@@ -69,6 +69,7 @@ import net.eanfang.worker.util.PrefUtils;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -93,6 +94,8 @@ public class MainActivity extends BaseActivity {
     private View redPointWork;
     private LoginBean user;
     private long mExitTime;
+    //被删除的 群组id 容器
+    public static HashMap<String, String> hashMap = new HashMap<>();
 
 //    @Override
 //    protected void onNewIntent(Intent intent) {
@@ -424,7 +427,7 @@ public class MainActivity extends BaseActivity {
                     //删除好友的会话记录
                     RongIM.getInstance().clearMessages(Conversation.ConversationType.PRIVATE, message.getTargetId(), null);
                     RongIM.getInstance().removeConversation(Conversation.ConversationType.PRIVATE, message.getTargetId(), null);
-
+                    hashMap.put(message.getTargetId(), message.getTargetId());
                     for (Activity activity : transactionActivities) {
                         if (activity instanceof ConversationActivity) {
                             if (message.getTargetId().equals(((ConversationActivity) activity).mId)) {
@@ -452,7 +455,10 @@ public class MainActivity extends BaseActivity {
                                 }));
 
                     });
-
+                    //添加被删除的id
+                    hashMap.put(message.getTargetId(), message.getTargetId());
+                    //删除好友的会话记录
+                    RongIM.getInstance().clearMessages(Conversation.ConversationType.PRIVATE, message.getTargetId(), null);
                     RongIM.getInstance().removeConversation(Conversation.ConversationType.GROUP, id, null);
 
                     for (Activity activity : transactionActivities) {
@@ -463,6 +469,10 @@ public class MainActivity extends BaseActivity {
                         }
                     }
                 } else {
+                    //移除添加被删除的id
+                    if (hashMap.get(message.getTargetId()) != null) {
+                        hashMap.remove(message.getTargetId());
+                    }
 
                     EanfangHttp.get(UserApi.POST_USER_INFO + message.getTargetId())
                             .execute(new EanfangCallback<User>(MainActivity.this, false, User.class, (bean) -> {

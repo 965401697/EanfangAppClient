@@ -59,6 +59,7 @@ import net.eanfang.client.util.PrefUtils;
 
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -83,6 +84,9 @@ public class MainActivity extends BaseClientActivity {
     private View redPointWork;
     private LoginBean user;
     private long mExitTime;
+
+    //被删除的 群组id 容器
+    public static HashMap<String, String> hashMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -378,7 +382,7 @@ public class MainActivity extends BaseClientActivity {
                     //删除好友的会话记录
                     RongIM.getInstance().clearMessages(Conversation.ConversationType.PRIVATE, message.getTargetId(), null);
                     RongIM.getInstance().removeConversation(Conversation.ConversationType.PRIVATE, message.getTargetId(), null);
-
+                    hashMap.put(message.getTargetId(), message.getTargetId());
                     for (Activity activity : transactionActivities) {
                         if (activity instanceof ConversationActivity) {
                             if (message.getTargetId().equals(((ConversationActivity) activity).mId)) {
@@ -407,7 +411,10 @@ public class MainActivity extends BaseClientActivity {
                     });
 
 
-                    RongIM.getInstance().removeConversation(Conversation.ConversationType.GROUP, id, null);
+                    //删除好友的会话记录
+                    RongIM.getInstance().clearMessages(Conversation.ConversationType.PRIVATE, message.getTargetId(), null);
+                    RongIM.getInstance().removeConversation(Conversation.ConversationType.PRIVATE, message.getTargetId(), null);
+                    hashMap.put(message.getTargetId(), message.getTargetId());
 
                     for (Activity activity : transactionActivities) {
                         if (activity instanceof ConversationActivity) {
@@ -417,6 +424,10 @@ public class MainActivity extends BaseClientActivity {
                         }
                     }
                 } else {
+                    //移除添加被删除的id
+                    if (hashMap.get(message.getTargetId()) != null) {
+                        hashMap.remove(message.getTargetId());
+                    }
 
                     EanfangHttp.get(UserApi.POST_USER_INFO + message.getTargetId())
                             .execute(new EanfangCallback<User>(MainActivity.this, false, User.class, (bean) -> {

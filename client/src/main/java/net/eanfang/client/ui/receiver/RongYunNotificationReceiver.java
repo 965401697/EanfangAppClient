@@ -22,14 +22,11 @@ public class RongYunNotificationReceiver extends PushMessageReceiver {
 
     @Override
     public boolean onNotificationMessageClicked(Context context, PushNotificationMessage message) {
-        if (message.getPushContent().equals("好友邀请") || message.getPushContent().equals("被删除通知") || message.getPushContent().equals("被移除群组通知")) {
-//            UserInfo userInfo=new UserInfo(message.getTargetId(),message.getTargetUserName()+message.getPushContent(),message.getSenderPortrait());
-
+        if (MainActivity.hashMap.get(message.getTargetId()) != null) {
             Intent intent = new Intent(context, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            intent.putExtra("sendUserInfo", userInfo);
+            MainActivity.hashMap.remove(message.getTargetId());
             context.startActivity(intent);
-
             return true;
         }
         return false;// 返回 false, 会走融云 SDK 默认处理逻辑, 即点击该通知会打开会话列表或会话界面; 返回 true, 则由您自定义处理逻辑。
