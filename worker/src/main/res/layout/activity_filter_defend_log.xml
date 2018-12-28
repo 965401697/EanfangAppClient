@@ -51,14 +51,14 @@
                         android:id="@+id/rb_device_read"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/dimen_60"
-                        android:background="@drawable/select_client_camera_back"
+                        android:background="@drawable/select_camera_back"
                         android:button="@null"
                         android:checked="false"
                         android:gravity="center"
                         android:paddingLeft="@dimen/dimen_20"
                         android:paddingRight="@dimen/dimen_20"
                         android:text="已读"
-                        android:textColor="@drawable/select_client_camera_text_back"
+                        android:textColor="@drawable/select_camera_text_back"
                         android:textSize="12sp" />
 
                     <RadioButton
@@ -66,13 +66,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/dimen_60"
                         android:layout_marginLeft="20dp"
-                        android:background="@drawable/select_client_camera_back"
+                        android:background="@drawable/select_camera_back"
                         android:button="@null"
                         android:gravity="center"
                         android:paddingLeft="@dimen/dimen_20"
                         android:paddingRight="@dimen/dimen_20"
                         android:text="未读"
-                        android:textColor="@drawable/select_client_camera_text_back"
+                        android:textColor="@drawable/select_camera_text_back"
                         android:textSize="12sp" />
 
                 </RadioGroup>
@@ -90,6 +90,7 @@
 
 
                 <TextView
+                    android:id="@+id/tv_filtrate"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dimen_90"
                     android:layout_marginLeft="@dimen/dimen_20"

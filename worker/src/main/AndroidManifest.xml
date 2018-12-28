@@ -1087,7 +1087,8 @@
         <activity
             android:name=".ui.activity.im.SearchPersonCompanyActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.activity.worksapce.repair.DeviceBrandActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.repair.DeviceBrandActivity" />
+        <activity android:name=".ui.activity.worksapce.FilterDefendLogActivity"></activity>
     </application>
 
 </manifest>

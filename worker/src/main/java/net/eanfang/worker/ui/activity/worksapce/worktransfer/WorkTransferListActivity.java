@@ -59,7 +59,7 @@ public class WorkTransferListActivity extends BaseActivity {
         mTitles = new String[allmTitles.size()];
         allmTitles.toArray(mTitles);
         for (String title : mTitles) {
-            mFragments.add(WorkTransferFragment.getInstance(title, mType));
+//            mFragments.add(WorkTransferFragment.getInstance(title, mType));
         }
 
         mAdapter = new MyPagerAdapter(getSupportFragmentManager());

@@ -28,7 +28,6 @@ public class OpenShopLogFragment extends TemplateItemListFragment {
     private String mTitle;
     private int mType;
     private OpenShopLogAdapter mAdapter;
-    private static int page = 1;
 
     private QueryEntry mQueryEntry;
 
@@ -121,13 +120,13 @@ public class OpenShopLogFragment extends TemplateItemListFragment {
         getData();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        mQueryEntry = null;
-        mPage = 1;
-        getData();
-    }
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        mQueryEntry = null;
+//        mPage = 1;
+//        getData();
+//    }
 
     @Override
     protected void getData() {
@@ -136,7 +135,7 @@ public class OpenShopLogFragment extends TemplateItemListFragment {
 
         if (mType == 1) {
             mQueryEntry.getEquals().put("ownerUserId", EanfangApplication.getApplication().getUserId() + "");
-        } else {
+        } else if (mType == 2) {
             mQueryEntry.getEquals().put("assigneeUserId", EanfangApplication.getApplication().getUserId() + "");
         }
 
@@ -147,7 +146,7 @@ public class OpenShopLogFragment extends TemplateItemListFragment {
 //        }
 
         mQueryEntry.setSize(10);
-        mQueryEntry.setPage(page);
+        mQueryEntry.setPage(mPage);
 
         EanfangHttp.post(NewApiService.OA_OPEN_SHOP_LIST)
                 .upJson(JsonUtils.obj2String(mQueryEntry))

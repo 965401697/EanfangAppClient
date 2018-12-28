@@ -9,17 +9,20 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.TextView;
 
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 import com.flyco.tablayout.SlidingTabLayout;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.worksapce.defendlog.FilterDefendLogActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class OpenShopLogParentActivity extends BaseClientActivity {
 
@@ -34,7 +37,6 @@ public class OpenShopLogParentActivity extends BaseClientActivity {
     private String[] mTitles = {"我创建的", "我接收的", "全部"};
     private MyPagerAdapter mAdapter;
     private final int FILTRATE_TYPE_CODE = 101;
-    private final int REFRESH_CODE = 102;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +57,7 @@ public class OpenShopLogParentActivity extends BaseClientActivity {
                 if (!PermKit.get().getOpenShopCreatePrem()) {
                     return;
                 }
-                startActivityForResult(new Intent(OpenShopLogParentActivity.this, OpenShopLogWriteActivity.class), REFRESH_CODE);
+                startActivityForResult(new Intent(OpenShopLogParentActivity.this, OpenShopLogWriteActivity.class), FILTRATE_TYPE_CODE);
             }
         });
 
@@ -68,6 +70,17 @@ public class OpenShopLogParentActivity extends BaseClientActivity {
         tlTaskList.setViewPager(vpTaskList, mTitles, this, mFragments);
 
         vpTaskList.setCurrentItem(0);
+    }
+
+    @OnClick(R.id.tv_filtrate)
+    public void onViewClicked() {
+        Bundle bundle = new Bundle();
+        if (vpTaskList.getCurrentItem() == 0) {// 我创建的
+            bundle.putInt("type", 0);
+        } else if (vpTaskList.getCurrentItem() == 1) {// 我接收的
+            bundle.putInt("type", 1);
+        }
+        JumpItent.jump(OpenShopLogParentActivity.this, FilterDefendLogActivity.class, bundle, FILTRATE_TYPE_CODE);
     }
 
 

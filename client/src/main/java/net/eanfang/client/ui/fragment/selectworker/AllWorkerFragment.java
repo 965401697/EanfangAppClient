@@ -8,7 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -42,6 +43,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
@@ -54,8 +56,11 @@ import butterknife.Unbinder;
 public class AllWorkerFragment extends BaseFragment {
 
     Unbinder unbinder;
+    @BindView(R.id.btn_key_two)
+    Button btnKeyTwo;
     private RecyclerView mRecyclerView;
-    private TextView mTvNoData;
+    private LinearLayout mllNoData;
+
     private List<WorkerEntity> selectWorkerList = new ArrayList<>();
 
     private RepairOrderEntity toRepairBean;
@@ -94,7 +99,7 @@ public class AllWorkerFragment extends BaseFragment {
     @Override
     protected void initView() {
         mRecyclerView = findViewById(R.id.rv_allWorker);
-        mTvNoData = findViewById(R.id.tv_noData);
+        mllNoData = findViewById(R.id.ll_nodata);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(),
                 DividerItemDecoration.VERTICAL));
@@ -150,33 +155,15 @@ public class AllWorkerFragment extends BaseFragment {
     private void initAdapter() {
         if (selectWorkerList == null || selectWorkerList.size() == 0) {
             mRecyclerView.setVisibility(View.GONE);
-            mTvNoData.setVisibility(View.VISIBLE);
+            mllNoData.setVisibility(View.VISIBLE);
+            btnKeyTwo.setVisibility(View.GONE);
         } else {
             mRecyclerView.setVisibility(View.VISIBLE);
-            mTvNoData.setVisibility(View.GONE);
+            mllNoData.setVisibility(View.GONE);
+            btnKeyTwo.setVisibility(View.VISIBLE);
             selectWorkerAdapter.refreshList(selectWorkerList);
             selectWorkerAdapter.notifyDataSetChanged();
         }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
-        return rootView;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
-
-    @OnClick(R.id.btn_key)
-    public void onViewClicked() {
-        //一键报修
-        doHttpSubmit();
     }
 
 
@@ -250,4 +237,31 @@ public class AllWorkerFragment extends BaseFragment {
         finishSelf();
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        unbinder = ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+    @OnClick({R.id.btn_key, R.id.btn_key_two})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.btn_key:
+                doHttpSubmit();
+                break;
+            case R.id.btn_key_two:
+                doHttpSubmit();
+                break;
+            default:
+                break;
+        }
+    }
 }

@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.TextView;
 
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 import com.flyco.tablayout.SlidingTabLayout;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class DefendLogParentActivity extends BaseClientActivity {
     @BindView(R.id.tl_task_list)
@@ -88,6 +90,17 @@ public class DefendLogParentActivity extends BaseClientActivity {
         public Fragment getItem(int position) {
             return mFragments.get(position);
         }
+    }
+
+    @OnClick(R.id.tv_filtrate)
+    public void onViewClicked() {
+        Bundle bundle = new Bundle();
+        if (vpTaskList.getCurrentItem() == 0) {// 我创建的
+            bundle.putInt("type", 0);
+        } else if (vpTaskList.getCurrentItem() == 1) {// 我处理的
+            bundle.putInt("type", 1);
+        }
+        JumpItent.jump(DefendLogParentActivity.this, FilterDefendLogActivity.class, bundle, FILTRATE_TYPE_CODE);
     }
 
     /**

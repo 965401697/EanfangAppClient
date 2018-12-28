@@ -28,7 +28,6 @@ public class DefendLogFragment extends TemplateItemListFragment {
     private String mTitle;
     private int mType;
     private DefendLogListAdapter mAdapter;
-    private int page = 1;
 
     private QueryEntry mQueryEntry;
 
@@ -110,13 +109,13 @@ public class DefendLogFragment extends TemplateItemListFragment {
         getData();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        mQueryEntry = null;
-        mPage = 1;
-        getData();
-    }
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        mQueryEntry = null;
+//        mPage = 1;
+//        getData();
+//    }
 
 
     @Override
@@ -126,7 +125,7 @@ public class DefendLogFragment extends TemplateItemListFragment {
 
         if (mType == 1) {
             mQueryEntry.getEquals().put("ownerUserId", EanfangApplication.getApplication().getUserId() + "");
-        } else {
+        } else if (mType == 2) {
 //            queryEntry.getEquals().put("assigneeUserId",  "980695066010497026");
             mQueryEntry.getEquals().put("assigneeUserId", EanfangApplication.getApplication().getUserId() + "");
         }
@@ -137,7 +136,7 @@ public class DefendLogFragment extends TemplateItemListFragment {
 //        }
 
         mQueryEntry.setSize(10);
-        mQueryEntry.setPage(page);
+        mQueryEntry.setPage(mPage);
 
         EanfangHttp.post(NewApiService.OA_DEFEND_LOG_LIST)
                 .upJson(JsonUtils.obj2String(mQueryEntry))

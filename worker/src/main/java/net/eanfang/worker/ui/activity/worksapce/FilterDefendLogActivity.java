@@ -1,4 +1,4 @@
-package net.eanfang.client.ui.activity.worksapce.defendlog;
+package net.eanfang.worker.ui.activity.worksapce;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,8 +17,8 @@ import com.eanfang.ui.fragment.SelectTimeDialogFragment;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
 
-import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.worksapce.oa.OAPersonAdaptet;
+import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.worksapce.oa.workreport.OAPersonAdaptet;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -33,11 +33,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * @author guanluocang
- * @data 2018/12/27
- * @description 筛选布防日志
- */
 
 public class FilterDefendLogActivity extends BaseActivity implements SelectTimeDialogFragment.SelectTimeListener, RadioGroup.OnCheckedChangeListener {
 
@@ -71,6 +66,8 @@ public class FilterDefendLogActivity extends BaseActivity implements SelectTimeD
     LinearLayout llTalk;
 
     public int mFlag;//人员选择器的标志位
+    @BindView(R.id.tv_filtrate)
+    TextView tvFiltrate;
 
 
     private OAPersonAdaptet oaPersonAdaptet;
@@ -103,6 +100,7 @@ public class FilterDefendLogActivity extends BaseActivity implements SelectTimeD
      */
     private String mPersonal_talk = "";
 
+
     /**
      * 面谈对象筛选
      */
@@ -124,12 +122,15 @@ public class FilterDefendLogActivity extends BaseActivity implements SelectTimeD
         if (mType == 0) {// 创建
             mPersonal = "assigneeUserId  ";
             mPersonal_talk = "assigneeUserId  ";
+            tvFiltrate.setText("按接收人筛选");
         } else {// 处理
             mPersonal = "createUserId";
             mPersonal_talk = "createUserId";
+            tvFiltrate.setText("按创建人筛选");
         }
         recyclerViewPersonal.setLayoutManager(new GridLayoutManager(this, 5));
-        oaPersonAdaptet = new OAPersonAdaptet(this, new ArrayList<TemplateBean.Preson>(), 2);
+
+        oaPersonAdaptet = new OAPersonAdaptet(this, new ArrayList<TemplateBean.Preson>());
         recyclerViewPersonal.setAdapter(oaPersonAdaptet);
 
         recyclerTalk.setLayoutManager(new GridLayoutManager(this, 5));
@@ -147,7 +148,6 @@ public class FilterDefendLogActivity extends BaseActivity implements SelectTimeD
         } else {
             llTalk.setVisibility(View.GONE);
         }
-
     }
 
     @OnClick({R.id.ll_start, R.id.ll_end, R.id.tv_cancle, R.id.tv_sure})
@@ -230,17 +230,19 @@ public class FilterDefendLogActivity extends BaseActivity implements SelectTimeD
 
     @Subscribe
     public void onEvent(List<TemplateBean.Preson> presonList) {
+
         if (presonList.size() > 0) {
+
             if (mFlag == 1) {
                 Set hashSet_talk = new HashSet();
                 hashSet_talk.addAll(oaPersonAdaptet_talk.getData());
                 hashSet_talk.addAll(presonList);
-                if (newPresonList_talk.size() > 0) {
-                    newPresonList_talk.clear();
+                if (newPresonList.size() > 0) {
+                    newPresonList.clear();
                 }
                 newPresonList_talk.addAll(hashSet_talk);
                 oaPersonAdaptet_talk.setNewData(newPresonList_talk);
-            } else if (mFlag == 2) {
+            } else {
                 Set hashSet = new HashSet();
                 hashSet.addAll(oaPersonAdaptet.getData());
                 hashSet.addAll(presonList);
@@ -250,16 +252,17 @@ public class FilterDefendLogActivity extends BaseActivity implements SelectTimeD
                 newPresonList.addAll(hashSet);
                 oaPersonAdaptet.setNewData(newPresonList);
             }
+
         }
     }
 
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int i) {
         switch (radioGroup.getCheckedRadioButtonId()) {
-            case R.id.rb_device_read://("未读",1)
+            case R.id.rb_device_read://("未读",1)//交接班 完成交接
                 mStatus = 1;
                 break;
-            case R.id.rb_device_unread:// "已读",0
+            case R.id.rb_device_unread:// "已读",0  // 交接班 待确认
                 mStatus = 0;
                 break;
             default:
