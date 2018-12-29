@@ -54,6 +54,7 @@ import net.eanfang.worker.ui.activity.worksapce.oa.workreport.OAPersonAdaptet;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 import net.eanfang.worker.util.SendContactUtils;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.text.SimpleDateFormat;
@@ -473,6 +474,7 @@ public class TaskAssignmentCreationActivity extends BaseWorkerActivity {
                         message.setMsgContent("任务指派成功");
                         message.setTip("确定");
                         bundle.putSerializable("message", message);
+                        EventBus.getDefault().post("addTaskSuccess");
                         JumpItent.jump(TaskAssignmentCreationActivity.this, StateChangeActivity.class, bundle);
 
                         //分享

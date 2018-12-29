@@ -118,6 +118,9 @@ public class OpenShopLogParentActivity extends BaseClientActivity {
             if (queryEntry != null) {
                 ((OpenShopLogFragment) mFragments.get(currentTab)).getTaskData(queryEntry);
             }
+        } else if (resultCode == RESULT_OK && requestCode == OpenShopLogFragment.DETAIL_TASK_REQUSET_COOD) {
+            ((OpenShopLogFragment) mFragments.get(currentTab)).refreshStatus();
+
         }
     }
 }

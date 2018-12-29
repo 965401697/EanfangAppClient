@@ -42,6 +42,7 @@ import net.eanfang.client.ui.adapter.SendPersonAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.util.SendContactUtils;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.Serializable;
@@ -409,6 +410,7 @@ public class DefendLogWriteActivity extends BaseClientActivity implements View.O
 
                     //分享
                     if (newPresonList.size() == 0 && newGroupList.size() == 0) {
+                        EventBus.getDefault().post("addDefendLogSuccess");
                         finishSelf();
                         return;
                     }

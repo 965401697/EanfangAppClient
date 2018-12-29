@@ -43,6 +43,7 @@ public class CheckListActivity extends BaseActivity {
     private MyPagerAdapter mAdapter;
     private final int FILTRATE_TYPE_CODE = 101;
     private final int REFRESH_CODE = 102;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +51,7 @@ public class CheckListActivity extends BaseActivity {
         ButterKnife.bind(this);
         initView();
     }
+
     private void initView() {
         setTitle("设备点检");
         setLeftBack();
@@ -62,7 +64,13 @@ public class CheckListActivity extends BaseActivity {
                 startActivityForResult(new Intent(CheckListActivity.this, AddNewCheckActivity.class), REFRESH_CODE);
             }
         });
-
+        setLeftBack(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(RESULT_OK);
+                finishSelf();
+            }
+        });
         mFragments.add(WorkCheckListFragment.getInstance("我创建的", 1));
         mFragments.add(WorkCheckListFragment.getInstance("我处理的", 2));
         mFragments.add(WorkCheckListFragment.getInstance("全部", 0));
@@ -122,6 +130,9 @@ public class CheckListActivity extends BaseActivity {
             if (queryEntry != null) {
                 ((WorkCheckListFragment) mFragments.get(currentTab)).getTaskData(queryEntry);
             }
+        } else if (resultCode == RESULT_OK && requestCode == WorkCheckListFragment.REQUST_REFRESH_CODE) {
+            ((WorkCheckListFragment) mFragments.get(currentTab)).refreshStatus();
+
         }
     }
 

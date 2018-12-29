@@ -116,6 +116,9 @@ public class DefendLogParentActivity extends BaseClientActivity {
             if (queryEntry != null) {
                 ((DefendLogFragment) mFragments.get(currentTab)).getTaskData(queryEntry);
             }
+        } else if (resultCode == RESULT_OK && requestCode == DefendLogFragment.DETAIL_TASK_REQUSET_COOD) {
+            ((DefendLogFragment) mFragments.get(currentTab)).refreshStatus();
+
         }
     }
 }

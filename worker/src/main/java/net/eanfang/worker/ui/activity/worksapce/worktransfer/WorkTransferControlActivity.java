@@ -125,6 +125,9 @@ public class WorkTransferControlActivity extends BaseActivity {
             if (queryEntry != null) {
                 ((WorkTransferFragment) mFragments.get(currentTab)).getTaskData(queryEntry);
             }
+        } else if (resultCode == RESULT_OK && requestCode == WorkTransferFragment.REFRESH_LIST_CODE) {
+            ((WorkTransferFragment) mFragments.get(currentTab)).refreshStatus();
+
         }
     }
 }

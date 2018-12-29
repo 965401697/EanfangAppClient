@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -261,6 +262,13 @@ public class WorkTransferDetailActivity extends BaseActivity {
         rlConfirm.setOnClickListener(view -> {
             doTransferConfim();
         });
+        setLeftBack(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(RESULT_OK);
+                finishSelf();
+            }
+        });
     }
 
     /**
@@ -273,6 +281,17 @@ public class WorkTransferDetailActivity extends BaseActivity {
                     finishSelf();
                 }));
 
+    }
+    /**
+     * 监听 返回键
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            setResult(RESULT_OK);
+            finishSelf();
+        }
+        return false;
     }
 }
 

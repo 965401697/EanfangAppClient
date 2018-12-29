@@ -87,7 +87,7 @@ public class WorkTransferControlActivity extends BaseActivity {
         } else if (vpTaskList.getCurrentItem() == 1) {// 我处理的
             bundle.putInt("type", 1);
         }
-        bundle.putString("modle","transfer");
+        bundle.putString("modle", "transfer");
         JumpItent.jump(WorkTransferControlActivity.this, FilterDefendLogActivity.class, bundle, FILTRATE_TYPE_CODE);
     }
 
@@ -126,6 +126,9 @@ public class WorkTransferControlActivity extends BaseActivity {
             if (queryEntry != null) {
                 ((WorkTransferFragment) mFragments.get(currentTab)).getTaskData(queryEntry);
             }
+        } else if (resultCode == RESULT_OK && requestCode == WorkTransferFragment.REFRESH_LIST_CODE) {
+            ((WorkTransferFragment) mFragments.get(currentTab)).refreshStatus();
+
         }
     }
 

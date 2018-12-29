@@ -30,11 +30,13 @@ public class WorkTransferAdapter extends BaseQuickAdapter<WorkTransferListBean.L
             helper.setText(R.id.tv_worktalk_name, item.getOwnerDepartmentEntity().getOrgName() + "(" + item.getOwnerUserEntity().getAccountEntity().getRealName() + ")");
             // 接收人
             helper.setText(R.id.tv_receiver_name, "接收人：" + item.getAssigneeUserEntity().getAccountEntity().getRealName());
+            helper.setText(R.id.tv_contact, "联系汇报人");
         } else {// 我接收的
             // 创建人
             helper.setText(R.id.tv_worktalk_name, item.getAssigneeCompanyEntity().getOrgName() + "(" + item.getAssigneeUserEntity().getAccountEntity().getRealName() + ")");
             // 接收人
             helper.setText(R.id.tv_receiver_name, "创建人：" + item.getOwnerUserEntity().getAccountEntity().getRealName());
+            helper.setText(R.id.tv_contact, "联系接收人");
         }
         // 订单是否 已读 未读 1：新订单 0 已读
         if (item.getNewOrder() == 1) {

@@ -8,8 +8,8 @@ android {
         applicationId "net.eanfang.worker"
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 18120701
-        versionName "2.3.30_beta"
+        versionCode 18122901
+        versionName "2.3.31_beta"
         multiDexEnabled true
 //        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 

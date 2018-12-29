@@ -1,6 +1,6 @@
 package net.eanfang.client.ui.activity.worksapce.defendlog;
 
-import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -11,13 +11,15 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.DefendLogBean;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 import com.yaf.base.entity.ProtectionLogEntity;
-import com.yaf.sys.entity.UserEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.fragment.TemplateItemListFragment;
+
+import org.greenrobot.eventbus.Subscribe;
 
 /**
  * Created by O u r on 2018/5/22.
@@ -30,6 +32,11 @@ public class DefendLogFragment extends TemplateItemListFragment {
     private DefendLogListAdapter mAdapter;
 
     private QueryEntry mQueryEntry;
+
+    public static final int DETAIL_TASK_REQUSET_COOD = 9;
+
+    private ProtectionLogEntity mDetailTaskBean;
+    private int mPosition;
 
     public static DefendLogFragment getInstance(String title, int type) {
         DefendLogFragment f = new DefendLogFragment();
@@ -56,8 +63,12 @@ public class DefendLogFragment extends TemplateItemListFragment {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 
                 if (!PermKit.get().getProtectionDetailPrem()) return;
-                UserEntity bean = ((ProtectionLogEntity) (adapter.getData().get(position))).getAssigneeUser();
-                startActivity(new Intent(getActivity(), DefendLogDetailActivity.class).putExtra("id", String.valueOf(((ProtectionLogEntity) adapter.getData().get(position)).getId())).putExtra("isVisible", false));
+                mDetailTaskBean = ((ProtectionLogEntity) adapter.getData().get(position));
+                mPosition = position;
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("isVisible", false);
+                bundle.putString("id", String.valueOf(((ProtectionLogEntity) adapter.getData().get(position)).getId()));
+                JumpItent.jump(getActivity(), DefendLogDetailActivity.class, bundle, DETAIL_TASK_REQUSET_COOD);
                 //刷新数据
 //                if (getmTitle().equals("未读日志") && String.valueOf(EanfangApplication.get().getAccId()).equals(String.valueOf(bean.getAccId()))) {
 //                    adapter.remove(position);
@@ -79,9 +90,13 @@ public class DefendLogFragment extends TemplateItemListFragment {
                     break;
                 case R.id.tv_detail:
                     //刷新数据
+                    mDetailTaskBean = ((ProtectionLogEntity) adapter.getData().get(position));
+                    mPosition = position;
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean("isVisible", false);
+                    bundle.putString("id", String.valueOf(((ProtectionLogEntity) adapter.getData().get(position)).getId()));
+                    JumpItent.jump(getActivity(), DefendLogDetailActivity.class, bundle, DETAIL_TASK_REQUSET_COOD);
 
-                    startActivity(new Intent(getActivity(), DefendLogDetailActivity.class).putExtra("id", String.valueOf(((ProtectionLogEntity) adapter.getData().get(position)).getId())));
-                    UserEntity bean = ((ProtectionLogEntity) (adapter.getData().get(position))).getAssigneeUser();
                     //刷新数据
 //                    if (getmTitle().equals("未读日志") && String.valueOf(EanfangApplication.get().getAccId()).equals(String.valueOf(bean.getAccId()))) {
 //                        adapter.remove(position);
@@ -188,6 +203,25 @@ public class DefendLogFragment extends TemplateItemListFragment {
                         mSwipeRefreshLayout.setRefreshing(false);
                     }
                 });
+    }
+
+    /**
+     * 刷新已读未读的状态
+     */
+    public void refreshStatus() {
+        if (mDetailTaskBean != null) {
+            mDetailTaskBean.setNewOrder(0);
+            mAdapter.notifyItemChanged(mPosition);
+        }
+    }
+
+    @Subscribe
+    public void onEvent(String createSuccess) {
+        if (createSuccess.equals("addDefendLogSuccess")) {
+            mQueryEntry = null;
+            mPage = 1;
+            getData();
+        }
     }
 
 }

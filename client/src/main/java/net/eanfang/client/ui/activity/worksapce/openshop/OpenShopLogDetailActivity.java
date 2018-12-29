@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -82,6 +83,13 @@ public class OpenShopLogDetailActivity extends BaseClientActivity {
     }
 
     private void initData() {
+        setLeftBack(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(RESULT_OK);
+                finishSelf();
+            }
+        });
         EanfangHttp.post(NewApiService.OA_OPEN_SHOP_DETAIL + "/" + getIntent().getStringExtra("id"))
                 .execute(new EanfangCallback<OpenShopLogEntity>(this, true, OpenShopLogEntity.class, (bean) -> {
                     initViews(bean);
@@ -196,5 +204,17 @@ public class OpenShopLogDetailActivity extends BaseClientActivity {
         }
 
         return sb.toString();
+    }
+
+    /**
+     * 监听 返回键
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            setResult(RESULT_OK);
+            finishSelf();
+        }
+        return false;
     }
 }

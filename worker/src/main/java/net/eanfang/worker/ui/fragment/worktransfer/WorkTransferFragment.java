@@ -23,6 +23,8 @@ import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.worktransfer.WorkTransferDetailActivity;
 import net.eanfang.worker.ui.adapter.worktransfer.WorkTransferAdapter;
 
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,10 +44,11 @@ public class WorkTransferFragment extends BaseFragment implements SwipeRefreshLa
     private int page = 1;
     private SwipeRefreshLayout swipeRefreshLayout;
     private RecyclerView rv_worktalk;
-    private final int REFRESH_LIST_CODE = 99;//刷新列表的request_Code
+    public static final int REFRESH_LIST_CODE = 99;//刷新列表的request_Code
     private int mRefreshPosition = 0;//刷新的position
     private List<WorkTransferListBean.ListBean> workTalkBeanList = new ArrayList<>();
     private WorkTransferAdapter workTalkAdapter;
+    private WorkTransferListBean.ListBean mDetailTaskBean;
     /**
      * 用户ID
      */
@@ -95,7 +98,7 @@ public class WorkTransferFragment extends BaseFragment implements SwipeRefreshLa
 //            mQueryEntry.getEquals().put(Constant.STATUS, status);
 //        }
         mQueryEntry.setPage(page);
-        mQueryEntry.setSize(5);
+        mQueryEntry.setSize(10);
         // 我接收的
         if (mType == 2) {
             mQueryEntry.getEquals().put("assigneeUserId", mUserId + "");
@@ -127,6 +130,13 @@ public class WorkTransferFragment extends BaseFragment implements SwipeRefreshLa
 
     @Override
     protected void initView() {
+        // 我接收的
+        if (mType == 2) {
+            mIsCreate = false;
+        } else if (mType == 1) {
+            // 我创建的
+            mIsCreate = true;
+        }
         swipeRefreshLayout = findViewById(R.id.srl_worktransfer);
         swipeRefreshLayout.setOnRefreshListener(this);
         rv_worktalk = findViewById(R.id.rv_worktransfer);
@@ -150,6 +160,7 @@ public class WorkTransferFragment extends BaseFragment implements SwipeRefreshLa
                         return;
                     }
                     mRefreshPosition = position;
+                    mDetailTaskBean = (WorkTransferListBean.ListBean) adapter.getData().get(position);
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("itemId", workTalkAdapter.getData().get(position).getId());
                     bundle.putSerializable("userId", workTalkAdapter.getData().get(position).getAssigneeUserId());
@@ -187,6 +198,25 @@ public class WorkTransferFragment extends BaseFragment implements SwipeRefreshLa
             if (workTalkAdapter.getData().size() == 0) {
                 showToast("暂无数据");
             }
+        }
+    }
+
+    /**
+     * 刷新已读未读的状态
+     */
+    public void refreshStatus() {
+        if (mDetailTaskBean != null) {
+            mDetailTaskBean.setNewOrder(0);
+            workTalkAdapter.notifyItemChanged(mRefreshPosition);
+        }
+    }
+
+    @Subscribe
+    public void onEvent(String createSuccess) {
+        if (createSuccess.equals("addTransferSuccess")) {
+            mQueryEntry = null;
+            page = 1;
+            getData();
         }
     }
 

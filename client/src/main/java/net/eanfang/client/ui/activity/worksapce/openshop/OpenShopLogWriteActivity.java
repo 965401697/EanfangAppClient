@@ -38,6 +38,7 @@ import net.eanfang.client.ui.adapter.SendPersonAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.util.SendContactUtils;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -311,27 +312,6 @@ public class OpenShopLogWriteActivity extends BaseClientActivity implements Sele
     }
 
 
-    /**
-     * 提交数据
-     * {
-     * "empEntryTime":"2018-05-21 17:30:30",
-     * "empExitTime":"2018-05-21 17:30:30",
-     * "cusEntryTime":"2018-05-21 17:30:30",
-     * "cusExitTime":"2018-05-21 17:30:30",
-     * "recYardStaTime":"2018-05-21 17:30:30",
-     * "recYardEndTime":"2018-05-21 17:30:30",
-     * "remarkInfo":"备注1",
-     * "ownerUserId":"958222608418070530",
-     * "ownerCompanyId":"1000",
-     * "ownerTopCompanyId":"1000",
-     * "ownerOrgCode":"c.4",
-     * "assigneeUserId":"958601236116574210",
-     * "assigneeCompanyId":"958601236116574209",
-     * "assigneeTopCompanyId":"958601236116574209",
-     * "assigneeOrgCode":"c.1",
-     * "assigneePhone":"6666666666"
-     * }
-     */
     private void sub() {
 
         if (!checkInfo()) return;
@@ -399,6 +379,7 @@ public class OpenShopLogWriteActivity extends BaseClientActivity implements Sele
 
                     //分享
                     if (newPresonList.size() == 0 && newGroupList.size() == 0) {
+                        EventBus.getDefault().post("addOpenShopSuccess");
                         finishSelf();
                         return;
                     }

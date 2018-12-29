@@ -24,6 +24,8 @@ import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.worktalk.WorkTalkDetailActivity;
 import net.eanfang.client.ui.adapter.WorkTalkAdapter;
 
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,6 +48,10 @@ public class WorkTalkListFragment extends BaseFragment implements SwipeRefreshLa
     private TextView tvNoData;
     private List<WorkTalkListBean.ListBean> workTalkBeanList = new ArrayList<>();
     private WorkTalkAdapter workTalkAdapter;
+    public static final int DETAIL_TASK_REQUSET_COOD = 9;
+
+    private WorkTalkListBean.ListBean mDetailTaskBean;
+    private int mPosition;
     /**
      * 用户ID
      */
@@ -171,9 +177,11 @@ public class WorkTalkListFragment extends BaseFragment implements SwipeRefreshLa
                     if (!PermKit.get().getFaceToWorkerDetailPrem()) {
                         return;
                     }
+                    mDetailTaskBean = ((WorkTalkListBean.ListBean) adapter.getData().get(position));
+                    mPosition = position;
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("itemId", workTalkAdapter.getData().get(position).getId());
-                    JumpItent.jump(getActivity(), WorkTalkDetailActivity.class, bundle);
+                    JumpItent.jump(getActivity(), WorkTalkDetailActivity.class, bundle, DETAIL_TASK_REQUSET_COOD);
                     break;
                 //联系汇报人
                 case R.id.tv_contact:
@@ -221,6 +229,24 @@ public class WorkTalkListFragment extends BaseFragment implements SwipeRefreshLa
         dataOption(BOTTOM_REFRESH);
     }
 
+    /**
+     * 刷新已读未读的状态
+     */
+    public void refreshStatus() {
+        if (mDetailTaskBean != null) {
+            mDetailTaskBean.setNewOrder(0);
+            workTalkAdapter.notifyItemChanged(mPosition);
+        }
+    }
+
+    @Subscribe
+    public void onEvent(String createSuccess) {
+        if (createSuccess.equals("addTalkSuccess")) {
+            mQueryEntry = null;
+            page = 1;
+            getData();
+        }
+    }
 
     public void onDataReceived() {
         if (page == 1) {

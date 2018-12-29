@@ -53,6 +53,9 @@ public class OrderListFragment extends BaseFragment implements
                 intent.putExtra(Constant.ID, ((RepairOrderEntity) adapter.getData().get(position)).getId());
                 intent.putExtra("title", mTitle);
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                //刷新已读未读
+                ((RepairOrderEntity) adapter.getData().get(position)).setNewOrder(0);
+                adapter.notifyItemChanged(position);
                 intent.putExtra("orderTime", GetDateUtils.dateToDateTimeString(((RepairOrderEntity) adapter.getData().get(position)).getCreateTime()));
                 startActivity(intent);
             }

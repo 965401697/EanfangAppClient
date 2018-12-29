@@ -1,6 +1,6 @@
 package net.eanfang.client.ui.activity.worksapce.openshop;
 
-import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -11,13 +11,15 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.OpenShopLogBean;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 import com.yaf.base.entity.OpenShopLogEntity;
-import com.yaf.sys.entity.UserEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.fragment.TemplateItemListFragment;
+
+import org.greenrobot.eventbus.Subscribe;
 
 /**
  * Created by O u r on 2018/5/22.
@@ -30,6 +32,11 @@ public class OpenShopLogFragment extends TemplateItemListFragment {
     private OpenShopLogAdapter mAdapter;
 
     private QueryEntry mQueryEntry;
+
+    public static final int DETAIL_TASK_REQUSET_COOD = 9;
+
+    private OpenShopLogEntity mDetailTaskBean;
+    private int mPosition;
 
     public static OpenShopLogFragment getInstance(String title, int type) {
         OpenShopLogFragment f = new OpenShopLogFragment();
@@ -57,11 +64,14 @@ public class OpenShopLogFragment extends TemplateItemListFragment {
 
                 if (!PermKit.get().getOpenShopDetailPrem()) return;
 
-                UserEntity bean = ((OpenShopLogEntity) (adapter.getData().get(position))).getAssigneeUser();
 
+                mDetailTaskBean = ((OpenShopLogEntity) adapter.getData().get(position));
+                mPosition = position;
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("isVisible", false);
+                bundle.putString("id", String.valueOf(((OpenShopLogEntity) adapter.getData().get(position)).getId()));
+                JumpItent.jump(getActivity(), OpenShopLogDetailActivity.class, bundle, DETAIL_TASK_REQUSET_COOD);
                 //刷新数据
-                startActivity(new Intent(getActivity(), OpenShopLogDetailActivity.class).
-                        putExtra("id", String.valueOf(((OpenShopLogEntity) adapter.getData().get(position)).getId())).putExtra("isVisible", false));
 
 //                if (getmTitle().equals("未读日志")) {
 //                    if (String.valueOf(bean.getAccId()).equals(String.valueOf(EanfangApplication.get().getAccId())))
@@ -88,8 +98,12 @@ public class OpenShopLogFragment extends TemplateItemListFragment {
                     break;
                 case R.id.tv_detail:
                     //刷新数据
-                    UserEntity bean = ((OpenShopLogEntity) (adapter.getData().get(position))).getAssigneeUser();
-                    startActivity(new Intent(getActivity(), OpenShopLogDetailActivity.class).putExtra("id", String.valueOf(((OpenShopLogEntity) adapter.getData().get(position)).getId())));
+                    mDetailTaskBean = ((OpenShopLogEntity) adapter.getData().get(position));
+                    mPosition = position;
+                    Bundle bundle = new Bundle();
+                    bundle.putString("id", String.valueOf(((OpenShopLogEntity) adapter.getData().get(position)).getId()));
+                    JumpItent.jump(getActivity(), OpenShopLogDetailActivity.class, bundle, DETAIL_TASK_REQUSET_COOD);
+
 //                    if (getmTitle().equals("未读日志")) {
 //                        if (String.valueOf(bean.getAccId()).equals(String.valueOf(EanfangApplication.get().getAccId())))
 //                            adapter.remove(position);
@@ -120,13 +134,6 @@ public class OpenShopLogFragment extends TemplateItemListFragment {
         getData();
     }
 
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        mQueryEntry = null;
-//        mPage = 1;
-//        getData();
-//    }
 
     @Override
     protected void getData() {
@@ -199,4 +206,24 @@ public class OpenShopLogFragment extends TemplateItemListFragment {
                     }
                 });
     }
+
+    /**
+     * 刷新已读未读的状态
+     */
+    public void refreshStatus() {
+        if (mDetailTaskBean != null) {
+            mDetailTaskBean.setNewOrder(0);
+            mAdapter.notifyItemChanged(mPosition);
+        }
+    }
+
+    @Subscribe
+    public void onEvent(String createSuccess) {
+        if (createSuccess.equals("addOpenShopSuccess")) {
+            mQueryEntry = null;
+            mPage = 1;
+            getData();
+        }
+    }
+
 }

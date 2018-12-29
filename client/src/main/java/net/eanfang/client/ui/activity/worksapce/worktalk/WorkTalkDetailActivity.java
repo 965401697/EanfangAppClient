@@ -2,6 +2,8 @@ package net.eanfang.client.ui.activity.worksapce.worktalk;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.View;
 import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
@@ -129,5 +131,24 @@ public class WorkTalkDetailActivity extends BaseActivity {
         setLeftBack();
         setTitle("面谈员工");
         mItemId = getIntent().getStringExtra("itemId");
+        setLeftBack(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(RESULT_OK);
+                finishSelf();
+            }
+        });
+    }
+
+    /**
+     * 监听 返回键
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            setResult(RESULT_OK);
+            finishSelf();
+        }
+        return false;
     }
 }

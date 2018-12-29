@@ -156,6 +156,7 @@ public class NewPayActivity extends BaseClientActivity {
         if (payLogEntity == null) {
             showToast("参数错误,请重试");
             finishSelf();
+            return;
         }
 
 //        calcPrice();

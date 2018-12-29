@@ -8,6 +8,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.config.Config;
@@ -31,8 +32,6 @@ import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
 import net.eanfang.worker.R;
-
-import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.List;
@@ -114,6 +113,13 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
         setTitle("完善资料");
         setLeftBack();
         orgid = getIntent().getLongExtra("orgid", 0);
+        // TODO: 2018/11/30  今天集合的对象引用 有待优化
+        for (BaseDataEntity b : businessTypeList) {
+            b.setCheck(false);
+        }
+        for (BaseDataEntity s : systemTypeList) {
+            s.setCheck(false);
+        }
     }
 
     private void initData() {

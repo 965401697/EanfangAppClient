@@ -125,6 +125,9 @@ public class WorkTalkControlActivity extends BaseActivity {
             if (queryEntry != null) {
                 ((WorkTalkListFragment) mFragments.get(currentTab)).getTaskData(queryEntry);
             }
+        }else if (resultCode == RESULT_OK && requestCode == WorkTalkListFragment.DETAIL_TASK_REQUSET_COOD) {
+            ((WorkTalkListFragment) mFragments.get(currentTab)).refreshStatus();
+
         }
     }
 
