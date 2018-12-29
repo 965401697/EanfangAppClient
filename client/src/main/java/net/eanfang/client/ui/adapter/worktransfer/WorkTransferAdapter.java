@@ -38,6 +38,7 @@ public class WorkTransferAdapter extends BaseQuickAdapter<WorkTransferListBean.L
             helper.setText(R.id.tv_receiver_name, "创建人：" + item.getOwnerUserEntity().getAccountEntity().getRealName());
             helper.setText(R.id.tv_contact, "联系接收人");
         }
+        
         // 订单是否 已读 未读 1：新订单 0 已读
         if (item.getNewOrder() == 1) {
             helper.getView(R.id.tv_state).setVisibility(View.VISIBLE);
