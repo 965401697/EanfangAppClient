@@ -204,6 +204,12 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
                     } else if (uiConversation.getConversationContent().toString().equals("被移除群组通知")) {
                         RongIM.getInstance().clearMessagesUnreadStatus(Conversation.ConversationType.SYSTEM, uiConversation.getConversationTargetId());
                         return true;
+                    }  else if (uiConversation.getConversationContent().toString().equals("群解散通知")) {
+                        RongIM.getInstance().clearMessagesUnreadStatus(Conversation.ConversationType.SYSTEM, uiConversation.getConversationTargetId());
+                        return true;
+                    } else if (uiConversation.getConversationContent().toString().equals("拒绝添加好友通知")) {
+                        RongIM.getInstance().clearMessagesUnreadStatus(Conversation.ConversationType.SYSTEM, uiConversation.getConversationTargetId());
+                        return true;
                     } else {
                         UserInfo userInfo = new UserInfo(uiConversation.getConversationTargetId(), uiConversation.getUIConversationTitle(), uiConversation.getIconUrl());
                         Intent intent = new Intent(getActivity(), SystemMessageActivity.class);
@@ -231,9 +237,9 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
                         EanfangHttp.post(UserApi.POST_GROUP_DETAIL_RY)
                                 .params("ryGroupId", s)
                                 .execute(new EanfangCallback<GroupDetailBean>(getActivity(), true, GroupDetailBean.class, (bean) -> {
+                                    if (bean != null) {
 
-                                    UserInfo userInfo = new UserInfo(s, bean.getGroup().getGroupName(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + bean.getGroup().getHeadPortrait()));
-                                    RongIM.getInstance().refreshUserInfoCache(userInfo);
+                                    }
 
                                 }));
                     });

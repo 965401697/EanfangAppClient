@@ -21,7 +21,7 @@ public class FilePreviewExActivity extends FilePreviewActivity {
         QbSdk.openFileReader(this, fileSavePath, null, new ValueCallback<String>() {
             @Override
             public void onReceiveValue(String s) {
-
+                Log.e("zzw", "fileName=============" + fileName + "," + "fileSavePath============" + fileSavePath);
             }
         });
 

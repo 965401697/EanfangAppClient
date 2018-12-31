@@ -17,6 +17,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
@@ -78,7 +79,6 @@ import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
-import io.rong.message.InformationNotificationMessage;
 import io.rong.message.TextMessage;
 
 import static com.eanfang.config.EanfangConst.MEIZU_APPID_WORKER;
@@ -402,22 +402,22 @@ public class MainActivity extends BaseActivity {
 
             //开发者根据自己需求自行处理
             boolean isDelect = false;
-            String type = message.getObjectName();
-            if (type.equals("RC:InfoNtf")) {
-                InformationNotificationMessage msg = (InformationNotificationMessage) message.getContent();
-                if (msg.getMessage().equals("解散了")) {
-                    isDelect = true;
-                    for (Activity activity : transactionActivities) {
-                        if (activity instanceof ConversationActivity) {
-                            if (message.getTargetId().equals(((ConversationActivity) activity).mId)) {
-                                activity.finish();
-                            }
-                        }
-                    }
-                    RongIM.getInstance().removeConversation(Conversation.ConversationType.GROUP, message.getTargetId(), null);
-                }
-
-            }
+//            String type = message.getObjectName();
+//            if (type.equals("RC:InfoNtf")) {
+//                InformationNotificationMessage msg = (InformationNotificationMessage) message.getContent();
+//                if (msg.getMessage().equals("解散了")) {
+//                    isDelect = true;
+//                    for (Activity activity : transactionActivities) {
+//                        if (activity instanceof ConversationActivity) {
+//                            if (message.getTargetId().equals(((ConversationActivity) activity).mId)) {
+//                                activity.finish();
+//                            }
+//                        }
+//                    }
+//                    RongIM.getInstance().removeConversation(Conversation.ConversationType.GROUP, message.getTargetId(), null);
+//                }
+//
+//            }
 
 
             if (message.getConversationType().getName().equals(Conversation.ConversationType.SYSTEM.getName())) {
@@ -436,6 +436,25 @@ public class MainActivity extends BaseActivity {
                         }
                     }
 
+                } else if (messageContent.getContent().equals("群解散通知")) {
+                    String extra = messageContent.getExtra();
+                    JSONObject jsonObject = JSON.parseObject(extra);
+                    //删除好友的会话记录
+
+                    UserInfo userInfo = new UserInfo(jsonObject.getString("groupId"), jsonObject.getString("groupName"), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + jsonObject.getString("groupPic")));
+
+                    RongIM.getInstance().refreshUserInfoCache(userInfo);
+
+                    RongIM.getInstance().clearMessages(Conversation.ConversationType.GROUP, message.getTargetId(), null);
+                    RongIM.getInstance().removeConversation(Conversation.ConversationType.GROUP, message.getTargetId(), null);
+                    hashMap.put(message.getTargetId(), message.getTargetId());
+                    for (Activity activity : transactionActivities) {
+                        if (activity instanceof ConversationActivity) {
+                            if (message.getTargetId().equals(((ConversationActivity) activity).mId)) {
+                                activity.finish();
+                            }
+                        }
+                    }
                 } else if (messageContent.getContent().equals("被移除群组通知")) {
 
                     TextMessage textMessage = (TextMessage) message.getContent();
