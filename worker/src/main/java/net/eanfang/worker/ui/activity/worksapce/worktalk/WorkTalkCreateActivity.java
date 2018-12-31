@@ -40,6 +40,7 @@ import net.eanfang.worker.ui.activity.worksapce.oa.SelectOAGroupActivity;
 import net.eanfang.worker.ui.adapter.SendPersonAdapter;
 import net.eanfang.worker.util.SendContactUtils;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.Serializable;
@@ -301,6 +302,7 @@ public class WorkTalkCreateActivity extends BaseActivity {
                     //分享
                     if (newPresonList.size() == 0 && newGroupList.size() == 0) {
                         showToast("添加完毕");
+                        EventBus.getDefault().post("addTalkSuccess");
                         finishSelf();
                         return;
                     }

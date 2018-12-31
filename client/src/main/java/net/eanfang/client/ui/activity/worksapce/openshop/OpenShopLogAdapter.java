@@ -1,5 +1,7 @@
 package net.eanfang.client.ui.activity.worksapce.openshop;
 
+import android.view.View;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.util.GetDateUtils;
@@ -27,11 +29,17 @@ public class OpenShopLogAdapter extends BaseQuickAdapter<OpenShopLogEntity, Base
             helper.setText(R.id.tv_company_name, "");
 
         }
-        if (item.getStatus() == 0) {
-            helper.setText(R.id.tv_state, "未读");
+        // 订单是否 已读 未读 1：新订单 0 已读
+        if (item.getNewOrder() == 1) {
+            helper.getView(R.id.tv_state).setVisibility(View.VISIBLE);
         } else {
-            helper.setText(R.id.tv_state, "已读");
+            helper.getView(R.id.tv_state).setVisibility(View.GONE);
         }
+//        if (item.getStatus() == 0) {
+//            helper.setText(R.id.tv_state, "未读");
+//        } else {
+//            helper.setText(R.id.tv_state, "已读");
+//        }
         helper.setText(R.id.tv_order_id, item.getOrderNumber());
         helper.setText(R.id.tv_create_time, GetDateUtils.dateToFormatString(item.getCreateTime(), "yyyy-MM-dd HH:mm:ss"));
         helper.setText(R.id.tv_person_name, item.getAssigneeUser().getAccountEntity().getRealName());

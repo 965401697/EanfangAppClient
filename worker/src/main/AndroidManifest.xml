@@ -136,7 +136,9 @@
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data
                     android:host="net.eanfang.worker"
                     android:path="/messagelist_notify"
@@ -1073,19 +1075,20 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.worksapce.SetPasswordActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <!-- 评价展示 -->
         <activity
             android:name=".ui.activity.worksapce.EvaluateShowActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <!-- 改约 -->
         <activity
             android:name=".ui.widget.FillAppointmentInfoRebookView"
-            android:screenOrientation="portrait"></activity>
-
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.im.SearchPersonCompanyActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".ui.activity.worksapce.repair.DeviceBrandActivity" />
+        <activity android:name=".ui.activity.worksapce.FilterDefendLogActivity"></activity>
     </application>
 
 </manifest>

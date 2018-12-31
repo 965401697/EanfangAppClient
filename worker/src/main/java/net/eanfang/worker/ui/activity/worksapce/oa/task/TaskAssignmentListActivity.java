@@ -103,10 +103,7 @@ public class TaskAssignmentListActivity extends BaseWorkerActivity {
                 ((WorkTaskListFragment) mFragments.get(currentTab)).getTaskData(queryEntry);
             }
         } else if (resultCode == RESULT_OK && requestCode == WorkTaskListFragment.DETAIL_TASK_REQUSET_COOD) {
-            if (currentTab == 1)
-                ((WorkTaskListFragment) mFragments.get(currentTab)).refreshStatus();
-        } else if (resultCode == RESULT_OK && requestCode == WorkTaskListFragment.DETAIL_TASK_REQUSET_COOD) {
-
+            ((WorkTaskListFragment) mFragments.get(currentTab)).refreshStatus();
         }
     }
 }

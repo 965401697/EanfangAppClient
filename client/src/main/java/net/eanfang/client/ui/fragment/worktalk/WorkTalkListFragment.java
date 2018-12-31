@@ -10,13 +10,11 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
-import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WorkTalkListBean;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.CallUtils;
-import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
@@ -25,6 +23,8 @@ import com.eanfang.util.QueryEntry;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.worktalk.WorkTalkDetailActivity;
 import net.eanfang.client.ui.adapter.WorkTalkAdapter;
+
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +40,7 @@ import static com.eanfang.config.EanfangConst.TOP_REFRESH;
 public class WorkTalkListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
 
     private String mTitle;
-    private String mType;
+    private int mType;
 
     private int page = 1;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -48,6 +48,10 @@ public class WorkTalkListFragment extends BaseFragment implements SwipeRefreshLa
     private TextView tvNoData;
     private List<WorkTalkListBean.ListBean> workTalkBeanList = new ArrayList<>();
     private WorkTalkAdapter workTalkAdapter;
+    public static final int DETAIL_TASK_REQUSET_COOD = 9;
+
+    private WorkTalkListBean.ListBean mDetailTaskBean;
+    private int mPosition;
     /**
      * 用户ID
      */
@@ -55,10 +59,13 @@ public class WorkTalkListFragment extends BaseFragment implements SwipeRefreshLa
 
     private boolean isCreate = false;
 
-    public static WorkTalkListFragment getInstance(String title, String type) {
+    private QueryEntry mQueryEntry;
+
+
+    public static WorkTalkListFragment getInstance(String title, int type) {
         WorkTalkListFragment workTalkListFragment = new WorkTalkListFragment();
         workTalkListFragment.mTitle = title;
-        workTalkListFragment.mType = String.valueOf(type);
+        workTalkListFragment.mType = type;
         return workTalkListFragment;
 
     }
@@ -86,26 +93,30 @@ public class WorkTalkListFragment extends BaseFragment implements SwipeRefreshLa
      * 获取数据
      */
     public void getData() {
-        mUserId = EanfangApplication.get().getUser().getAccount().getDefaultUser().getUserId();
-        QueryEntry queryEntry = new QueryEntry();
-        if (!Constant.ALL.equals(mTitle)) {
-            String status = GetConstDataUtils.getWorkTalkStatus().indexOf(getmTitle()) + "";
-            queryEntry.getEquals().put(Constant.STATUS, status);
+        if (mQueryEntry == null) {
+            mQueryEntry = new QueryEntry();
         }
-        // 我接收的
-        if (mType.equals("我接收的")) {
-            queryEntry.getEquals().put("assigneeUserId", mUserId + "");
-        } else {
-            // 我创建的
-            queryEntry.getEquals().put("ownerUserId", mUserId + "");
+
+//        if (!Constant.ALL.equals(mTitle)) {
+//            String status = GetConstDataUtils.getWorkTalkStatus().indexOf(getmTitle()) + "";
+//            mQueryEntry.getEquals().put(Constant.STATUS, status);
+//        }
+        // 我创建的
+        if (mType == 1) {
+            mQueryEntry.getEquals().put("ownerUserId", mUserId + "");
+            // 我接收的
+        } else if (mType == 2) {
+//            queryEntry.getEquals().put("assigneeUserId",  "980695066010497026");
+            mQueryEntry.getEquals().put("assigneeUserId", mUserId + "");
         }
-        queryEntry.setPage(page);
-        queryEntry.setSize(10);
+        mQueryEntry.setPage(page);
+        mQueryEntry.setSize(10);
 
         EanfangHttp.post(NewApiService.WORK_TALK)
-                .upJson(JsonUtils.obj2String(queryEntry))
+                .upJson(JsonUtils.obj2String(mQueryEntry))
                 .execute(new EanfangCallback<WorkTalkListBean>(getActivity(), true, WorkTalkListBean.class, (bean) -> {
                             getActivity().runOnUiThread(() -> {
+                                mQueryEntry = null;
                                 if (bean.getList() != null) {
                                     tvNoData.setVisibility(View.GONE);
                                     rv_worktalk.setVisibility(View.VISIBLE);
@@ -121,13 +132,26 @@ public class WorkTalkListFragment extends BaseFragment implements SwipeRefreshLa
                 );
     }
 
+    public void getTaskData(QueryEntry queryEntry) {
+        this.mQueryEntry = queryEntry;
+        page = 1;
+        dataOption(TOP_REFRESH);
+    }
+
+    @Override
+    public void onRefresh() {
+        mQueryEntry = null;
+        page = 1;
+        dataOption(TOP_REFRESH);
+    }
+
     @Override
     protected void initView() {
 
         // 我接收的
-        if (mType.equals("我接收的")) {
+        if (mType == 2) {
             isCreate = false;
-        } else {
+        } else if (mType == 1) {
             // 我创建的
             isCreate = true;
         }
@@ -140,6 +164,7 @@ public class WorkTalkListFragment extends BaseFragment implements SwipeRefreshLa
         workTalkAdapter.bindToRecyclerView(rv_worktalk);
         tvNoData = findViewById(R.id.tv_no_data);
         workTalkAdapter.setOnLoadMoreListener(this, rv_worktalk);
+        mUserId = EanfangApplication.get().getUser().getAccount().getDefaultUser().getUserId();
     }
 
     @Override
@@ -149,19 +174,31 @@ public class WorkTalkListFragment extends BaseFragment implements SwipeRefreshLa
             switch (view.getId()) {
                 // 查看详情
                 case R.id.tv_seedetail:
-                    if (!PermKit.get().getFaceToWorkerDetailPrem()) return;
+                    if (!PermKit.get().getFaceToWorkerDetailPrem()) {
+                        return;
+                    }
+                    mDetailTaskBean = ((WorkTalkListBean.ListBean) adapter.getData().get(position));
+                    mPosition = position;
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("itemId", workTalkAdapter.getData().get(position).getId());
-                    JumpItent.jump(getActivity(), WorkTalkDetailActivity.class, bundle);
+                    JumpItent.jump(getActivity(), WorkTalkDetailActivity.class, bundle, DETAIL_TASK_REQUSET_COOD);
                     break;
                 //联系汇报人
                 case R.id.tv_contact:
-                    // 我接收的 我创建的
-                    if (mType.equals("我接收的")) {
+                    // 我接收的
+                    if (mType == 2) {
                         CallUtils.call(getActivity(), workTalkBean.getOwnerUserEntity().getAccountEntity().getMobile());
-                    } else {//我创建的
+                    } else if (mType == 1) {//我创建的
                         CallUtils.call(getActivity(), workTalkBean.getAssigneeUserEntity().getAccountEntity().getMobile());
+                    } else {
+                        if (workTalkAdapter.getData().get(position).getAssigneeUserId().equals(mUserId + "")) {
+                            CallUtils.call(getActivity(), workTalkBean.getOwnerUserEntity().getAccountEntity().getMobile());
+                        } else {
+                            CallUtils.call(getActivity(), workTalkBean.getAssigneeUserEntity().getAccountEntity().getMobile());
+                        }
                     }
+                    break;
+                default:
                     break;
             }
         });
@@ -192,9 +229,23 @@ public class WorkTalkListFragment extends BaseFragment implements SwipeRefreshLa
         dataOption(BOTTOM_REFRESH);
     }
 
-    @Override
-    public void onRefresh() {
-        dataOption(TOP_REFRESH);
+    /**
+     * 刷新已读未读的状态
+     */
+    public void refreshStatus() {
+        if (mDetailTaskBean != null) {
+            mDetailTaskBean.setNewOrder(0);
+            workTalkAdapter.notifyItemChanged(mPosition);
+        }
+    }
+
+    @Subscribe
+    public void onEvent(String createSuccess) {
+        if (createSuccess.equals("addTalkSuccess")) {
+            mQueryEntry = null;
+            page = 1;
+            getData();
+        }
     }
 
     public void onDataReceived() {

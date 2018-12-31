@@ -41,6 +41,7 @@ import com.yaf.base.entity.WorkerEntity;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.repair.RepairActivity;
 import net.eanfang.client.ui.adapter.WorkDetailHonorAdapter;
+import net.eanfang.client.ui.adapter.WorkDetailQualificationAdapter;
 import net.eanfang.client.ui.adapter.WorkerDetailAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.util.PrefUtils;
@@ -146,8 +147,12 @@ public class WorkerDetailActivity extends BaseClientActivity {
     // 评价订单
     @BindView(R.id.tv_evaluteOrder)
     TextView tvEvaluteOrder;
+    // 荣誉证书
     @BindView(R.id.rv_honor)
     RecyclerView rvHonor;
+    //资质证书
+    @BindView(R.id.rv_qualification)
+    RecyclerView rvQualification;
 
     private boolean isTypeMore = false;
     // 业务领域查看更多
@@ -189,6 +194,10 @@ public class WorkerDetailActivity extends BaseClientActivity {
      * 荣誉证书
      */
     private WorkDetailHonorAdapter workDetailHonorAdapter;
+    /**
+     * 资质证书
+     */
+    private WorkDetailQualificationAdapter workDetailQualificationAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -206,9 +215,14 @@ public class WorkerDetailActivity extends BaseClientActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         rvHonor.setLayoutManager(layoutManager);
+        LinearLayoutManager layoutManager_qualifica = new LinearLayoutManager(this);
+        layoutManager_qualifica.setOrientation(LinearLayoutManager.HORIZONTAL);
+        rvQualification.setLayoutManager(layoutManager_qualifica);
 
         workDetailHonorAdapter = new WorkDetailHonorAdapter();
         workDetailHonorAdapter.bindToRecyclerView(rvHonor);
+        workDetailQualificationAdapter = new WorkDetailQualificationAdapter();
+        workDetailQualificationAdapter.bindToRecyclerView(rvQualification);
 
         // 正常报修流程 获取数据
         toRepairBean = v(() -> (RepairOrderEntity) getIntent().getSerializableExtra("toRepairBean"));
@@ -582,6 +596,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
 
         initAdapter();
         initHonor(bean);
+
     }
 
     private void initAdapter() {
@@ -638,6 +653,9 @@ public class WorkerDetailActivity extends BaseClientActivity {
     private void initHonor(WorkerEntity bean) {
         if (bean.getHonorList() != null) {
             workDetailHonorAdapter.setNewData(bean.getHonorList());
+        }
+        if (bean.getQualificationList() != null) {
+            workDetailQualificationAdapter.setNewData(bean.getQualificationList());
         }
     }
 

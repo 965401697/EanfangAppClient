@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -126,6 +127,13 @@ public class DefendLogDetailActivity extends BaseClientActivity {
         mAdapterList = defendLogDetailAdapter.getmList();//如果是添加数据  这里为空
 
         defendLogDetailAdapter.bindToRecyclerView(recyclerView);
+        setLeftBack(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(RESULT_OK);
+                finishSelf();
+            }
+        });
     }
 
 
@@ -258,6 +266,17 @@ public class DefendLogDetailActivity extends BaseClientActivity {
             return String.valueOf(sum);
         }
 
+    }
+    /**
+     * 监听 返回键
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            setResult(RESULT_OK);
+            finishSelf();
+        }
+        return false;
     }
 }
 

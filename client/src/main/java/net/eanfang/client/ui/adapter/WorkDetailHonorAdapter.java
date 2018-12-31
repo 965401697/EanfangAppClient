@@ -11,7 +11,7 @@ import net.eanfang.client.R;
 /**
  * @author guanluocang
  * @data 2018/12/4
- * @description
+ * @description 技师详情 荣誉证书
  */
 
 public class WorkDetailHonorAdapter extends BaseQuickAdapter<HonorCertificateEntity, BaseViewHolder> {

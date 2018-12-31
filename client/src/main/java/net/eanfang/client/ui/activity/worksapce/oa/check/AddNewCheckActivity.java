@@ -56,6 +56,7 @@ import net.eanfang.client.ui.activity.worksapce.oa.OAPersonAdaptet;
 import net.eanfang.client.ui.activity.worksapce.repair.SelectDeviceTypeActivity;
 import net.eanfang.client.util.SendContactUtils;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.text.SimpleDateFormat;
@@ -431,6 +432,7 @@ public class AddNewCheckActivity extends BaseActivity implements SelectTimeDialo
                         message.setMsgContent("新建点检成功");
                         message.setTip("确定");
                         bundle.putSerializable("message", message);
+                        EventBus.getDefault().post("addCheckSuccess");
                         JumpItent.jump(AddNewCheckActivity.this, StateChangeActivity.class, bundle);
 
                         //分享
@@ -467,7 +469,7 @@ public class AddNewCheckActivity extends BaseActivity implements SelectTimeDialo
                         b.putString("creatTime", etTaskName.getText().toString().trim());
                         b.putString("workerName", EanfangApplication.get().getUser().getAccount().getRealName());
                         b.putString("status", "0");
-                        b.putString("shareType", "4");
+                        b.putString("shareType", "5");
 
                         new SendContactUtils(b, handler, groupList, DialogUtil.createLoadingDialog(AddNewCheckActivity.this), "设备检点").send();
 

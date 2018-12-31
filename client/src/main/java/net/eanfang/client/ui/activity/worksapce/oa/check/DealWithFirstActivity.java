@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -32,6 +33,8 @@ import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.im.SelectIMContactActivity;
 import net.eanfang.client.ui.activity.worksapce.maintenance.MaintenanceTeamAdapter;
 import net.eanfang.client.util.ImagePerviewUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -152,6 +155,13 @@ public class DealWithFirstActivity extends BaseActivity {
 
                 intent.putExtras(bundle);
                 startActivity(intent);
+            }
+        });
+        setLeftBack(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(RESULT_OK);
+                finishSelf();
             }
         });
 
@@ -387,7 +397,20 @@ public class DealWithFirstActivity extends BaseActivity {
                 .params("id", mBean.getWorkInpectDetailDispose().getId())
                 .execute(new EanfangCallback(this, true, JSONObject.class, (bean) -> {
                     showToast("操作成功");
+                    EventBus.getDefault().post("addCheckSuccess");
+                    setResult(RESULT_OK);
                     finishSelf();
                 }));
+    }
+    /**
+     * 监听 返回键
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            setResult(RESULT_OK);
+            finishSelf();
+        }
+        return false;
     }
 }
