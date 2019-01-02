@@ -4,10 +4,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -39,6 +41,8 @@ public class SystemMessageActivity extends BaseWorkerActivity {
     TextView tvAccept;
     @BindView(R.id.ll_item)
     RelativeLayout llItem;
+    @BindView(R.id.ll_action)
+    LinearLayout llAction;
     private UserInfo userInfo;
 
     @Override
@@ -62,16 +66,16 @@ public class SystemMessageActivity extends BaseWorkerActivity {
 
         int unreadCount = RongIM.getInstance().getUnreadCount(Conversation.ConversationType.SYSTEM, userInfo.getUserId());
         if (unreadCount == 0) {
-            btnAccept.setVisibility(View.GONE);
+            llAction.setVisibility(View.GONE);
             tvAccept.setVisibility(View.VISIBLE);
         } else {
-            btnAccept.setVisibility(View.VISIBLE);
+            llAction.setVisibility(View.VISIBLE);
             tvAccept.setVisibility(View.GONE);
         }
     }
 
 
-    @OnClick({R.id.btn_accept, R.id.ll_item})
+    @OnClick({R.id.btn_accept, R.id.btn_reject, R.id.ll_item})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_accept:
@@ -93,8 +97,18 @@ public class SystemMessageActivity extends BaseWorkerActivity {
                                     });
                             RongIM.getInstance().startConversation(SystemMessageActivity.this, Conversation.ConversationType.PRIVATE, userInfo.getUserId(), userInfo.getName());
 
-                           endTransaction(true);
+                            endTransaction(true);
 
+                        }));
+                break;
+            case R.id.btn_reject:
+                //同意被添加好友
+                EanfangHttp.post(UserApi.POST_REJECT_FRIEND)
+                        .params("senderId", EanfangApplication.get().getAccId())
+                        .params("targetIds", userInfo.getUserId())
+                        .execute(new EanfangCallback<JSONObject>(SystemMessageActivity.this, true, JSONObject.class, (bean) -> {
+                            RongIM.getInstance().removeConversation(Conversation.ConversationType.SYSTEM, userInfo.getUserId(), null);
+                            endTransaction(true);
                         }));
                 break;
             case R.id.ll_item:
