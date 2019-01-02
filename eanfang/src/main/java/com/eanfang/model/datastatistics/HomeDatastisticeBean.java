@@ -100,5 +100,13 @@ public class HomeDatastisticeBean implements Serializable {
         public void setType(String typeNum) {
             this.typeNum = typeNum;
         }
+
+        public int getNum() {
+            return num;
+        }
+
+        public void setNum(int num) {
+            this.num = num;
+        }
     }
 }
