@@ -155,7 +155,7 @@ public class TemplateBean extends BaseItemData implements Serializable {
          */
         @Override
         public int hashCode() {
-            return id.hashCode() * name.hashCode();
+            return id.hashCode();
         }
 
     }
