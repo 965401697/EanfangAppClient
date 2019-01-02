@@ -82,6 +82,7 @@ public class SearchPersonByOrgannizationActivity extends BaseActivity {
         for (TemplateBean t : mDataList) {
             for (TemplateBean.Preson p : t.getPresons()) {
                 if (p.getName().contains(name)) {
+                    p.setOrgName(t.getOrgName());
                     searchDataList.add(p);
                 }
             }
