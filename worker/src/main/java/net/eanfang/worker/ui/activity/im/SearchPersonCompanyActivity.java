@@ -1,5 +1,6 @@
 package net.eanfang.worker.ui.activity.im;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,12 +14,13 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.model.TemplateBean;
 import com.eanfang.util.ToastUtil;
+
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
-import org.greenrobot.eventbus.EventBus;
-
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,7 +37,9 @@ public class SearchPersonCompanyActivity extends BaseWorkerActivity {
     private ArrayList<TemplateBean> mDataList;
 
     private ArrayList<TemplateBean.Preson> searchDataList;
-    private ArrayList<TemplateBean.Preson> seletedDataList = new ArrayList<>();
+    //    private ArrayList<TemplateBean.Preson> seletedDataList = new ArrayList<>();
+    private List<TemplateBean.Preson> presonList = new ArrayList<>();
+    ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +52,21 @@ public class SearchPersonCompanyActivity extends BaseWorkerActivity {
         setRightTitleOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (seletedDataList != null && seletedDataList.size() > 0) {
-                    EventBus.getDefault().post(seletedDataList);
+                if (presonList != null && presonList.size() > 0) {
+//                    EventBus.getDefault().post(seletedDataList);
+
+
+                    Intent intent = new Intent(SearchPersonCompanyActivity.this, CreateGroupActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("list", (Serializable) presonList);
+                    intent.putExtras(bundle);
+                    intent.putExtra("groupName", getIntent().getStringExtra("groupName"));
+                    intent.putExtra("imgKey", getIntent().getStringExtra("imgKey"));
+                    intent.putExtra("locationPortrait", getIntent().getStringExtra("locationPortrait"));
+                    startActivity(intent);
                     endTransaction(true);
+
+
                 } else {
                     ToastUtil.get().showToast(SearchPersonCompanyActivity.this, "请选择人员");
                 }
@@ -58,6 +74,12 @@ public class SearchPersonCompanyActivity extends BaseWorkerActivity {
         });
 
         mDataList = (ArrayList<TemplateBean>) getIntent().getSerializableExtra("data");
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            presonList = (List<TemplateBean.Preson>) bundle.getSerializable("list");
+        }
+
         initViews();
     }
 
@@ -97,10 +119,10 @@ public class SearchPersonCompanyActivity extends BaseWorkerActivity {
 
                     TemplateBean.Preson p = (TemplateBean.Preson) adapter.getData().get(position);
                     if (p.isChecked()) {
-                        seletedDataList.remove(p);
+                        presonList.remove(p);
                         p.setChecked(false);
                     } else {
-                        seletedDataList.add(p);
+                        presonList.add(p);
                         p.setChecked(true);
                     }
                     adapter.notifyItemChanged(position);
@@ -110,17 +132,15 @@ public class SearchPersonCompanyActivity extends BaseWorkerActivity {
     }
 
     private void search(String name) {
-        if (searchDataList == null) searchDataList = new ArrayList<>();
+        if (searchDataList == null) {
+            searchDataList = new ArrayList<>();
+        }
         searchDataList.clear();
-        if (seletedDataList.size() > 0) seletedDataList.clear();
 
         for (TemplateBean t : mDataList) {
             for (TemplateBean.Preson p : t.getPresons()) {
                 if (p.getName().contains(name)) {
                     searchDataList.add(p);
-                    if (p.isChecked()) {
-                        seletedDataList.add(p);
-                    }
                 }
             }
         }

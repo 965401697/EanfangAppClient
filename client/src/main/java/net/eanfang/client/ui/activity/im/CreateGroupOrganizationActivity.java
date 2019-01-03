@@ -279,6 +279,13 @@ public class CreateGroupOrganizationActivity extends BaseClientActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(CreateGroupOrganizationActivity.this, SearchPersonCompanyActivity.class);
                 intent.putExtra("data", (Serializable) mTemplateBeanList);
+
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("list", (Serializable) mAdapter.getSeletePerson());
+                intent.putExtras(bundle);
+                intent.putExtra("groupName", getIntent().getStringExtra("groupName"));
+                intent.putExtra("imgKey", getIntent().getStringExtra("imgKey"));
+                intent.putExtra("locationPortrait", getIntent().getStringExtra("locationPortrait"));
                 startActivity(intent);
             }
         });
