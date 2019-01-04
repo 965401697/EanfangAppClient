@@ -63,7 +63,7 @@ public class OfferAndPayListFragment extends TemplateItemListFragment {
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             switch (view.getId()) {
                 case R.id.tv_do_first:
-                    CallUtils.call(getActivity(), ((PayOrderListBean.ListBean) adapter.getData().get(position)).getReporterPhone());
+                    CallUtils.call(getActivity(), ((PayOrderListBean.ListBean) adapter.getData().get(position)).getOfferer().getAccountEntity().getMobile());
                     break;
                 case R.id.tv_do_second:
                     if (PermKit.get().getQuoteAgreePrem()) {

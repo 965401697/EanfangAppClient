@@ -3,6 +3,7 @@ package net.eanfang.client.ui.activity.my;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,6 +18,9 @@ import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.ToastUtil;
+import com.eanfang.witget.SwitchButton;
+import com.tencent.android.tpush.XGIOperateCallback;
+import com.tencent.android.tpush.XGPushManager;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.LoginActivity;
@@ -25,6 +29,8 @@ import net.eanfang.client.ui.activity.worksapce.setting.UpdatePasswordActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.ui.widget.AboutUsView;
 import net.eanfang.client.ui.widget.MessageStateView;
+
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,6 +58,8 @@ public class SettingActivity extends BaseClientActivity {
     LinearLayout llChangePhone;
     @BindView(R.id.ll_updata_password)
     LinearLayout llUpdataPassword;
+    @BindView(R.id.sb_voice)
+    SwitchButton sbVoice;
 
 
     @Override
@@ -91,6 +99,28 @@ public class SettingActivity extends BaseClientActivity {
         });
         btn_logout.setOnClickListener(v -> logout());
         llMsgSetting.setOnClickListener(v -> new MessageStateView(SettingActivity.this).show());
+
+        boolean isOpen = true;
+        try {
+            isOpen = (Boolean) SharePreferenceUtil.get().get("XGNoticeVoice", true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (isOpen) {
+            sbVoice.setChecked(true);
+        } else {
+            sbVoice.setChecked(false);
+        }
+        sbVoice.setOnCheckedChangeListener(new SwitchButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(SwitchButton view, boolean isChecked) {
+                try {
+                    SharePreferenceUtil.get().set("XGNoticeVoice", isChecked);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     /**
@@ -103,11 +133,6 @@ public class SettingActivity extends BaseClientActivity {
         builder.setPositiveButton("确定", (dialog, which) -> {
             signout();
             dialog.dismiss();
-            PermKit.permList.clear();//清空权限
-            SharePreferenceUtil.get().clear();
-            CleanMessageUtil.clearAllCache(EanfangApplication.get());
-            startActivity(new Intent(SettingActivity.this, LoginActivity.class));
-            finishSelf();
         });
         builder.setNegativeButton("取消", (dialog, which) -> {
             dialog.dismiss();
@@ -118,7 +143,23 @@ public class SettingActivity extends BaseClientActivity {
     private void signout() {
         EanfangHttp.get(UserApi.APP_LOGOUT)
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
+                    XGPushManager.delAccount(SettingActivity.this, EanfangApplication.get().getUser().getAccount().getMobile(), new XGIOperateCallback() {
+                        @Override
+                        public void onSuccess(Object o, int i) {
+                            Log.e("GG", "信鸽退出Success");
+                        }
+
+                        @Override
+                        public void onFail(Object o, int i, String s) {
+                            Log.e("GG", "信鸽退出Fail");
+                        }
+                    });
                     RongIM.getInstance().logout();//退出融云
+                    PermKit.permList.clear();//清空权限
+                    SharePreferenceUtil.get().clear();
+                    CleanMessageUtil.clearAllCache(EanfangApplication.get());
+                    finishSelf();
+                    startActivity(new Intent(SettingActivity.this, LoginActivity.class));
                     showToast("退出成功");
                 }));
     }

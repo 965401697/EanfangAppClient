@@ -45,6 +45,7 @@ public class WorkTransferAdapter extends BaseQuickAdapter<WorkTransferListBean.L
         } else {
             helper.getView(R.id.tv_state).setVisibility(View.GONE);
         }
+        helper.getView(R.id.tv_order_status).setVisibility(View.VISIBLE);
         helper.setText(R.id.tv_order_status, GetConstDataUtils.getWorkTransferList().get(item.getStatus()));
         helper.setText(R.id.tv_order_id, "编号：" + item.getOrderNum());
         helper.setText(R.id.tv_create_time, "创建时间：" + item.getCreateTime());
