@@ -56,6 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
+                android:paddingBottom="@dimen/dimen_20"
                 android:layout_marginTop="@dimen/dimen_14"
                 android:background="@color/white"
                 android:orientation="vertical">
@@ -76,11 +77,45 @@
                     android:layout_height="@dimen/dimen_2"
                     android:background="@color/content_bg" />
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recycler_status"
+                <RadioGroup
+                    android:id="@+id/rg_status"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:layout_marginRight="@dimen/dimen_20"
+                    android:layout_marginTop="@dimen/dimen_28"
+                    android:orientation="horizontal">
 
+                    <RadioButton
+                        android:id="@+id/rb_device_read"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dimen_60"
+                        android:background="@drawable/select_camera_back"
+                        android:button="@null"
+                        android:checked="false"
+                        android:gravity="center"
+                        android:paddingLeft="@dimen/dimen_20"
+                        android:paddingRight="@dimen/dimen_20"
+                        android:text="已读"
+                        android:textColor="@drawable/select_camera_text_back"
+                        android:textSize="12sp" />
+
+                    <RadioButton
+                        android:id="@+id/rb_device_unread"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dimen_60"
+                        android:layout_marginLeft="20dp"
+                        android:background="@drawable/select_camera_back"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:paddingLeft="@dimen/dimen_20"
+                        android:paddingRight="@dimen/dimen_20"
+                        android:text="未读"
+                        android:textColor="@drawable/select_camera_text_back"
+                        android:textSize="12sp" />
+
+                </RadioGroup>
             </LinearLayout>
 
             <LinearLayout
@@ -121,9 +156,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_90"
                 android:layout_marginTop="@dimen/dimen_40"
-                android:padding="@dimen/dimen_20"
                 android:background="@color/white"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="@dimen/dimen_20">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -146,7 +181,7 @@
                     android:gravity="right"
                     android:text=""
                     android:textColor="@color/color_bottom"
-                    android:textSize="@dimen/textSize_13"/>
+                    android:textSize="@dimen/textSize_13" />
             </LinearLayout>
 
             <View style="@style/style_common_line_gray" />
@@ -155,9 +190,9 @@
                 android:id="@+id/ll_end"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_90"
-                android:padding="@dimen/dimen_20"
                 android:background="@color/white"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="@dimen/dimen_20">
 
                 <TextView
                     android:layout_width="wrap_content"
