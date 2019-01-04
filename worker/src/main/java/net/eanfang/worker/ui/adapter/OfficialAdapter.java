@@ -1,6 +1,7 @@
 package net.eanfang.worker.ui.adapter;
 
 import android.net.Uri;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -19,10 +20,18 @@ public class OfficialAdapter extends BaseQuickAdapter<NoticePushEntity, BaseView
         super(R.layout.item_official_msg);
     }
 
+
     @Override
     protected void convert(BaseViewHolder helper, NoticePushEntity item) {
+        if (item.getStatus() == 0) {
+            ((TextView) helper.getView(R.id.tv_title)).setTextColor(helper.getConvertView().getResources().getColor(R.color.color_client_neworder));
+            ((TextView) helper.getView(R.id.tv_read)).setTextColor(helper.getConvertView().getResources().getColor(R.color.color_client_neworder));
+        } else {
+            ((TextView) helper.getView(R.id.tv_title)).setTextColor(helper.getConvertView().getResources().getColor(R.color.roll_content));
+            ((TextView) helper.getView(R.id.tv_read)).setTextColor(helper.getConvertView().getResources().getColor(R.color.roll_content));
+        }
         helper.setText(R.id.tv_title, item.getNoticeTitle());
-        ((SimpleDraweeView) helper.getView(R.id.iv_pic)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getPicture()));
         helper.setText(R.id.tv_desc, item.getNoticeDescribe());
+        ((SimpleDraweeView) helper.getView(R.id.iv_pic)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getPicture()));
     }
 }

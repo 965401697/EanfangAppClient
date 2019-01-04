@@ -69,6 +69,8 @@ public class NoticePushEntity implements Serializable {
     private String mobiles;
 
     private Integer pushFinish;
+
+    private int status;
     //	@TableField(strategy=FieldStrategy.NOT_EMPTY)
     private String picture;
     //	@TableField(strategy=FieldStrategy.NOT_EMPTY)
@@ -324,6 +326,15 @@ public class NoticePushEntity implements Serializable {
             return this.id.equals(((NoticePushEntity) other).id);
         }
         return false;
+    }
+
+    //阅读的状态
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     @Override

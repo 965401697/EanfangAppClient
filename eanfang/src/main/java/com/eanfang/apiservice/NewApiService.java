@@ -146,6 +146,10 @@ public interface NewApiService {
      * 获取官方消息通知
      */
     String GET_OFFICIAL_MSG = BuildConfig.API_HOST + "/yaf_sys/noticepush/appList";
+    /**
+     * 获取官方消息状态接口
+     */
+    String GET_OFFICIAL_CHANGE_STATUS = BuildConfig.API_HOST + "/yaf_sys/noticepush/updateStatus";
 
 
     /**
