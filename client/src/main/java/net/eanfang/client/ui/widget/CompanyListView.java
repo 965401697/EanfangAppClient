@@ -78,17 +78,7 @@ public class CompanyListView extends PopupWindow {
         revCompanyList.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                SwitchCompany(beanList.get(position).getOrgId());
-                String companyName = null;
-                if (beanList.get(position).getOrgName() != null) {
-                    companyName = beanList.get(position).getOrgName();
-                }
-                String logpic = null;
-                if (beanList.get(position).getOrgUnitEntity() != null && beanList.get(position).getOrgUnitEntity().getLogoPic() != null) {
-                    logpic = beanList.get(position).getOrgUnitEntity().getLogoPic();
-                }
-                itemCompany.getItemName(companyName, logpic);
-                dismiss();
+                SwitchCompany(beanList, position, beanList.get(position).getOrgId());
             }
         });
     }
@@ -96,7 +86,7 @@ public class CompanyListView extends PopupWindow {
     /**
      * @param companyid Go to another company
      */
-    private void SwitchCompany(Long companyid) {
+    private void SwitchCompany(List<OrgEntity> beanList, int position, Long companyid) {
         EanfangHttp.get(NewApiService.SWITCH_COMPANY_ALL_LIST)
                 .params("companyId", companyid)
                 .execute(new EanfangCallback<LoginBean>(mContext, false, LoginBean.class, (bean) -> {
@@ -106,6 +96,16 @@ public class CompanyListView extends PopupWindow {
                         EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
                         EanfangHttp.setToken(EanfangApplication.get().getUser().getToken());
                         EanfangHttp.setClient();
+                        String companyName = null;
+                        dismiss();
+                        if (beanList.get(position).getOrgName() != null) {
+                            companyName = beanList.get(position).getOrgName();
+                        }
+                        String logpic = null;
+                        if (beanList.get(position).getOrgUnitEntity() != null && beanList.get(position).getOrgUnitEntity().getLogoPic() != null) {
+                            logpic = beanList.get(position).getOrgUnitEntity().getLogoPic();
+                        }
+                        itemCompany.getItemName(companyName, logpic);
                     }
                 }));
     }

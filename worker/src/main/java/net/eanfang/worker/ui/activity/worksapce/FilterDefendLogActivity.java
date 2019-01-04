@@ -259,10 +259,10 @@ public class FilterDefendLogActivity extends BaseActivity implements SelectTimeD
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int i) {
         switch (radioGroup.getCheckedRadioButtonId()) {
-            case R.id.rb_device_read://("未读",1)//交接班 完成交接
+            case R.id.rb_device_read://("已读",1)//交接班 完成交接 1
                 mStatus = 1;
                 break;
-            case R.id.rb_device_unread:// "已读",0  // 交接班 待确认
+            case R.id.rb_device_unread:// "未读",0  // 交接班 待确认 0
                 mStatus = 0;
                 break;
             default:

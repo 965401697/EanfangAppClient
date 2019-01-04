@@ -228,6 +228,8 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
 
     private int maxWordsNum = 200; //输入限制的最大字数
 
+    private Long clientCompanyUid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -255,6 +257,7 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
         orderId = getIntent().getLongExtra("orderId", 0);
         companyName = getIntent().getStringExtra("companyName");
         companyId = getIntent().getLongExtra("companyUid", 0);
+        clientCompanyUid = getIntent().getLongExtra("clientCompanyUid", 0);
         // 获取经纬度
         LocationUtil.location(this, (location) -> {
             // mAddress = location.getCity() + location.getDistrict();
@@ -286,6 +289,7 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
         tvAddFault.setOnClickListener(v -> {
             Intent intent = new Intent(FillRepairInfoActivity.this, AddTroubleActivity.class);
             intent.putExtra("repaid", orderId);
+            intent.putExtra("clientCompanyUid", clientCompanyUid);
             startActivityForResult(intent, 10003);
         });
         //提交完工

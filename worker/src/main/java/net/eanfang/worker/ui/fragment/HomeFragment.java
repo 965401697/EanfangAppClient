@@ -249,6 +249,8 @@ public class HomeFragment extends BaseFragment {
                     JumpItent.jump(getActivity(), ScanCodeActivity.class, bundle);
                     homeScanPopWindow.dismiss();
                     break;
+                default:
+                    break;
             }
         }
     };

@@ -140,8 +140,7 @@ public class EanfangCallback<T> extends StringCallback {
 
     @Override
     public final void onSuccess(Response<String> response) {
-        try {
-            if (StringUtils.isEmpty(response.toString()) || StringUtils.isEmpty(response.body())) {
+        try {if (StringUtils.isEmpty(response.toString()) || StringUtils.isEmpty(response.body())) {
                 onServerError("服务器无响应");
                 return;
             }

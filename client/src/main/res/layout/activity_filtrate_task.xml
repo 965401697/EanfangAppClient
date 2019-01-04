@@ -24,7 +24,8 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:background="@color/white"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dimen_20">
 
 
                 <TextView
@@ -42,10 +43,45 @@
                     android:layout_height="@dimen/dimen_2"
                     android:background="@color/content_bg" />
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recycler_status"
+                <RadioGroup
+                    android:id="@+id/rg_status"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:layout_marginRight="@dimen/dimen_20"
+                    android:layout_marginTop="@dimen/dimen_28"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rb_device_read"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dimen_60"
+                        android:background="@drawable/select_client_camera_back"
+                        android:button="@null"
+                        android:checked="false"
+                        android:gravity="center"
+                        android:paddingLeft="@dimen/dimen_20"
+                        android:paddingRight="@dimen/dimen_20"
+                        android:text="已读"
+                        android:textColor="@drawable/select_client_camera_text_back"
+                        android:textSize="12sp" />
+
+                    <RadioButton
+                        android:id="@+id/rb_device_unread"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dimen_60"
+                        android:layout_marginLeft="20dp"
+                        android:background="@drawable/select_client_camera_back"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:paddingLeft="@dimen/dimen_20"
+                        android:paddingRight="@dimen/dimen_20"
+                        android:text="未读"
+                        android:textColor="@drawable/select_client_camera_text_back"
+                        android:textSize="12sp" />
+
+                </RadioGroup>
 
             </LinearLayout>
 
