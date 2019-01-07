@@ -571,4 +571,9 @@ public interface NewApiService {
      */
     String REPAIR_PAY_COUPON = BASE_URL + "/yaf_sys/couponPay/repair";
 
+    /**
+     * 技师端扫一扫客户设备库，查看当前设备是否是待维保的设备，并返回维保信息和维保明细信息。
+     */
+    String SCAN_DEVICE_DEAL = BASE_URL + "/yaf_maintain/shopmaintenanceorder/app/maintenanceDetailByDeviceId";
+
 }

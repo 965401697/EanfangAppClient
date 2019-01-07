@@ -77,7 +77,8 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/worker_logo"
         android:supportsRtl="true"
-        android:theme="@style/NewBaseTheme">
+        android:theme="@style/NewBaseTheme"
+        tools:replace="android:name">
 
         <!-- 多渠道打包 -->
         <meta-data

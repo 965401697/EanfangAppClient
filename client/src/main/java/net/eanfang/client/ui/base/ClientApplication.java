@@ -6,6 +6,7 @@ import android.util.Log;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.util.SharePreferenceUtil;
+import com.mob.MobSDK;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
@@ -60,6 +61,7 @@ public class ClientApplication extends EanfangApplication {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            MobSDK.init(this);
         }
 
 

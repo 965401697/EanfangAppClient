@@ -107,6 +107,11 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
     private int examResultEntityPosition;
     private ShopMaintenanceExamResultEntity examResultEntity;
 
+    /**
+     * 扫码看设备
+     */
+    private String mType = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,7 +127,9 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
     private void initData() {
         mId = getIntent().getLongExtra("orderId", 0);
         examResultList = (ArrayList<ShopMaintenanceExamDeviceEntity>) getIntent().getSerializableExtra("list");
-
+        mType = getIntent().getStringExtra("type");
+        if (mType.equals("scanDevice")) {
+        }
         checkBoxList.add(cbVideo);
         checkBoxList.add(cbTime);
         checkBoxList.add(cbPrint);
@@ -203,8 +210,7 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == ADD_HANDLE_RESULT) {
-                ShopMaintenanceExamResultEntity resultEntity = (ShopMaintenanceExamResultEntity) data.getSerializableExtra("bean");
-                maintenanceHandeCheckAdapter.addData(resultEntity);
+                doAddHandleResult(data);
             } else if (requestCode == EDIT_HANDLE_RESULT) {//修改已有检查结果
                 ShopMaintenanceExamResultEntity resultEntity = (ShopMaintenanceExamResultEntity) data.getSerializableExtra("bean");
                 maintenanceHandeCheckAdapter.setData(examResultEntityPosition, resultEntity);
@@ -218,6 +224,11 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
             }
         }
 
+    }
+
+    private void doAddHandleResult(Intent data) {
+        ShopMaintenanceExamResultEntity resultEntity = (ShopMaintenanceExamResultEntity) data.getSerializableExtra("bean");
+        maintenanceHandeCheckAdapter.addData(resultEntity);
     }
 
     @OnClick({R.id.ll_add, R.id.ll_device_handle, R.id.ll_conclusion, R.id.ll_photo, R.id.tv_add_team, R.id.tv_sub})
@@ -255,6 +266,8 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
                 break;
             case R.id.tv_sub:
                 doSubData();
+                break;
+            default:
                 break;
         }
     }

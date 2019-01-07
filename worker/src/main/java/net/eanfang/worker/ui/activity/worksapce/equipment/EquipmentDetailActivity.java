@@ -12,13 +12,19 @@ import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.JumpItent;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.CustDeviceEntity;
+import com.yaf.base.entity.ShopMaintenanceExamDeviceEntity;
+import com.yaf.base.entity.ShopMaintenanceOrderEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.worksapce.maintenance.MaintenanceAddCheckResultActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -88,6 +94,9 @@ public class EquipmentDetailActivity extends BaseWorkerActivity {
     private String id = "";
     private CustDeviceEntity mBean;
 
+    private List<ShopMaintenanceExamDeviceEntity> examDeviceEntityListBeans = new ArrayList<>();
+    private Long orderId;
+
     // 扫描二维码返回 数据
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +107,9 @@ public class EquipmentDetailActivity extends BaseWorkerActivity {
         setLeftBack();
         id = getIntent().getStringExtra("id");
         initData();
+        initDeal();
     }
+
 
     private void initData() {
 
@@ -207,6 +218,28 @@ public class EquipmentDetailActivity extends BaseWorkerActivity {
                 ivLoacleFive.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + locationPictures[4]));
             }
         }
+    }
+
+    /**
+     * 当查看的设备是当前技师所操作的维保单中的一个设备时。右上角出现维保处理按钮。
+     */
+    private void initDeal() {
+        EanfangHttp.post(NewApiService.SCAN_DEVICE_DEAL)
+                .params("id", id)
+                .execute(new EanfangCallback<ShopMaintenanceOrderEntity>(this, true, ShopMaintenanceOrderEntity.class, bean -> {
+                    setRightVisible();
+                    setRightTitle("维保处理");
+                    examDeviceEntityListBeans = bean.getExamDeviceEntityList();
+                    orderId = bean.getId();
+                }));
+
+        setRightTitleOnClickListener((v) -> {
+            Bundle bundle = new Bundle();
+            bundle.putLong("orderId", orderId);
+            bundle.putSerializable("list", (Serializable) examDeviceEntityListBeans);
+            bundle.putString("type", "scanDevice");
+            JumpItent.jump(EquipmentDetailActivity.this, MaintenanceAddCheckResultActivity.class, bundle);
+        });
     }
 
     @OnClick({R.id.tv_equipment_paramter, R.id.tv_history})
