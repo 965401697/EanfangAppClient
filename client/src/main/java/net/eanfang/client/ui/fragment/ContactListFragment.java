@@ -79,7 +79,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
     // 消息数量
     private int mMessageCount = 0;
     private int mStystemCount = 0;
-    private int mCamCount = 0;
+    private int mCmpCount = 0;
 
     private View view;
     private MyConversationListFragment myConversationListFragment;
@@ -238,7 +238,8 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
                                 .params("ryGroupId", s)
                                 .execute(new EanfangCallback<GroupDetailBean>(getActivity(), true, GroupDetailBean.class, (bean) -> {
                                     if (bean != null) {
-
+                                        UserInfo userInfo = new UserInfo(s, bean.getGroup().getGroupName(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + bean.getGroup().getHeadPortrait()));
+                                        RongIM.getInstance().refreshUserInfoCache(userInfo);
                                     }
 
                                 }));
@@ -290,19 +291,12 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
                         initBizCount(0);
                         mMessageCount = 0;
                     }
-                    if (bean.getCam() > 0) {// 官方通知
-                        initCamCount(bean.getCam());
-                        mCamCount = bean.getCam();
+                    if (bean.getCmp() > 0) {// 官方通知
+                        initCamCount(bean.getCmp());
+                        mCmpCount = bean.getCmp();
                     } else {
                         initCamCount(0);
-                        mCamCount = 0;
-                    }
-                    if (bean.getCam() > 0) {// 官方通知
-                        initCamCount(bean.getCam());
-                        mCamCount = bean.getCam();
-                    } else {
-                        initCamCount(0);
-                        mCamCount = 0;
+                        mCmpCount = 0;
                     }
                     /**
                      * 底部红点更新
@@ -468,7 +462,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
         // 官方通知
         view.findViewById(R.id.ll_official).setOnClickListener(v -> {
             Bundle bundle = new Bundle();
-            bundle.putInt("mCamCount", mCamCount);
+            bundle.putInt("mCamCount", mCmpCount);
             JumpItent.jump(getActivity(), OfficialListActivity.class, bundle, REQUST_REFRESH_CODE);
         });
         // 业务通知

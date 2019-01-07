@@ -80,7 +80,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
     // 消息数量
     private int mMessageCount = 0;
     private int mStystemCount = 0;
-    private int mCamCount = 0;
+    private int mCmpCount = 0;
 
     private View view;
     private MyConversationListFragment myConversationListFragment;
@@ -314,12 +314,12 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
                         initBizCount(0);
                         mMessageCount = 0;
                     }
-                    if (bean.getCam() > 0) {// 官方通知
-                        initCamCount(bean.getCam());
-                        mCamCount = 0;
+                    if (bean.getCmp() > 0) {// 官方通知
+                        initCmpCount(bean.getCmp());
+                        mCmpCount = 0;
                     } else {
-                        initCamCount(0);
-                        mCamCount = 0;
+                        initCmpCount(0);
+                        mCmpCount = 0;
                     }
                     if (bean.getBiz() > 0) {// 业务通知
                         initBizCount(bean.getBiz());
@@ -328,13 +328,6 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
                         initBizCount(0);
                         mMessageCount = 0;
                     }
-                    if (bean.getCam() > 0) {// 官方通知
-                        initCamCount(bean.getCam());
-                        mCamCount = 0;
-                    } else {
-                        initCamCount(0);
-                        mCamCount = 0;
-                    }
                     /**
                      * 底部红点更新
                      * */
@@ -342,7 +335,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
                 }));
     }
 
-    private void initCamCount(Integer cam) {
+    private void initCmpCount(Integer cam) {
 
         if (cam > 0) {
             ((TextView) view.findViewById(R.id.tv_official_info)).setText("新通知");
@@ -496,7 +489,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
         // 官方通知
         view.findViewById(R.id.ll_official).setOnClickListener(v -> {
             Bundle bundle = new Bundle();
-            bundle.putInt("mCamCount", mCamCount);
+            bundle.putInt("mCamCount", mCmpCount);
             JumpItent.jump(getActivity(), OfficialListActivity.class, bundle, REQUST_REFRESH_CODE);
         });       // 业务通知
         view.findViewById(R.id.ll_msg_list).setOnClickListener(v -> {

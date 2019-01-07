@@ -38,7 +38,7 @@ public class AllMessageBean implements Serializable {
     private int report;
     private int inspect;
     private int sys;
-    private int cam;
+    private int cmp;
     private int totalCount;
 
 }

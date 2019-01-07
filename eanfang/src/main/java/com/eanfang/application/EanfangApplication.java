@@ -1,5 +1,7 @@
 package com.eanfang.application;
 
+import android.util.Log;
+
 import com.camera.CameraApplication;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.voice.RecognitionManager;
@@ -69,9 +71,21 @@ public class EanfangApplication extends CustomeApplication {
 //        mManager = DaoManager.getInstance();
 //        mManager.init(this);
         CameraApplication.init(this, true);
-        //初始换tbs 不需要 callback 的可以传入 null
-        QbSdk.initX5Environment(getApplicationContext(), null);
 
+        //初始换tbs 不需要 callback 的可以传入 null
+        QbSdk.initX5Environment(getApplicationContext(), new QbSdk.PreInitCallback() {
+            @Override
+            public void onViewInitFinished(boolean arg0) {
+                //x5內核初始化完成的回调，为true表示x5内核加载成功，否则表示x5内核加载失败，会自动切换到系统内核。
+                Log.e("zzw", " onViewInitFinished is " + arg0);
+            }
+
+            @Override
+            public void onCoreInitFinished() {
+                Log.e("zzw", " onCoreInitFinished");
+            }
+
+        });
         // 初始化讯飞
         // 注意： appid 必须和下载的SDK保持一致，否则会出现10407错误
         RecognitionManager.getSingleton().init(EanfangApplication.getApplication().getApplicationContext(), XUNFEI_APPID);

@@ -477,7 +477,7 @@ public class MainActivity extends BaseActivity {
                     //添加被删除的id
                     hashMap.put(message.getTargetId(), message.getTargetId());
                     //删除好友的会话记录
-                    RongIM.getInstance().clearMessages(Conversation.ConversationType.PRIVATE, message.getTargetId(), null);
+                    RongIM.getInstance().clearMessages(Conversation.ConversationType.GROUP, message.getTargetId(), null);
                     RongIM.getInstance().removeConversation(Conversation.ConversationType.GROUP, id, null);
 
                     for (Activity activity : transactionActivities) {
@@ -487,6 +487,10 @@ public class MainActivity extends BaseActivity {
                             }
                         }
                     }
+                } else if (messageContent.getContent().equals("好友邀请")) {
+                    hashMap.put(message.getTargetId(), message.getTargetId());
+                } else if (messageContent.getContent().equals("拒绝添加好友通知")) {
+                    hashMap.put(message.getTargetId(), message.getTargetId());
                 } else {
                     //移除添加被删除的id
                     if (hashMap.get(message.getTargetId()) != null) {
@@ -721,7 +725,7 @@ public class MainActivity extends BaseActivity {
             }, 3 * 1000);
         }
         //消息页面红点
-        if (bean.getBiz() > 0 || bean.getSys() > 0 || bean.getCam() > 0) {
+        if (bean.getBiz() > 0 || bean.getSys() > 0 || bean.getCmp() > 0) {
             redPointContact.setVisibility(View.VISIBLE);
         } else {
             redPointContact.setVisibility(View.GONE);
