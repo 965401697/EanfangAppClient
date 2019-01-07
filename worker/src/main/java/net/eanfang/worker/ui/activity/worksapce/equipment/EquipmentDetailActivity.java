@@ -227,10 +227,12 @@ public class EquipmentDetailActivity extends BaseWorkerActivity {
         EanfangHttp.post(NewApiService.SCAN_DEVICE_DEAL)
                 .params("deviceId", id)
                 .execute(new EanfangCallback<ShopMaintenanceOrderEntity>(this, true, ShopMaintenanceOrderEntity.class, bean -> {
-                    setRightVisible();
-                    setRightTitle("维保处理");
-                    examDeviceEntityListBeans = bean.getExamDeviceEntityList();
-                    orderId = bean.getId();
+                    if (bean.getId() != null) {
+                        setRightVisible();
+                        setRightTitle("维保处理");
+                        examDeviceEntityListBeans = bean.getExamDeviceEntityList();
+                        orderId = bean.getId();
+                    }
                 }));
 
         setRightTitleOnClickListener((v) -> {
@@ -239,6 +241,7 @@ public class EquipmentDetailActivity extends BaseWorkerActivity {
             bundle.putSerializable("list", (Serializable) examDeviceEntityListBeans);
             bundle.putString("type", "scanDevice");
             JumpItent.jump(EquipmentDetailActivity.this, MaintenanceAddCheckResultActivity.class, bundle);
+            finishSelf();
         });
     }
 

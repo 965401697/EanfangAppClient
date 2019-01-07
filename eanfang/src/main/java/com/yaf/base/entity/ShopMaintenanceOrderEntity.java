@@ -151,7 +151,7 @@ public class ShopMaintenanceOrderEntity implements Serializable {
 
     private Date signTime;
     // 是否已读 未读
-    private int newOrder;
+    private Integer newOrder;
 
     /**
      * 设置：主键递增
