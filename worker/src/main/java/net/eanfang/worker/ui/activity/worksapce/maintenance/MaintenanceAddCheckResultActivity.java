@@ -122,7 +122,7 @@ public class MaintenanceAddCheckResultActivity extends BaseWorkerActivity {
                     OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
                         @Override
                         public void onOssSuccess() {
-                            if (mType.equals("scanDevice")) {
+                            if (mType != null && mType.equals("scanDevice")) {
                                 doPassTwo(resultEntity);
                             } else {
                                 doPassOne(resultEntity);
@@ -131,7 +131,7 @@ public class MaintenanceAddCheckResultActivity extends BaseWorkerActivity {
                     });
                     return;
                 }
-                if (mType.equals("scanDevice")) {
+                if (mType != null &&mType.equals("scanDevice")) {
                     doPassTwo(resultEntity);
                 } else {
                     if (examResultEntity != null) {

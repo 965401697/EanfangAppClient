@@ -225,7 +225,7 @@ public class EquipmentDetailActivity extends BaseWorkerActivity {
      */
     private void initDeal() {
         EanfangHttp.post(NewApiService.SCAN_DEVICE_DEAL)
-                .params("id", id)
+                .params("deviceId", id)
                 .execute(new EanfangCallback<ShopMaintenanceOrderEntity>(this, true, ShopMaintenanceOrderEntity.class, bean -> {
                     setRightVisible();
                     setRightTitle("维保处理");
