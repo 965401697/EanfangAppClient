@@ -12,6 +12,7 @@ import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
@@ -19,15 +20,16 @@ import com.eanfang.util.ToastUtil;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
+import com.yaf.base.entity.ShopMaintenanceExamDeviceEntity;
 import com.yaf.base.entity.ShopMaintenanceExamResultEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,6 +62,14 @@ public class MaintenanceAddCheckResultActivity extends BaseWorkerActivity {
     private String checkResultPhoto;
     private ShopMaintenanceExamResultEntity examResultEntity;
 
+
+    /**
+     * 扫码看设备
+     */
+    private String mType = "";
+    private long mId;
+    private ArrayList<ShopMaintenanceExamDeviceEntity> examResultList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,12 +78,18 @@ public class MaintenanceAddCheckResultActivity extends BaseWorkerActivity {
         setTitle("新增检查结果");
         setLeftBack();
 
-        snplPhoto.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_1, REQUEST_CODE_PHOTO_PREVIEW_1));
-        examResultEntity = (ShopMaintenanceExamResultEntity) getIntent().getSerializableExtra("bean");
+
         initViews();
     }
 
     private void initViews() {
+        mId = getIntent().getLongExtra("orderId", 0);
+        examResultList = (ArrayList<ShopMaintenanceExamDeviceEntity>) getIntent().getSerializableExtra("list");
+        mType = getIntent().getStringExtra("type");
+
+        snplPhoto.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_1, REQUEST_CODE_PHOTO_PREVIEW_1));
+        examResultEntity = (ShopMaintenanceExamResultEntity) getIntent().getSerializableExtra("bean");
+
         if (examResultEntity != null) {
             etQuestion.setText(examResultEntity.getExistQuestions());
             etHandle.setText(examResultEntity.getDisposeCourse());
@@ -82,6 +98,7 @@ public class MaintenanceAddCheckResultActivity extends BaseWorkerActivity {
             initImgUrlList();
             snplPhoto.setData(picList);
         }
+
     }
 
     @OnClick({R.id.tv_add, R.id.ll_conclusion, R.id.tv_conclusion})
@@ -105,22 +122,23 @@ public class MaintenanceAddCheckResultActivity extends BaseWorkerActivity {
                     OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
                         @Override
                         public void onOssSuccess() {
-                            Intent intent = new Intent();
-                            intent.putExtra("bean", resultEntity);
-                            setResult(RESULT_OK, intent);
-                            finishSelf();
+                            if (mType != null && mType.equals("scanDevice")) {
+                                doPassTwo(resultEntity);
+                            } else {
+                                doPassOne(resultEntity);
+                            }
                         }
                     });
                     return;
                 }
+                if (mType != null &&mType.equals("scanDevice")) {
+                    doPassTwo(resultEntity);
+                } else {
+                    if (examResultEntity != null) {
+                        doPassOne(resultEntity);
+                    }
 
-                if (examResultEntity != null) {
-                    Intent intent = new Intent();
-                    intent.putExtra("bean", resultEntity);
-                    setResult(RESULT_OK, intent);
-                    finishSelf();
                 }
-
 
                 break;
 
@@ -131,7 +149,26 @@ public class MaintenanceAddCheckResultActivity extends BaseWorkerActivity {
                 PickerSelectUtil.singleTextPicker(this, "", tvConclusion, GetConstDataUtils.getMaintainConditionList());
 
                 break;
+            default:
+                break;
         }
+    }
+
+    private void doPassOne(ShopMaintenanceExamResultEntity resultEntity) {
+        Intent intent = new Intent();
+        intent.putExtra("bean", resultEntity);
+        setResult(RESULT_OK, intent);
+        finishSelf();
+    }
+
+    private void doPassTwo(ShopMaintenanceExamResultEntity resultEntity) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("bean", resultEntity);
+        bundle.putLong("orderId", mId);
+        bundle.putSerializable("list", (Serializable) examResultList);
+        bundle.putString("type", "scanDevice");
+        JumpItent.jump(MaintenanceAddCheckResultActivity.this, MaintenanceHandleActivity.class, bundle);
+        finishSelf();
     }
 
     @Override

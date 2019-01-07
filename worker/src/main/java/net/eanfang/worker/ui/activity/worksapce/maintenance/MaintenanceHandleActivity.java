@@ -111,6 +111,12 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
     private int examResultEntityPosition;
     private ShopMaintenanceExamResultEntity examResultEntity;
 
+    /**
+     * 扫码看设备
+     */
+    private String mType = "";
+    private ShopMaintenanceExamResultEntity mScanExamResultEntity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,7 +132,11 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
     private void initData() {
         mId = getIntent().getLongExtra("orderId", 0);
         examResultList = (ArrayList<ShopMaintenanceExamDeviceEntity>) getIntent().getSerializableExtra("list");
+ 
         mSignTime = (Date) getIntent().getSerializableExtra("signTime");
+
+        mType = getIntent().getStringExtra("type");
+        mScanExamResultEntity = (ShopMaintenanceExamResultEntity) getIntent().getSerializableExtra("bean");
 
         checkBoxList.add(cbVideo);
         checkBoxList.add(cbTime);
@@ -201,15 +211,16 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
                 }
             }
         });
+
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
+            // 添加检查结果
             if (requestCode == ADD_HANDLE_RESULT) {
-                ShopMaintenanceExamResultEntity resultEntity = (ShopMaintenanceExamResultEntity) data.getSerializableExtra("bean");
-                maintenanceHandeCheckAdapter.addData(resultEntity);
+                doAddHandleResult((ShopMaintenanceExamResultEntity) data.getSerializableExtra("bean"));
             } else if (requestCode == EDIT_HANDLE_RESULT) {//修改已有检查结果
                 ShopMaintenanceExamResultEntity resultEntity = (ShopMaintenanceExamResultEntity) data.getSerializableExtra("bean");
                 maintenanceHandeCheckAdapter.setData(examResultEntityPosition, resultEntity);
@@ -223,6 +234,10 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
             }
         }
 
+    }
+
+    private void doAddHandleResult(ShopMaintenanceExamResultEntity data) {
+        maintenanceHandeCheckAdapter.addData(data);
     }
 
     @OnClick({R.id.ll_add, R.id.ll_device_handle, R.id.ll_conclusion, R.id.ll_photo, R.id.tv_add_team, R.id.tv_sub})
@@ -260,6 +275,8 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
                 break;
             case R.id.tv_sub:
                 doSubData();
+                break;
+            default:
                 break;
         }
     }
