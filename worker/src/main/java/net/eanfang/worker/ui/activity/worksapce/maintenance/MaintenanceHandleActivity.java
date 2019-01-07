@@ -23,7 +23,9 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.TemplateBean;
 import com.eanfang.ui.activity.SelectOAPresonActivity;
 import com.eanfang.ui.base.BaseEvent;
+import com.eanfang.util.ETimeUtils;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.ToastUtil;
@@ -38,6 +40,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -95,6 +98,7 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
 
     private long mId;
     private ArrayList<ShopMaintenanceExamDeviceEntity> examResultList;
+    private Date mSignTime;
     private MaintenanceHandeCheckAdapter maintenanceHandeCheckAdapter;
     private ShopMaintenanceExamDeviceEntity examDeviceEntity;
     private int examDeviceEntityPosition;
@@ -122,6 +126,7 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
     private void initData() {
         mId = getIntent().getLongExtra("orderId", 0);
         examResultList = (ArrayList<ShopMaintenanceExamDeviceEntity>) getIntent().getSerializableExtra("list");
+        mSignTime = (Date) getIntent().getSerializableExtra("signTime");
 
         checkBoxList.add(cbVideo);
         checkBoxList.add(cbTime);
@@ -401,11 +406,32 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
                 }
             }
 
+
+            if (mSignTime == null) {
+                confirmEntity.setWorkHour("0小时0分钟");
+            } else {
+                Date finishDay = GetDateUtils.getDateNow();
+                long day = GetDateUtils.getTimeDiff(finishDay, mSignTime, "day");
+                long hours = GetDateUtils.getTimeDiff(finishDay, mSignTime, "hours");
+                long minutes = GetDateUtils.getTimeDiff(finishDay, mSignTime, "minutes");
+                if (day < 0) {
+                    day = 0;
+                }
+                if (hours < 0) {
+                    hours = 0;
+                }
+                if (minutes < 0) {
+                    minutes = 0;
+                }
+                confirmEntity.setWorkHour((day * 24 + hours) + "小时" + minutes + "分钟");
+            }
+
+
             confirmEntity.setTeamWorker(stringBuffer.toString());
 
             confirmEntity.setShopMaintenanceOrderId(mId);
 
-
+            confirmEntity.setOverTime(GetDateUtils.getDate(ETimeUtils.getTimeByYearMonthDayHourMinSec(new Date(System.currentTimeMillis()))));
             jsonObject.put("confirmEntity", confirmEntity);
 
 

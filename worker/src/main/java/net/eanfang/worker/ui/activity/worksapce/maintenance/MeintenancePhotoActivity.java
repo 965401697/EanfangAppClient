@@ -32,11 +32,13 @@ public class MeintenancePhotoActivity extends BaseWorkerActivity {
     private static final int REQUEST_CODE_CHOOSE_PHOTO_1 = 1;
     private static final int REQUEST_CODE_CHOOSE_PHOTO_2 = 2;
     private static final int REQUEST_CODE_CHOOSE_PHOTO_3 = 3;
+    private static final int REQUEST_CODE_CHOOSE_PHOTO_4 = 4;
 
 
     private static final int REQUEST_CODE_PHOTO_PREVIEW_1 = 101;
     private static final int REQUEST_CODE_PHOTO_PREVIEW_2 = 102;
     private static final int REQUEST_CODE_PHOTO_PREVIEW_3 = 103;
+    private static final int REQUEST_CODE_PHOTO_PREVIEW_4 = 104;
     @BindView(R.id.tv_save)
     TextView tvSave;
 
@@ -48,10 +50,13 @@ public class MeintenancePhotoActivity extends BaseWorkerActivity {
     BGASortableNinePhotoLayout snplOperatingPhoto;
     @BindView(R.id.snpl_box_photo)
     BGASortableNinePhotoLayout snplBoxPhoto;
+    @BindView(R.id.snpl_invoices_photo)
+    BGASortableNinePhotoLayout snplInvoicesPhoto;
 
     private ArrayList<String> picList1 = new ArrayList<>();
     private ArrayList<String> picList2 = new ArrayList<>();
     private ArrayList<String> picList3 = new ArrayList<>();
+    private ArrayList<String> picList4 = new ArrayList<>();
     private ShopBughandleMaintenanceConfirmEntity confirmEntity;
     private boolean isShow;
 
@@ -71,6 +76,7 @@ public class MeintenancePhotoActivity extends BaseWorkerActivity {
             snplTvPhoto.setData(picList1);
             snplOperatingPhoto.setData(picList2);
             snplBoxPhoto.setData(picList3);
+            snplInvoicesPhoto.setData(picList4);
 
             if (isShow) {
                 snplTvPhoto.setPlusEnable(false);
@@ -81,6 +87,9 @@ public class MeintenancePhotoActivity extends BaseWorkerActivity {
 
                 snplBoxPhoto.setPlusEnable(false);
                 snplBoxPhoto.setEditable(false);
+
+                snplInvoicesPhoto.setPlusEnable(false);
+                snplInvoicesPhoto.setEditable(false);
 
 
                 tvSave.setVisibility(View.GONE);
@@ -99,26 +108,32 @@ public class MeintenancePhotoActivity extends BaseWorkerActivity {
         snplTvPhoto.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_1, REQUEST_CODE_PHOTO_PREVIEW_1));
         snplOperatingPhoto.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_2, REQUEST_CODE_PHOTO_PREVIEW_2));
         snplBoxPhoto.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_3, REQUEST_CODE_PHOTO_PREVIEW_3));
+        snplInvoicesPhoto.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_4, REQUEST_CODE_PHOTO_PREVIEW_4));
     }
 
 
     private void doSubmitData() {
 
-        String tvPhoto = PhotoUtils.getPhotoUrl("biz/maintain/",snplTvPhoto, uploadMap, false);
+        String tvPhoto = PhotoUtils.getPhotoUrl("biz/maintain/", snplTvPhoto, uploadMap, false);
         if (StringUtils.isEmpty(tvPhoto)) {
             showToast("请选择电视墙正面照片");
             return;
         }
 
-        String operatingPhoto = PhotoUtils.getPhotoUrl("biz/maintain/",snplOperatingPhoto, uploadMap, false);
+        String operatingPhoto = PhotoUtils.getPhotoUrl("biz/maintain/", snplOperatingPhoto, uploadMap, false);
         if (StringUtils.isEmpty(operatingPhoto)) {
             showToast("请选操作台背面照片");
             return;
         }
 
-        String boxPhoto = PhotoUtils.getPhotoUrl("biz/maintain/",snplBoxPhoto, uploadMap, false);
+        String boxPhoto = PhotoUtils.getPhotoUrl("biz/maintain/", snplBoxPhoto, uploadMap, false);
         if (StringUtils.isEmpty(boxPhoto)) {
             showToast("请选择机柜照片");
+            return;
+        }
+        String invoicesPhoto = PhotoUtils.getPhotoUrl("biz/maintain/", snplInvoicesPhoto, uploadMap, false);
+        if (StringUtils.isEmpty(invoicesPhoto)) {
+            showToast("请选择单据照片");
             return;
         }
 
@@ -128,6 +143,7 @@ public class MeintenancePhotoActivity extends BaseWorkerActivity {
         confirmEntity.setFrontPictures(tvPhoto);
         confirmEntity.setReverseSidePictures(operatingPhoto);
         confirmEntity.setEquipmentCabinetPictures(boxPhoto);
+        confirmEntity.setInvoicesPictures(invoicesPhoto);
 
         /**
          * 提交照片
@@ -170,6 +186,9 @@ public class MeintenancePhotoActivity extends BaseWorkerActivity {
             case REQUEST_CODE_CHOOSE_PHOTO_3:
                 snplBoxPhoto.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
                 break;
+            case REQUEST_CODE_CHOOSE_PHOTO_4:
+                snplInvoicesPhoto.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                break;
 
             case REQUEST_CODE_PHOTO_PREVIEW_1:
                 snplTvPhoto.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
@@ -179,6 +198,9 @@ public class MeintenancePhotoActivity extends BaseWorkerActivity {
                 break;
             case REQUEST_CODE_PHOTO_PREVIEW_3:
                 snplBoxPhoto.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                break;
+            case REQUEST_CODE_PHOTO_PREVIEW_4:
+                snplInvoicesPhoto.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
                 break;
             default:
                 break;
