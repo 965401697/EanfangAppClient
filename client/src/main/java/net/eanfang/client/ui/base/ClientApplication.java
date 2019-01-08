@@ -61,7 +61,7 @@ public class ClientApplication extends EanfangApplication {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            MobSDK.init(this);
+            MobSDK.init(this,"22bb8de378eab","f93cc21381c6f51702be823efde3e402");
         }
 
 

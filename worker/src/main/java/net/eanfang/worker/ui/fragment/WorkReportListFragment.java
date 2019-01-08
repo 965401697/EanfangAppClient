@@ -20,6 +20,8 @@ import com.eanfang.util.QueryEntry;
 import net.eanfang.worker.ui.activity.worksapce.oa.workreport.WorkReportDetailActivity;
 import net.eanfang.worker.ui.adapter.WorkReportListAdapter;
 
+import org.greenrobot.eventbus.Subscribe;
+
 
 /**
  * Created by Mr.hou
@@ -67,7 +69,7 @@ public class WorkReportListFragment extends TemplateItemListFragment {
 
                 if (!PermKit.get().getWorkReportDetailPrem()) return;
 
-                if (mType == 2 && ((WorkReportListBean.ListBean) adapter.getData().get(position)).getStatus() == EanfangConst.WORK_TASK_STATUS_UNREAD) {
+                if (((WorkReportListBean.ListBean) adapter.getData().get(position)).getNewOrder() == EanfangConst.WORK_TASK_STATUS_READ) {
 //                if (((WorkReportListBean.ListBean) adapter.getData().get(position)).getStatus() == EanfangConst.WORK_TASK_STATUS_UNREAD && mType == 1) {
                     getFirstLookData(((WorkReportListBean.ListBean) adapter.getData().get(position)).getId());
                     mDetailBean = ((WorkReportListBean.ListBean) adapter.getData().get(position));
@@ -190,9 +192,17 @@ public class WorkReportListFragment extends TemplateItemListFragment {
      */
     public void refreshStatus() {
         if (mDetailBean != null) {
-            mDetailBean.setStatus(1);
+            mDetailBean.setNewOrder(0);
             mAdapter.notifyItemChanged(mPosition);
         }
     }
 
+    @Subscribe
+    public void onEvent(String createSuccess) {
+        if (createSuccess.equals("addReportSuccess")) {
+            mQueryEntry = null;
+            mPage = 1;
+            getData();
+        }
+    }
 }

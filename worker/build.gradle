@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.butterknife'
-apply plugin: 'com.mob.sdk'
 
 android {
     compileSdkVersion 26
@@ -158,19 +157,6 @@ android {
         "samsung" {
             dimension "app"
             manifestPlaceholders = [tac_channel: "samsung"]
-        }
-    }
-}
-MobSDK {
-    appKey "299cfb8d27500"
-    appSecret "91afc15795a7f3dc04b5cab818c097c9"
-    ShareSDK {
-        //平台配置信息
-        devInfo {
-            Wechat {
-                appId "wx5e7969853addd542"
-                appSecret "584a16f5561e6506fe7dc454eb9ade78"
-            }
         }
     }
 }

@@ -107,9 +107,7 @@ public class WorkReportListActivity extends BaseClientActivity {
                 ((WorkReportListFragment) mFragments.get(currentTab)).getReportData(queryEntry);
             }
         } else if (resultCode == RESULT_OK && requestCode == DETAILL_REQUEST_CODE) {
-            if (currentTab == 1) {
-                ((WorkReportListFragment) mFragments.get(currentTab)).refreshStatus();
-            }
+            ((WorkReportListFragment) mFragments.get(currentTab)).refreshStatus();
         }
     }
 }

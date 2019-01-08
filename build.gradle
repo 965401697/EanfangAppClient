@@ -13,7 +13,6 @@ buildscript {
         classpath 'com.jakewharton:butterknife-gradle-plugin:8.5.1'
         classpath 'me.tatarka:gradle-retrolambda:3.7.0'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
-        classpath "com.mob.sdk:MobSDK:2018.0319.1724"
         //classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2' // add plugin
 
 //        classpath("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.2")

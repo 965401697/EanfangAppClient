@@ -83,6 +83,13 @@
             android:name="com.amap.api.v2.apikey"
             android:value="${AMAP_KEY}" />
 
+        <meta-data
+            android:name="Mob-AppKey"
+            android:value="22bb8de378eab" />
+        <meta-data
+            android:name="Mob-AppSecret"
+            android:value="f93cc21381c6f51702be823efde3e402" />
+
         <service android:name="com.amap.api.location.APSService" />
 
         <!-- <meta-data -->
@@ -148,6 +155,7 @@
             android:theme="@style/wx_theme" />
         <activity
             android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:label="@string/app_name"
             android:launchMode="singleTop"
