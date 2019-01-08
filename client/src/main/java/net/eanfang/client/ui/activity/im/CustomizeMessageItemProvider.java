@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
@@ -33,6 +34,7 @@ import net.eanfang.client.ui.activity.worksapce.worktransfer.WorkTransferDetailA
 import io.rong.imkit.model.ProviderTag;
 import io.rong.imkit.model.UIMessage;
 import io.rong.imkit.widget.provider.IContainerItemProvider;
+import io.rong.imlib.model.Message;
 
 /**
  * Created by O u r on 2018/7/2.
@@ -47,6 +49,7 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
         TextView creatTime;
         TextView workerName;
         SimpleDraweeView simpleDraweeView;
+        LinearLayout ll_custom;
     }
 
     @Override
@@ -132,6 +135,20 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
             holder.workerName.setVisibility(View.GONE);
             holder.status.setText(Integer.parseInt(customizeMessage.getStatus()) == 1 ? "已读" : "未读");
         }
+
+        if (uiMessage.getMessageDirection() == Message.MessageDirection.SEND) {//消息方向，自己发送的
+            holder.ll_custom.setBackgroundResource(io.rong.imkit.R.drawable.rc_ic_bubble_custom_right);
+        } else {
+
+            LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) holder.simpleDraweeView.getLayoutParams();
+            layoutParams.setMargins(50, 0, 0, 0);
+            holder.simpleDraweeView.setLayoutParams(layoutParams);
+
+
+            holder.title.setPadding(20, 10, 0, 0);
+
+            holder.ll_custom.setBackgroundResource(io.rong.imkit.R.drawable.rc_ic_bubble_custom_left);
+        }
     }
 
     @Override
@@ -206,6 +223,7 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
         holder.creatTime = (TextView) view.findViewById(R.id.tv_create_time);
         holder.workerName = (TextView) view.findViewById(R.id.tv_person_name);
         holder.simpleDraweeView = (SimpleDraweeView) view.findViewById(R.id.iv_upload);
+        holder.ll_custom = (LinearLayout) view.findViewById(R.id.ll_custom);
         view.setTag(holder);
         return view;
     }
