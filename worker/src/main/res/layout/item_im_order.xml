@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ll_custom"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@color/color_white"
+    android:background="@color/white"
     android:orientation="vertical">
 
+
     <LinearLayout
-        android:layout_width="270dp"
+        android:layout_width="235dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/dimen_20"
@@ -22,7 +24,7 @@
             android:paddingTop="@dimen/dimen_8"
             android:text="报修订单"
             android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/textSize_14" />
+            android:textSize="@dimen/textSize_13" />
 
         <TextView
             android:id="@+id/tv_state"
@@ -40,7 +42,7 @@
         android:layout_marginTop="@dimen/dimen_8" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="235dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dimen_8"
         android:layout_marginTop="@dimen/dimen_8"
@@ -90,6 +92,6 @@
 
         </LinearLayout>
 
-    </LinearLayout>
 
+    </LinearLayout>
 </LinearLayout>
