@@ -32,6 +32,7 @@ import com.eanfang.util.ToastUtil;
 import com.yaf.base.entity.ShopBughandleMaintenanceConfirmEntity;
 import com.yaf.base.entity.ShopMaintenanceExamDeviceEntity;
 import com.yaf.base.entity.ShopMaintenanceExamResultEntity;
+import com.yaf.base.entity.ShopMaintenanceOrderEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
@@ -97,7 +98,7 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
 
 
     private long mId;
-    private ArrayList<ShopMaintenanceExamDeviceEntity> examResultList;
+    private List<ShopMaintenanceExamDeviceEntity> examResultList = new ArrayList<>();
     private Date mSignTime;
     private MaintenanceHandeCheckAdapter maintenanceHandeCheckAdapter;
     private ShopMaintenanceExamDeviceEntity examDeviceEntity;
@@ -131,8 +132,8 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
 
     private void initData() {
         mId = getIntent().getLongExtra("orderId", 0);
-        examResultList = (ArrayList<ShopMaintenanceExamDeviceEntity>) getIntent().getSerializableExtra("list");
- 
+//        examResultList = (ArrayList<ShopMaintenanceExamDeviceEntity>) getIntent().getSerializableExtra("list");
+
         mSignTime = (Date) getIntent().getSerializableExtra("signTime");
 
         mType = getIntent().getStringExtra("type");
@@ -143,7 +144,10 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
         checkBoxList.add(cbPrint);
         checkBoxList.add(cbHost);
 
+        doGetDeviceList();
+
     }
+
 
     private void initViews() {
         //互动冲突的解决
@@ -171,12 +175,6 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
 
         handleEditAdapter = new MaintenanceHandleEditAdapter(R.layout.item_maintenance_empasis_device_handle);
         handleEditAdapter.bindToRecyclerView(rvDeviceHandle);
-        if (examResultList != null && examResultList.size() > 0) {
-            handleEditAdapter.setNewData(examResultList);
-        } else {
-            tvDeviceHandle.setVisibility(View.VISIBLE);
-            ivDeviceHandle.setVisibility(View.GONE);
-        }
 
         handleEditAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -211,7 +209,25 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
                 }
             }
         });
+        if (mType != null && mType.equals("scanDevice")) {
+            if (mScanExamResultEntity != null) {
+                doAddHandleResult(mScanExamResultEntity);
+            }
+        }
+    }
 
+    private void doGetDeviceList() {
+        EanfangHttp.post(NewApiService.MAINTENANCE_DEVICE_DEAL)
+                .params("id", mId)
+                .execute(new EanfangCallback<ShopMaintenanceOrderEntity>(this, true, ShopMaintenanceOrderEntity.class, bean -> {
+                    examResultList = bean.getExamDeviceEntityList();
+                    if (examResultList != null && examResultList.size() > 0) {
+                        handleEditAdapter.setNewData(examResultList);
+                    } else {
+                        tvDeviceHandle.setVisibility(View.VISIBLE);
+                        ivDeviceHandle.setVisibility(View.GONE);
+                    }
+                }));
     }
 
     @Override

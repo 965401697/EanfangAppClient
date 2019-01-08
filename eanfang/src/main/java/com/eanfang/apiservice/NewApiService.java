@@ -580,4 +580,10 @@ public interface NewApiService {
      */
     String SCAN_DEVICE_DEAL = BASE_URL + "/yaf_maintain/shopmaintenanceorder/app/maintenanceDetailByDeviceId";
 
+    /**
+     * 维保完工查看重点设备
+     */
+    String MAINTENANCE_DEVICE_DEAL = BASE_URL + "/yaf_maintain/shopmaintenanceorder/prepare";
+
+
 }
