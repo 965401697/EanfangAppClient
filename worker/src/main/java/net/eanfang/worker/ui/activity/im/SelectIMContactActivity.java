@@ -213,7 +213,12 @@ public class SelectIMContactActivity extends BaseWorkerActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SelectIMContactActivity.this, SelectedFriendsActivity.class);
-                intent.putExtra("flag", 2);
+                if (mFlag == 0) {
+                    //分享flag
+                    intent.putExtra("flag", 3);
+                } else {
+                    intent.putExtra("flag", 2);
+                }
                 intent.putExtra("groupId", mGroupId);
                 intent.putExtra("title", mTitle);
                 intent.putExtra("ryGroupId", mRYGroupId);
