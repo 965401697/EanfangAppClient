@@ -24,6 +24,7 @@ import butterknife.OnClick;
 
 import static net.eanfang.worker.ui.fragment.WorkReportListFragment.DETAILL_REQUEST_CODE;
 
+
 public class WorkReportListActivity extends BaseWorkerActivity {
     //    private static String titleBar;
 //    public final List<String> allmTitles = GetConstDataUtils.getWorkReportStatus();
@@ -106,9 +107,7 @@ public class WorkReportListActivity extends BaseWorkerActivity {
                 ((WorkReportListFragment) mFragments.get(currentTab)).getReportData(queryEntry);
             }
         } else if (resultCode == RESULT_OK && requestCode == DETAILL_REQUEST_CODE) {
-            if (currentTab == 1) {
-                ((WorkReportListFragment) mFragments.get(currentTab)).refreshStatus();
-            }
+            ((WorkReportListFragment) mFragments.get(currentTab)).refreshStatus();
         }
     }
 }

@@ -88,6 +88,12 @@
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="${AMAP_KEY}" />
+        <meta-data
+            android:name="Mob-AppKey"
+            android:value="299cfb8d27500" />
+        <meta-data
+            android:name="Mob-AppSecret"
+            android:value="91afc15795a7f3dc04b5cab818c097c9" />
 
         <service android:name="com.amap.api.location.APSService" />
 
@@ -1089,7 +1095,12 @@
             android:name=".ui.activity.im.SearchPersonCompanyActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.worksapce.repair.DeviceBrandActivity" />
-        <activity android:name=".ui.activity.worksapce.FilterDefendLogActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.FilterDefendLogActivity" />
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

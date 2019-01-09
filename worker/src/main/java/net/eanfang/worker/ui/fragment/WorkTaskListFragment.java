@@ -7,7 +7,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
-import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WorkTaskListBean;
@@ -71,11 +70,11 @@ public class WorkTaskListFragment extends TemplateItemListFragment {
 
                 WorkTaskListBean.ListBean bean = (WorkTaskListBean.ListBean) adapter.getData().get(position);
 
-                if (bean.getStatus() == (EanfangConst.WORK_TASK_STATUS_UNREAD)) {
+//                if (bean.getStatus() == (EanfangConst.WORK_TASK_STATUS_UNREAD)) {
 //                    getFirstLookData(bean.getId());
                     mDetailTaskBean = ((WorkTaskListBean.ListBean) adapter.getData().get(position));
                     mPosition = position;
-                }
+//                }
 //                new WorkTaskInfoView(getActivity(), true, bean.getId(), false).show();
 //                Intent intent = new Intent(getActivity(), TaskDetailActivity.class);
 //                intent.putExtra("id", ((WorkTaskListBean.ListBean) adapter.getData().get(position)).getId());

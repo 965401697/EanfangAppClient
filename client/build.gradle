@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
 //apply plugin: 'org.greenrobot.greendao' // apply plugin
 apply plugin: 'com.jakewharton.butterknife'
-apply plugin: 'com.mob.sdk'
 
 android {
     compileSdkVersion 26
@@ -155,19 +154,6 @@ android {
         "samsung" {
             dimension "app"
             manifestPlaceholders = [tac_channel: "samsung"]
-        }
-    }
-}
-MobSDK {
-    appKey "22bb8de378eab"
-    appSecret "f93cc21381c6f51702be823efde3e402"
-    ShareSDK {
-        //平台配置信息
-        devInfo {
-            Wechat {
-                appId "wx11d1a11a2f79200a"
-                appSecret "367df9bffcfc33d64c50860012ee2b37"
-            }
         }
     }
 }
