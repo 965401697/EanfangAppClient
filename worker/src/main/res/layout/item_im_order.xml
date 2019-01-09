@@ -70,6 +70,8 @@
                 android:layout_height="wrap_content"
                 android:text="单号：MO20165489375342"
                 android:textColor="@color/color_client_neworder"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:textSize="@dimen/textSize_12" />
 
             <TextView
