@@ -161,7 +161,7 @@ public class OpenShopLogFragment extends TemplateItemListFragment {
 
                     @Override
                     public void onSuccess(OpenShopLogBean bean) {
-                        mQueryEntry = null;
+
                         if (mPage == 1) {
                             mAdapter.getData().clear();
                             mAdapter.setNewData(bean.getList());
@@ -169,6 +169,7 @@ public class OpenShopLogFragment extends TemplateItemListFragment {
                             mAdapter.loadMoreComplete();
                             if (bean.getList().size() < 10) {
                                 mAdapter.loadMoreEnd();
+                                mQueryEntry = null;
                             }
 
                             if (bean.getList().size() > 0) {

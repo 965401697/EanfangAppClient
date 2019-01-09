@@ -115,7 +115,6 @@ public class WorkTransferFragment extends BaseFragment implements SwipeRefreshLa
                 .upJson(JsonUtils.obj2String(mQueryEntry))
                 .execute(new EanfangCallback<WorkTransferListBean>(getActivity(), true, WorkTransferListBean.class, (bean) -> {
                             getActivity().runOnUiThread(() -> {
-                                mQueryEntry = null;
                                 if (bean.getList() != null) {
                                     workTalkBeanList = bean.getList();
                                     onDataReceived();
@@ -261,6 +260,7 @@ public class WorkTransferFragment extends BaseFragment implements SwipeRefreshLa
                 showToast("暂无数据");
                 workTalkAdapter.getData().clear();
                 workTalkAdapter.notifyDataSetChanged();
+                mQueryEntry = null;
             } else {
                 workTalkAdapter.getData().clear();
                 workTalkAdapter.setNewData(workTalkBeanList);
