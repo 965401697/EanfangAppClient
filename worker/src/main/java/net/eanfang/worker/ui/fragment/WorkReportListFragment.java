@@ -58,7 +58,6 @@ public class WorkReportListFragment extends TemplateItemListFragment {
 
     @Override
     protected void initAdapter() {
-        mAdapter = new WorkReportListAdapter(mType);
         mAdapter.bindToRecyclerView(mRecyclerView);
         mAdapter.setOnLoadMoreListener(this);
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -126,7 +125,6 @@ public class WorkReportListFragment extends TemplateItemListFragment {
                     @Override
                     public void onSuccess(WorkReportListBean bean) {
 
-                        mQueryEntry = null;//释放对象
 
                         if (mPage == 1) {
                             mAdapter.getData().clear();
@@ -135,6 +133,8 @@ public class WorkReportListFragment extends TemplateItemListFragment {
                             mAdapter.loadMoreComplete();
                             if (bean.getList().size() < 10) {
                                 mAdapter.loadMoreEnd();
+                                //释放对象
+                                mQueryEntry = null;
                             }
 
                             if (bean.getList().size() > 0) {

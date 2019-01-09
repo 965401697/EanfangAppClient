@@ -56,6 +56,7 @@ import net.eanfang.client.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.util.SendContactUtils;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.text.SimpleDateFormat;
@@ -994,6 +995,7 @@ public class CreationWorkReportActivity extends BaseClientActivity {
                         message.setShowLogo(true);
                         message.setTip("确定");
                         bundle.putSerializable("message", message);
+                        EventBus.getDefault().post("addReportSuccess");
                         intent.putExtras(bundle);
                         startActivity(intent);
 

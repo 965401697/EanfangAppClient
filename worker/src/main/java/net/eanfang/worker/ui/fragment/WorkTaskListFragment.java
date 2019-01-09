@@ -72,8 +72,8 @@ public class WorkTaskListFragment extends TemplateItemListFragment {
 
 //                if (bean.getStatus() == (EanfangConst.WORK_TASK_STATUS_UNREAD)) {
 //                    getFirstLookData(bean.getId());
-                    mDetailTaskBean = ((WorkTaskListBean.ListBean) adapter.getData().get(position));
-                    mPosition = position;
+                mDetailTaskBean = ((WorkTaskListBean.ListBean) adapter.getData().get(position));
+                mPosition = position;
 //                }
 //                new WorkTaskInfoView(getActivity(), true, bean.getId(), false).show();
 //                Intent intent = new Intent(getActivity(), TaskDetailActivity.class);
@@ -118,7 +118,6 @@ public class WorkTaskListFragment extends TemplateItemListFragment {
                     @Override
                     public void onSuccess(WorkTaskListBean bean) {
 
-                        mQueryEntry = null;//释放以前对象
 
                         if (mPage == 1) {
                             mAdapter.getData().clear();
@@ -127,6 +126,8 @@ public class WorkTaskListFragment extends TemplateItemListFragment {
                             mAdapter.loadMoreComplete();
                             if (bean.getList().size() < 10) {
                                 mAdapter.loadMoreEnd();
+                                //释放以前对象
+                                mQueryEntry = null;
                             }
 
                             if (bean.getList().size() > 0) {
