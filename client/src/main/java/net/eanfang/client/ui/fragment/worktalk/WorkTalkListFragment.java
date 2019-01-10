@@ -115,19 +115,18 @@ public class WorkTalkListFragment extends BaseFragment implements SwipeRefreshLa
         EanfangHttp.post(NewApiService.WORK_TALK)
                 .upJson(JsonUtils.obj2String(mQueryEntry))
                 .execute(new EanfangCallback<WorkTalkListBean>(getActivity(), true, WorkTalkListBean.class, (bean) -> {
-                            getActivity().runOnUiThread(() -> {
-                                mQueryEntry = null;
-                                if (bean.getList() != null) {
-                                    tvNoData.setVisibility(View.GONE);
-                                    rv_worktalk.setVisibility(View.VISIBLE);
-                                    workTalkBeanList = bean.getList();
-                                    onDataReceived();
-                                    swipeRefreshLayout.setRefreshing(false);
-                                } else {
-                                    tvNoData.setVisibility(View.VISIBLE);
-                                    rv_worktalk.setVisibility(View.GONE);
-                                }
-                            });
+//                            getActivity().runOnUiThread(() -> {
+                            if (bean.getList() != null) {
+                                tvNoData.setVisibility(View.GONE);
+                                rv_worktalk.setVisibility(View.VISIBLE);
+                                workTalkBeanList = bean.getList();
+                                onDataReceived();
+                                swipeRefreshLayout.setRefreshing(false);
+                            } else {
+                                tvNoData.setVisibility(View.VISIBLE);
+                                rv_worktalk.setVisibility(View.GONE);
+                            }
+//                            });
                         })
                 );
     }
@@ -254,6 +253,7 @@ public class WorkTalkListFragment extends BaseFragment implements SwipeRefreshLa
                 showToast("暂无数据");
                 workTalkAdapter.getData().clear();
                 workTalkAdapter.notifyDataSetChanged();
+                mQueryEntry = null;
             } else {
                 workTalkAdapter.getData().clear();
                 workTalkAdapter.setNewData(workTalkBeanList);

@@ -118,7 +118,6 @@ public class WorkTaskListFragment extends TemplateItemListFragment {
                     @Override
                     public void onSuccess(WorkTaskListBean bean) {
 
-                        mQueryEntry = null;//释放以前对象
 
                         if (mPage == 1) {
                             mAdapter.getData().clear();
@@ -127,6 +126,8 @@ public class WorkTaskListFragment extends TemplateItemListFragment {
                             mAdapter.loadMoreComplete();
                             if (bean.getList().size() < 10) {
                                 mAdapter.loadMoreEnd();
+                                //释放以前对象
+                                mQueryEntry = null;
                             }
 
                             if (bean.getList().size() > 0) {

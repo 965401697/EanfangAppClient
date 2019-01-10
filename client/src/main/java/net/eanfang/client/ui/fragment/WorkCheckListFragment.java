@@ -97,7 +97,7 @@ public class WorkCheckListFragment extends TemplateItemListFragment {
 
                     @Override
                     public void onSuccess(WorkCheckListBean bean) {
-                        mQueryEntry = null;
+
                         if (mPage == 1) {
                             mAdapter.getData().clear();
                             mAdapter.setNewData(bean.getList());
@@ -105,6 +105,7 @@ public class WorkCheckListFragment extends TemplateItemListFragment {
                             mAdapter.loadMoreComplete();
                             if (bean.getList().size() < 10) {
                                 mAdapter.loadMoreEnd();
+                                mQueryEntry = null;
                             }
 
                             if (bean.getList().size() > 0) {

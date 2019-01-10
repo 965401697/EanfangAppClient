@@ -124,7 +124,6 @@ public class WorkTalkListFragment extends BaseFragment implements SwipeRefreshLa
                 .upJson(JsonUtils.obj2String(mQueryEntry))
                 .execute(new EanfangCallback<WorkTalkListBean>(getActivity(), true, WorkTalkListBean.class, (bean) -> {
                             getActivity().runOnUiThread(() -> {
-                                mQueryEntry = null;
                                 if (bean.getList() != null) {
                                     tvNoData.setVisibility(View.GONE);
                                     rv_worktalk.setVisibility(View.VISIBLE);
@@ -259,6 +258,7 @@ public class WorkTalkListFragment extends BaseFragment implements SwipeRefreshLa
                 showToast("暂无数据");
                 workTalkAdapter.getData().clear();
                 workTalkAdapter.notifyDataSetChanged();
+                mQueryEntry = null;
             } else {
                 workTalkAdapter.getData().clear();
                 workTalkAdapter.setNewData(workTalkBeanList);

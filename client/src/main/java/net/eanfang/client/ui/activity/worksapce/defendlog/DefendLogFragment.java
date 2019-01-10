@@ -159,7 +159,7 @@ public class DefendLogFragment extends TemplateItemListFragment {
 
                     @Override
                     public void onSuccess(DefendLogBean bean) {
-                        mQueryEntry = null;
+
                         if (mPage == 1) {
                             mAdapter.getData().clear();
                             mAdapter.setNewData(bean.getList());
@@ -167,6 +167,7 @@ public class DefendLogFragment extends TemplateItemListFragment {
                             mAdapter.loadMoreComplete();
                             if (bean.getList().size() < 10) {
                                 mAdapter.loadMoreEnd();
+                                mQueryEntry = null;
                             }
 
                             if (bean.getList().size() > 0) {
