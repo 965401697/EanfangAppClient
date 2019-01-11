@@ -585,5 +585,14 @@ public interface NewApiService {
      */
     String MAINTENANCE_DEVICE_DEAL = BASE_URL + "/yaf_maintain/shopmaintenanceorder/prepare";
 
+    /**
+     * 招标信息列表
+     */
+    String TENDER_LIST = BASE_URL + "/yaf_ifb/ifborder/list";
+    /**
+     * 招标信息详情
+     */
+    String TENDER_DETAIL = BASE_URL + "/yaf_ifb/ifborder/info";
+
 
 }

@@ -1109,6 +1109,9 @@
                 <data android:scheme="wx5e7969853addd542" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.activity.worksapce.tender.WorkerTenderControlActivity" />
+        <activity android:name=".ui.activity.worksapce.tender.FilterTenderActivity" />
+        <activity android:name=".ui.activity.worksapce.tender.WorkTenderDetailActivity"></activity>
     </application>
 
 </manifest>

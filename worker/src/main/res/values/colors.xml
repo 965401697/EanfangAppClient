@@ -45,4 +45,5 @@
     <color name="color_auth_top_back">#FFD6E6F2</color>
     <color name="color_auth_top_text">#FF1C91EA</color>
     <color name="color_worker_detail_circle">#FB973B</color>
+    <color name="color_tender_info">#FF4A4A</color>
 </resources>
