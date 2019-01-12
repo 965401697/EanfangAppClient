@@ -58,6 +58,7 @@ public class WorkReportListFragment extends TemplateItemListFragment {
 
     @Override
     protected void initAdapter() {
+        mAdapter = new WorkReportListAdapter(mType);
         mAdapter.bindToRecyclerView(mRecyclerView);
         mAdapter.setOnLoadMoreListener(this);
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
