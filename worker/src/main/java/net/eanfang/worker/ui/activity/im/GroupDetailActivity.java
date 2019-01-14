@@ -16,6 +16,7 @@ import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.EanfangConst;
+import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.GroupDetailBean;
@@ -103,7 +104,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
     private final int UPDATA_GROUP_OWN = 102;//转让群主
     private final int UPDATA_GROUP_NOTICE = 103;//更新公告
     private final int UPDATA_GROUP_SHUTUP_MBER = 104;//更新禁言人的状态
-
+    private boolean isCompound = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,11 +128,16 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                 .execute(new EanfangCallback<GroupDetailBean>(this, true, GroupDetailBean.class, (bean) -> {
 
 
-                    if(bean ==null)return;//接口改过，造成了
+                    if (bean == null) return;//接口改过，造成了
 
                     if (friendListBeanArrayList.size() > 0) friendListBeanArrayList.clear();
                     if (temp.size() > 0)
                         temp.clear();
+
+                    if (bean.getGroup().getHeadPortrait().contains("CUSTOM")) {
+                        //自己选择的图片没有生成 始终不变
+                        isCompound = false;
+                    }
 
 
                     mList = (ArrayList<GroupDetailBean.ListBean>) bean.getList();
@@ -260,6 +266,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                     intent.putExtra("groupId", id);
                     intent.putExtra("ryGroupId", groupId);
                     intent.putExtra("title", title);
+                    intent.putExtra("isCompound", isCompound);
                     startActivityForResult(intent, UPDATA_GROUP_OWN);
                 } else if (position == temp.size() - 2 && isOwner || position == temp.size() - 1 && !isOwner) {
 //                    Intent intent = new Intent(GroupDetailActivity.this, SelectedFriendsActivity.class);
@@ -278,6 +285,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                     intent.putExtra("title", title);
                     intent.putExtra("ryGroupId", groupId);
                     intent.putExtra("list", friendListBeanArrayList);
+                    intent.putExtra("isCompound", isCompound);
                     startActivityForResult(intent, UPDATA_GROUP_OWN);
 
                 } else {
@@ -388,41 +396,45 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                 startActivityForResult(in, UPDATA_GROUP_SHUTUP_MBER);
                 break;
             case R.id.group_quit:
-                if (isOwner) {
-                    //我是群主
-                    EanfangHttp.post(UserApi.POST_GROUP_DELETE)
-                            .params("groupId", id)
-                            .params("ids", EanfangApplication.getApplication().getAccId())
-                            .params("groupName", title)
-                            .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (json) -> {
-                                ToastUtil.get().showToast(GroupDetailActivity.this, "销毁成功");
+                new TrueFalseDialog(this, "系统提示", "是否" + groupQuit.getText().toString() + "？", () -> {
+
+                    if (isOwner) {
+                        //我是群主
+                        EanfangHttp.post(UserApi.POST_GROUP_DELETE)
+                                .params("groupId", id)
+                                .params("ids", EanfangApplication.getApplication().getAccId())
+                                .params("groupName", title)
+                                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (json) -> {
+                                    ToastUtil.get().showToast(GroupDetailActivity.this, "销毁成功");
 
 
-                                RongIM.getInstance().removeConversation(Conversation.ConversationType.GROUP, groupId, null);
-                                for (Activity activity : BaseActivity.transactionActivities) {
+                                    RongIM.getInstance().removeConversation(Conversation.ConversationType.GROUP, groupId, null);
+                                    for (Activity activity : BaseActivity.transactionActivities) {
 
-                                    activity.finish();
+                                        activity.finish();
 
-                                }
-                            }));
-                } else {
-                    EanfangHttp.post(UserApi.POST_GROUP_QUIT)
-                            .params("groupId", id)
-                            .params("ids", EanfangApplication.getApplication().getAccId())
-                            .params("groupName", title)
-                            .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (json) -> {
-                                ToastUtil.get().showToast(GroupDetailActivity.this, "退出成功");
-                                //清除删除的群组信息
-                                RongIM.getInstance().removeConversation(Conversation.ConversationType.GROUP, groupId, null);
-                                //清空本地的聊天信息
-                                RongIM.getInstance().clearMessages(Conversation.ConversationType.GROUP, groupId, null);
-                                for (Activity activity : BaseActivity.transactionActivities) {
+                                    }
+                                }));
+                    } else {
+                        EanfangHttp.post(UserApi.POST_GROUP_QUIT)
+                                .params("groupId", id)
+                                .params("ids", EanfangApplication.getApplication().getAccId())
+                                .params("groupName", title)
+                                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (json) -> {
+                                    ToastUtil.get().showToast(GroupDetailActivity.this, "退出成功");
+                                    //清除删除的群组信息
+                                    RongIM.getInstance().removeConversation(Conversation.ConversationType.GROUP, groupId, null);
+                                    //清空本地的聊天信息
+                                    RongIM.getInstance().clearMessages(Conversation.ConversationType.GROUP, groupId, null);
+                                    for (Activity activity : BaseActivity.transactionActivities) {
 
-                                    activity.finish();
+                                        activity.finish();
 
-                                }
-                            }));
-                }
+                                    }
+                                }));
+                    }
+
+                }).showDialog();
                 break;
         }
     }
@@ -581,7 +593,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
         }
         TImage image = result.getImage();
 
-        headPortrait = "im/group/" + UuidUtil.getUUID() + ".png";
+        headPortrait = "im/select/CUSTOM_" + UuidUtil.getUUID() + ".png";
 
         groupHeader.setImageURI("file://" + image.getOriginalPath());
 

@@ -30,6 +30,7 @@ import com.eanfang.ui.activity.SelectOAPresonActivity;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.DialogUtil;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 
@@ -39,6 +40,7 @@ import net.eanfang.worker.ui.activity.worksapce.oa.SelectOAGroupActivity;
 import net.eanfang.worker.ui.adapter.SendPersonAdapter;
 import net.eanfang.worker.util.SendContactUtils;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.Serializable;
@@ -235,7 +237,9 @@ public class WorkTalkCreateActivity extends BaseActivity {
             // 面谈对象
             case R.id.ll_talk_object:
                 isWhitch = false;
-                startActivity(new Intent(this, SelectOAPresonActivity.class));
+                Bundle bundle = new Bundle();
+                bundle.putString("isRadio", "isRadio");
+                JumpItent.jump(this, SelectOAPresonActivity.class, bundle);
                 break;
             // 接收人
             case R.id.ll_receiver_person:
@@ -252,6 +256,7 @@ public class WorkTalkCreateActivity extends BaseActivity {
                 Intent intent = new Intent(this, CreateGroupOrganizationActivity.class);
                 intent.putExtra("isFrom", "OA");
                 intent.putExtra("companyId", String.valueOf(EanfangApplication.getApplication().getCompanyId()));
+                intent.putExtra("companyOrgCode", EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgCode());
                 intent.putExtra("companyName", EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
                 Bundle b = new Bundle();
                 b.putSerializable("list", (Serializable) sendPersonAdapter.getData());
@@ -267,6 +272,8 @@ public class WorkTalkCreateActivity extends BaseActivity {
             // 提交
             case R.id.rl_confirm:
                 doSubmit();
+                break;
+            default:
                 break;
         }
     }
@@ -295,6 +302,7 @@ public class WorkTalkCreateActivity extends BaseActivity {
                     //分享
                     if (newPresonList.size() == 0 && newGroupList.size() == 0) {
                         showToast("添加完毕");
+                        EventBus.getDefault().post("addTalkSuccess");
                         finishSelf();
                         return;
                     }

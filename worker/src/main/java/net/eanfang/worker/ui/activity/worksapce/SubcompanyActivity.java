@@ -3,8 +3,11 @@ package net.eanfang.worker.ui.activity.worksapce;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.TextView;
 
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseActivity;
@@ -30,11 +33,13 @@ public class SubcompanyActivity extends BaseActivity {
 
     @BindView(R.id.rev_list)
     RecyclerView revList;
+    @BindView(R.id.tv_nodata)
+    TextView tvNodata;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_comment_list);
+        setContentView(R.layout.activity_contact_unit);
         ButterKnife.bind(this);
         initView();
         initData();
@@ -47,6 +52,7 @@ public class SubcompanyActivity extends BaseActivity {
 
     private void initData() {
         EanfangHttp.get(UserApi.GET_BRANCH_OFFICE_LIST)
+                .params("companyId", EanfangApplication.get().getCompanyId())
                 .execute(new EanfangCallback<OrgEntity>(this, true, OrgEntity.class, true, (list) -> {
                     initAdapter(list);
                 }));
@@ -56,5 +62,12 @@ public class SubcompanyActivity extends BaseActivity {
         revList.setLayoutManager(new LinearLayoutManager(this));
         ConstactsAdapter adapter = new ConstactsAdapter(mDatas);
         revList.setAdapter(adapter);
+        if (mDatas.size() > 0) {
+            revList.setVisibility(View.VISIBLE);
+            tvNodata.setVisibility(View.GONE);
+        } else {
+            revList.setVisibility(View.GONE);
+            tvNodata.setVisibility(View.VISIBLE);
+        }
     }
 }

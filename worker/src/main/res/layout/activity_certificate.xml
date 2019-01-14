@@ -12,6 +12,7 @@
     <RelativeLayout
         android:id="@+id/rl_add"
         android:layout_width="match_parent"
+        android:background="@color/white"
         android:layout_height="@dimen/dimen_222">
 
 
@@ -34,16 +35,10 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
+        android:background="@color/white"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:visibility="gone" />
+        android:layout_weight="1" />
 
-    <TextView
-        android:id="@+id/tv_nodata"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="暂无数据" />
 
     <TextView
         android:id="@+id/tv_sub"
@@ -56,6 +51,6 @@
         android:text="提交"
         android:textColor="@color/color_white"
         android:textSize="@dimen/textSize_14"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
 </LinearLayout>

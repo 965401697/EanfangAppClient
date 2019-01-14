@@ -6,9 +6,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -21,6 +23,7 @@ import com.eanfang.apiservice.RepairApi;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.TemplateBean;
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
@@ -35,6 +38,7 @@ import com.yaf.base.entity.TransferLogEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.im.SelectIMContactActivity;
+import net.eanfang.client.ui.activity.worksapce.maintenance.MaintenanceTeamAdapter;
 import net.eanfang.client.ui.adapter.TroubleDetailAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
@@ -75,8 +79,9 @@ public class TroubleDetailActivity extends BaseClientActivity {
     // 远传功能
     @BindView(R.id.tv_policeDeliver)
     TextView tvPoliceDeliver;
-    @BindView(R.id.tv_hangContnet)
-    TextView tvHangContnet;
+    // 协同人员
+    @BindView(R.id.rv_teamwork)
+    RecyclerView rvTeamwork;
 
 
     private RecyclerView rv_trouble;
@@ -108,13 +113,25 @@ public class TroubleDetailActivity extends BaseClientActivity {
      * 单据照片 (3张)
      */
     private BGASortableNinePhotoLayout snpl_form_photos;
-
+    /**
+     * 转单
+     */
+    @BindView(R.id.iv_header)
+    SimpleDraweeView ivHeader;
+    @BindView(R.id.tv_order_num)
+    TextView tvOrderNum;
+    @BindView(R.id.tv_order_time)
+    TextView tvOrderTime;
+    @BindView(R.id.tv_order_reason)
+    TextView tvOrderReason;
+    @BindView(R.id.ll_hang)
+    LinearLayout llHang;
+    @BindView(R.id.tv_no_history)
+    TextView tvNoHistory;
 
     private TextView tv_complete;
     private TextView tv_complaint;
     //2017年7月21日
-    //协助人员
-    private TextView tv_team_worker;
 
     private List<BughandleDetailEntity> mDataList;
     private TroubleDetailAdapter quotationDetailAdapter;
@@ -143,6 +160,12 @@ public class TroubleDetailActivity extends BaseClientActivity {
 
     //聊天分享的必要参数
     Bundle bundle = new Bundle();
+
+    /**
+     * 协同人员
+     */
+    private MaintenanceTeamAdapter teamAdapter;
+    private List<TemplateBean.Preson> presonList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -207,8 +230,6 @@ public class TroubleDetailActivity extends BaseClientActivity {
         //两个操作按钮
         tv_complete = (TextView) findViewById(R.id.tv_complete);
         tv_complaint = (TextView) findViewById(R.id.tv_complaint);
-        //协作人员
-        tv_team_worker = (TextView) findViewById(R.id.tv_team_worker);
 
 
         //非单确认状态 隐藏确认按钮
@@ -219,6 +240,11 @@ public class TroubleDetailActivity extends BaseClientActivity {
         tv_complaint.setOnClickListener((v) -> {
             CallUtils.call(this, "400-890-9280");
         });
+        //协作人员
+        GridLayoutManager layoutManage = new GridLayoutManager(this, 5);
+        rvTeamwork.setLayoutManager(layoutManage);
+        teamAdapter = new MaintenanceTeamAdapter();
+        teamAdapter.bindToRecyclerView(rvTeamwork);
     }
 
     private void flowConfirm() {
@@ -265,11 +291,33 @@ public class TroubleDetailActivity extends BaseClientActivity {
             tvPoliceDeliver.setTextColor(ContextCompat.getColor(this, R.color.color_white));
         }
         //协作人员
-        // 目前先获取技师
-        tv_team_worker.setText(bughandleConfirmEntity.getCreateUserEntity().getAccountEntity().getRealName());
-//        if (bughandleConfirmEntity.getTeamWorker() != null) {
-//            tv_team_worker.setText(bughandleConfirmEntity.getTeamWorker());
-//        }
+        if (bughandleConfirmEntity.getTeamWorker() != null && bughandleConfirmEntity.getTeamWorker().contains("-")) {
+            String[] info = bughandleConfirmEntity.getTeamWorker().split(",");
+            if (info.length > 0) {
+                //多条
+                for (int i = 0; i < info.length; i++) {
+                    String s = info[i];
+                    String headPortrait = s.split("-")[0];
+                    String name = s.split("-")[1];
+
+                    TemplateBean.Preson preson = new TemplateBean.Preson();
+                    preson.setProtraivat(headPortrait);
+                    preson.setName(name);
+                    presonList.add(preson);
+                }
+            } else {
+                //一条
+                String headPortrait = bughandleConfirmEntity.getTeamWorker().split("-")[0];
+                String name = bughandleConfirmEntity.getTeamWorker().split("-")[1];
+
+                TemplateBean.Preson preson = new TemplateBean.Preson();
+                preson.setProtraivat(headPortrait);
+                preson.setName(name);
+                presonList.add(preson);
+
+            }
+            teamAdapter.setNewData(presonList);
+        }
 
         /**
          *电视机墙正面照 拍摄视频
@@ -394,11 +442,15 @@ public class TroubleDetailActivity extends BaseClientActivity {
      */
     public void getHistory(TransferLogEntity transferLogEntity) {
         if (transferLogEntity == null) {
-            tvHangContnet.setText("暂无转单记录");
-        } else {
-            tvHangContnet.setText(transferLogEntity.getOriginalUserEntity().getAccountEntity().getRealName() + "因" +
-                    GetConstDataUtils.getTransferCauseList().get(transferLogEntity.getCause()) + "在" +
-                    GetDateUtils.dateToDateTimeString(transferLogEntity.getCreateTime()) + "转给" + transferLogEntity.getReceiveUserEntity().getAccountEntity().getRealName());
+            llHang.setVisibility(View.GONE);
+            tvNoHistory.setVisibility(View.VISIBLE);
+            return;
         }
+        llHang.setVisibility(View.VISIBLE);
+        tvNoHistory.setVisibility(View.GONE);
+        ivHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + transferLogEntity.getOriginalUserEntity().getAccountEntity().getAvatar()));
+        tvOrderNum.setText(transferLogEntity.getOrderNum() + "");
+        tvOrderTime.setText(GetDateUtils.dateToDateTimeString(transferLogEntity.getCreateTime()));
+        tvOrderReason.setText(GetConstDataUtils.getTransferCauseList().get(transferLogEntity.getCause()));
     }
 }

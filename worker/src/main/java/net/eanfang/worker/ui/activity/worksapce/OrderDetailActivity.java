@@ -6,9 +6,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.PopupWindow;
 
 import com.eanfang.util.ViewFindUtils;
+import com.eanfang.witget.SharePopWindow;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.flyco.tablayout.listener.OnTabSelectListener;
 
@@ -20,6 +24,11 @@ import net.eanfang.worker.ui.fragment.OrderProgressFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import cn.sharesdk.framework.Platform;
+import cn.sharesdk.framework.PlatformActionListener;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.wechat.friends.Wechat;
 
 /**
  * Created by MrHou
@@ -43,6 +52,11 @@ public class OrderDetailActivity extends BaseWorkerActivity implements OnTabSele
     private Long id;
     private String mOrderTime = "";
     private boolean isVisible;
+    /**
+     * 分享
+     */
+    private SharePopWindow sharePopWindow;
+    private HashMap hashMap = new HashMap();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +70,13 @@ public class OrderDetailActivity extends BaseWorkerActivity implements OnTabSele
 
         //分享按钮是是否隐藏
         isVisible = getIntent().getBooleanExtra("isVisible", false);
-
+        sharePopWindow = new SharePopWindow(this, pictureSelectItemsOnClick);
+        sharePopWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                sharePopWindow.backgroundAlpha(1.0f);
+            }
+        });
         mFragments.add(OrderDetailFragment.getInstance(id));
         mFragments.add(OrderProgressFragment.getInstance(id, mOrderTime));
         View decorView = getWindow().getDecorView();
@@ -72,6 +92,7 @@ public class OrderDetailActivity extends BaseWorkerActivity implements OnTabSele
         setLeftBack();
         //去掉loading
         loadingDialog.dismiss();
+        hashMap = ((OrderDetailFragment) mFragments.get(0)).getHashMap();
 
         if (!isVisible) {
             setRightTitle("分享");
@@ -79,25 +100,86 @@ public class OrderDetailActivity extends BaseWorkerActivity implements OnTabSele
                 @Override
                 public void onClick(View v) {
                     //分享聊天
-
-                    HashMap hashMap = ((OrderDetailFragment) mFragments.get(0)).getHashMap();
-
-                    Intent intent = new Intent(OrderDetailActivity.this, SelectIMContactActivity.class);
-                    Bundle bundle = new Bundle();
-
-                    bundle.putString("id", (String) hashMap.get("id"));
-                    bundle.putString("orderNum", (String) hashMap.get("orderNum"));
-                    bundle.putString("picUrl", (String) hashMap.get("picUrl"));
-                    bundle.putString("creatTime", (String) hashMap.get("creatTime"));
-                    bundle.putString("workerName", (String) hashMap.get("workerName"));
-                    bundle.putString("status", (String) hashMap.get("status"));
-                    bundle.putString("shareType", (String) hashMap.get("shareType"));
-
-                    intent.putExtras(bundle);
-                    startActivity(intent);
+                    //分享聊天
+                    sharePopWindow.showAtLocation(OrderDetailActivity.this.findViewById(R.id.ll_share), Gravity.BOTTOM, 0, 0);
+                    sharePopWindow.backgroundAlpha(0.5f);
                 }
             });
         }
+    }
+
+    View.OnClickListener pictureSelectItemsOnClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+                // 微信
+                case R.id.tv_share_wx:
+                    doShareWx();
+                    break;
+                // 通讯录
+                case R.id.tv_share_contact:
+                    doContact();
+                    break;
+                // 取消
+                case R.id.btn_cancel:
+                    sharePopWindow.dismiss();
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
+    public void doContact() {
+
+        Intent intent = new Intent(OrderDetailActivity.this, SelectIMContactActivity.class);
+        Bundle bundle = new Bundle();
+
+        bundle.putString("id", (String) hashMap.get("id"));
+        bundle.putString("orderNum", (String) hashMap.get("orderNum"));
+        bundle.putString("picUrl", (String) hashMap.get("picUrl"));
+        bundle.putString("creatTime", (String) hashMap.get("creatTime"));
+        bundle.putString("workerName", (String) hashMap.get("workerName"));
+        bundle.putString("status", (String) hashMap.get("status"));
+        bundle.putString("shareType", (String) hashMap.get("shareType"));
+
+        intent.putExtras(bundle);
+        startActivity(intent);
+        sharePopWindow.dismiss();
+    }
+
+    public void doShareWx() {
+
+        Wechat.ShareParams sp = new Wechat.ShareParams();
+        //微信分享网页的参数严格对照列表中微信分享网页的参数要求
+        sp.setTitle("易安防");
+        sp.setText("报修订单分享");
+        sp.setUrl("https://wechat.eanfang.net/?from=1#/orderdetail/" + hashMap.get("id"));
+        sp.setShareType(Platform.SHARE_WEBPAGE);
+        Platform wechat = ShareSDK.getPlatform(Wechat.NAME);
+        // 设置分享事件回调（注：回调放在不能保证在主线程调用，不可以在里面直接处理UI操作）
+        wechat.setPlatformActionListener(new PlatformActionListener() {
+            @Override
+            public void onComplete(Platform platform, int i, HashMap<String, Object> hashMap) {
+                Log.d("ShareSDK", "onComplete ---->  分享成功");
+            }
+
+            @Override
+            public void onError(Platform platform, int i, Throwable throwable) {
+                Log.d("ShareSDK", "onError ---->  分享失败" + throwable.getStackTrace().toString());
+                Log.d("ShareSDK", "onError ---->  分享失败" + throwable.getMessage());
+                throwable.getMessage();
+                throwable.printStackTrace();
+            }
+
+            @Override
+            public void onCancel(Platform platform, int i) {
+                Log.d("ShareSDK", "onCancel ---->  分享取消");
+            }
+        });
+        // 执行图文分享
+        wechat.share(sp);
+        sharePopWindow.dismiss();
     }
 
 

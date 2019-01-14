@@ -23,13 +23,16 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.TemplateBean;
 import com.eanfang.ui.activity.SelectOAPresonActivity;
 import com.eanfang.ui.base.BaseEvent;
+import com.eanfang.util.ETimeUtils;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.ToastUtil;
 import com.yaf.base.entity.ShopBughandleMaintenanceConfirmEntity;
 import com.yaf.base.entity.ShopMaintenanceExamDeviceEntity;
 import com.yaf.base.entity.ShopMaintenanceExamResultEntity;
+import com.yaf.base.entity.ShopMaintenanceOrderEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
@@ -38,6 +41,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -94,7 +98,8 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
 
 
     private long mId;
-    private ArrayList<ShopMaintenanceExamDeviceEntity> examResultList;
+    private List<ShopMaintenanceExamDeviceEntity> examResultList = new ArrayList<>();
+    private Date mSignTime;
     private MaintenanceHandeCheckAdapter maintenanceHandeCheckAdapter;
     private ShopMaintenanceExamDeviceEntity examDeviceEntity;
     private int examDeviceEntityPosition;
@@ -106,6 +111,12 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
     private ArrayList<TemplateBean.Preson> newPresonList = new ArrayList<>();
     private int examResultEntityPosition;
     private ShopMaintenanceExamResultEntity examResultEntity;
+
+    /**
+     * 扫码看设备
+     */
+    private String mType = "";
+    private ShopMaintenanceExamResultEntity mScanExamResultEntity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,14 +132,22 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
 
     private void initData() {
         mId = getIntent().getLongExtra("orderId", 0);
-        examResultList = (ArrayList<ShopMaintenanceExamDeviceEntity>) getIntent().getSerializableExtra("list");
+//        examResultList = (ArrayList<ShopMaintenanceExamDeviceEntity>) getIntent().getSerializableExtra("list");
+
+        mSignTime = (Date) getIntent().getSerializableExtra("signTime");
+
+        mType = getIntent().getStringExtra("type");
+        mScanExamResultEntity = (ShopMaintenanceExamResultEntity) getIntent().getSerializableExtra("bean");
 
         checkBoxList.add(cbVideo);
         checkBoxList.add(cbTime);
         checkBoxList.add(cbPrint);
         checkBoxList.add(cbHost);
 
+        doGetDeviceList();
+
     }
+
 
     private void initViews() {
         //互动冲突的解决
@@ -156,12 +175,6 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
 
         handleEditAdapter = new MaintenanceHandleEditAdapter(R.layout.item_maintenance_empasis_device_handle);
         handleEditAdapter.bindToRecyclerView(rvDeviceHandle);
-        if (examResultList != null && examResultList.size() > 0) {
-            handleEditAdapter.setNewData(examResultList);
-        } else {
-            tvDeviceHandle.setVisibility(View.VISIBLE);
-            ivDeviceHandle.setVisibility(View.GONE);
-        }
 
         handleEditAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -196,15 +209,34 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
                 }
             }
         });
+        if (mType != null && mType.equals("scanDevice")) {
+            if (mScanExamResultEntity != null) {
+                doAddHandleResult(mScanExamResultEntity);
+            }
+        }
+    }
+
+    private void doGetDeviceList() {
+        EanfangHttp.post(NewApiService.MAINTENANCE_DEVICE_DEAL)
+                .params("id", mId)
+                .execute(new EanfangCallback<ShopMaintenanceOrderEntity>(this, true, ShopMaintenanceOrderEntity.class, bean -> {
+                    examResultList = bean.getExamDeviceEntityList();
+                    if (examResultList != null && examResultList.size() > 0) {
+                        handleEditAdapter.setNewData(examResultList);
+                    } else {
+                        tvDeviceHandle.setVisibility(View.VISIBLE);
+                        ivDeviceHandle.setVisibility(View.GONE);
+                    }
+                }));
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
+            // 添加检查结果
             if (requestCode == ADD_HANDLE_RESULT) {
-                ShopMaintenanceExamResultEntity resultEntity = (ShopMaintenanceExamResultEntity) data.getSerializableExtra("bean");
-                maintenanceHandeCheckAdapter.addData(resultEntity);
+                doAddHandleResult((ShopMaintenanceExamResultEntity) data.getSerializableExtra("bean"));
             } else if (requestCode == EDIT_HANDLE_RESULT) {//修改已有检查结果
                 ShopMaintenanceExamResultEntity resultEntity = (ShopMaintenanceExamResultEntity) data.getSerializableExtra("bean");
                 maintenanceHandeCheckAdapter.setData(examResultEntityPosition, resultEntity);
@@ -218,6 +250,10 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
             }
         }
 
+    }
+
+    private void doAddHandleResult(ShopMaintenanceExamResultEntity data) {
+        maintenanceHandeCheckAdapter.addData(data);
     }
 
     @OnClick({R.id.ll_add, R.id.ll_device_handle, R.id.ll_conclusion, R.id.ll_photo, R.id.tv_add_team, R.id.tv_sub})
@@ -255,6 +291,8 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
                 break;
             case R.id.tv_sub:
                 doSubData();
+                break;
+            default:
                 break;
         }
     }
@@ -401,11 +439,32 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
                 }
             }
 
+
+            if (mSignTime == null) {
+                confirmEntity.setWorkHour("0小时0分钟");
+            } else {
+                Date finishDay = GetDateUtils.getDateNow();
+                long day = GetDateUtils.getTimeDiff(finishDay, mSignTime, "day");
+                long hours = GetDateUtils.getTimeDiff(finishDay, mSignTime, "hours");
+                long minutes = GetDateUtils.getTimeDiff(finishDay, mSignTime, "minutes");
+                if (day < 0) {
+                    day = 0;
+                }
+                if (hours < 0) {
+                    hours = 0;
+                }
+                if (minutes < 0) {
+                    minutes = 0;
+                }
+                confirmEntity.setWorkHour((day * 24 + hours) + "小时" + minutes + "分钟");
+            }
+
+
             confirmEntity.setTeamWorker(stringBuffer.toString());
 
             confirmEntity.setShopMaintenanceOrderId(mId);
 
-
+            confirmEntity.setOverTime(GetDateUtils.getDate(ETimeUtils.getTimeByYearMonthDayHourMinSec(new Date(System.currentTimeMillis()))));
             jsonObject.put("confirmEntity", confirmEntity);
 
 

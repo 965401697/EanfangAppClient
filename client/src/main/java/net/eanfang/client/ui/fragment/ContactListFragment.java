@@ -40,6 +40,8 @@ import net.eanfang.client.ui.activity.worksapce.notice.MessageListActivity;
 import net.eanfang.client.ui.activity.worksapce.notice.OfficialListActivity;
 import net.eanfang.client.ui.activity.worksapce.notice.SystemNoticeActivity;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -77,7 +79,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
     // 消息数量
     private int mMessageCount = 0;
     private int mStystemCount = 0;
-    private int mCamCount = 0;
+    private int mCmpCount = 0;
 
     private View view;
     private MyConversationListFragment myConversationListFragment;
@@ -202,6 +204,12 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
                     } else if (uiConversation.getConversationContent().toString().equals("被移除群组通知")) {
                         RongIM.getInstance().clearMessagesUnreadStatus(Conversation.ConversationType.SYSTEM, uiConversation.getConversationTargetId());
                         return true;
+                    }  else if (uiConversation.getConversationContent().toString().equals("群解散通知")) {
+                        RongIM.getInstance().clearMessagesUnreadStatus(Conversation.ConversationType.SYSTEM, uiConversation.getConversationTargetId());
+                        return true;
+                    } else if (uiConversation.getConversationContent().toString().equals("拒绝添加好友通知")) {
+                        RongIM.getInstance().clearMessagesUnreadStatus(Conversation.ConversationType.SYSTEM, uiConversation.getConversationTargetId());
+                        return true;
                     } else {
                         UserInfo userInfo = new UserInfo(uiConversation.getConversationTargetId(), uiConversation.getUIConversationTitle(), uiConversation.getIconUrl());
                         Intent intent = new Intent(getActivity(), SystemMessageActivity.class);
@@ -229,9 +237,10 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
                         EanfangHttp.post(UserApi.POST_GROUP_DETAIL_RY)
                                 .params("ryGroupId", s)
                                 .execute(new EanfangCallback<GroupDetailBean>(getActivity(), true, GroupDetailBean.class, (bean) -> {
-
-                                    UserInfo userInfo = new UserInfo(s, bean.getGroup().getGroupName(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + bean.getGroup().getHeadPortrait()));
-                                    RongIM.getInstance().refreshUserInfoCache(userInfo);
+                                    if (bean != null) {
+                                        UserInfo userInfo = new UserInfo(s, bean.getGroup().getGroupName(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + bean.getGroup().getHeadPortrait()));
+                                        RongIM.getInstance().refreshUserInfoCache(userInfo);
+                                    }
 
                                 }));
                     });
@@ -282,20 +291,18 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
                         initBizCount(0);
                         mMessageCount = 0;
                     }
-                    if (bean.getCam() > 0) {// 官方通知
-                        initCamCount(bean.getCam());
-                        mCamCount = bean.getCam();
+                    if (bean.getCmp() > 0) {// 官方通知
+                        initCamCount(bean.getCmp());
+                        mCmpCount = bean.getCmp();
                     } else {
                         initCamCount(0);
-                        mCamCount = 0;
+                        mCmpCount = 0;
                     }
-                    if (bean.getCam() > 0) {// 官方通知
-                        initCamCount(bean.getCam());
-                        mCamCount = bean.getCam();
-                    } else {
-                        initCamCount(0);
-                        mCamCount = 0;
-                    }
+                    /**
+                     * 底部红点更新
+                     * */
+                    EventBus.getDefault().post(bean);
+
                 }));
     }
 
@@ -309,7 +316,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
         qBadgeViewCam.bindTarget(view.findViewById(R.id.tv_official))
                 .setBadgeNumber(cam)
                 .setBadgeBackgroundColor(0xFFFF0000)
-                .setBadgePadding(5, true)
+                .setBadgePadding(2, true)
                 .setGravityOffset(0, 0, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setBadgeTextSize(11, true);
@@ -327,7 +334,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
         qBadgeViewBiz.bindTarget(view.findViewById(R.id.tv_bus_msg))
                 .setBadgeNumber(biz)
                 .setBadgeBackgroundColor(0xFFFF0000)
-                .setBadgePadding(5, true)
+                .setBadgePadding(2, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(0, 0, true)
                 .setBadgeTextSize(11, true);
@@ -356,7 +363,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
                 .bindTarget(view.findViewById(R.id.tv_sys_msg))
                 .setBadgeNumber(sys)
                 .setBadgeBackgroundColor(0xFFFF0000)
-                .setBadgePadding(5, true)
+                .setBadgePadding(2, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(0, 0, true)
                 .setBadgeTextSize(11, true);
@@ -455,7 +462,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
         // 官方通知
         view.findViewById(R.id.ll_official).setOnClickListener(v -> {
             Bundle bundle = new Bundle();
-            bundle.putInt("mCamCount", mCamCount);
+            bundle.putInt("mCamCount", mCmpCount);
             JumpItent.jump(getActivity(), OfficialListActivity.class, bundle, REQUST_REFRESH_CODE);
         });
         // 业务通知

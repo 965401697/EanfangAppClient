@@ -5,9 +5,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -19,6 +21,7 @@ import com.eanfang.apiservice.RepairApi;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.TemplateBean;
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
@@ -34,6 +37,7 @@ import com.yaf.base.entity.TransferLogEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.im.SelectIMContactActivity;
+import net.eanfang.worker.ui.activity.worksapce.maintenance.MaintenanceTeamAdapter;
 import net.eanfang.worker.ui.activity.worksapce.repair.seefaultdetail.faultdetail.LookTroubleDetailActivity;
 import net.eanfang.worker.ui.adapter.FillTroubleDetailAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
@@ -114,11 +118,23 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
      */
     @BindView(R.id.snpl_form_photos)
     BGASortableNinePhotoLayout snplFormPhotos;
-    //协助人员
-    @BindView(R.id.tv_team_worker)
-    TextView tvTeamWorker;
-    @BindView(R.id.tv_hangContnet)
-    TextView tvHangContnet;
+    @BindView(R.id.rv_team)
+    RecyclerView rvTeam;
+    /**
+     * 转单
+     */
+    @BindView(R.id.iv_header)
+    SimpleDraweeView ivHeader;
+    @BindView(R.id.tv_order_num)
+    TextView tvOrderNum;
+    @BindView(R.id.tv_order_time)
+    TextView tvOrderTime;
+    @BindView(R.id.tv_order_reason)
+    TextView tvOrderReason;
+    @BindView(R.id.ll_hang)
+    LinearLayout llHang;
+    @BindView(R.id.tv_no_history)
+    TextView tvNoHistory;
 
     private FillTroubleDetailAdapter quotationDetailAdapter;
     private Long id;
@@ -146,6 +162,12 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
 
     //聊天分享的必要参数
     Bundle bundle = new Bundle();
+
+    /**
+     * 协同人员
+     */
+    private MaintenanceTeamAdapter teamAdapter;
+    private List<TemplateBean.Preson> presonList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -202,6 +224,11 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
         setTitle("故障处理");
         setLeftBack();
         id = getIntent().getLongExtra("orderId", 0);
+        //协作人员
+        GridLayoutManager layoutManage = new GridLayoutManager(this, 5);
+        rvTeam.setLayoutManager(layoutManage);
+        teamAdapter = new MaintenanceTeamAdapter();
+        teamAdapter.bindToRecyclerView(rvTeam);
 
     }
 
@@ -245,9 +272,32 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
             }
 
             //协作人员
+            if (bughandleConfirmEntity.getTeamWorker() != null && bughandleConfirmEntity.getTeamWorker().contains("-")) {
+                String[] info = bughandleConfirmEntity.getTeamWorker().split(",");
+                if (info.length > 0) {
+                    //多条
+                    for (int i = 0; i < info.length; i++) {
+                        String s = info[i];
+                        String headPortrait = s.split("-")[0];
+                        String name = s.split("-")[1];
 
-            if (bughandleConfirmEntity.getTeamWorker() != null) {
-                tvTeamWorker.setText(bughandleConfirmEntity.getTeamWorker());
+                        TemplateBean.Preson preson = new TemplateBean.Preson();
+                        preson.setProtraivat(headPortrait);
+                        preson.setName(name);
+                        presonList.add(preson);
+                    }
+                } else {
+                    //一条
+                    String headPortrait = bughandleConfirmEntity.getTeamWorker().split("-")[0];
+                    String name = bughandleConfirmEntity.getTeamWorker().split("-")[1];
+
+                    TemplateBean.Preson preson = new TemplateBean.Preson();
+                    preson.setProtraivat(headPortrait);
+                    preson.setName(name);
+                    presonList.add(preson);
+
+                }
+                teamAdapter.setNewData(presonList);
             }
 
             initImageList(bughandleConfirmEntity);
@@ -380,12 +430,16 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
      */
     public void getHistory(TransferLogEntity transferLogEntity) {
         if (transferLogEntity == null) {
-            tvHangContnet.setText("暂无转单记录");
-        } else {
-            tvHangContnet.setText(transferLogEntity.getOriginalUserEntity().getAccountEntity().getRealName() + "因" +
-                    GetConstDataUtils.getTransferCauseList().get(transferLogEntity.getCause()) + "在" +
-                    GetDateUtils.dateToDateTimeString(transferLogEntity.getCreateTime()) + "转给" + transferLogEntity.getReceiveUserEntity().getAccountEntity().getRealName());
+            llHang.setVisibility(View.GONE);
+            tvNoHistory.setVisibility(View.VISIBLE);
+            return;
         }
+        llHang.setVisibility(View.VISIBLE);
+        tvNoHistory.setVisibility(View.GONE);
+        ivHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + transferLogEntity.getOriginalUserEntity().getAccountEntity().getAvatar()));
+        tvOrderNum.setText(transferLogEntity.getOrderNum() + "");
+        tvOrderTime.setText(GetDateUtils.dateToDateTimeString(transferLogEntity.getCreateTime()));
+        tvOrderReason.setText(GetConstDataUtils.getTransferCauseList().get(transferLogEntity.getCause()));
     }
 
     @Override

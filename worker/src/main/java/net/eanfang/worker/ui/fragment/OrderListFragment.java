@@ -383,7 +383,7 @@ public class OrderListFragment extends BaseFragment implements
     public void onResume() {
         super.onResume();
         if (status != null) {
-            int index = ((RepairCtrlActivity) getActivity()).tabLayout_2.getCurrentTab();
+            int index = ((RepairCtrlActivity) getActivity()).tabLayout_2.getCurrentTab() + 1;
             if (status.equals(String.valueOf(index))) {
                 Log.e("zzw", "onResume == " + status);
                 page = 1;
@@ -399,6 +399,9 @@ public class OrderListFragment extends BaseFragment implements
             Intent intent = new Intent(getActivity(), OrderDetailActivity.class);
             intent.putExtra("id", ((RepairOrderEntity) adapter.getData().get(position)).getId());
             intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            //刷新已读未读
+            ((RepairOrderEntity) adapter.getData().get(position)).setNewOrder(0);
+            adapter.notifyItemChanged(position);
             intent.putExtra("orderTime", GetDateUtils.dateToDateTimeString(((RepairOrderEntity) adapter.getData().get(position)).getCreateTime()));
             startActivity(intent);
         }
@@ -464,11 +467,15 @@ public class OrderListFragment extends BaseFragment implements
     }
 
     public boolean doCompare(Long assingerUserId, Long userId) {
-
+        if (assingerUserId == null) {
+            showToast("只有订单负责人可以操作");
+            return false;
+        }
         if (assingerUserId.equals(userId)) {
             return true;
         }
         showToast("只有订单负责人可以操作");
         return false;
     }
+
 }

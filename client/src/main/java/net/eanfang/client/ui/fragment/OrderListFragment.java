@@ -53,6 +53,9 @@ public class OrderListFragment extends BaseFragment implements
                 intent.putExtra(Constant.ID, ((RepairOrderEntity) adapter.getData().get(position)).getId());
                 intent.putExtra("title", mTitle);
                 intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                //刷新已读未读
+                ((RepairOrderEntity) adapter.getData().get(position)).setNewOrder(0);
+                adapter.notifyItemChanged(position);
                 intent.putExtra("orderTime", GetDateUtils.dateToDateTimeString(((RepairOrderEntity) adapter.getData().get(position)).getCreateTime()));
                 startActivity(intent);
             }
@@ -136,7 +139,12 @@ public class OrderListFragment extends BaseFragment implements
                 switch (view.getId()) {
                     case R.id.tv_do_second:
                         if (doCompare(item.getOwnerUserId(), mUseId)) {
-                            CallUtils.call(getActivity(), item.getAssigneeUser().getAccountEntity().getMobile());
+                            if (item.getAssigneeUser() != null) {
+                                CallUtils.call(getActivity(), item.getAssigneeUser().getAccountEntity().getMobile());
+                            } else {
+                                showToast("请等待分配技师");
+                            }
+
                         }
                         break;
                     default:
@@ -217,7 +225,6 @@ public class OrderListFragment extends BaseFragment implements
 //                        }
                         if (doCompare(item.getOwnerUserId(), mUseId)) {
                             startActivity(new Intent(getActivity(), EvaluateWorkerActivity.class)
-                                    .putExtra("flag", 0)
                                     .putExtra("ordernum", item.getOrderNum())
                                     .putExtra("workerUid", item.getAssigneeUserId())
                                     .putExtra("orderId", item.getId())
@@ -264,16 +271,10 @@ public class OrderListFragment extends BaseFragment implements
 
     }
 
-    @Override
-    protected void onLazyLoad() {
-//        new CommonRequestProtocol("/workerorderlist", 100004, this).execute();
-//        ((RepairedManageActivity) getActivity()).initData();
-        getData();
-    }
 
     protected void getData() {
         QueryEntry queryEntry = new QueryEntry();
-        if (!Constant.ALL.equals(getTitle())) {
+        if (!"全部".equals(getTitle())) {
             status = GetConstDataUtils.getRepairStatus().indexOf(getTitle()) + "";
             queryEntry.getEquals().put(Constant.STATUS, status);
         }
@@ -346,6 +347,13 @@ public class OrderListFragment extends BaseFragment implements
 
     public String getTitle() {
         return mTitle;
+    }
+
+    @Override
+    protected void onLazyLoad() {
+//        new CommonRequestProtocol("/workerorderlist", 100004, this).execute();
+//        ((RepairedManageActivity) getActivity()).initData();
+        getData();
     }
 
     @Override

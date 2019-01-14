@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -65,6 +66,10 @@ public class NewSelectIMContactActivity extends BaseWorkerActivity {
     RecyclerView recyclerViewHori;
     @BindView(R.id.rv_company)
     RecyclerView rvCompany;
+    @BindView(R.id.recycler_view)
+    RecyclerView recyclerView;
+    @BindView(R.id.tv_no_chat)
+    TextView tvNoChat;
     private HeaderIconAdapter mHeaderIconAdapter;
     private Bundle bundle;
 
@@ -80,6 +85,13 @@ public class NewSelectIMContactActivity extends BaseWorkerActivity {
     private String mTitle;
     private ArrayList<String> mUserIdList = new ArrayList<String>();
     private ArrayList<String> mUserIconList = new ArrayList<String>();
+
+    //常用联系人的选中容器
+    private ArrayList<TemplateBean.Preson> mSeletePrivateChat = new ArrayList<TemplateBean.Preson>();
+
+    private List<TemplateBean.Preson> pirvateChat;
+
+    private OrganizationPersonAdapter mChatAdapter;
 
     private Handler handler = new Handler() {
 
@@ -146,7 +158,7 @@ public class NewSelectIMContactActivity extends BaseWorkerActivity {
 
         if (mFlag == 1) {
             //创建群组
-            setRightTitle("创建");
+            setRightTitle("下一步");
             findViewById(R.id.rl_my_group).setVisibility(View.GONE);
         } else if (mFlag == 2) {//创建是分享
             setRightTitle("确定");
@@ -167,7 +179,32 @@ public class NewSelectIMContactActivity extends BaseWorkerActivity {
             @Override
             public void onClick(View v) {
                 if (mFlag == 1) {
-                    compoundPhoto();
+
+                    // 私聊好友
+                    Set hashSet = new HashSet();
+                    hashSet.addAll(mHeaderIconAdapter.getData());
+                    hashSet.addAll(mSeletePrivateChat);
+
+                    if (newPresonList.size() > 0) {
+                        newPresonList.clear();
+                    }
+                    newPresonList.addAll(hashSet);
+
+                    if (newPresonList.size() <= 1) {
+                        ToastUtil.get().showToast(NewSelectIMContactActivity.this, "最少选两个好友");
+                        return;
+                    }
+
+                    Intent intent = new Intent(NewSelectIMContactActivity.this, CreateGroupActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("list", (Serializable) newPresonList);
+                    intent.putExtras(bundle);
+                    intent.putExtra("groupName", getIntent().getStringExtra("groupName"));
+                    intent.putExtra("imgKey", getIntent().getStringExtra("headPortrait"));
+                    intent.putExtra("locationPortrait", getIntent().getStringExtra("locationPortrait"));
+                    startActivity(intent);
+                    endTransaction(true);
+//                    compoundPhoto();
                 } else if (mFlag == 2) {//创建是分享
                     if (newPresonList.size() > 0) {
                         EventBus.getDefault().post(newPresonList);
@@ -215,6 +252,8 @@ public class NewSelectIMContactActivity extends BaseWorkerActivity {
         } else {
             findViewById(R.id.rl_organization).setVisibility(View.GONE);
         }
+        //获得常用联系人的会话列表
+        getPrivateChat();
     }
 
     private void getData() {
@@ -236,8 +275,23 @@ public class NewSelectIMContactActivity extends BaseWorkerActivity {
                                 intent.putExtra("companyId", String.valueOf(((OrgEntity) adapter.getData().get(position)).getCompanyId()));
                                 intent.putExtra("companyName", ((OrgEntity) adapter.getData().get(position)).getOrgName());
                                 Bundle bundle = new Bundle();
-                                bundle.putSerializable("list", (Serializable) mOldPresonList);
+
+                                // 私聊好友
+                                Set hashSet = new HashSet();
+                                hashSet.addAll(mHeaderIconAdapter.getData());
+                                hashSet.addAll(mSeletePrivateChat);
+
+                                if (newPresonList.size() > 0) {
+                                    newPresonList.clear();
+                                }
+                                newPresonList.addAll(hashSet);
+
+                                bundle.putSerializable("list", (Serializable) newPresonList);
                                 intent.putExtras(bundle);
+                                intent.putExtra("groupName", getIntent().getStringExtra("groupName"));
+                                intent.putExtra("imgKey", getIntent().getStringExtra("headPortrait"));
+                                intent.putExtra("locationPortrait", getIntent().getStringExtra("locationPortrait"));
+
                                 startActivity(intent);
                             }
                         });
@@ -251,13 +305,24 @@ public class NewSelectIMContactActivity extends BaseWorkerActivity {
         recyclerViewHori.setLayoutManager(linearLayoutManager);
         mHeaderIconAdapter = new HeaderIconAdapter(R.layout.item_header_icon);
         mHeaderIconAdapter.bindToRecyclerView(recyclerViewHori);
+        //删除已选的人
+        mHeaderIconAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                newPresonList.remove(position);
+                adapter.notifyDataSetChanged();
 
+                if (newPresonList.size() == 0) {
+                    rlSelected.setVisibility(View.GONE);
+                }
+            }
+        });
         rvCompany.setNestedScrollingEnabled(false);
 
         if (mOldPresonList != null && mOldPresonList.size() > 0) {
             rlSelected.setVisibility(View.VISIBLE);
-            mHeaderIconAdapter.setNewData(mOldPresonList);
             newPresonList.addAll(mOldPresonList);//加入创建的老数据
+            mHeaderIconAdapter.setNewData(newPresonList);
         }
     }
 
@@ -337,7 +402,11 @@ public class NewSelectIMContactActivity extends BaseWorkerActivity {
 
         @Override
         protected void convert(BaseViewHolder helper, TemplateBean.Preson item) {
-            ((ImageView) helper.getView(R.id.iv_user_header)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getProtraivat()));
+            if (item.getProtraivat().startsWith("http")) {
+                ((ImageView) helper.getView(R.id.iv_user_header)).setImageURI(Uri.parse(item.getProtraivat()));
+            } else {
+                ((ImageView) helper.getView(R.id.iv_user_header)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getProtraivat()));
+            }
         }
     }
 
@@ -551,6 +620,63 @@ public class NewSelectIMContactActivity extends BaseWorkerActivity {
                     setResult(RESULT_OK);
                     endTransaction(true);
                 }));
+    }
+
+    private void getPrivateChat() {
+        if (RongIM.getInstance() != null)
+            RongIM.getInstance().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
+                @Override
+                public void onSuccess(List<Conversation> conversations) {
+
+                    if (conversations != null && conversations.size() > 0) {
+                        pirvateChat = new ArrayList<>(conversations.size());
+                        for (Conversation s : conversations) {
+                            //如果名字为空的话 就不现实这天记录
+                            if (!TextUtils.isEmpty(s.getConversationTitle())) {
+                                TemplateBean.Preson preson = new TemplateBean.Preson();
+                                preson.setProtraivat(s.getPortraitUrl());
+                                preson.setId(s.getTargetId());
+                                preson.setName(s.getConversationTitle());
+                                pirvateChat.add(preson);
+                            }
+                        }
+
+
+                        runOnUiThread(() -> {
+                            if (pirvateChat.size() > 0) {
+                                recyclerView.setVisibility(View.VISIBLE);
+                                tvNoChat.setVisibility(View.GONE);
+                                recyclerView.setLayoutManager(new LinearLayoutManager(NewSelectIMContactActivity.this));
+                                mChatAdapter = new OrganizationPersonAdapter(1);
+                                mChatAdapter.bindToRecyclerView(recyclerView);
+                                mChatAdapter.setNewData(pirvateChat);
+                                mChatAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+
+                                        //设置选中不选中
+                                        TemplateBean.Preson p = (TemplateBean.Preson) adapter.getData().get(position);
+                                        if (p.isChecked()) {
+                                            p.setChecked(false);
+                                            mSeletePrivateChat.remove(p);
+                                        } else {
+                                            p.setChecked(true);
+                                            mSeletePrivateChat.add(p);
+                                        }
+
+                                        adapter.notifyItemChanged(position);
+                                    }
+                                });
+                            }
+                        });
+                    }
+                }
+
+                @Override
+                public void onError(RongIMClient.ErrorCode errorCode) {
+
+                }
+            }, Conversation.ConversationType.PRIVATE);
     }
 
     /**

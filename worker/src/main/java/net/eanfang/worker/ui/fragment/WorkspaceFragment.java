@@ -44,6 +44,8 @@ import net.eanfang.worker.ui.widget.CompanyListView;
 import net.eanfang.worker.ui.widget.SignCtrlView;
 import net.eanfang.worker.ui.widget.WorkSpaceSelectMapPopWindow;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -137,6 +139,27 @@ public class WorkspaceFragment extends BaseFragment {
         });
         // 获取定位
         getLocation();
+        // 汇报
+        qBadgeViewReport.bindTarget(findViewById(R.id.tv_work_report))
+                .setBadgeBackgroundColor(0xFFFF0000)
+                .setBadgePadding(5, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setGravityOffset(11, 0, true)
+                .setBadgeTextSize(11, true);
+        // 任务
+        qBadgeViewTask.bindTarget(findViewById(R.id.tv_work_task))
+                .setBadgeBackgroundColor(0xFFFF0000)
+                .setBadgePadding(5, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setGravityOffset(11, 0, true)
+                .setBadgeTextSize(11, true);
+        //检查
+        qBadgeViewInspect.bindTarget(findViewById(R.id.tv_work_inspect))
+                .setBadgeBackgroundColor(0xFFFF0000)
+                .setBadgePadding(5, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setGravityOffset(11, 0, true)
+                .setBadgeTextSize(11, true);
     }
 
     // 获取当前定位
@@ -219,6 +242,7 @@ public class WorkspaceFragment extends BaseFragment {
                             iv_company_logo.setImageURI("");
                         }
                         selectCompanyPop.dismiss();
+                        doHttpOrderNums();
                     }));
                     selectCompanyPop.setOnDismissListener(new PopupWindow.OnDismissListener() {
                         @Override
@@ -422,29 +446,15 @@ public class WorkspaceFragment extends BaseFragment {
 
     public void doSetOrderNums(AllMessageBean bean) {
         // 汇报
-        qBadgeViewReport.bindTarget(findViewById(R.id.tv_work_report))
-                .setBadgeNumber(bean.getReport())
-                .setBadgeBackgroundColor(0xFFFF0000)
-                .setBadgePadding(5, true)
-                .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setGravityOffset(11, 0, true)
-                .setBadgeTextSize(11, true);
+        qBadgeViewReport.setBadgeNumber(bean.getReport());
         // 任务
-        qBadgeViewTask.bindTarget(findViewById(R.id.tv_work_task))
-                .setBadgeNumber(bean.getTask())
-                .setBadgeBackgroundColor(0xFFFF0000)
-                .setBadgePadding(5, true)
-                .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setGravityOffset(11, 0, true)
-                .setBadgeTextSize(11, true);
+        qBadgeViewTask.setBadgeNumber(bean.getTask());
         //检查
-        qBadgeViewInspect.bindTarget(findViewById(R.id.tv_work_inspect))
-                .setBadgeNumber(bean.getInspect())
-                .setBadgeBackgroundColor(0xFFFF0000)
-                .setBadgePadding(5, true)
-                .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setGravityOffset(11, 0, true)
-                .setBadgeTextSize(11, true);
+        qBadgeViewInspect.setBadgeNumber(bean.getInspect());
+        /**
+         * 底部红点更新
+         * */
+        EventBus.getDefault().post(bean);
     }
 
 

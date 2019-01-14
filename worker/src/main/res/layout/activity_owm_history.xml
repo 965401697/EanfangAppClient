@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_white"
     android:orientation="vertical"
     tools:context="net.eanfang.worker.ui.activity.my.certification.CertificateListActivity">
 
@@ -13,7 +14,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_160"
-        android:background="@color/color_white"
+
         android:orientation="vertical">
 
 
@@ -119,6 +120,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
+        android:textColor="@color/white"
         android:layout_height="0dp"
         android:layout_weight="1" />
 
@@ -133,7 +135,7 @@
         android:padding="@dimen/dimen_30"
         android:text="去添加工作经历→"
         android:textColor="@color/color_white"
-        android:visibility="gone"
-        android:textSize="@dimen/textSize_14" />
+        android:textSize="@dimen/textSize_14"
+        android:visibility="gone" />
 
 </LinearLayout>

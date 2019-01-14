@@ -146,6 +146,10 @@ public interface NewApiService {
      * 获取官方消息通知
      */
     String GET_OFFICIAL_MSG = BuildConfig.API_HOST + "/yaf_sys/noticepush/appList";
+    /**
+     * 获取官方消息状态接口
+     */
+    String GET_OFFICIAL_CHANGE_STATUS = BuildConfig.API_HOST + "/yaf_sys/noticepush/updateStatus";
 
 
     /**
@@ -395,6 +399,10 @@ public interface NewApiService {
      */
     String GET_COOPERATION_LIST = BASE_URL + "/yaf_shop/cooperation/list";
     /**
+     * 筛选合作业务的公司专用接口（根据assginee或owner信息筛选出合作业务的公司信息）
+     */
+    String GET_SELECT_COOPERATION_LIST = BASE_URL + "/yaf_shop/cooperation/selectCoopCompany";
+    /**
      * 查看合作业务的详情
      * post
      */
@@ -520,10 +528,10 @@ public interface NewApiService {
      */
     String MAINTENANCE_DETAIL_DISPOSE = BASE_URL + "/yaf_maintain/shopmaintenanceorder/app/detailDispose";
 
-    /*
-    * 报修统计获取公司
-    */
-    String REPAIR_DATA_COMPANGY = BASE_URL + "/yaf_shop/workCompany/search";
+    /**
+     * 报修统计获取公司
+     */
+    String REPAIR_DATA_COMPANGY = BASE_URL + "/yaf_sys/org/company/listsubcompany";
 
     /**
      * 面谈员工列表
@@ -566,5 +574,16 @@ public interface NewApiService {
      * 报修支付优惠码
      */
     String REPAIR_PAY_COUPON = BASE_URL + "/yaf_sys/couponPay/repair";
+
+    /**
+     * 技师端扫一扫客户设备库，查看当前设备是否是待维保的设备，并返回维保信息和维保明细信息。
+     */
+    String SCAN_DEVICE_DEAL = BASE_URL + "/yaf_maintain/shopmaintenanceorder/app/maintenanceDetailByDeviceId";
+
+    /**
+     * 维保完工查看重点设备
+     */
+    String MAINTENANCE_DEVICE_DEAL = BASE_URL + "/yaf_maintain/shopmaintenanceorder/prepare";
+
 
 }

@@ -7,12 +7,13 @@ import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 import com.yaf.sys.entity.OrgEntity;
 import com.yaf.sys.entity.UserEntity;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
+import lombok.Getter;
+import lombok.Setter;
 
 
 /**
@@ -75,6 +76,8 @@ public class ProtectionLogEntity implements Serializable {
     //状态(0:未读,1:已读,2:删除)
     //@TableField(value = "status")
     private Integer status;
+    // 是否已读 未读
+    private int newOrder;
 
 
     //-----------------------------------业务字段，不存在于数据库----------------------------------------

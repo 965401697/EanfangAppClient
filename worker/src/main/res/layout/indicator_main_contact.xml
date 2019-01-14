@@ -21,7 +21,7 @@
         android:src="@drawable/main_tab_contact_selector" />
 
     <View
-        android:id="@+id/redPoint"
+        android:id="@+id/redPoint_contact"
         android:layout_width="12dp"
         android:layout_height="12dp"
         android:layout_marginTop="3dp"

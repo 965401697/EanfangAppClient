@@ -20,6 +20,8 @@ import com.eanfang.util.QueryEntry;
 import net.eanfang.client.ui.activity.worksapce.oa.workreport.WorkReportDetailActivity;
 import net.eanfang.client.ui.adapter.WorkReportListAdapter;
 
+import org.greenrobot.eventbus.Subscribe;
+
 
 /**
  * Created by Mr.hou
@@ -64,7 +66,7 @@ public class WorkReportListFragment extends TemplateItemListFragment {
 
                 if (!PermKit.get().getWorkReportDetailPrem()) return;
 
-                if (mType == 2 && ((WorkReportListBean.ListBean) adapter.getData().get(position)).getStatus() == EanfangConst.WORK_TASK_STATUS_UNREAD) {
+                if (((WorkReportListBean.ListBean) adapter.getData().get(position)).getNewOrder() == EanfangConst.WORK_TASK_STATUS_READ) {
 //                if (((WorkReportListBean.ListBean) adapter.getData().get(position)).getStatus() == EanfangConst.WORK_TASK_STATUS_UNREAD && mType == 1) {
                     getFirstLookData(((WorkReportListBean.ListBean) adapter.getData().get(position)).getId());
                     mDetailBean = ((WorkReportListBean.ListBean) adapter.getData().get(position));
@@ -78,7 +80,7 @@ public class WorkReportListFragment extends TemplateItemListFragment {
                 intent.putExtra("id", ((WorkReportListBean.ListBean) adapter.getData().get(position)).getId());
                 intent.putExtra("type", GetConstDataUtils.getWorkReportTypeList().get((((WorkReportListBean.ListBean) adapter.getData().get(position)).getType())));
                 intent.putExtra("name", ((WorkReportListBean.ListBean) adapter.getData().get(position)).getCreateUser().getAccountEntity().getRealName());
-                getActivity().startActivityForResult(intent,DETAILL_REQUEST_CODE);
+                getActivity().startActivityForResult(intent, DETAILL_REQUEST_CODE);
             }
         });
     }
@@ -121,7 +123,6 @@ public class WorkReportListFragment extends TemplateItemListFragment {
                     @Override
                     public void onSuccess(WorkReportListBean bean) {
 
-                        mQueryEntry = null;//释放对象
 
                         if (mPage == 1) {
                             mAdapter.getData().clear();
@@ -130,6 +131,8 @@ public class WorkReportListFragment extends TemplateItemListFragment {
                             mAdapter.loadMoreComplete();
                             if (bean.getList().size() < 10) {
                                 mAdapter.loadMoreEnd();
+                                //释放对象
+                                mQueryEntry = null;
                             }
 
                             if (bean.getList().size() > 0) {
@@ -181,13 +184,23 @@ public class WorkReportListFragment extends TemplateItemListFragment {
         mPage = 1;
         getData();
     }
+
     /**
      * 刷新已读未读的状态
      */
     public void refreshStatus() {
         if (mDetailBean != null) {
-            mDetailBean.setStatus(1);
+            mDetailBean.setNewOrder(0);
             mAdapter.notifyItemChanged(mPosition);
+        }
+    }
+
+    @Subscribe
+    public void onEvent(String createSuccess) {
+        if (createSuccess.equals("addReportSuccess")) {
+            mQueryEntry = null;
+            mPage = 1;
+            getData();
         }
     }
 }

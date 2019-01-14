@@ -2,6 +2,7 @@ package com.eanfang.ui.items;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.CheckBox;
 
@@ -11,6 +12,7 @@ import com.baozi.treerecyclerview.item.TreeItemGroup;
 import com.eanfang.BuildConfig;
 import com.eanfang.R;
 import com.eanfang.model.TemplateBean;
+import com.eanfang.util.SharePreferenceUtil;
 
 /**
  * Created by O u r on 2018/5/31.
@@ -31,7 +33,16 @@ public class OrgSelectItem extends TreeItem<TemplateBean.Preson> {
         if (data.isVisible()) {
             viewHolder.getView(R.id.cb_check).setVisibility(View.INVISIBLE);
         }
+        try {
+            if (SharePreferenceUtil.get().get("app", "").equals("client")) {
+                ((CheckBox) viewHolder.getView(R.id.cb_check)).setBackground(ContextCompat.getDrawable(viewHolder.getTextView(R.id.tv_name).getContext(), R.drawable.selector_single_checked_client));
 
+            } else {
+                ((CheckBox) viewHolder.getView(R.id.cb_check)).setBackground(ContextCompat.getDrawable(viewHolder.getTextView (R.id.tv_name).getContext(), R.drawable.selector_single_checked_worker));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         TreeItemGroup parentItem = getParentItem();
         if (parentItem instanceof OrgSelectGroupMultipleItem) {
             viewHolder.setChecked(R.id.cb_check, ((OrgSelectGroupMultipleItem) parentItem).getSelectItems().contains(this));

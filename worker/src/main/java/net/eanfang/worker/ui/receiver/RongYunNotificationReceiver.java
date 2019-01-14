@@ -1,7 +1,10 @@
 package net.eanfang.worker.ui.receiver;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
+
+import net.eanfang.worker.ui.activity.MainActivity;
 
 import io.rong.push.notification.PushMessageReceiver;
 import io.rong.push.notification.PushNotificationMessage;
@@ -11,15 +14,26 @@ import io.rong.push.notification.PushNotificationMessage;
  */
 
 public class RongYunNotificationReceiver extends PushMessageReceiver {
+
+
     @Override
     public boolean onNotificationMessageArrived(Context context, PushNotificationMessage message) {
-        Log.e("zzw", "onNotificationMessageArrived" + message.getPushContent().toString());
+        Log.e("zzw", "onNotificationMessageArrived=" + message.getPushContent().toString());
+
         return false;// 返回 false, 会弹出融云 SDK 默认通知; 返回 true, 融云 SDK 不会弹通知, 通知需要由您自定义。
     }
 
     @Override
     public boolean onNotificationMessageClicked(Context context, PushNotificationMessage message) {
-        Log.e("zzw", "onNotificationMessageArrived" + message.getPushContent().toString());
+        Log.e("zzw", "onNotificationMessageClicked=" + message.getPushContent().toString());
+        if (MainActivity.hashMap.get(message.getTargetId()) != null) {
+            Intent intent = new Intent(context, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            MainActivity.hashMap.remove(message.getTargetId());
+            context.startActivity(intent);
+            return true;
+        }
+
         return false;// 返回 false, 会走融云 SDK 默认处理逻辑, 即点击该通知会打开会话列表或会话界面; 返回 true, 则由您自定义处理逻辑。
     }
 }

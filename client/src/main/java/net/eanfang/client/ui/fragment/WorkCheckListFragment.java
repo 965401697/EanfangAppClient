@@ -1,6 +1,6 @@
 package net.eanfang.client.ui.fragment;
 
-import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -11,6 +11,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WorkCheckListBean;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 
@@ -35,9 +36,10 @@ public class WorkCheckListFragment extends TemplateItemListFragment {
     private int mType;
     private WorkCheckListAdapter mAdapter;
     private int currentPosition;
-    public static final int REQUST_REFRESH_CODE = 101;
+    public static final int REQUST_REFRESH_CODE = 1010;
 
     private QueryEntry mQueryEntry;
+    private WorkCheckListBean.ListBean mDetailTaskBean;
 
     public static WorkCheckListFragment getInstance(String title, int type) {
         WorkCheckListFragment sf = new WorkCheckListFragment();
@@ -62,10 +64,11 @@ public class WorkCheckListFragment extends TemplateItemListFragment {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if (!PermKit.get().getWorkInspectDetailPrem()) return;
                 currentPosition = position;
-                Intent intent = new Intent(getActivity(), DealWithFirstActivity.class);
-                intent.putExtra("id", ((WorkCheckListBean.ListBean) adapter.getData().get(position)).getId());
-                intent.putExtra("status", ((WorkCheckListBean.ListBean) adapter.getData().get(position)).getStatus());
-                startActivityForResult(intent, REQUST_REFRESH_CODE);
+                mDetailTaskBean = (WorkCheckListBean.ListBean) adapter.getData().get(position);
+                Bundle bundle = new Bundle();
+                bundle.putInt("status", ((WorkCheckListBean.ListBean) adapter.getData().get(position)).getStatus());
+                bundle.putLong("id", ((WorkCheckListBean.ListBean) adapter.getData().get(position)).getId());
+                JumpItent.jump(getActivity(), DealWithFirstActivity.class, bundle, REQUST_REFRESH_CODE);
             }
         });
     }
@@ -94,7 +97,7 @@ public class WorkCheckListFragment extends TemplateItemListFragment {
 
                     @Override
                     public void onSuccess(WorkCheckListBean bean) {
-                        mQueryEntry = null;
+
                         if (mPage == 1) {
                             mAdapter.getData().clear();
                             mAdapter.setNewData(bean.getList());
@@ -102,6 +105,7 @@ public class WorkCheckListFragment extends TemplateItemListFragment {
                             mAdapter.loadMoreComplete();
                             if (bean.getList().size() < 10) {
                                 mAdapter.loadMoreEnd();
+                                mQueryEntry = null;
                             }
 
                             if (bean.getList().size() > 0) {
@@ -153,6 +157,16 @@ public class WorkCheckListFragment extends TemplateItemListFragment {
         getData();
     }
 
+    /**
+     * 刷新已读未读的状态
+     */
+    public void refreshStatus() {
+        if (mDetailTaskBean != null) {
+            mDetailTaskBean.setNewOrder(0);
+            mAdapter.notifyItemChanged(currentPosition);
+        }
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)//MAIN代表主线程
     public void receiveMessage(String message) {//该方法名可更改，不影响任何东西。
         if (message.equals("addDealWithInfoSuccess")) {
@@ -162,6 +176,15 @@ public class WorkCheckListFragment extends TemplateItemListFragment {
             } else {
                 mTvNoData.setVisibility(View.GONE);
             }
+        }
+    }
+
+    @Subscribe
+    public void onEvent(String createSuccess) {
+        if (createSuccess.equals("addCheckSuccess")) {
+            mQueryEntry = null;
+            mPage = 1;
+            getData();
         }
     }
 }

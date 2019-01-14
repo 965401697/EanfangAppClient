@@ -90,6 +90,7 @@ public class OrderDetailFragment extends BaseFragment {
     //
     private String mOrderNum = "";
     private Long mOwnerUserId;
+    private Long mAssigneeUserId;
 
     private Long id;
     // 保修人
@@ -136,7 +137,7 @@ public class OrderDetailFragment extends BaseFragment {
 
     @Override
     protected void initData(Bundle arguments) {
-        getData();
+//        getData();
     }
 
     @Override
@@ -182,6 +183,11 @@ public class OrderDetailFragment extends BaseFragment {
         mTvOrderAllPrice = findViewById(R.id.tv_orderAllPrice);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getData();
+    }
 
     @Override
     protected void setListener() {
@@ -201,9 +207,8 @@ public class OrderDetailFragment extends BaseFragment {
             } else if (mOrderStatus == 5) {//立即评价
                 if (doCompare(mOwnerUserId, mUserId)) {
                     startActivity(new Intent(getActivity(), EvaluateWorkerActivity.class)
-                            .putExtra("flag", 0)
                             .putExtra("ordernum", mOrderNum)
-                            .putExtra("workerUid", mOwnerUserId)
+                            .putExtra("workerUid", mAssigneeUserId)
                             .putExtra("orderId", mItemId)
                             .putExtra("avatar", mHeadUrl));
                 }
@@ -290,7 +295,7 @@ public class OrderDetailFragment extends BaseFragment {
                     //==================================================================
 
                     hashMap.put("id", String.valueOf(bean.getId()));
-                    if (bean.getBugEntityList() != null && !TextUtils.isEmpty(bean.getBugEntityList().get(0).getPictures())) {
+                    if (bean.getBugEntityList() != null && bean.getBugEntityList().size() > 0) {
                         hashMap.put("picUrl", bean.getBugEntityList().get(0).getPictures().split(",")[0]);
                     }
                     hashMap.put("orderNum", bean.getOrderNum());
@@ -402,6 +407,7 @@ public class OrderDetailFragment extends BaseFragment {
                         llFinish.setVisibility(View.VISIBLE);
                         llPay.setVisibility(View.GONE);
                         tvBottomRight.setText("立即评价");
+                        mAssigneeUserId = bean.getAssigneeUserId();
                         if (bean.getWorkerEvaluateId() == null || bean.getWorkerEvaluateId().longValue() <= 0) {
                             tvBottomRight.setVisibility(View.VISIBLE);
                         } else {
@@ -430,4 +436,5 @@ public class OrderDetailFragment extends BaseFragment {
         showToast("当前无权限操作订单");
         return false;
     }
+
 }

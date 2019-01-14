@@ -73,30 +73,32 @@ public class CooperationSearchClientActivity extends BaseWorkerActivity {
                 }
             }
         });
-
-
-        mCooperationSearchAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+        mCooperationSearchAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                if (view.getId() == R.id.cb_checked) {
                     CooperationSearchBean.ListBean bean = (CooperationSearchBean.ListBean) adapter.getData().get(position);
+
                     if (mOldPosition == -1) {
                         mOldPosition = position;
                         bean.setChecked(true);
-                        adapter.notifyDataSetChanged();
+                        adapter.notifyItemChanged(position);
                         return;
                     }
 
                     if (position == mOldPosition) {
                         mOldPosition = -1;
                         bean.setChecked(false);
+                        adapter.notifyItemChanged(position);
                     } else {
                         ((CooperationSearchBean.ListBean) adapter.getData().get(mOldPosition)).setChecked(false);
-                        mOldPosition = position;
+                        adapter.notifyItemChanged(mOldPosition);
 
+                        mOldPosition = position;
                         bean.setChecked(true);
+                        adapter.notifyItemChanged(position);
                     }
-                    adapter.notifyDataSetChanged();
+                }
             }
         });
     }

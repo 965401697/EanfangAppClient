@@ -7,6 +7,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.model.CollectionWorkerListBean;
+import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -38,6 +39,8 @@ public class CollectionWorkerListAdapter extends BaseQuickAdapter<CollectionWork
         if (item.getAssigneeUserEntity() != null) {
             helper.setText(R.id.tv_name, item.getAssigneeUserEntity().getAccountEntity().getRealName());
         }
+        // 工作年限
+        helper.setText(R.id.tv_workTime, GetConstDataUtils.getWorkingYearList().get(item.getWorkerEntity().getVerifyEntity().getWorkingYear()));
         if (item.getWorkerEntity() != null) {
             if (item.getWorkerEntity().getPublicPraise() != 0) {
                 helper.setText(R.id.tv_koubei, item.getWorkerEntity().getPublicPraise() / 100 + "分");

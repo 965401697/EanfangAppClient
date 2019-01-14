@@ -23,7 +23,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white">
+                    android:background="@color/white"
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -233,11 +234,20 @@
                     android:paddingTop="@dimen/dimen_20"
                     android:text="常用联系人" />
 
+
+                <TextView
+                    android:id="@+id/tv_no_chat"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_400"
+                    android:gravity="center"
+                    android:text="暂无数据" />
+
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recycler_view"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_400"
-                    android:paddingLeft="@dimen/dimen_36" />
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="@dimen/dimen_36"
+                    android:visibility="gone" />
             </LinearLayout>
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

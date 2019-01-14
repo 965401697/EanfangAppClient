@@ -48,6 +48,12 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // 解决 安装后直接打开 按home键 从新开启闪屏页
+        if ((getIntent().getFlags() & Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT) != 0) {
+            //结束你的activity
+            finish();
+            return;
+        }
         setContentView(R.layout.activity_splash);
         //bugly初始化
         CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(SplashActivity.this);

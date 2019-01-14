@@ -332,9 +332,13 @@ public interface UserApi {
      */
     String POST_ACCEPT_FRIEND = BuildConfig.API_HOST + "/yaf_sys/outer2user/accept";
     /**
-     * 拒绝
+     * 拒绝添加添加
      */
-    String POST_REFUSE_FRIEND = BuildConfig.API_HOST + "/yaf_sys/outer2user/refuse";
+    String POST_REJECT_FRIEND = BuildConfig.API_HOST + "/yaf_im/im/rejectFriendPush";
+//    /**
+//     * 拒绝
+//     */
+//    String POST_REFUSE_FRIEND = BuildConfig.API_HOST + "/yaf_sys/outer2user/refuse";
     /**
      * 删除好友
      */

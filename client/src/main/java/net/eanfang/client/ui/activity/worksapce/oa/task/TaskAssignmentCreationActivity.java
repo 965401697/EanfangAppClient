@@ -54,6 +54,7 @@ import net.eanfang.client.ui.activity.worksapce.oa.OAPersonAdaptet;
 import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.util.SendContactUtils;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.text.SimpleDateFormat;
@@ -71,7 +72,7 @@ import butterknife.OnClick;
 
 import static android.provider.MediaStore.Video.Thumbnails.MINI_KIND;
 
-public class TaskAssignmentCreationActivity  extends BaseClientActivity {
+public class TaskAssignmentCreationActivity extends BaseClientActivity {
 
     @BindView(R.id.tv_company_name)
     TextView tvCompanyName;
@@ -233,7 +234,6 @@ public class TaskAssignmentCreationActivity  extends BaseClientActivity {
                 JumpItent.jump(TaskAssignmentCreationActivity.this, PlayVideoActivity.class, bundle_takevideo);
                 break;
             case R.id.tv_complete:
-                llAddTask.setVisibility(View.GONE);
                 if (closeTaskWrite()) {
                     llAddTask.setVisibility(View.GONE);
 
@@ -249,6 +249,9 @@ public class TaskAssignmentCreationActivity  extends BaseClientActivity {
             case R.id.tv_sub:
                 submit();
                 break;
+            default:
+                break;
+
         }
     }
 
@@ -472,6 +475,7 @@ public class TaskAssignmentCreationActivity  extends BaseClientActivity {
                         message.setMsgContent("任务指派成功");
                         message.setTip("确定");
                         bundle.putSerializable("message", message);
+                        EventBus.getDefault().post("addTaskSuccess");
                         JumpItent.jump(TaskAssignmentCreationActivity.this, StateChangeActivity.class, bundle);
 
                         //分享
@@ -510,7 +514,7 @@ public class TaskAssignmentCreationActivity  extends BaseClientActivity {
                         b.putString("status", "0");
                         b.putString("shareType", "4");
 
-                        new SendContactUtils(b, handler, groupList, DialogUtil.createLoadingDialog(TaskAssignmentCreationActivity.this),"布置任务").send();
+                        new SendContactUtils(b, handler, groupList, DialogUtil.createLoadingDialog(TaskAssignmentCreationActivity.this), "布置任务").send();
 
 
                     });

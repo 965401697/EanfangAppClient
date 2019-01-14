@@ -13,14 +13,14 @@ import java.util.List;
  * 切换公司列表
  */
 
-public class SwitchCompanyDataStatisticsListAdapter extends BaseQuickAdapter<DataStatisticsCompany.ListBean, BaseViewHolder> {
+public class SwitchCompanyDataStatisticsListAdapter extends BaseQuickAdapter<DataStatisticsCompany, BaseViewHolder> {
     public SwitchCompanyDataStatisticsListAdapter(int layoutResId, List data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, DataStatisticsCompany.ListBean item) {
-        helper.setText(R.id.tv_detail_name, helper.getPosition() + 1 + "." + item.getCompanyEntity().getName());
+    protected void convert(BaseViewHolder helper, DataStatisticsCompany item) {
+        helper.setText(R.id.tv_detail_name, helper.getPosition() + 1 + "." + item.getOrgName());
         helper.addOnClickListener(R.id.tv_delete);
     }
 }

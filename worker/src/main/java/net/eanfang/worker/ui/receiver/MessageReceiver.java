@@ -9,6 +9,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.camera.util.LogUtil;
 import com.eanfang.ui.base.voice.SynthesizerPresenter;
+import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.Var;
 import com.tencent.android.tpush.XGPushBaseReceiver;
@@ -48,7 +49,14 @@ public class MessageReceiver extends XGPushBaseReceiver {
         if (!StringUtils.isEmpty(jsonObject.toJSONString())) {
             System.err.println("---------------------jsonObject:" + jsonObject.toJSONString());
             if (jsonObject.containsKey("audio") && !StringUtils.isEmpty(jsonObject.getString("audio"))) {
-                SynthesizerPresenter.getInstance().start(jsonObject.getString("audio"));
+                try {
+                    boolean isOpen = (Boolean) SharePreferenceUtil.get().get("XGNoticeVoice", true);
+                    if (isOpen) {
+                        SynthesizerPresenter.getInstance().start(jsonObject.getString("audio"));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
         LogUtil.e(LogTag, "onNotifactionShowedResult");
@@ -78,7 +86,6 @@ public class MessageReceiver extends XGPushBaseReceiver {
         if (context == null || message == null) {
             return;
         }
-        LogUtil.e(LogTag, "onNotifactionClickedResult");
 //        if (message.getActionType() == XGPushClickedResult.NOTIFACTION_CLICKED_TYPE) {
 //            // 通知在通知栏被点击啦。。。。。
 //            // APP自己处理点击的相关动作

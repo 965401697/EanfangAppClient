@@ -46,6 +46,7 @@
         android:layout_toRightOf="@+id/iv_user_header"
         android:text="  "
         android:textColor="#999999"
+        android:visibility="gone"
         android:textSize="@dimen/textSize_12" />
 
 </RelativeLayout>

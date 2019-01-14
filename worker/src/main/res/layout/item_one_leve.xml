@@ -32,8 +32,10 @@
 
         <CheckBox
             android:id="@+id/cb_all_checked"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/dimen_42"
+            android:layout_height="@dimen/dimen_42"
+            android:background="@drawable/selector_single_checked_worker"
+            android:button="@null"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/dimen_26"

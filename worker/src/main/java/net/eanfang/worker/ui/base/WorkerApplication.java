@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.util.SharePreferenceUtil;
+import com.mob.MobSDK;
 
 import net.eanfang.worker.BuildConfig;
 import net.eanfang.worker.ui.activity.MainActivity;
@@ -75,7 +76,7 @@ public class WorkerApplication extends EanfangApplication {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
+            MobSDK.init(this,"299cfb8d27500","91afc15795a7f3dc04b5cab818c097c9");
         }
 
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {

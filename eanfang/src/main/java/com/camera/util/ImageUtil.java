@@ -6,6 +6,9 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.text.Layout;
+import android.text.StaticLayout;
+import android.text.TextPaint;
 
 /**
  * Created by Mr.hou
@@ -131,7 +134,7 @@ public class ImageUtil {
      */
     public static Bitmap drawTextToLeftTop(Context context, Bitmap bitmap, String text,
                                            int size, int color, int paddingLeft, int paddingTop) {
-        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        TextPaint paint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor(color);
         paint.setTextSize(dp2px(context, size));
         Rect bounds = new Rect();
@@ -139,29 +142,6 @@ public class ImageUtil {
         return drawTextToBitmap(context, bitmap, text, paint, bounds,
                 dp2px(context, paddingLeft),
                 dp2px(context, paddingTop) + bounds.height());
-    }
-
-    /**
-     * 绘制文字到右下角
-     *
-     * @param context
-     * @param bitmap
-     * @param text
-     * @param size
-     * @param color
-     */
-    public static Bitmap drawTextToRightBottom(Context context, Bitmap bitmap, String text,
-                                               int size, int color, int paddingRight, int paddingBottom) {
-        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        paint.setColor(color);
-        paint.setTextSize(dp2px(context, size));
-        Rect bounds = new Rect();
-        if (text.length() != 0) {
-            paint.getTextBounds(text, 0, text.length(), bounds);
-        }
-        return drawTextToBitmap(context, bitmap, text, paint, bounds,
-                bitmap.getWidth() - bounds.width() - dp2px(context, paddingRight),
-                bitmap.getHeight() - dp2px(context, paddingBottom));
     }
 
     /**
@@ -178,7 +158,7 @@ public class ImageUtil {
      */
     public static Bitmap drawTextToRightTop(Context context, Bitmap bitmap, String text,
                                             int size, int color, int paddingRight, int paddingTop) {
-        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        TextPaint paint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor(color);
         paint.setTextSize(dp2px(context, size));
         Rect bounds = new Rect();
@@ -186,6 +166,54 @@ public class ImageUtil {
         return drawTextToBitmap(context, bitmap, text, paint, bounds,
                 bitmap.getWidth() - bounds.width() - dp2px(context, paddingRight),
                 dp2px(context, paddingTop) + bounds.height());
+    }
+
+    /**
+     * 绘制文字到右下角
+     *
+     * @param context
+     * @param bitmap
+     * @param text
+     * @param size
+     * @param color
+     */
+    public static Bitmap drawTextToRightBottom(Context context, Bitmap bitmap, String text,
+                                               int size, int color, int paddingRight, int paddingBottom) {
+        TextPaint paint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
+        paint.setColor(color);
+        paint.setTextSize(dp2px(context, size));
+        Rect bounds = new Rect();
+        if (text.length() != 0) {
+            paint.getTextBounds(text, 0, text.length(), bounds);
+        }
+        return drawTextToBitmap(context, bitmap, text, paint, bounds,
+                bitmap.getWidth() - bounds.width() - dp2px(context, paddingRight),
+                bitmap.getHeight() - dp2px(context, paddingBottom));
+    }
+
+    //图片上绘制文字
+    private static Bitmap drawTextToBitmap(Context context, Bitmap bitmap, String text,
+                                           TextPaint paint, Rect bounds, int paddingLeft, int paddingTop) {
+        Bitmap.Config bitmapConfig = bitmap.getConfig();
+
+        paint.setDither(true); // 获取跟清晰的图像采样
+        paint.setFilterBitmap(true);// 过滤一些
+        if (bitmapConfig == null) {
+            bitmapConfig = Bitmap.Config.ARGB_8888;
+        }
+        bitmap = bitmap.copy(bitmapConfig, true);
+
+
+        Canvas canvas = new Canvas(bitmap);
+        StaticLayout staticLayout2 = new StaticLayout(text, paint, bitmap.getWidth(),
+                Layout.Alignment.ALIGN_NORMAL, 1.0F, 0.0F, true);
+
+        canvas.translate(0, paddingTop);
+        staticLayout2.draw(canvas);
+        canvas.save();
+        canvas.restore();
+//        canvas.drawText(text, paddingLeft, paddingTop, paint);
+        return bitmap;
     }
 
     /**
@@ -202,7 +230,7 @@ public class ImageUtil {
      */
     public static Bitmap drawTextToLeftBottom(Context context, Bitmap bitmap, String text,
                                               int size, int color, int paddingLeft, int paddingBottom) {
-        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        TextPaint paint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor(color);
         paint.setTextSize(dp2px(context, size));
         Rect bounds = new Rect();
@@ -224,7 +252,7 @@ public class ImageUtil {
      */
     public static Bitmap drawTextToCenter(Context context, Bitmap bitmap, String text,
                                           int size, int color) {
-        Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        TextPaint paint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
         paint.setColor(color);
         paint.setTextSize(dp2px(context, size));
         Rect bounds = new Rect();
@@ -234,22 +262,6 @@ public class ImageUtil {
                 (bitmap.getHeight() + bounds.height()) / 2);
     }
 
-    //图片上绘制文字
-    private static Bitmap drawTextToBitmap(Context context, Bitmap bitmap, String text,
-                                           Paint paint, Rect bounds, int paddingLeft, int paddingTop) {
-        Bitmap.Config bitmapConfig = bitmap.getConfig();
-
-        paint.setDither(true); // 获取跟清晰的图像采样
-        paint.setFilterBitmap(true);// 过滤一些
-        if (bitmapConfig == null) {
-            bitmapConfig = Bitmap.Config.ARGB_8888;
-        }
-        bitmap = bitmap.copy(bitmapConfig, true);
-        Canvas canvas = new Canvas(bitmap);
-
-        canvas.drawText(text, paddingLeft, paddingTop, paint);
-        return bitmap;
-    }
 
     /**
      * 缩放图片

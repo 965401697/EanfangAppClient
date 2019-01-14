@@ -128,7 +128,12 @@ public class SignInActivity extends BaseWorkerActivity {
             singNotAround();
         } else {
             mSignScope = "0";
-            doHttp(orderId);
+//            doHttp(orderId);
+            if (mIsFromType == 1) {
+                doMaintenanceHttp(orderId);
+            } else {
+                doHttp(orderId);
+            }
         }
     }
 
@@ -241,7 +246,8 @@ public class SignInActivity extends BaseWorkerActivity {
         object.put("signLongitude", mLongitude + "");
         object.put("signLatitude", mLatitude + "");
         object.put("signScope", mSignScope);
-
+        object.put("signCode", Config.get().getAreaCodeByName(city, county));
+        object.put("signAddress", tvAddress.getText().toString().trim());
 
         EanfangHttp.post(NewApiService.MAINTENANCE_SINGIN)
                 .upJson(JsonUtils.obj2String(object))

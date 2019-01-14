@@ -449,7 +449,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="故障简述:"
+                        android:text="故障名称:"
                         android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_13" />
 
@@ -459,7 +459,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dimen_40"
                         android:layout_weight="1"
-                        android:text="暂无简述"
+                        android:text="暂无"
                         android:textColor="@color/color_bottom"
                         android:textSize="@dimen/textSize_13"
                         android:visibility="visible" />
@@ -500,6 +500,51 @@
                         android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_13" />
                 </LinearLayout>
+            </LinearLayout>
+
+            <View style="@style/style_common_line_gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_white"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dimen_30"
+                        android:text="@string/text_fault_description"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_13" />
+
+                    <ImageView
+                        android:id="@+id/iv_input_voice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerInParent="true"
+                        android:padding="@dimen/dimen_20"
+                        android:src="@mipmap/ic_client_voice_input" />
+                </RelativeLayout>
+
+
+                <EditText
+                    android:id="@+id/ev_faultDescripte"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_margin="@dimen/dimen_30"
+                    android:background="@drawable/bg_client_camera_text_back"
+                    android:gravity="left"
+                    android:padding="10dp"
+                    android:text=""
+                    android:textColor="@color/color_client_neworder"
+                    android:textColorHint="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_12" />
             </LinearLayout>
 
             <View style="@style/style_common_line_gray" />
@@ -605,51 +650,6 @@
 
             </LinearLayout>
 
-            <View style="@style/style_common_line_gray" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@color/color_white"
-                android:orientation="vertical">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/dimen_30"
-                        android:text="@string/text_fault_description"
-                        android:textColor="@color/color_client_neworder"
-                        android:textSize="@dimen/textSize_13" />
-
-                    <ImageView
-                        android:id="@+id/iv_input_voice"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerInParent="true"
-                        android:padding="@dimen/dimen_20"
-                        android:src="@mipmap/ic_client_voice_input" />
-                </RelativeLayout>
-
-
-                <EditText
-                    android:id="@+id/ev_faultDescripte"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_margin="@dimen/dimen_30"
-                    android:background="@drawable/bg_client_camera_text_back"
-                    android:gravity="left"
-                    android:padding="10dp"
-                    android:text=""
-                    android:textColor="@color/color_client_neworder"
-                    android:textColorHint="@color/color_client_neworder"
-                    android:textSize="@dimen/textSize_12" />
-            </LinearLayout>
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>

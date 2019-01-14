@@ -1,22 +1,24 @@
 package net.eanfang.worker.ui.fragment;
 
-import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 
 import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
-import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WorkTaskListBean;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.worker.ui.activity.worksapce.oa.task.TaskDetailActivity;
 import net.eanfang.worker.ui.adapter.WorkTaskListAdapter;
+
+import org.greenrobot.eventbus.Subscribe;
 
 
 /**
@@ -68,16 +70,20 @@ public class WorkTaskListFragment extends TemplateItemListFragment {
 
                 WorkTaskListBean.ListBean bean = (WorkTaskListBean.ListBean) adapter.getData().get(position);
 
-                if (Integer.parseInt(mType) == 2 && bean.getStatus() == (EanfangConst.WORK_TASK_STATUS_UNREAD)) {
-                    getFirstLookData(bean.getId());
-                    mDetailTaskBean = ((WorkTaskListBean.ListBean) adapter.getData().get(position));
-                    mPosition = position;
-                }
+//                if (bean.getStatus() == (EanfangConst.WORK_TASK_STATUS_UNREAD)) {
+//                    getFirstLookData(bean.getId());
+                mDetailTaskBean = ((WorkTaskListBean.ListBean) adapter.getData().get(position));
+                mPosition = position;
+//                }
 //                new WorkTaskInfoView(getActivity(), true, bean.getId(), false).show();
-                Intent intent = new Intent(getActivity(), TaskDetailActivity.class);
-                intent.putExtra("id", ((WorkTaskListBean.ListBean) adapter.getData().get(position)).getId());
-                intent.putExtra("name", ((WorkTaskListBean.ListBean) adapter.getData().get(position)).getCreateUser().getAccountEntity().getRealName());
-                getActivity().startActivityForResult(intent, DETAIL_TASK_REQUSET_COOD);
+//                Intent intent = new Intent(getActivity(), TaskDetailActivity.class);
+//                intent.putExtra("id", ((WorkTaskListBean.ListBean) adapter.getData().get(position)).getId());
+//                intent.putExtra("name", ((WorkTaskListBean.ListBean) adapter.getData().get(position)).getCreateUser().getAccountEntity().getRealName());
+//                getActivity().startActivityForResult(intent, DETAIL_TASK_REQUSET_COOD);
+                Bundle bundle = new Bundle();
+                bundle.putString("name", ((WorkTaskListBean.ListBean) adapter.getData().get(position)).getCreateUser().getAccountEntity().getRealName());
+                bundle.putLong("id", ((WorkTaskListBean.ListBean) adapter.getData().get(position)).getId());
+                JumpItent.jump(getActivity(), TaskDetailActivity.class, bundle, DETAIL_TASK_REQUSET_COOD);
             }
         });
     }
@@ -112,7 +118,6 @@ public class WorkTaskListFragment extends TemplateItemListFragment {
                     @Override
                     public void onSuccess(WorkTaskListBean bean) {
 
-                        mQueryEntry = null;//释放以前对象
 
                         if (mPage == 1) {
                             mAdapter.getData().clear();
@@ -121,6 +126,8 @@ public class WorkTaskListFragment extends TemplateItemListFragment {
                             mAdapter.loadMoreComplete();
                             if (bean.getList().size() < 10) {
                                 mAdapter.loadMoreEnd();
+                                //释放以前对象
+                                mQueryEntry = null;
                             }
 
                             if (bean.getList().size() > 0) {
@@ -179,7 +186,7 @@ public class WorkTaskListFragment extends TemplateItemListFragment {
      */
     public void refreshStatus() {
         if (mDetailTaskBean != null) {
-            mDetailTaskBean.setStatus(1);
+            mDetailTaskBean.setNewOrder(0);
             mAdapter.notifyItemChanged(mPosition);
         }
     }
@@ -193,5 +200,14 @@ public class WorkTaskListFragment extends TemplateItemListFragment {
                 .execute(new EanfangCallback(getActivity(), true, JSONObject.class, (bean) -> {
 
                 }));
+    }
+
+    @Subscribe
+    public void onEvent(String createSuccess) {
+        if (createSuccess.equals("addTaskSuccess")) {
+            mQueryEntry = null;
+            mPage = 1;
+            getData();
+        }
     }
 }

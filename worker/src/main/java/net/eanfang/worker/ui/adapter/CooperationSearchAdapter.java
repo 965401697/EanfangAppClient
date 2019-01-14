@@ -32,5 +32,6 @@ public class CooperationSearchAdapter extends BaseQuickAdapter<CooperationSearch
         } else {
             ((CheckBox) helper.getView(R.id.cb_checked)).setChecked(false);
         }
+        helper.addOnClickListener(R.id.cb_checked);
     }
 }

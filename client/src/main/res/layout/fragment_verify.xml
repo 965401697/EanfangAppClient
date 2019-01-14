@@ -145,7 +145,6 @@
             android:textColor="#ffffff"
             android:textSize="16sp" />
     </LinearLayout>
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -155,5 +154,4 @@
         android:text="温馨提示:未注册易安防账号的手机将在登录时自动注册"
         android:textColor="@color/font_color"
         android:textSize="12sp" />
-
 </RelativeLayout>

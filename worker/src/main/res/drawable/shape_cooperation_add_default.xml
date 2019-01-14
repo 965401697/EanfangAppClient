@@ -7,6 +7,6 @@
 
     <stroke
         android:width="@dimen/dimen_2"
-        android:color="@color/content_bg" />
+        android:color="#c0c0c0" />
 
 </shape>

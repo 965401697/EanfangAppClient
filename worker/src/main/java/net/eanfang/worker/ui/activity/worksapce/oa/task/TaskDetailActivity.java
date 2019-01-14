@@ -46,6 +46,8 @@ public class TaskDetailActivity extends BaseWorkerActivity {
     TextView tvTask;
     @BindView(R.id.rv_task_list)
     RecyclerView rvTaskList;
+    @BindView(R.id.tv_check_title)
+    TextView tvCheckTitle;
     private long mId;
     private WorkTaskInfoBean mBean;
 
@@ -103,6 +105,7 @@ public class TaskDetailActivity extends BaseWorkerActivity {
                             tvDate.setText(bean.getCreateTime());
                             tvName.setText(bean.getCreateUser().getAccountEntity().getRealName());
                             tvWeek.setText(GetDateUtils.dateToWeek(bean.getCreateTime()));
+                            tvCheckTitle.setText(bean.getTitle());
 
                             for (int i = 0; i < bean.getWorkTaskDetails().size(); i++) {
                                 WorkTaskInfoBean.WorkTaskDetailsBean detialBean = bean.getWorkTaskDetails().get(i);

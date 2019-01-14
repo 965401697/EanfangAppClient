@@ -38,12 +38,18 @@ public class DataStatisticsCompanyListView extends BaseDialog {
     RecyclerView revCompanyList;
     private Activity mContext;
     private setCheckItemCompany itemCompany;
+    //当前登录人公司ID
     private String mOrgId = "";
+    //当前登录人公Name
+    private String mOrgName = "";
 
-    public DataStatisticsCompanyListView(Activity context, String orgId, setCheckItemCompany itemCompany) {
+    private Long orgId;
+
+    public DataStatisticsCompanyListView(Activity context, String orgId, String orgName, setCheckItemCompany itemCompany) {
         super(context);
         this.mContext = context;
         mOrgId = orgId;
+        mOrgName = orgName;
         this.itemCompany = itemCompany;
 
     }
@@ -52,21 +58,25 @@ public class DataStatisticsCompanyListView extends BaseDialog {
     protected void initCustomView(Bundle savedInstanceState) {
         setContentView(R.layout.view_company_list);
         ButterKnife.bind(this);
-        getCompanyAllList(mOrgId);
+        getCompanyAllList();
     }
 
     /**
      * Get the list of Companies
      */
-    private void getCompanyAllList(String orgId) {
+    private void getCompanyAllList() {
         QueryEntry queryEntry = new QueryEntry();
-        queryEntry.getEquals().put("topCompanyId", orgId + "");
-        queryEntry.getEquals().put("companyId", orgId + "");
+//        queryEntry.getEquals().put("topCompanyId", orgId + "");
+//        queryEntry.getEquals().put("companyId", orgId + "");
         EanfangHttp.post(NewApiService.REPAIR_DATA_COMPANGY)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<DataStatisticsCompany>(mContext, false, DataStatisticsCompany.class, bean -> {
-                    if (bean.getList().size() > 0) {
-                        List<DataStatisticsCompany.ListBean> companyEntityBeanList = bean.getList();
+                .execute(new EanfangCallback<DataStatisticsCompany>(mContext, false, DataStatisticsCompany.class, true, bean -> {
+                    if (bean.size() > 0) {
+                        DataStatisticsCompany company = new DataStatisticsCompany();
+                        company.setOrgId(mOrgId);
+                        company.setOrgName(mOrgName);
+                        List<DataStatisticsCompany> companyEntityBeanList = bean;
+                        companyEntityBeanList.add(company);
                         initAdapter(companyEntityBeanList);
                     } else {
                         dismiss();
@@ -76,7 +86,7 @@ public class DataStatisticsCompanyListView extends BaseDialog {
                 }));
     }
 
-    private void initAdapter(List<DataStatisticsCompany.ListBean> beanList) {
+    private void initAdapter(List<DataStatisticsCompany> beanList) {
         SwitchCompanyDataStatisticsListAdapter adapter = new SwitchCompanyDataStatisticsListAdapter(R.layout.item_quotation_detail, beanList);
         revCompanyList.addItemDecoration(new DividerItemDecoration(mContext,
                 DividerItemDecoration.VERTICAL));
@@ -85,18 +95,17 @@ public class DataStatisticsCompanyListView extends BaseDialog {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 String companyName = "";
-                if (beanList.get(position).getCompanyEntity().getName() != null) {
-                    companyName = beanList.get(position).getCompanyEntity().getName();
+                if (beanList.get(position).getOrgName() != null) {
+                    companyName = beanList.get(position).getOrgName();
                 }
-                String orgId = "";
-                if (beanList.get(position).getCompanyEntity().getOrgId() != null && beanList.get(position).getCompanyEntity().getOrgId() != null) {
-                    orgId = beanList.get(position).getCompanyEntity().getOrgId();
+                if (beanList.get(position).getOrgId() != null) {
+                    orgId = Long.valueOf(beanList.get(position).getOrgId());
                 }
-                String sonId = "";
-                if (beanList.get(position).getCompanyEntity().getSon() != null && beanList.get(position).getCompanyEntity().getSon() != null) {
-                    sonId = beanList.get(position).getCompanyEntity().getSon();
-                }
-                itemCompany.getItemName(companyName, orgId, sonId);
+//                String sonId = "";
+//                if (beanList.get(position).getCompanyEntity().getSon() != null && beanList.get(position).getCompanyEntity().getSon() != null) {
+//                    sonId = beanList.get(position).getCompanyEntity().getSon();
+//                }
+                itemCompany.getItemName(companyName, orgId);
                 dismiss();
             }
         });
@@ -105,7 +114,7 @@ public class DataStatisticsCompanyListView extends BaseDialog {
 
 
     public interface setCheckItemCompany {
-        void getItemName(String name, String orgId, String sonId);
+        void getItemName(String name, Long orgId);
     }
 
 }

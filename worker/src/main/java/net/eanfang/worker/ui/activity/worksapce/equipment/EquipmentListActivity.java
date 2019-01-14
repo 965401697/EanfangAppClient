@@ -8,7 +8,13 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
+import com.eanfang.apiservice.NewApiService;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
+import com.eanfang.util.JsonUtils;
+import com.eanfang.util.QueryEntry;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.yaf.base.entity.CooperationEntity;
 import com.yaf.sys.entity.BaseDataEntity;
@@ -55,14 +61,14 @@ public class EquipmentListActivity extends BaseWorkerActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(EquipmentListActivity.this, EquipmentCooperationCompanyActivity.class);
                 intent.putExtra("ownerCompanyId", mOwnerCompanyId);
-                if(c!=null){
+                if (c != null) {
                     intent.putExtra("bean", c);
                 }
                 startActivityForResult(intent, REQUEST_COMPANY_ID);
             }
         });
-
-        initView();
+        getData();
+//        initView();
     }
 
     private void initView() {
@@ -133,6 +139,30 @@ public class EquipmentListActivity extends BaseWorkerActivity {
 
     }
 
+    private void getData() {
+        QueryEntry queryEntry = new QueryEntry();
+        queryEntry.setSize(1);
+        queryEntry.getEquals().put("status", "1");
+        queryEntry.setPage(1);
+
+        queryEntry.getEquals().put("ownerOrgId", String.valueOf(EanfangApplication.getApplication().getCompanyId()));
+
+        EanfangHttp.post(NewApiService.GET_SELECT_COOPERATION_LIST)
+                .upJson(JsonUtils.obj2String(queryEntry))
+                .execute(new EanfangCallback<CooperationEntity>(this, true, CooperationEntity.class, true, (list) -> {
+
+                    if (list.size() > 0) {
+                        setEquipmentTitle(list.get(0).getAssigneeOrg().getOrgName());
+                        mOwnerCompanyId = String.valueOf(list.get(0).getAssigneeOrgId());
+                        c = list.get(0);
+                    }
+
+                    runOnUiThread(() -> {
+                        initView();
+                    });
+                }));
+
+    }
 
     public void setEquipmentTitle(String title) {
         if (title.length() > 5) {

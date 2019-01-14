@@ -4,7 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.RepairApi;
@@ -15,6 +19,7 @@ import com.eanfang.swipefresh.SwipyRefreshLayout;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
+import com.eanfang.util.ToastUtil;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.repair.FaultLibraryAdapter;
@@ -39,6 +44,10 @@ public class FaultLibraryActivity extends BaseActivity implements SwipyRefreshLa
     RecyclerView rvFaultList;
     @BindView(R.id.swiprefresh)
     SwipyRefreshLayout swiprefresh;
+    @BindView(R.id.et_search)
+    EditText etSearch;
+    //搜索状态不让用户上拉
+    private boolean mFlag = false;
 
     private FaultLibraryAdapter faultLibraryAdapter;
     private List<FaultListBean.ListBean> mFaultListBeanList = new ArrayList<>();
@@ -69,6 +78,28 @@ public class FaultLibraryActivity extends BaseActivity implements SwipyRefreshLa
         faultLibraryAdapter = new FaultLibraryAdapter(R.layout.layout_fault_list_item);
         faultLibraryAdapter.setNewData(mFaultListBeanList);
         faultLibraryAdapter.bindToRecyclerView(rvFaultList);
+
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!TextUtils.isEmpty(s)) {
+                    searchData(s.toString());
+                    mFlag = true;
+                } else {
+                    onRefresh(1);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     private void initData() {
@@ -91,6 +122,29 @@ public class FaultLibraryActivity extends BaseActivity implements SwipyRefreshLa
                             mFaultListBeanList = bean.getList();
                             faultLibraryAdapter.addData(mFaultListBeanList);
                         }
+
+                    }
+
+                }));
+    }
+
+    private void searchData(String description) {
+        QueryEntry queryEntry = new QueryEntry();
+        queryEntry.getEquals().put("businessOneCode", businessOneCode);
+        queryEntry.getEquals().put("headDeviceId", "");
+        queryEntry.getLike().put("description", description);
+
+        EanfangHttp.post(RepairApi.GET_FAULT_LIST)
+                .upJson(JsonUtils.obj2String(queryEntry))
+                .execute(new EanfangCallback<FaultListBean>(FaultLibraryActivity.this, false, FaultListBean.class, bean -> {
+                    if (bean != null) {
+                        if (bean.getList().size() == 0) {
+                            ToastUtil.get().showToast(FaultLibraryActivity.this, "暂无数据");
+                        }
+                        mFaultListBeanList.clear();
+                        swiprefresh.setRefreshing(false);
+                        mFaultListBeanList = bean.getList();
+                        faultLibraryAdapter.setNewData(mFaultListBeanList);
 
                     }
 
@@ -121,6 +175,10 @@ public class FaultLibraryActivity extends BaseActivity implements SwipyRefreshLa
 
     @Override
     public void onRefresh(int index) {
+        if (!TextUtils.isEmpty(etSearch.getText().toString().trim())) {
+            etSearch.setText("");
+        }
+        mFlag = false;
         dataOption(TOP_REFRESH);
     }
 
@@ -131,13 +189,18 @@ public class FaultLibraryActivity extends BaseActivity implements SwipyRefreshLa
 //        dataOption(BOTTOM_REFRESH);
     @Override
     public void onLoad(int index) {
-        dataOption(BOTTOM_REFRESH);
+        if (!mFlag) {
+            dataOption(BOTTOM_REFRESH);
+        } else {
+            swiprefresh.setRefreshing(false);
+        }
     }
 
     private void dataOption(int option) {
         switch (option) {
             case TOP_REFRESH:
                 //下拉刷新
+                page = 1;
                 initData();
                 break;
             case BOTTOM_REFRESH:

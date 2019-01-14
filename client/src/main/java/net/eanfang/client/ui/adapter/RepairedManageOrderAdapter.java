@@ -65,22 +65,22 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
         }
 //        helper.setText(R.id.tv_company_name, orgName);
 
-        if (item.getOwnerOrg() != null && item.getOwnerOrg().getBelongCompany() != null && item.getOwnerUser() != null && item.getOwnerUser().getAccountEntity() != null) {
-            helper.setText(R.id.tv_company_name, item.getOwnerOrg().getBelongCompany().getOrgName()
-                    + "  (" + item.getOwnerUser().getAccountEntity().getRealName() + ")");
-        } else if (item.getOwnerOrg() == null) {
-            helper.setText(R.id.tv_company_name, item.getOwnerUser().getAccountEntity().getRealName());
+        if (item.getOwnerUser() != null && item.getOwnerUser().getAccountEntity() != null) {
+            helper.setText(R.id.tv_person_name, "报修人:" + item.getOwnerUser().getAccountEntity().getRealName());
         }
 
 //        String userName = "";
 //        if (item.getOwnerUser() != null && item.getOwnerUser().getAccountEntity() != null) {
 //            userName = Optional.ofNullable(item.getOwnerUser().getAccountEntity().getRealName()).orElseGet(() -> "");
 //        }
+        /**
+         * 技师 安防公司
+         * */
         if (TextUtils.isEmpty(orgName)) {
-            helper.setVisible(R.id.tv_person_name, false);
+            helper.setVisible(R.id.tv_company_name, false);
         } else {
-            helper.setVisible(R.id.tv_person_name, true);
-            helper.setText(R.id.tv_person_name, "技师：" + orgName);
+            helper.setVisible(R.id.tv_company_name, true);
+            helper.setText(R.id.tv_company_name, orgName);
         }
 
         helper.setText(R.id.tv_order_id, "单号：" + item.getOrderNum() + str);

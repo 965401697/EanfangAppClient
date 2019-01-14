@@ -12,13 +12,19 @@ import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.JumpItent;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.CustDeviceEntity;
+import com.yaf.base.entity.ShopMaintenanceExamDeviceEntity;
+import com.yaf.base.entity.ShopMaintenanceOrderEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.worksapce.maintenance.MaintenanceAddCheckResultActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,6 +54,10 @@ public class EquipmentDetailActivity extends BaseWorkerActivity {
     SimpleDraweeView ivPicTwo;
     @BindView(R.id.iv_pic_three)
     SimpleDraweeView ivPicThree;
+    @BindView(R.id.iv_pic_four)
+    SimpleDraweeView ivPicFour;
+    @BindView(R.id.iv_pic_five)
+    SimpleDraweeView ivPicFive;
     @BindView(R.id.tv_position)
     TextView tvPosition;
     @BindView(R.id.tv_position_num)
@@ -74,11 +84,18 @@ public class EquipmentDetailActivity extends BaseWorkerActivity {
     SimpleDraweeView ivLocaleTwo;
     @BindView(R.id.iv_loacle_three)
     SimpleDraweeView ivLoacleThree;
+    @BindView(R.id.iv_locale_four)
+    SimpleDraweeView ivLocaleFour;
+    @BindView(R.id.iv_loacle_five)
+    SimpleDraweeView ivLoacleFive;
     @BindView(R.id.tv_notice)
     TextView tvNotice;
 
     private String id = "";
     private CustDeviceEntity mBean;
+
+    private List<ShopMaintenanceExamDeviceEntity> examDeviceEntityListBeans = new ArrayList<>();
+    private Long orderId;
 
     // 扫描二维码返回 数据
     @Override
@@ -90,7 +107,9 @@ public class EquipmentDetailActivity extends BaseWorkerActivity {
         setLeftBack();
         id = getIntent().getStringExtra("id");
         initData();
+        initDeal();
     }
+
 
     private void initData() {
 
@@ -130,6 +149,12 @@ public class EquipmentDetailActivity extends BaseWorkerActivity {
             if (picture != null && picture.length >= 3) {
                 ivPicThree.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + picture[2]));
             }
+            if (picture != null && picture.length >= 4) {
+                ivPicFour.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + picture[3]));
+            }
+            if (picture != null && picture.length >= 5) {
+                ivPicFive.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + picture[4]));
+            }
         }
         tvNotice.setText(bean.getDeviceInfo());
 
@@ -151,12 +176,16 @@ public class EquipmentDetailActivity extends BaseWorkerActivity {
         } else {
             tvEquipmentStatus.setText("报废");
         }
-        if (bean.getChargeOrgEntity() != null && bean.getChargeOrgEntity().getBelongTopCompany() != null) {
-            tvSection.setText(bean.getChargeOrgEntity().getBelongTopCompany().getOrgName());
+        if (bean.getChargeOrgEntity() != null) {
+            tvSection.setText(bean.getChargeOrgEntity().getOrgName());
+        } else {
+            tvSection.setText("无");
         }
 
         if (bean.getChargeUserEntity() != null && bean.getChargeUserEntity().getAccountEntity() != null) {
             tvPreson.setText(bean.getChargeUserEntity().getAccountEntity().getRealName());
+        } else {
+            tvPreson.setText("无");
         }
 
         tvYear.setText(bean.getWarrantyPeriod());
@@ -181,7 +210,39 @@ public class EquipmentDetailActivity extends BaseWorkerActivity {
             if (locationPictures != null && locationPictures.length >= 3) {
                 ivLoacleThree.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + locationPictures[2]));
             }
+
+            if (locationPictures != null && locationPictures.length >= 4) {
+                ivLocaleFour.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + locationPictures[3]));
+            }
+            if (locationPictures != null && locationPictures.length >= 5) {
+                ivLoacleFive.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + locationPictures[4]));
+            }
         }
+    }
+
+    /**
+     * 当查看的设备是当前技师所操作的维保单中的一个设备时。右上角出现维保处理按钮。
+     */
+    private void initDeal() {
+        EanfangHttp.post(NewApiService.SCAN_DEVICE_DEAL)
+                .params("deviceId", id)
+                .execute(new EanfangCallback<ShopMaintenanceOrderEntity>(this, true, ShopMaintenanceOrderEntity.class, bean -> {
+                    if (bean.getId() != null) {
+                        setRightVisible();
+                        setRightTitle("维保处理");
+                        examDeviceEntityListBeans = bean.getExamDeviceEntityList();
+                        orderId = bean.getId();
+                    }
+                }));
+
+        setRightTitleOnClickListener((v) -> {
+            Bundle bundle = new Bundle();
+            bundle.putLong("orderId", orderId);
+            bundle.putSerializable("list", (Serializable) examDeviceEntityListBeans);
+            bundle.putString("type", "scanDevice");
+            JumpItent.jump(EquipmentDetailActivity.this, MaintenanceAddCheckResultActivity.class, bundle);
+            finishSelf();
+        });
     }
 
     @OnClick({R.id.tv_equipment_paramter, R.id.tv_history})

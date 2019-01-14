@@ -28,7 +28,6 @@ import com.eanfang.util.StringUtils;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.MainActivity;
 import net.eanfang.client.ui.activity.worksapce.GuideActivity;
-import net.eanfang.client.ui.activity.worksapce.SetPasswordActivity;
 import net.eanfang.client.util.PrefUtils;
 
 import java.io.IOException;
@@ -184,9 +183,10 @@ public class PasswordFragment extends BaseFragment {
         if (PrefUtils.getVBoolean(getActivity(), PrefUtils.GUIDE)) {
             startActivity(new Intent(getActivity(), GuideActivity.class));
             finishSelf();
-        } else if (isUpdataPassword) {
-            startActivity(new Intent(getActivity(), SetPasswordActivity.class));
-            finishSelf();
+//        }
+//        else if (isUpdataPassword) {
+//            startActivity(new Intent(getActivity(), SetPasswordActivity.class));
+//            finishSelf();
         } else {
 
             startActivity(new Intent(getActivity(), MainActivity.class));

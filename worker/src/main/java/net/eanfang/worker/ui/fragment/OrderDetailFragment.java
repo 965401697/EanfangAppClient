@@ -204,12 +204,12 @@ public class OrderDetailFragment extends BaseFragment {
                 .execute(new EanfangCallback<RepairOrderEntity>(getActivity(), true, RepairOrderEntity.class, (bean) -> {
 
                     hashMap.put("id", String.valueOf(bean.getId()));
-                    if (bean.getBugEntityList() != null && bean.getBugEntityList().size() > 0 && !TextUtils.isEmpty(bean.getBugEntityList().get(0).getPictures())) {
+                    if (bean.getBugEntityList() != null && bean.getBugEntityList().size() > 0) {
                         hashMap.put("picUrl", bean.getBugEntityList().get(0).getPictures().split(",")[0]);
                     }
                     hashMap.put("orderNum", bean.getOrderNum());
                     hashMap.put("creatTime", GetDateUtils.dateToDateTimeString(bean.getCreateTime()));
-                    hashMap.put("workerName", bean.getAssigneeUser().getAccountEntity().getRealName());
+                    hashMap.put("workerName", V.v(() -> bean.getAssigneeUser().getAccountEntity().getRealName()));
                     hashMap.put("status", String.valueOf(bean.getStatus()));
                     hashMap.put("shareType", "1");
 

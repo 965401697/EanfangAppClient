@@ -56,6 +56,7 @@ import net.eanfang.worker.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 import net.eanfang.worker.util.SendContactUtils;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.text.SimpleDateFormat;
@@ -382,6 +383,8 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
                 //保存 并 下一条
                 addDataToWrok();
                 scrollView.scrollTo(0, etInputContent.getScrollY());
+                break;
+            default:
                 break;
         }
     }
@@ -994,6 +997,7 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
                         message.setShowLogo(true);
                         message.setTip("确定");
                         bundle.putSerializable("message", message);
+                        EventBus.getDefault().post("addReportSuccess");
                         intent.putExtras(bundle);
                         startActivity(intent);
 

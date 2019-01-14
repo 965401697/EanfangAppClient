@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -48,19 +50,24 @@ public class SelectDeviceTypeActivity extends BaseActivity implements
     private List<BaseDataEntity> leftDataList = new ArrayList<>();
     private List<BaseDataEntity> rightDataList = new ArrayList<>();
 
+    private List<BaseDataEntity> searchRightDataList = new ArrayList<>();
+
     private RepairDeviceTypeLeftAdapter deviceTypeLeftAdapter;
     private RepairDeviceTypeRightAdapter deviceTypeRightAdapter;
 
     private Integer mLeftId = 0;
+    private boolean mFlag = false;//搜索的adapter的点击事件 从集合取数据
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_select_device_type);  ButterKnife.bind(this);
+        setContentView(R.layout.activity_select_device_type);
+        ButterKnife.bind(this);
         initView();
         initData();
         initListener();
     }
+
     /**
      * @date on 2018/5/4  15:57
      * @decision 初始化数据
@@ -68,6 +75,34 @@ public class SelectDeviceTypeActivity extends BaseActivity implements
     private void initView() {
         setLeftBack();
         setTitle("设备类别");
+
+        etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (rightDataList != null) {
+                    mFlag = true;
+                    searchRightDataList.clear();
+                    for (BaseDataEntity data : rightDataList) {
+                        if (data.getDataName().contains(s.toString())) {
+                            searchRightDataList.add(data);
+                        }
+                    }
+                    deviceTypeRightAdapter = new RepairDeviceTypeRightAdapter(R.layout.layout_repair_device_right, searchRightDataList);
+                    rvDeviceTypeRight.setAdapter(deviceTypeRightAdapter);
+                }
+            }
+
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     private void initData() {
@@ -97,9 +132,15 @@ public class SelectDeviceTypeActivity extends BaseActivity implements
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent();
-                intent.putExtra("dataCode", rightDataList.get(position).getDataCode());
-                String businessOneCode = Config.get().getBaseCodeByLevel(rightDataList.get(position).getDataCode(), 1);
-                intent.putExtra("businessOneCode", businessOneCode);
+                if (!mFlag) {
+                    intent.putExtra("dataCode", rightDataList.get(position).getDataCode());
+                    String businessOneCode = Config.get().getBaseCodeByLevel(rightDataList.get(position).getDataCode(), 1);
+                    intent.putExtra("businessOneCode", businessOneCode);
+                } else {
+                    intent.putExtra("dataCode", searchRightDataList.get(position).getDataCode());
+                    String businessOneCode = Config.get().getBaseCodeByLevel(searchRightDataList.get(position).getDataCode(), 1);
+                    intent.putExtra("businessOneCode", businessOneCode);
+                }
                 setResult(RESULT_DATACODE, intent);
                 finishSelf();
             }
@@ -112,6 +153,7 @@ public class SelectDeviceTypeActivity extends BaseActivity implements
                 deviceTypeLeftAdapter.notifyDataSetChanged();
                 mLeftId = leftDataList.get(i).getDataId();
                 rightDataList = doSelectRightList(mLeftId);
+                etSearch.setText("");//切换置空
                 getData();
             }
         });

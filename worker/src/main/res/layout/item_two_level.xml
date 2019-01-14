@@ -13,7 +13,7 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/dimen_36"
         android:layout_marginRight="@dimen/dimen_24"
-        fresco:placeholderImage="@mipmap/ic_client_camera"
+        fresco:placeholderImage="@mipmap/ic_header"
         fresco:roundAsCircle="true" />
 
     <TextView
@@ -26,11 +26,13 @@
 
     <CheckBox
         android:id="@+id/cb_check"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/dimen_42"
+        android:layout_height="@dimen/dimen_42"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/dimen_36"
+        android:background="@drawable/selector_single_checked_worker"
+        android:button="@null"
         android:clickable="false"
         android:focusable="false"
         android:focusableInTouchMode="false" />

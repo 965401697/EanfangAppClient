@@ -228,6 +228,8 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
 
     private int maxWordsNum = 200; //输入限制的最大字数
 
+    private Long clientCompanyUid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -255,6 +257,7 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
         orderId = getIntent().getLongExtra("orderId", 0);
         companyName = getIntent().getStringExtra("companyName");
         companyId = getIntent().getLongExtra("companyUid", 0);
+        clientCompanyUid = getIntent().getLongExtra("clientCompanyUid", 0);
         // 获取经纬度
         LocationUtil.location(this, (location) -> {
             // mAddress = location.getCity() + location.getDistrict();
@@ -286,6 +289,7 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
         tvAddFault.setOnClickListener(v -> {
             Intent intent = new Intent(FillRepairInfoActivity.this, AddTroubleActivity.class);
             intent.putExtra("repaid", orderId);
+            intent.putExtra("clientCompanyUid", clientCompanyUid);
             startActivityForResult(intent, 10003);
         });
         //提交完工
@@ -350,11 +354,20 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
                 tvPoliceDeliver.setTextColor(ContextCompat.getColor(this, R.color.color_client_neworder));
             }
         });
-        // 增加团队
+        // 增加团队成员
         tvAddGroup.setOnClickListener((v) -> {
             Intent intent = new Intent(FillRepairInfoActivity.this, SelectOrganizationActivity.class);
             this.startActivity(intent);
         });
+        repairTeamWorkerAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                TemplateBean.Preson preson = (TemplateBean.Preson) adapter.getData().get(position);
+                adapter.getData().remove(preson);
+                adapter.notifyDataSetChanged();
+            }
+        });
+
         // 遗留问题
         ivVoiceInputRemainQuestion.setOnClickListener((v) -> {
             PermissionUtils.get(this).getVoicePermission(() -> {
@@ -469,7 +482,7 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
             showToast("请填写遗留问题");
             return false;
         }
-        if (DetailEntityList != null) {
+        if (DetailEntityList != null && DetailEntityList.size() > 0) {
             //增加限制，需要先完善故障处理 在提交
             for (int i = 0; i < DetailEntityList.size(); i++) {
                 if (StringUtils.isEmpty(DetailEntityList.get(i).getCheckProcess())) {
@@ -477,6 +490,9 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
                     return false;
                 }
             }
+        } else {
+            showToast("请至少添加一条故障处理明细");
+            return false;
         }
 
         return true;
@@ -558,10 +574,12 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
 
         //添加合作成员
         StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < mPresonList.size(); i++) {
-            stringBuilder.append(mPresonList.get(i).getName()).append("(").append(mPresonList.get(i).getMobile()).append(")");
-            if (i < mPresonList.size() - 1) {
-                stringBuilder.append(",");
+        for (int i = 0; i < repairTeamWorkerAdapter.getData().size(); i++) {
+            TemplateBean.Preson preson = repairTeamWorkerAdapter.getData().get(i);
+            if (i == repairTeamWorkerAdapter.getData().size() - 1) {
+                stringBuilder.append(preson.getProtraivat() + "-" + preson.getName());
+            } else {
+                stringBuilder.append(preson.getProtraivat() + "-" + preson.getName() + ",");
             }
         }
         bughandleConfirmEntity.setTeamWorker(String.valueOf(stringBuilder));

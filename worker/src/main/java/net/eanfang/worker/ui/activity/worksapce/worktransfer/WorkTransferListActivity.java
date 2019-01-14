@@ -1,5 +1,6 @@
 package net.eanfang.worker.ui.activity.worksapce.worktransfer;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -58,7 +59,7 @@ public class WorkTransferListActivity extends BaseActivity {
         mTitles = new String[allmTitles.size()];
         allmTitles.toArray(mTitles);
         for (String title : mTitles) {
-            mFragments.add(WorkTransferFragment.getInstance(title, mType));
+//            mFragments.add(WorkTransferFragment.getInstance(title, mType));
         }
 
         mAdapter = new MyPagerAdapter(getSupportFragmentManager());
@@ -85,6 +86,11 @@ public class WorkTransferListActivity extends BaseActivity {
         workTransferFragment = (WorkTransferFragment) mFragments.get(0);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        workTransferFragment.onActivityResult(requestCode, resultCode, data);
+    }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
         public MyPagerAdapter(FragmentManager fm) {

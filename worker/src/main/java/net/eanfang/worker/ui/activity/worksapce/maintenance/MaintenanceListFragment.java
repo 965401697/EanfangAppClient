@@ -196,6 +196,7 @@ public class MaintenanceListFragment extends TemplateItemListFragment {
                             intent = new Intent(getActivity(), MaintenanceHandleActivity.class);
                             intent.putExtra("orderId", item.getId());
                             intent.putExtra("list", (ArrayList) item.getExamDeviceEntityList());
+                            intent.putExtra("signTime", item.getSignTime());
 //                        intent.putExtra("companyName", item.getOwnerOrg().getBelongCompany().getOrgName());
 //                        intent.putExtra("companyUid", item.getAssigneeOrg().getCompanyId());
 //                        intent.putExtra("clientCompanyUid", item.getOwnerCompanyId());

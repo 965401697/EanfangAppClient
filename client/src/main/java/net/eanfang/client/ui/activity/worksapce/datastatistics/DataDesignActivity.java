@@ -20,7 +20,7 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.datastatistics.DataInstallBean;
+import com.eanfang.model.datastatistics.DataDesignBean;
 import com.eanfang.model.datastatistics.DataStatisticsCompany;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JsonUtils;
@@ -35,8 +35,8 @@ import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.yaf.sys.entity.BaseDataEntity;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.adapter.datastatistics.DataStatisticsInstallAdapter;
-import net.eanfang.client.ui.adapter.datastatistics.DataStatisticsInstallCompanyAdapter;
+import net.eanfang.client.ui.adapter.datastatistics.DataStatisticsDesignAdapter;
+import net.eanfang.client.ui.adapter.datastatistics.DataStatisticsDesignCompanyAdapter;
 import net.eanfang.client.ui.widget.DataStatisticsCompanyListView;
 
 import java.util.ArrayList;
@@ -67,9 +67,6 @@ public class DataDesignActivity extends BaseActivity implements RadioGroup.OnChe
     // 故障现象比
     @BindView(R.id.pc_fault)
     PieChart pcFault;
-    // 设备完好率
-    @BindView(R.id.pc_intact)
-    PieChart pcIntact;
     //昨日报修
     @BindView(R.id.rv_repair_class_one)
     RecyclerView rvRepairClassOne;
@@ -90,9 +87,6 @@ public class DataDesignActivity extends BaseActivity implements RadioGroup.OnChe
     @BindView(R.id.rl_change_company)
     RelativeLayout rlChangeCompany;
 
-    // 设备完好率
-    @BindView(R.id.ll_intact)
-    LinearLayout llIntact;
     // 故障类型
     @BindView(R.id.ll_fault)
     LinearLayout llFault;
@@ -111,9 +105,9 @@ public class DataDesignActivity extends BaseActivity implements RadioGroup.OnChe
     private DataSelectPopWindow dataSelectPopWindow;
 
     // 昨日报修
-    private DataStatisticsInstallAdapter dataStatisticsReapirAdapter;
+    private DataStatisticsDesignAdapter dataStatisticsReapirAdapter;
     // 五家公司
-    private DataStatisticsInstallCompanyAdapter dataStatisticsCompanyAdapter;
+    private DataStatisticsDesignCompanyAdapter dataStatisticsCompanyAdapter;
     // 类型
     private List<BaseDataEntity> mDataType = new ArrayList();
 
@@ -121,14 +115,16 @@ public class DataDesignActivity extends BaseActivity implements RadioGroup.OnChe
     private String mData = "1";
 
     //报修公司
-    private List<DataInstallBean.InstallBean> installBeanList = new ArrayList<>();
+    private List<DataDesignBean.DesignBean> installBeanList = new ArrayList<>();
     // 报修五家单位
-    private List<DataInstallBean.FiveBean> fiveBeanList = new ArrayList<>();
+    private List<DataDesignBean.FiveBean> fiveBeanList = new ArrayList<>();
     // 故障类型
-    private List<DataInstallBean.BussinessBean> bussinessBeanList = new ArrayList<>();
+    private List<DataDesignBean.BussinessBean> bussinessBeanList = new ArrayList<>();
     private ArrayList<PieEntry> bussinessEntryList = new ArrayList<>();
 
-    //当前公司ID
+    //当前登录人公司ID
+    private Long mMyOrgId;
+    //切换公司ID
     private Long mOrgId;
     // 当前公司名称
     private String mOrgName = "";
@@ -146,6 +142,7 @@ public class DataDesignActivity extends BaseActivity implements RadioGroup.OnChe
             Color.rgb(130, 104, 234),
     };
 
+    private List<DataStatisticsCompany> companyEntityBeanList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,21 +157,21 @@ public class DataDesignActivity extends BaseActivity implements RadioGroup.OnChe
     private void initView() {
         setTitle("设计数据统计");
         setLeftBack();
-        mOrgId = EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgId();
+        mMyOrgId = EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgId();
         mOrgName = EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName();
+        mOrgId = mMyOrgId;
         /**
          * 设置pieChart图表的描述
          * */
         initMyPieChart(pcFault);
-        initMyPieChart(pcIntact);
         // 报修
-        dataStatisticsReapirAdapter = new DataStatisticsInstallAdapter(DataDesignActivity.this);
+        dataStatisticsReapirAdapter = new DataStatisticsDesignAdapter(DataDesignActivity.this);
         rvRepairClassOne.setLayoutManager(new LinearLayoutManager(this));
         dataStatisticsReapirAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
         dataStatisticsReapirAdapter.bindToRecyclerView(rvRepairClassOne);
         rvRepairClassOne.setNestedScrollingEnabled(false);
         // 五家公司
-        dataStatisticsCompanyAdapter = new DataStatisticsInstallCompanyAdapter();
+        dataStatisticsCompanyAdapter = new DataStatisticsDesignCompanyAdapter();
         rvFiveCompany.setLayoutManager(new LinearLayoutManager(this));
         dataStatisticsCompanyAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
         dataStatisticsCompanyAdapter.bindToRecyclerView(rvFiveCompany);
@@ -185,9 +182,9 @@ public class DataDesignActivity extends BaseActivity implements RadioGroup.OnChe
         tvCompanyName.setText(mOrgName);
         tvSelectCompanyName.setText(mOrgName);
         // 获取统计数据
-        doGetData("");
+        doGetData("", mMyOrgId);
         // 获取公司
-        doGetComapnyData(mOrgId + "");
+        doGetComapnyData(mMyOrgId + "");
         BaseDataEntity baseDataEntity = new BaseDataEntity();
         baseDataEntity.setDataName("全部");
         baseDataEntity.setDataCode("");
@@ -201,13 +198,13 @@ public class DataDesignActivity extends BaseActivity implements RadioGroup.OnChe
      */
     private void doGetComapnyData(String orgId) {
         QueryEntry queryEntry = new QueryEntry();
-        queryEntry.getEquals().put("topCompanyId", orgId + "");
-        queryEntry.getEquals().put("companyId", orgId + "");
+//        queryEntry.getEquals().put("topCompanyId", orgId + "");
+//        queryEntry.getEquals().put("companyId", orgId + "");
         EanfangHttp.post(NewApiService.REPAIR_DATA_COMPANGY)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<DataStatisticsCompany>(this, false, DataStatisticsCompany.class, bean -> {
-                    List<DataStatisticsCompany.ListBean> companyEntityBeanList = bean.getList();
-                    if (companyEntityBeanList.size() - 1 > 0) {
+                .execute(new EanfangCallback<DataStatisticsCompany>(this, false, DataStatisticsCompany.class, true, bean -> {
+                    companyEntityBeanList = bean;
+                    if (companyEntityBeanList.size() > 0) {
                         tvChildCompanyName.setText(companyEntityBeanList.size() + "");
                     } else {
                         tvChildCompanyName.setText("0");
@@ -218,27 +215,27 @@ public class DataDesignActivity extends BaseActivity implements RadioGroup.OnChe
     private void initListener() {
         rgDataTiem.setOnCheckedChangeListener(this);
         rlChangeCompany.setOnClickListener((View v) -> {
-            new DataStatisticsCompanyListView(DataDesignActivity.this, mOrgId + "", (mCompanyName, mCompanyId, mSonId) -> {
+            new DataStatisticsCompanyListView(DataDesignActivity.this, mMyOrgId + "", mOrgName, (mCompanyName, mCompanyId) -> {
                 tvSelectCompanyName.setText(mCompanyName);
-                doGetData("");
+                mOrgId = mCompanyId;
+                doGetData("", mOrgId);
             }).show();
-            doGetComapnyData(mOrgId + "");
         });
     }
 
     /**
      * 获取数据
      */
-    public void doGetData(String businessCode) {
+    public void doGetData(String businessCode, Long compangId) {
         QueryEntry queryEntry = new QueryEntry();
         if (!StringUtils.isEmpty(businessCode)) {
             queryEntry.getEquals().put("businessOneCode", businessCode);
         }
-        queryEntry.getEquals().put("shopCompanyId", mOrgId + "");
+        queryEntry.getEquals().put("shopCompanyId", compangId + "");
         queryEntry.getEquals().put("date", mData);
-        EanfangHttp.post(NewApiService.INSTALL_DATA_STATISTICE)
+        EanfangHttp.post(NewApiService.DESIGN_DATA_STATISTICE)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<DataInstallBean>(this, true, DataInstallBean.class, bean -> {
+                .execute(new EanfangCallback<DataDesignBean>(this, true, DataDesignBean.class, bean -> {
                     setData(bean);
                 }));
 
@@ -247,15 +244,17 @@ public class DataDesignActivity extends BaseActivity implements RadioGroup.OnChe
     /**
      * 填充数据
      */
-    private void setData(DataInstallBean bean) {
+    private void setData(DataDesignBean bean) {
 
-        // 昨日报装
-        if (bean.getInstall().size() > 0) {
+        // 昨日设计
+        if (bean.getDesign().size() > 0) {
             installBeanList.clear();
             tvRepairNoresult.setVisibility(View.GONE);
-            installBeanList = bean.getInstall();
+            installBeanList = bean.getDesign();
+            rvRepairClassOne.setVisibility(View.VISIBLE);
             dataStatisticsReapirAdapter.setNewData(installBeanList);
         } else {
+            rvRepairClassOne.setVisibility(View.GONE);
             tvRepairNoresult.setVisibility(View.VISIBLE);
         }
         // 五家公司
@@ -263,8 +262,10 @@ public class DataDesignActivity extends BaseActivity implements RadioGroup.OnChe
             fiveBeanList.clear();
             tvFiveNoresult.setVisibility(View.GONE);
             fiveBeanList = bean.getFive();
+            rvFiveCompany.setVisibility(View.VISIBLE);
             dataStatisticsCompanyAdapter.setNewData(fiveBeanList);
         } else {
+            rvFiveCompany.setVisibility(View.GONE);
             tvFiveNoresult.setVisibility(View.VISIBLE);
         }
         // 饼状图
@@ -287,11 +288,9 @@ public class DataDesignActivity extends BaseActivity implements RadioGroup.OnChe
         }
         if (bussinessEntryList.size() <= 0) {
             tvPieNoresult.setVisibility(View.VISIBLE);
-            llIntact.setVisibility(View.GONE);
             llFault.setVisibility(View.GONE);
         } else {
             tvPieNoresult.setVisibility(View.GONE);
-            llIntact.setVisibility(View.VISIBLE);
             llFault.setVisibility(View.VISIBLE);
         }
 
@@ -305,7 +304,7 @@ public class DataDesignActivity extends BaseActivity implements RadioGroup.OnChe
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 tvDataSelectType.setText(mDataType.get(i).getDataName());
                 mBussiness = mDataType.get(i).getDataCode();
-                doGetData(mDataType.get(i).getDataCode());
+                doGetData(mDataType.get(i).getDataCode(), mOrgId);
                 dataSelectPopWindow.dismiss();
             }
         });
@@ -327,12 +326,12 @@ public class DataDesignActivity extends BaseActivity implements RadioGroup.OnChe
             case R.id.rb_dataTimeToday:
                 mData = "1";
                 // 获取统计数据
-                doGetData(mBussiness);
+                doGetData(mBussiness, mOrgId);
                 break;
             case R.id.rb_dataTimeMonth:
                 mData = "2";
                 // 获取统计数据
-                doGetData(mBussiness);
+                doGetData(mBussiness, mOrgId);
                 break;
         }
     }
@@ -340,19 +339,22 @@ public class DataDesignActivity extends BaseActivity implements RadioGroup.OnChe
     //设置数据
     private void setFaultData(ArrayList<PieEntry> entries, boolean isFive) {
         pcFault.clear();
-        PieDataSet dataSet = new PieDataSet(entries, "故障类型");
+        PieDataSet dataSet = new PieDataSet(entries, "");
         //设置个饼状图之间的距离
         dataSet.setSliceSpace(3f);
         dataSet.setSelectionShift(5f);
         ArrayList<Integer> colors = new ArrayList<Integer>();
         if (isFive) {
-            for (int c : LIBERTY_COLORS_FiVE)
+            for (int c : LIBERTY_COLORS_FiVE) {
                 colors.add(c);
+            }
         } else {
-            for (int c : LIBERTY_COLORS_FiVE)
+            for (int c : LIBERTY_COLORS_FiVE) {
                 colors.add(c);
-            for (int c : LIBERTY_TWO_COLORS_MORE)
+            }
+            for (int c : LIBERTY_TWO_COLORS_MORE) {
                 colors.add(c);
+            }
         }
         dataSet.setColors(colors);
 
@@ -382,48 +384,6 @@ public class DataDesignActivity extends BaseActivity implements RadioGroup.OnChe
 
     }
 
-    //设置数据
-    private void setIntactData(ArrayList<PieEntry> entries, boolean isFive) {
-        pcIntact.clear();
-        PieDataSet dataSet = new PieDataSet(entries, "故障修复率");
-        //设置个饼状图之间的距离
-        dataSet.setSliceSpace(3f);
-        dataSet.setSelectionShift(5f);
-        ArrayList<Integer> colors = new ArrayList<Integer>();
-        if (isFive) {
-            for (int c : LIBERTY_TWO_COLORS_MORE)
-                colors.add(c);
-        } else {
-            for (int c : LIBERTY_COLORS_FiVE)
-                colors.add(c);
-            for (int c : LIBERTY_TWO_COLORS_MORE)
-                colors.add(c);
-        }
-        dataSet.setColors(colors);
-
-//        dataSet.setValueLinePart1OffsetPercentage(80.f);
-        dataSet.setValueLinePart1Length(0.2f);
-        dataSet.setValueLinePart2Length(0.4f);
-        dataSet.setYValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
-
-        PieData data = new PieData(dataSet);
-        /**
-         * 设置是否显示数据实体 显示百分比
-         * */
-        data.setDrawValues(true);
-        /**
-         * 设置所有DataSet内数据实体（百分比）的文本字体格式
-         * */
-        data.setValueFormatter(new PercentFormatter());
-        data.setValueTextColor(R.color.roll_content);
-        data.setValueTextSize(15f);
-        pcIntact.setData(data);
-        // 撤销所有的亮点
-        pcIntact.highlightValues(null);
-
-        pcIntact.notifyDataSetChanged();
-        pcIntact.invalidate();
-    }
 
     public void initMyPieChart(PieChart pieChart) {
         /**

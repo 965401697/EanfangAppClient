@@ -53,6 +53,8 @@ public class QuotationServiceView extends BaseDialog {
     }
 
     private void initView() {
+        ivLeft.setOnClickListener(v -> dismiss());
+        tvTitle.setText("服务明细");
         etServiceName.setText(v(()->servicesBean.getServiceName()));
         etServiceContent.setText(v(()->servicesBean.getServiceContent()));
         etServicePrice.setText(v(()->(servicesBean.getServicePrice()/100) + ""));

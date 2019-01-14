@@ -125,6 +125,9 @@ public class CheckListActivity extends BaseActivity {
             if (queryEntry != null) {
                 ((WorkCheckListFragment) mFragments.get(currentTab)).getTaskData(queryEntry);
             }
+        } else if (resultCode == RESULT_OK && requestCode == WorkCheckListFragment.REQUST_REFRESH_CODE) {
+            ((WorkCheckListFragment) mFragments.get(currentTab)).refreshStatus();
+
         }
     }
 }

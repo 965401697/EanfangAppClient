@@ -661,14 +661,18 @@
                 android:orientation="horizontal"
                 android:padding="@dimen/dimen_10"
                 android:paddingTop="@dimen/dimen_20"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/dimen_18"
+                    android:paddingLeft="@dimen/dimen_32"
+                    android:paddingRight="@dimen/dimen_32"
+                    android:paddingTop="@dimen/dimen_18">
 
 
                     <TextView

@@ -60,11 +60,18 @@ public class SignListDetailActivity extends BaseActivity {
     ImageView ivOpen;
     @BindView(R.id.ll_photos)
     LinearLayout llPhotos;
+    @BindView(R.id.tv_sing_time_type)
+    TextView tvSingTimeType;
+    @BindView(R.id.tv_sing_person)
+    TextView tvSingPerson;
     private AMap aMap;
     private Marker marker;
     private LatLng latLng2;
     private SignListBean.ListBean listBean;
-
+    /**
+     * 签到or 签退
+     */
+    private int status;
 
     private ArrayList<String> imageList = new ArrayList<>();
 
@@ -73,8 +80,8 @@ public class SignListDetailActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_list_detail);
+        super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
         //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，创建地图
         mapView.onCreate(savedInstanceState);
@@ -91,6 +98,12 @@ public class SignListDetailActivity extends BaseActivity {
         listBean = (SignListBean.ListBean) getIntent().getSerializableExtra("bean");
         setTitle("足迹");
         setLeftBack();
+        status = getIntent().getIntExtra("status", 0);
+        if (status == 1) {// 1 签退
+            tvSingTimeType.setText("签退时间");
+        } else {// 签到
+            tvSingTimeType.setText("签到时间");
+        }
 
         tvTime.setText(listBean.getSignTime());
         tvAddress.setText(Config.get().getAddressByCode(listBean.getZoneCode()) + listBean.getDetailPlace());
@@ -102,6 +115,7 @@ public class SignListDetailActivity extends BaseActivity {
             tvVisitName.setVisibility(View.GONE);
         }
 
+        tvSingPerson.setText(listBean.getCreateUser().getAccountEntity().getRealName());
 
         if (!TextUtils.isEmpty(listBean.getRemarkInfo())) {
             tvRemark.setText(listBean.getRemarkInfo());

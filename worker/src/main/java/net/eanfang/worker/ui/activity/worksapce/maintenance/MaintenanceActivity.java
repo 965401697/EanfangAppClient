@@ -40,8 +40,8 @@ public class MaintenanceActivity extends BaseWorkerActivity {
                 intent.putExtra("type", 3);//公司
                 startAnimActivity(intent);
                 break;
-
-
+            default:
+                break;
         }
     }
 }

@@ -72,9 +72,11 @@ public class EvaluateShowActivity extends BaseActivity {
         if (mStatus.equals("giv")) {//评价技师
             llWorker.setVisibility(View.VISIBLE);
             llClient.setVisibility(View.GONE);
+            sdvWorkerHead.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + revBean.getOwnerUser().getAccountEntity().getAvatar()));
         } else {// 我收到的评价
             llWorker.setVisibility(View.GONE);
             llClient.setVisibility(View.VISIBLE);
+            sdvWorkerHead.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + revBean.getCreateUser().getAccountEntity().getAvatar()));
         }
 
         rbStar1.setNumStars(revBean.getItem1());
@@ -87,7 +89,6 @@ public class EvaluateShowActivity extends BaseActivity {
         rbWorkerStar4.setNumStars(revBean.getItem4());
         rbWorkerStar5.setNumStars(revBean.getItem5());
 
-        sdvWorkerHead.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + revBean.getCreateUser().getAccountEntity().getAvatar()));
         if (revBean.getFavorableRate() == 1) {//超赞 1 一般 2 差评 3
             tvWonderful.setText("超赞");
         } else if (revBean.getFavorableRate() == 2) {

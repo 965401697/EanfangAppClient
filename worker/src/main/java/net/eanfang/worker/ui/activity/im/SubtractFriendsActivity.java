@@ -47,7 +47,7 @@ public class SubtractFriendsActivity extends BaseWorkerActivity {
     private String mTitle;
     private ArrayList<String> mUserIdList = new ArrayList<String>();
     private ArrayList<GroupDetailBean.ListBean> mSubUserIconList = new ArrayList<GroupDetailBean.ListBean>();
-
+    private boolean isCompound;
 
     Handler handler = new Handler() {
         @Override
@@ -71,6 +71,7 @@ public class SubtractFriendsActivity extends BaseWorkerActivity {
 
         }
     };
+    private ArrayList<GroupDetailBean.ListBean> mList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +85,8 @@ public class SubtractFriendsActivity extends BaseWorkerActivity {
         mGroupId = getIntent().getStringExtra("groupId");
         mRYGroupId = getIntent().getStringExtra("ryGroupId");
         mTitle = getIntent().getStringExtra("title");
+        //是否是合成的头像
+        isCompound =getIntent().getBooleanExtra("isCompound", true);
         startTransaction(true);
 
         setRightTitleOnClickListener(new View.OnClickListener() {
@@ -100,7 +103,13 @@ public class SubtractFriendsActivity extends BaseWorkerActivity {
         mGroupFriendsAdapter = new GroupFriendsAdapter(R.layout.item_friend_list);//标志位 就是为了显示checkbox
         mGroupFriendsAdapter.bindToRecyclerView(recyclerView);
 
-        mGroupFriendsAdapter.setNewData(mFriendListBeanArrayList);
+        mList = new ArrayList<>();
+        for (GroupDetailBean.ListBean bean : mFriendListBeanArrayList) {
+            if (!bean.getAccId().equals(String.valueOf(EanfangApplication.get().getAccId()))) {
+                mList.add(bean);//自己不能删除自己
+            }
+        }
+        mGroupFriendsAdapter.setNewData(mList);
         selectFriends();
     }
 
@@ -132,6 +141,7 @@ public class SubtractFriendsActivity extends BaseWorkerActivity {
         }
 
         list.add(EanfangApplication.get().getUser().getAccount().getAvatar());
+        if(isCompound)
         CompoundHelper.getInstance().sendBitmap(this, handler, list);//生成图片
 
         EanfangHttp.post(UserApi.POST_GROUP_KICKOUT)
@@ -141,7 +151,10 @@ public class SubtractFriendsActivity extends BaseWorkerActivity {
                 .params("senderId", EanfangApplication.get().getAccId())
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (json) -> {
                     ToastUtil.get().showToast(SubtractFriendsActivity.this, "移除成功");
-
+                    if(!isCompound){
+                        SubtractFriendsActivity.this.setResult(RESULT_OK);
+                        SubtractFriendsActivity.this.endTransaction(true);
+                    }
                 }));
     }
 

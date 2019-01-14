@@ -153,12 +153,12 @@ public class AddWorkActivity extends BaseActivityWithTakePhoto {
 
     private boolean checkedData() {
         if (TextUtils.isEmpty(etCompanyName.getText().toString())) {
-            ToastUtil.get().showToast(this, "请输入公司名称名称");
+            ToastUtil.get().showToast(this, "请输入公司名称");
             return true;
         }
 
         if (TextUtils.isEmpty(etPosition.getText().toString())) {
-            ToastUtil.get().showToast(this, "请输入职位名称名称");
+            ToastUtil.get().showToast(this, "请输入职位名称");
             return true;
         }
 

@@ -10,8 +10,14 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
 
+import com.eanfang.apiservice.NewApiService;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
+
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
+
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -64,5 +70,21 @@ public class OfficialDetailActivity extends BaseClientActivity {
         });//谷歌内核
 
         mWebView.loadUrl(getIntent().getStringExtra("url"));
+        long id = getIntent().getLongExtra("id", 0);
+        if (id > 0) {
+            readStatus(id);
+        }
+
+    }
+
+    private void readStatus(long id) {
+        EanfangHttp.post(NewApiService.GET_OFFICIAL_CHANGE_STATUS)
+                .params("id", id)
+                .execute(new EanfangCallback<JSONObject>(this, false, JSONObject.class) {
+                    @Override
+                    public void onSuccess(JSONObject object) {
+
+                    }
+                });
     }
 }

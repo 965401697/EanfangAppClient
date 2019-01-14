@@ -6,7 +6,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.CheckBox;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.eanfang.model.TemplateBean;
@@ -17,7 +18,6 @@ import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.oa.workreport.OAPersonAdaptet;
-import net.eanfang.worker.ui.adapter.CooperationAddAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -34,20 +34,22 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class FiltrateTaskActivity extends BaseWorkerActivity implements SelectTimeDialogFragment.SelectTimeListener {
+public class FiltrateTaskActivity extends BaseWorkerActivity implements SelectTimeDialogFragment.SelectTimeListener, RadioGroup.OnCheckedChangeListener {
 
-    @BindView(R.id.recycler_status)
-    RecyclerView recyclerStatus;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     @BindView(R.id.tv_start)
     TextView tvStart;
     @BindView(R.id.tv_end)
     TextView tvEnd;
-    private CooperationAddAdapter statusAdapter;
+    @BindView(R.id.rb_device_read)
+    RadioButton rbDeviceRead;
+    @BindView(R.id.rb_device_unread)
+    RadioButton rbDeviceUnread;
+    @BindView(R.id.rg_status)
+    RadioGroup rgStatus;
 
     List<String> mTypeList = new ArrayList<>();
-    List<String> mStatusList = new ArrayList<>();
     private OAPersonAdaptet oaPersonAdaptet;
 
     private ArrayList<TemplateBean.Preson> newPresonList = new ArrayList<>();
@@ -55,6 +57,10 @@ public class FiltrateTaskActivity extends BaseWorkerActivity implements SelectTi
 //    private TimePickerView mTimeYearMonthDay;
 
     private TextView mCurrentText;
+    /**
+     * 状态选择
+     */
+    private int mStatus = 100;
 
 
     @Override
@@ -71,24 +77,14 @@ public class FiltrateTaskActivity extends BaseWorkerActivity implements SelectTi
     private void initViews() {
 
         mTypeList = GetConstDataUtils.getWorkReportTypeList();
-        mStatusList.add("待阅");
-        mStatusList.add("已阅");
-        mStatusList.add("已删除");
 
 
-        recyclerStatus.setLayoutManager(new GridLayoutManager(this, 3));
         recyclerView.setLayoutManager(new GridLayoutManager(this, 5));
-
-
-        statusAdapter = new CooperationAddAdapter(R.layout.item_cooperation_add);
 
         oaPersonAdaptet = new OAPersonAdaptet(this, new ArrayList<TemplateBean.Preson>());
         recyclerView.setAdapter(oaPersonAdaptet);
 
-        statusAdapter.bindToRecyclerView(recyclerStatus);
-
-        statusAdapter.setNewData(mStatusList);
-
+        rgStatus.setOnCheckedChangeListener(this);
 //        doSelectYearMonthDay();
     }
 
@@ -115,30 +111,12 @@ public class FiltrateTaskActivity extends BaseWorkerActivity implements SelectTi
     }
 
     private void sub() {
+        QueryEntry queryEntry = new QueryEntry();
 
-        QueryEntry queryEntry = null;
-
-
-        if (statusAdapter.getCheckBoxList().size() != 0) {
-
-            if (queryEntry == null) queryEntry = new QueryEntry();
-
-            List<CheckBox> statusList = statusAdapter.getCheckBoxList();
-
-
-            if (statusList.size() > 1) {
-                List<String> statusIndexList = new ArrayList<>();
-
-                for (CheckBox status : statusList) {
-                    int statusIndex = mStatusList.indexOf(status.getText().toString().trim());
-                    statusIndexList.add(String.valueOf(statusIndex));
-                }
-                queryEntry.getIsIn().put("status", statusIndexList);
-            } else {
-                queryEntry.getEquals().put("status", String.valueOf(mStatusList.indexOf(((CheckBox) statusList.get(0)).getText().toString().trim())));
-            }
-
+        if (mStatus != 100) {
+            queryEntry.getEquals().put("status", mStatus + "");
         }
+
 
         if (newPresonList.size() != 0) {
 
@@ -233,6 +211,21 @@ public class FiltrateTaskActivity extends BaseWorkerActivity implements SelectTi
             mCurrentText.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
         } else {
             mCurrentText.setText(time);
+        }
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup radioGroup, int i) {
+        switch (radioGroup.getCheckedRadioButtonId()) {
+            case R.id.rb_device_read://("已读",1)
+                mStatus = 1;
+                break;
+            case R.id.rb_device_unread:// "未读",0
+                mStatus = 0;
+                break;
+            default:
+                break;
+
         }
     }
 }

@@ -400,14 +400,10 @@ public class CameraActivity extends BaseWorkerActivity implements AMapLocationLi
      * 绘制水印
      */
     private void drawBitmap(String path, Bitmap watermarkBitmap, String lAddress, String time) {
-        Bitmap textBitmap = ImageUtil.drawTextToRightBottom(this, watermarkBitmap, "地址：" + lAddress, 16, color, 5, 8);
-        textBitmap = ImageUtil.drawTextToRightBottom(this, textBitmap, "内容：" + project_content, 16, color, 5, 28);
-        textBitmap = ImageUtil.drawTextToRightBottom(this, textBitmap, "部位/区域：" + region_name, 16, color, 5, 48);
-        textBitmap = ImageUtil.drawTextToRightBottom(this, textBitmap, "类型：" + project_type, 16, color, 5, 68);
-        textBitmap = ImageUtil.drawTextToRightBottom(this, textBitmap, "名称：" + project_name, 16, color, 5, 88);
-        textBitmap = ImageUtil.drawTextToRightBottom(this, textBitmap, "创建者:" + creatUser, 16, color, 5, 108);
-        textBitmap = ImageUtil.drawTextToRightBottom(this, textBitmap, "天气：" + weather, 16, color, 5, 128);
-        textBitmap = ImageUtil.drawTextToRightBottom(this, textBitmap, "时间：" + time, 16, color, 5, 148);
+        String mContent = "时间：" + time + "\n" + "天气：" + weather + "\n" + "创建者:" +
+                creatUser + "\n" + "类型：" + project_type + "\n" + "名称：" + project_name + "\n" + "部位/区域：" + region_name + "\n" + "内容：" + project_content + "\n" +
+                "地址：" + lAddress;
+        Bitmap textBitmap = ImageUtil.drawTextToRightBottom(this, watermarkBitmap, mContent, 16, color, 5, 240);
         showTakePhotoImg.setImageBitmap(textBitmap);
         flCamera.setVisibility(View.VISIBLE);
         try {
@@ -459,8 +455,8 @@ public class CameraActivity extends BaseWorkerActivity implements AMapLocationLi
                     if (weatherLiveResult != null && weatherLiveResult.getLiveResult() != null) {
                         weatherlive = weatherLiveResult.getLiveResult();
                         weather = weatherlive.getWeather()
-                                + weatherlive.getTemperature() + "°\n"
-                                + weatherlive.getWindDirection() + "风 \n "
+                                + weatherlive.getTemperature() + "°"
+                                + weatherlive.getWindDirection() + "风 "
                                 + weatherlive.getWindPower() + "级";
                     }
                 }

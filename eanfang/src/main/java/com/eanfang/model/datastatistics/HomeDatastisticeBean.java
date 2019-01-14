@@ -90,15 +90,23 @@ public class HomeDatastisticeBean implements Serializable {
          */
 
         private int num;
-        private String type;
+        private String typeNum;
 
 
         public String getType() {
-            return type;
+            return typeNum;
         }
 
-        public void setType(String type) {
-            this.type = type;
+        public void setType(String typeNum) {
+            this.typeNum = typeNum;
+        }
+
+        public int getNum() {
+            return num;
+        }
+
+        public void setNum(int num) {
+            this.num = num;
         }
     }
 }

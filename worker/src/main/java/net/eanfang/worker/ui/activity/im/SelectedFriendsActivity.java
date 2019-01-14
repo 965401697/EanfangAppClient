@@ -136,9 +136,8 @@ public class SelectedFriendsActivity extends BaseWorkerActivity {
                         intent.putStringArrayListExtra("userIconList", mUserIconList);
                         startActivity(intent);
                     }
-                } else if (flag == 2) {
-                    AddNumber();
-                } else {
+                } else if (flag == 2 || flag == 3) {
+//                    AddNumber();
                     EventBus.getDefault().post(presonList);
                     finishSelf();
                 }
@@ -233,7 +232,14 @@ public class SelectedFriendsActivity extends BaseWorkerActivity {
                     if (bean.getFlag() == 1) {
                         //移除
                         mUserIdList.remove(bean.getAccId());
-                        presonList.remove(position);
+
+
+                        TemplateBean.Preson preson = new TemplateBean.Preson();
+                        preson.setName(bean.getNickName());
+                        preson.setId(bean.getAccId());
+                        preson.setProtraivat(bean.getAvatar());
+                        presonList.remove(preson);
+
                         if (!TextUtils.isEmpty(bean.getAvatar())) {
                             mUserIconList.remove(bean.getAvatar());
                         }

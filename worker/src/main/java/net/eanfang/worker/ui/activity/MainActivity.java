@@ -17,6 +17,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
@@ -55,6 +56,8 @@ import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.im.ConversationActivity;
 import net.eanfang.worker.ui.activity.worksapce.SetPasswordActivity;
 import net.eanfang.worker.ui.activity.worksapce.WorkDetailActivity;
+import net.eanfang.worker.ui.activity.worksapce.notice.MessageListActivity;
+import net.eanfang.worker.ui.activity.worksapce.notice.SystemNoticeActivity;
 import net.eanfang.worker.ui.base.WorkerApplication;
 import net.eanfang.worker.ui.fragment.ContactListFragment;
 import net.eanfang.worker.ui.fragment.ContactsFragment;
@@ -67,6 +70,7 @@ import net.eanfang.worker.util.PrefUtils;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -75,7 +79,6 @@ import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
-import io.rong.message.InformationNotificationMessage;
 import io.rong.message.TextMessage;
 
 import static com.eanfang.config.EanfangConst.MEIZU_APPID_WORKER;
@@ -86,9 +89,13 @@ import static com.eanfang.config.EanfangConst.XIAOMI_APPKEY_WORKER;
 public class MainActivity extends BaseActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     protected FragmentTabHost mTabHost;
-    View redPoint;
+    private View redPointContact;
+    private View redPointHome;
+    private View redPointWork;
     private LoginBean user;
     private long mExitTime;
+    //被删除的 群组id 容器
+    public static HashMap<String, String> hashMap = new HashMap<>();
 
 //    @Override
 //    protected void onNewIntent(Intent intent) {
@@ -164,6 +171,8 @@ public class MainActivity extends BaseActivity {
         });
 
         PrefUtils.setBoolean(getApplicationContext(), PrefUtils.GUIDE, false);//新手引导是否展示
+
+        getPushMessage(getIntent());
     }
 
 
@@ -207,70 +216,21 @@ public class MainActivity extends BaseActivity {
         mTabHost.getTabWidget().setDividerDrawable(R.color.transparent);
         View indicator = getLayoutInflater().inflate(R.layout.indicator_main_home, null);
         mTabHost.addTab(mTabHost.newTabSpec("home").setIndicator(indicator), HomeFragment.class, null);
+        redPointHome = indicator.findViewById(R.id.redPoint_home);
 
         indicator = getLayoutInflater().inflate(R.layout.indicator_main_contact, null);
         mTabHost.addTab(mTabHost.newTabSpec("contactList").setIndicator(indicator), ContactListFragment.class, null);
-        redPoint = indicator.findViewById(R.id.redPoint);
+        redPointContact = indicator.findViewById(R.id.redPoint_contact);
 
         indicator = getLayoutInflater().inflate(R.layout.indicator_main_work, null);
         mTabHost.addTab(mTabHost.newTabSpec("work").setIndicator(indicator), WorkspaceFragment.class, null);
+        redPointWork = indicator.findViewById(R.id.redPoint_work);
 
         indicator = getLayoutInflater().inflate(R.layout.indicator_org_work, null);
         mTabHost.addTab(mTabHost.newTabSpec("contact").setIndicator(indicator), ContactsFragment.class, null);
         indicator = getLayoutInflater().inflate(R.layout.indicator_main_config, null);
 
         mTabHost.addTab(mTabHost.newTabSpec("config").setIndicator(indicator), MyFragment.class, null);
-
-        initMessageCount();
-    }
-
-    private void initMessageCount() {
-//        Badge qBadgeView = new QBadgeView(this)
-//                .bindTarget(indicator.findViewById(R.id.ll_news))
-//                .setBadgeNumber(Var.get("MainActivity.initMessageCount").getAllUnreadMessageCount() > 0 ? -1 : 0)
-//                .setBadgePadding(5, true)
-//                .setBadgeGravity(Gravity.END | Gravity.TOP)
-//                .setGravityOffset(0, 0, true)
-//                .setBadgeTextSize(18, true)
-//                .setOnDragStateChangedListener((dragState, badge, targetView) -> {
-//                    //清除成功
-//                    if (dragState == Badge.OnDragStateChangedListener.STATE_SUCCEED) {
-//                        EanfangHttp.get(NewApiService.GET_PUSH_READ_ALL).execute(new EanfangCallback(this, false, JSONObject.class));
-//                        //  showToast("消息被清空了");
-//                    }
-//                });
-        EanfangHttp.get(UserApi.ALL_MESSAGE).execute(new EanfangCallback<AllMessageBean>(MainActivity.this, false, AllMessageBean.class, (bean -> {
-            new Handler(getMainLooper()).postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    // 桌面气泡赋值
-                    BadgeUtil.setBadgeCount(MainActivity.this, bean.getTotalCount(), R.drawable.worker_logo);
-                }
-            }, 3 * 1000);
-
-            String classMainName = "MainActivity.initMessageCount";// 底部消息右上方红点
-            String classContactCamName = "ContactListFragment.camMessageCount";// 官方 消息
-            String classContactSysName = "ContactListFragment.sysMessageCount";// 系统 消息
-            String classContactBizName = "ContactListFragment.bizMessageCount";// 业务 消息
-
-            if (bean.getBiz() > 0 || bean.getSys() > 0 || bean.getCam() > 0) {// 进行底部消息小红点的显示
-                redPoint.setVisibility(View.VISIBLE);
-            } else {
-                redPoint.setVisibility(View.GONE);
-            }
-
-            //变量监听
-//            Var.get("MainActivity.initMessageCount").setChangeListener((var) -> {
-//                runOnUiThread(() -> {
-////                qBadgeView.setBadgeNumber(var > 0 ? -1 : 0);
-//                    if (var == 0) {
-//                        redPoint.setVisibility(View.GONE);
-//                    } else {
-//                        redPoint.setVisibility(View.VISIBLE);
-//                    }
-//                });
-//            });
-        })));
 
     }
 
@@ -442,30 +402,32 @@ public class MainActivity extends BaseActivity {
 
             //开发者根据自己需求自行处理
             boolean isDelect = false;
-            String type = message.getObjectName();
-            if (type.equals("RC:InfoNtf")) {
-                InformationNotificationMessage msg = (InformationNotificationMessage) message.getContent();
-                if (msg.getMessage().equals("解散了")) {
-                    isDelect = true;
-                    for (Activity activity : transactionActivities) {
-                        if (activity instanceof ConversationActivity) {
-                            if (message.getTargetId().equals(((ConversationActivity) activity).mId)) {
-                                activity.finish();
-                            }
-                        }
-                    }
-                    RongIM.getInstance().removeConversation(Conversation.ConversationType.GROUP, message.getTargetId(), null);
-                }
-
-            }
+//            String type = message.getObjectName();
+//            if (type.equals("RC:InfoNtf")) {
+//                InformationNotificationMessage msg = (InformationNotificationMessage) message.getContent();
+//                if (msg.getMessage().equals("解散了")) {
+//                    isDelect = true;
+//                    for (Activity activity : transactionActivities) {
+//                        if (activity instanceof ConversationActivity) {
+//                            if (message.getTargetId().equals(((ConversationActivity) activity).mId)) {
+//                                activity.finish();
+//                            }
+//                        }
+//                    }
+//                    RongIM.getInstance().removeConversation(Conversation.ConversationType.GROUP, message.getTargetId(), null);
+//                }
+//
+//            }
 
 
             if (message.getConversationType().getName().equals(Conversation.ConversationType.SYSTEM.getName())) {
                 TextMessage messageContent = (TextMessage) message.getContent();
                 if (messageContent.getContent().equals("被删除通知")) {
 
+                    //删除好友的会话记录
+                    RongIM.getInstance().clearMessages(Conversation.ConversationType.PRIVATE, message.getTargetId(), null);
                     RongIM.getInstance().removeConversation(Conversation.ConversationType.PRIVATE, message.getTargetId(), null);
-
+                    hashMap.put(message.getTargetId(), message.getTargetId());
                     for (Activity activity : transactionActivities) {
                         if (activity instanceof ConversationActivity) {
                             if (message.getTargetId().equals(((ConversationActivity) activity).mId)) {
@@ -474,6 +436,25 @@ public class MainActivity extends BaseActivity {
                         }
                     }
 
+                } else if (messageContent.getContent().equals("群解散通知")) {
+                    String extra = messageContent.getExtra();
+                    JSONObject jsonObject = JSON.parseObject(extra);
+                    //删除好友的会话记录
+
+                    UserInfo userInfo = new UserInfo(jsonObject.getString("groupId"), jsonObject.getString("groupName"), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + jsonObject.getString("groupPic")));
+
+                    RongIM.getInstance().refreshUserInfoCache(userInfo);
+
+                    RongIM.getInstance().clearMessages(Conversation.ConversationType.GROUP, message.getTargetId(), null);
+                    RongIM.getInstance().removeConversation(Conversation.ConversationType.GROUP, message.getTargetId(), null);
+                    hashMap.put(message.getTargetId(), message.getTargetId());
+                    for (Activity activity : transactionActivities) {
+                        if (activity instanceof ConversationActivity) {
+                            if (message.getTargetId().equals(((ConversationActivity) activity).mId)) {
+                                activity.finish();
+                            }
+                        }
+                    }
                 } else if (messageContent.getContent().equals("被移除群组通知")) {
 
                     TextMessage textMessage = (TextMessage) message.getContent();
@@ -493,7 +474,10 @@ public class MainActivity extends BaseActivity {
                                 }));
 
                     });
-
+                    //添加被删除的id
+                    hashMap.put(message.getTargetId(), message.getTargetId());
+                    //删除好友的会话记录
+                    RongIM.getInstance().clearMessages(Conversation.ConversationType.GROUP, message.getTargetId(), null);
                     RongIM.getInstance().removeConversation(Conversation.ConversationType.GROUP, id, null);
 
                     for (Activity activity : transactionActivities) {
@@ -503,7 +487,15 @@ public class MainActivity extends BaseActivity {
                             }
                         }
                     }
+                } else if (messageContent.getContent().equals("好友邀请")) {
+                    hashMap.put(message.getTargetId(), message.getTargetId());
+                } else if (messageContent.getContent().equals("拒绝添加好友通知")) {
+                    hashMap.put(message.getTargetId(), message.getTargetId());
                 } else {
+                    //移除添加被删除的id
+                    if (hashMap.get(message.getTargetId()) != null) {
+                        hashMap.remove(message.getTargetId());
+                    }
 
                     EanfangHttp.get(UserApi.POST_USER_INFO + message.getTargetId())
                             .execute(new EanfangCallback<User>(MainActivity.this, false, User.class, (bean) -> {
@@ -686,6 +678,69 @@ public class MainActivity extends BaseActivity {
         } else if (resultCode == RESULT_OK && requestCode == 49) {
             ContactsFragment contactsFragment = (ContactsFragment) getSupportFragmentManager().getFragments().get(3);
             contactsFragment.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        /**
+         * 获取推送
+         * */
+        getPushMessage(intent);
+    }
+
+    private void getPushMessage(Intent intent) {
+        Uri uri = intent.getData();
+        int mType;
+        if (uri != null) {
+            if (!StringUtils.isEmpty(uri.getQueryParameter("type"))) {
+                mType = Integer.parseInt(uri.getQueryParameter("type"));
+                if (mType == 2) {
+                    // 打开messagelistactivity
+                    JumpItent.jump(MainActivity.this, MessageListActivity.class);
+                } else if (mType == 3) {
+                    //打开systemnoticeactivity
+                    JumpItent.jump(MainActivity.this, SystemNoticeActivity.class);
+                }
+            }
+
+        }
+    }
+
+    @Subscribe
+    public void onEventBottomRedIcon(AllMessageBean bean) {
+        /**
+         * 桌面app红点
+         * */
+        if (bean.getTotalCount() > 0) {
+            // 首页红点
+            new Handler(getMainLooper()).postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    // 桌面气泡赋值
+                    BadgeUtil.setBadgeCount(MainActivity.this, bean.getTotalCount(), R.drawable.client_logo);
+
+                }
+            }, 3 * 1000);
+        }
+        //消息页面红点
+        if (bean.getBiz() > 0 || bean.getSys() > 0 || bean.getCmp() > 0) {
+            redPointContact.setVisibility(View.VISIBLE);
+        } else {
+            redPointContact.setVisibility(View.GONE);
+        }
+        // 进行底部首页小红点的显示
+        if (bean.getRepair() > 0 || bean.getInstall() > 0 || bean.getDesign() > 0) {
+            redPointHome.setVisibility(View.VISIBLE);
+        } else {
+            redPointHome.setVisibility(View.GONE);
+        }
+        // 工作台消息红点
+        if (bean.getReport() > 0 || bean.getTask() > 0 || bean.getInspect() > 0) {
+            redPointWork.setVisibility(View.VISIBLE);
+        } else {
+            redPointWork.setVisibility(View.GONE);
         }
     }
 }

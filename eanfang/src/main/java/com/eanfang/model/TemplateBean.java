@@ -143,7 +143,8 @@ public class TemplateBean extends BaseItemData implements Serializable {
                 Preson preson = (Preson) obj;
 
                 // 比较每个属性的值 一致时才返回true
-                if (preson.id.equals(this.id) && preson.name.equals(this.name))
+//                if (preson.id.equals(this.id) && preson.name.equals(this.name))
+                if (preson.id.equals(this.id))
                     return true;
             }
             return false;
@@ -154,7 +155,7 @@ public class TemplateBean extends BaseItemData implements Serializable {
          */
         @Override
         public int hashCode() {
-            return id.hashCode() * name.hashCode();
+            return id.hashCode();
         }
 
     }

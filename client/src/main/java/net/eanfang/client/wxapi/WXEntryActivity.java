@@ -5,14 +5,14 @@
 
 package net.eanfang.client.wxapi;
 
-import android.app.Activity;
-
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 
+import cn.sharesdk.wechat.utils.WechatHandlerActivity;
 
-public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
+
+public class WXEntryActivity extends WechatHandlerActivity implements IWXAPIEventHandler {
     @Override
     public void onReq(BaseReq baseReq) {
 

@@ -56,6 +56,7 @@ import net.eanfang.client.ui.activity.worksapce.oa.OAPersonAdaptet;
 import net.eanfang.client.ui.activity.worksapce.repair.SelectDeviceTypeActivity;
 import net.eanfang.client.util.SendContactUtils;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.text.SimpleDateFormat;
@@ -79,7 +80,7 @@ import static android.provider.MediaStore.Video.Thumbnails.MINI_KIND;
  * @description 添加设备点检
  */
 
-public class AddNewCheckActivity  extends BaseActivity implements SelectTimeDialogFragment.SelectTimeListener {
+public class AddNewCheckActivity extends BaseActivity implements SelectTimeDialogFragment.SelectTimeListener {
     /**
      * 公司名称
      */
@@ -182,6 +183,7 @@ public class AddNewCheckActivity  extends BaseActivity implements SelectTimeDial
             finishSelf();
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -191,6 +193,7 @@ public class AddNewCheckActivity  extends BaseActivity implements SelectTimeDial
         initView();
         initData();
     }
+
     private void initView() {
         setTitle("新建任务");
 
@@ -268,9 +271,9 @@ public class AddNewCheckActivity  extends BaseActivity implements SelectTimeDial
                 JumpItent.jump(AddNewCheckActivity.this, PlayVideoActivity.class, bundle_takevideo);
                 break;
             case R.id.tv_complete_work:
-                llAddDetail.setVisibility(View.GONE);
                 if (closeTaskWrite()) {
                     llAddDetail.setVisibility(View.GONE);
+
                 } else {
                     if (addDataToWrok()) llAddDetail.setVisibility(View.GONE);
                 }
@@ -283,6 +286,8 @@ public class AddNewCheckActivity  extends BaseActivity implements SelectTimeDial
             case R.id.tv_sub:
                 submit();
                 break;
+            default:
+                break;
         }
     }
 
@@ -292,7 +297,6 @@ public class AddNewCheckActivity  extends BaseActivity implements SelectTimeDial
     private boolean checkWorkInfo() {
 
         if (TextUtils.isEmpty(etInputTitle.getText().toString().trim())) {
-
             showToast("请填写任务标题");
             return false;
         }
@@ -309,7 +313,7 @@ public class AddNewCheckActivity  extends BaseActivity implements SelectTimeDial
         }
         if (TextUtils.isEmpty(etInputContent.getText().toString().trim())) {
 
-            showToast("请填写任务内容");
+            showToast("请填写检查内容");
             return false;
         }
         return true;
@@ -428,6 +432,7 @@ public class AddNewCheckActivity  extends BaseActivity implements SelectTimeDial
                         message.setMsgContent("新建点检成功");
                         message.setTip("确定");
                         bundle.putSerializable("message", message);
+                        EventBus.getDefault().post("addCheckSuccess");
                         JumpItent.jump(AddNewCheckActivity.this, StateChangeActivity.class, bundle);
 
                         //分享
@@ -464,7 +469,7 @@ public class AddNewCheckActivity  extends BaseActivity implements SelectTimeDial
                         b.putString("creatTime", etTaskName.getText().toString().trim());
                         b.putString("workerName", EanfangApplication.get().getUser().getAccount().getRealName());
                         b.putString("status", "0");
-                        b.putString("shareType", "4");
+                        b.putString("shareType", "5");
 
                         new SendContactUtils(b, handler, groupList, DialogUtil.createLoadingDialog(AddNewCheckActivity.this), "设备检点").send();
 
@@ -527,6 +532,12 @@ public class AddNewCheckActivity  extends BaseActivity implements SelectTimeDial
         rlThumbnailCheck.setVisibility(View.GONE);
     }
 
+    private void inputVoice(EditText editText) {
+        PermissionUtils.get(this).getVoicePermission(() -> {
+            RecognitionManager.getSingleton().startRecognitionWithDialog(AddNewCheckActivity.this, editText);
+        });
+    }
+
     private boolean closeTaskWrite() {
         if (TextUtils.isEmpty(etInputContent.getText().toString().trim()) &&
                 TextUtils.isEmpty(etInputTitle.getText().toString().trim()) &&
@@ -538,12 +549,6 @@ public class AddNewCheckActivity  extends BaseActivity implements SelectTimeDial
         }
 
         return false;
-    }
-
-    private void inputVoice(EditText editText) {
-        PermissionUtils.get(this).getVoicePermission(() -> {
-            RecognitionManager.getSingleton().startRecognitionWithDialog(AddNewCheckActivity.this, editText);
-        });
     }
 
     private void getGroupDetail(String targetId) {

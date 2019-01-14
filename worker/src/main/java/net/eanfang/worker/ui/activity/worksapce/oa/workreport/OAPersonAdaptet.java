@@ -4,6 +4,7 @@ package net.eanfang.worker.ui.activity.worksapce.oa.workreport;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -42,6 +43,7 @@ public class OAPersonAdaptet extends RecyclerView.Adapter<OAPersonAdaptet.ViewHo
     private Context mContext;
     private List<TemplateBean.Preson> mData;
     private int mFlag;
+    private Handler mHandler;
 
     public OAPersonAdaptet(Context context, List<TemplateBean.Preson> data) {
         this.mContext = context;
@@ -52,6 +54,13 @@ public class OAPersonAdaptet extends RecyclerView.Adapter<OAPersonAdaptet.ViewHo
         this.mContext = context;
         this.mData = data;
         this.mFlag = flag;
+    }
+
+    public OAPersonAdaptet(Context context, List<TemplateBean.Preson> data, int flag, Handler handler) {
+        this.mContext = context;
+        this.mData = data;
+        this.mFlag = flag;
+        this.mHandler = handler;
     }
 
     @NonNull
@@ -93,7 +102,10 @@ public class OAPersonAdaptet extends RecyclerView.Adapter<OAPersonAdaptet.ViewHo
                         bundle.putSerializable("list", (Serializable) getData());
                         intent.putExtras(bundle);
                         intent.putExtra("flag", 1);
-                        ((CreateGroupActivity) mContext).finishSelf();
+                        intent.putExtra("groupName", ((CreateGroupActivity) mContext).etGroupName.getText().toString());
+                        intent.putExtra("headPortrait", ((CreateGroupActivity) mContext).imgKey);
+                        intent.putExtra("locationPortrait", ((CreateGroupActivity) mContext).locationUrl);
+//                        ((CreateGroupActivity) mContext).finishSelf();
                         mContext.startActivity(intent);
                     } else {
                         //选择协同人员
@@ -123,6 +135,9 @@ public class OAPersonAdaptet extends RecyclerView.Adapter<OAPersonAdaptet.ViewHo
             holder.userHeader.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if (mHandler != null) {
+                        mHandler.sendEmptyMessage(1);
+                    }
                     mData.remove(position);
                     notifyDataSetChanged();
                 }

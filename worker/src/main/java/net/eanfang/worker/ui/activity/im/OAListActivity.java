@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.eanfang.util.PermKit;
+
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.oa.check.AddNewCheckActivity;
 import net.eanfang.worker.ui.activity.worksapce.oa.task.TaskAssignmentCreationActivity;
@@ -35,13 +37,20 @@ public class OAListActivity extends BaseWorkerActivity {
      */
 
     private void jump() {
+
+
+        if (!PermKit.get().getWorkReportListPrem()) return;
         onClick((findViewById(R.id.tv_work_report)), CreationWorkReportActivity.class);
+        if (!PermKit.get().getWorkTaskListPrem()) return;
         onClick((findViewById(R.id.tv_work_task)), TaskAssignmentCreationActivity.class);
+        if (!PermKit.get().getWorkInspectListPrem()) return;
         onClick((findViewById(R.id.tv_work_inspect)), AddNewCheckActivity.class);
         onClick((findViewById(R.id.tv_work_transfer)), WorkTransferCreateActivity.class);
         onClick((findViewById(R.id.tv_work_talk)), WorkTalkCreateActivity.class);
 
+
     }
+
 
     private void onClick(View v, Class clazz) {
 

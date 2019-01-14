@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -31,10 +30,7 @@ public class SkillCertificafeListActivity extends BaseWorkerActivity {
     RecyclerView recyclerView;
 
     private final int ADD_EDUCATION_CODE = 101;
-    @BindView(R.id.tv_sub)
-    TextView tvSub;
     private QualificationAdapter adapter;
-    private int mStatus;
 
 
     @Override
@@ -44,7 +40,6 @@ public class SkillCertificafeListActivity extends BaseWorkerActivity {
         ButterKnife.bind(this);
         setTitle("技能认证");
         setLeftBack();
-        mStatus = getIntent().getIntExtra("status", -1);
         initViews();
     }
 
@@ -69,9 +64,7 @@ public class SkillCertificafeListActivity extends BaseWorkerActivity {
             }
         });
 
-        if (mStatus > 0) {
-            getData();
-        }
+        getData();
     }
 
 
@@ -87,7 +80,6 @@ public class SkillCertificafeListActivity extends BaseWorkerActivity {
                     public void onSuccess(QualifyCertificafeListBean bean) {
 
                         if (bean.getList().size() > 0) {
-//                            adapter.getData().clear();
                             adapter.setNewData(bean.getList());
                         }
 
@@ -112,10 +104,6 @@ public class SkillCertificafeListActivity extends BaseWorkerActivity {
                     @Override
                     public void onSuccess(JSONObject bean) {
                         adapter.remove(position);
-
-                        if (adapter.getData().size() == 0) {
-                            tvSub.setVisibility(View.GONE);
-                        }
                     }
 
                 });
@@ -137,7 +125,7 @@ public class SkillCertificafeListActivity extends BaseWorkerActivity {
 
             case R.id.tv_add:
                 startActivityForResult(new Intent(SkillCertificafeListActivity.this, AddSkillCertificafeActivity.class), ADD_EDUCATION_CODE);
-                endTransaction(true);
+                endTransaction(false);
                 break;
         }
     }
@@ -148,10 +136,6 @@ public class SkillCertificafeListActivity extends BaseWorkerActivity {
 
         if (resultCode == RESULT_OK && requestCode == ADD_EDUCATION_CODE) {
             getData();
-
-            if (tvSub.getVisibility() == View.GONE) {
-                tvSub.setVisibility(View.VISIBLE);
-            }
         }
 
     }

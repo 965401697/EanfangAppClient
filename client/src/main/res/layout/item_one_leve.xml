@@ -25,27 +25,29 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dimen_20"
             android:layout_toRightOf="@+id/iv_select"
-            android:text="asdfasfd"
+            android:text=" "
             android:textColor="@color/color_client_neworder"
             android:textSize="@dimen/textSize_15" />
 
 
         <CheckBox
             android:id="@+id/cb_all_checked"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/dimen_42"
+            android:layout_height="@dimen/dimen_42"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/dimen_26"
+            android:button="@null"
             android:clickable="false"
             android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:layout_marginRight="@dimen/dimen_26"
-            />
+            android:background="@drawable/selector_single_checked_client"
+            android:focusableInTouchMode="false" />
 
 
     </RelativeLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
 </LinearLayout>

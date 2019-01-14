@@ -95,11 +95,13 @@ public class SelectTimeDialogFragment extends DialogFragment implements OnDateSe
         widget.setSelectedDate(instance);
         widget.setOnDateChangedListener(this);
 
+        mCalendarTime = "";
         return new AlertDialog.Builder(getActivity())
                 .setTitle("")
                 .setView(view)
                 .setPositiveButton("确定", onClickListener)
                 .create();
+
     }
 
     public DialogInterface.OnClickListener onClickListener = new DialogInterface.OnClickListener() {

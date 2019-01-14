@@ -13,6 +13,8 @@ import net.eanfang.client.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.eanfang.util.V.v;
+
 /**
  * Created by MrHou
  *
@@ -51,9 +53,11 @@ public class QuotationServiceView extends BaseDialog {
     }
 
     private void initView() {
+        ivLeft.setOnClickListener(v -> dismiss());
+        tvTitle.setText("服务明细");
         etServiceName.setText(servicesBean.getServiceName());
         etServiceContent.setText(servicesBean.getServiceContent());
-        etServicePrice.setText(servicesBean.getServicePrice() + "");
+        etServicePrice.setText(v(() -> (servicesBean.getServicePrice() / 100)) + "");
         etServiceTimes.setText(servicesBean.getServiceTime() + "");
         etServiceValue.setText(servicesBean.getServiceValue());
     }

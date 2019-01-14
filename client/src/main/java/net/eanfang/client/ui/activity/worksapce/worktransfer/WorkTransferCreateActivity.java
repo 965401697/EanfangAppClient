@@ -45,6 +45,7 @@ import net.eanfang.client.ui.adapter.worktransfer.WorkTransferDetailUnFinishWork
 import net.eanfang.client.ui.widget.WorkTrancferCreateSelectClassListView;
 import net.eanfang.client.util.SendContactUtils;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.Serializable;
@@ -325,6 +326,7 @@ public class WorkTransferCreateActivity extends BaseActivity {
                 Intent intent = new Intent(WorkTransferCreateActivity.this, CreateGroupOrganizationActivity.class);
                 intent.putExtra("isFrom", "OA");
                 intent.putExtra("companyId", String.valueOf(EanfangApplication.getApplication().getCompanyId()));
+                intent.putExtra("companyOrgCode", EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgCode());
                 intent.putExtra("companyName", EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
                 Bundle b = new Bundle();
                 b.putSerializable("list", (Serializable) sendPersonAdapter.getData());
@@ -338,6 +340,8 @@ public class WorkTransferCreateActivity extends BaseActivity {
             // 提交日志
             case R.id.rl_confirm:
                 doSubmit();
+                break;
+            default:
                 break;
         }
     }
@@ -547,6 +551,7 @@ public class WorkTransferCreateActivity extends BaseActivity {
                     //分享
                     if (newPresonList.size() == 0 && newGroupList.size() == 0) {
                         showToast("添加完毕");
+                        EventBus.getDefault().post("addTransferSuccess");
                         finishSelf();
                         return;
                     }
@@ -650,6 +655,8 @@ public class WorkTransferCreateActivity extends BaseActivity {
                         sendGroupAdapter.addData(preson);
                         newGroupList.add(preson);
                     }
+                    break;
+                default:
                     break;
             }
         }

@@ -28,31 +28,40 @@ public class TransferLogEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     //主键自增
-    //@TableField(value = "id")
-    //数据库id 默认自增，如果全局唯一，请使用 IdType.ID_WORKER
+//@TableField(value = "id")
+//数据库id 默认自增，如果全局唯一，请使用 IdType.ID_WORKER
     @TableId(value = "id", type = IdType.AUTO)
     private Long id;
     //订单类型：0报修单
-    //@TableField(value = "order_type")
+//@TableField(value = "order_type")
     private Integer orderType;
-    //订单id
-    //@TableField(value = "order_id")
+    //新订单id
+//@TableField(value = "order_id")
     private Long orderId;
+    //新订单num
+//@TableField(value = "order_num")
+    private String orderNum;
+    //原始订单id
+//@TableField(value = "original_order_id")
+    private Long originalOrderId;
+    //原始订单num
+//@TableField(value = "original_order_num")
+    private String originalOrderNum;
     //原始转单人id
-    //@TableField(value = "original_user_id")
+//@TableField(value = "original_user_id")
     private Long originalUserId;
     //接收人id
-    //@TableField(value = "receive_user_id")
+//@TableField(value = "receive_user_id")
     private Long receiveUserId;
     //挂单原因
-    //@TableField(value = "case")
+//@TableField(value = "case")
     private Integer cause;
     //创建时间
-    //@TableField(value = "create_time")
+//@TableField(value = "create_time")
     private Date createTime;
 
     //备注信息
-    //@TableField(value = "remark")
+//@TableField(value = "remark")
     private String remark;
     /**
      * 接收人

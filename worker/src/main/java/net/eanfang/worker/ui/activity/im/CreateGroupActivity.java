@@ -54,7 +54,7 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
     @BindView(R.id.iv_group_pic)
     SimpleDraweeView ivGroupPic;
     @BindView(R.id.tv_group_name)
-    EditText etGroupName;
+    public EditText etGroupName;
     @BindView(R.id.tv_num)
     TextView tvNum;
     @BindView(R.id.rv_team)
@@ -63,9 +63,8 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
     Button btnCreate;
 
 
-    private String imgKey;
+
     private Dialog dialog;
-    ;
     private String path;
     private List<TemplateBean.Preson> presonList = new ArrayList<>();
     private Handler handler = new Handler() {
@@ -77,7 +76,7 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
 
             path = (String) message;
             if (!TextUtils.isEmpty(path)) {
-                imgKey = "im/select/" + UuidUtil.getUUID() + ".png";
+                imgKey = "im/group/" + UuidUtil.getUUID() + ".png";
                 dialog.dismiss();
                 //头像上传成功后  提交数据
                 OSSUtils.initOSS(CreateGroupActivity.this).asyncPutImage(imgKey, path, new OSSCallBack(CreateGroupActivity.this, false) {
@@ -91,9 +90,18 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
             }
         }
     };
-    private String groupName;
-    private OAPersonAdaptet oaPersonAdaptet;
+    public String groupName = "";
+    public String imgKey = "";
+    public String locationUrl = "";
 
+    private OAPersonAdaptet oaPersonAdaptet;
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            tvNum.setText(oaPersonAdaptet.getData().size() + "人");
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,17 +118,32 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
         Bundle bundle = getIntent().getExtras();
         presonList = (List<TemplateBean.Preson>) bundle.getSerializable("list");
 
+        groupName = getIntent().getStringExtra("groupName");
+        imgKey = getIntent().getStringExtra("imgKey");
+        locationUrl = getIntent().getStringExtra("locationPortrait");
+
+
         initViews();
+        NewSelectIMContactActivity.transactionActivities.add(this);
     }
 
     private void initViews() {
+
+        if (!TextUtils.isEmpty(groupName)) {
+            etGroupName.setText(groupName);
+        }
+
+        if (!TextUtils.isEmpty(locationUrl)) {
+            ivGroupPic.setImageURI(locationUrl);
+        }
+
 
         tvNum.setText(presonList.size() + "人");
 
         rvTeam.setLayoutManager(new GridLayoutManager(this, 5));
 
 
-        oaPersonAdaptet = new OAPersonAdaptet(this, new ArrayList<TemplateBean.Preson>(), 6);//说明是创建群组
+        oaPersonAdaptet = new OAPersonAdaptet(this, new ArrayList<TemplateBean.Preson>(), 6, mHandler);//说明是创建群组
 
 
         rvTeam.setAdapter(oaPersonAdaptet);
@@ -145,7 +168,8 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
     public void takeSuccess(TResult result, int resultCode) {
         super.takeSuccess(result, resultCode);
         OSSCallBack callback = null;
-        imgKey = UuidUtil.getUUID() + ".png";
+        imgKey = "im/group/CUSTOM_" + UuidUtil.getUUID() + ".png";
+        locationUrl = "file://" + result.getImage().getOriginalPath();
         switch (resultCode) {
             case HEAD_PHOTO:
                 ivGroupPic.setImageURI("file://" + result.getImage().getOriginalPath());
@@ -174,7 +198,7 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
      * 合唱头像
      */
     private void compoundPhoto() {
-        if (presonList.size() <= 1) {
+        if (oaPersonAdaptet.getData().size() <= 1) {
             ToastUtil.get().showToast(this, "最少选两个好友");
             return;
         }
@@ -183,14 +207,14 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
         dialog.show();
         ArrayList<String> userIconList = new ArrayList<>();
 
-        if (presonList.size() > 3) {
+        if (oaPersonAdaptet.getData().size() > 3) {
 
             for (int i = 0; i < 3; i++) {
-                userIconList.add(presonList.get(i).getProtraivat());
+                userIconList.add(oaPersonAdaptet.getData().get(i).getProtraivat());
             }
 
         } else {
-            for (TemplateBean.Preson preson : presonList) {
+            for (TemplateBean.Preson preson : oaPersonAdaptet.getData()) {
                 userIconList.add(preson.getProtraivat());
             }
         }
@@ -212,15 +236,15 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
         StringBuffer stringBuffer = new StringBuffer();
         for (int i = 0; i < len; i++) {
             if (i == 0) {
-                stringBuffer.append(presonList.get(i).getName());
+                stringBuffer.append(oaPersonAdaptet.getData().get(i).getName());
             } else if (i == len - 1) {
                 if (i < 2) {
-                    stringBuffer.append("," + presonList.get(i).getName());
+                    stringBuffer.append("," + oaPersonAdaptet.getData().get(i).getName());
                 } else {
-                    stringBuffer.append("," + presonList.get(i).getName() + "...等");
+                    stringBuffer.append("," + oaPersonAdaptet.getData().get(i).getName() + "...等");
                 }
             } else {
-                stringBuffer.append("," + presonList.get(i).getName());
+                stringBuffer.append("," + oaPersonAdaptet.getData().get(i).getName());
             }
         }
         groupName = EanfangApplication.get().getUser().getAccount().getNickName() + "," + stringBuffer.toString();
@@ -231,12 +255,16 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
      */
     private void submit() {
 
+        if (oaPersonAdaptet.getData().size() <= 1) {
+            ToastUtil.get().showToast(this, "最少选两个好友");
+            return;
+        }
 
         if (TextUtils.isEmpty(etGroupName.getText().toString().trim())) {
-            if (presonList.size() > 3) {
+            if (oaPersonAdaptet.getData().size() > 3) {
                 handleNames(3);
             } else {
-                handleNames(presonList.size());
+                handleNames(oaPersonAdaptet.getData().size());
             }
         } else {
             groupName = etGroupName.getText().toString().trim();
@@ -245,7 +273,7 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
 
         ArrayList<String> list = new ArrayList<>();
         for (
-                TemplateBean.Preson p : presonList)
+                TemplateBean.Preson p : oaPersonAdaptet.getData())
 
         {
             list.add(p.getId());
@@ -293,6 +321,7 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
 
             EanfangApplication.get().set(bean.getRcloudGroupId(), bean.getGroupId());
             RongIM.getInstance().startGroupChat(CreateGroupActivity.this, bean.getRcloudGroupId(), bean.getGroupName());
+            NewSelectIMContactActivity.transactionActivities.remove(this);
             CreateGroupActivity.this.finish();
         }));
 
@@ -314,6 +343,7 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
      */
     private void giveUp() {
         new TrueFalseDialog(this, "系统提示", "是否放弃创建群组？", () -> {
+            NewSelectIMContactActivity.transactionActivities.remove(this);
             finish();
         }).showDialog();
     }

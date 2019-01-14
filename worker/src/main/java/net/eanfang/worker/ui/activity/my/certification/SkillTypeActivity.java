@@ -81,9 +81,9 @@ public class SkillTypeActivity extends BaseWorkerActivity {
         initViews();
 //        initData();
 
-        if (mStatus > 0) {
-            getSkillInfo();
-        }
+
+        getSkillInfo();
+
     }
 
     private void initViews() {
@@ -167,15 +167,19 @@ public class SkillTypeActivity extends BaseWorkerActivity {
         EanfangHttp.post(UserApi.TECH_WORKER_DETAIL)
                 .params("accId", String.valueOf(EanfangApplication.getApplication().getAccId()))
                 .execute(new EanfangCallback<WorkerVerifySkillBean>(this, true, WorkerVerifySkillBean.class, bean -> {
-                    List<BaseDataEntity> SystemBusinessList = bean.getBaseData2userList();
+                    if (bean != null) {
+                        List<BaseDataEntity> SystemBusinessList = bean.getBaseData2userList();
 
 
-                    // 系统类别
-                    for (BaseDataEntity checkedS : SystemBusinessList) {
-                        for (BaseDataEntity s : systemTypeList) {
-                            if (checkedS.getDataType() == 1 && (s.getDataId() == checkedS.getDataId())) {
-                                s.setCheck(true);
-                                break;
+                        // 系统类别
+                        for (BaseDataEntity checkedS : SystemBusinessList) {
+                            if (checkedS.getDataType() == 1) {
+                                for (BaseDataEntity s : systemTypeList) {
+                                    if ((String.valueOf(s.getDataId()).equals(String.valueOf(checkedS.getDataId())))) {
+                                        s.setCheck(true);
+                                        break;
+                                    }
+                                }
                             } else {
                                 for (BaseDataEntity checkedB : businessTypeList) {
                                     if (checkedB.getDataId() == checkedS.getDataId()) {
@@ -185,17 +189,19 @@ public class SkillTypeActivity extends BaseWorkerActivity {
                                 }
                             }
                         }
-                    }
 
-                    osCooperationAddAdapter.setNewData(systemTypeList);
-                    businessCooperationAddAdapter.setNewData(businessTypeList);
-                    fillData(bean);
+                        osCooperationAddAdapter.setNewData(systemTypeList);
+                        businessCooperationAddAdapter.setNewData(businessTypeList);
+                        fillData(bean);
+                    }
                 }));
     }
 
     private void fillData(WorkerVerifySkillBean bean) {
-        tvLimit.setText(GetConstDataUtils.getWorkingYearList().get(bean.getWorkerVerify().getWorkingYear()));
-        tvAbility.setText(GetConstDataUtils.getWorkingLevelList().get(bean.getWorkerVerify().getWorkingLevel()));
+        if (bean.getWorkerVerify().getWorkingYear() != null)
+            tvLimit.setText(GetConstDataUtils.getWorkingYearList().get(bean.getWorkerVerify().getWorkingYear()));
+        if (bean.getWorkerVerify().getWorkingLevel() != null)
+            tvAbility.setText(GetConstDataUtils.getWorkingLevelList().get(bean.getWorkerVerify().getWorkingLevel()));
     }
 
     @OnClick(R.id.tv_go)

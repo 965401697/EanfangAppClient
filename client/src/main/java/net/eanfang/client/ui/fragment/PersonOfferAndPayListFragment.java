@@ -17,6 +17,7 @@ import com.eanfang.util.QueryEntry;
 import com.yaf.base.entity.PayLogEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.pay.NewPayActivity;
 import net.eanfang.client.ui.activity.pay.PayActivity;
 import net.eanfang.client.ui.activity.worksapce.PayOrderDetailActivity;
 import net.eanfang.client.ui.adapter.PayOrderListAdapter;
@@ -90,14 +91,19 @@ public class PersonOfferAndPayListFragment extends TemplateItemListFragment {
         PayLogEntity payLogEntity = new PayLogEntity();
         payLogEntity.setOrderId(mDataList.get(pos).getId());
         payLogEntity.setOrderNum(mDataList.get(pos).getOrderNum());
-        payLogEntity.setOrderType(Constant.OrderType.REPAIR.ordinal());
+        payLogEntity.setOrderType(Constant.OrderType.QUOTE.ordinal());
         payLogEntity.setAssigneeUserId(mDataList.get(pos).getOwnerUserId());
         payLogEntity.setAssigneeOrgCode(mDataList.get(pos).getOwnerOrgCode());
         payLogEntity.setAssigneeTopCompanyId(mDataList.get(pos).getOwnerTopCompanyId());
-        //查询上门费
+        // 原始价格
         payLogEntity.setOriginPrice(mDataList.get(pos).getTotalCost());
+        //实际支付价格
+        payLogEntity.setPayPrice(mDataList.get(pos).getTotalCost());
+        // 优惠价格
+        payLogEntity.setReducedPrice(0);
 
-        Intent intent = new Intent(getActivity(), PayActivity.class);
+//        Intent intent = new Intent(getActivity(), PayActivity.class);
+        Intent intent = new Intent(getActivity(), NewPayActivity.class);
         intent.putExtra("payLogEntity", payLogEntity);
         startActivity(intent);
 //        finishSelf();

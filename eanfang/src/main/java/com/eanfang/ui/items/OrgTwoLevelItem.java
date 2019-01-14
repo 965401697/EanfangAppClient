@@ -17,6 +17,7 @@ import com.eanfang.R;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.model.SectionBean;
 import com.eanfang.ui.activity.SelectPresonActivity;
+import com.eanfang.util.SharePreferenceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,6 +68,16 @@ public class OrgTwoLevelItem extends TreeItemGroup<SectionBean> {
             viewHolder.getView(R.id.ll_staff).setVisibility(View.INVISIBLE);
         }
 
+        try {
+            if (SharePreferenceUtil.get().get("app", "").equals("client")) {
+                ((CheckBox) viewHolder.getView(R.id.cb_checked)).setBackground(ContextCompat.getDrawable(viewHolder.getImageView(R.id.iv_select).getContext(), R.drawable.selector_single_checked_client));
+
+            } else {
+                ((CheckBox) viewHolder.getView(R.id.cb_checked)).setBackground(ContextCompat.getDrawable(viewHolder.getImageView(R.id.iv_select).getContext(), R.drawable.selector_single_checked_worker));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         if (isExpand()) {
             viewHolder.getImageView(R.id.iv_select).setImageDrawable(ContextCompat.getDrawable(viewHolder.getImageView(R.id.iv_select).getContext(), R.drawable.ic_one_opne));

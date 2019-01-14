@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -18,10 +19,10 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WorkTransferDetailBean;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JumpItent;
 import com.facebook.drawee.view.SimpleDraweeView;
-
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.worktransfer.WorkTransferDetailAttentionAdapter;
@@ -59,6 +60,8 @@ public class WorkTransferDetailActivity extends BaseActivity {
     TextView tvCompanyName;
     @BindView(R.id.tv_company_phone)
     TextView tvCompanyPhone;
+    @BindView(R.id.tv_work_classes)
+    TextView tvWorkClasses;
     @BindView(R.id.tv_accept_preson)
     TextView tvAcceptPreson;
     @BindView(R.id.tv_accept_phone)
@@ -74,7 +77,10 @@ public class WorkTransferDetailActivity extends BaseActivity {
      * userid
      */
 //    private String mUserId = "";
-
+    /**
+     * 订单status
+     */
+    private int mStatus = 100;
     @BindView(R.id.rv_hand_item)
     RecyclerView rvHandItem;
     /**
@@ -129,6 +135,7 @@ public class WorkTransferDetailActivity extends BaseActivity {
         setLeftBack();
         setTitle("日志详情");
         mItemId = getIntent().getStringExtra("itemId");
+        mStatus = getIntent().getIntExtra("status", 100);
 //        mUserId = getIntent().getStringExtra("userId");
 
         workTransferDetailFinishWorkAdapter = new WorkTransferDetailFinishWorkAdapter(false);
@@ -182,6 +189,8 @@ public class WorkTransferDetailActivity extends BaseActivity {
         tvCompanyName.setText(bean.getOwnerCompanyEntity().getOrgName());
         // 单位电话
         tvCompanyPhone.setText(bean.getOwnerUserEntity().getAccountEntity().getMobile());
+        //班次
+        tvWorkClasses.setText(GetConstDataUtils.getWorkTransferCreateClass().get(bean.getWorkClasses()));
         // 接收人
         tvAcceptPreson.setText(bean.getAssigneeUserEntity().getAccountEntity().getRealName());
         //接收人电话
@@ -199,10 +208,15 @@ public class WorkTransferDetailActivity extends BaseActivity {
 
 
         if (bean.getAssigneeUserEntity().getUserId().equals(String.valueOf(EanfangApplication.get().getUserId()))) {
-            rlConfirm.setVisibility(View.VISIBLE);
+            if (mStatus == 0) {
+                rlConfirm.setVisibility(View.VISIBLE);
+            } else {
+                rlConfirm.setVisibility(View.GONE);
+            }
         } else {
             rlConfirm.setVisibility(View.GONE);
         }
+
     }
 
     private void initListener() {
@@ -249,6 +263,13 @@ public class WorkTransferDetailActivity extends BaseActivity {
         rlConfirm.setOnClickListener(view -> {
             doTransferConfim();
         });
+        setLeftBack(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(RESULT_OK);
+                finishSelf();
+            }
+        });
     }
 
     /**
@@ -257,9 +278,21 @@ public class WorkTransferDetailActivity extends BaseActivity {
     private void doTransferConfim() {
         EanfangHttp.post(NewApiService.WORK_TRANSFER_CONFIM + mItemId)
                 .execute(new EanfangCallback<WorkTransferDetailBean>(WorkTransferDetailActivity.this, true, WorkTransferDetailBean.class, bean -> {
+                    setResult(RESULT_OK);
                     finishSelf();
                 }));
 
+    }
+    /**
+     * 监听 返回键
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            setResult(RESULT_OK);
+            finishSelf();
+        }
+        return false;
     }
 }
 

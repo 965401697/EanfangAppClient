@@ -102,12 +102,16 @@ public class EquipmentChangeDetailActivity extends BaseWorkerActivity {
             tvEquipmentStatus.setText("报废");
         }
 
-        if (bean.getChargeOrgEntity() != null && bean.getChargeOrgEntity().getBelongTopCompany() != null) {
-            tvSection.setText(bean.getChargeOrgEntity().getBelongTopCompany().getOrgName());
+        if (bean.getChargeOrgEntity() != null) {
+            tvSection.setText(bean.getChargeOrgEntity().getOrgName());
+        } else {
+            tvSection.setText("无");
         }
 
         if (bean.getChargeUserEntity() != null && bean.getChargeUserEntity().getAccountEntity() != null) {
             tvPreson.setText(bean.getChargeUserEntity().getAccountEntity().getRealName());
+        } else {
+            tvPreson.setText("无");
         }
         tvYear.setText(bean.getWarrantyPeriod());
 
