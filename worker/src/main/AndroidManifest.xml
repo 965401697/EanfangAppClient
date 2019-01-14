@@ -1109,6 +1109,7 @@
                 <data android:scheme="wx5e7969853addd542" />
             </intent-filter>
         </activity>
+
         <activity android:name=".ui.activity.my.specialist.SpecialistAuthListActivity" />
         <activity android:name=".ui.activity.my.specialist.SpecialistCertificationActivity" />
         <activity android:name=".ui.activity.my.specialist.SpecialistIdentityCardCertification" />
@@ -1121,6 +1122,11 @@
         <activity android:name=".ui.activity.my.specialist.SpecialistSkillTypeActivity" />
         <activity android:name=".ui.activity.my.specialist.SpecialistSkillCertificafeListActivity" />
         <activity android:name=".ui.activity.my.specialist.SpecialistAddSkillCertificafeActivity"></activity>
+
+        <activity android:name=".ui.activity.worksapce.tender.WorkerTenderControlActivity" />
+        <activity android:name=".ui.activity.worksapce.tender.FilterTenderActivity" />
+        <activity android:name=".ui.activity.worksapce.tender.WorkTenderDetailActivity"></activity>
+
     </application>
 
 </manifest>

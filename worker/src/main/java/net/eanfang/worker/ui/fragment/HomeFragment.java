@@ -51,6 +51,7 @@ import net.eanfang.worker.ui.activity.worksapce.design.DesignActivity;
 import net.eanfang.worker.ui.activity.worksapce.maintenance.MaintenanceActivity;
 import net.eanfang.worker.ui.activity.worksapce.repair.RepairCtrlActivity;
 import net.eanfang.worker.ui.activity.worksapce.scancode.ScanCodeActivity;
+import net.eanfang.worker.ui.activity.worksapce.tender.WorkerTenderControlActivity;
 import net.eanfang.worker.ui.adapter.HomeDataAdapter;
 import net.eanfang.worker.ui.widget.SignCtrlView;
 
@@ -214,6 +215,10 @@ public class HomeFragment extends BaseFragment {
                 List<String> ss = new ArrayList<>();
                 new SignCtrlView(getActivity()).show();
             }
+        });
+        //招标信息
+        findViewById(R.id.tv_tender).setOnClickListener((v) -> {
+            startActivity(new Intent(getActivity(), WorkerTenderControlActivity.class));
         });
         //扫描二维码
         findViewById(R.id.iv_scan).setOnClickListener((v) -> {

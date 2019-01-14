@@ -332,6 +332,14 @@ public class SelectIMContactActivity extends BaseWorkerActivity {
         @Override
         public void run() {
             // TODO Auto-generated method stub
+            Set hashSet = new HashSet();
+            hashSet.addAll(newPresonList);
+            hashSet.addAll(mSeletePrivateChat);
+
+            if (newPresonList.size() > 0) {
+                newPresonList.clear();
+            }
+            newPresonList.addAll(hashSet);
             //要做的事情，这里再次调用此Runnable对象，以实现每一秒实现一次的定时器操作
             if (!dialog.isShowing()) {
                 dialog.show();
