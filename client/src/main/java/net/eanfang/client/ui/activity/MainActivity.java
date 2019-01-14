@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.FragmentTabHost;
 import android.text.TextUtils;
 import android.util.Log;
@@ -567,14 +566,13 @@ public class MainActivity extends BaseClientActivity {
          * */
         if (bean.getTotalCount() > 0) {
             // 首页红点
-            new Handler(getMainLooper()).postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    // 桌面气泡赋值
-                    BadgeUtil.setBadgeCount(MainActivity.this, bean.getTotalCount(), R.drawable.client_logo);
-
-                }
-            }, 3 * 1000);
+//            new Handler(getMainLooper()).postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+            // 桌面气泡赋值
+            BadgeUtil.setBadgeCount(MainActivity.this, bean.getTotalCount(), R.drawable.client_logo);
+//                }
+//            }, 3 * 1000);
         }
         //消息页面红点
         if (bean.getBiz() > 0 || bean.getSys() > 0 || bean.getCmp() > 0) {

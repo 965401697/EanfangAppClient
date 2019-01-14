@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
@@ -14,6 +15,8 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.IfbOrderEntity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GetDateUtils;
+import com.tencent.smtt.sdk.QbSdk;
+import com.tencent.smtt.sdk.ValueCallback;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.worktender.WorkTenderAdjunctAdapter;
@@ -110,6 +113,19 @@ public class WorkTenderDetailActivity extends BaseActivity {
         rvAttch.setLayoutManager(new LinearLayoutManager(this));
         workTenderAdjunctAdapter.bindToRecyclerView(rvAttch);
         doGetData();
+        workTenderAdjunctAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                String name = String.valueOf(adapter.getData().get(position));
+                String[] url = name.split("_");
+                QbSdk.openFileReader(WorkTenderDetailActivity.this, com.eanfang.BuildConfig.OSS_SERVER + url[1], null, new ValueCallback<String>() {
+                    @Override
+                    public void onReceiveValue(String s) {
+
+                    }
+                });
+            }
+        });
     }
 
     private void doGetData() {
