@@ -73,7 +73,11 @@
             android:drawableTop="@mipmap/ic_worker_sign"
             android:text="@string/text_worker_sign" />
 
-        <TextView style="@style/style_client_home_meun" />
+        <TextView
+            android:id="@+id/tv_tender"
+            style="@style/style_client_home_meun"
+            android:drawableTop="@mipmap/ic_worker_tender"
+            android:text="@string/text_worker_tender" />
 
         <TextView style="@style/style_client_home_meun" />
 
