@@ -9,8 +9,8 @@ android {
         applicationId "net.eanfang.client"
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 19011101
-        versionName "2.3.32_beta"
+        versionCode 19011201
+        versionName "2.3.33"
         //testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         // gradle 3.0.0 以上需要有这个
