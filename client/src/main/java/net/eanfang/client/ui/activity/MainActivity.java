@@ -69,6 +69,7 @@ import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
 import io.rong.message.TextMessage;
+import q.rorbin.badgeview.QBadgeView;
 
 import static com.eanfang.config.EanfangConst.MEIZU_APPID_CLIENT;
 import static com.eanfang.config.EanfangConst.MEIZU_APPKEY_CLIENT;
@@ -78,14 +79,20 @@ import static com.eanfang.config.EanfangConst.XIAOMI_APPKEY_CLIENT;
 public class MainActivity extends BaseClientActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     protected FragmentTabHost mTabHost;
-    private View redPointContact;
-    private View redPointHome;
-    private View redPointWork;
+    //    private View redPointContact;
+//    private View redPointHome;
+//    private View redPointWork;
     private LoginBean user;
     private long mExitTime;
 
     //被删除的 群组id 容器
     public static HashMap<String, String> hashMap = new HashMap<>();
+    /**
+     * 底部消息数量
+     */
+    private QBadgeView qBadgeViewHome = new QBadgeView(EanfangApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewContact = new QBadgeView(EanfangApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewWork = new QBadgeView(EanfangApplication.get().getApplicationContext());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,15 +156,15 @@ public class MainActivity extends BaseClientActivity {
         mTabHost.getTabWidget().setDividerDrawable(R.color.transparent);
         View indicator = getLayoutInflater().inflate(R.layout.indicator_main_home, null);
         mTabHost.addTab(mTabHost.newTabSpec("home").setIndicator(indicator), HomeFragment.class, null);
-        redPointHome = indicator.findViewById(R.id.redPoint_home);
+//        redPointHome = indicator.findViewById(R.id.redPoint_home);
 
         indicator = getLayoutInflater().inflate(R.layout.indicator_main_contact, null);
         mTabHost.addTab(mTabHost.newTabSpec("contactList").setIndicator(indicator), ContactListFragment.class, null);
-        redPointContact = indicator.findViewById(R.id.redPoint_contact);
+//        redPointContact = indicator.findViewById(R.id.redPoint_contact);
 
         indicator = getLayoutInflater().inflate(R.layout.indicator_main_work, null);
         mTabHost.addTab(mTabHost.newTabSpec("work").setIndicator(indicator), WorkspaceFragment.class, null);
-        redPointWork = indicator.findViewById(R.id.redPoint_work);
+//        redPointWork = indicator.findViewById(R.id.redPoint_work);
 
         indicator = getLayoutInflater().inflate(R.layout.indicator_org_work, null);
         mTabHost.addTab(mTabHost.newTabSpec("contact").setIndicator(indicator), ContactsFragment.class, null);
@@ -576,21 +583,33 @@ public class MainActivity extends BaseClientActivity {
         }
         //消息页面红点
         if (bean.getBiz() > 0 || bean.getSys() > 0 || bean.getCmp() > 0) {
-            redPointContact.setVisibility(View.VISIBLE);
-        } else {
-            redPointContact.setVisibility(View.GONE);
+//            qBadgeViewContact.bindTarget(findViewById(R.id.tab_contact))
+//                    .setBadgeNumber(bean.getBiz() + bean.getSys() + bean.getCmp())
+//                    .setBadgeBackgroundColor(0xFFFF0000)
+//                    .setBadgePadding(0, true)
+//                    .setBadgeGravity(Gravity.END | Gravity.TOP)
+//                    .setGravityOffset(0, 3, true)
+//                    .setBadgeTextSize(11, true);
         }
-        // 进行底部首页小红点的显示
+        // 首页小红点的显示
         if (bean.getRepair() > 0 || bean.getInstall() > 0 || bean.getDesign() > 0) {
-            redPointHome.setVisibility(View.VISIBLE);
-        } else {
-            redPointHome.setVisibility(View.GONE);
+//            qBadgeViewHome.bindTarget(findViewById(R.id.tab_home))
+//                    .setBadgeNumber(bean.getRepair() + bean.getInstall() + bean.getDesign())
+//                    .setBadgeBackgroundColor(0xFFFF0000)
+//                    .setBadgePadding(0, true)
+//                    .setBadgeGravity(Gravity.END | Gravity.TOP)
+//                    .setGravityOffset(0, 3, true)
+//                    .setBadgeTextSize(11, true);
         }
         // 工作台消息红点
         if (bean.getReport() > 0 || bean.getTask() > 0 || bean.getInspect() > 0) {
-            redPointWork.setVisibility(View.VISIBLE);
-        } else {
-            redPointWork.setVisibility(View.GONE);
+//            qBadgeViewWork.bindTarget(findViewById(R.id.tab_work))
+//                    .setBadgeNumber(bean.getReport() + bean.getTask() + bean.getInspect())
+//                    .setBadgeBackgroundColor(0xFFFF0000)
+//                    .setBadgePadding(0, true)
+//                    .setBadgeGravity(Gravity.END | Gravity.TOP)
+//                    .setGravityOffset(0, 3, true)
+//                    .setBadgeTextSize(11, true);
         }
     }
 
