@@ -3,7 +3,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dimen_100"
+    android:layout_height="@dimen/dimen_110"
     android:layout_gravity="center"
     android:background="@color/color_bottom_back"
     android:gravity="center">
@@ -11,12 +11,9 @@
 
     <ImageView
         android:id="@+id/tabImg"
-        android:layout_width="@dimen/dimen_36"
-        android:layout_height="@dimen/dimen_36"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="@dimen/dimen_12"
-        android:contentDescription="@null"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:src="@drawable/main_tab_my_selector" />
 
     <View
@@ -27,18 +24,4 @@
         android:background="@drawable/red_point"
         android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/tabText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tabImg"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center"
-        android:layout_marginBottom="@dimen/dimen_12"
-        android:layout_marginTop="@dimen/dimen_8"
-        android:focusable="true"
-        android:gravity="center"
-        android:text="我的"
-        android:textColor="@drawable/tab_item_txt_sel"
-        android:textSize="@dimen/textSize_11" />
 </RelativeLayout>
