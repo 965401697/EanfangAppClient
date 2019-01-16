@@ -1,5 +1,6 @@
 package net.eanfang.worker.ui.activity.im;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.http.EanfangCallback;
@@ -17,6 +19,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.OrganizationBean;
 import com.eanfang.model.SectionBean;
 import com.eanfang.model.TemplateBean;
+import com.eanfang.util.DialogUtil;
 import com.yaf.sys.entity.UserEntity;
 
 import net.eanfang.worker.R;
@@ -51,6 +54,7 @@ public class CreateGroupOrganizationActivity extends BaseWorkerActivity {
 
     private List<TemplateBean.Preson> mDataList;
     private CreateGroupOrganizationAdapter mAdapter;
+    private Dialog mLoadingDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,13 +104,17 @@ public class CreateGroupOrganizationActivity extends BaseWorkerActivity {
             mDataList = (List<TemplateBean.Preson>) bundle.getSerializable("list");
         }
 
+        mLoadingDialog = DialogUtil.createLoadingDialog(this);
 
         getData();
     }
 
     private void getData() {
+
+        mLoadingDialog.show();
+
         EanfangHttp.get(UserApi.GET_BRANCH_OFFICE_LIST_TREE + companyId)
-                .execute(new EanfangCallback<UserEntity>(this, true, UserEntity.class, true, (list) -> {
+                .execute(new EanfangCallback<UserEntity>(this, false, UserEntity.class, true, (list) -> {
                     OrganizationBean bean = new OrganizationBean();
                     bean.setOrgName(companyName);
                     bean.setCompanyId(companyId);
@@ -124,122 +132,138 @@ public class CreateGroupOrganizationActivity extends BaseWorkerActivity {
 
         EanfangHttp.get(UserApi.GET_BRANCH_OFFICE_LIST_TREE_ALL)
                 .params("companyId", bean.getCompanyId())
-                .execute(new EanfangCallback<SectionBean>(CreateGroupOrganizationActivity.this, true, SectionBean.class, true, (sectionBeanList) -> {
+                .execute(new EanfangCallback<SectionBean>(CreateGroupOrganizationActivity.this, false, SectionBean.class, true, new EanfangCallback.ISuccessArray<SectionBean>() {
+                    @Override
+                    public void success(List<SectionBean> sectionBeanList) {
+                        bean.setSectionBeanList(sectionBeanList);
+                        OrganizationBean organizationBean = bean;
 
-                    bean.setSectionBeanList(sectionBeanList);
-                    OrganizationBean organizationBean = bean;
+                        TemplateBean templateBean2 = new TemplateBean();
+                        List<TemplateBean.Preson> presonArrayList2 = new ArrayList<>();
 
-                    TemplateBean templateBean2 = new TemplateBean();
-                    List<TemplateBean.Preson> presonArrayList2 = new ArrayList<>();
+                        setTitle(organizationBean.getOrgName());
+                        for (SectionBean sectionBean : organizationBean.getSectionBeanList()) {//循环一个公司全部 部门和员工
 
-                    setTitle(organizationBean.getOrgName());
-                    for (SectionBean sectionBean : organizationBean.getSectionBeanList()) {//循环一个公司全部 部门和员工
-
-                        TemplateBean templateBean1 = new TemplateBean();
-                        List<TemplateBean.Preson> presonArrayList1 = new ArrayList<>();
-
-
-                        if (sectionBean.getChildren() != null) {
-                            for (SectionBean.ChildrenBean childrens : sectionBean.getChildren()) {
-                                List<TemplateBean.Preson> presonArrayList = new ArrayList<>();
-                                TemplateBean templateBean = new TemplateBean();
-                                templateBean.setOrgName(sectionBean.getOrgName() + "-" + childrens.getOrgName());
-                                if (childrens.getStaff() != null) {
-                                    for (SectionBean.ChildrenBean.StaffBean staffBean : childrens.getStaff()) {
-                                        TemplateBean.Preson preson = new TemplateBean.Preson();
+                            TemplateBean templateBean1 = new TemplateBean();
+                            List<TemplateBean.Preson> presonArrayList1 = new ArrayList<>();
 
 
-                                        preson.setId(staffBean.getAccId());
-                                        preson.setOrgCode(sectionBean.getOrgCode());
-                                        preson.setUserId(staffBean.getUserId());
-                                        preson.setName(staffBean.getAccountEntity().getRealName());
-                                        preson.setOrgName(childrens.getOrgName());
-                                        preson.setProtraivat(staffBean.getAccountEntity().getAvatar());
-                                        preson.setMobile(staffBean.getAccountEntity().getMobile());
-                                        preson.setDepartmentId(staffBean.getDepartmentId());
+                            if (sectionBean.getChildren() != null) {
+                                for (SectionBean.ChildrenBean childrens : sectionBean.getChildren()) {
+                                    List<TemplateBean.Preson> presonArrayList = new ArrayList<>();
+                                    TemplateBean templateBean = new TemplateBean();
+                                    templateBean.setOrgName(sectionBean.getOrgName() + "-" + childrens.getOrgName());
+                                    if (childrens.getStaff() != null) {
+                                        for (SectionBean.ChildrenBean.StaffBean staffBean : childrens.getStaff()) {
+                                            TemplateBean.Preson preson = new TemplateBean.Preson();
 
-                                        //循环已选的数据的 设置为cheked的
-                                        if (oldPersonList != null && oldPersonList.contains(preson)) {
-                                            preson.setChecked(true);
+
+                                            preson.setId(staffBean.getAccId());
+                                            preson.setOrgCode(sectionBean.getOrgCode());
+                                            preson.setUserId(staffBean.getUserId());
+                                            preson.setName(staffBean.getAccountEntity().getRealName());
+                                            preson.setOrgName(childrens.getOrgName());
+                                            preson.setProtraivat(staffBean.getAccountEntity().getAvatar());
+                                            preson.setMobile(staffBean.getAccountEntity().getMobile());
+                                            preson.setDepartmentId(staffBean.getDepartmentId());
+
+                                            //循环已选的数据的 设置为cheked的
+                                            if (oldPersonList != null && oldPersonList.contains(preson)) {
+                                                preson.setChecked(true);
+                                            }
+
+                                            presonArrayList.add(preson);
                                         }
 
-                                        presonArrayList.add(preson);
+                                        templateBean.setPresons(presonArrayList);
+                                        mTemplateBeanList.add(templateBean);
+                                    }
+                                }
+                            }
+
+                            if (sectionBean.getStaff() != null) {
+                                List<SectionBean.StaffBeanX> staffBeanXList = sectionBean.getStaff();
+
+                                templateBean1.setOrgName(sectionBean.getOrgName());
+
+                                for (SectionBean.StaffBeanX staffBeanX : staffBeanXList) {
+
+                                    TemplateBean.Preson preson = new TemplateBean.Preson();
+
+                                    //循环已选的数据的 设置为cheked的
+
+
+                                    preson.setId(staffBeanX.getAccId());
+                                    preson.setName(staffBeanX.getAccountEntity().getRealName());
+                                    preson.setProtraivat(staffBeanX.getAccountEntity().getAvatar());
+                                    preson.setMobile(staffBeanX.getAccountEntity().getMobile());
+                                    preson.setUserId(staffBeanX.getUserId());
+                                    preson.setDepartmentId(staffBeanX.getDepartmentId());
+                                    preson.setOrgName(sectionBean.getOrgName());
+                                    preson.setOrgCode(sectionBean.getOrgCode());
+
+                                    if (oldPersonList != null && oldPersonList.contains(preson)) {
+                                        preson.setChecked(true);
                                     }
 
-                                    templateBean.setPresons(presonArrayList);
-                                    mTemplateBeanList.add(templateBean);
+                                    presonArrayList1.add(preson);
+
+                                }
+                                templateBean1.setPresons(presonArrayList1);
+                                if (templateBean1.getPresons() != null && templateBean1.getPresons().size() > 0) {
+                                    mTemplateBeanList.add(templateBean1);
                                 }
                             }
                         }
 
-                        if (sectionBean.getStaff() != null) {
-                            List<SectionBean.StaffBeanX> staffBeanXList = sectionBean.getStaff();
 
-                            templateBean1.setOrgName(sectionBean.getOrgName());
+                        if (organizationBean.getStaff() != null && organizationBean.getStaff().size() > 0) {
+                            templateBean2.setOrgName("本部门/本公司");
 
-                            for (SectionBean.StaffBeanX staffBeanX : staffBeanXList) {
+                            List<UserEntity> userEntityList = organizationBean.getStaff();
+
+                            for (UserEntity userEntity : userEntityList) {
 
                                 TemplateBean.Preson preson = new TemplateBean.Preson();
-
-                                //循环已选的数据的 设置为cheked的
-
-
-                                preson.setId(staffBeanX.getAccId());
-                                preson.setName(staffBeanX.getAccountEntity().getRealName());
-                                preson.setProtraivat(staffBeanX.getAccountEntity().getAvatar());
-                                preson.setMobile(staffBeanX.getAccountEntity().getMobile());
-                                preson.setUserId(staffBeanX.getUserId());
-                                preson.setDepartmentId(staffBeanX.getDepartmentId());
-                                preson.setOrgName(sectionBean.getOrgName());
-                                preson.setOrgCode(sectionBean.getOrgCode());
+                                preson.setId(String.valueOf(userEntity.getAccountEntity().getAccId()));
+                                preson.setName(userEntity.getAccountEntity().getRealName());
+                                preson.setProtraivat(userEntity.getAccountEntity().getAvatar());
+                                preson.setMobile(userEntity.getAccountEntity().getMobile());
+                                preson.setUserId(String.valueOf(userEntity.getUserId()));
+                                preson.setDepartmentId(String.valueOf(userEntity.getDepartmentId()));
+                                preson.setOrgName(organizationBean.getOrgName());
+                                preson.setOrgCode(organizationBean.getOrgCode());
 
                                 if (oldPersonList != null && oldPersonList.contains(preson)) {
                                     preson.setChecked(true);
                                 }
-
-                                presonArrayList1.add(preson);
+                                presonArrayList2.add(preson);
 
                             }
-                            templateBean1.setPresons(presonArrayList1);
-                            if (templateBean1.getPresons() != null && templateBean1.getPresons().size() > 0) {
-                                mTemplateBeanList.add(templateBean1);
-                            }
+                            templateBean2.setPresons(presonArrayList2);
                         }
-                    }
 
-
-                    if (organizationBean.getStaff() != null && organizationBean.getStaff().size() > 0) {
-                        templateBean2.setOrgName("本部门/本公司");
-
-                        List<UserEntity> userEntityList = organizationBean.getStaff();
-
-                        for (UserEntity userEntity : userEntityList) {
-
-                            TemplateBean.Preson preson = new TemplateBean.Preson();
-                            preson.setId(String.valueOf(userEntity.getAccountEntity().getAccId()));
-                            preson.setName(userEntity.getAccountEntity().getRealName());
-                            preson.setProtraivat(userEntity.getAccountEntity().getAvatar());
-                            preson.setMobile(userEntity.getAccountEntity().getMobile());
-                            preson.setUserId(String.valueOf(userEntity.getUserId()));
-                            preson.setDepartmentId(String.valueOf(userEntity.getDepartmentId()));
-                            preson.setOrgName(organizationBean.getOrgName());
-                            preson.setOrgCode(organizationBean.getOrgCode());
-
-                            if (oldPersonList != null && oldPersonList.contains(preson)) {
-                                preson.setChecked(true);
-                            }
-                            presonArrayList2.add(preson);
+                        if (templateBean2.getPresons() != null && templateBean2.getPresons().size() > 0) {
+                            mTemplateBeanList.add(0, templateBean2);
 
                         }
-                        templateBean2.setPresons(presonArrayList2);
+
+                        mLoadingDialog.dismiss();
+                    }
+                }) {
+
+                    @Override
+                    public void onFail(Integer code, String message, JSONObject jsonObject) {
+                        super.onFail(code, message, jsonObject);
+                        mLoadingDialog.dismiss();
                     }
 
-                    if (templateBean2.getPresons() != null && templateBean2.getPresons().size() > 0) {
-                        mTemplateBeanList.add(0, templateBean2);
-
+                    @Override
+                    public void onError(String message) {
+                        super.onError(message);
+                        mLoadingDialog.dismiss();
                     }
-
-                }));
+                });
 
         initViews();
     }

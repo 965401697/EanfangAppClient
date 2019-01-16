@@ -29,6 +29,7 @@ import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.my.EvaluateActivity;
 import net.eanfang.worker.ui.activity.my.PersonInfoActivity;
 import net.eanfang.worker.ui.activity.my.SettingActivity;
+import net.eanfang.worker.ui.activity.my.specialist.SpecialistAuthListActivity;
 import net.eanfang.worker.ui.activity.my.certification.NewAuthListActivity;
 import net.eanfang.worker.ui.widget.InviteView;
 import net.eanfang.worker.util.PrefUtils;
@@ -44,7 +45,7 @@ import net.eanfang.worker.util.PrefUtils;
 
 public class MyFragment extends BaseFragment {
     private TextView tv_user_name, tvVerfiy, tvWorkerStatus;
-    private RelativeLayout rlWorkingStatus, rlWorkerVerfity;
+    private RelativeLayout rlWorkingStatus, rlWorkerVerfity, rlExpertVerfity;
     private SimpleDraweeView iv_header;
     // 二维码头像
     private SimpleDraweeView mIvPersonalQRCode;
@@ -86,6 +87,9 @@ public class MyFragment extends BaseFragment {
         rlWorkerVerfity.setOnClickListener((v) -> {
             doWorkAuth();
         });
+        rlExpertVerfity.setOnClickListener((v) -> {
+            JumpItent.jump(getActivity(), SpecialistAuthListActivity.class);
+        });
     }
 
     @Override
@@ -97,6 +101,7 @@ public class MyFragment extends BaseFragment {
         mIvPersonalQRCode = findViewById(R.id.iv_personalQRCode);
         tvWorkerStatus = (TextView) findViewById(R.id.tv_worker_status);
         rlWorkingStatus = (RelativeLayout) findViewById(R.id.rl_working);
+        rlExpertVerfity = (RelativeLayout) findViewById(R.id.rl_expert_verfity);
         tvWorkerStatus.setText(PrefUtils.getString("status", ""));
         findViewById(R.id.iv_user_header).setOnClickListener((v) -> {
             PersonInfoActivity.jumpToActivity(getActivity());
