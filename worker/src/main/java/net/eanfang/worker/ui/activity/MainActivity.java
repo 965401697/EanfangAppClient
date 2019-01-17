@@ -102,19 +102,10 @@ public class MainActivity extends BaseActivity {
     private int mHome = 0;
     private int mContact = 0;
     private int mWork = 0;
-//    @Override
-//    protected void onNewIntent(Intent intent) {
-//        super.onNewIntent(intent);
-//        setIntent(intent);
-//        JumpItent.jump(MainActivity.this, MessageListActivity.class);
-//    }
-
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        XGPushManager.onActivityStoped(this);
-//
-//    }
+    /**
+     * 当前聊天服务状态
+     */
+    private String mStatus = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -547,30 +538,33 @@ public class MainActivity extends BaseActivity {
 
                     Log.i("zzw", "--------------------连接成功");
                     getIMUnreadMessageCount();
+                    mStatus = "";
                     break;
 
                 case DISCONNECTED://断开连接。
 
                     Log.i("zzw", "--------------------断开连接");
-
+                    mStatus = "聊天服务器正在连接中...";
                     break;
 
                 case CONNECTING://连接中。
 
                     Log.i("zzw", "--------------------链接中");
-
+                    mStatus = "聊天服务器正在连接中...";
                     break;
 
                 case NETWORK_UNAVAILABLE://网络不可用。
 
                     Log.i("zzw", "--------------------网络不可用");
-
+                    mStatus = "当前网络不可用，请检查网络设置";
                     break;
 
                 case KICKED_OFFLINE_BY_OTHER_CLIENT://用户账户在其他设备登录，本机会被踢掉线
 
                     Log.i("zzw", "--------------------掉线");
-
+                    mStatus = "用户账户在其他设备登录";
+                    break;
+                default:
                     break;
             }
         }
@@ -765,6 +759,10 @@ public class MainActivity extends BaseActivity {
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(0, 3, true)
                 .setBadgeTextSize(11, true);
+    }
+
+    public String onNoConatac() {
+        return mStatus;
     }
 }
 

@@ -27,6 +27,7 @@ import com.eanfang.model.GroupsBean;
 import com.eanfang.model.device.User;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JumpItent;
+import com.eanfang.util.StringUtils;
 import com.facebook.common.internal.Sets;
 
 import net.eanfang.client.R;
@@ -86,6 +87,10 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
     private Uri uri;
 
     private final int REQUST_REFRESH_CODE = 101;
+    /**
+     * 融云链接状态
+     */
+    private TextView mContactStatus;
 
     @Override
     protected int setLayoutResouceId() {
@@ -121,6 +126,28 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
     @Override
     protected void initView() {
 
+        mContactStatus = view.findViewById(R.id.tv_contact_status);
+        qBadgeViewSys
+                .bindTarget(view.findViewById(R.id.tv_sys_msg))
+                .setBadgeBackgroundColor(0xFFFF0000)
+                .setBadgePadding(2, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setGravityOffset(0, 0, true)
+                .setBadgeTextSize(11, true);
+
+        qBadgeViewBiz.bindTarget(view.findViewById(R.id.tv_bus_msg))
+                .setBadgeBackgroundColor(0xFFFF0000)
+                .setBadgePadding(2, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setGravityOffset(0, 0, true)
+                .setBadgeTextSize(11, true);
+
+        qBadgeViewCam.bindTarget(view.findViewById(R.id.tv_official))
+                .setBadgeBackgroundColor(0xFFFF0000)
+                .setBadgePadding(2, true)
+                .setGravityOffset(0, 0, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setBadgeTextSize(11, true);
 //        ((android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setOnRefreshListener(this);
 
         myConversationListFragment = new MyConversationListFragment();
@@ -204,7 +231,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
                     } else if (uiConversation.getConversationContent().toString().equals("被移除群组通知")) {
                         RongIM.getInstance().clearMessagesUnreadStatus(Conversation.ConversationType.SYSTEM, uiConversation.getConversationTargetId());
                         return true;
-                    }  else if (uiConversation.getConversationContent().toString().equals("群解散通知")) {
+                    } else if (uiConversation.getConversationContent().toString().equals("群解散通知")) {
                         RongIM.getInstance().clearMessagesUnreadStatus(Conversation.ConversationType.SYSTEM, uiConversation.getConversationTargetId());
                         return true;
                     } else if (uiConversation.getConversationContent().toString().equals("拒绝添加好友通知")) {
@@ -272,6 +299,13 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
 //            myConversationListFragment.setUri(uri);
 
         ((MainActivity) getActivity()).getIMUnreadMessageCount();
+        String mStatus = ((MainActivity) getActivity()).onNoConatac();
+        if (StringUtils.isEmpty(mStatus)) {
+            view.findViewById(R.id.rl_no_contact).setVisibility(View.GONE);
+        } else {
+            view.findViewById(R.id.rl_no_contact).setVisibility(View.VISIBLE);
+            mContactStatus.setText(mStatus);
+        }
     }
 
     private void doHttpNoticeCount() {
@@ -313,14 +347,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
         } else {
             ((TextView) view.findViewById(R.id.tv_official_info)).setText("没有新通知");
         }
-        qBadgeViewCam.bindTarget(view.findViewById(R.id.tv_official))
-                .setBadgeNumber(cam)
-                .setBadgeBackgroundColor(0xFFFF0000)
-                .setBadgePadding(2, true)
-                .setGravityOffset(0, 0, true)
-                .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setBadgeTextSize(11, true);
-
+        qBadgeViewCam.setBadgeNumber(cam);
     }
 
     private void initBizCount(Integer biz) {
@@ -331,25 +358,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
             ((TextView) view.findViewById(R.id.tv_bus_msg_info)).setText("没有新消息");
         }
 
-        qBadgeViewBiz.bindTarget(view.findViewById(R.id.tv_bus_msg))
-                .setBadgeNumber(biz)
-                .setBadgeBackgroundColor(0xFFFF0000)
-                .setBadgePadding(2, true)
-                .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setGravityOffset(0, 0, true)
-                .setBadgeTextSize(11, true);
-
-//        if (biz <= 0) {
-//            qBadgeViewSys.setVisibility(View.GONE);
-//        }
-//                .setOnDragStateChangedListener((dragState, badge, targetView) -> {
-//                    //清除成功
-//                    if (dragState == Badge.OnDragStateChangedListener.STATE_SUCCEED) {
-//                        EanfangHttp.get(NewApiService.GET_PUSH_READ_ALL).execute(new EanfangCallback(getActivity(), false, JSONObject.class));
-//                        showToast("消息被清空了");
-////                        Var.get().setVar(0);
-//                    }
-//                });
+        qBadgeViewBiz.setBadgeNumber(biz);
     }
 
     private void initSysCount(Integer sys) {
@@ -359,24 +368,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
             ((TextView) view.findViewById(R.id.tv_sys_msg_info)).setText("没有新消息");
         }
 
-        qBadgeViewSys
-                .bindTarget(view.findViewById(R.id.tv_sys_msg))
-                .setBadgeNumber(sys)
-                .setBadgeBackgroundColor(0xFFFF0000)
-                .setBadgePadding(2, true)
-                .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setGravityOffset(0, 0, true)
-                .setBadgeTextSize(11, true);
-
-
-//                .setOnDragStateChangedListener((dragState, badge, targetView) -> {
-//                    //清除成功
-//                    if (dragState == Badge.OnDragStateChangedListener.STATE_SUCCEED) {
-//                        EanfangHttp.get(NewApiService.GET_PUSH_READ_ALL).execute(new EanfangCallback(getActivity(), false, JSONObject.class));
-//                        showToast("消息被清空了");
-////                        Var.get().setVar(0);
-//                    }
-//                });
+        qBadgeViewSys.setBadgeNumber(sys);
     }
 
     /**
@@ -507,4 +499,5 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
         Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
         return pattern.matcher(str).matches();
     }
+
 }

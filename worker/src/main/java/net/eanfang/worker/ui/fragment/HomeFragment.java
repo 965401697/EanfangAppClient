@@ -97,11 +97,19 @@ public class HomeFragment extends BaseFragment {
     // 扫码Popwindow
     private HomeScanPopWindow homeScanPopWindow;
 
+    /**
+     * 图标数量
+     */
     private QBadgeView qBadgeViewRepair = new QBadgeView(EanfangApplication.get().getApplicationContext());
     private QBadgeView qBadgeViewDesign = new QBadgeView(EanfangApplication.get().getApplicationContext());
     private QBadgeView qBadgeViewMaintain = new QBadgeView(EanfangApplication.get().getApplicationContext());
     private QBadgeView qBadgeViewQuota = new QBadgeView(EanfangApplication.get().getApplicationContext());
     private QBadgeView qBadgeViewInstall = new QBadgeView(EanfangApplication.get().getApplicationContext());
+    private int mRepair = 0;
+    private int mDesign = 0;
+    private int mInstall = 0;
+    private int mMaintain = 0;
+    private int mQuota = 0;
 
     @Override
     protected int setLayoutResouceId() {
@@ -140,6 +148,42 @@ public class HomeFragment extends BaseFragment {
         initFalseData();
         doHttpNews();
         doHttpDatastatistics();
+        // 报修
+        qBadgeViewRepair.bindTarget(findViewById(R.id.tv_reparir_order))
+                .setBadgeNumber(mRepair)
+                .setBadgeBackgroundColor(0xFFFF0000)
+                .setBadgePadding(5, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setGravityOffset(11, 0, true)
+                .setBadgeTextSize(11, true);
+        // 报装
+        qBadgeViewInstall.bindTarget(findViewById(R.id.tv_install_order))
+                .setBadgeBackgroundColor(0xFFFF0000)
+                .setBadgePadding(5, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setGravityOffset(11, 0, true)
+                .setBadgeTextSize(11, true);
+        //设计
+        qBadgeViewDesign.bindTarget(findViewById(R.id.tv_design_order))
+                .setBadgeBackgroundColor(0xFFFF0000)
+                .setBadgePadding(5, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setGravityOffset(11, 0, true)
+                .setBadgeTextSize(11, true);
+        //维保
+        qBadgeViewMaintain.bindTarget(findViewById(R.id.tv_maintain_order))
+                .setBadgeBackgroundColor(0xFFFF0000)
+                .setBadgePadding(5, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setGravityOffset(11, 0, true)
+                .setBadgeTextSize(11, true);
+        //报价
+        qBadgeViewQuota.bindTarget(findViewById(R.id.tv_inside_price))
+                .setBadgeBackgroundColor(0xFFFF0000)
+                .setBadgePadding(5, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setGravityOffset(11, 0, true)
+                .setBadgeTextSize(11, true);
     }
 
     @Override
@@ -440,45 +484,40 @@ public class HomeFragment extends BaseFragment {
 
     public void doSetOrderNums(AllMessageBean bean) {
         // 报修
-        qBadgeViewRepair.bindTarget(findViewById(R.id.tv_reparir_order))
-                .setBadgeNumber(bean.getRepair())
-                .setBadgeBackgroundColor(0xFFFF0000)
-                .setBadgePadding(5, true)
-                .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setGravityOffset(11, 0, true)
-                .setBadgeTextSize(11, true);
+        if (bean.getRepair() > 0) {
+            mRepair = bean.getRepair();
+        } else {
+            mRepair = 0;
+        }
+        qBadgeViewRepair.setBadgeNumber(mRepair);
         // 报装
-        qBadgeViewInstall.bindTarget(findViewById(R.id.tv_install_order))
-                .setBadgeNumber(bean.getInstall())
-                .setBadgeBackgroundColor(0xFFFF0000)
-                .setBadgePadding(5, true)
-                .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setGravityOffset(11, 0, true)
-                .setBadgeTextSize(11, true);
+        if (bean.getInstall() > 0) {
+            mInstall = bean.getInstall();
+        } else {
+            mInstall = 0;
+        }
+        qBadgeViewInstall.setBadgeNumber(mInstall);
         //设计
-        qBadgeViewDesign.bindTarget(findViewById(R.id.tv_design_order))
-                .setBadgeNumber(bean.getDesign())
-                .setBadgeBackgroundColor(0xFFFF0000)
-                .setBadgePadding(5, true)
-                .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setGravityOffset(11, 0, true)
-                .setBadgeTextSize(11, true);
+        if (bean.getDesign() > 0) {
+            mDesign = bean.getDesign();
+        } else {
+            mDesign = 0;
+        }
+        qBadgeViewDesign.setBadgeNumber(mDesign);
         //维保
-        qBadgeViewMaintain.bindTarget(findViewById(R.id.tv_maintain_order))
-                .setBadgeNumber(bean.getMaintain())
-                .setBadgeBackgroundColor(0xFFFF0000)
-                .setBadgePadding(5, true)
-                .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setGravityOffset(11, 0, true)
-                .setBadgeTextSize(11, true);
+        if (bean.getMaintain() > 0) {
+            mMaintain = bean.getMaintain();
+        } else {
+            mMaintain = 0;
+        }
+        qBadgeViewMaintain.setBadgeNumber(mMaintain);
         //报价
-        qBadgeViewQuota.bindTarget(findViewById(R.id.tv_inside_price))
-                .setBadgeNumber(bean.getQuote())
-                .setBadgeBackgroundColor(0xFFFF0000)
-                .setBadgePadding(5, true)
-                .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setGravityOffset(11, 0, true)
-                .setBadgeTextSize(11, true);
+        if (bean.getQuote() > 0) {
+            mQuota = bean.getQuote();
+        } else {
+            mQuota = 0;
+        }
+        qBadgeViewQuota.setBadgeNumber(mQuota);
         /**
          * 底部红点更新
          * */

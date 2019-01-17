@@ -95,6 +95,11 @@ public class MainActivity extends BaseClientActivity {
     private int mContact = 0;
     private int mWork = 0;
 
+    /**
+     * 当前聊天服务状态
+     */
+    private String mStatus = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -497,35 +502,38 @@ public class MainActivity extends BaseClientActivity {
         public void onChanged(ConnectionStatus connectionStatus) {
 
             switch (connectionStatus) {
-
-                case CONNECTED://连接成功。
+                //连接成功。
+                case CONNECTED:
 
                     Log.i("zzw", "--------------------连接成功");
-
+                    getIMUnreadMessageCount();
+                    mStatus = "";
                     break;
-
-                case DISCONNECTED://断开连接。
+                //断开连接。
+                case DISCONNECTED:
 
                     Log.i("zzw", "--------------------断开连接");
-
+                    mStatus = "聊天服务器正在连接中...";
                     break;
-
-                case CONNECTING://连接中。
+                //连接中。
+                case CONNECTING:
 
                     Log.i("zzw", "--------------------链接中");
-
+                    mStatus = "聊天服务器正在连接中...";
                     break;
-
-                case NETWORK_UNAVAILABLE://网络不可用。
+                //网络不可用。
+                case NETWORK_UNAVAILABLE:
 
                     Log.i("zzw", "--------------------网络不可用");
-
+                    mStatus = "当前网络不可用，请检查网络设置";
                     break;
-
-                case KICKED_OFFLINE_BY_OTHER_CLIENT://用户账户在其他设备登录，本机会被踢掉线
+                //用户账户在其他设备登录，本机会被踢掉线
+                case KICKED_OFFLINE_BY_OTHER_CLIENT:
 
                     Log.i("zzw", "--------------------掉线");
-
+                    mStatus = "用户账户在其他设备登录";
+                    break;
+                default:
                     break;
             }
         }
@@ -611,7 +619,7 @@ public class MainActivity extends BaseClientActivity {
             mWork = 0;
         }
         qBadgeViewWork.bindTarget(findViewById(R.id.tab_work))
-                .setBadgeNumber(12)
+                .setBadgeNumber(mWork)
                 .setBadgeBackgroundColor(0xFFFF0000)
                 .setBadgePadding(2, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
@@ -658,6 +666,10 @@ public class MainActivity extends BaseClientActivity {
             }
 
         }
+    }
+
+    public String onNoConatac() {
+        return mStatus;
     }
 
 }
