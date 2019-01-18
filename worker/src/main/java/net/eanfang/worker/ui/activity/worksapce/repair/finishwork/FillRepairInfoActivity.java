@@ -685,6 +685,7 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
             case REQUEST_CODE_PHOTO_PREVIEW_4:
                 snplFormPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
                 break;
+            // 完善故障明细
             case REQUEST_CODE_UPDATE_TROUBLE:
                 BughandleDetailEntity resultBean = (BughandleDetailEntity) data.getSerializableExtra("bean");
                 if (resultBean == null) {
@@ -692,9 +693,13 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
                 }
                 int position = data.getIntExtra("position", 0);
                 DetailEntityList.remove(position);
+                fillTroubleDetailAdapter.notifyItemRemoved(position);
                 DetailEntityList.add(resultBean);
+                fillTroubleDetailAdapter.notifyItemInserted(fillTroubleDetailAdapter.getData().size() - 1);
                 fillTroubleDetailAdapter.notifyDataSetChanged();
+//                fillTroubleDetailAdapter.notifyItemRangeChanged(position, fillTroubleDetailAdapter.getData().size()-1);
                 break;
+            // 添加故障明细
             case 10003:
                 if (data.getSerializableExtra("bean") == null) {
                     return;
