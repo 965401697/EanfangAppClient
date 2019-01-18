@@ -7,6 +7,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -191,6 +192,11 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
 
     private int maxWordsNum = 200; //输入限制的最大字数
 
+    /**
+     * 故障图片
+     */
+    private String mPicture = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -216,6 +222,7 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
         position = getIntent().getIntExtra("position", 0);
         failureId = getIntent().getLongExtra("failureId", 0);
         confirmId = getIntent().getLongExtra("confirmId", 0);
+        mPicture = getIntent().getStringExtra("picture");
         // bean = (BughandleDetailEntity) getIntent().getSerializableExtra("bean");
         // bugBean = (BusinessWorkBean) getIntent().getSerializableExtra("bugBean");
         // bugOneCode = getIntent().getStringExtra("bugOneCode");
@@ -486,7 +493,9 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
         repairFailureEntity.setSketch(etTroubleSketch.getText().toString().trim());
         repairFailureEntity.setIsMisinformation(GetConstDataUtils.getRepairMisinformationList().indexOf(mIsRepairError));
         repairFailureEntity.setBugPosition(tvDeviceLocation.getText().toString().trim());
-        repairFailureEntity.setPictures(detailEntity.getFailureEntity().getPictures());
+        if (!TextUtils.isEmpty(mPicture)) {
+            repairFailureEntity.setPictures(mPicture);
+        }
         detailEntity.setFailureEntity(repairFailureEntity);
         //   使用建议
         detailEntity.setUseAdvice(etTroubleUseAdvace.getText().toString().trim());

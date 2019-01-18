@@ -45,7 +45,6 @@ import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UpdateAppManager;
-import com.eanfang.util.Var;
 import com.picker.common.util.ScreenUtils;
 import com.tencent.android.tpush.XGPushConfig;
 import com.yaf.base.entity.WorkerEntity;
@@ -70,7 +69,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.HashMap;
-import java.util.List;
 
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
@@ -106,6 +104,14 @@ public class MainActivity extends BaseActivity {
      * 当前聊天服务状态
      */
     private String mStatus = "";
+    /**
+     * 消息页面回话数量
+     */
+    private int mContactNum = 0;
+    /**
+     * 消息总数量
+     */
+    private int mAllCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -504,27 +510,27 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    // TODO: 2018/10/26 删除群聊也要刷新
     public void getIMUnreadMessageCount() {
-        RongIM.getInstance().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
+        /**
+         * 获取消息页面回话列表数量
+         * */
+        RongIM.getInstance().getTotalUnreadCount(new RongIMClient.ResultCallback<Integer>() {
             @Override
-            public void onSuccess(List<Conversation> conversations) {
-                int mUnreadMessageCount = 0;
-                if (conversations != null && conversations.size() > 0) {
-                    for (Conversation s : conversations) {
-                        mUnreadMessageCount += s.getUnreadMessageCount();
-                    }
-                }
-                Var.get("MainActivity.initMessageCount").setUnreadMessageCount(mUnreadMessageCount);
-//                Log.e("zzw0", "IM未读=" + mUnreadMessageCount);
-//                Log.e("zzw1", "通知未读=" + Var.get("MainActivity.initMessageCount").getVar());
-//                Log.e("zzw2", "总未读=" + Var.get("MainActivity.initMessageCount").getAllUnreadMessageCount());
+            public void onSuccess(Integer integer) {
+                mContactNum = integer;
+                int i = mContact + integer;
+                doChange(i);
             }
 
             @Override
             public void onError(RongIMClient.ErrorCode errorCode) {
+
             }
-        }, Conversation.ConversationType.GROUP, Conversation.ConversationType.PRIVATE);
+        });
+    }
+
+    private void doChange(int mContactNum) {
+        qBadgeViewContact.setBadgeNumber(mContactNum);
     }
 
     class MyConnectionStatusListener implements RongIMClient.ConnectionStatusListener {
@@ -533,33 +539,33 @@ public class MainActivity extends BaseActivity {
         public void onChanged(ConnectionStatus connectionStatus) {
 
             switch (connectionStatus) {
-
-                case CONNECTED://连接成功。
+                //连接成功。
+                case CONNECTED:
 
                     Log.i("zzw", "--------------------连接成功");
                     getIMUnreadMessageCount();
                     mStatus = "";
                     break;
-
-                case DISCONNECTED://断开连接。
+                //断开连接。
+                case DISCONNECTED:
 
                     Log.i("zzw", "--------------------断开连接");
                     mStatus = "聊天服务器正在连接中...";
                     break;
-
-                case CONNECTING://连接中。
+                //连接中。
+                case CONNECTING:
 
                     Log.i("zzw", "--------------------链接中");
                     mStatus = "聊天服务器正在连接中...";
                     break;
-
-                case NETWORK_UNAVAILABLE://网络不可用。
+                //网络不可用。
+                case NETWORK_UNAVAILABLE:
 
                     Log.i("zzw", "--------------------网络不可用");
                     mStatus = "当前网络不可用，请检查网络设置";
                     break;
-
-                case KICKED_OFFLINE_BY_OTHER_CLIENT://用户账户在其他设备登录，本机会被踢掉线
+                //用户账户在其他设备登录，本机会被踢掉线
+                case KICKED_OFFLINE_BY_OTHER_CLIENT:
 
                     Log.i("zzw", "--------------------掉线");
                     mStatus = "用户账户在其他设备登录";
@@ -734,13 +740,14 @@ public class MainActivity extends BaseActivity {
                 .setGravityOffset(0, 3, true)
                 .setBadgeTextSize(11, true);
         //消息页面红点
-        if (bean.getBiz() > 0 || bean.getSys() > 0 || bean.getCmp() > 0) {
+        if (bean.getBiz() > 0 || bean.getSys() > 0 || bean.getCmp() > 0 || mContactNum > 0) {
             mContact = bean.getBiz() + bean.getSys() + bean.getCmp();
+            mAllCount = bean.getBiz() + bean.getSys() + bean.getCmp() + mContactNum;
         } else {
-            mContact = 0;
+            mAllCount = 0;
         }
         qBadgeViewContact.bindTarget(findViewById(R.id.tab_contact))
-                .setBadgeNumber(mContact)
+                .setBadgeNumber(mAllCount)
                 .setBadgeBackgroundColor(0xFFFF0000)
                 .setBadgePadding(2, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)

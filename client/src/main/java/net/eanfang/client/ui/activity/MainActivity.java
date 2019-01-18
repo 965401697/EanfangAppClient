@@ -37,7 +37,6 @@ import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UpdateAppManager;
-import com.eanfang.util.Var;
 import com.tencent.android.tpush.XGPushConfig;
 import com.yaf.base.entity.WorkerEntity;
 
@@ -61,7 +60,6 @@ import net.eanfang.client.util.PrefUtils;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.HashMap;
-import java.util.List;
 
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
@@ -99,6 +97,14 @@ public class MainActivity extends BaseClientActivity {
      * 当前聊天服务状态
      */
     private String mStatus = "";
+    /**
+     * 消息页面回话数量
+     */
+    private int mContactNum = 0;
+    /**
+     * 消息总数量
+     */
+    private int mAllCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -265,18 +271,6 @@ public class MainActivity extends BaseClientActivity {
 
     public void initXinGe() {
         registerXinGe();
-//        Var.get("MainActivity.initXinGe").setChangeListener((var) -> {
-//
-//            ExecuteUtils.execute(
-//                    () -> Var.get("MainActivity.initXinGe").getVar()
-//                    , 1, 0,
-//                    () -> Var.remove("MainActivity.initXinGe")
-//                    , () -> {
-//                        registerXinGe();
-//                    });
-//
-//        });
-//        Var.get("MainActivity.initXinGe").setVar(0);
     }
 
 
@@ -475,25 +469,26 @@ public class MainActivity extends BaseClientActivity {
     }
 
     public void getIMUnreadMessageCount() {
-        RongIM.getInstance().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
+        /**
+         * 获取消息页面回话列表数量
+         * */
+        RongIM.getInstance().getTotalUnreadCount(new RongIMClient.ResultCallback<Integer>() {
             @Override
-            public void onSuccess(List<Conversation> conversations) {
-                int mUnreadMessageCount = 0;
-                if (conversations != null && conversations.size() > 0) {
-                    for (Conversation s : conversations) {
-                        mUnreadMessageCount += s.getUnreadMessageCount();
-                    }
-                }
-                Var.get("MainActivity.initMessageCount").setUnreadMessageCount(mUnreadMessageCount);
-//                Log.e("zzw0", "IM未读=" + mUnreadMessageCount);
-//                Log.e("zzw1", "通知未读=" + Var.get("MainActivity.initMessageCount").getVar());
-//                Log.e("zzw2", "总未读=" + Var.get("MainActivity.initMessageCount").getAllUnreadMessageCount());
+            public void onSuccess(Integer integer) {
+                mContactNum = integer;
+                int i = mContact + integer;
+                doChange(i);
             }
 
             @Override
             public void onError(RongIMClient.ErrorCode errorCode) {
+
             }
-        }, Conversation.ConversationType.GROUP, Conversation.ConversationType.PRIVATE);
+        });
+    }
+
+    private void doChange(int mContactNum) {
+        qBadgeViewContact.setBadgeNumber(mContactNum);
     }
 
     class MyConnectionStatusListener implements RongIMClient.ConnectionStatusListener {
@@ -600,13 +595,14 @@ public class MainActivity extends BaseClientActivity {
                 .setGravityOffset(0, 3, true)
                 .setBadgeTextSize(11, true);
         //消息页面红点
-        if (bean.getBiz() > 0 || bean.getSys() > 0 || bean.getCmp() > 0) {
+        if (bean.getBiz() > 0 || bean.getSys() > 0 || bean.getCmp() > 0 || mContactNum > 0) {
             mContact = bean.getBiz() + bean.getSys() + bean.getCmp();
+            mAllCount = bean.getBiz() + bean.getSys() + bean.getCmp() + mContactNum;
         } else {
-            mContact = 0;
+            mAllCount = 0;
         }
         qBadgeViewContact.bindTarget(findViewById(R.id.tab_contact))
-                .setBadgeNumber(mContact)
+                .setBadgeNumber(mAllCount)
                 .setBadgeBackgroundColor(0xFFFF0000)
                 .setBadgePadding(2, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)

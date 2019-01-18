@@ -21,7 +21,6 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.config.Config;
 import com.eanfang.delegate.BGASortableDelegate;
@@ -247,6 +246,8 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
         rvTrouble.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
         rvTrouble.setLayoutManager(new LinearLayoutManager(this));
+        rvTrouble.setNestedScrollingEnabled(false);
+        rvTrouble.setHasFixedSize(false);
         //团队成员
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -452,13 +453,14 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
         businessIdLis = Stream.of(DetailEntityList).map(bean -> Config.get().getBusinessIdByCode(bean.getFailureEntity().getBusinessThreeCode(), 3) + "").toList();
         fillTroubleDetailAdapter = new FillTroubleDetailAdapter(R.layout.layout_trouble_detail, DetailEntityList);
         rvTrouble.setAdapter(fillTroubleDetailAdapter);
-        rvTrouble.addOnItemTouchListener(new OnItemClickListener() {
+        fillTroubleDetailAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(FillRepairInfoActivity.this, AddTroubleDetailActivity.class);
                 intent.putExtra("confirmId", bughandleConfirmEntity.getId());
-                intent.putExtra("failureId", DetailEntityList.get(position).getBusRepairFailureId());
+                intent.putExtra("failureId", fillTroubleDetailAdapter.getData().get(position).getBusRepairFailureId());
                 intent.putExtra("position", position);
+                intent.putExtra("picture", fillTroubleDetailAdapter.getData().get(position).getFailureEntity().getPictures());
                 startActivityForResult(intent, REQUEST_CODE_UPDATE_TROUBLE);
                 //((BaseViewHolder) rvTrouble.getChildViewHolder(rvTrouble.getChildAt(position))).setText(R.id.tv_detai_status, "");
             }
