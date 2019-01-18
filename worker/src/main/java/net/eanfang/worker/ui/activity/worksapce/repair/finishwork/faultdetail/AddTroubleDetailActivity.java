@@ -472,23 +472,6 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
         addRepariResult();
     }
 
-    private void initAdapter() {
-
-        materialAdapter = new MaterialAdapter(R.layout.layout_item_add_material);
-        materialAdapter.bindToRecyclerView(rcyConsumable);
-
-        materialAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            switch (view.getId()) {
-                case R.id.iv_delete:
-                    materialAdapter.remove(position);
-                    break;
-                default:
-                    break;
-            }
-        });
-
-    }
-
     private void submit() {
         if (!checkData()) {
             return;
@@ -503,6 +486,7 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
         repairFailureEntity.setSketch(etTroubleSketch.getText().toString().trim());
         repairFailureEntity.setIsMisinformation(GetConstDataUtils.getRepairMisinformationList().indexOf(mIsRepairError));
         repairFailureEntity.setBugPosition(tvDeviceLocation.getText().toString().trim());
+        repairFailureEntity.setPictures(detailEntity.getFailureEntity().getPictures());
         detailEntity.setFailureEntity(repairFailureEntity);
         //   使用建议
         detailEntity.setUseAdvice(etTroubleUseAdvace.getText().toString().trim());
@@ -524,6 +508,23 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
         detailEntity.setParamEntityList(paramEntityList);
 
         doHttpSubmit();
+
+    }
+
+    private void initAdapter() {
+
+        materialAdapter = new MaterialAdapter(R.layout.layout_item_add_material);
+        materialAdapter.bindToRecyclerView(rcyConsumable);
+
+        materialAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            switch (view.getId()) {
+                case R.id.iv_delete:
+                    materialAdapter.remove(position);
+                    break;
+                default:
+                    break;
+            }
+        });
 
     }
 
