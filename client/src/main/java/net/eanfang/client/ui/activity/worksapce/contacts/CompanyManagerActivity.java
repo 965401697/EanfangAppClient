@@ -1,6 +1,7 @@
 package net.eanfang.client.ui.activity.worksapce.contacts;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -70,7 +71,17 @@ public class CompanyManagerActivity extends BaseActivity implements DissloveTeam
     private void initView() {
         setLeftBack();
         setTitle("企业管理");
-        setRightTitle("解散团队");
+        if (PermKit.get().getCompanyDepartmentCreatPerm()){
+            setRightTitle("解散团队");
+        }else {
+            setRightTitle("");
+            setRightTitleOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    return;
+                }
+            });
+        }
         mOrgId = getIntent().getLongExtra("orgid", 0);
         mOrgName = getIntent().getStringExtra("orgName");
         isAuth = getIntent().getStringExtra("isAuth");

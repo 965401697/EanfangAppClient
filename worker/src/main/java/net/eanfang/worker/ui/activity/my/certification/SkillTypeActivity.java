@@ -1,9 +1,11 @@
 package net.eanfang.worker.ui.activity.my.certification;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -111,6 +113,8 @@ public class SkillTypeActivity extends BaseWorkerActivity {
 
         String mYear = tvLimit.getText().toString().trim();
         String mAbility = tvAbility.getText().toString().trim();
+        Log.i("mYear++mAbility",mYear+"++"+mAbility);
+
         if (StringUtils.isEmpty(mYear)) {
             showToast("请选择从业年限");
             return;
@@ -131,6 +135,7 @@ public class SkillTypeActivity extends BaseWorkerActivity {
         workerInfoBean = new TechWorkerVerifyEntity();
         workerInfoBean.setWorkingLevel(GetConstDataUtils.getWorkingLevelList().indexOf(mAbility));
         workerInfoBean.setWorkingYear(GetConstDataUtils.getWorkingYearList().indexOf(mYear));
+
         workerInfoBean.setAccId(EanfangApplication.get().getAccId());
 
         commitData();

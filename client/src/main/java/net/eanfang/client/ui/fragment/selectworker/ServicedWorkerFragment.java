@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -52,7 +53,6 @@ public class ServicedWorkerFragment extends BaseFragment {
     private RecyclerView mRecyclerView;
     private LinearLayout llnodata;
     private List<WorkerEntity> selectWorkerList = new ArrayList<>();
-
     private RepairOrderEntity toRepairBean;
     private ArrayList<String> businessIds = new ArrayList<>();
     private int mDoorFee;
@@ -147,6 +147,7 @@ public class ServicedWorkerFragment extends BaseFragment {
         if (selectWorkerList == null || selectWorkerList.size() == 0) {
             mRecyclerView.setVisibility(View.GONE);
             llnodata.setVisibility(View.VISIBLE);
+            //selectWorkerAdapter.notifyDataSetChanged();
         } else {
             mRecyclerView.setVisibility(View.VISIBLE);
             llnodata.setVisibility(View.GONE);

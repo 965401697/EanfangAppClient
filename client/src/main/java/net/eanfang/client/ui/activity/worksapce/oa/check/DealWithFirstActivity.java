@@ -208,6 +208,8 @@ public class DealWithFirstActivity extends BaseActivity {
                             }
                             if (bean.getWorkInpectDetailDispose() != null) {
                                 llDealWith.setVisibility(View.VISIBLE);
+                                tvDealContent.setText(bean.getWorkInpectDetailDispose().getDisposeInfo());
+                                tvRemark.setText(bean.getWorkInpectDetailDispose().getRemarkInfo());
                                 //协同人员
                                 if (!StringUtils.isEmpty(bean.getWorkInpectDetailDispose().getCollaborativeUser())) {
                                     setTeam(bean.getWorkInpectDetailDispose().getCollaborativeUser());

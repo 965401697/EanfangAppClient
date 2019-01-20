@@ -1,9 +1,11 @@
 package net.eanfang.worker.ui.activity.worksapce.contacts;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONPObject;
 import com.eanfang.apiservice.NewApiService;
@@ -66,13 +68,24 @@ public class CompanyManagerActivity extends BaseActivity implements DissloveTeam
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_company_manager);
         ButterKnife.bind(this);
+        Log.i("idididid",EanfangApplication.get().getUserId()+"");
         initView();
     }
 
     private void initView() {
         setLeftBack();
         setTitle("企业管理");
-        setRightTitle("解散团队");
+        if (PermKit.get().getCompanyDepartmentCreatPerm()){
+            setRightTitle("解散团队");
+        }else {
+            setRightTitle("");
+            setRightTitleOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    return;
+                }
+            });
+        }
         mOrgId = getIntent().getLongExtra("orgid", 0);
         mOrgName = getIntent().getStringExtra("orgName");
         isAuth = getIntent().getStringExtra("isAuth");
