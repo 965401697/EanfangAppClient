@@ -122,6 +122,11 @@ public class GetConstDataUtils {
      */
     private static List<String> workingLevelList;
 
+    /**
+     * 专家的认证类型
+     */
+    private static List<String> expertTypeList;
+
     private static List<String> workingYearList;
     /**
      * 设备单位
@@ -657,6 +662,21 @@ public class GetConstDataUtils {
             }
         }
         return workingLevelList;
+    }
+
+    /**
+     * 专家认证的类型
+     * getShopConstant
+     */
+    public static List<String> getExpertTypeList() {
+        if (expertTypeList == null) {
+            synchronized (GetConstDataUtils.class) {
+                if (expertTypeList == null) {
+                    expertTypeList = Config.get().getConstBean().getData().getConst().get(Constant.EXPERT);
+                }
+            }
+        }
+        return expertTypeList;
     }
 
     /**

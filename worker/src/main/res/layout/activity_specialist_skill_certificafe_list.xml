@@ -46,14 +46,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/dimen_38"
-                    android:text="服务区域"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/textSize_13" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/dimen_38"
                     android:text="资质证书"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/textSize_13" />
@@ -79,16 +71,6 @@
                     android:layout_height="wrap_content"
                     android:src="@mipmap/point_3" />
 
-                <TextView
-                    android:layout_width="@dimen/dimen_120"
-                    android:layout_height="@dimen/dimen_2"
-                    android:layout_gravity="center_vertical"
-                    android:background="@color/colorPrimary" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/point_3" />
 
                 <TextView
                     android:layout_width="@dimen/dimen_120"
@@ -144,8 +126,8 @@
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@color/white"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:background="@color/white" />
     </LinearLayout>
 
     <TextView

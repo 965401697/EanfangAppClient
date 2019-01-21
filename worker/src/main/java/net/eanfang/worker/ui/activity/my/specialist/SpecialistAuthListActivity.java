@@ -15,8 +15,8 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.AuthStatusBean;
 import com.eanfang.model.Message;
+import com.eanfang.model.SpecialistAuthStatusBean;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.ToastUtil;
 
@@ -49,7 +49,7 @@ public class SpecialistAuthListActivity extends BaseWorkerActivity {
     private CommitVerfiyView verfiyView;
 
     private int verify = -1;
-    private AuthStatusBean mAuthStatusBean;
+    private SpecialistAuthStatusBean mAuthStatusBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +72,7 @@ public class SpecialistAuthListActivity extends BaseWorkerActivity {
                     return;
                 }
                 new TrueFalseDialog(SpecialistAuthListActivity.this, "系统提示", "是否撤销认证并保存信息", () -> {
-                    EanfangHttp.post(NewApiService.WORKER_AUTH_REVOKE + EanfangApplication.getApplication().getAccId())
+                    EanfangHttp.post(NewApiService.EXPERT_AUTH_REVOKE + EanfangApplication.getApplication().getAccId())
                             .execute(new EanfangCallback<JSONPObject>(SpecialistAuthListActivity.this, true, JSONPObject.class, bean -> {
                                 tvConfim.setVisibility(View.VISIBLE);
                                 verify = 0;//撤销认证  状态没有时时的刷新 减少请求 本地改变状态
@@ -98,15 +98,15 @@ public class SpecialistAuthListActivity extends BaseWorkerActivity {
 
     private void initData() {
         // 获取认证状态
-        EanfangHttp.post(UserApi.POST_WORKER_AUTH_STATUS)
+        EanfangHttp.post(UserApi.GET_EXPERT_CERTIFICATION_STATUS)
                 .params("accId", EanfangApplication.getApplication().getAccId())
-                .execute(new EanfangCallback<AuthStatusBean>(this, true, AuthStatusBean.class, (bean) -> {
-                    verify = bean.getVerify();
+                .execute(new EanfangCallback<SpecialistAuthStatusBean>(this, true, SpecialistAuthStatusBean.class, (bean) -> {
+                    verify = bean.verify;
                     //只有认证完成了 才显示重新认证
                     if (verify == 2)
                         setRightTitle("重新认证");
                     mAuthStatusBean = bean;
-                    doChange(bean.getBase(), bean.getApt(), bean.getExp(), bean.getHonor(), bean.getVerify());
+                    doChange(bean.base, bean.qual, bean.job, bean.honor, bean.verify);
                 }));
     }
 
@@ -115,37 +115,37 @@ public class SpecialistAuthListActivity extends BaseWorkerActivity {
         switch (view.getId()) {
             // 实名认证
             case R.id.rl_base_info:
-//                if (verify == 1 || verify == 2) {//如果是认证中  和 认证完成 跳到详情界面 不可修改
-//                    JumpItent.jump(this, CertificationInfoActivity.class);
-//                } else {
-//                    if (mAuthStatusBean == null) {
-//
-//                        ToastUtil.get().showToast(this, "请稍后操作");
-//
-//                        return;
-//                    }
-                    startActivity(new Intent(this, SpecialistCertificationActivity.class).putExtra("status", mAuthStatusBean.getBase()));
-//                }
+                if (verify == 1 || verify == 2) {//如果是认证中  和 认证完成 跳到详情界面 不可修改
+                    JumpItent.jump(this, SpecialistCertificationInfoActivity.class);
+                } else {
+                    if (mAuthStatusBean == null) {
+
+                        ToastUtil.get().showToast(this, "请稍后操作");
+
+                        return;
+                    }
+                    startActivity(new Intent(this, SpecialistCertificationActivity.class).putExtra("status", mAuthStatusBean.base));
+                }
                 break;
             //技能资质
             case R.id.rl_skill:
-//                if (mAuthStatusBean.getBase() == 0) {
-//                    ToastUtil.get().showToast(this, "请先进行实名认证");
-//                    return;
-//                }
-//                if (verify == 1 || verify == 2) {//如果是认证中  和 认证完成 跳到详情界面 不可修改
-//                    JumpItent.jump(this, SkillInfoDetailActivity.class);
-//                } else {
-//
-//                    if (mAuthStatusBean == null) {
-//                        //多次访问状态的接口 造成mAuthStatusBean == null
-//                        ToastUtil.get().showToast(this, "请稍后操作");
-//
-//                        return;
-//                    }
+                if (mAuthStatusBean.base == 0) {
+                    ToastUtil.get().showToast(this, "请先进行实名认证");
+                    return;
+                }
+                if (verify == 1 || verify == 2) {//如果是认证中  和 认证完成 跳到详情界面 不可修改
+                    JumpItent.jump(this, SpecialistSkillInfoDetailActivity.class);
+                } else {
 
-                    startActivity(new Intent(this, SpecialistSkillTypeActivity.class).putExtra("status", mAuthStatusBean.getApt()));
-//                }
+                    if (mAuthStatusBean == null) {
+                        //多次访问状态的接口 造成mAuthStatusBean == null
+                        ToastUtil.get().showToast(this, "请稍后操作");
+
+                        return;
+                    }
+
+                    startActivity(new Intent(this, SpecialistSkillTypeActivity.class).putExtra("status", mAuthStatusBean.qual));
+                }
                 break;
             // 个人经历
             case R.id.rl_own:
@@ -155,9 +155,8 @@ public class SpecialistAuthListActivity extends BaseWorkerActivity {
                 break;
             //荣誉证书
             case R.id.rl_certificate:
-                Bundle bundle = new Bundle();
-                bundle.putString("role", "worker");
-                JumpItent.jump(this, SpecialistCertificateListActivity.class, bundle);
+
+                JumpItent.jump(this, SpecialistCertificateListActivity.class);
                 break;
             case R.id.tv_confim:
                 doVerify();
@@ -224,7 +223,7 @@ public class SpecialistAuthListActivity extends BaseWorkerActivity {
 
     // 提交认证
     private void commitVerfiy(CommitVerfiyView verfiyView) {
-        EanfangHttp.post(UserApi.POST_TECH_WORKER_SEND_VERIFY)
+        EanfangHttp.post(UserApi.POST_EXPERT_SEND_VERIFY)
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
                     verfiyView.dismiss();
                     doJumpConfirm();

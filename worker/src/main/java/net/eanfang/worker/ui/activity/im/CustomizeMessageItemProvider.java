@@ -53,6 +53,10 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
     public void bindView(View view, int i, CustomizeMessage customizeMessage, UIMessage uiMessage) {
         ViewHolder holder = (ViewHolder) view.getTag();
 
+        if (TextUtils.isEmpty(customizeMessage.getShareType())) {
+            return;
+        }
+
         if (customizeMessage.getShareType().equals("1")) {
             holder.title.setText("报修订单");
             holder.orderNum.setText("单号：  " + customizeMessage.getOrderNum());
@@ -136,6 +140,11 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
 
     @Override
     public Spannable getContentSummary(CustomizeMessage customizeMessage) {
+
+        if (TextUtils.isEmpty(customizeMessage.getShareType())) {
+            return null;
+        }
+
         if (customizeMessage.getShareType().equals("1")) {
             return new SpannableString("报修订单(快去查看吧!)");
         } else if (customizeMessage.getShareType().equals("2")) {
@@ -156,6 +165,11 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
 
     @Override
     public void onItemClick(View view, int i, CustomizeMessage customizeMessage, UIMessage uiMessage) {
+
+        if (TextUtils.isEmpty(customizeMessage.getShareType())) {
+            return;
+        }
+
         if (customizeMessage.getShareType().equals("1")) {
             Intent intent = new Intent(view.getContext(), OrderDetailActivity.class);
             intent.putExtra(Constant.ID, Long.parseLong(customizeMessage.getOrderId()));

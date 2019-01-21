@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -17,7 +16,6 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.HonorCerticificateListBean;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.util.QueryEntry;
 import com.yaf.base.entity.HonorCertificateEntity;
 
 import net.eanfang.worker.R;
@@ -42,9 +40,7 @@ public class SpecialistCertificateListActivity extends BaseWorkerActivity {
     @BindView(R.id.rl_add)
     RelativeLayout rlAdd;
     private CertificateListAdapter adapter;
-    // 是否安防公司的荣誉证书
-    private String isCompany = "";
-    private Long orgid;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,15 +54,11 @@ public class SpecialistCertificateListActivity extends BaseWorkerActivity {
     }
 
     private void initViews() {
-        isCompany = getIntent().getStringExtra("role");
-        orgid = getIntent().getLongExtra("orgid", 0);
 
         tvAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(SpecialistCertificateListActivity.this, SpecialistAddCertificationActivity.class)
-                        .putExtra("role", isCompany)
-                        .putExtra("orgid", orgid), ADD_CERTIFICATION_CODE);
+                startActivityForResult(new Intent(SpecialistCertificateListActivity.this, SpecialistAddCertificationActivity.class), ADD_CERTIFICATION_CODE);
             }
         });
 
@@ -85,28 +77,22 @@ public class SpecialistCertificateListActivity extends BaseWorkerActivity {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 startActivityForResult(new Intent(SpecialistCertificateListActivity.this, SpecialistAddCertificationActivity.class)
-                        .putExtra("bean", (HonorCertificateEntity) adapter.getData().get(position))
-                        .putExtra("role", isCompany)
-                        .putExtra("orgid", orgid), ADD_CERTIFICATION_CODE);
+                                .putExtra("bean", (HonorCertificateEntity) adapter.getData().get(position))
+                        , ADD_CERTIFICATION_CODE);
             }
         });
     }
 
 
     private void getData() {
-        String url = "";
-        QueryEntry queryEntry = new QueryEntry();
 
-        queryEntry.getEquals().put("type", "0");
-        if (!TextUtils.isEmpty(isCompany) && isCompany.equals("company")) {
-            queryEntry.getEquals().put("orgId", orgid + "");
-            url = UserApi.COMPANY_CERTIFICATE_LIST;// 安防公司
-        } else {
-            queryEntry.getEquals().put("accId", String.valueOf(EanfangApplication.get().getAccId()));
-            url = UserApi.GET_TECH_WORKER_ADD_CERTIFICATE_LIST;// 技师认证
-        }
-        EanfangHttp.post(url)
-                .upJson(JsonUtils.obj2String(queryEntry))
+
+        JSONObject object = new JSONObject();
+        object.put("accId", String.valueOf(EanfangApplication.get().getAccId()));
+        object.put("type", "1");
+
+        EanfangHttp.post(UserApi.GET_TECH_WORKER_ADD_CERTIFICATE_LIST)
+                .upJson(JsonUtils.obj2String(object))
                 .execute(new EanfangCallback<HonorCerticificateListBean>(this, true, HonorCerticificateListBean.class) {
                     @Override
                     public void onSuccess(HonorCerticificateListBean bean) {
@@ -135,13 +121,8 @@ public class SpecialistCertificateListActivity extends BaseWorkerActivity {
 
 
     private void delete(BaseQuickAdapter adapter, int position) {
-        String url = "";
-        if (isCompany.equals("company")) {
-            url = UserApi.COMPANY_CERTIFICATE_DELETE;// 安防公司
-        } else {
-            url = UserApi.GET_TECH_WORKER_ADD_CERTIFICATE_DELETE;// 技师认证
-        }
-        EanfangHttp.post(url + "/" + ((HonorCertificateEntity) adapter.getData().get(position)).getId())
+
+        EanfangHttp.post(UserApi.GET_TECH_WORKER_ADD_CERTIFICATE_DELETE + "/" + ((HonorCertificateEntity) adapter.getData().get(position)).getId())
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class) {
                     @Override
                     public void onSuccess(JSONObject bean) {
@@ -158,7 +139,7 @@ public class SpecialistCertificateListActivity extends BaseWorkerActivity {
     @OnClick(R.id.tv_sub)
     public void onViewClicked() {
         Intent intent = new Intent(SpecialistCertificateListActivity.this, OwnDataHintActivity.class);
-        intent.putExtra("info", "尊敬的用户，祝贺您！赶紧去接单吧！");
+        intent.putExtra("info", "尊敬的专家，您可以解答行业问题，帮助其他人，以获取知名度！");
         intent.putExtra("go", "");
         intent.putExtra("desc", "如有疑问，请联系客服处理");
         intent.putExtra("service", "客服热线：400-890-9280");

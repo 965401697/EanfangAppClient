@@ -14,7 +14,6 @@ import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.AuthStatusBean;
 import com.eanfang.model.LoginBean;
 import com.eanfang.ui.activity.QrCodeShowActivity;
 import com.eanfang.ui.base.BaseFragment;
@@ -29,8 +28,8 @@ import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.my.EvaluateActivity;
 import net.eanfang.worker.ui.activity.my.PersonInfoActivity;
 import net.eanfang.worker.ui.activity.my.SettingActivity;
-import net.eanfang.worker.ui.activity.my.specialist.SpecialistAuthListActivity;
 import net.eanfang.worker.ui.activity.my.certification.NewAuthListActivity;
+import net.eanfang.worker.ui.activity.my.specialist.SpecialistAuthListActivity;
 import net.eanfang.worker.ui.widget.InviteView;
 import net.eanfang.worker.util.PrefUtils;
 
@@ -44,7 +43,7 @@ import net.eanfang.worker.util.PrefUtils;
  */
 
 public class MyFragment extends BaseFragment {
-    private TextView tv_user_name, tvVerfiy, tvWorkerStatus;
+    private TextView tv_user_name, tvVerfiy, tvWorkerStatus, tvExpertVerfiy;
     private RelativeLayout rlWorkingStatus, rlWorkerVerfity, rlExpertVerfity;
     private SimpleDraweeView iv_header;
     // 二维码头像
@@ -65,30 +64,42 @@ public class MyFragment extends BaseFragment {
 
     private void getWorkInfo() {
         // 获取认证状态
-        EanfangHttp.post(UserApi.POST_WORKER_AUTH_STATUS)
-                .params("accId", EanfangApplication.getApplication().getAccId())
-                .execute(new EanfangCallback<AuthStatusBean>(getActivity(), true, AuthStatusBean.class, (bean) -> {
-                    setOnClick(bean.getVerify());
+        EanfangHttp.post(UserApi.POST_WORKER_EXPERT_AUTH_STATUS)
+                .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class, (bean) -> {
+                    int e = (int) bean.get("expert");//专家
+                    int t = (int) bean.get("techWorker");//技师
+                    setOnClick(e, t);
                 }));
     }
 
-    private void setOnClick(int status) {
-
-        //status 0草稿1认证中2认证通过3认证拒绝
-        if (status == 0) {
+    private void setOnClick(int e, int t) {
+        if (t == 0) {
             tvVerfiy.setText("技师未认证，待认证");
-        } else if (status == 1) {
+        } else if (t == 1) {
             tvVerfiy.setText("认证中");
-        } else if (status == 2) {
+        } else if (t == 2) {
             tvVerfiy.setText("已认证");
-        } else if (status == 3) {
+        } else if (t == 3) {
+
             tvVerfiy.setText("认证失败，请重新认证");
         }
+        //status 0草稿1认证中2认证通过3认证拒绝
+        if (e == 0) {
+            tvExpertVerfiy.setText("专家未认证，待认证");
+        } else if (e == 1) {
+            tvExpertVerfiy.setText("认证中");
+        } else if (e == 2) {
+            tvExpertVerfiy.setText("已认证");
+        } else if (e == 3) {
+            tvExpertVerfiy.setText("认证失败，请重新认证");
+        }
+
+
         rlWorkerVerfity.setOnClickListener((v) -> {
             doWorkAuth();
         });
         rlExpertVerfity.setOnClickListener((v) -> {
-            JumpItent.jump(getActivity(), SpecialistAuthListActivity.class);
+            doExpertWorkAuth();
         });
     }
 
@@ -96,6 +107,7 @@ public class MyFragment extends BaseFragment {
     protected void initView() {
         rlWorkerVerfity = findViewById(R.id.rl_worker_verfity);
         tvVerfiy = (TextView) findViewById(R.id.tv_verfity_status);
+        tvExpertVerfiy = (TextView) findViewById(R.id.tv_expert_verfity_status);
         tv_user_name = (TextView) findViewById(R.id.tv_user_name);
         iv_header = (SimpleDraweeView) findViewById(R.id.iv_user_header);
         mIvPersonalQRCode = findViewById(R.id.iv_personalQRCode);
@@ -185,6 +197,17 @@ public class MyFragment extends BaseFragment {
         } else {
             JumpItent.jump(getActivity(), NewAuthListActivity.class);
 //            JumpItent.jump(getActivity(), AuthListActivity.class);
+        }
+    }
+
+    private void doExpertWorkAuth() {
+        // 技师未认证，提示完善个人资料
+
+        String realName = EanfangApplication.get().getUser().getAccount().getRealName();
+        if (StringUtils.isEmpty(realName) || "待提供".equals(realName)) {
+            showToast("请先完善个人资料");
+        } else {
+            JumpItent.jump(getActivity(), SpecialistAuthListActivity.class);
         }
     }
 }

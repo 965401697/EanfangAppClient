@@ -29,7 +29,7 @@ public interface Constant {
     String mapScope = "加油站|其它能源站|加气站|汽车养护/装饰|汽车配件销售|汽车租赁|" +
             "二手车交易|充电站|汽车销售|汽车维修|餐饮服务|购物服务|售票处|邮局|物流速递|电讯营业厅|人才市场|自来水营业厅|电力营业厅|体育休闲服务|医疗保健服务|住宿服务|风景名胜|" +
             "商务住宅|政府机构及社会团体|科教文化服务|交通设施服务|金融保险服务|知名企业|地名地址信息|公共设施|通行设施";
-   String ALL = "全部";
+    String ALL = "全部";
 
     /**
      * 无数据更新
@@ -291,6 +291,11 @@ public interface Constant {
      */
 
     String DIPLOMA = "diploma";
+    /**
+     * 45.专家认证的类型
+     */
+
+    String EXPERT = "exptVerifyType";
 
     //业务通知
     int NOTICE_BUSINESS = 1;

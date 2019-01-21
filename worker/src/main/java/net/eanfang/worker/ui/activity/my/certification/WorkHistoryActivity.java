@@ -134,8 +134,9 @@ public class WorkHistoryActivity extends BaseWorkerActivity {
                 intent.putExtra("go", "去添加荣誉证书");
                 intent.putExtra("desc", "如有疑问，请联系客服处理");
                 intent.putExtra("service", "客服热线：" + R.string.text_service_telphone);
+                intent.putExtra("class",CertificateListActivity.class);
                 startActivity(intent);
-                endTransaction(false);
+                endTransaction(true);
                 break;
         }
     }

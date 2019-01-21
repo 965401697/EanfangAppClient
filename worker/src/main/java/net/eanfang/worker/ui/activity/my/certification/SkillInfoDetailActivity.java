@@ -96,7 +96,7 @@ public class SkillInfoDetailActivity extends BaseWorkerActivity {
 
     private void initViews() {
         tvLimit.setText(GetConstDataUtils.getWorkingYearList().get(mWorkerVerifySkillBean.getWorkerVerify().getWorkingYear()));
-        tvAbility.setText(GetConstDataUtils.getWorkingYearList().get(mWorkerVerifySkillBean.getWorkerVerify().getWorkingLevel()));
+        tvAbility.setText(GetConstDataUtils.getWorkingLevelList().get(mWorkerVerifySkillBean.getWorkerVerify().getWorkingLevel()));
 
         recyclerViewBusiness.setLayoutManager(new GridLayoutManager(this, 3));
         recyclerViewOs.setLayoutManager(new GridLayoutManager(this, 3));

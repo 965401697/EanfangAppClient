@@ -75,7 +75,7 @@ public class SpecialistCertificationActivity extends BaseActivityWithTakePhoto {
         setOnClick();
         if (mStatus > 0) {
             // 获取专家信息
-            EanfangHttp.get(UserApi.GET_EXPERT_INFO_BY_ID+"/"+EanfangApplication.get().getAccId())
+            EanfangHttp.get(UserApi.GET_EXPERT_INFO_BY_ID)
                     .execute(new EanfangCallback<ExpertsCertificationEntity>(SpecialistCertificationActivity.this, true, ExpertsCertificationEntity.class, (bean) -> {
                         mExpertsCertificationEntity = bean;
                         fillData();

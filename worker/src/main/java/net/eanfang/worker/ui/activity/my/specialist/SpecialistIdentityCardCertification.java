@@ -110,6 +110,7 @@ public class SpecialistIdentityCardCertification extends BaseActivityWithTakePho
                     intent.putExtra("go", "前往资质认证");
                     intent.putExtra("desc", "如有疑问，请联系客服处理");
                     intent.putExtra("service", "客服热线：" + R.string.text_service_telphone);
+                    intent.putExtra("class", SpecialistSkillTypeActivity.class);
                     startActivity(intent);
                     closeActivity();
                 }));

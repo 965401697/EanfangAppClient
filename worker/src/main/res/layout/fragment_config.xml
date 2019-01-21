@@ -471,7 +471,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginRight="@dimen/dimen_14"
                         android:layout_toStartOf="@+id/imageView1"
-                        android:text="未认证"
+
                         android:textColor="@color/client"
                         android:textSize="@dimen/textSize_11" />
 
@@ -525,9 +525,10 @@
                         android:layout_alignBottom="@+id/tv_2"
                         android:layout_centerVertical="true"
                         android:layout_toStartOf="@+id/imageView22"
-                        android:text=""
+
+                        android:layout_marginRight="@dimen/dimen_14"
                         android:textColor="@color/client"
-                        android:textSize="@dimen/textSize_10" />
+                        android:textSize="@dimen/textSize_11" />
 
                     <ImageView
                         android:id="@+id/imageView22"
