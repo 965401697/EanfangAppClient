@@ -31,9 +31,11 @@ public class BadgeUtil {
         } else {
             count = Math.max(0, Math.min(count, 99));
         }
-
         if (Build.MANUFACTURER.equalsIgnoreCase("xiaomi")) {
             setBadgeOfMIUI(context, count, iconResId);
+//        } else {
+//            ShortcutBadger.applyCount(context, count);
+//        }
         } else if (Build.MANUFACTURER.equalsIgnoreCase("sony")) {
             setBadgeOfSony(context, count);
         } else if (Build.MANUFACTURER.toLowerCase().contains("samsung") ||
@@ -81,6 +83,9 @@ public class BadgeUtil {
             e.printStackTrace();
         }
         mNotificationManager.notify(0, notification);
+
+//        ShortcutBadger.applyNotification(context, notification, count);
+
     }
 
     /**

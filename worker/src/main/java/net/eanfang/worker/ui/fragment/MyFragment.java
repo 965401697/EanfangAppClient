@@ -98,9 +98,11 @@ public class MyFragment extends BaseFragment {
         rlWorkerVerfity.setOnClickListener((v) -> {
             doWorkAuth();
         });
-        rlExpertVerfity.setOnClickListener((v) -> {
-            doExpertWorkAuth();
-        });
+
+//        rlExpertVerfity.setOnClickListener((v) -> {
+//            JumpItent.jump(getActivity(), SpecialistAuthListActivity.class);
+//        });
+
     }
 
     @Override

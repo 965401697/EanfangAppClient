@@ -92,12 +92,15 @@ public class HomeFragment extends BaseFragment {
     private HomeDataAdapter homeDataAdapter;
     private RelativeLayout rlAllData;
 
+    /**
+     * 图标数量
+     */
     private QBadgeView qBadgeViewRepair = new QBadgeView(EanfangApplication.get().getApplicationContext());
     private QBadgeView qBadgeViewDesign = new QBadgeView(EanfangApplication.get().getApplicationContext());
-    private QBadgeView qBadgeViewMaintain = new QBadgeView(EanfangApplication.get().getApplicationContext());
-    private QBadgeView qBadgeViewQuota = new QBadgeView(EanfangApplication.get().getApplicationContext());
     private QBadgeView qBadgeViewInstall = new QBadgeView(EanfangApplication.get().getApplicationContext());
-
+    private int mRepair = 0;
+    private int mDesign = 0;
+    private int mInstall = 0;
 
     @Override
     protected int setLayoutResouceId() {
@@ -147,6 +150,27 @@ public class HomeFragment extends BaseFragment {
 
         doHttpNews();
         doHttpDatastatistics();
+        //报修
+        qBadgeViewRepair.bindTarget(findViewById(R.id.tv_reparir))
+                .setBadgeBackgroundColor(0xFFFF0000)
+                .setBadgePadding(5, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setGravityOffset(11, 0, true)
+                .setBadgeTextSize(11, true);
+        // 报装
+        qBadgeViewInstall.bindTarget(findViewById(R.id.tv_install))
+                .setBadgeBackgroundColor(0xFFFF0000)
+                .setBadgePadding(5, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setGravityOffset(11, 0, true)
+                .setBadgeTextSize(11, true);
+        //设计
+        qBadgeViewDesign.bindTarget(findViewById(R.id.tv_design))
+                .setBadgeBackgroundColor(0xFFFF0000)
+                .setBadgePadding(5, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setGravityOffset(11, 0, true)
+                .setBadgeTextSize(11, true);
     }
 
 
@@ -383,29 +407,26 @@ public class HomeFragment extends BaseFragment {
 
     public void doSetOrderNums(AllMessageBean bean) {
         // 报修
-        qBadgeViewRepair.bindTarget(findViewById(R.id.tv_reparir))
-                .setBadgeNumber(bean.getRepair())
-                .setBadgeBackgroundColor(0xFFFF0000)
-                .setBadgePadding(5, true)
-                .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setGravityOffset(11, 0, true)
-                .setBadgeTextSize(11, true);
+        if (bean.getRepair() > 0) {
+            mRepair = bean.getRepair();
+        } else {
+            mRepair = 0;
+        }
+        qBadgeViewRepair.setBadgeNumber(mRepair);
         // 报装
-        qBadgeViewInstall.bindTarget(findViewById(R.id.tv_install))
-                .setBadgeNumber(bean.getInstall())
-                .setBadgeBackgroundColor(0xFFFF0000)
-                .setBadgePadding(5, true)
-                .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setGravityOffset(11, 0, true)
-                .setBadgeTextSize(11, true);
+        if (bean.getInstall() > 0) {
+            mInstall = bean.getInstall();
+        } else {
+            mInstall = 0;
+        }
+        qBadgeViewInstall.setBadgeNumber(mInstall);
         //设计
-        qBadgeViewDesign.bindTarget(findViewById(R.id.tv_design))
-                .setBadgeNumber(bean.getDesign())
-                .setBadgeBackgroundColor(0xFFFF0000)
-                .setBadgePadding(5, true)
-                .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setGravityOffset(11, 0, true)
-                .setBadgeTextSize(11, true);
+        if (bean.getDesign() > 0) {
+            mDesign = bean.getDesign();
+        } else {
+            mDesign = 0;
+        }
+        qBadgeViewDesign.setBadgeNumber(mDesign);
         /**
          * 底部红点更新
          * */

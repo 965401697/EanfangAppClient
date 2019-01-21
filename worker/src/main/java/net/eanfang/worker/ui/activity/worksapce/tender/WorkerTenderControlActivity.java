@@ -52,7 +52,7 @@ public class WorkerTenderControlActivity extends BaseActivity {
     }
 
     private void initView() {
-        setTitle("面谈员工");
+        setTitle("招标信息");
         setLeftBack();
 
         mFragments.add(WorkTenderFragment.getInstance("正在公告", 0));
