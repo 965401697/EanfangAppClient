@@ -86,11 +86,15 @@ public class WorkspaceFragment extends BaseFragment {
     //所在城市
     private String companyName = "";
     private String mSeachRequest = "五金店";
-
+    /**
+     * 消息气泡
+     */
     private QBadgeView qBadgeViewReport = new QBadgeView(EanfangApplication.get().getApplicationContext());
     private QBadgeView qBadgeViewTask = new QBadgeView(EanfangApplication.get().getApplicationContext());
     private QBadgeView qBadgeViewInspect = new QBadgeView(EanfangApplication.get().getApplicationContext());
-
+    private int mReport = 0;
+    private int mTask = 0;
+    private int mInspect = 0;
     /**
      * 切换公司 pop
      */
@@ -446,11 +450,26 @@ public class WorkspaceFragment extends BaseFragment {
 
     public void doSetOrderNums(AllMessageBean bean) {
         // 汇报
-        qBadgeViewReport.setBadgeNumber(bean.getReport());
+        if (bean.getReport() > 0) {
+            mReport = bean.getReport();
+        } else {
+            mReport = 0;
+        }
+        qBadgeViewReport.setBadgeNumber(mReport);
         // 任务
-        qBadgeViewTask.setBadgeNumber(bean.getTask());
+        if (bean.getTask() > 0) {
+            mTask = bean.getTask();
+        } else {
+            mTask = 0;
+        }
+        qBadgeViewTask.setBadgeNumber(mTask);
         //检查
-        qBadgeViewInspect.setBadgeNumber(bean.getInspect());
+        if (bean.getInspect() > 0) {
+            mInspect = bean.getInspect();
+        } else {
+            mInspect = 0;
+        }
+        qBadgeViewInspect.setBadgeNumber(mInspect);
         /**
          * 底部红点更新
          * */

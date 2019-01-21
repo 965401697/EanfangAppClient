@@ -59,7 +59,7 @@ public class OrderConfirmAdapter extends BaseQuickAdapter<RepairBugEntity, BaseV
         }
         helper.setText(R.id.tv_model, bugThree);
         helper.setText(R.id.tv_location, item.getBugPosition());
-//        helper.setText(R.id.tv_desc, item.getBugDescription());
+        helper.setText(R.id.tv_desc, item.getBugDescription());
         //位置编号
         helper.setText(R.id.tv_deviceNumber, item.getLocationNumber());
 

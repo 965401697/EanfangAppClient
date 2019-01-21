@@ -195,6 +195,7 @@ public class DealWithFirstActivity extends BaseActivity {
                             tvTitle.setText(bean.getTitle());
                             tvName.setText("接收人" + bean.getAssigneeUser().getAccountEntity().getRealName());
                             tvWeek.setText(GetDateUtils.dateToWeek(bean.getCreateTime()));
+
                             // 是否显示认领
                             if (bean.getAssigneeUserId().equals(EanfangApplication.get().getUserId()) && mOrderStatus == 0) {
                                 tvSub.setVisibility(View.VISIBLE);
@@ -209,6 +210,10 @@ public class DealWithFirstActivity extends BaseActivity {
                             }
                             if (bean.getWorkInpectDetailDispose() != null) {
                                 llDealWith.setVisibility(View.VISIBLE);
+                                //if (mOrderStatus == 2){
+                                tvDealContent.setText(bean.getWorkInpectDetailDispose().getDisposeInfo());
+                                tvRemark.setText(bean.getWorkInpectDetailDispose().getRemarkInfo());
+                                // }
                                 //协同人员
                                 if (!StringUtils.isEmpty(bean.getWorkInpectDetailDispose().getCollaborativeUser())) {
                                     setTeam(bean.getWorkInpectDetailDispose().getCollaborativeUser());

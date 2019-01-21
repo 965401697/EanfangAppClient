@@ -55,8 +55,6 @@ public class WorkTalkControlActivity extends BaseActivity {
     private void initView() {
         setTitle("面谈员工");
         setLeftBack();
-        setTitle("面谈员工");
-        setLeftBack();
         setRightImageResId(R.mipmap.add);
 
         setRightImageOnClickListener(new View.OnClickListener() {

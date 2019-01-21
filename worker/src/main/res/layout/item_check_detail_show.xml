@@ -31,10 +31,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <TextView
+            <!--<TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="任务标题：" />
+                android:text="任务标题：" />-->
 
             <TextView
                 android:id="@+id/tv_check_title"
@@ -48,10 +48,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_20">
 
-            <TextView
+            <!--<TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="工作内容：" />
+                android:text="工作内容：" />-->
 
             <TextView
                 android:id="@+id/tv_work_content"

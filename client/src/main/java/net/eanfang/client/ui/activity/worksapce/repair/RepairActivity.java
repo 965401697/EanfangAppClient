@@ -186,7 +186,7 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
         initData();
         initListener();
         initAdapter();
-        initScanRepair();
+//        initScanRepair();
 
         getProjectList();
     }
@@ -222,7 +222,6 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
         // 扫码 报修
         repairOrderEntity = (RepairOrderEntity) getIntent().getSerializableExtra("repairbean");
         isScan = getIntent().getStringExtra("qrcode");
-        isScanRepair = getIntent().getBooleanExtra("isScanRepair", false);
     }
 
     private void initListener() {
@@ -232,14 +231,6 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
         rgSex.setOnCheckedChangeListener(this);
     }
 
-    private void initScanRepair() {
-        if (isScanRepair) {
-            RepairBugEntity repairBugEntity = (RepairBugEntity) getIntent().getSerializableExtra("bean");
-            beanList.add(repairBugEntity);
-            evaluateAdapter.notifyDataSetChanged();
-            mOwnerOrgId = getIntent().getLongExtra("mOwnerOrgId", 0);
-        }
-    }
 
     private void initAdapter() {
         evaluateAdapter = new ToRepairAdapter(R.layout.item_trouble, beanList);
@@ -490,10 +481,11 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
                 etDetailAddress.setText(address);
                 break;
             case ADD_TROUBLE_CALLBACK_CODE:
+                isScanRepair = data.getBooleanExtra("isScanRepair", false);
                 RepairBugEntity repairBugEntity = (RepairBugEntity) data.getSerializableExtra("bean");
                 beanList.add(repairBugEntity);
                 evaluateAdapter.notifyDataSetChanged();
-                mOwnerOrgId = data.getLongExtra("mOwnerOrgId", 0);
+                mOwnerOrgId = getIntent().getLongExtra("mOwnerOrgId", 0);
 //                initData();
                 break;
             default:
@@ -591,6 +583,8 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
                     ll_user_info.setVisibility(View.VISIBLE);
                     iv_arrow.setImageDrawable(getResources().getDrawable(R.mipmap.ic_worker_detail_area_down));
                 }
+                break;
+            default:
                 break;
         }
     }

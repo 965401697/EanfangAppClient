@@ -2,17 +2,13 @@ package net.eanfang.worker.ui.fragment.worktransfer;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WorkTransferListBean;
-import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
@@ -22,28 +18,23 @@ import com.eanfang.util.QueryEntry;
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.worktransfer.WorkTransferDetailActivity;
 import net.eanfang.worker.ui.adapter.worktransfer.WorkTransferAdapter;
+import net.eanfang.worker.ui.fragment.TemplateItemListFragment;
 
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.eanfang.config.EanfangConst.BOTTOM_REFRESH;
-import static com.eanfang.config.EanfangConst.TOP_REFRESH;
-
 /**
  * @author Guanluocang
  * @date on 2018/7/27  16:23
  * @decision 交接班列表
  */
-public class WorkTransferFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
+public class WorkTransferFragment extends TemplateItemListFragment {
 
     private String mTitle;
     private int mType;
 
-    private int page = 1;
-    private SwipeRefreshLayout swipeRefreshLayout;
-    private RecyclerView rv_worktalk;
     public static final int REFRESH_LIST_CODE = 99;//刷新列表的request_Code
     private int mRefreshPosition = 0;//刷新的position
     private List<WorkTransferListBean.ListBean> workTalkBeanList = new ArrayList<>();
@@ -70,34 +61,16 @@ public class WorkTransferFragment extends BaseFragment implements SwipeRefreshLa
         return mTitle;
     }
 
-    @Override
-    protected int setLayoutResouceId() {
-        return R.layout.fragment_work_transfer;
-    }
-
-    @Override
-    protected void initData(Bundle arguments) {
-    }
-
-    @Override
-    protected void onLazyLoad() {
-        super.onLazyLoad();
-        getData();
-    }
-
     /**
      * 获取数据
      */
-    public void getData() {
+    @Override
+    protected void getData() {
         if (mQueryEntry == null) {
             mQueryEntry = new QueryEntry();
         }
 
-//        if (!Constant.ALL.equals(mTitle)) {
-//            String status = GetConstDataUtils.getWorkTransfer().indexOf(getmTitle()) + "";
-//            mQueryEntry.getEquals().put(Constant.STATUS, status);
-//        }
-        mQueryEntry.setPage(page);
+        mQueryEntry.setPage(mPage);
         mQueryEntry.setSize(10);
         // 我接收的
         if (mType == 2) {
@@ -111,24 +84,58 @@ public class WorkTransferFragment extends BaseFragment implements SwipeRefreshLa
 
         EanfangHttp.post(NewApiService.WORK_TRANSFER_LIST)
                 .upJson(JsonUtils.obj2String(mQueryEntry))
-                .execute(new EanfangCallback<WorkTransferListBean>(getActivity(), true, WorkTransferListBean.class, (bean) -> {
-                            if (getActivity() == null) {
-                                return;
+                .execute(new EanfangCallback<WorkTransferListBean>(getActivity(), true, WorkTransferListBean.class) {
+                    @Override
+                    public void onSuccess(WorkTransferListBean bean) {
+                        if (mPage == 1) {
+                            workTalkAdapter.getData().clear();
+                            workTalkAdapter.setNewData(bean.getList());
+                            mSwipeRefreshLayout.setRefreshing(false);
+                            workTalkAdapter.loadMoreComplete();
+                            if (bean.getList().size() < 10) {
+                                workTalkAdapter.loadMoreEnd();
+                                //释放对象
+                                mQueryEntry = null;
                             }
-                            getActivity().runOnUiThread(() -> {
-                                if (bean.getList() != null) {
-                                    workTalkBeanList = bean.getList();
-                                    onDataReceived();
-                                    swipeRefreshLayout.setRefreshing(false);
-                                } else {
-                                }
-                            });
-                        })
-                );
+
+                            if (bean.getList().size() > 0) {
+                                mTvNoData.setVisibility(View.GONE);
+                            } else {
+                                mTvNoData.setVisibility(View.VISIBLE);
+                            }
+
+
+                        } else {
+                            workTalkAdapter.addData(bean.getList());
+                            workTalkAdapter.loadMoreComplete();
+                            if (bean.getList().size() < 10) {
+                                workTalkAdapter.loadMoreEnd();
+                            }
+                        }
+
+                    }
+
+                    @Override
+                    public void onNoData(String message) {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        workTalkAdapter.loadMoreEnd();//没有数据了
+                        if (workTalkAdapter.getData().size() == 0) {
+                            mTvNoData.setVisibility(View.VISIBLE);
+                        } else {
+                            mTvNoData.setVisibility(View.GONE);
+                        }
+
+                    }
+
+                    @Override
+                    public void onCommitAgain() {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+                });
     }
 
     @Override
-    protected void initView() {
+    protected void initAdapter() {
         // 我接收的
         if (mType == 2) {
             mIsCreate = false;
@@ -136,13 +143,9 @@ public class WorkTransferFragment extends BaseFragment implements SwipeRefreshLa
             // 我创建的
             mIsCreate = true;
         }
-        swipeRefreshLayout = findViewById(R.id.srl_worktransfer);
-        swipeRefreshLayout.setOnRefreshListener(this);
-        rv_worktalk = findViewById(R.id.rv_worktransfer);
         workTalkAdapter = new WorkTransferAdapter(mIsCreate);
-        rv_worktalk.setLayoutManager(new LinearLayoutManager(getContext()));
-        workTalkAdapter.bindToRecyclerView(rv_worktalk);
-        workTalkAdapter.setOnLoadMoreListener(this, rv_worktalk);
+        workTalkAdapter.bindToRecyclerView(mRecyclerView);
+        workTalkAdapter.setOnLoadMoreListener(this, mRecyclerView);
 
         mUserId = EanfangApplication.get().getUser().getAccount().getDefaultUser().getUserId();
     }
@@ -214,78 +217,23 @@ public class WorkTransferFragment extends BaseFragment implements SwipeRefreshLa
     public void onEvent(String createSuccess) {
         if (createSuccess.equals("addTransferSuccess")) {
             mQueryEntry = null;
-            page = 1;
+            mPage = 1;
             getData();
         }
-    }
-
-    private void dataOption(int option) {
-        switch (option) {
-            case TOP_REFRESH:
-                //下拉刷新
-                page--;
-                if (page <= 0) {
-                    page = 1;
-                }
-                getData();
-                break;
-            case BOTTOM_REFRESH:
-                //上拉加载更多
-                page++;
-                getData();
-                break;
-            default:
-                break;
-        }
-    }
-
-    @Override
-    public void onLoadMoreRequested() {
-        dataOption(BOTTOM_REFRESH);
     }
 
 
     public void getTaskData(QueryEntry queryEntry) {
         this.mQueryEntry = queryEntry;
-        page = 1;
-        dataOption(TOP_REFRESH);
+        mPage = 1;
+        getData();
     }
 
     @Override
     public void onRefresh() {
         mQueryEntry = null;
-        page = 1;
-        dataOption(TOP_REFRESH);
+        mPage = 1;
+        getData();
     }
 
-    public void onDataReceived() {
-        if (page == 1) {
-            if (workTalkBeanList.size() == 0 || workTalkBeanList == null) {
-                showToast("暂无数据");
-                workTalkAdapter.getData().clear();
-                workTalkAdapter.notifyDataSetChanged();
-                mQueryEntry = null;
-            } else {
-                workTalkAdapter.getData().clear();
-                workTalkAdapter.setNewData(workTalkBeanList);
-                workTalkAdapter.disableLoadMoreIfNotFullPage();
-                if (workTalkBeanList.size() < 10) {
-                    workTalkAdapter.loadMoreEnd();
-                }
-            }
-        } else {
-            if (workTalkBeanList.size() == 0 || workTalkBeanList == null) {
-                showToast("暂无更多数据");
-                page = page - 1;
-//                messageListAdapter.notifyDataSetChanged();
-                workTalkAdapter.loadMoreEnd();
-            } else {
-                workTalkAdapter.addData(workTalkBeanList);
-                workTalkAdapter.loadMoreComplete();
-                if (workTalkBeanList.size() < 10) {
-                    workTalkAdapter.loadMoreEnd();
-                }
-            }
-        }
-    }
 }

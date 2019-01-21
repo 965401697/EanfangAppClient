@@ -26,11 +26,11 @@
             android:src="@mipmap/ic_no_worker_other" />
 
         <TextView
-            android:id="@+id/tv_noData"
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="暂无收藏的技师" />
+            android:text="暂无服务的技师" />
     </LinearLayout>
 
     <LinearLayout

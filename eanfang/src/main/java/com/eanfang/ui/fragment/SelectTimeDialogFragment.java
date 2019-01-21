@@ -42,12 +42,20 @@ public class SelectTimeDialogFragment extends DialogFragment implements OnDateSe
 
     private TimePicker timePicker;
 
-    public static SelectTimeDialogFragment newInstance() {
+    /**
+     * 标识
+     */
+    private String mTag = "";
+
+    public static SelectTimeDialogFragment newInstance(String tag) {
         SelectTimeDialogFragment selectTimeDialogFragment = new SelectTimeDialogFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("name", tag);
+        selectTimeDialogFragment.setArguments(bundle);
         return selectTimeDialogFragment;
     }
 
-    //DCL
+
     public static SelectTimeDialogFragment getInstance() {
         if (mSelectTimeDialogFragment == null) {
             synchronized (SelectTimeDialogFragment.class) {
@@ -80,7 +88,10 @@ public class SelectTimeDialogFragment extends DialogFragment implements OnDateSe
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-
+        Bundle args = getArguments();
+        if (args != null) {
+            mTag = args.getString("name");
+        }
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.fragment_select_time_dialog, null);
 
@@ -95,6 +106,9 @@ public class SelectTimeDialogFragment extends DialogFragment implements OnDateSe
         widget.setSelectedDate(instance);
         widget.setOnDateChangedListener(this);
 
+        if (mTag.equals("tender")) {
+            timePicker.setVisibility(View.GONE);
+        }
         mCalendarTime = "";
         return new AlertDialog.Builder(getActivity())
                 .setTitle("")
@@ -121,7 +135,11 @@ public class SelectTimeDialogFragment extends DialogFragment implements OnDateSe
                 mMinute = "0" + mMinute;
             }
             mHourTime = mHour + ":" + mMinute + ":00";
-            selectTimeListener.getData(mCalendarTime + " " + mHourTime);
+            if (mTag.equals("tender")) {
+                selectTimeListener.getData(mCalendarTime);
+            } else {
+                selectTimeListener.getData(mCalendarTime + " " + mHourTime);
+            }
         }
     };
 

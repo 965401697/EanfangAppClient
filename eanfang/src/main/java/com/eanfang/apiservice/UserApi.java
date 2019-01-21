@@ -232,6 +232,16 @@ public interface UserApi {
      */
     String GET_TECH_WORKER_EDUCATION_UPDATE = BuildConfig.API_HOST + "/yaf_shop/educationexperience/update";
 
+
+    /**
+     * 填写专家认证的信息
+     */
+    String GET_EXPERT_INFO_BY_ID = BuildConfig.API_HOST + "/yaf_sys/expertscertification/info";
+    /**
+     * 填写专家认证的信息
+     */
+    String GET_EXPERT_INFO_CERTIFICATION = BuildConfig.API_HOST + "/yaf_sys/expertscertification/insertV2";
+
     /**
      * 加载系统类别
      */
