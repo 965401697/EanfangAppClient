@@ -130,6 +130,8 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
             } else {
                 helper.setVisible(R.id.tv_do_second, false);
             }
+        } else {
+            helper.setVisible(R.id.iv_finish, false);
         }
 //        if (!StringUtils.isEmpty(item.getBugEntityList().get(helper.getPosition()).getPictures())){
 //            String[] urls = item.getBugEntityList().get(helper.getPosition()).getPictures().split(",");

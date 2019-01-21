@@ -69,6 +69,7 @@ public class SelectOrganizationActivity extends BaseActivity {
             setTitle("选择组织部门");
             setRightTitle("确定");
             setRightTitleOnClickListener(new View.OnClickListener() {
+
                 @Override
                 public void onClick(View v) {
                     if (mOldObj == null) {
