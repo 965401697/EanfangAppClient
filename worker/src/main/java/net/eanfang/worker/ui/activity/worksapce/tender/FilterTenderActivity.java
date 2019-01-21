@@ -130,7 +130,7 @@ public class FilterTenderActivity extends BaseActivity implements SelectTimeDial
 
         if (!TextUtils.isEmpty(etAdress.getText().toString().trim())) {
             if (queryEntry == null) queryEntry = new QueryEntry();
-            queryEntry.getEquals().put("projectArea", etAdress.getText().toString().trim());
+            queryEntry.getEquals().put("projectAddress", etAdress.getText().toString().trim());
         }
         if (!TextUtils.isEmpty(tvStart.getText().toString().trim())) {
 

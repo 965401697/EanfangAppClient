@@ -85,7 +85,7 @@ public class OfferAndPayListFragment1 extends TemplateItemListFragment {
         if ("1".equals(mType)) {
             queryEntry.getEquals().put("createUserId", EanfangApplication.getApplication().getUserId() + "");
         } else if ("2".equals(mType)) {
-            queryEntry.getEquals().put("assigneeCompanyId", EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyId() + "");
+            queryEntry.getEquals().put("assigneeUserId", EanfangApplication.getApplication().getUserId() + "");
         }
         queryEntry.getEquals().put("status", status + "");
 
