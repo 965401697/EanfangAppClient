@@ -79,7 +79,13 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
         } else {
             helper.setText(R.id.tv_arriveTime, "到达时限： 0 ");
         }
-        helper.setText(R.id.tv_state, GetConstDataUtils.getRepairStatus().get(item.getStatus()));
+        //订单已取消
+        if (item.getStatus() == 6) {
+            helper.setText(R.id.tv_state, "订单取消");
+        } else {
+            helper.setText(R.id.tv_state, GetConstDataUtils.getRepairStatus().get(item.getStatus()));
+        }
+
         //( 0:待支付，1:待回电，2:待上门，3:待完工，4:待确认，5:订单完成)
         helper.setText(R.id.tv_do_second, doSomething[item.getStatus()]);
         helper.setVisible(R.id.tv_do_first, isShowFirstBtn[item.getStatus()]);

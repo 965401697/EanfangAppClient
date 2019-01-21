@@ -105,8 +105,12 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
             helper.setVisible(R.id.tv_total, false);
         }
 
-
-        helper.setText(R.id.tv_state, GetConstDataUtils.getRepairStatus().get(item.getStatus()));
+        //订单已取消
+        if (item.getStatus() == 6) {
+            helper.setText(R.id.tv_state, "订单取消");
+        } else {
+            helper.setText(R.id.tv_state, GetConstDataUtils.getRepairStatus().get(item.getStatus()));
+        }
 
         helper.setVisible(R.id.tv_do_first, isShowFirstBtnClient[item.getStatus()]);
         helper.setText(R.id.tv_do_second, doSomething[item.getStatus()]);

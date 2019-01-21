@@ -60,7 +60,7 @@ public class FilterTenderActivity extends BaseActivity implements SelectTimeDial
      * 获取系统类别
      */
     List<BaseDataEntity> systemTypeList = Config.get().getBusinessList(1);
-    private Integer mCode = 100;
+    private String mCode = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,7 +89,7 @@ public class FilterTenderActivity extends BaseActivity implements SelectTimeDial
         tagSystemType.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
             @Override
             public boolean onTagClick(View view, int position, FlowLayout parent) {
-                mCode = Config.get().getBusinessIdByCode(systemTypeList.get(position).getDataCode(), 1);
+                mCode = systemTypeList.get(position).getDataCode();
 //                systemTypeList.get(position).setCheck(!systemTypeList.get(position).isCheck());
                 return true;
             }
@@ -102,11 +102,13 @@ public class FilterTenderActivity extends BaseActivity implements SelectTimeDial
         switch (view.getId()) {
             case R.id.ll_start:
                 mCurrentText = tvStart;
-                new SelectTimeDialogFragment().show(getSupportFragmentManager(), R.string.app_name + "");
+                SelectTimeDialogFragment selectTimeDialogFragment = SelectTimeDialogFragment.newInstance("tender");
+                selectTimeDialogFragment.show(getSupportFragmentManager(), R.string.app_name + "");
                 break;
             case R.id.ll_end:
                 mCurrentText = tvEnd;
-                new SelectTimeDialogFragment().show(getSupportFragmentManager(), R.string.app_name + "");
+                SelectTimeDialogFragment selectTimeDialogFragment_end = SelectTimeDialogFragment.newInstance("tender");
+                selectTimeDialogFragment_end.show(getSupportFragmentManager(), R.string.app_name + "");
                 break;
             case R.id.tv_cancle:
                 finishSelf();
@@ -122,25 +124,25 @@ public class FilterTenderActivity extends BaseActivity implements SelectTimeDial
     private void sub() {
 
         QueryEntry queryEntry = new QueryEntry();
-        if (mCode != 100) {
+        if (!StringUtils.isEmpty(mCode)) {
             queryEntry.getEquals().put("businessOneCode", mCode + "");
         }
 
         if (!TextUtils.isEmpty(etAdress.getText().toString().trim())) {
             if (queryEntry == null) queryEntry = new QueryEntry();
-            queryEntry.getEquals().put("projectAddress", etAdress.getText().toString().trim());
+            queryEntry.getEquals().put("projectArea", etAdress.getText().toString().trim());
         }
         if (!TextUtils.isEmpty(tvStart.getText().toString().trim())) {
 
             if (queryEntry == null) queryEntry = new QueryEntry();
 
-            queryEntry.getGtEquals().put("createTime", tvStart.getText().toString().trim());
+            queryEntry.getGtEquals().put("startDate", tvStart.getText().toString().trim());
         }
         if (!TextUtils.isEmpty(tvEnd.getText().toString().trim())) {
 
             if (queryEntry == null) queryEntry = new QueryEntry();
 
-            queryEntry.getLtEquals().put("createTime", tvEnd.getText().toString().trim());
+            queryEntry.getLtEquals().put("endDate", tvEnd.getText().toString().trim());
         }
 
         Intent intent = new Intent();

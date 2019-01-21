@@ -67,6 +67,30 @@
           android:id="@+id/swipre_fresh"
           android:layout_width="match_parent"
           android:layout_height="match_parent">-->
+    <LinearLayout
+        android:id="@+id/rl_no_contact"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_85"
+        android:background="@color/color_no_contact"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/dimen_20"
+        android:paddingLeft="@dimen/dimen_44"
+        android:paddingTop="@dimen/dimen_20"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/ic_no_contact" />
+
+        <TextView
+            android:id="@+id/tv_contact_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_20"
+            android:textColor="@color/color_no_contact_text"
+            android:textSize="@dimen/textSize_13" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
