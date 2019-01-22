@@ -139,7 +139,7 @@ public class SpecialistCertificateListActivity extends BaseWorkerActivity {
     @OnClick(R.id.tv_sub)
     public void onViewClicked() {
         Intent intent = new Intent(SpecialistCertificateListActivity.this, OwnDataHintActivity.class);
-        intent.putExtra("info", "尊敬的专家，您可以解答行业问题，帮助其他人，以获取知名度！");
+        intent.putExtra("info", "尊敬的专家，您可以解答行业问题，\n帮助其他人，以获取知名度！");
         intent.putExtra("go", "");
         intent.putExtra("desc", "如有疑问，请联系客服处理");
         intent.putExtra("service", "客服热线：400-890-9280");
