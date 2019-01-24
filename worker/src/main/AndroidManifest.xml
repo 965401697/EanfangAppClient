@@ -1126,7 +1126,13 @@
         <activity android:name=".ui.activity.worksapce.tender.WorkTenderDetailActivity" />
         <activity android:name=".ui.activity.my.specialist.AddBrandActivity" />
         <activity android:name=".ui.activity.my.specialist.SpecialistCertificationInfoActivity" />
-        <activity android:name=".ui.activity.my.specialist.SpecialistSkillInfoDetailActivity"></activity>
+        <activity android:name=".ui.activity.my.specialist.SpecialistSkillInfoDetailActivity" />
+        <activity android:name=".ui.activity.worksapce.online.ExpertOnlineActivity" />
+        <activity android:name=".ui.activity.worksapce.online.SystemTypeActivity" />
+        <activity android:name=".ui.activity.worksapce.online.ManufacturerAfterSaleActivity" />
+        <activity android:name=".ui.activity.worksapce.online.ExpertListActivity" />
+        <activity android:name=".ui.activity.worksapce.online.AskExpertActivity" />
+        <activity android:name=".ui.activity.worksapce.online.FreeAskActivity"></activity>
     </application>
 
 </manifest>

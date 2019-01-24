@@ -55,6 +55,8 @@ public class ExpertsCertificationEntity implements Serializable {
     //认证类型(0:行业专家 1：厂家售后专家)
     //@TableField(value = "approve_type")
     private Integer approveType;
+    //性别
+    private Integer gender;
     //系统类别
     //@TableField(value = "system_type")
     private Integer systemType;
@@ -162,6 +164,14 @@ public class ExpertsCertificationEntity implements Serializable {
      */
     public void setExpertName(String expertName) {
         this.expertName = expertName;
+    }
+
+    public Integer getGender() {
+        return gender;
+    }
+
+    public void setGender(Integer gender) {
+        this.gender = gender;
     }
 
     /**

@@ -60,7 +60,7 @@ public class ParentAdapter extends BaseQuickAdapter<OrgEntity, BaseViewHolder> {
             ivVerify.setImageResource(R.mipmap.ic_contact_noauthentication);
         } else if (item.getVerifyStatus() == 2) {
             helper.setText(R.id.tv_auth_status, "认证通过");
-            ivVerify.setImageResource(R.mipmap.ic_contact_authentication);
+            ivVerify.setImageResource(R.mipmap.ic_worker_contact_authentication);
         } else if (item.getVerifyStatus() == 3) {
             helper.setText(R.id.tv_auth_status, "重新认证");
             ivVerify.setImageResource(R.mipmap.ic_contact_noauthentication);
