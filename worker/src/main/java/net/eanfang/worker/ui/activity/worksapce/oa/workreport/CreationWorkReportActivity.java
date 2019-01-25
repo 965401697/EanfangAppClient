@@ -235,7 +235,7 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
         @Override
         public void handleMessage(android.os.Message msg) {
             super.handleMessage(msg);
-            ToastUtil.get().showToast(CreationWorkReportActivity.this, "发送成功");
+//            ToastUtil.get().showToast(CreationWorkReportActivity.this, "发送成功");
             finish();
         }
     };

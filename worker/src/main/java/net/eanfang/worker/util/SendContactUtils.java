@@ -3,7 +3,9 @@ package net.eanfang.worker.util;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 
+import com.camera.util.ToastUtil;
 import com.eanfang.model.TemplateBean;
 
 import net.eanfang.worker.ui.activity.im.CustomizeMessage;
@@ -109,16 +111,21 @@ public class SendContactUtils {
             } else {
                 conversationType = Conversation.ConversationType.GROUP;
             }
-
+            //说明是一个空消息
+            if (TextUtils.isEmpty(customizeMessage.getShareType())) {
+                ToastUtil.getInstance().showShort("发送失败");
+                return;
+            }
             Message message = RongIM.getInstance().sendMessage(conversationType, id, customizeMessage, mPush, mPush, new RongIMClient.SendMessageCallback() {
                 @Override
                 public void onError(Integer integer, RongIMClient.ErrorCode errorCode) {
-
+                    ToastUtil.getInstance().showShort("发送失败");
                 }
 
                 @Override
                 public void onSuccess(Integer integer) {
 
+                    ToastUtil.getInstance().showShort("发送成功");
                 }
             });
         }
