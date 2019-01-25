@@ -105,6 +105,40 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:background="@color/white" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_100"
+        android:background="@color/white">
+
+        <EditText
+            android:id="@+id/et_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/dimen_20"
+            android:layout_marginLeft="@dimen/dimen_40"
+            android:layout_marginRight="@dimen/dimen_20"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:layout_weight="1"
+            android:background="@drawable/shape_comment"
+            android:hint="写评论"
+            android:paddingLeft="@dimen/dimen_30"
+            android:textSize="@dimen/textSize_13" />
+
+        <TextView
+            android:id="@+id/tv_send"
+            android:layout_width="@dimen/dimen_140"
+            android:layout_height="@dimen/dimen_60"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/dimen_40"
+            android:background="@drawable/bg_trouble_type_pressed"
+            android:gravity="center"
+            android:text="发送"
+            android:textColor="@color/white"
+            android:textColorHint="@color/roll_title" />
+
+    </LinearLayout>
 </LinearLayout>

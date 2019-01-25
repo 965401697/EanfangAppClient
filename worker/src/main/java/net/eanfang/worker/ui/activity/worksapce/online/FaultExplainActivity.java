@@ -68,7 +68,7 @@ public class FaultExplainActivity extends BaseWorkerActivity {
 
     @OnClick(R.id.tv_answer)
     public void onViewClicked() {
-        Intent intent = new Intent(FaultExplainActivity.this, IAnswerActivity.class);
+        Intent intent = new Intent(FaultExplainActivity.this, ExpertAnswerActivity.class);
         startActivity(intent);
     }
 }

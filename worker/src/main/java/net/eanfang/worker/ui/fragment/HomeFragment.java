@@ -49,7 +49,7 @@ import net.eanfang.worker.ui.activity.worksapce.datastatistics.DataStaticsticsLi
 import net.eanfang.worker.ui.activity.worksapce.datastatistics.DataStatisticsActivity;
 import net.eanfang.worker.ui.activity.worksapce.design.DesignActivity;
 import net.eanfang.worker.ui.activity.worksapce.maintenance.MaintenanceActivity;
-import net.eanfang.worker.ui.activity.worksapce.online.ManufacturerAfterSaleActivity;
+import net.eanfang.worker.ui.activity.worksapce.online.ExpertOnlineActivity;
 import net.eanfang.worker.ui.activity.worksapce.scancode.ScanCodeActivity;
 import net.eanfang.worker.ui.activity.worksapce.tender.WorkerTenderControlActivity;
 import net.eanfang.worker.ui.adapter.HomeDataAdapter;
@@ -206,7 +206,7 @@ public class HomeFragment extends BaseFragment {
         findViewById(R.id.tv_reparir_order).setOnClickListener((v) -> {
             if (!PermKit.get().getRepairListPerm()) return;
             if (workerApprove()) {
-                startActivity(new Intent(getActivity(), ManufacturerAfterSaleActivity.class));
+                startActivity(new Intent(getActivity(), ExpertOnlineActivity.class));
 //                startActivity(new Intent(getActivity(), RepairCtrlActivity.class));
             }
         });

@@ -6,9 +6,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.eanfang.apiservice.UserApi;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.delegate.BGASortableDelegate;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
@@ -25,6 +30,7 @@ import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -119,6 +125,19 @@ public class FreeAskActivity extends BaseWorkerActivity {
 
     private void sub() {
         String ursStr = PhotoUtils.getPhotoUrl("biz/repair/", snplMomentAddPhotos, uploadMap, true);
+    }
+
+    private void subData(List<String> lists) {
+
+        EanfangHttp.post(UserApi.GET_ACC_INFO)
+                .upJson(JSON.toJSONString(lists))
+                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class) {
+
+                    @Override
+                    public void onSuccess(JSONObject bean) {
+                        super.onSuccess(bean);
+                    }
+                });
     }
 
     @Override
