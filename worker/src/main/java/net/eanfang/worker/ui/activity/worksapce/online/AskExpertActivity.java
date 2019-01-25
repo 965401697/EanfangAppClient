@@ -1,6 +1,7 @@
 package net.eanfang.worker.ui.activity.worksapce.online;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -82,6 +83,8 @@ public class AskExpertActivity extends BaseWorkerActivity {
             case R.id.ll_money:
                 break;
             case R.id.tv_ask_now:
+                Intent intent = new Intent(AskExpertActivity.this, FreeAskActivity.class);
+                startActivity(intent);
                 break;
         }
     }

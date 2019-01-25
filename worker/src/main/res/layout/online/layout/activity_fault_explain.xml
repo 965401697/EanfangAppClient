@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/header" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_120">
+
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/iv_user_header"
+                    android:layout_width="@dimen/dimen_70"
+                    android:layout_height="@dimen/dimen_70"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/dimen_40"
+                    fresco:placeholderImage="@mipmap/ic_header"
+                    fresco:roundAsCircle="true" />
+
+
+                <TextView
+                    android:id="@+id/tv_user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/iv_user_header"
+                    android:layout_marginLeft="@dimen/dimen_25"
+                    android:layout_toRightOf="@+id/iv_user_header"
+                    android:text="推荐专家"
+                    android:textColor="@color/roll_title"
+                    android:textSize="@dimen/textSize_15" />
+
+
+                <TextView
+                    android:id="@+id/tv_fault_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/iv_user_header"
+                    android:layout_marginLeft="@dimen/dimen_25"
+                    android:layout_marginRight="@dimen/dimen_40"
+                    android:layout_toRightOf="@+id/iv_user_header"
+                    android:singleLine="true"
+                    android:text=" asdf"
+                    android:textColor="@color/color_bottom"
+                    android:textSize="@dimen/textSize_12" />
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/tv_user_name"
+                    android:layout_alignBottom="@+id/tv_user_name"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="20dp"
+                    android:singleLine="true"
+                    android:text="9小时"
+                    android:textColor="@color/color_bottom"
+                    android:textSize="@dimen/textSize_12" />
+
+
+                <View
+                    android:id="@+id/line"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_2"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/color_new_line" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_major"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_40"
+                    android:layout_marginTop="@dimen/dimen_30"
+                    android:text="擅长专业："
+                    android:textColor="@color/roll_title"
+                    android:textSize="@dimen/textSize_13" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_40"
+                    android:layout_marginTop="@dimen/dimen_30"
+                    android:text="描述："
+                    android:textColor="@color/roll_title"
+                    android:textSize="@dimen/textSize_14" />
+
+                <TextView
+                    android:id="@+id/tv_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_20"
+                    android:layout_marginLeft="@dimen/dimen_40"
+                    android:layout_marginRight="@dimen/dimen_40"
+                    android:layout_marginTop="@dimen/dimen_20"
+                    android:text="asdfasdfasdfasdfsadfasfasfasdfasfsafasdfasfdasdfasdfasdfasfdasfdasfdas："
+                    android:textColor="@color/color_bottom"
+                    android:textSize="@dimen/textSize_13" />
+
+
+                <com.photopicker.com.widget.BGASortableNinePhotoLayout
+                    android:id="@+id/snpl_photos"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_30"
+                    app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
+                    app:bga_snpl_deleteDrawableOverlapQuarter="false"
+                    app:bga_snpl_editable="true"
+                    app:bga_snpl_itemCornerRadius="0dp"
+                    app:bga_snpl_itemSpanCount="3"
+                    app:bga_snpl_itemWhiteSpacing="4dp"
+                    app:bga_snpl_itemWidth="0dp"
+                    app:bga_snpl_maxItemCount="3"
+                    app:bga_snpl_otherWhiteSpacing="100dp"
+                    app:bga_snpl_placeholderDrawable="@drawable/bga_pp_ic_holder_dark"
+                    app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
+                    app:bga_snpl_plusEnable="true"
+                    app:bga_snpl_sortable="true" />
+
+                <TextView
+                    android:id="@+id/tv_answer"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_90"
+                    android:layout_marginBottom="@dimen/dimen_40"
+                    android:layout_marginLeft="@dimen/dimen_210"
+                    android:layout_marginRight="@dimen/dimen_210"
+                    android:layout_marginTop="@dimen/dimen_40"
+                    android:background="@drawable/bg_trouble_type_pressed"
+                    android:gravity="center"
+                    android:text="我来回答"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSize_13" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_90"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/dimen_40"
+                android:text="专家回复"
+                android:textColor="@color/roll_title"
+                android:textSize="@dimen/textSize_14" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view_answer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

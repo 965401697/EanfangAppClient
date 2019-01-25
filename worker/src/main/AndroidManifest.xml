@@ -1132,7 +1132,11 @@
         <activity android:name=".ui.activity.worksapce.online.ManufacturerAfterSaleActivity" />
         <activity android:name=".ui.activity.worksapce.online.ExpertListActivity" />
         <activity android:name=".ui.activity.worksapce.online.AskExpertActivity" />
-        <activity android:name=".ui.activity.worksapce.online.FreeAskActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.online.FreeAskActivity" />
+        <activity android:name=".ui.activity.worksapce.online.CommonFaultListActivity" />
+        <activity android:name=".ui.activity.worksapce.online.FaultExplainActivity" />
+        <activity android:name=".ui.activity.worksapce.online.IAnswerActivity" />
+        <activity android:name=".ui.activity.worksapce.online.ExpertAnswerActivity"></activity>
     </application>
 
 </manifest>
