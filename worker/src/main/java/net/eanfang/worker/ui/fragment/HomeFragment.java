@@ -2,19 +2,20 @@ package net.eanfang.worker.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
@@ -23,18 +24,16 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.AllMessageBean;
 import com.eanfang.model.NoticeEntity;
-import com.eanfang.model.datastatistics.HomeDatastisticeBean;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.GetDateUtils;
-import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
-import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
 import com.eanfang.witget.BannerView;
 import com.eanfang.witget.HomeScanPopWindow;
 import com.eanfang.witget.RollTextView;
+import com.flyco.tablayout.SlidingTabLayout;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.CameraActivity;
@@ -43,16 +42,15 @@ import net.eanfang.worker.ui.activity.worksapce.MineTaskPublishListSendParentAct
 import net.eanfang.worker.ui.activity.worksapce.OfferAndPayOrderParentActivity;
 import net.eanfang.worker.ui.activity.worksapce.TakeTaskListActivity;
 import net.eanfang.worker.ui.activity.worksapce.WebActivity;
-import net.eanfang.worker.ui.activity.worksapce.datastatistics.DataDesignActivity;
-import net.eanfang.worker.ui.activity.worksapce.datastatistics.DataInstallActivity;
 import net.eanfang.worker.ui.activity.worksapce.datastatistics.DataStaticsticsListActivity;
-import net.eanfang.worker.ui.activity.worksapce.datastatistics.DataStatisticsActivity;
 import net.eanfang.worker.ui.activity.worksapce.design.DesignActivity;
 import net.eanfang.worker.ui.activity.worksapce.maintenance.MaintenanceActivity;
 import net.eanfang.worker.ui.activity.worksapce.repair.RepairCtrlActivity;
 import net.eanfang.worker.ui.activity.worksapce.scancode.ScanCodeActivity;
 import net.eanfang.worker.ui.activity.worksapce.tender.WorkerTenderControlActivity;
-import net.eanfang.worker.ui.adapter.HomeDataAdapter;
+import net.eanfang.worker.ui.adapter.HomeWaitAdapter;
+import net.eanfang.worker.ui.widget.CustomHomeViewPager;
+import net.eanfang.worker.ui.widget.HomeWaitIndicator;
 import net.eanfang.worker.ui.widget.SignCtrlView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -74,22 +72,11 @@ import static com.eanfang.util.V.v;
  */
 
 public class HomeFragment extends BaseFragment {
+
     private BannerView bannerView;
     //头部标题
     private TextView tvHomeTitle;
     private RollTextView rollTextView;
-
-    private RecyclerView rvData;
-    private List<HomeDatastisticeBean.GroupBean> clientDataList = new ArrayList<>();
-    private HomeDataAdapter homeDataAdapter;
-
-    //报修数量
-    TextView tvReapirTotal;
-    LinearLayout llRepairDatasticstics;
-    //报装数量
-    TextView tvInstallTotal;
-    // 设计总数
-    TextView tvDesitnTotal;
 
     private RelativeLayout rlAllData;
 
@@ -111,26 +98,41 @@ public class HomeFragment extends BaseFragment {
     private int mMaintain = 0;
     private int mQuota = 0;
 
+    /**
+     * 统计
+     */
+    private SlidingTabLayout tlDataStatisticsList;
+    private CustomHomeViewPager customHomeViewPager;
+    private ArrayList<Fragment> mFragments = new ArrayList<>();
+    private String[] mTitles = {"当日维修", "当日安装", "当日设计"};
+    private MyPagerAdapter mAdapter;
+
+    /**
+     * 今日待办
+     */
+    private RecyclerView rvWait;
+    private HomeWaitAdapter waitAdapter;
+    private List mWaitList = new ArrayList();
+    private HomeWaitIndicator homeWaitIndicator;
+    private LinearLayoutManager layoutManager;
+
+    @Override
+    protected void initData(Bundle arguments) {
+    }
+
     @Override
     protected int setLayoutResouceId() {
         return R.layout.fragment_home;
     }
 
     @Override
-    protected void initData(Bundle arguments) {
-
-    }
-
-    @Override
     protected void initView() {
-        rvData = (RecyclerView) findViewById(R.id.rv_reapir_data);
-
+        rvWait = findViewById(R.id.rv_wait);
+        homeWaitIndicator = findViewById(R.id.indicator);
+        tlDataStatisticsList = (SlidingTabLayout) findViewById(R.id.tl_datastatistics);
         rlAllData = (RelativeLayout) findViewById(R.id.rl_allData);
-        tvReapirTotal = findViewById(R.id.tv_reapir_total);
-        tvInstallTotal = findViewById(R.id.tv_install_total);
-        tvDesitnTotal = findViewById(R.id.tv_desitn_total);
+        customHomeViewPager = (CustomHomeViewPager) findViewById(R.id.vp_datastatistics);
         tvHomeTitle = (TextView) findViewById(R.id.tv_homeTitle);
-        llRepairDatasticstics = (LinearLayout) findViewById(R.id.ll_repair_datasticstics);
         homeScanPopWindow = new HomeScanPopWindow(getActivity(), true, scanSelectItemsOnClick);
         homeScanPopWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
@@ -138,16 +140,33 @@ public class HomeFragment extends BaseFragment {
                 homeScanPopWindow.backgroundAlpha(1.0f);
             }
         });
+
         initIconClick();
         initLoopView();
-        //设置布局样式
-        //设置布局样式
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 3);
-        rvData.setLayoutManager(gridLayoutManager);
+
+        /**
+         * 统计
+         * */
+        mFragments.clear();
+        mFragments.add(HomeDataStatisticsFragment.getInstance(mTitles[0], 1));
+        mFragments.add(HomeDataStatisticsFragment.getInstance(mTitles[1], 2));
+        mFragments.add(HomeDataStatisticsFragment.getInstance(mTitles[2], 0));
+
+        mAdapter = new MyPagerAdapter(this.getChildFragmentManager());
+        customHomeViewPager.setAdapter(mAdapter);
+        // 设置不可滑动
+        customHomeViewPager.setScanScroll(false);
+        tlDataStatisticsList.setViewPager(customHomeViewPager, mTitles, getActivity(), mFragments);
+        customHomeViewPager.setCurrentItem(0);
+        tlDataStatisticsList.setCurrentTab(0);
+
         initCount();
-        initFalseData();
         doHttpNews();
-        doHttpDatastatistics();
+        initNum();
+        initWait();
+    }
+
+    private void initNum() {
         // 报修
         qBadgeViewRepair.bindTarget(findViewById(R.id.tv_reparir_order))
                 .setBadgeNumber(mRepair)
@@ -177,13 +196,38 @@ public class HomeFragment extends BaseFragment {
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(11, 0, true)
                 .setBadgeTextSize(11, true);
-        //报价
+        /**
+         * 报价
+         * */
         qBadgeViewQuota.bindTarget(findViewById(R.id.tv_inside_price))
                 .setBadgeBackgroundColor(0xFFFF0000)
                 .setBadgePadding(5, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(11, 0, true)
                 .setBadgeTextSize(11, true);
+    }
+
+    private void initWait() {
+
+        /**
+         * 今日待办
+         * */
+        mWaitList.add("报修订单MO111111111111111");
+        mWaitList.add("报修订单MO222222222222222");
+        mWaitList.add("报修订单MO333333333333333");
+        mWaitList.add("报修订单MO444444444444444");
+        mWaitList.add("报修订单MO555555555555555");
+        mWaitList.add("报修订单MO666666666666666");
+        waitAdapter = new HomeWaitAdapter();
+        layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        rvWait.setLayoutManager(layoutManager);
+        waitAdapter.bindToRecyclerView(rvWait);
+        waitAdapter.setNewData(mWaitList);
+        rvWait.setHasFixedSize(true);
+        rvWait.scrollToPosition(mWaitList.size() * 10);
+        PagerSnapHelper snapHelper = new PagerSnapHelper();
+        snapHelper.attachToRecyclerView(rvWait);
+        homeWaitIndicator.setNumber(mWaitList.size());
     }
 
     @Override
@@ -197,6 +241,7 @@ public class HomeFragment extends BaseFragment {
         }
         doHttpOrderNums();
     }
+
 
     /**
      * 工作按钮
@@ -307,15 +352,15 @@ public class HomeFragment extends BaseFragment {
     @Override
     protected void setListener() {
         findViewById(R.id.iv_camera).setOnClickListener(v -> startActivity(new Intent(getActivity(), CameraActivity.class)));
-        findViewById(R.id.ll_repair_datasticstics).setOnClickListener(v -> startActivity(new Intent(getActivity(), DataStatisticsActivity.class)));
-        rvData.addOnItemTouchListener(new OnItemClickListener() {
+        rvWait.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(new Intent(getActivity(), DataStatisticsActivity.class));
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    int i = layoutManager.findFirstVisibleItemPosition() % mWaitList.size();
+                    homeWaitIndicator.setPosition(i);
+                }
             }
         });
-        findViewById(R.id.ll_repair_install).setOnClickListener(v -> startActivity(new Intent(getActivity(), DataInstallActivity.class)));
-        findViewById(R.id.ll_design).setOnClickListener(v -> startActivity(new Intent(getActivity(), DataDesignActivity.class)));
     }
 
     /**
@@ -439,18 +484,6 @@ public class HomeFragment extends BaseFragment {
 
     }
 
-    /**
-     * 获取统计数据
-     */
-    private void doHttpDatastatistics() {
-        QueryEntry queryEntry = new QueryEntry();
-        queryEntry.getEquals().put("companyId", EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgId() + "");
-        EanfangHttp.post(NewApiService.HOME_DATASTASTISTICS)
-                .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<HomeDatastisticeBean>(getActivity(), false, HomeDatastisticeBean.class, bean -> {
-                    initDatastatisticsData(bean);
-                }));
-    }
 
     /**
      * 获取订单数量
@@ -459,27 +492,6 @@ public class HomeFragment extends BaseFragment {
         EanfangHttp.get(UserApi.ALL_MESSAGE).execute(new EanfangCallback<AllMessageBean>(getActivity(), false, AllMessageBean.class, (bean -> {
             doSetOrderNums(bean);
         })));
-    }
-
-    /**
-     * 填充
-     */
-    private void initDatastatisticsData(HomeDatastisticeBean bean) {
-        clientDataList = bean.getGroup();
-        homeDataAdapter = new HomeDataAdapter(R.layout.layout_home_data);
-        rvData.setAdapter(homeDataAdapter);
-        homeDataAdapter.bindToRecyclerView(rvData);
-        homeDataAdapter.setNewData(clientDataList);
-        tvReapirTotal.setText(bean.getAll() + "");
-        tvDesitnTotal.setText(bean.getDesign().getNum() + "");
-        tvInstallTotal.setText(bean.getInstall().getNum() + "");
-    }
-
-    private void initFalseData() {
-        homeDataAdapter = new HomeDataAdapter(R.layout.layout_home_data);
-        rvData.setAdapter(homeDataAdapter);
-        homeDataAdapter.bindToRecyclerView(rvData);
-        homeDataAdapter.setNewData(clientDataList);
     }
 
     public void doSetOrderNums(AllMessageBean bean) {
@@ -522,6 +534,27 @@ public class HomeFragment extends BaseFragment {
          * 底部红点更新
          * */
         EventBus.getDefault().post(bean);
+    }
+
+    private class MyPagerAdapter extends FragmentPagerAdapter {
+        public MyPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragments.size();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mTitles[position];
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragments.get(position);
+        }
     }
 }
 

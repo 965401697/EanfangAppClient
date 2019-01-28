@@ -5,27 +5,25 @@
     android:background="@color/color_white"
     android:orientation="vertical">
 
-    <LinearLayout
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@mipmap/ic_work_top_back"
-        android:orientation="vertical">
+        android:layout_height="50dp"
+        android:background="@color/colorPrimary">
 
-        <!--        <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_40" />-->
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dimen_30"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/iv_camera"
                 android:layout_width="@dimen/dimen_52"
                 android:layout_height="@dimen/dimen_44"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="18dp"
+                android:layout_marginRight="@dimen/dimen_50"
                 android:padding="2dp"
                 android:src="@mipmap/ic_main_top_camera" />
 
@@ -33,25 +31,23 @@
                 android:id="@+id/iv_scan"
                 android:layout_width="@dimen/dimen_54"
                 android:layout_height="@dimen/dimen_50"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="16dp"
                 android:padding="4dp"
                 android:src="@mipmap/ic_main_top_qrcode" />
+        </LinearLayout>
 
-            <TextView
-                android:id="@+id/tv_homeTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@id/iv_scan"
-                android:layout_toRightOf="@id/iv_camera"
-                android:gravity="center"
-                android:text="易安防"
-                android:textColor="@color/white"
-                android:textSize="@dimen/textSize_15" />
-        </RelativeLayout>
-    </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_homeTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_30"
+            android:gravity="center"
+            android:text="易安防"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textSize_16" />
+    </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -69,185 +65,16 @@
                 android:layout_height="140dp"
                 android:visibility="visible" />
 
-            <include layout="@layout/layout_home_function" />
-
             <include layout="@layout/layout_roll_msg" />
+
+            <View style="@style/style_common_line_gray" />
+
+            <include layout="@layout/layout_home_function" />
 
             <include layout="@layout/layout_count" />
 
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scrollbars="none">
+            <include layout="@layout/layout_home_wait" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dimen_32"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:id="@+id/ll_repair_datasticstics"
-                        android:layout_width="@dimen/dimen_310"
-                        android:layout_height="wrap_content"
-                        android:background="@mipmap/ic_client_home_data_back"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/tv_repair_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/dimen_32"
-                            android:layout_marginTop="@dimen/dimen_24"
-                            android:text="当日维修"
-                            android:textColor="@color/color_client_data_item_title"
-                            android:textSize="@dimen/textSize_15" />
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/dimen_32"
-                            android:layout_marginTop="@dimen/dimen_10"
-                            android:gravity="center"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="总数:"
-                                android:textColor="@color/color_client_neworder"
-                                android:textSize="@dimen/textSize_12" />
-
-                            <TextView
-                                android:id="@+id/tv_reapir_total"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="4dp"
-                                android:text=""
-                                android:textColor="@color/color_client_neworder"
-                                android:textSize="@dimen/textSize_12" />
-
-                        </LinearLayout>
-
-                        <android.support.v7.widget.RecyclerView
-                            android:id="@+id/rv_reapir_data"
-                            android:layout_width="@dimen/dimen_290"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/dimen_10"
-                            android:layout_marginTop="@dimen/dimen_10"
-                            android:scrollbars="none" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/ll_repair_install"
-                        android:layout_width="@dimen/dimen_282"
-                        android:layout_height="wrap_content"
-                        android:background="@mipmap/ic_client_home_data_back"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/tv_install_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/dimen_32"
-                            android:layout_marginTop="@dimen/dimen_24"
-                            android:text="当日报装"
-                            android:textColor="@color/color_client_data_item_title"
-                            android:textSize="@dimen/textSize_15" />
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/dimen_32"
-                            android:layout_marginTop="@dimen/dimen_10"
-                            android:gravity="center"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="总数:"
-                                android:textColor="@color/color_client_neworder"
-                                android:textSize="@dimen/textSize_12" />
-
-                            <TextView
-                                android:id="@+id/tv_install_total"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="4dp"
-                                android:text=""
-                                android:textColor="@color/color_client_neworder"
-                                android:textSize="@dimen/textSize_12" />
-
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/ll_design"
-                        android:layout_width="@dimen/dimen_282"
-                        android:layout_height="wrap_content"
-                        android:background="@mipmap/ic_client_home_data_back"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/tv_design_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/dimen_32"
-                            android:layout_marginTop="@dimen/dimen_24"
-                            android:text="当日设计"
-                            android:textColor="@color/color_client_data_item_title"
-                            android:textSize="@dimen/textSize_15" />
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/dimen_32"
-                            android:layout_marginTop="@dimen/dimen_10"
-                            android:gravity="center"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="总数:"
-                                android:textColor="@color/color_client_neworder"
-                                android:textSize="@dimen/textSize_12" />
-
-                            <TextView
-                                android:id="@+id/tv_desitn_total"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="4dp"
-                                android:text=""
-                                android:textColor="@color/color_client_neworder"
-                                android:textSize="@dimen/textSize_12" />
-
-                        </LinearLayout>
-
-
-                    </LinearLayout>
-
-                </LinearLayout>
-            </HorizontalScrollView>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/dimen_28"
-                android:layout_marginTop="@dimen/dimen_8"
-                android:text="安防圈"
-                android:textColor="@color/color_client_neworder"
-                android:textSize="@dimen/textSize_16" />
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_20"
-                android:background="@mipmap/ic_client_circle" />
         </LinearLayout>
 
     </ScrollView>

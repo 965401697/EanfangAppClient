@@ -1,7 +1,6 @@
 package com.eanfang.ui.base;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,11 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.eanfang.R;
-import com.eanfang.application.EanfangApplication;
-import com.eanfang.dialog.TrueFalseDialog;
-import com.eanfang.model.WorkerInfoBean;
 import com.eanfang.util.ToastUtil;
-
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -58,6 +53,14 @@ public abstract class BaseFragment extends Fragment implements IBase {
     @Nullable
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        if (mRootView != null) {
+            ViewGroup parent = (ViewGroup) mRootView.getParent();
+            if (parent != null) {
+                parent.removeView(mRootView);
+            }
+            return mRootView;
+
+        }
         mRootView = inflater.inflate(setLayoutResouceId(), container, false);
         ButterKnife.bind(this, mRootView);
         initData(getArguments());

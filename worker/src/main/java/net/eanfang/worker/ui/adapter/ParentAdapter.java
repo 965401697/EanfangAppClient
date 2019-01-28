@@ -54,22 +54,22 @@ public class ParentAdapter extends BaseQuickAdapter<OrgEntity, BaseViewHolder> {
         }
         if (item.getVerifyStatus() == 0) {
             helper.setText(R.id.tv_auth_status, "未认证");
-            ivVerify.setImageResource(R.mipmap.ic_contact_noauthentication);
+            ivVerify.setImageResource(R.mipmap.ic_contact_noauth);
         } else if (item.getVerifyStatus() == 1) {
             helper.setText(R.id.tv_auth_status, "认证中");
-            ivVerify.setImageResource(R.mipmap.ic_contact_noauthentication);
+            ivVerify.setImageResource(R.mipmap.ic_contact_noauth);
         } else if (item.getVerifyStatus() == 2) {
             helper.setText(R.id.tv_auth_status, "认证通过");
-            ivVerify.setImageResource(R.mipmap.ic_contact_authentication);
+            ivVerify.setImageResource(R.mipmap.ic_contact_auth);
         } else if (item.getVerifyStatus() == 3) {
             helper.setText(R.id.tv_auth_status, "重新认证");
-            ivVerify.setImageResource(R.mipmap.ic_contact_noauthentication);
+            ivVerify.setImageResource(R.mipmap.ic_contact_noauth);
         } else if (item.getVerifyStatus() == 4) {
             helper.setText(R.id.tv_auth_status, "已禁用");
-            ivVerify.setImageResource(R.mipmap.ic_contact_noauthentication);
+            ivVerify.setImageResource(R.mipmap.ic_contact_noauth);
         } else if (item.getVerifyStatus() == 5) {
             helper.setText(R.id.tv_auth_status, "已删除");
-            ivVerify.setImageResource(R.mipmap.ic_contact_noauthentication);
+            ivVerify.setImageResource(R.mipmap.ic_contact_noauth);
         }
 
         if (item.isFlag()) {

@@ -92,6 +92,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
      * 融云链接状态
      */
     private TextView mContactStatus;
+
     @Override
     protected int setLayoutResouceId() {
         return R.layout.fragment_message;
@@ -490,9 +491,9 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
             bundle.putInt("mStystemCount", mStystemCount);
             JumpItent.jump(getActivity(), SystemNoticeActivity.class, bundle, REQUST_REFRESH_CODE);
         });
-        view.findViewById(R.id.iv_add).setOnClickListener(v -> {
+        view.findViewById(R.id.ll_add).setOnClickListener(v -> {
             MorePopWindow morePopWindow = new MorePopWindow(getActivity(), false);
-            morePopWindow.showPopupWindow(view.findViewById(R.id.iv_add));
+            morePopWindow.showPopupWindow(view.findViewById(R.id.ll_add));
         });
     }
 

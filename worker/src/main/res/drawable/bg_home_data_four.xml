@@ -11,4 +11,7 @@
         android:left="@dimen/dimen_4"
         android:right="@dimen/dimen_4"
         android:top="@dimen/dimen_4" />
+    <stroke
+        android:width="@dimen/dimen_1"
+        android:color="#E8E8E8" />
 </shape>
