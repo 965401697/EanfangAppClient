@@ -1,6 +1,5 @@
-package net.eanfang.worker.ui.activity.worksapce;
+package net.eanfang.worker.ui.activity.worksapce.online;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,7 +8,6 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -18,89 +16,50 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.FaultListsBean;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
-import com.eanfang.util.ToastUtil;
-import com.yaf.base.entity.RepairFailureEntity;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.adapter.FaultRecordAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class FaultRecordListActivity extends BaseWorkerActivity implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
+public class CommentFaultSearchActivity extends BaseWorkerActivity implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
 
+    @BindView(R.id.et_search)
+    TextView etSearch;
     @BindView(R.id.rv_list)
     RecyclerView rvList;
     @BindView(R.id.tv_no_datas)
     TextView mTvNoData;
     @BindView(R.id.swipre_fresh)
     SwipeRefreshLayout mSwipeRefreshLayout;
-    @BindView(R.id.et_search)
-    EditText etSearch;
 
     private int mPage = 1;
-    private FaultRecordAdapter mAdapter;
-    private Bundle mBundle;
+    private CommentFaultSearchAdapter mAdapter;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_fault_record_list);
+        setContentView(R.layout.activity_comment_fault_search);
         ButterKnife.bind(this);
-        setTitle("故障列表");
+        setTitle("常见故障");
         setLeftBack();
-        mPage = 1;
-
-        mBundle = getIntent().getExtras();
-        if (mBundle == null) {
-            setRightImageResId(R.mipmap.ic_fualt_totle);
-            setRightImageOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(FaultRecordListActivity.this, FaultStatisticsListActivity.class);
-                    startActivity(intent);
-                }
-            });
-        }
-        initView();
     }
-
 
     private void initView() {
         mSwipeRefreshLayout.setOnRefreshListener(this);
         rvList.setLayoutManager(new LinearLayoutManager(this));
 
-        mAdapter = new FaultRecordAdapter(R.layout.item_fault_record);
+        mAdapter = new CommentFaultSearchAdapter();
         mAdapter.bindToRecyclerView(rvList);
         mAdapter.setOnLoadMoreListener(this);
 
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if (!PermKit.get().getFailureDetailPerm()) return;
-                RepairFailureEntity bean = (RepairFailureEntity) adapter.getData().get(position);
-//                if (bean.getRepairOrderEntity() == null || bean.getRepairOrderEntity().getStatus() == 0) {//为什么那order的状态
-                if (bean.getRepairOrderEntity() == null || bean.getStatus() == 0) {
-                    ToastUtil.get().showToast(FaultRecordListActivity.this, "该故障未处理，不能查看详情");
-                    return;
-                }
 
-
-                int isPhoneSolve = bean.getRepairOrderEntity().getIsPhoneSolve();
-
-//                String status = "";
-//
-//                if (bean.getRepairOrderEntity().getStatus() == 5) {
-//                    status = "完成";
-//                } else if (bean.getRepairOrderEntity().getStatus() == 5) {
-//                    status = "待确认";
-//                }
-
-                new TroubleDetalilListActivity(FaultRecordListActivity.this, true, bean.getBusRepairOrderId(), isPhoneSolve, false).show();
 
             }
         });
@@ -113,7 +72,7 @@ public class FaultRecordListActivity extends BaseWorkerActivity implements Swipe
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                
+
                 if (!TextUtils.isEmpty(s)) {
                     searchData(s.toString());
                 } else {
@@ -128,7 +87,6 @@ public class FaultRecordListActivity extends BaseWorkerActivity implements Swipe
         });
         getData();
     }
-
 
     /**
      * 下拉刷新
@@ -155,17 +113,10 @@ public class FaultRecordListActivity extends BaseWorkerActivity implements Swipe
         getData();
     }
 
-
     private void getData() {
         QueryEntry queryEntry = new QueryEntry();
         queryEntry.setSize(10);
         queryEntry.setPage(mPage);
-        if (mBundle != null) {
-            queryEntry.getGtEquals().put("createTime", (String) mBundle.get("startTime"));
-            queryEntry.getLt().put("createTime", ((String) mBundle.get("endTime")) + " 23:59:59");
-            queryEntry.getLike().put("businessThreeCode", (String) mBundle.get("bugOneCode") + "%");
-            queryEntry.getEquals().put("status", (String) mBundle.get("status"));
-        }
 
         EanfangHttp.post(NewApiService.FAULT_RECORD_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
@@ -175,7 +126,7 @@ public class FaultRecordListActivity extends BaseWorkerActivity implements Swipe
 
                         if (mPage == 1) {
                             mAdapter.getData().clear();
-                            mAdapter.setNewData(bean.getList());
+//                            mAdapter.setNewData(bean.getList());
                             mSwipeRefreshLayout.setRefreshing(false);
                             mAdapter.loadMoreComplete();
                             if (bean.getList().size() < 10) {
@@ -190,7 +141,7 @@ public class FaultRecordListActivity extends BaseWorkerActivity implements Swipe
 
 
                         } else {
-                            mAdapter.addData(bean.getList());
+//                            mAdapter.addData(bean.getList());
                             mAdapter.loadMoreComplete();
                             if (bean.getList().size() < 10) {
                                 mAdapter.loadMoreEnd();
@@ -230,7 +181,7 @@ public class FaultRecordListActivity extends BaseWorkerActivity implements Swipe
 
 
                         mAdapter.getData().clear();
-                        mAdapter.setNewData(bean.getList());
+//                        mAdapter.setNewData(bean.getList());
                         mSwipeRefreshLayout.setRefreshing(false);
                         mAdapter.loadMoreComplete();
 
@@ -265,5 +216,3 @@ public class FaultRecordListActivity extends BaseWorkerActivity implements Swipe
                 });
     }
 }
-
-

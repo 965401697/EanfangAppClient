@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
+import com.eanfang.delegate.BGASortableDelegate;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
@@ -40,6 +41,9 @@ public class FaultExplainActivity extends BaseWorkerActivity {
     BGASortableNinePhotoLayout snplPhotos;
     @BindView(R.id.recycler_view_answer)
     RecyclerView recyclerViewAnswer;
+    private static final int REQUEST_CODE_CHOOSE_EXPLAIN = 1;
+    private static final int REQUEST_CODE_PHOTO_EXPLAIN = 2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,10 +64,26 @@ public class FaultExplainActivity extends BaseWorkerActivity {
         list.add("1");
         list.add("1");
 
+
+        snplPhotos.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_EXPLAIN, REQUEST_CODE_PHOTO_EXPLAIN));
+
+
         recyclerViewAnswer.setLayoutManager(new LinearLayoutManager(this));
-        FaultExplainAdapter mFaultExplainAdapter=new FaultExplainAdapter();
+        FaultExplainAdapter mFaultExplainAdapter = new FaultExplainAdapter();
         mFaultExplainAdapter.bindToRecyclerView(recyclerViewAnswer);
         mFaultExplainAdapter.setNewData(list);
+    }
+
+
+    private void fillData() {
+        ArrayList<String> picList = new ArrayList<>();
+//
+//        String[] pics = bean.getCardPics().split(",");
+//
+//        for (int i = 0; i < pics.length; i++) {
+//            picList.add(BuildConfig.OSS_SERVER + pics[i]);
+//        }
+        snplPhotos.setData(picList);
     }
 
     @OnClick(R.id.tv_answer)

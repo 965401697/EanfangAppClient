@@ -54,7 +54,7 @@ public class CommonFaultListActivity extends BaseWorkerActivity {
         list.add("1");
 
         mCommonFaultAdapter.setNewData(list);
-        mExpertListAdapter.setNewData(list);
+//        mExpertListAdapter.setNewData(list);
 
 
         mCommonFaultAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {

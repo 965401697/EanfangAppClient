@@ -204,7 +204,7 @@ public class HomeFragment extends BaseFragment {
     private void initIconClick() {
         //报修订单
         findViewById(R.id.tv_reparir_order).setOnClickListener((v) -> {
-            if (!PermKit.get().getRepairListPerm()) return;
+//            if (!PermKit.get().getRepairListPerm()) return;
             if (workerApprove()) {
                 startActivity(new Intent(getActivity(), ExpertOnlineActivity.class));
 //                startActivity(new Intent(getActivity(), RepairCtrlActivity.class));

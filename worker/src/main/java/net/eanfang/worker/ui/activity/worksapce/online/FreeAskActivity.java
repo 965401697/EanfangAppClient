@@ -2,6 +2,7 @@ package net.eanfang.worker.ui.activity.worksapce.online;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.delegate.BGASortableDelegate;
@@ -17,9 +19,11 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
+import com.eanfang.util.ToastUtil;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
+import com.yaf.base.entity.AskQuestionsEntity;
 import com.yaf.base.entity.CustDeviceEntity;
 
 import net.eanfang.worker.R;
@@ -28,9 +32,8 @@ import net.eanfang.worker.ui.activity.worksapce.repair.FaultLibraryActivity;
 import net.eanfang.worker.ui.activity.worksapce.repair.SelectDeviceTypeActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -74,6 +77,8 @@ public class FreeAskActivity extends BaseWorkerActivity {
     private String businessOneCode = "";
 
     private Map<String, String> uploadMap = new HashMap<>();
+    private String mModelCode;
+    private String mSketch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,27 +120,65 @@ public class FreeAskActivity extends BaseWorkerActivity {
                 }
                 break;
             case R.id.tv_ask:
-
-                Intent intent = new Intent(FreeAskActivity.this, CommonFaultListActivity.class);
-                startActivity(intent);
+                fillData();
                 break;
         }
     }
 
 
-    private void sub() {
-        String ursStr = PhotoUtils.getPhotoUrl("biz/repair/", snplMomentAddPhotos, uploadMap, true);
+    private boolean fillData() {
+
+        if (TextUtils.isEmpty(tvFaultDeviceName.getText().toString().trim())) {
+            ToastUtil.get().showToast(this, "请选择设备名称");
+            return false;
+        }
+        if (TextUtils.isEmpty(tvDeviceBrand.getText().toString().trim())) {
+            ToastUtil.get().showToast(this, "请选择品牌型号");
+            return false;
+        }
+        if (TextUtils.isEmpty(tvFaultInfo.getText().toString().trim())) {
+            ToastUtil.get().showToast(this, "请选择故障简述");
+            return false;
+        }
+        if (TextUtils.isEmpty(etInputInfo.getText().toString().trim())) {
+            ToastUtil.get().showToast(this, "请填写故障简述");
+            return false;
+        }
+
+        String accidentPic = PhotoUtils.getPhotoUrl("online/", snplMomentAddPhotos, uploadMap, false);
+        if (StringUtils.isEmpty(accidentPic)) {
+            showToast("请添加现场照片");
+            return false;
+        }
+        AskQuestionsEntity askQuestionsEntity = new AskQuestionsEntity();
+        askQuestionsEntity.setQuestionUserId(EanfangApplication.get().getUserId());
+        if (EanfangApplication.get().getCompanyId() != 0) {
+            askQuestionsEntity.setQuestionCompanyId(EanfangApplication.get().getCompanyId());
+            askQuestionsEntity.setQuestionTopCompanyId(EanfangApplication.get().getTopCompanyId());
+        }
+        askQuestionsEntity.setQuestionCreateDate(new Date());
+        askQuestionsEntity.setDataCode(dataCode);
+        askQuestionsEntity.setBusinessOneCode(businessOneCode);
+        askQuestionsEntity.setModelCode(mModelCode);
+        askQuestionsEntity.setFailureTypeId(String.valueOf(dataId));
+        askQuestionsEntity.setQuestionSketch(mSketch);
+        askQuestionsEntity.setQuestionContent(etInputInfo.getText().toString().trim());
+        askQuestionsEntity.setQuestionPics(accidentPic);
+
+        subData(askQuestionsEntity);
+
+        return true;
     }
 
-    private void subData(List<String> lists) {
+    private void subData(AskQuestionsEntity askQuestionsEntity) {
 
-        EanfangHttp.post(UserApi.GET_ACC_INFO)
-                .upJson(JSON.toJSONString(lists))
+        EanfangHttp.post(UserApi.EXPERT_ASK_QUESTION)
+                .upJson(JSON.toJSONString(askQuestionsEntity))
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class) {
 
                     @Override
                     public void onSuccess(JSONObject bean) {
-                        super.onSuccess(bean);
+                        finishSelf();
                     }
                 });
     }
@@ -156,24 +199,16 @@ public class FreeAskActivity extends BaseWorkerActivity {
 
             tvFaultDeviceName.setText(Config.get().getBusinessNameByCode(dataCode, 1) + " - " + Config.get().getBusinessNameByCode(dataCode, 3));
         } else if (requestCode == REQUEST_FAULTDESINFO && resultCode == RESULT_FAULTDESCODE) {
+            mSketch = data.getStringExtra("sketch");
             tvFaultInfo.setText(data.getStringExtra("sketch"));
             dataId = Long.valueOf(data.getStringExtra("datasId"));
-            ArrayList<String> arrayImgList = new ArrayList<String>();
+
         } else if (resultCode == RESULT_OK && requestCode == REQUEST_EQUIPMENT) {
             CustDeviceEntity custDeviceEntity = (CustDeviceEntity) data.getSerializableExtra("bean");
+            mModelCode = custDeviceEntity.getModelCode();
 
-//            etDeviceNum.setFocusable(false);
-//            etDeviceLocationNum.setFocusable(false);
-//            etLocation.setFocusable(false);
-//            llDeviceBrand.setClickable(false);
-//
-//            etDeviceNum.setText(custDeviceEntity.getDeviceNo());
-//            etDeviceLocationNum.setText(custDeviceEntity.getLocationNumber());
-//            etLocation.setText(custDeviceEntity.getLocation());
             tvDeviceBrand.setText(Config.get().getModelNameByCode(custDeviceEntity.getModelCode(), 2));
 
-//            bean.setMaintenanceStatus(custDeviceEntity.getWarrantyStatus());
-//            bean.setRepairCount(custDeviceEntity.getDeviceVersion());
         } else if (resultCode == RESULT_DEVICE_BRAND_CODE && requestCode == REQUEST_DEVICE_BRAND_CODE) {// 设备品牌
             tvDeviceBrand.setText(data.getStringExtra("deviceBrandName"));
         }

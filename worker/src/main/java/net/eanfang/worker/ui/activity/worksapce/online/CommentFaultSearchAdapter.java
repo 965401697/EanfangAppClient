@@ -11,12 +11,12 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import net.eanfang.worker.R;
 
 /**
- * Created by Our on 2019/1/24.
+ * Created by Our on 2019/1/26.
  */
 
-public class FaultExplainAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
-    public FaultExplainAdapter() {
-        super(R.layout.item_fault_explain);
+public class CommentFaultSearchAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
+    public CommentFaultSearchAdapter() {
+        super(R.layout.item_comment_fault_search);
     }
 
     @Override
@@ -26,12 +26,9 @@ public class FaultExplainAdapter extends BaseQuickAdapter<String, BaseViewHolder
         } else {
             ((SimpleDraweeView) helper.getView(R.id.iv_expert_header)).setImageURI(Uri.parse(""));
         }
+        helper.setText(R.id.tv_fault_desc, "");
         helper.setText(R.id.tv_expert_name, "");
-        helper.setText(R.id.tv_major, "");
-        helper.setText(R.id.tv_time, "");
-        helper.setText(R.id.tv_answer, "");
-        helper.addOnClickListener(R.id.ll_zan);
-        helper.addOnClickListener(R.id.ll_comment);
+        helper.setText(R.id.tv_desc, "好评率");
 
     }
 }

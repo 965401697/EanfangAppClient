@@ -44,6 +44,7 @@ public class AskExpertActivity extends BaseWorkerActivity {
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     private BaseDataEntity mBrand;
+    private long mUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +52,7 @@ public class AskExpertActivity extends BaseWorkerActivity {
         setContentView(R.layout.activity_ask_expert);
         ButterKnife.bind(this);
         mBrand = (BaseDataEntity) getIntent().getSerializableExtra("brand");
+        mUserId = getIntent().getLongExtra("userId", 0);
         setTitle(mBrand.getDataName());
         setLeftBack();
 

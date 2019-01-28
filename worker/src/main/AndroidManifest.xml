@@ -1136,7 +1136,8 @@
         <activity android:name=".ui.activity.worksapce.online.CommonFaultListActivity" />
         <activity android:name=".ui.activity.worksapce.online.FaultExplainActivity" />
         <activity android:name=".ui.activity.worksapce.online.IAnswerActivity" />
-        <activity android:name=".ui.activity.worksapce.online.ExpertAnswerActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.online.ExpertAnswerActivity" />
+        <activity android:name=".ui.activity.worksapce.online.CommentFaultSearchActivity"></activity>
     </application>
 
 </manifest>

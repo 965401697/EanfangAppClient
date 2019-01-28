@@ -23,5 +23,6 @@ public class UserAppraiseAdapter extends BaseQuickAdapter<String, BaseViewHolder
         helper.setText(R.id.tv_user_name, "子六");
         helper.setText(R.id.tv_user_appraise, "阿朵发送到发生的发生的发生发顺丰");
         helper.setText(R.id.tv_appraise_status, "非常满足");
+        helper.setVisible(R.id.tv_appraise_status, true);
     }
 }

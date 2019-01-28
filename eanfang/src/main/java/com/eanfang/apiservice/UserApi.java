@@ -542,4 +542,16 @@ public interface UserApi {
      * 技师技能认证的详情
      */
     String TECH_WORKER_DETAIL = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/detail/sp1";
+    /**
+     * 专家在线免费 我要提问
+     */
+    String EXPERT_ASK_QUESTION = BuildConfig.API_HOST + "/yaf_sys/expertsOnline/questionAdd";
+    /**
+     * 专家列表
+     */
+    String EXPERT_LIST = BuildConfig.API_HOST + "/yaf_sys/expertsOnline/expertListByModel";
+    /**
+     * 查看带回答数和好评率的专家明细
+     */
+    String EXPERT_MORE_DETAIL = BuildConfig.API_HOST + "/yaf_sys/expertsOnline/expertMoreDetails";
 }

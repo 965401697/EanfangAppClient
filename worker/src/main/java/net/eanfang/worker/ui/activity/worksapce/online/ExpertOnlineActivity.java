@@ -1,5 +1,6 @@
 package net.eanfang.worker.ui.activity.worksapce.online;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -23,12 +24,20 @@ public class ExpertOnlineActivity extends BaseWorkerActivity {
         setLeftBack();
     }
 
-    @OnClick({R.id.rl_free_ask, R.id.rl_find_expert})
+    @OnClick({R.id.tv_search,R.id.rl_free_ask, R.id.rl_find_expert})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.tv_search:
+                Intent i = new Intent(ExpertOnlineActivity.this, CommentFaultSearchActivity.class);
+                startActivity(i);
+                break;
             case R.id.rl_free_ask:
+                Intent intent = new Intent(ExpertOnlineActivity.this, FreeAskActivity.class);
+                startActivity(intent);
                 break;
             case R.id.rl_find_expert:
+                Intent in = new Intent(ExpertOnlineActivity.this, ExpertListActivity.class);
+                startActivity(in);
                 break;
         }
     }
