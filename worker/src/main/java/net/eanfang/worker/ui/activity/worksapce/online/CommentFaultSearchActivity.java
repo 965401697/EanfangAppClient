@@ -14,9 +14,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.FaultListsBean;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
+import com.yaf.base.entity.AskQuestionsListBean;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
@@ -46,6 +46,8 @@ public class CommentFaultSearchActivity extends BaseWorkerActivity implements Sw
         ButterKnife.bind(this);
         setTitle("常见故障");
         setLeftBack();
+
+        initView();
     }
 
     private void initView() {
@@ -118,15 +120,15 @@ public class CommentFaultSearchActivity extends BaseWorkerActivity implements Sw
         queryEntry.setSize(10);
         queryEntry.setPage(mPage);
 
-        EanfangHttp.post(NewApiService.FAULT_RECORD_LIST)
+        EanfangHttp.post(NewApiService.COMMENT_FAULT_RECORD_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<FaultListsBean>(this, true, FaultListsBean.class) {
+                .execute(new EanfangCallback<AskQuestionsListBean>(this, true, AskQuestionsListBean.class) {
                     @Override
-                    public void onSuccess(FaultListsBean bean) {
+                    public void onSuccess(AskQuestionsListBean bean) {
 
                         if (mPage == 1) {
                             mAdapter.getData().clear();
-//                            mAdapter.setNewData(bean.getList());
+                            mAdapter.setNewData(bean.getList());
                             mSwipeRefreshLayout.setRefreshing(false);
                             mAdapter.loadMoreComplete();
                             if (bean.getList().size() < 10) {
@@ -141,7 +143,7 @@ public class CommentFaultSearchActivity extends BaseWorkerActivity implements Sw
 
 
                         } else {
-//                            mAdapter.addData(bean.getList());
+                            mAdapter.addData(bean.getList());
                             mAdapter.loadMoreComplete();
                             if (bean.getList().size() < 10) {
                                 mAdapter.loadMoreEnd();
@@ -175,13 +177,13 @@ public class CommentFaultSearchActivity extends BaseWorkerActivity implements Sw
 
         EanfangHttp.post(NewApiService.FAULT_RECORD_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<FaultListsBean>(this, false, FaultListsBean.class) {
+                .execute(new EanfangCallback<AskQuestionsListBean>(this, false, AskQuestionsListBean.class) {
                     @Override
-                    public void onSuccess(FaultListsBean bean) {
+                    public void onSuccess(AskQuestionsListBean bean) {
 
 
                         mAdapter.getData().clear();
-//                        mAdapter.setNewData(bean.getList());
+                        mAdapter.setNewData(bean.getList());
                         mSwipeRefreshLayout.setRefreshing(false);
                         mAdapter.loadMoreComplete();
 

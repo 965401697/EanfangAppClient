@@ -45,32 +45,7 @@ public class SystemTypeActivity extends BaseWorkerActivity {
         systemTypeAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                switch (position) {
-                    //电视监控
-                    case 0:
-                        break;
-                    //防盗报警
-                    case 1:
-                        break;
-                    //门禁 -卡通
-                    case 2:
-                        break;
-                    //可是对讲
-                    case 3:
-                        break;
-                    //公共广播
-                    case 4:
-                        break;
-                    //停车场
-                    case 5:
-                        break;
-                    //eas
-                    case 6:
-                        break;
-                    //  其他
-                    case 7:
-                        break;
-                }
+
             }
         });
     }

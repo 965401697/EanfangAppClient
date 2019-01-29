@@ -549,7 +549,7 @@ public interface UserApi {
     /**
      * 专家列表
      */
-    String EXPERT_LIST = BuildConfig.API_HOST + "/yaf_sys/expertsOnline/expertListByModel";
+    String EXPERT_LIST = BuildConfig.API_HOST + "/yaf_sys/expertsOnline/expertListByDataCode";
     /**
      * 查看带回答数和好评率的专家明细
      */

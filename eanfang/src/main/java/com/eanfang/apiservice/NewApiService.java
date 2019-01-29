@@ -435,6 +435,11 @@ public interface NewApiService {
      */
     String FAULT_RECORD_LIST = BASE_URL + "/yaf_repair/failure/record/list";
     /**
+     * 故障记录列表
+     * post
+     */
+    String COMMENT_FAULT_RECORD_LIST = BASE_URL + "/yaf_sys/expertsOnline/deviceFailureList";
+    /**
      * 故障记录统计
      * post
      */

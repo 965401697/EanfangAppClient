@@ -6,13 +6,14 @@ import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 import com.yaf.sys.entity.AccountEntity;
+import com.yaf.sys.entity.BaseDataEntity;
 import com.yaf.sys.entity.UserEntity;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Date;
 
-import lombok.Getter;
-import lombok.Setter;
 
 
 /**
@@ -22,14 +23,14 @@ import lombok.Setter;
  * @email jornlin@foxmail.com
  * @date 2018-07-06 10:36:26
  */
-@TableName(value = "experts_certification")
+@TableName(value = "experts_certification" )
 public class ExpertsCertificationEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
     //主键自增
     //@TableField(value = "id")
     //数据库id 默认自增，如果全局唯一，请使用 IdType.ID_WORKER
-    @TableId(value = "id", type = IdType.AUTO)
+    @TableId(value = "id" , type = IdType.AUTO)
     private Long id;
     //所属的user_id
     //@TableField(value = "user_id")
@@ -55,11 +56,9 @@ public class ExpertsCertificationEntity implements Serializable {
     //认证类型(0:行业专家 1：厂家售后专家)
     //@TableField(value = "approve_type")
     private Integer approveType;
-    //性别
-    private Integer gender;
     //系统类别
     //@TableField(value = "system_type")
-    private Integer systemType;
+    private String systemType;
     //职称证书
     //@TableField(value = "job_LCE")
     private Integer jobLce;
@@ -69,8 +68,6 @@ public class ExpertsCertificationEntity implements Serializable {
     //就职单位
     //@TableField(value = "company")
     private String company;
-    //厂商名称
-    private String brandName;
     //负责品牌（对应sys_base_data表的data_code之间逗号分隔）
     //@TableField(value = "responsible_brand")
     private String responsibleBrand;
@@ -116,6 +113,53 @@ public class ExpertsCertificationEntity implements Serializable {
     //认证备注信息（审核意见）
     //@TableField(value = "approve_message")
     private String approveMessage;
+    //性别,0女 1男
+    //@TableField(value = "gender")
+    private Integer gender;
+    //专家推荐排名权重
+    //@TableField(value = "rank_weight")
+    private Integer rankWeight;
+    //好评率
+    //@TableField(value = "favorable_rate")
+    private Double favorableRate;
+    //专家收费标准
+    //@TableField(value = "price")
+    private Integer price;
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+
+    /**
+     * 获取：好评率
+     */
+    public Double getFavorableRate() {
+        return favorableRate;
+    }
+
+    /**
+     * 设置：好评率
+     */
+    public void setFavorableRate(Double favorableRate) {
+        this.favorableRate = favorableRate;
+    }
+
+    /**
+     * 获取：专家推荐排名权重
+     */
+    public Integer getRankWeight() {
+        return rankWeight;
+    }
+    /**
+     * 设置：专家推荐排名权重
+     */
+    public void setRankWeight(Integer rankWeight) {
+        this.rankWeight = rankWeight;
+    }
 
     /**
      * 设置：主键自增
@@ -130,7 +174,6 @@ public class ExpertsCertificationEntity implements Serializable {
     public Long getId() {
         return id;
     }
-
     /**
      * 设置：所属的user_id
      */
@@ -144,7 +187,6 @@ public class ExpertsCertificationEntity implements Serializable {
     public Long getUserId() {
         return userId;
     }
-
     /**
      * 设置：所属的acc_id
      */
@@ -158,20 +200,11 @@ public class ExpertsCertificationEntity implements Serializable {
     public Long getAccId() {
         return accId;
     }
-
     /**
      * 设置：专家名称
      */
     public void setExpertName(String expertName) {
         this.expertName = expertName;
-    }
-
-    public Integer getGender() {
-        return gender;
-    }
-
-    public void setGender(Integer gender) {
-        this.gender = gender;
     }
 
     /**
@@ -180,15 +213,6 @@ public class ExpertsCertificationEntity implements Serializable {
     public String getExpertName() {
         return expertName;
     }
-
-    public String getBrandName() {
-        return brandName;
-    }
-
-    public void setBrandName(String brandName) {
-        this.brandName = brandName;
-    }
-
     /**
      * 设置：专家联系电话
      */
@@ -202,7 +226,6 @@ public class ExpertsCertificationEntity implements Serializable {
     public String getPhonenumber() {
         return phonenumber;
     }
-
     /**
      * 设置：收款类型（'1':支付宝 '2':微信 '3':银行卡）
      */
@@ -216,7 +239,6 @@ public class ExpertsCertificationEntity implements Serializable {
     public Integer getPayType() {
         return payType;
     }
-
     /**
      * 设置：收款账号
      */
@@ -230,7 +252,6 @@ public class ExpertsCertificationEntity implements Serializable {
     public String getPayAccount() {
         return payAccount;
     }
-
     /**
      * 设置：从业年限
      */
@@ -244,7 +265,6 @@ public class ExpertsCertificationEntity implements Serializable {
     public Integer getWorkingAge() {
         return workingAge;
     }
-
     /**
      * 设置：认证类型(0:行业专家 1：厂家售后专家)
      */
@@ -258,21 +278,19 @@ public class ExpertsCertificationEntity implements Serializable {
     public Integer getApproveType() {
         return approveType;
     }
-
     /**
      * 设置：系统类别
      */
-    public void setSystemType(Integer systemType) {
+    public void setSystemType(String systemType) {
         this.systemType = systemType;
     }
 
     /**
      * 获取：系统类别
      */
-    public Integer getSystemType() {
+    public String getSystemType() {
         return systemType;
     }
-
     /**
      * 设置：职称证书
      */
@@ -286,7 +304,6 @@ public class ExpertsCertificationEntity implements Serializable {
     public Integer getJobLce() {
         return jobLce;
     }
-
     /**
      * 设置：职称级别(0一级,1二级,2三级,3四级,4五级)
      */
@@ -300,7 +317,6 @@ public class ExpertsCertificationEntity implements Serializable {
     public Integer getJobLevel() {
         return jobLevel;
     }
-
     /**
      * 设置：就职单位
      */
@@ -314,7 +330,6 @@ public class ExpertsCertificationEntity implements Serializable {
     public String getCompany() {
         return company;
     }
-
     /**
      * 设置：负责品牌（对应sys_base_data表的data_code之间逗号分隔）
      */
@@ -328,7 +343,6 @@ public class ExpertsCertificationEntity implements Serializable {
     public String getResponsibleBrand() {
         return responsibleBrand;
     }
-
     /**
      * 设置：授权书-URL
      */
@@ -342,7 +356,6 @@ public class ExpertsCertificationEntity implements Serializable {
     public String getImpowerUrl() {
         return impowerUrl;
     }
-
     /**
      * 设置：身份证正面
      */
@@ -356,7 +369,6 @@ public class ExpertsCertificationEntity implements Serializable {
     public String getIdCardFront() {
         return idCardFront;
     }
-
     /**
      * 设置：身份证背面
      */
@@ -370,7 +382,6 @@ public class ExpertsCertificationEntity implements Serializable {
     public String getIdCardSide() {
         return idCardSide;
     }
-
     /**
      * 设置：手持身份证
      */
@@ -384,7 +395,6 @@ public class ExpertsCertificationEntity implements Serializable {
     public String getIdCardHand() {
         return idCardHand;
     }
-
     /**
      * 设置：职称证书-URL
      */
@@ -398,7 +408,6 @@ public class ExpertsCertificationEntity implements Serializable {
     public String getJobLceUrl() {
         return jobLceUrl;
     }
-
     /**
      * 设置：个人简介
      */
@@ -412,7 +421,6 @@ public class ExpertsCertificationEntity implements Serializable {
     public String getIntro() {
         return intro;
     }
-
     /**
      * 设置：0未认证, 1等待认证，2认证通过，3认证拒绝，4禁用，5删除
      */
@@ -426,7 +434,6 @@ public class ExpertsCertificationEntity implements Serializable {
     public Integer getStatus() {
         return status;
     }
-
     /**
      * 设置：头像照片
      */
@@ -440,7 +447,6 @@ public class ExpertsCertificationEntity implements Serializable {
     public String getAvatarPhoto() {
         return avatarPhoto;
     }
-
     /**
      * 设置：创建时间
      */
@@ -454,7 +460,6 @@ public class ExpertsCertificationEntity implements Serializable {
     public Date getCreateTime() {
         return createTime;
     }
-
     /**
      * 设置：更新时间
      */
@@ -482,7 +487,6 @@ public class ExpertsCertificationEntity implements Serializable {
     public Date getUpdateTime() {
         return updateTime;
     }
-
     /**
      * 设置：认证时间
      */
@@ -496,7 +500,6 @@ public class ExpertsCertificationEntity implements Serializable {
     public Date getApproveTime() {
         return approveTime;
     }
-
     /**
      * 设置：认证操作人员
      */
@@ -510,7 +513,6 @@ public class ExpertsCertificationEntity implements Serializable {
     public String getApproveUserName() {
         return approveUserName;
     }
-
     /**
      * 设置：认证备注信息（审核意见）
      */
@@ -525,22 +527,35 @@ public class ExpertsCertificationEntity implements Serializable {
         return approveMessage;
     }
 
+    /**
+     * 获取：性别,0女 1男
+     */
+    public Integer getGender() {
+        return gender;
+    }
+
+    /**
+     * 设置：性别,0女 1男
+     */
+    public void setGender(Integer gender) {
+        this.gender = gender;
+    }
+
+
     @Override
     public String toString() {
         return JSON.toJSONString(this);
     }
-
     @Override
     public boolean equals(Object other) {
         if (other instanceof ExpertsCertificationEntity) {
-            if (this.id == null || other == null)
+            if(this.id == null || other == null) {
                 return false;
-
+            }
             return this.id.equals(((ExpertsCertificationEntity) other).id);
         }
         return false;
     }
-
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -558,6 +573,34 @@ public class ExpertsCertificationEntity implements Serializable {
     @Setter
     @TableField(exist = false)
     private UserEntity userEntity;
+
+    @Getter
+    @Setter
+    @TableField(exist = false)
+    private BaseData2userEntity baseData2userEntity;
+
+    @Getter
+    @Setter
+    @TableField(exist = false)
+    private BaseDataEntity baseDataEntity;
+
+    @Getter
+    @Setter
+    @TableField(exist = false)
+    private Long questionId;
+
+
+    /**
+     * @Author yorkz
+     * @Description 厂商名称
+     * @Date 18:17 2019/1/18
+     * @param
+     * @return
+     **/
+    @Getter
+    @Setter
+    private String brandName;
+
 
 
 }
