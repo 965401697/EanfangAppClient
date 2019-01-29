@@ -75,6 +75,8 @@
 
             <include layout="@layout/layout_home_wait" />
 
+            <include layout="@layout/layout_home_security" />
+
         </LinearLayout>
 
     </ScrollView>

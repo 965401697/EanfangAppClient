@@ -48,8 +48,10 @@ import net.eanfang.worker.ui.activity.worksapce.maintenance.MaintenanceActivity;
 import net.eanfang.worker.ui.activity.worksapce.repair.RepairCtrlActivity;
 import net.eanfang.worker.ui.activity.worksapce.scancode.ScanCodeActivity;
 import net.eanfang.worker.ui.activity.worksapce.tender.WorkerTenderControlActivity;
+import net.eanfang.worker.ui.adapter.HomeSecurityAdapter;
 import net.eanfang.worker.ui.adapter.HomeWaitAdapter;
 import net.eanfang.worker.ui.widget.CustomHomeViewPager;
+import net.eanfang.worker.ui.widget.DividerItemDecoration;
 import net.eanfang.worker.ui.widget.HomeWaitIndicator;
 import net.eanfang.worker.ui.widget.SignCtrlView;
 
@@ -115,6 +117,13 @@ public class HomeFragment extends BaseFragment {
     private List mWaitList = new ArrayList();
     private HomeWaitIndicator homeWaitIndicator;
     private LinearLayoutManager layoutManager;
+    /**
+     * 安防圈
+     */
+    private RelativeLayout rlSecurity;
+    private RecyclerView rvSecurity;
+    private HomeSecurityAdapter homeSecurityAdapter;
+    private List mSecurityList = new ArrayList();
 
     @Override
     protected void initData(Bundle arguments) {
@@ -128,6 +137,7 @@ public class HomeFragment extends BaseFragment {
     @Override
     protected void initView() {
         rvWait = findViewById(R.id.rv_wait);
+        rvSecurity = findViewById(R.id.rv_security);
         homeWaitIndicator = findViewById(R.id.indicator);
         tlDataStatisticsList = (SlidingTabLayout) findViewById(R.id.tl_datastatistics);
         rlAllData = (RelativeLayout) findViewById(R.id.rl_allData);
@@ -164,6 +174,7 @@ public class HomeFragment extends BaseFragment {
         doHttpNews();
         initNum();
         initWait();
+        initSecurity();
     }
 
     private void initNum() {
@@ -228,6 +239,26 @@ public class HomeFragment extends BaseFragment {
         PagerSnapHelper snapHelper = new PagerSnapHelper();
         snapHelper.attachToRecyclerView(rvWait);
         homeWaitIndicator.setNumber(mWaitList.size());
+    }
+
+
+    /**
+     * 安防圈
+     */
+    private void initSecurity() {
+        mSecurityList.add("李白");
+        mSecurityList.add("杜甫");
+        mSecurityList.add("辛弃疾");
+        mSecurityList.add("曹操");
+        mSecurityList.add("刘备");
+        mSecurityList.add("关羽");
+        homeSecurityAdapter = new HomeSecurityAdapter();
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        rvSecurity.setLayoutManager(layoutManager);
+        rvSecurity.setNestedScrollingEnabled(false);
+        rvSecurity.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
+        homeSecurityAdapter.bindToRecyclerView(rvSecurity);
+        homeSecurityAdapter.setNewData(mSecurityList);
     }
 
     @Override

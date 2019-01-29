@@ -56,4 +56,6 @@
     <color name="color_my_price">#2F86FF</color>
     <color name="color_my_back_border">#EAEAEA</color>
     <color name="color_my_line">#DBDCDF</color>
+    <color name="color_home_security_like">#EC5353</color>
+    <color name="color_home_security_text">#BEBEBE</color>
 </resources>
