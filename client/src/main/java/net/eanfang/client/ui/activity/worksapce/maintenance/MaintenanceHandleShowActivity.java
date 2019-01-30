@@ -28,7 +28,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 维保处理界面
+ * 维保处理界面7
  */
 public class MaintenanceHandleShowActivity extends BaseClientActivity {
 
@@ -70,6 +70,7 @@ public class MaintenanceHandleShowActivity extends BaseClientActivity {
     private ShopMaintenanceExamDeviceEntity examDeviceEntity;
     private MaintenanceHandleEditAdapter handleEditAdapter;
     private ShopMaintenanceOrderEntity orderEntity;
+    private int orderTypeZ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,9 +119,6 @@ public class MaintenanceHandleShowActivity extends BaseClientActivity {
             tvDeviceHandle.setVisibility(View.VISIBLE);
             ivDeviceHandle.setVisibility(View.GONE);
         }
-
-
-
         if (orderEntity.getExamResultEntityList() != null && orderEntity.getExamResultEntityList().size() > 0) {
             maintenanceHandeCheckAdapter = new MaintenanceHandeCheckAdapter(R.layout.item_maintenance_check_add, 1);
             maintenanceHandeCheckAdapter.bindToRecyclerView(rvCheckResult);
@@ -136,8 +134,6 @@ public class MaintenanceHandleShowActivity extends BaseClientActivity {
         } else {
             tvCheckResult.setVisibility(View.VISIBLE);
         }
-
-
         setChecked(cbVideo, orderEntity.getConfirmEntity().getIsVcrStoreDayNormal());
         setChecked(cbTime, orderEntity.getConfirmEntity().getIsTimeRight());
         setChecked(cbPrint, orderEntity.getConfirmEntity().getIsAlarmPrinter());

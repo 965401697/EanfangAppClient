@@ -71,7 +71,11 @@ public class CompanyManagerActivity extends BaseActivity implements DissloveTeam
     private void initView() {
         setLeftBack();
         setTitle("企业管理");
-        if (PermKit.get().getCompanyDepartmentCreatPerm()){
+        mOrgId = getIntent().getLongExtra("orgid", 0);
+        mOrgName = getIntent().getStringExtra("orgName");
+        isAuth = getIntent().getStringExtra("isAuth");
+        adminUserId = getIntent().getStringExtra("adminUserId");
+        if (String.valueOf(EanfangApplication.get().getUserId()).equals(adminUserId)){
             setRightTitle("解散团队");
         }else {
             setRightTitle("");
@@ -82,10 +86,6 @@ public class CompanyManagerActivity extends BaseActivity implements DissloveTeam
                 }
             });
         }
-        mOrgId = getIntent().getLongExtra("orgid", 0);
-        mOrgName = getIntent().getStringExtra("orgName");
-        isAuth = getIntent().getStringExtra("isAuth");
-        adminUserId = getIntent().getStringExtra("adminUserId");
         /**
          *  0 未认证，待认证
          *  1认证中

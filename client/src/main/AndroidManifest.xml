@@ -82,7 +82,6 @@
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="${AMAP_KEY}" />
-
         <meta-data
             android:name="Mob-AppKey"
             android:value="22bb8de378eab" />
@@ -950,7 +949,8 @@
         <activity
             android:name=".ui.activity.im.SearchPersonCompanyActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.activity.worksapce.defendlog.FilterDefendLogActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.defendlog.FilterDefendLogActivity" />
+        <activity android:name=".ui.activity.worksapce.maintenance.MaintenanceHandleActivityZ"></activity>
     </application>
 
 </manifest>

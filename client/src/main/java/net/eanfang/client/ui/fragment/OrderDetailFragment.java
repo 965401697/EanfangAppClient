@@ -102,8 +102,6 @@ public class OrderDetailFragment extends BaseFragment {
     // 个人订单
     private LinearLayout mLlOrderPay;
     private LinearLayout mLlOrderMoney;
-    // 支付方式
-    private TextView mTvPayType;
     // 支付时间
     private TextView mTvPayTime;
     private String mPayType = "";
@@ -177,7 +175,6 @@ public class OrderDetailFragment extends BaseFragment {
         mFaultNum = findViewById(R.id.tv_faultNum);
         mLlOrderPay = findViewById(R.id.ll_orderPay);
         mLlOrderMoney = findViewById(R.id.ll_orderMoney);
-        mTvPayType = findViewById(R.id.tv_payType);
         mTvPayTime = findViewById(R.id.tv_payTime);
         mTvDoorFee = findViewById(R.id.tv_doorFee);
         mTvOrderAllPrice = findViewById(R.id.tv_orderAllPrice);
@@ -352,11 +349,10 @@ public class OrderDetailFragment extends BaseFragment {
                         // 支付方式
                         if (bean.getPayLogEntity().getPayType() != null) {
                             mPayType = GetConstDataUtils.getPayTypeList().get(bean.getPayLogEntity().getPayType());
-                            mTvPayType.setText(mPayType);
                         }
                         // 支付时间
                         if (bean.getPayLogEntity().getPayTime() != null) {
-                            mTvPayTime.setText(GetDateUtils.dateToDateTimeString(bean.getCreateTime()));
+                            mTvPayTime.setText(GetDateUtils.dateToDateTimeString(bean.getPayLogEntity().getPayTime()));
                         }
                     } else {
                         llPay.setVisibility(View.GONE);

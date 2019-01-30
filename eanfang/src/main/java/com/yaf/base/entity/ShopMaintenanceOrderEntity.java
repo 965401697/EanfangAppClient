@@ -18,7 +18,7 @@ import lombok.Setter;
 
 
 /**
- * 维保执行计划订单表
+ * 维保执行计划订单表02
  *
  * @author jornlin
  * @email jornlin@foxmail.com
