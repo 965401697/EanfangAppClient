@@ -14,11 +14,9 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.QualifyCertificafeListBean;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.util.QueryEntry;
 import com.yaf.base.entity.QualificationCertificateEntity;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.my.certification.AddSkillCertificafeActivity;
 import net.eanfang.worker.ui.activity.my.certification.QualificationAdapter;
 import net.eanfang.worker.ui.activity.worksapce.OwnDataHintActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
@@ -42,7 +40,7 @@ public class SpecialistSkillCertificafeListActivity extends BaseWorkerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_specialist_skill_certificafe_list);
         ButterKnife.bind(this);
-        setTitle("技能认证");
+        setTitle("资质证书");
         setLeftBack();
         initViews();
     }
@@ -64,7 +62,7 @@ public class SpecialistSkillCertificafeListActivity extends BaseWorkerActivity {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivityForResult(new Intent(SpecialistSkillCertificafeListActivity.this, AddSkillCertificafeActivity.class).putExtra("bean", (QualificationCertificateEntity) adapter.getData().get(position)), ADD_EDUCATION_CODE);
+                startActivityForResult(new Intent(SpecialistSkillCertificafeListActivity.this, SpecialistAddSkillCertificafeActivity.class).putExtra("bean", (QualificationCertificateEntity) adapter.getData().get(position)), ADD_EDUCATION_CODE);
             }
         });
 
@@ -73,12 +71,11 @@ public class SpecialistSkillCertificafeListActivity extends BaseWorkerActivity {
 
 
     private void getData() {
-        QueryEntry queryEntry = new QueryEntry();
-
-        queryEntry.getEquals().put("accId", String.valueOf(EanfangApplication.get().getAccId()));
-        queryEntry.getEquals().put("type", "0");
+        JSONObject object = new JSONObject();
+        object.put("accId", String.valueOf(EanfangApplication.get().getAccId()));
+        object.put("type", "1");
         EanfangHttp.post(UserApi.TECH_WORKER_LIST_QUALIFY)
-                .upJson(JsonUtils.obj2String(queryEntry))
+                .upJson(JsonUtils.obj2String(object))
                 .execute(new EanfangCallback<QualifyCertificafeListBean>(this, true, QualifyCertificafeListBean.class) {
                     @Override
                     public void onSuccess(QualifyCertificafeListBean bean) {
@@ -118,11 +115,12 @@ public class SpecialistSkillCertificafeListActivity extends BaseWorkerActivity {
         switch (view.getId()) {
             case R.id.tv_sub:
                 Intent intent = new Intent(SpecialistSkillCertificafeListActivity.this, OwnDataHintActivity.class);
-                intent.putExtra("info", "尊敬的用户，您可以添加个人经历，\n" +
-                        "以提高行业内声望");
+                intent.putExtra("info", "尊敬的用户，您可以添加个人经历\n" +
+                        "达到更高的知名度");
                 intent.putExtra("go", "去添加个人经历");
                 intent.putExtra("desc", "如有疑问，请联系客服处理");
                 intent.putExtra("service", "客服热线：400-890-9280");
+                intent.putExtra("class",SpecialistOwmHistoryActivity.class);
                 startActivity(intent);
                 endTransaction(true);
                 break;

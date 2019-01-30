@@ -1,7 +1,6 @@
 package net.eanfang.worker.ui.activity.my.certification;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,7 +17,6 @@ import com.eanfang.model.WorkerVerifySkillBean;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
-import com.eanfang.util.V;
 import com.yaf.sys.entity.BaseDataEntity;
 
 import net.eanfang.worker.R;
@@ -97,10 +95,11 @@ public class SkillInfoDetailActivity extends BaseWorkerActivity {
     }
 
     private void initViews() {
-        tvAbility.setText(V.v(() -> GetConstDataUtils.getWorkingLevelList().get(mWorkerVerifySkillBean.getWorkerVerify().getWorkingYear())));
-        //tvLimit.setText(V.v(() -> GetConstDataUtils.getWorkingYearList().get(mWorkerVerifySkillBean.getWorkerVerify().getWorkingLevel())));
+
         tvLimit.setText(GetConstDataUtils.getWorkingYearList().get(mWorkerVerifySkillBean.getWorkerVerify().getWorkingYear()));
-        //tvAbility.setText(GetConstDataUtils.getWorkingYearList().get(mWorkerVerifySkillBean.getWorkerVerify().getWorkingLevel()));
+
+        tvAbility.setText(GetConstDataUtils.getWorkingLevelList().get(mWorkerVerifySkillBean.getWorkerVerify().getWorkingLevel()));
+
 
         recyclerViewBusiness.setLayoutManager(new GridLayoutManager(this, 3));
         recyclerViewOs.setLayoutManager(new GridLayoutManager(this, 3));

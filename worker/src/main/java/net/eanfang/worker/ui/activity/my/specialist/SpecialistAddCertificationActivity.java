@@ -42,7 +42,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-
 public class SpecialistAddCertificationActivity extends BaseActivityWithTakePhoto implements SelectTimeDialogFragment.SelectTimeListener {
 
     @BindView(R.id.et_name)
@@ -75,10 +74,7 @@ public class SpecialistAddCertificationActivity extends BaseActivityWithTakePhot
 
     //        private TimePickerView mTimeYearMonthDay;
     private HonorCertificateEntity bean;
-    private String url = "";
-    // 是否安防公司的荣誉证书
-    private String isCompany = "";
-    private Long orgid;
+    private String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,8 +87,7 @@ public class SpecialistAddCertificationActivity extends BaseActivityWithTakePhot
 
     private void initView() {
         setLeftBack();
-        isCompany = getIntent().getStringExtra("role");
-        orgid = getIntent().getLongExtra("orgid", 0);
+
         bean = (HonorCertificateEntity) getIntent().getSerializableExtra("bean");
 
         snplMomentAccident.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_CERTIFICATE, REQUEST_CODE_PHOTO_CERTIFICATE));
@@ -163,21 +158,13 @@ public class SpecialistAddCertificationActivity extends BaseActivityWithTakePhot
 
         HonorCertificateEntity entity = new HonorCertificateEntity();
         entity.setAccId(EanfangApplication.get().getAccId());
-        if (!TextUtils.isEmpty(isCompany) && isCompany.equals("company")) {// 安防公司
-            if (bean != null) {
-                entity.setId(bean.getId());
-                url = UserApi.COMPANY_CERTIFICATE_UPDATE;
-            } else {
-                url = UserApi.COMPANY_ADD_CERTIFICATE;
-            }
-            entity.setOrgId(orgid);
-        } else {// 技师
-            if (bean != null) {
-                entity.setId(bean.getId());
-                url = UserApi.GET_TECH_WORKER_ADD_CERTIFICATE_UPDATE;
-            } else {
-                url = UserApi.GET_TECH_WORKER_ADD_CERTIFICATE;
-            }
+        url = "";
+        if (bean != null) {
+            entity.setId(bean.getId());
+            url = UserApi.GET_TECH_WORKER_ADD_CERTIFICATE_UPDATE;
+        } else {
+            url = UserApi.GET_TECH_WORKER_ADD_CERTIFICATE;
+
         }
 
         entity.setHonorName(etName.getText().toString().trim());
@@ -185,7 +172,7 @@ public class SpecialistAddCertificationActivity extends BaseActivityWithTakePhot
         entity.setAwardTime(DateUtils.parseDate(tvTime.getText().toString().trim(), "yyyy-MM-dd"));
         entity.setHonorPics(pic);
         entity.setIntro(etCertificate.getText().toString().trim());
-        entity.setType(0);
+        entity.setType(1);
 
         OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
             @Override

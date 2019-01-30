@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.FragmentTabHost;
 import android.text.TextUtils;
 import android.util.Log;
@@ -46,7 +45,6 @@ import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UpdateAppManager;
-import com.eanfang.util.Var;
 import com.picker.common.util.ScreenUtils;
 import com.tencent.android.tpush.XGPushConfig;
 import com.yaf.base.entity.WorkerEntity;
@@ -57,6 +55,7 @@ import net.eanfang.worker.ui.activity.im.ConversationActivity;
 import net.eanfang.worker.ui.activity.worksapce.SetPasswordActivity;
 import net.eanfang.worker.ui.activity.worksapce.WorkDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.notice.MessageListActivity;
+import net.eanfang.worker.ui.activity.worksapce.notice.OfficialListActivity;
 import net.eanfang.worker.ui.activity.worksapce.notice.SystemNoticeActivity;
 import net.eanfang.worker.ui.base.WorkerApplication;
 import net.eanfang.worker.ui.fragment.ContactListFragment;
@@ -71,7 +70,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.HashMap;
-import java.util.List;
 
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
@@ -80,6 +78,7 @@ import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
 import io.rong.message.TextMessage;
+import q.rorbin.badgeview.QBadgeView;
 
 import static com.eanfang.config.EanfangConst.MEIZU_APPID_WORKER;
 import static com.eanfang.config.EanfangConst.MEIZU_APPKEY_WORKER;
@@ -89,27 +88,31 @@ import static com.eanfang.config.EanfangConst.XIAOMI_APPKEY_WORKER;
 public class MainActivity extends BaseActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     protected FragmentTabHost mTabHost;
-    private View redPointContact;
-    private View redPointHome;
-    private View redPointWork;
     private LoginBean user;
     private long mExitTime;
     //被删除的 群组id 容器
     public static HashMap<String, String> hashMap = new HashMap<>();
-
-//    @Override
-//    protected void onNewIntent(Intent intent) {
-//        super.onNewIntent(intent);
-//        setIntent(intent);
-//        JumpItent.jump(MainActivity.this, MessageListActivity.class);
-//    }
-
-//    @Override
-//    protected void onPause() {
-//        super.onPause();
-//        XGPushManager.onActivityStoped(this);
-//
-//    }
+    /**
+     * 底部消息数量
+     */
+    private QBadgeView qBadgeViewHome = new QBadgeView(EanfangApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewContact = new QBadgeView(EanfangApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewWork = new QBadgeView(EanfangApplication.get().getApplicationContext());
+    private int mHome = 0;
+    private int mContact = 0;
+    private int mWork = 0;
+    /**
+     * 当前聊天服务状态
+     */
+    private String mStatus = "";
+    /**
+     * 消息页面回话数量
+     */
+    private int mContactNum = 0;
+    /**
+     * 消息总数量
+     */
+    private int mAllCount = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -216,20 +219,17 @@ public class MainActivity extends BaseActivity {
         mTabHost.getTabWidget().setDividerDrawable(R.color.transparent);
         View indicator = getLayoutInflater().inflate(R.layout.indicator_main_home, null);
         mTabHost.addTab(mTabHost.newTabSpec("home").setIndicator(indicator), HomeFragment.class, null);
-        redPointHome = indicator.findViewById(R.id.redPoint_home);
 
         indicator = getLayoutInflater().inflate(R.layout.indicator_main_contact, null);
         mTabHost.addTab(mTabHost.newTabSpec("contactList").setIndicator(indicator), ContactListFragment.class, null);
-        redPointContact = indicator.findViewById(R.id.redPoint_contact);
 
         indicator = getLayoutInflater().inflate(R.layout.indicator_main_work, null);
         mTabHost.addTab(mTabHost.newTabSpec("work").setIndicator(indicator), WorkspaceFragment.class, null);
-        redPointWork = indicator.findViewById(R.id.redPoint_work);
 
         indicator = getLayoutInflater().inflate(R.layout.indicator_org_work, null);
         mTabHost.addTab(mTabHost.newTabSpec("contact").setIndicator(indicator), ContactsFragment.class, null);
-        indicator = getLayoutInflater().inflate(R.layout.indicator_main_config, null);
 
+        indicator = getLayoutInflater().inflate(R.layout.indicator_main_config, null);
         mTabHost.addTab(mTabHost.newTabSpec("config").setIndicator(indicator), MyFragment.class, null);
 
     }
@@ -511,27 +511,27 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    // TODO: 2018/10/26 删除群聊也要刷新
     public void getIMUnreadMessageCount() {
-        RongIM.getInstance().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
+        /**
+         * 获取消息页面回话列表数量
+         * */
+        RongIM.getInstance().getTotalUnreadCount(new RongIMClient.ResultCallback<Integer>() {
             @Override
-            public void onSuccess(List<Conversation> conversations) {
-                int mUnreadMessageCount = 0;
-                if (conversations != null && conversations.size() > 0) {
-                    for (Conversation s : conversations) {
-                        mUnreadMessageCount += s.getUnreadMessageCount();
-                    }
-                }
-                Var.get("MainActivity.initMessageCount").setUnreadMessageCount(mUnreadMessageCount);
-//                Log.e("zzw0", "IM未读=" + mUnreadMessageCount);
-//                Log.e("zzw1", "通知未读=" + Var.get("MainActivity.initMessageCount").getVar());
-//                Log.e("zzw2", "总未读=" + Var.get("MainActivity.initMessageCount").getAllUnreadMessageCount());
+            public void onSuccess(Integer integer) {
+                mContactNum = integer;
+                int i = mContact + integer;
+                doChange(i);
             }
 
             @Override
             public void onError(RongIMClient.ErrorCode errorCode) {
+
             }
-        }, Conversation.ConversationType.GROUP, Conversation.ConversationType.PRIVATE);
+        });
+    }
+
+    private void doChange(int mContactNum) {
+        qBadgeViewContact.setBadgeNumber(mContactNum);
     }
 
     class MyConnectionStatusListener implements RongIMClient.ConnectionStatusListener {
@@ -540,35 +540,38 @@ public class MainActivity extends BaseActivity {
         public void onChanged(ConnectionStatus connectionStatus) {
 
             switch (connectionStatus) {
-
-                case CONNECTED://连接成功。
+                //连接成功。
+                case CONNECTED:
 
                     Log.i("zzw", "--------------------连接成功");
                     getIMUnreadMessageCount();
+                    mStatus = "";
                     break;
-
-                case DISCONNECTED://断开连接。
+                //断开连接。
+                case DISCONNECTED:
 
                     Log.i("zzw", "--------------------断开连接");
-
+                    mStatus = "聊天服务器正在连接中...";
                     break;
-
-                case CONNECTING://连接中。
+                //连接中。
+                case CONNECTING:
 
                     Log.i("zzw", "--------------------链接中");
-
+                    mStatus = "聊天服务器正在连接中...";
                     break;
-
-                case NETWORK_UNAVAILABLE://网络不可用。
+                //网络不可用。
+                case NETWORK_UNAVAILABLE:
 
                     Log.i("zzw", "--------------------网络不可用");
-
+                    mStatus = "当前网络不可用，请检查网络设置";
                     break;
-
-                case KICKED_OFFLINE_BY_OTHER_CLIENT://用户账户在其他设备登录，本机会被踢掉线
+                //用户账户在其他设备登录，本机会被踢掉线
+                case KICKED_OFFLINE_BY_OTHER_CLIENT:
 
                     Log.i("zzw", "--------------------掉线");
-
+                    mStatus = "用户账户在其他设备登录";
+                    break;
+                default:
                     break;
             }
         }
@@ -702,6 +705,9 @@ public class MainActivity extends BaseActivity {
                 } else if (mType == 3) {
                     //打开systemnoticeactivity
                     JumpItent.jump(MainActivity.this, SystemNoticeActivity.class);
+                } else if (mType == 4) {
+                    //打开systemnoticeactivity
+                    JumpItent.jump(MainActivity.this, OfficialListActivity.class);
                 }
             }
 
@@ -715,33 +721,59 @@ public class MainActivity extends BaseActivity {
          * */
         if (bean.getTotalCount() > 0) {
             // 首页红点
-            new Handler(getMainLooper()).postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    // 桌面气泡赋值
-                    BadgeUtil.setBadgeCount(MainActivity.this, bean.getTotalCount(), R.drawable.client_logo);
-
-                }
-            }, 3 * 1000);
+//            new Handler(getMainLooper()).postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+            // 桌面气泡赋值
+            BadgeUtil.setBadgeCount(MainActivity.this, bean.getTotalCount(), R.drawable.client_logo);
+//                }
+//            }, 3 * 1000);
         }
-        //消息页面红点
-        if (bean.getBiz() > 0 || bean.getSys() > 0 || bean.getCmp() > 0) {
-            redPointContact.setVisibility(View.VISIBLE);
-        } else {
-            redPointContact.setVisibility(View.GONE);
-        }
-        // 进行底部首页小红点的显示
+        // 首页小红点的显示
         if (bean.getRepair() > 0 || bean.getInstall() > 0 || bean.getDesign() > 0) {
-            redPointHome.setVisibility(View.VISIBLE);
+            mHome = bean.getRepair() + bean.getInstall() + bean.getDesign();
+
         } else {
-            redPointHome.setVisibility(View.GONE);
+            mHome = 0;
         }
+        qBadgeViewHome.bindTarget(findViewById(R.id.tab_home))
+                .setBadgeNumber(mHome)
+                .setBadgeBackgroundColor(0xFFFF0000)
+                .setBadgePadding(2, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setGravityOffset(0, 3, true)
+                .setBadgeTextSize(11, true);
+        //消息页面红点
+        if (bean.getBiz() > 0 || bean.getSys() > 0 || bean.getCmp() > 0 || mContactNum > 0) {
+            mContact = bean.getBiz() + bean.getSys() + bean.getCmp();
+            mAllCount = bean.getBiz() + bean.getSys() + bean.getCmp() + mContactNum;
+        } else {
+            mAllCount = 0;
+        }
+        qBadgeViewContact.bindTarget(findViewById(R.id.tab_contact))
+                .setBadgeNumber(mAllCount)
+                .setBadgeBackgroundColor(0xFFFF0000)
+                .setBadgePadding(2, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setGravityOffset(0, 3, true)
+                .setBadgeTextSize(11, true);
         // 工作台消息红点
         if (bean.getReport() > 0 || bean.getTask() > 0 || bean.getInspect() > 0) {
-            redPointWork.setVisibility(View.VISIBLE);
+            mWork = bean.getReport() + bean.getTask() + bean.getInspect();
         } else {
-            redPointWork.setVisibility(View.GONE);
+            mWork = 0;
         }
+        qBadgeViewWork.bindTarget(findViewById(R.id.tab_work))
+                .setBadgeNumber(mWork)
+                .setBadgeBackgroundColor(0xFFFF0000)
+                .setBadgePadding(2, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setGravityOffset(0, 3, true)
+                .setBadgeTextSize(11, true);
+    }
+
+    public String onNoConatac() {
+        return mStatus;
     }
 }
 

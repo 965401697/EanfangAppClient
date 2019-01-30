@@ -100,7 +100,8 @@ public class OrgUnitEntity implements Serializable {
     //创建时间
     //@TableField(value = "create_time")
     private Date createTime;
-
+    //是否 认领过
+    private Integer isclaim;
     //更新时间
     @Getter
     @Setter
@@ -122,6 +123,14 @@ public class OrgUnitEntity implements Serializable {
     @Size(min = 0, max = 200)
     private String verifyMessage;
 
+
+    public Integer getIsclaim() {
+        return isclaim;
+    }
+
+    public void setIsclaim(Integer isclaim) {
+        this.isclaim = isclaim;
+    }
 
     /**
      * 获取：管理员

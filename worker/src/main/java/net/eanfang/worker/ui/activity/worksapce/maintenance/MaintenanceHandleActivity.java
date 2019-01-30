@@ -18,6 +18,7 @@ import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.TemplateBean;
@@ -27,6 +28,7 @@ import com.eanfang.util.ETimeUtils;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.LocationUtil;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.ToastUtil;
 import com.yaf.base.entity.ShopBughandleMaintenanceConfirmEntity;
@@ -117,6 +119,8 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
      */
     private String mType = "";
     private ShopMaintenanceExamResultEntity mScanExamResultEntity;
+    private String mAddress;
+    private String mAddressCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -214,6 +218,24 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
                 doAddHandleResult(mScanExamResultEntity);
             }
         }
+
+        // 获取经纬度
+        LocationUtil.location(this, (location) -> {
+            // mAddress = location.getCity() + location.getDistrict();
+            mAddress = location.getAddress().replace(location.getCity(), "").replace(location.getDistrict(), "");
+            if (!mAddress.contains("(")) {
+                mAddress += " (" + location.getDescription() + ")";
+            }
+            double mSignOutLatitude = location.getLatitude();
+            double mSignOutLongitude = location.getLongitude();
+            mAddressCode = Config.get().getAreaCodeByName(location.getCity(), location.getDistrict());
+
+            runOnUiThread(() -> {
+                if (mSignOutLatitude <= 0 || mSignOutLongitude <= 0) {
+                    showToast("获取定位信息失败，请检查定位或返回后重试。");
+                }
+            });
+        });
     }
 
     private void doGetDeviceList() {
@@ -415,11 +437,11 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
             jsonObject.put("examDeviceEntityList", examDeviceArray);
 //======================================================================================
 
+            confirmEntity.setStoreDays(cbVideo.isChecked() ? 1 : 0);
             confirmEntity.setIsVcrStoreDayNormal(cbVideo.isChecked() ? 1 : 0);
             confirmEntity.setIsTimeRight(cbTime.isChecked() ? 1 : 0);
             confirmEntity.setIsAlarmPrinter(cbPrint.isChecked() ? 1 : 0);
             confirmEntity.setIsMachineDataRemote(cbHost.isChecked() ? 1 : 0);
-
 
             confirmEntity.setStatus(GetConstDataUtils.getMaintainOsRuntimeList().indexOf(tvConclusion.getText().toString().trim()));
             confirmEntity.setTeamWorker(etSuggest.getText().toString().trim());
@@ -464,6 +486,13 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
 
             confirmEntity.setShopMaintenanceOrderId(mId);
 
+            // 签退时间
+            confirmEntity.setSignOutTime(new Date(System.currentTimeMillis()));
+            //签退地点
+            confirmEntity.setSignOutAddress(mAddress);
+            confirmEntity.setSignOutCode(mAddressCode);
+//            confirmEntity.setSignOutLongitude(mSignOutLongitude + "");
+//            confirmEntity.setSignOutLatitude(mSignOutLatitude + "");
             confirmEntity.setOverTime(GetDateUtils.getDate(ETimeUtils.getTimeByYearMonthDayHourMinSec(new Date(System.currentTimeMillis()))));
             jsonObject.put("confirmEntity", confirmEntity);
 

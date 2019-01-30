@@ -15,7 +15,6 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.EducationListBean;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.util.QueryEntry;
 import com.yaf.base.entity.EducationExperienceEntity;
 
 import net.eanfang.worker.R;
@@ -80,12 +79,12 @@ public class SpecialistOwmHistoryActivity extends BaseWorkerActivity {
 
 
     private void getData() {
-        QueryEntry queryEntry = new QueryEntry();
+        JSONObject object=new JSONObject();
+        object .put("accId", String.valueOf(EanfangApplication.get().getAccId()));
+        object .put("type", "1");
 
-        queryEntry.getEquals().put("accId", String.valueOf(EanfangApplication.get().getAccId()));
-        queryEntry.getEquals().put("type", "0");
         EanfangHttp.post(UserApi.GET_TECH_WORKER_EDUCATION_LIST)
-                .upJson(JsonUtils.obj2String(queryEntry))
+                .upJson(JsonUtils.obj2String(object))
                 .execute(new EanfangCallback<EducationListBean>(this, true, EducationListBean.class) {
                     @Override
                     public void onSuccess(EducationListBean bean) {

@@ -77,7 +77,10 @@
             android:id="@+id/tv_tender"
             style="@style/style_client_home_meun"
             android:drawableTop="@mipmap/ic_worker_tender"
-            android:text="@string/text_worker_tender" />
+            android:text="@string/text_worker_tender"
+            android:visibility="visible" />
+
+        <!--<TextView style="@style/style_client_home_meun" />-->
 
         <TextView style="@style/style_client_home_meun" />
 

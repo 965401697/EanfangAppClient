@@ -40,8 +40,8 @@ public class EvaluateAdapter extends BaseQuickAdapter<EvaluateBean.ListBean, Bas
                 iv_header.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getCreateUser().getAccountEntity().getAvatar()));
             }
             totalStar = item.getItem1() + item.getItem2() +
-                    item.getItem3()+ item.getItem4() + item.getItem5();
-            average = totalStar / 5;
+                    item.getItem3();
+            average = totalStar / 3;
             helper.setText(R.id.tv_name, item.getCreateUser().getAccountEntity().getRealName())
                     .setText(R.id.tv_time, item.getCreateTime());
         } else {
@@ -49,8 +49,8 @@ public class EvaluateAdapter extends BaseQuickAdapter<EvaluateBean.ListBean, Bas
                 iv_header.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getOwnerUser().getAccountEntity().getAvatar()));
             }
             totalStar = item.getItem1() + item.getItem2() +
-                    item.getItem3();
-            average = totalStar / 3;
+                    item.getItem3() + item.getItem4() + item.getItem5();
+            average = totalStar / 5;
             helper.setText(R.id.tv_name, item.getOwnerUser().getAccountEntity().getRealName())
                     .setText(R.id.tv_time, item.getCreateTime());
         }

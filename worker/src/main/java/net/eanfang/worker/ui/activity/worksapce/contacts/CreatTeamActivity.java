@@ -18,6 +18,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.OrgUnitListBean;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
+import com.eanfang.util.ToastUtil;
 import com.yaf.sys.entity.OrgUnitEntity;
 
 import net.eanfang.worker.R;
@@ -120,6 +121,11 @@ public class CreatTeamActivity extends BaseWorkerActivity {
                     if (view.getId() == R.id.tv_claim) {
 
                         OrgUnitEntity orgUnitEntity = (OrgUnitEntity) adapter.getData().get(position);
+
+                        if (orgUnitEntity.getIsclaim() == 1) {
+                            ToastUtil.get().showToast(CreatTeamActivity.this, "当前企业已被认领");
+                            return;
+                        }
 
                         startActivity(new Intent(CreatTeamActivity.this, AuthCompanyFirstActivity.class).
                                 putExtra("orgName", orgUnitEntity.getName()).putExtra("orgid", orgUnitEntity.getOrgId()));

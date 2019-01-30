@@ -33,7 +33,7 @@ public class FillTroubleDetailAdapter extends BaseQuickAdapter<BughandleDetailEn
 
         // 故障简述
         if (item.getFailureEntity().getSketch() != null) {
-            helper.setText(R.id.tv_name, "故障" + (helper.getAdapterPosition() + 1) + "." + item.getFailureEntity().getSketch());
+            helper.setText(R.id.tv_name, "故障" + (helper.getAdapterPosition() + 1) + ".      " + item.getFailureEntity().getSketch());
         }
 
         helper.setText(R.id.tv_model, bugThree);
@@ -50,6 +50,8 @@ public class FillTroubleDetailAdapter extends BaseQuickAdapter<BughandleDetailEn
             String[] urls = item.getFailureEntity().getPictures().split(",");
             draweeView.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[0]));
             helper.addOnClickListener(R.id.ll_item);
+        } else {
+            draweeView.setImageResource(R.mipmap.ic_nodata);
         }
         helper.addOnClickListener(R.id.iv_pic);
     }

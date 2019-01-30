@@ -53,7 +53,9 @@ public class OfficialDetailActivity extends BaseWorkerActivity {
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {//页面加载完成
-                loadingDialog.dismiss();
+                if (loadingDialog != null && loadingDialog.isShowing()) {
+                    loadingDialog.dismiss();
+                }
             }
 
             @Override

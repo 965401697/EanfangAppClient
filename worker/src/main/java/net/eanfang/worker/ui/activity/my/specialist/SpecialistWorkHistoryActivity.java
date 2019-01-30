@@ -15,7 +15,6 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.JobListBean;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.util.QueryEntry;
 import com.yaf.base.entity.JobExperienceEntity;
 
 import net.eanfang.worker.R;
@@ -71,19 +70,18 @@ public class SpecialistWorkHistoryActivity extends BaseWorkerActivity {
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivityForResult(new Intent(SpecialistWorkHistoryActivity.this, AddWorkActivity.class).putExtra("bean", (JobExperienceEntity) adapter.getData().get(position)), ADD_WORK_CODE);
+                startActivityForResult(new Intent(SpecialistWorkHistoryActivity.this, SpecialistAddWorkActivity.class).putExtra("bean", (JobExperienceEntity) adapter.getData().get(position)), ADD_WORK_CODE);
             }
         });
     }
 
 
     private void getData() {
-        QueryEntry queryEntry = new QueryEntry();
-
-        queryEntry.getEquals().put("accId", String.valueOf(EanfangApplication.get().getAccId()));
-        queryEntry.getEquals().put("type", "0");
+        JSONObject object=new JSONObject();
+        object .put("accId", String.valueOf(EanfangApplication.get().getAccId()));
+        object .put("type", "1");
         EanfangHttp.post(UserApi.GET_TECH_WORKER_WORK_LIST)
-                .upJson(JsonUtils.obj2String(queryEntry))
+                .upJson(JsonUtils.obj2String(object))
                 .execute(new EanfangCallback<JobListBean>(this, true, JobListBean.class) {
                     @Override
                     public void onSuccess(JobListBean bean) {
@@ -134,12 +132,13 @@ public class SpecialistWorkHistoryActivity extends BaseWorkerActivity {
             case R.id.tv_sub:
                 Intent intent = new Intent(SpecialistWorkHistoryActivity.this, OwnDataHintActivity.class);
                 intent.putExtra("info", "尊敬的用户，您可以添加荣誉证书，\n" +
-                        "以展示更强的权威性");
+                        "达到更高的知名度");
                 intent.putExtra("go", "去添加荣誉证书");
                 intent.putExtra("desc", "如有疑问，请联系客服处理");
                 intent.putExtra("service", "客服热线：" + R.string.text_service_telphone);
+                intent.putExtra("class", SpecialistCertificateListActivity.class);
                 startActivity(intent);
-                endTransaction(false);
+                endTransaction(true);
                 break;
         }
     }

@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.my.certification.CertificateListActivity;
 import net.eanfang.worker.ui.activity.worksapce.contacts.CreatTeamActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
@@ -33,7 +32,7 @@ public class OwnDataHintActivity extends BaseWorkerActivity {
         ButterKnife.bind(this);
         setTitle("提交成功");
         setLeftBack();
-
+        Class clazz = (Class) getIntent().getSerializableExtra("class");
         Intent intent = new Intent(OwnDataHintActivity.this, CreatTeamActivity.class);
 
         String info = getIntent().getStringExtra("info");
@@ -51,16 +50,19 @@ public class OwnDataHintActivity extends BaseWorkerActivity {
         } else {
             tvGo.setText(go);
             tvGo.setVisibility(View.VISIBLE);
-            intent.setClass(OwnDataHintActivity.this, CertificateListActivity.class);
+            if (clazz != null)
+                intent.setClass(OwnDataHintActivity.this, clazz);
         }
 
 
         findViewById(R.id.tv_go).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(intent);
+                if (clazz != null)
+                    startActivity(intent);
                 finishSelf();
             }
         });
     }
+
 }

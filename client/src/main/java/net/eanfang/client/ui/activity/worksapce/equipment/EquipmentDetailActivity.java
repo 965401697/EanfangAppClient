@@ -12,13 +12,13 @@ import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GetDateUtils;
-import com.eanfang.util.JumpItent;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.CustDeviceEntity;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.worksapce.repair.AddTroubleActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.Serializable;
 
@@ -246,8 +246,11 @@ public class EquipmentDetailActivity extends BaseClientActivity {
                 Bundle bundle_repair = new Bundle();
                 bundle_repair.putSerializable("scan_repair", mBean);
                 bundle_repair.putBoolean("isScanRepair", true);
-                JumpItent.jump(EquipmentDetailActivity.this, AddTroubleActivity.class, bundle_repair);
+//                JumpItent.jump(EquipmentDetailActivity.this, AddTroubleActivity.class, bundle_repair);
+                EventBus.getDefault().post(bundle_repair);
                 finishSelf();
+                break;
+            default:
                 break;
         }
     }

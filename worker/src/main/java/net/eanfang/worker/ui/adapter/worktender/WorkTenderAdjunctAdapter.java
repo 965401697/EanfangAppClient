@@ -18,7 +18,7 @@ public class WorkTenderAdjunctAdapter extends BaseQuickAdapter<String, BaseViewH
 
     @Override
     protected void convert(BaseViewHolder helper, String item) {
-        helper.setText(R.id.tv_name, "附件" + helper.getAdapterPosition());
+        helper.setText(R.id.tv_name, "附件" + helper.getAdapterPosition() + 1 + "：");
         helper.setText(R.id.tv_content, item);
 
     }

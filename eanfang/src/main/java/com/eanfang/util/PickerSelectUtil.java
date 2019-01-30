@@ -81,6 +81,10 @@ public class PickerSelectUtil {
         });
     }
 
+    public static void singleTextPicker(Activity context, String title, final TextView tv, List<String> items, OnOptionPickListener listener) {
+        singleTextPicker(context, Gravity.BOTTOM, WheelView.DividerConfig.FILL, 14, Color.BLACK, title, items, listener);
+    }
+
     /**
      * 三级联动
      *

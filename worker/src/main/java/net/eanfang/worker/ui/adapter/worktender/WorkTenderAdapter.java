@@ -22,9 +22,9 @@ public class WorkTenderAdapter extends BaseQuickAdapter<IfbOrderEntity, BaseView
     @Override
     protected void convert(BaseViewHolder helper, IfbOrderEntity item) {
         // 公告名称
-        helper.setText(R.id.tv_tender_unit, item.getAnnouncementName());
+        helper.setText(R.id.tv_tender_name, item.getAnnouncementName());
         //招标单位
-        helper.setText(R.id.tv_tender_name, item.getIfbCompanyName());
+        helper.setText(R.id.tv_tender_unit, item.getIfbCompanyName());
         //系统类别
         helper.setText(R.id.tv_tender_info, Config.get().getBusinessNameByCode(item.getBusinessOneCode(), 1));
         //项目地区

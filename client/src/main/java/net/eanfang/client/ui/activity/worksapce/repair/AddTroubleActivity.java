@@ -85,6 +85,10 @@ public class AddTroubleActivity extends BaseClientActivity {
     private final int REQUEST_DEVICE_BRAND_CODE = 1001;
     private final int RESULT_DEVICE_BRAND_CODE = 1002;
 
+    /**
+     * 扫码报修
+     */
+    private final int SCAN_REAPIR_ADDTROUBLE = 20190116;
     //故障设备名称
     @BindView(R.id.tv_faultDeviceName)
     TextView tvFaultDeviceName;
@@ -266,9 +270,6 @@ public class AddTroubleActivity extends BaseClientActivity {
             llDeviceHouse.setVisibility(View.GONE);
         }
         snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this));
-
-        mDeviceBean = (CustDeviceEntity) getIntent().getSerializableExtra("scan_repair");
-        isScanRepair = getIntent().getBooleanExtra("isScanRepair", false);
 
     }
 
@@ -494,13 +495,13 @@ public class AddTroubleActivity extends BaseClientActivity {
                 .execute(new EanfangCallback<CooperationEntity>(this, true, CooperationEntity.class, (bean) -> {
 
                     if (isScanRepair) {// 扫码添加故障
-                        Bundle bundle = new Bundle();
+                        Intent intent = new Intent();
                         if (bean != null) {
-                            bundle.putLong("mOwnerOrgId", bean.getOwnerOrgId());
+                            intent.putExtra("mOwnerOrgId", bean.getOwnerOrgId());
                         }
-                        bundle.putSerializable("bean", repairBugEntity);
-                        bundle.putBoolean("isScanRepair", isScanRepair);
-                        JumpItent.jump(AddTroubleActivity.this, RepairActivity.class, bundle);
+                        intent.putExtra("bean", repairBugEntity);
+                        intent.putExtra("isScanRepair", isScanRepair);
+                        setResult(CLIENT_ADD_TROUBLE, intent);
                         finishSelf();
                     } else {// 正常报修流程
                         Intent intent = new Intent();
@@ -527,6 +528,16 @@ public class AddTroubleActivity extends BaseClientActivity {
             }
             tvAddViedeo.setText("重新拍摄");
         }
+    }
+
+    /**
+     * 扫码报修
+     */
+    @Subscribe
+    public void onEventBScanReapirAddtrouble(Bundle bundle_repair) {
+        mDeviceBean = (CustDeviceEntity) bundle_repair.getSerializable("scan_repair");
+        isScanRepair = bundle_repair.getBoolean("isScanRepair", false);
+        initData();
     }
 
 
