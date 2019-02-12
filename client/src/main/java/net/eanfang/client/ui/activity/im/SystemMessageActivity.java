@@ -112,6 +112,7 @@ public class SystemMessageActivity extends BaseClientActivity {
                         }));
                 break;
             case R.id.ll_item:
+                if (llAction.getVisibility() == View.VISIBLE) return;
                 RongIM.getInstance().startConversation(SystemMessageActivity.this, Conversation.ConversationType.PRIVATE, userInfo.getUserId(), userInfo.getName());
                 break;
         }

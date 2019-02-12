@@ -60,7 +60,7 @@ public class MaintenanceListAdapter extends BaseQuickAdapter<ShopMaintenanceOrde
         if (item.getStatus() == 1) {
 
             helper.setText(R.id.tv_state, "待预约");
-            helper.setText(R.id.tv_do_second, "马上回电");
+            helper.setText(R.id.tv_do_second, "联系客户");
             helper.getView(R.id.tv_do_first).setVisibility(View.GONE);
             helper.getView(R.id.tv_do_second).setVisibility(View.VISIBLE);
 

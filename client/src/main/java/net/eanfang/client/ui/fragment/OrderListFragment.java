@@ -214,9 +214,9 @@ public class OrderListFragment extends BaseFragment implements
 //                            showToast("当前订单负责人可以操作");
 //                            return;
 //                        }
-                        if (doCompare(item.getOwnerUserId(), mUseId)) {
+                        //if (doCompare(item.getOwnerUserId(), mUseId)) {
                             new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), "完成", false).show();
-                        }
+                        //}
                         break;
                     case R.id.tv_do_second:// 评价技师
 //                        if (!item.getOwnerUserId().equals(EanfangApplication.get().getUserId())) {
@@ -236,6 +236,11 @@ public class OrderListFragment extends BaseFragment implements
                 }
                 break;
 
+            case 6:
+                if (doCompare(item.getOwnerUserId(), mUseId)) {
+                    CallUtils.call(getActivity(), item.getOwnerUser().getAccountEntity().getMobile());
+                }
+                break;
             default:
                 break;
 

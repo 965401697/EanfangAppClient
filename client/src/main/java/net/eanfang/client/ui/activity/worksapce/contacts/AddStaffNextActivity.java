@@ -122,7 +122,7 @@ public class AddStaffNextActivity extends BaseClientActivity {
         } else if (mChildrenBean != null) {
             userEntity.setDepartmentId(Long.parseLong(mChildrenBean.getOrgId()));
         } else {
-            userEntity.setDepartmentId(Long.parseLong(mOrganizationBean.getCompanyId()));
+            userEntity.setDepartmentId(Long.parseLong(mOrganizationBean.getOrgId()));
         }
 
         AccountEntity accountEntity = new AccountEntity();
@@ -141,7 +141,7 @@ public class AddStaffNextActivity extends BaseClientActivity {
                     public void onSuccess(UserEntity bean) {
 
                         //添加角色
-                        EanfangHttp.post(NewApiService.ADD_STAFF_ROLE + "/" + bean.getAccountEntity().getAccId())
+                        EanfangHttp.post(NewApiService.ADD_STAFF_ROLE + "/" + bean.getUserId())
                                 .upJson(JSON.toJSONString(roleIdList))
                                 .execute(new EanfangCallback<JSONObject>(AddStaffNextActivity.this, true, JSONObject.class) {
 

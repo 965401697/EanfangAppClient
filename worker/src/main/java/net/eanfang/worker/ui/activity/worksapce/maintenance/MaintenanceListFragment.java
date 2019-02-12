@@ -210,7 +210,6 @@ public class MaintenanceListFragment extends TemplateItemListFragment {
             case 4:
             case 5:
                 switch (view.getId()) {
-
                     case R.id.tv_do_second:
                         //只有当前登陆人为订单负责人才可以操作
                         if (doCompare(item.getAssigneeUserId(), mUseId)) {

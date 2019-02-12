@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rl_show"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/dimen_30"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_30"
+        android:text="工作1"
+        android:textColor="@color/colorPrimary" />
+
+    <TextView
+        android:id="@+id/tv_work_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_30"
+        android:layout_marginRight="@dimen/dimen_400"
+        android:layout_toLeftOf="@+id/iv_show"
+        android:layout_toRightOf="@+id/tv_title"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="工作内容：" />
+
+    <TextView
+        android:id="@+id/tv_work_content_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_170"
+        android:layout_marginRight="@dimen/dimen_30"
+        android:layout_toLeftOf="@+id/iv_show"
+        android:layout_toRightOf="@+id/tv_title"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="工作内容：" />
+
+    <ImageView
+        android:id="@+id/iv_show"
+        android:layout_width="@dimen/dimen_40"
+        android:layout_height="@dimen/dimen_40"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dimen_30"
+        android:src="@mipmap/show" />
+
+    <TextView
+        android:id="@+id/tv_work_question"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_work_content"
+        android:layout_marginLeft="@dimen/dimen_30"
+        android:layout_marginRight="@dimen/dimen_30"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:layout_toLeftOf="@+id/iv_show"
+        android:layout_toRightOf="@+id/tv_title"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="工作内容：阿斯顿发asdfasdf" />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_2"
+        android:layout_below="@+id/tv_work_question"
+        android:layout_marginTop="@dimen/dimen_15"
+        android:background="@color/content_bg" />
+
+</RelativeLayout>

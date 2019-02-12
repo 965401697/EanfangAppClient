@@ -3,14 +3,12 @@ package net.eanfang.worker.ui.activity.worksapce.sign;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
@@ -20,12 +18,12 @@ import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
-import com.photopicker.com.util.BGASpaceItemDecoration;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.SignListAdapter;
+import net.eanfang.worker.ui.adapter.SignSecondAdapter;
+import net.eanfang.worker.util.WrapContentLinearLayoutManager;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,10 +55,9 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
     private String title;
     private int status;
 
-    private SignListAdapter signListAdapter;
+    private SignSecondAdapter signListAdapter;
 
-    private List<SignListBean> signListBeanList = new ArrayList<>();
-
+    private List<SignListBean.ListBean> signListBeanList = new ArrayList<>();
 
     @BindView(R.id.swipre_fresh)
     SwipeRefreshLayout mSwipeRefreshLayout;
@@ -72,6 +69,16 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
     private int mFirstPosition;
 
     private QueryEntry mQueryEntry = new QueryEntry();
+
+    /**
+     * 第一次 和 上拉加载的 signDay
+     */
+    private String mFirstSingDay = "";
+    private String mSecondSingDay = "";
+
+    /**
+     * 是否是第一页
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,21 +97,21 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
         status = getIntent().getIntExtra("status", 0);
         if (status == 1) tvSign.setText("签退");
 
-        revList.setLayoutManager(new LinearLayoutManager(this));
-        revList.addItemDecoration(new BGASpaceItemDecoration(30));
-        signListAdapter = new SignListAdapter(this);
+        revList.setLayoutManager(new WrapContentLinearLayoutManager(this));
+//        revList.addItemDecoration(new BGASpaceItemDecoration(30));
+        signListAdapter = new SignSecondAdapter();
         signListAdapter.bindToRecyclerView(revList);
-
         llSignLayout.setOnClickListener(v -> finishSelf());
 
-//        signListAdapter.disableLoadMoreIfNotFullPage();
-        signListAdapter.setOnLoadMoreListener(this, revList);
         mSwipeRefreshLayout.setOnRefreshListener(this);
+        signListAdapter.setOnLoadMoreListener(this, revList);
+        signListAdapter.disableLoadMoreIfNotFullPage();
         revList.setNestedScrollingEnabled(false);
 
         setRightTitleOnClickListener((v) -> {
             JumpItent.jump(SignListActivity.this, SignFiltrateActivity.class, REQUEST_FILTRATE);
         });
+        initAdapter();
     }
 
     private void initData() {
@@ -116,12 +123,42 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
         }
         EanfangHttp.post(UserApi.SIGN_LIST)
                 .upJson(JsonUtils.obj2String(mQueryEntry))
-                .execute(new EanfangCallback<SignListBean>(this, true, SignListBean.class, true, (bean) -> {
-                    signListBeanList = bean;
-                    onDataReceived();
-                    initAdapter();
-                    mSwipeRefreshLayout.setRefreshing(false);
-                }));
+                .execute(new EanfangCallback<SignListBean>(this, true, SignListBean.class) {
+                    @Override
+                    public void onSuccess(SignListBean bean) {
+                        if (page == 1) {
+                            signListAdapter.getData().clear();
+                            signListAdapter.setNewData(bean.getList());
+                            mSwipeRefreshLayout.setRefreshing(false);
+                            signListAdapter.loadMoreComplete();
+                            revList.stopScroll();
+                            if (bean.getList().size() < 10) {
+                                signListAdapter.loadMoreEnd();
+                                //释放对象
+                                mQueryEntry = null;
+                            }
+
+                        } else {
+                            signListAdapter.addData(bean.getList());
+                            signListAdapter.loadMoreComplete();
+                            revList.stopScroll();
+                            if (bean.getList().size() < 10) {
+                                signListAdapter.loadMoreEnd();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onNoData(String message) {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        signListAdapter.loadMoreEnd();//没有数据了
+                    }
+
+                    @Override
+                    public void onCommitAgain() {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+                });
     }
 
 
@@ -151,6 +188,7 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
             } else {
                 signListAdapter.getData().clear();
                 signListAdapter.setNewData(signListBeanList);
+                signListAdapter.notifyDataSetChanged();
                 if (signListBeanList.size() < 10) {
                     signListAdapter.loadMoreEnd();
                 }
@@ -171,10 +209,14 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
     }
 
     private void initAdapter() {
-        revList.addOnItemTouchListener(new OnItemClickListener() {
+        signListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
-            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                mFirstPosition = position;
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Bundle bundle = new Bundle();
+                bundle.putString("id", signListAdapter.getData().get(mFirstPosition).getId());
+                bundle.putInt("status", signListAdapter.getData().get(mFirstPosition).getStatus());
+                bundle.putSerializable("bean", signListAdapter.getData().get(position));
+                JumpItent.jump(SignListActivity.this, SignListDetailActivity.class, bundle);
             }
         });
     }
@@ -184,10 +226,7 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
             case TOP_REFRESH:
                 //下拉刷新
                 mQueryEntry = new QueryEntry();
-                page--;
-                if (page <= 0) {
-                    page = 1;
-                }
+                page = 1;
                 initData();
                 break;
             case BOTTOM_REFRESH:
@@ -207,6 +246,9 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
             return;
         }
         if (requestCode == REQUEST_FILTRATE && resultCode == RESULT_FILTRATE) {
+            page = 1;
+            signListAdapter.getMTimeMap().clear();
+            signListAdapter.getData().clear();
             mQueryEntry = (QueryEntry) data.getSerializableExtra("query_foot");
             initData();
         }
@@ -214,10 +256,6 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
 
     @Override
     public void onSecondClick(int position) {
-        Bundle bundle = new Bundle();
-        bundle.putString("id", signListAdapter.getData().get(mFirstPosition).getList().get(position).getId());
-        bundle.putInt("status", signListAdapter.getData().get(mFirstPosition).getList().get(position).getStatus());
-        bundle.putSerializable("bean", (Serializable) signListAdapter.getData().get(mFirstPosition).getList().get(position));
-        JumpItent.jump(SignListActivity.this, SignListDetailActivity.class, bundle);
+
     }
 }

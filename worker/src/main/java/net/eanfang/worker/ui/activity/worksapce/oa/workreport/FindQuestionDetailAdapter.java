@@ -2,6 +2,7 @@ package net.eanfang.worker.ui.activity.worksapce.oa.workreport;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -47,6 +48,7 @@ public class FindQuestionDetailAdapter extends BaseMultiItemQuickAdapter<WorkRep
         this.mComtext = context;
         addItemType(WorkAddReportBean.WorkReportDetailsBean.FOLD, R.layout.item_template_work_report_detail_normal);
         addItemType(WorkAddReportBean.WorkReportDetailsBean.EXPAND, R.layout.item_template_question_report_detail_show);
+        addItemType(WorkAddReportBean.WorkReportDetailsBean.FOLD, R.layout.item_template_work_report_detail_normaltwo);
     }
 
     @Override
@@ -54,7 +56,8 @@ public class FindQuestionDetailAdapter extends BaseMultiItemQuickAdapter<WorkRep
         switch (helper.getItemViewType()) {
             case WorkAddReportBean.WorkReportDetailsBean.FOLD:
                 helper.setText(R.id.tv_title, "问题：" + (helper.getAdapterPosition() + 1));
-                helper.setText(R.id.tv_work_content, "工作内容：" + item.getField1());
+                helper.setText(R.id.tv_work_content_text, item.getField1());
+                helper.setTextColor(R.id.tv_work_content_text, Color.parseColor("#FF4A4A"));
                 if (!TextUtils.isEmpty(item.getField3())) {
                     helper.setText(R.id.tv_work_question, "处理措施：" + item.getField3());
                 } else {
@@ -67,6 +70,7 @@ public class FindQuestionDetailAdapter extends BaseMultiItemQuickAdapter<WorkRep
             case WorkAddReportBean.WorkReportDetailsBean.EXPAND:
                 helper.setText(R.id.tv_title, "问题：" + (helper.getAdapterPosition() + 1));
                 helper.setText(R.id.tv_work_content, item.getField1());
+                helper.setTextColor(R.id.tv_work_content, Color.parseColor("#FF4A4A"));
                 if (!TextUtils.isEmpty(item.getField3())) {
                     helper.setText(R.id.tv_work_question, item.getField3());
                 } else {

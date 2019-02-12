@@ -33,5 +33,6 @@ public class SignSecondAdapter extends BaseQuickAdapter<SignListBean.ListBean, B
         helper.setText(R.id.tv_sign_time, item.getSignTime());
         helper.setText(R.id.tv_address, Config.get().getAddressByCode(item.getZoneCode()) + item.getDetailPlace());
         helper.setText(R.id.tv_visit_name, item.getVisitorName());
+        helper.setText(R.id.tv_sign_name, item.getCreateUser().getAccountEntity().getRealName() + "   ");
     }
 }

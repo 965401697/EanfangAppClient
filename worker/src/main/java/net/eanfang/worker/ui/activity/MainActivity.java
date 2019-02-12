@@ -55,6 +55,7 @@ import net.eanfang.worker.ui.activity.im.ConversationActivity;
 import net.eanfang.worker.ui.activity.worksapce.SetPasswordActivity;
 import net.eanfang.worker.ui.activity.worksapce.WorkDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.notice.MessageListActivity;
+import net.eanfang.worker.ui.activity.worksapce.notice.OfficialListActivity;
 import net.eanfang.worker.ui.activity.worksapce.notice.SystemNoticeActivity;
 import net.eanfang.worker.ui.base.WorkerApplication;
 import net.eanfang.worker.ui.fragment.ContactListFragment;
@@ -704,6 +705,9 @@ public class MainActivity extends BaseActivity {
                 } else if (mType == 3) {
                     //打开systemnoticeactivity
                     JumpItent.jump(MainActivity.this, SystemNoticeActivity.class);
+                } else if (mType == 4) {
+                    //打开systemnoticeactivity
+                    JumpItent.jump(MainActivity.this, OfficialListActivity.class);
                 }
             }
 

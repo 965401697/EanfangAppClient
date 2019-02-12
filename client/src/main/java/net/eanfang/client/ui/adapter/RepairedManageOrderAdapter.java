@@ -105,12 +105,8 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
             helper.setVisible(R.id.tv_total, false);
         }
 
-        //订单已取消
-        if (item.getStatus() == 6) {
-            helper.setText(R.id.tv_state, "订单取消");
-        } else {
-            helper.setText(R.id.tv_state, GetConstDataUtils.getRepairStatus().get(item.getStatus()));
-        }
+
+        helper.setText(R.id.tv_state, GetConstDataUtils.getRepairStatus().get(item.getStatus()));
 
         helper.setVisible(R.id.tv_do_first, isShowFirstBtnClient[item.getStatus()]);
         helper.setText(R.id.tv_do_second, doSomething[item.getStatus()]);
@@ -130,14 +126,11 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
             } else {
                 helper.setVisible(R.id.tv_do_second, false);
             }
-        } else {
-            helper.setVisible(R.id.iv_finish, false);
+        }else if (item.getStatus() == 6) {
+            //helper.setText(R.id.tv_do_first, "联系客户");
+            helper.setVisible(R.id.tv_do_first, false);
+            helper.setVisible(R.id.tv_do_second, false);
         }
-//        if (!StringUtils.isEmpty(item.getBugEntityList().get(helper.getPosition()).getPictures())){
-//            String[] urls = item.getBugEntityList().get(helper.getPosition()).getPictures().split(",");
-//            //将业务类型的图片显示到列表
-//            ((SimpleDraweeView) helper.getView(R.id.iv_upload)).setImageURI(Uri.parse(urls[0]));
-//        }
 
         //将业务类型的图片显示到列表
         String imgUrl = V.v(() -> item.getFailureEntity().getPictures().split(",")[0]);

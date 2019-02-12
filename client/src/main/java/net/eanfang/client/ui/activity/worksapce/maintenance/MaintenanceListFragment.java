@@ -1,6 +1,7 @@
 package net.eanfang.client.ui.activity.worksapce.maintenance;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -36,8 +37,8 @@ public class MaintenanceListFragment extends TemplateItemListFragment {
     private MaintenanceListAdapter mAdapter;
     private int currentPosition;
 
-
     private Long mUseId = EanfangApplication.get().getUserId();
+    private ShopMaintenanceOrderEntity shopMaintenanceOrderEntity;
 
     public static MaintenanceListFragment getInstance(int status, String title) {
         MaintenanceListFragment sf = new MaintenanceListFragment();
@@ -68,7 +69,7 @@ public class MaintenanceListFragment extends TemplateItemListFragment {
         mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                ShopMaintenanceOrderEntity shopMaintenanceOrderEntity = (ShopMaintenanceOrderEntity) adapter.getData().get(position);
+                shopMaintenanceOrderEntity = (ShopMaintenanceOrderEntity) adapter.getData().get(position);
                 currentPosition = position;
                 switchCase(shopMaintenanceOrderEntity, view);
             }
@@ -91,7 +92,6 @@ public class MaintenanceListFragment extends TemplateItemListFragment {
 
         int status = GetConstDataUtils.getMaintainStatusList().indexOf(mTitle);
         queryEntry.getEquals().put("status", String.valueOf(status));
-//        queryEntry.getEquals().put("status", String.valueOf(status));
 
         EanfangHttp.post(NewApiService.MAINTENANCE_GET_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
@@ -107,14 +107,11 @@ public class MaintenanceListFragment extends TemplateItemListFragment {
                             if (bean.getList().size() < 10) {
                                 mAdapter.loadMoreEnd();
                             }
-
                             if (bean.getList().size() > 0) {
                                 mTvNoData.setVisibility(View.GONE);
                             } else {
                                 mTvNoData.setVisibility(View.VISIBLE);
                             }
-
-
                         } else {
                             mAdapter.addData(bean.getList());
                             mAdapter.loadMoreComplete();
@@ -146,24 +143,25 @@ public class MaintenanceListFragment extends TemplateItemListFragment {
 
     private void switchCase(ShopMaintenanceOrderEntity item, View view) {
         Intent intent;
+        //Log.i("RXXXXXd",item+"");
         //获取：1:待预约，2:待上门，3:维修中，4:待验收，5:订单完成)
         switch (item.getStatus()) {
             case 1:
-                //给客户联系人打电话
+                //给打电话
                 if (doCompare(item.getOwnerUserId(), mUseId)) {
-                    CallUtils.call(getActivity(), V.v(() -> item.getOwnerUserEntity().getAccountEntity().getMobile()));
+                    CallUtils.call(getActivity(), V.v(() -> item.getAssigneeUserEntity().getAccountEntity().getMobile()));
                 }
                 break;
             case 2:
                 //给客户联系人打电话
                 if (doCompare(item.getOwnerUserId(), mUseId)) {
-                    CallUtils.call(getActivity(), V.v(() -> item.getOwnerUserEntity().getAccountEntity().getMobile()));
+                    CallUtils.call(getActivity(), V.v(() -> item.getAssigneeUserEntity().getAccountEntity().getMobile()));
                 }
                 break;
             case 3:// 待上门 签到
                 //给客户联系人打电话
                 if (doCompare(item.getOwnerUserId(), mUseId)) {
-                    CallUtils.call(getActivity(), V.v(() -> item.getOwnerUserEntity().getAccountEntity().getMobile()));
+                    CallUtils.call(getActivity(), V.v(() -> item.getAssigneeUserEntity().getAccountEntity().getMobile()));
                 }
                 break;
             case 4:
