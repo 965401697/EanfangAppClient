@@ -124,6 +124,8 @@ public class SignFiltrateActivity extends BaseActivity implements RadioGroup.OnC
             case R.id.tv_cancle_work:
                 finishSelf();
                 break;
+            default:
+                break;
         }
     }
 
@@ -210,11 +212,19 @@ public class SignFiltrateActivity extends BaseActivity implements RadioGroup.OnC
     @Override
     public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
         switch (group.getCheckedRadioButtonId()) {
-            case R.id.rb_signin:// 签到
+            // 签到
+            case R.id.rb_signin:
                 mSignStatus = 0;
                 break;
+            // 签退F
             case R.id.rb_signout:
-                mSignStatus = 1;// 签退
+                mSignStatus = 1;
+                break;
+            // 全部
+            case R.id.rb_all:
+                mSignStatus = 100;
+                break;
+            default:
                 break;
         }
     }

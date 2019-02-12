@@ -21,11 +21,12 @@ import lombok.Setter;
 @AllArgsConstructor
 public class SignListBean implements Serializable {
 
-    private String signDay;
     private List<ListBean> list;
 
     @Getter
     @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
     public static class ListBean implements Serializable {
 
         private CompanyBean company;
@@ -50,7 +51,9 @@ public class SignListBean implements Serializable {
 
         @Getter
         @Setter
-        public static class CompanyBean implements Serializable {
+        @NoArgsConstructor
+        @AllArgsConstructor
+        public static class CompanyBean  implements Serializable{
 
             private String adminUserId;
             private String companyId;
@@ -71,7 +74,9 @@ public class SignListBean implements Serializable {
 
         @Getter
         @Setter
-        public static class CreateUserBean implements Serializable {
+        @NoArgsConstructor
+        @AllArgsConstructor
+        public static class CreateUserBean  implements Serializable{
 
             private String accId;
             private AccountEntityBean accountEntity;
@@ -83,17 +88,27 @@ public class SignListBean implements Serializable {
 
             @Getter
             @Setter
-            public static class AccountEntityBean implements Serializable {
+            @NoArgsConstructor
+            @AllArgsConstructor
+            public static class AccountEntityBean implements Serializable{
+                /**
+                 * accId : 979177961461190657
+                 * accType : 3
+                 * avatar : account/avatar/3543634438de44e5936d3ff185910da2.png
+                 * mobile : 17600738557
+                 * realName : 管管
+                 * simplePwd : false
+                 */
 
                 private String accId;
                 private int accType;
                 private String avatar;
                 private String mobile;
                 private String realName;
+                private boolean simplePwd;
 
             }
         }
     }
-
 }
 

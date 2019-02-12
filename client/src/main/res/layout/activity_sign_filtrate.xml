@@ -44,9 +44,21 @@
                     android:orientation="horizontal">
 
                     <RadioButton
+                        android:id="@+id/rb_all"
+                        android:layout_width="@dimen/dimen_100"
+                        android:layout_height="@dimen/dimen_60"
+                        android:background="@drawable/select_client_camera_back"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="全部"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="12sp" />
+
+                    <RadioButton
                         android:id="@+id/rb_signin"
                         android:layout_width="@dimen/dimen_100"
                         android:layout_height="@dimen/dimen_60"
+                        android:layout_marginLeft="20dp"
                         android:background="@drawable/select_client_camera_back"
                         android:button="@null"
                         android:gravity="center"

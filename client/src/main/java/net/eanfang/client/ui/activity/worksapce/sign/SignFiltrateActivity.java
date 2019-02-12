@@ -123,6 +123,8 @@ public class SignFiltrateActivity extends BaseActivity implements RadioGroup.OnC
             case R.id.tv_cancle_work:
                 finishSelf();
                 break;
+            default:
+                break;
         }
     }
 
@@ -215,6 +217,12 @@ public class SignFiltrateActivity extends BaseActivity implements RadioGroup.OnC
                 break;
             case R.id.rb_signout:
                 mSignStatus = 1;// 签退
+                break;
+            // 全部
+            case R.id.rb_all:
+                mSignStatus = 100;
+                break;
+            default:
                 break;
         }
     }
