@@ -153,6 +153,7 @@ public class BGANinePhotoLayout extends FrameLayout implements AdapterView.OnIte
         return (ArrayList<String>) mPhotoAdapter.getData();
     }
 
+
     /**
      * 设置图片路径数据集合
      *

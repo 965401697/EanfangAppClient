@@ -3,8 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/dimen_40"
-    android:orientation="vertical">
+    android:background="@color/color_white"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/dimen_30"
+    android:paddingLeft="@dimen/dimen_34"
+    android:paddingRight="@dimen/dimen_34"
+    android:paddingTop="@dimen/dimen_40">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -32,7 +36,6 @@
                     android:id="@+id/tv_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="王璐"
                     android:textColor="@color/black"
                     android:textSize="@dimen/textSize_15" />
 
@@ -41,7 +44,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen_16"
-                    android:text="北京市法安视科技有限公司"
                     android:textColor="@color/color_bottom"
                     android:textSize="@dimen/textSize_13" />
             </LinearLayout>
@@ -69,7 +71,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_30"
-        android:text=" 这是文字正文这是文字正文这是文字正文，这是文字正文这是文字正文，这是文字正文这是文字正文。"
         android:textColor="@color/color_client_neworder"
         android:textSize="@dimen/textSize_13" />
 
@@ -80,25 +81,21 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/iv_one"
-            android:layout_width="@dimen/dimen_200"
-            android:layout_height="@dimen/dimen_200"
-            app:placeholderImage="@mipmap/ic_nodata" />
-
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/iv_two"
-            android:layout_width="@dimen/dimen_200"
-            android:layout_height="@dimen/dimen_200"
-            android:layout_marginLeft="@dimen/dimen_12"
-            android:layout_marginRight="@dimen/dimen_12"
-            app:placeholderImage="@mipmap/ic_nodata" />
-
-        <com.facebook.drawee.view.SimpleDraweeView
-            android:id="@+id/iv_three"
-            android:layout_width="@dimen/dimen_200"
-            android:layout_height="@dimen/dimen_200"
-            app:placeholderImage="@mipmap/ic_nodata" />
+        <com.photopicker.com.widget.BGASortableNinePhotoLayout
+            android:id="@+id/snpl_pic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:bga_snpl_deleteDrawable="@color/color_white"
+            app:bga_snpl_deleteDrawableOverlapQuarter="false"
+            app:bga_snpl_editable="false"
+            app:bga_snpl_itemCornerRadius="0dp"
+            app:bga_snpl_itemSpanCount="3"
+            app:bga_snpl_itemWhiteSpacing="4dp"
+            app:bga_snpl_itemWidth="0dp"
+            app:bga_snpl_maxItemCount="9"
+            app:bga_snpl_otherWhiteSpacing="100dp"
+            app:bga_snpl_plusEnable="false"
+            app:bga_snpl_sortable="false" />
     </LinearLayout>
 
     <RelativeLayout
@@ -123,7 +120,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_12"
-                android:text="12"
+                android:text="1"
                 android:textColor="@color/color_home_security_like"
                 android:textSize="@dimen/textSize_14" />
         </LinearLayout>
@@ -147,7 +144,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_12"
-                android:text="t12"
                 android:textColor="@color/color_home_security_text" />
         </LinearLayout>
 
@@ -164,13 +160,6 @@
                 android:layout_height="wrap_content"
                 android:src="@mipmap/ic_worker_security_share" />
 
-            <TextView
-                android:id="@+id/tv_share_num"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_12"
-                android:text="t12"
-                android:textColor="@color/color_home_security_text" />
         </LinearLayout>
 
         <TextView

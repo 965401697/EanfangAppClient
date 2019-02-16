@@ -35,7 +35,5 @@
         android:id="@+id/rv_security"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/dimen_34"
-        android:paddingRight="@dimen/dimen_34"
         android:scrollbars="none" />
 </LinearLayout>

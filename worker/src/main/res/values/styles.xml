@@ -139,5 +139,9 @@
         <item name="android:layout_height">@dimen/dimen_1</item>
         <item name="android:background">@color/color_my_line</item>
     </style>
+
+    <style name="NewBaseTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="NewBaseTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
 

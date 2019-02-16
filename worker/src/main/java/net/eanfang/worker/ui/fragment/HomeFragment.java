@@ -47,6 +47,7 @@ import net.eanfang.worker.ui.activity.worksapce.design.DesignActivity;
 import net.eanfang.worker.ui.activity.worksapce.maintenance.MaintenanceActivity;
 import net.eanfang.worker.ui.activity.worksapce.repair.RepairCtrlActivity;
 import net.eanfang.worker.ui.activity.worksapce.scancode.ScanCodeActivity;
+import net.eanfang.worker.ui.activity.worksapce.security.SecurityListActivity;
 import net.eanfang.worker.ui.activity.worksapce.tender.WorkerTenderControlActivity;
 import net.eanfang.worker.ui.adapter.HomeSecurityAdapter;
 import net.eanfang.worker.ui.adapter.HomeWaitAdapter;
@@ -123,7 +124,6 @@ public class HomeFragment extends BaseFragment {
     private RelativeLayout rlSecurity;
     private RecyclerView rvSecurity;
     private HomeSecurityAdapter homeSecurityAdapter;
-    private List mSecurityList = new ArrayList();
 
     @Override
     protected void initData(Bundle arguments) {
@@ -246,19 +246,13 @@ public class HomeFragment extends BaseFragment {
      * 安防圈
      */
     private void initSecurity() {
-        mSecurityList.add("李白");
-        mSecurityList.add("杜甫");
-        mSecurityList.add("辛弃疾");
-        mSecurityList.add("曹操");
-        mSecurityList.add("刘备");
-        mSecurityList.add("关羽");
-        homeSecurityAdapter = new HomeSecurityAdapter();
+        homeSecurityAdapter = new HomeSecurityAdapter(rvSecurity,getActivity());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         rvSecurity.setLayoutManager(layoutManager);
         rvSecurity.setNestedScrollingEnabled(false);
         rvSecurity.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
-        homeSecurityAdapter.bindToRecyclerView(rvSecurity);
-        homeSecurityAdapter.setNewData(mSecurityList);
+//        homeSecurityAdapter.bindToRecyclerView(rvSecurity);
+//        homeSecurityAdapter.setNewData(mSecurityList);
     }
 
     @Override
@@ -344,6 +338,10 @@ public class HomeFragment extends BaseFragment {
         findViewById(R.id.iv_scan).setOnClickListener((v) -> {
             homeScanPopWindow.showAsDropDown(findViewById(R.id.iv_scan));
             homeScanPopWindow.backgroundAlpha(0.5f);
+        });
+        // 安防圈
+        findViewById(R.id.rl_security).setOnClickListener((v) -> {
+            startActivity(new Intent(getActivity(), SecurityListActivity.class));
         });
 
     }

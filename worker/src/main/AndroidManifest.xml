@@ -1126,7 +1126,13 @@
         <activity android:name=".ui.activity.worksapce.tender.WorkTenderDetailActivity" />
         <activity android:name=".ui.activity.my.specialist.AddBrandActivity" />
         <activity android:name=".ui.activity.my.specialist.SpecialistCertificationInfoActivity" />
-        <activity android:name=".ui.activity.my.specialist.SpecialistSkillInfoDetailActivity"></activity>
+        <activity android:name=".ui.activity.my.specialist.SpecialistSkillInfoDetailActivity" />
+        <activity
+            android:name=".ui.activity.worksapce.security.SecurityListActivity"
+            android:label="@string/title_activity_security_list"
+            android:theme="@style/NewBaseTheme" />
+        <activity android:name=".ui.activity.worksapce.security.SecurityCreateActivity" />
+        <activity android:name=".ui.activity.worksapce.security.SecurityDetailActivity"></activity>
     </application>
 
 </manifest>

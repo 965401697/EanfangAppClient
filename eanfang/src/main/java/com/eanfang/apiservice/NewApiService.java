@@ -598,5 +598,17 @@ public interface NewApiService {
      */
     String TENDER_DETAIL = BASE_URL + "/yaf_ifb/ifborder/info";
 
+    /**
+     * 安防圈 热门列表
+     */
+    String SECURITY_HOT = BASE_URL + "/yaf_spc/spcircle/list";
+    /**
+     * 安防圈 关注列表
+     */
+    String SERCURITY_FOUCS = BASE_URL + "/yaf_spc/spcircle/followerList";
+    /**
+     * 安防圈 创建
+     */
+    String SERCURITY_CREATE = BASE_URL + "/yaf_spc/spcircle/create";
 
 }
