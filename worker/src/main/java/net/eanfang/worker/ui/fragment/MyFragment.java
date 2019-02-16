@@ -29,6 +29,7 @@ import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.my.EvaluateActivity;
 import net.eanfang.worker.ui.activity.my.PersonInfoActivity;
 import net.eanfang.worker.ui.activity.my.SettingActivity;
+import net.eanfang.worker.ui.activity.my.specialist.SpecialistAuthListActivity;
 import net.eanfang.worker.ui.activity.my.certification.NewAuthListActivity;
 import net.eanfang.worker.ui.widget.InviteView;
 import net.eanfang.worker.util.PrefUtils;
@@ -43,6 +44,8 @@ import net.eanfang.worker.util.PrefUtils;
  */
 
 public class MyFragment extends BaseFragment {
+    private static long lastClickTime;
+
     private TextView tv_user_name, tvVerfiy, tvWorkerStatus;
     private RelativeLayout rlWorkingStatus, rlWorkerVerfity, rlExpertVerfity;
     private SimpleDraweeView iv_header;
@@ -86,9 +89,9 @@ public class MyFragment extends BaseFragment {
         rlWorkerVerfity.setOnClickListener((v) -> {
             doWorkAuth();
         });
-//        rlExpertVerfity.setOnClickListener((v) -> {
-//            JumpItent.jump(getActivity(), SpecialistAuthListActivity.class);
-//        });
+        rlExpertVerfity.setOnClickListener((v) -> {
+            JumpItent.jump(getActivity(), SpecialistAuthListActivity.class);
+        });
     }
 
     @Override
@@ -177,7 +180,6 @@ public class MyFragment extends BaseFragment {
     // 判断是否认证
     private void doWorkAuth() {
         // 技师未认证，提示完善个人资料
-
         String realName = EanfangApplication.get().getUser().getAccount().getRealName();
         if (StringUtils.isEmpty(realName) || "待提供".equals(realName)) {
             showToast("请先完善个人资料");
@@ -186,4 +188,6 @@ public class MyFragment extends BaseFragment {
 //            JumpItent.jump(getActivity(), AuthListActivity.class);
         }
     }
+
+
 }

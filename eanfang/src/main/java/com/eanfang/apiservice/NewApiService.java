@@ -470,6 +470,10 @@ public interface NewApiService {
      */
     String WORKER_AUTH_REVOKE = BASE_URL + "/yaf_sys/techworkerverify/rollBack/";
     /**
+     * 专家认证撤回
+     */
+    String EXPERT_AUTH_REVOKE = BASE_URL + "/yaf_sys/expertscertification/rollBack/";
+    /**
      * 安防公司编辑
      */
     String COMPANY_SECURITY_AUTH_REVOKE = BASE_URL + "/yaf_sys/orgunit/shop/rollback/";

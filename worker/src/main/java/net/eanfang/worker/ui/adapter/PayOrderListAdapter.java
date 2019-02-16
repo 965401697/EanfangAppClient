@@ -38,15 +38,20 @@ public class PayOrderListAdapter extends BaseQuickAdapter<PayOrderListBean.ListB
         helper.setText(R.id.tv_state, GetConstDataUtils.getQuoteStatus().get(item.getStatus()));
         if (item.getCreateUserId().equals(EanfangApplication.getApplication().getUserId())) {
             helper.setText(R.id.tv_do_first, "联系接收人");
-            helper.setVisible(R.id.tv_do_second, false);
+            helper.setVisible(R.id.tv_do_first, true);
         } else if (item.getAssigneeUserId().equals(EanfangApplication.getApplication().getUserId())) {
             helper.setText(R.id.tv_do_first, "联系报价人");
+            helper.setVisible(R.id.tv_do_first, true);
             if (item.getStatus() == 0) {
                 helper.setText(R.id.tv_do_second, "同意报价");
+                helper.setVisible(R.id.tv_do_second, true);
             } else {
                 helper.setVisible(R.id.tv_do_second, false);
             }
 
+        } else {
+            helper.setVisible(R.id.tv_do_first, false);
+            helper.setVisible(R.id.tv_do_second, false);
         }
 
         helper.addOnClickListener(R.id.tv_do_first);

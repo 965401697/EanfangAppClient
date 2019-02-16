@@ -32,9 +32,9 @@ public class SignListAdapter extends BaseQuickAdapter<SignListBean, BaseViewHold
 
     @Override
     protected void convert(BaseViewHolder helper, SignListBean item) {
-        String[] times = item.getSignDay().split("-");
-        helper.setText(R.id.tv_month, times[1] + "月");
-        helper.setText(R.id.tv_year, times[0] + "年");
+//        String[] times = item.getSignDay().split("-");
+//        helper.setText(R.id.tv_month, times[1] + "月");
+//        helper.setText(R.id.tv_year, times[0] + "年");
 
         RecyclerView rv_footer = helper.getView(R.id.rv_footer);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);

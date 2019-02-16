@@ -46,6 +46,7 @@ import net.eanfang.client.ui.activity.im.ConversationActivity;
 import net.eanfang.client.ui.activity.worksapce.SetPasswordActivity;
 import net.eanfang.client.ui.activity.worksapce.WorkerDetailActivity;
 import net.eanfang.client.ui.activity.worksapce.notice.MessageListActivity;
+import net.eanfang.client.ui.activity.worksapce.notice.OfficialListActivity;
 import net.eanfang.client.ui.activity.worksapce.notice.SystemNoticeActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.ui.base.ClientApplication;
@@ -658,6 +659,9 @@ public class MainActivity extends BaseClientActivity {
                 } else if (mType == 3) {
                     //打开systemnoticeactivity
                     JumpItent.jump(MainActivity.this, SystemNoticeActivity.class);
+                }else if (mType == 4) {
+                    //打开systemnoticeactivity
+                    JumpItent.jump(MainActivity.this, OfficialListActivity.class);
                 }
             }
 

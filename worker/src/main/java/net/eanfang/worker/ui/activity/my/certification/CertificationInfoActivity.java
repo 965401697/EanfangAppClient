@@ -1,10 +1,12 @@
 package net.eanfang.worker.ui.activity.my.certification;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
@@ -90,6 +92,7 @@ public class CertificationInfoActivity extends BaseWorkerActivity {
             tvContactPhone.setText(mobile);
         }
         etCardId.setFocusable(false);
+        //Log.i("zhangyanran",EanfangApplication.get().getUser().getAccount().getIdCard()+"-----------"+EanfangApplication.get().getUser().getAccount().getRealName());
         etCardId.setText(EanfangApplication.get().getUser().getAccount().getIdCard());
         //0女1男
         if (EanfangApplication.get().getUser().getAccount().getGender() == 0) {
@@ -122,7 +125,6 @@ public class CertificationInfoActivity extends BaseWorkerActivity {
             for (byte i = 0; i < accidentPics.length; i++) {
                 accidentPicList.add(BuildConfig.OSS_SERVER + accidentPics[i]);
             }
-
             snplMomentAccident.setData(accidentPicList);
         }
     }

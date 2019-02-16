@@ -236,11 +236,20 @@ public interface UserApi {
     /**
      * 填写专家认证的信息
      */
-    String GET_EXPERT_INFO_BY_ID = BuildConfig.API_HOST + "/yaf_sys/expertscertification/info";
+    String GET_EXPERT_INFO_BY_ID = BuildConfig.API_HOST + "/yaf_sys/expertscertification/detail";
     /**
      * 填写专家认证的信息
      */
     String GET_EXPERT_INFO_CERTIFICATION = BuildConfig.API_HOST + "/yaf_sys/expertscertification/insertV2";
+    /**
+     * 专家认证的信息的状态
+     */
+    String GET_EXPERT_CERTIFICATION_STATUS = BuildConfig.API_HOST + "/yaf_sys/expertscertification/verifyStatus";
+    /**
+     * 专家认证的教育信息列表
+     */
+    String GET_EXPERT_EDU_LIST = BuildConfig.API_HOST + "/yaf_shop/educationexperience/listByAccId";
+
 
     /**
      * 加载系统类别
@@ -262,9 +271,13 @@ public interface UserApi {
     String POST_TECH_WORKER_AREA = BuildConfig.API_HOST + "/yaf_sys/basedata2user/workerarea";
 
     /**
-     * 提交认证
+     * 技师提交认证
      */
     String POST_TECH_WORKER_SEND_VERIFY = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/sendverify";
+    /**
+     * 专家提交认证
+     */
+    String POST_EXPERT_SEND_VERIFY = BuildConfig.API_HOST + "/yaf_sys/expertscertification/sendverify";
 
     /**
      * 加载企业信息
@@ -422,6 +435,10 @@ public interface UserApi {
      */
     String POST_WORKER_AUTH_STATUS = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/verifyStatus";
     /**
+     * 获取技师和 专家的认证状态
+     */
+    String POST_WORKER_EXPERT_AUTH_STATUS = BuildConfig.API_HOST + "/yaf_sys/expertscertification/checkVerifyStatus";
+    /**
      * 修改手机号
      */
     String UPDATA_MOBILE = BuildConfig.API_HOST + "/yaf_sys/account/changeAppMobile";
@@ -482,10 +499,18 @@ public interface UserApi {
      */
     String SIGN_LIST = BuildConfig.API_HOST + "/yaf_oa/sign/userListNew";
     /**
+     * 专家技能认证的 系统类别和业务类型的提交
+     */
+    String EXPERT_VERIFY = BuildConfig.API_HOST + "/yaf_sys/expertscertification/updateV2";
+    /**
+     * 专家技能详情
+     */
+    String EXPERT_DETAIL_VERIFY = BuildConfig.API_HOST + "/yaf_sys/expertscertification/detail/sp1";
+
+    /**
      * 技师技能认证的 系统类别和业务类型的提交
      */
     String TECH_WORKER_VERIFY = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/updateV2";
-
     /**
      * 技师技能认证添加资质证书
      */

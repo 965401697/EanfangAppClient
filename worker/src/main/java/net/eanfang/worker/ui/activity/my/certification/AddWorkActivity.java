@@ -73,7 +73,7 @@ public class AddWorkActivity extends BaseActivityWithTakePhoto {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_work);
         ButterKnife.bind(this);
-        setTitle("个人经历");
+        setTitle("工作经历");
         setLeftBack();
 
         bean = (JobExperienceEntity) getIntent().getSerializableExtra("bean");
@@ -84,9 +84,9 @@ public class AddWorkActivity extends BaseActivityWithTakePhoto {
 
         if (bean != null) {
             fillData();
-            setTitle("修改个人经历");
+            setTitle("修改工作经历");
         } else {
-            setTitle("添加个人经历");
+            setTitle("添加工作经历");
         }
 
     }

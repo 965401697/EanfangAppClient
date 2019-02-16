@@ -183,7 +183,7 @@ public class SpecialistAddEducationHistoryActivity extends BaseActivityWithTakeP
         entity.setBeginTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[0], "yyyy-MM-dd"));
         entity.setEndTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[1], "yyyy-MM-dd"));
         entity.setCertificatePics(pic);
-        entity.setType(0);
+        entity.setType(1);
 
         OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
             @Override

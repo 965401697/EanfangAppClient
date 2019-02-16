@@ -1,6 +1,7 @@
 package net.eanfang.worker.ui.activity.worksapce.contacts;
 
 import android.text.TextUtils;
+import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -37,6 +38,14 @@ public class CompanyListAdapter extends BaseQuickAdapter<OrgUnitEntity, BaseView
         } else {
             helper.setText(R.id.tv_address, "地址：");
         }
+
+        if (item.getIsclaim() == 0) {
+            //可以认领
+            ((View) helper.getView(R.id.tv_claim)).setBackground(((View) helper.getView(R.id.tv_claim)).getResources().getDrawable(R.drawable.bg_ll_btn));
+        } else {
+            ((View) helper.getView(R.id.tv_claim)).setBackground(((View) helper.getView(R.id.tv_claim)).getResources().getDrawable(R.drawable.bg_ll_gray_btn));
+        }
+
         helper.addOnClickListener(R.id.tv_claim);
     }
 }

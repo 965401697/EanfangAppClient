@@ -126,7 +126,7 @@ public class SpecialistAddSkillCertificafeActivity extends BaseActivityWithTakeP
         entity.setCertificateNumber(etNum.getText().toString().trim());
         entity.setCertificatePics(pic);
 
-        entity.setType(0);
+        entity.setType(1);
 
         OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
             @Override

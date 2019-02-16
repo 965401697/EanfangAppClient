@@ -1,7 +1,9 @@
 package net.eanfang.worker.ui.adapter;
 
 import android.net.Uri;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -29,7 +31,7 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
     };
     private String[] doSomethingWorker = {
             "联系客户", "马上回电", "签到"
-            , "完工", "查看故障处理", "评价客户", "联系技师"
+            , "完工", "查看故障处理", "评价客户", "联系客户"
     };
     private String[] doSomething;
     private boolean[] isShowFirstBtn;
@@ -41,6 +43,7 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
         isShowFirstBtn = isShowFirstBtnWorker;
 
     }
+
 
     @Override
     protected void convert(BaseViewHolder helper, RepairOrderEntity item) {
@@ -79,13 +82,7 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
         } else {
             helper.setText(R.id.tv_arriveTime, "到达时限： 0 ");
         }
-        //订单已取消
-        if (item.getStatus() == 6) {
-            helper.setText(R.id.tv_state, "订单取消");
-        } else {
-            helper.setText(R.id.tv_state, GetConstDataUtils.getRepairStatus().get(item.getStatus()));
-        }
-
+        helper.setText(R.id.tv_state, GetConstDataUtils.getRepairStatus().get(item.getStatus()));
         //( 0:待支付，1:待回电，2:待上门，3:待完工，4:待确认，5:订单完成)
         helper.setText(R.id.tv_do_second, doSomething[item.getStatus()]);
         helper.setVisible(R.id.tv_do_first, isShowFirstBtn[item.getStatus()]);
@@ -116,9 +113,11 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
         } else if (item.getStatus() == 3) {
             helper.setText(R.id.tv_do_first, "联系客户");
             helper.setVisible(R.id.iv_finish, false);
+
         } else if (item.getStatus() == 4) {
             helper.setText(R.id.tv_do_first, "联系客户");
             helper.setVisible(R.id.iv_finish, false);
+
         } else if (item.getStatus() == 5) {
             helper.setText(R.id.tv_do_first, "查看故障处理");
             helper.setVisible(R.id.iv_finish, true);
@@ -128,6 +127,10 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
             } else {
                 helper.setVisible(R.id.tv_do_second, false);
             }
+        }else if (item.getStatus() == 6) {
+            //helper.setText(R.id.tv_do_first, "联系客户");
+            helper.setVisible(R.id.tv_do_first, false);
+            helper.setVisible(R.id.tv_do_second, false);
         }
 
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -154,12 +155,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="能力等级"
+                    android:text="认证类型"
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_14" />
 
                 <TextView
-                    android:id="@+id/tv_ability"
+                    android:id="@+id/tv_type"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="20dp"
@@ -171,6 +172,88 @@
                     android:text=""
                     android:textColor="@color/color_bottom"
                     android:textSize="@dimen/textSize_13" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_factory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <View style="@style/style_common_line_gray" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/dimen_20"
+                    android:paddingLeft="@dimen/dimen_36"
+                    android:paddingRight="@dimen/dimen_34"
+                    android:paddingTop="@dimen/dimen_20">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="厂商名称"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_14" />
+
+                    <EditText
+                        android:id="@+id/et_factory_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:drawablePadding="@dimen/dimen_14"
+                        android:gravity="right"
+                        android:hint="请输入"
+                        android:textColor="@color/color_bottom"
+                        android:textSize="@dimen/textSize_13" />
+                </LinearLayout>
+
+                <View style="@style/style_common_line_gray" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/dimen_20"
+                    android:paddingLeft="@dimen/dimen_36"
+                    android:paddingRight="@dimen/dimen_34"
+                    android:paddingTop="@dimen/dimen_20">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:text="授权书"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_14" />
+
+                    <com.photopicker.com.widget.BGASortableNinePhotoLayout
+                        android:id="@+id/snpl_impower"
+                        android:layout_width="@dimen/dimen_144"
+                        android:layout_height="@dimen/dimen_144"
+                        app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
+                        app:bga_snpl_deleteDrawableOverlapQuarter="false"
+                        app:bga_snpl_editable="true"
+                        app:bga_snpl_itemCornerRadius="0dp"
+                        app:bga_snpl_itemSpanCount="1"
+                        app:bga_snpl_itemWhiteSpacing="4dp"
+                        app:bga_snpl_itemWidth="0dp"
+                        app:bga_snpl_maxItemCount="1"
+                        app:bga_snpl_otherWhiteSpacing="100dp"
+                        app:bga_snpl_placeholderDrawable="@mipmap/ic_nodata"
+                        app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
+                        app:bga_snpl_plusEnable="true"
+                        app:bga_snpl_sortable="true" />
+                </LinearLayout>
+
             </LinearLayout>
 
             <LinearLayout
@@ -220,7 +303,7 @@
                     android:layout_height="@dimen/dimen_90"
                     android:layout_marginLeft="@dimen/dimen_20"
                     android:gravity="center_vertical"
-                    android:text="选择业务类型"
+                    android:text="熟悉品牌"
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_15" />
 
@@ -231,7 +314,7 @@
                     android:background="@color/content_bg" />
 
                 <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recycler_view_classfiy"
+                    android:id="@+id/recycler_brand"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -252,7 +335,7 @@
         android:background="@drawable/bg_btn_trouble_detail_add_trouble"
         android:gravity="center"
         android:padding="@dimen/dimen_30"
-        android:text="去设置服务区域→"
+        android:text="去添加资质证书→"
         android:textColor="@color/color_white"
         android:textSize="@dimen/textSize_13" />
 

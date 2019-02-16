@@ -72,7 +72,7 @@ public class SpecialistAddWorkActivity extends BaseActivityWithTakePhoto {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_specialist_add_work);
         ButterKnife.bind(this);
-        setTitle("个人经历");
+        setTitle("工作经历");
         setLeftBack();
 
         bean = (JobExperienceEntity) getIntent().getSerializableExtra("bean");
@@ -83,9 +83,9 @@ public class SpecialistAddWorkActivity extends BaseActivityWithTakePhoto {
 
         if (bean != null) {
             fillData();
-            setTitle("修改个人经历");
+            setTitle("修改工作经历");
         } else {
-            setTitle("添加个人经历");
+            setTitle("添加工作经历");
         }
 
     }
@@ -128,7 +128,7 @@ public class SpecialistAddWorkActivity extends BaseActivityWithTakePhoto {
         entity.setEndTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[1], "yyyy-MM-dd"));
         entity.setJobIntro(etCertificate.getText().toString().trim());
         entity.setCardPics(pic);
-        entity.setType(0);
+        entity.setType(1);
 
         OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
             @Override

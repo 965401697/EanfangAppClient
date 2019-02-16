@@ -211,6 +211,7 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
             return;
         }
         if (requestCode == REQUEST_FILTRATE && resultCode == RESULT_FILTRATE) {
+            signListAdapter.getData().clear();
             mQueryEntry = (QueryEntry) data.getSerializableExtra("query_foot");
             initData();
         }

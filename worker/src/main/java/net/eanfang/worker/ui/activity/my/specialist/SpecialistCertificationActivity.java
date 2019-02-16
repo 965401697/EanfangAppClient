@@ -22,7 +22,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.jph.takephoto.model.TImage;
 import com.jph.takephoto.model.TResult;
 import com.yaf.base.entity.ExpertsCertificationEntity;
-import com.yaf.sys.entity.AccountEntity;
 
 import net.eanfang.worker.R;
 
@@ -75,7 +74,7 @@ public class SpecialistCertificationActivity extends BaseActivityWithTakePhoto {
         setOnClick();
         if (mStatus > 0) {
             // 获取专家信息
-            EanfangHttp.get(UserApi.GET_EXPERT_INFO_BY_ID+"/"+EanfangApplication.get().getAccId())
+            EanfangHttp.get(UserApi.GET_EXPERT_INFO_BY_ID)
                     .execute(new EanfangCallback<ExpertsCertificationEntity>(SpecialistCertificationActivity.this, true, ExpertsCertificationEntity.class, (bean) -> {
                         mExpertsCertificationEntity = bean;
                         fillData();
@@ -175,12 +174,10 @@ public class SpecialistCertificationActivity extends BaseActivityWithTakePhoto {
 
 
         mExpertsCertificationEntity.setAccId(EanfangApplication.get().getAccId());
-        AccountEntity accountEntity = new AccountEntity();
-        accountEntity.setRealName(tvContactName.getText().toString().trim());
-        accountEntity.setMobile(tvContactPhone.getText().toString().trim());
-        accountEntity.setIdCard(cardId);
-        accountEntity.setGender(rbMan.isChecked() ? 1 : 0);
-        mExpertsCertificationEntity.setAccountEntity(accountEntity);
+        mExpertsCertificationEntity.setExpertName(tvContactName.getText().toString().trim());
+        mExpertsCertificationEntity.setPhonenumber(tvContactPhone.getText().toString().trim());
+        mExpertsCertificationEntity.setIdCard(cardId);
+        mExpertsCertificationEntity.setGender(rbMan.isChecked() ? 1 : 0);
         mExpertsCertificationEntity.setIntro(info);
 
         Intent intent = new Intent(this, SpecialistIdentityCardCertification.class);
