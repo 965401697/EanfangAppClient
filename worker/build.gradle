@@ -9,7 +9,7 @@ android {
         minSdkVersion 17
         targetSdkVersion 26
         versionCode 19021601
-        versionName "2.3.35"
+        versionName "2.3.34_beta"
         multiDexEnabled true
 //        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
