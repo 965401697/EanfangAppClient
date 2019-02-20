@@ -1,5 +1,6 @@
 package net.eanfang.worker.ui.activity.worksapce.security;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -37,6 +38,9 @@ public class SecurityListActivity extends BaseActivity {
     private String[] mTitles = {"关注", "热门"};
     private MyPagerAdapter mAdapter;
 
+
+    private final int FILTRATE_TYPE_CODE = 101;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +65,7 @@ public class SecurityListActivity extends BaseActivity {
 
     @OnClick(R.id.iv_create)
     public void onViewClicked() {
-        JumpItent.jump(SecurityListActivity.this, SecurityCreateActivity.class);
+        JumpItent.jump(SecurityListActivity.this, SecurityCreateActivity.class, FILTRATE_TYPE_CODE);
     }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
@@ -85,5 +89,12 @@ public class SecurityListActivity extends BaseActivity {
         }
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        int currentTab = tlSecurityList.getCurrentTab();
+        if (resultCode == RESULT_OK && requestCode == FILTRATE_TYPE_CODE) {
+            ((SecurityHotFragment) mFragments.get(currentTab)).refreshStatus();
+        }
+    }
 }

@@ -610,5 +610,12 @@ public interface NewApiService {
      * 安防圈 创建
      */
     String SERCURITY_CREATE = BASE_URL + "/yaf_spc/spcircle/create";
-
+    /**
+     * 安防圈 关注
+     */
+    String SERCURITY_FOUCUS = BASE_URL + "/yaf_spc/spcircle/follower";
+    /**
+     * 安防圈 关注
+     */
+    String SERCURITY_LIKE = BASE_URL + "/yaf_spc/spcircle/likes";
 }

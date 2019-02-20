@@ -16,6 +16,7 @@ import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
+import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.worker.R;
@@ -73,7 +74,7 @@ public class SecurityCreateActivity extends BaseActivity {
             return;
         }
         securityCreateBean.setSpcContent(mContent);
-        mPic = PhotoUtils.getPhotoUrl("/sercurity", snplAddPhoto, uploadMap, false);
+        mPic = PhotoUtils.getPhotoUrl("sercurity/", snplAddPhoto, uploadMap, false);
         securityCreateBean.setSpcImg(mPic);
         if (uploadMap.size() != 0) {
             OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
@@ -91,7 +92,8 @@ public class SecurityCreateActivity extends BaseActivity {
     }
 
     public void doSubmit() {
-        EanfangHttp.post(NewApiService.SERCURITY_CREATE).upJson(JSONObject.toJSONString(securityCreateBean))
+        EanfangHttp.post(NewApiService.SERCURITY_CREATE)
+                .upJson(JSONObject.toJSONString(securityCreateBean))
                 .execute(new EanfangCallback<JSONObject>(SecurityCreateActivity.this, true, JSONObject.class, bean1 -> {
                     setResult(RESULT_OK);
                     finishSelf();
@@ -107,6 +109,9 @@ public class SecurityCreateActivity extends BaseActivity {
         switch (requestCode) {
             case REQUEST_CODE_CHOOSE_CERTIFICATE:
                 snplAddPhoto.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                break;
+            case REQUEST_CODE_PHOTO_CERTIFICATE:
+                snplAddPhoto.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
                 break;
         }
     }

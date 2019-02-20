@@ -49,7 +49,7 @@ import net.eanfang.worker.ui.activity.worksapce.repair.RepairCtrlActivity;
 import net.eanfang.worker.ui.activity.worksapce.scancode.ScanCodeActivity;
 import net.eanfang.worker.ui.activity.worksapce.security.SecurityListActivity;
 import net.eanfang.worker.ui.activity.worksapce.tender.WorkerTenderControlActivity;
-import net.eanfang.worker.ui.adapter.HomeSecurityAdapter;
+import net.eanfang.worker.ui.adapter.security.SecurityHotListAdapter;
 import net.eanfang.worker.ui.adapter.HomeWaitAdapter;
 import net.eanfang.worker.ui.widget.CustomHomeViewPager;
 import net.eanfang.worker.ui.widget.DividerItemDecoration;
@@ -123,7 +123,7 @@ public class HomeFragment extends BaseFragment {
      */
     private RelativeLayout rlSecurity;
     private RecyclerView rvSecurity;
-    private HomeSecurityAdapter homeSecurityAdapter;
+    private SecurityHotListAdapter securityHotListAdapter;
 
     @Override
     protected void initData(Bundle arguments) {
@@ -246,13 +246,13 @@ public class HomeFragment extends BaseFragment {
      * 安防圈
      */
     private void initSecurity() {
-        homeSecurityAdapter = new HomeSecurityAdapter(rvSecurity,getActivity());
+        securityHotListAdapter = new SecurityHotListAdapter(getActivity());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         rvSecurity.setLayoutManager(layoutManager);
         rvSecurity.setNestedScrollingEnabled(false);
         rvSecurity.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
-//        homeSecurityAdapter.bindToRecyclerView(rvSecurity);
-//        homeSecurityAdapter.setNewData(mSecurityList);
+//        securityHotListAdapter.bindToRecyclerView(rvSecurity);
+//        securityHotListAdapter.setNewData(mSecurityList);
     }
 
     @Override

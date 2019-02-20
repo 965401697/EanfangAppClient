@@ -63,7 +63,8 @@
             android:paddingRight="@dimen/dimen_24"
             android:paddingTop="@dimen/dimen_16"
             android:text="+关注"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:visibility="gone" />
     </RelativeLayout>
 
     <TextView
@@ -81,21 +82,10 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <com.photopicker.com.widget.BGASortableNinePhotoLayout
+        <com.photopicker.com.widget.BGANinePhotoLayout
             android:id="@+id/snpl_pic"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:bga_snpl_deleteDrawable="@color/color_white"
-            app:bga_snpl_deleteDrawableOverlapQuarter="false"
-            app:bga_snpl_editable="false"
-            app:bga_snpl_itemCornerRadius="0dp"
-            app:bga_snpl_itemSpanCount="3"
-            app:bga_snpl_itemWhiteSpacing="4dp"
-            app:bga_snpl_itemWidth="0dp"
-            app:bga_snpl_maxItemCount="9"
-            app:bga_snpl_otherWhiteSpacing="100dp"
-            app:bga_snpl_plusEnable="false"
-            app:bga_snpl_sortable="false" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <RelativeLayout

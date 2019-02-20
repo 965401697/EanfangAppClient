@@ -21,7 +21,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SecurityHotBean implements Serializable {
+public class SecurityHotListBean implements Serializable {
     private List<ListBean> list;
 
     @Getter
@@ -34,6 +34,7 @@ public class SecurityHotBean implements Serializable {
         private Date createTime;
         private String editTime;
         private int followCount;
+        private int followsStatus;
         private int friend;
         private int likesCount;
         private Long publisherCompanyId;
@@ -45,7 +46,7 @@ public class SecurityHotBean implements Serializable {
         private Long publisherUserId;
         private int readCount;
         private String spcContent;
-        private int spcId;
+        private Long spcId;
         private String spcImg;
 
         @Getter

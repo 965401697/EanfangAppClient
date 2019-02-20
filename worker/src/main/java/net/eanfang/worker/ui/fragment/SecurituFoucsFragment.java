@@ -7,21 +7,20 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.security.SecurityFoucsListBean;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.adapter.HomeSecurityAdapter;
+import net.eanfang.worker.ui.adapter.security.SecurityFocusListAdapter;
 import net.eanfang.worker.ui.widget.DividerItemDecoration;
-
-import org.json.JSONObject;
 
 public class SecurituFoucsFragment extends TemplateItemListFragment {
 
     private String mTitle;
 
     private QueryEntry mQueryEntry;
-    private HomeSecurityAdapter homeSecurityAdapter;
+    private SecurityFocusListAdapter securityFocusListAdapter;
 
     public static SecurituFoucsFragment getInstance(String title) {
         SecurituFoucsFragment sf = new SecurituFoucsFragment();
@@ -33,11 +32,6 @@ public class SecurituFoucsFragment extends TemplateItemListFragment {
         return mTitle;
     }
 
-//    @Override
-//    protected int setLayoutResouceId() {
-//        return R.layout.fragment_securitu_foucs;
-//    }
-
 
     @Override
     protected void setListener() {
@@ -46,11 +40,11 @@ public class SecurituFoucsFragment extends TemplateItemListFragment {
 
     @Override
     protected void initAdapter() {
-        homeSecurityAdapter = new HomeSecurityAdapter(mRecyclerView,getActivity());
-//        homeSecurityAdapter.bindToRecyclerView(mRecyclerView);
+        securityFocusListAdapter = new SecurityFocusListAdapter(getActivity());
+        securityFocusListAdapter.bindToRecyclerView(mRecyclerView);
         mRecyclerView.setBackgroundColor(getResources().getColor(R.color.white));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
-//        homeSecurityAdapter.setOnLoadMoreListener(this);
+        securityFocusListAdapter.setOnLoadMoreListener(this, mRecyclerView);
     }
 
     @Override
@@ -62,16 +56,16 @@ public class SecurituFoucsFragment extends TemplateItemListFragment {
         mQueryEntry.getEquals().put("followUserId", EanfangApplication.get().getUserId() + "");
         EanfangHttp.post(NewApiService.SERCURITY_FOUCS)
                 .upJson(JsonUtils.obj2String(mQueryEntry))
-                .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class) {
+                .execute(new EanfangCallback<SecurityFoucsListBean>(getActivity(), true, SecurityFoucsListBean.class) {
                     @Override
-                    public void onSuccess(JSONObject bean) {
+                    public void onSuccess(SecurityFoucsListBean bean) {
                         if (mPage == 1) {
-                            homeSecurityAdapter.getData().clear();
-//                            homeSecurityAdapter.setNewData(bean.getList());
+                            securityFocusListAdapter.getData().clear();
+                            securityFocusListAdapter.setNewData(bean.getList());
                             mSwipeRefreshLayout.setRefreshing(false);
-//                            homeSecurityAdapter.loadMoreComplete();
+//                            securityHotListAdapter.loadMoreComplete();
 //                            if (bean.getList().size() < 10) {
-//                                homeSecurityAdapter.loadMoreEnd();
+//                                securityHotListAdapter.loadMoreEnd();
 //                                mQueryEntry = null;
 //                            }
 
@@ -83,10 +77,10 @@ public class SecurituFoucsFragment extends TemplateItemListFragment {
 
 
                         } else {
-//                            homeSecurityAdapter.addData(bean.getList());
-//                            homeSecurityAdapter.loadMoreComplete();
+//                            securityHotListAdapter.addData(bean.getList());
+//                            securityHotListAdapter.loadMoreComplete();
 //                            if (bean.getList().size() < 10) {
-//                                homeSecurityAdapter.loadMoreEnd();
+//                                securityHotListAdapter.loadMoreEnd();
 //                            }
                         }
                     }
@@ -94,8 +88,8 @@ public class SecurituFoucsFragment extends TemplateItemListFragment {
                     @Override
                     public void onNoData(String message) {
                         mSwipeRefreshLayout.setRefreshing(false);
-//                        homeSecurityAdapter.loadMoreEnd();//没有数据了
-                        if (homeSecurityAdapter.getData().size() == 0) {
+//                        securityHotListAdapter.loadMoreEnd();//没有数据了
+                        if (securityFocusListAdapter.getData().size() == 0) {
                             mTvNoData.setVisibility(View.VISIBLE);
                         } else {
                             mTvNoData.setVisibility(View.GONE);

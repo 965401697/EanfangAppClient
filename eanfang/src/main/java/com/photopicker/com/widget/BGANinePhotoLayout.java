@@ -53,7 +53,7 @@ public class BGANinePhotoLayout extends FrameLayout implements AdapterView.OnIte
     private int mOtherWhiteSpacing;
     private int mPlaceholderDrawableResId;
     private int mItemSpanCount;
-
+    private Context mContext;
     private int mItemWidth;
 
     public BGANinePhotoLayout(Context context) {
@@ -153,6 +153,9 @@ public class BGANinePhotoLayout extends FrameLayout implements AdapterView.OnIte
         return (ArrayList<String>) mPhotoAdapter.getData();
     }
 
+    public void init(Context context) {
+        mContext = context;
+    }
 
     /**
      * 设置图片路径数据集合
@@ -160,6 +163,9 @@ public class BGANinePhotoLayout extends FrameLayout implements AdapterView.OnIte
      * @param photos
      */
     public void setData(ArrayList<String> photos) {
+        if (mContext == null) {
+            throw new RuntimeException("请先调用init方法进行初始化");
+        }
         if (photos.size() == 0) {
             setVisibility(GONE);
         } else {
