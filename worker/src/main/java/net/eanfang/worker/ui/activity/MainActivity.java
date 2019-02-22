@@ -73,6 +73,7 @@ import java.util.HashMap;
 
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.manager.IUnReadMessageObserver;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
@@ -85,7 +86,7 @@ import static com.eanfang.config.EanfangConst.MEIZU_APPKEY_WORKER;
 import static com.eanfang.config.EanfangConst.XIAOMI_APPID_WORKER;
 import static com.eanfang.config.EanfangConst.XIAOMI_APPKEY_WORKER;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements IUnReadMessageObserver {
     private static final String TAG = MainActivity.class.getSimpleName();
     protected FragmentTabHost mTabHost;
     private LoginBean user;
@@ -176,6 +177,14 @@ public class MainActivity extends BaseActivity {
         PrefUtils.setBoolean(getApplicationContext(), PrefUtils.GUIDE, false);//新手引导是否展示
 
         getPushMessage(getIntent());
+
+        final Conversation.ConversationType[] conversationTypes = {
+                Conversation.ConversationType.PRIVATE,
+                Conversation.ConversationType.GROUP, Conversation.ConversationType.SYSTEM,
+                Conversation.ConversationType.PUBLIC_SERVICE, Conversation.ConversationType.APP_PUBLIC_SERVICE
+        };
+
+        RongIM.getInstance().addUnReadMessageCountChangedObserver(this, conversationTypes);
     }
 
 
@@ -398,26 +407,27 @@ public class MainActivity extends BaseActivity {
         @Override
         public boolean onReceived(Message message, int left) {
 
-            getIMUnreadMessageCount();
+//            getIMUnreadMessageCount();
 
             //开发者根据自己需求自行处理
             boolean isDelect = false;
-//            String type = message.getObjectName();
-//            if (type.equals("RC:InfoNtf")) {
-//                InformationNotificationMessage msg = (InformationNotificationMessage) message.getContent();
-//                if (msg.getMessage().equals("解散了")) {
-//                    isDelect = true;
-//                    for (Activity activity : transactionActivities) {
-//                        if (activity instanceof ConversationActivity) {
-//                            if (message.getTargetId().equals(((ConversationActivity) activity).mId)) {
-//                                activity.finish();
-//                            }
-//                        }
-//                    }
-//                    RongIM.getInstance().removeConversation(Conversation.ConversationType.GROUP, message.getTargetId(), null);
-//                }
-//
-//            }
+
+            /**String type = message.getObjectName();
+             if (type.equals("RC:InfoNtf")) {
+             InformationNotificationMessage msg = (InformationNotificationMessage) message.getContent();
+             if (msg.getMessage().equals("解散了")) {
+             isDelect = true;
+             for (Activity activity : transactionActivities) {
+             if (activity instanceof ConversationActivity) {
+             if (message.getTargetId().equals(((ConversationActivity) activity).mId)) {
+             activity.finish();
+             }
+             }
+             }
+             RongIM.getInstance().removeConversation(Conversation.ConversationType.GROUP, message.getTargetId(), null);
+             }
+
+             }*/
 
 
             if (message.getConversationType().getName().equals(Conversation.ConversationType.SYSTEM.getName())) {
@@ -518,9 +528,7 @@ public class MainActivity extends BaseActivity {
         RongIM.getInstance().getTotalUnreadCount(new RongIMClient.ResultCallback<Integer>() {
             @Override
             public void onSuccess(Integer integer) {
-                mContactNum = integer;
-                int i = mContact + integer;
-                doChange(i);
+
             }
 
             @Override
@@ -528,6 +536,14 @@ public class MainActivity extends BaseActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onCountChanged(int integer) {
+        Log.e("GG", "消息數量" + integer);
+        mContactNum = integer;
+        int i = mContact + integer;
+        doChange(i);
     }
 
     private void doChange(int mContactNum) {
@@ -544,7 +560,7 @@ public class MainActivity extends BaseActivity {
                 case CONNECTED:
 
                     Log.i("zzw", "--------------------连接成功");
-                    getIMUnreadMessageCount();
+//                    getIMUnreadMessageCount();
                     mStatus = "";
                     break;
                 //断开连接。

@@ -64,6 +64,7 @@ import java.util.HashMap;
 
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.manager.IUnReadMessageObserver;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
@@ -76,7 +77,7 @@ import static com.eanfang.config.EanfangConst.MEIZU_APPKEY_CLIENT;
 import static com.eanfang.config.EanfangConst.XIAOMI_APPID_CLIENT;
 import static com.eanfang.config.EanfangConst.XIAOMI_APPKEY_CLIENT;
 
-public class MainActivity extends BaseClientActivity {
+public class MainActivity extends BaseClientActivity implements IUnReadMessageObserver {
     private static final String TAG = MainActivity.class.getSimpleName();
     protected FragmentTabHost mTabHost;
     private LoginBean user;
@@ -354,7 +355,7 @@ public class MainActivity extends BaseClientActivity {
         @Override
         public boolean onReceived(Message message, int left) {
 
-            getIMUnreadMessageCount();
+//            getIMUnreadMessageCount();
 
             //开发者根据自己需求自行处理
             boolean isDelect = false;
@@ -476,9 +477,9 @@ public class MainActivity extends BaseClientActivity {
         RongIM.getInstance().getTotalUnreadCount(new RongIMClient.ResultCallback<Integer>() {
             @Override
             public void onSuccess(Integer integer) {
-                mContactNum = integer;
-                int i = mContact + integer;
-                doChange(i);
+//                mContactNum = integer;
+//                int i = mContact + integer;
+//                doChange(i);
             }
 
             @Override
@@ -486,6 +487,14 @@ public class MainActivity extends BaseClientActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onCountChanged(int integer) {
+        Log.e("GG", "消息數量" + integer);
+        mContactNum = integer;
+        int i = mContact + integer;
+        doChange(i);
     }
 
     private void doChange(int mContactNum) {
@@ -502,7 +511,7 @@ public class MainActivity extends BaseClientActivity {
                 case CONNECTED:
 
                     Log.i("zzw", "--------------------连接成功");
-                    getIMUnreadMessageCount();
+//                    getIMUnreadMessageCount();
                     mStatus = "";
                     break;
                 //断开连接。
@@ -659,7 +668,7 @@ public class MainActivity extends BaseClientActivity {
                 } else if (mType == 3) {
                     //打开systemnoticeactivity
                     JumpItent.jump(MainActivity.this, SystemNoticeActivity.class);
-                }else if (mType == 4) {
+                } else if (mType == 4) {
                     //打开systemnoticeactivity
                     JumpItent.jump(MainActivity.this, OfficialListActivity.class);
                 }

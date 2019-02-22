@@ -298,7 +298,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
 //        if (myConversationListFragment != null && uri != null)
 //            myConversationListFragment.setUri(uri);
 
-        ((MainActivity) getActivity()).getIMUnreadMessageCount();
+//        ((MainActivity) getActivity()).getIMUnreadMessageCount();
         String mStatus = ((MainActivity) getActivity()).onNoConatac();
         if (StringUtils.isEmpty(mStatus)) {
             view.findViewById(R.id.rl_no_contact).setVisibility(View.GONE);

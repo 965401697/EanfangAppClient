@@ -92,6 +92,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
      * 融云链接状态
      */
     private TextView mContactStatus;
+
     @Override
     protected int setLayoutResouceId() {
         return R.layout.fragment_message;
@@ -315,7 +316,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
 //        if (myConversationListFragment != null && uri != null)
 //            myConversationListFragment.setUri(uri);
 //
-        ((MainActivity) getActivity()).getIMUnreadMessageCount();
+//        ((MainActivity) getActivity()).getIMUnreadMessageCount();
         String mStatus = ((MainActivity) getActivity()).onNoConatac();
         if (StringUtils.isEmpty(mStatus)) {
             view.findViewById(R.id.rl_no_contact).setVisibility(View.GONE);
