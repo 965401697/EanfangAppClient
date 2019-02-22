@@ -75,6 +75,14 @@ public class SecurityHotListAdapter extends BaseQuickAdapter<SecurityHotListBean
         } else {
             helper.setVisible(R.id.tv_isFocus, true);
         }
+        /**
+         * 0 点赞 1 未点赞
+         * */
+        if (item.getLikeStatus() == 0) {
+            helper.setImageResource(R.id.iv_like, R.mipmap.ic_worker_security_like_pressed);
+        } else {
+            helper.setImageResource(R.id.iv_like, R.mipmap.ic_worker_security_like_unpressed);
+        }
         picList.clear();
         ninePhotoLayout.init(context);
         ninePhotoLayout.setData(picList);

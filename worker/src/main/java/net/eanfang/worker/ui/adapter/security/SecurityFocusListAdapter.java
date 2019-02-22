@@ -60,6 +60,7 @@ public class SecurityFocusListAdapter extends BaseQuickAdapter<SecurityFoucsList
 //            helper.setVisible(R.id.tv_isFocus, true);
 //        }
         picList.clear();
+        ninePhotoLayout.init(context);
         ninePhotoLayout.setData(picList);
 //        if (!StringUtils.isEmpty(item.getSpcImg())) {
 //            ninePhotoLayout.setVisibility(View.VISIBLE);

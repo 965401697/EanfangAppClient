@@ -103,7 +103,7 @@
                 android:id="@+id/iv_like"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/ic_worker_security_like_pressed" />
+                android:src="@mipmap/ic_worker_security_like_unpressed" />
 
             <TextView
                 android:id="@+id/tv_like_num"

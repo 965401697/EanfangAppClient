@@ -28,7 +28,7 @@ public class SecurityHotListBean implements Serializable {
     @Setter
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class ListBean {
+    public static class ListBean implements Serializable {
         private int collectionCount;
         private int commentCount;
         private Date createTime;
@@ -37,6 +37,7 @@ public class SecurityHotListBean implements Serializable {
         private int followsStatus;
         private int friend;
         private int likesCount;
+        private int likeStatus;
         private Long publisherCompanyId;
         private String publisherCompanyName;
         private PublisherOrgBean publisherOrg;

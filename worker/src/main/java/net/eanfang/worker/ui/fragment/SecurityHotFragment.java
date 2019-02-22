@@ -1,5 +1,7 @@
 package net.eanfang.worker.ui.fragment;
 
+import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.alibaba.fastjson.JSONObject;
@@ -11,10 +13,13 @@ import com.eanfang.model.security.SecurityFoucsBean;
 import com.eanfang.model.security.SecurityHotListBean;
 import com.eanfang.model.security.SecurityLikeBean;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.worksapce.security.SecurityDetailActivity;
 import net.eanfang.worker.ui.adapter.security.SecurityHotListAdapter;
+import net.eanfang.worker.ui.widget.DividerItemDecoration;
 
 import cn.bingoogolapple.photopicker.imageloader.BGARVOnScrollListener;
 
@@ -38,15 +43,6 @@ public class SecurityHotFragment extends TemplateItemListFragment {
 
     @Override
     protected void setListener() {
-
-    }
-
-    @Override
-    protected void initAdapter() {
-        securityHotListAdapter = new SecurityHotListAdapter(getActivity());
-        securityHotListAdapter.bindToRecyclerView(mRecyclerView);
-        securityHotListAdapter.setOnLoadMoreListener(this, mRecyclerView);
-        mRecyclerView.addOnScrollListener(new BGARVOnScrollListener(getActivity()));
         securityHotListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             switch (view.getId()) {
                 case R.id.tv_isFocus:
@@ -56,7 +52,9 @@ public class SecurityHotFragment extends TemplateItemListFragment {
                     doLike(securityHotListAdapter.getData().get(position));
                     break;
                 case R.id.ll_comments:
-                    showToast("评论");
+                    Bundle bundle = new Bundle();
+                    bundle.putString("id", securityHotListAdapter.getData().get(position).getSpcId()+"");
+                    JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
                     break;
                 case R.id.iv_share:
                     showToast("分享");
@@ -65,6 +63,22 @@ public class SecurityHotFragment extends TemplateItemListFragment {
                     break;
             }
         });
+        securityHotListAdapter.setOnItemClickListener((adapter, view, position) -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("id", securityHotListAdapter.getData().get(position).getSpcId() + "");
+            JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
+        });
+    }
+
+    @Override
+    protected void initAdapter() {
+        securityHotListAdapter = new SecurityHotListAdapter(getActivity());
+        securityHotListAdapter.bindToRecyclerView(mRecyclerView);
+        mRecyclerView.setBackgroundColor(getResources().getColor(R.color.white));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
+        securityHotListAdapter.setOnLoadMoreListener(this, mRecyclerView);
+        mRecyclerView.addOnScrollListener(new BGARVOnScrollListener(getActivity()));
+
     }
 
     /**
@@ -74,14 +88,20 @@ public class SecurityHotFragment extends TemplateItemListFragment {
         SecurityLikeBean securityLikeBean = new SecurityLikeBean();
         securityLikeBean.setAsId(listBean.getSpcId());
         securityLikeBean.setType("0");
-        securityLikeBean.setLikeStatus("0");
+        /**
+         * 0 点赞 1 未点赞
+         * */
+        if (listBean.getLikeStatus() == 0) {
+            securityLikeBean.setLikeStatus("1");
+        } else {
+            securityLikeBean.setLikeStatus("0");
+        }
         securityLikeBean.setLikeUserId(EanfangApplication.get().getUserId());
         securityLikeBean.setLikeCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyId());
         securityLikeBean.setLikeTopCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getTopCompanyId());
-        EanfangHttp.post(NewApiService.SERCURITY_FOUCUS)
+        EanfangHttp.post(NewApiService.SERCURITY_LIKE)
                 .upJson(JSONObject.toJSONString(securityLikeBean))
                 .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class, bean -> {
-                    showToast("点赞成功");
                     mRecyclerView.scrollToPosition(0);
                     getData();
                 }));
