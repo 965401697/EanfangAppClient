@@ -26,7 +26,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.eanfang.util.ConnectivityChangeReceiver;
+import com.eanfang.util.ConnectivityChangeUtil;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
@@ -89,7 +89,7 @@ public class WebActivity extends BaseClientActivity {
     private void initCheck() {
         setLeftBack();
         setTitle(title);
-        if (ConnectivityChangeReceiver.isNetConnected(WebActivity.this) == false) {
+        if (ConnectivityChangeUtil.isNetConnected(WebActivity.this) == false) {
             llErrorView.setVisibility(View.VISIBLE);
             loadUrl(urls);
         } else {
@@ -99,7 +99,7 @@ public class WebActivity extends BaseClientActivity {
         llCheckNet.setOnClickListener(v -> startActivity(new Intent(Settings.ACTION_SETTINGS)));
 
         llRefresh.setOnClickListener((v) -> {
-            if (ConnectivityChangeReceiver.isNetConnected(this) == true) {
+            if (ConnectivityChangeUtil.isNetConnected(this) == true) {
                 llErrorView.setVisibility(View.GONE);
                 loadUrl(urls);
             } else {
@@ -149,7 +149,7 @@ public class WebActivity extends BaseClientActivity {
         //LOAD_DEFAULT: （默认）根据cache-control决定是否从网络上取数据。
         //LOAD_NO_CACHE: 不使用缓存，只从网络获取数据.
         //LOAD_CACHE_ELSE_NETWORK，只要本地有，无论是否过期，或者no-cache，都使用缓存中的数据。
-//        if (ConnectivityChangeReceiver.isNetConnected(getApplicationContext())) {
+//        if (ConnectivityChangeUtil.isNetConnected(getApplicationContext())) {
 //            webSettings.setCacheMode(WebSettings.LOAD_DEFAULT);//根据cache-control决定是否从网络上取数据。
 //        } else {
 //            webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);//没网，则从本地获取，即离线加载

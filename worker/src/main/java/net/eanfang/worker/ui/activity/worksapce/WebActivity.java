@@ -26,7 +26,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.eanfang.ui.base.BaseActivity;
-import com.eanfang.util.ConnectivityChangeReceiver;
+import com.eanfang.util.ConnectivityChangeUtil;
 
 import net.eanfang.worker.R;
 
@@ -88,7 +88,7 @@ public class WebActivity extends BaseActivity {
     private void initCheck() {
         setLeftBack();
         setTitle(title);
-        if (ConnectivityChangeReceiver.isNetConnected(WebActivity.this) == false) {
+        if (ConnectivityChangeUtil.isNetConnected(WebActivity.this) == false) {
             llErrorView.setVisibility(View.VISIBLE);
             loadUrl(urls);
         } else {
@@ -98,7 +98,7 @@ public class WebActivity extends BaseActivity {
         llCheckNet.setOnClickListener(v -> startActivity(new Intent(Settings.ACTION_SETTINGS)));
 
         llRefresh.setOnClickListener((v) -> {
-            if (ConnectivityChangeReceiver.isNetConnected(this) == true) {
+            if (ConnectivityChangeUtil.isNetConnected(this) == true) {
                 llErrorView.setVisibility(View.GONE);
                 loadUrl(urls);
             } else {

@@ -60,7 +60,7 @@ public class SecurityHotListAdapter extends BaseQuickAdapter<SecurityHotListBean
         // 点赞数量
         helper.setText(R.id.tv_like_num, item.getLikesCount() + "");
         // 评论数量
-        helper.setText(R.id.tv_comments_num, item.getFollowCount() + "");
+        helper.setText(R.id.tv_comments_num, item.getCommentCount() + "");
         helper.setText(R.id.tv_time, ETimeUtils.getTimeFormatText(item.getCreateTime()));
         if (item.getPublisherUserId().equals(EanfangApplication.get().getUserId())) {
             helper.setVisible(R.id.tv_isFocus, false);

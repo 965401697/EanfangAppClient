@@ -26,7 +26,7 @@ import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.takevideo.TakeVdideoMode;
 import com.eanfang.takevideo.TakeVideoActivity;
 import com.eanfang.ui.base.voice.RecognitionManager;
-import com.eanfang.util.ConnectivityChangeReceiver;
+import com.eanfang.util.ConnectivityChangeUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.PhotoUtils;
@@ -277,7 +277,7 @@ public class AddTroubleActivity extends BaseClientActivity {
      * 提交方法
      */
     private void onSubmitClient() {
-        if (!ConnectivityChangeReceiver.isNetConnected(getApplicationContext())) {
+        if (!ConnectivityChangeUtil.isNetConnected(getApplicationContext())) {
             showToast("网络异常，请检查网络");
             return;
         }

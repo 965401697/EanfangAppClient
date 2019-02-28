@@ -62,6 +62,7 @@ public class SecurituFoucsFragment extends TemplateItemListFragment {
                 case R.id.ll_comments:
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("bean", securityFocusListAdapter.getData().get(position));
+                    bundle.putString("type", "focus");
                     JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
                     break;
                 case R.id.iv_share:
@@ -71,6 +72,12 @@ public class SecurituFoucsFragment extends TemplateItemListFragment {
                     break;
             }
         });
+        securityFocusListAdapter.setOnItemClickListener((adapter, view, position) -> {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("bean", securityFocusListAdapter.getData().get(position));
+            bundle.putString("type", "focus");
+            JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
+        });
     }
 
     /**
@@ -78,29 +85,29 @@ public class SecurituFoucsFragment extends TemplateItemListFragment {
      */
     private void doLike(SecurityFoucsListBean.ListBean listBean) {
         SecurityLikeBean securityLikeBean = new SecurityLikeBean();
-//        securityLikeBean.setAsId(listBean.getSpcId());
+        securityLikeBean.setAsId(listBean.getAskSpCircleEntity().getSpcId());
         securityLikeBean.setType("0");
         /**
-         * 0 点赞 1 未点赞
+         *状态：0 点赞 1 未点赞
          * */
-//        if (listBean.getLikeStatus() == 0) {
-//            securityLikeBean.setLikeStatus("1");
-//        } else {
-//            securityLikeBean.setLikeStatus("0");
-//        }
+        if (listBean.getAskSpCircleEntity().getLikeStatus() == 0) {
+            securityLikeBean.setLikeStatus("1");
+        } else {
+            securityLikeBean.setLikeStatus("0");
+        }
         securityLikeBean.setLikeUserId(EanfangApplication.get().getUserId());
         securityLikeBean.setLikeCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyId());
         securityLikeBean.setLikeTopCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getTopCompanyId());
         EanfangHttp.post(NewApiService.SERCURITY_LIKE)
                 .upJson(JSONObject.toJSONString(securityLikeBean))
                 .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class, bean -> {
-                    mRecyclerView.scrollToPosition(0);
+//                    mRecyclerView.scrollToPosition(0);
                     getData();
                 }));
     }
 
     /**
-     * 进行关注
+     * 取消关注
      */
     private void doFoucus(SecurityFoucsListBean.ListBean listBean) {
         SecurityFoucsBean securityFoucsBean = new SecurityFoucsBean();
@@ -108,14 +115,14 @@ public class SecurituFoucsFragment extends TemplateItemListFragment {
         securityFoucsBean.setFollowCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyId());
         securityFoucsBean.setFollowTopCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getTopCompanyId());
 
-//        securityFoucsBean.setAsUserId(listBean.getPublisherUserId());
-//        securityFoucsBean.setAsCompanyId(listBean.getPublisherCompanyId());
-//        securityFoucsBean.setAsTopCompanyId(listBean.getPublisherTopCompanyId());
-        EanfangHttp.post(NewApiService.SERCURITY_FOUCUS)
+        securityFoucsBean.setAsUserId(listBean.getAskSpCircleEntity().getPublisherUserId());
+        securityFoucsBean.setAsCompanyId(listBean.getAskSpCircleEntity().getPublisherCompanyId());
+        securityFoucsBean.setAsTopCompanyId(listBean.getAskSpCircleEntity().getPublisherTopCompanyId());
+        EanfangHttp.post(NewApiService.SERCURITY_DELETEFOUCUS)
                 .upJson(JSONObject.toJSONString(securityFoucsBean))
                 .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class, bean -> {
-                    showToast("关注成功");
-                    mRecyclerView.scrollToPosition(0);
+                    showToast("已取消关注");
+//                    mRecyclerView.scrollToPosition(0);
                     getData();
                 }));
     }

@@ -1133,6 +1133,12 @@
             android:theme="@style/NewBaseTheme" />
         <activity android:name=".ui.activity.worksapce.security.SecurityCreateActivity" />
         <activity android:name=".ui.activity.worksapce.security.SecurityDetailActivity"></activity>
+
+        <receiver android:name="com.eanfang.listener.NetBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

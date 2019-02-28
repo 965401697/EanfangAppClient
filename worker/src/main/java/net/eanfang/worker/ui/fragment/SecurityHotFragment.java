@@ -53,7 +53,8 @@ public class SecurityHotFragment extends TemplateItemListFragment {
                     break;
                 case R.id.ll_comments:
                     Bundle bundle = new Bundle();
-                    bundle.putString("id", securityHotListAdapter.getData().get(position).getSpcId()+"");
+                    bundle.putSerializable("bean", securityHotListAdapter.getData().get(position));
+                    bundle.putString("type", "hot");
                     JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
                     break;
                 case R.id.iv_share:
@@ -65,7 +66,8 @@ public class SecurityHotFragment extends TemplateItemListFragment {
         });
         securityHotListAdapter.setOnItemClickListener((adapter, view, position) -> {
             Bundle bundle = new Bundle();
-            bundle.putString("id", securityHotListAdapter.getData().get(position).getSpcId() + "");
+            bundle.putSerializable("bean", securityHotListAdapter.getData().get(position));
+            bundle.putString("type", "hot");
             JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
         });
     }
@@ -89,7 +91,7 @@ public class SecurityHotFragment extends TemplateItemListFragment {
         securityLikeBean.setAsId(listBean.getSpcId());
         securityLikeBean.setType("0");
         /**
-         * 0 点赞 1 未点赞
+         * 状态：0 点赞 1 未点赞
          * */
         if (listBean.getLikeStatus() == 0) {
             securityLikeBean.setLikeStatus("1");

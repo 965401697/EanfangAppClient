@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.eanfang.R;
+import com.eanfang.listener.NetBroadcastReceiver;
 import com.eanfang.util.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -48,6 +49,7 @@ public abstract class BaseFragment extends Fragment implements IBase {
      */
     protected boolean mIsPrepare;
 
+    public static NetBroadcastReceiver.NetChangeListener netChangeListener;
 
     @Override
     @Nullable
@@ -77,6 +79,7 @@ public abstract class BaseFragment extends Fragment implements IBase {
         setListener();
 
         Log.e("zzw", "BaseFragment 执行onCreateView = " + mIsPrepare);
+
 
         return mRootView;
     }
@@ -246,4 +249,6 @@ public abstract class BaseFragment extends Fragment implements IBase {
 
         return true;
     }
+
+
 }

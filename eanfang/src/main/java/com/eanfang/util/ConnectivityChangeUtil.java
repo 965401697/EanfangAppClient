@@ -1,8 +1,6 @@
 package com.eanfang.util;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
@@ -13,7 +11,7 @@ import android.net.NetworkInfo;
  * @desc 网络监听的工具类，在网络时2秒内弹出异常界面
  */
 
-public class ConnectivityChangeReceiver extends BroadcastReceiver {
+public class ConnectivityChangeUtil {
     /**
      * @return 判断是否有网络
      */
@@ -31,11 +29,11 @@ public class ConnectivityChangeReceiver extends BroadcastReceiver {
         return false;
     }
 
-    @Override
-    public void onReceive(final Context context, final Intent intent) {
-        if (isNetConnected(context)) {
-            //网络正常,不执行任何操作.
-            return;
-        }
-    }
+//    @Override
+//    public void onReceive(final Context context, final Intent intent) {
+//        if (isNetConnected(context)) {
+//            //网络正常,不执行任何操作.
+//            return;
+//        }
+//    }
 }

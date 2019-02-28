@@ -22,6 +22,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SecurityHotListBean implements Serializable {
+
     private List<ListBean> list;
 
     @Getter
