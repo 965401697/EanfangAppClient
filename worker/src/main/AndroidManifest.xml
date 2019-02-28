@@ -1127,6 +1127,11 @@
         <activity android:name=".ui.activity.my.specialist.AddBrandActivity" />
         <activity android:name=".ui.activity.my.specialist.SpecialistCertificationInfoActivity" />
         <activity android:name=".ui.activity.my.specialist.SpecialistSkillInfoDetailActivity"></activity>
+        <receiver android:name="com.eanfang.listener.NetBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

@@ -13,7 +13,7 @@ import android.net.NetworkInfo;
  * @desc 网络监听的工具类，在网络时2秒内弹出异常界面
  */
 
-public class ConnectivityChangeReceiver extends BroadcastReceiver {
+public class ConnectivityChangeUtil extends BroadcastReceiver {
     /**
      * @return 判断是否有网络
      */

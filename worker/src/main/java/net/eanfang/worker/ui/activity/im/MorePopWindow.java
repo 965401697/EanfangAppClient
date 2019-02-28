@@ -21,7 +21,7 @@ import net.eanfang.worker.R;
 public class MorePopWindow extends PopupWindow {
 
     @SuppressLint("InflateParams")
-    public MorePopWindow(final Activity context, boolean isVisable) {
+    public  MorePopWindow(final Activity context, boolean isVisable) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View content = inflater.inflate(R.layout.popu_add, null);

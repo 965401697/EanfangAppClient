@@ -1,7 +1,6 @@
 package com.eanfang.ui.base;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,11 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.eanfang.R;
-import com.eanfang.application.EanfangApplication;
-import com.eanfang.dialog.TrueFalseDialog;
-import com.eanfang.model.WorkerInfoBean;
+import com.eanfang.listener.NetBroadcastReceiver;
 import com.eanfang.util.ToastUtil;
-
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -52,6 +48,7 @@ public abstract class BaseFragment extends Fragment implements IBase {
      * 当执行完oncreatview,View的初始化方法后方法后即为true
      */
     protected boolean mIsPrepare;
+    public static NetBroadcastReceiver.NetChangeListener netChangeListener;
 
 
     @Override
