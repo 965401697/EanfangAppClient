@@ -275,9 +275,7 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
                     if (mDatas.get(position).getChildren() != null) {
                         num += mDatas.get(position).getChildren().size();
                     }
-
                     organizationBean.setCountStaff(num);
-
                     Intent intent = new Intent(getActivity(), SelectOrganizationActivity.class);
                     intent.putExtra("companyId", String.valueOf(mDatas.get(position).getCompanyId()));
                     intent.putExtra("organizationBean", organizationBean);

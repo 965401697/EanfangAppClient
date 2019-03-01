@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen_200">
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_2"
+        android:layout_alignParentTop="true"
+        android:background="@color/color_new_line" />
+
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/iv_user_header"
+        android:layout_width="@dimen/dimen_80"
+        android:layout_height="@dimen/dimen_80"
+        android:layout_marginLeft="@dimen/dimen_40"
+        android:layout_marginTop="@dimen/dimen_20"
+        fresco:placeholderImage="@mipmap/ic_header"
+        fresco:roundAsCircle="true" />
+
+    <TextView
+        android:id="@+id/tv_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_30"
+        android:layout_marginTop="@dimen/dimen_45"
+        android:layout_toRightOf="@+id/iv_user_header"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:text="子六"
+        android:textColor="@color/roll_title"
+        android:textSize="@dimen/textSize_15" />
+
+
+    <TextView
+        android:id="@+id/tv_user_appraise"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_user_name"
+        android:layout_marginLeft="@dimen/dimen_30"
+        android:layout_marginRight="@dimen/dimen_40"
+        android:layout_marginTop="@dimen/dimen_30"
+        android:layout_toRightOf="@+id/iv_user_header"
+        android:text="真好"
+        android:textColor="@color/roll_title"
+        android:textSize="@dimen/textSize_13" />
+
+    <TextView
+        android:id="@+id/tv_appraise_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dimen_40"
+        android:layout_marginTop="@dimen/dimen_50"
+        android:text="非常满意"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/textSize_13" />
+</RelativeLayout>

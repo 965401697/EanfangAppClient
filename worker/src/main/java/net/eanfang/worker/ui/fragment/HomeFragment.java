@@ -45,7 +45,7 @@ import net.eanfang.worker.ui.activity.worksapce.WebActivity;
 import net.eanfang.worker.ui.activity.worksapce.datastatistics.DataStaticsticsListActivity;
 import net.eanfang.worker.ui.activity.worksapce.design.DesignActivity;
 import net.eanfang.worker.ui.activity.worksapce.maintenance.MaintenanceActivity;
-import net.eanfang.worker.ui.activity.worksapce.repair.RepairCtrlActivity;
+import net.eanfang.worker.ui.activity.worksapce.online.ExpertOnlineActivity;
 import net.eanfang.worker.ui.activity.worksapce.scancode.ScanCodeActivity;
 import net.eanfang.worker.ui.activity.worksapce.security.SecurityListActivity;
 import net.eanfang.worker.ui.activity.worksapce.tender.WorkerTenderControlActivity;
@@ -274,9 +274,10 @@ public class HomeFragment extends BaseFragment {
     private void initIconClick() {
         //报修订单
         findViewById(R.id.tv_reparir_order).setOnClickListener((v) -> {
-            if (!PermKit.get().getRepairListPerm()) return;
+//            if (!PermKit.get().getRepairListPerm()) return;
             if (workerApprove()) {
-                startActivity(new Intent(getActivity(), RepairCtrlActivity.class));
+                startActivity(new Intent(getActivity(), ExpertOnlineActivity.class));
+//                startActivity(new Intent(getActivity(), RepairCtrlActivity.class));
             }
         });
         //报装订单

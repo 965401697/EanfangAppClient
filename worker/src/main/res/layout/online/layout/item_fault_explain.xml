@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:layout_marginBottom="@dimen/dimen_20"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_120">
+
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/iv_expert_header"
+            android:layout_width="@dimen/dimen_70"
+            android:layout_height="@dimen/dimen_70"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/dimen_40"
+            fresco:placeholderImage="@mipmap/ic_header"
+            fresco:roundAsCircle="true" />
+
+
+        <TextView
+            android:id="@+id/tv_expert_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/iv_expert_header"
+            android:layout_marginLeft="@dimen/dimen_25"
+            android:layout_toRightOf="@+id/iv_expert_header"
+            android:text="推荐专家"
+            android:textColor="@color/roll_title"
+            android:textSize="@dimen/textSize_15" />
+
+
+        <TextView
+            android:id="@+id/tv_major"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/iv_expert_header"
+            android:layout_marginLeft="@dimen/dimen_25"
+            android:layout_marginRight="@dimen/dimen_40"
+
+            android:layout_toRightOf="@+id/iv_expert_header"
+            android:singleLine="true"
+            android:text=" asdf"
+            android:textColor="@color/title_zyr_color"
+            android:textSize="@dimen/textSize_13" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tv_expert_name"
+            android:layout_alignBottom="@+id/tv_expert_name"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="20dp"
+            android:singleLine="true"
+            android:text="9小时"
+            android:textColor="@color/color_bottom"
+            android:textSize="@dimen/textSize_12" />
+
+        <ImageView
+            android:layout_width="@dimen/dimen_24"
+            android:layout_height="@dimen/dimen_24"
+            android:layout_alignTop="@+id/tv_expert_name"
+            android:layout_marginLeft="@dimen/dimen_15"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:layout_toRightOf="@+id/tv_expert_name"
+            android:src="@mipmap/ic_worker_contact_authentication" />
+
+        <View
+
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_2"
+            android:layout_alignParentBottom="true"
+            android:background="@color/color_new_line" />
+
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_answer"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_210"
+        android:background="@color/white"
+        android:padding="@dimen/dimen_40"
+        android:text="asdfasdf"
+        android:textColor="@color/roll_title"
+        android:textSize="@dimen/textSize_13" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_2"
+        android:background="@color/color_new_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_80">
+
+        <LinearLayout
+            android:id="@+id/ll_zan"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/tu_like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:src="@drawable/ic_zan_checked"/>
+
+            <ImageView
+                android:id="@+id/tu_no_like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:src="@drawable/zan_no_check"/>
+            <TextView
+                android:id="@+id/tv_like"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="@dimen/dimen_2"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/dimen_20"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:background="@color/color_new_line"
+            android:drawablePadding="@dimen/dimen_5" />
+
+        <LinearLayout
+            android:id="@+id/ll_comment"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tv_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:drawableLeft="@drawable/ic_comment"
+                android:drawablePadding="@dimen/dimen_5"
+                android:text="11" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

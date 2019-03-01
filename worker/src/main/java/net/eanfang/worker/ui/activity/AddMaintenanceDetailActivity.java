@@ -170,7 +170,6 @@ public class AddMaintenanceDetailActivity extends BaseWorkerActivity {
                         setResult(10002, intent);
                         finish();
                     });
-
                 }
             });
         } else {

@@ -50,6 +50,10 @@ android {
         main {
             jni.srcDirs = []
             jniLibs.srcDirs = ['src/main/jnilibs']
+            res.srcDirs = [
+                    'src/main/res/layout/online',
+                    'src/main/res'
+            ]
         }
     }
 
