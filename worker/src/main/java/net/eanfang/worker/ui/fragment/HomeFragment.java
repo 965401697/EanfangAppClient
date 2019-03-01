@@ -46,11 +46,12 @@ import net.eanfang.worker.ui.activity.worksapce.datastatistics.DataStaticsticsLi
 import net.eanfang.worker.ui.activity.worksapce.design.DesignActivity;
 import net.eanfang.worker.ui.activity.worksapce.maintenance.MaintenanceActivity;
 import net.eanfang.worker.ui.activity.worksapce.online.ExpertOnlineActivity;
+import net.eanfang.worker.ui.activity.worksapce.repair.RepairCtrlActivity;
 import net.eanfang.worker.ui.activity.worksapce.scancode.ScanCodeActivity;
 import net.eanfang.worker.ui.activity.worksapce.security.SecurityListActivity;
 import net.eanfang.worker.ui.activity.worksapce.tender.WorkerTenderControlActivity;
-import net.eanfang.worker.ui.adapter.security.SecurityHotListAdapter;
 import net.eanfang.worker.ui.adapter.HomeWaitAdapter;
+import net.eanfang.worker.ui.adapter.security.SecurityHotListAdapter;
 import net.eanfang.worker.ui.widget.CustomHomeViewPager;
 import net.eanfang.worker.ui.widget.DividerItemDecoration;
 import net.eanfang.worker.ui.widget.HomeWaitIndicator;
@@ -276,8 +277,14 @@ public class HomeFragment extends BaseFragment {
         findViewById(R.id.tv_reparir_order).setOnClickListener((v) -> {
 //            if (!PermKit.get().getRepairListPerm()) return;
             if (workerApprove()) {
+                startActivity(new Intent(getActivity(), RepairCtrlActivity.class));
+            }
+        });
+        //专家问答
+        findViewById(R.id.tv_onLine).setOnClickListener((v) -> {
+//            if (!PermKit.get().getRepairListPerm()) return;
+            if (workerApprove()) {
                 startActivity(new Intent(getActivity(), ExpertOnlineActivity.class));
-//                startActivity(new Intent(getActivity(), RepairCtrlActivity.class));
             }
         });
         //报装订单
@@ -396,6 +403,7 @@ public class HomeFragment extends BaseFragment {
     /**
      * 统计
      */
+
     private void initCount() {
         rlAllData.setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), DataStaticsticsListActivity.class));

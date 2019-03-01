@@ -30,7 +30,6 @@ import com.eanfang.model.GroupDetailBean;
 import com.eanfang.model.GroupsBean;
 import com.eanfang.model.device.User;
 import com.eanfang.ui.base.BaseFragment;
-import com.eanfang.util.ConnectivityChangeUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
 import com.facebook.common.internal.Sets;
@@ -143,7 +142,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
             filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
             netBroadcastReceiver = new NetBroadcastReceiver();
             //注册广播接收
-            mActivity.registerReceiver(netBroadcastReceiver, filter);
+            getActivity().registerReceiver(netBroadcastReceiver, filter);
         }
         return view;
     }

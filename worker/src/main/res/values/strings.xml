@@ -38,6 +38,7 @@
     <string name="text_worker_project_receive">找活</string>
     <string name="text_worker_sign">签到</string>
     <string name="text_worker_tender">招标信息</string>
+    <string name="text_worker_online">专家问答</string>
 
     <string name="text_new_order">最新订单</string>
     <string name="text_worker_create_project">创建项目</string>
