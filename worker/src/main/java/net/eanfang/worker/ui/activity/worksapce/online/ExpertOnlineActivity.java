@@ -3,6 +3,7 @@ package net.eanfang.worker.ui.activity.worksapce.online;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +12,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.eanfang.apiservice.NewApiService;
 import com.eanfang.config.Config;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
+import com.eanfang.util.JsonUtils;
+import com.eanfang.util.QueryEntry;
 import com.eanfang.witget.BannerView;
+import com.yaf.base.entity.AskQuestionsEntity;
+import com.yaf.base.entity.AskQuestionsListBean;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
@@ -33,6 +41,10 @@ public class ExpertOnlineActivity extends BaseWorkerActivity {
     BannerView bvLoop;
     @BindView(R.id.recycler_view_sys)
     RecyclerView recyclerViewSys;
+    @BindView(R.id.recycler_common_fault)
+    RecyclerView recyclerCommonFault;
+    private CommentFaultSearchAdapter mCommonFaultAdapter;
+    private List<AskQuestionsListBean.ListBean> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,10 +53,11 @@ public class ExpertOnlineActivity extends BaseWorkerActivity {
         ButterKnife.bind(this);
         setTitle("专家在线");
         setLeftBack();
-
         initLoopView();
         initViews();
     }
+
+
 
     private void initViews() {
 
@@ -79,15 +92,20 @@ public class ExpertOnlineActivity extends BaseWorkerActivity {
 
         //2.声名gridview布局方式  第二个参数代表是3列的网格视图 (垂直滑动的情况下, 如果是水平滑动就代表3行)
         GridLayoutManager gridLayoutManager = new GridLayoutManager(ExpertOnlineActivity.this, 2);
+        //故障布局管理器
+        recyclerCommonFault.setLayoutManager(new LinearLayoutManager(this));
         //3.给GridLayoutManager设置滑动的方向
         gridLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
         SystemTypeAdapter systemTypeAdapter = new SystemTypeAdapter();
+        //故障adapter
+        mCommonFaultAdapter = new CommentFaultSearchAdapter();
+        mCommonFaultAdapter.bindToRecyclerView(recyclerCommonFault);
         //4.为recyclerView设置布局管理器
         recyclerViewSys.setLayoutManager(gridLayoutManager); //设置分割线
         recyclerViewSys.addItemDecoration(new DividerItemDecoration(this));
         systemTypeAdapter.bindToRecyclerView(recyclerViewSys);
 
-        systemTypeAdapter.setNewData(Config.get().getBusinessList(1).subList(0, 4));
+        systemTypeAdapter.setNewData(Config.get().getBusinessList(1).subList(0, 7));
 
         systemTypeAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -95,6 +113,16 @@ public class ExpertOnlineActivity extends BaseWorkerActivity {
 
             }
         });
+        /*mCommonFaultAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Intent intent = new Intent(ExpertOnlineActivity.this, CommonFaultListActivity.class);
+                intent.putExtra("QuestionSketch",list.get(position).getQuestionSketch());
+                startActivity(intent);
+            }
+        });*/
+        //故障数据
+        getData();
     }
 
     /**
@@ -119,15 +147,15 @@ public class ExpertOnlineActivity extends BaseWorkerActivity {
     @OnClick({R.id.tv_search, R.id.rl_free_ask, R.id.rl_find_expert})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.tv_search:
+            case R.id.tv_search://跳转常见故障列表页面
                 Intent i = new Intent(ExpertOnlineActivity.this, CommentFaultSearchActivity.class);
                 startActivity(i);
                 break;
-            case R.id.rl_free_ask:
+            case R.id.rl_free_ask://免费提问
                 Intent intent = new Intent(ExpertOnlineActivity.this, FreeAskActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.rl_find_expert:
+            case R.id.rl_find_expert://找专家
                 Intent in = new Intent(ExpertOnlineActivity.this, ExpertListActivity.class);
                 startActivity(in);
                 break;
@@ -149,4 +177,30 @@ public class ExpertOnlineActivity extends BaseWorkerActivity {
                 break;
         }
     }
+    //网络请求
+    private void getData() {
+        QueryEntry queryEntry = new QueryEntry();
+        queryEntry.setSize(4);
+        queryEntry.setPage(1);
+
+        EanfangHttp.post(NewApiService.COMMENT_FAULT_RECORD_LIST)
+                .upJson(JsonUtils.obj2String(queryEntry))
+                .execute(new EanfangCallback<AskQuestionsListBean>(this, true, AskQuestionsListBean.class) {
+                    @Override
+                    public void onSuccess(AskQuestionsListBean bean) {
+                        list = bean.getList();
+                        mCommonFaultAdapter.setNewData(bean.getList());
+                    }
+
+                    @Override
+                    public void onNoData(String message) {
+
+                    }
+
+                    @Override
+                    public void onCommitAgain() {
+                    }
+                });
+    }
+
 }

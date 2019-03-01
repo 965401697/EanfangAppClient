@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -178,6 +179,7 @@ public class FreeAskActivity extends BaseWorkerActivity {
 
                     @Override
                     public void onSuccess(JSONObject bean) {
+                        Toast.makeText(FreeAskActivity.this,"成功",Toast.LENGTH_SHORT).show();
                         finishSelf();
                     }
                 });

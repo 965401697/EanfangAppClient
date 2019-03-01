@@ -53,10 +53,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:visibility="gone"
         android:layout_marginRight="@dimen/dimen_40"
         android:layout_marginTop="@dimen/dimen_50"
         android:text="非常满意"
-        android:textColor="#FB5B3B"
+        android:textColor="@color/colorPrimary"
         android:textSize="@dimen/textSize_13" />
 </RelativeLayout>

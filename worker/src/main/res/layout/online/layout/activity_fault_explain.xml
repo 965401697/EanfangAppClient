@@ -53,7 +53,7 @@
                     android:layout_marginRight="@dimen/dimen_40"
                     android:layout_toRightOf="@+id/iv_user_header"
                     android:singleLine="true"
-                    android:text=" asdf"
+                    android:text="提问"
                     android:textColor="@color/color_bottom"
                     android:textSize="@dimen/textSize_12" />
 
@@ -118,24 +118,38 @@
                     android:textSize="@dimen/textSize_13" />
 
 
-                <com.photopicker.com.widget.BGASortableNinePhotoLayout
-                    android:id="@+id/snpl_photos"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dimen_30"
-                    app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
-                    app:bga_snpl_deleteDrawableOverlapQuarter="false"
-                    app:bga_snpl_editable="true"
-                    app:bga_snpl_itemCornerRadius="0dp"
-                    app:bga_snpl_itemSpanCount="3"
-                    app:bga_snpl_itemWhiteSpacing="4dp"
-                    app:bga_snpl_itemWidth="0dp"
-                    app:bga_snpl_maxItemCount="3"
-                    app:bga_snpl_otherWhiteSpacing="100dp"
-                    app:bga_snpl_placeholderDrawable="@drawable/bga_pp_ic_holder_dark"
-                    app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
-                    app:bga_snpl_plusEnable="true"
-                    app:bga_snpl_sortable="true" />
+                <LinearLayout
+                    android:id="@+id/ll_pic"
+                    android:layout_width="match_parent"
+                    android:layout_height="99dp"
+                    android:orientation="horizontal">
+
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/iv_pic1"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:layout_margin="5dp"
+                        fresco:placeholderImage="@mipmap/no_img" />
+
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/iv_pic2"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:layout_margin="5dp"
+                        android:visibility="gone"
+                        fresco:placeholderImage="@mipmap/no_img" />
+
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/iv_pic3"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        android:visibility="gone"
+                        fresco:placeholderImage="@mipmap/no_img" />
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/tv_answer"

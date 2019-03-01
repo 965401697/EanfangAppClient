@@ -430,15 +430,52 @@ public interface NewApiService {
      */
     String COOPERATION_WORKCOMPANY_SUB = BASE_URL + "/yaf_shop/cooperation/create";
     /**
-     * 故障记录列表
+     * 模糊查询故障记录列表
      * post
      */
-    String FAULT_RECORD_LIST = BASE_URL + "/yaf_repair/failure/record/list";
+    String FAULT_RECORD_LIST = BASE_URL + "/yaf_sys/expertsOnline/questionListByFailureType";
     /**
      * 故障记录列表
      * post
      */
-    String COMMENT_FAULT_RECORD_LIST = BASE_URL + "/yaf_sys/expertsOnline/deviceFailureList";
+    String COMMENT_FAULT_RECORD_LIST = BASE_URL + "/yaf_sys/expertsOnline/questionsWithExpert";
+    /**
+     * 评论列表
+     * post
+     */
+    String Reply_List = BASE_URL + "/yaf_sys/expertsOnline/replyList";
+
+    /**
+     * 添加评论
+     * post
+     */
+    String Reply_Add = BASE_URL + "/yaf_sys/expertsOnline/replyAdd";
+    /**
+     * 故障解答
+     * post
+     */
+    String ANSWER_List_With_Question = BASE_URL + "/yaf_sys/expertsOnline/answerListWithQuestion";
+    /**
+     * 赞
+     * post
+     */
+    String ANSWER_Change_Like_Status = BASE_URL + "/yaf_sys/expertsOnline/changeLikeStatus";
+    /**
+     * 我的回答
+     * post
+     */
+    String Answer_Add = BASE_URL + "/yaf_sys/expertsOnline/answerAdd";
+
+    /**
+     * 故障解答
+     * post
+     */
+    String ANSWER_Expert_More_Details = BASE_URL + "/yaf_sys/expertsOnline/expertMoreDetails";
+    /**
+     * 按某一类问题筛选免费提问列表
+     * post
+     */
+    String COMMENT_FAULT_RECORD_TYPE = BASE_URL + "/yaf_sys/expertsOnline/questionListByFailureType";
     /**
      * 故障记录统计
      * post

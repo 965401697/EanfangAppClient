@@ -17,6 +17,7 @@
     <color name="colorPrimary_client">#3F51B5</color>
     <!--<color name="colorPrimaryDark">#303F9F</color>-->
     <color name="title_bar_color">#FF7C26</color>
+    <color name="title_zyr_color">#FB973B</color>
     <color name="window_background">#f0f0f0</color>
     <color name="client">#2c88cb</color>
     <color name="font_color">#8b8b8b</color>

@@ -6,16 +6,18 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.eanfang.apiservice.NewApiService;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.yaf.sys.entity.BaseDataEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,37 +45,88 @@ public class AskExpertActivity extends BaseWorkerActivity {
     TextView tvCompany;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
-    private BaseDataEntity mBrand;
-    private long mUserId;
+    @BindView(R.id.iv_left)
+    ImageView ivLeft;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+    @BindView(R.id.iv_right)
+    ImageView ivRight;
+    @BindView(R.id.tv_right)
+    TextView tvRight;
+    @BindView(R.id.titles_bar)
+    RelativeLayout titlesBar;
+    @BindView(R.id.ll_good)
+    TextView llGood;
+    @BindView(R.id.ll_answer)
+    TextView llAnswer;
+    @BindView(R.id.ll_money)
+    LinearLayout llMoney;
+    @BindView(R.id.tv_ask_now)
+    TextView tvAskNow;
+    @BindView(R.id.num_zyr)
+    TextView numZyr;
+    private String mBrand, mUserId;
+    private UserAppraiseAdapter mUserAppraiseAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ask_expert);
         ButterKnife.bind(this);
-        mBrand = (BaseDataEntity) getIntent().getSerializableExtra("brand");
-        mUserId = getIntent().getLongExtra("userId", 0);
-        setTitle(mBrand.getDataName());
+        mBrand = getIntent().getStringExtra("com2");
+        mUserId = getIntent().getStringExtra("com");
+        if (mBrand != null) {
+            setTitle(mBrand);
+        } else {
+            setTitle("专家在线");
+        }
         setLeftBack();
 
         initViews();
+        getData();
     }
 
     private void initViews() {
-        ivExpertHeader.setImageURI("http://");
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setNestedScrollingEnabled(false);
-        UserAppraiseAdapter mUserAppraiseAdapter = new UserAppraiseAdapter();
+        mUserAppraiseAdapter = new UserAppraiseAdapter();
         mUserAppraiseAdapter.bindToRecyclerView(recyclerView);
-        List<String> list = new ArrayList<>();
-        list.add("1");
-        list.add("1");
-        list.add("1");
-        list.add("1");
-        list.add("1");
-        mUserAppraiseAdapter.setNewData(list);
     }
+
+
+    //网络请求--展示问题信息
+    private void getData() {
+        EanfangHttp.post(NewApiService.ANSWER_Expert_More_Details)
+                .params("userId", mUserId)
+                .execute(new EanfangCallback<AnswerExpertMoreDetailsBean>(this, true, AnswerExpertMoreDetailsBean.class) {
+                    @Override
+                    public void onSuccess(AnswerExpertMoreDetailsBean bean) {
+                        ivExpertHeader.setImageURI(bean.getExpert().getAvatarPhoto());
+                        tvLevel.setText("建造师（1级）");
+                        tvExpertName.setText(bean.getExpert().getApproveUserName());
+                        llGood.setText("好评率:" + bean.getExpert().getFavorableRate() * 100 + "%");
+                        llAnswer.setText("回答:" + bean.getAnswerNums());
+                        tvMajor.setText("擅长专业:" + bean.getExpert().getSystemType());
+                        tvBrand.setText("擅长品牌:" + bean.getExpert().getResponsibleBrand());
+                        tvIntroduce.setText("专家介绍:" + bean.getExpert().getIntro());
+                        tvCompany.setText("就职单位:" + bean.getExpert().getCompany());
+                        tvExpertType.setText(bean.getExpert().getSystemType());
+                        numZyr.setText("用户评价("+bean.getEvaluateUsers()+")");
+                        mUserAppraiseAdapter.setNewData(bean.getEvaluateList());
+                    }
+
+                    @Override
+                    public void onNoData(String message) {
+                    }
+
+                    @Override
+                    public void onCommitAgain() {
+                    }
+                });
+
+
+    }
+
 
     @OnClick({R.id.ll_good, R.id.ll_answer, R.id.ll_money, R.id.tv_ask_now})
     public void onViewClicked(View view) {

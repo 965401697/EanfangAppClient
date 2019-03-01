@@ -308,13 +308,11 @@ public class MainActivity extends BaseClientActivity {
                 .params("userId", EanfangApplication.get().getAccId())
                 .execute(new EanfangCallback<String>(MainActivity.this, false, String.class, (str) -> {
                     if (!TextUtils.isEmpty(str)) {
-                        Log.e("zzw1", str + "");
                         JSONObject json = JSONObject.parseObject(str);
                         String token = json.getString("token");
                         EanfangApplication.get().set(EanfangConst.RONG_YUN_TOKEN, token);
                         ClientApplication.connect(token, MainActivity.this);
                     }
-                    Log.e("zzw2", str + "");
                 }));
 
 

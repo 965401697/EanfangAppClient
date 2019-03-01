@@ -73,9 +73,9 @@ public class AskQuestionsEntity implements Serializable {
     private Integer deviceFailureId;
 
 
-    @Getter
-    @Setter
-    @TableField(exist = false)
+    //@Getter
+   // @Setter
+    //@TableField(exist = false)
     private ExpertsCertificationEntity expertsCertification;
 
     public ExpertsCertificationEntity getExpertsCertification() {

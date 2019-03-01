@@ -39,13 +39,16 @@ android {
             buildConfigField("boolean", "LOG_DEBUG", "true")
 
             // 上线url
-//            buildConfigField("String", "HOST", "\"https://api.eanfang.net\"")
-//            buildConfigField("String", "API_HOST", "\"https://api.eanfang.net\"")
-
-                      buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
-                       buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
-//            buildConfigField("String", "HOST", "\"http://yz.ngrok.xiaomiqiu.cn\"")
-//            buildConfigField("String", "API_HOST", "\"http://yz.ngrok.xiaomiqiu.cn\"")
+            //buildConfigField("String", "HOST", "\"https://api.eanfang.net\"")
+            //buildConfigField("String", "API_HOST", "\"https://api.eanfang.net\"")
+           // buildConfigField("String", "HOST", "\"http://api.beta.eanfang.net\"")
+           // buildConfigField("String", "API_HOST", "\"http://api.beta.eanfang.net\"")
+            buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
+            buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
+            //buildConfigField("String", "HOST", "\"http://yz.ngrok.xiaomiqiu.cn\"")
+           // buildConfigField("String", "API_HOST", "\"http://yz.ngrok.xiaomiqiu.cn\"")
+           // buildConfigField("String", "HOST", "\"http://yz.ngrok.eanfang.net:89\"")
+           // buildConfigField("String", "API_HOST", "\"http://yz.ngrok.eanfang.net:89\"")
 //            buildConfigField("String", "HOST", "\"http://7.196.57.45:8080\"")
 //            buildConfigField("String", "API_HOST", "\"http://7.196.57.45:8080\"")
 //            buildConfigField("String", "HOST", "\"http://192.168.0.131:8081\"")
@@ -54,8 +57,7 @@ android {
         }
         release {
             // 上线url
-            buildConfigField("String", "HOST", "\"http://api.beta.eanfang.net\"")
-            buildConfigField("String", "API_HOST", "\"http://api.beta.eanfang.net\"")
+
             // 不显示Log
             buildConfigField("boolean", "LOG_DEBUG", "false")
             //Zipalign优化

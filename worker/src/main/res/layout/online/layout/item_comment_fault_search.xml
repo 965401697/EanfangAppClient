@@ -3,8 +3,14 @@
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dimen_160"
+    android:background="#FFFFFF"
     android:orientation="vertical">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_2"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:background="@color/color_new_line" />
     <TextView
         android:id="@+id/tv_fault_desc"
         android:layout_width="wrap_content"
@@ -43,7 +49,8 @@
             android:textSize="@dimen/textSize_13" />
 
         <ImageView
-            android:layout_width="@dimen/dimen_24"
+            android:id="@+id/tv_picture"
+            android:layout_width="wrap_content"
             android:layout_height="@dimen/dimen_24"
             android:layout_alignTop="@+id/tv_expert_name"
             android:layout_gravity="center_vertical"
@@ -61,17 +68,13 @@
             android:layout_marginRight="@dimen/dimen_40"
             android:layout_toRightOf="@+id/iv_expert_header"
             android:singleLine="true"
-            android:text="  "
+            android:text=""
             android:textColor="@color/color_bottom"
             android:textSize="@dimen/textSize_13" />
 
 
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_2"
-        android:layout_marginTop="@dimen/dimen_10"
-        android:background="@color/color_new_line" />
+
 
 </LinearLayout>

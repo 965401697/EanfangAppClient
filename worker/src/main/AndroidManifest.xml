@@ -1137,7 +1137,8 @@
         <activity android:name=".ui.activity.worksapce.online.FaultExplainActivity" />
         <activity android:name=".ui.activity.worksapce.online.IAnswerActivity" />
         <activity android:name=".ui.activity.worksapce.online.ExpertAnswerActivity" />
-        <activity android:name=".ui.activity.worksapce.online.CommentFaultSearchActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.online.CommentFaultSearchActivity" />
+        <activity android:name=".ui.activity.worksapce.online.MyFreeAskActivity"></activity>
     </application>
 
 </manifest>

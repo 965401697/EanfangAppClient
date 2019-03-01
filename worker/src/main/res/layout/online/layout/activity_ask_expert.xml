@@ -94,7 +94,6 @@
                     android:layout_height="@dimen/dimen_80">
 
                     <LinearLayout
-                        android:id="@+id/ll_good"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -107,17 +106,19 @@
                             android:src="@mipmap/ic_ask_good" />
 
                         <TextView
+                            android:id="@+id/ll_good"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="@dimen/dimen_10"
                             android:gravity="center"
                             android:text="好评率"
+                            android:textColor="@color/colorPrimary"
                             android:textSize="@dimen/textSize_13" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/ll_answer"
+
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -130,12 +131,14 @@
                             android:src="@mipmap/ic_ask_answer" />
 
                         <TextView
+                            android:id="@+id/ll_answer"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="@dimen/dimen_10"
                             android:gravity="center"
                             android:text="回答"
+                            android:textColor="@color/colorPrimary"
                             android:textSize="@dimen/textSize_13" />
                     </LinearLayout>
 
@@ -159,7 +162,7 @@
                             android:layout_marginLeft="@dimen/dimen_10"
                             android:gravity="center"
                             android:text="10元/次"
-                            android:textColor="#FB973B"
+                            android:textColor="@color/colorPrimary"
                             android:textSize="@dimen/textSize_13" />
                     </LinearLayout>
 
@@ -225,6 +228,7 @@
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/num_zyr"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen_20"
@@ -241,22 +245,25 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/white" />
+
+                <TextView
+                    android:id="@+id/tv_ask_now"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="bottom"
+                    android:layout_margin="@dimen/dimen_20"
+                    android:background="@drawable/bg_btn_trouble_detail_add_trouble"
+                    android:gravity="center"
+                    android:padding="@dimen/dimen_30"
+                    android:text="马上提问"
+                    android:textColor="@color/color_white"
+                    android:textSize="@dimen/textSize_13" />
             </LinearLayout>
 
 
-            <TextView
-                android:id="@+id/tv_ask_now"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_gravity="bottom"
-                android:layout_margin="@dimen/dimen_20"
-                android:background="@drawable/bg_btn_trouble_detail_add_trouble"
-                android:gravity="center"
-                android:padding="@dimen/dimen_30"
-                android:text="马上提问"
-                android:textColor="@color/color_white"
-                android:textSize="@dimen/textSize_13" />
+
         </FrameLayout>
+
     </android.support.v4.widget.NestedScrollView>
 </LinearLayout>
