@@ -50,11 +50,18 @@ public abstract class BaseFragment extends Fragment implements IBase {
     protected boolean mIsPrepare;
     public static NetBroadcastReceiver.NetChangeListener netChangeListener;
 
-
     @Override
     @Nullable
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        if (mRootView != null) {
+            ViewGroup parent = (ViewGroup) mRootView.getParent();
+            if (parent != null) {
+                parent.removeView(mRootView);
+            }
+            return mRootView;
+
+        }
         mRootView = inflater.inflate(setLayoutResouceId(), container, false);
         ButterKnife.bind(this, mRootView);
         initData(getArguments());
@@ -71,6 +78,7 @@ public abstract class BaseFragment extends Fragment implements IBase {
         setListener();
 
         Log.e("zzw", "BaseFragment 执行onCreateView = " + mIsPrepare);
+
 
         return mRootView;
     }
@@ -240,4 +248,6 @@ public abstract class BaseFragment extends Fragment implements IBase {
 
         return true;
     }
+
+
 }

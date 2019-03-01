@@ -68,7 +68,7 @@ public class DataStaticsticsListActivity extends BaseActivity {
         rvData.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(new Intent(DataStaticsticsListActivity.this, DataStatisticsActivity.class));
+//                startActivity(new Intent(DataStaticsticsListActivity.this, DataStatisticsActivity.class));
             }
         });
     }

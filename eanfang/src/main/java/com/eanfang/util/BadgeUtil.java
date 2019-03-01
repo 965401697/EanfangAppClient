@@ -26,31 +26,37 @@ public class BadgeUtil {
      *  
      */
     public static void setBadgeCount(Context context, int count, int iconResId) {
+        String mMoreCount = "";
         if (count <= 0) {
             count = 0;
         } else {
             count = Math.max(0, Math.min(count, 99));
         }
+        if (count > 99) {
+            mMoreCount = "99+";
+        } else {
+            mMoreCount = count + "";
+        }
         if (Build.MANUFACTURER.equalsIgnoreCase("xiaomi")) {
-            setBadgeOfMIUI(context, count, iconResId);
+            setBadgeOfMIUI(context, mMoreCount, iconResId);
 //        } else {
 //            ShortcutBadger.applyCount(context, count);
 //        }
         } else if (Build.MANUFACTURER.equalsIgnoreCase("sony")) {
-            setBadgeOfSony(context, count);
+            setBadgeOfSony(context, mMoreCount);
         } else if (Build.MANUFACTURER.toLowerCase().contains("samsung") ||
                 Build.MANUFACTURER.toLowerCase().contains("lg")) {
-            setBadgeOfSumsung(context, count);
+            setBadgeOfSumsung(context, mMoreCount);
         } else if (Build.MANUFACTURER.toLowerCase().contains("htc")) {
-            setBadgeOfHTC(context, count);
+            setBadgeOfHTC(context, mMoreCount);
         } else if (Build.MANUFACTURER.toLowerCase().contains("nova")) {
-            setBadgeOfNova(context, count);
+            setBadgeOfNova(context, mMoreCount);
         } else if (Build.MANUFACTURER.toLowerCase().contains("OPPO")) {//oppo
 //setBadgeOfOPPO(context, count);
         } else if (Build.MANUFACTURER.toLowerCase().contains("LeMobile")) {//乐视
 
         } else if (Build.MANUFACTURER.toLowerCase().contains("vivo")) {
-            setBadgeOfVIVO(context, count);
+            setBadgeOfVIVO(context, mMoreCount);
         } else if (Build.MANUFACTURER.toLowerCase().contains("huawei") || Build.BRAND.equals("HUAWEI") || Build.BRAND.equals("HONOR")) {//华为
             setHuaweiBadge(context, count);
         } else if (Build.MANUFACTURER.toLowerCase().contains("")) {//魅族
@@ -68,7 +74,7 @@ public class BadgeUtil {
      *  * 设置MIUI的Badge
      *  
      */
-    private static void setBadgeOfMIUI(Context context, int count, int iconResId) {
+    private static void setBadgeOfMIUI(Context context, String count, int iconResId) {
         NotificationManager mNotificationManager = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
@@ -93,13 +99,13 @@ public class BadgeUtil {
      *  * 需添加权限：<uses-permission android:name="com.sonyericsson.home.permission.BROADCAST_BADGE" />
      *  
      */
-    private static void setBadgeOfSony(Context context, int count) {
+    private static void setBadgeOfSony(Context context, String count) {
         String launcherClassName = getLauncherClassName(context);
         if (launcherClassName == null) {
             return;
         }
         boolean isShow = true;
-        if (count == 0) {
+        if (count.equals("0")) {
             isShow = false;
         }
         Intent localIntent = new Intent();
@@ -115,7 +121,7 @@ public class BadgeUtil {
      *  * 设置三星的Badge\设置LG的Badge
      *  
      */
-    private static void setBadgeOfSumsung(Context context, int count) {
+    private static void setBadgeOfSumsung(Context context, String count) {
 // 获取你当前的应用
         String launcherClassName = getLauncherClassName(context);
         if (launcherClassName == null) {
@@ -132,7 +138,7 @@ public class BadgeUtil {
      *  * 设置HTC的Badge
      *  
      */
-    private static void setBadgeOfHTC(Context context, int count) {
+    private static void setBadgeOfHTC(Context context, String count) {
         Intent intentNotification = new Intent("com.htc.launcher.action.SET_NOTIFICATION");
         ComponentName localComponentName = new ComponentName(context.getPackageName(), getLauncherClassName(context));
         intentNotification.putExtra("com.htc.launcher.extra.COMPONENT", localComponentName.flattenToShortString());
@@ -149,7 +155,7 @@ public class BadgeUtil {
      *  * 设置Nova的Badge
      *  
      */
-    private static void setBadgeOfNova(Context context, int count) {
+    private static void setBadgeOfNova(Context context, String count) {
         ContentValues contentValues = new ContentValues();
         contentValues.put("tag", context.getPackageName() + "/" + getLauncherClassName(context));
         contentValues.put("count", count);
@@ -161,7 +167,7 @@ public class BadgeUtil {
      *  * 设置vivo的Badge :vivoXplay5 vivo x7无效果
      *  
      */
-    private static void setBadgeOfVIVO(Context context, int count) {
+    private static void setBadgeOfVIVO(Context context, String count) {
         try {
             Intent intent = new Intent("launcher.action.CHANGE_APPLICATION_NOTIFICATION_NUM");
             intent.putExtra("packageName", context.getPackageName());

@@ -3,7 +3,7 @@
     android:id="@+id/titles_bar"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:background="@mipmap/ic_work_top_back"
+    android:background="@color/colorPrimary"
     android:orientation="horizontal">
 
     <ImageView

@@ -426,6 +426,11 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BGAOnIte
             mImageSize = BGAPhotoPickerUtil.getScreenWidth() / (mItemSpanCount > 3 ? 8 : 6);
         }
 
+//        @Override
+//        protected void setItemChildListener(BGAViewHolderHelper helper) {
+//            helper.setItemChildClickListener(cn.bingoogolapple.photopicker.R.id.iv_item_nine_photo_flag);
+//        }
+
         @Override
         protected void setItemChildListener(BGAViewHolderHelper helper, int viewType) {
             helper.setItemChildClickListener(R.id.iv_item_nine_photo_flag);

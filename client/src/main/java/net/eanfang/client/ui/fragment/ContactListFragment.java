@@ -100,6 +100,10 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
      */
     private boolean isNetWork = false;
     private NetBroadcastReceiver netBroadcastReceiver;
+    /**
+     * 融云状态
+     */
+    private String mStatus = "";
 
     @Override
     protected int setLayoutResouceId() {
@@ -138,7 +142,6 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
             //注册广播接收
             mActivity.registerReceiver(netBroadcastReceiver, filter);
         }
-        checkNet();
         return view;
     }
 
@@ -318,7 +321,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
 //            myConversationListFragment.setUri(uri);
 
         ((MainActivity) getActivity()).getIMUnreadMessageCount();
-        String mStatus = ((MainActivity) getActivity()).onNoConatac();
+        mStatus = ((MainActivity) getActivity()).onNoConatac();
         if (StringUtils.isEmpty(mStatus)) {
             view.findViewById(R.id.rl_no_contact).setVisibility(View.GONE);
         } else {
@@ -519,25 +522,27 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
         return pattern.matcher(str).matches();
     }
 
-    /**
-     * 初始化时判断有没有网络
-     */
-    public boolean checkNet() {
-        this.isNetWork = ConnectivityChangeUtil.isNetConnected(mActivity);
-        if (!isNetConnect()) {
-            view.findViewById(R.id.rl_no_contact).setVisibility(View.VISIBLE);
-            mContactStatus.setText("当前网络不可用，请检查网络设置");
-        } else {
-            view.findViewById(R.id.rl_no_contact).setVisibility(View.GONE);
-        }
-        return isNetConnect();
-    }
 
+    //    public boolean checkNet() {
+//        this.isNetWork = ConnectivityChangeUtil.isNetConnected(getActivity());
+//        if (!isNetConnect()) {
+//            view.findViewById(R.id.rl_no_contact).setVisibility(View.VISIBLE);
+//            mContactStatus.setText("当前网络不可用，请检查网络设置");
+//        } else {
+//            view.findViewById(R.id.rl_no_contact).setVisibility(View.GONE);
+//        }
+//        return isNetConnect();
+//    }
     @Override
+
     public void onChangeListener(boolean status) {
         this.isNetWork = status;
         if (isNetConnect()) {
-            view.findViewById(R.id.rl_no_contact).setVisibility(View.GONE);
+            if (StringUtils.isEmpty(mStatus)) {
+                view.findViewById(R.id.rl_no_contact).setVisibility(View.GONE);
+            } else {
+                view.findViewById(R.id.rl_no_contact).setVisibility(View.VISIBLE);
+            }
         } else {
             view.findViewById(R.id.rl_no_contact).setVisibility(View.VISIBLE);
             mContactStatus.setText("当前网络不可用，请检查网络设置");

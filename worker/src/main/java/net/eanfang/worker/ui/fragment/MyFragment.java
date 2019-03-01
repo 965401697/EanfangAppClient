@@ -3,6 +3,8 @@ package net.eanfang.worker.ui.fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -18,9 +20,7 @@ import com.eanfang.model.AuthStatusBean;
 import com.eanfang.model.LoginBean;
 import com.eanfang.ui.activity.QrCodeShowActivity;
 import com.eanfang.ui.base.BaseFragment;
-import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.witget.PersonalQRCodeDialog;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -43,16 +43,17 @@ import net.eanfang.worker.util.PrefUtils;
  * @desc 我的
  */
 
-public class MyFragment extends BaseFragment {
-    private static long lastClickTime;
+public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChangeListener {
+    private TextView tv_user_name, tvVerfiy, tvExpertVerfiy;
+    private RelativeLayout rlWorkerVerfity, rlExpertVerfity;
 
-    private TextView tv_user_name, tvVerfiy, tvWorkerStatus;
-    private RelativeLayout rlWorkingStatus, rlWorkerVerfity, rlExpertVerfity;
     private SimpleDraweeView iv_header;
     // 二维码头像
     private SimpleDraweeView mIvPersonalQRCode;
     // Dialog
     private PersonalQRCodeDialog personalQRCodeDialog;
+    private RadioButton rbWorking, rbFree, rbStop;
+    private RadioGroup rbWorkStatus;
 
     @Override
     protected int setLayoutResouceId() {
@@ -101,10 +102,12 @@ public class MyFragment extends BaseFragment {
         tv_user_name = (TextView) findViewById(R.id.tv_user_name);
         iv_header = (SimpleDraweeView) findViewById(R.id.iv_user_header);
         mIvPersonalQRCode = findViewById(R.id.iv_personalQRCode);
-        tvWorkerStatus = (TextView) findViewById(R.id.tv_worker_status);
-        rlWorkingStatus = (RelativeLayout) findViewById(R.id.rl_working);
         rlExpertVerfity = (RelativeLayout) findViewById(R.id.rl_expert_verfity);
-        tvWorkerStatus.setText(PrefUtils.getString("status", ""));
+        rbFree = findViewById(R.id.rb_free);
+        rbStop = findViewById(R.id.rb_stop);
+        rbWorking = findViewById(R.id.rb_working);
+        rbWorking = findViewById(R.id.rb_working);
+        rbWorkStatus = findViewById(R.id.rg_workStauts);
         findViewById(R.id.iv_user_header).setOnClickListener((v) -> {
             PersonInfoActivity.jumpToActivity(getActivity());
         });
@@ -123,18 +126,11 @@ public class MyFragment extends BaseFragment {
             startActivity(new Intent(getActivity(), SettingActivity.class));
         });
 
+        rbWorkStatus.setOnCheckedChangeListener(this);
     }
 
     @Override
     protected void setListener() {
-        // 工作状态
-        rlWorkingStatus.setOnClickListener((v) -> {
-            PickerSelectUtil.singleTextPicker(getActivity(), "", GetConstDataUtils.getWorkerStatus(), (index, item) -> {
-                tvWorkerStatus.setText(item);
-                setWorkStatus(Config.get().getConstBean().getData().getShopConstant().get(Constant.WORK_STATUS).indexOf(item));
-                PrefUtils.setString("status", item);
-            });
-        });
         // 二维码头像
         mIvPersonalQRCode.setOnClickListener((v) -> {
             Bundle bundle = new Bundle();
@@ -175,11 +171,29 @@ public class MyFragment extends BaseFragment {
         if (!StringUtils.isEmpty(user.getAccount().getAvatar())) {
             iv_header.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + user.getAccount().getAvatar()));
         }
+        /**
+         * 获取技师工作状态
+         * */
+        String mStatus = PrefUtils.getString("status", "");
+        if (mStatus.equals("空闲状态")) {
+            rbFree.setChecked(true);
+            rbStop.setChecked(false);
+            rbWorking.setChecked(false);
+        } else if (mStatus.equals("停止接单")) {
+            rbFree.setChecked(false);
+            rbStop.setChecked(true);
+            rbWorking.setChecked(false);
+        } else if (mStatus.equals("工作中")) {
+            rbFree.setChecked(false);
+            rbStop.setChecked(false);
+            rbWorking.setChecked(true);
+        }
     }
 
     // 判断是否认证
     private void doWorkAuth() {
         // 技师未认证，提示完善个人资料
+
         String realName = EanfangApplication.get().getUser().getAccount().getRealName();
         if (StringUtils.isEmpty(realName) || "待提供".equals(realName)) {
             showToast("请先完善个人资料");
@@ -189,5 +203,37 @@ public class MyFragment extends BaseFragment {
         }
     }
 
+    private void doExpertWorkAuth() {
+        // 技师未认证，提示完善个人资料
 
+        String realName = EanfangApplication.get().getUser().getAccount().getRealName();
+        if (StringUtils.isEmpty(realName) || "待提供".equals(realName)) {
+            showToast("请先完善个人资料");
+        } else {
+            JumpItent.jump(getActivity(), SpecialistAuthListActivity.class);
+        }
+    }
+
+
+    @Override
+    public void onCheckedChanged(RadioGroup radioGroup, int i) {
+        switch (radioGroup.getCheckedRadioButtonId()) {
+            case R.id.rb_free:
+                doChangeWorkStatus("空闲状态");
+                break;
+            case R.id.rb_stop:
+                doChangeWorkStatus("停止接单");
+                break;
+            case R.id.rb_working:
+                doChangeWorkStatus("工作中");
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void doChangeWorkStatus(String status) {
+        setWorkStatus(Config.get().getConstBean().getData().getShopConstant().get(Constant.WORK_STATUS).indexOf(status));
+        PrefUtils.setString("status", status);
+    }
 }

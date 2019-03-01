@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/dimen_38"
+    android:layout_marginTop="@dimen/dimen_80"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rl_allData"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginLeft="@dimen/dimen_34"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="今日待办"
+            android:textColor="@color/color_client_neworder"
+            android:textSize="@dimen/textSize_18" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" 全部待办("
+                android:textSize="@dimen/textSize_12" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="6"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/textSize_12" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dimen_30"
+                android:text=")>"
+                android:textSize="@dimen/textSize_12" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_28"
+        android:layout_marginRight="@dimen/dimen_28"
+        android:layout_marginTop="@dimen/dimen_36"
+        android:background="@drawable/bg_worker_home_datastics_back"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/dimen_26">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_wait"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:scrollbars="none" />
+
+        <net.eanfang.worker.ui.widget.HomeWaitIndicator
+            android:id="@+id/indicator"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_40"
+            android:layout_alignBottom="@id/rv_wait"
+            android:layout_marginTop="@dimen/dimen_40"
+            app:radius="@dimen/dimen_14"
+            app:selectColor="#C5C5C5"
+            app:space="@dimen/dimen_12"
+            app:unselectedColor="#E8E8E8" />
+
+    </LinearLayout>
+</LinearLayout>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#4988F5</color>
+    <color name="colorPrimary">#006BFF</color>
     <color name="colorPrimaryDark">#4988F5</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorPrimary_client">#3F51B5</color>
@@ -37,13 +37,26 @@
 
     <color name="color_service_title">#33B0FF</color>
     <!-- 首页统计数据四个点的背景色 -->
-    <color name="color_home_data_one">#F6D914</color>
-    <color name="color_home_data_two">#F59A49</color>
-    <color name="color_home_data_three">#F55549</color>
+    <color name="color_home_data_one">#EAF6EC</color>
+    <color name="color_home_data_two">#E6EFFA</color>
+    <color name="color_home_data_three">#FAE8EA</color>
     <color name="color_auth_list_unfinish">#F56549</color>
-    <color name="color_home_data_four">#CDCDCD</color>
+    <color name="color_home_data_four">#FFF</color>
+    <color name="color_home_data_text_one">#129725</color>
+    <color name="color_home_data_text_three">#FF1833</color>
     <color name="color_auth_top_back">#FFD6E6F2</color>
     <color name="color_auth_top_text">#FF1C91EA</color>
     <color name="color_worker_detail_circle">#FB973B</color>
     <color name="color_tender_info">#FF4A4A</color>
+    <color name="color_home_datastatistics">#141E34</color>
+    <color name="color_contact_auth_text">#5D6881</color>
+    <color name="color_contact_companyname">#141E34</color>
+    <color name="color_personal_edit_info">#9EC7FE</color>
+    <color name="color_pesonal_getorder">#006BFF</color>
+    <color name="color_my_price">#2F86FF</color>
+    <color name="color_my_back_border">#EAEAEA</color>
+    <color name="color_my_line">#DBDCDF</color>
+    <color name="color_home_security_like">#EC5353</color>
+    <color name="color_home_security_text">#BEBEBE</color>
+    <color name="color_security_detail_bottom_back">#F7F7F7</color>
 </resources>
