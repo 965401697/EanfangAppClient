@@ -62,11 +62,6 @@ public class SecurityHotListAdapter extends BaseQuickAdapter<SecurityHotListBean
         // 评论数量
         helper.setText(R.id.tv_comments_num, item.getCommentCount() + "");
         helper.setText(R.id.tv_time, ETimeUtils.getTimeFormatText(item.getCreateTime()));
-        if (item.getPublisherUserId().equals(EanfangApplication.get().getUserId())) {
-            helper.setVisible(R.id.tv_isFocus, false);
-        } else {
-            helper.setVisible(R.id.tv_isFocus, true);
-        }
         /**
          * 0 是关注 1 是未关注
          * */
@@ -75,6 +70,13 @@ public class SecurityHotListAdapter extends BaseQuickAdapter<SecurityHotListBean
         } else {
             helper.setVisible(R.id.tv_isFocus, true);
         }
+        if (item.getPublisherUserId().equals(EanfangApplication.get().getUserId())) {
+            helper.getView(R.id.tv_isFocus).setVisibility(View.GONE);
+        } else {
+
+            helper.getView(R.id.tv_isFocus).setVisibility(View.VISIBLE);
+        }
+
         /**
          * 0 点赞 1 未点赞
          * */

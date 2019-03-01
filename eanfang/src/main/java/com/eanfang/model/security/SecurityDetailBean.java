@@ -1,6 +1,7 @@
 package com.eanfang.model.security;
 
 import com.yaf.sys.entity.AccountEntity;
+import com.yaf.sys.entity.OrgUnitEntity;
 
 import java.io.Serializable;
 import java.util.List;
@@ -22,7 +23,7 @@ import lombok.Setter;
 @Setter
 public class SecurityDetailBean implements Serializable {
 
-    private List<SecurityDetailBean.ListBean> list;
+    private List<ListBean> list;
 
     @AllArgsConstructor
     @NoArgsConstructor
@@ -35,6 +36,7 @@ public class SecurityDetailBean implements Serializable {
         private int asTopCompanyId;
         private String asUserId;
         private CommentUserBean commentUser;
+        private CommentOrgBean commentOrg;
         private String commentsAnswerId;
         private String commentsCompanyId;
         private String commentsContent;
@@ -59,6 +61,23 @@ public class SecurityDetailBean implements Serializable {
             private boolean sysAdmin;
             private String topCompanyId;
             private String userId;
+
+        }
+
+        @AllArgsConstructor
+        @NoArgsConstructor
+        @Getter
+        @Setter
+        public static class CommentOrgBean implements Serializable {
+
+            private String companyId;
+            private int countStaff;
+            private int level;
+            private String orgCode;
+            private String orgId;
+            private String orgName;
+            private OrgUnitEntity orgUnitEntity;
+            private String topCompanyId;
 
         }
     }

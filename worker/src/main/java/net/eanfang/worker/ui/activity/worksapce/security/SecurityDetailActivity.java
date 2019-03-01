@@ -1,14 +1,19 @@
 package net.eanfang.worker.ui.activity.worksapce.security;
 
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
@@ -18,6 +23,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.security.SecurityDetailBean;
 import com.eanfang.model.security.SecurityFoucsListBean;
 import com.eanfang.model.security.SecurityHotListBean;
+import com.eanfang.model.security.SecurityLikeBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.ETimeUtils;
 import com.eanfang.util.StringUtils;
@@ -34,6 +40,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @author guanluocang
@@ -71,6 +78,10 @@ public class SecurityDetailActivity extends BaseActivity {
     TextView tvTime;
     @BindView(R.id.rv_comments)
     RecyclerView rvComments;
+    @BindView(R.id.ll_edit_comments)
+    LinearLayout llEditComments;
+    @BindView(R.id.et_input)
+    EditText etInput;
 
     private SecurityHotListBean.ListBean hotBean;
     private SecurityFoucsListBean.ListBean foucsBean;
@@ -80,6 +91,11 @@ public class SecurityDetailActivity extends BaseActivity {
 
     private SecurityCommentAdapter securityCommentAdapter;
     private List<SecurityDetailBean.ListBean> commentList = new ArrayList<>();
+
+    /**
+     * 点赞状态
+     */
+    private int mLikeStatus = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +111,7 @@ public class SecurityDetailActivity extends BaseActivity {
         setTitle("安防圈");
         initData();
         securityCommentAdapter = new SecurityCommentAdapter();
+        rvComments.setLayoutManager(new LinearLayoutManager(this));
         securityCommentAdapter.bindToRecyclerView(rvComments);
         rvComments.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
     }
@@ -103,10 +120,12 @@ public class SecurityDetailActivity extends BaseActivity {
         if (mType.equals("hot")) {
             hotBean = (SecurityHotListBean.ListBean) getIntent().getSerializableExtra("bean");
             mId = hotBean.getSpcId();
+            mLikeStatus = hotBean.getLikeStatus();
             setHotData();
         } else {
             foucsBean = (SecurityFoucsListBean.ListBean) getIntent().getSerializableExtra("bean");
             mId = foucsBean.getAskSpCircleEntity().getSpcId();
+            mLikeStatus = foucsBean.getAskSpCircleEntity().getLikeStatus();
             setFoucsData();
         }
         EanfangHttp.post(NewApiService.SERCURITY_DETAIL)
@@ -225,4 +244,101 @@ public class SecurityDetailActivity extends BaseActivity {
             snplPic.setVisibility(View.GONE);
         }
     }
+
+    @OnClick({R.id.ll_like, R.id.ll_comments, R.id.ll_share})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.ll_like:
+                doLike();
+                break;
+            case R.id.ll_comments:
+                doComments();
+                break;
+            case R.id.ll_share:
+                doShare();
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+     * 分享
+     */
+    private void doShare() {
+    }
+
+    /**
+     * 评论
+     */
+    private void doComments() {
+
+    }
+
+    /**
+     * 点赞
+     */
+    private void doLike() {
+        SecurityLikeBean securityLikeBean = new SecurityLikeBean();
+        securityLikeBean.setAsId(mId);
+        securityLikeBean.setType("0");
+         /**
+         * 状态：0 点赞 1 未点赞
+         * */
+        if (mLikeStatus == 0) {
+            securityLikeBean.setLikeStatus("1");
+        } else {
+            securityLikeBean.setLikeStatus("0");
+        }
+        securityLikeBean.setLikeUserId(EanfangApplication.get().getUserId());
+        securityLikeBean.setLikeCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyId());
+        securityLikeBean.setLikeTopCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getTopCompanyId());
+        EanfangHttp.post(NewApiService.SERCURITY_LIKE)
+                .upJson(JSONObject.toJSONString(securityLikeBean))
+                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
+                    /**
+                     * 0 点赞 1 未点赞
+                     * */
+                    if (mLikeStatus == 0) {
+                        mLikeStatus = 1;
+                        ivLike.setImageResource(R.mipmap.ic_worker_security_like_unpressed);
+                    } else {
+                        ivLike.setImageResource(R.mipmap.ic_worker_security_like_pressed);
+                        mLikeStatus = 0;
+                    }
+                }));
+    }
+
+    /**
+     * 显示布局与键盘
+     */
+    private void ShowKeyboard() {
+        //显示布局
+        llEditComments.setVisibility(View.VISIBLE);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+    }
+
+    /**
+     * 隐藏键盘与布局
+     */
+    private void hideKeyboard() {
+        //隐藏布局
+        llEditComments.setVisibility(View.GONE);
+        etInput.setText("");//清空输入
+        View view = getWindow().peekDecorView();
+        if (view != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    // 捕获返回键的方法
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        //隐藏键盘与布局
+        hideKeyboard();
+        return true;
+    }
+
 }

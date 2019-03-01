@@ -30,8 +30,11 @@ public class SecurityCommentAdapter extends BaseQuickAdapter<SecurityDetailBean.
         // 评论人
         helper.setText(R.id.tv_name, item.getCommentUser().getAccountEntity().getRealName());
         // 公司名称
-//        helper.setText(R.id.tv_company, item.getPublisherOrg().getOrgName());
+        helper.setText(R.id.tv_company, item.getCommentOrg().getOrgName());
         //发布的内容
         helper.setText(R.id.tv_content, item.getCommentsContent());
+        //时间
+        helper.setText(R.id.tv_time, item.getCreateTime());
+
     }
 }
