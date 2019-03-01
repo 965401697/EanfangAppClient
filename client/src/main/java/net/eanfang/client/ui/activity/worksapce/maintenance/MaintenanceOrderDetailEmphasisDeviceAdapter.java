@@ -1,7 +1,10 @@
 package net.eanfang.client.ui.activity.worksapce.maintenance;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -10,8 +13,11 @@ import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.ShopMaintenanceExamDeviceEntity;
+import com.yaf.base.entity.ShopMaintenanceOrderEntity;
 
 import net.eanfang.client.R;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 /**
@@ -19,8 +25,14 @@ import net.eanfang.client.R;
  */
 
 public class MaintenanceOrderDetailEmphasisDeviceAdapter extends BaseQuickAdapter<ShopMaintenanceExamDeviceEntity, BaseViewHolder> {
+
+    private Integer isSelect;
+
     public MaintenanceOrderDetailEmphasisDeviceAdapter(int layoutResId) {
         super(layoutResId);
+    }
+    public void setIsSelect(Integer isSelect) {
+        this.isSelect = isSelect;
     }
 
     @Override
@@ -39,7 +51,15 @@ public class MaintenanceOrderDetailEmphasisDeviceAdapter extends BaseQuickAdapte
             helper.setText(R.id.tv_status, "维保状态    保外");
         }
 
+
         helper.setText(R.id.tv_history, "维修历史    " + String.valueOf(item.getRepairCount()));
-        helper.setVisible(R.id.iv_arrow, true);
+
+        if (isSelect==4||isSelect==5){
+            helper.setVisible(R.id.iv_arrow, true);
+        }else{
+            helper.setVisible(R.id.iv_arrow, false);
+        }
+
     }
+
 }

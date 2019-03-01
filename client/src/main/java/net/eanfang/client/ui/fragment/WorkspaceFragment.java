@@ -282,7 +282,7 @@ public class WorkspaceFragment extends BaseFragment {
         //行业知识
         findViewById(R.id.tv_work_knowledge).setOnClickListener(v ->
                 startActivity(new Intent(getActivity(), WebActivity.class)
-                        .putExtra("url", "https://news.eanfang.net/")
+                        .putExtra("url", "http://www.1anfang.com/news")
                         .putExtra("title", "行业知识")));
         //变更记录
         findViewById(R.id.tv_work_change).setOnClickListener(v -> JumpItent.jump(getActivity(), NoContentActivity.class));

@@ -1,5 +1,8 @@
 package net.eanfang.client.ui.activity.worksapce.maintenance;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -76,8 +80,6 @@ public class MaintenanceOrderDetailFragment extends BaseFragment {
     TextView tvOsType;
     @BindView(R.id.rv_device_list)
     RecyclerView rvDeviceList;
-    @BindView(R.id.rv_device_test)
-    RecyclerView rvDeviceTest;
     @BindView(R.id.iv_device_list)
     ImageView ivDeviceList;
     @BindView(R.id.iv_device_test)
@@ -87,6 +89,8 @@ public class MaintenanceOrderDetailFragment extends BaseFragment {
     @BindView(R.id.tv_device_test)
     TextView tvDeviceTest;
     Unbinder unbinder;
+    @BindView(R.id.rv_device_test)
+    RecyclerView rvDeviceTest;
 
     private MaintenanceOrderDetailEmphasisDeviceAdapter emphasisDeviceAdapter;
     private MaintenanceOrderDetailDeviceListAdapter deviceListAdapter;
@@ -123,14 +127,15 @@ public class MaintenanceOrderDetailFragment extends BaseFragment {
         emphasisDeviceAdapter = new MaintenanceOrderDetailEmphasisDeviceAdapter(R.layout.item_maintenance_order_detail_empasis_device);
         emphasisDeviceAdapter.bindToRecyclerView(rvDeviceTest);
 
-
-        emphasisDeviceAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+        /*emphasisDeviceAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-//                startActivity(new Intent(getActivity(), MaintenanceHandleActivity.class));
+                Intent intent = new Intent(getActivity(), MaintenanceHandleShowActivity.class);
+                intent.putExtra("orderId", orderEntity.getId());
+                startActivity(intent);
             }
-        });
-    }
+        });*/
+     }
 
     @Override
     protected void setListener() {
@@ -148,8 +153,9 @@ public class MaintenanceOrderDetailFragment extends BaseFragment {
     }
 
     private void initViews() {
+        emphasisDeviceAdapter.setIsSelect(orderEntity.getStatus());
         ivReportHeader.setImageURI(BuildConfig.OSS_SERVER + orderEntity.getOwnerUserEntity().getAccountEntity().getAvatar());
-        tvName.setText(orderEntity.getAssigneeUserEntity().getAccountEntity().getRealName() + "(" + (orderEntity.getAssigneeUserEntity().getAccountEntity().getGender() == 1 ? "先生" : "女士") + ")");
+        tvName.setText(orderEntity.getOwnerUserEntity().getAccountEntity().getRealName() + "(" + (orderEntity.getAssigneeUserEntity().getAccountEntity().getGender() == 1 ? "先生" : "女士") + ")");
         tvCompanyName.setText(orderEntity.getOwnerUserEntity().getCompanyEntity().getOrgName());
         if (!TextUtils.isEmpty(orderEntity.getOwnerUserEntity().getAccountEntity().getAreaCode())) {
             tvAddress.setText(Config.get().getAddressByCode(orderEntity.getPlaceCode()) + "" + orderEntity.getAddress());
@@ -206,7 +212,25 @@ public class MaintenanceOrderDetailFragment extends BaseFragment {
             ivDeviceList.setVisibility(View.GONE);
         }
 
+        if (orderEntity.getStatus() == 4 || orderEntity.getStatus() == 5) {
+            emphasisDeviceAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                    Intent intent = new Intent(getActivity(), MaintenanceHandleShowActivity.class);
+                    intent.putExtra("orderId", orderEntity.getId());
+                    startActivity(intent);
+                }
+            });
+        }else{
+            emphasisDeviceAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                    return;
+                }
+            });
+        }
     }
+
 
     @OnClick({R.id.ll_device_list, R.id.ll_device_test})
     public void onViewClicked(View view) {

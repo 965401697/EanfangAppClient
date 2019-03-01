@@ -49,7 +49,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class NewPayActivity extends BaseClientActivity {
+public class NewPayActivity extends BaseClientActivity implements View.OnClickListener {
 
     public static final int INVOICE_SUCCESS = 47329;
     public static final int INVOICE_CALL_BACK = 3001;
@@ -87,7 +87,8 @@ public class NewPayActivity extends BaseClientActivity {
     CheckBox cbCoupon;
     @BindView(R.id.ll_coupons)
     LinearLayout llCoupons;
-
+    @BindView(R.id.tv_outline_pay)
+    TextView tvOutlinePay;
     private int mPayType = 1;//微信 1 支付宝 0 优惠券 3
     private String mPayPrice;
 
@@ -144,6 +145,7 @@ public class NewPayActivity extends BaseClientActivity {
         setLeftBack();
         initData();
         startTransaction(true);
+        tvOutlinePay.setOnClickListener(this);
     }
 
 
@@ -520,6 +522,15 @@ public class NewPayActivity extends BaseClientActivity {
             return NewApiService.WEI_XIN_PUBLISH;
         }
         return "";
+    }
+
+    @OnClick(R.id.tv_outline_pay)
+    public void onViewClicked() {
+    }
+
+    @Override
+    public void onClick(View v) {
+        finish();
     }
 
     class MoneyBean {

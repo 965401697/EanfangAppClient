@@ -435,7 +435,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_weight="1"
                         android:padding="@dimen/dimen_15"
-                        android:text=""
+                        android:text="线下支付"
                         android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_13" />
                 </LinearLayout>
