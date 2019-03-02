@@ -92,15 +92,13 @@ public class ExpertListActivity extends BaseWorkerActivity implements SwipeRefre
         mExpertListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                if (mExpertListAdapter.getData().get(position).getPrice()>0){
-                    Toast.makeText(ExpertListActivity.this,"功能暂未开启",Toast.LENGTH_SHORT).show();
-                    //Intent intent = new Intent(ExpertListActivity.this, NewTwoPayActivity.class);
-                    //startActivity(intent);
-                }else{
+                //if (mExpertListAdapter.getData().get(position).getPrice()>0){
+                    //Toast.makeText(ExpertListActivity.this,"需充值支付",Toast.LENGTH_SHORT).show();
+                //}else{
                     String accId = list.get(position).getAccId();
                     String expertName = list.get(position).getExpertName();
                     RongIM.getInstance().startConversation(ExpertListActivity.this, Conversation.ConversationType.PRIVATE, accId, expertName);
-                }
+                //}
             }
         });
 

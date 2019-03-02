@@ -8,11 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
@@ -20,7 +18,6 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
-import com.yaf.base.entity.AskQuestionsEntity;
 import com.yaf.base.entity.AskQuestionsListBean;
 
 import net.eanfang.worker.R;
@@ -42,6 +39,7 @@ public class CommentFaultSearchActivity extends BaseWorkerActivity implements Sw
     @BindView(R.id.swipre_fresh)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
+    //获取数据源
     private int mPage = 1;
     private CommentFaultSearchAdapter mAdapter;
 
@@ -56,6 +54,7 @@ public class CommentFaultSearchActivity extends BaseWorkerActivity implements Sw
 
         initView();
     }
+
     //子条目操作
     private void initView() {
         mSwipeRefreshLayout.setOnRefreshListener(this);
@@ -63,6 +62,7 @@ public class CommentFaultSearchActivity extends BaseWorkerActivity implements Sw
 
         mAdapter = new CommentFaultSearchAdapter();
         mAdapter.bindToRecyclerView(rvList);
+        //rvList.setAdapter(mAdapter);
         mAdapter.setOnLoadMoreListener(this);
         //跳转详情
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -70,7 +70,7 @@ public class CommentFaultSearchActivity extends BaseWorkerActivity implements Sw
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 //问题详情
                 Intent intent = new Intent(CommentFaultSearchActivity.this, CommonFaultListActivity.class);
-                intent.putExtra("QuestionSketch",mAdapter.getData().get(position).getQuestionSketch());
+                intent.putExtra("QuestionSketch", mAdapter.getData().get(position).getQuestionSketch());
                 startActivity(intent);
             }
         });
@@ -88,7 +88,7 @@ public class CommentFaultSearchActivity extends BaseWorkerActivity implements Sw
                 if (!TextUtils.isEmpty(s)) {
                     searchData(s.toString());
                 } else {
-                    //refresh();
+                    onRefresh();
                 }
             }
 
@@ -114,6 +114,7 @@ public class CommentFaultSearchActivity extends BaseWorkerActivity implements Sw
                         if (mPage == 1) {
                             mAdapter.getData().clear();
                             mAdapter.setNewData(bean.getList());
+                            mAdapter.notifyDataSetChanged();
                             mSwipeRefreshLayout.setRefreshing(false);
                             mAdapter.loadMoreComplete();
                             if (bean.getList().size() < 10) {
@@ -156,7 +157,7 @@ public class CommentFaultSearchActivity extends BaseWorkerActivity implements Sw
 
     //模糊查询
     private void searchData(String qustionSketch) {
-        if (!TextUtils.isEmpty(qustionSketch)){
+        if (!TextUtils.isEmpty(qustionSketch)) {
             QueryEntry queryEntry = new QueryEntry();
             queryEntry.getLike().put("questionSketch", qustionSketch);
 
@@ -196,12 +197,11 @@ public class CommentFaultSearchActivity extends BaseWorkerActivity implements Sw
                             mSwipeRefreshLayout.setRefreshing(false);
                         }
                     });
-        }else {
+        } else {
             getData();
         }
 
     }
-
 
 
     @Override

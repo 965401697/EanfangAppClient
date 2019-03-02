@@ -36,9 +36,9 @@ public class CommonFaultAdapter extends BaseQuickAdapter<CommonFaultListBeanEnti
             helper.setText(R.id.tv_fault_desc,"数据出错");
         }
         if (!TextUtils.isEmpty(item.getQuestionPics())) {
-            ((SimpleDraweeView) helper.getView(R.id.iv_fault_desc)).setImageURI(Uri.parse(item.getQuestionPics()));
+            ((SimpleDraweeView) helper.getView(R.id.iv_fault_desc)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getQuestionPics()));
         } else {
-            ((SimpleDraweeView) helper.getView(R.id.iv_fault_desc)).setImageURI(Uri.parse(""));
+            ((SimpleDraweeView) helper.getView(R.id.iv_fault_desc)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + "online/b033bd249b694c97bcfaa814c97c30cb.png"));
         }
 
 

@@ -176,7 +176,7 @@ public class FaultExplainActivity extends BaseWorkerActivity {
                         questionUserId = bean.getQuestion().getQuestionUserId();
                         questionCompanyId = bean.getQuestion().getQuestionCompanyId();
                         questionTopCompanyId = bean.getQuestion().getQuestionTopCompanyId();
-                        ivUserHeader.setImageURI(bean.getQuestion().getAccountEntity().getAvatar());
+                        ivUserHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER +bean.getQuestion().getAccountEntity().getAvatar()));
                         tvUserName.setText(bean.getQuestion().getAccountEntity().getNickName());
                         //时间
                         format1 = format(bean.getQuestion().getQuestionCreateDateLong());

@@ -27,7 +27,7 @@ public class ExpertListAdapter extends BaseQuickAdapter<ExpertListBean.ListBean,
 
     @Override
     protected void convert(BaseViewHolder helper, ExpertListBean.ListBean item) {
-        ((SimpleDraweeView) helper.getView(R.id.iv_expert_header)).setImageURI(Uri.parse(item.getAvatarPhoto()));
+        ((SimpleDraweeView) helper.getView(R.id.iv_expert_header)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER +item.getAvatarPhoto()));
         helper.setText(R.id.tv_expert, item.getExpertName());
         helper.setText(R.id.tv_good, "好评率:  "+item.getFavorableRate()*100+"%");
         helper.setText(R.id.tv_major, "擅长专业:  "+item.getSystemType());

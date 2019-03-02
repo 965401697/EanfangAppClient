@@ -66,7 +66,7 @@ public class ExpertsCertificationEntity implements Serializable {
     //@TableField(value = "job_level")
     private Integer jobLevel;
     //性别
-    private Integer gender;
+    //private Integer gender;
     //就职单位
     //@TableField(value = "company")
     private String company;
@@ -183,13 +183,13 @@ public class ExpertsCertificationEntity implements Serializable {
         this.userId = userId;
     }
 
-    public Integer getGender() {
-        return gender;
-    }
+    //public Integer getGender() {
+       // return gender;
+    //}
 
-    public void setGender(Integer gender) {
-        this.gender = gender;
-    }
+    //public void setGender(Integer gender) {
+      //  this.gender = gender;
+    //}
 
     /**
      * 获取：所属的user_id

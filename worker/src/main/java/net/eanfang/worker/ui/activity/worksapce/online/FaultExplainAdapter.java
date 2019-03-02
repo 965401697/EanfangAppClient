@@ -36,7 +36,7 @@ public class FaultExplainAdapter extends BaseQuickAdapter<AnswerListWithQuestion
     protected void convert(BaseViewHolder helper, AnswerListWithQuestionBean.AnswersBean item) {
 
         //头像
-        ((SimpleDraweeView) helper.getView(R.id.iv_expert_header)).setImageURI(item.getExpertsCertificationEntity().getAvatarPhoto());
+        ((SimpleDraweeView) helper.getView(R.id.iv_expert_header)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER +item.getExpertsCertificationEntity().getAvatarPhoto()));
         //名字
         helper.setText(R.id.tv_expert_name,item.getExpertsCertificationEntity().getApproveUserName());
         //品牌专家

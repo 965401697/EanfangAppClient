@@ -99,9 +99,15 @@ public class CommonFaultListActivity extends BaseWorkerActivity implements Swipe
         myExpertListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                String userId = String.valueOf(myExpertListAdapter.getData().get(position).getAccId());
-                String expertName = myExpertListAdapter.getData().get(position).getExpertName();
-                RongIM.getInstance().startConversation(CommonFaultListActivity.this, Conversation.ConversationType.PRIVATE, userId, expertName);
+
+                //if (myExpertListAdapter.getData().get(position).getPrice()>0){
+                //    Toast.makeText(CommonFaultListActivity.this,"需充值支付",Toast.LENGTH_SHORT).show();
+                //}else {
+                    String userId = String.valueOf(myExpertListAdapter.getData().get(position).getAccId());
+                    String expertName = myExpertListAdapter.getData().get(position).getExpertName();
+                    RongIM.getInstance().startConversation(CommonFaultListActivity.this, Conversation.ConversationType.PRIVATE, userId, expertName);
+                //}
+
             }
         });
         //swipreFreshZyr.setRefreshing(true);

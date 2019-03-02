@@ -19,7 +19,6 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.witget.BannerView;
-import com.yaf.base.entity.AskQuestionsEntity;
 import com.yaf.base.entity.AskQuestionsListBean;
 
 import net.eanfang.worker.R;
@@ -105,7 +104,7 @@ public class ExpertOnlineActivity extends BaseWorkerActivity {
         recyclerViewSys.addItemDecoration(new DividerItemDecoration(this));
         systemTypeAdapter.bindToRecyclerView(recyclerViewSys);
 
-        systemTypeAdapter.setNewData(Config.get().getBusinessList(1).subList(0, 7));
+        systemTypeAdapter.setNewData(Config.get().getBusinessList(1).subList(0, 4));
 
         systemTypeAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override

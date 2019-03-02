@@ -24,7 +24,7 @@ public class MyExpertListAdapter extends BaseQuickAdapter<CommonFaultListBeanEnt
 
     @Override
     protected void convert(BaseViewHolder helper, CommonFaultListBeanEntity.ExpertListBean.ListBeanX item) {
-        if (TextUtils.isEmpty(item.getAvatarPhoto())) {
+        if (!TextUtils.isEmpty(item.getAvatarPhoto())) {
             ((SimpleDraweeView) helper.getView(R.id.iv_expert_header)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getAvatarPhoto()));
         } else {
             ((SimpleDraweeView) helper.getView(R.id.iv_expert_header)).setImageURI(Uri.parse(""));
@@ -33,6 +33,7 @@ public class MyExpertListAdapter extends BaseQuickAdapter<CommonFaultListBeanEnt
 
         helper.setText(R.id.tv_good, "好评率: "+item.getFavorableRate() * 100 + "%");
         helper.setText(R.id.tv_major, "擅长专业:  "+item.getSystemType());
+        helper.setText(R.id.tv_money, item.getPrice()+"元一次");
         helper.addOnClickListener(R.id.tv_ask);
     }
 
