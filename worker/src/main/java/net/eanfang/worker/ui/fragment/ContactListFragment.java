@@ -2,7 +2,9 @@ package net.eanfang.worker.ui.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
@@ -22,6 +24,7 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.listener.NetBroadcastReceiver;
 import com.eanfang.model.AllMessageBean;
 import com.eanfang.model.GroupDetailBean;
 import com.eanfang.model.GroupsBean;
@@ -68,7 +71,7 @@ import static com.okgo.utils.HttpUtils.runOnUiThread;
  * @desc 消息
  */
 
-public class ContactListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
+public class ContactListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, NetBroadcastReceiver.NetChangeListener {
 
     private boolean isFrist = true;
     private List<String> invalidList = new ArrayList<>();//无效的会话id
@@ -92,7 +95,19 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
      * 融云链接状态
      */
     private TextView mContactStatus;
+    /**
+     * 有无网络
+     */
+    private boolean isNetWork = false;
+    private NetBroadcastReceiver netBroadcastReceiver;
+
+    /**
+     * 融云状态
+     */
+    private String mStatus = "";
+
     @Override
+
     protected int setLayoutResouceId() {
         return R.layout.fragment_message;
     }
@@ -119,7 +134,16 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
 //        if (parent != null) {
 //            parent.removeView(view);
 //        }
-
+        netChangeListener = this;
+        //Android 7.0以上需要动态注册
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            //实例化IntentFilter对象
+            IntentFilter filter = new IntentFilter();
+            filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+            netBroadcastReceiver = new NetBroadcastReceiver();
+            //注册广播接收
+            getActivity().registerReceiver(netBroadcastReceiver, filter);
+        }
         return view;
     }
 
@@ -271,7 +295,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
                                 .params("ryGroupId", s)
                                 .execute(new EanfangCallback<GroupDetailBean>(getActivity(), true, GroupDetailBean.class, (bean) -> {
                                     if (bean != null) {
-                                        UserInfo userInfo = new UserInfo(s, bean.getGroup().getGroupName(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + bean.getGroup().getHeadPortrait()));
+                                        UserInfo userInfo = new UserInfo(s, bean.getGroup().getGroupName(), Uri.parse(BuildConfig.OSS_SERVER + bean.getGroup().getHeadPortrait()));
                                         RongIM.getInstance().refreshUserInfoCache(userInfo);
                                     }
 
@@ -316,7 +340,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
 //            myConversationListFragment.setUri(uri);
 //
         ((MainActivity) getActivity()).getIMUnreadMessageCount();
-        String mStatus = ((MainActivity) getActivity()).onNoConatac();
+        mStatus = ((MainActivity) getActivity()).onNoConatac();
         if (StringUtils.isEmpty(mStatus)) {
             view.findViewById(R.id.rl_no_contact).setVisibility(View.GONE);
         } else {
@@ -430,7 +454,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
         EanfangHttp.get(UserApi.POST_USER_INFO + s)
                 .execute(new EanfangCallback<User>(getActivity(), false, User.class, (bean) -> {
                     if (bean != null) {
-                        UserInfo userInfo = new UserInfo(bean.getAccId(), bean.getNickName(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + bean.getAvatar()));
+                        UserInfo userInfo = new UserInfo(bean.getAccId(), bean.getNickName(), Uri.parse(BuildConfig.OSS_SERVER + bean.getAvatar()));
 
                         RongIM.getInstance().refreshUserInfoCache(userInfo);
                     }
@@ -490,9 +514,9 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
             bundle.putInt("mStystemCount", mStystemCount);
             JumpItent.jump(getActivity(), SystemNoticeActivity.class, bundle, REQUST_REFRESH_CODE);
         });
-        view.findViewById(R.id.iv_add).setOnClickListener(v -> {
+        view.findViewById(R.id.ll_add).setOnClickListener(v -> {
             MorePopWindow morePopWindow = new MorePopWindow(getActivity(), false);
-            morePopWindow.showPopupWindow(view.findViewById(R.id.iv_add));
+            morePopWindow.showPopupWindow(view.findViewById(R.id.ll_add));
         });
     }
 
@@ -520,4 +544,43 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
         Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
         return pattern.matcher(str).matches();
     }
+
+
+    //    public boolean checkNet() {
+//        this.isNetWork = ConnectivityChangeUtil.isNetConnected(getActivity());
+//        if (!isNetConnect()) {
+//            view.findViewById(R.id.rl_no_contact).setVisibility(View.VISIBLE);
+//            mContactStatus.setText("当前网络不可用，请检查网络设置");
+//        } else {
+//            view.findViewById(R.id.rl_no_contact).setVisibility(View.GONE);
+//        }
+//        return isNetConnect();
+//    }
+    @Override
+    public void onChangeListener(boolean status) {
+        this.isNetWork = status;
+        if (isNetConnect()) {
+            if (StringUtils.isEmpty(mStatus)) {
+                view.findViewById(R.id.rl_no_contact).setVisibility(View.GONE);
+            } else {
+                view.findViewById(R.id.rl_no_contact).setVisibility(View.VISIBLE);
+            }
+        } else {
+            view.findViewById(R.id.rl_no_contact).setVisibility(View.VISIBLE);
+            mContactStatus.setText("当前网络不可用，请检查网络设置");
+        }
+    }
+
+    /**
+     * 判断有无网络 。
+     *
+     * @return true 有网, false 没有网络.
+     */
+    public boolean isNetConnect() {
+        if (isNetWork) {
+            return true;
+        }
+        return false;
+    }
+
 }

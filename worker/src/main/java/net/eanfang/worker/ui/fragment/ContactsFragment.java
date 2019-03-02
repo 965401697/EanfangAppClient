@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
@@ -62,7 +61,6 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
     private ParentAdapter parentAdapter;
     private RecyclerView rev_list;
     private RelativeLayout rl_create_team;
-    private TextView tv_noTeam;
 
     // 通讯录点击展开
     private boolean isFirstShow = true;
@@ -138,11 +136,11 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
         //客户公司
         mDatas = Stream.of(mDatas).filter(beans -> beans.getOrgUnitEntity() != null && beans.getOrgUnitEntity().getUnitType() == 3).toList();
         if (mDatas.size() <= 0 || mDatas == null) {
-            tv_noTeam.setVisibility(View.VISIBLE);
+            rl_create_team.setVisibility(View.VISIBLE);
             rev_list.setVisibility(View.GONE);
         } else {
             //显示与隐藏
-            tv_noTeam.setVisibility(View.GONE);
+            rl_create_team.setVisibility(View.GONE);
             rev_list.setVisibility(View.VISIBLE);
 
             Long companyId = EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgId();
@@ -177,7 +175,6 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
 
 
         rl_create_team = (RelativeLayout) view.findViewById(R.id.rl_create_team);
-        tv_noTeam = (TextView) view.findViewById(R.id.tv_noTeam);
 
         view.findViewById(R.id.ll_my_friends).setOnClickListener(new View.OnClickListener() {
             @Override

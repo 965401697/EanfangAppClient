@@ -1126,6 +1126,13 @@
         <activity android:name=".ui.activity.worksapce.tender.WorkTenderDetailActivity" />
         <activity android:name=".ui.activity.my.specialist.AddBrandActivity" />
         <activity android:name=".ui.activity.my.specialist.SpecialistCertificationInfoActivity" />
+        <activity
+            android:name=".ui.activity.worksapce.security.SecurityListActivity"
+            android:label="@string/title_activity_security_list"
+            android:theme="@style/NewBaseTheme" />
+        <activity android:name=".ui.activity.worksapce.security.SecurityCreateActivity" />
+        <activity android:name=".ui.activity.worksapce.security.SecurityDetailActivity"></activity>
+
         <activity android:name=".ui.activity.my.specialist.SpecialistSkillInfoDetailActivity" />
         <activity android:name=".ui.activity.worksapce.online.ExpertOnlineActivity" />
         <activity android:name=".ui.activity.worksapce.online.SystemTypeActivity" />
@@ -1139,6 +1146,12 @@
         <activity android:name=".ui.activity.worksapce.online.ExpertAnswerActivity" />
         <activity android:name=".ui.activity.worksapce.online.CommentFaultSearchActivity" />
         <activity android:name=".ui.activity.worksapce.online.MyFreeAskActivity"></activity>
+
+        <receiver android:name="com.eanfang.listener.NetBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

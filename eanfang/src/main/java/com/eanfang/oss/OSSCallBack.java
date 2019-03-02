@@ -11,7 +11,7 @@ import com.alibaba.sdk.android.oss.callback.OSSProgressCallback;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.eanfang.ui.base.UploadDialogUtil;
-import com.eanfang.util.ConnectivityChangeReceiver;
+import com.eanfang.util.ConnectivityChangeUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 
@@ -136,7 +136,7 @@ public abstract class OSSCallBack implements OSSProgressCallback<PutObjectReques
      * 上传失败 回调
      */
     public void onOssFail(String message) {
-        if (!ConnectivityChangeReceiver.isNetConnected(activity)) {
+        if (!ConnectivityChangeUtil.isNetConnected(activity)) {
             ToastUtil.get().showToast(this.activity, "哎呀，网络连接好像失败了");
             return;
         } else if (!StringUtils.isEmpty(message)) {

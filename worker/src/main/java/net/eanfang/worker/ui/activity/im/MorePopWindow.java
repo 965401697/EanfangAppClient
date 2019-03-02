@@ -12,6 +12,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.worksapce.contacts.CreatTeamActivity;
 
 
 /**
@@ -20,8 +21,10 @@ import net.eanfang.worker.R;
 
 public class MorePopWindow extends PopupWindow {
 
+    public final int CREAT_TEAM_CODE = 49;
+
     @SuppressLint("InflateParams")
-    public MorePopWindow(final Activity context, boolean isVisable) {
+    public  MorePopWindow(final Activity context, boolean isVisable) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View content = inflater.inflate(R.layout.popu_add, null);
@@ -54,6 +57,7 @@ public class MorePopWindow extends PopupWindow {
         }
         RelativeLayout re_scanner = (RelativeLayout) content.findViewById(R.id.re_scanner);
         RelativeLayout re_group = (RelativeLayout) content.findViewById(R.id.re_group);
+        RelativeLayout re_addGroup = (RelativeLayout) content.findViewById(R.id.re_add_group);
         re_addfriends.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -98,6 +102,10 @@ public class MorePopWindow extends PopupWindow {
                 context.startActivity(new Intent(context, AddFriendActivity.class));
                 MorePopWindow.this.dismiss();
             }
+        });
+        re_addGroup.setOnClickListener((v) -> {
+            context.startActivityForResult(new Intent(context, CreatTeamActivity.class), CREAT_TEAM_CODE);
+            MorePopWindow.this.dismiss();
         });
 
 

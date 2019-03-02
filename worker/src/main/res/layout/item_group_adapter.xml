@@ -18,6 +18,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dimen_36"
+            android:visibility="gone"
             fresco:placeholderImage="@drawable/contend_ic_thenameofthecompany_default"
             fresco:roundAsCircle="true" />
 
@@ -25,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/dimen_28"
+            android:layout_marginLeft="@dimen/dimen_30"
             android:layout_toRightOf="@+id/iv_company_logo"
             android:gravity="center_vertical"
             android:orientation="horizontal">
@@ -39,17 +40,17 @@
                 android:maxEms="10"
                 android:singleLine="true"
                 android:text=""
-                android:textColor="@color/color_client_neworder"
+                android:textColor="@color/color_contact_companyname"
                 android:textSize="@dimen/textSize_15" />
 
             <ImageView
                 android:id="@+id/iv_verify"
-                android:layout_width="@dimen/dimen_26"
-                android:layout_height="@dimen/dimen_26"
+                android:layout_width="@dimen/dimen_32"
+                android:layout_height="@dimen/dimen_32"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@id/tv_company_name"
-                android:src="@mipmap/ic_contact_noauthentication"
+                android:src="@mipmap/ic_contact_noauth"
                 android:visibility="visible" />
 
             <TextView
@@ -61,7 +62,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:text="未认证"
-                android:textColor="@color/color_contact_authentication"
+                android:textColor="@color/color_contact_auth_text"
                 android:textSize="@dimen/textSize_12"
                 android:visibility="visible" />
         </RelativeLayout>
@@ -78,18 +79,16 @@
             android:src="@mipmap/ic_contact_setting" />
     </RelativeLayout>
 
+    <TextView style="@style/style_common_line_gray" />
 
     <LinearLayout
         android:id="@+id/ll_show"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dimen_20"
-        android:layout_marginLeft="@dimen/dimen_120"
+        android:layout_marginLeft="@dimen/dimen_80"
         android:orientation="vertical"
-        android:visibility="gone">
-
-
-        <TextView style="@style/style_common_line_gray" />
+        android:visibility="visible">
 
         <LinearLayout
             android:id="@+id/ll_org"
@@ -108,9 +107,9 @@
                 android:id="@+id/tv_org"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_44"
+                android:layout_marginLeft="@dimen/dimen_40"
                 android:text="组织架构"
-                android:textColor="@color/roll_content"
+                android:textColor="@color/color_contact_auth_text"
                 android:textSize="@dimen/textSize_14" />
         </LinearLayout>
 
@@ -127,15 +126,15 @@
             <ImageView
                 android:layout_width="@dimen/dimen_34"
                 android:layout_height="@dimen/dimen_34"
-                android:src="@mipmap/ic_worker_child" />
+                android:src="@mipmap/ic_contact_child" />
 
             <TextView
                 android:id="@+id/tv_child_company"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_44"
+                android:layout_marginLeft="@dimen/dimen_40"
                 android:text="子公司"
-                android:textColor="@color/roll_content"
+                android:textColor="@color/color_contact_auth_text"
                 android:textSize="@dimen/textSize_14" />
         </LinearLayout>
 
@@ -161,9 +160,9 @@
                 android:id="@+id/tv_outside_company"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_44"
+                android:layout_marginLeft="@dimen/dimen_40"
                 android:text="外协单位"
-                android:textColor="@color/roll_content"
+                android:textColor="@color/color_contact_auth_text"
                 android:textSize="@dimen/textSize_14" />
         </LinearLayout>
 
@@ -189,9 +188,9 @@
                 android:id="@+id/tv_parten_company"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_44"
+                android:layout_marginLeft="@dimen/dimen_40"
                 android:text="合作供应商"
-                android:textColor="@color/roll_content"
+                android:textColor="@color/color_contact_auth_text"
                 android:textSize="@dimen/textSize_14" />
         </LinearLayout>
 

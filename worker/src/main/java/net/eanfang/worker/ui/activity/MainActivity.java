@@ -563,7 +563,7 @@ public class MainActivity extends BaseActivity {
                 case NETWORK_UNAVAILABLE:
 
                     Log.i("zzw", "--------------------网络不可用");
-                    mStatus = "当前网络不可用，请检查网络设置";
+                    mStatus = "";
                     break;
                 //用户账户在其他设备登录，本机会被踢掉线
                 case KICKED_OFFLINE_BY_OTHER_CLIENT:
@@ -577,6 +577,7 @@ public class MainActivity extends BaseActivity {
         }
 
     }
+
 
     @Subscribe
     public void onEvent(Integer integer) {
