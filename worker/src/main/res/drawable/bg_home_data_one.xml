@@ -4,8 +4,8 @@
     android:useLevel="false">
     <solid android:color="@color/color_home_data_one" />
     <size
-        android:width="@dimen/dimen_40"
-        android:height="@dimen/dimen_40" />
+        android:width="@dimen/dimen_80"
+        android:height="@dimen/dimen_80" />
     <padding
         android:bottom="@dimen/dimen_4"
         android:left="@dimen/dimen_4"

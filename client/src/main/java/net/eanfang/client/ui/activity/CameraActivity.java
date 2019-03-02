@@ -34,7 +34,7 @@ import com.eanfang.model.CameraBean;
 import com.eanfang.model.SelectAddressItem;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.voice.RecognitionManager;
-import com.eanfang.util.ConnectivityChangeReceiver;
+import com.eanfang.util.ConnectivityChangeUtil;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.SharePreferenceUtil;
@@ -185,7 +185,7 @@ public class CameraActivity extends BaseClientActivity implements AMapLocationLi
         if (StringUtils.isEmpty(creatUser)) {
             creatUser = "--";
         }
-        if (ConnectivityChangeReceiver.isNetConnected(this) == true) {
+        if (ConnectivityChangeUtil.isNetConnected(this) == true) {
             etAddress.setVisibility(View.GONE);
             tvLocationAddress.setVisibility(View.VISIBLE);
         } else {
@@ -237,7 +237,7 @@ public class CameraActivity extends BaseClientActivity implements AMapLocationLi
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             showToast("请打开GPS,定位更准确");
         }
-        if (ConnectivityChangeReceiver.isNetConnected(this) == false) {
+        if (ConnectivityChangeUtil.isNetConnected(this) == false) {
             showToast("没有网络，请检查网络");
         }
     }
@@ -375,7 +375,7 @@ public class CameraActivity extends BaseClientActivity implements AMapLocationLi
                 Bitmap watermarkBitmap = ImageUtil.createWaterMaskCenter(waterBitmap, waterBitmap);
 
 
-                if (ConnectivityChangeReceiver.isNetConnected(this) == true) {
+                if (ConnectivityChangeUtil.isNetConnected(this) == true) {
                     String netAddress = tvLocationAddress.getText().toString();
                     drawBitmap(path, watermarkBitmap, netAddress, time);
                 } else {

@@ -950,7 +950,12 @@
             android:name=".ui.activity.im.SearchPersonCompanyActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.worksapce.defendlog.FilterDefendLogActivity" />
-        <activity android:name=".ui.activity.worksapce.maintenance.MaintenanceHandleActivityZ"></activity>
+
+        <receiver android:name="com.eanfang.listener.NetBroadcastReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

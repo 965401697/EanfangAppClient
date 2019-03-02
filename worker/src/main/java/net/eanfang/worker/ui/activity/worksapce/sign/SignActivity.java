@@ -28,7 +28,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.SignCountBean;
 import com.eanfang.model.SigninBean;
 import com.eanfang.ui.base.BaseActivity;
-import com.eanfang.util.ConnectivityChangeReceiver;
+import com.eanfang.util.ConnectivityChangeUtil;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
@@ -252,7 +252,7 @@ public class SignActivity extends BaseActivity implements LocationSource, AMapLo
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             ToastUtil.get().showToast(this, "请打开GPS,定位更准确");
         }
-        if (ConnectivityChangeReceiver.isNetConnected(this) == false) {
+        if (ConnectivityChangeUtil.isNetConnected(this) == false) {
             ToastUtil.get().showToast(this, "没有网络，请检查网络");
         }
     }

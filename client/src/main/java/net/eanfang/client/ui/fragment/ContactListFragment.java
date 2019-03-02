@@ -2,7 +2,9 @@ package net.eanfang.client.ui.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
@@ -21,6 +23,7 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.listener.NetBroadcastReceiver;
 import com.eanfang.model.AllMessageBean;
 import com.eanfang.model.GroupDetailBean;
 import com.eanfang.model.GroupsBean;
@@ -67,7 +70,7 @@ import static com.okgo.utils.HttpUtils.runOnUiThread;
  * @desc 消息
  */
 
-public class ContactListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
+public class ContactListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, NetBroadcastReceiver.NetChangeListener {
 
     private boolean isFrist = true;
     private List<String> invalidList = new ArrayList<>();//无效的会话id
@@ -91,6 +94,15 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
      * 融云链接状态
      */
     private TextView mContactStatus;
+    /**
+     * 有无网络
+     */
+    private boolean isNetWork = false;
+    private NetBroadcastReceiver netBroadcastReceiver;
+    /**
+     * 融云状态
+     */
+    private String mStatus = "";
 
     @Override
     protected int setLayoutResouceId() {
@@ -119,7 +131,16 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
 //        if (parent != null) {
 //            parent.removeView(view);
 //        }
-
+        netChangeListener = this;
+        //Android 7.0以上需要动态注册
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            //实例化IntentFilter对象
+            IntentFilter filter = new IntentFilter();
+            filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+            netBroadcastReceiver = new NetBroadcastReceiver();
+            //注册广播接收
+            getActivity().registerReceiver(netBroadcastReceiver, filter);
+        }
         return view;
     }
 
@@ -498,6 +519,45 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
     public static boolean isInteger(String str) {
         Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
         return pattern.matcher(str).matches();
+    }
+
+
+    //    public boolean checkNet() {
+//        this.isNetWork = ConnectivityChangeUtil.isNetConnected(getActivity());
+//        if (!isNetConnect()) {
+//            view.findViewById(R.id.rl_no_contact).setVisibility(View.VISIBLE);
+//            mContactStatus.setText("当前网络不可用，请检查网络设置");
+//        } else {
+//            view.findViewById(R.id.rl_no_contact).setVisibility(View.GONE);
+//        }
+//        return isNetConnect();
+//    }
+    @Override
+
+    public void onChangeListener(boolean status) {
+        this.isNetWork = status;
+        if (isNetConnect()) {
+            if (StringUtils.isEmpty(mStatus)) {
+                view.findViewById(R.id.rl_no_contact).setVisibility(View.GONE);
+            } else {
+                view.findViewById(R.id.rl_no_contact).setVisibility(View.VISIBLE);
+            }
+        } else {
+            view.findViewById(R.id.rl_no_contact).setVisibility(View.VISIBLE);
+            mContactStatus.setText("当前网络不可用，请检查网络设置");
+        }
+    }
+
+    /**
+     * 判断有无网络 。
+     *
+     * @return true 有网, false 没有网络.
+     */
+    public boolean isNetConnect() {
+        if (isNetWork) {
+            return true;
+        }
+        return false;
     }
 
 }

@@ -310,13 +310,11 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
                 .params("userId", EanfangApplication.get().getAccId())
                 .execute(new EanfangCallback<String>(MainActivity.this, false, String.class, (str) -> {
                     if (!TextUtils.isEmpty(str)) {
-                        Log.e("zzw1", str + "");
                         JSONObject json = JSONObject.parseObject(str);
                         String token = json.getString("token");
                         EanfangApplication.get().set(EanfangConst.RONG_YUN_TOKEN, token);
                         ClientApplication.connect(token, MainActivity.this);
                     }
-                    Log.e("zzw2", str + "");
                 }));
 
 
@@ -530,7 +528,7 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
                 case NETWORK_UNAVAILABLE:
 
                     Log.i("zzw", "--------------------网络不可用");
-                    mStatus = "当前网络不可用，请检查网络设置";
+                    mStatus = "";
                     break;
                 //用户账户在其他设备登录，本机会被踢掉线
                 case KICKED_OFFLINE_BY_OTHER_CLIENT:

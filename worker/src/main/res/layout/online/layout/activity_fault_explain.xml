@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/header" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_120">
+
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/iv_user_header"
+                    android:layout_width="@dimen/dimen_100"
+                    android:layout_height="@dimen/dimen_100"
+                    android:layout_marginLeft="@dimen/dimen_40"
+                    android:layout_marginTop="@dimen/dimen_40"
+                    android:layout_centerVertical="true"
+                    fresco:placeholderImage="@mipmap/ic_header"
+                    fresco:roundAsCircle="true" />
+
+
+                <TextView
+                    android:id="@+id/tv_user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/iv_user_header"
+                    android:layout_marginLeft="@dimen/dimen_25"
+                    android:layout_toRightOf="@+id/iv_user_header"
+                    android:text="推荐专家"
+                    android:textColor="@color/roll_title"
+                    android:textSize="@dimen/textSize_15" />
+
+
+                <TextView
+                    android:id="@+id/tv_ask"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/iv_user_header"
+                    android:layout_marginLeft="@dimen/dimen_25"
+                    android:layout_marginRight="@dimen/dimen_40"
+                    android:layout_toRightOf="@+id/iv_user_header"
+                    android:singleLine="true"
+                    android:text="提问"
+                    android:textColor="@color/color_bottom"
+                    android:textSize="@dimen/textSize_12" />
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/tv_user_name"
+                    android:layout_alignBottom="@+id/tv_user_name"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="20dp"
+                    android:singleLine="true"
+                    android:text="9小时"
+                    android:textColor="@color/color_bottom"
+                    android:textSize="@dimen/textSize_12" />
+
+
+                <View
+                    android:id="@+id/line"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_2"
+                    android:layout_alignParentBottom="true"
+                    android:background="@color/color_new_line" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_major"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_40"
+                    android:layout_marginTop="@dimen/dimen_30"
+                    android:text="擅长专业："
+                    android:textColor="@color/roll_title"
+                    android:textSize="@dimen/textSize_13" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_40"
+                    android:layout_marginTop="@dimen/dimen_30"
+                    android:text="描述："
+                    android:textColor="@color/roll_title"
+                    android:textSize="@dimen/textSize_14" />
+
+                <TextView
+                    android:id="@+id/tv_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_20"
+                    android:layout_marginLeft="@dimen/dimen_40"
+                    android:layout_marginRight="@dimen/dimen_40"
+                    android:layout_marginTop="@dimen/dimen_20"
+                    android:text="asdfasdfasdfasdfsadfasfasfasdfasfsafasdfasfdasdfasdfasdfasfdasfdasfdas："
+                    android:textColor="@color/color_bottom"
+                    android:textSize="@dimen/textSize_13" />
+
+
+                <LinearLayout
+                    android:id="@+id/ll_pic"
+                    android:layout_width="match_parent"
+                    android:layout_height="99dp"
+                    android:orientation="horizontal">
+
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/iv_pic1"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:layout_margin="5dp"
+                        fresco:placeholderImage="@mipmap/no_img" />
+
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/iv_pic2"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:layout_margin="5dp"
+                        android:visibility="gone"
+                        fresco:placeholderImage="@mipmap/no_img" />
+
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:id="@+id/iv_pic3"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        android:visibility="gone"
+                        fresco:placeholderImage="@mipmap/no_img" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_answer"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_90"
+                    android:layout_marginBottom="@dimen/dimen_40"
+                    android:layout_marginLeft="@dimen/dimen_210"
+                    android:layout_marginRight="@dimen/dimen_210"
+                    android:layout_marginTop="@dimen/dimen_40"
+                    android:background="@drawable/bg_trouble_type_pressed"
+                    android:gravity="center"
+                    android:text="我来回答"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSize_13" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_90"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/dimen_40"
+                android:text="专家回复"
+                android:textColor="@color/roll_title"
+                android:textSize="@dimen/textSize_14" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view_answer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

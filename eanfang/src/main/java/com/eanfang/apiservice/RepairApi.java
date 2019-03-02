@@ -17,6 +17,10 @@ public interface RepairApi {
     String GET_FLOW_CONFIRE = BuildConfig.API_HOST + "/yaf_repair/flow/confirm";
 
     /**
+     * 客户确认完工
+     */
+    String Answer_Add = BuildConfig.API_HOST + "/yaf_sys/expertsOnline/answerAdd";
+    /**
      * 1.新增报修
      */
     String ADD_CLIENT_REPAIR = BuildConfig.API_HOST + "/yaf_repair/order/create";

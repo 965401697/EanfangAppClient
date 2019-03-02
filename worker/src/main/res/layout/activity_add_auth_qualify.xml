@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:orientation="horizontal"
-            android:paddingBottom="@dimen/dimen_20"
+            android:paddingBottom="@dimen/dimen_24"
             android:paddingLeft="@dimen/dimen_36"
             android:paddingRight="@dimen/dimen_34"
             android:paddingTop="@dimen/dimen_20">

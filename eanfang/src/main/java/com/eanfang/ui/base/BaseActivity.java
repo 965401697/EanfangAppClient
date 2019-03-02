@@ -55,6 +55,7 @@ public class BaseActivity extends AppCompatActivity implements
     private boolean containsFirst = false;
     public final static ArrayList<Activity> transactionActivities = new ArrayList<Activity>();
 
+
     //Android6.0申请权限的回调方法
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -114,6 +115,7 @@ public class BaseActivity extends AppCompatActivity implements
         if (hasTransaction) {
             transactionActivities.add(this);
         }
+
     }
 
 
