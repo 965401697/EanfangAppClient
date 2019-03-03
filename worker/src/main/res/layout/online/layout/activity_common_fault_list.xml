@@ -20,9 +20,9 @@
             android:orientation="vertical">
 
             <!--<android.support.v4.widget.SwipeRefreshLayout
-                android:id="@+id/swipre_fresh_zyr"
+                android:id="@+id/swipre_fresh"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">-->
+                android:layout_height="200dp">-->
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recycler_view_fault"

@@ -7,6 +7,7 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.model.security.SecurityFoucsListBean;
 import com.eanfang.util.ETimeUtils;
 import com.eanfang.util.StringUtils;
@@ -68,9 +69,12 @@ public class SecurityFocusListAdapter extends BaseQuickAdapter<SecurityFoucsList
         /**
          * 0 是关注 1 是未关注
          * */
-        if (item.getFollowsStatus() == 0) {
+        if (item.getAskSpCircleEntity().getPublisherUserId().equals(EanfangApplication.get().getUserId()) || item.getFollowsStatus() == 0) {
             helper.setVisible(R.id.tv_isFocus, true);
             helper.setText(R.id.tv_isFocus, "取消关注");
+        } else {
+
+            helper.setVisible(R.id.tv_isFocus, false);
         }
         /**
          * 0 点赞 1 未点赞

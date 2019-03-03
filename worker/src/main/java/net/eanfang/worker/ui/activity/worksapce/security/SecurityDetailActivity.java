@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -68,8 +67,8 @@ public class SecurityDetailActivity extends BaseActivity {
     TextView tvLikeNum;
     @BindView(R.id.iv_comment)
     ImageView ivComment;
-    @BindView(R.id.tv_comments_num)
-    TextView tvCommentsNum;
+    //    @BindView(R.id.tv_comments_num)
+//    TextView tvCommentsNum;
     @BindView(R.id.ll_comments)
     LinearLayout llComments;
     @BindView(R.id.iv_share)
@@ -282,7 +281,7 @@ public class SecurityDetailActivity extends BaseActivity {
         SecurityLikeBean securityLikeBean = new SecurityLikeBean();
         securityLikeBean.setAsId(mId);
         securityLikeBean.setType("0");
-         /**
+        /**
          * 状态：0 点赞 1 未点赞
          * */
         if (mLikeStatus == 0) {
@@ -334,11 +333,11 @@ public class SecurityDetailActivity extends BaseActivity {
     }
 
     // 捕获返回键的方法
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
         //隐藏键盘与布局
-        hideKeyboard();
-        return true;
-    }
+//        hideKeyboard();
+//        return true;
+//    }
 
 }

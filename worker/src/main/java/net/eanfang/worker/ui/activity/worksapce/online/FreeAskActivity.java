@@ -161,6 +161,7 @@ public class FreeAskActivity extends BaseWorkerActivity {
         askQuestionsEntity.setDataCode(dataCode);
         askQuestionsEntity.setBusinessOneCode(businessOneCode);
         askQuestionsEntity.setModelCode(mModelCode);
+        Toast.makeText(FreeAskActivity.this,mModelCode+"",Toast.LENGTH_SHORT).show();
         askQuestionsEntity.setFailureTypeId(String.valueOf(dataId));
         askQuestionsEntity.setQuestionSketch(mSketch);
         askQuestionsEntity.setQuestionContent(etInputInfo.getText().toString().trim());

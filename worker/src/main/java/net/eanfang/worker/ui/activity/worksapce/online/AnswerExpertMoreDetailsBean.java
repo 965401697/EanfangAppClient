@@ -49,11 +49,12 @@ class AnswerExpertMoreDetailsBean {
         public static class ExpertBean {
             /**
              * accId : 980732504676810754
-             * approveTime : 2019-02-22 16:20:02
+             * approveTime : 2019-03-03 20:46:20
              * approveType : 0
              * approveUserName : 管理员
              * avatarPhoto : account/avatar/d6b8f38fe033460e94ce4a817eaf43f5.png
              * brandName : 啊啊啊
+             * certificateName : 建造师证书
              * company : 海康威视
              * createTime : 2019-01-16 10:39:56
              * expertName : 赵子武
@@ -66,7 +67,7 @@ class AnswerExpertMoreDetailsBean {
              * idCardSide : avatar/30766a1474a447668771c985301e0ab3.jpg
              * impowerUrl : account/avatar/d6b8f38fe033460e94ce4a817eaf43f5.png
              * intro : 再找找
-             * jobLce : 1
+             * jobLce : 24
              * jobLevel : 1
              * payAccount : 11111111
              * payType : 1
@@ -86,6 +87,7 @@ class AnswerExpertMoreDetailsBean {
             private String approveUserName;
             private String avatarPhoto;
             private String brandName;
+            private String certificateName;
             private String company;
             private String createTime;
             private String expertName;
@@ -157,6 +159,14 @@ class AnswerExpertMoreDetailsBean {
 
             public void setBrandName(String brandName) {
                 this.brandName = brandName;
+            }
+
+            public String getCertificateName() {
+                return certificateName;
+            }
+
+            public void setCertificateName(String certificateName) {
+                this.certificateName = certificateName;
             }
 
             public String getCompany() {
@@ -641,6 +651,6 @@ class AnswerExpertMoreDetailsBean {
                 public void setStatus(int status) {
                     this.status = status;
                 }
-            }
+        }
     }
 }

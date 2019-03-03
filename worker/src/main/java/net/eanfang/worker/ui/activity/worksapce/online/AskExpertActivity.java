@@ -2,6 +2,7 @@ package net.eanfang.worker.ui.activity.worksapce.online;
 
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -11,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -101,8 +103,8 @@ public class AskExpertActivity extends BaseWorkerActivity {
                 .execute(new EanfangCallback<AnswerExpertMoreDetailsBean>(this, true, AnswerExpertMoreDetailsBean.class) {
                     @Override
                     public void onSuccess(AnswerExpertMoreDetailsBean bean) {
-                        ivExpertHeader.setImageURI(bean.getExpert().getAvatarPhoto());
-                        tvLevel.setText("建造师（1级）");
+                        ivExpertHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER +bean.getExpert().getAvatarPhoto()));
+                        tvLevel.setText(bean.getExpert().getCertificateName());
                         tvExpertName.setText(bean.getExpert().getApproveUserName());
                         llGood.setText("好评率:" + bean.getExpert().getFavorableRate() * 100 + "%");
                         llAnswer.setText("回答:" + bean.getAnswerNums());

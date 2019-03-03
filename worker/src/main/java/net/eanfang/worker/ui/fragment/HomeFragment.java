@@ -42,7 +42,6 @@ import net.eanfang.worker.ui.activity.worksapce.MineTaskPublishListSendParentAct
 import net.eanfang.worker.ui.activity.worksapce.OfferAndPayOrderParentActivity;
 import net.eanfang.worker.ui.activity.worksapce.TakeTaskListActivity;
 import net.eanfang.worker.ui.activity.worksapce.WebActivity;
-import net.eanfang.worker.ui.activity.worksapce.datastatistics.DataStaticsticsListActivity;
 import net.eanfang.worker.ui.activity.worksapce.design.DesignActivity;
 import net.eanfang.worker.ui.activity.worksapce.maintenance.MaintenanceActivity;
 import net.eanfang.worker.ui.activity.worksapce.online.ExpertOnlineActivity;
@@ -406,7 +405,7 @@ public class HomeFragment extends BaseFragment {
 
     private void initCount() {
         rlAllData.setOnClickListener((v) -> {
-            startActivity(new Intent(getActivity(), DataStaticsticsListActivity.class));
+//            startActivity(new Intent(getActivity(), DataStaticsticsListActivity.class));
         });
     }
 

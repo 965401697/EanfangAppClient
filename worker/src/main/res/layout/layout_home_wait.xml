@@ -39,7 +39,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="6"
+                android:text="0"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/textSize_12" />
 
@@ -61,6 +61,7 @@
         android:layout_marginLeft="@dimen/dimen_28"
         android:layout_marginRight="@dimen/dimen_28"
         android:layout_marginTop="@dimen/dimen_36"
+        android:visibility="gone"
         android:background="@drawable/bg_worker_home_datastics_back"
         android:orientation="vertical"
         android:paddingBottom="@dimen/dimen_26">
@@ -84,4 +85,11 @@
             app:unselectedColor="#E8E8E8" />
 
     </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_100"
+        android:text="暂无待办"
+        android:gravity="center"
+        android:textSize="@dimen/textSize_15"
+        android:textColor="@color/color_bottom"/>
 </LinearLayout>
