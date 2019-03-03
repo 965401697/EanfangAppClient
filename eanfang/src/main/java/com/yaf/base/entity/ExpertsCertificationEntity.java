@@ -6,7 +6,6 @@ import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 import com.yaf.sys.entity.AccountEntity;
-import com.yaf.sys.entity.BaseDataEntity;
 import com.yaf.sys.entity.UserEntity;
 
 import java.io.Serializable;
@@ -115,8 +114,8 @@ public class ExpertsCertificationEntity implements Serializable {
     //@TableField(value = "approve_message")
     private String approveMessage;
     //性别,0女 1男
-    //@TableField(value = "gender")
-    //private Integer gender;
+    @TableField(value = "gender")
+    private Integer gender;
     //专家推荐排名权重
     //@TableField(value = "rank_weight")
     private Integer rankWeight;
@@ -532,16 +531,16 @@ public class ExpertsCertificationEntity implements Serializable {
     /**
      * 获取：性别,0女 1男
      */
-    /*public Integer getGender() {
+    public Integer getGender() {
         return gender;
-    }*/
+    }
 
     /**
      * 设置：性别,0女 1男
      */
-    /*public void setGender(Integer gender) {
+    public void setGender(Integer gender) {
         this.gender = gender;
-    }*/
+    }
 
 
     @Override
