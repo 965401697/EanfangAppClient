@@ -112,14 +112,14 @@ public class ExpertOnlineActivity extends BaseWorkerActivity {
 
             }
         });
-        /*mCommonFaultAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+        mCommonFaultAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(ExpertOnlineActivity.this, CommonFaultListActivity.class);
                 intent.putExtra("QuestionSketch",list.get(position).getQuestionSketch());
                 startActivity(intent);
             }
-        });*/
+        });
         //故障数据
         getData();
     }

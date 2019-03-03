@@ -1,5 +1,7 @@
 package net.eanfang.worker.ui.adapter;
 
+import android.net.Uri;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
@@ -21,7 +23,7 @@ public class AddStaffAdapter extends BaseQuickAdapter<FriendListBean, BaseViewHo
 
     @Override
     protected void convert(BaseViewHolder helper, FriendListBean item) {
-        ((SimpleDraweeView) helper.getView(R.id.iv_user_header)).setImageURI(BuildConfig.OSS_SERVER + item.getAvatar());
+        ((SimpleDraweeView) helper.getView(R.id.iv_user_header)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER +BuildConfig.OSS_SERVER + item.getAvatar()));
         helper.setText(R.id.tv_name_phone, item.getNickName() + "(" + item.getMobile() + ")");
         helper.setText(R.id.tv_address, Config.get().getAddressByCode(item.getAreaCode()) + item.getAddress());
     }
