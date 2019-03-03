@@ -116,7 +116,7 @@ public class ExpertsCertificationEntity implements Serializable {
     private String approveMessage;
     //性别,0女 1男
     //@TableField(value = "gender")
-    private Integer gender;
+    //private Integer gender;
     //专家推荐排名权重
     //@TableField(value = "rank_weight")
     private Integer rankWeight;
@@ -532,16 +532,16 @@ public class ExpertsCertificationEntity implements Serializable {
     /**
      * 获取：性别,0女 1男
      */
-    public Integer getGender() {
+    /*public Integer getGender() {
         return gender;
-    }
+    }*/
 
     /**
      * 设置：性别,0女 1男
      */
-    public void setGender(Integer gender) {
+    /*public void setGender(Integer gender) {
         this.gender = gender;
-    }
+    }*/
 
 
     @Override
