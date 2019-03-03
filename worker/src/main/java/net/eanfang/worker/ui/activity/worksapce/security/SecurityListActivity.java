@@ -94,7 +94,11 @@ public class SecurityListActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         int currentTab = tlSecurityList.getCurrentTab();
         if (resultCode == RESULT_OK && requestCode == FILTRATE_TYPE_CODE) {
-            ((SecurityHotFragment) mFragments.get(currentTab)).refreshStatus();
+            if(currentTab==0){
+                ((SecurituFoucsFragment)mFragments.get(currentTab)).refreshStatus();
+            }else{
+                ((SecurityHotFragment) mFragments.get(currentTab)).refreshStatus();
+            }
         }
     }
 }

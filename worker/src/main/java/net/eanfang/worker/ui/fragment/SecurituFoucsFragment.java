@@ -183,4 +183,11 @@ public class SecurituFoucsFragment extends TemplateItemListFragment {
                 });
     }
 
+    /**
+     * 刷新已读未读的状态
+     */
+    public void refreshStatus() {
+        getData();
+    }
+
 }
