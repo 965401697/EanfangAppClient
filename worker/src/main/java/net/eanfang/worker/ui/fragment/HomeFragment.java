@@ -24,16 +24,22 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.AllMessageBean;
 import com.eanfang.model.NoticeEntity;
+import com.eanfang.model.security.SecurityHotListBean;
+import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
+import com.eanfang.util.PermissionUtils;
+import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
 import com.eanfang.witget.BannerView;
 import com.eanfang.witget.HomeScanPopWindow;
 import com.eanfang.witget.RollTextView;
 import com.flyco.tablayout.SlidingTabLayout;
+import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.CameraActivity;
@@ -47,6 +53,7 @@ import net.eanfang.worker.ui.activity.worksapce.maintenance.MaintenanceActivity;
 import net.eanfang.worker.ui.activity.worksapce.online.ExpertOnlineActivity;
 import net.eanfang.worker.ui.activity.worksapce.repair.RepairCtrlActivity;
 import net.eanfang.worker.ui.activity.worksapce.scancode.ScanCodeActivity;
+import net.eanfang.worker.ui.activity.worksapce.security.SecurityDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.security.SecurityListActivity;
 import net.eanfang.worker.ui.activity.worksapce.tender.WorkerTenderControlActivity;
 import net.eanfang.worker.ui.adapter.HomeWaitAdapter;
@@ -124,6 +131,7 @@ public class HomeFragment extends BaseFragment {
     private RelativeLayout rlSecurity;
     private RecyclerView rvSecurity;
     private SecurityHotListAdapter securityHotListAdapter;
+    private TextView tvNoSecurity;
 
     @Override
     protected void initData(Bundle arguments) {
@@ -143,6 +151,7 @@ public class HomeFragment extends BaseFragment {
         rlAllData = (RelativeLayout) findViewById(R.id.rl_allData);
         customHomeViewPager = (CustomHomeViewPager) findViewById(R.id.vp_datastatistics);
         tvHomeTitle = (TextView) findViewById(R.id.tv_homeTitle);
+        tvNoSecurity = findViewById(R.id.tv_noSecurity);
         homeScanPopWindow = new HomeScanPopWindow(getActivity(), true, scanSelectItemsOnClick);
         homeScanPopWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
@@ -251,8 +260,29 @@ public class HomeFragment extends BaseFragment {
         rvSecurity.setLayoutManager(layoutManager);
         rvSecurity.setNestedScrollingEnabled(false);
         rvSecurity.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
-//        securityHotListAdapter.bindToRecyclerView(rvSecurity);
-//        securityHotListAdapter.setNewData(mSecurityList);
+        securityHotListAdapter.bindToRecyclerView(rvSecurity);
+        doGetSecurityData();
+    }
+
+    private void doGetSecurityData() {
+        QueryEntry mQueryEntry = new QueryEntry();
+        mQueryEntry.setPage(1);
+        mQueryEntry.setSize(3);
+        EanfangHttp.post(NewApiService.SECURITY_HOT)
+                .upJson(JsonUtils.obj2String(mQueryEntry))
+                .execute(new EanfangCallback<SecurityHotListBean>(getActivity(), true, SecurityHotListBean.class) {
+
+                    @Override
+                    public void onSuccess(SecurityHotListBean bean) {
+                        securityHotListAdapter.getData().clear();
+                        securityHotListAdapter.setNewData(bean.getList());
+                        if (bean.getList().size() > 0) {
+                            tvNoSecurity.setVisibility(View.GONE);
+                        } else {
+                            tvNoSecurity.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
     }
 
     @Override
@@ -396,6 +426,12 @@ public class HomeFragment extends BaseFragment {
                     homeWaitIndicator.setPosition(i);
                 }
             }
+        });
+        securityHotListAdapter.setOnItemClickListener((adapter, view, position) -> {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("bean", securityHotListAdapter.getData().get(position));
+            bundle.putString("type", "hot");
+            JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
         });
     }
 

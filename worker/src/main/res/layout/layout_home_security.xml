@@ -31,6 +31,16 @@
 
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/tv_noSecurity"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_100"
+        android:gravity="center"
+        android:visibility="gone"
+        android:text="暂无推荐"
+        android:textColor="@color/color_bottom"
+        android:textSize="@dimen/textSize_15" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_security"
         android:layout_width="match_parent"

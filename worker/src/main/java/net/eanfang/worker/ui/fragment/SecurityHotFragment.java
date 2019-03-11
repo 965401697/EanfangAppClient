@@ -40,6 +40,11 @@ public class SecurityHotFragment extends TemplateItemListFragment {
         return mTitle;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getData();
+    }
 
     @Override
     protected void setListener() {
@@ -54,6 +59,7 @@ public class SecurityHotFragment extends TemplateItemListFragment {
                 case R.id.ll_comments:
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("bean", securityHotListAdapter.getData().get(position));
+                    bundle.putInt("friend", securityHotListAdapter.getData().get(position).getFriend());
                     bundle.putString("type", "hot");
                     JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
                     break;
@@ -67,6 +73,7 @@ public class SecurityHotFragment extends TemplateItemListFragment {
         securityHotListAdapter.setOnItemClickListener((adapter, view, position) -> {
             Bundle bundle = new Bundle();
             bundle.putSerializable("bean", securityHotListAdapter.getData().get(position));
+            bundle.putInt("friend", securityHotListAdapter.getData().get(position).getFriend());
             bundle.putString("type", "hot");
             JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
         });
@@ -104,7 +111,7 @@ public class SecurityHotFragment extends TemplateItemListFragment {
         EanfangHttp.post(NewApiService.SERCURITY_LIKE)
                 .upJson(JSONObject.toJSONString(securityLikeBean))
                 .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class, bean -> {
-                    mRecyclerView.scrollToPosition(0);
+//                    mRecyclerView.scrollToPosition(0);
                     getData();
                 }));
     }
@@ -125,7 +132,7 @@ public class SecurityHotFragment extends TemplateItemListFragment {
                 .upJson(JSONObject.toJSONString(securityFoucsBean))
                 .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class, bean -> {
                     showToast("关注成功");
-                    mRecyclerView.scrollToPosition(0);
+//                    mRecyclerView.scrollToPosition(0);
                     getData();
                 }));
     }
@@ -146,6 +153,7 @@ public class SecurityHotFragment extends TemplateItemListFragment {
                         if (mPage == 1) {
                             securityHotListAdapter.getData().clear();
                             securityHotListAdapter.setNewData(bean.getList());
+                            securityHotListAdapter.notifyDataSetChanged();
                             mSwipeRefreshLayout.setRefreshing(false);
                             securityHotListAdapter.loadMoreComplete();
                             if (bean.getList().size() < 10) {

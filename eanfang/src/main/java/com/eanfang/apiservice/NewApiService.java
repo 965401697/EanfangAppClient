@@ -668,5 +668,14 @@ public interface NewApiService {
      * 安防圈详情
      */
     String SERCURITY_DETAIL = BASE_URL + "/yaf_spc/spcircle/detail";
+    /**
+     * 安防圈评论
+     */
+    String SERCURITY_COMMENT = BASE_URL + "/yaf_spc/spcircle/comment";
+    /**
+     * 删除评论
+     */
+    String SERCURITY_COMMENT_DELETE = BASE_URL + "/yaf_spc/spcircle/deleteComment";
+
 
 }
