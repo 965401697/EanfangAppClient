@@ -114,6 +114,7 @@ public class SecurityHotListAdapter extends BaseQuickAdapter<SecurityHotListBean
         helper.addOnClickListener(R.id.tv_isFocus);
         helper.addOnClickListener(R.id.ll_like);
         helper.addOnClickListener(R.id.ll_comments);
+        helper.addOnClickListener(R.id.ll_pic);
         helper.addOnClickListener(R.id.iv_share);
     }
 

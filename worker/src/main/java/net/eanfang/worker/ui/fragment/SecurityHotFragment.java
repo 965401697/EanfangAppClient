@@ -57,6 +57,7 @@ public class SecurityHotFragment extends TemplateItemListFragment {
                     doLike(securityHotListAdapter.getData().get(position));
                     break;
                 case R.id.ll_comments:
+                case R.id.ll_pic:
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("bean", securityHotListAdapter.getData().get(position));
                     bundle.putInt("friend", securityHotListAdapter.getData().get(position).getFriend());

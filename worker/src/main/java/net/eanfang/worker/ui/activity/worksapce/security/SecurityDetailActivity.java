@@ -206,6 +206,13 @@ public class SecurityDetailActivity extends BaseActivity {
                 .execute(new EanfangCallback<SecurityDetailBean>(this, true, SecurityDetailBean.class, bean -> {
                     commentList = bean.getList();
                     securityCommentAdapter.setNewData(commentList);
+
+                    /**
+                     * 阅读数
+                     * */
+                    if (bean.getSpcList() != null) {
+                        tvReadCount.setText(bean.getSpcList().get(0).getReadCount() + "");
+                    }
                     hideKeyboard();
                 }));
     }
@@ -263,10 +270,6 @@ public class SecurityDetailActivity extends BaseActivity {
         } else {
             ivLike.setImageResource(R.mipmap.ic_worker_security_like_unpressed);
         }
-        /**
-         * 阅读数
-         * */
-        tvReadCount.setText(hotBean.getReadCount() + "");
         if (!StringUtils.isEmpty(hotBean.getSpcImg())) {
             snplPic.setVisibility(View.VISIBLE);
             String[] pics = hotBean.getSpcImg().split(",");

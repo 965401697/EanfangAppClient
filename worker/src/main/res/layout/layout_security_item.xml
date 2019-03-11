@@ -108,7 +108,8 @@
             android:textColor="@color/color_client_neworder"
             android:textSize="@dimen/textSize_15" />
 
-        <LinearLayout
+        <net.eanfang.worker.ui.widget.CustomLinearLayout
+            android:id="@+id/ll_pic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_40"
@@ -119,7 +120,7 @@
                 android:id="@+id/snpl_pic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-        </LinearLayout>
+        </net.eanfang.worker.ui.widget.CustomLinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"

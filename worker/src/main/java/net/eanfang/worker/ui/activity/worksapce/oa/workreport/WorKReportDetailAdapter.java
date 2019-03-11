@@ -84,7 +84,7 @@ public class WorKReportDetailAdapter extends BaseMultiItemQuickAdapter<WorkRepor
                     helper.setText(R.id.tv_work_handle, "无");
 
                 }
-                if (!TextUtils.isEmpty(item.getField2())&& !item.getField2().contains("(") && item.getField2().contains("-")) {
+                if (!TextUtils.isEmpty(item.getField2()) && !item.getField2().contains("(") && item.getField2().contains("-")) {
                     helper.setVisible(R.id.recycler_view, true);
                     helper.setText(R.id.tv_person, "协同人员：");
                     String[] info = item.getField2().split(",");
@@ -152,6 +152,8 @@ public class WorKReportDetailAdapter extends BaseMultiItemQuickAdapter<WorkRepor
 
                 }
                 helper.addOnClickListener(R.id.iv_pack);
+                break;
+            default:
                 break;
         }
     }
