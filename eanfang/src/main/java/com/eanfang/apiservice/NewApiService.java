@@ -641,6 +641,10 @@ public interface NewApiService {
     String TENDER_DETAIL = BASE_URL + "/yaf_ifb/ifborder/info";
 
     /**
+     * 安防圈 首页三条
+     */
+    String SECURITY_RECOMMEND = BASE_URL + "/yaf_spc/spcircle/weightList";
+    /**
      * 安防圈 热门列表
      */
     String SECURITY_HOT = BASE_URL + "/yaf_spc/spcircle/list";

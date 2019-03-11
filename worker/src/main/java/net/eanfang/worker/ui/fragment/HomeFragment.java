@@ -25,13 +25,11 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.AllMessageBean;
 import com.eanfang.model.NoticeEntity;
 import com.eanfang.model.security.SecurityHotListBean;
-import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
-import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
@@ -39,7 +37,6 @@ import com.eanfang.witget.BannerView;
 import com.eanfang.witget.HomeScanPopWindow;
 import com.eanfang.witget.RollTextView;
 import com.flyco.tablayout.SlidingTabLayout;
-import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.CameraActivity;
@@ -268,7 +265,7 @@ public class HomeFragment extends BaseFragment {
         QueryEntry mQueryEntry = new QueryEntry();
         mQueryEntry.setPage(1);
         mQueryEntry.setSize(3);
-        EanfangHttp.post(NewApiService.SECURITY_HOT)
+        EanfangHttp.post(NewApiService.SECURITY_RECOMMEND)
                 .upJson(JsonUtils.obj2String(mQueryEntry))
                 .execute(new EanfangCallback<SecurityHotListBean>(getActivity(), true, SecurityHotListBean.class) {
 
