@@ -236,22 +236,8 @@
                 </LinearLayout>
             </HorizontalScrollView>
 
+            <include layout="@layout/layout_home_security" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="@dimen/dimen_28"
-                android:layout_marginTop="@dimen/dimen_8"
-                android:text="安防圈"
-                android:textColor="@color/color_client_neworder"
-                android:textSize="@dimen/textSize_16" />
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_20"
-                android:background="@mipmap/ic_client_circle" />
         </LinearLayout>
 
     </ScrollView>

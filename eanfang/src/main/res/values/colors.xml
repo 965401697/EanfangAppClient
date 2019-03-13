@@ -93,6 +93,9 @@
     <color name="color_worker_detail_top_grade">#2466D8</color>
     <color name="color_no_contact">#FCDEDC</color>
     <color name="color_no_contact_text">#AD7171</color>
+    <color name="color_security_detail_bottom_back">#F7F7F7</color>
+    <color name="color_home_security_like">#EC5353</color>
+    <color name="color_home_security_text">#BEBEBE</color>
 
 
 </resources>

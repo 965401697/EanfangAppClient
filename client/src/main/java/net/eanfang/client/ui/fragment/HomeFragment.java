@@ -2,7 +2,9 @@ package net.eanfang.client.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
@@ -23,6 +25,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.AllMessageBean;
 import com.eanfang.model.NoticeEntity;
 import com.eanfang.model.datastatistics.HomeDatastisticeBean;
+import com.eanfang.model.security.SecurityHotListBean;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JsonUtils;
@@ -47,7 +50,10 @@ import net.eanfang.client.ui.activity.worksapce.datastatistics.DataStatisticsAct
 import net.eanfang.client.ui.activity.worksapce.install.InstallOrderParentActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.RepairTypeActivity;
 import net.eanfang.client.ui.activity.worksapce.scancode.ScanCodeActivity;
+import net.eanfang.client.ui.activity.worksapce.security.SecurityDetailActivity;
+import net.eanfang.client.ui.activity.worksapce.security.SecurityListActivity;
 import net.eanfang.client.ui.adapter.HomeDataAdapter;
+import net.eanfang.client.ui.adapter.security.SecurityHotListAdapter;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -101,6 +107,12 @@ public class HomeFragment extends BaseFragment {
     private int mRepair = 0;
     private int mDesign = 0;
     private int mInstall = 0;
+    /**
+     * 安防圈
+     */
+    private RecyclerView rvSecurity;
+    private SecurityHotListAdapter securityHotListAdapter;
+    private TextView tvNoSecurity;
 
     @Override
     protected int setLayoutResouceId() {
@@ -133,6 +145,8 @@ public class HomeFragment extends BaseFragment {
         tvReapirTotal = findViewById(R.id.tv_reapir_total);
         tvInstallTotal = findViewById(R.id.tv_install_total);
         tvDesitnTotal = findViewById(R.id.tv_desitn_total);
+        rvSecurity = findViewById(R.id.rv_security);
+        tvNoSecurity = findViewById(R.id.tv_noSecurity);
         homeScanPopWindow = new HomeScanPopWindow(getActivity(), false, scanSelectItemsOnClick);
         homeScanPopWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
@@ -171,6 +185,8 @@ public class HomeFragment extends BaseFragment {
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(11, 0, true)
                 .setBadgeTextSize(11, true);
+
+        initSecurity();
     }
 
 
@@ -211,7 +227,10 @@ public class HomeFragment extends BaseFragment {
 //        findViewById(R.id.ll_sign).setOnClickListener((v) -> {
 //            new SignCtrlView(getActivity()).show();
 //        });
-
+        // 安防圈
+        findViewById(R.id.rl_security).setOnClickListener((v) -> {
+            startActivity(new Intent(getActivity(), SecurityListActivity.class));
+        });
 
     }
 
@@ -347,6 +366,40 @@ public class HomeFragment extends BaseFragment {
     }
 
     /**
+     * 安防圈
+     */
+    private void initSecurity() {
+        securityHotListAdapter = new SecurityHotListAdapter(getActivity());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        rvSecurity.setLayoutManager(layoutManager);
+        rvSecurity.setNestedScrollingEnabled(false);
+        rvSecurity.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
+        securityHotListAdapter.bindToRecyclerView(rvSecurity);
+        doGetSecurityData();
+    }
+
+    private void doGetSecurityData() {
+        QueryEntry mQueryEntry = new QueryEntry();
+        mQueryEntry.setPage(1);
+        mQueryEntry.setSize(3);
+        EanfangHttp.post(NewApiService.SECURITY_RECOMMEND)
+                .upJson(JsonUtils.obj2String(mQueryEntry))
+                .execute(new EanfangCallback<SecurityHotListBean>(getActivity(), true, SecurityHotListBean.class) {
+
+                    @Override
+                    public void onSuccess(SecurityHotListBean bean) {
+                        securityHotListAdapter.getData().clear();
+                        securityHotListAdapter.setNewData(bean.getList());
+                        if (bean.getList().size() > 0) {
+                            tvNoSecurity.setVisibility(View.GONE);
+                        } else {
+                            tvNoSecurity.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+    }
+
+    /**
      * 获取新闻
      */
     public void doHttpNews() {
@@ -403,6 +456,12 @@ public class HomeFragment extends BaseFragment {
         });
         findViewById(R.id.ll_repair_install).setOnClickListener(v -> startActivity(new Intent(getActivity(), DataInstallActivity.class)));
         findViewById(R.id.ll_design).setOnClickListener(v -> startActivity(new Intent(getActivity(), DataDesignActivity.class)));
+        securityHotListAdapter.setOnItemClickListener((adapter, view, position) -> {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("bean", securityHotListAdapter.getData().get(position));
+            bundle.putString("type", "hot");
+            JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
+        });
     }
 
     public void doSetOrderNums(AllMessageBean bean) {

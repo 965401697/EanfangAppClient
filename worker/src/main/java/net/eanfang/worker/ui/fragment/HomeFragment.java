@@ -125,7 +125,6 @@ public class HomeFragment extends BaseFragment {
     /**
      * 安防圈
      */
-    private RelativeLayout rlSecurity;
     private RecyclerView rvSecurity;
     private SecurityHotListAdapter securityHotListAdapter;
     private TextView tvNoSecurity;

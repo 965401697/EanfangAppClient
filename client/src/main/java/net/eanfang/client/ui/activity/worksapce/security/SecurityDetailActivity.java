@@ -1,8 +1,9 @@
-package net.eanfang.worker.ui.activity.worksapce.security;
+package net.eanfang.client.ui.activity.worksapce.security;
 
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
@@ -35,10 +36,9 @@ import com.eanfang.util.V;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
-import net.eanfang.worker.R;
-import net.eanfang.worker.ui.adapter.security.SecurityCommentAdapter;
-import net.eanfang.worker.ui.widget.DividerItemDecoration;
-import net.eanfang.worker.ui.widget.GeneralSDialog;
+import net.eanfang.client.R;
+import net.eanfang.client.ui.adapter.security.SecurityCommentAdapter;
+import net.eanfang.client.ui.widget.GeneralSDialog;
 
 import java.util.ArrayList;
 import java.util.Arrays;

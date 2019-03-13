@@ -1,4 +1,4 @@
-package net.eanfang.worker.ui.widget;
+package com.eanfang.witget;
 
 import android.content.Context;
 import android.util.AttributeSet;
