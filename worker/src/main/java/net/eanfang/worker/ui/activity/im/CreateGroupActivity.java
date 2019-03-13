@@ -63,7 +63,6 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
     Button btnCreate;
 
 
-
     private Dialog dialog;
     private String path;
     private List<TemplateBean.Preson> presonList = new ArrayList<>();
@@ -102,6 +101,7 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
             tvNum.setText(oaPersonAdaptet.getData().size() + "人");
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -219,8 +219,11 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
             }
         }
 
+        /**
+         * 添加自己的头像
+         * */
         if (!userIconList.contains(EanfangApplication.get().getUser().getAccount().getAvatar()))
-            userIconList.add(EanfangApplication.get().getUser().getAccount().getAvatar());//添加自己的头像
+            userIconList.add(EanfangApplication.get().getUser().getAccount().getAvatar());
 
         //防止创建群组的人员一个头像图片都没有 造成的空指针崩溃
         if (userIconList.size() == 0) {

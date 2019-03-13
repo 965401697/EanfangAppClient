@@ -349,37 +349,34 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
         }
     }
 
+    //
     private void doHttpNoticeCount() {
 
         EanfangHttp.get(UserApi.ALL_MESSAGE)
                 .execute(new EanfangCallback<AllMessageBean>(getActivity(), true, AllMessageBean.class, bean -> {
-                    if (bean.getSys() > 0) {// 系统消息
+                    // 系统消息
+                    if (bean.getSys() > 0) {
                         initSysCount(bean.getSys());
                         mStystemCount = bean.getSys();
                     } else {
                         initSysCount(0);
                         mStystemCount = 0;
                     }
-                    if (bean.getBiz() > 0) {// 业务通知
+                    // 业务通知
+                    if (bean.getBiz() > 0) {
                         initBizCount(bean.getBiz());
                         mMessageCount = bean.getBiz();
                     } else {
                         initBizCount(0);
                         mMessageCount = 0;
                     }
-                    if (bean.getCmp() > 0) {// 官方通知
+                    // 官方通知
+                    if (bean.getCmp() > 0) {
                         initCmpCount(bean.getCmp());
                         mCmpCount = 0;
                     } else {
                         initCmpCount(0);
                         mCmpCount = 0;
-                    }
-                    if (bean.getBiz() > 0) {// 业务通知
-                        initBizCount(bean.getBiz());
-                        mMessageCount = bean.getBiz();
-                    } else {
-                        initBizCount(0);
-                        mMessageCount = 0;
                     }
                     /**
                      * 底部红点更新
@@ -470,8 +467,8 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
 
         if (conversationsId.size() == 0) return;
 
-
-        if (list.size() == 0) {//我的群组为空  删除所有的群组会话
+        //我的群组为空  删除所有的群组会话
+        if (list.size() == 0) {
             for (String s : conversationsId) {
                 RongIM.getInstance().removeConversation(Conversation.ConversationType.GROUP, s, null);
             }
