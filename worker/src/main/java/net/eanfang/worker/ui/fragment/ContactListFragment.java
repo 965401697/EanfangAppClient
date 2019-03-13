@@ -150,6 +150,12 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
     @Override
     protected void initView() {
         mContactStatus = view.findViewById(R.id.tv_contact_status);
+        qBadgeViewCam.bindTarget(view.findViewById(R.id.iv_message))
+                .setBadgeBackgroundColor(0xFFFF0000)
+                .setBadgePadding(4, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setGravityOffset(0, 0, true)
+                .setBadgeTextSize(11, true);
         qBadgeViewCam.bindTarget(view.findViewById(R.id.tv_official))
                 .setBadgeBackgroundColor(0xFFFF0000)
                 .setBadgePadding(2, true)
@@ -502,7 +508,13 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
             Bundle bundle = new Bundle();
             bundle.putInt("mCamCount", mCmpCount);
             JumpItent.jump(getActivity(), OfficialListActivity.class, bundle, REQUST_REFRESH_CODE);
-        });       // 业务通知
+        });
+        view.findViewById(R.id.iv_message).setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt("mCamCount", mCmpCount);
+            JumpItent.jump(getActivity(), OfficialListActivity.class, bundle, REQUST_REFRESH_CODE);
+        });
+        // 业务通知
         view.findViewById(R.id.ll_msg_list).setOnClickListener(v -> {
             Bundle bundle = new Bundle();
             bundle.putInt("mMessageCount", mMessageCount);
