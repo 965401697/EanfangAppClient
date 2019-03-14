@@ -30,13 +30,14 @@ public class BadgeUtil {
         if (count <= 0) {
             count = 0;
         } else {
-            count = Math.max(0, Math.min(count, 99));
-        }
-        if (count > 99) {
+            if (count > 99) {
             mMoreCount = "99+";
         } else {
             mMoreCount = count + "";
         }
+            //count = Math.max(0, Math.min(count, 99));
+        }
+
         if (Build.MANUFACTURER.equalsIgnoreCase("xiaomi")) {
             setBadgeOfMIUI(context, mMoreCount, iconResId);
 //        } else {

@@ -162,6 +162,9 @@
         <activity
             android:name=".ui.activity.worksapce.notice.MessageListActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.worksapce.notice.MessageNotificationActivity"
+            android:screenOrientation="portrait" />
         <!-- 业务通知详情 -->
         <activity
             android:name=".ui.activity.worksapce.notice.MessageDetailActivity"
