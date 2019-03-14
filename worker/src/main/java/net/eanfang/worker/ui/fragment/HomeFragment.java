@@ -429,6 +429,23 @@ public class HomeFragment extends BaseFragment {
             bundle.putString("type", "hot");
             JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
         });
+        securityHotListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            switch (view.getId()) {
+                case R.id.tv_isFocus:
+                case R.id.ll_like:
+                case R.id.ll_comments:
+                case R.id.ll_pic:
+                case R.id.iv_share:
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("bean", securityHotListAdapter.getData().get(position));
+                    bundle.putInt("friend", securityHotListAdapter.getData().get(position).getFriend());
+                    bundle.putString("type", "hot");
+                    JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
+                    break;
+                default:
+                    break;
+            }
+        });
     }
 
     /**

@@ -532,6 +532,7 @@ public class MainActivity extends BaseActivity {
 
     private void doChange(int mContactNum) {
         qBadgeViewContact.setBadgeNumber(mContactNum);
+        BadgeUtil.setBadgeCount(MainActivity.this, mContactNum, R.drawable.client_logo);
     }
 
     class MyConnectionStatusListener implements RongIMClient.ConnectionStatusListener {

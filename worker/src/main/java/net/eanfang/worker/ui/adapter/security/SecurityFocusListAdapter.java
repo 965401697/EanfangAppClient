@@ -119,6 +119,7 @@ public class SecurityFocusListAdapter extends BaseQuickAdapter<SecurityFoucsList
         helper.addOnClickListener(R.id.ll_like);
         helper.addOnClickListener(R.id.ll_comments);
         helper.addOnClickListener(R.id.iv_share);
+        helper.addOnClickListener(R.id.ll_pic);
     }
 
 

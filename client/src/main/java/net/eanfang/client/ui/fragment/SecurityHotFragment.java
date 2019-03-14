@@ -58,15 +58,16 @@ public class SecurityHotFragment extends TemplateItemListFragment {
                     break;
                 case R.id.ll_comments:
                 case R.id.ll_pic:
+                case R.id.iv_share:
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("bean", securityHotListAdapter.getData().get(position));
                     bundle.putInt("friend", securityHotListAdapter.getData().get(position).getFriend());
                     bundle.putString("type", "hot");
                     JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
                     break;
-                case R.id.iv_share:
-                    showToast("分享");
-                    break;
+//                case R.id.iv_share:
+//                    showToast("分享");
+//                    break;
                 default:
                     break;
             }
