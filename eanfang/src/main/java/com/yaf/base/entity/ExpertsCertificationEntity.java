@@ -126,6 +126,7 @@ public class ExpertsCertificationEntity implements Serializable {
     //专家收费标准
     //@TableField(value = "price")
     private Integer price;
+    private int gender;
 
     public Integer getPrice() {
         return price;
@@ -604,5 +605,7 @@ public class ExpertsCertificationEntity implements Serializable {
     private String brandName;
 
 
-
+    public void setGender(int gender) {
+        this.gender = gender;
+    }
 }

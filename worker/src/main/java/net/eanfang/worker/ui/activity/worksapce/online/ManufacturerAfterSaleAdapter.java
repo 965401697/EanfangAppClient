@@ -24,6 +24,7 @@ public class ManufacturerAfterSaleAdapter extends BaseQuickAdapter<BaseDataEntit
     @Override
     protected void convert(BaseViewHolder helper, BaseDataEntity item) {
         ((SimpleDraweeView) helper.getView(R.id.im_manufacturer_pic)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getRemarkInfo()));
+        //helper.setText(R.id.name_T,item.getDataName());
 
     }
 }

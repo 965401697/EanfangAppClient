@@ -12,6 +12,10 @@
         app:placeholderImage="@mipmap/ic_nodata"
         android:layout_height="@dimen/dimen_80" />
 
+    <TextView
+        android:id="@+id/name_T"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 
 </FrameLayout>

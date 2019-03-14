@@ -1131,8 +1131,7 @@
             android:label="@string/title_activity_security_list"
             android:theme="@style/NewBaseTheme" />
         <activity android:name=".ui.activity.worksapce.security.SecurityCreateActivity" />
-        <activity android:name=".ui.activity.worksapce.security.SecurityDetailActivity"></activity>
-
+        <activity android:name=".ui.activity.worksapce.security.SecurityDetailActivity" />
         <activity android:name=".ui.activity.my.specialist.SpecialistSkillInfoDetailActivity" />
         <activity android:name=".ui.activity.worksapce.online.ExpertOnlineActivity" />
         <activity android:name=".ui.activity.worksapce.online.SystemTypeActivity" />
@@ -1145,13 +1144,19 @@
         <activity android:name=".ui.activity.worksapce.online.IAnswerActivity" />
         <activity android:name=".ui.activity.worksapce.online.ExpertAnswerActivity" />
         <activity android:name=".ui.activity.worksapce.online.CommentFaultSearchActivity" />
-        <activity android:name=".ui.activity.worksapce.online.MyFreeAskActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.online.MyFreeAskActivity" />
 
         <receiver android:name="com.eanfang.listener.NetBroadcastReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
+
+        <activity
+            android:name=".ui.activity.worksapce.online.FindExpertActivity"
+            android:launchMode="singleTop" />
+        <activity android:name=".ui.activity.worksapce.online.FindBrandActivity" />
+        <activity android:name=".ui.activity.worksapce.online.MyInformationActivity"></activity>
     </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 package net.eanfang.worker.ui.adapter.repair;
 
 import android.net.Uri;
+import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -28,5 +29,6 @@ public class RepairDeviceTypeRightAdapter extends BaseQuickAdapter<BaseDataEntit
         SimpleDraweeView ivPic;
         ivPic = helper.getView(R.id.iv_rightIcon);
         ivPic.setImageURI(Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + item.getRemarkInfo()));
+        helper.setVisible(R.id.check_true_t,false);
     }
 }

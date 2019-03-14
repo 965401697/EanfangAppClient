@@ -228,8 +228,6 @@ public class SpecialistSkillTypeActivity extends BaseWorkerActivity {
 
                     startActivity(new Intent(this, SpecialistSkillCertificafeListActivity.class).putExtra("status", mStatus));
                 }));
-
-
     }
 
     private void getSkillInfo() {

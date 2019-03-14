@@ -23,6 +23,8 @@ import com.yaf.base.entity.CommonFaultListBeanEntity;
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -51,11 +53,15 @@ public class CommonFaultListActivity extends BaseWorkerActivity implements Swipe
     RelativeLayout titlesBar;
     @BindView(R.id.ll_more)
     RelativeLayout llMore;
+    @BindView(R.id.tv_no_datas_zhuanjia)
+    TextView tvNoDatasZhuanjia;
     //@BindView(R.id.swipre_fresh)
     //SwipeRefreshLayout swipreFresh;
     private CommonFaultAdapter mCommonFaultAdapter;
     private MyExpertListAdapter myExpertListAdapter;
     private int mPage = 1;
+    private List<CommonFaultListBeanEntity.QuestionListBean.ListBean> qList;
+    private int size;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,48 +130,70 @@ public class CommonFaultListActivity extends BaseWorkerActivity implements Swipe
                 .execute(new EanfangCallback<CommonFaultListBeanEntity>(this, true, CommonFaultListBeanEntity.class) {
                     @Override
                     public void onSuccess(CommonFaultListBeanEntity bean) {
+                        size = bean.getQuestionList().getList().size();
                         if (mPage == 1) {
-                            mCommonFaultAdapter.getData().clear();
-                            myExpertListAdapter.setNewData(bean.getExpertList().getList());
-                            mCommonFaultAdapter.setNewData(bean.getQuestionList().getList());
-                            //swipreFresh.setRefreshing(false);
-                            mCommonFaultAdapter.loadMoreComplete();
-                            if (bean.getQuestionList().getList().size() < 10) {
-                                mCommonFaultAdapter.loadMoreEnd();
-                            }
+                                if (bean.getQuestionList().getList().size() > 0) {
+                                    recyclerViewFault.setVisibility(View.VISIBLE);
+                                    tvNoDatas.setVisibility(View.GONE);
+                                    mCommonFaultAdapter.getData().clear();
+                                    qList = bean.getQuestionList().getList();
+                                    mCommonFaultAdapter.setNewData(qList);
+                                    mCommonFaultAdapter.loadMoreComplete();
+                                } else {
+                                    tvNoDatas.setVisibility(View.VISIBLE);
+                                    recyclerViewFault.setVisibility(View.GONE);
+                                }
+                                if (bean.getExpertList().getList().size() > 0) {
+                                    recyclerViewExpert.setVisibility(View.VISIBLE);
+                                    tvNoDatasZhuanjia.setVisibility(View.GONE);
+                                    myExpertListAdapter.getData().clear();
+                                    myExpertListAdapter.setNewData(bean.getExpertList().getList());
+                                    myExpertListAdapter.loadMoreComplete();
+                                } else {
+                                    recyclerViewExpert.setVisibility(View.GONE);
+                                    tvNoDatasZhuanjia.setVisibility(View.VISIBLE);
+                                }
+                                //底部暂无数据
+                                if (bean.getQuestionList().getList().size() < 10) {
+                                    mCommonFaultAdapter.loadMoreEnd();
+                                }
+                                if (bean.getExpertList().getList().size() < 10) {
+                                    myExpertListAdapter.loadMoreEnd();
+                                }
 
-                            if (bean.getQuestionList().getList().size() > 0) {
-                                tvNoDatas.setVisibility(View.GONE);
                             } else {
-                                tvNoDatas.setVisibility(View.VISIBLE);
-                            }
-
-                        } else {
-                            mCommonFaultAdapter.addData(bean.getQuestionList().getList());
-                            mCommonFaultAdapter.loadMoreComplete();
-                            if (bean.getQuestionList().getList().size() < 10) {
-                                mCommonFaultAdapter.loadMoreEnd();
+                                mCommonFaultAdapter.addData(bean.getQuestionList().getList());
+                                myExpertListAdapter.addData(bean.getExpertList().getList());
+                                mCommonFaultAdapter.loadMoreComplete();
+                                myExpertListAdapter.loadMoreComplete();
+                                if (bean.getQuestionList().getList().size() < 10) {
+                                    mCommonFaultAdapter.loadMoreEnd();
+                                }
+                                if (bean.getExpertList().getList().size() < 10) {
+                                    myExpertListAdapter.loadMoreEnd();
+                                }
                             }
                         }
 
-                    }
 
                     @Override
                     public void onNoData(String message) {
                         //swipreFresh.setRefreshing(false);
                         mCommonFaultAdapter.loadMoreEnd();//没有数据了
-                        if (mCommonFaultAdapter.getData().size() == 0) {
-                            tvNoDatas.setVisibility(View.VISIBLE);
+                        myExpertListAdapter.loadMoreEnd();//没有数据了
+                        if (mCommonFaultAdapter.getData().size() <= 0) {
+                            //tvNoDatas.setVisibility(View.VISIBLE);
+                            mCommonFaultAdapter.loadMoreEnd();
                             seeMore.setVisibility(View.GONE);
                         } else {
-                            tvNoDatas.setVisibility(View.GONE);
+                            //tvNoDatas.setVisibility(View.GONE);
                             seeMore.setVisibility(View.VISIBLE);
                         }
                     }
 
                     @Override
                     public void onCommitAgain() {
-                       // swipreFresh.setRefreshing(false);
+                        // swipreFresh.setRefreshing(false);
                     }
                 });
     }
@@ -175,12 +203,12 @@ public class CommonFaultListActivity extends BaseWorkerActivity implements Swipe
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_more:
-                if (mPage>=2){
-                    Toast.makeText(CommonFaultListActivity.this,"暂无更多数据了",Toast.LENGTH_SHORT).show();
+                if (size<3){
                     llMore.setVisibility(View.GONE);
                 }else {
                     onLoadMoreRequested();
                 }
+
                 break;
         }
     }

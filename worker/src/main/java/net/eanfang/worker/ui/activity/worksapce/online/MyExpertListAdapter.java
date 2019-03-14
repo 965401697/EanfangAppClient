@@ -2,6 +2,7 @@ package net.eanfang.worker.ui.activity.worksapce.online;
 
 import android.net.Uri;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -26,6 +27,7 @@ public class MyExpertListAdapter extends BaseQuickAdapter<CommonFaultListBeanEnt
     protected void convert(BaseViewHolder helper, CommonFaultListBeanEntity.ExpertListBean.ListBeanX item) {
         if (!TextUtils.isEmpty(item.getAvatarPhoto())) {
             ((SimpleDraweeView) helper.getView(R.id.iv_expert_header)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getAvatarPhoto()));
+            Log.i("Tpian",item.getAvatarPhoto());
         } else {
             ((SimpleDraweeView) helper.getView(R.id.iv_expert_header)).setImageURI(Uri.parse(""));
         }

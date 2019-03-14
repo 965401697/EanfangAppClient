@@ -70,7 +70,7 @@ public class AskQuestionsEntity implements Serializable {
     private Integer questionStatus;
     //故障列表id
     //@TableField(value = "question_status")
-    private Integer deviceFailureId;
+    private Long deviceFailureId;//免费提问由integer转换成Long
 
 
     //@Getter
@@ -86,11 +86,11 @@ public class AskQuestionsEntity implements Serializable {
         this.expertsCertification = expertsCertification;
     }
 
-    public Integer getDeviceFailureId() {
+    public Long getDeviceFailureId() {
         return deviceFailureId;
     }
 
-    public void setDeviceFailureId(Integer deviceFailureId) {
+    public void setDeviceFailureId(Long deviceFailureId) {
         this.deviceFailureId = deviceFailureId;
     }
 

@@ -1,6 +1,7 @@
 package net.eanfang.worker.ui.adapter.repair;
 
 import android.net.Uri;
+import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -31,5 +32,6 @@ public class FaultLibraryAdapter extends BaseQuickAdapter<FaultListBean.ListBean
             simpleDraweeView.setImageURI(Uri.parse(com.eanfang.BuildConfig.OSS_SERVER  + imgs[0]));
         }
         helper.setText(R.id.tv_faultDes, item.getDescription());
+        helper.setVisible(R.id.check_true,false);
     }
 }

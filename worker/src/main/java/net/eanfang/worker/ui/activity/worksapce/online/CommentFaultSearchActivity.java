@@ -111,29 +111,28 @@ public class CommentFaultSearchActivity extends BaseWorkerActivity implements Sw
                 .execute(new EanfangCallback<AskQuestionsListBean>(this, true, AskQuestionsListBean.class) {
                     @Override
                     public void onSuccess(AskQuestionsListBean bean) {
-                        if (mPage == 1) {
-                            mAdapter.getData().clear();
-                            mAdapter.setNewData(bean.getList());
-                            mAdapter.notifyDataSetChanged();
-                            mSwipeRefreshLayout.setRefreshing(false);
-                            mAdapter.loadMoreComplete();
-                            if (bean.getList().size() < 10) {
-                                mAdapter.loadMoreEnd();
-                            }
-
-                            if (bean.getList().size() > 0) {
-                                mTvNoData.setVisibility(View.GONE);
+                        if (bean.getList().size() > 0) {
+                            mTvNoData.setVisibility(View.GONE);
+                            rvList.setVisibility(View.VISIBLE);
+                            if (mPage == 1) {
+                                mAdapter.getData().clear();
+                                mAdapter.setNewData(bean.getList());
+                                mSwipeRefreshLayout.setRefreshing(false);
+                                mAdapter.loadMoreComplete();
+                                if (bean.getList().size() < 10) {
+                                    mAdapter.loadMoreEnd();
+                                }
                             } else {
-                                mTvNoData.setVisibility(View.VISIBLE);
+                                mAdapter.addData(bean.getList());
+                                mAdapter.loadMoreComplete();
+                                if (bean.getList().size() < 10) {
+                                    mAdapter.loadMoreEnd();
+                                }
                             }
                         } else {
-                            mAdapter.addData(bean.getList());
-                            mAdapter.loadMoreComplete();
-                            if (bean.getList().size() < 10) {
-                                mAdapter.loadMoreEnd();
-                            }
+                            mTvNoData.setVisibility(View.VISIBLE);
+                            mSwipeRefreshLayout.setRefreshing(false);
                         }
-
                     }
 
                     @Override

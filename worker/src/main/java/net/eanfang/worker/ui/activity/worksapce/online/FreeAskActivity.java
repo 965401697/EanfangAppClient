@@ -3,6 +3,7 @@ package net.eanfang.worker.ui.activity.worksapce.online;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -17,6 +18,8 @@ import com.eanfang.config.Constant;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.oss.OSSCallBack;
+import com.eanfang.oss.OSSUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
@@ -73,13 +76,15 @@ public class FreeAskActivity extends BaseWorkerActivity {
 
     // 设备code 设备id
     private String dataCode = "";
-    private Long dataId;
+    private Long headDeviceId;
     //   系统类别
     private String businessOneCode = "";
 
     private Map<String, String> uploadMap = new HashMap<>();
-    private String mModelCode;
     private String mSketch;
+    private String mModelCodeT;
+    private String deviceFailureId;
+    private String failureTypeId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,7 +133,7 @@ public class FreeAskActivity extends BaseWorkerActivity {
 
 
     private boolean fillData() {
-
+        //new
         if (TextUtils.isEmpty(tvFaultDeviceName.getText().toString().trim())) {
             ToastUtil.get().showToast(this, "请选择设备名称");
             return false;
@@ -147,6 +152,29 @@ public class FreeAskActivity extends BaseWorkerActivity {
         }
 
         String accidentPic = PhotoUtils.getPhotoUrl("online/", snplMomentAddPhotos, uploadMap, false);
+       // detailsBean.setPictures(accidentPic);
+
+
+        if (uploadMap.size() != 0) {
+            OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
+                @Override
+                public void onOssSuccess() {
+                    runOnUiThread(() -> {
+                        Intent intent = new Intent();
+                        intent.putExtra("resultTwo", accidentPic);
+                        setResult( 101, intent);
+                        Toast.makeText(FreeAskActivity.this,"成功",Toast.LENGTH_SHORT).show();
+                        finish();
+                    });
+                }
+            });
+        } else {
+            Intent intent = new Intent();
+            intent.putExtra("resultTwo", accidentPic);
+            setResult(101, intent);
+            finish();
+        }
+
         if (StringUtils.isEmpty(accidentPic)) {
             showToast("请添加现场照片");
             return false;
@@ -157,16 +185,16 @@ public class FreeAskActivity extends BaseWorkerActivity {
             askQuestionsEntity.setQuestionCompanyId(EanfangApplication.get().getCompanyId());
             askQuestionsEntity.setQuestionTopCompanyId(EanfangApplication.get().getTopCompanyId());
         }
+
         askQuestionsEntity.setQuestionCreateDate(new Date());
         askQuestionsEntity.setDataCode(dataCode);
         askQuestionsEntity.setBusinessOneCode(businessOneCode);
-        askQuestionsEntity.setModelCode(mModelCode);
-        Toast.makeText(FreeAskActivity.this,mModelCode+"",Toast.LENGTH_SHORT).show();
-        askQuestionsEntity.setFailureTypeId(String.valueOf(dataId));
+        askQuestionsEntity.setModelCode(mModelCodeT);
+        askQuestionsEntity.setDeviceFailureId(Long.valueOf(deviceFailureId));
         askQuestionsEntity.setQuestionSketch(mSketch);
+        askQuestionsEntity.setFailureTypeId(failureTypeId);
         askQuestionsEntity.setQuestionContent(etInputInfo.getText().toString().trim());
         askQuestionsEntity.setQuestionPics(accidentPic);
-
         subData(askQuestionsEntity);
 
         return true;
@@ -180,8 +208,8 @@ public class FreeAskActivity extends BaseWorkerActivity {
 
                     @Override
                     public void onSuccess(JSONObject bean) {
-                        Toast.makeText(FreeAskActivity.this,"成功",Toast.LENGTH_SHORT).show();
-                        finishSelf();
+
+                        //finishSelf();
                     }
                 });
     }
@@ -189,6 +217,9 @@ public class FreeAskActivity extends BaseWorkerActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+       // CustDeviceEntity custDeviceEntity = (CustDeviceEntity) data.getSerializableExtra("bean");
+        //mModelCode = custDeviceEntity.getModelCode();
+       // Log.i("KKKZyr",mModelCode+"");
         if (data == null) {
             return;
         }
@@ -196,23 +227,27 @@ public class FreeAskActivity extends BaseWorkerActivity {
             snplMomentAddPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
         } else if (requestCode == BGASortableDelegate.REQUEST_CODE_CHOOSE_PHOTO) {
             snplMomentAddPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
-        } else if (requestCode == REQUEST_FAULTDEVICEINFO && resultCode == RESULT_DATACODE) {
+        } else if (requestCode == REQUEST_FAULTDEVICEINFO && resultCode == RESULT_DATACODE) {//设备名称
             dataCode = data.getStringExtra("dataCode");
             businessOneCode = data.getStringExtra("businessOneCode");
-
             tvFaultDeviceName.setText(Config.get().getBusinessNameByCode(dataCode, 1) + " - " + Config.get().getBusinessNameByCode(dataCode, 3));
-        } else if (requestCode == REQUEST_FAULTDESINFO && resultCode == RESULT_FAULTDESCODE) {
+        } else if (requestCode == REQUEST_FAULTDESINFO && resultCode == RESULT_FAULTDESCODE) {//故障简述
             mSketch = data.getStringExtra("sketch");
             tvFaultInfo.setText(data.getStringExtra("sketch"));
-            dataId = Long.valueOf(data.getStringExtra("datasId"));
-
+            deviceFailureId = data.getStringExtra("deviceFailureId");
+            failureTypeId = data.getStringExtra("failureTypeId");
         } else if (resultCode == RESULT_OK && requestCode == REQUEST_EQUIPMENT) {
             CustDeviceEntity custDeviceEntity = (CustDeviceEntity) data.getSerializableExtra("bean");
-            mModelCode = custDeviceEntity.getModelCode();
-
             tvDeviceBrand.setText(Config.get().getModelNameByCode(custDeviceEntity.getModelCode(), 2));
-
         } else if (resultCode == RESULT_DEVICE_BRAND_CODE && requestCode == REQUEST_DEVICE_BRAND_CODE) {// 设备品牌
+            //品牌型号ModelCode值-----bug 必须选择两次，否则值为空
+            if (Config.get().getBaseCodeByName(tvDeviceBrand.getText().toString().trim(), 2, Constant.MODEL).get(0)==""){
+                mModelCodeT = "5.1.18";
+            }else {
+                mModelCodeT = Config.get().getBaseCodeByName(tvDeviceBrand.getText().toString().trim(), 2, Constant.MODEL).get(0);
+            }
+
+            Log.i("mModelCodeT",mModelCodeT+"");
             tvDeviceBrand.setText(data.getStringExtra("deviceBrandName"));
         }
     }
