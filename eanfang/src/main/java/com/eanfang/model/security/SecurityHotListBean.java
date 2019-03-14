@@ -30,6 +30,7 @@ public class SecurityHotListBean implements Serializable {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class ListBean implements Serializable {
+        private AccountEntity accountEntity;
         private int collectionCount;
         private int commentCount;
         private Date createTime;
@@ -50,6 +51,7 @@ public class SecurityHotListBean implements Serializable {
         private String spcContent;
         private Long spcId;
         private String spcImg;
+        private int verifyStatus;
 
         @Getter
         @Setter
@@ -73,7 +75,6 @@ public class SecurityHotListBean implements Serializable {
         @NoArgsConstructor
         public static class PublisherUserBean implements Serializable {
             private Long accId;
-            private AccountEntity accountEntity;
             private boolean companyAdmin;
             private boolean superAdmin;
             private boolean sysAdmin;

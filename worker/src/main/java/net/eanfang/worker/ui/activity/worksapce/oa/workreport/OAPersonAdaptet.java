@@ -18,6 +18,7 @@ import com.eanfang.BuildConfig;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.model.TemplateBean;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.V;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
@@ -126,7 +127,7 @@ public class OAPersonAdaptet extends RecyclerView.Adapter<OAPersonAdaptet.ViewHo
             holder.name.setVisibility(View.VISIBLE);
             holder.ivSub.setVisibility(View.VISIBLE);
             TemplateBean.Preson preson = mData.get(position);
-            holder.name.setText(preson.getName());
+            holder.name.setText(V.v(() -> preson.getName()));
             if (preson.getProtraivat().startsWith("http")) {
                 holder.userHeader.setImageURI(preson.getProtraivat());
             } else {

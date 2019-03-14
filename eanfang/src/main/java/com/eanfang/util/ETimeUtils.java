@@ -67,7 +67,7 @@ public class ETimeUtils {
         }
         if (diff > month) {
             r = (diff / month);
-            return r + "个月前";
+            return r + "月前";
         }
         if (diff > day) {
             r = (diff / day);
@@ -75,7 +75,7 @@ public class ETimeUtils {
         }
         if (diff > hour) {
             r = (diff / hour);
-            return r + "个小时前";
+            return r + "小时前";
         }
         if (diff > minute) {
             r = (diff / minute);

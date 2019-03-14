@@ -62,6 +62,7 @@ public class SecurityFoucsListBean implements Serializable {
             private String spcContent;
             private Long spcId;
             private String spcImg;
+            private int verifyStatus;
 
         }
 

@@ -86,6 +86,9 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
     SwitchButton swGroupNotfaction;
 
     private GroupsDetailAdapter mGroupsDetailAdapter;
+    /**
+     * 全部成员
+     */
     private ArrayList<GroupDetailBean.ListBean> friendListBeanArrayList = new ArrayList<>();
     private ArrayList<GroupDetailBean.ListBean> temp = new ArrayList<>();
     private ArrayList<GroupDetailBean.ListBean> mList = new ArrayList<>();
@@ -105,6 +108,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
     private final int UPDATA_GROUP_NOTICE = 103;//更新公告
     private final int UPDATA_GROUP_SHUTUP_MBER = 104;//更新禁言人的状态
     private boolean isCompound = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -260,6 +264,9 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
+                /**
+                 * 移除好友
+                 * */
                 if (position == temp.size() - 1 && isOwner) {
                     Intent intent = new Intent(GroupDetailActivity.this, SubtractFriendsActivity.class);
                     intent.putExtra("list", friendListBeanArrayList);
@@ -277,7 +284,9 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
 //                    intent.putExtra("list", friendListBeanArrayList);
 //                    startActivityForResult(intent, UPDATA_GROUP_OWN);
 
-
+                /**
+                 * 添加好友
+                 * */
                     Intent intent = new Intent(new Intent(GroupDetailActivity.this, SelectIMContactActivity.class));
 //                Intent intent = new Intent(new Intent(context, SelectedFriendsActivity.class));
                     intent.putExtra("flag", 3);
@@ -297,19 +306,27 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
             }
         });
 
-
+        /**
+         * 消息置顶
+         * */
         swGroupTop.setOnCheckedChangeListener(new SwitchButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(SwitchButton view, boolean isChecked) {
                 setConversationTop(Conversation.ConversationType.GROUP, groupId, isChecked);
             }
         });
+        /**
+         * 全员禁言
+         * */
         group_shutup.setOnCheckedChangeListener(new SwitchButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(SwitchButton view, boolean isChecked) {
                 setGagOrNo(isChecked);
             }
         });
+        /**
+         * 消息免打扰
+         * */
         swGroupNotfaction.setOnCheckedChangeListener(new SwitchButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(SwitchButton view, boolean isChecked) {
@@ -344,14 +361,23 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
     @OnClick({R.id.group_member_size_item, R.id.ll_group_port, R.id.ll_group_qr, R.id.ll_group_name, R.id.group_announcement, R.id.group_clean, R.id.group_transfer, R.id.group_shutup_mber, R.id.group_quit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            /**
+             * 查看全部成员
+             * */
             case R.id.group_member_size_item:
                 Intent iet = new Intent(GroupDetailActivity.this, GroupMoreMemberActivity.class);
                 iet.putExtra("list", friendListBeanArrayList);
                 startActivity(iet);
                 break;
+            /**
+             * 修改群头像
+             * */
             case R.id.ll_group_port:
                 PermissionUtils.get(this).getCameraPermission(() -> takePhoto(GroupDetailActivity.this, HEADER_PIC));
                 break;
+            /**
+             * 二维码
+             * */
             case R.id.ll_group_qr:
                 Bundle bundle = new Bundle();
                 bundle.putString("qrcodeTitle", title);
@@ -362,6 +388,9 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
 //                personalQRCodeDialog.show();
 
                 break;
+            /**
+             * 群聊名称
+             * */
             case R.id.ll_group_name:
                 if (isOwner) {
                     Intent intent = new Intent(this, GroupUpdataNameActivity.class);
@@ -370,7 +399,9 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                     ToastUtil.get().showToast(GroupDetailActivity.this, "只有管理员才能操作");
                 }
                 break;
-
+            /**
+             * 群公告
+             * */
             case R.id.group_announcement:
                 if (isOwner) {
                     Intent tempIntent = new Intent(this, GroupNoticeActivity.class);
@@ -395,6 +426,9 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                 in.putExtra("groupId", id);
                 startActivityForResult(in, UPDATA_GROUP_SHUTUP_MBER);
                 break;
+            /**
+             * 退出群聊
+             * */
             case R.id.group_quit:
                 new TrueFalseDialog(this, "系统提示", "是否" + groupQuit.getText().toString() + "？", () -> {
 
@@ -435,6 +469,8 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                     }
 
                 }).showDialog();
+                break;
+            default:
                 break;
         }
     }
@@ -551,6 +587,9 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                 }));
     }
 
+    /**
+     * 全员禁言
+     */
     private void setGagOrNo(boolean b) {
         if (!b) {
             EanfangHttp.post(UserApi.POST_GROUP_NOGAG)

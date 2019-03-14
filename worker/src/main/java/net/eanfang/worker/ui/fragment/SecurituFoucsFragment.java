@@ -45,6 +45,12 @@ public class SecurituFoucsFragment extends TemplateItemListFragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        getData();
+    }
+
+    @Override
     protected void initAdapter() {
         securityFocusListAdapter = new SecurityFocusListAdapter(getActivity());
         securityFocusListAdapter.bindToRecyclerView(mRecyclerView);
@@ -62,6 +68,7 @@ public class SecurituFoucsFragment extends TemplateItemListFragment {
                 case R.id.ll_comments:
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("bean", securityFocusListAdapter.getData().get(position));
+                    bundle.putInt("friend", securityFocusListAdapter.getData().get(position).getFriend());
                     bundle.putString("type", "focus");
                     JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
                     break;
@@ -75,6 +82,7 @@ public class SecurituFoucsFragment extends TemplateItemListFragment {
         securityFocusListAdapter.setOnItemClickListener((adapter, view, position) -> {
             Bundle bundle = new Bundle();
             bundle.putSerializable("bean", securityFocusListAdapter.getData().get(position));
+            bundle.putInt("friend", securityFocusListAdapter.getData().get(position).getFriend());
             bundle.putString("type", "focus");
             JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
         });
@@ -122,7 +130,6 @@ public class SecurituFoucsFragment extends TemplateItemListFragment {
                 .upJson(JSONObject.toJSONString(securityFoucsBean))
                 .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class, bean -> {
                     showToast("已取消关注");
-//                    mRecyclerView.scrollToPosition(0);
                     getData();
                 }));
     }
@@ -181,6 +188,13 @@ public class SecurituFoucsFragment extends TemplateItemListFragment {
                         mSwipeRefreshLayout.setRefreshing(false);
                     }
                 });
+    }
+
+    /**
+     * 刷新已读未读的状态
+     */
+    public void refreshStatus() {
+        getData();
     }
 
 }

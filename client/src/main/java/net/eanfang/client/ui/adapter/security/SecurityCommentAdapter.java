@@ -1,4 +1,4 @@
-package net.eanfang.worker.ui.adapter;
+package net.eanfang.client.ui.adapter.security;
 
 import android.net.Uri;
 
@@ -8,7 +8,8 @@ import com.eanfang.BuildConfig;
 import com.eanfang.model.security.SecurityDetailBean;
 import com.facebook.drawee.view.SimpleDraweeView;
 
-import net.eanfang.worker.R;
+import net.eanfang.client.R;
+
 
 /**
  * @author guanluocang
