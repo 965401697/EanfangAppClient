@@ -88,7 +88,7 @@ public class Config {
         }
         return businessList;
     }
-
+    //系统类别-----级别
     public List<BaseDataEntity> getBusinessList(int level) {
         return Stream.of(getBusinessList()).filter(bean -> bean.getLevel().equals(level + 1)).toList();
     }
@@ -148,7 +148,7 @@ public class Config {
         }
         return modelList;
     }
-
+    //品牌-----级别
     public List<BaseDataEntity> getModelList(int level) {
         return Stream.of(getModelList()).filter(bean -> bean.getLevel().equals(level + 1)).toList();
     }
@@ -245,7 +245,6 @@ public class Config {
             return null;
         }
         return getBaseNameById(id, Constant.BIZ_TYPE);
-
     }
 
     /**

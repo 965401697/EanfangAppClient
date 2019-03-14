@@ -195,6 +195,10 @@ public interface NewApiService {
      */
     String QUERY_HISTORY_RECORD_LIST = BuildConfig.API_HOST + "/yaf_maintain/maintain/list";
     /**
+     * 我的信息
+     */
+    String My_Info_LIST = BuildConfig.API_HOST + "/yaf_sys/expertsOnline/myInfo";
+    /**
      * 维保详情
      */
     String MAINTENANCE_HISTORY_DETAIL = BuildConfig.API_HOST + "/yaf_maintain/maintain/detail";
@@ -439,6 +443,11 @@ public interface NewApiService {
      * post
      */
     String COMMENT_FAULT_RECORD_LIST = BASE_URL + "/yaf_sys/expertsOnline/questionsWithExpert";
+    /**
+     * 故障记录列表首页
+     * post
+     */
+    String CommonQuestions = BASE_URL + "/yaf_sys/expertsOnline/commonQuestions";
     /**
      * 评论列表
      * post

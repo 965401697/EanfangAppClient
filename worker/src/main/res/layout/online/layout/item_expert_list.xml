@@ -6,7 +6,6 @@
     android:layout_marginBottom="@dimen/dimen_20"
     android:background="@color/color_white">
 
-
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/iv_expert_header"
         android:layout_width="@dimen/dimen_100"

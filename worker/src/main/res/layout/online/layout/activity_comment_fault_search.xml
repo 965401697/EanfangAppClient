@@ -46,10 +46,9 @@
 
 
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_height="match_parent">
 
             <android.support.v4.widget.SwipeRefreshLayout
                 android:id="@+id/swipre_fresh"
@@ -69,8 +68,8 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="暂时没有数据"
-                android:visibility="visible" />
-        </LinearLayout>
+                android:visibility="gone" />
+        </FrameLayout>
 
 
     </LinearLayout>

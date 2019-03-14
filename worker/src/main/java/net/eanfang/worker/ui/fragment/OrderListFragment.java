@@ -232,10 +232,10 @@ public class OrderListFragment extends BaseFragment implements
                 switch (view.getId()) {
 
                     case R.id.tv_do_first:
-                        if (doCompare(item.getAssigneeUserId(), mUseId)) {
+                        //if (doCompare(item.getAssigneeUserId(), mUseId)) {
                             //查看故障处理
                             new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), false).show();
-                        }
+                        //}
                         break;
                     case R.id.tv_do_second:
 //                        if (!item.getAssigneeUserId().equals(EanfangApplication.get().getUserId())) {

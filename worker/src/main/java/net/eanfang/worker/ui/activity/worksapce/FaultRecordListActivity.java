@@ -178,11 +178,11 @@ public class FaultRecordListActivity extends BaseWorkerActivity implements Swipe
                             mAdapter.setNewData(bean.getList());
                             mSwipeRefreshLayout.setRefreshing(false);
                             mAdapter.loadMoreComplete();
-                            if (bean.getList().size() < 10) {
+                            if (bean.getList()==null) {
                                 mAdapter.loadMoreEnd();
                             }
 
-                            if (bean.getList().size() > 0) {
+                            if (bean.getList()!=null) {
                                 mTvNoData.setVisibility(View.GONE);
                             } else {
                                 mTvNoData.setVisibility(View.VISIBLE);

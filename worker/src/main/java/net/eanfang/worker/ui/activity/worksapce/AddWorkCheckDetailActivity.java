@@ -133,7 +133,7 @@ public class AddWorkCheckDetailActivity extends BaseWorkerActivity {
 
         String ursStr = PhotoUtils.getPhotoUrl("oa/workCheck/",mPhotosSnpl, uploadMap, true);
         detailsBean.setPictures(ursStr);
-
+        //服务器上传
         if (uploadMap.size() != 0) {
             OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
                 @Override

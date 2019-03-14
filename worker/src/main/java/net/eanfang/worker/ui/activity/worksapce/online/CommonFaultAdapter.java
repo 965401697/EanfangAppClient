@@ -2,6 +2,7 @@ package net.eanfang.worker.ui.activity.worksapce.online;
 
 import android.net.Uri;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -35,8 +36,9 @@ public class CommonFaultAdapter extends BaseQuickAdapter<CommonFaultListBeanEnti
         } else {
             helper.setText(R.id.tv_fault_desc,"数据出错");
         }
-        if (!TextUtils.isEmpty(item.getQuestionPics())) {
-            ((SimpleDraweeView) helper.getView(R.id.iv_fault_desc)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getQuestionPics()));
+        if (!TextUtils.isEmpty(item.getQuestionPics())) {                                  //Uri.parse(BuildConfig.OSS_SERVER + item.getAvatarPhoto()
+            ((SimpleDraweeView) helper.getView(R.id.iv_fault_desc)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER +  item.getQuestionPics().split(",")[0]));
+            Log.i("Tpian",item.getQuestionPics().split(",")[0]);
         } else {
             ((SimpleDraweeView) helper.getView(R.id.iv_fault_desc)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + "online/b033bd249b694c97bcfaa814c97c30cb.png"));
         }

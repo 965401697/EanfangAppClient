@@ -34,9 +34,13 @@ public class FaultExplainAdapter extends BaseQuickAdapter<AnswerListWithQuestion
     private static final String ONE_YEAR_AGO = "年前";
     @Override
     protected void convert(BaseViewHolder helper, AnswerListWithQuestionBean.AnswersBean item) {
-
+//https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3207781657,3460758070&fm=27&gp=0.jpg
         //头像
-        ((SimpleDraweeView) helper.getView(R.id.iv_expert_header)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER +item.getExpertsCertificationEntity().getAvatarPhoto()));
+        if (item.getExpertsCertificationEntity().getAvatarPhoto()==null){
+            ((SimpleDraweeView) helper.getView(R.id.iv_expert_header)).setImageURI(Uri.parse("https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3207781657,3460758070&fm=27&gp=0.jpg"));
+        }else {
+            ((SimpleDraweeView) helper.getView(R.id.iv_expert_header)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER +item.getExpertsCertificationEntity().getAvatarPhoto()));
+        }
         //名字
         helper.setText(R.id.tv_expert_name,item.getExpertsCertificationEntity().getApproveUserName());
         //品牌专家

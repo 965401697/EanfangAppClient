@@ -1,6 +1,7 @@
 package net.eanfang.worker.ui.activity.worksapce.online;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -42,8 +43,11 @@ public class ExpertOnlineActivity extends BaseWorkerActivity {
     RecyclerView recyclerViewSys;
     @BindView(R.id.recycler_common_fault)
     RecyclerView recyclerCommonFault;
-    private CommentFaultSearchAdapter mCommonFaultAdapter;
-    private List<AskQuestionsListBean.ListBean> list;
+    @BindView(R.id.tv_no_datas)
+    TextView tvNoDatas;
+    private CommonQuestionsAdapter commonQuestionsAdapter;
+    private List<CommonQuestionsBean.ListBean> list;
+    //private CommentFaultSearchAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +59,6 @@ public class ExpertOnlineActivity extends BaseWorkerActivity {
         initLoopView();
         initViews();
     }
-
 
 
     private void initViews() {
@@ -97,8 +100,9 @@ public class ExpertOnlineActivity extends BaseWorkerActivity {
         gridLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
         SystemTypeAdapter systemTypeAdapter = new SystemTypeAdapter();
         //故障adapter
-        mCommonFaultAdapter = new CommentFaultSearchAdapter();
-        mCommonFaultAdapter.bindToRecyclerView(recyclerCommonFault);
+        //mAdapter = new CommentFaultSearchAdapter();
+        commonQuestionsAdapter = new CommonQuestionsAdapter();
+        commonQuestionsAdapter.bindToRecyclerView(recyclerCommonFault);
         //4.为recyclerView设置布局管理器
         recyclerViewSys.setLayoutManager(gridLayoutManager); //设置分割线
         recyclerViewSys.addItemDecoration(new DividerItemDecoration(this));
@@ -112,11 +116,11 @@ public class ExpertOnlineActivity extends BaseWorkerActivity {
 
             }
         });
-        mCommonFaultAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+        commonQuestionsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(ExpertOnlineActivity.this, CommonFaultListActivity.class);
-                intent.putExtra("QuestionSketch",list.get(position).getQuestionSketch());
+                intent.putExtra("QuestionSketch", list.get(position).getQuestionSketch());
                 startActivity(intent);
             }
         });
@@ -154,9 +158,13 @@ public class ExpertOnlineActivity extends BaseWorkerActivity {
                 Intent intent = new Intent(ExpertOnlineActivity.this, FreeAskActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.rl_find_expert://找专家
-                Intent in = new Intent(ExpertOnlineActivity.this, ExpertListActivity.class);
-                startActivity(in);
+            case R.id.rl_find_expert://找专家--------跳转IM真实可用，找专家只是界面实现，纯属虚构-----都是复用以前的页面在跳转的时候传值，根据int值得比对来判断是否展示下一步这个控件和修改title其他地方均未修改
+                SharedPreferences sp = getSharedPreferences("basis", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sp.edit();
+                editor.clear();
+                editor.commit();
+                Intent intentExpert = new Intent(ExpertOnlineActivity.this, FindExpertActivity.class);
+                startActivity(intentExpert);
                 break;
         }
     }
@@ -176,19 +184,32 @@ public class ExpertOnlineActivity extends BaseWorkerActivity {
                 break;
         }
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getData();
+    }
+
     //网络请求
     private void getData() {
         QueryEntry queryEntry = new QueryEntry();
         queryEntry.setSize(4);
         queryEntry.setPage(1);
-
-        EanfangHttp.post(NewApiService.COMMENT_FAULT_RECORD_LIST)
+//CommonQuestions接口 COMMENT_FAULT_RECORD_LIST
+        //CommonQuestionsBean   实体  AskQuestionsListBean
+        //CommonQuestionsAdapter   适配器
+        EanfangHttp.post(NewApiService.CommonQuestions)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<AskQuestionsListBean>(this, true, AskQuestionsListBean.class) {
+                .execute(new EanfangCallback<CommonQuestionsBean>(this, true, CommonQuestionsBean.class) {
                     @Override
-                    public void onSuccess(AskQuestionsListBean bean) {
+                    public void onSuccess(CommonQuestionsBean bean) {
                         list = bean.getList();
-                        mCommonFaultAdapter.setNewData(bean.getList());
+                        if (bean.getList().size() > 0) {
+                            commonQuestionsAdapter.setNewData(bean.getList());
+                        }else {
+                            tvNoDatas.setVisibility(View.VISIBLE);
+                        }
                     }
 
                     @Override

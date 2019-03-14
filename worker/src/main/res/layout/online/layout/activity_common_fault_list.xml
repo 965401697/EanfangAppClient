@@ -23,12 +23,25 @@
                 android:id="@+id/swipre_fresh"
                 android:layout_width="match_parent"
                 android:layout_height="200dp">-->
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recycler_view_fault"
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white" />
+                    android:layout_height="match_parent">
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recycler_view_fault"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/white" />
+                    <TextView
+                        android:id="@+id/tv_no_datas"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:layout_centerInParent="true"
+                        android:layout_centerVertical="true"
+                        android:text="暂时没有数据"
+                        android:visibility="gone" />
+                </FrameLayout>
+
             <!--</android.support.v4.widget.SwipeRefreshLayout>-->
 
             <RelativeLayout
@@ -50,14 +63,7 @@
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/textSize_13" />
 
-                <TextView
-                    android:id="@+id/tv_no_datas"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_centerVertical="true"
-                    android:text="暂时没有数据"
-                    android:visibility="gone" />
+
 
 
                 <ImageView
@@ -79,11 +85,25 @@
                 android:textColor="@color/roll_title"
                 android:textSize="@dimen/textSize_14" />
 
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view_expert"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent">
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_view_expert"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+                <TextView
+                    android:id="@+id/tv_no_datas_zhuanjia"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_gravity="center"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:text="暂时没有数据"
+                    android:visibility="visible" />
+
+            </FrameLayout>
+
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
