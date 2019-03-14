@@ -140,7 +140,7 @@ public class SubtractFriendsActivity extends BaseWorkerActivity {
             list.add(bean.getAccountEntity().getAvatar());
         }
 
-        list.add(EanfangApplication.get().getUser().getAccount().getAvatar());
+//        list.add(EanfangApplication.get().getUser().getAccount().getAvatar());
         if(isCompound)
         CompoundHelper.getInstance().sendBitmap(this, handler, list);//生成图片
 

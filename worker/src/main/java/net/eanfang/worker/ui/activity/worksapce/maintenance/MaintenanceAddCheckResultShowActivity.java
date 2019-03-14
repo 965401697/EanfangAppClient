@@ -5,6 +5,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.eanfang.BuildConfig;
+import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.StringUtils;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
@@ -51,7 +52,7 @@ public class MaintenanceAddCheckResultShowActivity extends BaseWorkerActivity {
         setTitle("检查结果");
         setLeftBack();
 
-//        snplPhoto.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_1, REQUEST_CODE_PHOTO_PREVIEW_1));
+        snplPhoto.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_1, REQUEST_CODE_PHOTO_PREVIEW_1));
         snplPhoto.setEditable(false);
         snplPhoto.setPlusEnable(false);
         examResultEntity = (ShopMaintenanceExamResultEntity) getIntent().getSerializableExtra("bean");

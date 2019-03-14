@@ -581,7 +581,7 @@ public class SelectIMContactActivity extends BaseClientActivity {
             return;
         }
 
-        mUserIconList.add(EanfangApplication.get().getUser().getAccount().getAvatar());
+//        mUserIconList.add(EanfangApplication.get().getUser().getAccount().getAvatar());
         if (isCompound)
             CompoundHelper.getInstance().sendBitmap(this, mHandler, mUserIconList);//生成图片
 

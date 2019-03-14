@@ -137,6 +137,10 @@ public class WorkReportDetailActivity extends BaseWorkerActivity {
         rvWorkList.setNestedScrollingEnabled(false);
         rvQuestionList.setNestedScrollingEnabled(false);
         rvPlanList.setNestedScrollingEnabled(false);
+        rvWorkList.setFocusable(false);
+        rvQuestionList.setFocusable(false);
+        rvPlanList.setFocusable(false);
+
     }
 
     private void setAdapterChildListener(BaseQuickAdapter adapter) {

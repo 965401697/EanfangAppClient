@@ -336,6 +336,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
         }
     }
 
+    //
     private void doHttpNoticeCount() {
 
         EanfangHttp.get(UserApi.ALL_MESSAGE)
@@ -406,8 +407,8 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
 
         if (conversationsId.size() == 0) return;
 
-
-        if (list.size() == 0) {//我的群组为空  删除所有的群组会话
+        //我的群组为空  删除所有的群组会话
+        if (list.size() == 0) {
             for (String s : conversationsId) {
                 RongIM.getInstance().removeConversation(Conversation.ConversationType.GROUP, s, null);
             }

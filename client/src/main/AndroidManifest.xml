@@ -956,6 +956,15 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
+
+        <activity
+            android:name=".ui.activity.worksapce.security.SecurityListActivity"
+            android:theme="@style/NewBaseTheme" />
+        <activity android:name=".ui.activity.worksapce.security.SecurityCreateActivity" />
+        <activity
+            android:name=".ui.activity.worksapce.security.SecurityDetailActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden"></activity>
     </application>
 
 </manifest>
