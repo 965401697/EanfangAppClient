@@ -84,7 +84,7 @@
             android:drawablePadding="@dimen/dimen_24"
             android:drawableTop="@mipmap/ic_worker_tender"
             android:text="@string/text_worker_tender"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
         <TextView
             android:id="@+id/tv_onLine"
