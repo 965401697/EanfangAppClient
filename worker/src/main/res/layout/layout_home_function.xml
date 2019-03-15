@@ -94,7 +94,9 @@
             android:text="@string/text_worker_online" />
 
 
-        <TextView style="@style/style_client_home_meun" />
+        <TextView
+            style="@style/style_client_home_meun"
+            android:visibility="gone" />
 
     </LinearLayout>
 </LinearLayout>

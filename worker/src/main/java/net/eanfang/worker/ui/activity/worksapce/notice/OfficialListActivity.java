@@ -149,7 +149,6 @@ public class OfficialListActivity extends BaseWorkerActivity implements SwipeRef
         QueryEntry queryEntry = new QueryEntry();
         queryEntry.setSize(10);
         queryEntry.setPage(mPage);
-
         EanfangHttp.post(NewApiService.GET_OFFICIAL_MSG)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<OfficialListBean>(this, true, OfficialListBean.class) {
