@@ -153,6 +153,9 @@ public class OrderDetailFragment extends BaseFragment {
                 if (view.getId() == R.id.iv_pic) {
                     ArrayList<String> picList = new ArrayList<String>();
                     String[] urls = mDataList.get(position).getPictures().split(",");
+//                    for (int i = 0; i < urls.length; i++) {
+//                        picList.add(com.eanfang.BuildConfig.OSS_SERVER + urls[i]);
+//                    }
                     if (urls.length >= 1) {
                         picList.add(com.eanfang.BuildConfig.OSS_SERVER + urls[0]);
                     }

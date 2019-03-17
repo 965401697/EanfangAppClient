@@ -84,17 +84,19 @@
             android:drawablePadding="@dimen/dimen_24"
             android:drawableTop="@mipmap/ic_worker_tender"
             android:text="@string/text_worker_tender"
-            android:visibility="gone" />
+            android:visibility="visible" />
 
         <TextView
             android:id="@+id/tv_onLine"
             style="@style/style_client_home_meun"
             android:drawablePadding="@dimen/dimen_24"
-            android:drawableTop="@mipmap/ic_worker_home_project_sign"
+            android:drawableTop="@mipmap/ic_worker_home_online"
             android:text="@string/text_worker_online" />
 
 
-        <TextView style="@style/style_client_home_meun" />
+        <TextView
+            style="@style/style_client_home_meun"
+            android:visibility="gone" />
 
     </LinearLayout>
 </LinearLayout>

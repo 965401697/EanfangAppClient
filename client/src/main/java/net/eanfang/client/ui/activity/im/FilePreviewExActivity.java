@@ -1,8 +1,12 @@
 package net.eanfang.client.ui.activity.im;
 
 
+import android.os.Bundle;
 import android.util.Log;
 
+import com.eanfang.takevideo.PlayVideoActivity;
+import com.eanfang.util.JumpItent;
+import com.eanfang.util.ToastUtil;
 import com.tencent.smtt.sdk.QbSdk;
 import com.tencent.smtt.sdk.ValueCallback;
 
@@ -18,17 +22,30 @@ public class FilePreviewExActivity extends FilePreviewActivity {
 
     @Override
     public void openFile(String fileName, String fileSavePath) {
-//        super.openFile(fileName, fileSavePath);
         Log.e("zzw", "fileName=" + fileName + "," + "fileSavePath" + fileSavePath);
         HashMap<String, String> params = new HashMap<>();
-//        //“0”表示文件查看器使用默认的UI 样式。“1”表示文件查看器使用微信的UI 样式。不设置此key或设置错误值，则为默认UI 样式。
-                params.put("local", "true");
-        QbSdk.openFileReader(this, fileSavePath, params, new ValueCallback<String>() {
-            @Override
-            public void onReceiveValue(String s) {
-                Log.e("zzw", "fileName=============" + fileName + "," + "fileSavePath============" + fileSavePath);
-            }
-        });
+        /**
+         *  “0”表示文件查看器使用默认的UI 样式。“1”表示文件查看器使用微信的UI 样式。不设置此key或设置错误值，则为默认UI 样式。
+         * */
+        params.put("local", "true");
+
+        if (fileName.substring(fileName.lastIndexOf(".") + 1).equals("mp4")) {
+            Bundle bundle_takevideo = new Bundle();
+            bundle_takevideo.putString("videoPath", fileSavePath);
+            JumpItent.jump(this, PlayVideoActivity.class, bundle_takevideo);
+        } else {
+            QbSdk.openFileReader(this, fileSavePath, null, new ValueCallback<String>() {
+                @Override
+                public void onReceiveValue(String s) {
+                    if (s.equals("can not open")) {
+                        ToastUtil.get().showToast(FilePreviewExActivity.this,"此文件无法查看");
+                        finish();
+                        return;
+                    }
+                }
+
+            });
+        }
 
     }
 }

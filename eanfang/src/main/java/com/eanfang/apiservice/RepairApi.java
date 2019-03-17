@@ -51,6 +51,10 @@ public interface RepairApi {
     String GET_REPAIR_WORKER_DETAIL = BuildConfig.API_HOST + "/yaf_shop/worker/detail";
 
     /**
+     * 我的信息
+     */
+    String My_Info_LIST = BuildConfig.API_HOST + "/yaf_sys/expertsOnline/myInfo";
+    /**
      * 7.技师电话筛查
      */
     // String GET_REPAIR_SCREENING = BuildConfig.API_HOST + "/yaf_repair/flow/screening";

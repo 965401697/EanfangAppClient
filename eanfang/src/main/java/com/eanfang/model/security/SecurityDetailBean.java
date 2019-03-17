@@ -23,7 +23,9 @@ import lombok.Setter;
 @Setter
 public class SecurityDetailBean implements Serializable {
 
+
     private List<ListBean> list;
+    private List<SpcListBean> spcList;
 
     @AllArgsConstructor
     @NoArgsConstructor
@@ -80,5 +82,33 @@ public class SecurityDetailBean implements Serializable {
             private String topCompanyId;
 
         }
+    }
+
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Getter
+    @Setter
+    public static class SpcListBean {
+
+        private int collectionCount;
+        private int commentCount;
+        private String createTime;
+        private String editTime;
+        private int followCount;
+        private int followsStatus;
+        private int friend;
+        private int likeStatus;
+        private int likesCount;
+        private int publisherCompanyId;
+        private String publisherOrgCode;
+        private int publisherTopCompanyId;
+        private String publisherUserId;
+        private int readCount;
+        private String spcContent;
+        private int spcId;
+        private String spcImg;
+        private int verifyStatus;
+        private int weightCount;
+
     }
 }

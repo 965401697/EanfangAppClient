@@ -64,6 +64,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_15"
                 android:scrollbars="none" />
+            <TextView
+                android:id="@+id/tv_go"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_88"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="@dimen/dimen_20"
+                android:layout_marginTop="@dimen/dimen_270"
+                android:background="@drawable/bg_btn_trouble_detail_add_trouble"
+                android:gravity="center"
+                android:padding="@dimen/dimen_30"
+                android:text="下一步"
+                android:textColor="@color/color_white"
+                android:textSize="@dimen/textSize_13" />
         </RelativeLayout>
 
 
@@ -76,5 +89,7 @@
             android:gravity="center"
             android:text="暂无数据"
             android:visibility="gone" />
+
     </LinearLayout>
+
 </LinearLayout>

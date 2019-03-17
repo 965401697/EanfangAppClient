@@ -1,6 +1,5 @@
 package net.eanfang.worker.ui.activity.worksapce.online;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -55,6 +54,8 @@ public class ExpertAnswerActivity extends BaseWorkerActivity {
     ImageView tuNoLike;
     @BindView(R.id.huan)
     LinearLayout huan;
+    @BindView(R.id.tv_no_datas)
+    TextView tvNoDatas;
     private Long answerId;
     private ReplyListAdapter replyListAdapter;
     private String replyContent;
@@ -70,19 +71,10 @@ public class ExpertAnswerActivity extends BaseWorkerActivity {
         ButterKnife.bind(this);
         setTitle("专家回复");
         SharedPreferences sp = getSharedPreferences("userXinxi", MODE_PRIVATE);
-        String avatarPhoto = sp.getString("avatarPhoto", "");
-        String approveUserName = sp.getString("approveUserName", "");
-        String company = sp.getString("company", "");
-        String answerContent = sp.getString("answerContent", "");
         String format1 = sp.getString("format1", "");
         int answerLikes = sp.getInt("answerLikes", 1);
         answerId = sp.getLong("answerId", 1);
-        ivExpertHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + avatarPhoto));
-        tvExpertName.setText(approveUserName);
-        tvMajor.setText(company);
-        tvDesc.setText(answerContent);
         tvTime.setText(format1);
-        zanCount.setText("点赞量 " + answerLikes);
         setLeftBack();
 
 
@@ -100,8 +92,11 @@ public class ExpertAnswerActivity extends BaseWorkerActivity {
             }
         });
     }
-
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getData();
+    }
 
     private void initView() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -141,19 +136,33 @@ public class ExpertAnswerActivity extends BaseWorkerActivity {
                 .execute(new EanfangCallback<MyReplyListBean>(this, true, MyReplyListBean.class) {
                     @Override
                     public void onSuccess(MyReplyListBean bean) {
+
+                        ivExpertHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bean.getAnswerInfo().getExpertsCertificationEntity().getAvatarPhoto()));
+                        tvExpertName.setText(bean.getAnswerInfo().getExpertsCertificationEntity().getApproveUserName());
+                        tvMajor.setText(bean.getAnswerInfo().getExpertsCertificationEntity().getCompany());
+                        tvDesc.setText(bean.getAnswerInfo().getAnswerContent());
+                        zanCount.setText("点赞量 " + bean.getAnswerInfo().getAnswerLikes());
                         answerStatus = bean.getAnswerInfo().getLikeStatus();
                         answerCompanyId = bean.getAnswerInfo().getAnswerCompanyId();
                         answerTopCompanyId = bean.getAnswerInfo().getAnswerTopCompanyId();
                         answerUserId = bean.getAnswerInfo().getAnswerUserId();
-                        if (answerStatus %2 == 0){
+                        if (answerStatus % 2 == 0) {
                             tuLike.setVisibility(View.VISIBLE);
                             tuNoLike.setVisibility(View.GONE);
-                        }else {
+                        } else {
                             tuNoLike.setVisibility(View.VISIBLE);
                             tuLike.setVisibility(View.GONE);
                         }
                         tvComment.setText("评论 " + bean.getReplyCount());
-                        replyListAdapter.setNewData(bean.getReplyList());
+                        if (bean.getReplyList().size() > 0) {
+                            recyclerView.setVisibility(View.VISIBLE);
+                            tvNoDatas.setVisibility(View.GONE);
+                            replyListAdapter.setNewData(bean.getReplyList());
+                        }else {
+                            recyclerView.setVisibility(View.GONE);
+                            tvNoDatas.setVisibility(View.VISIBLE);
+                        }
+
                     }
 
                     @Override
@@ -179,10 +188,10 @@ public class ExpertAnswerActivity extends BaseWorkerActivity {
                 .execute(new EanfangCallback<AnswerChangeLikeStatusBean>(this, true, AnswerChangeLikeStatusBean.class) {
                     @Override
                     public void onSuccess(AnswerChangeLikeStatusBean bean) {
-                        if (answerStatus % 2 != 0){
+                        if (answerStatus % 2 != 0) {
                             getData();
                             Toast.makeText(ExpertAnswerActivity.this, "点赞成功", Toast.LENGTH_SHORT).show();
-                        }else {
+                        } else {
                             getData();
                             Toast.makeText(ExpertAnswerActivity.this, "取消成功", Toast.LENGTH_SHORT).show();
                         }

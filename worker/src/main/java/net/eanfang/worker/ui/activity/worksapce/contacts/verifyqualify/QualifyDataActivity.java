@@ -141,7 +141,6 @@ public class QualifyDataActivity extends BaseActivity {
      */
     private void getQuailifyData() {
         QueryEntry queryEntry = new QueryEntry();
-
         queryEntry.getEquals().put("orgId", orgid + "");
         queryEntry.getEquals().put("type", "0");
         EanfangHttp.post(UserApi.LIST_QUALIFY)

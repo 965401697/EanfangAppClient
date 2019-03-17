@@ -30,13 +30,14 @@ public class BadgeUtil {
         if (count <= 0) {
             count = 0;
         } else {
-            count = Math.max(0, Math.min(count, 99));
-        }
-        if (count > 99) {
+            if (count > 99) {
             mMoreCount = "99+";
         } else {
             mMoreCount = count + "";
         }
+            //count = Math.max(0, Math.min(count, 99));
+        }
+
         if (Build.MANUFACTURER.equalsIgnoreCase("xiaomi")) {
             setBadgeOfMIUI(context, mMoreCount, iconResId);
 //        } else {
@@ -78,7 +79,7 @@ public class BadgeUtil {
         NotificationManager mNotificationManager = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-        builder.setContentTitle("标题").setContentText("消息正文").setSmallIcon(iconResId);
+        builder.setContentTitle("易安防").setContentText("新消息").setSmallIcon(iconResId);
         Notification notification = builder.build();
         try {
             Field field = notification.getClass().getDeclaredField("extraNotification");

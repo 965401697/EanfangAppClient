@@ -195,6 +195,10 @@ public interface NewApiService {
      */
     String QUERY_HISTORY_RECORD_LIST = BuildConfig.API_HOST + "/yaf_maintain/maintain/list";
     /**
+     * 我的信息
+     */
+    String My_Info_LIST = BuildConfig.API_HOST + "/yaf_sys/expertsOnline/myInfo";
+    /**
      * 维保详情
      */
     String MAINTENANCE_HISTORY_DETAIL = BuildConfig.API_HOST + "/yaf_maintain/maintain/detail";
@@ -440,6 +444,11 @@ public interface NewApiService {
      */
     String COMMENT_FAULT_RECORD_LIST = BASE_URL + "/yaf_sys/expertsOnline/questionsWithExpert";
     /**
+     * 故障记录列表首页
+     * post
+     */
+    String CommonQuestions = BASE_URL + "/yaf_sys/expertsOnline/commonQuestions";
+    /**
      * 评论列表
      * post
      */
@@ -641,6 +650,10 @@ public interface NewApiService {
     String TENDER_DETAIL = BASE_URL + "/yaf_ifb/ifborder/info";
 
     /**
+     * 安防圈 首页三条
+     */
+    String SECURITY_RECOMMEND = BASE_URL + "/yaf_spc/spcircle/weightList";
+    /**
      * 安防圈 热门列表
      */
     String SECURITY_HOT = BASE_URL + "/yaf_spc/spcircle/list";
@@ -668,5 +681,14 @@ public interface NewApiService {
      * 安防圈详情
      */
     String SERCURITY_DETAIL = BASE_URL + "/yaf_spc/spcircle/detail";
+    /**
+     * 安防圈评论
+     */
+    String SERCURITY_COMMENT = BASE_URL + "/yaf_spc/spcircle/comment";
+    /**
+     * 删除评论
+     */
+    String SERCURITY_COMMENT_DELETE = BASE_URL + "/yaf_spc/spcircle/deleteComment";
+
 
 }

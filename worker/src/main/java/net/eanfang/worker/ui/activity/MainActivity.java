@@ -548,6 +548,7 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
 
     private void doChange(int mContactNum) {
         qBadgeViewContact.setBadgeNumber(mContactNum);
+        BadgeUtil.setBadgeCount(MainActivity.this, mContactNum, R.drawable.client_logo);
     }
 
     class MyConnectionStatusListener implements RongIMClient.ConnectionStatusListener {
@@ -736,16 +737,21 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
         /**
          * 桌面app红点
          * */
-        if (bean.getTotalCount() > 0) {
-            // 首页红点
+        if (bean.getBiz() > 0 || bean.getSys() > 0 || bean.getCmp() > 0 || mContactNum > 0) {
+            mContact = bean.getBiz() + bean.getSys() + bean.getCmp();
+            mAllCount = bean.getBiz() + bean.getSys() + bean.getCmp() + mContactNum;
+        } else {
+            mAllCount = 0;
+        }
+        // 首页红点
 //            new Handler(getMainLooper()).postDelayed(new Runnable() {
 //                @Override
 //                public void run() {
-            // 桌面气泡赋值
-            BadgeUtil.setBadgeCount(MainActivity.this, bean.getTotalCount(), R.drawable.client_logo);
+        // 桌面气泡赋值
+        BadgeUtil.setBadgeCount(MainActivity.this, mAllCount, R.drawable.client_logo);
 //                }
 //            }, 3 * 1000);
-        }
+
         // 首页小红点的显示
         if (bean.getRepair() > 0 || bean.getInstall() > 0 || bean.getDesign() > 0) {
             mHome = bean.getRepair() + bean.getInstall() + bean.getDesign();
@@ -761,12 +767,6 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
                 .setGravityOffset(0, 3, true)
                 .setBadgeTextSize(11, true);
         //消息页面红点
-        if (bean.getBiz() > 0 || bean.getSys() > 0 || bean.getCmp() > 0 || mContactNum > 0) {
-            mContact = bean.getBiz() + bean.getSys() + bean.getCmp();
-            mAllCount = bean.getBiz() + bean.getSys() + bean.getCmp() + mContactNum;
-        } else {
-            mAllCount = 0;
-        }
         qBadgeViewContact.bindTarget(findViewById(R.id.tab_contact))
                 .setBadgeNumber(mAllCount)
                 .setBadgeBackgroundColor(0xFFFF0000)

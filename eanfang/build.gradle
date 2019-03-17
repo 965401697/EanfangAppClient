@@ -10,8 +10,8 @@ android {
     defaultConfig {
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 19030201
-        versionName "2.3.36"
+        versionCode 19031701
+        versionName "2.3.37"
         multiDexEnabled true
 
         buildConfigField("String", "OSS_SERVER", "\"http://oss.eanfang.net/\"")
@@ -40,19 +40,12 @@ android {
 
             // 上线url
             // buildConfigField("String", "HOST", "\"https://api.eanfang.net\"")
-            //buildConfigField("String", "API_HOST", "\"https://api.eanfang.net\"")
+            // buildConfigField("String", "API_HOST", "\"https://api.eanfang.net\"")
 
-            //          buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
-            //           buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
-//            buildConfigField("String", "HOST", "\"http://yz.ngrok.xiaomiqiu.cn\"")
-//            buildConfigField("String", "API_HOST", "\"http://yz.ngrok.xiaomiqiu.cn\"")
-            buildConfigField("String", "HOST", "\"http://yz.ngrok.eanfang.net:89\"")
-            buildConfigField("String", "API_HOST", "\"http://yz.ngrok.eanfang.net:89\"")
-//            buildConfigField("String", "HOST", "\"http://7.196.57.45:8080\"")
-//            buildConfigField("String", "API_HOST", "\"http://7.196.57.45:8080\"")
-//            buildConfigField("String", "HOST", "\"http://192.168.0.131:8081\"")
-//            buildConfigField("String", "API_HOST", "\"http://192.168.0.131:8081\"")
-
+            //buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
+            //buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
+            buildConfigField("String", "HOST", "\"http://api.beta.eanfang.net\"")
+            buildConfigField("String", "API_HOST", "\"http://api.beta.eanfang.net\"")
         }
         release {
             // 上线url

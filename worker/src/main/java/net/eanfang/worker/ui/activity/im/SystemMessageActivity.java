@@ -115,6 +115,8 @@ public class SystemMessageActivity extends BaseWorkerActivity {
                 if (llAction.getVisibility() == View.VISIBLE) return;
                 RongIM.getInstance().startConversation(SystemMessageActivity.this, Conversation.ConversationType.PRIVATE, userInfo.getUserId(), userInfo.getName());
                 break;
+            default:
+                break;
         }
     }
 }

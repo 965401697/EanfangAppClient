@@ -9,6 +9,8 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.RepairApi;
@@ -22,6 +24,7 @@ import com.eanfang.util.QueryEntry;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.worksapce.online.ExpertListActivity;
 import net.eanfang.worker.ui.adapter.repair.FaultLibraryAdapter;
 
 import java.util.ArrayList;
@@ -38,7 +41,7 @@ import static com.eanfang.config.EanfangConst.TOP_REFRESH;
  * @date on 2018/6/8  16:37
  * @decision 故障库
  */
-public class FaultLibraryActivity extends BaseActivity implements SwipyRefreshLayout.OnRefreshListener {
+public class FaultLibraryActivity extends BaseActivity implements SwipyRefreshLayout.OnRefreshListener, View.OnClickListener {
     private static final int RESULT_DATACODE = 2000;
     @BindView(R.id.rv_faultList)
     RecyclerView rvFaultList;
@@ -46,9 +49,11 @@ public class FaultLibraryActivity extends BaseActivity implements SwipyRefreshLa
     SwipyRefreshLayout swiprefresh;
     @BindView(R.id.et_search)
     EditText etSearch;
+    @BindView(R.id.tv_go)
+    TextView tvGo;
     //搜索状态不让用户上拉
     private boolean mFlag = false;
-
+    private int i = 1;
     private FaultLibraryAdapter faultLibraryAdapter;
     private List<FaultListBean.ListBean> mFaultListBeanList = new ArrayList<>();
     // 系统类别id
@@ -61,14 +66,41 @@ public class FaultLibraryActivity extends BaseActivity implements SwipyRefreshLa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fault_library);
         ButterKnife.bind(this);
-        initView();
-        initData();
-        initListener();
+
+        if (getIntent().getIntExtra("GZK", 0) == 3) {
+            initView();
+            initData();
+
+            faultLibraryAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                    View viewByPosition = faultLibraryAdapter.getViewByPosition(position, R.id.check_true);
+                    i++;
+                    if (i%2==1){
+                        viewByPosition.setVisibility(View.VISIBLE);
+                    }else {
+                        viewByPosition.setVisibility(View.GONE);
+                    }
+                }
+            });
+            tvGo.setOnClickListener(this);
+        }else {
+            tvGo.setVisibility(View.GONE);
+            initView();
+            initData();
+            initListener();
+        }
+
+
     }
 
     private void initView() {
         setLeftBack();
-        setTitle("故障库");
+        if (getIntent().getIntExtra("GZK", 0) == 3){
+            setTitle("选择故障类型");
+        }else {
+            setTitle("故障库");
+        }
         page = 1;
         businessOneCode = getIntent().getStringExtra("businessOneCode");
         rvFaultList.setLayoutManager(new LinearLayoutManager(this));
@@ -160,18 +192,13 @@ public class FaultLibraryActivity extends BaseActivity implements SwipyRefreshLa
                 intent.putExtra("sketch", ((FaultListBean.ListBean) adapter.getData().get(position)).getSketch());
                 intent.putExtra("faultDes", ((FaultListBean.ListBean) adapter.getData().get(position)).getDescription());
                 intent.putExtra("faultImgs", ((FaultListBean.ListBean) adapter.getData().get(position)).getPictures());
-                intent.putExtra("datasId", ((FaultListBean.ListBean) adapter.getData().get(position)).getId());
+                intent.putExtra("deviceFailureId", ((FaultListBean.ListBean) adapter.getData().get(position)).getId());
+                intent.putExtra("failureTypeId", ((FaultListBean.ListBean) adapter.getData().get(position)).getFailureTypeId());
                 setResult(RESULT_DATACODE, intent);
                 finishSelf();
             }
         });
 
-//        rvFaultList.addOnItemTouchListener(new OnItemClickListener() {
-//            @Override
-//            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-//
-//            }
-//        });
     }
 
     @Override
@@ -212,5 +239,11 @@ public class FaultLibraryActivity extends BaseActivity implements SwipyRefreshLa
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent in = new Intent(FaultLibraryActivity.this, ExpertListActivity.class);
+        startActivity(in);
     }
 }

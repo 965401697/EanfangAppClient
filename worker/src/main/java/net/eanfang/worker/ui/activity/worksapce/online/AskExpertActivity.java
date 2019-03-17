@@ -67,6 +67,8 @@ public class AskExpertActivity extends BaseWorkerActivity {
     TextView tvAskNow;
     @BindView(R.id.num_zyr)
     TextView numZyr;
+    @BindView(R.id.tv_no_datas)
+    TextView tvNoDatas;
     private String mBrand, mUserId;
     private UserAppraiseAdapter mUserAppraiseAdapter;
 
@@ -103,18 +105,26 @@ public class AskExpertActivity extends BaseWorkerActivity {
                 .execute(new EanfangCallback<AnswerExpertMoreDetailsBean>(this, true, AnswerExpertMoreDetailsBean.class) {
                     @Override
                     public void onSuccess(AnswerExpertMoreDetailsBean bean) {
-                        ivExpertHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER +bean.getExpert().getAvatarPhoto()));
+                        ivExpertHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bean.getExpert().getAvatarPhoto()));
                         tvLevel.setText(bean.getExpert().getCertificateName());
-                        tvExpertName.setText(bean.getExpert().getApproveUserName());
+                        tvExpertName.setText(bean.getExpert().getExpertName());
                         llGood.setText("好评率:" + bean.getExpert().getFavorableRate() * 100 + "%");
                         llAnswer.setText("回答:" + bean.getAnswerNums());
-                        tvMajor.setText("擅长专业:" + bean.getExpert().getSystemType());
-                        tvBrand.setText("擅长品牌:" + bean.getExpert().getResponsibleBrand());
-                        tvIntroduce.setText("专家介绍:" + bean.getExpert().getIntro());
-                        tvCompany.setText("就职单位:" + bean.getExpert().getCompany());
+                        tvMajor.setText("擅长专业:  " + bean.getExpert().getSystemType());
+                        tvBrand.setText("擅长品牌:  " + bean.getExpert().getResponsibleBrand());
+                        tvIntroduce.setText("专家介绍:  " + bean.getExpert().getIntro());
+                        tvCompany.setText("就职单位:  " + bean.getExpert().getCompany());
                         tvExpertType.setText(bean.getExpert().getSystemType());
-                        numZyr.setText("用户评价("+bean.getEvaluateUsers()+")");
-                        mUserAppraiseAdapter.setNewData(bean.getEvaluateList());
+                        numZyr.setText("用户评价(" + bean.getEvaluateUsers() + ")");
+                        if (bean.getEvaluateList().size() > 0) {
+                            recyclerView.setVisibility(View.VISIBLE);
+                            tvNoDatas.setVisibility(View.GONE);
+                            mUserAppraiseAdapter.setNewData(bean.getEvaluateList());
+                        }else {
+                            recyclerView.setVisibility(View.GONE);
+                            tvNoDatas.setVisibility(View.VISIBLE);
+                        }
+
                     }
 
                     @Override

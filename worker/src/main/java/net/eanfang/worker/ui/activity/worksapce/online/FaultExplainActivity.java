@@ -18,11 +18,9 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 import com.yaf.base.entity.AnswerListWithQuestionBean;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.worksapce.oa.check.DealWithFirstActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 import net.eanfang.worker.util.ImagePerviewUtil;
 
@@ -71,6 +69,10 @@ public class FaultExplainActivity extends BaseWorkerActivity {
     SimpleDraweeView ivPic3;
     @BindView(R.id.ll_pic)
     LinearLayout llPic;
+    @BindView(R.id.tv_no_datas)
+    TextView tvNoDatas;
+    @BindView(R.id.collect)
+    TextView collect;
 
     //private static final int REQUEST_CODE_CHOOSE_EXPLAIN = 1;
     //private static final int REQUEST_CODE_PHOTO_EXPLAIN = 2;
@@ -99,6 +101,12 @@ public class FaultExplainActivity extends BaseWorkerActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getData();
+    }
+
     private void initViews() {
         recyclerViewAnswer.setLayoutManager(new LinearLayoutManager(this));
         //专家回复
@@ -118,13 +126,8 @@ public class FaultExplainActivity extends BaseWorkerActivity {
                     getZanData();
                 } else if (view.getId() == R.id.ll_comment) {
                     SharedPreferences sp = getSharedPreferences("userXinxi", MODE_PRIVATE);
-                    sp.edit().putString("avatarPhoto", mFaultExplainAdapter.getData().get(position).getExpertsCertificationEntity().getAvatarPhoto())
-                            .putString("approveUserName", mFaultExplainAdapter.getData().get(position).getExpertsCertificationEntity().getApproveUserName())
-                            .putString("company", mFaultExplainAdapter.getData().get(position).getExpertsCertificationEntity().getCompany())
-                            .putString("answerContent", mFaultExplainAdapter.getData().get(position).getAnswerContent())
-                            .putString("format1", format1)
+                    sp.edit().putString("format1", format1)
                             .putLong("answerId", mFaultExplainAdapter.getData().get(position).getAnswerId())
-                            .putInt("answerLikes", mFaultExplainAdapter.getData().get(position).getAnswerLikes())
                             .commit();
                     //这个是专家回复的页面
                     Intent intent = new Intent(FaultExplainActivity.this, ExpertAnswerActivity.class);
@@ -176,7 +179,7 @@ public class FaultExplainActivity extends BaseWorkerActivity {
                         questionUserId = bean.getQuestion().getQuestionUserId();
                         questionCompanyId = bean.getQuestion().getQuestionCompanyId();
                         questionTopCompanyId = bean.getQuestion().getQuestionTopCompanyId();
-                        ivUserHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER +bean.getQuestion().getAccountEntity().getAvatar()));
+                        ivUserHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bean.getQuestion().getAccountEntity().getAvatar()));
                         tvUserName.setText(bean.getQuestion().getAccountEntity().getNickName());
                         //时间
                         format1 = format(bean.getQuestion().getQuestionCreateDateLong());
@@ -184,13 +187,17 @@ public class FaultExplainActivity extends BaseWorkerActivity {
                         tvMajor.setText("系统:" + bean.getQuestion().getBusinessName() + "      品牌:" + bean.getQuestion().getModelName());
                         //snplPhotos.setDelegate(new BGASortableDelegate(this));
                         tvDesc.setText(bean.getQuestion().getQuestionContent());
-                        answers = bean.getAnswers();
-                        mFaultExplainAdapter.setNewData(answers);
-
                         if (!StringUtils.isEmpty(bean.getQuestion().getQuestionPics())) {
                             setPhoto(bean.getQuestion().getQuestionPics());
                         }
-
+                        answers = bean.getAnswers();
+                        if (bean.getAnswers().size() <= 0) {
+                            recyclerViewAnswer.setVisibility(View.GONE);
+                            tvNoDatas.setVisibility(View.VISIBLE);
+                        } else {
+                            tvNoDatas.setVisibility(View.GONE);
+                            mFaultExplainAdapter.setNewData(answers);
+                        }
                         if (bean.getAnswers().size() < 10) {
                             mFaultExplainAdapter.loadMoreEnd();
                         }
@@ -208,18 +215,13 @@ public class FaultExplainActivity extends BaseWorkerActivity {
 
     }
 
-    //我来回答
+    /*//我来回答
     @OnClick(R.id.tv_answer)
     public void onViewClicked() {
-        Intent intent = new Intent(FaultExplainActivity.this, MyFreeAskActivity.class);
-        intent.putExtra("questionId", b);
-        intent.putExtra("questionUserId", questionUserId);
-        intent.putExtra("questionCompanyId", questionCompanyId);
-        intent.putExtra("questionTopCompanyId", questionTopCompanyId);
-        startActivity(intent);
-    }
 
-//图片展示
+    }*/
+
+    //图片展示
     public void setPhoto(String photoPath) {
         String[] urls = photoPath.split(",");
         ArrayList<String> picList = new ArrayList<String>();
@@ -325,4 +327,21 @@ public class FaultExplainActivity extends BaseWorkerActivity {
         return toMonths(date) / 365L;
     }
 
+    @OnClick({R.id.collect, R.id.tv_answer})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.collect:
+                Intent intentCollect = new Intent(FaultExplainActivity.this, CommonFaultListActivity.class);
+                startActivity(intentCollect);
+                break;
+            case R.id.tv_answer:
+                Intent intent = new Intent(FaultExplainActivity.this, MyFreeAskActivity.class);
+                intent.putExtra("questionId", b);
+                intent.putExtra("questionUserId", questionUserId);
+                intent.putExtra("questionCompanyId", questionCompanyId);
+                intent.putExtra("questionTopCompanyId", questionTopCompanyId);
+                startActivity(intent);
+                break;
+        }
+    }
 }

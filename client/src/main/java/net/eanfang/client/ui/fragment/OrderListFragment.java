@@ -219,10 +219,10 @@ public class OrderListFragment extends BaseFragment implements
                         //}
                         break;
                     case R.id.tv_do_second:// 评价技师
-//                        if (!item.getOwnerUserId().equals(EanfangApplication.get().getUserId())) {
-//                            showToast("当前订单负责人可以操作");
-//                            return;
-//                        }
+                        if (!item.getOwnerUserId().equals(EanfangApplication.get().getUserId())) {
+                            showToast("当前订单负责人可以操作");
+                            return;
+                        }
                         if (doCompare(item.getOwnerUserId(), mUseId)) {
                             startActivity(new Intent(getActivity(), EvaluateWorkerActivity.class)
                                     .putExtra("ordernum", item.getOrderNum())

@@ -137,6 +137,9 @@ public class WorkReportDetailActivity extends BaseClientActivity {
         rvWorkList.setNestedScrollingEnabled(false);
         rvQuestionList.setNestedScrollingEnabled(false);
         rvPlanList.setNestedScrollingEnabled(false);
+        rvWorkList.setFocusable(false);
+        rvQuestionList.setFocusable(false);
+        rvPlanList.setFocusable(false);
     }
 
     private void setAdapterChildListener(BaseQuickAdapter adapter) {
@@ -203,6 +206,7 @@ public class WorkReportDetailActivity extends BaseClientActivity {
                         })
                 );
     }
+
     /**
      * 监听 返回键
      */

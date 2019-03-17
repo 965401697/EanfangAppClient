@@ -603,5 +603,7 @@ public class ExpertsCertificationEntity implements Serializable {
     private String brandName;
 
 
-
+    public void setGender(int gender) {
+        this.gender = gender;
+    }
 }
