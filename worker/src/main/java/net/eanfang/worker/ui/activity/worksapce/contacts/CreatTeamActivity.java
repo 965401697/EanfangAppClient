@@ -51,11 +51,10 @@ public class CreatTeamActivity extends BaseWorkerActivity {
             @Override
             public void onClick(View v) {
 
-                if (etInputCompany.getText().toString().trim().length() <= 3) {
-                    showToast("真实团队/公司名称必须大于三个字符");
-                    return;
-                }
-
+//                if (etInputCompany.getText().toString().trim().length() <= 3) {
+//                    showToast("真实团队/公司名称必须大于三个字符");
+//                    return;
+//                }
                 startActivity(getIntent().setClass(CreatTeamActivity.this, CreatTeamDetailActivity.class).putExtra("name", etInputCompany.getText().toString()));
             }
         });
