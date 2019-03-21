@@ -33,9 +33,9 @@ public class SecurityDetailBean implements Serializable {
     @Setter
     public static class ListBean implements Serializable {
 
-        private int asCompanyId;
+        private String asCompanyId;
         private int asId;
-        private int asTopCompanyId;
+        private String asTopCompanyId;
         private String asUserId;
         private CommentUserBean commentUser;
         private CommentOrgBean commentOrg;
@@ -89,26 +89,6 @@ public class SecurityDetailBean implements Serializable {
     @Getter
     @Setter
     public static class SpcListBean {
-
-        private int collectionCount;
-        private int commentCount;
-        private String createTime;
-        private String editTime;
-        private int followCount;
-        private int followsStatus;
-        private int friend;
-        private int likeStatus;
-        private int likesCount;
-        private int publisherCompanyId;
-        private String publisherOrgCode;
-        private int publisherTopCompanyId;
-        private String publisherUserId;
         private int readCount;
-        private String spcContent;
-        private int spcId;
-        private String spcImg;
-        private int verifyStatus;
-        private int weightCount;
-
     }
 }

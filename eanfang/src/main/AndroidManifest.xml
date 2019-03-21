@@ -107,7 +107,8 @@
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.QrCodeShowActivity" />
-        <activity android:name=".ui.activity.SearchPersonByOrgannizationActivity"></activity>
+        <activity android:name=".ui.activity.SearchPersonByOrgannizationActivity" />
+        <activity android:name=".util.FileDisplayActivity"></activity>
     </application>
 
 </manifest>

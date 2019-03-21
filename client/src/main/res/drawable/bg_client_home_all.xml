@@ -2,14 +2,12 @@
     android:shape="rectangle">
     <!-- rectangle表示为矩形 -->
 
-
     <!-- 填充的颜色 -->
-    <solid android:color="#FAFAFA" />
-
+    <solid android:color="@color/color_white" />
     <stroke
         android:width="@dimen/dimen_2"
-        android:color="#EAEAEA" />
+        android:color="@color/colorPrimary" />
     <!-- android:radius 圆角的半径 -->
-    <corners android:radius="5dp" />
+    <corners android:radius="20dp" />
 
 </shape>

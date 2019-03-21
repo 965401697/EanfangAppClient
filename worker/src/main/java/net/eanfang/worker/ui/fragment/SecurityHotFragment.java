@@ -1,7 +1,6 @@
 package net.eanfang.worker.ui.fragment;
 
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.alibaba.fastjson.JSONObject;
@@ -15,11 +14,11 @@ import com.eanfang.model.security.SecurityLikeBean;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
+import com.photopicker.com.util.BGASpaceItemDecoration;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.security.SecurityDetailActivity;
 import net.eanfang.worker.ui.adapter.security.SecurityHotListAdapter;
-import net.eanfang.worker.ui.widget.DividerItemDecoration;
 
 import cn.bingoogolapple.photopicker.imageloader.BGARVOnScrollListener;
 
@@ -85,7 +84,7 @@ public class SecurityHotFragment extends TemplateItemListFragment {
         securityHotListAdapter = new SecurityHotListAdapter(getActivity());
         securityHotListAdapter.bindToRecyclerView(mRecyclerView);
         mRecyclerView.setBackgroundColor(getResources().getColor(R.color.white));
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
+        mRecyclerView.addItemDecoration(new BGASpaceItemDecoration(20));
         securityHotListAdapter.setOnLoadMoreListener(this, mRecyclerView);
         mRecyclerView.addOnScrollListener(new BGARVOnScrollListener(getActivity()));
 

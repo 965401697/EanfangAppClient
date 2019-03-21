@@ -26,7 +26,13 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/dimen_30"
+            android:background="@drawable/bg_client_home_all"
+            android:paddingBottom="@dimen/dimen_12"
+            android:paddingLeft="@dimen/dimen_28"
+            android:paddingRight="@dimen/dimen_28"
+            android:paddingTop="@dimen/dimen_12"
             android:text="@string/text_home_alldata"
+            android:textColor="@color/colorPrimary"
             android:textSize="@dimen/textSize_12" />
 
     </RelativeLayout>
@@ -36,10 +42,10 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_100"
         android:gravity="center"
-        android:visibility="gone"
         android:text="暂无推荐"
         android:textColor="@color/color_bottom"
-        android:textSize="@dimen/textSize_15" />
+        android:textSize="@dimen/textSize_15"
+        android:visibility="gone" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_security"

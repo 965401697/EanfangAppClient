@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants"
     android:orientation="vertical"
     tools:context="net.eanfang.client.ui.activity.worksapce.oa.workreport.WorkReportDetailActivity">
 
@@ -129,8 +130,7 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_work_list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-          />
+                android:layout_height="wrap_content" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -160,8 +160,7 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_question_list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-              />
+                android:layout_height="wrap_content" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -191,8 +190,7 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rv_plan_list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-              />
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
