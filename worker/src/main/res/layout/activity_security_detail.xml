@@ -222,10 +222,10 @@
         <LinearLayout
             android:id="@+id/ll_edit_comments"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/dimen_80"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:visibility="gone">
+            android:visibility="visible">
 
 
             <EditText
@@ -243,15 +243,17 @@
             <TextView
                 android:id="@+id/tv_send"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dimen_10"
                 android:background="@drawable/bg_worker_camera_text_back_pressed"
-                android:paddingBottom="@dimen/dimen_16"
-                android:paddingLeft="@dimen/dimen_24"
-                android:paddingRight="@dimen/dimen_24"
-                android:paddingTop="@dimen/dimen_16"
-                android:text="发送"
+                android:gravity="center"
+                android:paddingBottom="@dimen/dimen_12"
+                android:paddingLeft="@dimen/dimen_34"
+                android:paddingRight="@dimen/dimen_34"
+                android:paddingTop="@dimen/dimen_12"
+                android:text="发 送"
                 android:textColor="@color/color_white"
                 android:textSize="@dimen/textSize_15" />
         </LinearLayout>

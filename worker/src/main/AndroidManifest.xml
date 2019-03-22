@@ -1156,6 +1156,7 @@
             android:launchMode="singleTask" />
         <activity android:name=".ui.activity.worksapce.online.FindBrandActivity" />
         <activity android:name=".ui.activity.worksapce.online.MyInformationActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.notice.MessageNotificationActivity" />
     </application>
 
 </manifest>

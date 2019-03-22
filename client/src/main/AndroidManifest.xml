@@ -350,6 +350,9 @@
         <activity
             android:name=".ui.activity.worksapce.notice.MessageDetailActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.worksapce.notice.MessageNotificationActivity"
+            android:screenOrientation="portrait" />
         <!-- 客服 帮助页面 -->
         <activity
             android:name=".ui.activity.worksapce.CustomerServiceActivity"

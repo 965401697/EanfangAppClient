@@ -28,7 +28,7 @@ public class SecurityCommentAdapter extends BaseQuickAdapter<SecurityDetailBean.
         SimpleDraweeView ivHeader = helper.getView(R.id.iv_seucrity_header);
         ivHeader.setImageURI((Uri.parse(BuildConfig.OSS_SERVER + item.getCommentUser().getAccountEntity().getAvatar())));
         // 评论人
-        helper.setText(R.id.tv_name, item.getCommentUser().getAccountEntity().getRealName());
+        helper.setText(R.id.tv_name, item.getCommentUser().getAccountEntity().getNickName());
         // 公司名称
         helper.setText(R.id.tv_company, item.getCommentOrg().getOrgName());
         //发布的内容
