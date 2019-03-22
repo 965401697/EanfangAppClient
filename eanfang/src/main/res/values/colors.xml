@@ -95,7 +95,9 @@
     <color name="color_no_contact_text">#AD7171</color>
     <color name="color_security_detail_bottom_back">#F7F7F7</color>
     <color name="color_home_security_like">#EC5353</color>
-    <color name="color_home_security_text">#BEBEBE</color>
+    <color name="color_security_personal_one">#788697</color>
+    <color name="color_security_personal_two">#425062</color>
+    <color name="color_home_titile">#141E34</color>
 
 
 </resources>

@@ -1,8 +1,6 @@
 package net.eanfang.client.ui.fragment;
 
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.alibaba.fastjson.JSONObject;
@@ -16,6 +14,7 @@ import com.eanfang.model.security.SecurityLikeBean;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
+import com.photopicker.com.util.BGASpaceItemDecoration;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.security.SecurityDetailActivity;
@@ -56,7 +55,7 @@ public class SecurituFoucsFragment extends TemplateItemListFragment {
         securityFocusListAdapter = new SecurityFocusListAdapter(getActivity());
         securityFocusListAdapter.bindToRecyclerView(mRecyclerView);
         mRecyclerView.setBackgroundColor(getResources().getColor(R.color.white));
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
+        mRecyclerView.addItemDecoration(new BGASpaceItemDecoration(20));
         securityFocusListAdapter.setOnLoadMoreListener(this, mRecyclerView);
         securityFocusListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             switch (view.getId()) {

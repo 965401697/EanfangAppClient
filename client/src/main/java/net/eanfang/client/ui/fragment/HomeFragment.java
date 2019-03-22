@@ -2,7 +2,6 @@ package net.eanfang.client.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,6 +35,7 @@ import com.eanfang.util.V;
 import com.eanfang.witget.BannerView;
 import com.eanfang.witget.HomeScanPopWindow;
 import com.eanfang.witget.RollTextView;
+import com.photopicker.com.util.BGASpaceItemDecoration;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.CameraActivity;
@@ -134,6 +134,7 @@ public class HomeFragment extends BaseFragment {
             tvHomeTitle.setText(orgName);
         }
         doHttpOrderNums();
+        doGetSecurityData();
     }
 
     @Override
@@ -373,7 +374,7 @@ public class HomeFragment extends BaseFragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         rvSecurity.setLayoutManager(layoutManager);
         rvSecurity.setNestedScrollingEnabled(false);
-        rvSecurity.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
+        rvSecurity.addItemDecoration(new BGASpaceItemDecoration(20));
         securityHotListAdapter.bindToRecyclerView(rvSecurity);
         doGetSecurityData();
     }
@@ -460,7 +461,25 @@ public class HomeFragment extends BaseFragment {
             Bundle bundle = new Bundle();
             bundle.putSerializable("bean", securityHotListAdapter.getData().get(position));
             bundle.putString("type", "hot");
+            bundle.putInt("friend", securityHotListAdapter.getData().get(position).getFriend());
             JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
+        });
+        securityHotListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            switch (view.getId()) {
+                case R.id.tv_isFocus:
+                case R.id.ll_like:
+                case R.id.ll_comments:
+                case R.id.ll_pic:
+                case R.id.iv_share:
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("bean", securityHotListAdapter.getData().get(position));
+                    bundle.putInt("friend", securityHotListAdapter.getData().get(position).getFriend());
+                    bundle.putString("type", "hot");
+                    JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
+                    break;
+                default:
+                    break;
+            }
         });
     }
 

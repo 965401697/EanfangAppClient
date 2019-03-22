@@ -26,7 +26,6 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * @author guanluocang
@@ -62,9 +61,14 @@ public class SecurityCreateActivity extends BaseActivity {
     }
 
     private void initView() {
-        setTitle("发布安防圈");
+        setTitle("编辑");
         setLeftBack();
+        setRightTitle("发布");
         snplAddPhoto.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_CERTIFICATE, REQUEST_CODE_PHOTO_CERTIFICATE));
+
+        setRightTitleOnClickListener((v)->{
+            doCommit();
+        });
     }
 
     public void doCommit() {
@@ -116,8 +120,4 @@ public class SecurityCreateActivity extends BaseActivity {
         }
     }
 
-    @OnClick(R.id.tv_confim)
-    public void onViewClicked() {
-        doCommit();
-    }
 }

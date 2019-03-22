@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.eanfang.takevideo.PlayVideoActivity;
+import com.eanfang.util.FileDisplayActivity;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.ToastUtil;
 import com.tencent.smtt.sdk.QbSdk;
@@ -40,17 +41,20 @@ public class FilePreviewExActivity extends FilePreviewActivity {
             bundle_takevideo.putString("videoPath", fileSavePath);
             JumpItent.jump(this, PlayVideoActivity.class, bundle_takevideo);
         } else {
-            QbSdk.openFileReader(this, fileSavePath, null, new ValueCallback<String>() {
-                @Override
-                public void onReceiveValue(String s) {
-                    if (s.equals("can not open")) {
-                        ToastUtil.get().showToast(FilePreviewExActivity.this,"此文件无法查看");
-                        finish();
-                        return;
+            if (!fileSavePath.contains("http")) {
+                FileDisplayActivity.actionStart(FilePreviewExActivity.this, fileSavePath);
+            } else {
+                QbSdk.canOpenFile(this, fileSavePath, new ValueCallback<Boolean>() {
+                    @Override
+                    public void onReceiveValue(Boolean aBoolean) {
+                        if (!aBoolean) {
+                            ToastUtil.get().showToast(FilePreviewExActivity.this, "此文件无法查看");
+                            finish();
+                            return;
+                        }
                     }
-                }
-
-            });
+                });
+            }
         }
     }
 }

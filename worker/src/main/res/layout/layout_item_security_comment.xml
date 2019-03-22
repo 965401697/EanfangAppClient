@@ -20,6 +20,7 @@
                 android:id="@+id/iv_seucrity_header"
                 android:layout_width="@dimen/dimen_80"
                 android:layout_height="@dimen/dimen_80"
+                app:roundAsCircle="true"
                 app:placeholderImage="@mipmap/ic_nodata" />
 
             <LinearLayout

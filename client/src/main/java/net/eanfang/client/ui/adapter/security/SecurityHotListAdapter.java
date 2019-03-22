@@ -81,9 +81,6 @@ public class SecurityHotListAdapter extends BaseQuickAdapter<SecurityHotListBean
         /**
          * 0 是关注 1 是未关注
          * */
-
-
-
         if (item.getPublisherUserId().equals(EanfangApplication.get().getUserId()) || item.getFollowsStatus() == 0) {
             helper.getView(R.id.tv_isFocus).setVisibility(View.GONE);
         } else {

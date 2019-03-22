@@ -1,5 +1,6 @@
 package net.eanfang.worker.ui.activity.worksapce.tender;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,18 +9,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.IfbOrderEntity;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.FileDisplayActivity;
 import com.eanfang.util.GetDateUtils;
-import com.tencent.smtt.sdk.QbSdk;
-import com.tencent.smtt.sdk.ValueCallback;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.worktender.WorkTenderAdjunctAdapter;
+import net.eanfang.worker.util.ImagePerviewUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,6 +99,9 @@ public class WorkTenderDetailActivity extends BaseActivity {
     private WorkTenderAdjunctAdapter workTenderAdjunctAdapter;
     private List<String> mAdjunctList = new ArrayList<>();
 
+    private ArrayList<String> mPicList = new ArrayList<>();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,13 +122,24 @@ public class WorkTenderDetailActivity extends BaseActivity {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 String name = String.valueOf(adapter.getData().get(position));
-                String[] url = name.split("_");
-                QbSdk.openFileReader(WorkTenderDetailActivity.this, com.eanfang.BuildConfig.OSS_SERVER + url[1], null, new ValueCallback<String>() {
-                    @Override
-                    public void onReceiveValue(String s) {
-
-                    }
-                });
+                String url = "";
+                if (name.split("_").length > 1) {
+                    url = name.split("_")[1];
+                } else {
+                    url = name.split("_")[0];
+                }
+                if ((url.substring(url.lastIndexOf(".") + 1)).equals("jpg") || (url.substring(url.lastIndexOf(".") + 1)).equals("jpeg") || (url.substring(url.lastIndexOf(".") + 1)).equals("png")) {
+                    mPicList.add(BuildConfig.OSS_SERVER + Uri.parse(url));
+                    ImagePerviewUtil.perviewImage(WorkTenderDetailActivity.this, mPicList);
+                } else {
+                    FileDisplayActivity.actionStart(WorkTenderDetailActivity.this, BuildConfig.OSS_SERVER + Uri.parse(url));
+//                    QbSdk.openFileReader(WorkTenderDetailActivity.this, com.eanfang.BuildConfig.OSS_SERVER + url[1], null, new ValueCallback<String>() {
+//                        @Override
+//                        public void onReceiveValue(String s) {
+//
+//                        }
+//                    });
+                }
             }
         });
     }
@@ -195,28 +211,35 @@ public class WorkTenderDetailActivity extends BaseActivity {
             case R.id.iv_notice_show:
                 if (isNotice) {
                     llNoticeInfo.setVisibility(View.GONE);
+                    isNotice = false;
                 } else {
                     llNoticeInfo.setVisibility(View.VISIBLE);
+                    isNotice = true;
                 }
                 break;
             //附件
             case R.id.iv_adjadjunct_show:
                 if (isAdjunct) {
                     rvAttch.setVisibility(View.GONE);
+                    isAdjunct = false;
                 } else {
                     rvAttch.setVisibility(View.VISIBLE);
+                    isAdjunct = true;
                 }
                 break;
             // 联系人信息
             case R.id.iv_contact_show:
                 if (isContact) {
                     llContact.setVisibility(View.GONE);
+                    isContact = false;
                 } else {
                     llContact.setVisibility(View.VISIBLE);
+                    isContact = true;
                 }
                 break;
             default:
                 break;
         }
     }
+
 }

@@ -1,9 +1,7 @@
 package net.eanfang.worker.ui.adapter;
 
 import android.net.Uri;
-import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -63,7 +61,7 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
             helper.setText(R.id.tv_real_name, item.getOwnerUser().getAccountEntity().getRealName());
         } else {
             helper.setText(R.id.tv_company_name, "个人客户");
-            helper.setText(R.id.tv_real_name, item.getOwnerUser().getAccountEntity().getRealName());
+            helper.setText(R.id.tv_real_name, V.v(() -> item.getOwnerUser().getAccountEntity().getRealName()));
         }
 
         if (item.getAssigneeUser() != null && item.getAssigneeUser().getAccountEntity() != null) {
@@ -127,7 +125,7 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
             } else {
                 helper.setVisible(R.id.tv_do_second, false);
             }
-        }else if (item.getStatus() == 6) {
+        } else if (item.getStatus() == 6) {
             //helper.setText(R.id.tv_do_first, "联系客户");
             helper.setVisible(R.id.tv_do_first, false);
             helper.setVisible(R.id.tv_do_second, false);

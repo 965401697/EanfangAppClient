@@ -37,6 +37,7 @@ import com.eanfang.witget.BannerView;
 import com.eanfang.witget.HomeScanPopWindow;
 import com.eanfang.witget.RollTextView;
 import com.flyco.tablayout.SlidingTabLayout;
+import com.photopicker.com.util.BGASpaceItemDecoration;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.CameraActivity;
@@ -56,7 +57,6 @@ import net.eanfang.worker.ui.activity.worksapce.tender.WorkerTenderControlActivi
 import net.eanfang.worker.ui.adapter.HomeWaitAdapter;
 import net.eanfang.worker.ui.adapter.security.SecurityHotListAdapter;
 import net.eanfang.worker.ui.widget.CustomHomeViewPager;
-import net.eanfang.worker.ui.widget.DividerItemDecoration;
 import net.eanfang.worker.ui.widget.HomeWaitIndicator;
 import net.eanfang.worker.ui.widget.SignCtrlView;
 
@@ -255,7 +255,7 @@ public class HomeFragment extends BaseFragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         rvSecurity.setLayoutManager(layoutManager);
         rvSecurity.setNestedScrollingEnabled(false);
-        rvSecurity.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
+        rvSecurity.addItemDecoration(new BGASpaceItemDecoration(20));
         securityHotListAdapter.bindToRecyclerView(rvSecurity);
         doGetSecurityData();
     }
@@ -291,6 +291,7 @@ public class HomeFragment extends BaseFragment {
             tvHomeTitle.setText(orgName);
         }
         doHttpOrderNums();
+        doGetSecurityData();
     }
 
 
@@ -427,6 +428,7 @@ public class HomeFragment extends BaseFragment {
             Bundle bundle = new Bundle();
             bundle.putSerializable("bean", securityHotListAdapter.getData().get(position));
             bundle.putString("type", "hot");
+            bundle.putInt("friend", securityHotListAdapter.getData().get(position).getFriend());
             JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
         });
         securityHotListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
