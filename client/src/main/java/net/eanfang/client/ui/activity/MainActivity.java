@@ -106,7 +106,10 @@ public class MainActivity extends BaseClientActivity {
      * 消息总数量
      */
     private int mAllCount = 0;
-
+    /**
+     *所有消息总数记录
+     */
+    private int mTotalCount=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -476,7 +479,8 @@ public class MainActivity extends BaseClientActivity {
             public void onSuccess(Integer integer) {
                 mContactNum = integer;
                 int i = mContact + integer;
-                doChange(i);
+                int nums=mTotalCount+integer;
+                doChange(i,nums);
             }
 
             @Override
@@ -486,9 +490,9 @@ public class MainActivity extends BaseClientActivity {
         });
     }
 
-    private void doChange(int mContactNum) {
+    private void doChange(int mContactNum,int nums) {
         qBadgeViewContact.setBadgeNumber(mContactNum);
-        BadgeUtil.setBadgeCount(MainActivity.this, mContactNum, R.drawable.client_logo);
+        BadgeUtil.setBadgeCount(MainActivity.this, nums, R.drawable.client_logo);
     }
 
     class MyConnectionStatusListener implements RongIMClient.ConnectionStatusListener {
@@ -567,24 +571,13 @@ public class MainActivity extends BaseClientActivity {
 
     @Subscribe
     public void onEventBottomRedIcon(AllMessageBean bean) {
-        /**
-         * 桌面app红点
-         * */
+        //消息页面红点
         if (bean.getBiz() > 0 || bean.getSys() > 0 || bean.getCmp() > 0 || mContactNum > 0) {
             mContact = bean.getBiz() + bean.getSys() + bean.getCmp();
             mAllCount = bean.getBiz() + bean.getSys() + bean.getCmp() + mContactNum;
         } else {
             mAllCount = 0;
         }
-
-            // 首页红点
-//            new Handler(getMainLooper()).postDelayed(new Runnable() {
-//                @Override
-//                public void run() {
-            // 桌面气泡赋值
-            BadgeUtil.setBadgeCount(MainActivity.this,mAllCount, R.drawable.client_logo);
-//                }
-//            }, 3 * 1000);
         // 首页小红点的显示
         if (bean.getRepair() > 0 || bean.getInstall() > 0 || bean.getDesign() > 0) {
             mHome = bean.getRepair() + bean.getInstall() + bean.getDesign();
@@ -592,6 +585,24 @@ public class MainActivity extends BaseClientActivity {
         } else {
             mHome = 0;
         }
+        // 工作台消息红点
+        if (bean.getReport() > 0 || bean.getTask() > 0 || bean.getInspect() > 0) {
+            mWork = bean.getReport() + bean.getTask() + bean.getInspect();
+        } else {
+            mWork = 0;
+        }
+        //桌面app红点
+        mTotalCount=mHome+mAllCount+mWork;
+        // 首页红点
+//            new Handler(getMainLooper()).postDelayed(new Runnable() {
+//                @Override
+//                public void run() {
+        // 桌面气泡赋值
+
+        BadgeUtil.setBadgeCount(MainActivity.this, mTotalCount, R.drawable.client_logo);
+//                }
+//            }, 3 * 1000);
+
         qBadgeViewHome.bindTarget(findViewById(R.id.tab_home))
                 .setBadgeNumber(mHome)
                 .setBadgeBackgroundColor(0xFFFF0000)
@@ -599,7 +610,6 @@ public class MainActivity extends BaseClientActivity {
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(0, 3, true)
                 .setBadgeTextSize(11, true);
-        //消息页面红点
         qBadgeViewContact.bindTarget(findViewById(R.id.tab_contact))
                 .setBadgeNumber(mAllCount)
                 .setBadgeBackgroundColor(0xFFFF0000)
@@ -607,12 +617,6 @@ public class MainActivity extends BaseClientActivity {
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(0, 3, true)
                 .setBadgeTextSize(11, true);
-        // 工作台消息红点
-        if (bean.getReport() > 0 || bean.getTask() > 0 || bean.getInspect() > 0) {
-            mWork = bean.getReport() + bean.getTask() + bean.getInspect();
-        } else {
-            mWork = 0;
-        }
         qBadgeViewWork.bindTarget(findViewById(R.id.tab_work))
                 .setBadgeNumber(mWork)
                 .setBadgeBackgroundColor(0xFFFF0000)
@@ -657,7 +661,7 @@ public class MainActivity extends BaseClientActivity {
                 } else if (mType == 3) {
                     //打开systemnoticeactivity
                     JumpItent.jump(MainActivity.this, SystemNoticeActivity.class);
-                }else if (mType == 4) {
+                } else if (mType == 4) {
                     //打开systemnoticeactivity
                     JumpItent.jump(MainActivity.this, OfficialListActivity.class);
                 }
