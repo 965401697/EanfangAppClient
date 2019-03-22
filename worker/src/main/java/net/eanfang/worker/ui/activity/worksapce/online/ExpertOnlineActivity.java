@@ -9,8 +9,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
@@ -20,11 +22,12 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.witget.BannerView;
-import com.yaf.base.entity.AskQuestionsListBean;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.worksapce.repair.SelectDeviceTypeActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +49,7 @@ public class ExpertOnlineActivity extends BaseWorkerActivity {
     @BindView(R.id.tv_no_datas)
     TextView tvNoDatas;
     private CommonQuestionsAdapter commonQuestionsAdapter;
-    private List<CommonQuestionsBean.ListBean> list;
+    //private List<CommonQuestionsBean.ListBean> list;
     //private CommentFaultSearchAdapter mAdapter;
 
     @Override
@@ -55,6 +58,7 @@ public class ExpertOnlineActivity extends BaseWorkerActivity {
         setContentView(R.layout.activity_expert_online);
         ButterKnife.bind(this);
         setTitle("专家在线");
+
         setLeftBack();
         initLoopView();
         initViews();
@@ -62,14 +66,12 @@ public class ExpertOnlineActivity extends BaseWorkerActivity {
 
 
     private void initViews() {
-
         RelativeLayout title_top = findViewById(R.id.title_top);
         TextView t = title_top.findViewById(R.id.tv_title_desc);
         t.setText("厂商售后");
         title_top.findViewById(R.id.tv_more).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 startActivity(new Intent(ExpertOnlineActivity.this, ManufacturerAfterSaleActivity.class));
             }
         });
@@ -109,18 +111,20 @@ public class ExpertOnlineActivity extends BaseWorkerActivity {
         systemTypeAdapter.bindToRecyclerView(recyclerViewSys);
 
         systemTypeAdapter.setNewData(Config.get().getBusinessList(1).subList(0, 4));
-
+        //系统类别
         systemTypeAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
+                Intent intent = new Intent(ExpertOnlineActivity.this, ExpertListActivity.class);
+                intent.putExtra("brand", (Serializable) adapter.getData().get(position));
+                startActivity(intent);
             }
         });
         commonQuestionsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent = new Intent(ExpertOnlineActivity.this, CommonFaultListActivity.class);
-                intent.putExtra("QuestionSketch", list.get(position).getQuestionSketch());
+                Intent intent = new Intent(ExpertOnlineActivity.this, FaultExplainActivity.class);
+                intent.putExtra("QuestionIdZ", commonQuestionsAdapter.getData().get(position).getQuestionId());
                 startActivity(intent);
             }
         });
@@ -154,11 +158,11 @@ public class ExpertOnlineActivity extends BaseWorkerActivity {
                 Intent i = new Intent(ExpertOnlineActivity.this, CommentFaultSearchActivity.class);
                 startActivity(i);
                 break;
-            case R.id.rl_free_ask://免费提问
+            case R.id.rl_free_ask://免费提问x
                 Intent intent = new Intent(ExpertOnlineActivity.this, FreeAskActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.rl_find_expert://找专家--------跳转IM真实可用，找专家只是界面实现，纯属虚构-----都是复用以前的页面在跳转的时候传值，根据int值得比对来判断是否展示下一步这个控件和修改title其他地方均未修改
+            case R.id.rl_find_expert://找专家
                 SharedPreferences sp = getSharedPreferences("basis", MODE_PRIVATE);
                 SharedPreferences.Editor editor = sp.edit();
                 editor.clear();
@@ -173,14 +177,35 @@ public class ExpertOnlineActivity extends BaseWorkerActivity {
     public void onViewClickedSale(View view) {
         switch (view.getId()) {
             case R.id.rl_haikang:
+                Intent intent = new Intent(ExpertOnlineActivity.this, ExpertListActivity.class);
+                intent.putExtra("brand_code", "5.1.28");
+                intent.putExtra("brand_name", "海康威视（Hikvion）");
+                startActivity(intent);
                 break;
             case R.id.rl_yushi:
+                Intent intentUniview = new Intent(ExpertOnlineActivity.this, ExpertListActivity.class);
+                intentUniview.putExtra("brand_code", "5.1.65");
+                intentUniview.putExtra("brand_name", "宇视（Uniview）");
+                startActivity(intentUniview);
                 break;
             case R.id.rl_hua:
+                Intent intentDahua = new Intent(ExpertOnlineActivity.this, ExpertListActivity.class);
+                intentDahua.putExtra("brand_code", "5.1.17");
+                intentDahua.putExtra("brand_name", "大华（Dahua）");
+                startActivity(intentDahua);
                 break;
             case R.id.rl_sam:
+                Intent intentSamsung = new Intent(ExpertOnlineActivity.this, ExpertListActivity.class);
+                intentSamsung.putExtra("brand_code", "5.1.45");
+                intentSamsung.putExtra("brand_name", "三星（Samsung）");
+                startActivity(intentSamsung);
                 break;
             case R.id.rl_iinsanli:
+                Intent intentSantachi = new Intent(ExpertOnlineActivity.this, ExpertListActivity.class);
+                intentSantachi.putExtra("brand_code", "5.1.44");
+                intentSantachi.putExtra("brand_name", "三立（Santachi）");
+                startActivity(intentSantachi);
+
                 break;
         }
     }
@@ -196,18 +221,16 @@ public class ExpertOnlineActivity extends BaseWorkerActivity {
         QueryEntry queryEntry = new QueryEntry();
         queryEntry.setSize(4);
         queryEntry.setPage(1);
-//CommonQuestions接口 COMMENT_FAULT_RECORD_LIST
-        //CommonQuestionsBean   实体  AskQuestionsListBean
-        //CommonQuestionsAdapter   适配器
         EanfangHttp.post(NewApiService.CommonQuestions)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<CommonQuestionsBean>(this, true, CommonQuestionsBean.class) {
                     @Override
                     public void onSuccess(CommonQuestionsBean bean) {
-                        list = bean.getList();
-                        if (bean.getList().size() > 0) {
+                        //list = bean.getList();
+                        if (bean.getList()!=null) {
+                            tvNoDatas.setVisibility(View.GONE);
                             commonQuestionsAdapter.setNewData(bean.getList());
-                        }else {
+                        } else {
                             tvNoDatas.setVisibility(View.VISIBLE);
                         }
                     }
@@ -219,8 +242,10 @@ public class ExpertOnlineActivity extends BaseWorkerActivity {
 
                     @Override
                     public void onCommitAgain() {
+
                     }
                 });
+
     }
 
 }

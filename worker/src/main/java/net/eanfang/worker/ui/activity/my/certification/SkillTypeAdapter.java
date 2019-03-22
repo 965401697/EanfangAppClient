@@ -1,5 +1,6 @@
 package net.eanfang.worker.ui.activity.my.certification;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 
@@ -97,18 +98,22 @@ public class SkillTypeAdapter extends BaseQuickAdapter<BaseDataEntity, BaseViewH
     }
 
     public List<Integer> getScheckedId() {
+        Log.i("kkkt",scheckedId+"");
         return scheckedId;
     }
 
     public List<Integer> getUnSCheckedId() {
+        Log.i("kkkt",unSCheckedId+"");
         return unSCheckedId;
     }
 
     public List<Integer> getBcheckedId() {
+        Log.i("kkkt",bcheckedId+"");
         return bcheckedId;
     }
 
     public List<Integer> getUnbCheckedId() {
+        Log.i("kkkt",unbCheckedId+"");
         return unbCheckedId;
     }
 }

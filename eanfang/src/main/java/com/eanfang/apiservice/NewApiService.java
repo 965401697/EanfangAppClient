@@ -484,7 +484,7 @@ public interface NewApiService {
      * 按某一类问题筛选免费提问列表
      * post
      */
-    String COMMENT_FAULT_RECORD_TYPE = BASE_URL + "/yaf_sys/expertsOnline/questionListByFailureType";
+    String COMMENT_FAULT_RECORD_TYPE = BASE_URL + "/yaf_sys/expertsOnline/similarQuestions";
     /**
      * 故障记录统计
      * post

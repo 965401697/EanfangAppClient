@@ -1,6 +1,7 @@
 package net.eanfang.worker.ui.activity.worksapce.online;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -69,8 +71,8 @@ public class CommentFaultSearchActivity extends BaseWorkerActivity implements Sw
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 //问题详情
-                Intent intent = new Intent(CommentFaultSearchActivity.this, CommonFaultListActivity.class);
-                intent.putExtra("QuestionSketch", mAdapter.getData().get(position).getQuestionSketch());
+                Intent intent = new Intent(CommentFaultSearchActivity.this, FaultExplainActivity.class);
+                intent.putExtra("QuestionIdZ", mAdapter.getData().get(position).getQuestionId());
                 startActivity(intent);
             }
         });
@@ -111,27 +113,26 @@ public class CommentFaultSearchActivity extends BaseWorkerActivity implements Sw
                 .execute(new EanfangCallback<AskQuestionsListBean>(this, true, AskQuestionsListBean.class) {
                     @Override
                     public void onSuccess(AskQuestionsListBean bean) {
-                        if (bean.getList().size() > 0) {
-                            mTvNoData.setVisibility(View.GONE);
-                            rvList.setVisibility(View.VISIBLE);
-                            if (mPage == 1) {
-                                mAdapter.getData().clear();
-                                mAdapter.setNewData(bean.getList());
-                                mSwipeRefreshLayout.setRefreshing(false);
-                                mAdapter.loadMoreComplete();
-                                if (bean.getList().size() < 10) {
-                                    mAdapter.loadMoreEnd();
-                                }
+
+                        if (mPage == 1) {
+                            mAdapter.getData().clear();
+                            mAdapter.setNewData(bean.getList());
+                            mSwipeRefreshLayout.setRefreshing(false);
+                            mAdapter.loadMoreComplete();
+                            if (bean.getList().size() < 10) {
+                                mAdapter.loadMoreEnd();
+                            }
+                            if (bean.getList().size() > 0) {
+                                mTvNoData.setVisibility(View.GONE);
                             } else {
-                                mAdapter.addData(bean.getList());
-                                mAdapter.loadMoreComplete();
-                                if (bean.getList().size() < 10) {
-                                    mAdapter.loadMoreEnd();
-                                }
+                                mTvNoData.setVisibility(View.VISIBLE);
                             }
                         } else {
-                            mTvNoData.setVisibility(View.VISIBLE);
-                            mSwipeRefreshLayout.setRefreshing(false);
+                            mAdapter.addData(bean.getList());
+                            mAdapter.loadMoreComplete();
+                            if (bean.getList().size() < 10) {
+                                mAdapter.loadMoreEnd();
+                            }
                         }
                     }
 

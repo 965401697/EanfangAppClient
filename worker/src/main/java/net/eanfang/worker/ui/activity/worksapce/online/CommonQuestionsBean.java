@@ -3,7 +3,7 @@ package net.eanfang.worker.ui.activity.worksapce.online;
 import java.util.List;
 
 /**
- * Created by 匹诺曹 on 2019/3/12.
+ * Created by on 2019/3/12.
  */
 
 class CommonQuestionsBean {

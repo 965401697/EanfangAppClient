@@ -187,12 +187,12 @@
                 <TextView
                     android:id="@+id/tv_no_datas"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="@dimen/dimen_400"
                     android:layout_gravity="center"
                     android:gravity="center"
+                    android:visibility="gone"
                     android:background="@color/white"
-                    android:text="暂时没有数据"
-                    android:visibility="gone" />
+                    android:text="暂时没有数据" />
             </FrameLayout>
         </LinearLayout>
 

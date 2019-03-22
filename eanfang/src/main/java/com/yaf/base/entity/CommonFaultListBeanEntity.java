@@ -3,317 +3,313 @@ package com.yaf.base.entity;
 import java.util.List;
 
 /**
- * Created by 匹诺曹 on 2019/2/1.
+ * Created by on 2019/2/1.
  */
 
 public class CommonFaultListBeanEntity {
-    private QuestionListBean questionList;
-    private ExpertListBean expertList;
 
-    public QuestionListBean getQuestionList() {
-        return questionList;
-    }
+        private SimilarQuestionListBean similarQuestionList;
+        private List<ExpertsListBean> expertsList;
 
-    public void setQuestionList(QuestionListBean questionList) {
-        this.questionList = questionList;
-    }
-
-    public ExpertListBean getExpertList() {
-        return expertList;
-    }
-
-    public void setExpertList(ExpertListBean expertList) {
-        this.expertList = expertList;
-    }
-
-    public static class QuestionListBean {
-        /**
-         * currPage : 1
-         * list : [{"businessOneCode":"1.1","dataCode":"1.1.1.2","deviceFailureId":"1025400823779540994","failureTypeId":"1025400823779540994","questionCompanyId":"979995434422681602","questionContent":"罢了","questionCreateDate":"2019-01-26 03:53:13","questionId":1,"questionPics":"online/fc93c7e327914bc18567c7276f75269f.png,online/66db1245f9464e96a5935a898fe70258.png","questionSketch":"无视频信号","questionStatus":0,"questionTopCompanyId":"979995434422681602","questionUserId":"1049116901888790530","questionViewCount":3}]
-         * pageSize : 10
-         * totalCount : 1
-         * totalPage : 1
-         */
-
-        private int currPage;
-        private int pageSize;
-        private int totalCount;
-        private int totalPage;
-        private List<ListBean> list;
-
-        public int getCurrPage() {
-            return currPage;
+        public SimilarQuestionListBean getSimilarQuestionList() {
+            return similarQuestionList;
         }
 
-        public void setCurrPage(int currPage) {
-            this.currPage = currPage;
+        public void setSimilarQuestionList(SimilarQuestionListBean similarQuestionList) {
+            this.similarQuestionList = similarQuestionList;
         }
 
-        public int getPageSize() {
-            return pageSize;
+        public List<ExpertsListBean> getExpertsList() {
+            return expertsList;
         }
 
-        public void setPageSize(int pageSize) {
-            this.pageSize = pageSize;
+        public void setExpertsList(List<ExpertsListBean> expertsList) {
+            this.expertsList = expertsList;
         }
 
-        public int getTotalCount() {
-            return totalCount;
-        }
-
-        public void setTotalCount(int totalCount) {
-            this.totalCount = totalCount;
-        }
-
-        public int getTotalPage() {
-            return totalPage;
-        }
-
-        public void setTotalPage(int totalPage) {
-            this.totalPage = totalPage;
-        }
-
-        public List<ListBean> getList() {
-            return list;
-        }
-
-        public void setList(List<ListBean> list) {
-            this.list = list;
-        }
-
-        public static class ListBean {
+        public static class SimilarQuestionListBean {
             /**
-             * businessOneCode : 1.1
-             * dataCode : 1.1.1.2
-             * deviceFailureId : 1025400823779540994
-             * failureTypeId : 1025400823779540994
-             * questionCompanyId : 979995434422681602
-             * questionContent : 罢了
-             * questionCreateDate : 2019-01-26 03:53:13
-             * questionId : 1
-             * questionPics : online/fc93c7e327914bc18567c7276f75269f.png,online/66db1245f9464e96a5935a898fe70258.png
-             * questionSketch : 无视频信号
-             * questionStatus : 0
-             * questionTopCompanyId : 979995434422681602
-             * questionUserId : 1049116901888790530
-             * questionViewCount : 3
+             * currPage : 1
+             * list : [{"businessOneCode":"1.1","commonWeight":255,"dataCode":"1.1.1.3","deviceFailureId":"1025400829223747586","failureTypeId":"6.1","modelCode":"5.1.4","questionAnswerCount":4,"questionCompanyId":"1082922712729456641","questionContent":"扣扣","questionCreateDate":"2019-03-15 10:23:39","questionId":33,"questionLikeCount":2,"questionPics":"online/ea32c1cbb5124f7b9b3c37f0c1ec3bff.png,online/bf99cef1db3744139c96b2e76f6f7cc0.png","questionSketch":"黑屏","questionStatus":0,"questionTopCompanyId":"1082922712729456641","questionUserId":"1082922712729456642","questionViewCount":113,"weight":238},{"businessOneCode":"1.1","commonWeight":273,"dataCode":"1.1.1.13","deviceFailureId":"1025400829223747586","failureTypeId":"6.1","modelCode":"5.1.20","questionAnswerCount":4,"questionCompanyId":"1082922712729456641","questionContent":"你就疼我","questionCreateDate":"2019-03-15 10:25:32","questionId":34,"questionLikeCount":1,"questionPics":"online/589079b1517443298bcc18b97abcf7b9.png,online/a12ed2c8f57e46b2aa6525a836413495.png","questionSketch":"黑屏","questionStatus":0,"questionTopCompanyId":"1082922712729456641","questionUserId":"1082922712729456642","questionViewCount":110,"weight":230},{"businessOneCode":"1.1","commonWeight":507,"dataCode":"1.1.1.2","deviceFailureId":"1025400837469749249","failureTypeId":"6.1","modelCode":"5.1.4","questionAnswerCount":6,"questionCompanyId":"1082922712729456641","questionContent":"1不理我滴","questionCreateDate":"2019-03-15 14:47:43","questionId":35,"questionLikeCount":4,"questionPics":"online/596da9175f46451c90fd37f701b022be.png,online/c40b2f6c01044ebca35de728e72339f4.png","questionSketch":"有水波纹,木纹","questionStatus":0,"questionTopCompanyId":"1082922712729456641","questionUserId":"1082922712729456642","questionViewCount":250,"weight":518},{"businessOneCode":"1.1","dataCode":"1.1.1.11","deviceFailureId":"1025400849285103618","failureTypeId":"6.1","modelCode":"5.1.8","questionAnswerCount":1,"questionCompanyId":"1082922712729456641","questionContent":"你知道","questionCreateDate":"2019-03-15 16:43:19","questionId":36,"questionLikeCount":0,"questionPics":"online/a15cdd43449a4379bd38cd7a5a1d295d.png","questionSketch":"白屏","questionStatus":0,"questionTopCompanyId":"1082922712729456641","questionUserId":"1082922712729456642","questionViewCount":26,"weight":81},{"businessOneCode":"1.1","dataCode":"1.1.1.3","deviceFailureId":"1025400841517252609","failureTypeId":"6.1","modelCode":"5.1.18","questionAnswerCount":0,"questionCompanyId":"1082922712729456641","questionContent":"来了","questionCreateDate":"2019-03-15 16:46:22","questionId":37,"questionLikeCount":0,"questionPics":"online/c8cc65abf54146b0bc84e51ebcaf4fe6.png","questionSketch":"有竖道","questionStatus":0,"questionTopCompanyId":"1082922712729456641","questionUserId":"1082922712729456642","questionViewCount":3,"weight":9},{"businessOneCode":"1.1","commonWeight":186,"dataCode":"1.1.1.3","deviceFailureId":"1025400841517252609","failureTypeId":"6.1","modelCode":"5.1.18","questionAnswerCount":4,"questionCompanyId":"1082922712729456641","questionContent":"来了","questionCreateDate":"2019-03-15 16:46:22","questionId":38,"questionLikeCount":3,"questionPics":"online/e7498367285e416f9c7697e11d3c25e3.png","questionSketch":"有竖道","questionStatus":0,"questionTopCompanyId":"1082922712729456641","questionUserId":"1082922712729456642","questionViewCount":55,"weight":186},{"businessOneCode":"1.1","dataCode":"1.1.1.8","deviceFailureId":"1025400833225113602","failureTypeId":"6.1","modelCode":"5.1.18","questionAnswerCount":0,"questionCompanyId":"1082922712729456641","questionContent":"看我的","questionCreateDate":"2019-03-15 16:47:12","questionId":39,"questionLikeCount":0,"questionPics":"online/c48929c02a214aed84e48ddd41501809.png","questionSketch":"蓝屏","questionStatus":0,"questionTopCompanyId":"1082922712729456641","questionUserId":"1082922712729456642","questionViewCount":10,"weight":30},{"businessOneCode":"1.1","dataCode":"1.1.1.12","deviceFailureId":"1025400829223747586","failureTypeId":"6.1","modelCode":"5.1.2","questionAnswerCount":0,"questionCompanyId":"1082922712729456641","questionContent":"咯告诉我","questionCreateDate":"2019-03-15 16:47:38","questionId":40,"questionLikeCount":0,"questionPics":"online/c03e628a0da14065b2a3bbf5a8438378.png","questionSketch":"黑屏","questionStatus":0,"questionTopCompanyId":"1082922712729456641","questionUserId":"1082922712729456642","questionViewCount":4,"weight":12},{"businessOneCode":"1.1","dataCode":"1.1.1.11","deviceFailureId":"1025400823779540994","failureTypeId":"6.1","modelCode":"5.1.20","questionAnswerCount":0,"questionCompanyId":"1082922712729456641","questionContent":"没有记录","questionCreateDate":"2019-03-15 16:48:33","questionId":41,"questionLikeCount":0,"questionPics":"online/0a9dd1df33cc45b1bbdb3eeafea87049.png","questionSketch":"无视频信号","questionStatus":0,"questionTopCompanyId":"1082922712729456641","questionUserId":"1082922712729456642","questionViewCount":6,"weight":18},{"businessOneCode":"1.1","dataCode":"1.1.1.8","deviceFailureId":"1025400829223747586","failureTypeId":"6.1","modelCode":"5.1.12","questionAnswerCount":0,"questionCompanyId":"1082922712729456641","questionContent":"初中","questionCreateDate":"2019-03-15 17:46:28","questionId":42,"questionLikeCount":0,"questionPics":"online/3dee1b8676f4490595bdf018d833d3e3.png","questionSketch":"黑屏","questionStatus":0,"questionTopCompanyId":"1082922712729456641","questionUserId":"1082922712729456642","questionViewCount":3,"weight":9}]
+             * pageSize : 10
+             * totalCount : 59
+             * totalPage : 6
              */
 
-            private String businessOneCode;
-            private String dataCode;
-            private String deviceFailureId;
-            private String failureTypeId;
-            private String questionCompanyId;
-            private String questionContent;
-            private String questionCreateDate;
-            private int questionId;
-            private String questionPics;
-            private String questionSketch;
-            private int questionStatus;
-            private String questionTopCompanyId;
-            private String questionUserId;
-            private int questionViewCount;
+            private int currPage;
+            private int pageSize;
+            private int totalCount;
+            private int totalPage;
+            private List<ListBean> list;
 
-            public String getBusinessOneCode() {
-                return businessOneCode;
+            public int getCurrPage() {
+                return currPage;
             }
 
-            public void setBusinessOneCode(String businessOneCode) {
-                this.businessOneCode = businessOneCode;
+            public void setCurrPage(int currPage) {
+                this.currPage = currPage;
             }
 
-            public String getDataCode() {
-                return dataCode;
+            public int getPageSize() {
+                return pageSize;
             }
 
-            public void setDataCode(String dataCode) {
-                this.dataCode = dataCode;
+            public void setPageSize(int pageSize) {
+                this.pageSize = pageSize;
             }
 
-            public String getDeviceFailureId() {
-                return deviceFailureId;
+            public int getTotalCount() {
+                return totalCount;
             }
 
-            public void setDeviceFailureId(String deviceFailureId) {
-                this.deviceFailureId = deviceFailureId;
+            public void setTotalCount(int totalCount) {
+                this.totalCount = totalCount;
             }
 
-            public String getFailureTypeId() {
-                return failureTypeId;
+            public int getTotalPage() {
+                return totalPage;
             }
 
-            public void setFailureTypeId(String failureTypeId) {
-                this.failureTypeId = failureTypeId;
+            public void setTotalPage(int totalPage) {
+                this.totalPage = totalPage;
             }
 
-            public String getQuestionCompanyId() {
-                return questionCompanyId;
+            public List<ListBean> getList() {
+                return list;
             }
 
-            public void setQuestionCompanyId(String questionCompanyId) {
-                this.questionCompanyId = questionCompanyId;
+            public void setList(List<ListBean> list) {
+                this.list = list;
             }
 
-            public String getQuestionContent() {
-                return questionContent;
-            }
+            public static class ListBean {
+                /**
+                 * businessOneCode : 1.1
+                 * commonWeight : 255
+                 * dataCode : 1.1.1.3
+                 * deviceFailureId : 1025400829223747586
+                 * failureTypeId : 6.1
+                 * modelCode : 5.1.4
+                 * questionAnswerCount : 4
+                 * questionCompanyId : 1082922712729456641
+                 * questionContent : 扣扣
+                 * questionCreateDate : 2019-03-15 10:23:39
+                 * questionId : 33
+                 * questionLikeCount : 2
+                 * questionPics : online/ea32c1cbb5124f7b9b3c37f0c1ec3bff.png,online/bf99cef1db3744139c96b2e76f6f7cc0.png
+                 * questionSketch : 黑屏
+                 * questionStatus : 0
+                 * questionTopCompanyId : 1082922712729456641
+                 * questionUserId : 1082922712729456642
+                 * questionViewCount : 113
+                 * weight : 238
+                 */
 
-            public void setQuestionContent(String questionContent) {
-                this.questionContent = questionContent;
-            }
+                private String businessOneCode;
+                private int commonWeight;
+                private String dataCode;
+                private String deviceFailureId;
+                private String failureTypeId;
+                private String modelCode;
+                private int questionAnswerCount;
+                private String questionCompanyId;
+                private String questionContent;
+                private String questionCreateDate;
+                private int questionId;
+                private int questionLikeCount;
+                private String questionPics;
+                private String questionSketch;
+                private int questionStatus;
+                private String questionTopCompanyId;
+                private String questionUserId;
+                private int questionViewCount;
+                private int weight;
 
-            public String getQuestionCreateDate() {
-                return questionCreateDate;
-            }
+                public String getBusinessOneCode() {
+                    return businessOneCode;
+                }
 
-            public void setQuestionCreateDate(String questionCreateDate) {
-                this.questionCreateDate = questionCreateDate;
-            }
+                public void setBusinessOneCode(String businessOneCode) {
+                    this.businessOneCode = businessOneCode;
+                }
 
-            public int getQuestionId() {
-                return questionId;
-            }
+                public int getCommonWeight() {
+                    return commonWeight;
+                }
 
-            public void setQuestionId(int questionId) {
-                this.questionId = questionId;
-            }
+                public void setCommonWeight(int commonWeight) {
+                    this.commonWeight = commonWeight;
+                }
 
-            public String getQuestionPics() {
-                return questionPics;
-            }
+                public String getDataCode() {
+                    return dataCode;
+                }
 
-            public void setQuestionPics(String questionPics) {
-                this.questionPics = questionPics;
-            }
+                public void setDataCode(String dataCode) {
+                    this.dataCode = dataCode;
+                }
 
-            public String getQuestionSketch() {
-                return questionSketch;
-            }
+                public String getDeviceFailureId() {
+                    return deviceFailureId;
+                }
 
-            public void setQuestionSketch(String questionSketch) {
-                this.questionSketch = questionSketch;
-            }
+                public void setDeviceFailureId(String deviceFailureId) {
+                    this.deviceFailureId = deviceFailureId;
+                }
 
-            public int getQuestionStatus() {
-                return questionStatus;
-            }
+                public String getFailureTypeId() {
+                    return failureTypeId;
+                }
 
-            public void setQuestionStatus(int questionStatus) {
-                this.questionStatus = questionStatus;
-            }
+                public void setFailureTypeId(String failureTypeId) {
+                    this.failureTypeId = failureTypeId;
+                }
 
-            public String getQuestionTopCompanyId() {
-                return questionTopCompanyId;
-            }
+                public String getModelCode() {
+                    return modelCode;
+                }
 
-            public void setQuestionTopCompanyId(String questionTopCompanyId) {
-                this.questionTopCompanyId = questionTopCompanyId;
-            }
+                public void setModelCode(String modelCode) {
+                    this.modelCode = modelCode;
+                }
 
-            public String getQuestionUserId() {
-                return questionUserId;
-            }
+                public int getQuestionAnswerCount() {
+                    return questionAnswerCount;
+                }
 
-            public void setQuestionUserId(String questionUserId) {
-                this.questionUserId = questionUserId;
-            }
+                public void setQuestionAnswerCount(int questionAnswerCount) {
+                    this.questionAnswerCount = questionAnswerCount;
+                }
 
-            public int getQuestionViewCount() {
-                return questionViewCount;
-            }
+                public String getQuestionCompanyId() {
+                    return questionCompanyId;
+                }
 
-            public void setQuestionViewCount(int questionViewCount) {
-                this.questionViewCount = questionViewCount;
+                public void setQuestionCompanyId(String questionCompanyId) {
+                    this.questionCompanyId = questionCompanyId;
+                }
+
+                public String getQuestionContent() {
+                    return questionContent;
+                }
+
+                public void setQuestionContent(String questionContent) {
+                    this.questionContent = questionContent;
+                }
+
+                public String getQuestionCreateDate() {
+                    return questionCreateDate;
+                }
+
+                public void setQuestionCreateDate(String questionCreateDate) {
+                    this.questionCreateDate = questionCreateDate;
+                }
+
+                public int getQuestionId() {
+                    return questionId;
+                }
+
+                public void setQuestionId(int questionId) {
+                    this.questionId = questionId;
+                }
+
+                public int getQuestionLikeCount() {
+                    return questionLikeCount;
+                }
+
+                public void setQuestionLikeCount(int questionLikeCount) {
+                    this.questionLikeCount = questionLikeCount;
+                }
+
+                public String getQuestionPics() {
+                    return questionPics;
+                }
+
+                public void setQuestionPics(String questionPics) {
+                    this.questionPics = questionPics;
+                }
+
+                public String getQuestionSketch() {
+                    return questionSketch;
+                }
+
+                public void setQuestionSketch(String questionSketch) {
+                    this.questionSketch = questionSketch;
+                }
+
+                public int getQuestionStatus() {
+                    return questionStatus;
+                }
+
+                public void setQuestionStatus(int questionStatus) {
+                    this.questionStatus = questionStatus;
+                }
+
+                public String getQuestionTopCompanyId() {
+                    return questionTopCompanyId;
+                }
+
+                public void setQuestionTopCompanyId(String questionTopCompanyId) {
+                    this.questionTopCompanyId = questionTopCompanyId;
+                }
+
+                public String getQuestionUserId() {
+                    return questionUserId;
+                }
+
+                public void setQuestionUserId(String questionUserId) {
+                    this.questionUserId = questionUserId;
+                }
+
+                public int getQuestionViewCount() {
+                    return questionViewCount;
+                }
+
+                public void setQuestionViewCount(int questionViewCount) {
+                    this.questionViewCount = questionViewCount;
+                }
+
+                public int getWeight() {
+                    return weight;
+                }
+
+                public void setWeight(int weight) {
+                    this.weight = weight;
+                }
             }
         }
-    }
 
-    public static class ExpertListBean {
-        /**
-         * currPage : 1
-         * list : [{"accId":"980732504676810754","approveTime":"2019-01-31 17:38:17","approveType":0,"approveUserName":"管理员","avatarPhoto":"account/avatar/d6b8f38fe033460e94ce4a817eaf43f5.png","brandName":"啊啊啊","company":"testCompany","createTime":"2019-01-16 10:39:56","expertName":"赵子武","favorableRate":1,"gender":1,"id":8,"idCard":"110101199105051235","idCardFront":"avatar/30766a1474a447668771c985301e0ab3.jpg","idCardHand":"avatar/30766a1474a447668771c985301e0ab3.jpg","idCardSide":"avatar/30766a1474a447668771c985301e0ab3.jpg","impowerUrl":"account/avatar/d6b8f38fe033460e94ce4a817eaf43f5.png","intro":"再找找","jobLce":1,"jobLevel":1,"payAccount":"11111111","payType":1,"phonenumber":"12312312345","price":10,"responsibleBrand":"AB,JVC,东芝（Toshiba）","status":0,"systemType":"电视监控,防盗报警,可视对讲,公共广播,其他","updateTime":"2019-01-30 06:42:13","userId":"980732504693587970","workingAge":0}]
-         * pageSize : 2147483647
-         * totalCount : 1
-         * totalPage : 1
-         */
-
-        private int currPage;
-        private int pageSize;
-        private int totalCount;
-        private int totalPage;
-        private List<ListBeanX> list;
-
-        public int getCurrPage() {
-            return currPage;
-        }
-
-        public void setCurrPage(int currPage) {
-            this.currPage = currPage;
-        }
-
-        public int getPageSize() {
-            return pageSize;
-        }
-
-        public void setPageSize(int pageSize) {
-            this.pageSize = pageSize;
-        }
-
-        public int getTotalCount() {
-            return totalCount;
-        }
-
-        public void setTotalCount(int totalCount) {
-            this.totalCount = totalCount;
-        }
-
-        public int getTotalPage() {
-            return totalPage;
-        }
-
-        public void setTotalPage(int totalPage) {
-            this.totalPage = totalPage;
-        }
-
-        public List<ListBeanX> getList() {
-            return list;
-        }
-
-        public void setList(List<ListBeanX> list) {
-            this.list = list;
-        }
-
-        public static class ListBeanX {
+        public static class ExpertsListBean {
             /**
-             * accId : 980732504676810754
-             * approveTime : 2019-01-31 17:38:17
+             * accId : 1059326429620158466
+             * approveTime : 2019-03-16 16:05:53
              * approveType : 0
              * approveUserName : 管理员
-             * avatarPhoto : account/avatar/d6b8f38fe033460e94ce4a817eaf43f5.png
-             * brandName : 啊啊啊
-             * company : testCompany
-             * createTime : 2019-01-16 10:39:56
-             * expertName : 赵子武
-             * favorableRate : 1
+             * avatarPhoto : b265cb5269df4a5ab7fce6b7e2f79367.png
+             * brandName : testBrand0001
+             * company : ddd
+             * createTime : 2019-03-15 15:57:24
+             * expertName : 零六
+             * favorableRate : 0.66
              * gender : 1
-             * id : 8
-             * idCard : 110101199105051235
-             * idCardFront : avatar/30766a1474a447668771c985301e0ab3.jpg
-             * idCardHand : avatar/30766a1474a447668771c985301e0ab3.jpg
-             * idCardSide : avatar/30766a1474a447668771c985301e0ab3.jpg
-             * impowerUrl : account/avatar/d6b8f38fe033460e94ce4a817eaf43f5.png
-             * intro : 再找找
+             * id : 14
+             * idCard : 130322199608563284
+             * idCardFront : b026817b8ff848e7b6f7e047290cdb11.png
+             * idCardHand : b026817b8ff848e7b6f7e047290cdb11.png
+             * idCardSide : b026817b8ff848e7b6f7e047290cdb11.png
+             * impowerUrl : feb2da277dc647ddb9d7bfaff9919296.png
+             * intro : 111
              * jobLce : 1
              * jobLevel : 1
-             * payAccount : 11111111
+             * payAccount : 222
              * payType : 1
-             * phonenumber : 12312312345
-             * price : 10
-             * responsibleBrand : AB,JVC,东芝（Toshiba）
+             * phonenumber : 18600000002
+             * price : 13
+             * responsibleBrand : AB,东芝（Toshiba）
              * status : 0
-             * systemType : 电视监控,防盗报警,可视对讲,公共广播,其他
-             * updateTime : 2019-01-30 06:42:13
-             * userId : 980732504693587970
+             * systemType : 防盗报警,可视对讲
+             * updateTime : 2019-03-15 15:56:06
+             * userId : 1082922712729456642
              * workingAge : 0
              */
 
@@ -326,7 +322,7 @@ public class CommonFaultListBeanEntity {
             private String company;
             private String createTime;
             private String expertName;
-            private int favorableRate;
+            private double favorableRate;
             private int gender;
             private int id;
             private String idCard;
@@ -420,11 +416,11 @@ public class CommonFaultListBeanEntity {
                 this.expertName = expertName;
             }
 
-            public int getFavorableRate() {
+            public double getFavorableRate() {
                 return favorableRate;
             }
 
-            public void setFavorableRate(int favorableRate) {
+            public void setFavorableRate(double favorableRate) {
                 this.favorableRate = favorableRate;
             }
 
@@ -588,5 +584,4 @@ public class CommonFaultListBeanEntity {
                 this.workingAge = workingAge;
             }
         }
-    }
 }

@@ -1,5 +1,6 @@
 package net.eanfang.worker.ui.activity.worksapce.online;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,7 +14,7 @@ import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
+import java.io.Serializable;
 public class SystemTypeActivity extends BaseWorkerActivity {
 
     @BindView(R.id.recycler_view)
@@ -45,7 +46,14 @@ public class SystemTypeActivity extends BaseWorkerActivity {
         systemTypeAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-
+                systemTypeAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                        Intent intent = new Intent(SystemTypeActivity.this, ExpertListActivity.class);
+                        intent.putExtra("brand", (Serializable) adapter.getData().get(position));
+                        startActivity(intent);
+                    }
+                });
             }
         });
     }

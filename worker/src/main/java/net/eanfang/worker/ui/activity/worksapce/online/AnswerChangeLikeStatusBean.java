@@ -1,7 +1,7 @@
 package net.eanfang.worker.ui.activity.worksapce.online;
 
 /**
- * Created by 匹诺曹 on 2019/2/24.
+ * Created by on 2019/2/24.
  */
 
 class AnswerChangeLikeStatusBean {

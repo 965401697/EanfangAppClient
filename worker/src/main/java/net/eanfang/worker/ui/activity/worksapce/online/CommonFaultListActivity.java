@@ -1,6 +1,7 @@
 package net.eanfang.worker.ui.activity.worksapce.online;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.JsonUtils;
@@ -60,7 +62,7 @@ public class CommonFaultListActivity extends BaseWorkerActivity implements Swipe
     private CommonFaultAdapter mCommonFaultAdapter;
     private MyExpertListAdapter myExpertListAdapter;
     private int mPage = 1;
-    private List<CommonFaultListBeanEntity.QuestionListBean.ListBean> qList;
+    private List<CommonFaultListBeanEntity.SimilarQuestionListBean.ListBean> qList;
     private int size;
 
     @Override
@@ -68,13 +70,7 @@ public class CommonFaultListActivity extends BaseWorkerActivity implements Swipe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_common_fault_list);
         ButterKnife.bind(this);
-        Intent intent = getIntent();
-
-        if (!TextUtils.isEmpty(intent.getStringExtra("QuestionSketch"))) {
-            setTitle(intent.getStringExtra("QuestionSketch"));
-        } else {
-            setTitle("常见故障");
-        }
+        setTitle("类似故障");
         setLeftBack();
         initViews();
     }
@@ -96,8 +92,9 @@ public class CommonFaultListActivity extends BaseWorkerActivity implements Swipe
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(CommonFaultListActivity.this, FaultExplainActivity.class);
-                intent.putExtra("QuestionId", mCommonFaultAdapter.getData().get(position).getQuestionId());
+                intent.putExtra("QuestionIdZ",mCommonFaultAdapter.getData().get(position).getQuestionId());
                 startActivity(intent);
+                finish();
             }
         });
         //专家详情
@@ -122,7 +119,10 @@ public class CommonFaultListActivity extends BaseWorkerActivity implements Swipe
     }
 
     private void getData() {
+        Intent intent = getIntent();
+        String failureTypeId = intent.getStringExtra("failureTypeId");
         QueryEntry queryEntry = new QueryEntry();
+        queryEntry.getEquals().put("failureTypeId", failureTypeId);
         queryEntry.setSize(3);
         queryEntry.setPage(mPage);
         EanfangHttp.post(NewApiService.COMMENT_FAULT_RECORD_TYPE)
@@ -130,46 +130,46 @@ public class CommonFaultListActivity extends BaseWorkerActivity implements Swipe
                 .execute(new EanfangCallback<CommonFaultListBeanEntity>(this, true, CommonFaultListBeanEntity.class) {
                     @Override
                     public void onSuccess(CommonFaultListBeanEntity bean) {
-                        size = bean.getQuestionList().getList().size();
+                        size = bean.getSimilarQuestionList().getList().size();
                         if (mPage == 1) {
-                                if (bean.getQuestionList().getList().size() > 0) {
+                                if (bean.getSimilarQuestionList().getList().size() > 0) {
                                     recyclerViewFault.setVisibility(View.VISIBLE);
                                     tvNoDatas.setVisibility(View.GONE);
                                     mCommonFaultAdapter.getData().clear();
-                                    qList = bean.getQuestionList().getList();
+                                    qList = bean.getSimilarQuestionList().getList();
                                     mCommonFaultAdapter.setNewData(qList);
                                     mCommonFaultAdapter.loadMoreComplete();
                                 } else {
                                     tvNoDatas.setVisibility(View.VISIBLE);
                                     recyclerViewFault.setVisibility(View.GONE);
                                 }
-                                if (bean.getExpertList().getList().size() > 0) {
+                                if (bean.getExpertsList().size() > 0) {
                                     recyclerViewExpert.setVisibility(View.VISIBLE);
                                     tvNoDatasZhuanjia.setVisibility(View.GONE);
                                     myExpertListAdapter.getData().clear();
-                                    myExpertListAdapter.setNewData(bean.getExpertList().getList());
+                                    myExpertListAdapter.setNewData(bean.getExpertsList());
                                     myExpertListAdapter.loadMoreComplete();
                                 } else {
                                     recyclerViewExpert.setVisibility(View.GONE);
                                     tvNoDatasZhuanjia.setVisibility(View.VISIBLE);
                                 }
                                 //底部暂无数据
-                                if (bean.getQuestionList().getList().size() < 10) {
+                                if (bean.getSimilarQuestionList().getList().size() < 10) {
                                     mCommonFaultAdapter.loadMoreEnd();
                                 }
-                                if (bean.getExpertList().getList().size() < 10) {
+                                if (bean.getExpertsList().size() < 10) {
                                     myExpertListAdapter.loadMoreEnd();
                                 }
 
                             } else {
-                                mCommonFaultAdapter.addData(bean.getQuestionList().getList());
-                                myExpertListAdapter.addData(bean.getExpertList().getList());
+                                mCommonFaultAdapter.addData(bean.getSimilarQuestionList().getList());
+                                myExpertListAdapter.addData(bean.getExpertsList());
                                 mCommonFaultAdapter.loadMoreComplete();
                                 myExpertListAdapter.loadMoreComplete();
-                                if (bean.getQuestionList().getList().size() < 10) {
+                                if (bean.getSimilarQuestionList().getList().size() < 10) {
                                     mCommonFaultAdapter.loadMoreEnd();
                                 }
-                                if (bean.getExpertList().getList().size() < 10) {
+                                if (bean.getExpertsList().size() < 10) {
                                     myExpertListAdapter.loadMoreEnd();
                                 }
                             }
@@ -203,12 +203,12 @@ public class CommonFaultListActivity extends BaseWorkerActivity implements Swipe
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_more:
-                if (size<3){
+                if (size<=3){
+                    Toast.makeText(CommonFaultListActivity.this,"暂无更多数据",Toast.LENGTH_SHORT).show();
                     llMore.setVisibility(View.GONE);
                 }else {
                     onLoadMoreRequested();
                 }
-
                 break;
         }
     }

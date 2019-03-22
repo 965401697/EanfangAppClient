@@ -9,8 +9,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.annimon.stream.Stream;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
@@ -49,8 +51,8 @@ public class FindExpertActivity extends BaseWorkerActivity implements View.OnCli
     TextView pinName;
     // 设备信息 RequestCode
     private static final int REQUEST_FAULTDEVICEINFO = 100;
-    @BindView(R.id.my_information)
-    Button myInformation;
+    //@BindView(R.id.my_information)
+    //Button myInformation;
     private SpecialistBrandAdapter brandAdapter;
     private SkillTypeAdapter osCooperationAddAdapter;
     private final int ADD_BRAND_REQESET_CODE = 100;
@@ -101,11 +103,24 @@ public class FindExpertActivity extends BaseWorkerActivity implements View.OnCli
         tvGo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(FindExpertActivity.this, SelectDeviceTypeActivity.class);
-                intent.putExtra("type", 0);
-                startActivity(intent);
+                if (systemTypeList.size()>=0){
+                    Intent intent = new Intent(FindExpertActivity.this, SelectDeviceTypeActivity.class);
+                    intent.putExtra("type", 0);
+                    startActivity(intent);
+                }else {
+                    Toast.makeText(FindExpertActivity.this,"请选择系统类别",Toast.LENGTH_SHORT).show();
+                }
             }
         });
+        osCooperationAddAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+                for (BaseDataEntity s : systemTypeList) {
+                    s.setCheck(true);
+                }
+            }
+        });
+
     }
 
     @Override
@@ -190,7 +205,7 @@ public class FindExpertActivity extends BaseWorkerActivity implements View.OnCli
     }
 
     private void fillData(ExpertVerifySkillBean bean) {
-        if (bean.getExpertVerify().getApproveType() == 1) {
+        if (bean.getExpertVerify().getApproveType() == null) {
             imPowerList.add(BuildConfig.OSS_SERVER + bean.getExpertVerify().getImpowerUrl());
             impowerUrl = bean.getExpertVerify().getImpowerUrl();
         }
@@ -220,14 +235,14 @@ public class FindExpertActivity extends BaseWorkerActivity implements View.OnCli
         startActivity(intent);
     }
 
-    @OnClick({R.id.my_information, R.id.tv_go})
+    @OnClick({/*R.id.my_information,*/ R.id.tv_go})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.my_information:
+            /*case R.id.my_information:
                 Intent intent = new Intent(FindExpertActivity.this, MyInformationActivity.class);
                 intent.putExtra("find", 2);
                 startActivity(intent);
-                break;
+                break;*/
             case R.id.tv_go:
                 doVerify();
                 break;

@@ -46,12 +46,25 @@
             android:layout_alignBottom="@+id/iv_expert_header"
             android:layout_marginLeft="@dimen/dimen_25"
             android:layout_marginRight="@dimen/dimen_40"
+
             android:layout_toRightOf="@+id/iv_expert_header"
             android:singleLine="true"
             android:text=" asdf"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/title_zyr_color"
             android:textSize="@dimen/textSize_13" />
 
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/tv_expert_name"
+            android:layout_alignBottom="@+id/tv_expert_name"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="20dp"
+            android:singleLine="true"
+            android:text="9小时"
+            android:textColor="@color/color_bottom"
+            android:textSize="@dimen/textSize_12" />
 
         <ImageView
             android:layout_width="@dimen/dimen_24"
@@ -72,31 +85,15 @@
 
     </RelativeLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="@dimen/dimen_246">
-            <TextView
-                android:id="@+id/tv_answer"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_170"
-                android:background="@color/white"
-                android:padding="@dimen/dimen_40"
-                android:text="asdfasdf"
-                android:textColor="@color/roll_title"
-                android:textSize="@dimen/textSize_13" />
-            <TextView
-                android:id="@+id/tv_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_24"
-                android:layout_marginLeft="@dimen/dimen_40"
-                android:text="9小时"
-                android:textColor="@color/color_bottom"
-                android:textSize="@dimen/textSize_12" />
-        </LinearLayout>
-
-
+    <TextView
+        android:id="@+id/tv_answer"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_210"
+        android:background="@color/white"
+        android:padding="@dimen/dimen_40"
+        android:text="asdfasdf"
+        android:textColor="@color/roll_title"
+        android:textSize="@dimen/textSize_13" />
     </LinearLayout>
     <View
         android:layout_width="match_parent"
@@ -112,28 +109,28 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center_vertical">
+            android:orientation="horizontal"
+            android:gravity="center">
 
             <ImageView
                 android:id="@+id/tu_like"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_146"
                 android:visibility="gone"
+                android:layout_marginRight="@dimen/dimen_20"
                 android:src="@drawable/ic_zan_checked"/>
 
             <ImageView
                 android:id="@+id/tu_no_like"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_146"
                 android:visibility="gone"
+                android:layout_marginRight="@dimen/dimen_20"
                 android:src="@drawable/zan_no_check"/>
             <TextView
                 android:id="@+id/tv_like"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_10"
                 android:text="12" />
 
         </LinearLayout>
@@ -151,18 +148,15 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center_vertical">
+            android:gravity="center">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_146"
-                android:src="@drawable/ic_comment"/>
             <TextView
                 android:id="@+id/tv_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_10"
+                android:layout_gravity="center"
+                android:drawableLeft="@drawable/ic_comment"
+                android:drawablePadding="@dimen/dimen_5"
                 android:text="11" />
 
         </LinearLayout>

@@ -1128,7 +1128,6 @@
         <activity android:name=".ui.activity.my.specialist.SpecialistCertificationInfoActivity" />
         <activity
             android:name=".ui.activity.worksapce.security.SecurityListActivity"
-            android:label="@string/title_activity_security_list"
             android:theme="@style/NewBaseTheme" />
         <activity android:name=".ui.activity.worksapce.security.SecurityCreateActivity" />
         <activity android:name=".ui.activity.worksapce.security.SecurityDetailActivity" />
@@ -1154,7 +1153,7 @@
 
         <activity
             android:name=".ui.activity.worksapce.online.FindExpertActivity"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTask" />
         <activity android:name=".ui.activity.worksapce.online.FindBrandActivity" />
         <activity android:name=".ui.activity.worksapce.online.MyInformationActivity"></activity>
     </application>

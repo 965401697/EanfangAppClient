@@ -3,12 +3,14 @@ package com.eanfang.delegate;
 import android.os.Environment;
 import android.view.View;
 
+import com.eanfang.http.EanfangCallback;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.PermissionUtils;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
+import com.yaf.base.entity.AnswerListWithQuestionBean;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -50,6 +52,7 @@ public class BGASortableDelegate implements
         this.activityWithTakePhoto = activity;
         this.codes = Arrays.asList(REQUEST_CODE_CHOOSE_PHOTO, REQUEST_CODE_PHOTO_PREVIEW);
     }
+
 
 
     @Override

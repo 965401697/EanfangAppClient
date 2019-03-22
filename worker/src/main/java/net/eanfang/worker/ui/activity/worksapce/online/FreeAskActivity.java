@@ -151,9 +151,14 @@ public class FreeAskActivity extends BaseWorkerActivity {
             return false;
         }
 
+
+
         String accidentPic = PhotoUtils.getPhotoUrl("online/", snplMomentAddPhotos, uploadMap, false);
        // detailsBean.setPictures(accidentPic);
-
+//        if (uploadMap.size() <= 0) {
+//            ToastUtil.get().showToast(this, "添加现场照片可能会优先得到回答哦");
+//            return false;
+//        }
 
         if (uploadMap.size() != 0) {
             OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
@@ -163,7 +168,6 @@ public class FreeAskActivity extends BaseWorkerActivity {
                         Intent intent = new Intent();
                         intent.putExtra("resultTwo", accidentPic);
                         setResult( 101, intent);
-                        Toast.makeText(FreeAskActivity.this,"成功",Toast.LENGTH_SHORT).show();
                         finish();
                     });
                 }
@@ -175,10 +179,10 @@ public class FreeAskActivity extends BaseWorkerActivity {
             finish();
         }
 
-        if (StringUtils.isEmpty(accidentPic)) {
-            showToast("请添加现场照片");
-            return false;
-        }
+//        if (StringUtils.isEmpty(accidentPic)) {
+//            showToast("请添加现场照片");
+//            return false;
+//        }
         AskQuestionsEntity askQuestionsEntity = new AskQuestionsEntity();
         askQuestionsEntity.setQuestionUserId(EanfangApplication.get().getUserId());
         if (EanfangApplication.get().getCompanyId() != 0) {
@@ -204,12 +208,17 @@ public class FreeAskActivity extends BaseWorkerActivity {
 
         EanfangHttp.post(UserApi.EXPERT_ASK_QUESTION)
                 .upJson(JSON.toJSONString(askQuestionsEntity))
+                //JSONObject
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class) {
 
                     @Override
                     public void onSuccess(JSONObject bean) {
-
-                        //finishSelf();
+                        Toast.makeText(FreeAskActivity.this,"提问成功",Toast.LENGTH_SHORT).show();
+                        int questionId = (int) bean.get("questionId");
+                        Intent intent = new Intent(FreeAskActivity.this,FaultExplainActivity.class);
+                        intent.putExtra("QuestionIdZ", questionId);
+                        startAnimActivity(intent);
+                        finish();
                     }
                 });
     }
@@ -217,9 +226,6 @@ public class FreeAskActivity extends BaseWorkerActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-       // CustDeviceEntity custDeviceEntity = (CustDeviceEntity) data.getSerializableExtra("bean");
-        //mModelCode = custDeviceEntity.getModelCode();
-       // Log.i("KKKZyr",mModelCode+"");
         if (data == null) {
             return;
         }

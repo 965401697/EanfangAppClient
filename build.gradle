@@ -13,6 +13,7 @@ buildscript {
         classpath 'com.jakewharton:butterknife-gradle-plugin:8.5.1'
         classpath 'me.tatarka:gradle-retrolambda:3.7.0'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7.3'
+        //classpath 'com.google.gms:google-services:4.0.1'新增
         //classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2' // add plugin
 
 //        classpath("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.2")
@@ -24,7 +25,10 @@ plugins {
 
 allprojects {
     repositories {
+        /*google()新增*/
         jcenter()
+        /*mavenCentral()新增*/
+        /*maven {url 'https://dl.bintray.com/jetbrains/anko'}新增*/
         maven { url "https://jitpack.io" }
         google()
     }

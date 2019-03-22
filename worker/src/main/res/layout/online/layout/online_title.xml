@@ -30,8 +30,14 @@
         android:layout_toRightOf="@+id/tv_title_desc"
         android:src="@mipmap/right" />
 
-    <TextView
+    <LinearLayout
+        android:layout_width="@dimen/dimen_150"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
         android:id="@+id/tv_more"
+        android:orientation="vertical">
+    </LinearLayout>
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
