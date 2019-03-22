@@ -6,6 +6,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.model.security.SecurityDetailBean;
+import com.eanfang.util.V;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
@@ -26,9 +27,9 @@ public class SecurityCommentAdapter extends BaseQuickAdapter<SecurityDetailBean.
 
         // 头像
         SimpleDraweeView ivHeader = helper.getView(R.id.iv_seucrity_header);
-        ivHeader.setImageURI((Uri.parse(BuildConfig.OSS_SERVER + item.getCommentUser().getAccountEntity().getAvatar())));
+        ivHeader.setImageURI((Uri.parse(BuildConfig.OSS_SERVER + V.v(() -> item.getCommentUser().getAccountEntity().getAvatar()))));
         // 评论人
-        helper.setText(R.id.tv_name, item.getCommentUser().getAccountEntity().getNickName());
+        helper.setText(R.id.tv_name, V.v(() -> item.getCommentUser().getAccountEntity().getNickName()));
         // 公司名称
         helper.setText(R.id.tv_company, item.getCommentOrg().getOrgName());
         //发布的内容

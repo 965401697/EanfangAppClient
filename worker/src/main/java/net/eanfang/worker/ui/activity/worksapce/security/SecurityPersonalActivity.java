@@ -2,6 +2,7 @@ package net.eanfang.worker.ui.activity.worksapce.security;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -63,10 +64,13 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
     SwipeRefreshLayout swipreFresh;
     @BindView(R.id.tv_no_datas)
     TextView tvNoDatas;
+    @BindView(R.id.nestedScrollView)
+    NestedScrollView nestedScrollView;
 
     private QueryEntry queryEntry;
     private int mPage = 1;
     private SecurityHotListAdapter securityHotListAdapter;
+    private boolean isFirst = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,14 +84,34 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
     private void initView() {
         setLeftBack();
         setTitle("我的安防圈");
-        securityHotListAdapter = new SecurityHotListAdapter(this);
+        securityHotListAdapter = new SecurityHotListAdapter(SecurityPersonalActivity.this);
         securityHotListAdapter.bindToRecyclerView(rvSecurity);
+
         rvSecurity.setLayoutManager(new LinearLayoutManager(this));
         swipreFresh.setOnRefreshListener(this);
+
         rvSecurity.addItemDecoration(new BGASpaceItemDecoration(20));
         securityHotListAdapter.setOnLoadMoreListener(this, rvSecurity);
+
         ivHead.setImageURI((Uri.parse(BuildConfig.OSS_SERVER + EanfangApplication.get().getUser().getAccount().getAvatar())));
         tvName.setText(EanfangApplication.getApplication().getUser().getAccount().getNickName());
+        rvSecurity.setNestedScrollingEnabled(false);
+
+        nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                //判断是否滑到的底部
+                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+                    loadMore();
+                }
+            }
+        });
+
+    }
+
+    private void loadMore() {
+        mPage++;
+        initData();
     }
 
     private void initData() {
@@ -96,7 +120,7 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
         }
         queryEntry.setPage(mPage);
         queryEntry.setSize(10);
-        queryEntry.getEquals().put("publisherUserId", EanfangApplication.get().getAccId() + "");
+        queryEntry.getEquals().put("publisherUserId", EanfangApplication.get().getUserId() + "");
         EanfangHttp.post(NewApiService.SERCURITY_PERSONAL)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<SecurityPersonalBean>(SecurityPersonalActivity.this, true, SecurityPersonalBean.class) {
@@ -111,10 +135,14 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
                             tvLikeCount.setText(bean.getLikeCount() + "");
                             //全部动态数
                             tvAllstatae.setText(bean.getSpccount() + "");
+
                             securityHotListAdapter.getData().clear();
                             securityHotListAdapter.setNewData(bean.getPageUtil().getList());
+                            securityHotListAdapter.disableLoadMoreIfNotFullPage(rvSecurity);
+
                             swipreFresh.setRefreshing(false);
                             securityHotListAdapter.loadMoreComplete();
+
                             if (bean.getPageUtil().getList().size() < 10) {
                                 securityHotListAdapter.loadMoreEnd();
                                 queryEntry = null;
@@ -125,6 +153,7 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
                             } else {
                                 tvNoDatas.setVisibility(View.VISIBLE);
                             }
+
                         } else {
                             securityHotListAdapter.addData(bean.getPageUtil().getList());
                             securityHotListAdapter.loadMoreComplete();
