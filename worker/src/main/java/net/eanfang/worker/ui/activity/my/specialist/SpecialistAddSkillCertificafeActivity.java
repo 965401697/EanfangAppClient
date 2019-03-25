@@ -107,7 +107,9 @@ public class SpecialistAddSkillCertificafeActivity extends BaseActivityWithTakeP
 
     private void setData() {
 
-        if (checkedData()) return;
+        if (checkedData()) {
+            return;
+        }
 
         QualificationCertificateEntity entity = new QualificationCertificateEntity();
         entity.setAccId(EanfangApplication.get().getAccId());

@@ -44,7 +44,9 @@ public class TaskParentActivity extends BaseClientActivity {
         ivAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!PermKit.get().getWorkTaskCreatePrem()) return;
+                if (!PermKit.get().getWorkTaskCreatePrem()) {
+                    return;
+                }
                 startActivity(new Intent(TaskParentActivity.this, TaskActivity.class));
             }
         });

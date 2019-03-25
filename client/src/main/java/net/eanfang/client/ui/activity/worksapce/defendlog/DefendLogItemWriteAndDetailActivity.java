@@ -116,7 +116,9 @@ public class DefendLogItemWriteAndDetailActivity extends BaseClientActivity impl
                 break;
             case R.id.ll_comit:
 
-                if (!checkInfo()) return;
+                if (!checkInfo()) {
+                    return;
+                }
 
 
                 LogDetailsEntity bean = new LogDetailsEntity();

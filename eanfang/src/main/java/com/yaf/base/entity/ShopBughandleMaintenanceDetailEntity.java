@@ -272,8 +272,9 @@ public class ShopBughandleMaintenanceDetailEntity implements Serializable {
 	@Override
     public boolean equals(Object other) {
     	if (other instanceof ShopBughandleMaintenanceDetailEntity) {
-    		if(this.id == null || other == null)
-    			return false;
+    		if(this.id == null || other == null) {
+                return false;
+            }
     		
             return this.id.equals(((ShopBughandleMaintenanceDetailEntity) other).id);   
         }   

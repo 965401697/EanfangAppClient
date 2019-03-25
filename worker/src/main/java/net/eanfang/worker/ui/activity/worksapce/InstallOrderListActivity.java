@@ -169,7 +169,9 @@ public class InstallOrderListActivity extends BaseWorkerActivity implements Swip
         rvList.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if (!PermKit.get().getInstallDetailPrem()) return;
+                if (!PermKit.get().getInstallDetailPrem()) {
+                    return;
+                }
                 new InstallCtrlItemView(InstallOrderListActivity.this, true, ((WorkspaceInstallBean.ListBean) adapter.getData().get(position)).getId()).show();
             }
         });

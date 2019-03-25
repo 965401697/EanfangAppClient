@@ -103,8 +103,9 @@ public class SpecialistAuthListActivity extends BaseWorkerActivity {
                 .execute(new EanfangCallback<SpecialistAuthStatusBean>(this, true, SpecialistAuthStatusBean.class, (bean) -> {
                     verify = bean.verify;
                     //只有认证完成了 才显示重新认证
-                    if (verify == 2)
+                    if (verify == 2) {
                         setRightTitle("重新认证");
+                    }
                     mAuthStatusBean = bean;
                     doChange(bean.base, bean.qual, bean.job, bean.honor, bean.verify);
                 }));

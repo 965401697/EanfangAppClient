@@ -198,8 +198,9 @@ public class AptitudeCertificateEntity implements Serializable {
 	@Override
     public boolean equals(Object other) {
     	if (other instanceof AptitudeCertificateEntity) {
-    		if(this.id == null || other == null)
-    			return false;
+    		if(this.id == null || other == null) {
+                return false;
+            }
     		
             return this.id.equals(((AptitudeCertificateEntity) other).id);   
         }   

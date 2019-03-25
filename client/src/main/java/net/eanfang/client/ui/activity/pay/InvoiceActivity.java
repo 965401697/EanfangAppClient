@@ -143,7 +143,9 @@ public class InvoiceActivity extends BaseClientActivity {
     private void subInvoice() {
         InvoiceEntity invoice;
         if (!isChecked) {
-            if (!checkInfo()) return;
+            if (!checkInfo()) {
+                return;
+            }
 
             invoice = new InvoiceEntity();
             invoice.setOrderId(orderId);
@@ -155,8 +157,12 @@ public class InvoiceActivity extends BaseClientActivity {
             invoice.setReceiveAddressEntity(mReceiveAddressEntity);
 
         } else {
-            if (!checkInfo()) return;
-            if (!checkProInfo()) return;
+            if (!checkInfo()) {
+                return;
+            }
+            if (!checkProInfo()) {
+                return;
+            }
 
             invoice = new InvoiceEntity();
             invoice.setOrderId(orderId);

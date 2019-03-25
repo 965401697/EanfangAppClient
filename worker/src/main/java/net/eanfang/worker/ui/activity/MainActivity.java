@@ -618,8 +618,9 @@ public class MainActivity extends BaseActivity {
         EanfangHttp.post(NewApiService.GET_UNREAD_MSG)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<NoticeEntity>(this, true, NoticeEntity.class, (bean) -> {
-                            if (bean != null)
+                            if (bean != null) {
                                 customDialog(bean.getTitle(), bean.getContent(), bean.getExtInfo(), bean.getId());
+                            }
 
                         })
                 );

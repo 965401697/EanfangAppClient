@@ -62,7 +62,9 @@ public class DefendLogFragment extends TemplateItemListFragment {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 
-                if (!PermKit.get().getProtectionDetailPrem()) return;
+                if (!PermKit.get().getProtectionDetailPrem()) {
+                    return;
+                }
                 mDetailTaskBean = ((ProtectionLogEntity) adapter.getData().get(position));
                 mPosition = position;
                 Bundle bundle = new Bundle();
@@ -135,8 +137,9 @@ public class DefendLogFragment extends TemplateItemListFragment {
 
     @Override
     protected void getData() {
-        if (mQueryEntry == null)
+        if (mQueryEntry == null) {
             mQueryEntry = new QueryEntry();
+        }
 
         if (mType == 1) {
             mQueryEntry.getEquals().put("ownerUserId", EanfangApplication.getApplication().getUserId() + "");

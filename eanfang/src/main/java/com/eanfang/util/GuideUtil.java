@@ -104,7 +104,9 @@ public class GuideUtil {
             if (last) {
                 view.findViewById(R.id.button1).setVisibility(View.VISIBLE);
                 view.findViewById(R.id.button1).setOnClickListener((v) -> {
-                    if (mOnCallback != null) mOnCallback.goLogin();
+                    if (mOnCallback != null) {
+                        mOnCallback.goLogin();
+                    }
                 });
 
             }
@@ -129,7 +131,9 @@ public class GuideUtil {
             ViewGroup pageViewWrapper = (ViewGroup) page;
             @SuppressWarnings("SuspiciousMethodCalls")
             int[] layer = mLayoutViewIdsMap.get(pageViewWrapper.getChildAt(0).getId());
-            if (layer == null) return;
+            if (layer == null) {
+                return;
+            }
             for (int id : layer) {
                 View view = page.findViewById(id);
                 if (view != null) {

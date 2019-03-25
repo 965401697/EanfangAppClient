@@ -401,13 +401,16 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
         ArrayList<Integer> colors = new ArrayList<Integer>();
 
         if (isFive) {
-            for (int c : LIBERTY_COLORS_FiVE)
+            for (int c : LIBERTY_COLORS_FiVE) {
                 colors.add(c);
+            }
         } else {
-            for (int c : LIBERTY_COLORS_FiVE)
+            for (int c : LIBERTY_COLORS_FiVE) {
                 colors.add(c);
-            for (int c : LIBERTY_TWO_COLORS_MORE)
+            }
+            for (int c : LIBERTY_TWO_COLORS_MORE) {
                 colors.add(c);
+            }
         }
 
         dataSet.setColors(colors);
@@ -448,13 +451,16 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
 
         ArrayList<Integer> colors = new ArrayList<Integer>();
         if (isFive) {
-            for (int c : LIBERTY_TWO_COLORS_MORE)
+            for (int c : LIBERTY_TWO_COLORS_MORE) {
                 colors.add(c);
+            }
         } else {
-            for (int c : LIBERTY_COLORS_FiVE)
+            for (int c : LIBERTY_COLORS_FiVE) {
                 colors.add(c);
-            for (int c : LIBERTY_TWO_COLORS_MORE)
+            }
+            for (int c : LIBERTY_TWO_COLORS_MORE) {
                 colors.add(c);
+            }
         }
         dataSet.setColors(colors);
 

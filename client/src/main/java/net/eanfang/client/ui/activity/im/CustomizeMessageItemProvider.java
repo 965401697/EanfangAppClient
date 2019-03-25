@@ -178,7 +178,9 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
     @Override
     public void onItemClick(View view, int i, CustomizeMessage customizeMessage, UIMessage uiMessage) {
         if (customizeMessage.getShareType().equals("1")) {
-            if (!PermKit.get().getRepairDetailPerm()) return;
+            if (!PermKit.get().getRepairDetailPerm()) {
+                return;
+            }
             Intent intent = new Intent(view.getContext(), OrderDetailActivity.class);
             intent.putExtra(Constant.ID, Long.parseLong(customizeMessage.getOrderId()));
             intent.putExtra("title", GetConstDataUtils.getRepairStatus().get(Integer.parseInt(customizeMessage.getStatus())));
@@ -188,26 +190,40 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
         } else if (customizeMessage.getShareType().equals("2")) {
             new TroubleDetalilListActivity((Activity) view.getContext(), true, Long.parseLong(customizeMessage.getOrderId()), Integer.parseInt(customizeMessage.getStatus()), "完成", true).show();
         } else if (customizeMessage.getShareType().equals("3")) {
-            if (!PermKit.get().getWorkReportDetailPrem()) return;
+            if (!PermKit.get().getWorkReportDetailPrem()) {
+                return;
+            }
             view.getContext().startActivity(new Intent((Activity) view.getContext(), WorkReportDetailActivity.class).putExtra("id", Long.parseLong(customizeMessage.getOrderId())));
         } else if (customizeMessage.getShareType().equals("4")) {
-            if (!PermKit.get().getWorkTaskDetailPrem()) return;
+            if (!PermKit.get().getWorkTaskDetailPrem()) {
+                return;
+            }
             view.getContext().startActivity(new Intent((Activity) view.getContext(), TaskDetailActivity.class).putExtra("id", Long.parseLong(customizeMessage.getOrderId())));
         } else if (customizeMessage.getShareType().equals("5")) {
-            if (!PermKit.get().getWorkInspectDetailPrem()) return;
+            if (!PermKit.get().getWorkInspectDetailPrem()) {
+                return;
+            }
             view.getContext().startActivity(new Intent((Activity) view.getContext(), DealWithFirstActivity.class).putExtra("id", Long.parseLong(customizeMessage.getOrderId())));
 
         } else if (customizeMessage.getShareType().equals("6")) {
-            if (!PermKit.get().getExchangeDetailPrem()) return;
+            if (!PermKit.get().getExchangeDetailPrem()) {
+                return;
+            }
             view.getContext().startActivity(new Intent((Activity) view.getContext(), WorkTransferDetailActivity.class).putExtra("itemId", customizeMessage.getOrderId()));
         } else if (customizeMessage.getShareType().equals("7")) {
-            if (!PermKit.get().getFaceToWorkerDetailPrem()) return;
+            if (!PermKit.get().getFaceToWorkerDetailPrem()) {
+                return;
+            }
             view.getContext().startActivity(new Intent((Activity) view.getContext(), WorkTalkDetailActivity.class).putExtra("itemId", customizeMessage.getOrderId()));
         } else if (customizeMessage.getShareType().equals("8")) {
-            if (!PermKit.get().getOpenShopDetailPrem()) return;
+            if (!PermKit.get().getOpenShopDetailPrem()) {
+                return;
+            }
             view.getContext().startActivity(new Intent((Activity) view.getContext(), OpenShopLogDetailActivity.class).putExtra("id", customizeMessage.getOrderId()).putExtra("isVisible", true));
         } else if (customizeMessage.getShareType().equals("9")) {
-            if (!PermKit.get().getProtectionDetailPrem()) return;
+            if (!PermKit.get().getProtectionDetailPrem()) {
+                return;
+            }
             view.getContext().startActivity(new Intent((Activity) view.getContext(), DefendLogDetailActivity.class).putExtra("id", customizeMessage.getOrderId()).putExtra("isVisible", true));
 
         }

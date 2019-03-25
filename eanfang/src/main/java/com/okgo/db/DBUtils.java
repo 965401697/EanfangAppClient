@@ -36,10 +36,14 @@ public class DBUtils {
      * 是否需要升级表
      */
     public static boolean isNeedUpgradeTable(SQLiteDatabase db, TableEntity table) {
-        if (!isTableExists(db, table.tableName)) return true;
+        if (!isTableExists(db, table.tableName)) {
+            return true;
+        }
 
         Cursor cursor = db.rawQuery("select * from " + table.tableName, null);
-        if (cursor == null) return false;
+        if (cursor == null) {
+            return false;
+        }
         try {
             int columnCount = table.getColumnCount();
             if (columnCount == cursor.getColumnCount()) {
@@ -70,7 +74,9 @@ public class DBUtils {
      * 对于表来说，type 字段永远是 ‘table’，name 字段永远是表的名字。
      */
     public static boolean isTableExists(SQLiteDatabase db, String tableName) {
-        if (tableName == null || db == null || !db.isOpen()) return false;
+        if (tableName == null || db == null || !db.isOpen()) {
+            return false;
+        }
 
         Cursor cursor = null;
         int count = 0;
@@ -83,13 +89,17 @@ public class DBUtils {
         } catch (Exception e) {
             OkLogger.printStackTrace(e);
         } finally {
-            if (cursor != null) cursor.close();
+            if (cursor != null) {
+                cursor.close();
+            }
         }
         return count > 0;
     }
 
     public static boolean isFieldExists(SQLiteDatabase db, String tableName, String fieldName) {
-        if (tableName == null || db == null || fieldName == null || !db.isOpen()) return false;
+        if (tableName == null || db == null || fieldName == null || !db.isOpen()) {
+            return false;
+        }
 
         Cursor cursor = null;
         try {

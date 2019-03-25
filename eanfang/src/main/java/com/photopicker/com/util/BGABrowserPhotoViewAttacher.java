@@ -55,7 +55,9 @@ public class BGABrowserPhotoViewAttacher extends PhotoViewAttacher {
 
     public void setUpdateBaseMatrix() {
         ImageView view = getImageView();
-        if (view == null) return;
+        if (view == null) {
+            return;
+        }
         updateBaseMatrix(view.getDrawable());
     }
 

@@ -33,7 +33,8 @@ public class EquipmentParameterActivity extends BaseClientActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         EquipmentParamAdapter adapter = new EquipmentParamAdapter();
         adapter.bindToRecyclerView(recyclerView);
-        if (list != null)
+        if (list != null) {
             adapter.setNewData(list);
+        }
     }
 }

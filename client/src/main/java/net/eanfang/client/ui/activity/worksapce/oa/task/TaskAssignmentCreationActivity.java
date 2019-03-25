@@ -238,7 +238,9 @@ public class TaskAssignmentCreationActivity extends BaseClientActivity {
                     llAddTask.setVisibility(View.GONE);
 
                 } else {
-                    if (addDataToWrok()) llAddTask.setVisibility(View.GONE);
+                    if (addDataToWrok()) {
+                        llAddTask.setVisibility(View.GONE);
+                    }
                 }
                 tvAddTask.setVisibility(View.VISIBLE);
                 break;
@@ -257,7 +259,9 @@ public class TaskAssignmentCreationActivity extends BaseClientActivity {
 
     private boolean addDataToWrok() {
 
-        if (!checkWorkInfo()) return false;
+        if (!checkWorkInfo()) {
+            return false;
+        }
 
         WorkTaskBean.WorkTaskDetailsBean taskDetailsBean = new WorkTaskBean.WorkTaskDetailsBean();
 

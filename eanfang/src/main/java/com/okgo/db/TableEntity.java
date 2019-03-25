@@ -97,7 +97,9 @@ public class TableEntity {
     public int getColumnIndex(String columnName) {
         int columnCount = getColumnCount();
         for (int i = 0; i < columnCount; i++) {
-            if (list.get(i).columnName.equals(columnName)) return i;
+            if (list.get(i).columnName.equals(columnName)) {
+                return i;
+            }
         }
         return -1;
     }

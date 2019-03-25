@@ -422,7 +422,9 @@ public class ReportActivity extends BaseWorkerActivity implements View.OnClickLi
      */
     @Subscribe
     public void onEvent(List<TemplateBean.Preson> presonList) {
-        if (!isEventBus) return;//防止发送接收错误
+        if (!isEventBus) {
+            return;//防止发送接收错误
+        }
 
         if (presonList.size() > 0) {
             if (isSend == 1) {

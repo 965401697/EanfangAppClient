@@ -99,8 +99,9 @@ public class MaintenanceAppointTimeActivity extends BaseActivity implements Sele
                 .upJson(JsonUtils.obj2String(object))
                 .execute(new EanfangCallback<JSONObject>(MaintenanceAppointTimeActivity.this, true, JSONObject.class, (bean) -> {
                     showToast("预约成功");
-                    if (mType == 1)
+                    if (mType == 1) {
                         EventBus.getDefault().post(new BaseEvent());//刷新item
+                    }
                     finishSelf();
                     EanfangApplication.get().closeActivity(MaintenanceAppointTimeActivity.class.getName());
                 }));

@@ -78,17 +78,20 @@ public class BaseDataEntity implements Serializable {
      */
     @Override
     public boolean equals(Object obj) {
-        if (obj == null)
+        if (obj == null) {
             return false;
-        if (this == obj)
+        }
+        if (this == obj) {
             return true;
+        }
         if (obj instanceof BaseDataEntity) {
             BaseDataEntity b = (BaseDataEntity) obj;
 
             // 比较每个属性的值 一致时才返回true
 //                if (preson.id.equals(this.id) && preson.name.equals(this.name))
-            if (b.getDataId().equals(this.getDataId()))
+            if (b.getDataId().equals(this.getDataId())) {
                 return true;
+            }
         }
         return false;
     }

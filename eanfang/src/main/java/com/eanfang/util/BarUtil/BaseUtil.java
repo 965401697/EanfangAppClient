@@ -3,17 +3,15 @@ package com.eanfang.util.BarUtil;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Application;
+import android.app.Application.ActivityLifecycleCallbacks;
 import android.content.Context;
 import android.os.Bundle;
-
+import android.support.annotation.NonNull;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 import java.util.Map;
-
-import android.app.Application.ActivityLifecycleCallbacks;
-import android.support.annotation.NonNull;
 
 
 /**
@@ -94,12 +92,16 @@ public final class BaseUtil {
      * @return the context of Application object
      */
     public static Application getApp() {
-        if (sApplication != null) return sApplication;
+        if (sApplication != null) {
+            return sApplication;
+        }
         throw new NullPointerException("u should init first");
     }
 
     static void setTopActivity(final Activity activity) {
-        if (activity.getClass() == PermissionUtils.PermissionActivity.class) return;
+        if (activity.getClass() == PermissionUtils.PermissionActivity.class) {
+            return;
+        }
         if (ACTIVITY_LIST.contains(activity)) {
             if (!ACTIVITY_LIST.getLast().equals(activity)) {
                 ACTIVITY_LIST.remove(activity);
@@ -134,7 +136,9 @@ public final class BaseUtil {
             Field activitiesField = activityThreadClass.getDeclaredField("mActivities");
             activitiesField.setAccessible(true);
             Map activities = (Map) activitiesField.get(activityThread);
-            if (activities == null) return null;
+            if (activities == null) {
+                return null;
+            }
             for (Object activityRecord : activities.values()) {
                 Class activityRecordClass = activityRecord.getClass();
                 Field pausedField = activityRecordClass.getDeclaredField("paused");

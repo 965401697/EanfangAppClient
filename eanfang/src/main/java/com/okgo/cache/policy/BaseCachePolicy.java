@@ -90,10 +90,14 @@ public abstract class BaseCachePolicy<T> implements CachePolicy<T> {
 
     @Override
     public synchronized Call prepareRawCall() throws Throwable {
-        if (executed) throw HttpException.COMMON("Already executed!");
+        if (executed) {
+            throw HttpException.COMMON("Already executed!");
+        }
         executed = true;
         rawCall = request.getRawCall();
-        if (canceled) rawCall.cancel();
+        if (canceled) {
+            rawCall.cancel();
+        }
         return rawCall;
     }
 
@@ -157,7 +161,9 @@ public abstract class BaseCachePolicy<T> implements CachePolicy<T> {
                     return;
                 }
 
-                if (onAnalysisResponse(call, response)) return;
+                if (onAnalysisResponse(call, response)) {
+                    return;
+                }
 
                 try {
                     T body = request.getConverter().convertResponse(response);
@@ -180,8 +186,12 @@ public abstract class BaseCachePolicy<T> implements CachePolicy<T> {
      * @param data    响应数据
      */
     private void saveCache(Headers headers, T data) {
-        if (request.getCacheMode() == CacheMode.NO_CACHE) return;    //不需要缓存,直接返回
-        if (data instanceof Bitmap) return;             //Bitmap没有实现Serializable,不能缓存
+        if (request.getCacheMode() == CacheMode.NO_CACHE) {
+            return;    //不需要缓存,直接返回
+        }
+        if (data instanceof Bitmap) {
+            return;             //Bitmap没有实现Serializable,不能缓存
+        }
 
         CacheEntity<T> cache = HeaderParser.createCacheEntity(headers, data, request.getCacheMode(), request.getCacheKey());
         if (cache == null) {
@@ -212,7 +222,9 @@ public abstract class BaseCachePolicy<T> implements CachePolicy<T> {
 
     @Override
     public boolean isCanceled() {
-        if (canceled) return true;
+        if (canceled) {
+            return true;
+        }
         synchronized (this) {
             return rawCall != null && rawCall.isCanceled();
         }

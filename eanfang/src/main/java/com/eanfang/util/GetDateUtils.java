@@ -369,11 +369,13 @@ public class GetDateUtils {
      * @return int 无效：-1
      */
     public static int getDateProperty(String dateStr, int calendarField) {
-        if (null == dateStr || calendarField < 0)
+        if (null == dateStr || calendarField < 0) {
             return -1;
+        }
         Date date = getDate(dateStr);
-        if (null == date)
+        if (null == date) {
             return -1;
+        }
         int result = -1;
         try {
             Calendar calendar = Calendar.getInstance();
@@ -445,8 +447,9 @@ public class GetDateUtils {
      */
     public static long convertDateToSecond(String dateStr) {
         Date date = getDate(dateStr);
-        if (date == null)
+        if (date == null) {
             return 0;
+        }
         return date.getTime() / 1000;
     }
 
@@ -466,8 +469,9 @@ public class GetDateUtils {
             e.printStackTrace();
         }
         int w = cal.get(Calendar.DAY_OF_WEEK) - 1; // 指示一个星期中的某天。
-        if (w < 0)
+        if (w < 0) {
             w = 0;
+        }
         return weekDays[w];
     }
 

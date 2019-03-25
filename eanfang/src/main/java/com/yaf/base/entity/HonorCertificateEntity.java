@@ -185,8 +185,9 @@ public class HonorCertificateEntity implements Serializable {
 	@Override
     public boolean equals(Object other) {
     	if (other instanceof HonorCertificateEntity) {
-    		if(this.id == null || other == null)
-    			return false;
+    		if(this.id == null || other == null) {
+                return false;
+            }
     		
             return this.id.equals(((HonorCertificateEntity) other).id);   
         }   

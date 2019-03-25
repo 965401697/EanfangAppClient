@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -49,8 +48,8 @@ public class FindExpertActivity extends BaseWorkerActivity implements View.OnCli
     TextView pinName;
     // 设备信息 RequestCode
     private static final int REQUEST_FAULTDEVICEINFO = 100;
-    @BindView(R.id.my_information)
-    Button myInformation;
+//    @BindView(R.id.my_information)
+//    Button myInformation;
     private SpecialistBrandAdapter brandAdapter;
     private SkillTypeAdapter osCooperationAddAdapter;
     private final int ADD_BRAND_REQESET_CODE = 100;
@@ -220,14 +219,14 @@ public class FindExpertActivity extends BaseWorkerActivity implements View.OnCli
         startActivity(intent);
     }
 
-    @OnClick({R.id.my_information, R.id.tv_go})
+    @OnClick({ R.id.tv_go})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.my_information:
-                Intent intent = new Intent(FindExpertActivity.this, MyInformationActivity.class);
-                intent.putExtra("find", 2);
-                startActivity(intent);
-                break;
+//            case R.id.my_information:
+//                Intent intent = new Intent(FindExpertActivity.this, MyInformationActivity.class);
+//                intent.putExtra("find", 2);
+//                startActivity(intent);
+//                break;
             case R.id.tv_go:
                 doVerify();
                 break;

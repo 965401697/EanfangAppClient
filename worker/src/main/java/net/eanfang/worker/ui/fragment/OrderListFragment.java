@@ -412,7 +412,9 @@ public class OrderListFragment extends BaseFragment implements
     OnItemClickListener onItemClickListener = new OnItemClickListener() {
         @Override
         public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-            if (!PermKit.get().getRepairDetailPerm()) return;
+            if (!PermKit.get().getRepairDetailPerm()) {
+                return;
+            }
             Intent intent = new Intent(getActivity(), OrderDetailActivity.class);
             intent.putExtra("id", ((RepairOrderEntity) adapter.getData().get(position)).getId());
             intent.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);

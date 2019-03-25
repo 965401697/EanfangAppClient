@@ -151,7 +151,9 @@ public class OkGo {
      * 根据Tag取消请求
      */
     public static void cancelTag(OkHttpClient client, Object tag) {
-        if (client == null || tag == null) return;
+        if (client == null || tag == null) {
+            return;
+        }
         for (Call call : client.dispatcher().queuedCalls()) {
             if (tag.equals(call.request().tag())) {
                 call.cancel();
@@ -168,7 +170,9 @@ public class OkGo {
      * 取消所有请求请求
      */
     public static void cancelAll(OkHttpClient client) {
-        if (client == null) return;
+        if (client == null) {
+            return;
+        }
         for (Call call : client.dispatcher().queuedCalls()) {
             call.cancel();
         }
@@ -229,7 +233,9 @@ public class OkGo {
      * 超时重试次数
      */
     public OkGo setRetryCount(int retryCount) {
-        if (retryCount < 0) throw new IllegalArgumentException("retryCount must > 0");
+        if (retryCount < 0) {
+            throw new IllegalArgumentException("retryCount must > 0");
+        }
         mRetryCount = retryCount;
         return this;
     }
@@ -260,7 +266,9 @@ public class OkGo {
      * 全局的缓存过期时间
      */
     public OkGo setCacheTime(long cacheTime) {
-        if (cacheTime <= -1) cacheTime = CacheEntity.CACHE_NEVER_EXPIRE;
+        if (cacheTime <= -1) {
+            cacheTime = CacheEntity.CACHE_NEVER_EXPIRE;
+        }
         mCacheTime = cacheTime;
         return this;
     }
@@ -276,7 +284,9 @@ public class OkGo {
      * 添加全局公共请求参数
      */
     public OkGo addCommonParams(HttpParams commonParams) {
-        if (mCommonParams == null) mCommonParams = new HttpParams();
+        if (mCommonParams == null) {
+            mCommonParams = new HttpParams();
+        }
         mCommonParams.put(commonParams);
         return this;
     }
@@ -292,7 +302,9 @@ public class OkGo {
      * 添加全局公共请求参数
      */
     public OkGo addCommonHeaders(HttpHeaders commonHeaders) {
-        if (mCommonHeaders == null) mCommonHeaders = new HttpHeaders();
+        if (mCommonHeaders == null) {
+            mCommonHeaders = new HttpHeaders();
+        }
         mCommonHeaders.put(commonHeaders);
         return this;
     }
@@ -301,7 +313,9 @@ public class OkGo {
      * 根据Tag取消请求
      */
     public void cancelTag(Object tag) {
-        if (tag == null) return;
+        if (tag == null) {
+            return;
+        }
         for (Call call : getOkHttpClient().dispatcher().queuedCalls()) {
             if (tag.equals(call.request().tag())) {
                 call.cancel();

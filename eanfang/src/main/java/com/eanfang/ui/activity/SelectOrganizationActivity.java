@@ -151,7 +151,9 @@ public class SelectOrganizationActivity extends BaseActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         initData();
 
-        if (TextUtils.isEmpty(isSection)) return;
+        if (TextUtils.isEmpty(isSection)) {
+            return;
+        }
 
         treeRecyclerAdapter.setOnItemClickListener(new BaseRecyclerAdapter.OnItemClickListener() {
             @Override

@@ -54,7 +54,9 @@ public class MaintenanceListFragment extends TemplateItemListFragment {
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if (!PermKit.get().getMaintenanceDetailPrem()) return;
+                if (!PermKit.get().getMaintenanceDetailPrem()) {
+                    return;
+                }
                 Intent intent = new Intent(getActivity(), MaintenanceDetailActivity.class);
                 intent.putExtra("id", mAdapter.getData().get(position).getId());
                 startActivity(intent);
@@ -213,7 +215,9 @@ public class MaintenanceListFragment extends TemplateItemListFragment {
                     case R.id.tv_do_second:
                         //只有当前登陆人为订单负责人才可以操作
                         if (doCompare(item.getAssigneeUserId(), mUseId)) {
-                            if (!PermKit.get().getMaintenanceBughandlePrem()) return;
+                            if (!PermKit.get().getMaintenanceBughandlePrem()) {
+                                return;
+                            }
                             intent = new Intent(getActivity(), MaintenanceHandleShowActivity.class);
                             intent.putExtra("orderId", item.getId());
 //                        intent.putExtra("companyName", item.getOwnerOrg().getBelongCompany().getOrgName());

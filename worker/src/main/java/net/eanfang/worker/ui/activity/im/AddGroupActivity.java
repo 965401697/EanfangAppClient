@@ -94,7 +94,9 @@ public class AddGroupActivity extends BaseWorkerActivity {
                             }
                         }
                     }
-                    if (flag) initData();
+                    if (flag) {
+                        initData();
+                    }
                 }));
     }
 

@@ -214,8 +214,9 @@ public class EducationExperienceEntity implements Serializable {
 	@Override
     public boolean equals(Object other) {
     	if (other instanceof EducationExperienceEntity) {
-    		if(this.id == null || other == null)
-    			return false;
+    		if(this.id == null || other == null) {
+                return false;
+            }
     		
             return this.id.equals(((EducationExperienceEntity) other).id);   
         }   

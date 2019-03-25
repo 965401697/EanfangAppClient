@@ -43,13 +43,17 @@ public class MineTaskPublishListSendParentActivity extends BaseWorkerActivity {
         llMineAssignment.setOnClickListener(v -> jump("我创建的", 1));
         llMineCompany.setOnClickListener(v -> jump("我公司的", 2));
         ivAdd.setOnClickListener((v) -> {
-            if (!PermKit.get().getTenderCreatePrem()) return;
+            if (!PermKit.get().getTenderCreatePrem()) {
+                return;
+            }
             startActivity(new Intent(this, TaskPublishActivity.class));
         });
     }
 
     private void jump(String title, int type) {
-        if (!PermKit.get().getTenderListPrem()) return;
+        if (!PermKit.get().getTenderListPrem()) {
+            return;
+        }
         Intent intent = new Intent(this, MineTaskPublishListActivity.class);
         intent.putExtra("title", title);
         intent.putExtra("type", type);

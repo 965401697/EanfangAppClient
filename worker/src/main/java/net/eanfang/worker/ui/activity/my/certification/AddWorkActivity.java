@@ -112,7 +112,9 @@ public class AddWorkActivity extends BaseActivityWithTakePhoto {
 
     private void setData() {
 
-        if (checkedData()) return;
+        if (checkedData()) {
+            return;
+        }
 
         JobExperienceEntity entity = new JobExperienceEntity();
         entity.setAccId(EanfangApplication.get().getAccId());

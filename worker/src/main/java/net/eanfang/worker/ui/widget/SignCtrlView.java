@@ -45,9 +45,13 @@ public class SignCtrlView extends BaseDialog {
 
     private void jumpSign(String title, int status) {
         if (status == 0) {
-            if (!PermKit.get().getSignInCreatePrem()) return;
+            if (!PermKit.get().getSignInCreatePrem()) {
+                return;
+            }
         } else {
-            if (!PermKit.get().getSignOutCreatePrem()) return;
+            if (!PermKit.get().getSignOutCreatePrem()) {
+                return;
+            }
         }
         Intent intent = new Intent(mContext, SignActivity.class);
         intent.putExtra("title", title);

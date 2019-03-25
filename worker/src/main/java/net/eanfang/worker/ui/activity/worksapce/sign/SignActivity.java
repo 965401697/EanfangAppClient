@@ -121,9 +121,13 @@ public class SignActivity extends BaseActivity implements LocationSource, AMapLo
             @Override
             public void onClick(View v) {
                 if (status == 0) {
-                    if (!PermKit.get().getSignInListPrem()) return;
+                    if (!PermKit.get().getSignInListPrem()) {
+                        return;
+                    }
                 } else {
-                    if (!PermKit.get().getSignOutListPrem()) return;
+                    if (!PermKit.get().getSignOutListPrem()) {
+                        return;
+                    }
                 }
 
                 startActivity(new Intent(SignActivity.this, SignListActivity.class)

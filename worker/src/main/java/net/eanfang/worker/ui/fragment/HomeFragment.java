@@ -344,7 +344,9 @@ public class HomeFragment extends BaseFragment {
         findViewById(R.id.tv_project_receive).setOnClickListener((v) -> {
             if (workerApprove()) {
 //                new TakePubCtrlView(getActivity(), true).show();
-                if (!PermKit.get().getBidListPrem()) return;
+                if (!PermKit.get().getBidListPrem()) {
+                    return;
+                }
                 startActivity(new Intent(getActivity(), TakeTaskListActivity.class));
 
             }

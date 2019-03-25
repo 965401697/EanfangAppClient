@@ -252,8 +252,9 @@ public class DefendLogWriteActivity extends BaseClientActivity implements View.O
             case R.id.ll_open_time:
 
                 currentTextView = tvOpenTime;
-                if (!SelectTimeDialogFragment.getInstance().isAdded())
+                if (!SelectTimeDialogFragment.getInstance().isAdded()) {
                     SelectTimeDialogFragment.getInstance().show(getSupportFragmentManager(), R.string.app_name + "");
+                }
 //                mTimeYearMonthDayHMS.setDate(Calendar.getInstance());
 //                mTimeYearMonthDayHMS.show();
 
@@ -261,8 +262,9 @@ public class DefendLogWriteActivity extends BaseClientActivity implements View.O
             case R.id.ll_close_time:
 
                 currentTextView = tvCloseTime;
-                if (!SelectTimeDialogFragment.getInstance().isAdded())
+                if (!SelectTimeDialogFragment.getInstance().isAdded()) {
                     SelectTimeDialogFragment.getInstance().show(getSupportFragmentManager(), R.string.app_name + "");
+                }
 //                mTimeYearMonthDayHMS.setDate(Calendar.getInstance());
 //                mTimeYearMonthDayHMS.show();
 
@@ -340,7 +342,9 @@ public class DefendLogWriteActivity extends BaseClientActivity implements View.O
 
     private void sub() {
 
-        if (!checkInfo()) return;
+        if (!checkInfo()) {
+            return;
+        }
 
 
         if (GetDateUtils.getTimeStamp(tvCloseTime.getText().toString().trim(), "yyyy-MM-dd hh:mm:ss") <= GetDateUtils.getTimeStamp(tvOpenTime.getText().toString().trim(), "yyyy-MM-dd hh:mm:ss")) {

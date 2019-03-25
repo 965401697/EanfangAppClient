@@ -148,8 +148,9 @@ public class BaseData2userEntity implements Serializable {
     @Override
     public boolean equals(Object other) {
         if (other instanceof BaseData2userEntity) {
-            if (this.id == null || other == null)
+            if (this.id == null || other == null) {
                 return false;
+            }
 
             return this.id.equals(((BaseData2userEntity) other).id);
         }

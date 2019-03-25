@@ -280,8 +280,9 @@ public class CreateGroupOrganizationActivity extends BaseClientActivity {
         mAdapter.bindToRecyclerView(recyclerView);
         mAdapter.setNewData(mTemplateBeanList);
         //添加上次选中的数据
-        if (mDataList != null)
+        if (mDataList != null) {
             mAdapter.getSeletePerson().addAll(mDataList);
+        }
         mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {

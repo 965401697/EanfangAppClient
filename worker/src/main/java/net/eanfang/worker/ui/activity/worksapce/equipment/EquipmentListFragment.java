@@ -48,7 +48,9 @@ public class EquipmentListFragment extends TemplateItemListFragment {
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if (!PermKit.get().getExchangeDetailPrem()) return;
+                if (!PermKit.get().getExchangeDetailPrem()) {
+                    return;
+                }
                 Intent intent = new Intent(getActivity(), EquipmentDetailActivity.class);
                 intent.putExtra("id", String.valueOf(mAdapter.getData().get(position).getId()));
 //                intent.putExtra("ownerCompanyId", mOwnerCompanyId);

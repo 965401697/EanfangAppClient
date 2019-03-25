@@ -95,7 +95,9 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
         setRightTitle("查找");
         title = getIntent().getStringExtra("title");
         status = getIntent().getIntExtra("status", 0);
-        if (status == 1) tvSign.setText("签退");
+        if (status == 1) {
+            tvSign.setText("签退");
+        }
 
         revList.setLayoutManager(new WrapContentLinearLayoutManager(this));
 //        revList.addItemDecoration(new BGASpaceItemDecoration(30));

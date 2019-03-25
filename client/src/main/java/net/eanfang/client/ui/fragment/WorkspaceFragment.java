@@ -325,7 +325,9 @@ public class WorkspaceFragment extends BaseFragment {
         //设备点检
         findViewById(R.id.tv_work_inspect).setOnClickListener((v) -> {
 //            new WorkCheckCtrlView(getActivity(), true).show();
-            if (!PermKit.get().getWorkInspectListPrem()) return;
+            if (!PermKit.get().getWorkInspectListPrem()) {
+                return;
+            }
             Intent intent = new Intent(getActivity(), CheckListActivity.class);
             startActivity(intent);
         });
@@ -355,7 +357,9 @@ public class WorkspaceFragment extends BaseFragment {
 
         //设备库
         findViewById(R.id.tv_work_library).setOnClickListener((v) -> {
-            if (!PermKit.get().getDeviceArchiveListPerm()) return;
+            if (!PermKit.get().getDeviceArchiveListPerm()) {
+                return;
+            }
             Intent intent = new Intent(getActivity(), EquipmentListActivity.class);
             startActivity(intent);
         });

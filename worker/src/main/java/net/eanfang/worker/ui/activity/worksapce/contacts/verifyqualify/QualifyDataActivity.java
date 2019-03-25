@@ -158,13 +158,15 @@ public class QualifyDataActivity extends BaseActivity {
     private void initBusinessData(QualifyFirstBean qualifyFirstBean) {
         // 系统类别 datatype ：1
         for (BaseDataEntity baseDataEntity : qualifyFirstBean.getCompany2baseDataList()) {
-            if (baseDataEntity.getDataType() == 1)
+            if (baseDataEntity.getDataType() == 1) {
                 systemTypeList.add(baseDataEntity);
+            }
         }
         // 业务类别 datatype ：2
         for (BaseDataEntity baseDataEntity : qualifyFirstBean.getCompany2baseDataList()) {
-            if (baseDataEntity.getDataType() == 2)
+            if (baseDataEntity.getDataType() == 2) {
                 businessTypeList.add(baseDataEntity);
+            }
         }
         addSysResult();
         addBusResult();

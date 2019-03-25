@@ -260,7 +260,9 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
                 //组织结构
                 case R.id.ll_org:
 
-                    if (!PermKit.get().getCompanyDepartmentListPerm()) return;
+                    if (!PermKit.get().getCompanyDepartmentListPerm()) {
+                        return;
+                    }
 
                     OrganizationBean organizationBean = new OrganizationBean();
 
@@ -291,7 +293,9 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
                     startActivity(new Intent(getActivity(), ExternalCompanyActivity.class));
                     break;
                 case R.id.ll_part_company:
-                    if (!PermKit.get().getCooperationListAllPerm()) return;
+                    if (!PermKit.get().getCooperationListAllPerm()) {
+                        return;
+                    }
                     startActivity(new Intent(getActivity(), PartnerActivity.class));
                     break;
                 case R.id.ll_out_contacts:

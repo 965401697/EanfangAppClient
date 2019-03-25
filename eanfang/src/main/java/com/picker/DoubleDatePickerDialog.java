@@ -231,10 +231,12 @@ public class DoubleDatePickerDialog extends AlertDialog implements OnClickListen
 
     @Override
     public void onDateChanged(DatePicker view, int year, int month, int day) {
-        if (view.getId() == R.id.datePickerStart)
+        if (view.getId() == R.id.datePickerStart) {
             mDatePicker_start.init(year, month, day, this);
-        if (view.getId() == R.id.datePickerEnd)
+        }
+        if (view.getId() == R.id.datePickerEnd) {
             mDatePicker_end.init(year, month, day, this);
+        }
         // updateTitle(year, month, day);
     }
 

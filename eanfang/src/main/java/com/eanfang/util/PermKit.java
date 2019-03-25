@@ -43,7 +43,9 @@ public class PermKit {
      */
     public boolean getPerm(String permCode) {
 
-        if (permList.size() == 0) permList();
+        if (permList.size() == 0) {
+            permList();
+        }
 
         boolean isPerm = false;
         for (String p : permList) {

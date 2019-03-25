@@ -140,8 +140,9 @@ public class SideBar extends android.support.v7.widget.AppCompatTextView {
                     eventY = 0;
                     invalidate();
                     return true;
-                } else
+                } else {
                     break;
+                }
         }
         return super.onTouchEvent(event);
     }
@@ -192,20 +193,22 @@ public class SideBar extends android.support.v7.widget.AppCompatTextView {
                 //要画的字母的起始Y坐标
                 float currentItemToDrawY = singleTextH + itemH * i;
                 float centerItemToDrawY;
-                if (index < i)
+                if (index < i) {
                     centerItemToDrawY = singleTextH + itemH * (index + scaleItemCount);
-                else
+                } else {
                     centerItemToDrawY = singleTextH + itemH * (index - scaleItemCount);
+                }
                 float delta = 1 - Math.abs((y - currentItemToDrawY) / (centerItemToDrawY - currentItemToDrawY));
                 float maxRightX = w - getPaddingRight();
                 //如果大于0，表明在y坐标上方
                 scaleTextPaint.setTextSize(getTextSize() + getTextSize() * delta);
                 float drawX = maxRightX - scaleWidth * delta;
                 //超出边界直接花在边界上
-                if (drawX > maxRightX)
+                if (drawX > maxRightX) {
                     canvas.drawText(letters[i], maxRightX, singleTextH + itemH * i, textPaint);
-                else
+                } else {
                     canvas.drawText(letters[i], drawX, singleTextH + itemH * i, scaleTextPaint);
+                }
             }
         }
     }

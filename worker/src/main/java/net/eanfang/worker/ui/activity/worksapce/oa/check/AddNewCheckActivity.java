@@ -276,7 +276,9 @@ public class AddNewCheckActivity extends BaseActivity implements SelectTimeDialo
                     llAddDetail.setVisibility(View.GONE);
 
                 } else {
-                    if (addDataToWrok()) llAddDetail.setVisibility(View.GONE);
+                    if (addDataToWrok()) {
+                        llAddDetail.setVisibility(View.GONE);
+                    }
                 }
                 tvAddTask.setVisibility(View.VISIBLE);
                 break;
@@ -326,7 +328,9 @@ public class AddNewCheckActivity extends BaseActivity implements SelectTimeDialo
      */
     private boolean addDataToWrok() {
 
-        if (!checkWorkInfo()) return false;
+        if (!checkWorkInfo()) {
+            return false;
+        }
         detailsBean = new WorkAddCheckBean.WorkInspectDetailsBean();
 
         //任务标题

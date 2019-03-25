@@ -375,7 +375,9 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
                     llCompleteWork.setVisibility(View.GONE);
 
                 } else {
-                    if (addDataToWrok()) llCompleteWork.setVisibility(View.GONE);
+                    if (addDataToWrok()) {
+                        llCompleteWork.setVisibility(View.GONE);
+                    }
                 }
                 tvAddComplete.setVisibility(View.VISIBLE);
                 break;
@@ -418,7 +420,9 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
 
     private boolean addDataToWrok() {
 
-        if (!checkWorkInfo(etInputContent)) return false;
+        if (!checkWorkInfo(etInputContent)) {
+            return false;
+        }
 
         WorkAddReportBean.WorkReportDetailsBean workBean = new WorkAddReportBean.WorkReportDetailsBean();
 
@@ -637,7 +641,9 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
 
                 } else {
 
-                    if (addQuestionData()) llFindQuestion.setVisibility(View.GONE);
+                    if (addQuestionData()) {
+                        llFindQuestion.setVisibility(View.GONE);
+                    }
                 }
                 tvAddFind.setVisibility(View.VISIBLE);
                 break;
@@ -650,7 +656,9 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
 
     private boolean addQuestionData() {
 
-        if (!checkWorkInfo(etInputContentQuestion)) return false;
+        if (!checkWorkInfo(etInputContentQuestion)) {
+            return false;
+        }
 
         WorkAddReportBean.WorkReportDetailsBean questionBean = new WorkAddReportBean.WorkReportDetailsBean();
 
@@ -773,8 +781,9 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
                     llReportPlan.setVisibility(View.GONE);
 
                 } else {
-                    if (setPlanData())
+                    if (setPlanData()) {
                         llReportPlan.setVisibility(View.GONE);
+                    }
                 }
                 tvAddPlan.setVisibility(View.VISIBLE);
 
@@ -788,7 +797,9 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
 
     private boolean setPlanData() {
 
-        if (!checkWorkInfo(etInputContentPlan)) return false;
+        if (!checkWorkInfo(etInputContentPlan)) {
+            return false;
+        }
 
         WorkAddReportBean.WorkReportDetailsBean planBean = new WorkAddReportBean.WorkReportDetailsBean();
 

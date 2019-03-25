@@ -103,8 +103,9 @@ public class NewAuthListActivity extends BaseWorkerActivity {
                 .execute(new EanfangCallback<AuthStatusBean>(this, true, AuthStatusBean.class, (bean) -> {
                     verify = bean.getVerify();
                     //只有认证完成了 才显示重新认证
-                    if (verify == 2)
+                    if (verify == 2) {
                         setRightTitle("重新认证");
+                    }
                     mAuthStatusBean = bean;
                     doChange(bean.getBase(), bean.getApt(), bean.getExp(), bean.getHonor(), bean.getVerify());
                 }));

@@ -45,7 +45,9 @@ public class OkLogger {
     }
 
     public static void v(String tag, String msg) {
-        if (isLogEnable) Log.v(tag, msg);
+        if (isLogEnable) {
+            Log.v(tag, msg);
+        }
     }
 
     public static void d(String msg) {
@@ -53,7 +55,9 @@ public class OkLogger {
     }
 
     public static void d(String tag, String msg) {
-        if (isLogEnable) Log.d(tag, msg);
+        if (isLogEnable) {
+            Log.d(tag, msg);
+        }
     }
 
     public static void i(String msg) {
@@ -61,7 +65,9 @@ public class OkLogger {
     }
 
     public static void i(String tag, String msg) {
-        if (isLogEnable) Log.i(tag, msg);
+        if (isLogEnable) {
+            Log.i(tag, msg);
+        }
     }
 
     public static void w(String msg) {
@@ -69,7 +75,9 @@ public class OkLogger {
     }
 
     public static void w(String tag, String msg) {
-        if (isLogEnable) Log.w(tag, msg);
+        if (isLogEnable) {
+            Log.w(tag, msg);
+        }
     }
 
     public static void e(String msg) {
@@ -77,10 +85,14 @@ public class OkLogger {
     }
 
     public static void e(String tag, String msg) {
-        if (isLogEnable) Log.e(tag, msg);
+        if (isLogEnable) {
+            Log.e(tag, msg);
+        }
     }
 
     public static void printStackTrace(Throwable t) {
-        if (isLogEnable && t != null) t.printStackTrace();
+        if (isLogEnable && t != null) {
+            t.printStackTrace();
+        }
     }
 }

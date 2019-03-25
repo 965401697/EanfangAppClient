@@ -96,7 +96,9 @@ public class BitmapUtil {
         } else if (w < h && h > width) {//如果高度高的话根据宽度固定大小缩放
             be = (int) (h / width);
         }
-        if (be <= 0) be = 1;
+        if (be <= 0) {
+            be = 1;
+        }
         newOpts.inSampleSize = be;//设置缩放比例
         // 开始压缩图片，注意此时已经把options.inJustDecodeBounds 设回false了
         bitmap = BitmapFactory.decodeFile(imgPath, newOpts);
@@ -137,7 +139,9 @@ public class BitmapUtil {
         } else if (w < h && h > height) {//如果高度高的话根据宽度固定大小缩放
             be = (int) (h / height);
         }
-        if (be <= 0) be = 1;
+        if (be <= 0) {
+            be = 1;
+        }
         newOpts.inSampleSize = be;//设置缩放比例
         //重新读入图片，注意此时已经把options.inJustDecodeBounds 设回false了
         is = new ByteArrayInputStream(os.toByteArray());
@@ -399,7 +403,9 @@ public class BitmapUtil {
      * @param imageView
      */
     public static void recycleImgBg(ImageView imageView) {
-        if (imageView == null) return;
+        if (imageView == null) {
+            return;
+        }
         Drawable drawable = imageView.getBackground();
         if (drawable != null && drawable instanceof BitmapDrawable) {
             BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;

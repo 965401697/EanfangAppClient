@@ -105,7 +105,9 @@ public class OrgOneLevelItem extends TreeItemGroup<OrganizationBean> {
                 @Override
                 public void onClick(View v) {
 
-                    if (finalTotle == 0) return;
+                    if (finalTotle == 0) {
+                        return;
+                    }
 
                     Intent intent = new Intent(EanfangApplication.getApplication(), SelectPresonActivity.class);
                     intent.putExtra("flag", 1);

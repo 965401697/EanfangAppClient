@@ -57,7 +57,9 @@ public class CompoundHelper {
 
     public void sendBitmap(Context context, Handler handler, GroupDetailBean bean) {
 
-        if (bitmapList.size() > 0) bitmapList.clear();
+        if (bitmapList.size() > 0) {
+            bitmapList.clear();
+        }
 
         num = bean.getList().size();
 
@@ -69,8 +71,9 @@ public class CompoundHelper {
                 public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
 
                     synchronized (this) {
-                        if (resource != null)
+                        if (resource != null) {
                             bitmapList.add(resource);
+                        }
                         num--;
                         if (num == 0) {
 
@@ -82,7 +85,9 @@ public class CompoundHelper {
                                     mBitmap = CombineBitmapTools.combimeBitmap(context, 100, 100, bitmapList);
 
                                     File file = new File(Environment.getExternalStorageDirectory() + "/RY");
-                                    if (!file.exists()) file.mkdir();
+                                    if (!file.exists()) {
+                                        file.mkdir();
+                                    }
                                     File f = new File(Environment.getExternalStorageDirectory() + "/RY/" + System.currentTimeMillis() + ".jpg");
                                     try {
                                         out = new FileOutputStream(f);
@@ -119,7 +124,9 @@ public class CompoundHelper {
 
     public void sendBitmap(Context context, Handler handler, List<String> list) {
 
-        if (bitmapList.size() > 0) bitmapList.clear();
+        if (bitmapList.size() > 0) {
+            bitmapList.clear();
+        }
 
         num = list.size();
 
@@ -151,7 +158,9 @@ public class CompoundHelper {
                                     mBitmap = CombineBitmapTools.combimeBitmap(context, 100, 100, bitmapList);
 
                                     File file = new File(Environment.getExternalStorageDirectory() + "/RY");
-                                    if (!file.exists()) file.mkdir();
+                                    if (!file.exists()) {
+                                        file.mkdir();
+                                    }
                                     File f = new File(Environment.getExternalStorageDirectory() + "/RY/" + System.currentTimeMillis() + ".jpg");
                                     try {
                                         out = new FileOutputStream(f);
@@ -194,7 +203,9 @@ public class CompoundHelper {
                                 mBitmap = CombineBitmapTools.combimeBitmap(context, 100, 100, bitmapList);
 
                                 File file = new File(Environment.getExternalStorageDirectory() + "/RY");
-                                if (!file.exists()) file.mkdir();
+                                if (!file.exists()) {
+                                    file.mkdir();
+                                }
                                 File f = new File(Environment.getExternalStorageDirectory() + "/RY/" + System.currentTimeMillis() + ".jpg");
                                 try {
                                     out = new FileOutputStream(f);

@@ -132,11 +132,16 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                 .execute(new EanfangCallback<GroupDetailBean>(this, true, GroupDetailBean.class, (bean) -> {
 
 
-                    if (bean == null) return;//接口改过，造成了
+                    if (bean == null) {
+                        return;//接口改过，造成了
+                    }
 
-                    if (friendListBeanArrayList.size() > 0) friendListBeanArrayList.clear();
-                    if (temp.size() > 0)
+                    if (friendListBeanArrayList.size() > 0) {
+                        friendListBeanArrayList.clear();
+                    }
+                    if (temp.size() > 0) {
                         temp.clear();
+                    }
 
                     if (bean.getGroup().getHeadPortrait().contains("CUSTOM")) {
                         //自己选择的图片没有生成 始终不变
@@ -166,10 +171,14 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                         for (int i = 0; i < bean.getList().size(); i++) {
                             if (isOwner) {
                                 //群主 8个item  默认的 加 和 减
-                                if (temp.size() == 8) break;
+                                if (temp.size() == 8) {
+                                    break;
+                                }
                             } else {
                                 //不是群主 9个item  默认的 加
-                                if (temp.size() == 9) break;
+                                if (temp.size() == 9) {
+                                    break;
+                                }
                             }
                             if (bean.getList().get(i).getAccId().equals(bean.getGroup().getCreateUser())) {
                                 temp.add(0, bean.getList().get(i));

@@ -355,7 +355,9 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
             }
         }
 
-        if (!isNo) return;
+        if (!isNo) {
+            return;
+        }
 
 
         boolean isAllCheck = true;

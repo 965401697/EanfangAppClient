@@ -49,7 +49,9 @@ public class InstallOrderParentActivity extends BaseWorkerActivity {
     }
 
     private void jump(String title, int type) {
-        if (!PermKit.get().getInstallListPrem()) return;
+        if (!PermKit.get().getInstallListPrem()) {
+            return;
+        }
         Intent intent = new Intent(this, InstallOrderListActivity.class);
         intent.putExtra("title", title);
         intent.putExtra("type", type);

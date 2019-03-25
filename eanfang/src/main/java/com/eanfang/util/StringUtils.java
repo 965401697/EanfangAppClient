@@ -30,13 +30,16 @@ public class StringUtils {
      * 返回字符串的16进制形式
      */
     public static String toHexString(String str) {
-        if (str == null || str.length() == 0)
+        if (str == null || str.length() == 0) {
             return "(null)";
+        }
         StringBuilder sb = new StringBuilder();
         byte[] bytes = str.getBytes();
         for (int i = 0; i < bytes.length; i++) {
             String temp = Integer.toHexString(bytes[i]);
-            if (temp.length() == 1) sb.append("0");
+            if (temp.length() == 1) {
+                sb.append("0");
+            }
             sb.append(temp + " ");
         }
         return sb.toString().trim().toUpperCase();

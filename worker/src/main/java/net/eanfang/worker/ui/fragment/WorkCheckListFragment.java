@@ -65,7 +65,9 @@ public class WorkCheckListFragment extends TemplateItemListFragment {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 
-                if (!PermKit.get().getWorkInspectDetailPrem()) return;
+                if (!PermKit.get().getWorkInspectDetailPrem()) {
+                    return;
+                }
 
                 currentPosition = position;
                 mDetailTaskBean = (WorkCheckListBean.ListBean) adapter.getData().get(position);
@@ -79,8 +81,9 @@ public class WorkCheckListFragment extends TemplateItemListFragment {
 
     @Override
     protected void getData() {
-        if (mQueryEntry == null)
+        if (mQueryEntry == null) {
             mQueryEntry = new QueryEntry();
+        }
 
 //        if (!Constant.ALL.equals(mTitle)) {
 //            String status = GetConstDataUtils.getWorkInspectStatus().indexOf(getmTitle()) + "";

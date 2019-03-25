@@ -139,8 +139,9 @@ public class SubtractFriendsActivity extends BaseClientActivity {
         }
 
 //        list.add(EanfangApplication.get().getUser().getAccount().getAvatar());
-        if(isCompound)
-        CompoundHelper.getInstance().sendBitmap(this, handler, list);//生成图片
+        if(isCompound) {
+            CompoundHelper.getInstance().sendBitmap(this, handler, list);//生成图片
+        }
 
         EanfangHttp.post(UserApi.POST_GROUP_KICKOUT)
                 .params("groupId", mGroupId)

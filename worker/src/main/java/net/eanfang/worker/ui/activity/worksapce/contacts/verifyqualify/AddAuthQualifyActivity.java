@@ -123,7 +123,10 @@ public class AddAuthQualifyActivity extends BaseActivityWithTakePhoto implements
         if (aptitudeCertificateEntity != null) {
             fillData();
         }
-        if ("2".equals(isAuth) || "1".equals(isAuth)) {//已认证  进行查看资质认证
+        /**
+         * 已认证  进行查看资质认证
+         * */
+        if ("2".equals(isAuth) || "1".equals(isAuth)) {
             doUnWrite();
         }
     }

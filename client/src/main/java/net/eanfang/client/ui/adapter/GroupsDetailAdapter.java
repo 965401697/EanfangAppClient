@@ -131,8 +131,9 @@ public class GroupsDetailAdapter extends BaseAdapter {
         }
 
 
-        if (mList.get(position).getAccountEntity() != null)
+        if (mList.get(position).getAccountEntity() != null) {
             holder.tv_name.setText(mList.get(position).getAccountEntity().getNickName());
+        }
 
         return convertView;
 

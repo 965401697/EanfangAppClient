@@ -44,7 +44,9 @@ public class TaskParentActivity extends BaseWorkerActivity {
         ivAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!PermKit.get().getWorkTaskCreatePrem()) return;
+                if (!PermKit.get().getWorkTaskCreatePrem()) {
+                    return;
+                }
                 startActivity(new Intent(TaskParentActivity.this, TaskActivity.class));
             }
         });
@@ -54,7 +56,9 @@ public class TaskParentActivity extends BaseWorkerActivity {
     }
 
     private void jump(String title, String type) {
-        if (!PermKit.get().getWorkTaskListPrem()) return;
+        if (!PermKit.get().getWorkTaskListPrem()) {
+            return;
+        }
         Intent intent = new Intent(this, WorkTaskListActivity.class);
         intent.putExtra("title", title);
         intent.putExtra("type", type);

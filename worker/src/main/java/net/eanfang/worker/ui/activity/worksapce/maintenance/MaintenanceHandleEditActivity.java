@@ -101,7 +101,9 @@ public class MaintenanceHandleEditActivity extends BaseWorkerActivity {
 
     private void doSubData() {
 
-        if (!isCheck()) return;
+        if (!isCheck()) {
+            return;
+        }
 
         if (examDeviceEntity.getMaintenanceDetailEntity() == null) {
             ToastUtil.get().showToast(this, "请选择照片");

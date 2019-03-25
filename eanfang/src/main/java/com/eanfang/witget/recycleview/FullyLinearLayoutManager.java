@@ -58,9 +58,12 @@ public class FullyLinearLayoutManager extends LinearLayoutManager {
     }
 
     public void setOverScrollMode(int overScrollMode) {
-        if (overScrollMode < ViewCompat.OVER_SCROLL_ALWAYS || overScrollMode > ViewCompat.OVER_SCROLL_NEVER)
+        if (overScrollMode < ViewCompat.OVER_SCROLL_ALWAYS || overScrollMode > ViewCompat.OVER_SCROLL_NEVER) {
             throw new IllegalArgumentException("Unknown overscroll mode: " + overScrollMode);
-        if (this.view == null) throw new IllegalStateException("view == null");
+        }
+        if (this.view == null) {
+            throw new IllegalStateException("view == null");
+        }
         this.overScrollMode = overScrollMode;
         ViewCompat.setOverScrollMode(view, overScrollMode);
     }

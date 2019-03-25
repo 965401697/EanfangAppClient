@@ -25,7 +25,9 @@ public class MaintenanceActivity extends BaseWorkerActivity {
 
     @OnClick({R.id.iv_own, R.id.iv_section, R.id.iv_company})
     public void onViewClicked(View view) {
-        if (!PermKit.get().getMaintenanceListPrem()) return;
+        if (!PermKit.get().getMaintenanceListPrem()) {
+            return;
+        }
         Intent intent = new Intent(this, MaintenanceListActivity.class);
         switch (view.getId()) {
             case R.id.iv_own:

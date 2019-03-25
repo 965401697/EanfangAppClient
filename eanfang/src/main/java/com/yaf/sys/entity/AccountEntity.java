@@ -347,8 +347,9 @@ public class AccountEntity implements Serializable {
     @Override
     public boolean equals(Object other) {
         if (other instanceof AccountEntity) {
-            if (this.accId == null || other == null)
+            if (this.accId == null || other == null) {
                 return false;
+            }
 
             return this.accId.equals(((AccountEntity) other).accId);
         }

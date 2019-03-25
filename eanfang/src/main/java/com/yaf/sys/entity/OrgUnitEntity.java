@@ -421,8 +421,9 @@ public class OrgUnitEntity implements Serializable {
     @Override
     public boolean equals(Object other) {
         if (other instanceof OrgUnitEntity) {
-            if (this.adminUserId == null || other == null)
+            if (this.adminUserId == null || other == null) {
                 return false;
+            }
 
             return this.adminUserId.equals(((OrgUnitEntity) other).adminUserId);
         }

@@ -349,8 +349,9 @@ public class LogDetailsEntity implements Serializable {
     @Override
     public boolean equals(Object other) {
         if (other instanceof LogDetailsEntity) {
-            if (this.id == null || other == null)
+            if (this.id == null || other == null) {
                 return false;
+            }
 
             return this.id.equals(((LogDetailsEntity) other).id);
         }

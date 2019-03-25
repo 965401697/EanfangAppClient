@@ -123,8 +123,9 @@ public class FileDisplayActivity extends BaseActivity implements TbsReaderView.R
                 }
                 for (int j = 0; j < b.length; j++) {
                     int k = b[j];
-                    if (k < 0)
+                    if (k < 0) {
                         k += 256;
+                    }
                     sb.append("%" + Integer.toHexString(k).toUpperCase());
                 }
             }
@@ -191,12 +192,14 @@ public class FileDisplayActivity extends BaseActivity implements TbsReaderView.R
         }
         /* 获取文件的后缀名 */
         String end = fName.substring(dotIndex, fName.length()).toLowerCase();
-        if (end == "")
+        if (end == "") {
             return type;
+        }
         // 在MIME和文件类型的匹配表中找到对应的MIME类型。
         for (int i = 0; i < MIME_MapTable.length; i++) {
-            if (end.equals(MIME_MapTable[i][0]))
+            if (end.equals(MIME_MapTable[i][0])) {
                 type = MIME_MapTable[i][1];
+            }
         }
         return type;
     }

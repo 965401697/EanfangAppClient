@@ -184,7 +184,8 @@ public class TakePhotoActivity extends BaseActivity implements CameraFocusView.I
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (loadingDialog != null && loadingDialog.isShowing())
+        if (loadingDialog != null && loadingDialog.isShowing()) {
             loadingDialog.dismiss();
+        }
     }
 }

@@ -268,8 +268,9 @@ public class SpecialistSkillTypeActivity extends BaseWorkerActivity {
     }
 
     private void fillData(ExpertVerifySkillBean bean) {
-        if (bean.getExpertVerify().getWorkingAge() != null)
+        if (bean.getExpertVerify().getWorkingAge() != null) {
             tvLimit.setText(GetConstDataUtils.getWorkingYearList().get(bean.getExpertVerify().getWorkingAge()));
+        }
         if (bean.getExpertVerify().getApproveType() != null) {
             tvType.setText(GetConstDataUtils.getExpertTypeList().get(bean.getExpertVerify().getApproveType()));
             if (bean.getExpertVerify().getApproveType() == 1) {

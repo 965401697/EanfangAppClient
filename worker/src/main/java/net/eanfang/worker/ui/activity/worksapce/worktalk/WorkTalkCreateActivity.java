@@ -294,8 +294,9 @@ public class WorkTalkCreateActivity extends BaseActivity {
     }
 
     private void doSubmit() {
-        if (!doCheckInfo())
+        if (!doCheckInfo()) {
             return;
+        }
         EanfangHttp.post(NewApiService.WORK_TALK_ADD)
                 .upJson(JSONObject.toJSONString(workTalkDetailBean))
                 .execute(new EanfangCallback<WorkTalkDetailBean>(WorkTalkCreateActivity.this, true, WorkTalkDetailBean.class, (bean) -> {

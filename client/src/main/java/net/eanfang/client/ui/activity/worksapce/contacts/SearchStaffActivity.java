@@ -100,8 +100,9 @@ public class SearchStaffActivity extends BaseClientActivity {
     private void initData() {
         List<String> phoneList = new ArrayList<>();
         if (mList.size() > 0) {
-            for (FriendListBean bean : mList)
+            for (FriendListBean bean : mList) {
                 phoneList.add(bean.getMobile());
+            }
         }
 
         EanfangHttp.post(UserApi.GET_MOBILE_INFO)

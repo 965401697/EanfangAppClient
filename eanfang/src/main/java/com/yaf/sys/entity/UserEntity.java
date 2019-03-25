@@ -279,8 +279,9 @@ public class UserEntity implements Serializable {
 	@Override 
     public boolean equals(Object other) {
     	if (other instanceof UserEntity) {
-    		if(this.userId == null || other== null)
-    			return false;
+    		if(this.userId == null || other== null) {
+                return false;
+            }
     		
             return this.userId.equals(((UserEntity) other).userId);   
         }   

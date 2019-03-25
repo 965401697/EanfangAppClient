@@ -57,7 +57,9 @@ public class TakeTaskListActivity extends BaseWorkerActivity implements SwipeRef
         setRightTitleOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!PermKit.get().getBidListPrem()) return;
+                if (!PermKit.get().getBidListPrem()) {
+                    return;
+                }
                 startActivity(new Intent(TakeTaskListActivity.this, MineTakePublishListReceiveParentActivity.class));
             }
         });

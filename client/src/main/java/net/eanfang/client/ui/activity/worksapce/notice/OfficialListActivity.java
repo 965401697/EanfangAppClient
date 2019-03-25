@@ -54,8 +54,9 @@ public class OfficialListActivity extends BaseClientActivity implements SwipeRef
         setLeftBack(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (read)
+                if (read) {
                     setResult(RESULT_OK);
+                }
                 finishSelf();
             }
         });
@@ -230,8 +231,9 @@ public class OfficialListActivity extends BaseClientActivity implements SwipeRef
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) { // 监控/拦截/屏蔽返回键
-            if (read)
+            if (read) {
                 setResult(RESULT_OK);
+            }
         }
         return super.onKeyDown(keyCode, event);
     }

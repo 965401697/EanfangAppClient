@@ -163,7 +163,9 @@ public class AddCertificationActivity extends BaseActivityWithTakePhoto implemen
 
     private void setData() {
 
-        if (checkedData()) return;
+        if (checkedData()) {
+            return;
+        }
 
         HonorCertificateEntity entity = new HonorCertificateEntity();
         entity.setAccId(EanfangApplication.get().getAccId());

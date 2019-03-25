@@ -214,8 +214,9 @@ public class CustDeviceParamEntity implements Serializable {
     @Override
     public boolean equals(Object other) {
         if (other instanceof CustDeviceParamEntity) {
-            if (this.id == null || other == null)
+            if (this.id == null || other == null) {
                 return false;
+            }
 
             return this.id.equals(((CustDeviceParamEntity) other).id);
         }
