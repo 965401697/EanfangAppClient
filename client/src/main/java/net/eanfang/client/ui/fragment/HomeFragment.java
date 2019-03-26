@@ -48,6 +48,7 @@ import net.eanfang.client.ui.activity.worksapce.datastatistics.DataInstallActivi
 import net.eanfang.client.ui.activity.worksapce.datastatistics.DataStaticsticsListActivity;
 import net.eanfang.client.ui.activity.worksapce.datastatistics.DataStatisticsActivity;
 import net.eanfang.client.ui.activity.worksapce.install.InstallOrderParentActivity;
+import net.eanfang.client.ui.activity.worksapce.online.ExpertOnlineActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.RepairTypeActivity;
 import net.eanfang.client.ui.activity.worksapce.scancode.ScanCodeActivity;
 import net.eanfang.client.ui.activity.worksapce.security.SecurityDetailActivity;
@@ -198,6 +199,13 @@ public class HomeFragment extends BaseFragment {
         //我要报修
         findViewById(R.id.tv_reparir).setOnClickListener((v) -> {
             JumpItent.jump(getActivity(), RepairTypeActivity.class);
+        });
+        //专家问答
+        findViewById(R.id.tv_onLine).setOnClickListener((v) -> {
+//            if (!PermKit.get().getRepairListPerm()) return;
+            if (workerApprove()) {
+                startActivity(new Intent(getActivity(), ExpertOnlineActivity.class));
+            }
         });
         //我要报装
         findViewById(R.id.tv_install).setOnClickListener((v) -> {

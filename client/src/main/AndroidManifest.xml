@@ -968,6 +968,24 @@
             android:name=".ui.activity.worksapce.security.SecurityDetailActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden"></activity>
+        <activity
+            android:name=".ui.activity.worksapce.online.FindExpertActivity"
+            android:launchMode="singleTask" />
+        <activity android:name=".ui.activity.worksapce.online.FindBrandActivity" />
+        <activity android:name=".ui.activity.worksapce.online.ExpertOnlineActivity"
+            android:launchMode="singleTask"/>
+        <activity android:name=".ui.activity.worksapce.online.AskExpertActivity" />
+        <activity android:name=".ui.activity.worksapce.online.FaultExplainActivity" />
+        <activity android:name=".ui.activity.worksapce.online.SystemTypeActivity" />
+        <activity android:name=".ui.activity.worksapce.online.ManufacturerAfterSaleActivity" />
+        <activity android:name=".ui.activity.worksapce.online.ExpertListActivity" />
+        <activity android:name=".ui.activity.worksapce.online.FreeAskActivity" />
+        <activity android:name=".ui.activity.worksapce.online.CommonFaultListActivity" />
+        <activity android:name=".ui.activity.worksapce.online.IAnswerActivity" />
+        <activity android:name=".ui.activity.worksapce.online.ExpertAnswerActivity" />
+        <activity android:name=".ui.activity.worksapce.online.CommentFaultSearchActivity" />
+        <activity android:name=".ui.activity.worksapce.online.MyFreeAskActivity" />
+        <activity android:name=".ui.activity.worksapce.online.MyInformationActivity" />
     </application>
 
 </manifest>

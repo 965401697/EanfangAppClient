@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_white"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dimen_450"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_2"
+            android:background="@color/color_new_line" />
+
+        <RelativeLayout
+            android:id="@+id/rl_haikang"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_300">
+
+            <ImageView
+                android:layout_width="@dimen/dimen_260"
+                android:layout_height="@dimen/dimen_120"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/ic_haikang" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_2"
+            android:background="@color/color_new_line" />
+
+        <RelativeLayout
+            android:id="@+id/rl_yushi"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_150">
+
+            <ImageView
+                android:layout_width="@dimen/dimen_190"
+                android:layout_height="@dimen/dimen_86"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/ic_yushi" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="@dimen/dimen_2"
+        android:layout_height="match_parent"
+        android:background="@color/color_new_line" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/rl_hua"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_150">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_2"
+                android:background="@color/color_new_line" />
+
+            <ImageView
+                android:layout_width="@dimen/dimen_190"
+                android:layout_height="@dimen/dimen_86"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/ic_hua" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_2"
+            android:background="@color/color_new_line" />
+
+        <RelativeLayout
+            android:id="@+id/rl_sam"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_150">
+
+            <ImageView
+                android:layout_width="@dimen/dimen_190"
+                android:layout_height="@dimen/dimen_86"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/ic_sam" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_2"
+            android:background="@color/color_new_line" />
+
+        <RelativeLayout
+            android:id="@+id/rl_iinsanli"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_150">
+
+            <ImageView
+                android:layout_width="@dimen/dimen_190"
+                android:layout_height="@dimen/dimen_86"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/ic_jinsanli" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -169,7 +169,7 @@ public class FaultLibraryActivity extends BaseActivity implements SwipyRefreshLa
 
         EanfangHttp.post(RepairApi.GET_FAULT_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<FaultListBean>(FaultLibraryActivity.this, false, FaultListBean.class, bean -> {
+                .execute(new EanfangCallback<FaultListBean>(FaultLibraryActivity.this, false, FaultListBean.class, (FaultListBean bean) -> {
                     if (bean != null) {
                         if (bean.getList().size() == 0) {
                             ToastUtil.get().showToast(FaultLibraryActivity.this, "暂无数据");
