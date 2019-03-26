@@ -21,7 +21,6 @@ import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.worker.R;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -45,9 +44,8 @@ public class SecurityCreateActivity extends BaseActivity {
     /**
      * 上传图片路径
      */
-    private String mPic;
+    private String mPic = "";
 
-    private ArrayList<String> picList_certificate = new ArrayList<>();
     private HashMap<String, String> uploadMap = new HashMap<>();
 
     private SecurityCreateBean securityCreateBean = new SecurityCreateBean();
@@ -66,33 +64,32 @@ public class SecurityCreateActivity extends BaseActivity {
         setRightTitle("发布");
         snplAddPhoto.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_CERTIFICATE, REQUEST_CODE_PHOTO_CERTIFICATE));
 
-        setRightTitleOnClickListener((v)->{
+        setRightTitleOnClickListener((v) -> {
             doCommit();
         });
     }
 
     public void doCommit() {
         String mContent = etContent.getText().toString().trim();
-        if (StringUtils.isEmpty(mContent)) {
-            showToast("请输入内容");
-            return;
-        }
-        securityCreateBean.setSpcContent(mContent);
         mPic = PhotoUtils.getPhotoUrl("sercurity/", snplAddPhoto, uploadMap, false);
-        securityCreateBean.setSpcImg(mPic);
-        if (uploadMap.size() != 0) {
-            OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
-                @Override
-                public void onOssSuccess() {
-                    runOnUiThread(() -> {
-                        doSubmit();
-                    });
-                }
-            });
+        if (!StringUtils.isEmpty(mContent) || !StringUtils.isEmpty(mPic)) {
+            securityCreateBean.setSpcContent(mContent);
+            securityCreateBean.setSpcImg(mPic);
+            if (uploadMap.size() != 0) {
+                OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
+                    @Override
+                    public void onOssSuccess() {
+                        runOnUiThread(() -> {
+                            doSubmit();
+                        });
+                    }
+                });
+            } else {
+                doSubmit();
+            }
         } else {
-            doSubmit();
+            showToast("请输入发布内容");
         }
-
     }
 
     public void doSubmit() {

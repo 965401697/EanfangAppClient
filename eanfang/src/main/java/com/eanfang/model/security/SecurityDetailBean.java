@@ -49,6 +49,7 @@ public class SecurityDetailBean implements Serializable {
         private int id;
         private int status;
         private int type;
+        private int verifyStatus;
 
         @AllArgsConstructor
         @NoArgsConstructor

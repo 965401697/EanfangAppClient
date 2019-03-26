@@ -125,6 +125,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:bga_npl_itemCornerRadius="@dimen/dimen_10"
+                app:bga_npl_itemSpanCount="3"
                 app:bga_npl_itemWhiteSpacing="@dimen/dimen_32"
                 app:bga_npl_showAsLargeWhenOnlyOne="false" />
         </com.eanfang.witget.CustomLinearLayout>

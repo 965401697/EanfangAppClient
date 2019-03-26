@@ -91,7 +91,6 @@ public class MaintenanceListFragment extends TemplateItemListFragment {
 
         int status = GetConstDataUtils.getMaintainStatusList().indexOf(mTitle);
         queryEntry.getEquals().put("status", String.valueOf(status));
-//        queryEntry.getEquals().put("status", String.valueOf(status));
 
         EanfangHttp.post(NewApiService.MAINTENANCE_GET_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))

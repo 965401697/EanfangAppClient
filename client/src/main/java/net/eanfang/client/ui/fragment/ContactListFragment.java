@@ -40,10 +40,7 @@ import net.eanfang.client.ui.activity.im.IMPresonInfoActivity;
 import net.eanfang.client.ui.activity.im.MorePopWindow;
 import net.eanfang.client.ui.activity.im.MyConversationListFragment;
 import net.eanfang.client.ui.activity.im.SystemMessageActivity;
-import net.eanfang.client.ui.activity.worksapce.notice.MessageListActivity;
 import net.eanfang.client.ui.activity.worksapce.notice.MessageNotificationActivity;
-import net.eanfang.client.ui.activity.worksapce.notice.OfficialListActivity;
-import net.eanfang.client.ui.activity.worksapce.notice.SystemNoticeActivity;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -61,7 +58,6 @@ import io.rong.imlib.model.UserInfo;
 import q.rorbin.badgeview.QBadgeView;
 
 import static android.app.Activity.RESULT_CANCELED;
-import static android.app.Activity.RESULT_OK;
 import static com.okgo.utils.HttpUtils.runOnUiThread;
 
 /**
@@ -360,9 +356,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
      */
     private void setUserInfo(String s) {
 
-        if (TextUtils.isEmpty(s)) {
-            return;
-        }
+        if (TextUtils.isEmpty(s)) return;
 
 
         EanfangHttp.get(UserApi.POST_USER_INFO + s)
@@ -382,9 +376,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
 
     private void delectInvalidGroup(List<GroupsBean> list) {
 
-        if (conversationsId.size() == 0) {
-            return;
-        }
+        if (conversationsId.size() == 0) return;
 
 
         if (list.size() == 0) {//我的群组为空  删除所有的群组会话

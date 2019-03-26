@@ -19,6 +19,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.security.SecurityPersonalBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.photopicker.com.util.BGASpaceItemDecoration;
@@ -70,7 +71,6 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
     private QueryEntry queryEntry;
     private int mPage = 1;
     private SecurityHotListAdapter securityHotListAdapter;
-    private boolean isFirst = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +105,14 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
                     loadMore();
                 }
             }
+        });
+
+        securityHotListAdapter.setOnItemClickListener((adapter, view, position) -> {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("bean", securityHotListAdapter.getData().get(position));
+            bundle.putInt("friend", securityHotListAdapter.getData().get(position).getFriend());
+            bundle.putString("type", "hot");
+            JumpItent.jump(SecurityPersonalActivity.this, SecurityDetailActivity.class, bundle);
         });
 
     }
@@ -185,11 +193,20 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
     @OnClick({R.id.tv_comment, R.id.tv_like, R.id.tv_aboutme})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            // 评论列表
             case R.id.tv_comment:
+                JumpItent.jump(SecurityPersonalActivity.this, SecurityCommentListActivity.class);
                 break;
+            // 点赞列表
             case R.id.tv_like:
+                Bundle bundle_like = new Bundle();
+                bundle_like.putString("type", "like");
+                JumpItent.jump(SecurityPersonalActivity.this, SecurityPersonalPublicListActivity.class, bundle_like);
                 break;
             case R.id.tv_aboutme:
+                Bundle bundle_about = new Bundle();
+                bundle_about.putString("type", "about");
+                JumpItent.jump(SecurityPersonalActivity.this, SecurityPersonalPublicListActivity.class, bundle_about);
                 break;
             default:
                 break;
@@ -206,7 +223,8 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
     }
 
     public void refresh() {
-        mPage = 1;//下拉永远第一页
+        //下拉永远第一页
+        mPage = 1;
         initData();
     }
 

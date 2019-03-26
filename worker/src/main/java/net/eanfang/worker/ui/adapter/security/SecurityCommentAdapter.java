@@ -36,6 +36,24 @@ public class SecurityCommentAdapter extends BaseQuickAdapter<SecurityDetailBean.
         helper.setText(R.id.tv_content, item.getCommentsContent());
         //时间
         helper.setText(R.id.tv_time, item.getCreateTime());
+        // 是否是好友
+        /**
+         * 是否是好友 2 好友 1 不是好友
+         * */
+        if (item.getFriend() == 2) {
+            helper.setVisible(R.id.tv_friend, true);
+        } else {
+            helper.setVisible(R.id.tv_friend, false);
+        }
+        // 是否认证
+        /**
+         * 是否认证
+         * */
+        if (item.getVerifyStatus() == 1) {
+            helper.setVisible(R.id.iv_certifi, true);
+        } else {
+            helper.setVisible(R.id.iv_certifi, false);
+        }
 
     }
 }
