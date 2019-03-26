@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.RepairApi;
@@ -22,6 +23,7 @@ import com.eanfang.util.QueryEntry;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.worksapce.online.ExpertListActivity;
 import net.eanfang.client.ui.adapter.repair.FaultLibraryAdapter;
 
 import java.util.ArrayList;
@@ -38,7 +40,7 @@ import static com.eanfang.config.EanfangConst.TOP_REFRESH;
  * @date on 2018/5/28  11:37
  * @decision 故障库
  */
-public class FaultLibraryActivity extends BaseActivity implements SwipyRefreshLayout.OnRefreshListener {
+public class FaultLibraryActivity extends BaseActivity implements SwipyRefreshLayout.OnRefreshListener, View.OnClickListener {
 
     private static final int RESULT_DATACODE = 2000;
     @BindView(R.id.rv_faultList)
@@ -47,6 +49,8 @@ public class FaultLibraryActivity extends BaseActivity implements SwipyRefreshLa
     SwipyRefreshLayout swiprefresh;
     @BindView(R.id.et_search)
     EditText etSearch;
+    @BindView(R.id.tv_go)
+    TextView tvGo;
     //搜索状态不让用户上拉
     private boolean mFlag = false;
 
@@ -54,7 +58,7 @@ public class FaultLibraryActivity extends BaseActivity implements SwipyRefreshLa
     private List<FaultListBean.ListBean> mFaultListBeanList = new ArrayList<>();
     // 系统类别id
     private String businessOneCode = "";
-
+    private int i = 1;
     private static int page = 1;
 
     @Override
@@ -62,15 +66,39 @@ public class FaultLibraryActivity extends BaseActivity implements SwipyRefreshLa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fault_library);
         ButterKnife.bind(this);
-        initView();
-        initData();
-        initListener();
+        if (getIntent().getIntExtra("GZK", 0) == 3) {
+            initView();
+            initData();
+
+            faultLibraryAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                    View viewByPosition = faultLibraryAdapter.getViewByPosition(position, R.id.check_true);
+                    i++;
+                    if (i % 2 == 1) {
+                        viewByPosition.setVisibility(View.VISIBLE);
+                    } else {
+                        viewByPosition.setVisibility(View.GONE);
+                    }
+                }
+            });
+            tvGo.setOnClickListener(this);
+        } else {
+            tvGo.setVisibility(View.GONE);
+            initView();
+            initData();
+            initListener();
+        }
     }
 
 
     private void initView() {
         setLeftBack();
-        setTitle("故障库");
+        if (getIntent().getIntExtra("GZK", 0) == 3) {
+            setTitle("选择故障类型");
+        } else {
+            setTitle("故障库");
+        }
         page = 1;
         businessOneCode = getIntent().getStringExtra("businessOneCode");
         rvFaultList.setLayoutManager(new LinearLayoutManager(this));
@@ -138,7 +166,7 @@ public class FaultLibraryActivity extends BaseActivity implements SwipyRefreshLa
 
         EanfangHttp.post(RepairApi.GET_FAULT_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<FaultListBean>(FaultLibraryActivity.this, false, FaultListBean.class, bean -> {
+                .execute(new EanfangCallback<FaultListBean>(FaultLibraryActivity.this, false, FaultListBean.class, (FaultListBean bean) -> {
                     if (bean != null) {
                         if (bean.getList().size() == 0) {
                             ToastUtil.get().showToast(FaultLibraryActivity.this, "暂无数据");
@@ -219,5 +247,11 @@ public class FaultLibraryActivity extends BaseActivity implements SwipyRefreshLa
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent in = new Intent(FaultLibraryActivity.this, ExpertListActivity.class);
+        startActivity(in);
     }
 }

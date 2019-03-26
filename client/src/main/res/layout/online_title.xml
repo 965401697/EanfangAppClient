@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen_85"
+    android:layout_marginTop="@dimen/dimen_20"
+    android:background="@color/white">
+
+
+    <ImageView
+        android:layout_width="@dimen/dimen_24"
+        android:layout_height="@dimen/dimen_20"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/dimen_10"
+        android:layout_toLeftOf="@+id/tv_title_desc"
+        android:src="@mipmap/left" />
+
+    <TextView
+        android:id="@+id/tv_title_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="厂商售后"
+        android:textColor="#FF9037" />
+
+    <ImageView
+        android:layout_width="@dimen/dimen_24"
+        android:layout_height="@dimen/dimen_20"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dimen_10"
+        android:layout_toRightOf="@+id/tv_title_desc"
+        android:src="@mipmap/right" />
+
+    <LinearLayout
+        android:layout_width="@dimen/dimen_150"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:id="@+id/tv_more"
+        android:orientation="vertical">
+    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/dimen_12"
+        android:layout_toLeftOf="@+id/iv_m"
+        android:text="更多"
+        android:textColor="@color/color_bottom"
+        android:textSize="@dimen/textSize_12" />
+
+
+    <ImageView
+        android:id="@+id/iv_m"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="@dimen/dimen_40"
+        android:src="@mipmap/ic_icon_right" />
+
+</RelativeLayout>

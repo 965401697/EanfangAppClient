@@ -1133,7 +1133,8 @@
         <activity android:name=".ui.activity.worksapce.security.SecurityCreateActivity" />
         <activity android:name=".ui.activity.worksapce.security.SecurityDetailActivity" />
         <activity android:name=".ui.activity.my.specialist.SpecialistSkillInfoDetailActivity" />
-        <activity android:name=".ui.activity.worksapce.online.ExpertOnlineActivity" />
+        <activity android:name=".ui.activity.worksapce.online.ExpertOnlineActivity"
+            android:launchMode="singleTask"/>
         <activity android:name=".ui.activity.worksapce.online.SystemTypeActivity" />
         <activity android:name=".ui.activity.worksapce.online.ManufacturerAfterSaleActivity" />
         <activity android:name=".ui.activity.worksapce.online.ExpertListActivity" />

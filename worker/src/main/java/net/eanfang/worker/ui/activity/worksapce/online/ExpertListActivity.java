@@ -76,6 +76,8 @@ public class ExpertListActivity extends BaseWorkerActivity implements SwipeRefre
                 Intent intent = new Intent(ExpertListActivity.this, AskExpertActivity.class);
                 intent.putExtra("com", list.get(position).getUserId());
                 intent.putExtra("com2", list.get(position).getCompany());
+                intent.putExtra("com3", list.get(position).getAccId());
+                intent.putExtra("com4", list.get(position).getExpertName());
                 startActivity(intent);
             }
         });

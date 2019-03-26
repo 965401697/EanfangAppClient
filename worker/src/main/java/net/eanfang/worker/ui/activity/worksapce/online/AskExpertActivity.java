@@ -25,6 +25,8 @@ import net.eanfang.worker.ui.base.BaseWorkerActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Conversation;
 
 public class AskExpertActivity extends BaseWorkerActivity {
 
@@ -181,8 +183,10 @@ public class AskExpertActivity extends BaseWorkerActivity {
             case R.id.ll_money:
                 break;
             case R.id.tv_ask_now:
-                Intent intent = new Intent(AskExpertActivity.this, FreeAskActivity.class);
-                startActivity(intent);
+                Intent intent = getIntent();
+                String accId = intent.getStringExtra("com3");
+                String expertName = intent.getStringExtra("com4");
+                RongIM.getInstance().startConversation(AskExpertActivity.this, Conversation.ConversationType.PRIVATE, accId, expertName);
                 break;
         }
     }

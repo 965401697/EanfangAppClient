@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_white"
-    android:orientation="vertical"
-    tools:context="net.eanfang.client.ui.activity.worksapce.repair.SelectDeviceTypeActivity">
+    android:orientation="vertical">
 
     <include layout="@layout/header" />
 
@@ -29,6 +28,7 @@
             android:paddingLeft="@dimen/dimen_20"
             android:textSize="@dimen/textSize_12" />
     </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -64,6 +64,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_15"
                 android:scrollbars="none" />
+            <TextView
+                android:id="@+id/tv_go"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="@dimen/dimen_20"
+                android:layout_marginTop="@dimen/dimen_270"
+                android:background="@mipmap/ic_next_background"
+                android:gravity="center"
+                android:padding="@dimen/dimen_30"
+                android:text="下一步"
+                android:textColor="@color/color_white"
+                android:textSize="@dimen/textSize_13" />
         </RelativeLayout>
 
 
@@ -76,5 +89,8 @@
             android:gravity="center"
             android:text="暂无数据"
             android:visibility="gone" />
+
     </LinearLayout>
+
+
 </LinearLayout>

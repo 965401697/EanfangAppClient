@@ -15,10 +15,23 @@
 
     <TextView
         android:id="@+id/tv_faultDes"
-        android:layout_width="wrap_content"
-        android:layout_marginLeft="@dimen/dimen_30"
+        android:layout_width="@dimen/dimen_336"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_30"
         android:textColor="@color/color_client_neworder"
         android:textSize="@dimen/textSize_13" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/check_true"
+            android:layout_width="@dimen/dimen_38"
+            android:layout_height="@dimen/dimen_38"
+            android:src="@drawable/check_true" />
+    </LinearLayout>
 
 </LinearLayout>
