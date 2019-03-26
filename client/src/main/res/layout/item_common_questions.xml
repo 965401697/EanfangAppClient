@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen_160"
+    android:background="#FFFFFF"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_2"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:background="@color/color_new_line" />
+    <TextView
+        android:id="@+id/tv_fault_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_40"
+        android:layout_marginTop="@dimen/dimen_30"
+        android:text="主机滴滴(ˇ?ˇ) 想～"
+        android:textColor="@color/roll_title"
+        android:textSize="@dimen/textSize_14" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_20">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/iv_expert_header"
+            android:layout_width="@dimen/dimen_55"
+            android:layout_height="@dimen/dimen_55"
+            android:layout_centerVertical="true"
+
+            android:layout_marginLeft="@dimen/dimen_40"
+            fresco:placeholderImage="@mipmap/ic_header"
+            fresco:roundAsCircle="true" />
+
+        <TextView
+            android:id="@+id/tv_expert_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/iv_expert_header"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dimen_25"
+            android:layout_toRightOf="@+id/iv_expert_header"
+            android:text="推荐专家"
+            android:textColor="@color/roll_content"
+            android:textSize="@dimen/textSize_13" />
+
+        <ImageView
+            android:id="@+id/tv_picture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/tv_expert_name"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dimen_15"
+            android:layout_toRightOf="@+id/tv_expert_name"
+            android:src="@mipmap/rz" />
+
+        <TextView
+            android:id="@+id/tv_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/iv_expert_header"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dimen_25"
+            android:layout_marginRight="@dimen/dimen_40"
+            android:layout_toRightOf="@+id/iv_expert_header"
+            android:singleLine="true"
+            android:text=""
+            android:textColor="@color/color_bottom"
+            android:textSize="@dimen/textSize_13" />
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

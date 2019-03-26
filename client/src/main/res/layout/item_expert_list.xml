@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_marginBottom="@dimen/dimen_20"
+    android:background="@color/color_white">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/iv_expert_header"
+        android:layout_width="@dimen/dimen_100"
+        android:layout_height="@dimen/dimen_100"
+        android:layout_marginLeft="@dimen/dimen_40"
+        android:layout_marginTop="@dimen/dimen_40"
+        fresco:placeholderImage="@mipmap/ic_header"
+        fresco:roundAsCircle="true" />
+
+    <TextView
+        android:id="@+id/tv_expert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/iv_expert_header"
+        android:layout_marginLeft="@dimen/dimen_40"
+        android:layout_toRightOf="@+id/iv_expert_header"
+        android:text="电视监控专家"
+        android:textColor="@color/roll_title"
+        android:textSize="@dimen/textSize_15" />
+
+    <ImageView
+        android:layout_width="@dimen/dimen_24"
+        android:layout_height="@dimen/dimen_24"
+        android:layout_alignTop="@+id/tv_expert"
+        android:layout_marginLeft="@dimen/dimen_10"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:layout_toRightOf="@+id/tv_expert"
+        android:src="@mipmap/rz" />
+    
+    <TextView
+        android:id="@+id/tv_line_status"
+        android:layout_width="@dimen/dimen_110"
+        android:text="在线"
+        android:layout_alignTop="@+id/tv_expert"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/dimen_40"
+        android:gravity="center"
+        android:textColor="#FB5B3B"
+        android:textSize="@dimen/textSize_12"
+        android:background="@drawable/shape_expert_online"
+        android:layout_height="@dimen/dimen_50" />
+
+    <TextView
+        android:id="@+id/tv_good"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_expert"
+        android:layout_marginLeft="@dimen/dimen_40"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:layout_toRightOf="@+id/iv_expert_header"
+        android:text="好评率：98%"
+        android:textColor="@color/roll_title"
+        android:textSize="@dimen/textSize_13" />
+
+    <TextView
+        android:id="@+id/tv_major"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_good"
+        android:layout_marginBottom="@dimen/dimen_40"
+        android:layout_marginLeft="@dimen/dimen_40"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:layout_toRightOf="@+id/iv_expert_header"
+        android:text="好评率：98%"
+        android:textColor="@color/roll_title"
+        android:textSize="@dimen/textSize_13" />
+
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_2"
+        android:layout_below="@+id/tv_major"
+        android:background="@color/color_new_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_100"
+        android:layout_below="@+id/line">
+
+        <ImageView
+            android:layout_width="@dimen/dimen_40"
+            android:layout_height="@dimen/dimen_40"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dimen_40"
+            android:src="@mipmap/ic_money" />
+
+        <TextView
+            android:id="@+id/tv_money"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dimen_15"
+            android:layout_weight="1"
+            android:text="好评率：98%"
+            android:textColor="#FB5B3B"
+            android:textSize="@dimen/textSize_13" />
+
+        <TextView
+            android:id="@+id/tv_ask"
+            android:layout_width="@dimen/dimen_150"
+            android:layout_height="@dimen/dimen_60"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/dimen_40"
+            android:background="@drawable/bg_btn_trouble_detail_add_trouble_two"
+            android:gravity="center"
+            android:text="问专家"
+            android:textColor="@color/color_white"
+            android:textSize="@dimen/textSize_12" />
+
+    </LinearLayout>
+</RelativeLayout>

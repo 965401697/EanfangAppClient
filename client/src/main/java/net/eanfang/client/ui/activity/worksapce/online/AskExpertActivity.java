@@ -28,7 +28,11 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
-
+/**
+ * @author
+ * @data 2018/11/9
+ * @description 专家详情
+ */
 public class AskExpertActivity extends BaseClientActivity {
 
     @BindView(R.id.iv_expert_header)
