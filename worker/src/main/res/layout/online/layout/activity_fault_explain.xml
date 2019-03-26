@@ -115,7 +115,7 @@
                         android:layout_marginLeft="@dimen/dimen_40"
                         android:layout_marginRight="@dimen/dimen_40"
                         android:layout_marginTop="@dimen/dimen_20"
-                        android:text="内容。。。"
+                        android:text=""
                         android:textColor="@color/color_bottom"
                         android:textSize="@dimen/textSize_13" />
 
