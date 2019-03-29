@@ -7,21 +7,38 @@
         android:id="@+id/header"
         layout="@layout/header" />
 
-    <EditText
-        android:id="@+id/et_new_name"
+    <LinearLayout
+        android:id="@+id/ll_new_name"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_90"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/header"
         android:background="@color/white"
-        android:hint="请输入部门名称"
-        android:paddingLeft="@dimen/dimen_36"
-        android:textSize="@dimen/textSize_14" />
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_36"
+            android:text="部门名称"
+            android:textColor="@color/color_client_neworder"
+            android:textSize="@dimen/textSize_14" />
+
+        <EditText
+            android:id="@+id/et_new_name"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_90"
+            android:background="@color/white"
+            android:hint="请输入部门名称"
+            android:paddingLeft="@dimen/dimen_36"
+            android:textSize="@dimen/textSize_14" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll_section"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_90"
-        android:layout_below="@+id/et_new_name"
+        android:layout_below="@+id/ll_new_name"
         android:layout_marginTop="@dimen/dimen_20"
         android:background="@color/white">
 
