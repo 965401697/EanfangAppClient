@@ -31,6 +31,7 @@ public class OrgOneLevelItem extends TreeItemGroup<OrganizationBean> {
     @Nullable
     @Override
     protected List<TreeItem> initChildList(OrganizationBean organizationBean) {
+        setExpand(true);
         return ItemHelperFactory.createTreeItemList(organizationBean.getSectionBeanList(), OrgTwoLevelItem.class, this);
     }
 

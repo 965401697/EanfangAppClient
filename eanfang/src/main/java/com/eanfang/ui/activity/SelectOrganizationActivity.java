@@ -87,7 +87,7 @@ public class SelectOrganizationActivity extends BaseActivity {
             setTitle("组织架构");
             treeRecyclerAdapter = new TreeRecyclerAdapter(TreeRecyclerType.SHOW_ALL);
         } else {
-            treeRecyclerAdapter = new TreeRecyclerAdapter();
+            treeRecyclerAdapter = new TreeRecyclerAdapter(TreeRecyclerType.SHOW_EXPAND);
         }
 
         initViews();
