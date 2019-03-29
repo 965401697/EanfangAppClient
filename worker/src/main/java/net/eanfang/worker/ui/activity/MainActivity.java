@@ -52,7 +52,6 @@ import com.yaf.base.entity.WorkerEntity;
 import net.eanfang.worker.BuildConfig;
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.im.ConversationActivity;
-import net.eanfang.worker.ui.activity.worksapce.MaintenanceActivity;
 import net.eanfang.worker.ui.activity.worksapce.SetPasswordActivity;
 import net.eanfang.worker.ui.activity.worksapce.WorkDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.notice.MessageListActivity;
@@ -67,7 +66,6 @@ import net.eanfang.worker.ui.fragment.WorkspaceFragment;
 import net.eanfang.worker.ui.receiver.ReceiverInit;
 import net.eanfang.worker.util.PrefUtils;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 

@@ -24,7 +24,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.AllMessageBean;
 import com.eanfang.model.NoticeEntity;
-import com.eanfang.model.security.SecurityHotListBean;
+import com.eanfang.model.security.SecurityListBean;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JsonUtils;
@@ -55,7 +55,7 @@ import net.eanfang.worker.ui.activity.worksapce.security.SecurityDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.security.SecurityListActivity;
 import net.eanfang.worker.ui.activity.worksapce.tender.WorkerTenderControlActivity;
 import net.eanfang.worker.ui.adapter.HomeWaitAdapter;
-import net.eanfang.worker.ui.adapter.security.SecurityHotListAdapter;
+import net.eanfang.worker.ui.adapter.security.SecurityListAdapter;
 import net.eanfang.worker.ui.widget.CustomHomeViewPager;
 import net.eanfang.worker.ui.widget.HomeWaitIndicator;
 import net.eanfang.worker.ui.widget.SignCtrlView;
@@ -126,7 +126,7 @@ public class HomeFragment extends BaseFragment {
      * 安防圈
      */
     private RecyclerView rvSecurity;
-    private SecurityHotListAdapter securityHotListAdapter;
+    private SecurityListAdapter securityListAdapter;
     private TextView tvNoSecurity;
 
     @Override
@@ -251,12 +251,12 @@ public class HomeFragment extends BaseFragment {
      * 安防圈
      */
     private void initSecurity() {
-        securityHotListAdapter = new SecurityHotListAdapter(getActivity());
+        securityListAdapter = new SecurityListAdapter(getActivity());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         rvSecurity.setLayoutManager(layoutManager);
         rvSecurity.setNestedScrollingEnabled(false);
         rvSecurity.addItemDecoration(new BGASpaceItemDecoration(20));
-        securityHotListAdapter.bindToRecyclerView(rvSecurity);
+        securityListAdapter.bindToRecyclerView(rvSecurity);
         doGetSecurityData();
     }
 
@@ -266,12 +266,12 @@ public class HomeFragment extends BaseFragment {
         mQueryEntry.setSize(3);
         EanfangHttp.post(NewApiService.SECURITY_RECOMMEND)
                 .upJson(JsonUtils.obj2String(mQueryEntry))
-                .execute(new EanfangCallback<SecurityHotListBean>(getActivity(), true, SecurityHotListBean.class) {
+                .execute(new EanfangCallback<SecurityListBean>(getActivity(), true, SecurityListBean.class) {
 
                     @Override
-                    public void onSuccess(SecurityHotListBean bean) {
-                        securityHotListAdapter.getData().clear();
-                        securityHotListAdapter.setNewData(bean.getList());
+                    public void onSuccess(SecurityListBean bean) {
+                        securityListAdapter.getData().clear();
+                        securityListAdapter.setNewData(bean.getList());
                         if (bean.getList().size() > 0) {
                             tvNoSecurity.setVisibility(View.GONE);
                         } else {
@@ -426,14 +426,13 @@ public class HomeFragment extends BaseFragment {
                 }
             }
         });
-        securityHotListAdapter.setOnItemClickListener((adapter, view, position) -> {
+        securityListAdapter.setOnItemClickListener((adapter, view, position) -> {
             Bundle bundle = new Bundle();
-            bundle.putSerializable("bean", securityHotListAdapter.getData().get(position));
-            bundle.putString("type", "hot");
-            bundle.putInt("friend", securityHotListAdapter.getData().get(position).getFriend());
+            bundle.putSerializable("bean", securityListAdapter.getData().get(position));
+            bundle.putInt("friend", securityListAdapter.getData().get(position).getFriend());
             JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
         });
-        securityHotListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+        securityListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             switch (view.getId()) {
                 case R.id.tv_isFocus:
                 case R.id.ll_like:
@@ -441,9 +440,8 @@ public class HomeFragment extends BaseFragment {
                 case R.id.ll_pic:
                 case R.id.iv_share:
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable("bean", securityHotListAdapter.getData().get(position));
-                    bundle.putInt("friend", securityHotListAdapter.getData().get(position).getFriend());
-                    bundle.putString("type", "hot");
+                    bundle.putSerializable("bean", securityListAdapter.getData().get(position));
+                    bundle.putInt("friend", securityListAdapter.getData().get(position).getFriend());
                     JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
                     break;
                 default:

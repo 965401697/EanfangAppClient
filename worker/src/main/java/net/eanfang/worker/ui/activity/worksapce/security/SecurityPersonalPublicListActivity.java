@@ -12,14 +12,14 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.security.SecurityHotListBean;
+import com.eanfang.model.security.SecurityListBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 import com.photopicker.com.util.BGASpaceItemDecoration;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.adapter.security.SecurityHotListAdapter;
+import net.eanfang.worker.ui.adapter.security.SecurityListAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,7 +41,7 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
 
     private QueryEntry queryEntry;
     private int mPage = 1;
-    private SecurityHotListAdapter securityHotListAdapter;
+    private SecurityListAdapter securityListAdapter;
 
     private String mType = "";
     String mLike = "like";
@@ -67,19 +67,19 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
         } else {
             setTitle("@我的");
         }
-        securityHotListAdapter = new SecurityHotListAdapter(SecurityPersonalPublicListActivity.this);
-        securityHotListAdapter.bindToRecyclerView(rvSecurity);
+        securityListAdapter = new SecurityListAdapter(SecurityPersonalPublicListActivity.this);
+        securityListAdapter.bindToRecyclerView(rvSecurity);
 
         rvSecurity.setLayoutManager(new LinearLayoutManager(this));
         swipreFresh.setOnRefreshListener(this);
 
         rvSecurity.addItemDecoration(new BGASpaceItemDecoration(20));
-        securityHotListAdapter.setOnLoadMoreListener(this, rvSecurity);
+        securityListAdapter.setOnLoadMoreListener(this, rvSecurity);
 
-        securityHotListAdapter.setOnItemClickListener((adapter, view, position) -> {
+        securityListAdapter.setOnItemClickListener((adapter, view, position) -> {
 //            Bundle bundle = new Bundle();
-//            bundle.putSerializable("bean", securityHotListAdapter.getData().get(position));
-//            bundle.putInt("friend", securityHotListAdapter.getData().get(position).getFriend());
+//            bundle.putSerializable("bean", securityListAdapter.getData().get(position));
+//            bundle.putInt("friend", securityListAdapter.getData().get(position).getFriend());
 //            bundle.putString("type", "hot");
 //            JumpItent.jump(SecurityPersonalPublicListActivity.this, SecurityDetailActivity.class, bundle);
         });
@@ -103,20 +103,20 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
 
         EanfangHttp.post(mUrl)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<SecurityHotListBean>(SecurityPersonalPublicListActivity.this, true, SecurityHotListBean.class) {
+                .execute(new EanfangCallback<SecurityListBean>(SecurityPersonalPublicListActivity.this, true, SecurityListBean.class) {
                     @Override
-                    public void onSuccess(SecurityHotListBean bean) {
+                    public void onSuccess(SecurityListBean bean) {
                         if (mPage == 1) {
 
-                            securityHotListAdapter.getData().clear();
-                            securityHotListAdapter.setNewData(bean.getList());
-                            securityHotListAdapter.disableLoadMoreIfNotFullPage(rvSecurity);
+                            securityListAdapter.getData().clear();
+                            securityListAdapter.setNewData(bean.getList());
+                            securityListAdapter.disableLoadMoreIfNotFullPage(rvSecurity);
 
                             swipreFresh.setRefreshing(false);
-                            securityHotListAdapter.loadMoreComplete();
+                            securityListAdapter.loadMoreComplete();
 
                             if (bean.getList().size() < 10) {
-                                securityHotListAdapter.loadMoreEnd();
+                                securityListAdapter.loadMoreEnd();
                                 queryEntry = null;
                             }
 
@@ -127,10 +127,10 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
                             }
 
                         } else {
-                            securityHotListAdapter.addData(bean.getList());
-                            securityHotListAdapter.loadMoreComplete();
+                            securityListAdapter.addData(bean.getList());
+                            securityListAdapter.loadMoreComplete();
                             if (bean.getList().size() < 10) {
-                                securityHotListAdapter.loadMoreEnd();
+                                securityListAdapter.loadMoreEnd();
                             }
                         }
                     }
@@ -138,8 +138,8 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
                     @Override
                     public void onNoData(String message) {
                         swipreFresh.setRefreshing(false);
-                        securityHotListAdapter.loadMoreEnd();//没有数据了
-                        if (securityHotListAdapter.getData().size() == 0) {
+                        securityListAdapter.loadMoreEnd();//没有数据了
+                        if (securityListAdapter.getData().size() == 0) {
                             tvNoDatas.setVisibility(View.VISIBLE);
                         } else {
                             tvNoDatas.setVisibility(View.GONE);

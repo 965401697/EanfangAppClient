@@ -233,7 +233,7 @@ public class AddTroubleActivity extends BaseWorkerActivity {
         } else if (requestCode == REQUEST_FAULTDESINFO && resultCode == RESULT_FAULTDESCODE) {
             tvFaultDescripte.setText(data.getStringExtra("faultDes"));
 //            String mGetImgs = data.getStringExtra("faultImgs");
-            dataId = Long.valueOf(data.getStringExtra("datasId"));
+            dataId = Long.valueOf(data.getStringExtra("deviceFailureId"));
 //            String[] imgs = mGetImgs.split(",");
             ArrayList<String> arrayImgList = new ArrayList<String>();
 //            arrayImgList.addAll(Stream.of(Arrays.asList(imgs)).map(url -> (BuildConfig.OSS_SERVER + "failure/" + url).toString()).toList());

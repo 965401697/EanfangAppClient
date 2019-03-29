@@ -9,7 +9,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.application.EanfangApplication;
-import com.eanfang.model.security.SecurityHotListBean;
+import com.eanfang.model.security.SecurityListBean;
 import com.eanfang.util.ETimeUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
@@ -27,12 +27,12 @@ import java.util.Arrays;
  * @description 安防圈adapter
  */
 
-public class SecurityHotListAdapter extends BaseQuickAdapter<SecurityHotListBean.ListBean, BaseViewHolder> {
+public class SecurityListAdapter extends BaseQuickAdapter<SecurityListBean.ListBean, BaseViewHolder> {
 
     private Context context;
     private ArrayList<String> picList = new ArrayList<>();
 
-    public SecurityHotListAdapter(Context mContext) {
+    public SecurityListAdapter(Context mContext) {
         super(R.layout.layout_security_item);
         this.context = mContext;
     }
@@ -46,7 +46,7 @@ public class SecurityHotListAdapter extends BaseQuickAdapter<SecurityHotListBean
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, SecurityHotListBean.ListBean item) {
+    protected void convert(BaseViewHolder helper, SecurityListBean.ListBean item) {
         SimpleDraweeView ivHeader = helper.getView(R.id.iv_seucrity_header);
         BGANinePhotoLayout ninePhotoLayout = helper.getView(R.id.snpl_pic);
         // 发布人

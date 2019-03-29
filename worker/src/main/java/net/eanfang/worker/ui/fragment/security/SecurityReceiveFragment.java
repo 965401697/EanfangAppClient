@@ -47,7 +47,6 @@ public class SecurityReceiveFragment extends TemplateItemListFragment {
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
         securityCommentListAdapter.setOnItemClickListener((adapter, view, position) -> {
             Bundle bundle = new Bundle();
-            bundle.putString("type", "hot");
             JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
         });
     }

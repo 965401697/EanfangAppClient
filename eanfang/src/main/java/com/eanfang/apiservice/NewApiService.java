@@ -660,7 +660,7 @@ public interface NewApiService {
     /**
      * 安防圈 关注列表
      */
-    String SERCURITY_FOUCS = BASE_URL + "/yaf_spc/spcircle/followerList";
+    String SERCURITY_FOUCS = BASE_URL + "/yaf_spc/spcircle/followersList";
     /**
      * 安防圈 创建
      */

@@ -25,7 +25,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.photopicker.com.util.BGASpaceItemDecoration;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.adapter.security.SecurityHotListAdapter;
+import net.eanfang.worker.ui.adapter.security.SecurityListAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,7 +70,7 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
 
     private QueryEntry queryEntry;
     private int mPage = 1;
-    private SecurityHotListAdapter securityHotListAdapter;
+    private SecurityListAdapter securityListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,14 +84,14 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
     private void initView() {
         setLeftBack();
         setTitle("我的安防圈");
-        securityHotListAdapter = new SecurityHotListAdapter(SecurityPersonalActivity.this);
-        securityHotListAdapter.bindToRecyclerView(rvSecurity);
+        securityListAdapter = new SecurityListAdapter(SecurityPersonalActivity.this);
+        securityListAdapter.bindToRecyclerView(rvSecurity);
 
         rvSecurity.setLayoutManager(new LinearLayoutManager(this));
         swipreFresh.setOnRefreshListener(this);
 
         rvSecurity.addItemDecoration(new BGASpaceItemDecoration(20));
-        securityHotListAdapter.setOnLoadMoreListener(this, rvSecurity);
+        securityListAdapter.setOnLoadMoreListener(this, rvSecurity);
 
         ivHead.setImageURI((Uri.parse(BuildConfig.OSS_SERVER + EanfangApplication.get().getUser().getAccount().getAvatar())));
         tvName.setText(EanfangApplication.getApplication().getUser().getAccount().getNickName());
@@ -107,11 +107,10 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
             }
         });
 
-        securityHotListAdapter.setOnItemClickListener((adapter, view, position) -> {
+        securityListAdapter.setOnItemClickListener((adapter, view, position) -> {
             Bundle bundle = new Bundle();
-            bundle.putSerializable("bean", securityHotListAdapter.getData().get(position));
-            bundle.putInt("friend", securityHotListAdapter.getData().get(position).getFriend());
-            bundle.putString("type", "hot");
+            bundle.putSerializable("bean", securityListAdapter.getData().get(position));
+            bundle.putInt("friend", securityListAdapter.getData().get(position).getFriend());
             JumpItent.jump(SecurityPersonalActivity.this, SecurityDetailActivity.class, bundle);
         });
 
@@ -144,15 +143,15 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
                             //全部动态数
                             tvAllstatae.setText(bean.getSpccount() + "");
 
-                            securityHotListAdapter.getData().clear();
-                            securityHotListAdapter.setNewData(bean.getPageUtil().getList());
-                            securityHotListAdapter.disableLoadMoreIfNotFullPage(rvSecurity);
+                            securityListAdapter.getData().clear();
+                            securityListAdapter.setNewData(bean.getPageUtil().getList());
+                            securityListAdapter.disableLoadMoreIfNotFullPage(rvSecurity);
 
                             swipreFresh.setRefreshing(false);
-                            securityHotListAdapter.loadMoreComplete();
+                            securityListAdapter.loadMoreComplete();
 
                             if (bean.getPageUtil().getList().size() < 10) {
-                                securityHotListAdapter.loadMoreEnd();
+                                securityListAdapter.loadMoreEnd();
                                 queryEntry = null;
                             }
 
@@ -163,10 +162,10 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
                             }
 
                         } else {
-                            securityHotListAdapter.addData(bean.getPageUtil().getList());
-                            securityHotListAdapter.loadMoreComplete();
+                            securityListAdapter.addData(bean.getPageUtil().getList());
+                            securityListAdapter.loadMoreComplete();
                             if (bean.getPageUtil().getList().size() < 10) {
-                                securityHotListAdapter.loadMoreEnd();
+                                securityListAdapter.loadMoreEnd();
                             }
                         }
                     }
@@ -174,8 +173,8 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
                     @Override
                     public void onNoData(String message) {
                         swipreFresh.setRefreshing(false);
-                        securityHotListAdapter.loadMoreEnd();//没有数据了
-                        if (securityHotListAdapter.getData().size() == 0) {
+                        securityListAdapter.loadMoreEnd();//没有数据了
+                        if (securityListAdapter.getData().size() == 0) {
                             tvNoDatas.setVisibility(View.VISIBLE);
                         } else {
                             tvNoDatas.setVisibility(View.GONE);

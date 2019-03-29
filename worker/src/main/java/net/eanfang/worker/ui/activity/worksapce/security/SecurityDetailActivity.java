@@ -25,9 +25,8 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.security.SecurityCommentBean;
 import com.eanfang.model.security.SecurityDetailBean;
 import com.eanfang.model.security.SecurityFoucsBean;
-import com.eanfang.model.security.SecurityFoucsListBean;
-import com.eanfang.model.security.SecurityHotListBean;
 import com.eanfang.model.security.SecurityLikeBean;
+import com.eanfang.model.security.SecurityListBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.ETimeUtils;
 import com.eanfang.util.StringUtils;
@@ -74,8 +73,6 @@ public class SecurityDetailActivity extends BaseActivity {
     BGASortableNinePhotoLayout snplPic;
     @BindView(R.id.iv_like)
     ImageView ivLike;
-    @BindView(R.id.tv_like_num)
-    TextView tvLikeNum;
     @BindView(R.id.iv_comment)
     ImageView ivComment;
     //    @BindView(R.id.tv_comments_num)
@@ -102,11 +99,13 @@ public class SecurityDetailActivity extends BaseActivity {
     ImageView ivCertifi;
     @BindView(R.id.tv_readCount)
     TextView tvReadCount;
+    @BindView(R.id.tv_question_content)
+    TextView tvQuestionContent;
+    @BindView(R.id.ll_question)
+    LinearLayout llQuestion;
 
-    private SecurityHotListBean.ListBean hotBean;
-    private SecurityFoucsListBean.ListBean foucsBean;
+    private SecurityListBean.ListBean securityBean;
     private ArrayList<String> picList = new ArrayList<>();
-    private String mType = "";
     private Long mId;
 
     private SecurityCommentAdapter securityCommentAdapter;
@@ -139,7 +138,6 @@ public class SecurityDetailActivity extends BaseActivity {
 
 
     private void initView() {
-        mType = getIntent().getStringExtra("type");
         setLeftBack();
         setTitle("安防圈");
         securityCommentAdapter = new SecurityCommentAdapter();
@@ -152,17 +150,10 @@ public class SecurityDetailActivity extends BaseActivity {
     }
 
     private void initData() {
-        if (mType.equals("hot")) {
-            hotBean = (SecurityHotListBean.ListBean) getIntent().getSerializableExtra("bean");
-            mId = hotBean.getSpcId();
-            mLikeStatus = hotBean.getLikeStatus();
-            setHotData();
-        } else {
-            foucsBean = (SecurityFoucsListBean.ListBean) getIntent().getSerializableExtra("bean");
-            mId = foucsBean.getAskSpCircleEntity().getSpcId();
-            mLikeStatus = foucsBean.getAskSpCircleEntity().getLikeStatus();
-            setFoucsData();
-        }
+        securityBean = (SecurityListBean.ListBean) getIntent().getSerializableExtra("bean");
+        mId = securityBean.getSpcId();
+        mLikeStatus = securityBean.getLikeStatus();
+        setData();
         getComments();
     }
 
@@ -217,21 +208,17 @@ public class SecurityDetailActivity extends BaseActivity {
                 }));
     }
 
-    public void setHotData() {
+    public void setData() {
         // 发布人
-        tvName.setText(V.v(() -> hotBean.getAccountEntity().getNickName()));
+        tvName.setText(V.v(() -> securityBean.getAccountEntity().getNickName()));
         // 头像
-        ivSeucrityHeader.setImageURI((Uri.parse(BuildConfig.OSS_SERVER + V.v(() -> hotBean.getAccountEntity().getAvatar()))));
+        ivSeucrityHeader.setImageURI((Uri.parse(BuildConfig.OSS_SERVER + V.v(() -> securityBean.getAccountEntity().getAvatar()))));
         // 公司名称
-        tvCompany.setText(hotBean.getPublisherOrg().getOrgName());
+        tvCompany.setText(securityBean.getPublisherOrg().getOrgName());
         //发布的内容
-        tvContent.setText(hotBean.getSpcContent());
-        // 点赞数量
-//        tvLikeNum.setText(hotBean.getLikesCount() + "");
-        // 评论数量
-//        tvCommentsNum.setText(hotBean.getCommentCount() + "");
-        tvTime.setText(ETimeUtils.getTimeFormatText(hotBean.getCreateTime()));
-        if (hotBean.getPublisherUserId().equals(EanfangApplication.get().getUserId())) {
+        tvContent.setText(securityBean.getSpcContent());
+        tvTime.setText(ETimeUtils.getTimeFormatText(securityBean.getCreateTime()));
+        if (securityBean.getPublisherUserId().equals(EanfangApplication.get().getUserId())) {
             tvIsFocus.setVisibility(View.GONE);
         } else {
             tvIsFocus.setVisibility(View.VISIBLE);
@@ -247,7 +234,7 @@ public class SecurityDetailActivity extends BaseActivity {
         /**
          * 是否认证
          * */
-        if (hotBean.getVerifyStatus() == 1) {
+        if (securityBean.getVerifyStatus() == 1) {
             ivCertifi.setVisibility(View.VISIBLE);
         } else {
             ivCertifi.setVisibility(View.GONE);
@@ -255,7 +242,7 @@ public class SecurityDetailActivity extends BaseActivity {
         /**
          * 0 是关注 1 是未关注
          * */
-        if (hotBean.getFollowsStatus() == 0) {
+        if (securityBean.getFollowsStatus() == 0) {
             tvIsFocus.setText("取消关注");
             isFoucus = true;
         } else {
@@ -265,14 +252,14 @@ public class SecurityDetailActivity extends BaseActivity {
         /**
          * 0 点赞 1 未点赞
          * */
-        if (hotBean.getLikeStatus() == 0) {
+        if (securityBean.getLikeStatus() == 0) {
             ivLike.setImageResource(R.mipmap.ic_worker_security_like_pressed);
         } else {
             ivLike.setImageResource(R.mipmap.ic_worker_security_like_unpressed);
         }
-        if (!StringUtils.isEmpty(hotBean.getSpcImg())) {
+        if (!StringUtils.isEmpty(securityBean.getSpcImg())) {
             snplPic.setVisibility(View.VISIBLE);
-            String[] pics = hotBean.getSpcImg().split(",");
+            String[] pics = securityBean.getSpcImg().split(",");
             picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
 
             snplPic.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO, REQUEST_CODE_CHOOSE_PHOTO_two));
@@ -283,73 +270,6 @@ public class SecurityDetailActivity extends BaseActivity {
         }
     }
 
-    public void setFoucsData() {
-        // 发布人
-        tvName.setText(V.v(() -> foucsBean.getAccountEntity().getNickName()));
-        // 头像
-        ivSeucrityHeader.setImageURI((Uri.parse(BuildConfig.OSS_SERVER + V.v(() -> foucsBean.getAccountEntity().getAvatar()))));
-        // 公司名称
-        if (StringUtils.isEmpty(foucsBean.getOrgUnitEntity().getName())) {
-            tvCompany.setText("个人");
-        } else {
-            tvCompany.setText(foucsBean.getOrgUnitEntity().getName());
-        }
-        //发布的内容
-        tvContent.setText(foucsBean.getAskSpCircleEntity().getSpcContent());
-        // 点赞数量
-//        tvLikeNum.setText(foucsBean.getAskSpCircleEntity().getLikesCount() + "");
-        // 评论数量
-//        tvCommentsNum.setText(foucsBean.getAskSpCircleEntity().getCommentCount() + "");
-        tvTime.setText(ETimeUtils.getTimeFormatText(foucsBean.getAskSpCircleEntity().getCreateTime()));
-        /**
-         * 0 是关注 1 是未关注
-         * */
-        if (foucsBean.getAskSpCircleEntity().getPublisherUserId().equals(EanfangApplication.get().getUserId()) || foucsBean.getFollowsStatus() == 0) {
-            tvIsFocus.setText("取消关注");
-            isFoucus = true;
-        } else {
-            tvIsFocus.setText("关注");
-            isFoucus = false;
-        }
-        /**
-         * 是否是好友 2 好友 1 不是好友
-         * */
-        if (mFriend == 2) {
-            tvFriend.setVisibility(View.VISIBLE);
-        } else {
-            tvFriend.setVisibility(View.GONE);
-        }
-        /**
-         * 是否认证
-         * */
-        if (foucsBean.getAskSpCircleEntity().getVerifyStatus() == 1) {
-            ivCertifi.setVisibility(View.VISIBLE);
-        } else {
-            ivCertifi.setVisibility(View.GONE);
-        }
-        /**
-         * 0 点赞 1 未点赞
-         * */
-        if (foucsBean.getAskSpCircleEntity().getLikeStatus() == 0) {
-            ivLike.setImageResource(R.mipmap.ic_worker_security_like_pressed);
-        } else {
-            ivLike.setImageResource(R.mipmap.ic_worker_security_like_unpressed);
-        }
-        /**
-         * 阅读数
-         * */
-        tvReadCount.setText(foucsBean.getAskSpCircleEntity().getReadCount() + "");
-        if (!StringUtils.isEmpty(foucsBean.getAskSpCircleEntity().getSpcImg())) {
-            snplPic.setVisibility(View.VISIBLE);
-            String[] pics = foucsBean.getAskSpCircleEntity().getSpcImg().split(",");
-            picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
-            snplPic.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO, REQUEST_CODE_CHOOSE_PHOTO_two));
-            snplPic.setData(picList);
-            snplPic.setEditable(false);
-        } else {
-            snplPic.setVisibility(View.GONE);
-        }
-    }
 
     @OnClick({R.id.ll_like, R.id.ll_comments, R.id.ll_share, R.id.tv_send, R.id.tv_isFocus})
     public void onViewClicked(View view) {
@@ -368,17 +288,9 @@ public class SecurityDetailActivity extends BaseActivity {
                 break;
             case R.id.tv_isFocus:
                 if (isFoucus) {
-                    if (mType.equals("hot")) {
-                        doUnHotFoucus(hotBean);
-                    } else {
-                        doUnFoucsFoucus(foucsBean);
-                    }
+                    doUnFoucus(securityBean);
                 } else {
-                    if (mType.equals("hot")) {
-                        doHotFoucus(hotBean);
-                    } else {
-                        doFoucusFoucus(foucsBean);
-                    }
+                    doFoucus(securityBean);
                 }
                 break;
 
@@ -390,7 +302,8 @@ public class SecurityDetailActivity extends BaseActivity {
     /**
      * 关注
      */
-    private void doHotFoucus(SecurityHotListBean.ListBean listBean) {
+
+    private void doFoucus(SecurityListBean.ListBean listBean) {
         SecurityFoucsBean securityFoucsBean = new SecurityFoucsBean();
         securityFoucsBean.setFollowUserId(EanfangApplication.get().getUserId());
         securityFoucsBean.setFollowCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyId());
@@ -408,28 +321,11 @@ public class SecurityDetailActivity extends BaseActivity {
                 }));
     }
 
-    private void doFoucusFoucus(SecurityFoucsListBean.ListBean listBean) {
-        SecurityFoucsBean securityFoucsBean = new SecurityFoucsBean();
-        securityFoucsBean.setFollowUserId(EanfangApplication.get().getUserId());
-        securityFoucsBean.setFollowCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyId());
-        securityFoucsBean.setFollowTopCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getTopCompanyId());
-
-        securityFoucsBean.setAsUserId(listBean.getAskSpCircleEntity().getPublisherUserId());
-        securityFoucsBean.setAsCompanyId(listBean.getAskSpCircleEntity().getPublisherCompanyId());
-        securityFoucsBean.setAsTopCompanyId(listBean.getAskSpCircleEntity().getPublisherTopCompanyId());
-        EanfangHttp.post(NewApiService.SERCURITY_FOUCUS)
-                .upJson(JSONObject.toJSONString(securityFoucsBean))
-                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
-                    showToast("关注成功");
-                    tvIsFocus.setText("取消关注");
-                    isFoucus = true;
-                }));
-    }
 
     /**
      * 取消关注
      */
-    private void doUnHotFoucus(SecurityHotListBean.ListBean listBean) {
+    private void doUnFoucus(SecurityListBean.ListBean listBean) {
         SecurityFoucsBean securityFoucsBean = new SecurityFoucsBean();
         securityFoucsBean.setFollowUserId(EanfangApplication.get().getUserId());
         securityFoucsBean.setFollowCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyId());
@@ -438,24 +334,6 @@ public class SecurityDetailActivity extends BaseActivity {
         securityFoucsBean.setAsUserId(listBean.getPublisherUserId());
         securityFoucsBean.setAsCompanyId(listBean.getPublisherCompanyId());
         securityFoucsBean.setAsTopCompanyId(listBean.getPublisherTopCompanyId());
-        EanfangHttp.post(NewApiService.SERCURITY_DELETEFOUCUS)
-                .upJson(JSONObject.toJSONString(securityFoucsBean))
-                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
-                    showToast("已取消关注");
-                    tvIsFocus.setText("关注");
-                    isFoucus = false;
-                }));
-    }
-
-    private void doUnFoucsFoucus(SecurityFoucsListBean.ListBean listBean) {
-        SecurityFoucsBean securityFoucsBean = new SecurityFoucsBean();
-        securityFoucsBean.setFollowUserId(EanfangApplication.get().getUserId());
-        securityFoucsBean.setFollowCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyId());
-        securityFoucsBean.setFollowTopCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getTopCompanyId());
-
-        securityFoucsBean.setAsUserId(listBean.getAskSpCircleEntity().getPublisherUserId());
-        securityFoucsBean.setAsCompanyId(listBean.getAskSpCircleEntity().getPublisherCompanyId());
-        securityFoucsBean.setAsTopCompanyId(listBean.getAskSpCircleEntity().getPublisherTopCompanyId());
         EanfangHttp.post(NewApiService.SERCURITY_DELETEFOUCUS)
                 .upJson(JSONObject.toJSONString(securityFoucsBean))
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {

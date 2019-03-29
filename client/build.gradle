@@ -67,8 +67,6 @@ android {
             buildConfigField("String", "BUGLY_CLIENT", "\"3a5df914f4\"")
             //Zipalign优化
             zipAlignEnabled true
-            // 移除无用的resource文件
-            shrinkResources false
             //混淆
             minifyEnabled true
             //加载默认混淆配置文件

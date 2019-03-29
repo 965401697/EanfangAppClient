@@ -128,6 +128,8 @@ public class FreeAskActivity extends BaseWorkerActivity {
             case R.id.tv_ask:
                 fillData();
                 break;
+            default:
+                break;
         }
     }
 
@@ -152,9 +154,8 @@ public class FreeAskActivity extends BaseWorkerActivity {
         }
 
 
-
         String accidentPic = PhotoUtils.getPhotoUrl("online/", snplMomentAddPhotos, uploadMap, false);
-       // detailsBean.setPictures(accidentPic);
+        // detailsBean.setPictures(accidentPic);
 //        if (uploadMap.size() <= 0) {
 //            ToastUtil.get().showToast(this, "添加现场照片可能会优先得到回答哦");
 //            return false;
@@ -167,7 +168,7 @@ public class FreeAskActivity extends BaseWorkerActivity {
                     runOnUiThread(() -> {
                         Intent intent = new Intent();
                         intent.putExtra("resultTwo", accidentPic);
-                        setResult( 101, intent);
+                        setResult(101, intent);
                         finish();
                     });
                 }
@@ -213,9 +214,9 @@ public class FreeAskActivity extends BaseWorkerActivity {
 
                     @Override
                     public void onSuccess(JSONObject bean) {
-                        Toast.makeText(FreeAskActivity.this,"提问成功",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(FreeAskActivity.this, "提问成功", Toast.LENGTH_SHORT).show();
                         int questionId = (int) bean.get("questionId");
-                        Intent intent = new Intent(FreeAskActivity.this,FaultExplainActivity.class);
+                        Intent intent = new Intent(FreeAskActivity.this, FaultExplainActivity.class);
                         intent.putExtra("QuestionIdZ", questionId);
                         startAnimActivity(intent);
                         finish();
@@ -247,13 +248,13 @@ public class FreeAskActivity extends BaseWorkerActivity {
             tvDeviceBrand.setText(Config.get().getModelNameByCode(custDeviceEntity.getModelCode(), 2));
         } else if (resultCode == RESULT_DEVICE_BRAND_CODE && requestCode == REQUEST_DEVICE_BRAND_CODE) {// 设备品牌
             //品牌型号ModelCode值-----bug 必须选择两次，否则值为空
-            if (Config.get().getBaseCodeByName(tvDeviceBrand.getText().toString().trim(), 2, Constant.MODEL).get(0)==""){
+            if (Config.get().getBaseCodeByName(tvDeviceBrand.getText().toString().trim(), 2, Constant.MODEL).get(0) == "") {
                 mModelCodeT = "5.1.18";
-            }else {
+            } else {
                 mModelCodeT = Config.get().getBaseCodeByName(tvDeviceBrand.getText().toString().trim(), 2, Constant.MODEL).get(0);
             }
 
-            Log.i("mModelCodeT",mModelCodeT+"");
+            Log.i("mModelCodeT", mModelCodeT + "");
             tvDeviceBrand.setText(data.getStringExtra("deviceBrandName"));
         }
     }

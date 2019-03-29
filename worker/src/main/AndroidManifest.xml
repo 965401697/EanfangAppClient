@@ -1133,8 +1133,9 @@
         <activity android:name=".ui.activity.worksapce.security.SecurityCreateActivity" />
         <activity android:name=".ui.activity.worksapce.security.SecurityDetailActivity" />
         <activity android:name=".ui.activity.my.specialist.SpecialistSkillInfoDetailActivity" />
-        <activity android:name=".ui.activity.worksapce.online.ExpertOnlineActivity"
-            android:launchMode="singleTask"/>
+        <activity
+            android:name=".ui.activity.worksapce.online.ExpertOnlineActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".ui.activity.worksapce.online.SystemTypeActivity" />
         <activity android:name=".ui.activity.worksapce.online.ManufacturerAfterSaleActivity" />
         <activity android:name=".ui.activity.worksapce.online.ExpertListActivity" />
@@ -1161,7 +1162,8 @@
         <activity android:name=".ui.activity.worksapce.notice.MessageNotificationActivity" />
         <activity android:name=".ui.activity.worksapce.security.SecurityPersonalActivity" />
         <activity android:name=".ui.activity.worksapce.security.SecurityCommentListActivity" />
-        <activity android:name=".ui.activity.worksapce.security.SecurityPersonalPublicListActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.security.SecurityPersonalPublicListActivity" />
+        <activity android:name=".ui.activity.worksapce.security.SecurityFoucsListActivity"></activity>
     </application>
 
 </manifest>

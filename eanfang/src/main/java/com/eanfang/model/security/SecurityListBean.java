@@ -21,7 +21,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SecurityHotListBean implements Serializable {
+public class SecurityListBean implements Serializable {
 
     private List<ListBean> list;
 
@@ -52,6 +52,9 @@ public class SecurityHotListBean implements Serializable {
         private Long spcId;
         private String spcImg;
         private int verifyStatus;
+        private String questionContent;
+        private String questionId;
+        private String type;
 
         @Getter
         @Setter

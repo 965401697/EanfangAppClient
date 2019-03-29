@@ -31,6 +31,6 @@ public class SecurityPersonalBean implements Serializable {
     @AllArgsConstructor
     public static class PageUtilBean {
 
-        private List<SecurityHotListBean.ListBean> list;
+        private List<SecurityListBean.ListBean> list;
     }
 }

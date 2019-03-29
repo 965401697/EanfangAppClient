@@ -100,7 +100,6 @@ public class OrderDetailActivity extends BaseWorkerActivity implements OnTabSele
                 @Override
                 public void onClick(View v) {
                     //分享聊天
-                    //分享聊天
                     sharePopWindow.showAtLocation(OrderDetailActivity.this.findViewById(R.id.ll_share), Gravity.BOTTOM, 0, 0);
                     sharePopWindow.backgroundAlpha(0.5f);
                 }
