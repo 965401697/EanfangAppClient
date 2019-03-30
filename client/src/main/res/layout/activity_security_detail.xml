@@ -130,8 +130,8 @@
                     android:id="@+id/snpl_pic"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="-16dp"
                     android:layout_marginTop="@dimen/dimen_4"
+                    android:paddingLeft="-16dp"
                     app:bga_snpl_editable="true"
                     app:bga_snpl_itemCornerRadius="@dimen/dimen_10"
                     app:bga_snpl_itemSpanCount="3"
@@ -141,6 +141,33 @@
                     app:bga_snpl_placeholderDrawable="@mipmap/ic_nodata"
                     app:bga_snpl_plusEnable="false"
                     app:bga_snpl_sortable="false" />
+
+                <LinearLayout
+                    android:id="@+id/ll_question"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_34"
+                    android:background="@drawable/bg_security_comment_list"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dimen_26"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="专家问答："
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_12" />
+
+                    <TextView
+                        android:id="@+id/tv_question_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_12" />
+                </LinearLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -243,7 +270,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/dimen_10"
-                android:background="@drawable/bg_client_camera_text_back_pressed"
+                android:background="@drawable/bg_worker_camera_text_back_pressed"
                 android:gravity="center"
                 android:paddingBottom="@dimen/dimen_12"
                 android:paddingLeft="@dimen/dimen_34"

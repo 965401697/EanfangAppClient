@@ -125,9 +125,38 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:bga_npl_itemCornerRadius="@dimen/dimen_10"
+                app:bga_npl_itemSpanCount="3"
                 app:bga_npl_itemWhiteSpacing="@dimen/dimen_32"
                 app:bga_npl_showAsLargeWhenOnlyOne="false" />
         </com.eanfang.witget.CustomLinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_question"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_34"
+            android:background="@drawable/bg_security_comment_list"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:padding="@dimen/dimen_26">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="专家问答："
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_12" />
+
+            <TextView
+                android:id="@+id/tv_question_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:lines="1"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_12" />
+        </LinearLayout>
+
 
         <RelativeLayout
             android:layout_width="match_parent"

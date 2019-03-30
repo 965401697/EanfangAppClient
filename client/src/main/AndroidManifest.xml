@@ -972,8 +972,9 @@
             android:name=".ui.activity.worksapce.online.FindExpertActivity"
             android:launchMode="singleTask" />
         <activity android:name=".ui.activity.worksapce.online.FindBrandActivity" />
-        <activity android:name=".ui.activity.worksapce.online.ExpertOnlineActivity"
-            android:launchMode="singleTask"/>
+        <activity
+            android:name=".ui.activity.worksapce.online.ExpertOnlineActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".ui.activity.worksapce.online.AskExpertActivity" />
         <activity android:name=".ui.activity.worksapce.online.FaultExplainActivity" />
         <activity android:name=".ui.activity.worksapce.online.SystemTypeActivity" />
@@ -986,6 +987,10 @@
         <activity android:name=".ui.activity.worksapce.online.CommentFaultSearchActivity" />
         <activity android:name=".ui.activity.worksapce.online.MyFreeAskActivity" />
         <activity android:name=".ui.activity.worksapce.online.MyInformationActivity" />
+        <activity android:name=".ui.activity.worksapce.security.SecurityPersonalActivity" />
+        <activity android:name=".ui.activity.worksapce.security.SecurityCommentListActivity" />
+        <activity android:name=".ui.activity.worksapce.security.SecurityPersonalPublicListActivity" />
+        <activity android:name=".ui.activity.worksapce.security.SecurityFoucsListActivity"/>
     </application>
 
 </manifest>

@@ -49,6 +49,7 @@ public class SecurityListAdapter extends BaseQuickAdapter<SecurityListBean.ListB
     protected void convert(BaseViewHolder helper, SecurityListBean.ListBean item) {
         SimpleDraweeView ivHeader = helper.getView(R.id.iv_seucrity_header);
         BGANinePhotoLayout ninePhotoLayout = helper.getView(R.id.snpl_pic);
+        String[] pics = null;
         // 发布人
         helper.setText(R.id.tv_name, V.v(() -> item.getAccountEntity().getNickName()));
         // 头像
@@ -56,7 +57,14 @@ public class SecurityListAdapter extends BaseQuickAdapter<SecurityListBean.ListB
         // 公司名称
         helper.setText(R.id.tv_company, item.getPublisherOrg().getOrgName());
         //发布的内容
-        helper.setText(R.id.tv_content, item.getSpcContent());
+        if ("1".equals(item.getType())) {
+            helper.setText(R.id.tv_content, "我提了一个问题，邀请你来回答");
+            helper.setText(R.id.tv_question_content, item.getSpcContent());
+            helper.setVisible(R.id.ll_question, true);
+        } else {
+            helper.setText(R.id.tv_content, item.getSpcContent());
+            helper.setVisible(R.id.ll_question, false);
+        }
         // 点赞数量
         helper.setText(R.id.tv_like_num, item.getLikesCount() + "");
         // 评论数量
@@ -101,10 +109,9 @@ public class SecurityListAdapter extends BaseQuickAdapter<SecurityListBean.ListB
         helper.setText(R.id.tv_readCount, item.getReadCount() + "");
         picList.clear();
         ninePhotoLayout.init(context);
-        ninePhotoLayout.setData(picList);
         if (!StringUtils.isEmpty(item.getSpcImg())) {
             ninePhotoLayout.setVisibility(View.VISIBLE);
-            String[] pics = item.getSpcImg().split(",");
+            pics = item.getSpcImg().split(",");
             picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
             ninePhotoLayout.setData(picList);
         } else {
@@ -116,6 +123,7 @@ public class SecurityListAdapter extends BaseQuickAdapter<SecurityListBean.ListB
         helper.addOnClickListener(R.id.ll_comments);
         helper.addOnClickListener(R.id.ll_pic);
         helper.addOnClickListener(R.id.iv_share);
+        helper.addOnClickListener(R.id.ll_question);
     }
 
 }

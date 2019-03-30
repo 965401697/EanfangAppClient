@@ -1,5 +1,6 @@
 package com.eanfang.model.security;
 
+import com.yaf.base.entity.WorkerEntity;
 import com.yaf.sys.entity.AccountEntity;
 
 import java.io.Serializable;
@@ -22,16 +23,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class SecurityCommentListBean implements Serializable {
 
-
     private List<ListBean> list;
-
-    public List<ListBean> getList() {
-        return list;
-    }
-
-    public void setList(List<ListBean> list) {
-        this.list = list;
-    }
 
     @Getter
     @Setter
@@ -39,19 +31,38 @@ public class SecurityCommentListBean implements Serializable {
     @AllArgsConstructor
     public static class ListBean {
 
-        private AskSpCircleEntityBean askSpCircleEntity;
         private AccountEntity accountEntity;
-        private String commentsContent;
+        private CommentsEntityBean commentsEntity;
         private String createTime;
+        private PublisherUserBean publisherUser;
+        private String spcContent;
+        private int spcId;
+        private int type;
+        private WorkerEntity workerEntity;
 
         @Getter
         @Setter
         @NoArgsConstructor
         @AllArgsConstructor
-        public static class AskSpCircleEntityBean {
+        public static class CommentsEntityBean {
+
+            private String commentsContent;
             private String createTime;
-            private String spcContent;
+            private int type;
+        }
+        @Getter
+        @Setter
+        @NoArgsConstructor
+        @AllArgsConstructor
+        public static class PublisherUserBean {
+
+            private String accId;
+            private boolean companyAdmin;
+            private String createTime;
+            private boolean superAdmin;
+            private boolean sysAdmin;
 
         }
+
     }
 }

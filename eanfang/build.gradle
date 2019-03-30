@@ -10,8 +10,8 @@ android {
     defaultConfig {
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 19031601
-        versionName "2.3.35_beta"
+        versionCode 19032901
+        versionName "2.3.36_beta"
         multiDexEnabled true
 
         buildConfigField("String", "OSS_SERVER", "\"http://oss.eanfang.net/\"")

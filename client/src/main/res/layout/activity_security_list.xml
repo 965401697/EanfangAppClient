@@ -55,5 +55,5 @@
         android:layout_marginBottom="@dimen/dimen_30"
         android:layout_marginRight="@dimen/dimen_40"
         android:scaleType="fitXY"
-        android:src="@mipmap/ic_client_security_create" />
+        android:src="@mipmap/ic_worker_security_create" />
 </RelativeLayout>

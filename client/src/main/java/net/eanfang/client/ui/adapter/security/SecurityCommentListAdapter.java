@@ -1,4 +1,4 @@
-package net.eanfang.worker.ui.adapter.security;
+package net.eanfang.client.ui.adapter.security;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -6,7 +6,8 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.model.security.SecurityCommentListBean;
 import com.eanfang.util.StringUtils;
 
-import net.eanfang.worker.R;
+import net.eanfang.client.R;
+
 
 /**
  * @author guanluocang
@@ -32,6 +33,5 @@ public class SecurityCommentListAdapter extends BaseQuickAdapter<SecurityComment
             helper.setText(R.id.tv_content, item.getSpcContent());
         }
         helper.setText(R.id.tv_time, item.getCreateTime());
-
     }
 }

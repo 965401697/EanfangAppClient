@@ -99,6 +99,10 @@ public class SecurityDetailActivity extends BaseActivity {
     ImageView ivCertifi;
     @BindView(R.id.tv_readCount)
     TextView tvReadCount;
+    @BindView(R.id.tv_question_content)
+    TextView tvQuestionContent;
+    @BindView(R.id.ll_question)
+    LinearLayout llQuestion;
 
     private SecurityListBean.ListBean securityBean;
     private ArrayList<String> picList = new ArrayList<>();

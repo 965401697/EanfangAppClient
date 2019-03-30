@@ -52,7 +52,7 @@ public class SecurityListActivity extends BaseActivity {
     private void initView() {
         setTitle("安防圈");
         setLeftBack();
-
+        setRightTitle("个人中心");
         mFragments.add(SecurituFoucsFragment.getInstance("关注"));
         mFragments.add(SecurityHotFragment.getInstance("热门"));
 
@@ -61,6 +61,10 @@ public class SecurityListActivity extends BaseActivity {
         tlSecurityList.setViewPager(vpSecurityList, mTitles, this, mFragments);
 
         vpSecurityList.setCurrentItem(0);
+
+        setRightTitleOnClickListener((v) -> {
+            JumpItent.jump(SecurityListActivity.this, SecurityPersonalActivity.class);
+        });
     }
 
     @OnClick(R.id.iv_create)
@@ -94,9 +98,9 @@ public class SecurityListActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         int currentTab = tlSecurityList.getCurrentTab();
         if (resultCode == RESULT_OK && requestCode == FILTRATE_TYPE_CODE) {
-            if(currentTab==0){
-                ((SecurituFoucsFragment)mFragments.get(currentTab)).refreshStatus();
-            }else{
+            if (currentTab == 0) {
+                ((SecurituFoucsFragment) mFragments.get(currentTab)).refreshStatus();
+            } else {
                 ((SecurityHotFragment) mFragments.get(currentTab)).refreshStatus();
             }
         }
