@@ -151,7 +151,9 @@ public class HttpsUtils {
 
     private static KeyManager[] prepareKeyManager(InputStream bksFile, String password) {
         try {
-            if (bksFile == null || password == null) return null;
+            if (bksFile == null || password == null) {
+                return null;
+            }
             KeyStore clientKeyStore = KeyStore.getInstance("BKS");
             clientKeyStore.load(bksFile, password.toCharArray());
             KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
@@ -164,7 +166,9 @@ public class HttpsUtils {
     }
 
     private static TrustManager[] prepareTrustManager(InputStream... certificates) {
-        if (certificates == null || certificates.length <= 0) return null;
+        if (certificates == null || certificates.length <= 0) {
+            return null;
+        }
         try {
             CertificateFactory certificateFactory = CertificateFactory.getInstance("X.509");
             // 创建一个默认类型的KeyStore，存储我们信任的证书
@@ -178,7 +182,9 @@ public class HttpsUtils {
                 // 将 cert 作为可信证书放入到keyStore中
                 keyStore.setCertificateEntry(certificateAlias, cert);
                 try {
-                    if (certStream != null) certStream.close();
+                    if (certStream != null) {
+                        certStream.close();
+                    }
                 } catch (IOException e) {
                     OkLogger.printStackTrace(e);
                 }

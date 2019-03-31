@@ -217,7 +217,9 @@ public class FileUtils {
     public static boolean isExists(String fileName) {
         File f = new File(fileName);
         if (f.exists()) {
-            if (f.length() == 0) f.delete();
+            if (f.length() == 0) {
+                f.delete();
+            }
         }
         return f.exists();
     }
@@ -230,7 +232,9 @@ public class FileUtils {
     public static void createFile(String fileName) {
         File f = new File(fileName);
         if (f.exists()) {
-            if (f.length() == 0) f.delete();
+            if (f.length() == 0) {
+                f.delete();
+            }
         } else {
             f.mkdirs();
         }
@@ -330,7 +334,9 @@ public class FileUtils {
 
         File f = new File(VIDEO_STORAGE_DIR + name + ".jpg");
 
-        if (f.exists()) f.delete();
+        if (f.exists()) {
+            f.delete();
+        }
 
         FileOutputStream fOut = null;
 

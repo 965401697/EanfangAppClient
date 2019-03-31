@@ -1,6 +1,6 @@
 package net.eanfang.worker.ui.activity.worksapce.online;
 
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,21 +13,31 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
+import net.eanfang.worker.util.ImagePerviewUtil;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ExpertAnswerActivity extends BaseWorkerActivity {
+    private static final int REQUEST_CODE_CHOOSE_PHOTO = 1;
 
+    private static final int REQUEST_CODE_CHOOSE_PHOTO_two = 1;
     @BindView(R.id.iv_expert_header)
     SimpleDraweeView ivExpertHeader;
     @BindView(R.id.tv_expert_name)
@@ -56,12 +66,15 @@ public class ExpertAnswerActivity extends BaseWorkerActivity {
     LinearLayout huan;
     @BindView(R.id.tv_no_datas)
     TextView tvNoDatas;
-    private Long answerId;
+    @BindView(R.id.snpl_pic)
+    BGASortableNinePhotoLayout snplPic;
+    private int answerId;
     private ReplyListAdapter replyListAdapter;
+    private ArrayList<String> picList = new ArrayList<>();
     private String replyContent;
     private int answerStatus;
-    private int answerCompanyId;
-    private int answerTopCompanyId;
+    private String answerCompanyId;
+    private String answerTopCompanyId;
     private String answerUserId;
 
     @Override
@@ -70,10 +83,9 @@ public class ExpertAnswerActivity extends BaseWorkerActivity {
         setContentView(R.layout.activity_expert_answer);
         ButterKnife.bind(this);
         setTitle("专家回复");
-        SharedPreferences sp = getSharedPreferences("userXinxi", MODE_PRIVATE);
-        String format1 = sp.getString("format1", "");
-        int answerLikes = sp.getInt("answerLikes", 1);
-        answerId = sp.getLong("answerId", 1);
+        Intent intent = getIntent();
+        String format1 = intent.getStringExtra("format1");
+        answerId = intent.getIntExtra("answerId", 0);
         tvTime.setText(format1);
         setLeftBack();
 
@@ -92,6 +104,7 @@ public class ExpertAnswerActivity extends BaseWorkerActivity {
             }
         });
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -108,7 +121,7 @@ public class ExpertAnswerActivity extends BaseWorkerActivity {
     //添加回答
     private void getAddData() {
         EanfangHttp.post(NewApiService.Reply_Add)
-                .params("areAnswerId", answerId)
+                .params("areAnswerId", Long.valueOf(answerId))
                 .params("replyContent", replyContent)
                 .execute(new EanfangCallback<MyReplyAddBean>(this, true, MyReplyAddBean.class) {
                     @Override
@@ -131,15 +144,32 @@ public class ExpertAnswerActivity extends BaseWorkerActivity {
 
     //网络请求---列表展示
     private void getData() {
+        picList.clear();
         EanfangHttp.post(NewApiService.Reply_List)
-                .params("answerId", answerId)
+                .params("answerId", Long.valueOf(answerId))
                 .execute(new EanfangCallback<MyReplyListBean>(this, true, MyReplyListBean.class) {
                     @Override
                     public void onSuccess(MyReplyListBean bean) {
-
-                        ivExpertHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bean.getAnswerInfo().getExpertsCertificationEntity().getAvatarPhoto()));
-                        tvExpertName.setText(bean.getAnswerInfo().getExpertsCertificationEntity().getApproveUserName());
-                        tvMajor.setText(bean.getAnswerInfo().getExpertsCertificationEntity().getCompany());
+                        if (bean.getAnswerInfo().getAnswerUserType() == 4 || bean.getAnswerInfo().getAnswerUserType() == 5) {
+                            ivExpertHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bean.getAnswerInfo().getExpertsCertificationEntity().getAvatarPhoto()));
+                            tvExpertName.setText(bean.getAnswerInfo().getExpertsCertificationEntity().getApproveUserName());
+                            tvMajor.setText(bean.getAnswerInfo().getExpertsCertificationEntity().getCompany());
+                        } else if (bean.getAnswerInfo().getAnswerUserType() == 0 || bean.getAnswerInfo().getAnswerUserType() == 2) {
+                            setTitle("用户回复");
+                            ivExpertHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bean.getAnswerInfo().getAccountEntity().getAvatar()));
+                            tvExpertName.setText(bean.getAnswerInfo().getAccountEntity().getNickName());
+                            tvMajor.setVisibility(View.GONE);
+                        }
+                        if (!StringUtils.isEmpty(bean.getAnswerInfo().getAnswerPics())) {
+                            String[] pics = bean.getAnswerInfo().getAnswerPics().split(",");
+                            picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
+                            snplPic.setDelegate(new BGASortableDelegate(ExpertAnswerActivity.this, REQUEST_CODE_CHOOSE_PHOTO, REQUEST_CODE_CHOOSE_PHOTO_two));
+                            //            snplPic.init(this);
+                            snplPic.setData(picList);
+                            snplPic.setEditable(false);
+                        }else {
+                            snplPic.setVisibility(View.GONE);
+                        }
                         tvDesc.setText(bean.getAnswerInfo().getAnswerContent());
                         zanCount.setText("点赞量 " + bean.getAnswerInfo().getAnswerLikes());
                         answerStatus = bean.getAnswerInfo().getLikeStatus();
@@ -158,10 +188,11 @@ public class ExpertAnswerActivity extends BaseWorkerActivity {
                             recyclerView.setVisibility(View.VISIBLE);
                             tvNoDatas.setVisibility(View.GONE);
                             replyListAdapter.setNewData(bean.getReplyList());
-                        }else {
+                        } else {
                             recyclerView.setVisibility(View.GONE);
                             tvNoDatas.setVisibility(View.VISIBLE);
                         }
+
 
                     }
 
@@ -206,4 +237,6 @@ public class ExpertAnswerActivity extends BaseWorkerActivity {
                     }
                 });
     }
+
+
 }

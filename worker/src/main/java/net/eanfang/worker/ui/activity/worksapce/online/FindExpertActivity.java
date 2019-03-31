@@ -35,6 +35,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class FindExpertActivity extends BaseWorkerActivity implements View.OnClickListener {
     @BindView(R.id.recycler_view_kind)
@@ -218,18 +219,18 @@ public class FindExpertActivity extends BaseWorkerActivity implements View.OnCli
         startActivity(intent);
     }
 
-//    @OnClick({R.id.my_information, R.id.tv_go})
-//    public void onViewClicked(View view) {
-//        switch (view.getId()) {
+    @OnClick({ R.id.tv_go})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
 //            case R.id.my_information:
 //                Intent intent = new Intent(FindExpertActivity.this, MyInformationActivity.class);
 //                intent.putExtra("find", 2);
 //                startActivity(intent);
 //                break;
-//            case R.id.tv_go:
-//                doVerify();
-//                break;
-//        }
-//    }
+            case R.id.tv_go:
+                doVerify();
+                break;
+        }
+    }
 
 }

@@ -22,7 +22,9 @@ public class MyConversationListAdapter extends ConversationListAdapter {
     @Override
     protected void bindView(View v, int position, UIConversation data) {
         super.bindView(v, position, data);
-        if (data == null) return;//防止 加群 入群的崩溃问题
+        if (data == null) {
+            return;//防止 加群 入群的崩溃问题
+        }
         if (data.getConversationType() == Conversation.ConversationType.SYSTEM) {
 
             AsyncImageView img = v.findViewById(io.rong.imkit.R.id.rc_left);

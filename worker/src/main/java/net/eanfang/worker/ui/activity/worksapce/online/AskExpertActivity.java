@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,6 +25,8 @@ import net.eanfang.worker.ui.base.BaseWorkerActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Conversation;
 
 public class AskExpertActivity extends BaseWorkerActivity {
 
@@ -106,15 +109,45 @@ public class AskExpertActivity extends BaseWorkerActivity {
                     @Override
                     public void onSuccess(AnswerExpertMoreDetailsBean bean) {
                         ivExpertHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bean.getExpert().getAvatarPhoto()));
-                        tvLevel.setText(bean.getExpert().getCertificateName());
-                        tvExpertName.setText(bean.getExpert().getExpertName());
+                        if (!TextUtils.isEmpty(bean.getExpert().getCertificateName())){
+                            tvLevel.setText(bean.getExpert().getCertificateName());
+                        }else {
+                            tvLevel.setText("无");
+                        }
+                        if (!TextUtils.isEmpty(bean.getExpert().getExpertName())){
+                            tvExpertName.setText(bean.getExpert().getExpertName());
+                        }else {
+                            tvExpertName.setText("无");
+                        }
                         llGood.setText("好评率:" + bean.getExpert().getFavorableRate() * 100 + "%");
                         llAnswer.setText("回答:" + bean.getAnswerNums());
-                        tvMajor.setText("擅长专业:  " + bean.getExpert().getSystemType());
-                        tvBrand.setText("擅长品牌:  " + bean.getExpert().getResponsibleBrand());
-                        tvIntroduce.setText("专家介绍:  " + bean.getExpert().getIntro());
-                        tvCompany.setText("就职单位:  " + bean.getExpert().getCompany());
-                        tvExpertType.setText(bean.getExpert().getSystemType());
+                        if (!TextUtils.isEmpty(bean.getExpert().getSystemType())){
+                            tvMajor.setText("擅长专业:  " + bean.getExpert().getSystemType());
+                        }else {
+                            tvExpertName.setText("无");
+                        }
+                        if (!TextUtils.isEmpty(bean.getExpert().getResponsibleBrand())){
+                            tvBrand.setText("擅长品牌:  " + bean.getExpert().getResponsibleBrand());
+                        }else {
+                            tvExpertName.setText("无");
+                        }
+                        if (!TextUtils.isEmpty(bean.getExpert().getIntro())){
+                            tvIntroduce.setText("专家介绍:  " + bean.getExpert().getIntro());
+                        }else {
+                            tvExpertName.setText("无");
+                        }
+                        if (!TextUtils.isEmpty(bean.getExpert().getCompany())){
+                            tvCompany.setText("就职单位:  " + bean.getExpert().getCompany());
+                        }else {
+                            tvExpertName.setText("无");
+                        }
+
+                        if (!TextUtils.isEmpty(bean.getExpert().getSystemType())){
+                            tvExpertType.setText(bean.getExpert().getSystemType());
+                        }else {
+                            tvExpertName.setText("无");
+                        }
+
                         numZyr.setText("用户评价(" + bean.getEvaluateUsers() + ")");
                         if (bean.getEvaluateList().size() > 0) {
                             recyclerView.setVisibility(View.VISIBLE);
@@ -150,8 +183,10 @@ public class AskExpertActivity extends BaseWorkerActivity {
             case R.id.ll_money:
                 break;
             case R.id.tv_ask_now:
-                Intent intent = new Intent(AskExpertActivity.this, FreeAskActivity.class);
-                startActivity(intent);
+                Intent intent = getIntent();
+                String accId = intent.getStringExtra("com3");
+                String expertName = intent.getStringExtra("com4");
+                RongIM.getInstance().startConversation(AskExpertActivity.this, Conversation.ConversationType.PRIVATE, accId, expertName);
                 break;
         }
     }

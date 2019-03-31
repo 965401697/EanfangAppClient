@@ -77,15 +77,19 @@ public class HttpParams implements Serializable {
 
     public void put(HttpParams params) {
         if (params != null) {
-            if (params.urlParamsMap != null && !params.urlParamsMap.isEmpty())
+            if (params.urlParamsMap != null && !params.urlParamsMap.isEmpty()) {
                 urlParamsMap.putAll(params.urlParamsMap);
-            if (params.fileParamsMap != null && !params.fileParamsMap.isEmpty())
+            }
+            if (params.fileParamsMap != null && !params.fileParamsMap.isEmpty()) {
                 fileParamsMap.putAll(params.fileParamsMap);
+            }
         }
     }
 
     public void put(Map<String, String> params, boolean... isReplace) {
-        if (params == null || params.isEmpty()) return;
+        if (params == null || params.isEmpty()) {
+            return;
+        }
         for (Map.Entry<String, String> entry : params.entrySet()) {
             put(entry.getKey(), entry.getValue(), isReplace);
         }
@@ -154,7 +158,9 @@ public class HttpParams implements Serializable {
                 urlValues = new ArrayList<>();
                 urlParamsMap.put(key, urlValues);
             }
-            if (isReplace) urlValues.clear();
+            if (isReplace) {
+                urlValues.clear();
+            }
             urlValues.add(value);
         }
     }
@@ -230,11 +236,15 @@ public class HttpParams implements Serializable {
     public String toString() {
         StringBuilder result = new StringBuilder();
         for (ConcurrentHashMap.Entry<String, List<String>> entry : urlParamsMap.entrySet()) {
-            if (result.length() > 0) result.append("&");
+            if (result.length() > 0) {
+                result.append("&");
+            }
             result.append(entry.getKey()).append("=").append(entry.getValue());
         }
         for (ConcurrentHashMap.Entry<String, List<FileWrapper>> entry : fileParamsMap.entrySet()) {
-            if (result.length() > 0) result.append("&");
+            if (result.length() > 0) {
+                result.append("&");
+            }
             result.append(entry.getKey()).append("=").append(entry.getValue());
         }
         return result.toString();

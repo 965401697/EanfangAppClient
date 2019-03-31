@@ -110,7 +110,9 @@ public class BitmapConvert implements Converter<Bitmap> {
     @Override
     public Bitmap convertResponse(Response response) throws Throwable {
         ResponseBody body = response.body();
-        if (body == null) return null;
+        if (body == null) {
+            return null;
+        }
         return parse(body.bytes());
     }
 

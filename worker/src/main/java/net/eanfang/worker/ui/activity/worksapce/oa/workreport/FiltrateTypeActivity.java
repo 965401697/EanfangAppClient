@@ -154,7 +154,9 @@ public class FiltrateTypeActivity extends BaseWorkerActivity implements SelectTi
         }
         if (newPresonList.size() != 0) {
 
-            if (queryEntry == null) queryEntry = new QueryEntry();
+            if (queryEntry == null) {
+                queryEntry = new QueryEntry();
+            }
 
             if (newPresonList.size() > 1) {
                 List<String> idList = new ArrayList<>();
@@ -171,13 +173,17 @@ public class FiltrateTypeActivity extends BaseWorkerActivity implements SelectTi
 
         if (!TextUtils.isEmpty(tvStart.getText().toString().trim())) {
 
-            if (queryEntry == null) queryEntry = new QueryEntry();
+            if (queryEntry == null) {
+                queryEntry = new QueryEntry();
+            }
 
             queryEntry.getGtEquals().put("createTime", tvStart.getText().toString().trim());
         }
         if (!TextUtils.isEmpty(tvEnd.getText().toString().trim())) {
 
-            if (queryEntry == null) queryEntry = new QueryEntry();
+            if (queryEntry == null) {
+                queryEntry = new QueryEntry();
+            }
 
             queryEntry.getLtEquals().put("createTime", tvEnd.getText().toString().trim());
         }

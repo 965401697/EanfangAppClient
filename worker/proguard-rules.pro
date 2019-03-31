@@ -81,8 +81,8 @@
 -keep public class * extends android.content.BroadcastReceiver
 -keep class com.tencent.android.tpush.** {* ;}
 -keep class com.tencent.mid.** {* ;}
--keep public class * extends com.qq.taf.jce.JceStruct{*;}
--keep class com.qq.taf.** {*;}
+-keep class com.qq.taf.jce.** {*;}
+-keep class com.tencent.bigdata.** {* ;}
 
 ##  eventbus
 -keep class de.greenrobot.event.** {*;}
@@ -98,12 +98,16 @@
 
 
   #华为推送
+-ignorewarning
+-keepattributes *Annotation*
 -keepattributes Exceptions
 -keepattributes InnerClasses
+-keepattributes Signature
 -keepattributes SourceFile,LineNumberTable
 -keep class com.hianalytics.android.**{*;}
 -keep class com.huawei.updatesdk.**{*;}
 -keep class com.huawei.hms.**{*;}
+-keep class com.huawei.android.hms.agent.**{*;}
   #小米推送
 -keep class com.xiaomi.**{*;}
 -keep public class * extends com.xiaomi.mipush.sdk.PushMessageReceiver

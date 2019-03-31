@@ -195,8 +195,9 @@ public class ShopMaintenanceDeviceEntity implements Serializable {
     @Override
     public boolean equals(Object other) {
         if (other instanceof ShopMaintenanceDeviceEntity) {
-            if (this.id == null || other == null)
+            if (this.id == null || other == null) {
                 return false;
+            }
 
             return this.id.equals(((ShopMaintenanceDeviceEntity) other).id);
         }

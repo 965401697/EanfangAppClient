@@ -66,7 +66,9 @@ public class HeaderParser {
             String cacheControl = HttpHeaders.getCacheControl(responseHeaders.get(HttpHeaders.HEAD_KEY_CACHE_CONTROL), responseHeaders.get(HttpHeaders.HEAD_KEY_PRAGMA));
 
             //没有缓存头控制，不需要缓存
-            if (TextUtils.isEmpty(cacheControl) && expires <= 0) return null;
+            if (TextUtils.isEmpty(cacheControl) && expires <= 0) {
+                return null;
+            }
 
             long maxAge = 0;
             if (!TextUtils.isEmpty(cacheControl)) {
@@ -81,7 +83,9 @@ public class HeaderParser {
                             //获取最大缓存时间
                             maxAge = Long.parseLong(token.substring(8));
                             //服务器缓存设置立马过期，不缓存
-                            if (maxAge <= 0) return null;
+                            if (maxAge <= 0) {
+                                return null;
+                            }
                         } catch (Exception e) {
                             OkLogger.printStackTrace(e);
                         }
@@ -91,7 +95,9 @@ public class HeaderParser {
 
             //获取基准缓存时间，优先使用response中的date头，如果没有就使用本地时间
             long now = System.currentTimeMillis();
-            if (date > 0) now = date;
+            if (date > 0) {
+                now = date;
+            }
 
             if (maxAge > 0) {
                 // Http1.1 优先验证 Cache-Control 头
@@ -140,10 +146,13 @@ public class HeaderParser {
             HttpHeaders responseHeaders = cacheEntity.getResponseHeaders();
             if (responseHeaders != null) {
                 String eTag = responseHeaders.get(HttpHeaders.HEAD_KEY_E_TAG);
-                if (eTag != null) request.headers(HttpHeaders.HEAD_KEY_IF_NONE_MATCH, eTag);
+                if (eTag != null) {
+                    request.headers(HttpHeaders.HEAD_KEY_IF_NONE_MATCH, eTag);
+                }
                 long lastModified = HttpHeaders.getLastModified(responseHeaders.get(HttpHeaders.HEAD_KEY_LAST_MODIFIED));
-                if (lastModified > 0)
+                if (lastModified > 0) {
                     request.headers(HttpHeaders.HEAD_KEY_IF_MODIFIED_SINCE, HttpHeaders.formatMillisToGMT(lastModified));
+                }
             }
         }
     }

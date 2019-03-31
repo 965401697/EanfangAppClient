@@ -266,7 +266,9 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
                 //组织结构
                 case R.id.ll_org:
 
-                    if (!PermKit.get().getCompanyDepartmentListPerm()) return;
+                    if (!PermKit.get().getCompanyDepartmentListPerm()) {
+                        return;
+                    }
 
                     OrganizationBean organizationBean = new OrganizationBean();
 

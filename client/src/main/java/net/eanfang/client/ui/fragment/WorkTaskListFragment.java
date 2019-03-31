@@ -67,7 +67,9 @@ public class WorkTaskListFragment extends TemplateItemListFragment {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 
 
-                if (!PermKit.get().getWorkTaskDetailPrem()) return;
+                if (!PermKit.get().getWorkTaskDetailPrem()) {
+                    return;
+                }
 
                 WorkTaskListBean.ListBean bean = (WorkTaskListBean.ListBean) adapter.getData().get(position);
 
@@ -94,7 +96,9 @@ public class WorkTaskListFragment extends TemplateItemListFragment {
 //        if (!mTitle.equals("全部")) {
 //            status = GetConstDataUtils.getWorkTaskStatus().indexOf(getmTitle()) + "";
 //        }
-        if (mQueryEntry == null) mQueryEntry = new QueryEntry();
+        if (mQueryEntry == null) {
+            mQueryEntry = new QueryEntry();
+        }
 
         if ("0".equals(mType)) {
             mQueryEntry.getEquals().put("createCompanyId", EanfangApplication.getApplication().getCompanyId() + "");

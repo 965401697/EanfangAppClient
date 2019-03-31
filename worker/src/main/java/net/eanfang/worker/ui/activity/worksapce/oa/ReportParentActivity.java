@@ -50,7 +50,9 @@ public class ReportParentActivity extends BaseWorkerActivity {
         ivAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!PermKit.get().getWorkReportCreatePrem()) return;
+                if (!PermKit.get().getWorkReportCreatePrem()) {
+                    return;
+                }
                 startActivity(new Intent(ReportParentActivity.this, ReportActivity.class));
             }
         });
@@ -60,7 +62,9 @@ public class ReportParentActivity extends BaseWorkerActivity {
     }
 
     private void jump(String title, String type) {
-        if (!PermKit.get().getWorkReportListPrem()) return;
+        if (!PermKit.get().getWorkReportListPrem()) {
+            return;
+        }
         Intent intent = new Intent(this, WorkReportListActivity.class);
         intent.putExtra("title", title);
         intent.putExtra("type", type);

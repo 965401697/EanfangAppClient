@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -81,15 +82,49 @@
 
     </RelativeLayout>
 
-    <TextView
-        android:id="@+id/tv_desc"
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_210"
+        android:layout_height="wrap_content"
         android:background="@color/white"
-        android:padding="@dimen/dimen_40"
-        android:text="asdfasdf"
-        android:textColor="@color/roll_title"
-        android:textSize="@dimen/textSize_13" />
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dimen_40"
+            android:text="asdfasdf"
+            android:textColor="@color/roll_title"
+            android:textSize="@dimen/textSize_13" />
+        <LinearLayout
+            android:id="@+id/ll_pic"
+            android:layout_width="match_parent"
+            android:layout_height="99dp"
+            android:layout_marginLeft="@dimen/dimen_40"
+            android:layout_marginRight="@dimen/dimen_40"
+            android:orientation="horizontal">
+            <com.photopicker.com.widget.BGASortableNinePhotoLayout
+                android:id="@+id/snpl_pic"
+                android:layout_marginLeft="@dimen/dimen_40"
+                android:layout_marginRight="@dimen/dimen_40"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
+                app:bga_snpl_deleteDrawableOverlapQuarter="false"
+                app:bga_snpl_editable="true"
+                app:bga_snpl_itemCornerRadius="0dp"
+                app:bga_snpl_itemSpanCount="3"
+                app:bga_snpl_itemWhiteSpacing="4dp"
+                app:bga_snpl_itemWidth="0dp"
+                app:bga_snpl_maxItemCount="3"
+                app:bga_snpl_otherWhiteSpacing="100dp"
+                app:bga_snpl_placeholderDrawable="@mipmap/ic_nodata"
+                app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
+                app:bga_snpl_plusEnable="true"
+                app:bga_snpl_sortable="true" />
+        </LinearLayout>
+    </LinearLayout>
+
 
     <!--<TextView
         android:id="@+id/tv_comment"

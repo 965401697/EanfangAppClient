@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.eanfang.BuildConfig;
 import com.eanfang.model.EvaluateBean;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.V;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
@@ -73,11 +74,11 @@ public class EvaluateShowActivity extends BaseActivity {
         if (mStatus.equals("giv")) {// 给客户的评价
             llClient.setVisibility(View.VISIBLE);
             llWorker.setVisibility(View.GONE);
-            sdvWorkerHead.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + revBean.getOwnerUser().getAccountEntity().getAvatar()));
+            sdvWorkerHead.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + V.v(() -> revBean.getOwnerUser().getAccountEntity().getAvatar())));
         } else {// 收到的评价
             llClient.setVisibility(View.GONE);
             llWorker.setVisibility(View.VISIBLE);
-            sdvWorkerHead.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + revBean.getCreateUser().getAccountEntity().getAvatar()));
+            sdvWorkerHead.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + V.v(() -> revBean.getCreateUser().getAccountEntity().getAvatar())));
         }
 
         rbStar1.setNumStars(revBean.getItem1());

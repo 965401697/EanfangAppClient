@@ -17,10 +17,11 @@ import java.util.List;
  * Created by Our on 2019/1/24.
  */
 
-public class FaultExplainAdapter extends BaseQuickAdapter<AnswerListWithQuestionBean.AnswersBean, BaseViewHolder> {
+public class FaultExplainAdapter extends BaseQuickAdapter<AnswerListWithQuestionBean.ExpertAnswersBean, BaseViewHolder> {
     public FaultExplainAdapter() {
         super(R.layout.item_fault_explain);
     }
+
     private static final long ONE_MINUTE = 60000L;
     private static final long ONE_HOUR = 3600000L;
     private static final long ONE_DAY = 86400000L;
@@ -32,39 +33,36 @@ public class FaultExplainAdapter extends BaseQuickAdapter<AnswerListWithQuestion
     private static final String ONE_DAY_AGO = "天前";
     private static final String ONE_MONTH_AGO = "月前";
     private static final String ONE_YEAR_AGO = "年前";
+
     @Override
-    protected void convert(BaseViewHolder helper, AnswerListWithQuestionBean.AnswersBean item) {
-//https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3207781657,3460758070&fm=27&gp=0.jpg
+    protected void convert(BaseViewHolder helper, AnswerListWithQuestionBean.ExpertAnswersBean item) {
         //头像
-        if (item.getExpertsCertificationEntity().getAvatarPhoto()==null){
-            ((SimpleDraweeView) helper.getView(R.id.iv_expert_header)).setImageURI(Uri.parse("https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3207781657,3460758070&fm=27&gp=0.jpg"));
-        }else {
-            ((SimpleDraweeView) helper.getView(R.id.iv_expert_header)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER +item.getExpertsCertificationEntity().getAvatarPhoto()));
-        }
+        ((SimpleDraweeView) helper.getView(R.id.iv_expert_header)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getExpertsCertificationEntity().getAvatarPhoto()));
         //名字
-        helper.setText(R.id.tv_expert_name,item.getExpertsCertificationEntity().getApproveUserName());
+        helper.setText(R.id.tv_expert_name, item.getExpertsCertificationEntity().getApproveUserName());
         //品牌专家
-        helper.setText(R.id.tv_major, item.getExpertsCertificationEntity().getCompany()+"专家");
+        helper.setText(R.id.tv_major, item.getExpertsCertificationEntity().getCompany() + "专家");
         //时间
         helper.setText(R.id.tv_time, format(item.getAnswerCreateTimeLong()));
         //描述
         helper.setText(R.id.tv_answer, item.getAnswerContent());
 
         //点赞量
-        helper.setText(R.id.tv_like, item.getAnswerLikes()+"");
+        helper.setText(R.id.tv_like, item.getAnswerLikes() + "");
 
-        if (item.getLikeStatus()%2==0){
-            helper.setVisible(R.id.tu_like,true);
-            helper.setVisible(R.id.tu_no_like,false);
-        }else {
-            helper.setVisible(R.id.tu_no_like,true);
-            helper.setVisible(R.id.tu_like,false);
+        if (item.getLikeStatus() % 2 == 0) {
+            helper.setVisible(R.id.tu_like, true);
+            helper.setVisible(R.id.tu_no_like, false);
+        } else {
+            helper.setVisible(R.id.tu_no_like, true);
+            helper.setVisible(R.id.tu_like, false);
         }
         //留言数量
-        helper.setText(R.id.tv_message, item.getReplyCount()+"");
+        helper.setText(R.id.tv_message, item.getReplyCount() + "");
         helper.addOnClickListener(R.id.ll_zan);
 
         helper.addOnClickListener(R.id.ll_comment);
+        helper.addOnClickListener(R.id.linear_layout_all);
     }
 
 
@@ -124,7 +122,4 @@ public class FaultExplainAdapter extends BaseQuickAdapter<AnswerListWithQuestion
         return toMonths(date) / 365L;
     }
 
-    public void getOnItemChildClickListener(int ll_zan) {
-
-    }
 }

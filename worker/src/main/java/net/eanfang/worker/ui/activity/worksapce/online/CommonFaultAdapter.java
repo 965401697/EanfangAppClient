@@ -19,13 +19,13 @@ import java.util.List;
  * Created by Our on 2019/1/24.
  */
 
-public class CommonFaultAdapter extends BaseQuickAdapter<CommonFaultListBeanEntity.QuestionListBean.ListBean, BaseViewHolder> {
+public class CommonFaultAdapter extends BaseQuickAdapter<CommonFaultListBeanEntity.SimilarQuestionListBean.ListBean, BaseViewHolder> {
     public CommonFaultAdapter() {
         super(R.layout.item_common_fault);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, CommonFaultListBeanEntity.QuestionListBean.ListBean item) {
+    protected void convert(BaseViewHolder helper, CommonFaultListBeanEntity.SimilarQuestionListBean.ListBean item) {
         if (!TextUtils.isEmpty(item.getQuestionSketch())) {
             helper.setText(R.id.tv_fault_title,item.getQuestionSketch());
         } else {

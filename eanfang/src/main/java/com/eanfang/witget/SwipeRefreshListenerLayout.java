@@ -27,8 +27,9 @@ public class SwipeRefreshListenerLayout extends android.support.v4.widget.SwipeR
             return recyclerView.getChildCount() > 0
                     && (recyclerView.getChildAt(0).getVisibility() == View.VISIBLE || recyclerView.getChildAt(0)
                     .getTop() < recyclerView.getPaddingTop());
-        } else
+        } else {
             return ViewCompat.canScrollVertically(target, -1);
+        }
     }
 }
 

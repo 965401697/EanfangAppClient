@@ -557,8 +557,9 @@ public class IfbOrderEntity implements Serializable {
     @Override
     public boolean equals(Object other) {
         if (other instanceof IfbOrderEntity) {
-            if (this.id == null || other == null)
+            if (this.id == null || other == null) {
                 return false;
+            }
 
             return this.id.equals(((IfbOrderEntity) other).id);
         }

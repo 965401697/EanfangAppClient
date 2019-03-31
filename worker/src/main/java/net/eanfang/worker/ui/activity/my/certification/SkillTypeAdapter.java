@@ -1,5 +1,6 @@
 package net.eanfang.worker.ui.activity.my.certification;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -43,7 +44,8 @@
                             android:id="@+id/iv_seucrity_header"
                             android:layout_width="@dimen/dimen_80"
                             android:layout_height="@dimen/dimen_80"
-                            app:placeholderImage="@mipmap/ic_nodata" />
+                            app:placeholderImage="@mipmap/ic_nodata"
+                            fresco:roundAsCircle="true" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -64,7 +66,6 @@
                                     android:textColor="@color/black"
                                     android:textSize="@dimen/textSize_15" />
 
-
                                 <TextView
                                     android:id="@+id/tv_friend"
                                     android:layout_width="wrap_content"
@@ -79,7 +80,7 @@
                                     android:id="@+id/iv_certifi"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/dimen_14"
+                                    android:layout_marginLeft="@dimen/dimen_16"
                                     android:src="@mipmap/ic_security_ceritifi"
                                     android:visibility="gone" />
                             </LinearLayout>
@@ -89,7 +90,7 @@
                                 android:id="@+id/tv_company"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/dimen_16"
+                                android:layout_marginTop="@dimen/dimen_14"
                                 android:textColor="@color/color_bottom"
                                 android:textSize="@dimen/textSize_13" />
                         </LinearLayout>
@@ -103,54 +104,75 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:background="@drawable/bg_client_camera_text_back_pressed"
+                        android:background="@drawable/shape_add_staff_name"
                         android:paddingBottom="@dimen/dimen_16"
                         android:paddingLeft="@dimen/dimen_24"
                         android:paddingRight="@dimen/dimen_24"
                         android:paddingTop="@dimen/dimen_16"
                         android:text="+关注"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/textSize_12"
+                        android:visibility="gone" />
                 </RelativeLayout>
 
                 <TextView
                     android:id="@+id/tv_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_30"
+                    android:layout_marginTop="@dimen/dimen_18"
+                    android:ellipsize="end"
+                    android:maxLines="3"
                     android:textColor="@color/color_client_neworder"
-                    android:textSize="@dimen/textSize_13" />
+                    android:textSize="@dimen/textSize_15" />
+
+
+                <com.photopicker.com.widget.BGASortableNinePhotoLayout
+                    android:id="@+id/snpl_pic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_4"
+                    android:paddingLeft="-16dp"
+                    app:bga_snpl_editable="true"
+                    app:bga_snpl_itemCornerRadius="@dimen/dimen_10"
+                    app:bga_snpl_itemSpanCount="3"
+                    app:bga_snpl_itemWhiteSpacing="@dimen/dimen_32"
+                    app:bga_snpl_maxItemCount="9"
+                    app:bga_snpl_otherWhiteSpacing="100dp"
+                    app:bga_snpl_placeholderDrawable="@mipmap/ic_nodata"
+                    app:bga_snpl_plusEnable="false"
+                    app:bga_snpl_sortable="false" />
 
                 <LinearLayout
+                    android:id="@+id/ll_question"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_40"
-                    android:gravity="center"
-                    android:orientation="horizontal">
+                    android:layout_marginTop="@dimen/dimen_34"
+                    android:background="@drawable/bg_security_comment_list"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/dimen_26"
+                    android:visibility="gone">
 
-                    <com.photopicker.com.widget.BGASortableNinePhotoLayout
-                        android:id="@+id/snpl_pic"
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen_30"
-                        app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
-                        app:bga_snpl_deleteDrawableOverlapQuarter="false"
-                        app:bga_snpl_editable="true"
-                        app:bga_snpl_itemCornerRadius="0dp"
-                        app:bga_snpl_itemSpanCount="3"
-                        app:bga_snpl_itemWhiteSpacing="4dp"
-                        app:bga_snpl_itemWidth="0dp"
-                        app:bga_snpl_maxItemCount="3"
-                        app:bga_snpl_otherWhiteSpacing="100dp"
-                        app:bga_snpl_placeholderDrawable="@mipmap/ic_nodata"
-                        app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
-                        app:bga_snpl_plusEnable="true"
-                        app:bga_snpl_sortable="true" />
+                        android:text="专家问答："
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_12" />
+
+                    <TextView
+                        android:id="@+id/tv_question_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_12" />
                 </LinearLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_30">
+                    android:layout_marginTop="@dimen/dimen_2">
 
                     <LinearLayout
                         android:id="@+id/linearLayout"
@@ -186,6 +208,7 @@
 
 
                 </RelativeLayout>
+
             </LinearLayout>
 
             <LinearLayout
@@ -222,10 +245,10 @@
         <LinearLayout
             android:id="@+id/ll_edit_comments"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/dimen_80"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:visibility="gone">
+            android:visibility="visible">
 
 
             <EditText
@@ -243,11 +266,11 @@
             <TextView
                 android:id="@+id/tv_send"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/dimen_10"
-                android:background="@drawable/bg_client_camera_text_back_pressed"
+                android:background="@drawable/bg_worker_camera_text_back_pressed"
                 android:gravity="center"
                 android:paddingBottom="@dimen/dimen_12"
                 android:paddingLeft="@dimen/dimen_34"

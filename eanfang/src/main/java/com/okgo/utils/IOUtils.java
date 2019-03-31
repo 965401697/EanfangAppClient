@@ -55,7 +55,9 @@ import java.util.List;
 public class IOUtils {
 
     public static void closeQuietly(Closeable closeable) {
-        if (closeable == null) return;
+        if (closeable == null) {
+            return;
+        }
         try {
             closeable.close();
         } catch (Exception e) {
@@ -64,7 +66,9 @@ public class IOUtils {
     }
 
     public static void flushQuietly(Flushable flushable) {
-        if (flushable == null) return;
+        if (flushable == null) {
+            return;
+        }
         try {
             flushable.flush();
         } catch (Exception e) {
@@ -144,7 +148,9 @@ public class IOUtils {
     }
 
     public static Object toObject(byte[] input) {
-        if (input == null) return null;
+        if (input == null) {
+            return null;
+        }
         ByteArrayInputStream bais = null;
         ObjectInputStream ois = null;
         try {
@@ -161,13 +167,18 @@ public class IOUtils {
     }
 
     public static byte[] toByteArray(CharSequence input) {
-        if (input == null) return new byte[0];
+        if (input == null) {
+            return new byte[0];
+        }
         return input.toString().getBytes();
     }
 
     public static byte[] toByteArray(CharSequence input, String encoding) throws UnsupportedEncodingException {
-        if (input == null) return new byte[0];
-        else return input.toString().getBytes(encoding);
+        if (input == null) {
+            return new byte[0];
+        } else {
+            return input.toString().getBytes(encoding);
+        }
     }
 
     public static byte[] toByteArray(InputStream input) throws IOException {
@@ -237,45 +248,65 @@ public class IOUtils {
     }
 
     public static void write(byte[] data, OutputStream output) throws IOException {
-        if (data != null) output.write(data);
+        if (data != null) {
+            output.write(data);
+        }
     }
 
     public static void write(byte[] data, Writer output) throws IOException {
-        if (data != null) output.write(new String(data));
+        if (data != null) {
+            output.write(new String(data));
+        }
     }
 
     public static void write(byte[] data, Writer output, String encoding) throws IOException {
-        if (data != null) output.write(new String(data, encoding));
+        if (data != null) {
+            output.write(new String(data, encoding));
+        }
     }
 
     public static void write(char[] data, Writer output) throws IOException {
-        if (data != null) output.write(data);
+        if (data != null) {
+            output.write(data);
+        }
     }
 
     public static void write(char[] data, OutputStream output) throws IOException {
-        if (data != null) output.write(new String(data).getBytes());
+        if (data != null) {
+            output.write(new String(data).getBytes());
+        }
     }
 
     public static void write(char[] data, OutputStream output, String encoding) throws IOException {
-        if (data != null) output.write(new String(data).getBytes(encoding));
+        if (data != null) {
+            output.write(new String(data).getBytes(encoding));
+        }
     }
 
     public static void write(CharSequence data, Writer output) throws IOException {
-        if (data != null) output.write(data.toString());
+        if (data != null) {
+            output.write(data.toString());
+        }
     }
 
     public static void write(CharSequence data, OutputStream output) throws IOException {
-        if (data != null) output.write(data.toString().getBytes());
+        if (data != null) {
+            output.write(data.toString().getBytes());
+        }
     }
 
     public static void write(CharSequence data, OutputStream output, String encoding) throws IOException {
-        if (data != null) output.write(data.toString().getBytes(encoding));
+        if (data != null) {
+            output.write(data.toString().getBytes(encoding));
+        }
     }
 
     public static void write(InputStream inputStream, OutputStream outputStream) throws IOException {
         int len;
         byte[] buffer = new byte[4096];
-        while ((len = inputStream.read(buffer)) != -1) outputStream.write(buffer, 0, len);
+        while ((len = inputStream.read(buffer)) != -1) {
+            outputStream.write(buffer, 0, len);
+        }
     }
 
     public static void write(Reader input, OutputStream output) throws IOException {
@@ -308,7 +339,9 @@ public class IOUtils {
     public static void write(Reader input, Writer output) throws IOException {
         int len;
         char[] buffer = new char[4096];
-        while (-1 != (len = input.read(buffer))) output.write(buffer, 0, len);
+        while (-1 != (len = input.read(buffer))) {
+            output.write(buffer, 0, len);
+        }
     }
 
     public static boolean contentEquals(InputStream input1, InputStream input2) throws IOException {
@@ -372,9 +405,11 @@ public class IOUtils {
             OkLogger.printStackTrace(e);
             return 0;
         }
-        if (Build.VERSION.SDK_INT >= 18)
+        if (Build.VERSION.SDK_INT >= 18) {
             return getStatFsSize(stat, "getBlockSizeLong", "getAvailableBlocksLong");
-        else return getStatFsSize(stat, "getBlockSize", "getAvailableBlocks");
+        } else {
+            return getStatFsSize(stat, "getBlockSize", "getAvailableBlocks");
+        }
     }
 
     private static long getStatFsSize(StatFs statFs, String blockSizeMethod, String availableBlocksMethod) {
@@ -436,7 +471,9 @@ public class IOUtils {
      */
     public static boolean createFolder(File targetFolder) {
         if (targetFolder.exists()) {
-            if (targetFolder.isDirectory()) return true;
+            if (targetFolder.isDirectory()) {
+                return true;
+            }
             //noinspection ResultOfMethodCallIgnored
             targetFolder.delete();
         }
@@ -485,7 +522,9 @@ public class IOUtils {
      */
     public static boolean createFile(File targetFile) {
         if (targetFile.exists()) {
-            if (targetFile.isFile()) return true;
+            if (targetFile.isFile()) {
+                return true;
+            }
             delFileOrFolder(targetFile);
         }
         try {
@@ -516,7 +555,9 @@ public class IOUtils {
      * @return True: success, or false: failure.
      */
     public static boolean createNewFile(File targetFile) {
-        if (targetFile.exists()) delFileOrFolder(targetFile);
+        if (targetFile.exists()) {
+            delFileOrFolder(targetFile);
+        }
         try {
             return targetFile.createNewFile();
         } catch (IOException e) {
@@ -532,7 +573,9 @@ public class IOUtils {
      * @see #delFileOrFolder(File)
      */
     public static boolean delFileOrFolder(String path) {
-        if (TextUtils.isEmpty(path)) return false;
+        if (TextUtils.isEmpty(path)) {
+            return false;
+        }
         return delFileOrFolder(new File(path));
     }
 

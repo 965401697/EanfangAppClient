@@ -419,7 +419,7 @@ public class NewSelectIMContactActivity extends BaseClientActivity {
     }
 
     private void getPrivateChat() {
-        if (RongIM.getInstance() != null)
+        if (RongIM.getInstance() != null) {
             RongIM.getInstance().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
                 @Override
                 public void onSuccess(List<Conversation> conversations) {
@@ -473,6 +473,7 @@ public class NewSelectIMContactActivity extends BaseClientActivity {
 
                 }
             }, Conversation.ConversationType.PRIVATE);
+        }
     }
 
     /**

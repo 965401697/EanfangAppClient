@@ -1,11 +1,9 @@
 package net.eanfang.worker.ui.activity.worksapce.contacts;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONPObject;
 import com.eanfang.apiservice.NewApiService;
@@ -122,16 +120,22 @@ public class CompanyManagerActivity extends BaseActivity implements DissloveTeam
                 bundle_prefect.putString("orgName", mOrgName);
                 bundle_prefect.putString("assign", "prefect");
                 if ("2".equals(isAuth) || "1".equals(isAuth)) {//已认证  进行查看 资料
-                    if (!PermKit.get().getWorkerCompanyDetailPerm()) return;
+                    if (!PermKit.get().getWorkerCompanyDetailPerm()) {
+                        return;
+                    }
                     JumpItent.jump(CompanyManagerActivity.this, AuthCompanyDataActivity.class, bundle_prefect);
                 } else {
-                    if (!PermKit.get().getWorkerCompanyVerifyPerm()) return;
+                    if (!PermKit.get().getWorkerCompanyVerifyPerm()) {
+                        return;
+                    }
                     JumpItent.jump(CompanyManagerActivity.this, AuthCompanyFirstActivity.class, bundle_prefect);
                 }
                 break;
             // 资质认证
             case R.id.rl_auth:
-                if (!PermKit.get().getWorkerCompanyVerifyPerm()) return;
+                if (!PermKit.get().getWorkerCompanyVerifyPerm()) {
+                    return;
+                }
                 Bundle bundle_auth = new Bundle();
                 bundle_auth.putLong("orgid", mOrgId);
                 bundle_auth.putString("isAuth", isAuth);
@@ -159,22 +163,30 @@ public class CompanyManagerActivity extends BaseActivity implements DissloveTeam
                 }
                 break;
             case R.id.rl_creat_section:
-                if (!PermKit.get().getCompanyDepartmentCreatPerm()) return;
+                if (!PermKit.get().getCompanyDepartmentCreatPerm()) {
+                    return;
+                }
                 JumpItent.jump(CompanyManagerActivity.this, CreatSectionActivity.class);
 
                 break;
             case R.id.rl_add_staff:
-                if (!PermKit.get().getCompanyStaffCreatPerm()) return;
+                if (!PermKit.get().getCompanyStaffCreatPerm()) {
+                    return;
+                }
                 JumpItent.jump(CompanyManagerActivity.this, SearchStaffActivity.class);
 
                 break;
             case R.id.rl_permission:
-                if (!PermKit.get().getCompanyStaffAssignrolePerm()) return;
+                if (!PermKit.get().getCompanyStaffAssignrolePerm()) {
+                    return;
+                }
                 JumpItent.jump(CompanyManagerActivity.this, PermissionManagerActivity.class);
                 break;
             // 合作关系
             case R.id.ll_cooperation_relation:
-                if (!PermKit.get().getCooperationListAllPerm()) return;
+                if (!PermKit.get().getCooperationListAllPerm()) {
+                    return;
+                }
                 JumpItent.jump(CompanyManagerActivity.this, CooperationRelationActivity.class);
                 break;
             case R.id.tv_againAuth:
@@ -202,7 +214,9 @@ public class CompanyManagerActivity extends BaseActivity implements DissloveTeam
      * 进行撤销认证操作
      */
     public void doUndoVerify() {
-        if (!PermKit.get().getWorkerCompanyBackPerm()) return;
+        if (!PermKit.get().getWorkerCompanyBackPerm()) {
+            return;
+        }
         new TrueFalseDialog(this, "系统提示", "是否撤销认证并保存信息", () -> {
             EanfangHttp.post(NewApiService.COMPANY_SECURITY_AUTH_REVOKE + mOrgId).
                     execute(new EanfangCallback<JSONPObject>(this, true, JSONPObject.class, bean -> {

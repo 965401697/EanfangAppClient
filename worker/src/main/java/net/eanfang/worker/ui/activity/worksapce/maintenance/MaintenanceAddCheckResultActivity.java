@@ -106,7 +106,9 @@ public class MaintenanceAddCheckResultActivity extends BaseWorkerActivity {
         switch (view.getId()) {
             case R.id.tv_add:
 
-                if (!isCheck()) return;
+                if (!isCheck()) {
+                    return;
+                }
 
                 ShopMaintenanceExamResultEntity resultEntity = new ShopMaintenanceExamResultEntity();
                 resultEntity.setExistQuestions(etQuestion.getText().toString().trim());

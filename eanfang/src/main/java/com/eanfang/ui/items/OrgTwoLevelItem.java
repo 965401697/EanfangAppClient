@@ -92,7 +92,9 @@ public class OrgTwoLevelItem extends TreeItemGroup<SectionBean> {
                 @Override
                 public void onClick(View v) {
 
-                    if (data.getChildren() == null && data.getStaff() == null) return;
+                    if (data.getChildren() == null && data.getStaff() == null) {
+                        return;
+                    }
 
                     Intent intent = new Intent(EanfangApplication.getApplication(), SelectPresonActivity.class);
                     intent.putExtra("flag", 2);

@@ -26,6 +26,7 @@ public class RepairDeviceTypeRightAdapter extends BaseQuickAdapter<BaseDataEntit
         helper.setText(R.id.tv_rightName, item.getDataName());
         SimpleDraweeView ivPic;
         ivPic = helper.getView(R.id.iv_rightIcon);
-        ivPic.setImageURI(Uri.parse(com.eanfang.BuildConfig.OSS_SERVER  + item.getRemarkInfo()));
+        ivPic.setImageURI(Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + item.getRemarkInfo()));
+        helper.setVisible(R.id.check_true_t,false);
     }
 }

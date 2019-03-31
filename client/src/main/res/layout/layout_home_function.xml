@@ -60,9 +60,12 @@
             style="@style/style_client_home_meun"
             android:drawableTop="@mipmap/ic_client_home_monitor"
             android:text="@string/text_home_monitor" />
-
         <TextView
+            android:id="@+id/tv_onLine"
             android:layout_width="0dp"
+            style="@style/style_client_home_meun"
+            android:drawableTop="@mipmap/ic_worker_home_online"
+            android:text="@string/text_home_mo"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 

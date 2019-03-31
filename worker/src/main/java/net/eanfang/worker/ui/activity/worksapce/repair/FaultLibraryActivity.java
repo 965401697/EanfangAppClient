@@ -25,6 +25,8 @@ import com.eanfang.util.ToastUtil;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.online.ExpertListActivity;
+import net.eanfang.worker.ui.activity.worksapce.online.ExpertOnlineActivity;
+import net.eanfang.worker.ui.activity.worksapce.online.FindExpertActivity;
 import net.eanfang.worker.ui.adapter.repair.FaultLibraryAdapter;
 
 import java.util.ArrayList;
@@ -66,7 +68,6 @@ public class FaultLibraryActivity extends BaseActivity implements SwipyRefreshLa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fault_library);
         ButterKnife.bind(this);
-
         if (getIntent().getIntExtra("GZK", 0) == 3) {
             initView();
             initData();
@@ -76,15 +77,15 @@ public class FaultLibraryActivity extends BaseActivity implements SwipyRefreshLa
                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                     View viewByPosition = faultLibraryAdapter.getViewByPosition(position, R.id.check_true);
                     i++;
-                    if (i%2==1){
+                    if (i % 2 == 1) {
                         viewByPosition.setVisibility(View.VISIBLE);
-                    }else {
+                    } else {
                         viewByPosition.setVisibility(View.GONE);
                     }
                 }
             });
             tvGo.setOnClickListener(this);
-        }else {
+        } else {
             tvGo.setVisibility(View.GONE);
             initView();
             initData();
@@ -96,9 +97,9 @@ public class FaultLibraryActivity extends BaseActivity implements SwipyRefreshLa
 
     private void initView() {
         setLeftBack();
-        if (getIntent().getIntExtra("GZK", 0) == 3){
+        if (getIntent().getIntExtra("GZK", 0) == 3) {
             setTitle("选择故障类型");
-        }else {
+        } else {
             setTitle("故障库");
         }
         page = 1;
@@ -168,7 +169,7 @@ public class FaultLibraryActivity extends BaseActivity implements SwipyRefreshLa
 
         EanfangHttp.post(RepairApi.GET_FAULT_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<FaultListBean>(FaultLibraryActivity.this, false, FaultListBean.class, bean -> {
+                .execute(new EanfangCallback<FaultListBean>(FaultLibraryActivity.this, false, FaultListBean.class, (FaultListBean bean) -> {
                     if (bean != null) {
                         if (bean.getList().size() == 0) {
                             ToastUtil.get().showToast(FaultLibraryActivity.this, "暂无数据");

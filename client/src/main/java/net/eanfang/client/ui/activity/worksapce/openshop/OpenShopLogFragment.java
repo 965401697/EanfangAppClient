@@ -62,7 +62,9 @@ public class OpenShopLogFragment extends TemplateItemListFragment {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 
-                if (!PermKit.get().getOpenShopDetailPrem()) return;
+                if (!PermKit.get().getOpenShopDetailPrem()) {
+                    return;
+                }
 
 
                 mDetailTaskBean = ((OpenShopLogEntity) adapter.getData().get(position));
@@ -137,8 +139,9 @@ public class OpenShopLogFragment extends TemplateItemListFragment {
 
     @Override
     protected void getData() {
-        if (mQueryEntry == null)
+        if (mQueryEntry == null) {
             mQueryEntry = new QueryEntry();
+        }
 
         if (mType == 1) {
             mQueryEntry.getEquals().put("ownerUserId", EanfangApplication.getApplication().getUserId() + "");

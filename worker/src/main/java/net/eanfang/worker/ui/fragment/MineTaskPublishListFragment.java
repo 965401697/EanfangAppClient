@@ -88,7 +88,9 @@ public class MineTaskPublishListFragment extends TemplateItemListFragment {
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if (!PermKit.get().getTenderDetailPrem()) return;
+                if (!PermKit.get().getTenderDetailPrem()) {
+                    return;
+                }
                 new TaskPublishDetailView(getActivity(), true, (MineTaskListBean.ListBean) adapter.getData().get(position), false).show();
             }
         });
@@ -315,8 +317,9 @@ public class MineTaskPublishListFragment extends TemplateItemListFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            if (requestCode == REQUEST_CODE)
+            if (requestCode == REQUEST_CODE) {
                 mAdapter.remove(mCurrentPosition);
+            }
         }
     }
 

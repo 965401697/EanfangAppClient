@@ -242,7 +242,8 @@ public class ViewfinderView extends View {
      * @param point a point to draw, relative to the preview frame
      */
     public void addPossibleResultPoint(ResultPoint point) {
-        if (possibleResultPoints.size() < MAX_RESULT_POINTS)
+        if (possibleResultPoints.size() < MAX_RESULT_POINTS) {
             possibleResultPoints.add(point);
+        }
     }
 }

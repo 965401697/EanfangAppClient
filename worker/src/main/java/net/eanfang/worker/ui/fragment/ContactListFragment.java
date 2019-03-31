@@ -385,7 +385,9 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
      */
     private void setUserInfo(String s) {
 
-        if (TextUtils.isEmpty(s)) return;
+        if (TextUtils.isEmpty(s)) {
+            return;
+        }
 
 
         EanfangHttp.get(UserApi.POST_USER_INFO + s)
@@ -405,7 +407,9 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
 
     private void delectInvalidGroup(List<GroupsBean> list) {
 
-        if (conversationsId.size() == 0) return;
+        if (conversationsId.size() == 0) {
+            return;
+        }
 
         //我的群组为空  删除所有的群组会话
         if (list.size() == 0) {

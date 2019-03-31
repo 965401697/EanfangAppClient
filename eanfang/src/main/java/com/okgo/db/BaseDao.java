@@ -59,15 +59,21 @@ public abstract class BaseDao<T> {
     }
 
     protected final void closeDatabase(SQLiteDatabase database, Cursor cursor) {
-        if (cursor != null && !cursor.isClosed()) cursor.close();
-        if (database != null && database.isOpen()) database.close();
+        if (cursor != null && !cursor.isClosed()) {
+            cursor.close();
+        }
+        if (database != null && database.isOpen()) {
+            database.close();
+        }
     }
 
     /**
      * 插入一条记录
      */
     public boolean insert(T t) {
-        if (t == null) return false;
+        if (t == null) {
+            return false;
+        }
         long start = System.currentTimeMillis();
         lock.lock();
         try {
@@ -96,7 +102,9 @@ public abstract class BaseDao<T> {
      * 插入多条记录
      */
     public boolean insert(List<T> ts) {
-        if (ts == null) return false;
+        if (ts == null) {
+            return false;
+        }
         long start = System.currentTimeMillis();
         lock.lock();
         try {
@@ -200,7 +208,9 @@ public abstract class BaseDao<T> {
      * 6. 如果新插入的或替换的记录中， 有字段和表中的其他记录冲突， 那么会删除那条其他记录。
      */
     public boolean replace(T t) {
-        if (t == null) return false;
+        if (t == null) {
+            return false;
+        }
         long start = System.currentTimeMillis();
         lock.lock();
         try {
@@ -245,7 +255,9 @@ public abstract class BaseDao<T> {
     }
 
     public boolean replace(List<T> ts) {
-        if (ts == null) return false;
+        if (ts == null) {
+            return false;
+        }
         long start = System.currentTimeMillis();
         lock.lock();
         try {
@@ -281,7 +293,9 @@ public abstract class BaseDao<T> {
      * 更新一条记录
      */
     public boolean update(T t, String whereClause, String[] whereArgs) {
-        if (t == null) return false;
+        if (t == null) {
+            return false;
+        }
         long start = System.currentTimeMillis();
         lock.lock();
         try {
@@ -353,7 +367,9 @@ public abstract class BaseDao<T> {
      */
     public T queryOne(SQLiteDatabase database, String selection, String[] selectionArgs) {
         List<T> query = query(database, null, selection, selectionArgs, null, null, null, "1");
-        if (query.size() > 0) return query.get(0);
+        if (query.size() > 0) {
+            return query.get(0);
+        }
         return null;
     }
 

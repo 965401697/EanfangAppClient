@@ -46,9 +46,12 @@ public class CreateGroupOrganizationAdapter extends BaseQuickAdapter<TemplateBea
             helper.setVisible(R.id.tv_company_name, true);
             helper.setText(R.id.tv_company_name, item.getOrgName() + "(" + item.getPresons().size() + ")");
 
-            if (organizationPersonAdapterMap == null)
+            if (organizationPersonAdapterMap == null) {
                 organizationPersonAdapterMap = new HashMap<Integer, OrganizationPersonAdapter>();
-            if (recyclerViewMap == null) recyclerViewMap = new HashMap<Integer, RecyclerView>();
+            }
+            if (recyclerViewMap == null) {
+                recyclerViewMap = new HashMap<Integer, RecyclerView>();
+            }
 
             helper.setVisible(R.id.cb_all_checked, true);
             RecyclerView recyclerView = helper.getView(R.id.recycler_view);

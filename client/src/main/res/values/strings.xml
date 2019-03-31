@@ -15,6 +15,7 @@
     <string name="text_home_unlock">开锁</string>
     <string name="text_home_service">客服</string>
     <string name="text_home_monitor">实时监控</string>
+    <string name="text_home_mo">专家问答</string>
     <string name="text_work_repair">报修管控</string>
     <string name="text_work_install">报装管控</string>
     <string name="text_work_price">维修报价</string>

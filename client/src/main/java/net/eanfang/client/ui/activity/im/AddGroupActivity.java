@@ -95,7 +95,9 @@ public class AddGroupActivity extends BaseClientActivity {
                             }
                         }
                     }
-                    if (flag) initData();
+                    if (flag) {
+                        initData();
+                    }
                 }));
     }
 

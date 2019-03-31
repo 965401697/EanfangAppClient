@@ -102,7 +102,9 @@ public class Progress implements Serializable {
         boolean isNotify = (currentTime - progress.lastRefreshTime) >= OkGo.REFRESH_TIME;
         if (isNotify || progress.currentSize == totalSize) {
             long diffTime = currentTime - progress.lastRefreshTime;
-            if (diffTime == 0) diffTime = 1;
+            if (diffTime == 0) {
+                diffTime = 1;
+            }
             progress.fraction = progress.currentSize * 1.0f / totalSize;
             progress.speed = progress.bufferSpeed(progress.tempSize * 1000 / diffTime);
             progress.lastRefreshTime = currentTime;
@@ -194,8 +196,12 @@ public class Progress implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Progress progress = (Progress) o;
         return tag != null ? tag.equals(progress.tag) : progress.tag == null;

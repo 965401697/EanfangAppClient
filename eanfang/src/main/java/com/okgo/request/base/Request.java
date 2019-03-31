@@ -77,14 +77,21 @@ public abstract class Request<T, R extends Request> implements Serializable {
         OkGo go = OkGo.getInstance();
         //默认添加 Accept-Language
         String acceptLanguage = HttpHeaders.getAcceptLanguage();
-        if (!TextUtils.isEmpty(acceptLanguage))
+        if (!TextUtils.isEmpty(acceptLanguage)) {
             headers(HttpHeaders.HEAD_KEY_ACCEPT_LANGUAGE, acceptLanguage);
+        }
         //默认添加 User-Agent
         String userAgent = HttpHeaders.getUserAgent();
-        if (!TextUtils.isEmpty(userAgent)) headers(HttpHeaders.HEAD_KEY_USER_AGENT, userAgent);
+        if (!TextUtils.isEmpty(userAgent)) {
+            headers(HttpHeaders.HEAD_KEY_USER_AGENT, userAgent);
+        }
         //添加公共请求参数
-        if (go.getCommonParams() != null) params(go.getCommonParams());
-        if (go.getCommonHeaders() != null) headers(go.getCommonHeaders());
+        if (go.getCommonParams() != null) {
+            params(go.getCommonParams());
+        }
+        if (go.getCommonHeaders() != null) {
+            headers(go.getCommonHeaders());
+        }
         //添加缓存模式
         retryCount = go.getRetryCount();
         cacheMode = go.getCacheMode();
@@ -99,7 +106,9 @@ public abstract class Request<T, R extends Request> implements Serializable {
 
     @SuppressWarnings("unchecked")
     public R retryCount(int retryCount) {
-        if (retryCount < 0) throw new IllegalArgumentException("retryCount must > 0");
+        if (retryCount < 0) {
+            throw new IllegalArgumentException("retryCount must > 0");
+        }
         this.retryCount = retryCount;
         return (R) this;
     }
@@ -155,7 +164,9 @@ public abstract class Request<T, R extends Request> implements Serializable {
      */
     @SuppressWarnings("unchecked")
     public R cacheTime(long cacheTime) {
-        if (cacheTime <= -1) cacheTime = CacheEntity.CACHE_NEVER_EXPIRE;
+        if (cacheTime <= -1) {
+            cacheTime = CacheEntity.CACHE_NEVER_EXPIRE;
+        }
         this.cacheTime = cacheTime;
         return (R) this;
     }
@@ -267,7 +278,9 @@ public abstract class Request<T, R extends Request> implements Serializable {
      */
     public String getUrlParam(String key) {
         List<String> values = params.urlParamsMap.get(key);
-        if (values != null && values.size() > 0) return values.get(0);
+        if (values != null && values.size() > 0) {
+            return values.get(0);
+        }
         return null;
     }
 
@@ -276,7 +289,9 @@ public abstract class Request<T, R extends Request> implements Serializable {
      */
     public HttpParams.FileWrapper getFileParam(String key) {
         List<HttpParams.FileWrapper> values = params.fileParamsMap.get(key);
-        if (values != null && values.size() > 0) return values.get(0);
+        if (values != null && values.size() > 0) {
+            return values.get(0);
+        }
         return null;
     }
 
@@ -330,7 +345,9 @@ public abstract class Request<T, R extends Request> implements Serializable {
 
     public Converter<T> getConverter() {
         // converter 优先级高于 callback
-        if (converter == null) converter = callback;
+        if (converter == null) {
+            converter = callback;
+        }
         HttpUtils.checkNotNull(converter, "converter == null, do you forget to call Request#converter(Converter<T>) ?");
         return converter;
     }
@@ -360,7 +377,9 @@ public abstract class Request<T, R extends Request> implements Serializable {
         } else {
             mRequest = generateRequest(null);
         }
-        if (client == null) client = OkGo.getInstance().getOkHttpClient();
+        if (client == null) {
+            client = OkGo.getInstance().getOkHttpClient();
+        }
         return client.newCall(mRequest);
     }
 

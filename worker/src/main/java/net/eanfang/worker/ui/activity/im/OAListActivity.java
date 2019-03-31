@@ -39,11 +39,17 @@ public class OAListActivity extends BaseWorkerActivity {
     private void jump() {
 
 
-        if (!PermKit.get().getWorkReportListPrem()) return;
+        if (!PermKit.get().getWorkReportListPrem()) {
+            return;
+        }
         onClick((findViewById(R.id.tv_work_report)), CreationWorkReportActivity.class);
-        if (!PermKit.get().getWorkTaskListPrem()) return;
+        if (!PermKit.get().getWorkTaskListPrem()) {
+            return;
+        }
         onClick((findViewById(R.id.tv_work_task)), TaskAssignmentCreationActivity.class);
-        if (!PermKit.get().getWorkInspectListPrem()) return;
+        if (!PermKit.get().getWorkInspectListPrem()) {
+            return;
+        }
         onClick((findViewById(R.id.tv_work_inspect)), AddNewCheckActivity.class);
         onClick((findViewById(R.id.tv_work_transfer)), WorkTransferCreateActivity.class);
         onClick((findViewById(R.id.tv_work_talk)), WorkTalkCreateActivity.class);

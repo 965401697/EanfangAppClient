@@ -46,7 +46,7 @@
                     android:layout_height="wrap_content"
                     android:text="北京法安视科技有限公司"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/textSize_15" />
+                    android:textSize="@dimen/textSize_16" />
 
                 <ImageView
                     android:id="@+id/iv_down_icon"

@@ -64,7 +64,9 @@ public class WorkReportListFragment extends TemplateItemListFragment {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
 
-                if (!PermKit.get().getWorkReportDetailPrem()) return;
+                if (!PermKit.get().getWorkReportDetailPrem()) {
+                    return;
+                }
 
                 if (((WorkReportListBean.ListBean) adapter.getData().get(position)).getNewOrder() == EanfangConst.WORK_TASK_STATUS_READ) {
 //                if (((WorkReportListBean.ListBean) adapter.getData().get(position)).getStatus() == EanfangConst.WORK_TASK_STATUS_UNREAD && mType == 1) {

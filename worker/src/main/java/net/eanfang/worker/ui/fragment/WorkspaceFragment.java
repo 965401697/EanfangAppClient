@@ -321,7 +321,9 @@ public class WorkspaceFragment extends BaseFragment {
 //            Intent intent = new Intent(getActivity(), ReportParentActivity.class);
 //            startActivity(intent);
 
-            if (!PermKit.get().getWorkReportListPrem()) return;
+            if (!PermKit.get().getWorkReportListPrem()) {
+                return;
+            }
             Intent intent = new Intent(getActivity(), WorkReportListActivity.class);
 //            intent.putExtra("title", title);
 //            intent.putExtra("type", type);
@@ -331,7 +333,9 @@ public class WorkspaceFragment extends BaseFragment {
         findViewById(R.id.tv_work_task).setOnClickListener((v) -> {
 //            new TaskCtrlView(getActivity(), true).show();
 //            Intent intent = new Intent(getActivity(), TaskParentActivity.class);
-            if (!PermKit.get().getWorkTaskListPrem()) return;
+            if (!PermKit.get().getWorkTaskListPrem()) {
+                return;
+            }
             Intent intent = new Intent(getActivity(), TaskAssignmentListActivity.class);
             startActivity(intent);
         });
@@ -340,7 +344,9 @@ public class WorkspaceFragment extends BaseFragment {
         findViewById(R.id.tv_work_inspect).setOnClickListener((v) -> {
 //            new WorkCheckCtrlView(getActivity(), true).show();
 //            Intent intent = new Intent(getActivity(), CheckParentActivity.class);
-            if (!PermKit.get().getWorkInspectListPrem()) return;
+            if (!PermKit.get().getWorkInspectListPrem()) {
+                return;
+            }
             Intent intent = new Intent(getActivity(), CheckListActivity.class);
             startActivity(intent);
         });
@@ -358,7 +364,9 @@ public class WorkspaceFragment extends BaseFragment {
 
         //设备库
         findViewById(R.id.tv_work_library).setOnClickListener((v) -> {
-            if (!PermKit.get().getExchangeListPrem()) return;
+            if (!PermKit.get().getExchangeListPrem()) {
+                return;
+            }
             if (workerApprove()) {
                 Intent intent = new Intent(getActivity(), EquipmentListActivity.class);
                 startActivity(intent);

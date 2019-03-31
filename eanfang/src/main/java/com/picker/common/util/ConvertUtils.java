@@ -129,8 +129,9 @@ public class ConvertUtils {
     }
 
     public static String toHexString(String str) {
-        if (TextUtils.isEmpty(str))
+        if (TextUtils.isEmpty(str)) {
             return "";
+        }
         StringBuilder builder = new StringBuilder();
         byte[] bytes = str.getBytes();
         for (byte aByte : bytes) {

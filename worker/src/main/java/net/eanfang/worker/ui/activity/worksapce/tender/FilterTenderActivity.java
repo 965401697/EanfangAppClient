@@ -129,18 +129,24 @@ public class FilterTenderActivity extends BaseActivity implements SelectTimeDial
         }
 
         if (!TextUtils.isEmpty(etAdress.getText().toString().trim())) {
-            if (queryEntry == null) queryEntry = new QueryEntry();
+            if (queryEntry == null) {
+                queryEntry = new QueryEntry();
+            }
             queryEntry.getEquals().put("projectAddress", etAdress.getText().toString().trim());
         }
         if (!TextUtils.isEmpty(tvStart.getText().toString().trim())) {
 
-            if (queryEntry == null) queryEntry = new QueryEntry();
+            if (queryEntry == null) {
+                queryEntry = new QueryEntry();
+            }
 
             queryEntry.getGtEquals().put("startDate", tvStart.getText().toString().trim());
         }
         if (!TextUtils.isEmpty(tvEnd.getText().toString().trim())) {
 
-            if (queryEntry == null) queryEntry = new QueryEntry();
+            if (queryEntry == null) {
+                queryEntry = new QueryEntry();
+            }
 
             queryEntry.getLtEquals().put("endDate", tvEnd.getText().toString().trim());
         }

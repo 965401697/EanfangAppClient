@@ -53,7 +53,9 @@ public class OfferAndPayListFragment1 extends TemplateItemListFragment {
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if (!PermKit.get().getQuoteDetailPrem()) return;
+                if (!PermKit.get().getQuoteDetailPrem()) {
+                    return;
+                }
                 startActivity(new Intent(getActivity(), PayOrderDetailActivity.class).putExtra("id", ((PayOrderListBean.ListBean) adapter.getData().get(position)).getId()));
             }
         });
@@ -64,7 +66,9 @@ public class OfferAndPayListFragment1 extends TemplateItemListFragment {
                     CallUtils.call(getActivity(), ((PayOrderListBean.ListBean) adapter.getData().get(position)).getReporterPhone());
                     break;
                 case R.id.tv_do_second:
-                    if (!PermKit.get().getQuoteAgreePrem()) return;
+                    if (!PermKit.get().getQuoteAgreePrem()) {
+                        return;
+                    }
                     agreeOffer(((PayOrderListBean.ListBean) adapter.getData().get(position)).getId());
                     break;
                 default:

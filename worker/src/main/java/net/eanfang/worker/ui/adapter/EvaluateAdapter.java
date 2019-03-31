@@ -7,6 +7,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.model.EvaluateBean;
 import com.eanfang.util.StringUtils;
+import com.eanfang.util.V;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
@@ -38,22 +39,22 @@ public class EvaluateAdapter extends BaseQuickAdapter<EvaluateBean.ListBean, Bas
          * give  给出的评价 owner 被评价人
          * */
         if (mTag.equals("receive")) {
-            if (!StringUtils.isEmpty(item.getCreateUser().getAccountEntity().getAvatar())) {
+            if (!StringUtils.isEmpty(V.v(()->item.getCreateUser().getAccountEntity().getAvatar()))) {
                 iv_header.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getCreateUser().getAccountEntity().getAvatar()));
             }
             totalStar = item.getItem1() + item.getItem2() +
                     item.getItem3() + item.getItem4() + item.getItem5();
             average = totalStar / 5;
-            helper.setText(R.id.tv_name, item.getCreateUser().getAccountEntity().getRealName())
+            helper.setText(R.id.tv_name,V.v(()-> item.getCreateUser().getAccountEntity().getRealName()))
                     .setText(R.id.tv_time, item.getCreateTime());
         } else {
-            if (!StringUtils.isEmpty(item.getCreateUser().getAccountEntity().getAvatar())) {
-                iv_header.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getOwnerUser().getAccountEntity().getAvatar()));
+            if (!StringUtils.isEmpty(V.v(()->item.getCreateUser().getAccountEntity().getAvatar()))) {
+                iv_header.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + V.v(()->item.getOwnerUser().getAccountEntity().getAvatar())));
             }
             totalStar = item.getItem1() + item.getItem2() +
                     item.getItem3();
             average = totalStar / 3;
-            helper.setText(R.id.tv_name, item.getOwnerUser().getAccountEntity().getRealName())
+            helper.setText(R.id.tv_name, V.v(()->item.getOwnerUser().getAccountEntity().getRealName()))
                     .setText(R.id.tv_time, item.getCreateTime());
         }
 

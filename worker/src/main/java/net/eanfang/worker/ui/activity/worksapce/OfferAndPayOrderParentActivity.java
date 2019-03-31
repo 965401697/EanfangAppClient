@@ -51,13 +51,17 @@ public class OfferAndPayOrderParentActivity extends BaseWorkerActivity {
         llMineAssignment.setOnClickListener(v -> jump("我创建的", "1"));
         llMineAccept.setOnClickListener(v -> jump("我负责的", "2"));
         ivAdd.setOnClickListener((v) -> {
-            if(!PermKit.get().getQuoteCreatePrem())return;
+            if(!PermKit.get().getQuoteCreatePrem()) {
+                return;
+            }
             startActivity(new Intent(this, QuotationActivity.class));
         });
     }
 
     private void jump(String title, String type) {
-        if(!PermKit.get().getQuoteListPrem())return;
+        if(!PermKit.get().getQuoteListPrem()) {
+            return;
+        }
         Intent intent = new Intent(this, OfferAndPayOrderActivity.class);
         intent.putExtra("title", title);
         intent.putExtra("type", type);

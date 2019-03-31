@@ -9,8 +9,8 @@ android {
         applicationId "net.eanfang.client"
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 19031701
-        versionName "2.3.37"
+        versionCode 19033001
+        versionName "2.3.38"
         //testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         // gradle 3.0.0 以上需要有这个
@@ -67,8 +67,6 @@ android {
             buildConfigField("String", "BUGLY_CLIENT", "\"3a5df914f4\"")
             //Zipalign优化
             zipAlignEnabled true
-            // 移除无用的resource文件
-            shrinkResources false
             //混淆
             minifyEnabled true
             //加载默认混淆配置文件

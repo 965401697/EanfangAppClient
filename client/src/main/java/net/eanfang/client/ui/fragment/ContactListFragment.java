@@ -40,9 +40,7 @@ import net.eanfang.client.ui.activity.im.IMPresonInfoActivity;
 import net.eanfang.client.ui.activity.im.MorePopWindow;
 import net.eanfang.client.ui.activity.im.MyConversationListFragment;
 import net.eanfang.client.ui.activity.im.SystemMessageActivity;
-import net.eanfang.client.ui.activity.worksapce.notice.MessageListActivity;
-import net.eanfang.client.ui.activity.worksapce.notice.OfficialListActivity;
-import net.eanfang.client.ui.activity.worksapce.notice.SystemNoticeActivity;
+import net.eanfang.client.ui.activity.worksapce.notice.MessageNotificationActivity;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -59,7 +57,7 @@ import io.rong.imlib.model.Group;
 import io.rong.imlib.model.UserInfo;
 import q.rorbin.badgeview.QBadgeView;
 
-import static android.app.Activity.RESULT_OK;
+import static android.app.Activity.RESULT_CANCELED;
 import static com.okgo.utils.HttpUtils.runOnUiThread;
 
 /**
@@ -76,14 +74,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
     private List<String> invalidList = new ArrayList<>();//无效的会话id
     private Set<String> conversationsId = Sets.newHashSet();
 
-    private QBadgeView qBadgeViewSys = new QBadgeView(EanfangApplication.get().getApplicationContext());
-    private QBadgeView qBadgeViewBiz = new QBadgeView(EanfangApplication.get().getApplicationContext());
-    private QBadgeView qBadgeViewCam = new QBadgeView(EanfangApplication.get().getApplicationContext());
-
-    // 消息数量
-    private int mMessageCount = 0;
-    private int mStystemCount = 0;
-    private int mCmpCount = 0;
+    private QBadgeView qBadgeViewAllMsg = new QBadgeView(EanfangApplication.get().getApplicationContext());
 
     private View view;
     private MyConversationListFragment myConversationListFragment;
@@ -148,27 +139,13 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
     protected void initView() {
 
         mContactStatus = view.findViewById(R.id.tv_contact_status);
-        qBadgeViewSys
-                .bindTarget(view.findViewById(R.id.tv_sys_msg))
+        qBadgeViewAllMsg.bindTarget(view.findViewById(R.id.ll_message))
                 .setBadgeBackgroundColor(0xFFFF0000)
-                .setBadgePadding(2, true)
+                .setBadgePadding(3, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(0, 0, true)
-                .setBadgeTextSize(11, true);
+                .setBadgeTextSize(10, true);
 
-        qBadgeViewBiz.bindTarget(view.findViewById(R.id.tv_bus_msg))
-                .setBadgeBackgroundColor(0xFFFF0000)
-                .setBadgePadding(2, true)
-                .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setGravityOffset(0, 0, true)
-                .setBadgeTextSize(11, true);
-
-        qBadgeViewCam.bindTarget(view.findViewById(R.id.tv_official))
-                .setBadgeBackgroundColor(0xFFFF0000)
-                .setBadgePadding(2, true)
-                .setGravityOffset(0, 0, true)
-                .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setBadgeTextSize(11, true);
 //        ((android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setOnRefreshListener(this);
 
         myConversationListFragment = new MyConversationListFragment();
@@ -332,26 +309,11 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
     private void doHttpNoticeCount() {
         EanfangHttp.get(UserApi.ALL_MESSAGE)
                 .execute(new EanfangCallback<AllMessageBean>(getActivity(), true, AllMessageBean.class, bean -> {
-                    if (bean.getSys() > 0) {// 系统消息
-                        initSysCount(bean.getSys());
-                        mStystemCount = bean.getSys();
+                    int messageNum = bean.getSys() + bean.getBiz() + bean.getCmp();
+                    if (messageNum > 0) {
+                        qBadgeViewAllMsg.setBadgeNumber(messageNum);
                     } else {
-                        initSysCount(0);
-                        mStystemCount = 0;
-                    }
-                    if (bean.getBiz() > 0) {// 业务通知
-                        initBizCount(bean.getBiz());
-                        mMessageCount = bean.getBiz();
-                    } else {
-                        initBizCount(0);
-                        mMessageCount = 0;
-                    }
-                    if (bean.getCmp() > 0) {// 官方通知
-                        initCamCount(bean.getCmp());
-                        mCmpCount = bean.getCmp();
-                    } else {
-                        initCamCount(0);
-                        mCmpCount = 0;
+                        qBadgeViewAllMsg.setBadgeNumber(0);
                     }
                     /**
                      * 底部红点更新
@@ -361,36 +323,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
                 }));
     }
 
-    private void initCamCount(Integer cam) {
 
-        if (cam > 0) {
-            ((TextView) view.findViewById(R.id.tv_official_info)).setText("新通知");
-        } else {
-            ((TextView) view.findViewById(R.id.tv_official_info)).setText("没有新通知");
-        }
-        qBadgeViewCam.setBadgeNumber(cam);
-    }
-
-    private void initBizCount(Integer biz) {
-
-        if (biz > 0) {
-            ((TextView) view.findViewById(R.id.tv_bus_msg_info)).setText("新消息");
-        } else {
-            ((TextView) view.findViewById(R.id.tv_bus_msg_info)).setText("没有新消息");
-        }
-
-        qBadgeViewBiz.setBadgeNumber(biz);
-    }
-
-    private void initSysCount(Integer sys) {
-        if (sys > 0) {
-            ((TextView) view.findViewById(R.id.tv_sys_msg_info)).setText("新消息");
-        } else {
-            ((TextView) view.findViewById(R.id.tv_sys_msg_info)).setText("没有新消息");
-        }
-
-        qBadgeViewSys.setBadgeNumber(sys);
-    }
 
     /**
      * 设置群组信息提供者
@@ -472,27 +405,12 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
 
     @Override
     protected void setListener() {
-        // 官方通知
-        view.findViewById(R.id.ll_official).setOnClickListener(v -> {
-            Bundle bundle = new Bundle();
-            bundle.putInt("mCamCount", mCmpCount);
-            JumpItent.jump(getActivity(), OfficialListActivity.class, bundle, REQUST_REFRESH_CODE);
-        });
-        // 业务通知
-        view.findViewById(R.id.ll_msg_list).setOnClickListener(v -> {
-            Bundle bundle = new Bundle();
-            bundle.putInt("mMessageCount", mMessageCount);
-            JumpItent.jump(getActivity(), MessageListActivity.class, bundle, REQUST_REFRESH_CODE);
-        });
-        // 系统消息
-        view.findViewById(R.id.ll_system_notice).setOnClickListener(v -> {
-            Bundle bundle = new Bundle();
-            bundle.putInt("mStystemCount", mStystemCount);
-            JumpItent.jump(getActivity(), SystemNoticeActivity.class, bundle, REQUST_REFRESH_CODE);
-        });
         view.findViewById(R.id.iv_add).setOnClickListener(v -> {
             MorePopWindow morePopWindow = new MorePopWindow(getActivity(), false);
             morePopWindow.showPopupWindow(view.findViewById(R.id.iv_add));
+        });
+        view.findViewById(R.id.iv_message).setOnClickListener(v -> {
+            JumpItent.jump(getActivity(), MessageNotificationActivity.class, REQUST_REFRESH_CODE);
         });
     }
 
@@ -504,7 +422,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == REQUST_REFRESH_CODE) {
+        if (resultCode == RESULT_CANCELED && requestCode == REQUST_REFRESH_CODE) {
             doHttpNoticeCount();
         }
     }

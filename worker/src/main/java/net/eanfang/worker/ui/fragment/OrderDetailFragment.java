@@ -184,7 +184,9 @@ public class OrderDetailFragment extends BaseFragment {
         evaluateAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if (!PermKit.get().getRepairBughandlePerm()) return;
+                if (!PermKit.get().getRepairBughandlePerm()) {
+                    return;
+                }
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("faultDeatail", mDataList.get(position));
                 JumpItent.jump(getActivity(), FaultDetailActivity.class, bundle);
@@ -248,8 +250,9 @@ public class OrderDetailFragment extends BaseFragment {
                         iv_pic.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(bean.getOwnerUser().getAccountEntity().getAvatar()));
                         tv_worker_name.setText(bean.getRepairContacts());
                         if (bean.getOwnerOrg() != null) {
-                            if (bean.getOwnerOrg().getBelongCompany().getOrgName() != null)
+                            if (bean.getOwnerOrg().getBelongCompany().getOrgName() != null) {
                                 tv_worker_company.setText(bean.getOwnerOrg().getBelongCompany().getOrgName());
+                            }
                         }
                         iv_phone.setTag(bean.getRepairContactPhone());
                     }

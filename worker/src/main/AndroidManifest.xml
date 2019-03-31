@@ -66,6 +66,7 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
 
     <!-- 华为桌面消息图标权限 -->
     <uses-permission android:name="com.huawei.android.launcher.permission.CHANGE_BADGE" />
@@ -1132,7 +1133,9 @@
         <activity android:name=".ui.activity.worksapce.security.SecurityCreateActivity" />
         <activity android:name=".ui.activity.worksapce.security.SecurityDetailActivity" />
         <activity android:name=".ui.activity.my.specialist.SpecialistSkillInfoDetailActivity" />
-        <activity android:name=".ui.activity.worksapce.online.ExpertOnlineActivity" />
+        <activity
+            android:name=".ui.activity.worksapce.online.ExpertOnlineActivity"
+            android:launchMode="singleTask" />
         <activity android:name=".ui.activity.worksapce.online.SystemTypeActivity" />
         <activity android:name=".ui.activity.worksapce.online.ManufacturerAfterSaleActivity" />
         <activity android:name=".ui.activity.worksapce.online.ExpertListActivity" />
@@ -1153,10 +1156,14 @@
 
         <activity
             android:name=".ui.activity.worksapce.online.FindExpertActivity"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTask" />
         <activity android:name=".ui.activity.worksapce.online.FindBrandActivity" />
-        <activity android:name=".ui.activity.worksapce.online.MyInformationActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.online.MyInformationActivity" />
         <activity android:name=".ui.activity.worksapce.notice.MessageNotificationActivity" />
+        <activity android:name=".ui.activity.worksapce.security.SecurityPersonalActivity" />
+        <activity android:name=".ui.activity.worksapce.security.SecurityCommentListActivity" />
+        <activity android:name=".ui.activity.worksapce.security.SecurityPersonalPublicListActivity" />
+        <activity android:name=".ui.activity.worksapce.security.SecurityFoucsListActivity" />
     </application>
 
 </manifest>

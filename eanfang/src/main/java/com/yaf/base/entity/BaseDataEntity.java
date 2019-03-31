@@ -212,8 +212,9 @@ public class BaseDataEntity implements Serializable,Cloneable {
 	@Override	
     public boolean equals(Object other) {
     	if (other instanceof BaseDataEntity) {
-    		if(this.dataId == null || other== null)
-    			return false;
+    		if(this.dataId == null || other== null) {
+                return false;
+            }
     		
             return this.dataId.equals(((BaseDataEntity) other).dataId);   
         }   

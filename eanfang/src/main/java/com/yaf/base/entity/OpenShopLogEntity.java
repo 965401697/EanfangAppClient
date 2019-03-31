@@ -402,8 +402,9 @@ public class OpenShopLogEntity implements Serializable {
     @Override
     public boolean equals(Object other) {
         if (other instanceof OpenShopLogEntity) {
-            if (this.id == null || other == null)
+            if (this.id == null || other == null) {
                 return false;
+            }
 
             return this.id.equals(((OpenShopLogEntity) other).id);
         }

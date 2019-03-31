@@ -28,26 +28,33 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:orientation="horizontal">
+            android:layout_marginRight="@dimen/dimen_34"
+            android:background="@drawable/bg_worker_home_all"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/dimen_12"
+            android:paddingLeft="@dimen/dimen_14"
+            android:paddingRight="@dimen/dimen_14"
+            android:paddingTop="@dimen/dimen_12">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=" 全部待办("
-                android:textSize="@dimen/textSize_12" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/textSize_12" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/dimen_30"
-                android:text=")>"
+                android:text="0"
+                android:textColor="#FF1833"
+                android:textSize="@dimen/textSize_12" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=")"
+                android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/textSize_12" />
         </LinearLayout>
 
@@ -58,13 +65,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dimen_28"
-        android:layout_marginRight="@dimen/dimen_28"
-        android:layout_marginTop="@dimen/dimen_36"
-        android:visibility="gone"
+        android:layout_marginLeft="@dimen/dimen_32"
+        android:layout_marginRight="@dimen/dimen_32"
+        android:layout_marginTop="@dimen/dimen_28"
         android:background="@drawable/bg_worker_home_datastics_back"
         android:orientation="vertical"
-        android:paddingBottom="@dimen/dimen_26">
+        android:paddingBottom="@dimen/dimen_26"
+        android:visibility="gone">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_wait"
@@ -85,11 +92,16 @@
             app:unselectedColor="#E8E8E8" />
 
     </LinearLayout>
+
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_100"
-        android:text="暂无待办"
+        android:layout_height="@dimen/dimen_300"
+        android:layout_marginLeft="@dimen/dimen_32"
+        android:layout_marginRight="@dimen/dimen_32"
+        android:layout_marginTop="@dimen/dimen_28"
+        android:background="@drawable/bg_worker_home_datastics_back"
         android:gravity="center"
-        android:textSize="@dimen/textSize_15"
-        android:textColor="@color/color_bottom"/>
+        android:text="暂无待办"
+        android:textColor="@color/color_bottom"
+        android:textSize="@dimen/textSize_15" />
 </LinearLayout>

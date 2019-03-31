@@ -75,7 +75,7 @@ public class MyFreeAskActivity extends BaseWorkerActivity implements View.OnClic
             public void onClick(View v) {
                 answerContent1 = MyFreeAskActivity.this.answerContent.getText().toString();
                 if (!TextUtils.isEmpty(answerContent1)){
-                    urls = PhotoUtils.getPhotoUrl("/expert/questions",snplPhotos, uploadMap, true);
+                    urls = PhotoUtils.getPhotoUrl("online/",snplPhotos, uploadMap, true);
                     getData();
                 }else {
                     Toast.makeText(MyFreeAskActivity.this,"內容不可为空",Toast.LENGTH_SHORT).show();
@@ -83,19 +83,31 @@ public class MyFreeAskActivity extends BaseWorkerActivity implements View.OnClic
             }
         });
 
+
+    }
+
+    //网络请求--我来回答----多图上传
+    private void getData() {
+
         if (uploadMap.size() != 0) {
             OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
                 @Override
                 public void onOssSuccess() {
                     runOnUiThread(() -> {
+                        Intent intent = new Intent();
+                        intent.putExtra("resultTwo", urls);
+                        setResult( 101, intent);
+                        finish();
                     });
                 }
             });
+        }else {
+            Intent intentk = new Intent();
+            intentk.putExtra("resultTwo", urls);
+            setResult(101, intentk);
+            finish();
         }
-    }
 
-    //网络请求--我来回答----多图上传
-    private void getData() {
         EanfangHttp.post(NewApiService.Answer_Add)
                 .params("questionId", questionId)
                 .params("questionUserId", questionUserId)

@@ -45,7 +45,9 @@ public class RecycleScrollView extends ScrollView {
                 break;
             case MotionEvent.ACTION_MOVE:
                 //  滑动距离大于slop值时，返回true
-                if (Math.abs((int) ev.getRawY() - touch) > slop) return true;
+                if (Math.abs((int) ev.getRawY() - touch) > slop) {
+                    return true;
+                }
                 break;
         }
 

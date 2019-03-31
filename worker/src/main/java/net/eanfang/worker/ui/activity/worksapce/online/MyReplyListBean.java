@@ -3,7 +3,7 @@ package net.eanfang.worker.ui.activity.worksapce.online;
 import java.util.List;
 
 /**
- * Created by 匹诺曹 on 2019/2/25.
+ * Created by on 2019/2/25.
  */
 
 class MyReplyListBean {
@@ -11,7 +11,8 @@ class MyReplyListBean {
 
         private int replyCount;
         private AnswerInfoBean answerInfo;
-        private List<MyReplyListBean> replyList;
+        private int likes;
+        private List<ReplyListBean> replyList;
 
         public int getReplyCount() {
             return replyCount;
@@ -29,35 +30,48 @@ class MyReplyListBean {
             this.answerInfo = answerInfo;
         }
 
-        public List<MyReplyListBean> getReplyList() {
+        public int getLikes() {
+            return likes;
+        }
+
+        public void setLikes(int likes) {
+            this.likes = likes;
+        }
+
+        public List<ReplyListBean> getReplyList() {
             return replyList;
         }
 
-        public void setReplyList(List<MyReplyListBean> replyList) {
+        public void setReplyList(List<ReplyListBean> replyList) {
             this.replyList = replyList;
         }
 
         public static class AnswerInfoBean {
             /**
-             * answerCompanyId : 0
-             * answerContent : nt00110101
-             * answerCreateTime : 2019-01-28 11:39:15
-             * answerCreateTimeLong : 1548646755000
-             * answerForwardNums : 1
-             * answerId : 1
-             * answerLikes : 5
+             * accountEntity : {"accId":"979985982284677121","accType":2,"address":"皇家鸡排(物资学院店)2","areaCode":"3.12.1.1","avatar":"account/avatar/7cff7eb2ddf34dd4b59b0e674499e2fc.png","birthday":"2018-06-01 00:00:00","email":"13800138002@qq.com","gender":0,"idCard":"110101200001015372","isNew":0,"lastLoginTime":"2019-03-19 15:32:33","loginCount":813,"mobile":"13800138002","nickName":"管理员","passwd":"o36zKRVp1PIjbkC6jWzofmWDYDk=","qrCode":"account/qr/4ad0548b6f5b434daf62884c13266e2d.png","rcloudToken":"jla3YZd66R1O2G4aYIM1j0xrRiQKPOlpqRODuAaxpdkYa9bWuJ/bufzAJ92EjG82kKn5OgspXlX91fTBYoMaloztbpKlkMs1BqOUHqdui+0=","realName":"管理员","regTime":"2018-03-31 15:37:20","simplePwd":false,"status":0}
+             * answerCompanyId : 1082922712729456641
+             * answerContent : 沐浴露
+             * answerCreateTime : 2019-03-15 16:44:14
+             * answerCreateTimeLong : 1552639454000
+             * answerForwardNums : 0
+             * answerId : 28
+             * answerLikes : 0
              * answerStatus : 0
-             * answerTopCompanyId : 0
-             * answerUserId : 1057887495614709762
-             * expertsCertificationEntity : {"accId":"1057887495589543937","approveTime":"2019-02-22 16:20:17","approveType":0,"approveUserName":"管理员","avatarPhoto":"145bbddd9890479a931005a7bd7da828.png","brandName":"testBrand0001","company":"水康威看","createTime":"2019-01-16 18:13:16","expertName":"测试专家001","favorableRate":0.88,"gender":1,"id":9,"idCard":"110101199105051211","idCardFront":"feb2da277dc647ddb9d7bfaff9919296.png","idCardHand":"145bbddd9890479a931005a7bd7da828.png","idCardSide":"b265cb5269df4a5ab7fce6b7e2f79367.png","impowerUrl":"account/3750d8072f264aa49bafce3f7a2be35d.png","intro":"ceshiintrp0001","jobLce":1,"jobLevel":1,"payAccount":"321321","payType":2,"phonenumber":"14796325896","price":20,"status":2,"systemType":"防盗报警,可视对讲","updateTime":"2019-01-17 09:41:18","userId":"1057887495614709762","workingAge":0}
+             * answerPics : /expert/questionsa467e20aaf8641aba93d870e89f7b2a1.png
+             * answerTopCompanyId : 1082922712729456641
+             * answerUser : test零七
+             * answerUserId : 1082922712729456642
+             * answerUserType : 5
+             * expertsCertificationEntity : {"accId":"1059326429620158466","approveTime":"2019-03-16 16:05:53","approveType":0,"approveUserName":"管理员","avatarPhoto":"b265cb5269df4a5ab7fce6b7e2f79367.png","brandName":"testBrand0001","company":"ddd","createTime":"2019-03-15 15:57:24","expertName":"零六","favorableRate":0.66,"gender":1,"id":14,"idCard":"130322199608563284","idCardFront":"b026817b8ff848e7b6f7e047290cdb11.png","idCardHand":"b026817b8ff848e7b6f7e047290cdb11.png","idCardSide":"b026817b8ff848e7b6f7e047290cdb11.png","impowerUrl":"feb2da277dc647ddb9d7bfaff9919296.png","intro":"111","jobLce":1,"jobLevel":1,"payAccount":"222","payType":1,"phonenumber":"18600000002","price":13,"responsibleBrand":"AB,东芝（Toshiba）","status":0,"systemType":"防盗报警,可视对讲","updateTime":"2019-03-15 15:56:06","userId":"1082922712729456642","workingAge":0}
              * likeStatus : 1
-             * questionCompanyId : 979995434422681602
-             * questionId : 1
-             * questionTopCompanyId : 979995434422681602
-             * questionUserId : 1049116901888790530
+             * questionCompanyId : 1082922712729456641
+             * questionId : 38
+             * questionTopCompanyId : 1082922712729456641
+             * questionUserId : 1082922712729456642
              */
 
-            private int answerCompanyId;
+            private AccountEntityBean accountEntity;
+            private String answerCompanyId;
             private String answerContent;
             private String answerCreateTime;
             private long answerCreateTimeLong;
@@ -65,8 +79,11 @@ class MyReplyListBean {
             private int answerId;
             private int answerLikes;
             private int answerStatus;
-            private int answerTopCompanyId;
+            private String answerPics;
+            private String answerTopCompanyId;
+            private String answerUser;
             private String answerUserId;
+            private int answerUserType;
             private ExpertsCertificationEntityBean expertsCertificationEntity;
             private int likeStatus;
             private String questionCompanyId;
@@ -74,11 +91,19 @@ class MyReplyListBean {
             private String questionTopCompanyId;
             private String questionUserId;
 
-            public int getAnswerCompanyId() {
+            public AccountEntityBean getAccountEntity() {
+                return accountEntity;
+            }
+
+            public void setAccountEntity(AccountEntityBean accountEntity) {
+                this.accountEntity = accountEntity;
+            }
+
+            public String getAnswerCompanyId() {
                 return answerCompanyId;
             }
 
-            public void setAnswerCompanyId(int answerCompanyId) {
+            public void setAnswerCompanyId(String answerCompanyId) {
                 this.answerCompanyId = answerCompanyId;
             }
 
@@ -138,12 +163,28 @@ class MyReplyListBean {
                 this.answerStatus = answerStatus;
             }
 
-            public int getAnswerTopCompanyId() {
+            public String getAnswerPics() {
+                return answerPics;
+            }
+
+            public void setAnswerPics(String answerPics) {
+                this.answerPics = answerPics;
+            }
+
+            public String getAnswerTopCompanyId() {
                 return answerTopCompanyId;
             }
 
-            public void setAnswerTopCompanyId(int answerTopCompanyId) {
+            public void setAnswerTopCompanyId(String answerTopCompanyId) {
                 this.answerTopCompanyId = answerTopCompanyId;
+            }
+
+            public String getAnswerUser() {
+                return answerUser;
+            }
+
+            public void setAnswerUser(String answerUser) {
+                this.answerUser = answerUser;
             }
 
             public String getAnswerUserId() {
@@ -152,6 +193,14 @@ class MyReplyListBean {
 
             public void setAnswerUserId(String answerUserId) {
                 this.answerUserId = answerUserId;
+            }
+
+            public int getAnswerUserType() {
+                return answerUserType;
+            }
+
+            public void setAnswerUserType(int answerUserType) {
+                this.answerUserType = answerUserType;
             }
 
             public ExpertsCertificationEntityBean getExpertsCertificationEntity() {
@@ -202,36 +251,253 @@ class MyReplyListBean {
                 this.questionUserId = questionUserId;
             }
 
+            public static class AccountEntityBean {
+                /**
+                 * accId : 979985982284677121
+                 * accType : 2
+                 * address : 皇家鸡排(物资学院店)2
+                 * areaCode : 3.12.1.1
+                 * avatar : account/avatar/7cff7eb2ddf34dd4b59b0e674499e2fc.png
+                 * birthday : 2018-06-01 00:00:00
+                 * email : 13800138002@qq.com
+                 * gender : 0
+                 * idCard : 110101200001015372
+                 * isNew : 0
+                 * lastLoginTime : 2019-03-19 15:32:33
+                 * loginCount : 813
+                 * mobile : 13800138002
+                 * nickName : 管理员
+                 * passwd : o36zKRVp1PIjbkC6jWzofmWDYDk=
+                 * qrCode : account/qr/4ad0548b6f5b434daf62884c13266e2d.png
+                 * rcloudToken : jla3YZd66R1O2G4aYIM1j0xrRiQKPOlpqRODuAaxpdkYa9bWuJ/bufzAJ92EjG82kKn5OgspXlX91fTBYoMaloztbpKlkMs1BqOUHqdui+0=
+                 * realName : 管理员
+                 * regTime : 2018-03-31 15:37:20
+                 * simplePwd : false
+                 * status : 0
+                 */
+
+                private String accId;
+                private int accType;
+                private String address;
+                private String areaCode;
+                private String avatar;
+                private String birthday;
+                private String email;
+                private int gender;
+                private String idCard;
+                private int isNew;
+                private String lastLoginTime;
+                private int loginCount;
+                private String mobile;
+                private String nickName;
+                private String passwd;
+                private String qrCode;
+                private String rcloudToken;
+                private String realName;
+                private String regTime;
+                private boolean simplePwd;
+                private int status;
+
+                public String getAccId() {
+                    return accId;
+                }
+
+                public void setAccId(String accId) {
+                    this.accId = accId;
+                }
+
+                public int getAccType() {
+                    return accType;
+                }
+
+                public void setAccType(int accType) {
+                    this.accType = accType;
+                }
+
+                public String getAddress() {
+                    return address;
+                }
+
+                public void setAddress(String address) {
+                    this.address = address;
+                }
+
+                public String getAreaCode() {
+                    return areaCode;
+                }
+
+                public void setAreaCode(String areaCode) {
+                    this.areaCode = areaCode;
+                }
+
+                public String getAvatar() {
+                    return avatar;
+                }
+
+                public void setAvatar(String avatar) {
+                    this.avatar = avatar;
+                }
+
+                public String getBirthday() {
+                    return birthday;
+                }
+
+                public void setBirthday(String birthday) {
+                    this.birthday = birthday;
+                }
+
+                public String getEmail() {
+                    return email;
+                }
+
+                public void setEmail(String email) {
+                    this.email = email;
+                }
+
+                public int getGender() {
+                    return gender;
+                }
+
+                public void setGender(int gender) {
+                    this.gender = gender;
+                }
+
+                public String getIdCard() {
+                    return idCard;
+                }
+
+                public void setIdCard(String idCard) {
+                    this.idCard = idCard;
+                }
+
+                public int getIsNew() {
+                    return isNew;
+                }
+
+                public void setIsNew(int isNew) {
+                    this.isNew = isNew;
+                }
+
+                public String getLastLoginTime() {
+                    return lastLoginTime;
+                }
+
+                public void setLastLoginTime(String lastLoginTime) {
+                    this.lastLoginTime = lastLoginTime;
+                }
+
+                public int getLoginCount() {
+                    return loginCount;
+                }
+
+                public void setLoginCount(int loginCount) {
+                    this.loginCount = loginCount;
+                }
+
+                public String getMobile() {
+                    return mobile;
+                }
+
+                public void setMobile(String mobile) {
+                    this.mobile = mobile;
+                }
+
+                public String getNickName() {
+                    return nickName;
+                }
+
+                public void setNickName(String nickName) {
+                    this.nickName = nickName;
+                }
+
+                public String getPasswd() {
+                    return passwd;
+                }
+
+                public void setPasswd(String passwd) {
+                    this.passwd = passwd;
+                }
+
+                public String getQrCode() {
+                    return qrCode;
+                }
+
+                public void setQrCode(String qrCode) {
+                    this.qrCode = qrCode;
+                }
+
+                public String getRcloudToken() {
+                    return rcloudToken;
+                }
+
+                public void setRcloudToken(String rcloudToken) {
+                    this.rcloudToken = rcloudToken;
+                }
+
+                public String getRealName() {
+                    return realName;
+                }
+
+                public void setRealName(String realName) {
+                    this.realName = realName;
+                }
+
+                public String getRegTime() {
+                    return regTime;
+                }
+
+                public void setRegTime(String regTime) {
+                    this.regTime = regTime;
+                }
+
+                public boolean isSimplePwd() {
+                    return simplePwd;
+                }
+
+                public void setSimplePwd(boolean simplePwd) {
+                    this.simplePwd = simplePwd;
+                }
+
+                public int getStatus() {
+                    return status;
+                }
+
+                public void setStatus(int status) {
+                    this.status = status;
+                }
+            }
+
             public static class ExpertsCertificationEntityBean {
                 /**
-                 * accId : 1057887495589543937
-                 * approveTime : 2019-02-22 16:20:17
+                 * accId : 1059326429620158466
+                 * approveTime : 2019-03-16 16:05:53
                  * approveType : 0
                  * approveUserName : 管理员
-                 * avatarPhoto : 145bbddd9890479a931005a7bd7da828.png
+                 * avatarPhoto : b265cb5269df4a5ab7fce6b7e2f79367.png
                  * brandName : testBrand0001
-                 * company : 水康威看
-                 * createTime : 2019-01-16 18:13:16
-                 * expertName : 测试专家001
-                 * favorableRate : 0.88
+                 * company : ddd
+                 * createTime : 2019-03-15 15:57:24
+                 * expertName : 零六
+                 * favorableRate : 0.66
                  * gender : 1
-                 * id : 9
-                 * idCard : 110101199105051211
-                 * idCardFront : feb2da277dc647ddb9d7bfaff9919296.png
-                 * idCardHand : 145bbddd9890479a931005a7bd7da828.png
-                 * idCardSide : b265cb5269df4a5ab7fce6b7e2f79367.png
-                 * impowerUrl : account/3750d8072f264aa49bafce3f7a2be35d.png
-                 * intro : ceshiintrp0001
+                 * id : 14
+                 * idCard : 130322199608563284
+                 * idCardFront : b026817b8ff848e7b6f7e047290cdb11.png
+                 * idCardHand : b026817b8ff848e7b6f7e047290cdb11.png
+                 * idCardSide : b026817b8ff848e7b6f7e047290cdb11.png
+                 * impowerUrl : feb2da277dc647ddb9d7bfaff9919296.png
+                 * intro : 111
                  * jobLce : 1
                  * jobLevel : 1
-                 * payAccount : 321321
-                 * payType : 2
-                 * phonenumber : 14796325896
-                 * price : 20
-                 * status : 2
+                 * payAccount : 222
+                 * payType : 1
+                 * phonenumber : 18600000002
+                 * price : 13
+                 * responsibleBrand : AB,东芝（Toshiba）
+                 * status : 0
                  * systemType : 防盗报警,可视对讲
-                 * updateTime : 2019-01-17 09:41:18
-                 * userId : 1057887495614709762
+                 * updateTime : 2019-03-15 15:56:06
+                 * userId : 1082922712729456642
                  * workingAge : 0
                  */
 
@@ -259,6 +525,7 @@ class MyReplyListBean {
                 private int payType;
                 private String phonenumber;
                 private int price;
+                private String responsibleBrand;
                 private int status;
                 private String systemType;
                 private String updateTime;
@@ -457,6 +724,14 @@ class MyReplyListBean {
                     this.price = price;
                 }
 
+                public String getResponsibleBrand() {
+                    return responsibleBrand;
+                }
+
+                public void setResponsibleBrand(String responsibleBrand) {
+                    this.responsibleBrand = responsibleBrand;
+                }
+
                 public int getStatus() {
                     return status;
                 }
@@ -499,14 +774,14 @@ class MyReplyListBean {
             }
         }
 
-
+        public static class ReplyListBean {
             /**
-             * areAnswerId : 1
-             * areId : 1
+             * areAnswerId : 28
+             * areId : 15
              * replyContent : 这是一条专家回答的回复
-             * replyTime : 2019-02-25 15:05:05
-             * replyTimeLong : 1551078305000
-             * replyUser : {"accId":"979985982284677121","accType":2,"address":"皇家鸡排(物资学院店)2","areaCode":"3.12.1.1","avatar":"account/avatar/d6b8f38fe033460e94ce4a817eaf43f5.png","birthday":"2018-06-01 00:00:00","email":"13800138002@qq.com","gender":0,"idCard":"110101200001015372","lastLoginTime":"2019-02-25 15:03:55","loginCount":680,"mobile":"13800138002","nickName":"管理员","passwd":"Ph3EDGqydyNbzkrLhhpuEkrLIG8=","qrCode":"account/qr/4ad0548b6f5b434daf62884c13266e2d.png","rcloudToken":"jla3YZd66R1O2G4aYIM1j0xrRiQKPOlpqRODuAaxpdkYa9bWuJ/bufzAJ92EjG82kKn5OgspXlX91fTBYoMaloztbpKlkMs1BqOUHqdui+0=","realName":"管理员","regTime":"2018-03-31 15:37:20","simplePwd":false,"status":0}
+             * replyTime : 2019-02-26 14:25:06
+             * replyTimeLong : 1551162306000
+             * replyUser : {"accId":"979985982284677121","accType":2,"address":"皇家鸡排(物资学院店)2","areaCode":"3.12.1.1","avatar":"account/avatar/7cff7eb2ddf34dd4b59b0e674499e2fc.png","birthday":"2018-06-01 00:00:00","email":"13800138002@qq.com","gender":0,"idCard":"110101200001015372","isNew":0,"lastLoginTime":"2019-03-16 20:41:28","loginCount":792,"mobile":"13800138002","nickName":"管理员","passwd":"Bf50YcYHwzIpdy1AJQVgEBan0Oo=","qrCode":"account/qr/4ad0548b6f5b434daf62884c13266e2d.png","rcloudToken":"jla3YZd66R1O2G4aYIM1j0xrRiQKPOlpqRODuAaxpdkYa9bWuJ/bufzAJ92EjG82kKn5OgspXlX91fTBYoMaloztbpKlkMs1BqOUHqdui+0=","realName":"管理员","regTime":"2018-03-31 15:37:20","simplePwd":false,"status":0}
              * replyUserId : 979985982318231553
              */
 
@@ -580,16 +855,17 @@ class MyReplyListBean {
                  * accType : 2
                  * address : 皇家鸡排(物资学院店)2
                  * areaCode : 3.12.1.1
-                 * avatar : account/avatar/d6b8f38fe033460e94ce4a817eaf43f5.png
+                 * avatar : account/avatar/7cff7eb2ddf34dd4b59b0e674499e2fc.png
                  * birthday : 2018-06-01 00:00:00
                  * email : 13800138002@qq.com
                  * gender : 0
                  * idCard : 110101200001015372
-                 * lastLoginTime : 2019-02-25 15:03:55
-                 * loginCount : 680
+                 * isNew : 0
+                 * lastLoginTime : 2019-03-16 20:41:28
+                 * loginCount : 792
                  * mobile : 13800138002
                  * nickName : 管理员
-                 * passwd : Ph3EDGqydyNbzkrLhhpuEkrLIG8=
+                 * passwd : Bf50YcYHwzIpdy1AJQVgEBan0Oo=
                  * qrCode : account/qr/4ad0548b6f5b434daf62884c13266e2d.png
                  * rcloudToken : jla3YZd66R1O2G4aYIM1j0xrRiQKPOlpqRODuAaxpdkYa9bWuJ/bufzAJ92EjG82kKn5OgspXlX91fTBYoMaloztbpKlkMs1BqOUHqdui+0=
                  * realName : 管理员
@@ -607,6 +883,7 @@ class MyReplyListBean {
                 private String email;
                 private int gender;
                 private String idCard;
+                private int isNew;
                 private String lastLoginTime;
                 private int loginCount;
                 private String mobile;
@@ -689,6 +966,14 @@ class MyReplyListBean {
 
                 public void setIdCard(String idCard) {
                     this.idCard = idCard;
+                }
+
+                public int getIsNew() {
+                    return isNew;
+                }
+
+                public void setIsNew(int isNew) {
+                    this.isNew = isNew;
                 }
 
                 public String getLastLoginTime() {
@@ -779,4 +1064,6 @@ class MyReplyListBean {
                     this.status = status;
                 }
             }
-        }
+    }
+}
+

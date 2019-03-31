@@ -86,7 +86,7 @@ import static com.eanfang.config.EanfangConst.MEIZU_APPKEY_WORKER;
 import static com.eanfang.config.EanfangConst.XIAOMI_APPID_WORKER;
 import static com.eanfang.config.EanfangConst.XIAOMI_APPKEY_WORKER;
 
-public class MainActivity extends BaseActivity implements IUnReadMessageObserver {
+public class MainActivity extends BaseActivity{
     private static final String TAG = MainActivity.class.getSimpleName();
     protected FragmentTabHost mTabHost;
     private LoginBean user;
@@ -115,6 +115,10 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
      */
     private int mAllCount = 0;
 
+    /**
+     *所有消息总数记录
+     */
+    private int mTotalCount=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -178,13 +182,6 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
 
         getPushMessage(getIntent());
 
-        final Conversation.ConversationType[] conversationTypes = {
-                Conversation.ConversationType.PRIVATE,
-                Conversation.ConversationType.GROUP, Conversation.ConversationType.SYSTEM,
-                Conversation.ConversationType.PUBLIC_SERVICE, Conversation.ConversationType.APP_PUBLIC_SERVICE
-        };
-
-        RongIM.getInstance().addUnReadMessageCountChangedObserver(this, conversationTypes);
     }
 
 
@@ -528,9 +525,11 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
         RongIM.getInstance().getTotalUnreadCount(new RongIMClient.ResultCallback<Integer>() {
             @Override
             public void onSuccess(Integer integer) {
-
+                mContactNum = integer;
+                int i = mContact + integer;
+                int nums=mTotalCount+integer;
+                doChange(i,nums);
             }
-
             @Override
             public void onError(RongIMClient.ErrorCode errorCode) {
 
@@ -538,17 +537,9 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
         });
     }
 
-    @Override
-    public void onCountChanged(int integer) {
-        Log.e("GG", "消息數量" + integer);
-        mContactNum = integer;
-        int i = mContact + integer;
-        doChange(i);
-    }
-
-    private void doChange(int mContactNum) {
+    private void doChange(int mContactNum,int nums) {
         qBadgeViewContact.setBadgeNumber(mContactNum);
-        BadgeUtil.setBadgeCount(MainActivity.this, mContactNum, R.drawable.client_logo);
+        BadgeUtil.setBadgeCount(MainActivity.this,nums, R.drawable.client_logo);
     }
 
     class MyConnectionStatusListener implements RongIMClient.ConnectionStatusListener {
@@ -628,8 +619,9 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
         EanfangHttp.post(NewApiService.GET_UNREAD_MSG)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<NoticeEntity>(this, true, NoticeEntity.class, (bean) -> {
-                            if (bean != null)
+                            if (bean != null) {
                                 customDialog(bean.getTitle(), bean.getContent(), bean.getExtInfo(), bean.getId());
+                            }
 
                         })
                 );
@@ -734,31 +726,35 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
 
     @Subscribe
     public void onEventBottomRedIcon(AllMessageBean bean) {
-        /**
-         * 桌面app红点
-         * */
+        // 首页小红点的显示
+        if (bean.getRepair() > 0 || bean.getInstall() > 0 || bean.getDesign() > 0||bean.getMaintain()>0) {
+            mHome = bean.getRepair() + bean.getInstall() + bean.getDesign()+bean.getMaintain();
+        } else {
+            mHome = 0;
+        }
+        //消息页面红点
         if (bean.getBiz() > 0 || bean.getSys() > 0 || bean.getCmp() > 0 || mContactNum > 0) {
             mContact = bean.getBiz() + bean.getSys() + bean.getCmp();
             mAllCount = bean.getBiz() + bean.getSys() + bean.getCmp() + mContactNum;
         } else {
             mAllCount = 0;
         }
+        // 工作台消息红点
+        if (bean.getReport() > 0 || bean.getTask() > 0 || bean.getInspect() > 0) {
+            mWork = bean.getReport() + bean.getTask() + bean.getInspect();
+        } else {
+            mWork = 0;
+        }
+        mTotalCount=mHome+mAllCount+mWork;
+        // 桌面app红点
         // 首页红点
 //            new Handler(getMainLooper()).postDelayed(new Runnable() {
 //                @Override
 //                public void run() {
         // 桌面气泡赋值
-        BadgeUtil.setBadgeCount(MainActivity.this, mAllCount, R.drawable.client_logo);
+            BadgeUtil.setBadgeCount(MainActivity.this, mTotalCount, R.drawable.client_logo);
 //                }
 //            }, 3 * 1000);
-
-        // 首页小红点的显示
-        if (bean.getRepair() > 0 || bean.getInstall() > 0 || bean.getDesign() > 0) {
-            mHome = bean.getRepair() + bean.getInstall() + bean.getDesign();
-
-        } else {
-            mHome = 0;
-        }
         qBadgeViewHome.bindTarget(findViewById(R.id.tab_home))
                 .setBadgeNumber(mHome)
                 .setBadgeBackgroundColor(0xFFFF0000)
@@ -766,7 +762,6 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(0, 3, true)
                 .setBadgeTextSize(11, true);
-        //消息页面红点
         qBadgeViewContact.bindTarget(findViewById(R.id.tab_contact))
                 .setBadgeNumber(mAllCount)
                 .setBadgeBackgroundColor(0xFFFF0000)
@@ -774,12 +769,6 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(0, 3, true)
                 .setBadgeTextSize(11, true);
-        // 工作台消息红点
-        if (bean.getReport() > 0 || bean.getTask() > 0 || bean.getInspect() > 0) {
-            mWork = bean.getReport() + bean.getTask() + bean.getInspect();
-        } else {
-            mWork = 0;
-        }
         qBadgeViewWork.bindTarget(findViewById(R.id.tab_work))
                 .setBadgeNumber(mWork)
                 .setBadgeBackgroundColor(0xFFFF0000)

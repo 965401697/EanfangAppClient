@@ -9,9 +9,9 @@ import java.util.List;
 
 public class AnswerListWithQuestionBean {
 
-
         private QuestionBean question;
-        private List<AnswersBean> answers;
+        private List<CommonAnswersBean> commonAnswers;
+        private List<ExpertAnswersBean> expertAnswers;
 
         public QuestionBean getQuestion() {
             return question;
@@ -21,35 +21,46 @@ public class AnswerListWithQuestionBean {
             this.question = question;
         }
 
-        public List<AnswersBean> getAnswers() {
-            return answers;
+        public List<CommonAnswersBean> getCommonAnswers() {
+            return commonAnswers;
         }
 
-        public void setAnswers(List<AnswersBean> answers) {
-            this.answers = answers;
+        public void setCommonAnswers(List<CommonAnswersBean> commonAnswers) {
+            this.commonAnswers = commonAnswers;
+        }
+
+        public List<ExpertAnswersBean> getExpertAnswers() {
+            return expertAnswers;
+        }
+
+        public void setExpertAnswers(List<ExpertAnswersBean> expertAnswers) {
+            this.expertAnswers = expertAnswers;
         }
 
         public static class QuestionBean {
             /**
-             * accountEntity : {"accId":"980732504676810754","accType":5,"address":"聚朋友棋牌室(朝阳北路定福家园南里2号院3号楼底商附近)","areaCode":"3.11.1.1","avatar":"account/ae89cce13cc34856af5fc3c26847ca3d.png","email":"","gender":1,"idCard":"410926199005104491","lastLoginTime":"2019-02-16 06:36:37","loginCount":168,"mobile":"18519005131","mpFrom":-1,"nickName":"赵子武","openId":"1","passwd":"aK64wClE5PUBqWeyYSXunazwftw=","qrCode":"account/qr/de0182fb1ae541bba5e9d088199f9434.png","rcloudToken":"FcPTBWUNI4d6aVaNce3G8X7s2tSbN+XvbDqPHzdyLLUtcCQXSPO4lHO+5vbzX3xuayDoNTQV4R9zcn6LLCC6h3dxVT7rVHBDRUzCTbOVIS4=","realName":"赵子武","regTime":"2018-04-02 17:03:45","simplePwd":false,"status":0}
+             * accountEntity : {"accId":"1059326429620158466","accType":2,"address":"正兴烧烤(五里桥一街3号院1号楼-1层-101)","areaCode":"3.11.1.5","avatar":"account/72eb26c502ca4a6d88cd467773192f7d.png","email":"","gender":0,"idCard":"130322199507243525","isNew":0,"lastLoginTime":"2019-03-15 17:28:32","loginCount":152,"mobile":"18600000006","nickName":"test零七","passwd":"Bf50YcYHwzIpdy1AJQVgEBan0Oo=","qrCode":"account/qr/635b2cb12f4246bd9491fd674d11afe9.png","rcloudToken":"vBPuRDUaF4GQiuE/Pkh4CUxrRiQKPOlpqRODuAaxpdkYa9bWuJ/buZyvclKjJjfSRBHbT3Xc5RFQQf8bW7kKA/dRKEUj8hcxGkMnlZQKljvlJREgd7+tuA==","realName":"零六","regFrom":0,"regTime":"2018-11-05 14:07:57","simplePwd":false,"status":0}
              * businessName : 电视监控
              * businessOneCode : 1.1
-             * dataCode : 1.1.1.2
-             * deviceFailureId : 1025400823779540994
-             * failureTypeId : 1025400823779540994
-             * modelCode : 5.1.21
-             * modelName : 飞利浦（Philips）
-             * questionCompanyId : 979995434422681602
-             * questionContent : 罢了
-             * questionCreateDate : 2019-01-26 03:53:13
-             * questionCreateDateLong : 1548445993000
-             * questionId : 1
-             * questionPics : online/fc93c7e327914bc18567c7276f75269f.png,online/66db1245f9464e96a5935a898fe70258.png
-             * questionSketch : 无视频信号
+             * dataCode : 1.1.1.3
+             * deviceFailureId : 1025400841517252609
+             * failureTypeId : 6.1
+             * modelCode : 5.1.18
+             * modelName : 迪威乐（Devele）
+             * questionAnswerCount : 1
+             * questionCompanyId : 1082922712729456641
+             * questionContent : 来了
+             * questionCreateDate : 2019-03-15 16:46:22
+             * questionCreateDateLong : 1552639582000
+             * questionId : 38
+             * questionLikeCount : 0
+             * questionPics : online/e7498367285e416f9c7697e11d3c25e3.png
+             * questionSketch : 有竖道
              * questionStatus : 0
-             * questionTopCompanyId : 979995434422681602
-             * questionUserId : 1049116901888790530
-             * questionViewCount : 70
+             * questionTopCompanyId : 1082922712729456641
+             * questionUserId : 1082922712729456642
+             * questionViewCount : 17
+             * weight : 70
              */
 
             private AccountEntityBean accountEntity;
@@ -60,17 +71,20 @@ public class AnswerListWithQuestionBean {
             private String failureTypeId;
             private String modelCode;
             private String modelName;
+            private int questionAnswerCount;
             private String questionCompanyId;
             private String questionContent;
             private String questionCreateDate;
             private long questionCreateDateLong;
             private int questionId;
+            private int questionLikeCount;
             private String questionPics;
             private String questionSketch;
             private int questionStatus;
             private String questionTopCompanyId;
             private String questionUserId;
             private int questionViewCount;
+            private int weight;
 
             public AccountEntityBean getAccountEntity() {
                 return accountEntity;
@@ -136,6 +150,14 @@ public class AnswerListWithQuestionBean {
                 this.modelName = modelName;
             }
 
+            public int getQuestionAnswerCount() {
+                return questionAnswerCount;
+            }
+
+            public void setQuestionAnswerCount(int questionAnswerCount) {
+                this.questionAnswerCount = questionAnswerCount;
+            }
+
             public String getQuestionCompanyId() {
                 return questionCompanyId;
             }
@@ -174,6 +196,14 @@ public class AnswerListWithQuestionBean {
 
             public void setQuestionId(int questionId) {
                 this.questionId = questionId;
+            }
+
+            public int getQuestionLikeCount() {
+                return questionLikeCount;
+            }
+
+            public void setQuestionLikeCount(int questionLikeCount) {
+                this.questionLikeCount = questionLikeCount;
             }
 
             public String getQuestionPics() {
@@ -224,27 +254,35 @@ public class AnswerListWithQuestionBean {
                 this.questionViewCount = questionViewCount;
             }
 
+            public int getWeight() {
+                return weight;
+            }
+
+            public void setWeight(int weight) {
+                this.weight = weight;
+            }
+
             public static class AccountEntityBean {
                 /**
-                 * accId : 980732504676810754
-                 * accType : 5
-                 * address : 聚朋友棋牌室(朝阳北路定福家园南里2号院3号楼底商附近)
-                 * areaCode : 3.11.1.1
-                 * avatar : account/ae89cce13cc34856af5fc3c26847ca3d.png
+                 * accId : 1059326429620158466
+                 * accType : 2
+                 * address : 正兴烧烤(五里桥一街3号院1号楼-1层-101)
+                 * areaCode : 3.11.1.5
+                 * avatar : account/72eb26c502ca4a6d88cd467773192f7d.png
                  * email :
-                 * gender : 1
-                 * idCard : 410926199005104491
-                 * lastLoginTime : 2019-02-16 06:36:37
-                 * loginCount : 168
-                 * mobile : 18519005131
-                 * mpFrom : -1
-                 * nickName : 赵子武
-                 * openId : 1
-                 * passwd : aK64wClE5PUBqWeyYSXunazwftw=
-                 * qrCode : account/qr/de0182fb1ae541bba5e9d088199f9434.png
-                 * rcloudToken : FcPTBWUNI4d6aVaNce3G8X7s2tSbN+XvbDqPHzdyLLUtcCQXSPO4lHO+5vbzX3xuayDoNTQV4R9zcn6LLCC6h3dxVT7rVHBDRUzCTbOVIS4=
-                 * realName : 赵子武
-                 * regTime : 2018-04-02 17:03:45
+                 * gender : 0
+                 * idCard : 130322199507243525
+                 * isNew : 0
+                 * lastLoginTime : 2019-03-15 17:28:32
+                 * loginCount : 152
+                 * mobile : 18600000006
+                 * nickName : test零七
+                 * passwd : Bf50YcYHwzIpdy1AJQVgEBan0Oo=
+                 * qrCode : account/qr/635b2cb12f4246bd9491fd674d11afe9.png
+                 * rcloudToken : vBPuRDUaF4GQiuE/Pkh4CUxrRiQKPOlpqRODuAaxpdkYa9bWuJ/buZyvclKjJjfSRBHbT3Xc5RFQQf8bW7kKA/dRKEUj8hcxGkMnlZQKljvlJREgd7+tuA==
+                 * realName : 零六
+                 * regFrom : 0
+                 * regTime : 2018-11-05 14:07:57
                  * simplePwd : false
                  * status : 0
                  */
@@ -257,16 +295,16 @@ public class AnswerListWithQuestionBean {
                 private String email;
                 private int gender;
                 private String idCard;
+                private int isNew;
                 private String lastLoginTime;
                 private int loginCount;
                 private String mobile;
-                private int mpFrom;
                 private String nickName;
-                private String openId;
                 private String passwd;
                 private String qrCode;
                 private String rcloudToken;
                 private String realName;
+                private int regFrom;
                 private String regTime;
                 private boolean simplePwd;
                 private int status;
@@ -333,6 +371,448 @@ public class AnswerListWithQuestionBean {
 
                 public void setIdCard(String idCard) {
                     this.idCard = idCard;
+                }
+
+                public int getIsNew() {
+                    return isNew;
+                }
+
+                public void setIsNew(int isNew) {
+                    this.isNew = isNew;
+                }
+
+                public String getLastLoginTime() {
+                    return lastLoginTime;
+                }
+
+                public void setLastLoginTime(String lastLoginTime) {
+                    this.lastLoginTime = lastLoginTime;
+                }
+
+                public int getLoginCount() {
+                    return loginCount;
+                }
+
+                public void setLoginCount(int loginCount) {
+                    this.loginCount = loginCount;
+                }
+
+                public String getMobile() {
+                    return mobile;
+                }
+
+                public void setMobile(String mobile) {
+                    this.mobile = mobile;
+                }
+
+                public String getNickName() {
+                    return nickName;
+                }
+
+                public void setNickName(String nickName) {
+                    this.nickName = nickName;
+                }
+
+                public String getPasswd() {
+                    return passwd;
+                }
+
+                public void setPasswd(String passwd) {
+                    this.passwd = passwd;
+                }
+
+                public String getQrCode() {
+                    return qrCode;
+                }
+
+                public void setQrCode(String qrCode) {
+                    this.qrCode = qrCode;
+                }
+
+                public String getRcloudToken() {
+                    return rcloudToken;
+                }
+
+                public void setRcloudToken(String rcloudToken) {
+                    this.rcloudToken = rcloudToken;
+                }
+
+                public String getRealName() {
+                    return realName;
+                }
+
+                public void setRealName(String realName) {
+                    this.realName = realName;
+                }
+
+                public int getRegFrom() {
+                    return regFrom;
+                }
+
+                public void setRegFrom(int regFrom) {
+                    this.regFrom = regFrom;
+                }
+
+                public String getRegTime() {
+                    return regTime;
+                }
+
+                public void setRegTime(String regTime) {
+                    this.regTime = regTime;
+                }
+
+                public boolean isSimplePwd() {
+                    return simplePwd;
+                }
+
+                public void setSimplePwd(boolean simplePwd) {
+                    this.simplePwd = simplePwd;
+                }
+
+                public int getStatus() {
+                    return status;
+                }
+
+                public void setStatus(int status) {
+                    this.status = status;
+                }
+            }
+        }
+
+        public static class CommonAnswersBean {
+            /**
+             * accountEntity : {"accId":"979993411866378241","accType":3,"address":"朝阳大悦城青年路1号","areaCode":"3.11.1.5","avatar":"c29039799c434a6ab1c6fae0aa1e7fb7.png","birthday":"2000-01-01 00:00:00","email":"10562331229@qq.com","gender":1,"idCard":"110101200001010870","isNew":0,"lastLoginTime":"2019-03-15 11:43:28","loginCount":381,"mobile":"18600134480","mpFrom":0,"nickName":"浮沉不定","openId":"owzakvz7ZUa_xQI5yA5-189cLttk","passwd":"0DPiKuNIrrVmD8IUCuw1hQxNqZc=","qrCode":"account/qr/5e9a6d16432448548ba6c1b36b766e22.png","rcloudToken":"fzyBWYvxei2Au3jW3jBCI37s2tSbN+XvbDqPHzdyLLUtcCQXSPO4lD1+fUAHIDu5zaO6jfU2ag3oGSi2aQlXm6LnQdDEiphRkFqJgXLMZxI=","realName":"刘保恩","regTime":"2018-03-31 16:06:51","simplePwd":false,"status":0}
+             * answerCompanyId : 979995434422681602
+             * answerContent : 什么测试
+             * answerCreateTime : 2019-03-15 09:35:24
+             * answerCreateTimeLong : 1552613724000
+             * answerForwardNums : 0
+             * answerId : 22
+             * answerLikes : 0
+             * answerPics : /expert/questionsbdbe9da2401e41ffb640a4beed619257.png
+             * answerStatus : 0
+             * answerTopCompanyId : 979995434422681602
+             * answerUser : 浮沉不定
+             * answerUserId : 980000524737757185
+             * answerUserType : 0
+             * likeStatus : 1
+             * questionCompanyId : 1070259251163729922
+             * questionId : 38
+             * questionTopCompanyId : 1070259251163729922
+             * questionUserId : 1077806071972753409
+             * replyCount : 0
+             */
+
+            private AccountEntityBeanX accountEntity;
+            private String answerCompanyId;
+            private String answerContent;
+            private String answerCreateTime;
+            private long answerCreateTimeLong;
+            private int answerForwardNums;
+            private int answerId;
+            private int answerLikes;
+            private String answerPics;
+            private int answerStatus;
+            private String answerTopCompanyId;
+            private String answerUser;
+            private String answerUserId;
+            private int answerUserType;
+            private int likeStatus;
+            private String questionCompanyId;
+            private int questionId;
+            private String questionTopCompanyId;
+            private String questionUserId;
+            private int replyCount;
+
+            public AccountEntityBeanX getAccountEntity() {
+                return accountEntity;
+            }
+
+            public void setAccountEntity(AccountEntityBeanX accountEntity) {
+                this.accountEntity = accountEntity;
+            }
+
+            public String getAnswerCompanyId() {
+                return answerCompanyId;
+            }
+
+            public void setAnswerCompanyId(String answerCompanyId) {
+                this.answerCompanyId = answerCompanyId;
+            }
+
+            public String getAnswerContent() {
+                return answerContent;
+            }
+
+            public void setAnswerContent(String answerContent) {
+                this.answerContent = answerContent;
+            }
+
+            public String getAnswerCreateTime() {
+                return answerCreateTime;
+            }
+
+            public void setAnswerCreateTime(String answerCreateTime) {
+                this.answerCreateTime = answerCreateTime;
+            }
+
+            public long getAnswerCreateTimeLong() {
+                return answerCreateTimeLong;
+            }
+
+            public void setAnswerCreateTimeLong(long answerCreateTimeLong) {
+                this.answerCreateTimeLong = answerCreateTimeLong;
+            }
+
+            public int getAnswerForwardNums() {
+                return answerForwardNums;
+            }
+
+            public void setAnswerForwardNums(int answerForwardNums) {
+                this.answerForwardNums = answerForwardNums;
+            }
+
+            public int getAnswerId() {
+                return answerId;
+            }
+
+            public void setAnswerId(int answerId) {
+                this.answerId = answerId;
+            }
+
+            public int getAnswerLikes() {
+                return answerLikes;
+            }
+
+            public void setAnswerLikes(int answerLikes) {
+                this.answerLikes = answerLikes;
+            }
+
+            public String getAnswerPics() {
+                return answerPics;
+            }
+
+            public void setAnswerPics(String answerPics) {
+                this.answerPics = answerPics;
+            }
+
+            public int getAnswerStatus() {
+                return answerStatus;
+            }
+
+            public void setAnswerStatus(int answerStatus) {
+                this.answerStatus = answerStatus;
+            }
+
+            public String getAnswerTopCompanyId() {
+                return answerTopCompanyId;
+            }
+
+            public void setAnswerTopCompanyId(String answerTopCompanyId) {
+                this.answerTopCompanyId = answerTopCompanyId;
+            }
+
+            public String getAnswerUser() {
+                return answerUser;
+            }
+
+            public void setAnswerUser(String answerUser) {
+                this.answerUser = answerUser;
+            }
+
+            public String getAnswerUserId() {
+                return answerUserId;
+            }
+
+            public void setAnswerUserId(String answerUserId) {
+                this.answerUserId = answerUserId;
+            }
+
+            public int getAnswerUserType() {
+                return answerUserType;
+            }
+
+            public void setAnswerUserType(int answerUserType) {
+                this.answerUserType = answerUserType;
+            }
+
+            public int getLikeStatus() {
+                return likeStatus;
+            }
+
+            public void setLikeStatus(int likeStatus) {
+                this.likeStatus = likeStatus;
+            }
+
+            public String getQuestionCompanyId() {
+                return questionCompanyId;
+            }
+
+            public void setQuestionCompanyId(String questionCompanyId) {
+                this.questionCompanyId = questionCompanyId;
+            }
+
+            public int getQuestionId() {
+                return questionId;
+            }
+
+            public void setQuestionId(int questionId) {
+                this.questionId = questionId;
+            }
+
+            public String getQuestionTopCompanyId() {
+                return questionTopCompanyId;
+            }
+
+            public void setQuestionTopCompanyId(String questionTopCompanyId) {
+                this.questionTopCompanyId = questionTopCompanyId;
+            }
+
+            public String getQuestionUserId() {
+                return questionUserId;
+            }
+
+            public void setQuestionUserId(String questionUserId) {
+                this.questionUserId = questionUserId;
+            }
+
+            public int getReplyCount() {
+                return replyCount;
+            }
+
+            public void setReplyCount(int replyCount) {
+                this.replyCount = replyCount;
+            }
+
+            public static class AccountEntityBeanX {
+                /**
+                 * accId : 979993411866378241
+                 * accType : 3
+                 * address : 朝阳大悦城青年路1号
+                 * areaCode : 3.11.1.5
+                 * avatar : c29039799c434a6ab1c6fae0aa1e7fb7.png
+                 * birthday : 2000-01-01 00:00:00
+                 * email : 10562331229@qq.com
+                 * gender : 1
+                 * idCard : 110101200001010870
+                 * isNew : 0
+                 * lastLoginTime : 2019-03-15 11:43:28
+                 * loginCount : 381
+                 * mobile : 18600134480
+                 * mpFrom : 0
+                 * nickName : 浮沉不定
+                 * openId : owzakvz7ZUa_xQI5yA5-189cLttk
+                 * passwd : 0DPiKuNIrrVmD8IUCuw1hQxNqZc=
+                 * qrCode : account/qr/5e9a6d16432448548ba6c1b36b766e22.png
+                 * rcloudToken : fzyBWYvxei2Au3jW3jBCI37s2tSbN+XvbDqPHzdyLLUtcCQXSPO4lD1+fUAHIDu5zaO6jfU2ag3oGSi2aQlXm6LnQdDEiphRkFqJgXLMZxI=
+                 * realName : 刘保恩
+                 * regTime : 2018-03-31 16:06:51
+                 * simplePwd : false
+                 * status : 0
+                 */
+
+                private String accId;
+                private int accType;
+                private String address;
+                private String areaCode;
+                private String avatar;
+                private String birthday;
+                private String email;
+                private int gender;
+                private String idCard;
+                private int isNew;
+                private String lastLoginTime;
+                private int loginCount;
+                private String mobile;
+                private int mpFrom;
+                private String nickName;
+                private String openId;
+                private String passwd;
+                private String qrCode;
+                private String rcloudToken;
+                private String realName;
+                private String regTime;
+                private boolean simplePwd;
+                private int status;
+
+                public String getAccId() {
+                    return accId;
+                }
+
+                public void setAccId(String accId) {
+                    this.accId = accId;
+                }
+
+                public int getAccType() {
+                    return accType;
+                }
+
+                public void setAccType(int accType) {
+                    this.accType = accType;
+                }
+
+                public String getAddress() {
+                    return address;
+                }
+
+                public void setAddress(String address) {
+                    this.address = address;
+                }
+
+                public String getAreaCode() {
+                    return areaCode;
+                }
+
+                public void setAreaCode(String areaCode) {
+                    this.areaCode = areaCode;
+                }
+
+                public String getAvatar() {
+                    return avatar;
+                }
+
+                public void setAvatar(String avatar) {
+                    this.avatar = avatar;
+                }
+
+                public String getBirthday() {
+                    return birthday;
+                }
+
+                public void setBirthday(String birthday) {
+                    this.birthday = birthday;
+                }
+
+                public String getEmail() {
+                    return email;
+                }
+
+                public void setEmail(String email) {
+                    this.email = email;
+                }
+
+                public int getGender() {
+                    return gender;
+                }
+
+                public void setGender(int gender) {
+                    this.gender = gender;
+                }
+
+                public String getIdCard() {
+                    return idCard;
+                }
+
+                public void setIdCard(String idCard) {
+                    this.idCard = idCard;
+                }
+
+                public int getIsNew() {
+                    return isNew;
+                }
+
+                public void setIsNew(int isNew) {
+                    this.isNew = isNew;
                 }
 
                 public String getLastLoginTime() {
@@ -441,29 +921,31 @@ public class AnswerListWithQuestionBean {
             }
         }
 
-        public static class AnswersBean {
+        public static class ExpertAnswersBean {
             /**
-             * answerCompanyId : 0
-             * answerContent : nt00110101
-             * answerCreateTime : 2019-01-28 11:39:15
-             * answerCreateTimeLong : 1548646755000
-             * answerForwardNums : 1
-             * answerId : 1
+             * answerCompanyId : 1082922712729456641
+             * answerContent : 沐浴露
+             * answerCreateTime : 2019-03-15 16:44:08
+             * answerCreateTimeLong : 1552639448000
+             * answerForwardNums : 0
+             * answerId : 27
              * answerLikes : 0
              * answerStatus : 0
-             * answerTopCompanyId : 0
-             * answerUserId : 1057887495614709762
-             * expertsCertificationEntity : {"accId":"1057887495589543937","approveTime":"2019-02-22 16:20:17","approveType":0,"approveUserName":"管理员","avatarPhoto":"145bbddd9890479a931005a7bd7da828.png","brandName":"testBrand0001","company":"水康威看","createTime":"2019-01-16 18:13:16","expertName":"测试专家001","favorableRate":0.88,"gender":1,"id":9,"idCard":"110101199105051211","idCardFront":"feb2da277dc647ddb9d7bfaff9919296.png","idCardHand":"145bbddd9890479a931005a7bd7da828.png","idCardSide":"b265cb5269df4a5ab7fce6b7e2f79367.png","impowerUrl":"account/3750d8072f264aa49bafce3f7a2be35d.png","intro":"ceshiintrp0001","jobLce":1,"jobLevel":1,"payAccount":"321321","payType":2,"phonenumber":"14796325896","price":20,"status":2,"systemType":"防盗报警,可视对讲","updateTime":"2019-01-17 09:41:18","userId":"1057887495614709762","workingAge":0}
+             * answerTopCompanyId : 1082922712729456641
+             * answerUser : test零七
+             * answerUserId : 1082922712729456642
+             * answerUserType : 5
+             * expertsCertificationEntity : {"accId":"1059326429620158466","approveTime":"2019-03-16 16:05:53","approveType":0,"approveUserName":"管理员","avatarPhoto":"b265cb5269df4a5ab7fce6b7e2f79367.png","brandName":"testBrand0001","company":"ddd","createTime":"2019-03-15 15:57:24","expertName":"零六","favorableRate":0.66,"gender":1,"id":14,"idCard":"130322199608563284","idCardFront":"b026817b8ff848e7b6f7e047290cdb11.png","idCardHand":"b026817b8ff848e7b6f7e047290cdb11.png","idCardSide":"b026817b8ff848e7b6f7e047290cdb11.png","impowerUrl":"feb2da277dc647ddb9d7bfaff9919296.png","intro":"111","jobLce":1,"jobLevel":1,"payAccount":"222","payType":1,"phonenumber":"18600000002","price":13,"responsibleBrand":"AB,东芝（Toshiba）","status":0,"systemType":"防盗报警,可视对讲","updateTime":"2019-03-15 15:56:06","userId":"1082922712729456642","workingAge":0}
              * likeStatus : 1
-             * questionCompanyId : 979995434422681602
-             * questionId : 1
-             * questionTopCompanyId : 979995434422681602
-             * questionUserId : 1049116901888790530
-             * replyCount : 5
-             * answerPics : aaa.img
+             * questionCompanyId : 1082922712729456641
+             * questionId : 38
+             * questionTopCompanyId : 1082922712729456641
+             * questionUserId : 1082922712729456642
+             * replyCount : 0
+             * answerPics : /expert/questions73927f99ddef4bd2a1ec5e5f518ac14c.png
              */
 
-            private int answerCompanyId;
+            private String answerCompanyId;
             private String answerContent;
             private String answerCreateTime;
             private long answerCreateTimeLong;
@@ -471,8 +953,10 @@ public class AnswerListWithQuestionBean {
             private int answerId;
             private int answerLikes;
             private int answerStatus;
-            private int answerTopCompanyId;
+            private String answerTopCompanyId;
+            private String answerUser;
             private String answerUserId;
+            private int answerUserType;
             private ExpertsCertificationEntityBean expertsCertificationEntity;
             private int likeStatus;
             private String questionCompanyId;
@@ -482,11 +966,11 @@ public class AnswerListWithQuestionBean {
             private int replyCount;
             private String answerPics;
 
-            public int getAnswerCompanyId() {
+            public String getAnswerCompanyId() {
                 return answerCompanyId;
             }
 
-            public void setAnswerCompanyId(int answerCompanyId) {
+            public void setAnswerCompanyId(String answerCompanyId) {
                 this.answerCompanyId = answerCompanyId;
             }
 
@@ -546,12 +1030,20 @@ public class AnswerListWithQuestionBean {
                 this.answerStatus = answerStatus;
             }
 
-            public int getAnswerTopCompanyId() {
+            public String getAnswerTopCompanyId() {
                 return answerTopCompanyId;
             }
 
-            public void setAnswerTopCompanyId(int answerTopCompanyId) {
+            public void setAnswerTopCompanyId(String answerTopCompanyId) {
                 this.answerTopCompanyId = answerTopCompanyId;
+            }
+
+            public String getAnswerUser() {
+                return answerUser;
+            }
+
+            public void setAnswerUser(String answerUser) {
+                this.answerUser = answerUser;
             }
 
             public String getAnswerUserId() {
@@ -560,6 +1052,14 @@ public class AnswerListWithQuestionBean {
 
             public void setAnswerUserId(String answerUserId) {
                 this.answerUserId = answerUserId;
+            }
+
+            public int getAnswerUserType() {
+                return answerUserType;
+            }
+
+            public void setAnswerUserType(int answerUserType) {
+                this.answerUserType = answerUserType;
             }
 
             public ExpertsCertificationEntityBean getExpertsCertificationEntity() {
@@ -628,34 +1128,35 @@ public class AnswerListWithQuestionBean {
 
             public static class ExpertsCertificationEntityBean {
                 /**
-                 * accId : 1057887495589543937
-                 * approveTime : 2019-02-22 16:20:17
+                 * accId : 1059326429620158466
+                 * approveTime : 2019-03-16 16:05:53
                  * approveType : 0
                  * approveUserName : 管理员
-                 * avatarPhoto : 145bbddd9890479a931005a7bd7da828.png
+                 * avatarPhoto : b265cb5269df4a5ab7fce6b7e2f79367.png
                  * brandName : testBrand0001
-                 * company : 水康威看
-                 * createTime : 2019-01-16 18:13:16
-                 * expertName : 测试专家001
-                 * favorableRate : 0.88
+                 * company : ddd
+                 * createTime : 2019-03-15 15:57:24
+                 * expertName : 零六
+                 * favorableRate : 0.66
                  * gender : 1
-                 * id : 9
-                 * idCard : 110101199105051211
-                 * idCardFront : feb2da277dc647ddb9d7bfaff9919296.png
-                 * idCardHand : 145bbddd9890479a931005a7bd7da828.png
-                 * idCardSide : b265cb5269df4a5ab7fce6b7e2f79367.png
-                 * impowerUrl : account/3750d8072f264aa49bafce3f7a2be35d.png
-                 * intro : ceshiintrp0001
+                 * id : 14
+                 * idCard : 130322199608563284
+                 * idCardFront : b026817b8ff848e7b6f7e047290cdb11.png
+                 * idCardHand : b026817b8ff848e7b6f7e047290cdb11.png
+                 * idCardSide : b026817b8ff848e7b6f7e047290cdb11.png
+                 * impowerUrl : feb2da277dc647ddb9d7bfaff9919296.png
+                 * intro : 111
                  * jobLce : 1
                  * jobLevel : 1
-                 * payAccount : 321321
-                 * payType : 2
-                 * phonenumber : 14796325896
-                 * price : 20
-                 * status : 2
+                 * payAccount : 222
+                 * payType : 1
+                 * phonenumber : 18600000002
+                 * price : 13
+                 * responsibleBrand : AB,东芝（Toshiba）
+                 * status : 0
                  * systemType : 防盗报警,可视对讲
-                 * updateTime : 2019-01-17 09:41:18
-                 * userId : 1057887495614709762
+                 * updateTime : 2019-03-15 15:56:06
+                 * userId : 1082922712729456642
                  * workingAge : 0
                  */
 
@@ -683,6 +1184,7 @@ public class AnswerListWithQuestionBean {
                 private int payType;
                 private String phonenumber;
                 private int price;
+                private String responsibleBrand;
                 private int status;
                 private String systemType;
                 private String updateTime;
@@ -879,6 +1381,14 @@ public class AnswerListWithQuestionBean {
 
                 public void setPrice(int price) {
                     this.price = price;
+                }
+
+                public String getResponsibleBrand() {
+                    return responsibleBrand;
+                }
+
+                public void setResponsibleBrand(String responsibleBrand) {
+                    this.responsibleBrand = responsibleBrand;
                 }
 
                 public int getStatus() {

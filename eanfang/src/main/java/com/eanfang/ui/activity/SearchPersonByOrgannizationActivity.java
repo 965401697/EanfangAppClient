@@ -77,7 +77,9 @@ public class SearchPersonByOrgannizationActivity extends BaseActivity {
     }
 
     private void search(String name) {
-        if (searchDataList == null) searchDataList = new ArrayList<>();
+        if (searchDataList == null) {
+            searchDataList = new ArrayList<>();
+        }
         searchDataList.clear();
         for (TemplateBean t : mDataList) {
             for (TemplateBean.Preson p : t.getPresons()) {

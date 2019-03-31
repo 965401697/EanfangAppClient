@@ -55,8 +55,11 @@ public class HttpUtils {
         try {
             StringBuilder sb = new StringBuilder();
             sb.append(url);
-            if (url.indexOf('&') > 0 || url.indexOf('?') > 0) sb.append("&");
-            else sb.append("?");
+            if (url.indexOf('&') > 0 || url.indexOf('?') > 0) {
+                sb.append("&");
+            } else {
+                sb.append("?");
+            }
             for (Map.Entry<String, List<String>> urlParams : params.entrySet()) {
                 List<String> urlValues = urlParams.getValue();
                 for (String value : urlValues) {
@@ -77,7 +80,9 @@ public class HttpUtils {
      * 通用的拼接请求头
      */
     public static Request.Builder appendHeaders(Request.Builder builder, HttpHeaders headers) {
-        if (headers.headersMap.isEmpty()) return builder;
+        if (headers.headersMap.isEmpty()) {
+            return builder;
+        }
         Headers.Builder headerBuilder = new Headers.Builder();
         try {
             for (Map.Entry<String, String> entry : headers.headersMap.entrySet()) {
@@ -135,8 +140,12 @@ public class HttpUtils {
      */
     public static String getNetFileName(Response response, String url) {
         String fileName = getHeaderFileName(response);
-        if (TextUtils.isEmpty(fileName)) fileName = getUrlFileName(url);
-        if (TextUtils.isEmpty(fileName)) fileName = "unknownfile_" + System.currentTimeMillis();
+        if (TextUtils.isEmpty(fileName)) {
+            fileName = getUrlFileName(url);
+        }
+        if (TextUtils.isEmpty(fileName)) {
+            fileName = "unknownfile_" + System.currentTimeMillis();
+        }
         try {
             fileName = URLDecoder.decode(fileName, "UTF-8");
         } catch (UnsupportedEncodingException e) {
@@ -200,9 +209,13 @@ public class HttpUtils {
      * 根据路径删除文件
      */
     public static boolean deleteFile(String path) {
-        if (TextUtils.isEmpty(path)) return true;
+        if (TextUtils.isEmpty(path)) {
+            return true;
+        }
         File file = new File(path);
-        if (!file.exists()) return true;
+        if (!file.exists()) {
+            return true;
+        }
         if (file.isFile()) {
             boolean delete = file.delete();
             OkLogger.e("deleteFile:" + delete + " path:" + path);

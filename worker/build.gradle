@@ -8,8 +8,8 @@ android {
         applicationId "net.eanfang.worker"
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 19031701
-        versionName "2.3.37"
+        versionCode 19033001
+        versionName "2.3.38"
         multiDexEnabled true
 //        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -80,8 +80,6 @@ android {
             buildConfigField("boolean", "LOG_DEBUG", "true")
             //Zipalign优化
             zipAlignEnabled true
-            // 移除无用的resource文件 表示去掉没有引用的资源，可以减少应用的体积，但这个只有在混淆开启后才有效。
-            shrinkResources false
             //混淆
             minifyEnabled true
             //加载默认混淆配置文件
@@ -198,12 +196,11 @@ dependencies {
     compile 'me.zhanghai.android.materialratingbar:library:1.0.2'
     compile 'com.daimajia.numberprogressbar:library:1.4@aar'
     // add library
-    compile 'com.alibaba:fastjson:1.2.47'
-    compile 'org.projectlombok:lombok:1.16.18'
     implementation project(':IMKit')
     implementation project(':zxing')
     // flowlayout
     compile 'com.zhy:flowlayout-lib:1.0.3'
     implementation project(':IMLib')
     implementation project(':eanfang')
+
 }

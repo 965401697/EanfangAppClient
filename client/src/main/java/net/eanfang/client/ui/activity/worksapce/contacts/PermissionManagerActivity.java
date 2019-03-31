@@ -70,6 +70,7 @@ public class PermissionManagerActivity extends BaseClientActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        jumpSelectOAPresonAc();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_permission_manager);
         ButterKnife.bind(this);
@@ -93,9 +94,7 @@ public class PermissionManagerActivity extends BaseClientActivity {
         switch (view.getId()) {
             case R.id.rl_checked_staff:
             case R.id.ll_select_staff:
-                Intent intent = new Intent(this, SelectOAPresonActivity.class);
-                intent.putExtra("isRadio", "isRadio");
-                startActivity(intent);
+                jumpSelectOAPresonAc();
                 break;
 
 //            case R.id.ll_role:
@@ -103,9 +102,15 @@ public class PermissionManagerActivity extends BaseClientActivity {
 //                in.putStringArrayListExtra("roleNameList", roleNameList);
 //                startActivityForResult(in, ROLE_FLAG);
 //                break;
+            default:
+                break;
         }
     }
-
+    private void jumpSelectOAPresonAc(){
+        Intent intent = new Intent(this, SelectOAPresonActivity.class);
+        intent.putExtra("isRadio", "isRadio");
+        startActivity(intent);
+    }
     private void subMermission() {
         if (TextUtils.isEmpty(departmentId)) {
             ToastUtil.get().showToast(this, "员工不能为空");

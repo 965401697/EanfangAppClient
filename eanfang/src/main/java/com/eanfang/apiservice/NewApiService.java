@@ -437,14 +437,14 @@ public interface NewApiService {
      * 模糊查询故障记录列表
      * post
      */
-    String FAULT_RECORD_LIST = BASE_URL + "/yaf_sys/expertsOnline/questionListByFailureType";
+    String FAULT_RECORD_LIST = BASE_URL + "/yaf_repair/failure/record/list ";
     /**
      * 故障记录列表
      * post
      */
     String COMMENT_FAULT_RECORD_LIST = BASE_URL + "/yaf_sys/expertsOnline/questionsWithExpert";
     /**
-     * 故障记录列表首页
+     * 故障记录列表首页e
      * post
      */
     String CommonQuestions = BASE_URL + "/yaf_sys/expertsOnline/commonQuestions";
@@ -484,7 +484,7 @@ public interface NewApiService {
      * 按某一类问题筛选免费提问列表
      * post
      */
-    String COMMENT_FAULT_RECORD_TYPE = BASE_URL + "/yaf_sys/expertsOnline/questionListByFailureType";
+    String COMMENT_FAULT_RECORD_TYPE = BASE_URL + "/yaf_sys/expertsOnline/similarQuestions";
     /**
      * 故障记录统计
      * post
@@ -660,7 +660,7 @@ public interface NewApiService {
     /**
      * 安防圈 关注列表
      */
-    String SERCURITY_FOUCS = BASE_URL + "/yaf_spc/spcircle/followerList";
+    String SERCURITY_FOUCS = BASE_URL + "/yaf_spc/spcircle/followersList";
     /**
      * 安防圈 创建
      */
@@ -686,9 +686,26 @@ public interface NewApiService {
      */
     String SERCURITY_COMMENT = BASE_URL + "/yaf_spc/spcircle/comment";
     /**
-     * 删除评论
+     * 安防圈删除评论
      */
     String SERCURITY_COMMENT_DELETE = BASE_URL + "/yaf_spc/spcircle/deleteComment";
+
+    /**
+     * 安防圈个人中心
+     */
+    String SERCURITY_PERSONAL = BASE_URL + "/yaf_spc/spcircle/centerList";
+    /**
+     * 安防圈评论列表
+     */
+    String SERCURITY_COMMENT_LIST = BASE_URL + "/yaf_spc/spcircle/commentList";
+    /**
+     * 安防圈点赞列表
+     */
+    String SERCURITY_LIKE_LIST = BASE_URL + "/yaf_spc/spcircle/likeList";
+    /**
+     * 安防圈艾特列表
+     */
+    String SERCURITY_ABOUT_LIST = BASE_URL + "/yaf_spc/spcircle/atList";
 
 
 }

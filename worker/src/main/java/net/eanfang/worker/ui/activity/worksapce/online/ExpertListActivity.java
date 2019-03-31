@@ -6,40 +6,30 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
-import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.ExpertListBean;
-import com.eanfang.model.FriendListBean;
-import com.eanfang.model.GroupsBean;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
-import com.yaf.base.entity.ExpertsCertificationEntity;
 import com.yaf.sys.entity.BaseDataEntity;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.im.MyFriendsListActivity;
-import net.eanfang.worker.ui.activity.im.MyGroupsListActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
-import net.eanfang.worker.ui.base.WorkerApplication;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
-
-import static net.eanfang.worker.R.id.tv_desc;
 
 public class ExpertListActivity extends BaseWorkerActivity implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
 
@@ -49,6 +39,8 @@ public class ExpertListActivity extends BaseWorkerActivity implements SwipeRefre
     TextView mTvNoData;
     @BindView(R.id.swipre_fresh)
     SwipeRefreshLayout mSwipeRefreshLayout;
+    @BindView(R.id.iv_left)
+    ImageView ivLeft;
     private BaseDataEntity mBrand;
 
     private int mPage = 1;
@@ -60,6 +52,7 @@ public class ExpertListActivity extends BaseWorkerActivity implements SwipeRefre
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expert_list);
         ButterKnife.bind(this);
+        ivLeft.setVisibility(View.GONE);
         mBrand = (BaseDataEntity) getIntent().getSerializableExtra("brand");
         if (mBrand != null) {
             setTitle(mBrand.getDataName());
@@ -81,8 +74,10 @@ public class ExpertListActivity extends BaseWorkerActivity implements SwipeRefre
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(ExpertListActivity.this, AskExpertActivity.class);
-                intent.putExtra("com",list.get(position).getUserId());
-                intent.putExtra("com2",list.get(position).getCompany());
+                intent.putExtra("com", list.get(position).getUserId());
+                intent.putExtra("com2", list.get(position).getCompany());
+                intent.putExtra("com3", list.get(position).getAccId());
+                intent.putExtra("com4", list.get(position).getExpertName());
                 startActivity(intent);
             }
         });
@@ -93,11 +88,11 @@ public class ExpertListActivity extends BaseWorkerActivity implements SwipeRefre
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 //if (mExpertListAdapter.getData().get(position).getPrice()>0){
-                    //Toast.makeText(ExpertListActivity.this,"需充值支付",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(ExpertListActivity.this,"需充值支付",Toast.LENGTH_SHORT).show();
                 //}else{
-                    String accId = list.get(position).getAccId();
-                    String expertName = list.get(position).getExpertName();
-                    RongIM.getInstance().startConversation(ExpertListActivity.this, Conversation.ConversationType.PRIVATE, accId, expertName);
+                String accId = list.get(position).getAccId();
+                String expertName = list.get(position).getExpertName();
+                RongIM.getInstance().startConversation(ExpertListActivity.this, Conversation.ConversationType.PRIVATE, accId, expertName);
                 //}
             }
         });
@@ -139,6 +134,17 @@ public class ExpertListActivity extends BaseWorkerActivity implements SwipeRefre
 
         if (mBrand != null) {
             queryEntry.getEquals().put("dataCode", mBrand.getDataCode());
+        } else {
+            Intent intent = getIntent();
+            String brand_code = intent.getStringExtra("brand_code");
+            String brand_name = intent.getStringExtra("brand_name");
+            queryEntry.getEquals().put("dataCode", brand_code);
+            if (!TextUtils.isEmpty(brand_name)) {
+                setTitle(brand_name);
+            } else {
+                setTitle("专家在线");
+            }
+
         }
 
         EanfangHttp.post(UserApi.EXPERT_LIST)
@@ -192,4 +198,18 @@ public class ExpertListActivity extends BaseWorkerActivity implements SwipeRefre
                 });
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount()==0){
+            Intent intent = new Intent(ExpertListActivity.this, ExpertOnlineActivity.class);
+            startActivity(intent);
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @OnClick(R.id.tiao_zhuan)
+    public void onViewClicked() {
+        Intent intent = new Intent(ExpertListActivity.this, ExpertOnlineActivity.class);
+        startActivity(intent);
+    }
 }

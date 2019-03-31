@@ -4,7 +4,7 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:background="@drawable/ic_main_top_back"
+    android:background="@color/colorPrimary"
     android:navigationIcon="@mipmap/shape_back"
     android:subtitle=""
     android:title=""

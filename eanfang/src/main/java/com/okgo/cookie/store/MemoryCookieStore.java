@@ -89,7 +89,9 @@ public class MemoryCookieStore implements CookieStore {
     public List<Cookie> getCookie(HttpUrl url) {
         List<Cookie> cookies = new ArrayList<>();
         List<Cookie> urlCookies = memoryCookies.get(url.host());
-        if (urlCookies != null) cookies.addAll(urlCookies);
+        if (urlCookies != null) {
+            cookies.addAll(urlCookies);
+        }
         return cookies;
     }
 

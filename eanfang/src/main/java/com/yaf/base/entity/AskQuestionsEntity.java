@@ -298,8 +298,9 @@ public class AskQuestionsEntity implements Serializable {
     @Override
     public boolean equals(Object other) {
         if (other instanceof AskQuestionsEntity) {
-            if (this.questionId == null || other == null)
+            if (this.questionId == null || other == null) {
                 return false;
+            }
 
             return this.questionId.equals(((AskQuestionsEntity) other).questionId);
         }

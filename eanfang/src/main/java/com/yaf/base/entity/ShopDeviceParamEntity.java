@@ -178,8 +178,9 @@ public class ShopDeviceParamEntity implements Serializable {
     @Override
     public boolean equals(Object other) {
         if (other instanceof ShopDeviceParamEntity) {
-            if (this.id == null || other == null)
+            if (this.id == null || other == null) {
                 return false;
+            }
 
             return this.id.equals(((ShopDeviceParamEntity) other).id);
         }

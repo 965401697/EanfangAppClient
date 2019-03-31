@@ -64,7 +64,9 @@ public class CacheManager extends BaseDao<CacheEntity<?>> {
      * 根据key获取缓存
      */
     public CacheEntity<?> get(String key) {
-        if (key == null) return null;
+        if (key == null) {
+            return null;
+        }
         List<CacheEntity<?>> cacheEntities = query(CacheEntity.KEY + "=?", new String[]{key});
         return cacheEntities.size() > 0 ? cacheEntities.get(0) : null;
     }
@@ -73,7 +75,9 @@ public class CacheManager extends BaseDao<CacheEntity<?>> {
      * 移除一个缓存
      */
     public boolean remove(String key) {
-        if (key == null) return false;
+        if (key == null) {
+            return false;
+        }
         return delete(CacheEntity.KEY + "=?", new String[]{key});
     }
 

@@ -245,7 +245,9 @@ public class TaskActivity extends BaseWorkerActivity implements View.OnClickList
     @Subscribe
     public void onEvent(List<TemplateBean.Preson> presonList) {
 
-        if (!isEventBus) return;
+        if (!isEventBus) {
+            return;
+        }
 
         if (presonList.size() > 0) {
             if (isSend == 1) {

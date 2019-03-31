@@ -107,7 +107,9 @@ public class AddSkillCertificafeActivity extends BaseActivityWithTakePhoto {
 
     private void setData() {
 
-        if (checkedData()) return;
+        if (checkedData()) {
+            return;
+        }
 
         QualificationCertificateEntity entity = new QualificationCertificateEntity();
         entity.setAccId(EanfangApplication.get().getAccId());

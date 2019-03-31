@@ -185,25 +185,29 @@ public class OpenShopLogWriteActivity extends BaseClientActivity implements Sele
         switch (view.getId()) {
             case R.id.ll_staff_in_time:
                 currentTextView = tvStaffInTime;
-                if (!SelectTimeDialogFragment.getInstance().isAdded())
+                if (!SelectTimeDialogFragment.getInstance().isAdded()) {
                     SelectTimeDialogFragment.getInstance().show(getSupportFragmentManager(), R.string.app_name + "");
+                }
 //                mTimeYearMonthDayHMS.setDate(Calendar.getInstance());
 //                mTimeYearMonthDayHMS.show();
                 break;
             case R.id.ll_staff_out_time:
                 currentTextView = tvStaffOutTime;
-                if (!SelectTimeDialogFragment.getInstance().isAdded())
+                if (!SelectTimeDialogFragment.getInstance().isAdded()) {
                     SelectTimeDialogFragment.getInstance().show(getSupportFragmentManager(), R.string.app_name + "");
+                }
                 break;
             case R.id.ll_client_in_time:
                 currentTextView = tvClientInTime;
-                if (!SelectTimeDialogFragment.getInstance().isAdded())
+                if (!SelectTimeDialogFragment.getInstance().isAdded()) {
                     SelectTimeDialogFragment.getInstance().show(getSupportFragmentManager(), R.string.app_name + "");
+                }
                 break;
             case R.id.ll_client_out_time:
                 currentTextView = tvClientOutTime;
-                if (!SelectTimeDialogFragment.getInstance().isAdded())
+                if (!SelectTimeDialogFragment.getInstance().isAdded()) {
                     SelectTimeDialogFragment.getInstance().show(getSupportFragmentManager(), R.string.app_name + "");
+                }
                 break;
             case R.id.ll_open_time:
                 currentTextView = tvOpenTime;
@@ -216,13 +220,15 @@ public class OpenShopLogWriteActivity extends BaseClientActivity implements Sele
 //                    selectTimeDialogFragment.show(getSupportFragmentManager(), "");
 //                }
 
-                if (!SelectTimeDialogFragment.getInstance().isAdded())
+                if (!SelectTimeDialogFragment.getInstance().isAdded()) {
                     SelectTimeDialogFragment.getInstance().show(getSupportFragmentManager(), R.string.app_name + "");
+                }
                 break;
             case R.id.ll_close_time:
                 currentTextView = tvCloseTime;
-                if (!SelectTimeDialogFragment.getInstance().isAdded())
+                if (!SelectTimeDialogFragment.getInstance().isAdded()) {
                     SelectTimeDialogFragment.getInstance().show(getSupportFragmentManager(), R.string.app_name + "");
+                }
                 break;
             case R.id.ll_depend_person:
 //                showDependPerson();
@@ -314,7 +320,9 @@ public class OpenShopLogWriteActivity extends BaseClientActivity implements Sele
 
     private void sub() {
 
-        if (!checkInfo()) return;
+        if (!checkInfo()) {
+            return;
+        }
 
         JSONObject object = new JSONObject();
         try {

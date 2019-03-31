@@ -424,7 +424,9 @@ public class ReportActivity extends BaseClientActivity implements View.OnClickLi
     @Subscribe
     public void onEvent(List<TemplateBean.Preson> presonList) {
 
-        if (!isEventBus) return;
+        if (!isEventBus) {
+            return;
+        }
 
         if (presonList.size() > 0) {
             if (isSend == 1) {

@@ -42,12 +42,14 @@ public class FileUtil {
      */
     public static File getOrCreateAppDir(String childDriName) {
         String root_path = getAppFileSaveRootDri();
-        if (root_path == null)
+        if (root_path == null) {
             return null;
+        }
 
         File dir = new File(root_path + "/" + childDriName);
-        if (!dir.exists())
+        if (!dir.exists()) {
             dir.mkdirs();
+        }
 
         return dir;
     }
@@ -253,8 +255,9 @@ public class FileUtil {
         File dir = FileUtil.getOrCreateAppDir(name);
         File file = new File(dir, MD5Util.hashKeyForDisk(UUID.randomUUID() + "") + ".jpg");
         try {
-            if (!file.exists())
+            if (!file.exists()) {
                 file.createNewFile();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -49,8 +49,9 @@ public abstract class J_CountDownTimer {
                             .elapsedRealtime();
                     // special case: user's onTick took more than interval to
                     // complete, skip to next interval
-                    while (delay < 0)
+                    while (delay < 0) {
                         delay += mCountdownInterval;
+                    }
                     mHandler.sendMessageDelayed(mHandler
                             .obtainMessage(MSG), delay);
                 }

@@ -222,8 +222,9 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
         /**
          * 添加自己的头像
          * */
-        if (!userIconList.contains(EanfangApplication.get().getUser().getAccount().getAvatar()))
+        if (!userIconList.contains(EanfangApplication.get().getUser().getAccount().getAvatar())) {
             userIconList.add(EanfangApplication.get().getUser().getAccount().getAvatar());
+        }
 
         //防止创建群组的人员一个头像图片都没有 造成的空指针崩溃
         if (userIconList.size() == 0) {

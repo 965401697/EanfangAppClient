@@ -21,7 +21,9 @@ public class DesignActivity extends BaseWorkerActivity {
         findViewById(R.id.iv_design).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!PermKit.get().getDesignListPrem())return;
+                if(!PermKit.get().getDesignListPrem()) {
+                    return;
+                }
                 JumpItent.jump(DesignActivity.this, DesignOrderActivity.class);
             }
         });

@@ -61,7 +61,9 @@ public class CheckListActivity extends BaseActivity {
         setRightImageOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!PermKit.get().getWorkInspectCreatePrem()) return;
+                if (!PermKit.get().getWorkInspectCreatePrem()) {
+                    return;
+                }
                 startActivityForResult(new Intent(CheckListActivity.this, AddNewCheckActivity.class), REFRESH_CODE);
             }
         });

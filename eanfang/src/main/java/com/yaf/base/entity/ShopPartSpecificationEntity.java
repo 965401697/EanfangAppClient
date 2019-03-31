@@ -161,8 +161,9 @@ public class ShopPartSpecificationEntity implements Serializable {
     @Override
     public boolean equals(Object other) {
         if (other instanceof ShopPartSpecificationEntity) {
-            if (this.id == null || other == null)
+            if (this.id == null || other == null) {
                 return false;
+            }
 
             return this.id.equals(((ShopPartSpecificationEntity) other).id);
         }

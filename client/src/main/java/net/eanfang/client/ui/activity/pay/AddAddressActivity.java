@@ -116,7 +116,9 @@ public class AddAddressActivity extends BaseClientActivity {
     }
 
     private void subAddress() {
-        if (!checkInfo()) return;
+        if (!checkInfo()) {
+            return;
+        }
 
         ReceiveAddressEntity receiveAddressEntity = new ReceiveAddressEntity();
         receiveAddressEntity.setUserId(EanfangApplication.get().getUserId());
@@ -143,7 +145,9 @@ public class AddAddressActivity extends BaseClientActivity {
 
     private void subEdit() {
 
-        if (!checkInfo()) return;
+        if (!checkInfo()) {
+            return;
+        }
 
         addressEntity.setUserId(EanfangApplication.get().getUserId());
         addressEntity.setName(etName.getText().toString().trim());

@@ -105,7 +105,9 @@ public class DBCookieStore implements CookieStore {
     @Override
     public synchronized List<Cookie> loadCookie(HttpUrl url) {
         List<Cookie> ret = new ArrayList<>();
-        if (!cookies.containsKey(url.host())) return ret;
+        if (!cookies.containsKey(url.host())) {
+            return ret;
+        }
 
         List<SerializableCookie> query = CookieManager.getInstance().query("host=?", new String[]{url.host()});
         for (SerializableCookie serializableCookie : query) {
@@ -124,9 +126,13 @@ public class DBCookieStore implements CookieStore {
      */
     @Override
     public synchronized boolean removeCookie(HttpUrl url, Cookie cookie) {
-        if (!cookies.containsKey(url.host())) return false;
+        if (!cookies.containsKey(url.host())) {
+            return false;
+        }
         String cookieToken = getCookieToken(cookie);
-        if (!cookies.get(url.host()).containsKey(cookieToken)) return false;
+        if (!cookies.get(url.host()).containsKey(cookieToken)) {
+            return false;
+        }
 
         //内存移除
         cookies.get(url.host()).remove(cookieToken);
@@ -139,7 +145,9 @@ public class DBCookieStore implements CookieStore {
 
     @Override
     public synchronized boolean removeCookie(HttpUrl url) {
-        if (!cookies.containsKey(url.host())) return false;
+        if (!cookies.containsKey(url.host())) {
+            return false;
+        }
 
         //内存移除
         cookies.remove(url.host());
@@ -175,7 +183,9 @@ public class DBCookieStore implements CookieStore {
     public synchronized List<Cookie> getCookie(HttpUrl url) {
         List<Cookie> ret = new ArrayList<>();
         Map<String, Cookie> mapCookie = cookies.get(url.host());
-        if (mapCookie != null) ret.addAll(mapCookie.values());
+        if (mapCookie != null) {
+            ret.addAll(mapCookie.values());
+        }
         return ret;
     }
 }

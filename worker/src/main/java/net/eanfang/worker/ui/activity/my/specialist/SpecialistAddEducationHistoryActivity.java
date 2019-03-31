@@ -166,7 +166,9 @@ public class SpecialistAddEducationHistoryActivity extends BaseActivityWithTakeP
 
     private void setData() {
 
-        if (checkedData()) return;
+        if (checkedData()) {
+            return;
+        }
 
         EducationExperienceEntity entity = new EducationExperienceEntity();
         entity.setAccId(EanfangApplication.get().getAccId());

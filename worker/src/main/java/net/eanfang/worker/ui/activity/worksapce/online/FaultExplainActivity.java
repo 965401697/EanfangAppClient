@@ -1,30 +1,31 @@
 package net.eanfang.worker.ui.activity.worksapce.online;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 import com.yaf.base.entity.AnswerListWithQuestionBean;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
-import net.eanfang.worker.util.ImagePerviewUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -35,7 +36,9 @@ import butterknife.OnClick;
  * 故障解答
  */
 public class FaultExplainActivity extends BaseWorkerActivity {
+    private static final int REQUEST_CODE_CHOOSE_PHOTO = 1;
 
+    private static final int REQUEST_CODE_CHOOSE_PHOTO_two = 1;
     @BindView(R.id.iv_user_header)
     SimpleDraweeView ivUserHeader;
     @BindView(R.id.tv_user_name)
@@ -46,45 +49,44 @@ public class FaultExplainActivity extends BaseWorkerActivity {
     TextView tvMajor;
     @BindView(R.id.tv_desc)
     TextView tvDesc;
-    //@BindView(R.id.snpl_photos)
-    //BGASortableNinePhotoLayout snplPhotos;
     @BindView(R.id.recycler_view_answer)
     RecyclerView recyclerViewAnswer;
     private static final long ONE_MINUTE = 60000L;
     private static final long ONE_HOUR = 3600000L;
     private static final long ONE_DAY = 86400000L;
     private static final long ONE_WEEK = 604800000L;
-
+    @BindView(R.id.snpl_pic)
+    BGASortableNinePhotoLayout snplPic;
+    private ArrayList<String> picList = new ArrayList<>();
     private static final String ONE_SECOND_AGO = "秒前";
     private static final String ONE_MINUTE_AGO = "分钟前";
     private static final String ONE_HOUR_AGO = "小时前";
     private static final String ONE_DAY_AGO = "天前";
     private static final String ONE_MONTH_AGO = "月前";
     private static final String ONE_YEAR_AGO = "年前";
-    @BindView(R.id.iv_pic1)
-    SimpleDraweeView ivPic1;
-    @BindView(R.id.iv_pic2)
-    SimpleDraweeView ivPic2;
-    @BindView(R.id.iv_pic3)
-    SimpleDraweeView ivPic3;
-    @BindView(R.id.ll_pic)
-    LinearLayout llPic;
     @BindView(R.id.tv_no_datas)
     TextView tvNoDatas;
     @BindView(R.id.collect)
     TextView collect;
+    @BindView(R.id.recycler_answer_common)
+    RecyclerView recyclerAnswerCommon;
+    @BindView(R.id.tv_no_datas_common)
+    TextView tvNoDatasCommon;
 
-    //private static final int REQUEST_CODE_CHOOSE_EXPLAIN = 1;
-    //private static final int REQUEST_CODE_PHOTO_EXPLAIN = 2;
-    private int questionId;
     private FaultExplainAdapter mFaultExplainAdapter;
-    private int answerCompanyId, answerTopCompanyId, likeStatus;
+    private String answerCompanyId;
+    private String answerTopCompanyId;
+    private int likeStatus;
     private long answerId;
     private String answerUserId;
     private String format1;
-    private long b;
     private String questionUserId, questionCompanyId, questionTopCompanyId;
-    private List<AnswerListWithQuestionBean.AnswersBean> answers;
+    private List<AnswerListWithQuestionBean.ExpertAnswersBean> answers;
+    private Intent intent;
+    private long questionIdZ;
+    private FaultCommonAdapter mFaultCommonAdapter;
+    private List<AnswerListWithQuestionBean.CommonAnswersBean> commonanswers;
+    private String failureTypeId;
 
 
     @Override
@@ -92,8 +94,7 @@ public class FaultExplainActivity extends BaseWorkerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fault_explain);
         ButterKnife.bind(this);
-        Intent intent = getIntent();
-        questionId = intent.getIntExtra("QuestionId", 0);
+        intent = getIntent();
         setTitle("故障解答");
         setLeftBack();
         getData();
@@ -108,11 +109,39 @@ public class FaultExplainActivity extends BaseWorkerActivity {
     }
 
     private void initViews() {
+        //布局管理器
         recyclerViewAnswer.setLayoutManager(new LinearLayoutManager(this));
+        recyclerAnswerCommon.setLayoutManager(new LinearLayoutManager(this));
         //专家回复
         mFaultExplainAdapter = new FaultExplainAdapter();
         mFaultExplainAdapter.bindToRecyclerView(recyclerViewAnswer);
+        //普通用户回复
+        mFaultCommonAdapter = new FaultCommonAdapter();
+        mFaultCommonAdapter.bindToRecyclerView(recyclerAnswerCommon);
+        //解决滑动停滞问题
+        recyclerViewAnswer.setNestedScrollingEnabled(false);
+        //用户回复
+        mFaultCommonAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
 
+                if (view.getId() == R.id.ll_zan) {
+                    answerId = mFaultCommonAdapter.getData().get(position).getAnswerId();
+                    answerUserId = mFaultCommonAdapter.getData().get(position).getAnswerUserId();
+                    answerCompanyId = mFaultCommonAdapter.getData().get(position).getAnswerCompanyId();
+                    answerTopCompanyId = mFaultCommonAdapter.getData().get(position).getAnswerTopCompanyId();
+                    likeStatus = mFaultCommonAdapter.getData().get(position).getLikeStatus();
+                    getZanData();
+                } else if (view.getId() == R.id.linear_layout_all) {
+                    //这个是专家回复的页面
+                    Intent intent = new Intent(FaultExplainActivity.this, ExpertAnswerActivity.class);
+                    intent.putExtra("format1", format(mFaultCommonAdapter.getData().get(position).getAnswerCreateTimeLong()));
+                    intent.putExtra("answerId", mFaultCommonAdapter.getData().get(position).getAnswerId());
+                    startActivity(intent);
+                }
+            }
+        });
+        //专家回复
         mFaultExplainAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
@@ -124,13 +153,11 @@ public class FaultExplainActivity extends BaseWorkerActivity {
                     answerTopCompanyId = mFaultExplainAdapter.getData().get(position).getAnswerTopCompanyId();
                     likeStatus = mFaultExplainAdapter.getData().get(position).getLikeStatus();
                     getZanData();
-                } else if (view.getId() == R.id.ll_comment) {
-                    SharedPreferences sp = getSharedPreferences("userXinxi", MODE_PRIVATE);
-                    sp.edit().putString("format1", format1)
-                            .putLong("answerId", mFaultExplainAdapter.getData().get(position).getAnswerId())
-                            .commit();
+                } else if (view.getId() == R.id.linear_layout_all) {
                     //这个是专家回复的页面
                     Intent intent = new Intent(FaultExplainActivity.this, ExpertAnswerActivity.class);
+                    intent.putExtra("format1", format(mFaultExplainAdapter.getData().get(position).getAnswerCreateTimeLong()));
+                    intent.putExtra("answerId", mFaultExplainAdapter.getData().get(position).getAnswerId());
                     startActivity(intent);
                 }
             }
@@ -170,12 +197,14 @@ public class FaultExplainActivity extends BaseWorkerActivity {
 
     //网络请求--展示问题信息
     private void getData() {
-        b = (int) questionId;
+        picList.clear();
+        questionIdZ = (int) intent.getIntExtra("QuestionIdZ", 0);
         EanfangHttp.post(NewApiService.ANSWER_List_With_Question)
-                .params("questionId", b)
+                .params("questionId", questionIdZ)
                 .execute(new EanfangCallback<AnswerListWithQuestionBean>(this, true, AnswerListWithQuestionBean.class) {
                     @Override
                     public void onSuccess(AnswerListWithQuestionBean bean) {
+                        failureTypeId = bean.getQuestion().getFailureTypeId();
                         questionUserId = bean.getQuestion().getQuestionUserId();
                         questionCompanyId = bean.getQuestion().getQuestionCompanyId();
                         questionTopCompanyId = bean.getQuestion().getQuestionTopCompanyId();
@@ -188,19 +217,37 @@ public class FaultExplainActivity extends BaseWorkerActivity {
                         //snplPhotos.setDelegate(new BGASortableDelegate(this));
                         tvDesc.setText(bean.getQuestion().getQuestionContent());
                         if (!StringUtils.isEmpty(bean.getQuestion().getQuestionPics())) {
-                            setPhoto(bean.getQuestion().getQuestionPics());
-                        }
-                        answers = bean.getAnswers();
-                        if (bean.getAnswers().size() <= 0) {
-                            recyclerViewAnswer.setVisibility(View.GONE);
-                            tvNoDatas.setVisibility(View.VISIBLE);
+                            String[] pics = bean.getQuestion().getQuestionPics().split(",");
+                            picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
+                            snplPic.setDelegate(new BGASortableDelegate(FaultExplainActivity.this, REQUEST_CODE_CHOOSE_PHOTO, REQUEST_CODE_CHOOSE_PHOTO_two));
+                            //            snplPic.init(this);
+                            snplPic.setData(picList);
+                            snplPic.setEditable(false);
                         } else {
-                            tvNoDatas.setVisibility(View.GONE);
+                            snplPic.setVisibility(View.GONE);
+                        }
+                        //专家回答
+                        answers = bean.getExpertAnswers();
+                        commonanswers = bean.getCommonAnswers();
+                        if (bean.getExpertAnswers().size() <= 0 && bean.getCommonAnswers().size() <= 0) {
+                            recyclerViewAnswer.setVisibility(View.GONE);
+                            recyclerAnswerCommon.setVisibility(View.GONE);
+                            tvNoDatas.setVisibility(View.VISIBLE);
+                            tvNoDatasCommon.setVisibility(View.VISIBLE);
+                        } else if (bean.getExpertAnswers().size() > 0 && bean.getCommonAnswers().size() <= 0) {
+                            tvNoDatasCommon.setVisibility(View.VISIBLE);
+                            recyclerAnswerCommon.setVisibility(View.GONE);
                             mFaultExplainAdapter.setNewData(answers);
+                        } else if (bean.getExpertAnswers().size() <= 0 && bean.getCommonAnswers().size() > 0) {
+                            tvNoDatas.setVisibility(View.VISIBLE);
+                            recyclerViewAnswer.setVisibility(View.GONE);
+                            mFaultCommonAdapter.setNewData(commonanswers);
+                        } else {
+                            mFaultExplainAdapter.setNewData(answers);
+                            mFaultCommonAdapter.setNewData(commonanswers);
                         }
-                        if (bean.getAnswers().size() < 10) {
-                            mFaultExplainAdapter.loadMoreEnd();
-                        }
+                        mFaultExplainAdapter.notifyDataSetChanged();
+                        mFaultCommonAdapter.notifyDataSetChanged();
                     }
 
                     @Override
@@ -210,65 +257,11 @@ public class FaultExplainActivity extends BaseWorkerActivity {
                     @Override
                     public void onCommitAgain() {
                     }
+
                 });
 
-
     }
 
-    /*//我来回答
-    @OnClick(R.id.tv_answer)
-    public void onViewClicked() {
-
-    }*/
-
-    //图片展示
-    public void setPhoto(String photoPath) {
-        String[] urls = photoPath.split(",");
-        ArrayList<String> picList = new ArrayList<String>();
-        if (urls.length >= 1) {
-            ivPic1.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[0]));
-            ivPic1.setVisibility(View.VISIBLE);
-            ivPic1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    picList.clear();
-                    picList.add(BuildConfig.OSS_SERVER + Uri.parse(urls[0]));
-                    ImagePerviewUtil.perviewImage(FaultExplainActivity.this, picList);
-                }
-            });
-        } else {
-            ivPic1.setVisibility(View.GONE);
-        }
-
-        if (urls.length >= 2) {
-            ivPic2.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[1]));
-            ivPic2.setVisibility(View.VISIBLE);
-            ivPic2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    picList.clear();
-                    picList.add(BuildConfig.OSS_SERVER + Uri.parse(urls[1]));
-                    ImagePerviewUtil.perviewImage(FaultExplainActivity.this, picList);
-                }
-            });
-        } else {
-            ivPic2.setVisibility(View.GONE);
-        }
-        if (urls.length >= 3) {
-            ivPic3.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[2]));
-            ivPic3.setVisibility(View.VISIBLE);
-            ivPic3.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    picList.clear();
-                    picList.add(BuildConfig.OSS_SERVER + Uri.parse(urls[2]));
-                    ImagePerviewUtil.perviewImage(FaultExplainActivity.this, picList);
-                }
-            });
-        } else {
-            ivPic3.setVisibility(View.GONE);
-        }
-    }
 
 
     //时间转化
@@ -327,20 +320,24 @@ public class FaultExplainActivity extends BaseWorkerActivity {
         return toMonths(date) / 365L;
     }
 
-    @OnClick({R.id.collect, R.id.tv_answer})
+    @OnClick({R.id.collect, R.id.tv_answer_k})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.collect:
+                //类似故障
                 Intent intentCollect = new Intent(FaultExplainActivity.this, CommonFaultListActivity.class);
+                intentCollect.putExtra("failureTypeId", failureTypeId);
                 startActivity(intentCollect);
+                finish();
                 break;
-            case R.id.tv_answer:
-                Intent intent = new Intent(FaultExplainActivity.this, MyFreeAskActivity.class);
-                intent.putExtra("questionId", b);
-                intent.putExtra("questionUserId", questionUserId);
-                intent.putExtra("questionCompanyId", questionCompanyId);
-                intent.putExtra("questionTopCompanyId", questionTopCompanyId);
-                startActivity(intent);
+            case R.id.tv_answer_k:
+                //我来回答
+                Intent intentAnswer = new Intent(FaultExplainActivity.this, MyFreeAskActivity.class);
+                intentAnswer.putExtra("questionId", questionIdZ);
+                intentAnswer.putExtra("questionUserId", questionUserId);
+                intentAnswer.putExtra("questionCompanyId", questionCompanyId);
+                intentAnswer.putExtra("questionTopCompanyId", questionTopCompanyId);
+                startActivity(intentAnswer);
                 break;
         }
     }

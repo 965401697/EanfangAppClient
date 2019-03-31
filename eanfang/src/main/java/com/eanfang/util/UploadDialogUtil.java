@@ -38,14 +38,16 @@ public class UploadDialogUtil {
      * @param context activity
      */
     public UploadDialog buildUploadDialog(final Context context) {
-        if (!(context instanceof Activity))
+        if (!(context instanceof Activity)) {
             return null;
+        }
 //        if (uploadDialog != null) {
 //            uploadDialog.cancel();
         uploadDialog = null;
 //        }
-        if (uploadDialog == null)
+        if (uploadDialog == null) {
             uploadDialog = new UploadDialog(context);
+        }
 
         uploadDialog.setCanceledOnTouchOutside(false);
         uploadDialog.setOnCancelListener((DialogInterface.OnCancelListener) dialog -> {

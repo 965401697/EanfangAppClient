@@ -28,7 +28,9 @@ public class J_MessageVerify {
     }
 
     public static J_MessageVerify get() {
-        if (verify == null) verify = new J_MessageVerify();
+        if (verify == null) {
+            verify = new J_MessageVerify();
+        }
         return verify;
     }
 
@@ -49,13 +51,17 @@ public class J_MessageVerify {
     }
 
     public void start() {
-        if (count == null) throw new NullPointerException("J_MessageVerify should init first");
+        if (count == null) {
+            throw new NullPointerException("J_MessageVerify should init first");
+        }
         count.reset();
         count.start();
     }
 
     public void setHandler(Handler handler) {
-        if (count == null) throw new NullPointerException("J_MessageVerify should init first");
+        if (count == null) {
+            throw new NullPointerException("J_MessageVerify should init first");
+        }
         this.handler = handler;
         count.setHandler(handler);
     }
@@ -72,7 +78,9 @@ public class J_MessageVerify {
      * 销毁
      */
     public void onDestory() {
-        if (count != null) count.cancel();
+        if (count != null) {
+            count.cancel();
+        }
         count = null;
     }
 
@@ -90,15 +98,19 @@ public class J_MessageVerify {
 
         @Override
         public void onFinish() {
-            if (handler != null) handler.sendEmptyMessage(FINISH);
+            if (handler != null) {
+                handler.sendEmptyMessage(FINISH);
+            }
             isFinish = true;
         }
 
         @Override
         public void onTick(long millisUntilFinished) {
-            if (handler != null) handler
-                    .sendMessage(handler.obtainMessage(ONTICK, String
-                            .valueOf(millisUntilFinished)));
+            if (handler != null) {
+                handler
+                        .sendMessage(handler.obtainMessage(ONTICK, String
+                                .valueOf(millisUntilFinished)));
+            }
         }
     }
 }

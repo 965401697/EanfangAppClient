@@ -50,16 +50,18 @@ public class OwnDataHintActivity extends BaseWorkerActivity {
         } else {
             tvGo.setText(go);
             tvGo.setVisibility(View.VISIBLE);
-            if (clazz != null)
+            if (clazz != null) {
                 intent.setClass(OwnDataHintActivity.this, clazz);
+            }
         }
 
 
         findViewById(R.id.tv_go).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (clazz != null)
+                if (clazz != null) {
                     startActivity(intent);
+                }
                 finishSelf();
             }
         });

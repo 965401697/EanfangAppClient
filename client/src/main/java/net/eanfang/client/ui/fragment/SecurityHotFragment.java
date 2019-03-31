@@ -1,8 +1,6 @@
 package net.eanfang.client.ui.fragment;
 
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.alibaba.fastjson.JSONObject;
@@ -11,15 +9,16 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.security.SecurityFoucsBean;
-import com.eanfang.model.security.SecurityHotListBean;
 import com.eanfang.model.security.SecurityLikeBean;
+import com.eanfang.model.security.SecurityListBean;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
+import com.photopicker.com.util.BGASpaceItemDecoration;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.security.SecurityDetailActivity;
-import net.eanfang.client.ui.adapter.security.SecurityHotListAdapter;
+import net.eanfang.client.ui.adapter.security.SecurityListAdapter;
 
 import cn.bingoogolapple.photopicker.imageloader.BGARVOnScrollListener;
 
@@ -27,7 +26,7 @@ public class SecurityHotFragment extends TemplateItemListFragment {
 
     private String mTitle;
     private QueryEntry mQueryEntry;
-    private SecurityHotListAdapter securityHotListAdapter;
+    private SecurityListAdapter securityListAdapter;
 
     public static SecurityHotFragment getInstance(String title) {
         SecurityHotFragment sf = new SecurityHotFragment();
@@ -48,20 +47,20 @@ public class SecurityHotFragment extends TemplateItemListFragment {
 
     @Override
     protected void setListener() {
-        securityHotListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+        securityListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             switch (view.getId()) {
                 case R.id.tv_isFocus:
-                    doFoucus(securityHotListAdapter.getData().get(position));
+                    doFoucus(securityListAdapter.getData().get(position));
                     break;
                 case R.id.ll_like:
-                    doLike(securityHotListAdapter.getData().get(position));
+                    doLike(securityListAdapter.getData().get(position));
                     break;
                 case R.id.ll_comments:
                 case R.id.ll_pic:
                 case R.id.iv_share:
                     Bundle bundle = new Bundle();
-                    bundle.putSerializable("bean", securityHotListAdapter.getData().get(position));
-                    bundle.putInt("friend", securityHotListAdapter.getData().get(position).getFriend());
+                    bundle.putSerializable("bean", securityListAdapter.getData().get(position));
+                    bundle.putInt("friend", securityListAdapter.getData().get(position).getFriend());
                     bundle.putString("type", "hot");
                     JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
                     break;
@@ -72,10 +71,10 @@ public class SecurityHotFragment extends TemplateItemListFragment {
                     break;
             }
         });
-        securityHotListAdapter.setOnItemClickListener((adapter, view, position) -> {
+        securityListAdapter.setOnItemClickListener((adapter, view, position) -> {
             Bundle bundle = new Bundle();
-            bundle.putSerializable("bean", securityHotListAdapter.getData().get(position));
-            bundle.putInt("friend", securityHotListAdapter.getData().get(position).getFriend());
+            bundle.putSerializable("bean", securityListAdapter.getData().get(position));
+            bundle.putInt("friend", securityListAdapter.getData().get(position).getFriend());
             bundle.putString("type", "hot");
             JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
         });
@@ -83,11 +82,11 @@ public class SecurityHotFragment extends TemplateItemListFragment {
 
     @Override
     protected void initAdapter() {
-        securityHotListAdapter = new SecurityHotListAdapter(getActivity());
-        securityHotListAdapter.bindToRecyclerView(mRecyclerView);
+        securityListAdapter = new SecurityListAdapter(getActivity());
+        securityListAdapter.bindToRecyclerView(mRecyclerView);
         mRecyclerView.setBackgroundColor(getResources().getColor(R.color.white));
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
-        securityHotListAdapter.setOnLoadMoreListener(this, mRecyclerView);
+        mRecyclerView.addItemDecoration(new BGASpaceItemDecoration(20));
+        securityListAdapter.setOnLoadMoreListener(this, mRecyclerView);
         mRecyclerView.addOnScrollListener(new BGARVOnScrollListener(getActivity()));
 
     }
@@ -95,7 +94,7 @@ public class SecurityHotFragment extends TemplateItemListFragment {
     /**
      * 进行点赞
      */
-    private void doLike(SecurityHotListBean.ListBean listBean) {
+    private void doLike(SecurityListBean.ListBean listBean) {
         SecurityLikeBean securityLikeBean = new SecurityLikeBean();
         securityLikeBean.setAsId(listBean.getSpcId());
         securityLikeBean.setType("0");
@@ -113,7 +112,6 @@ public class SecurityHotFragment extends TemplateItemListFragment {
         EanfangHttp.post(NewApiService.SERCURITY_LIKE)
                 .upJson(JSONObject.toJSONString(securityLikeBean))
                 .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class, bean -> {
-//                    mRecyclerView.scrollToPosition(0);
                     getData();
                 }));
     }
@@ -121,7 +119,7 @@ public class SecurityHotFragment extends TemplateItemListFragment {
     /**
      * 进行关注
      */
-    private void doFoucus(SecurityHotListBean.ListBean listBean) {
+    private void doFoucus(SecurityListBean.ListBean listBean) {
         SecurityFoucsBean securityFoucsBean = new SecurityFoucsBean();
         securityFoucsBean.setFollowUserId(EanfangApplication.get().getUserId());
         securityFoucsBean.setFollowCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyId());
@@ -134,7 +132,6 @@ public class SecurityHotFragment extends TemplateItemListFragment {
                 .upJson(JSONObject.toJSONString(securityFoucsBean))
                 .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class, bean -> {
                     showToast("关注成功");
-//                    mRecyclerView.scrollToPosition(0);
                     getData();
                 }));
     }
@@ -148,18 +145,18 @@ public class SecurityHotFragment extends TemplateItemListFragment {
         mQueryEntry.setSize(10);
         EanfangHttp.post(NewApiService.SECURITY_HOT)
                 .upJson(JsonUtils.obj2String(mQueryEntry))
-                .execute(new EanfangCallback<SecurityHotListBean>(getActivity(), true, SecurityHotListBean.class) {
+                .execute(new EanfangCallback<SecurityListBean>(getActivity(), true, SecurityListBean.class) {
 
                     @Override
-                    public void onSuccess(SecurityHotListBean bean) {
+                    public void onSuccess(SecurityListBean bean) {
                         if (mPage == 1) {
-                            securityHotListAdapter.getData().clear();
-                            securityHotListAdapter.setNewData(bean.getList());
-                            securityHotListAdapter.notifyDataSetChanged();
+                            securityListAdapter.getData().clear();
+                            securityListAdapter.setNewData(bean.getList());
+                            securityListAdapter.notifyDataSetChanged();
                             mSwipeRefreshLayout.setRefreshing(false);
-                            securityHotListAdapter.loadMoreComplete();
+                            securityListAdapter.loadMoreComplete();
                             if (bean.getList().size() < 10) {
-                                securityHotListAdapter.loadMoreEnd();
+                                securityListAdapter.loadMoreEnd();
                                 mQueryEntry = null;
                             }
 
@@ -171,10 +168,10 @@ public class SecurityHotFragment extends TemplateItemListFragment {
 
 
                         } else {
-                            securityHotListAdapter.addData(bean.getList());
-                            securityHotListAdapter.loadMoreComplete();
+                            securityListAdapter.addData(bean.getList());
+                            securityListAdapter.loadMoreComplete();
                             if (bean.getList().size() < 10) {
-                                securityHotListAdapter.loadMoreEnd();
+                                securityListAdapter.loadMoreEnd();
                             }
                         }
                     }
@@ -182,8 +179,8 @@ public class SecurityHotFragment extends TemplateItemListFragment {
                     @Override
                     public void onNoData(String message) {
                         mSwipeRefreshLayout.setRefreshing(false);
-                        securityHotListAdapter.loadMoreEnd();//没有数据了
-                        if (securityHotListAdapter.getData().size() == 0) {
+                        securityListAdapter.loadMoreEnd();//没有数据了
+                        if (securityListAdapter.getData().size() == 0) {
                             mTvNoData.setVisibility(View.VISIBLE);
                         } else {
                             mTvNoData.setVisibility(View.GONE);

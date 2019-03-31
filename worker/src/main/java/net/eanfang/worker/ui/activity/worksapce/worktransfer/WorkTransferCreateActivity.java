@@ -545,8 +545,9 @@ public class WorkTransferCreateActivity extends BaseActivity {
     }
 
     private void doSubmit() {
-        if (!doCheckInfo())
+        if (!doCheckInfo()) {
             return;
+        }
         EanfangHttp.post(NewApiService.WORK_TRANSFER_ADD)
                 .upJson(JSONObject.toJSONString(workTransferDetailBean))
                 .execute(new EanfangCallback<WorkTransferDetailBean>(WorkTransferCreateActivity.this, true, WorkTransferDetailBean.class, (bean) -> {

@@ -25,8 +25,9 @@ public class CombineBitmapTools {
 
         mContext = context;
 
-        if (bitmaps == null || bitmaps.size() == 0)
+        if (bitmaps == null || bitmaps.size() == 0) {
             return null;
+        }
 
         if (bitmaps.size() >= 9) {
             bitmaps = bitmaps.subList(0, 9);

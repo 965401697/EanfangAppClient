@@ -17,14 +17,14 @@ import net.eanfang.worker.R;
  * Created by Our on 2019/1/23.
  */
 
-public class MyExpertListAdapter extends BaseQuickAdapter<CommonFaultListBeanEntity.ExpertListBean.ListBeanX, BaseViewHolder> {
+public class MyExpertListAdapter extends BaseQuickAdapter<CommonFaultListBeanEntity.ExpertsListBean, BaseViewHolder> {
 
     public MyExpertListAdapter() {
         super(R.layout.item_expert_list);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, CommonFaultListBeanEntity.ExpertListBean.ListBeanX item) {
+    protected void convert(BaseViewHolder helper, CommonFaultListBeanEntity.ExpertsListBean item) {
         if (!TextUtils.isEmpty(item.getAvatarPhoto())) {
             ((SimpleDraweeView) helper.getView(R.id.iv_expert_header)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getAvatarPhoto()));
             Log.i("Tpian",item.getAvatarPhoto());

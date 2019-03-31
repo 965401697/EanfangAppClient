@@ -139,7 +139,9 @@ public class SignFiltrateActivity extends BaseActivity implements RadioGroup.OnC
         }
         if (whoList.size() != 0) {
 
-            if (queryEntry == null) queryEntry = new QueryEntry();
+            if (queryEntry == null) {
+                queryEntry = new QueryEntry();
+            }
             if (whoList.size() > 1) {
                 List<String> idList = new ArrayList<>();
 

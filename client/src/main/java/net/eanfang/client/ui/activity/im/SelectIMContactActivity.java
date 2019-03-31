@@ -582,8 +582,9 @@ public class SelectIMContactActivity extends BaseClientActivity {
         }
 
 //        mUserIconList.add(EanfangApplication.get().getUser().getAccount().getAvatar());
-        if (isCompound)
+        if (isCompound) {
             CompoundHelper.getInstance().sendBitmap(this, mHandler, mUserIconList);//生成图片
+        }
 
 
         JSONArray array = new JSONArray();
@@ -608,7 +609,7 @@ public class SelectIMContactActivity extends BaseClientActivity {
     }
 
     private void getPrivateChat() {
-        if (RongIM.getInstance() != null)
+        if (RongIM.getInstance() != null) {
             RongIM.getInstance().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
                 @Override
                 public void onSuccess(List<Conversation> conversations) {
@@ -662,6 +663,7 @@ public class SelectIMContactActivity extends BaseClientActivity {
 
                 }
             }, Conversation.ConversationType.PRIVATE);
+        }
     }
 
     /**

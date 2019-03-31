@@ -81,7 +81,9 @@ public class FaultRecordListActivity extends BaseWorkerActivity implements Swipe
         mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if (!PermKit.get().getFailureDetailPerm()) return;
+                if (!PermKit.get().getFailureDetailPerm()) {
+                    return;
+                }
                 RepairFailureEntity bean = (RepairFailureEntity) adapter.getData().get(position);
 //                if (bean.getRepairOrderEntity() == null || bean.getRepairOrderEntity().getStatus() == 0) {//为什么那order的状态
                 if (bean.getRepairOrderEntity() == null || bean.getStatus() == 0) {

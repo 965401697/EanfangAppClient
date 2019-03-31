@@ -111,14 +111,18 @@ class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (DBUtils.isNeedUpgradeTable(db, cacheTableEntity))
+        if (DBUtils.isNeedUpgradeTable(db, cacheTableEntity)) {
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_CACHE);
-        if (DBUtils.isNeedUpgradeTable(db, cookieTableEntity))
+        }
+        if (DBUtils.isNeedUpgradeTable(db, cookieTableEntity)) {
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_COOKIE);
-        if (DBUtils.isNeedUpgradeTable(db, downloadTableEntity))
+        }
+        if (DBUtils.isNeedUpgradeTable(db, downloadTableEntity)) {
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_DOWNLOAD);
-        if (DBUtils.isNeedUpgradeTable(db, uploadTableEntity))
+        }
+        if (DBUtils.isNeedUpgradeTable(db, uploadTableEntity)) {
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_UPLOAD);
+        }
         onCreate(db);
     }
 

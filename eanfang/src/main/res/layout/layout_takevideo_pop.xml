@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_corner_top"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_40"
+            android:gravity="center"
+            android:text="视频"
+            android:textColor="@color/color_client_neworder"
+            android:textSize="@dimen/textSize_15" />
+
+        <View
+            style="@style/style_common_line_gray"
+            android:layout_marginTop="@dimen/dimen_20" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_take"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/dimen_20"
+                android:text="拍摄"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="16sp" />
+
+            <View
+                style="@style/style_common_line_gray"
+                android:layout_marginTop="@dimen/dimen_20" />
+
+            <TextView
+                android:id="@+id/tv_select"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="@dimen/dimen_20"
+                android:text="相册选取"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <View
+            style="@style/style_common_line_gray"
+            android:layout_marginTop="@dimen/dimen_20" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_100"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btn_cancel"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:gravity="center"
+                android:text="取消"
+                android:textColor="#FFFF3657"
+                android:textSize="@dimen/textSize_15" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
