@@ -251,7 +251,7 @@ public class HomeFragment extends BaseFragment {
      * 安防圈
      */
     private void initSecurity() {
-        securityListAdapter = new SecurityListAdapter(getActivity());
+        securityListAdapter = new SecurityListAdapter(EanfangApplication.get().getApplicationContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         rvSecurity.setLayoutManager(layoutManager);
         rvSecurity.setNestedScrollingEnabled(false);

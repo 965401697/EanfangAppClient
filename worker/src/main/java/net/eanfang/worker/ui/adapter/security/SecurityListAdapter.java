@@ -14,7 +14,7 @@ import com.eanfang.util.ETimeUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.photopicker.com.widget.BGANinePhotoLayout;
+import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.worker.R;
 
@@ -31,6 +31,7 @@ public class SecurityListAdapter extends BaseQuickAdapter<SecurityListBean.ListB
 
     private Context context;
     private ArrayList<String> picList = new ArrayList<>();
+    private String[] pics = null;
 
     public SecurityListAdapter(Context mContext) {
         super(R.layout.layout_security_item);
@@ -39,8 +40,7 @@ public class SecurityListAdapter extends BaseQuickAdapter<SecurityListBean.ListB
 
     @Override
     public void onViewRecycled(BaseViewHolder holder) {
-        super.onViewRecycled(holder);
-//        BGANinePhotoLayout ninePhotoLayout = holder.getView(R.id.snpl_pic);
+//        BGANinePhotoLayout ninePhotoLayout = (BGANinePhotoLayout) holder.getConvertView().getTag(1);
 //        ninePhotoLayout.init(null);
 //        ninePhotoLayout.setDelegate(null);
     }
@@ -48,8 +48,7 @@ public class SecurityListAdapter extends BaseQuickAdapter<SecurityListBean.ListB
     @Override
     protected void convert(BaseViewHolder helper, SecurityListBean.ListBean item) {
         SimpleDraweeView ivHeader = helper.getView(R.id.iv_seucrity_header);
-        BGANinePhotoLayout ninePhotoLayout = helper.getView(R.id.snpl_pic);
-        String[] pics = null;
+        BGASortableNinePhotoLayout ninePhotoLayout = helper.getView(R.id.snpl_pic);
         // 发布人
         helper.setText(R.id.tv_name, V.v(() -> item.getAccountEntity().getNickName()));
         // 头像
@@ -108,14 +107,18 @@ public class SecurityListAdapter extends BaseQuickAdapter<SecurityListBean.ListB
          * */
         helper.setText(R.id.tv_readCount, item.getReadCount() + "");
         picList.clear();
-        ninePhotoLayout.init(context);
+        pics = null;
+//        ninePhotoLayout.init(context);
         if (!StringUtils.isEmpty(item.getSpcImg())) {
             ninePhotoLayout.setVisibility(View.VISIBLE);
             pics = item.getSpcImg().split(",");
             picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
             ninePhotoLayout.setData(picList);
+            ninePhotoLayout.setTag(pics);
         } else {
             ninePhotoLayout.setVisibility(View.GONE);
+            ninePhotoLayout.setData(null);
+            ninePhotoLayout.setDelegate(null);
         }
 
         helper.addOnClickListener(R.id.tv_isFocus);

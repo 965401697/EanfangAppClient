@@ -1,6 +1,7 @@
 package net.eanfang.worker.ui.fragment;
 
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.alibaba.fastjson.JSONObject;
@@ -51,7 +52,10 @@ public class SecurituFoucsFragment extends TemplateItemListFragment {
 
     @Override
     protected void initAdapter() {
-        securityListAdapter = new SecurityListAdapter(getActivity());
+        securityListAdapter = new SecurityListAdapter(EanfangApplication.get().getApplicationContext());
+        RecyclerView.RecycledViewPool pool = mRecyclerView.getRecycledViewPool();
+        pool.setMaxRecycledViews(0, 10);
+        mRecyclerView.setRecycledViewPool(pool);
         securityListAdapter.bindToRecyclerView(mRecyclerView);
         mRecyclerView.setBackgroundColor(getResources().getColor(R.color.white));
         mRecyclerView.addItemDecoration(new BGASpaceItemDecoration(20));
