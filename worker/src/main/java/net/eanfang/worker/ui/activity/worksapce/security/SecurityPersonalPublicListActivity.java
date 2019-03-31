@@ -67,7 +67,7 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
         } else {
             setTitle("@我的");
         }
-        securityListAdapter = new SecurityListAdapter(SecurityPersonalPublicListActivity.this);
+        securityListAdapter = new SecurityListAdapter(EanfangApplication.get().getApplicationContext());
         securityListAdapter.bindToRecyclerView(rvSecurity);
 
         rvSecurity.setLayoutManager(new LinearLayoutManager(this));

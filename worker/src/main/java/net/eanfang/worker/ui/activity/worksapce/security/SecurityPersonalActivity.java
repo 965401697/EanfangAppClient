@@ -84,7 +84,7 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
     private void initView() {
         setLeftBack();
         setTitle("我的安防圈");
-        securityListAdapter = new SecurityListAdapter(SecurityPersonalActivity.this);
+        securityListAdapter = new SecurityListAdapter(EanfangApplication.get().getApplicationContext());
         securityListAdapter.bindToRecyclerView(rvSecurity);
 
         rvSecurity.setLayoutManager(new LinearLayoutManager(this));
