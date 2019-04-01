@@ -120,12 +120,16 @@
             android:layout_marginTop="@dimen/dimen_20"
             android:orientation="horizontal">
 
-            <com.photopicker.com.widget.BGANinePhotoLayout
+            <com.photopicker.com.widget.BGASortableNinePhotoLayout
                 android:id="@+id/snpl_pic"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:bga_npl_itemCornerRadius="@dimen/dimen_10"
+                app:bga_snpl_plusEnable="false"
+                app:bga_snpl_sortable="false"
                 app:bga_npl_itemSpanCount="3"
+                app:bga_snpl_maxItemCount="9"
+                app:bga_snpl_editable="false"
                 app:bga_npl_itemWhiteSpacing="@dimen/dimen_32"
                 app:bga_npl_showAsLargeWhenOnlyOne="false" />
         </com.eanfang.witget.CustomLinearLayout>
@@ -191,7 +195,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="4小时前"
                 android:textColor="@color/color_bottom"
                 android:textSize="@dimen/textSize_12" />
 

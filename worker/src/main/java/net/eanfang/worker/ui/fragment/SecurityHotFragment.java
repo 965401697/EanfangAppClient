@@ -29,6 +29,7 @@ public class SecurityHotFragment extends TemplateItemListFragment {
     private QueryEntry mQueryEntry;
     private SecurityListAdapter securityListAdapter;
 
+
     public static SecurityHotFragment getInstance(String title) {
         SecurityHotFragment sf = new SecurityHotFragment();
         sf.mTitle = title;
@@ -113,7 +114,6 @@ public class SecurityHotFragment extends TemplateItemListFragment {
         EanfangHttp.post(NewApiService.SERCURITY_LIKE)
                 .upJson(JSONObject.toJSONString(securityLikeBean))
                 .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class, bean -> {
-//                    mRecyclerView.scrollToPosition(0);
                     getData();
                 }));
     }
@@ -134,7 +134,6 @@ public class SecurityHotFragment extends TemplateItemListFragment {
                 .upJson(JSONObject.toJSONString(securityFoucsBean))
                 .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class, bean -> {
                     showToast("关注成功");
-//                    mRecyclerView.scrollToPosition(0);
                     getData();
                 }));
     }

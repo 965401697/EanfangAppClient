@@ -69,13 +69,12 @@ public class SecurituFoucsFragment extends TemplateItemListFragment {
                     doLike(securityListAdapter.getData().get(position));
                     break;
                 case R.id.ll_comments:
+                case R.id.iv_share:
+                case R.id.ll_pic:
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("bean", securityListAdapter.getData().get(position));
                     bundle.putInt("friend", securityListAdapter.getData().get(position).getFriend());
                     JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
-                    break;
-                case R.id.iv_share:
-                    showToast("分享");
                     break;
                 default:
                     break;

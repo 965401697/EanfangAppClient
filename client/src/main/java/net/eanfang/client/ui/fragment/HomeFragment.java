@@ -54,7 +54,7 @@ import net.eanfang.client.ui.activity.worksapce.scancode.ScanCodeActivity;
 import net.eanfang.client.ui.activity.worksapce.security.SecurityDetailActivity;
 import net.eanfang.client.ui.activity.worksapce.security.SecurityListActivity;
 import net.eanfang.client.ui.adapter.HomeDataAdapter;
-import net.eanfang.client.ui.adapter.security.SecurityListAdapter;
+import net.eanfang.worker.ui.adapter.security.SecurityListAdapter;
 
 import org.greenrobot.eventbus.EventBus;
 

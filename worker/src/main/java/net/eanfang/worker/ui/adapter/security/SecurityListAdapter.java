@@ -40,9 +40,8 @@ public class SecurityListAdapter extends BaseQuickAdapter<SecurityListBean.ListB
 
     @Override
     public void onViewRecycled(BaseViewHolder holder) {
-//        BGANinePhotoLayout ninePhotoLayout = (BGANinePhotoLayout) holder.getConvertView().getTag(1);
-//        ninePhotoLayout.init(null);
-//        ninePhotoLayout.setDelegate(null);
+//        com.photopicker.com.widget.BGASortableNinePhotoLayout ninePhotoLayout =  holder.getView(R.id.snpl_pic);
+//        ninePhotoLayout.setData(null);
     }
 
     @Override

@@ -25,7 +25,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.photopicker.com.util.BGASpaceItemDecoration;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.adapter.security.SecurityListAdapter;
+import net.eanfang.worker.ui.adapter.security.SecurityListAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

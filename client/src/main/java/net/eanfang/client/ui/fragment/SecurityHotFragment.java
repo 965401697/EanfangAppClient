@@ -18,7 +18,7 @@ import com.photopicker.com.util.BGASpaceItemDecoration;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.security.SecurityDetailActivity;
-import net.eanfang.client.ui.adapter.security.SecurityListAdapter;
+import net.eanfang.worker.ui.adapter.security.SecurityListAdapter;
 
 import cn.bingoogolapple.photopicker.imageloader.BGARVOnScrollListener;
 
