@@ -103,6 +103,8 @@ public class SecurityDetailActivity extends BaseActivity {
     TextView tvQuestionContent;
     @BindView(R.id.ll_question)
     LinearLayout llQuestion;
+    @BindView(R.id.tv_comment_count)
+    TextView tvCommentCount;
 
     private SecurityListBean.ListBean securityBean;
     private ArrayList<String> picList = new ArrayList<>();
@@ -199,10 +201,11 @@ public class SecurityDetailActivity extends BaseActivity {
                     securityCommentAdapter.setNewData(commentList);
 
                     /**
-                     * 阅读数
+                     * 阅读数 评价数
                      * */
                     if (bean.getSpcList() != null) {
                         tvReadCount.setText(bean.getSpcList().get(0).getReadCount() + "");
+                        tvCommentCount.setText(bean.getSpcList().get(0).getCommentCount() + "");
                     }
                     hideKeyboard();
                 }));

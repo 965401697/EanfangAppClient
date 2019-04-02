@@ -13,8 +13,6 @@ import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.client.R;
 
-import java.util.List;
-
 import static com.eanfang.util.V.v;
 
 /**
@@ -24,14 +22,8 @@ import static com.eanfang.util.V.v;
 public class SelectWorkerAdapter extends BaseQuickAdapter<WorkerEntity, BaseViewHolder> {
 
 
-    public SelectWorkerAdapter(int layoutResId, List<WorkerEntity> mWorkData) {
-        super(layoutResId);
-        this.mData = mWorkData;
-    }
-
-    public void refreshList(List refreshData) {
-        this.mData = refreshData;
-        notifyDataSetChanged();
+    public SelectWorkerAdapter() {
+        super(R.layout.item_collection_worker);
     }
 
     @Override
@@ -76,10 +68,6 @@ public class SelectWorkerAdapter extends BaseQuickAdapter<WorkerEntity, BaseView
         } else if (v(() -> item.getQualification()) != null && item.getQualification() == 1) {
             helper.getView(R.id.tv_qualification).setVisibility(View.VISIBLE);
         }
-
-
-//        Integer stars = (item.getItem1() + item.getItem2() + item.getItem3() + item.getItem4() + item.getItem5()) / 5;
-//        helper.setRating(R.id.rb_star1, stars);
     }
 
     /**
