@@ -120,18 +120,11 @@
             android:layout_marginTop="@dimen/dimen_20"
             android:orientation="horizontal">
 
-            <com.photopicker.com.widget.BGASortableNinePhotoLayout
-                android:id="@+id/snpl_pic"
-                android:layout_width="match_parent"
+            <com.eanfang.witget.SecurityCircleImageLayout
+                android:id="@+id/securityImageLayout"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:bga_npl_itemCornerRadius="@dimen/dimen_10"
-                app:bga_snpl_plusEnable="false"
-                app:bga_snpl_sortable="false"
-                app:bga_npl_itemSpanCount="3"
-                app:bga_snpl_maxItemCount="9"
-                app:bga_snpl_editable="false"
-                app:bga_npl_itemWhiteSpacing="@dimen/dimen_32"
-                app:bga_npl_showAsLargeWhenOnlyOne="false" />
+                android:layout_marginTop="@dimen/dimen_10" />
         </com.eanfang.witget.CustomLinearLayout>
 
         <LinearLayout
@@ -141,8 +134,8 @@
             android:layout_marginTop="@dimen/dimen_34"
             android:background="@drawable/bg_security_comment_list"
             android:orientation="horizontal"
-            android:visibility="gone"
-            android:padding="@dimen/dimen_26">
+            android:padding="@dimen/dimen_26"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"

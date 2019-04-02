@@ -4,53 +4,44 @@
     android:layout_height="match_parent"
     tools:context="net.eanfang.client.ui.fragment.selectworker.ServicedWorkerFragment">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_selectedWorker"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipre_fresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="none"
-        android:visibility="visible" />
+        android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/ll_nodata"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_60"
-            android:src="@mipmap/ic_no_worker_other" />
-
-        <TextView
-
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="暂无服务的技师" />
-    </LinearLayout>
+            android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/dimen_30"
-        android:gravity="center">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_selectedWorker"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none"
+                android:visibility="gone" />
 
-        <Button
-            android:id="@+id/btn_key"
-            android:layout_width="@dimen/dimen_280"
-            android:layout_height="@dimen/dimen_80"
-            android:background="@drawable/bg_ll_selectwork"
-            android:paddingLeft="@dimen/dimen_50"
-            android:paddingRight="@dimen/dimen_50"
-            android:text="一键报修"
-            android:textColor="#fff"
-            android:textSize="@dimen/textSize_13" />
-    </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_nodata"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="vertical"
+                android:visibility="visible">
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_60"
+                    android:src="@mipmap/ic_no_worker_other" />
+
+                <TextView
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="暂无服务的技师" />
+            </LinearLayout>
+        </RelativeLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </RelativeLayout>

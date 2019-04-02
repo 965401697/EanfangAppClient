@@ -13,8 +13,8 @@ import com.eanfang.model.security.SecurityListBean;
 import com.eanfang.util.ETimeUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
+import com.eanfang.witget.SecurityCircleImageLayout;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.worker.R;
 
@@ -39,15 +39,9 @@ public class SecurityListAdapter extends BaseQuickAdapter<SecurityListBean.ListB
     }
 
     @Override
-    public void onViewRecycled(BaseViewHolder holder) {
-//        com.photopicker.com.widget.BGASortableNinePhotoLayout ninePhotoLayout =  holder.getView(R.id.snpl_pic);
-//        ninePhotoLayout.setData(null);
-    }
-
-    @Override
     protected void convert(BaseViewHolder helper, SecurityListBean.ListBean item) {
         SimpleDraweeView ivHeader = helper.getView(R.id.iv_seucrity_header);
-        BGASortableNinePhotoLayout ninePhotoLayout = helper.getView(R.id.snpl_pic);
+        SecurityCircleImageLayout securityImageLayout = helper.getView(R.id.securityImageLayout);
         // 发布人
         helper.setText(R.id.tv_name, V.v(() -> item.getAccountEntity().getNickName()));
         // 头像
@@ -107,17 +101,13 @@ public class SecurityListAdapter extends BaseQuickAdapter<SecurityListBean.ListB
         helper.setText(R.id.tv_readCount, item.getReadCount() + "");
         picList.clear();
         pics = null;
-//        ninePhotoLayout.init(context);
         if (!StringUtils.isEmpty(item.getSpcImg())) {
-            ninePhotoLayout.setVisibility(View.VISIBLE);
+            securityImageLayout.setVisibility(View.VISIBLE);
             pics = item.getSpcImg().split(",");
-            picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
-            ninePhotoLayout.setData(picList);
-            ninePhotoLayout.setTag(pics);
+            picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> (url).toString()).toList());
+            securityImageLayout.setImageUrls(picList);
         } else {
-            ninePhotoLayout.setVisibility(View.GONE);
-            ninePhotoLayout.setData(null);
-            ninePhotoLayout.setDelegate(null);
+            securityImageLayout.setVisibility(View.GONE);
         }
 
         helper.addOnClickListener(R.id.tv_isFocus);

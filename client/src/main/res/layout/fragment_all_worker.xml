@@ -6,75 +6,73 @@
     android:orientation="vertical"
     tools:context="net.eanfang.client.ui.fragment.selectworker.AllWorkerFragment">
 
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_allWorker"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipre_fresh"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:scrollbars="none" />
+        android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/ll_nodata"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="gone">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_noworker" />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_allWorker"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_60"
-            android:text="抱歉，您的附近暂无技师"
-            android:textColor="@color/color_client_neworder"
-            android:textSize="@dimen/textSize_15" />
+            <LinearLayout
+                android:id="@+id/ll_nodata"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_24"
-            android:text="试试一键报修吧！"
-            android:textColor="@color/color_bottom"
-            android:textSize="@dimen/textSize_15" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_noworker" />
 
-        <Button
-            android:id="@+id/btn_key"
-            android:layout_width="@dimen/dimen_280"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="@dimen/dimen_60"
-            android:background="@drawable/bg_ll_selectwork"
-            android:paddingLeft="@dimen/dimen_50"
-            android:paddingRight="@dimen/dimen_50"
-            android:text="一键报修"
-            android:textColor="#fff"
-            android:textSize="@dimen/textSize_13" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_60"
+                    android:text="抱歉，您的附近暂无技师"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_15" />
 
-    </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_24"
+                    android:text="试试一键报修吧！"
+                    android:textColor="@color/color_bottom"
+                    android:textSize="@dimen/textSize_15" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/dimen_30"
-        android:gravity="center">
+            </LinearLayout>
 
-        <Button
-            android:id="@+id/btn_key_two"
-            android:layout_width="@dimen/dimen_280"
-            android:layout_height="@dimen/dimen_80"
-            android:background="@drawable/bg_ll_selectwork"
-            android:paddingLeft="@dimen/dimen_50"
-            android:paddingRight="@dimen/dimen_50"
-            android:text="一键报修"
-            android:textColor="#fff"
-            android:textSize="@dimen/textSize_13"
-            android:visibility="visible" />
-    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/dimen_30"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/btn_key_two"
+                    android:layout_width="@dimen/dimen_280"
+                    android:layout_height="@dimen/dimen_80"
+                    android:background="@drawable/bg_ll_selectwork"
+                    android:paddingLeft="@dimen/dimen_50"
+                    android:paddingRight="@dimen/dimen_50"
+                    android:text="一键报修"
+                    android:textColor="#fff"
+                    android:textSize="@dimen/textSize_13"
+                    android:visibility="visible" />
+            </LinearLayout>
+        </RelativeLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 
 </LinearLayout>

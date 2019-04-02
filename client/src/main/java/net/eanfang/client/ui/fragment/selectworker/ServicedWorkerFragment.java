@@ -2,12 +2,14 @@ package net.eanfang.client.ui.fragment.selectworker;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -41,24 +43,32 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import butterknife.OnClick;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * @author Guanluocang
  * @date on 2018/4/27  14:01
  * @decision 服务过的技师
  */
-public class ServicedWorkerFragment extends BaseFragment {
+public class ServicedWorkerFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
 
-    private RecyclerView mRecyclerView;
-    private LinearLayout llnodata;
-    private List<WorkerEntity> selectWorkerList = new ArrayList<>();
+    @BindView(R.id.rv_selectedWorker)
+    RecyclerView rvSelectedWorker;
+    @BindView(R.id.ll_nodata)
+    LinearLayout llNodata;
+    @BindView(R.id.swipre_fresh)
+    SwipeRefreshLayout swipreFresh;
+    Unbinder unbinder;
     private RepairOrderEntity toRepairBean;
     private ArrayList<String> businessIds = new ArrayList<>();
     private int mDoorFee;
     private SelectWorkerAdapter selectWorkerAdapter;
 
     private Long mOwnerOrgId;
+    public int mPage = 1;
+    private QueryEntry mQueryEntry;
 
     public static ServicedWorkerFragment getInstance(RepairOrderEntity toRepairBean, ArrayList<String> businessIds, int doorfee, Long ownerOrgId) {
         ServicedWorkerFragment servicedWorkerFragment = new ServicedWorkerFragment();
@@ -89,26 +99,26 @@ public class ServicedWorkerFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        mRecyclerView = findViewById(R.id.rv_selectedWorker);
-        llnodata = findViewById(R.id.ll_nodata);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(),
+        rvSelectedWorker.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rvSelectedWorker.addItemDecoration(new DividerItemDecoration(getActivity(),
                 DividerItemDecoration.VERTICAL));
 
-        selectWorkerAdapter = new SelectWorkerAdapter(R.layout.item_collection_worker, selectWorkerList);
+        selectWorkerAdapter = new SelectWorkerAdapter();
         selectWorkerAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
-        mRecyclerView.setAdapter(selectWorkerAdapter);
+        swipreFresh.setOnRefreshListener(this);
+        selectWorkerAdapter.setOnLoadMoreListener(this, rvSelectedWorker);
+        rvSelectedWorker.setAdapter(selectWorkerAdapter);
     }
 
     @Override
     protected void setListener() {
-        mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
+        rvSelectedWorker.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(getActivity(), WorkerDetailActivity.class);
                 intent.putExtra("toRepairBean", toRepairBean);
-                intent.putExtra("companyUserId", selectWorkerList.get(position).getCompanyUserId() + "");
-                intent.putExtra("workerId", selectWorkerList.get(position).getId() + "");
+                intent.putExtra("companyUserId", selectWorkerAdapter.getData().get(position).getCompanyUserId() + "");
+                intent.putExtra("workerId", selectWorkerAdapter.getData().get(position).getId() + "");
                 intent.putExtra("doorFee", mDoorFee);
                 startActivity(intent);
             }
@@ -124,64 +134,92 @@ public class ServicedWorkerFragment extends BaseFragment {
 
     //加载技师
     private void initWorker(int serviceId, int collectId) {
-        QueryEntry queryEntry = new QueryEntry();
-        queryEntry.getEquals().put("regionCode", toRepairBean.getPlaceCode());
-        queryEntry.getIsIn().put("serviceId", Arrays.asList(Config.get().getBaseIdByCode("2.1", 1, Constant.BIZ_TYPE) + ""));
-        queryEntry.getIsIn().put("businessId", Stream.of(businessIds).distinct().toList());
-        queryEntry.getEquals().put("served", serviceId + "");
+        if (mQueryEntry == null) {
+            mQueryEntry = new QueryEntry();
+        }
+        mQueryEntry.getEquals().put("regionCode", toRepairBean.getPlaceCode());
+        mQueryEntry.getIsIn().put("serviceId", Arrays.asList(Config.get().getBaseIdByCode("2.1", 1, Constant.BIZ_TYPE) + ""));
+        mQueryEntry.getIsIn().put("businessId", Stream.of(businessIds).distinct().toList());
+        mQueryEntry.getEquals().put("served", serviceId + "");
+        mQueryEntry.setPage(mPage);
+        mQueryEntry.setSize(10);
 //        queryEntry.getEquals().put("collect", collectId + "");
         if (mOwnerOrgId != 0) {
 //            queryEntry.getEquals().put("companyId", mOwnerOrgId + "");
         }
 //        queryEntry.getEquals().put("userId", EanfangApplication.getApplication().getUserId() + "");
         EanfangHttp.post(RepairApi.GET_REPAIR_SEARCH)
-                .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<WorkerEntity>(getActivity(), true, WorkerEntity.class, true, (list) -> {
-                    selectWorkerList = list;
-                    initAdapter();
-//                    initMarker();
-                }));
-    }
-
-    private void initAdapter() {
-        if (selectWorkerList == null || selectWorkerList.size() == 0) {
-            mRecyclerView.setVisibility(View.GONE);
-            llnodata.setVisibility(View.VISIBLE);
-            //selectWorkerAdapter.notifyDataSetChanged();
-        } else {
-            mRecyclerView.setVisibility(View.VISIBLE);
-            llnodata.setVisibility(View.GONE);
-            selectWorkerAdapter.refreshList(selectWorkerList);
-            selectWorkerAdapter.notifyDataSetChanged();
-        }
-
-    }
-
-    @OnClick(R.id.btn_key)
-    public void onViewClicked() {
-        //一键报修
-        doHttpSubmit();
-    }
-
-
-    private void doHttpSubmit() {
-        EanfangHttp.post(RepairApi.ADD_CLIENT_REPAIR)
-                .upJson(JSON.toJSONString(toRepairBean))
-                .execute(new EanfangCallback<RepairOrderEntity>(getActivity(), true, RepairOrderEntity.class, (bean) -> {
-                    //待支付
-                    if (Constant.RepairStatus.CREATED.v == bean.getStatus().intValue()) {
-                        payment(bean);
-                    } else {
-                        submitSuccess();
+                .upJson(JsonUtils.obj2String(mQueryEntry))
+                .execute(new EanfangCallback<WorkerEntity>(getActivity(), true, WorkerEntity.class, true, new EanfangCallback.ISuccessArray<WorkerEntity>() {
+                    @Override
+                    public void success(List<WorkerEntity> bean) {
+                        if (mPage == 1) {
+                            selectWorkerAdapter.getData().clear();
+                            selectWorkerAdapter.setNewData(bean);
+                            swipreFresh.setRefreshing(false);
+                            selectWorkerAdapter.loadMoreComplete();
+                            if (bean.size() < 10) {
+                                selectWorkerAdapter.loadMoreEnd();
+                                //释放对象
+                                mQueryEntry = null;
+                            }
+                            if (bean.size() > 0) {
+                                rvSelectedWorker.setVisibility(View.VISIBLE);
+                                llNodata.setVisibility(View.GONE);
+                            } else {
+                                rvSelectedWorker.setVisibility(View.GONE);
+                                llNodata.setVisibility(View.VISIBLE);
+                            }
+                        } else {
+                            selectWorkerAdapter.addData(bean);
+                            selectWorkerAdapter.loadMoreComplete();
+                            if (bean.size() < 10) {
+                                selectWorkerAdapter.loadMoreEnd();
+                            }
+                        }
                     }
-                }));
+
+                }) {
+                    @Override
+                    public void onCommitAgain() {
+                        swipreFresh.setRefreshing(false);
+                        selectWorkerAdapter.loadMoreEnd();//没有数据了
+                        if (selectWorkerAdapter.getData().size() == 0) {
+                            llNodata.setVisibility(View.VISIBLE);
+                        } else {
+                            llNodata.setVisibility(View.GONE);
+                        }
+
+                    }
+
+                    @Override
+                    public void onNoData(String message) {
+                        swipreFresh.setRefreshing(false);
+                    }
+                });
+    }
+
+    /**
+     * 下拉刷新
+     */
+    @Override
+    public void onRefresh() {
+        mQueryEntry = null;
+        mPage = 1;
+        initWorker(1, 0);
+    }
+
+
+    /**
+     * 加载更多
+     */
+    @Override
+    public void onLoadMoreRequested() {
+        mPage++;
+        initWorker(1, 0);
     }
 
     private void submitSuccess(/*OrderReturnBean bean*/) {
-//        ordernum = bean.getOrdernum();
-//        status = bean.getStatus();
-//        doorfee = bean.getDoorfee();
-//        showToast("下单成功");
         Intent intent = new Intent(getActivity(), StateChangeActivity.class);
         Bundle bundle = new Bundle();
         Message message = new Message();
@@ -232,5 +270,19 @@ public class ServicedWorkerFragment extends BaseFragment {
         EanfangApplication.get().closeActivity(RepairActivity.class.getName());
         EanfangApplication.get().closeActivity(SelectWorkerActivity.class.getName());
         finishSelf();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        unbinder = ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }
