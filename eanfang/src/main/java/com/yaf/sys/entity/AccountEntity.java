@@ -378,6 +378,7 @@ public class AccountEntity implements Serializable {
                     || !Objects.equals(this.realName, other.realName)
                     || this.birthday != other.birthday
                     || !this.gender.equals(other.gender)
+                    || !Objects.equals(this.address, other.address)
                     || !Objects.equals(this.personalNote, other.personalNote)) {
                 this.avatar = other.avatar;
                 this.nickName = other.nickName;

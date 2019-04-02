@@ -1,19 +1,20 @@
 package net.eanfang.client.ui.activity.my;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
@@ -28,7 +29,8 @@ import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
-import com.eanfang.util.IDCardUtil;
+import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.JsonUtils;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
@@ -39,7 +41,9 @@ import com.yaf.sys.entity.AccountEntity;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.OwnDataHintActivity;
 
-import java.text.ParseException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,6 +59,22 @@ import io.rong.imlib.model.UserInfo;
 public class PersonInfoActivity extends BaseActivityWithTakePhoto {
 
     private static final int SELECT_ADDRESS_CALL_BACK_CODE = 1;
+    /**
+     * 昵称最大长度
+     */
+    private static final int MAXIMUM_LENGTH = 8;
+    private static final String DEFAULT_REAL_NAME = "待提供";
+    private static final String DEFAULT_NAME = "匿名用户";
+    @BindView(R.id.et_personal_note)
+    EditText mEtPersonalNote;
+    @BindView(R.id.tv_save)
+    Button mTvSave;
+    @BindView(R.id.tv_noHeader_show)
+    TextView mTvNoHeaderShow;
+    /**
+     * 性别默认是男
+     */
+    private boolean mIsMan = true;
 
     private final int HEAD_PHOTO = 100;
     @BindView(R.id.iv_left)
@@ -71,14 +91,6 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
     EditText etRealname;
     @BindView(R.id.et_departmentname)
     EditText etDepartmentname;
-    @BindView(R.id.rb_man)
-    RadioButton rbMan;
-    @BindView(R.id.rb_woman)
-    RadioButton rbWoman;
-    @BindView(R.id.rg_sex)
-    RadioGroup rgSex;
-    @BindView(R.id.et_idcard)
-    EditText etIdcard;
     @BindView(R.id.tv_area)
     TextView tvArea;
     @BindView(R.id.ll_area)
@@ -91,6 +103,16 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
     TextView tvRight;
     @BindView(R.id.ll_header)
     LinearLayout llHeader;
+    @BindView(R.id.img_position)
+    ImageView mImgPosition;
+    @BindView(R.id.tv_birthday)
+    TextView mTvBirthday;
+    @BindView(R.id.img_calendar)
+    ImageView mImgCalendar;
+    @BindView(R.id.btn_man)
+    Button mBtnMan;
+    @BindView(R.id.btn_woman)
+    Button mBtnWoman;
     private String path;
     private boolean isUploadHead = false;
 
@@ -100,6 +122,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
      */
     private String city = "";
     private String contry = "";
+    private AccountEntity mAccountEntity;
 
     public static void jumpToActivity(Context context) {
         Intent intent = new Intent();
@@ -129,18 +152,32 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         setTitle("我的资料");
         setRightTitle("保存");
         setLeftBack();
-        rbMan.isChecked();
         llHeader.setOnClickListener(v -> {
             takePhoto(PersonInfoActivity.this, HEAD_PHOTO);
         });
-        tvArea.setOnClickListener(v -> {
-            Intent intent = new Intent(PersonInfoActivity.this, SelectAddressActivity.class);
-            startActivityForResult(intent, SELECT_ADDRESS_CALL_BACK_CODE);
+        tvArea.setOnClickListener(this::choosePosition);
+        mImgPosition.setOnClickListener(this::choosePosition);
+        mBtnMan.setOnClickListener(v -> {
+            mIsMan = true;
+            setSexChoose();
         });
-
-        setRightTitleOnClickListener(new MultiClickListener(this, this::checkInfo, this::submit));
+        mBtnWoman.setOnClickListener(v -> {
+            mIsMan = false;
+            setSexChoose();
+        });
+        mTvBirthday.setOnClickListener(this::setBirthday);
+        mImgCalendar.setOnClickListener(this::setBirthday);
+        mTvSave.setOnClickListener(new MultiClickListener(this, this::checkInfo, this::submitSuccess));
+        setRightTitleOnClickListener(new MultiClickListener(this, this::checkInfo, this::submitSuccess));
     }
 
+    /**
+     * 设置性别按钮的选中状态
+     */
+    private void setSexChoose() {
+        mBtnMan.setSelected(mIsMan);
+        mBtnWoman.setSelected(!mIsMan);
+    }
 
     private void initData() {
         EanfangHttp.get(UserApi.GET_USER_INFO)
@@ -149,6 +186,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
                     runOnUiThread(() -> {
                         fillData(bean);
                         loginBean = bean;
+                        mAccountEntity = bean.getAccount();
                     });
                 }));
     }
@@ -158,53 +196,52 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         /**
          * 操作过快会闪退
          * */
-        if (infoBackBean == null) {
+        if (infoBackBean == null || infoBackBean.getAccount() == null) {
+            setHeaderShow(false);
             return;
         }
-        // 头像
-        if (!StringUtils.isEmpty(infoBackBean.getAccount().getAvatar())) {
-            ivUpload.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + infoBackBean.getAccount().getAvatar()));
+        AccountEntity accountEntity = infoBackBean.getAccount();
+        if (!StringUtils.isEmpty(accountEntity.getAvatar())) {
+            isUploadHead = true;
+            path = accountEntity.getAvatar();
+            ivUpload.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + accountEntity.getAvatar()));
+            setHeaderShow(true);
+        } else {
+            setHeaderShow(false);
+            isUploadHead = false;
         }
         // 昵称
-        if (infoBackBean.getAccount().getNickName() != null && !"待提供".equals(infoBackBean.getAccount().getNickName())) {
-            tvNickname.setText(infoBackBean.getAccount().getNickName());
+        if (accountEntity.getNickName() != null && !DEFAULT_NAME.equals(accountEntity.getNickName())) {
+            tvNickname.setText(accountEntity.getNickName());
         }
         //真实姓名
-        if (infoBackBean.getAccount().getRealName() != null && !"待提供".equals(infoBackBean.getAccount().getRealName())) {
-            etRealname.setText(infoBackBean.getAccount().getRealName());
+        if (accountEntity.getRealName() != null && !DEFAULT_REAL_NAME.equals(accountEntity.getRealName())) {
+            etRealname.setText(accountEntity.getRealName());
 //            etRealname.setEnabled(false);
         }
-        // 头像
-        if (infoBackBean.getAccount().getGender() == null) {
-            rbMan.setClickable(true);
-            rbWoman.setClickable(true);
-            rbMan.setChecked(true);
-        } else if (infoBackBean.getAccount().getGender() == 1) {// 男
-//            rbMan.setClickable(false);
-//            rbWoman.setClickable(false);
-            rbMan.setChecked(true);
+        //个人简介
+        if (accountEntity.getPersonalNote() != null) {
+            mEtPersonalNote.setText(accountEntity.getPersonalNote());
         } else {
-//            rbMan.setClickable(false);
-//            rbWoman.setClickable(false);
-            rbWoman.setChecked(true);// 女
+            accountEntity.setPersonalNote("");
         }
-        // 证件号码
-        if (!StringUtils.isEmpty(infoBackBean.getAccount().getIdCard())) {
-            etIdcard.setText(infoBackBean.getAccount().getIdCard());
-//            etIdcard.setEnabled(false);
+        //生日
+        if (accountEntity.getBirthday() != null) {
+            mTvBirthday.setText(GetDateUtils.dateToDateString(accountEntity.getBirthday()));
         }
-
-        String address = infoBackBean.getAccount().getAddress();
-
+        //gender = 1表示男的
+        mIsMan = accountEntity.getGender() == null
+                || accountEntity.getGender() == 1;
+        setSexChoose();
+        String address = accountEntity.getAddress();
         if (address != null) {
             etAddress.setText(address);
         }
-        if (!StringUtils.isEmpty(infoBackBean.getAccount().getAreaCode())) {
-            tvArea.setText(Config.get().getAddressByCode(infoBackBean.getAccount().getAreaCode()));
+        if (!StringUtils.isEmpty(accountEntity.getAreaCode())) {
+            tvArea.setText(Config.get().getAddressByCode(accountEntity.getAreaCode()));
         }
 
     }
-
 
     @Override
     public void takeSuccess(TResult result, int resultCode) {
@@ -221,6 +258,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
                             LoginBean entity = EanfangApplication.getApplication().getUser();
                             entity.getAccount().setAvatar(imgKey);
                             path = entity.getAccount().getAvatar();
+                            setHeaderShow(true);
                         });
 
                     }
@@ -235,85 +273,68 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
     }
 
 
+    /**
+     * 校验用户输入信息是否符合标准
+     *
+     * @return
+     */
     private boolean checkInfo() {
+        //如果为空，则代表头像
+        if (!isUploadHead || StringUtils.isEmpty(path)) {
+            showToast("请上传头像");
+            return false;
+        }
+
         String nickname = tvNickname.getText().toString().trim();
-        if (TextUtils.isEmpty(nickname)) {
+        if (TextUtils.isEmpty(nickname) || DEFAULT_NAME.equals(nickname)) {
             showToast("请输入昵称");
             return false;
         }
-        if (nickname.length() > 8) {
+
+        if (nickname.length() > MAXIMUM_LENGTH) {
             showToast("昵称长度为8");
             return false;
         }
-        String realname = etRealname.getText().toString().trim();
-        if (TextUtils.isEmpty(realname)) {
-            showToast("请输入真实姓名");
-            return false;
-        }
-//        if (realname.length() > 6) {
-//            showToast("真实姓名长度为6");
-//            return false;
-//        }
 
         if (StringUtils.isEmpty(city) && StringUtils.isEmpty(loginBean.getAccount().getAreaCode())) {
             showToast("请选择所在城市");
             return false;
         }
-        String address = etAddress.getText().toString().trim();
-        if (TextUtils.isEmpty(address)) {
-            showToast("请输入详细地址");
-            return false;
-        }
-        //如果为空，则代表头像
-        if (isUploadHead && StringUtils.isEmpty(path)) {
-            showToast("正在上传头像，请稍等");
-            return false;
-        }
-        if (!rbMan.isChecked() && !rbWoman.isChecked()) {
-            showToast("请选择性别");
-            return false;
-        }
 
-        String idcard = etIdcard.getText().toString().trim();
-        if (!StringUtils.isEmpty(idcard)) {
-            try {
-                if (IDCardUtil.IDCardValidate(idcard) == false) {
-                    showToast("证件格式有误，请重新输入");
-                    etIdcard.setText("");
-                    etIdcard.setEnabled(true);
-                    return false;
-                }
-            } catch (ParseException e) {
-            }
+        if (!accountInfoChanged()) {
+            showToast("用户信息未发生改变，请确认");
+            return false;
         }
-
         return true;
-
     }
 
-    private void submit() {
+    /**
+     * 用户信息是否发生改变
+     *
+     * @return true 改变  false：未改变
+     */
+    private boolean accountInfoChanged() {
         AccountEntity accountEntity = new AccountEntity();
         accountEntity.setAvatar(path);
-        accountEntity.setRealName(etRealname.getText().toString().trim());
+        String realName = etRealname.getText().toString().trim();
+        accountEntity.setRealName(StringUtils.isEmpty(realName) ?
+                tvNickname.getText().toString().trim() : realName);
+        // 昵称
         accountEntity.setNickName(tvNickname.getText().toString().trim());
-        if (rbMan.isChecked()) {
-            accountEntity.setGender(1);
-        } else {
-            accountEntity.setGender(0);
-        }
-        accountEntity.setIdCard(etIdcard.getText().toString().trim());
+        accountEntity.setGender(mIsMan ? 1 : 0);
         String address = etAddress.getText().toString().trim();
         accountEntity.setAddress(address);
+        accountEntity.setBirthday(GetDateUtils.getYeanDate(mTvBirthday.getText().toString()));
+        accountEntity.setPersonalNote(mEtPersonalNote.getText().toString());
         if (!StringUtils.isEmpty(city) && !StringUtils.isEmpty(contry)) {
             accountEntity.setAreaCode(Config.get().getAreaCodeByName(city, contry));
         }
-
-        submitSuccess(JSON.toJSONString(accountEntity));
+        return mAccountEntity.isChanged(accountEntity);
     }
 
-    private void submitSuccess(String json) {
+    private void submitSuccess() {
         EanfangHttp.post(UserApi.USER_INFO_UPDATE)
-                .upJson(json.toString())
+                .upJson(JsonUtils.obj2String(mAccountEntity))
                 .execute(new EanfangCallback(this, true, JSONObject.class, (bean) -> {
                     runOnUiThread(() -> {
                         showToast("修改成功");
@@ -361,4 +382,50 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         }
     }
 
+    /**
+     * 控制头像显示逻辑
+     *
+     * @param showHeader true ：显示头像 false：显示文本
+     */
+    private void setHeaderShow(boolean showHeader) {
+        mTvNoHeaderShow.setVisibility(!showHeader ? View.VISIBLE : View.GONE);
+        ivUpload.setVisibility(showHeader ? View.VISIBLE : View.GONE);
+    }
+
+    /**
+     * 跳转设置生日
+     *
+     * @param v
+     */
+    private void setBirthday(View v) {
+        Date date;
+        if (!StringUtils.isEmpty(mTvBirthday.getText())) {
+            date = GetDateUtils.getYeanDate(mTvBirthday.getText().toString());
+        } else {
+            date = new Date();
+        }
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, 2, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                mTvBirthday.setText(GetDateUtils.dateToDateString(new GregorianCalendar
+                        (year, month, dayOfMonth).getTime()));
+            }
+        }, year, month, day);
+        datePickerDialog.show();
+    }
+
+    /**
+     * 跳转导航定位
+     *
+     * @param v
+     */
+    private void choosePosition(View v) {
+        Intent intent = new Intent(PersonInfoActivity.this, SelectAddressActivity.class);
+        startActivityForResult(intent, SELECT_ADDRESS_CALL_BACK_CODE);
+    }
 }
