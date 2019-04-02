@@ -64,7 +64,6 @@ import java.util.HashMap;
 
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
-import io.rong.imkit.manager.IUnReadMessageObserver;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
@@ -77,7 +76,7 @@ import static com.eanfang.config.EanfangConst.MEIZU_APPKEY_CLIENT;
 import static com.eanfang.config.EanfangConst.XIAOMI_APPID_CLIENT;
 import static com.eanfang.config.EanfangConst.XIAOMI_APPKEY_CLIENT;
 
-public class MainActivity extends BaseClientActivity{
+public class MainActivity extends BaseClientActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     protected FragmentTabHost mTabHost;
     private LoginBean user;
@@ -108,9 +107,10 @@ public class MainActivity extends BaseClientActivity{
      */
     private int mAllCount = 0;
     /**
-     *所有消息总数记录
+     * 所有消息总数记录
      */
-    private int mTotalCount=0;
+    private int mTotalCount = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -356,7 +356,7 @@ public class MainActivity extends BaseClientActivity{
         @Override
         public boolean onReceived(Message message, int left) {
 
-//            getIMUnreadMessageCount();
+            getIMUnreadMessageCount();
 
             //开发者根据自己需求自行处理
             boolean isDelect = false;
@@ -480,8 +480,8 @@ public class MainActivity extends BaseClientActivity{
             public void onSuccess(Integer integer) {
                 mContactNum = integer;
                 int i = mContact + integer;
-                int nums=mTotalCount+integer;
-                doChange(i,nums);
+                int nums = mTotalCount + integer;
+                doChange(i, nums);
             }
 
             @Override
@@ -492,7 +492,7 @@ public class MainActivity extends BaseClientActivity{
     }
 
 
-    private void doChange(int mContactNum,int nums) {
+    private void doChange(int mContactNum, int nums) {
         qBadgeViewContact.setBadgeNumber(mContactNum);
         BadgeUtil.setBadgeCount(MainActivity.this, nums, R.drawable.client_logo);
     }
@@ -507,7 +507,7 @@ public class MainActivity extends BaseClientActivity{
                 case CONNECTED:
 
                     Log.i("zzw", "--------------------连接成功");
-//                    getIMUnreadMessageCount();
+                    getIMUnreadMessageCount();
                     mStatus = "";
                     break;
                 //断开连接。
@@ -594,7 +594,7 @@ public class MainActivity extends BaseClientActivity{
             mWork = 0;
         }
         //桌面app红点
-        mTotalCount=mHome+mAllCount+mWork;
+        mTotalCount = mHome + mAllCount + mWork;
         // 首页红点
 //            new Handler(getMainLooper()).postDelayed(new Runnable() {
 //                @Override

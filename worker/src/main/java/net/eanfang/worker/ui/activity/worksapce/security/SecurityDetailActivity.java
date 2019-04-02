@@ -205,7 +205,7 @@ public class SecurityDetailActivity extends BaseActivity {
                      * */
                     if (bean.getSpcList() != null) {
                         tvReadCount.setText(bean.getSpcList().get(0).getReadCount() + "");
-                        tvCommentCount.setText(bean.getSpcList().get(0).getCommentCount());
+                        tvCommentCount.setText(bean.getSpcList().get(0).getCommentCount() + "");
                     }
 
                     hideKeyboard();

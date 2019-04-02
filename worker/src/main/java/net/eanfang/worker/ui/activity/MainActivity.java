@@ -73,7 +73,6 @@ import java.util.HashMap;
 
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
-import io.rong.imkit.manager.IUnReadMessageObserver;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
@@ -404,7 +403,7 @@ public class MainActivity extends BaseActivity{
         @Override
         public boolean onReceived(Message message, int left) {
 
-//            getIMUnreadMessageCount();
+            getIMUnreadMessageCount();
 
             //开发者根据自己需求自行处理
             boolean isDelect = false;
@@ -552,7 +551,7 @@ public class MainActivity extends BaseActivity{
                 case CONNECTED:
 
                     Log.i("zzw", "--------------------连接成功");
-//                    getIMUnreadMessageCount();
+                    getIMUnreadMessageCount();
                     mStatus = "";
                     break;
                 //断开连接。

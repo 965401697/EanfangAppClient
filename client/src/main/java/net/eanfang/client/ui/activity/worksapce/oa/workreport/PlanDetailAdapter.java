@@ -85,7 +85,7 @@ public class PlanDetailAdapter extends BaseMultiItemQuickAdapter<WorkReportInfoB
                     helper.setText(R.id.tv_work_handle, "无");
 
                 }
-                if (!TextUtils.isEmpty(item.getField2())&& !item.getField2().contains("(") && item.getField2().contains("-")) {
+                if (!TextUtils.isEmpty(item.getField2()) && !item.getField2().contains("(") && item.getField2().contains("-")) {
                     helper.setVisible(R.id.recycler_view, true);
                     helper.setText(R.id.tv_person, "协同人员：");
                     String[] info = item.getField2().split(",");
@@ -155,6 +155,8 @@ public class PlanDetailAdapter extends BaseMultiItemQuickAdapter<WorkReportInfoB
                 }
                 helper.addOnClickListener(R.id.iv_pack);
                 break;
+            default:
+                break;
         }
     }
 
@@ -166,7 +168,9 @@ public class PlanDetailAdapter extends BaseMultiItemQuickAdapter<WorkReportInfoB
             helper.setVisible(R.id.ll_pic, true);
 
             ArrayList<String> picList = new ArrayList<String>();
-
+            for (int i = 0; i < urls.length; i++) {
+                picList.add(BuildConfig.OSS_SERVER + Uri.parse(urls[i]));
+            }
             if (urls.length >= 1) {
 
                 ((SimpleDraweeView) helper.getView(R.id.iv_pic1)).setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[0]));
@@ -174,8 +178,6 @@ public class PlanDetailAdapter extends BaseMultiItemQuickAdapter<WorkReportInfoB
                 ((SimpleDraweeView) helper.getView(R.id.iv_pic1)).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        picList.clear();
-                        picList.add(BuildConfig.OSS_SERVER + Uri.parse(urls[0]));
                         ImagePerviewUtil.perviewImage(mContext, picList);
                     }
                 });
@@ -189,8 +191,6 @@ public class PlanDetailAdapter extends BaseMultiItemQuickAdapter<WorkReportInfoB
                 ((SimpleDraweeView) helper.getView(R.id.iv_pic2)).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        picList.clear();
-                        picList.add(BuildConfig.OSS_SERVER + Uri.parse(urls[1]));
                         ImagePerviewUtil.perviewImage(mContext, picList);
                     }
                 });
@@ -203,8 +203,6 @@ public class PlanDetailAdapter extends BaseMultiItemQuickAdapter<WorkReportInfoB
                 ((SimpleDraweeView) helper.getView(R.id.iv_pic3)).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        picList.clear();
-                        picList.add(BuildConfig.OSS_SERVER + Uri.parse(urls[2]));
                         ImagePerviewUtil.perviewImage(mContext, picList);
                     }
                 });

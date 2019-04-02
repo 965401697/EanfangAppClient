@@ -160,31 +160,28 @@ public class WorKReportDetailAdapter extends BaseMultiItemQuickAdapter<WorkRepor
             helper.setVisible(R.id.ll_pic, true);
 
             ArrayList<String> picList = new ArrayList<String>();
+            for (int i = 0; i < urls.length; i++) {
+                picList.add(BuildConfig.OSS_SERVER + Uri.parse(urls[i]));
+            }
 
             if (urls.length >= 1) {
-
                 ((SimpleDraweeView) helper.getView(R.id.iv_pic1)).setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[0]));
                 ((SimpleDraweeView) helper.getView(R.id.iv_pic1)).setVisibility(View.VISIBLE);
                 ((SimpleDraweeView) helper.getView(R.id.iv_pic1)).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        picList.clear();
-                        picList.add(BuildConfig.OSS_SERVER + Uri.parse(urls[0]));
                         ImagePerviewUtil.perviewImage(mContext, picList);
                     }
                 });
             } else {
                 ((SimpleDraweeView) helper.getView(R.id.iv_pic1)).setVisibility(View.GONE);
             }
-
             if (urls.length >= 2) {
                 ((SimpleDraweeView) helper.getView(R.id.iv_pic2)).setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[1]));
                 ((SimpleDraweeView) helper.getView(R.id.iv_pic2)).setVisibility(View.VISIBLE);
                 ((SimpleDraweeView) helper.getView(R.id.iv_pic2)).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        picList.clear();
-                        picList.add(BuildConfig.OSS_SERVER + Uri.parse(urls[1]));
                         ImagePerviewUtil.perviewImage(mContext, picList);
                     }
                 });
@@ -197,14 +194,13 @@ public class WorKReportDetailAdapter extends BaseMultiItemQuickAdapter<WorkRepor
                 ((SimpleDraweeView) helper.getView(R.id.iv_pic3)).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        picList.clear();
-                        picList.add(BuildConfig.OSS_SERVER + Uri.parse(urls[2]));
                         ImagePerviewUtil.perviewImage(mContext, picList);
                     }
                 });
             } else {
                 ((SimpleDraweeView) helper.getView(R.id.iv_pic3)).setVisibility(View.GONE);
             }
+
         } else {
             helper.setText(R.id.tv_adjunct, "照片：无");
             helper.setVisible(R.id.ll_pic, false);

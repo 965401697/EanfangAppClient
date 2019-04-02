@@ -151,6 +151,9 @@ public class TaskDetailAdapter extends BaseMultiItemQuickAdapter<WorkTaskInfoBea
                 }
                 helper.addOnClickListener(R.id.iv_pack);
                 break;
+            default:
+                break;
+
         }
     }
 
@@ -162,7 +165,9 @@ public class TaskDetailAdapter extends BaseMultiItemQuickAdapter<WorkTaskInfoBea
             helper.setVisible(R.id.ll_pic, true);
 
             ArrayList<String> picList = new ArrayList<String>();
-
+            for (int i = 0; i < urls.length; i++) {
+                picList.add(BuildConfig.OSS_SERVER + Uri.parse(urls[i]));
+            }
             if (urls.length >= 1) {
 
                 ((SimpleDraweeView) helper.getView(R.id.iv_pic1)).setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[0]));
@@ -170,8 +175,6 @@ public class TaskDetailAdapter extends BaseMultiItemQuickAdapter<WorkTaskInfoBea
                 ((SimpleDraweeView) helper.getView(R.id.iv_pic1)).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        picList.clear();
-                        picList.add(BuildConfig.OSS_SERVER + Uri.parse(urls[0]));
                         ImagePerviewUtil.perviewImage(mContext, picList);
                     }
                 });
@@ -185,8 +188,6 @@ public class TaskDetailAdapter extends BaseMultiItemQuickAdapter<WorkTaskInfoBea
                 ((SimpleDraweeView) helper.getView(R.id.iv_pic2)).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        picList.clear();
-                        picList.add(BuildConfig.OSS_SERVER + Uri.parse(urls[1]));
                         ImagePerviewUtil.perviewImage(mContext, picList);
                     }
                 });
@@ -199,8 +200,6 @@ public class TaskDetailAdapter extends BaseMultiItemQuickAdapter<WorkTaskInfoBea
                 ((SimpleDraweeView) helper.getView(R.id.iv_pic3)).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        picList.clear();
-                        picList.add(BuildConfig.OSS_SERVER + Uri.parse(urls[2]));
                         ImagePerviewUtil.perviewImage(mContext, picList);
                     }
                 });

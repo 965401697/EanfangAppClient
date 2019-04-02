@@ -42,6 +42,7 @@ public class FindQuestionDetailAdapter extends BaseMultiItemQuickAdapter<WorkRep
      */
 
     private Context mComtext;
+
     public FindQuestionDetailAdapter(List<WorkReportInfoBean.WorkReportDetailsBean> data, Context context) {
         super(data);
         this.mComtext = context;
@@ -81,7 +82,7 @@ public class FindQuestionDetailAdapter extends BaseMultiItemQuickAdapter<WorkRep
 
                 }
 
-                if (!TextUtils.isEmpty(item.getField2())&& !item.getField2().contains("(") && item.getField2().contains("-")) {
+                if (!TextUtils.isEmpty(item.getField2()) && !item.getField2().contains("(") && item.getField2().contains("-")) {
                     helper.setVisible(R.id.recycler_view, true);
                     helper.setText(R.id.tv_person, "责任人：");
                     String[] info = item.getField2().split(",");
@@ -151,6 +152,8 @@ public class FindQuestionDetailAdapter extends BaseMultiItemQuickAdapter<WorkRep
                 }
                 helper.addOnClickListener(R.id.iv_pack);
                 break;
+            default:
+                break;
         }
     }
 
@@ -162,7 +165,9 @@ public class FindQuestionDetailAdapter extends BaseMultiItemQuickAdapter<WorkRep
             helper.setVisible(R.id.ll_pic, true);
 
             ArrayList<String> picList = new ArrayList<String>();
-
+            for (int i = 0; i < urls.length; i++) {
+                picList.add(BuildConfig.OSS_SERVER + Uri.parse(urls[i]));
+            }
             if (urls.length >= 1) {
 
                 ((SimpleDraweeView) helper.getView(R.id.iv_pic1)).setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[0]));
@@ -170,8 +175,6 @@ public class FindQuestionDetailAdapter extends BaseMultiItemQuickAdapter<WorkRep
                 ((SimpleDraweeView) helper.getView(R.id.iv_pic1)).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        picList.clear();
-                        picList.add(BuildConfig.OSS_SERVER + Uri.parse(urls[0]));
                         ImagePerviewUtil.perviewImage(mContext, picList);
                     }
                 });
@@ -185,8 +188,6 @@ public class FindQuestionDetailAdapter extends BaseMultiItemQuickAdapter<WorkRep
                 ((SimpleDraweeView) helper.getView(R.id.iv_pic2)).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        picList.clear();
-                        picList.add(BuildConfig.OSS_SERVER + Uri.parse(urls[1]));
                         ImagePerviewUtil.perviewImage(mContext, picList);
                     }
                 });
@@ -199,8 +200,6 @@ public class FindQuestionDetailAdapter extends BaseMultiItemQuickAdapter<WorkRep
                 ((SimpleDraweeView) helper.getView(R.id.iv_pic3)).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        picList.clear();
-                        picList.add(BuildConfig.OSS_SERVER + Uri.parse(urls[2]));
                         ImagePerviewUtil.perviewImage(mContext, picList);
                     }
                 });
