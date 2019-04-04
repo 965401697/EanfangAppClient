@@ -33,6 +33,8 @@ import net.eanfang.client.ui.activity.worksapce.repair.RepairCtrlActivity;
 import net.eanfang.client.ui.adapter.RepairedManageOrderAdapter;
 import net.eanfang.client.ui.interfaces.OnDataReceivedListener;
 
+import java.util.Objects;
+
 import static com.eanfang.config.EanfangConst.BOTTOM_REFRESH;
 import static com.eanfang.config.EanfangConst.TOP_REFRESH;
 
@@ -62,11 +64,8 @@ public class OrderListFragment extends BaseFragment implements
         }
     };
     private String mTitle;
-    private View v;
-    private String Msg;
     private SwipeRefreshLayout refreshLayout;
     private RecyclerView mRecyclerView;
-    //    private List<RepairOrderEntity> mDataList;
     private RepairedManageOrderAdapter adapter;
     private String status;
 
@@ -119,16 +118,7 @@ public class OrderListFragment extends BaseFragment implements
                 //待付款
                 switch (view.getId()) {
                     case R.id.tv_do_second:
-//                        if (!item.getOwnerUserId().equals(EanfangApplication.get().getUserId())) {
-//                            showToast("当前订单负责人可以操作");
-//                            return;
-//                        }
-                        if (doCompare(item.getOwnerUserId(), mUseId)) {
-                            payment(item);
-                        }
-//                        startActivity(new Intent(getActivity(), PayActivity.class)
-//                                .putExtra("ordernum", item.getOrderNum())
-//                                .putExtra("orderType", "报修"));
+                        payment(item);
                         break;
                     default:
                         break;
@@ -138,14 +128,12 @@ public class OrderListFragment extends BaseFragment implements
             case 1:
                 switch (view.getId()) {
                     case R.id.tv_do_second:
-                        if (doCompare(item.getOwnerUserId(), mUseId)) {
-                            if (item.getAssigneeUser() != null) {
-                                CallUtils.call(getActivity(), item.getAssigneeUser().getAccountEntity().getMobile());
-                            } else {
-                                showToast("请等待分配技师");
-                            }
-
+                        if (item.getAssigneeUser() != null) {
+                            CallUtils.call(getActivity(), item.getAssigneeUser().getAccountEntity().getMobile());
+                        } else {
+                            showToast("请等待分配技师");
                         }
+
                         break;
                     default:
                         break;
@@ -155,9 +143,7 @@ public class OrderListFragment extends BaseFragment implements
             case 2:
                 switch (view.getId()) {
                     case R.id.tv_do_second:
-                        if (doCompare(item.getOwnerUserId(), mUseId)) {
-                            CallUtils.call(getActivity(), item.getAssigneeUser().getAccountEntity().getMobile());
-                        }
+                        CallUtils.call(getActivity(), item.getAssigneeUser().getAccountEntity().getMobile());
                         break;
                     default:
                         break;
@@ -167,9 +153,7 @@ public class OrderListFragment extends BaseFragment implements
             case 3:
                 switch (view.getId()) {
                     case R.id.tv_do_second:
-                        if (doCompare(item.getOwnerUserId(), mUseId)) {
-                            CallUtils.call(getActivity(), item.getAssigneeUser().getAccountEntity().getMobile());
-                        }
+                        CallUtils.call(getActivity(), item.getAssigneeUser().getAccountEntity().getMobile());
                         break;
                     default:
                         break;
@@ -179,27 +163,13 @@ public class OrderListFragment extends BaseFragment implements
             case 4:
                 switch (view.getId()) {
                     case R.id.tv_do_first:
-                        if (doCompare(item.getOwnerUserId(), mUseId)) {
-                            CallUtils.call(getActivity(), item.getOwnerUser().getAccountEntity().getMobile());
-                        }
+                        CallUtils.call(getActivity(), item.getOwnerUser().getAccountEntity().getMobile());
                         break;
                     case R.id.tv_do_second:
-//                        if (!item.getOwnerUserId().equals(EanfangApplication.get().getUserId())) {
-//                            showToast("当前订单负责人可以操作");
-//                            return;
-//                        }
-                        if (doCompare(item.getOwnerUserId(), mUseId)) {
-                            new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), "待确认", false).show();
-                        }
+                        new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), "待确认", false).show();
                         break;
                     case R.id.tv_finish:
-//                        if (!item.getOwnerUserId().equals(EanfangApplication.get().getUserId())) {
-//                            showToast("当前订单负责人可以操作");
-//                            return;
-//                        }
-                        if (doCompare(item.getOwnerUserId(), mUseId)) {
-                            new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), "完成", false).show();
-                        }
+                        new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), "完成", false).show();
                         break;
                     default:
                         break;
@@ -209,27 +179,27 @@ public class OrderListFragment extends BaseFragment implements
             case 5:
                 switch (view.getId()) {
 
-                    case R.id.tv_do_first://  完工报告
+                    case R.id.tv_do_first:
+                        //  完工报告
 //                        if (!item.getOwnerUserId().equals(EanfangApplication.get().getUserId())) {
 //                            showToast("当前订单负责人可以操作");
 //                            return;
 //                        }
                         //if (doCompare(item.getOwnerUserId(), mUseId)) {
-                            new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), "完成", false).show();
+                        new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), "完成", false).show();
                         //}
                         break;
-                    case R.id.tv_do_second:// 评价技师
+                    case R.id.tv_do_second:
+                        // 评价技师
                         if (!item.getOwnerUserId().equals(EanfangApplication.get().getUserId())) {
                             showToast("当前订单负责人可以操作");
                             return;
                         }
-                        if (doCompare(item.getOwnerUserId(), mUseId)) {
-                            startActivity(new Intent(getActivity(), EvaluateWorkerActivity.class)
-                                    .putExtra("ordernum", item.getOrderNum())
-                                    .putExtra("workerUid", item.getAssigneeUserId())
-                                    .putExtra("orderId", item.getId())
-                                    .putExtra("avatar", item.getAssigneeUser().getAccountEntity().getAvatar()));
-                        }
+                        startActivity(new Intent(getActivity(), EvaluateWorkerActivity.class)
+                                .putExtra("ordernum", item.getOrderNum())
+                                .putExtra("workerUid", item.getAssigneeUserId())
+                                .putExtra("orderId", item.getId())
+                                .putExtra("avatar", item.getAssigneeUser().getAccountEntity().getAvatar()));
                         break;
                     default:
                         break;
@@ -237,9 +207,7 @@ public class OrderListFragment extends BaseFragment implements
                 break;
 
             case 6:
-                if (doCompare(item.getOwnerUserId(), mUseId)) {
-                    CallUtils.call(getActivity(), item.getOwnerUser().getAccountEntity().getMobile());
-                }
+                CallUtils.call(Objects.requireNonNull(getActivity()), item.getOwnerUser().getAccountEntity().getMobile());
                 break;
             default:
                 break;
@@ -264,7 +232,9 @@ public class OrderListFragment extends BaseFragment implements
 //
 //        payLogEntity.setOriginPrice(orderEntity.getPayLogEntity().getOriginPrice());// 原始价格
 //        payLogEntity.setPayPrice(orderEntity.getPayLogEntity().getPayPrice());//实际支付价格
-//        payLogEntity.setReducedPrice(0);// 优惠价格
+//        优惠价格
+//        payLogEntity.setReducedPrice(0);
+
 
         Intent intent = new Intent(getActivity(), NewPayActivity.class);
         intent.putExtra("payLogEntity", orderEntity.getPayLogEntity());
@@ -400,16 +370,6 @@ public class OrderListFragment extends BaseFragment implements
     /**
      * 刷新
      */
-//    @Override
-//    public void onRefresh(int index) {
-//        dataOption(TOP_REFRESH);
-//
-//    }
-//
-//    @Override
-//    public void onLoad(int index) {
-//        dataOption(BOTTOM_REFRESH);
-//    }
     private void dataOption(int option) {
         switch (option) {
             case TOP_REFRESH:
@@ -418,8 +378,8 @@ public class OrderListFragment extends BaseFragment implements
 //                if (page <= 0) {
 //                    page = 1;
 //                }
-
-                page = 1;//下拉永远第一页
+//下拉永远第一页
+                page = 1;
                 getData();
 
                 break;
@@ -431,14 +391,5 @@ public class OrderListFragment extends BaseFragment implements
             default:
                 break;
         }
-    }
-
-    public boolean doCompare(Long assingerUserId, Long userId) {
-
-        if (assingerUserId.equals(userId)) {
-            return true;
-        }
-        showToast("只有订单负责人可以操作");
-        return false;
     }
 }

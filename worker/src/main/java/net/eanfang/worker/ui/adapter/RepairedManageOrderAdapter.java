@@ -6,52 +6,48 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.NumberUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.yaf.base.entity.WorkerOrderOerationEntity;
 import com.yaf.base.entity.RepairOrderEntity;
 
 import net.eanfang.worker.R;
 
 
 /**
- * Created by wen on 2017/5/12.
+ * @author wen on 2017/5/12.
  */
 
 public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEntity, BaseViewHolder> {
 
-
-    private final boolean[] isShowFirstBtnWorker = {
-            false, false, true, true, false, true, false
-    };
-    private String[] doSomethingWorker = {
-            "联系客户", "马上回电", "签到"
-            , "完工", "查看故障处理", "评价客户", "联系客户"
-    };
-    private String[] doSomething;
-    private boolean[] isShowFirstBtn;
+    private static final String OEG_NAME = "个人";
+    private static final int DEFAULT_URL_LENGTH = 10;
 
     public RepairedManageOrderAdapter() {
 //    public RepairedManageOrderAdapter(List<RepairOrderEntity> data) {
         super(R.layout.item_workspace_order_list);
-        doSomething = doSomethingWorker;
-        isShowFirstBtn = isShowFirstBtnWorker;
-
     }
 
 
     @Override
     protected void convert(BaseViewHolder helper, RepairOrderEntity item) {
+        if (item == null) {
+            return;
+        }
+        //创建订单操作类( 0:待支付，1:待回电，2:待上门，3:待完工，4:待确认，5:订单完成)
+        int status = item.getStatus();
+        boolean custom = item.getAssigneeUserId() != null && item.getAssigneeUserId().
+                equals(EanfangApplication.get().getUserId());
+        WorkerOrderOerationEntity orderOerationEntity = new WorkerOrderOerationEntity(status, custom);
 
         // 订单是否 已读 未读 1：新订单 0 已读
-        if (item.getNewOrder() == 1) {
-            helper.getView(R.id.tv_order_read).setVisibility(View.VISIBLE);
-        } else {
-            helper.getView(R.id.tv_order_read).setVisibility(View.GONE);
-        }
+        helper.getView(R.id.tv_order_read).setVisibility(item.getNewOrder() == 1
+                ? View.VISIBLE : View.GONE);
         String str = "";
 
         if (item.getOwnerOrg() != null && item.getOwnerOrg().getBelongCompany() != null && item.getOwnerUser() != null && item.getOwnerUser().getAccountEntity() != null) {
@@ -81,12 +77,9 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
             helper.setText(R.id.tv_arriveTime, "到达时限： 0 ");
         }
         helper.setText(R.id.tv_state, GetConstDataUtils.getRepairStatus().get(item.getStatus()));
-        //( 0:待支付，1:待回电，2:待上门，3:待完工，4:待确认，5:订单完成)
-        helper.setText(R.id.tv_do_second, doSomething[item.getStatus()]);
-        helper.setVisible(R.id.tv_do_first, isShowFirstBtn[item.getStatus()]);
 
         //订单金额
-        if (item.getOwnerOrg() != null && item.getOwnerOrg().getBelongCompany() != null && item.getOwnerOrg().getBelongCompany().getOrgName().equals("个人")) {
+        if (item.getOwnerOrg() != null && item.getOwnerOrg().getBelongCompany() != null && OEG_NAME.equals(item.getOwnerOrg().getBelongCompany().getOrgName())) {
 
             helper.setVisible(R.id.tv_count_money, true);
             helper.setVisible(R.id.tv_total, true);
@@ -104,42 +97,23 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
             helper.setVisible(R.id.tv_count_money, false);
             helper.setVisible(R.id.tv_total, false);
         }
-        //( 0:待支付，1:待回电，2:待上门，3:待完工，4:待确认，5:订单完成)
-        if (item.getStatus() == 2) {
-            helper.setText(R.id.tv_do_first, "改约");
-            helper.setVisible(R.id.iv_finish, false);
-        } else if (item.getStatus() == 3) {
-            helper.setText(R.id.tv_do_first, "联系客户");
-            helper.setVisible(R.id.iv_finish, false);
 
-        } else if (item.getStatus() == 4) {
-            helper.setText(R.id.tv_do_first, "联系客户");
-            helper.setVisible(R.id.iv_finish, false);
-
-        } else if (item.getStatus() == 5) {
-            helper.setText(R.id.tv_do_first, "查看故障处理");
-            helper.setVisible(R.id.iv_finish, true);
-            helper.setVisible(R.id.tv_state, false);
-            if (item.getClientEvaluateId() == null || item.getClientEvaluateId().longValue() <= 0) {
-                helper.setVisible(R.id.tv_do_second, true);
-            } else {
-                helper.setVisible(R.id.tv_do_second, false);
-            }
-        } else if (item.getStatus() == 6) {
-            //helper.setText(R.id.tv_do_first, "联系客户");
-            helper.setVisible(R.id.tv_do_first, false);
-            helper.setVisible(R.id.tv_do_second, false);
-        }
-
+        helper.setText(R.id.tv_do_first, orderOerationEntity.getOperationLeft());
+        helper.setText(R.id.tv_do_second, orderOerationEntity.getOperationRight());
+        helper.setVisible(R.id.tv_do_first, orderOerationEntity.isShowOperationLeft());
+        //原代码判断status为5的时候判断item.getClientEvaluateId()<=0展示否则不展示第二按钮
+        helper.setVisible(R.id.tv_do_second, orderOerationEntity.isShowOperationRight() || (custom && status == 5 &&
+                (item.getClientEvaluateId() == null || item.getClientEvaluateId() <= 0)));
+        helper.setVisible(R.id.iv_finish, orderOerationEntity.isFinished());
+        helper.setVisible(R.id.tv_state, !orderOerationEntity.isFinished());
 
         //将业务类型的图片显示到列表
         String imgUrl = V.v(() -> item.getFailureEntity().getPictures().split(",")[0]);
-        if (!StringUtils.isEmpty(imgUrl) && imgUrl.length() > 10) {
+        if (!StringUtils.isEmpty(imgUrl) && imgUrl.length() > DEFAULT_URL_LENGTH) {
             ((SimpleDraweeView) helper.getView(R.id.iv_upload)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + imgUrl));
         } else {
             ((SimpleDraweeView) helper.getView(R.id.iv_upload)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER));
         }
-
         helper.addOnClickListener(R.id.tv_do_first);
         helper.addOnClickListener(R.id.tv_do_second);
     }
