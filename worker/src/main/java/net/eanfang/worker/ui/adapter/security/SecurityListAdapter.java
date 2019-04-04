@@ -32,10 +32,12 @@ public class SecurityListAdapter extends BaseQuickAdapter<SecurityListBean.ListB
     private Context context;
     private ArrayList<String> picList = new ArrayList<>();
     private String[] pics = null;
+    private boolean mIsUnRead = false;
 
-    public SecurityListAdapter(Context mContext) {
+    public SecurityListAdapter(Context mContext, boolean isUnRead) {
         super(R.layout.layout_security_item);
         this.context = mContext;
+        this.mIsUnRead = isUnRead;
     }
 
     @Override
@@ -121,7 +123,7 @@ public class SecurityListAdapter extends BaseQuickAdapter<SecurityListBean.ListB
             helper.setVisible(R.id.rl_video, false);
         }
 
-        if (item.getReadStatus() == 0) {
+        if (item.getReadStatus() == 0 && mIsUnRead) {
             helper.setVisible(R.id.tv_unread, true);
         } else {
             helper.setVisible(R.id.tv_unread, false);

@@ -82,7 +82,7 @@ public class SecurityHotFragment extends TemplateItemListFragment {
 
     @Override
     protected void initAdapter() {
-        securityListAdapter = new SecurityListAdapter(EanfangApplication.get().getApplicationContext());
+        securityListAdapter = new SecurityListAdapter(EanfangApplication.get().getApplicationContext(),false);
         RecyclerView.RecycledViewPool pool = mRecyclerView.getRecycledViewPool();
         pool.setMaxRecycledViews(0, 10);
         mRecyclerView.setRecycledViewPool(pool);

@@ -118,7 +118,7 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
             llSecuritypersonal.setVisibility(View.VISIBLE);
             tvSecuirtypersonal.setText("我的动态");
         }
-        securityListAdapter = new SecurityListAdapter(EanfangApplication.get().getApplicationContext());
+        securityListAdapter = new SecurityListAdapter(EanfangApplication.get().getApplicationContext(),false);
         securityListAdapter.bindToRecyclerView(rvSecurity);
 
         rvSecurity.setLayoutManager(new LinearLayoutManager(this));
