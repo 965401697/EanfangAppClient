@@ -40,13 +40,13 @@ public class SecurityListBean implements Serializable {
         private int friend;
         private int likesCount;
         private int likeStatus;
-        private Long publisherCompanyId;
         private String publisherCompanyName;
         private PublisherOrgBean publisherOrg;
         private String publisherOrgCode;
+        private Long publisherUserId;
+        private Long publisherCompanyId;
         private Long publisherTopCompanyId;
         private PublisherUserBean publisherUser;
-        private Long publisherUserId;
         private int readCount;
         private String spcContent;
         private Long spcId;
@@ -55,6 +55,9 @@ public class SecurityListBean implements Serializable {
         private String questionContent;
         private String questionId;
         private String type;
+        private String spcVideo;
+        private CountMapBean countMap;
+        private int readStatus;
 
         @Getter
         @Setter
@@ -84,6 +87,15 @@ public class SecurityListBean implements Serializable {
             private Long topCompanyId;
             private Long userId;
 
+        }
+
+        @Getter
+        @Setter
+        @AllArgsConstructor
+        @NoArgsConstructor
+        public static class CountMapBean implements Serializable {
+            private int noReadCount;
+            private int commentNoRead;
         }
     }
 }

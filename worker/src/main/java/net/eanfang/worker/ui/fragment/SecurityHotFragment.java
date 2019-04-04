@@ -19,6 +19,7 @@ import com.photopicker.com.util.BGASpaceItemDecoration;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.security.SecurityDetailActivity;
+import net.eanfang.worker.ui.activity.worksapce.security.SecurityListActivity;
 import net.eanfang.worker.ui.adapter.security.SecurityListAdapter;
 
 import cn.bingoogolapple.photopicker.imageloader.BGARVOnScrollListener;
@@ -60,13 +61,13 @@ public class SecurityHotFragment extends TemplateItemListFragment {
                 case R.id.ll_comments:
                 case R.id.ll_pic:
                 case R.id.iv_share:
+                case R.id.ll_question:
+                case R.id.rl_video:
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("bean", securityListAdapter.getData().get(position));
                     bundle.putInt("friend", securityListAdapter.getData().get(position).getFriend());
                     JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
                     break;
-//                showToast("分享");
-//                break;
                 default:
                     break;
             }
@@ -157,6 +158,7 @@ public class SecurityHotFragment extends TemplateItemListFragment {
                             securityListAdapter.notifyDataSetChanged();
                             mSwipeRefreshLayout.setRefreshing(false);
                             securityListAdapter.loadMoreComplete();
+                            ((SecurityListActivity) getActivity()).doRefreshMessage(bean.getList().get(0).getCountMap().getCommentNoRead() + bean.getList().get(0).getCountMap().getNoReadCount());
                             if (bean.getList().size() < 10) {
                                 securityListAdapter.loadMoreEnd();
                                 mQueryEntry = null;

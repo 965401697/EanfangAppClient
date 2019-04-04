@@ -128,6 +128,8 @@ public class HomeFragment extends BaseFragment {
     private RecyclerView rvSecurity;
     private SecurityListAdapter securityListAdapter;
     private TextView tvNoSecurity;
+    private TextView mTvSecurityNewMessage;
+    private RelativeLayout rlSecurityNewMessage;
 
     @Override
     protected void initData(Bundle arguments) {
@@ -148,6 +150,8 @@ public class HomeFragment extends BaseFragment {
         customHomeViewPager = (CustomHomeViewPager) findViewById(R.id.vp_datastatistics);
         tvHomeTitle = (TextView) findViewById(R.id.tv_homeTitle);
         tvNoSecurity = findViewById(R.id.tv_noSecurity);
+        mTvSecurityNewMessage = findViewById(R.id.tv_security_count);
+        rlSecurityNewMessage = findViewById(R.id.rl_security_message);
         homeScanPopWindow = new HomeScanPopWindow(getActivity(), true, scanSelectItemsOnClick);
         homeScanPopWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
@@ -379,6 +383,9 @@ public class HomeFragment extends BaseFragment {
         findViewById(R.id.rl_security).setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), SecurityListActivity.class));
         });
+        findViewById(R.id.iv_security_cancle).setOnClickListener((v) -> {
+            rlSecurityNewMessage.setVisibility(View.GONE);
+        });
 
     }
 
@@ -439,6 +446,8 @@ public class HomeFragment extends BaseFragment {
                 case R.id.ll_comments:
                 case R.id.ll_pic:
                 case R.id.iv_share:
+                case R.id.ll_question:
+                case R.id.rl_video:
                     Bundle bundle = new Bundle();
                     bundle.putSerializable("bean", securityListAdapter.getData().get(position));
                     bundle.putInt("friend", securityListAdapter.getData().get(position).getFriend());
@@ -618,6 +627,13 @@ public class HomeFragment extends BaseFragment {
             mQuota = 0;
         }
         qBadgeViewQuota.setBadgeNumber(mQuota);
+        // @我的和评论未读
+        if (bean.getCommentNoRead() + bean.getNoReadCount() > 0) {
+            mTvSecurityNewMessage.setText(bean.getCommentNoRead() + bean.getNoReadCount() + "");
+            rlSecurityNewMessage.setVisibility(View.VISIBLE);
+        } else {
+            rlSecurityNewMessage.setVisibility(View.GONE);
+        }
         /**
          * 底部红点更新
          * */

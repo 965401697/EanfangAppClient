@@ -694,6 +694,7 @@ public interface NewApiService {
      * 安防圈个人中心
      */
     String SERCURITY_PERSONAL = BASE_URL + "/yaf_spc/spcircle/centerList";
+    String SERCURITY_PERSONAL_OTHER = BASE_URL + "/yaf_spc/spcircle/avatarCenterList";
     /**
      * 安防圈评论列表
      */
@@ -706,6 +707,10 @@ public interface NewApiService {
      * 安防圈艾特列表
      */
     String SERCURITY_ABOUT_LIST = BASE_URL + "/yaf_spc/spcircle/atList";
+    /**
+     * 安防圈我关注的人
+     */
+    String SERCURITY_FOUCS_LIST = BASE_URL + "/yaf_spc/spcircle/followerManList";
 
 
 }

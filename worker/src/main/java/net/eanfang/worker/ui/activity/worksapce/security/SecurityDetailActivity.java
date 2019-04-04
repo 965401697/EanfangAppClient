@@ -12,6 +12,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -27,8 +28,10 @@ import com.eanfang.model.security.SecurityDetailBean;
 import com.eanfang.model.security.SecurityFoucsBean;
 import com.eanfang.model.security.SecurityLikeBean;
 import com.eanfang.model.security.SecurityListBean;
+import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.ETimeUtils;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -105,6 +108,10 @@ public class SecurityDetailActivity extends BaseActivity {
     LinearLayout llQuestion;
     @BindView(R.id.tv_comment_count)
     TextView tvCommentCount;
+    @BindView(R.id.iv_show_video)
+    SimpleDraweeView ivShowVideo;
+    @BindView(R.id.rl_video)
+    RelativeLayout rlVideo;
 
     private SecurityListBean.ListBean securityBean;
     private ArrayList<String> picList = new ArrayList<>();
@@ -173,6 +180,12 @@ public class SecurityDetailActivity extends BaseActivity {
             });
             generalDialog.show();
             return false;
+        });
+        ivSeucrityHeader.setOnClickListener((v) -> {
+            Bundle bundle = new Bundle();
+            bundle.putBoolean("isLookOther", true);
+            bundle.putLong("mUserId",securityBean.getPublisherUserId());
+            JumpItent.jump(SecurityDetailActivity.this,SecurityPersonalActivity.class,bundle);
         });
     }
 
@@ -272,10 +285,16 @@ public class SecurityDetailActivity extends BaseActivity {
         } else {
             snplPic.setVisibility(View.GONE);
         }
+        if (!StringUtils.isEmpty(securityBean.getSpcVideo())) {
+            rlVideo.setVisibility(View.VISIBLE);
+            ivShowVideo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + securityBean.getSpcVideo() + ".jpg"));
+        } else {
+            rlVideo.setVisibility(View.GONE);
+        }
     }
 
 
-    @OnClick({R.id.ll_like, R.id.ll_comments, R.id.ll_share, R.id.tv_send, R.id.tv_isFocus})
+    @OnClick({R.id.ll_like, R.id.ll_comments, R.id.ll_share, R.id.tv_send, R.id.tv_isFocus, R.id.rl_video})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_like:
@@ -297,7 +316,11 @@ public class SecurityDetailActivity extends BaseActivity {
                     doFoucus(securityBean);
                 }
                 break;
-
+            case R.id.rl_video:
+                Bundle bundle = new Bundle();
+                bundle.putString("videoPath", BuildConfig.OSS_SERVER + securityBean.getSpcVideo() + ".mp4");
+                JumpItent.jump(SecurityDetailActivity.this, PlayVideoActivity.class, bundle);
+                break;
             default:
                 break;
         }

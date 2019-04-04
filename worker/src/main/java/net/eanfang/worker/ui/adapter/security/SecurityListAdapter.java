@@ -42,6 +42,8 @@ public class SecurityListAdapter extends BaseQuickAdapter<SecurityListBean.ListB
     protected void convert(BaseViewHolder helper, SecurityListBean.ListBean item) {
         SimpleDraweeView ivHeader = helper.getView(R.id.iv_seucrity_header);
         SecurityCircleImageLayout securityImageLayout = helper.getView(R.id.securityImageLayout);
+        SimpleDraweeView ivShowVideo = helper.getView(R.id.iv_show_video);
+
         // 发布人
         helper.setText(R.id.tv_name, V.v(() -> item.getAccountEntity().getNickName()));
         // 头像
@@ -109,7 +111,23 @@ public class SecurityListAdapter extends BaseQuickAdapter<SecurityListBean.ListB
         } else {
             securityImageLayout.setVisibility(View.GONE);
         }
+        /**
+         *視頻缩略图
+         * */
+        if (!StringUtils.isEmpty(item.getSpcVideo())) {
+            helper.setVisible(R.id.rl_video, true);
+            ivShowVideo.setImageURI((Uri.parse(BuildConfig.OSS_SERVER + V.v(() -> item.getSpcVideo() + ".jpg"))));
+        } else {
+            helper.setVisible(R.id.rl_video, false);
+        }
 
+        if (item.getReadStatus() == 0) {
+            helper.setVisible(R.id.tv_unread, true);
+        } else {
+            helper.setVisible(R.id.tv_unread, false);
+        }
+
+        helper.addOnClickListener(R.id.rl_video);
         helper.addOnClickListener(R.id.tv_isFocus);
         helper.addOnClickListener(R.id.ll_like);
         helper.addOnClickListener(R.id.ll_comments);

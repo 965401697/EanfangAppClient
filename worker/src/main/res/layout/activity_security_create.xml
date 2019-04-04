@@ -26,24 +26,59 @@
             android:textColor="@color/color_bottom"
             android:textSize="@dimen/textSize_15" />
 
-        <com.photopicker.com.widget.BGASortableNinePhotoLayout
-            android:id="@+id/snpl_add_photo"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/dimen_30"
-            app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
-            app:bga_snpl_deleteDrawableOverlapQuarter="false"
-            app:bga_snpl_editable="true"
-            app:bga_snpl_itemCornerRadius="0dp"
-            app:bga_snpl_itemSpanCount="3"
-            app:bga_snpl_itemWhiteSpacing="4dp"
-            app:bga_snpl_itemWidth="0dp"
-            app:bga_snpl_maxItemCount="9"
-            app:bga_snpl_otherWhiteSpacing="100dp"
-            app:bga_snpl_placeholderDrawable="@mipmap/ic_nodata"
-            app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
-            app:bga_snpl_plusEnable="true"
-            app:bga_snpl_sortable="true" />
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/rl_video"
+                android:layout_width="@dimen/dimen_170"
+                android:layout_height="@dimen/dimen_170"
+                android:layout_marginLeft="@dimen/dimen_10"
+                android:layout_marginTop="@dimen/dimen_30"
+                android:visibility="gone">
+
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/iv_show_video"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:background="#1A000000"
+                    android:visibility="visible" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/ic_play_video" />
+            </RelativeLayout>
+
+            <com.photopicker.com.widget.BGASortableNinePhotoLayout
+                android:id="@+id/snpl_add_photo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/dimen_30"
+                app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
+                app:bga_snpl_deleteDrawableOverlapQuarter="false"
+                app:bga_snpl_editable="true"
+                app:bga_snpl_itemCornerRadius="0dp"
+                app:bga_snpl_itemSpanCount="3"
+                app:bga_snpl_itemWhiteSpacing="4dp"
+                app:bga_snpl_itemWidth="0dp"
+                app:bga_snpl_maxItemCount="9"
+                app:bga_snpl_otherWhiteSpacing="100dp"
+                app:bga_snpl_placeholderDrawable="@mipmap/ic_nodata"
+                app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
+                app:bga_snpl_plusEnable="true"
+                app:bga_snpl_sortable="true" />
+        </LinearLayout>
 
 
     </LinearLayout>

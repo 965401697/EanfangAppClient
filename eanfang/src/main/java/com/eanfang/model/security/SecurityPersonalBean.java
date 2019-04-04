@@ -24,6 +24,8 @@ public class SecurityPersonalBean implements Serializable {
     private PageUtilBean pageUtil;
     private int followerCount;
     private int asFollowerCount;
+    private int noReadCount;
+    private int commentNoRead;
 
     @Getter
     @Setter

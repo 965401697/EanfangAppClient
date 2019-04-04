@@ -56,4 +56,5 @@
     <color name="color_my_price">#2F86FF</color>
     <color name="color_my_back_border">#EAEAEA</color>
     <color name="color_my_line">#DBDCDF</color>
+    <color name="color_home_security_message">#4587E2</color>
 </resources>

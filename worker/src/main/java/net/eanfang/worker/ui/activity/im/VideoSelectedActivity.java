@@ -11,7 +11,9 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.model.VideoBean;
+import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.worker.R;
@@ -37,6 +39,12 @@ public class VideoSelectedActivity extends BaseActivity {
     private String mTargetId;
     private Conversation.ConversationType mConversationType;
 
+    /**
+     * 其他地方选择视频
+     */
+    private String mType = "";
+    private static final int REQUEST_CODE_CHOOSE_VIDEO = 1001;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,8 +55,13 @@ public class VideoSelectedActivity extends BaseActivity {
         setLeftBack();
         mTargetId = getIntent().getStringExtra("targetId");
         mConversationType = (Conversation.ConversationType) getIntent().getSerializableExtra("conversationType");
+        mType = getIntent().getStringExtra("type");
 
-        setRightTitle("发送");
+        if (("addSecurity").equals(mType)) {
+            setRightTitle("确定");
+        } else {
+            setRightTitle("发送");
+        }
         setRightTitleOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,25 +84,39 @@ public class VideoSelectedActivity extends BaseActivity {
 
                 if (view.getId() == R.id.cb_checked) {
                     VideoBean bean = (VideoBean) adapter.getData().get(position);
-
-                    if (bean.getFlag() == 0) {
-                        if (pathList.size() >= 9) {
-                            ToastUtil.get().showToast(VideoSelectedActivity.this, "最多只能选择9个视频文件");
+                    // 安防圈 添加视频
+                    if (("addSecurity").equals(mType)) {
+                        if (bean.getFlag() == 0) {
+                            if (pathList.size() >= 1) {
+                                ToastUtil.get().showToast(VideoSelectedActivity.this, "最多只能选择1个视频文件");
+                            } else {
+                                bean.setFlag(1);
+                                pathList.add(bean.getName());
+                            }
                         } else {
-                            bean.setFlag(1);
-                            pathList.add(bean.getName());
+                            bean.setFlag(0);
+                            pathList.remove(bean.getName());
                         }
                     } else {
-                        bean.setFlag(0);
-                        pathList.remove(bean.getName());
-                    }
+                        if (bean.getFlag() == 0) {
+                            if (pathList.size() >= 9) {
+                                ToastUtil.get().showToast(VideoSelectedActivity.this, "最多只能选择9个视频文件");
+                            } else {
+                                bean.setFlag(1);
+                                pathList.add(bean.getName());
+                            }
+                        } else {
+                            bean.setFlag(0);
+                            pathList.remove(bean.getName());
+                        }
 
-                    if (pathList.size() == 0) {
-                        setRightTitle("发送");
-                    } else {
-                        setRightTitle("发送(" + pathList.size() + "/9)");
-                    }
+                        if (pathList.size() == 0) {
+                            setRightTitle("发送");
+                        } else {
+                            setRightTitle("发送(" + pathList.size() + "/9)");
+                        }
 
+                    }
 
                     adapter.notifyItemChanged(position);
                 }
@@ -102,35 +129,45 @@ public class VideoSelectedActivity extends BaseActivity {
             ToastUtil.get().showToast(this, "必须选择一个视频文件");
             return;
         }
-        for (String s : pathList) {
-            FileMessage fileMessage = FileMessage.obtain(Uri.parse("file://" + s));
-            io.rong.imlib.model.Message message = io.rong.imlib.model.Message.obtain(mTargetId, mConversationType, fileMessage);
-            RongIM.getInstance().sendMediaMessage(message, (String) null, (String) null, new IRongCallback.ISendMediaMessageCallback() {
-                @Override
-                public void onProgress(Message message, int i) {
+        /**
+         * 安防圈 添加视频
+         * */
+        if (("addSecurity").equals(mType)) {
+            Bundle bundle = new Bundle();
+            bundle.putString("videoPath", pathList.get(0));
+            bundle.putBoolean("isTake", true);
+            JumpItent.jump(VideoSelectedActivity.this, PlayVideoActivity.class, bundle);
+        } else {
+            for (String s : pathList) {
+                FileMessage fileMessage = FileMessage.obtain(Uri.parse("file://" + s));
+                io.rong.imlib.model.Message message = io.rong.imlib.model.Message.obtain(mTargetId, mConversationType, fileMessage);
+                RongIM.getInstance().sendMediaMessage(message, (String) null, (String) null, new IRongCallback.ISendMediaMessageCallback() {
+                    @Override
+                    public void onProgress(Message message, int i) {
 
-                }
+                    }
 
-                @Override
-                public void onCanceled(Message message) {
+                    @Override
+                    public void onCanceled(Message message) {
 
-                }
+                    }
 
-                @Override
-                public void onAttached(Message message) {
+                    @Override
+                    public void onAttached(Message message) {
 
-                }
+                    }
 
-                @Override
-                public void onSuccess(Message message) {
+                    @Override
+                    public void onSuccess(Message message) {
 
-                }
+                    }
 
-                @Override
-                public void onError(Message message, RongIMClient.ErrorCode errorCode) {
+                    @Override
+                    public void onError(Message message, RongIMClient.ErrorCode errorCode) {
 
-                }
-            });
+                    }
+                });
+            }
         }
         VideoSelectedActivity.this.finish();
     }

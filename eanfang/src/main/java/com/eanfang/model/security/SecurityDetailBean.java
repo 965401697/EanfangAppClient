@@ -92,5 +92,6 @@ public class SecurityDetailBean implements Serializable {
     public static class SpcListBean {
         private int readCount;
         private int commentCount;
+
     }
 }

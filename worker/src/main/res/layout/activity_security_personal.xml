@@ -76,7 +76,7 @@
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/dimen_26"
+                                android:layout_marginTop="@dimen/dimen_23"
                                 android:orientation="horizontal">
 
                                 <TextView
@@ -93,26 +93,36 @@
                                     android:textColor="@color/color_security_personal_one"
                                     android:textSize="@dimen/textSize_13" />
 
-                                <TextView
-                                    android:id="@+id/tv_focus_count"
+                                <LinearLayout
+                                    android:id="@+id/ll_foucs"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/dimen_50"
-                                    android:textColor="@color/color_security_personal_one"
-                                    android:textSize="@dimen/textSize_13" />
+                                    android:layout_marginLeft="@dimen/dimen_25"
+                                    android:orientation="horizontal"
+                                    android:paddingLeft="@dimen/dimen_25"
+                                    android:paddingRight="@dimen/dimen_25">
 
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="关注"
-                                    android:textColor="@color/color_security_personal_one"
-                                    android:textSize="@dimen/textSize_13" />
+                                    <TextView
+                                        android:id="@+id/tv_focus_count"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:textColor="@color/color_security_personal_one"
+                                        android:textSize="@dimen/textSize_13" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="关注"
+                                        android:textColor="@color/color_security_personal_one"
+                                        android:textSize="@dimen/textSize_13" />
+                                </LinearLayout>
+
 
                                 <TextView
                                     android:id="@+id/tv_like_count"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/dimen_50"
+                                    android:layout_marginLeft="@dimen/dimen_25"
                                     android:textColor="@color/color_security_personal_one"
                                     android:textSize="@dimen/textSize_13" />
 
@@ -129,6 +139,7 @@
                     <View style="@style/style_common_line_gray" />
 
                     <LinearLayout
+                        android:id="@+id/ll_securitypersonal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_20"
@@ -182,6 +193,7 @@
                         android:padding="@dimen/dimen_40">
 
                         <TextView
+                            android:id="@+id/tv_secuirtypersonal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="我的动态"

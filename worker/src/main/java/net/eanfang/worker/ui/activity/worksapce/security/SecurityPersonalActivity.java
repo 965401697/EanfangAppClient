@@ -6,8 +6,10 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -30,6 +32,7 @@ import net.eanfang.worker.ui.adapter.security.SecurityListAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import q.rorbin.badgeview.QBadgeView;
 
 /**
  * @author guanluocang
@@ -67,10 +70,24 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
     TextView tvNoDatas;
     @BindView(R.id.nestedScrollView)
     NestedScrollView nestedScrollView;
+    @BindView(R.id.ll_securitypersonal)
+    LinearLayout llSecuritypersonal;
+    @BindView(R.id.tv_secuirtypersonal)
+    TextView tvSecuirtypersonal;
 
     private QueryEntry queryEntry;
     private int mPage = 1;
     private SecurityListAdapter securityListAdapter;
+
+
+    private QBadgeView qBadgeViewComment = new QBadgeView(EanfangApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewAbout = new QBadgeView(EanfangApplication.get().getApplicationContext());
+
+    /**
+     * 点击头像进入查看他人个人中心
+     */
+    private boolean isLookOther = false;
+    private Long mUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,12 +95,29 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
         setContentView(R.layout.activity_security_personal);
         ButterKnife.bind(this);
         initView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         initData();
+
+
     }
 
     private void initView() {
         setLeftBack();
-        setTitle("我的安防圈");
+        isLookOther = getIntent().getBooleanExtra("isLookOther", false);
+        mUserId = getIntent().getLongExtra("mUserId", 0);
+        if (isLookOther) {
+            setTitle("用户主页");
+            llSecuritypersonal.setVisibility(View.GONE);
+            tvSecuirtypersonal.setText("用户动态");
+        } else {
+            setTitle("我的安防圈");
+            llSecuritypersonal.setVisibility(View.VISIBLE);
+            tvSecuirtypersonal.setText("我的动态");
+        }
         securityListAdapter = new SecurityListAdapter(EanfangApplication.get().getApplicationContext());
         securityListAdapter.bindToRecyclerView(rvSecurity);
 
@@ -93,8 +127,6 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
         rvSecurity.addItemDecoration(new BGASpaceItemDecoration(20));
         securityListAdapter.setOnLoadMoreListener(this, rvSecurity);
 
-        ivHead.setImageURI((Uri.parse(BuildConfig.OSS_SERVER + EanfangApplication.get().getUser().getAccount().getAvatar())));
-        tvName.setText(EanfangApplication.getApplication().getUser().getAccount().getNickName());
         rvSecurity.setNestedScrollingEnabled(false);
 
         nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
@@ -113,6 +145,38 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
             bundle.putInt("friend", securityListAdapter.getData().get(position).getFriend());
             JumpItent.jump(SecurityPersonalActivity.this, SecurityDetailActivity.class, bundle);
         });
+        securityListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            switch (view.getId()) {
+                case R.id.tv_isFocus:
+                case R.id.ll_like:
+                case R.id.ll_comments:
+                case R.id.ll_pic:
+                case R.id.iv_share:
+                case R.id.ll_question:
+                case R.id.rl_video:
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("bean", securityListAdapter.getData().get(position));
+                    bundle.putInt("friend", securityListAdapter.getData().get(position).getFriend());
+                    JumpItent.jump(SecurityPersonalActivity.this, SecurityDetailActivity.class, bundle);
+                    break;
+                default:
+                    break;
+            }
+        });
+
+        qBadgeViewComment.bindTarget(findViewById(R.id.tv_comment))
+                .setBadgeBackgroundColor(0xFFFF0000)
+                .setBadgePadding(3, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setGravityOffset(15, 0, true)
+                .setBadgeTextSize(11, true);
+
+        qBadgeViewAbout.bindTarget(findViewById(R.id.tv_aboutme))
+                .setBadgeBackgroundColor(0xFFFF0000)
+                .setBadgePadding(3, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setGravityOffset(15, 0, true)
+                .setBadgeTextSize(11, true);
 
     }
 
@@ -122,18 +186,28 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
     }
 
     private void initData() {
+        String url = null;
         if (queryEntry == null) {
             queryEntry = new QueryEntry();
         }
         queryEntry.setPage(mPage);
         queryEntry.setSize(10);
-        queryEntry.getEquals().put("publisherUserId", EanfangApplication.get().getUserId() + "");
-        EanfangHttp.post(NewApiService.SERCURITY_PERSONAL)
+        if (isLookOther) {
+            queryEntry.getEquals().put("publisherUserId", mUserId + "");
+            url = NewApiService.SERCURITY_PERSONAL_OTHER;
+        } else {
+            queryEntry.getEquals().put("publisherUserId", EanfangApplication.get().getUserId() + "");
+            url = NewApiService.SERCURITY_PERSONAL;
+        }
+
+        EanfangHttp.post(url)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<SecurityPersonalBean>(SecurityPersonalActivity.this, true, SecurityPersonalBean.class) {
                     @Override
                     public void onSuccess(SecurityPersonalBean bean) {
                         if (mPage == 1) {
+                            ivHead.setImageURI((Uri.parse(BuildConfig.OSS_SERVER + bean.getPageUtil().getList().get(0).getAccountEntity().getAvatar())));
+                            tvName.setText(bean.getPageUtil().getList().get(0).getAccountEntity().getNickName());
                             //粉丝数
                             tvFansCount.setText(bean.getAsFollowerCount() + "");
                             //关注数
@@ -142,7 +216,10 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
                             tvLikeCount.setText(bean.getLikeCount() + "");
                             //全部动态数
                             tvAllstatae.setText(bean.getSpccount() + "");
-
+                            //评论未读
+                            qBadgeViewComment.setBadgeNumber(bean.getCommentNoRead());
+                            //艾特我未读
+                            qBadgeViewAbout.setBadgeNumber(bean.getNoReadCount());
                             securityListAdapter.getData().clear();
                             securityListAdapter.setNewData(bean.getPageUtil().getList());
                             securityListAdapter.disableLoadMoreIfNotFullPage(rvSecurity);
@@ -189,7 +266,7 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
     }
 
 
-    @OnClick({R.id.tv_comment, R.id.tv_like, R.id.tv_aboutme})
+    @OnClick({R.id.tv_comment, R.id.tv_like, R.id.tv_aboutme, R.id.ll_foucs})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             // 评论列表
@@ -206,6 +283,13 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
                 Bundle bundle_about = new Bundle();
                 bundle_about.putString("type", "about");
                 JumpItent.jump(SecurityPersonalActivity.this, SecurityPersonalPublicListActivity.class, bundle_about);
+                break;
+            case R.id.ll_foucs:
+                if (!isLookOther) {
+                    Bundle bundle_foucus = new Bundle();
+                    bundle_foucus.putString("type", "foucs");
+                    JumpItent.jump(SecurityPersonalActivity.this, SecurityPersonalPublicListActivity.class, bundle_foucus);
+                }
                 break;
             default:
                 break;

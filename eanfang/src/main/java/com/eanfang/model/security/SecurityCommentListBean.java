@@ -36,6 +36,7 @@ public class SecurityCommentListBean implements Serializable {
         private String createTime;
         private PublisherUserBean publisherUser;
         private String spcContent;
+        private int readStatus;
         private int spcId;
         private int type;
         private WorkerEntity workerEntity;
@@ -50,6 +51,7 @@ public class SecurityCommentListBean implements Serializable {
             private String createTime;
             private int type;
         }
+
         @Getter
         @Setter
         @NoArgsConstructor
