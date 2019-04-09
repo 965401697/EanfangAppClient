@@ -1,4 +1,4 @@
-package com.tengxunsdkutils.xingepush;
+package com.tengxunsdk.xingepush;
 
 import android.app.Activity;
 import android.content.Context;
@@ -22,10 +22,10 @@ public class XGPushProxy implements IXGPush {
         return mXGPushProxy;
     }
 
-    public XGPushProxy(Context context, IXGPush ixgPush) {
+    private XGPushProxy(Context context, IXGPush ixgPush) {
         this.ixgPush = ixgPush;
-        this.context = context;
-        this.setContext(context);
+        this.context = context.getApplicationContext();
+        this.setContext(this.context);
     }
 
     public void registerPush(String account) {

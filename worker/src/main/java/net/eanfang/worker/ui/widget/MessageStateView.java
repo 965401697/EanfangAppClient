@@ -8,10 +8,10 @@ import android.widget.RelativeLayout;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.witget.SwitchButton;
-import com.tencent.android.tpush.XGPushManager;
+import com.tengxunsdk.xingepush.XGPushFactory;
+import com.tengxunsdk.xingepush.XGPushProxy;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.receiver.ReceiverInit;
 import net.eanfang.worker.util.PrefUtils;
 
 import butterknife.BindView;
@@ -50,15 +50,19 @@ public class MessageStateView extends BaseDialog {
     }
 
     private void initView() {
+
         sbPersonRepair.setChecked(PrefUtils.getVBoolean(mContext, PrefUtils.RECEIVE_MSG_SWITCH_CHECK));
         sbPersonRepair.setOnCheckedChangeListener((view, isChecked) -> {
             PrefUtils.setBoolean(mContext, PrefUtils.RECEIVE_MSG_SWITCH_CHECK, isChecked);
             if (!isChecked) {
                 Log.e("GG", "关闭推送");
-                XGPushManager.unregisterPush(mContext.getApplicationContext());
+//                XGPushManager.unregisterPush(mContext.getApplicationContext());
+                XGPushProxy.getInstance(mContext,XGPushFactory.createXGPushManagerConfig()).unregisterPush();
             } else {
                 Log.e("GG", "打开推送");
-                ReceiverInit.getInstance().inits(mContext, EanfangApplication.get().getUser().getAccount().getMobile());
+//                ReceiverInit.getInstance().inits(mContext, EanfangApplication.get().getUser().getAccount().getMobile());
+                XGPushProxy.getInstance(mContext,XGPushFactory.createXGPushManagerConfig())
+                        .registerPush(EanfangApplication.get().getUser().getAccount().getMobile());
             }
         });
 

@@ -1,4 +1,4 @@
-package com.tengxunsdkutils.bugly;
+package com.tengxunsdk.bugly;
 
 import android.content.Context;
 
@@ -9,8 +9,15 @@ import android.content.Context;
  */
 public class BuglyProxy implements IBugly {
     private IBugly mIBugly;
+    private static BuglyProxy mBuglyProxy;
 
-    public BuglyProxy(IBugly mIBugly) {
+    public static BuglyProxy getInstance(IBugly mIBugly){
+        if(mBuglyProxy==null){
+            mBuglyProxy=new BuglyProxy(mIBugly);
+        }
+        return mBuglyProxy;
+    }
+    private BuglyProxy(IBugly mIBugly) {
         this.mIBugly = mIBugly;
     }
 

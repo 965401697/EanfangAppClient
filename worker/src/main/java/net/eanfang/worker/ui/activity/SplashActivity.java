@@ -21,7 +21,8 @@ import com.eanfang.util.GuideUtil;
 import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
-import com.tencent.bugly.crashreport.CrashReport;
+import com.tengxunsdk.bugly.BuglyFactory;
+import com.tengxunsdk.bugly.BuglyProxy;
 
 import net.eanfang.worker.BuildConfig;
 import net.eanfang.worker.R;
@@ -55,13 +56,16 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
             return;
         }
         setContentView(R.layout.activity_splash);
-        //bugly初始化
+        /*//bugly初始化
         CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(SplashActivity.this);
         strategy.setAppChannel(ChannelUtil.getChannelName(SplashActivity.this));
         //App的版本
         strategy.setAppVersion(ApkUtils.getAppVersionName(SplashActivity.this));
         strategy.setAppPackageName(BuildConfig.APPLICATION_ID);
-        CrashReport.initCrashReport(getApplicationContext(), BuildConfig.BUGLY_WORKER, false, strategy);
+        CrashReport.initCrashReport(getApplicationContext(), BuildConfig.BUGLY_WORKER, false, strategy);*/
+        BuglyProxy.getInstance(BuglyFactory.createBuglyManager()).
+                init(SplashActivity.this,ChannelUtil.getChannelName(SplashActivity.this),
+                ApkUtils.getAppVersionName(SplashActivity.this),BuildConfig.APPLICATION_ID,BuildConfig.BUGLY_WORKER, false);
         init();
     }
 

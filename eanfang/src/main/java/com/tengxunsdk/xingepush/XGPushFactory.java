@@ -1,4 +1,4 @@
-package com.tengxunsdkutils.xingepush;
+package com.tengxunsdk.xingepush;
 
 /**
  * created by wtt

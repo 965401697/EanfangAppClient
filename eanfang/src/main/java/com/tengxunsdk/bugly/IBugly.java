@@ -1,4 +1,4 @@
-package com.tengxunsdkutils.bugly;
+package com.tengxunsdk.bugly;
 
 import android.content.Context;
 

@@ -25,8 +25,9 @@ import com.eanfang.model.NoticeEntity;
 import com.eanfang.model.NoticeListBean;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
-import com.tencent.android.tpush.XGPushClickedResult;
-import com.tencent.android.tpush.XGPushManager;
+import com.tengxunsdk.xingepush.IXGPushClickedResult;
+import com.tengxunsdk.xingepush.XGPushFactory;
+import com.tengxunsdk.xingepush.XGPushProxy;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.MessageListAdapter;
@@ -264,9 +265,10 @@ public class MessageListActivity extends BaseWorkerActivity implements
     protected void onResume() {
         super.onResume();
 //        page = 1;
-
-        XGPushManager.onActivityStarted(this);
-        XGPushClickedResult clickedResult = XGPushManager.onActivityStarted(this);
+        IXGPushClickedResult clickedResult=XGPushProxy.getInstance(this ,
+                XGPushFactory.createXGPushManagerConfig()).onActivityStarted(this);
+       /* XGPushManager.onActivityStarted(this);
+        XGPushClickedResult clickedResult = XGPushManager.onActivityStarted(this);*/
         Log.d("TPush", "onResumeXGPushClickedResult:" + clickedResult);
         if (clickedResult != null) { // 判断是否来自信鸽的打开方式
             Toast.makeText(this, "通知被点击:" + clickedResult.toString(),

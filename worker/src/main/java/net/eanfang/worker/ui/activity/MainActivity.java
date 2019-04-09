@@ -47,6 +47,8 @@ import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UpdateAppManager;
 import com.picker.common.util.ScreenUtils;
 import com.tencent.android.tpush.XGPushConfig;
+import com.tengxunsdk.xingepush.XGPushFactory;
+import com.tengxunsdk.xingepush.XGPushProxy;
 import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.worker.BuildConfig;
@@ -63,7 +65,6 @@ import net.eanfang.worker.ui.fragment.ContactsFragment;
 import net.eanfang.worker.ui.fragment.HomeFragment;
 import net.eanfang.worker.ui.fragment.MyFragment;
 import net.eanfang.worker.ui.fragment.WorkspaceFragment;
-import net.eanfang.worker.ui.receiver.ReceiverInit;
 import net.eanfang.worker.util.PrefUtils;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -290,7 +291,9 @@ public class MainActivity extends BaseActivity{
         XGPushConfig.setMzPushAppId(MainActivity.this, MEIZU_APPID_WORKER);
         XGPushConfig.setMzPushAppKey(MainActivity.this, MEIZU_APPKEY_WORKER);
 
-        ReceiverInit.getInstance().inits(MainActivity.this, user.getAccount().getMobile());
+//        ReceiverInit.getInstance().inits(MainActivity.this, user.getAccount().getMobile());
+        XGPushProxy .getInstance(MainActivity.this,XGPushFactory.createXGPushManagerConfig())
+                .registerPush(user.getAccount().getMobile());
     }
 
     /**

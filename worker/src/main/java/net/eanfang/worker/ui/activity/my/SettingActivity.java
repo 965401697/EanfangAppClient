@@ -3,7 +3,6 @@ package net.eanfang.worker.ui.activity.my;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -19,8 +18,8 @@ import com.eanfang.util.PermKit;
 import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.witget.SwitchButton;
-import com.tencent.android.tpush.XGIOperateCallback;
-import com.tencent.android.tpush.XGPushManager;
+import com.tengxunsdk.xingepush.XGPushFactory;
+import com.tengxunsdk.xingepush.XGPushProxy;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.LoginActivity;
@@ -142,7 +141,7 @@ public class SettingActivity extends BaseWorkerActivity {
     private void signout() {
         EanfangHttp.get(UserApi.APP_LOGOUT)
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
-                    XGPushManager.delAccount(SettingActivity.this, EanfangApplication.get().getUser().getAccount().getMobile(), new XGIOperateCallback() {
+                    /*XGPushManager.delAccount(SettingActivity.this, EanfangApplication.get().getUser().getAccount().getMobile(), new XGIOperateCallback() {
                         @Override
                         public void onSuccess(Object o, int i) {
                             Log.e("GG", "信鸽退出Success");
@@ -152,7 +151,9 @@ public class SettingActivity extends BaseWorkerActivity {
                         public void onFail(Object o, int i, String s) {
                             Log.e("GG", "信鸽退出Fail");
                         }
-                    });
+                    });*/
+                    XGPushProxy.getInstance(SettingActivity.this,XGPushFactory.createXGPushManagerConfig())
+                            .delAccount(EanfangApplication.get().getUser().getAccount().getMobile());
                     RongIM.getInstance().logout();//退出融云
                     PermKit.permList.clear();//清空权限
                     CleanMessageUtil.clearAllCache(EanfangApplication.get());
