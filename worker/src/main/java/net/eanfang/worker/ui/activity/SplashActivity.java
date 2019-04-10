@@ -14,6 +14,7 @@ import com.eanfang.config.FastjsonConfig;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.LoginBean;
+import com.eanfang.sdk.SDKManager;
 import com.eanfang.util.ApkUtils;
 import com.eanfang.util.ChannelUtil;
 import com.eanfang.util.CleanMessageUtil;
@@ -64,8 +65,11 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
         strategy.setAppPackageName(BuildConfig.APPLICATION_ID);
         CrashReport.initCrashReport(getApplicationContext(), BuildConfig.BUGLY_WORKER, false, strategy);*/
         BuglyProxy.getInstance(BuglyFactory.createBuglyManager()).
-                init(SplashActivity.this,ChannelUtil.getChannelName(SplashActivity.this),
-                ApkUtils.getAppVersionName(SplashActivity.this),BuildConfig.APPLICATION_ID,BuildConfig.BUGLY_WORKER, false);
+                init(SplashActivity.this, ChannelUtil.getChannelName(SplashActivity.this),
+                        ApkUtils.getAppVersionName(SplashActivity.this), BuildConfig.APPLICATION_ID, BuildConfig.BUGLY_WORKER, false);
+
+        SDKManager.getBugly().init(SplashActivity.this, BuildConfig.BUGLY_WORKER);
+
         init();
     }
 

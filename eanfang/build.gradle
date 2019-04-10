@@ -36,7 +36,7 @@ android {
 
         // 开发
         debug {
-            buildConfigField("boolean", "LOG_DEBUG", "true")
+            buildConfigField("boolean", "DEBUG", "true")
 
             // 上线url
 //             buildConfigField("String", "HOST", "\"https://api.eanfang.net\"")
@@ -52,10 +52,10 @@ android {
         }
         release {
             // 上线url
-             buildConfigField("String", "HOST", "\"https://api.eanfang.net\"")
+            buildConfigField("String", "HOST", "\"https://api.eanfang.net\"")
             buildConfigField("String", "API_HOST", "\"https://api.eanfang.net\"")
             // 不显示Log
-            buildConfigField("boolean", "LOG_DEBUG", "false")
+            buildConfigField("boolean", "DEBUG", "false")
             //Zipalign优化
             zipAlignEnabled true
             // 移除无用的resource文件

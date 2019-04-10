@@ -117,7 +117,17 @@ public class ApkUtils {
      */
     public static String getPackageName(Context context, String filePath) {
         PackageManager packageManager = context.getPackageManager();
-        PackageInfo info = packageManager.getPackageArchiveInfo(filePath, PackageManager.GET_ACTIVITIES);
+        PackageInfo info = null;
+        if (filePath == null) {
+            try {
+                info = packageManager.getPackageInfo(context.getPackageName(), 0);
+
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
+        } else {
+            packageManager.getPackageArchiveInfo(filePath, PackageManager.GET_ACTIVITIES);
+        }
         if (info != null) {
             ApplicationInfo appInfo = info.applicationInfo;
             return appInfo.packageName;  //得到安装包名称
