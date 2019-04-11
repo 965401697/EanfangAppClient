@@ -9,7 +9,6 @@ import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.model.security.SecurityListBean;
 import com.eanfang.util.ETimeUtils;
 import com.eanfang.util.StringUtils;
@@ -106,7 +105,7 @@ public class SecurityListAdapter extends BaseQuickAdapter<SecurityListBean.ListB
         /**
          * 0 是关注 1 是未关注
          * */
-        if (item.getPublisherUserId().equals(EanfangApplication.get().getUserId()) || item.getFollowsStatus() == 0) {
+        if (item.getFollowsStatus() == 0) {
             helper.getView(R.id.tv_isFocus).setVisibility(View.GONE);
         } else {
             helper.getView(R.id.tv_isFocus).setVisibility(View.VISIBLE);

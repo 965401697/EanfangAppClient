@@ -102,6 +102,7 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
     @Override
     protected void onResume() {
         super.onResume();
+        mPage = 1;
         initData();
         initPersonalData();
     }
