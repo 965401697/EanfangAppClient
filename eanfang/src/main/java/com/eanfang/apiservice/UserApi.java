@@ -57,6 +57,10 @@ public interface UserApi {
      */
     String GET_USER_INFO = BASE_URL + "/yaf_sys/sys/userinfo";
 
+    /**
+     * 用户主页
+     */
+    String USER_HOME_PAGE = BASE_URL + "/yaf_sys/expertsOnline/homepage";
 
     /**
      * 合作公司
