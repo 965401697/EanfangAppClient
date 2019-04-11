@@ -1,6 +1,7 @@
 package net.eanfang.client.ui.fragment;
 
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.alibaba.fastjson.JSONObject;
@@ -17,8 +18,10 @@ import com.eanfang.util.QueryEntry;
 import com.photopicker.com.util.BGASpaceItemDecoration;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.worksapce.online.FaultExplainActivity;
 import net.eanfang.client.ui.activity.worksapce.security.SecurityDetailActivity;
-import net.eanfang.worker.ui.adapter.security.SecurityListAdapter;
+import net.eanfang.client.ui.activity.worksapce.security.SecurityListActivity;
+import net.eanfang.client.ui.adapter.security.SecurityListAdapter;
 
 import cn.bingoogolapple.photopicker.imageloader.BGARVOnScrollListener;
 
@@ -27,6 +30,7 @@ public class SecurityHotFragment extends TemplateItemListFragment {
     private String mTitle;
     private QueryEntry mQueryEntry;
     private SecurityListAdapter securityListAdapter;
+
 
     public static SecurityHotFragment getInstance(String title) {
         SecurityHotFragment sf = new SecurityHotFragment();
@@ -56,33 +60,44 @@ public class SecurityHotFragment extends TemplateItemListFragment {
                     doLike(securityListAdapter.getData().get(position));
                     break;
                 case R.id.ll_comments:
+                    doJump(position, true);
+                    break;
                 case R.id.ll_pic:
                 case R.id.iv_share:
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("bean", securityListAdapter.getData().get(position));
-                    bundle.putInt("friend", securityListAdapter.getData().get(position).getFriend());
-                    bundle.putString("type", "hot");
-                    JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
+                case R.id.ll_question:
+                case R.id.rl_video:
+                    doJump(position, false);
                     break;
-//                case R.id.iv_share:
-//                    showToast("分享");
-//                    break;
                 default:
                     break;
             }
         });
         securityListAdapter.setOnItemClickListener((adapter, view, position) -> {
+            doJump(position, false);
+        });
+    }
+
+    public void doJump(int position, boolean isCommon) {
+        //专家问答
+        if (securityListAdapter.getData().get(position).getType() == 1) {
+            Bundle bundle_question = new Bundle();
+            bundle_question.putInt("QuestionIdZ", Integer.parseInt(securityListAdapter.getData().get(position).getQuestionId()));
+            JumpItent.jump(getActivity(), FaultExplainActivity.class, bundle_question);
+        } else {
             Bundle bundle = new Bundle();
             bundle.putSerializable("bean", securityListAdapter.getData().get(position));
             bundle.putInt("friend", securityListAdapter.getData().get(position).getFriend());
-            bundle.putString("type", "hot");
+            bundle.putBoolean("isCommon", isCommon);
             JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
-        });
+        }
     }
 
     @Override
     protected void initAdapter() {
-        securityListAdapter = new SecurityListAdapter(getActivity());
+        securityListAdapter = new SecurityListAdapter(EanfangApplication.get().getApplicationContext(), false);
+        RecyclerView.RecycledViewPool pool = mRecyclerView.getRecycledViewPool();
+        pool.setMaxRecycledViews(0, 10);
+        mRecyclerView.setRecycledViewPool(pool);
         securityListAdapter.bindToRecyclerView(mRecyclerView);
         mRecyclerView.setBackgroundColor(getResources().getColor(R.color.white));
         mRecyclerView.addItemDecoration(new BGASpaceItemDecoration(20));
@@ -128,6 +143,9 @@ public class SecurityHotFragment extends TemplateItemListFragment {
         securityFoucsBean.setAsUserId(listBean.getPublisherUserId());
         securityFoucsBean.setAsCompanyId(listBean.getPublisherCompanyId());
         securityFoucsBean.setAsTopCompanyId(listBean.getPublisherTopCompanyId());
+
+        securityFoucsBean.setAsAccId(listBean.getPublisherUser().getAccId());
+        securityFoucsBean.setFollowAccId(EanfangApplication.get().getAccId());
         EanfangHttp.post(NewApiService.SERCURITY_FOUCUS)
                 .upJson(JSONObject.toJSONString(securityFoucsBean))
                 .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class, bean -> {
@@ -155,6 +173,9 @@ public class SecurityHotFragment extends TemplateItemListFragment {
                             securityListAdapter.notifyDataSetChanged();
                             mSwipeRefreshLayout.setRefreshing(false);
                             securityListAdapter.loadMoreComplete();
+                            if (bean.getList().size() > 0) {
+                                ((SecurityListActivity) getActivity()).doRefreshMessage(bean.getList().get(0).getCountMap().getCommentNoRead() + bean.getList().get(0).getCountMap().getNoReadCount());
+                            }
                             if (bean.getList().size() < 10) {
                                 securityListAdapter.loadMoreEnd();
                                 mQueryEntry = null;

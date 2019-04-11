@@ -39,7 +39,8 @@
             style="@style/style_client_work_meun"
             android:drawableTop="@mipmap/ic_client_work_answer"
             android:onClick="noOpen"
-            android:text="@string/text_work_answer" />
+            android:text="@string/text_work_answer"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_work_knowledge"
@@ -48,6 +49,11 @@
             android:onClick="noOpen"
             android:text="@string/text_work_knowledge" />
 
+        <TextView
+            android:id="@+id/tv_work_hardwareStore"
+            style="@style/style_client_work_meun"
+            android:drawableTop="@mipmap/ic_work_five_shop"
+            android:text="@string/text_worker_five_shop" />
 
     </LinearLayout>
 
@@ -69,16 +75,15 @@
             android:drawableTop="@mipmap/ic_client_work_jd"
             android:text="@string/text_work_jd" />
 
-        <TextView
-            android:id="@+id/tv_work_hardwareStore"
-            style="@style/style_client_work_meun"
-            android:drawableTop="@mipmap/ic_work_five_shop"
-            android:text="@string/text_worker_five_shop" />
 
         <TextView
             android:id="@+id/tv_work_service"
             style="@style/style_client_work_meun"
             android:text="" />
+
+        <TextView
+            style="@style/style_client_work_meun"
+            android:onClick="noOpen" />
 
         <!--<TextView-->
         <!--android:id="@+id/tv_work_service"-->

@@ -24,7 +24,7 @@ public class SecurityCommentListAdapter extends BaseQuickAdapter<SecurityComment
         if (item.getAccountEntity().getAccId().equals(EanfangApplication.get().getAccId())) {
             helper.setText(R.id.tv_comment, "我：" + item.getCommentsEntity().getCommentsContent());
         } else {
-            helper.setText(R.id.tv_comment, item.getAccountEntity().getNickName() + "：" + item.getCommentsEntity().getCommentsContent());
+            helper.setText(R.id.tv_comment, item.getAccountEntity().getRealName() + "：" + item.getCommentsEntity().getCommentsContent());
         }
         if (StringUtils.isEmpty(item.getSpcContent())) {
             helper.setText(R.id.tv_content, "[图片]");

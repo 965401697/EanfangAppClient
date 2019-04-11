@@ -58,7 +58,8 @@
             style="@style/style_client_work_meun"
             android:drawableTop="@mipmap/ic_work_apply_goods"
             android:onClick="noOpen"
-            android:text="@string/text_worker_apply_goods" />
+            android:text="@string/text_worker_apply_goods"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_work_talk"
@@ -71,6 +72,10 @@
             style="@style/style_client_work_meun"
             android:drawableTop="@mipmap/ic_work_transfer"
             android:text="@string/text_work_transfer" />
+
+        <TextView
+            style="@style/style_client_work_meun"
+            android:onClick="noOpen" />
 
         <TextView
             style="@style/style_client_work_meun"

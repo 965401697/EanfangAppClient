@@ -6,13 +6,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.Gravity;
 
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
 import com.flyco.tablayout.SlidingTabLayout;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.fragment.SecurituFoucsFragment;
+import net.eanfang.client.ui.fragment.SecurityFoucsFragment;
 import net.eanfang.client.ui.fragment.SecurityHotFragment;
 
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import q.rorbin.badgeview.QBadgeView;
 
 /**
  * @author guanluocang
@@ -38,8 +41,9 @@ public class SecurityListActivity extends BaseActivity {
     private String[] mTitles = {"关注", "热门"};
     private MyPagerAdapter mAdapter;
 
-
     private final int FILTRATE_TYPE_CODE = 101;
+
+    private QBadgeView qBadgeViewMaintain = new QBadgeView(EanfangApplication.get().getApplicationContext());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,8 +56,9 @@ public class SecurityListActivity extends BaseActivity {
     private void initView() {
         setTitle("安防圈");
         setLeftBack();
-        setRightTitle("个人中心");
-        mFragments.add(SecurituFoucsFragment.getInstance("关注"));
+        setRightTitle("我的");
+        setRightImageResId(R.mipmap.ic_security_right);
+        mFragments.add(SecurityFoucsFragment.getInstance("关注"));
         mFragments.add(SecurityHotFragment.getInstance("热门"));
 
         mAdapter = new MyPagerAdapter(getSupportFragmentManager());
@@ -65,6 +70,13 @@ public class SecurityListActivity extends BaseActivity {
         setRightTitleOnClickListener((v) -> {
             JumpItent.jump(SecurityListActivity.this, SecurityPersonalActivity.class);
         });
+
+        qBadgeViewMaintain.bindTarget(findViewById(R.id.tv_right))
+                .setBadgeBackgroundColor(0xFFFF0000)
+                .setBadgePadding(3, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setGravityOffset(0, 6, true)
+                .setBadgeTextSize(11, true);
     }
 
     @OnClick(R.id.iv_create)
@@ -99,10 +111,14 @@ public class SecurityListActivity extends BaseActivity {
         int currentTab = tlSecurityList.getCurrentTab();
         if (resultCode == RESULT_OK && requestCode == FILTRATE_TYPE_CODE) {
             if (currentTab == 0) {
-                ((SecurituFoucsFragment) mFragments.get(currentTab)).refreshStatus();
+                ((SecurityFoucsFragment) mFragments.get(currentTab)).refreshStatus();
             } else {
                 ((SecurityHotFragment) mFragments.get(currentTab)).refreshStatus();
             }
         }
+    }
+
+    public void doRefreshMessage(int mMessageCount) {
+        qBadgeViewMaintain.setBadgeNumber(mMessageCount);
     }
 }

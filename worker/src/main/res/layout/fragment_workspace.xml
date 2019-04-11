@@ -83,10 +83,12 @@
 
             <!--<include layout="@layout/layout_progress_ctrl" />-->
 
-            <include layout="@layout/layout_project_ctrl" />
+            <include layout="@layout/layout_project_ctrl"
+                android:visibility="gone"/>
 
             <View
                 style="@style/style_common_line_gray"
+                android:visibility="gone"
                 android:layout_marginTop="@dimen/dimen_34" />
 
             <include layout="@layout/layout_team_work" />

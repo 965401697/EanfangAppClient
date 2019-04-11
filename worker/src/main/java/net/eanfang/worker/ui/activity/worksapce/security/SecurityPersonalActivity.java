@@ -18,7 +18,8 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.security.SecurityPersonalBean;
+import com.eanfang.model.security.SecurityListBean;
+import com.eanfang.model.security.SecurityPersonalTopBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
@@ -27,6 +28,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.photopicker.com.util.BGASpaceItemDecoration;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.worksapce.online.FaultExplainActivity;
 import net.eanfang.worker.ui.adapter.security.SecurityListAdapter;
 
 import butterknife.BindView;
@@ -101,9 +103,9 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
     protected void onResume() {
         super.onResume();
         initData();
-
-
+        initPersonalData();
     }
+
 
     private void initView() {
         setLeftBack();
@@ -118,7 +120,7 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
             llSecuritypersonal.setVisibility(View.VISIBLE);
             tvSecuirtypersonal.setText("我的动态");
         }
-        securityListAdapter = new SecurityListAdapter(EanfangApplication.get().getApplicationContext(),false);
+        securityListAdapter = new SecurityListAdapter(EanfangApplication.get().getApplicationContext(), false);
         securityListAdapter.bindToRecyclerView(rvSecurity);
 
         rvSecurity.setLayoutManager(new LinearLayoutManager(this));
@@ -140,29 +142,26 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
         });
 
         securityListAdapter.setOnItemClickListener((adapter, view, position) -> {
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("bean", securityListAdapter.getData().get(position));
-            bundle.putInt("friend", securityListAdapter.getData().get(position).getFriend());
-            JumpItent.jump(SecurityPersonalActivity.this, SecurityDetailActivity.class, bundle);
+            doJump(position, false);
         });
         securityListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             switch (view.getId()) {
+                case R.id.ll_comments:
+                    doJump(position, true);
+                    break;
                 case R.id.tv_isFocus:
                 case R.id.ll_like:
-                case R.id.ll_comments:
                 case R.id.ll_pic:
                 case R.id.iv_share:
                 case R.id.ll_question:
                 case R.id.rl_video:
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("bean", securityListAdapter.getData().get(position));
-                    bundle.putInt("friend", securityListAdapter.getData().get(position).getFriend());
-                    JumpItent.jump(SecurityPersonalActivity.this, SecurityDetailActivity.class, bundle);
+                    doJump(position, false);
                     break;
                 default:
                     break;
             }
         });
+
 
         qBadgeViewComment.bindTarget(findViewById(R.id.tv_comment))
                 .setBadgeBackgroundColor(0xFFFF0000)
@@ -180,9 +179,60 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
 
     }
 
+    public void doJump(int position, boolean isCommon) {
+        //专家问答
+        if (securityListAdapter.getData().get(position).getType() == 1) {
+            Bundle bundle_question = new Bundle();
+            bundle_question.putInt("QuestionIdZ", Integer.parseInt(securityListAdapter.getData().get(position).getQuestionId()));
+            JumpItent.jump(SecurityPersonalActivity.this, FaultExplainActivity.class, bundle_question);
+        } else {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("bean", securityListAdapter.getData().get(position));
+            bundle.putInt("friend", securityListAdapter.getData().get(position).getFriend());
+            bundle.putBoolean("isCommon", isCommon);
+            JumpItent.jump(SecurityPersonalActivity.this, SecurityDetailActivity.class, bundle);
+        }
+    }
+
     private void loadMore() {
         mPage++;
         initData();
+    }
+
+    /**
+     * 头部个人信息
+     */
+    private void initPersonalData() {
+        String url = null;
+        if (queryEntry == null) {
+            queryEntry = new QueryEntry();
+        }
+        if (isLookOther) {
+            queryEntry.getEquals().put("publisherUserId", mUserId + "");
+            url = NewApiService.SERCURITY_PERSONAL_OTHER_TOP;
+        } else {
+            queryEntry.getEquals().put("publisherUserId", EanfangApplication.get().getUserId() + "");
+            url = NewApiService.SERCURITY_PERSONAL_TOP;
+        }
+        EanfangHttp.post(url)
+                .upJson(JsonUtils.obj2String(queryEntry))
+                .execute(new EanfangCallback<SecurityPersonalTopBean>(SecurityPersonalActivity.this, true, SecurityPersonalTopBean.class, bean -> {
+                    ivHead.setImageURI((Uri.parse(BuildConfig.OSS_SERVER + bean.getUserEntity().getAccountEntity().getAvatar())));
+                    tvName.setText(bean.getUserEntity().getAccountEntity().getRealName());
+                    //粉丝数
+                    tvFansCount.setText(bean.getAsFollowerCount() + "");
+                    //关注数
+                    tvFocusCount.setText(bean.getFollowerCount() + "");
+                    //点赞数量数
+                    tvLikeCount.setText(bean.getLikeCount() + "");
+                    //全部动态数
+                    tvAllstatae.setText(bean.getSpccount() + "");
+                    //评论未读
+                    qBadgeViewComment.setBadgeNumber(bean.getCommentNoRead());
+                    //艾特我未读
+                    qBadgeViewAbout.setBadgeNumber(bean.getNoReadCount());
+                }));
+
     }
 
     private void initData() {
@@ -202,46 +252,32 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
 
         EanfangHttp.post(url)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<SecurityPersonalBean>(SecurityPersonalActivity.this, true, SecurityPersonalBean.class) {
+                .execute(new EanfangCallback<SecurityListBean>(SecurityPersonalActivity.this, true, SecurityListBean.class) {
                     @Override
-                    public void onSuccess(SecurityPersonalBean bean) {
+                    public void onSuccess(SecurityListBean bean) {
                         if (mPage == 1) {
-                            ivHead.setImageURI((Uri.parse(BuildConfig.OSS_SERVER + bean.getPageUtil().getList().get(0).getAccountEntity().getAvatar())));
-                            tvName.setText(bean.getPageUtil().getList().get(0).getAccountEntity().getNickName());
-                            //粉丝数
-                            tvFansCount.setText(bean.getAsFollowerCount() + "");
-                            //关注数
-                            tvFocusCount.setText(bean.getFollowerCount() + "");
-                            //点赞数量数
-                            tvLikeCount.setText(bean.getLikeCount() + "");
-                            //全部动态数
-                            tvAllstatae.setText(bean.getSpccount() + "");
-                            //评论未读
-                            qBadgeViewComment.setBadgeNumber(bean.getCommentNoRead());
-                            //艾特我未读
-                            qBadgeViewAbout.setBadgeNumber(bean.getNoReadCount());
                             securityListAdapter.getData().clear();
-                            securityListAdapter.setNewData(bean.getPageUtil().getList());
+                            securityListAdapter.setNewData(bean.getList());
                             securityListAdapter.disableLoadMoreIfNotFullPage(rvSecurity);
 
                             swipreFresh.setRefreshing(false);
                             securityListAdapter.loadMoreComplete();
 
-                            if (bean.getPageUtil().getList().size() < 10) {
+                            if (bean.getList().size() < 10) {
                                 securityListAdapter.loadMoreEnd();
                                 queryEntry = null;
                             }
 
-                            if (bean.getPageUtil().getList().size() > 0) {
+                            if (bean.getList().size() > 0) {
                                 tvNoDatas.setVisibility(View.GONE);
                             } else {
                                 tvNoDatas.setVisibility(View.VISIBLE);
                             }
 
                         } else {
-                            securityListAdapter.addData(bean.getPageUtil().getList());
+                            securityListAdapter.addData(bean.getList());
                             securityListAdapter.loadMoreComplete();
-                            if (bean.getPageUtil().getList().size() < 10) {
+                            if (bean.getList().size() < 10) {
                                 securityListAdapter.loadMoreEnd();
                             }
                         }

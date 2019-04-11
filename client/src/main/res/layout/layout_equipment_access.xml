@@ -38,13 +38,24 @@
             android:id="@+id/tv_work_change"
             style="@style/style_client_work_meun"
             android:drawableTop="@mipmap/ic_client_work_change"
-            android:text="@string/text_work_change" />
+            android:text="@string/text_work_change"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_work_file"
             style="@style/style_client_work_meun"
             android:drawableTop="@mipmap/ic_client_work_file"
-            android:text="@string/text_work_file" />
+            android:text="@string/text_work_file"
+            android:visibility="gone" />
+
+        <TextView
+            style="@style/style_client_work_meun"
+            android:onClick="noOpen" />
+
+        <TextView
+            style="@style/style_client_work_meun"
+            android:onClick="noOpen" />
+
     </LinearLayout>
 
 

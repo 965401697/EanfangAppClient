@@ -1,6 +1,7 @@
 package net.eanfang.client.ui.fragment;
 
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.alibaba.fastjson.JSONObject;
@@ -17,19 +18,21 @@ import com.eanfang.util.QueryEntry;
 import com.photopicker.com.util.BGASpaceItemDecoration;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.worksapce.online.FaultExplainActivity;
 import net.eanfang.client.ui.activity.worksapce.security.SecurityDetailActivity;
-import net.eanfang.worker.ui.adapter.security.SecurityListAdapter;
+import net.eanfang.client.ui.activity.worksapce.security.SecurityListActivity;
+import net.eanfang.client.ui.adapter.security.SecurityListAdapter;
 
 
-public class SecurituFoucsFragment extends TemplateItemListFragment {
+public class SecurityFoucsFragment extends TemplateItemListFragment {
 
     private String mTitle;
 
     private QueryEntry mQueryEntry;
-    private SecurityListAdapter securityFocusListAdapter;
+    private SecurityListAdapter securityListAdapter;
 
-    public static SecurituFoucsFragment getInstance(String title) {
-        SecurituFoucsFragment sf = new SecurituFoucsFragment();
+    public static SecurityFoucsFragment getInstance(String title) {
+        SecurityFoucsFragment sf = new SecurityFoucsFragment();
         sf.mTitle = title;
         return sf;
     }
@@ -52,42 +55,53 @@ public class SecurituFoucsFragment extends TemplateItemListFragment {
 
     @Override
     protected void initAdapter() {
-        securityFocusListAdapter = new SecurityListAdapter(getActivity());
-        securityFocusListAdapter.bindToRecyclerView(mRecyclerView);
+        securityListAdapter = new SecurityListAdapter(EanfangApplication.get().getApplicationContext(), false);
+        RecyclerView.RecycledViewPool pool = mRecyclerView.getRecycledViewPool();
+        pool.setMaxRecycledViews(0, 10);
+        mRecyclerView.setRecycledViewPool(pool);
+        securityListAdapter.bindToRecyclerView(mRecyclerView);
         mRecyclerView.setBackgroundColor(getResources().getColor(R.color.white));
         mRecyclerView.addItemDecoration(new BGASpaceItemDecoration(20));
-        securityFocusListAdapter.setOnLoadMoreListener(this, mRecyclerView);
-        securityFocusListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+        securityListAdapter.setOnLoadMoreListener(this, mRecyclerView);
+        securityListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             switch (view.getId()) {
                 case R.id.tv_isFocus:
-                    doFoucus(securityFocusListAdapter.getData().get(position));
+                    doFoucus(securityListAdapter.getData().get(position));
                     break;
                 case R.id.ll_like:
-                    doLike(securityFocusListAdapter.getData().get(position));
+                    doLike(securityListAdapter.getData().get(position));
                     break;
                 case R.id.ll_comments:
-                case R.id.iv_share:
-                case R.id.ll_pic:
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("bean", securityFocusListAdapter.getData().get(position));
-                    bundle.putInt("friend", securityFocusListAdapter.getData().get(position).getFriend());
-                    bundle.putString("type", "focus");
-                    JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
+                    doJump(position, true);
                     break;
-//                case R.id.iv_share:
-//                    showToast("分享");
-//                    break;
+                case R.id.ll_pic:
+                case R.id.iv_share:
+                case R.id.ll_question:
+                case R.id.rl_video:
+                    doJump(position, false);
+                    break;
                 default:
                     break;
             }
         });
-        securityFocusListAdapter.setOnItemClickListener((adapter, view, position) -> {
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("bean", securityFocusListAdapter.getData().get(position));
-            bundle.putInt("friend", securityFocusListAdapter.getData().get(position).getFriend());
-            bundle.putString("type", "focus");
-            JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
+        securityListAdapter.setOnItemClickListener((adapter, view, position) -> {
+            doJump(position, false);
         });
+    }
+
+    public void doJump(int position, boolean isCommon) {
+        //专家问答
+        if (securityListAdapter.getData().get(position).getType() == 1) {
+            Bundle bundle_question = new Bundle();
+            bundle_question.putInt("QuestionIdZ", Integer.parseInt(securityListAdapter.getData().get(position).getQuestionId()));
+            JumpItent.jump(getActivity(), FaultExplainActivity.class, bundle_question);
+        } else {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("bean", securityListAdapter.getData().get(position));
+            bundle.putInt("friend", securityListAdapter.getData().get(position).getFriend());
+            bundle.putBoolean("isCommon", isCommon);
+            JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
+        }
     }
 
     /**
@@ -128,6 +142,8 @@ public class SecurituFoucsFragment extends TemplateItemListFragment {
         securityFoucsBean.setAsUserId(listBean.getPublisherUserId());
         securityFoucsBean.setAsCompanyId(listBean.getPublisherCompanyId());
         securityFoucsBean.setAsTopCompanyId(listBean.getPublisherTopCompanyId());
+        securityFoucsBean.setAsAccId(listBean.getPublisherUser().getAccId());
+        securityFoucsBean.setFollowAccId(EanfangApplication.get().getAccId());
         EanfangHttp.post(NewApiService.SERCURITY_DELETEFOUCUS)
                 .upJson(JSONObject.toJSONString(securityFoucsBean))
                 .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class, bean -> {
@@ -150,12 +166,15 @@ public class SecurituFoucsFragment extends TemplateItemListFragment {
                     @Override
                     public void onSuccess(SecurityListBean bean) {
                         if (mPage == 1) {
-                            securityFocusListAdapter.getData().clear();
-                            securityFocusListAdapter.setNewData(bean.getList());
+                            securityListAdapter.getData().clear();
+                            securityListAdapter.setNewData(bean.getList());
                             mSwipeRefreshLayout.setRefreshing(false);
-                            securityFocusListAdapter.loadMoreComplete();
+                            securityListAdapter.loadMoreComplete();
+                            if (bean.getList().size() > 0) {
+                                ((SecurityListActivity) getActivity()).doRefreshMessage(bean.getList().get(0).getCountMap().getCommentNoRead() + bean.getList().get(0).getCountMap().getNoReadCount());
+                            }
                             if (bean.getList().size() < 10) {
-                                securityFocusListAdapter.loadMoreEnd();
+                                securityListAdapter.loadMoreEnd();
                                 mQueryEntry = null;
                             }
 
@@ -165,10 +184,10 @@ public class SecurituFoucsFragment extends TemplateItemListFragment {
                                 mTvNoData.setVisibility(View.VISIBLE);
                             }
                         } else {
-                            securityFocusListAdapter.addData(bean.getList());
-                            securityFocusListAdapter.loadMoreComplete();
+                            securityListAdapter.addData(bean.getList());
+                            securityListAdapter.loadMoreComplete();
                             if (bean.getList().size() < 10) {
-                                securityFocusListAdapter.loadMoreEnd();
+                                securityListAdapter.loadMoreEnd();
                             }
                         }
                     }
@@ -176,8 +195,8 @@ public class SecurituFoucsFragment extends TemplateItemListFragment {
                     @Override
                     public void onNoData(String message) {
                         mSwipeRefreshLayout.setRefreshing(false);
-                        securityFocusListAdapter.loadMoreEnd();//没有数据了
-                        if (securityFocusListAdapter.getData().size() == 0) {
+                        securityListAdapter.loadMoreEnd();//没有数据了
+                        if (securityListAdapter.getData().size() == 0) {
                             mTvNoData.setVisibility(View.VISIBLE);
                         } else {
                             mTvNoData.setVisibility(View.GONE);

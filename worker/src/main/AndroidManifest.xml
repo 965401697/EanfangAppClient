@@ -1163,7 +1163,6 @@
         <activity android:name=".ui.activity.worksapce.security.SecurityPersonalActivity" />
         <activity android:name=".ui.activity.worksapce.security.SecurityCommentListActivity" />
         <activity android:name=".ui.activity.worksapce.security.SecurityPersonalPublicListActivity" />
-        <activity android:name=".ui.activity.worksapce.security.SecurityFoucsListActivity" />
     </application>
 
 </manifest>

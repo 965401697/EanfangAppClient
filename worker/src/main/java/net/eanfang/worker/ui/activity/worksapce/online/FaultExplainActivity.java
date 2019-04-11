@@ -204,47 +204,56 @@ public class FaultExplainActivity extends BaseWorkerActivity {
                 .execute(new EanfangCallback<AnswerListWithQuestionBean>(this, true, AnswerListWithQuestionBean.class) {
                     @Override
                     public void onSuccess(AnswerListWithQuestionBean bean) {
-                        failureTypeId = bean.getQuestion().getFailureTypeId();
-                        questionUserId = bean.getQuestion().getQuestionUserId();
-                        questionCompanyId = bean.getQuestion().getQuestionCompanyId();
-                        questionTopCompanyId = bean.getQuestion().getQuestionTopCompanyId();
-                        ivUserHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bean.getQuestion().getAccountEntity().getAvatar()));
-                        tvUserName.setText(bean.getQuestion().getAccountEntity().getNickName());
-                        //时间
-                        format1 = format(bean.getQuestion().getQuestionCreateDateLong());
-                        tvTime.setText(format1);
-                        tvMajor.setText("系统:" + bean.getQuestion().getBusinessName() + "      品牌:" + bean.getQuestion().getModelName());
-                        //snplPhotos.setDelegate(new BGASortableDelegate(this));
-                        tvDesc.setText(bean.getQuestion().getQuestionContent());
-                        if (!StringUtils.isEmpty(bean.getQuestion().getQuestionPics())) {
-                            String[] pics = bean.getQuestion().getQuestionPics().split(",");
-                            picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
-                            snplPic.setDelegate(new BGASortableDelegate(FaultExplainActivity.this, REQUEST_CODE_CHOOSE_PHOTO, REQUEST_CODE_CHOOSE_PHOTO_two));
-                            //            snplPic.init(this);
-                            snplPic.setData(picList);
-                            snplPic.setEditable(false);
-                        } else {
-                            snplPic.setVisibility(View.GONE);
+                        if (bean.getQuestion() != null) {
+                            failureTypeId = bean.getQuestion().getFailureTypeId();
+                            questionUserId = bean.getQuestion().getQuestionUserId();
+                            questionCompanyId = bean.getQuestion().getQuestionCompanyId();
+                            questionTopCompanyId = bean.getQuestion().getQuestionTopCompanyId();
+                            ivUserHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bean.getQuestion().getAccountEntity().getAvatar()));
+                            tvUserName.setText(bean.getQuestion().getAccountEntity().getNickName());
+                            //时间
+                            format1 = format(bean.getQuestion().getQuestionCreateDateLong());
+                            tvTime.setText(format1);
+                            tvMajor.setText("系统:" + bean.getQuestion().getBusinessName() + "      品牌:" + bean.getQuestion().getModelName());
+                            //snplPhotos.setDelegate(new BGASortableDelegate(this));
+                            tvDesc.setText(bean.getQuestion().getQuestionContent());
+                            if (!StringUtils.isEmpty(bean.getQuestion().getQuestionPics())) {
+                                String[] pics = bean.getQuestion().getQuestionPics().split(",");
+                                picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
+                                snplPic.setDelegate(new BGASortableDelegate(FaultExplainActivity.this, REQUEST_CODE_CHOOSE_PHOTO, REQUEST_CODE_CHOOSE_PHOTO_two));
+                                //            snplPic.init(this);
+                                snplPic.setData(picList);
+                                snplPic.setEditable(false);
+                            } else {
+                                snplPic.setVisibility(View.GONE);
+                            }
                         }
                         //专家回答
                         answers = bean.getExpertAnswers();
                         commonanswers = bean.getCommonAnswers();
-                        if (bean.getExpertAnswers().size() <= 0 && bean.getCommonAnswers().size() <= 0) {
-                            recyclerViewAnswer.setVisibility(View.GONE);
-                            recyclerAnswerCommon.setVisibility(View.GONE);
-                            tvNoDatas.setVisibility(View.VISIBLE);
-                            tvNoDatasCommon.setVisibility(View.VISIBLE);
-                        } else if (bean.getExpertAnswers().size() > 0 && bean.getCommonAnswers().size() <= 0) {
-                            tvNoDatasCommon.setVisibility(View.VISIBLE);
-                            recyclerAnswerCommon.setVisibility(View.GONE);
-                            mFaultExplainAdapter.setNewData(answers);
-                        } else if (bean.getExpertAnswers().size() <= 0 && bean.getCommonAnswers().size() > 0) {
-                            tvNoDatas.setVisibility(View.VISIBLE);
-                            recyclerViewAnswer.setVisibility(View.GONE);
-                            mFaultCommonAdapter.setNewData(commonanswers);
+                        if (bean.getExpertAnswers() != null && bean.getCommonAnswers() != null) {
+                            if (bean.getExpertAnswers().size() <= 0 && bean.getCommonAnswers().size() <= 0) {
+                                recyclerViewAnswer.setVisibility(View.GONE);
+                                recyclerAnswerCommon.setVisibility(View.GONE);
+                                tvNoDatas.setVisibility(View.VISIBLE);
+                                tvNoDatasCommon.setVisibility(View.VISIBLE);
+                            } else if (bean.getExpertAnswers().size() > 0 && bean.getCommonAnswers().size() <= 0) {
+                                tvNoDatasCommon.setVisibility(View.VISIBLE);
+                                recyclerAnswerCommon.setVisibility(View.GONE);
+                                mFaultExplainAdapter.setNewData(answers);
+                            } else if (bean.getExpertAnswers().size() <= 0 && bean.getCommonAnswers().size() > 0) {
+                                tvNoDatas.setVisibility(View.VISIBLE);
+                                recyclerViewAnswer.setVisibility(View.GONE);
+                                mFaultCommonAdapter.setNewData(commonanswers);
+                            } else {
+                                mFaultExplainAdapter.setNewData(answers);
+                                mFaultCommonAdapter.setNewData(commonanswers);
+                            }
                         } else {
-                            mFaultExplainAdapter.setNewData(answers);
-                            mFaultCommonAdapter.setNewData(commonanswers);
+                            recyclerViewAnswer.setVisibility(View.GONE);
+                            recyclerAnswerCommon.setVisibility(View.GONE);
+                            tvNoDatas.setVisibility(View.VISIBLE);
+                            tvNoDatasCommon.setVisibility(View.VISIBLE);
                         }
                         mFaultExplainAdapter.notifyDataSetChanged();
                         mFaultCommonAdapter.notifyDataSetChanged();
@@ -261,7 +270,6 @@ public class FaultExplainActivity extends BaseWorkerActivity {
                 });
 
     }
-
 
 
     //时间转化

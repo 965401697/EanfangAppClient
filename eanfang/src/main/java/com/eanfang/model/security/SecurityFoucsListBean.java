@@ -1,8 +1,10 @@
 package com.eanfang.model.security;
 
+import com.eanfang.R;
+import com.eanfang.witget.mentionedittext.edit.modle.FormatRange;
+import com.eanfang.witget.mentionedittext.edit.mylistener.InsertData;
 import com.yaf.base.entity.WorkerEntity;
 import com.yaf.sys.entity.AccountEntity;
-import com.yaf.sys.entity.UserEntity;
 
 import java.io.Serializable;
 import java.util.List;
@@ -22,7 +24,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SecurityFoucsListBean implements Serializable {
-
     private List<ListBean> list;
 
     @NoArgsConstructor
@@ -31,14 +32,82 @@ public class SecurityFoucsListBean implements Serializable {
     @Setter
     public static class ListBean {
 
-        private AccountEntity accountEntity;
         private String asUserId;
         private AskSpCircleEntityBean askSpCircleEntity;
         private int followsStatus;
         private int friend;
         private OrgEntityBean orgEntity;
-        private UserEntity userEntity;
+        private UserEntityBean userEntity;
         private WorkerEntity workerEntity;
+
+        @NoArgsConstructor
+        @AllArgsConstructor
+        @Getter
+        @Setter
+        public static class UserEntityBean implements Serializable, InsertData {
+            private AccountEntity accountEntity;
+            private CharSequence userId;
+            private Long mLUseId;
+            private String mSUserName;
+
+            public UserEntityBean(Long mUsrId, String mUserName) {
+                this.mSUserName = mUserName;
+                this.mLUseId = mUsrId;
+            }
+
+            @Override
+            public boolean equals(Object o) {
+                if (this == o) {
+                    return true;
+                }
+                if (o == null || getClass() != o.getClass()) {
+                    return false;
+                }
+                UserEntityBean user = (UserEntityBean) o;
+
+                if (userId != null ? !userId.equals(user.userId) : user.userId != null) {
+                    return false;
+                }
+                return accountEntity.getRealName() != null ? !accountEntity.getRealName().equals(user.getAccountEntity().getRealName()) : user.getAccountEntity().getRealName() != null;
+            }
+
+            @Override
+            public int hashCode() {
+                int result = userId != null ? userId.hashCode() : 0;
+                result = 31 * result + (getAccountEntity().getRealName() != null ? getAccountEntity().getRealName().hashCode() : 0);
+                return result;
+            }
+
+            @Override
+            public CharSequence charSequence() {
+                return "@" + accountEntity.getRealName();
+            }
+
+            @Override
+            public FormatRange.FormatData formatData() {
+                return new UserEntityConvert(this);
+            }
+
+            @Override
+            public int color() {
+                return R.color.colorPrimary;
+            }
+
+            private class UserEntityConvert implements FormatRange.FormatData {
+
+                public static final String USER_FORMART = "<user id='%s' name = '%s'></user>";
+                private final UserEntityBean accountEntityBean;
+
+                public UserEntityConvert(UserEntityBean mAccountEntityBean) {
+                    this.accountEntityBean = mAccountEntityBean;
+                }
+
+                @Override
+                public CharSequence formatCharSequence() {
+                    return String.format(USER_FORMART, accountEntityBean.getUserId(),accountEntityBean.getAccountEntity().getRealName());
+                }
+            }
+        }
 
         @NoArgsConstructor
         @AllArgsConstructor

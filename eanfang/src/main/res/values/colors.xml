@@ -99,6 +99,6 @@
     <color name="color_security_personal_two">#425062</color>
     <color name="color_home_titile">#141E34</color>
     <color name="rc_plugins_bg">#F8F8F8</color>
-
+    <color name="color_security_unread">#FF4520</color>
 
 </resources>

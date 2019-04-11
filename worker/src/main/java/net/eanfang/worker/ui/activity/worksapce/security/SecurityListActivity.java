@@ -14,7 +14,7 @@ import com.eanfang.util.JumpItent;
 import com.flyco.tablayout.SlidingTabLayout;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.fragment.SecurituFoucsFragment;
+import net.eanfang.worker.ui.fragment.SecurityFoucsFragment;
 import net.eanfang.worker.ui.fragment.SecurityHotFragment;
 
 import java.util.ArrayList;
@@ -58,7 +58,7 @@ public class SecurityListActivity extends BaseActivity {
         setLeftBack();
         setRightTitle("我的");
         setRightImageResId(R.mipmap.ic_security_right);
-        mFragments.add(SecurituFoucsFragment.getInstance("关注"));
+        mFragments.add(SecurityFoucsFragment.getInstance("关注"));
         mFragments.add(SecurityHotFragment.getInstance("热门"));
 
         mAdapter = new MyPagerAdapter(getSupportFragmentManager());
@@ -111,7 +111,7 @@ public class SecurityListActivity extends BaseActivity {
         int currentTab = tlSecurityList.getCurrentTab();
         if (resultCode == RESULT_OK && requestCode == FILTRATE_TYPE_CODE) {
             if (currentTab == 0) {
-                ((SecurituFoucsFragment) mFragments.get(currentTab)).refreshStatus();
+                ((SecurityFoucsFragment) mFragments.get(currentTab)).refreshStatus();
             } else {
                 ((SecurityHotFragment) mFragments.get(currentTab)).refreshStatus();
             }

@@ -18,6 +18,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.ExpertVerifySkillBean;
 import com.eanfang.model.GrantChange;
+import com.eanfang.util.V;
 import com.yaf.base.entity.ExpertsCertificationEntity;
 import com.yaf.sys.entity.BaseDataEntity;
 
@@ -48,7 +49,7 @@ public class FindExpertActivity extends BaseWorkerActivity implements View.OnCli
     TextView pinName;
     // 设备信息 RequestCode
     private static final int REQUEST_FAULTDEVICEINFO = 100;
-//    @BindView(R.id.my_information)
+    //    @BindView(R.id.my_information)
 //    Button myInformation;
     private SpecialistBrandAdapter brandAdapter;
     private SkillTypeAdapter osCooperationAddAdapter;
@@ -189,7 +190,7 @@ public class FindExpertActivity extends BaseWorkerActivity implements View.OnCli
     }
 
     private void fillData(ExpertVerifySkillBean bean) {
-        if (bean.getExpertVerify().getApproveType() == 1) {
+        if (V.v(() -> bean.getExpertVerify().getApproveType() == 1)) {
             imPowerList.add(BuildConfig.OSS_SERVER + bean.getExpertVerify().getImpowerUrl());
             impowerUrl = bean.getExpertVerify().getImpowerUrl();
         }
@@ -211,7 +212,6 @@ public class FindExpertActivity extends BaseWorkerActivity implements View.OnCli
     }
 
 
-
     @Override
     public void onClick(View v) {
         Intent intent = new Intent(FindExpertActivity.this, ManufacturerAfterSaleActivity.class);
@@ -219,7 +219,7 @@ public class FindExpertActivity extends BaseWorkerActivity implements View.OnCli
         startActivity(intent);
     }
 
-    @OnClick({ R.id.tv_go})
+    @OnClick({R.id.tv_go})
     public void onViewClicked(View view) {
         switch (view.getId()) {
 //            case R.id.my_information:

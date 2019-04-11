@@ -49,6 +49,7 @@ import net.eanfang.worker.ui.activity.worksapce.WebActivity;
 import net.eanfang.worker.ui.activity.worksapce.design.DesignActivity;
 import net.eanfang.worker.ui.activity.worksapce.maintenance.MaintenanceActivity;
 import net.eanfang.worker.ui.activity.worksapce.online.ExpertOnlineActivity;
+import net.eanfang.worker.ui.activity.worksapce.online.FaultExplainActivity;
 import net.eanfang.worker.ui.activity.worksapce.repair.RepairCtrlActivity;
 import net.eanfang.worker.ui.activity.worksapce.scancode.ScanCodeActivity;
 import net.eanfang.worker.ui.activity.worksapce.security.SecurityDetailActivity;
@@ -255,7 +256,7 @@ public class HomeFragment extends BaseFragment {
      * 安防圈
      */
     private void initSecurity() {
-        securityListAdapter = new SecurityListAdapter(EanfangApplication.get().getApplicationContext(),false);
+        securityListAdapter = new SecurityListAdapter(EanfangApplication.get().getApplicationContext(), false);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         rvSecurity.setLayoutManager(layoutManager);
         rvSecurity.setNestedScrollingEnabled(false);
@@ -408,7 +409,8 @@ public class HomeFragment extends BaseFragment {
                     JumpItent.jump(getActivity(), ScanCodeActivity.class, bundle_addfriend);
                     homeScanPopWindow.dismiss();
                     break;
-                case R.id.rl_scan_device:   // 扫描设备
+                // 扫描设备
+                case R.id.rl_scan_device:
                     Bundle bundle = new Bundle();
                     bundle.putString("from", EanfangConst.QR_CLIENT);
                     bundle.putString("scanType", "scan_device");
@@ -434,29 +436,41 @@ public class HomeFragment extends BaseFragment {
             }
         });
         securityListAdapter.setOnItemClickListener((adapter, view, position) -> {
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("bean", securityListAdapter.getData().get(position));
-            bundle.putInt("friend", securityListAdapter.getData().get(position).getFriend());
-            JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
+            doJump(position, false);
         });
         securityListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             switch (view.getId()) {
+                case R.id.ll_comments:
+                    doJump(position, true);
+                    break;
                 case R.id.tv_isFocus:
                 case R.id.ll_like:
-                case R.id.ll_comments:
                 case R.id.ll_pic:
                 case R.id.iv_share:
                 case R.id.ll_question:
                 case R.id.rl_video:
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("bean", securityListAdapter.getData().get(position));
-                    bundle.putInt("friend", securityListAdapter.getData().get(position).getFriend());
-                    JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
+                    doJump(position, false);
                     break;
                 default:
                     break;
             }
         });
+    }
+
+
+    public void doJump(int position, boolean isCommon) {
+        //专家问答
+        if (securityListAdapter.getData().get(position).getType() == 1) {
+            Bundle bundle_question = new Bundle();
+            bundle_question.putInt("QuestionIdZ", Integer.parseInt(securityListAdapter.getData().get(position).getQuestionId()));
+            JumpItent.jump(getActivity(), FaultExplainActivity.class, bundle_question);
+        } else {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("bean", securityListAdapter.getData().get(position));
+            bundle.putInt("friend", securityListAdapter.getData().get(position).getFriend());
+            bundle.putBoolean("isCommon", isCommon);
+            JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
+        }
     }
 
     /**

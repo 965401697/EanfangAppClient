@@ -1,7 +1,8 @@
-package net.eanfang.worker.ui.adapter.security;
+package net.eanfang.client.ui.adapter.security;
 
 import android.content.Context;
 import android.net.Uri;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 
 import com.annimon.stream.Stream;
@@ -14,6 +15,10 @@ import com.eanfang.util.ETimeUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
 import com.eanfang.witget.SecurityCircleImageLayout;
+import com.eanfang.witget.mentionedittext.edit.util.FormatRangeManager;
+import com.eanfang.witget.mentionedittext.text.MentionTextView;
+import com.eanfang.witget.mentionedittext.text.listener.Parser;
+import com.eanfang.witget.mentionedittext.util.SecurityItemUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
@@ -32,32 +37,51 @@ public class SecurityListAdapter extends BaseQuickAdapter<SecurityListBean.ListB
     private Context context;
     private ArrayList<String> picList = new ArrayList<>();
     private String[] pics = null;
+    private boolean mIsUnRead = false;
+    private Parser mTagParser = new Parser();
+    protected FormatRangeManager mRangeManager = new FormatRangeManager();
 
-    public SecurityListAdapter(Context mContext) {
+    public SecurityListAdapter(Context mContext, boolean isUnRead) {
         super(R.layout.layout_security_item);
         this.context = mContext;
+        this.mIsUnRead = isUnRead;
     }
-
 
     @Override
     protected void convert(BaseViewHolder helper, SecurityListBean.ListBean item) {
         SimpleDraweeView ivHeader = helper.getView(R.id.iv_seucrity_header);
         SecurityCircleImageLayout securityImageLayout = helper.getView(R.id.securityImageLayout);
+        SimpleDraweeView ivShowVideo = helper.getView(R.id.iv_show_video);
+        MentionTextView mentionTextView = helper.getView(R.id.tv_content);
+        mentionTextView.setMovementMethod(new LinkMovementMethod());
+        mentionTextView.setParserConverter(mTagParser);
+
+        String mContent = "";
+        String atName = "";
         // 发布人
-        helper.setText(R.id.tv_name, V.v(() -> item.getAccountEntity().getNickName()));
+        helper.setText(R.id.tv_name, V.v(() -> item.getAccountEntity().getRealName()));
         // 头像
         ivHeader.setImageURI((Uri.parse(BuildConfig.OSS_SERVER + V.v(() -> item.getAccountEntity().getAvatar()))));
         // 公司名称
         helper.setText(R.id.tv_company, item.getPublisherOrg().getOrgName());
+        // 艾特人
+        if (V.v(() -> (item.getAtMap() != null))) {
+            atName = SecurityItemUtil.getInstance().doJonint(item.getAtMap());
+        } else {
+            atName = "";
+        }
         //发布的内容
-        if ("1".equals(item.getType())) {
-            helper.setText(R.id.tv_content, "我提了一个问题，邀请你来回答");
+        if (item.getType() == 1) {
+            mContent = "我提了一个问题，邀请你来回答" + atName;
             helper.setText(R.id.tv_question_content, item.getSpcContent());
             helper.setVisible(R.id.ll_question, true);
         } else {
-            helper.setText(R.id.tv_content, item.getSpcContent());
+            mContent = item.getSpcContent() + atName;
             helper.setVisible(R.id.ll_question, false);
         }
+        CharSequence convertMetionString = mRangeManager.getFormatCharSequence(mContent);
+        mentionTextView.setText(convertMetionString);
+        mentionTextView.setEnabled(false);
         // 点赞数量
         helper.setText(R.id.tv_like_num, item.getLikesCount() + "");
         // 评论数量
@@ -110,7 +134,23 @@ public class SecurityListAdapter extends BaseQuickAdapter<SecurityListBean.ListB
         } else {
             securityImageLayout.setVisibility(View.GONE);
         }
+        /**
+         *視頻缩略图
+         * */
+        if (!StringUtils.isEmpty(item.getSpcVideo())) {
+            helper.setVisible(R.id.rl_video, true);
+            ivShowVideo.setImageURI((Uri.parse(BuildConfig.OSS_SERVER + V.v(() -> item.getSpcVideo() + ".jpg"))));
+        } else {
+            helper.setVisible(R.id.rl_video, false);
+        }
 
+        if (item.getReadStatus() == 0 && mIsUnRead) {
+            helper.setVisible(R.id.tv_unread, true);
+        } else {
+            helper.setVisible(R.id.tv_unread, false);
+        }
+
+        helper.addOnClickListener(R.id.rl_video);
         helper.addOnClickListener(R.id.tv_isFocus);
         helper.addOnClickListener(R.id.ll_like);
         helper.addOnClickListener(R.id.ll_comments);

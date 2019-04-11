@@ -3,10 +3,12 @@ package net.eanfang.worker.ui.activity.worksapce.security;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
@@ -16,6 +18,7 @@ import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.security.SecurityCreateBean;
+import com.eanfang.model.security.SecurityFoucsListBean;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.takevideo.PlayVideoActivity;
@@ -26,6 +29,7 @@ import com.eanfang.util.JumpItent;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.witget.TakeVideoPopWindow;
+import com.eanfang.witget.mentionedittext.edit.MentionEditText;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
@@ -33,6 +37,7 @@ import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.im.VideoSelectedActivity;
+import net.eanfang.worker.ui.activity.worksapce.online.FreeAskActivity;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -59,7 +64,7 @@ public class SecurityCreateActivity extends BaseActivity {
     @BindView(R.id.snpl_add_photo)
     BGASortableNinePhotoLayout snplAddPhoto;
     @BindView(R.id.et_content)
-    EditText etContent;
+    MentionEditText etContent;
     @BindView(R.id.iv_show_video)
     SimpleDraweeView ivShowVideo;
     @BindView(R.id.rl_video)
@@ -92,6 +97,7 @@ public class SecurityCreateActivity extends BaseActivity {
      * 艾特人
      */
     private static final int REQUEST_CODE_ABOUT = 1010;
+    private StringBuffer mAtUserId = new StringBuffer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +105,9 @@ public class SecurityCreateActivity extends BaseActivity {
         setContentView(R.layout.activity_security_create);
         ButterKnife.bind(this);
         initView();
+        initListener();
     }
+
 
     private void initView() {
         setTitle("编辑");
@@ -119,6 +127,34 @@ public class SecurityCreateActivity extends BaseActivity {
         });
     }
 
+    private void initListener() {
+        etContent.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (count == 1 && !TextUtils.isEmpty(s)) {
+                    char mentionChar = s.toString().charAt(start);
+                    int selectionStart = etContent.getSelectionStart();
+                    if (mentionChar == '@') {
+                        Bundle bundle_foucus = new Bundle();
+                        bundle_foucus.putString("type", "foucs");
+                        JumpItent.jump(SecurityCreateActivity.this, SecurityPersonalPublicListActivity.class, bundle_foucus, REQUEST_CODE_CHOOSE_VIDEO);
+                        etContent.getText().delete(selectionStart - 1, selectionStart);
+                    }
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+    }
+
+
     public void doCommit() {
         String mContent = etContent.getText().toString().trim();
         mPic = PhotoUtils.getPhotoUrl("sercurity/", snplAddPhoto, uploadMap, false);
@@ -126,6 +162,7 @@ public class SecurityCreateActivity extends BaseActivity {
             securityCreateBean.setSpcContent(mContent);
             securityCreateBean.setSpcImg(mPic);
             securityCreateBean.setSpcVideo(mUploadKey);
+            securityCreateBean.setAtUserId(mAtUserId.toString());
             if (uploadMap.size() != 0) {
                 OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
                     @Override
@@ -171,7 +208,14 @@ public class SecurityCreateActivity extends BaseActivity {
                 break;
             // 艾特人
             case REQUEST_CODE_ABOUT:
-
+                SecurityFoucsListBean.ListBean.UserEntityBean accountEntityBean =
+                        (SecurityFoucsListBean.ListBean.UserEntityBean) data.getSerializableExtra("foucsAccountEntity");
+                etContent.insert(accountEntityBean);
+                if (StringUtils.isEmpty(mAtUserId)) {
+                    mAtUserId.append(accountEntityBean.getUserId().toString());
+                } else {
+                    mAtUserId.append("," + accountEntityBean.getUserId().toString());
+                }
                 break;
             default:
                 break;
@@ -222,6 +266,8 @@ public class SecurityCreateActivity extends BaseActivity {
                 JumpItent.jump(SecurityCreateActivity.this, SecurityPersonalPublicListActivity.class, bundle_foucus, REQUEST_CODE_ABOUT);
                 break;
             case R.id.iv_question:
+                JumpItent.jump(SecurityCreateActivity.this, FreeAskActivity.class);
+                finishSelf();
                 break;
             case R.id.iv_workers:
                 break;

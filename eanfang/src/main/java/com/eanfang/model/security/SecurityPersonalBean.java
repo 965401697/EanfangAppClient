@@ -19,13 +19,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class SecurityPersonalBean implements Serializable {
 
-    private int spccount;
-    private int likeCount;
     private PageUtilBean pageUtil;
-    private int followerCount;
-    private int asFollowerCount;
-    private int noReadCount;
-    private int commentNoRead;
 
     @Getter
     @Setter

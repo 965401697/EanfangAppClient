@@ -24,6 +24,7 @@ import com.eanfang.util.QueryEntry;
 import com.photopicker.com.util.BGASpaceItemDecoration;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.worksapce.online.FaultExplainActivity;
 import net.eanfang.worker.ui.adapter.security.SecurityFoucsListAdapter;
 import net.eanfang.worker.ui.adapter.security.SecurityListAdapter;
 
@@ -98,33 +99,45 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
      * 点赞、我的
      * */
     public void initLikeAndAboutAdapter() {
-        securityListAdapter = new SecurityListAdapter(EanfangApplication.get().getApplicationContext(),true);
+        securityListAdapter = new SecurityListAdapter(EanfangApplication.get().getApplicationContext(), true);
         securityListAdapter.bindToRecyclerView(rvSecurity);
         securityListAdapter.setOnLoadMoreListener(this, rvSecurity);
         securityListAdapter.setOnItemClickListener((adapter, view, position) -> {
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("bean", securityListAdapter.getData().get(position));
-            bundle.putInt("friend", securityListAdapter.getData().get(position).getFriend());
-            JumpItent.jump(SecurityPersonalPublicListActivity.this, SecurityDetailActivity.class, bundle);
+            doJump(position, false);
         });
         securityListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             switch (view.getId()) {
+                case R.id.ll_comments:
+                    doJump(position, true);
+                    break;
                 case R.id.tv_isFocus:
                 case R.id.ll_like:
-                case R.id.ll_comments:
+
                 case R.id.ll_pic:
                 case R.id.iv_share:
                 case R.id.ll_question:
                 case R.id.rl_video:
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("bean", securityListAdapter.getData().get(position));
-                    bundle.putInt("friend", securityListAdapter.getData().get(position).getFriend());
-                    JumpItent.jump(SecurityPersonalPublicListActivity.this, SecurityDetailActivity.class, bundle);
+                    doJump(position, false);
                     break;
                 default:
                     break;
             }
         });
+    }
+
+    public void doJump(int position, boolean isCommon) {
+        //专家问答
+        if (securityListAdapter.getData().get(position).getType() == 1) {
+            Bundle bundle_question = new Bundle();
+            bundle_question.putInt("QuestionIdZ", Integer.parseInt(securityListAdapter.getData().get(position).getQuestionId()));
+            JumpItent.jump(SecurityPersonalPublicListActivity.this, FaultExplainActivity.class, bundle_question);
+        } else {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("bean", securityListAdapter.getData().get(position));
+            bundle.putInt("friend", securityListAdapter.getData().get(position).getFriend());
+            bundle.putBoolean("isCommon", isCommon);
+            JumpItent.jump(SecurityPersonalPublicListActivity.this, SecurityDetailActivity.class, bundle);
+        }
     }
 
     /**
@@ -143,9 +156,9 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
         securityFoucsListAdapter.setOnItemClickListener((adapter, view, position) -> {
             securityFoucsListBean = (SecurityFoucsListBean.ListBean) adapter.getData().get(position);
             Intent intent = new Intent();
-            intent.putExtra("foucsId", securityFoucsListBean.getAsUserId());
-            intent.putExtra("foucsName", securityFoucsListBean.getAccountEntity().getNickName());
-            setResult(1, intent);
+            intent.putExtra("foucsAccountEntity", securityFoucsListBean.getUserEntity());
+            setResult(RESULT_OK, intent);
+            finishSelf();
         });
     }
 
@@ -169,6 +182,8 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
         securityFoucsBean.setAsUserId(listBean.getAskSpCircleEntity().getPublisherUserId());
         securityFoucsBean.setAsCompanyId(listBean.getAskSpCircleEntity().getPublisherCompanyId());
         securityFoucsBean.setAsTopCompanyId(listBean.getAskSpCircleEntity().getPublisherTopCompanyId());
+        securityFoucsBean.setAsAccId(listBean.getUserEntity().getAccountEntity().getAccId());
+        securityFoucsBean.setFollowAccId(EanfangApplication.get().getAccId());
         EanfangHttp.post(NewApiService.SERCURITY_DELETEFOUCUS)
                 .upJson(JSONObject.toJSONString(securityFoucsBean))
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
@@ -189,6 +204,9 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
         securityFoucsBean.setAsUserId(listBean.getAskSpCircleEntity().getPublisherUserId());
         securityFoucsBean.setAsCompanyId(listBean.getAskSpCircleEntity().getPublisherCompanyId());
         securityFoucsBean.setAsTopCompanyId(listBean.getAskSpCircleEntity().getPublisherTopCompanyId());
+
+        securityFoucsBean.setAsAccId(listBean.getUserEntity().getAccountEntity().getAccId());
+        securityFoucsBean.setFollowAccId(EanfangApplication.get().getAccId());
         EanfangHttp.post(NewApiService.SERCURITY_FOUCUS)
                 .upJson(JSONObject.toJSONString(securityFoucsBean))
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
@@ -236,8 +254,10 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
 
                             if (bean.getList().size() > 0) {
                                 tvNoDatas.setVisibility(View.GONE);
+                                rvSecurity.setVisibility(View.VISIBLE);
                             } else {
                                 tvNoDatas.setVisibility(View.VISIBLE);
+                                rvSecurity.setVisibility(View.GONE);
                             }
 
                         } else {
@@ -297,8 +317,10 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
 
                             if (bean.getList().size() > 0) {
                                 tvNoDatas.setVisibility(View.GONE);
+                                rvSecurity.setVisibility(View.VISIBLE);
                             } else {
                                 tvNoDatas.setVisibility(View.VISIBLE);
+                                rvSecurity.setVisibility(View.GONE);
                             }
 
                         } else {

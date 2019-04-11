@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.method.LinkMovementMethod;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -34,6 +35,10 @@ import com.eanfang.util.ETimeUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
+import com.eanfang.witget.mentionedittext.edit.util.FormatRangeManager;
+import com.eanfang.witget.mentionedittext.text.MentionTextView;
+import com.eanfang.witget.mentionedittext.text.listener.Parser;
+import com.eanfang.witget.mentionedittext.util.SecurityItemUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
@@ -56,7 +61,7 @@ import butterknife.OnClick;
  * @description 安防圈详情
  */
 
-public class SecurityDetailActivity extends BaseActivity {
+public class SecurityDetailActivity extends BaseActivity implements Parser.OnParseAtClickListener {
 
 
     private static final int REQUEST_CODE_CHOOSE_PHOTO = 1;
@@ -70,8 +75,6 @@ public class SecurityDetailActivity extends BaseActivity {
     TextView tvCompany;
     @BindView(R.id.tv_isFocus)
     TextView tvIsFocus;
-    @BindView(R.id.tv_content)
-    TextView tvContent;
     @BindView(R.id.snpl_pic)
     BGASortableNinePhotoLayout snplPic;
     @BindView(R.id.iv_like)
@@ -112,6 +115,8 @@ public class SecurityDetailActivity extends BaseActivity {
     SimpleDraweeView ivShowVideo;
     @BindView(R.id.rl_video)
     RelativeLayout rlVideo;
+    @BindView(R.id.tv_content)
+    MentionTextView tvContent;
 
     private SecurityListBean.ListBean securityBean;
     private ArrayList<String> picList = new ArrayList<>();
@@ -132,9 +137,18 @@ public class SecurityDetailActivity extends BaseActivity {
      */
     private boolean isFoucus = false;
     /**
+     * 是否评论
+     */
+    private boolean isCommont = false;
+    /**
      * 是否是朋友
      */
     private int mFriend = 100;
+
+    private Parser mTagParser = new Parser(this);
+    protected FormatRangeManager mRangeManager = new FormatRangeManager();
+    private String mContent = "";
+    private String atName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,6 +169,7 @@ public class SecurityDetailActivity extends BaseActivity {
         rvComments.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         rvComments.setNestedScrollingEnabled(false);
         mFriend = getIntent().getIntExtra("friend", 100);
+        isCommont = getIntent().getBooleanExtra("isCommon", false);
         initData();
     }
 
@@ -162,6 +177,11 @@ public class SecurityDetailActivity extends BaseActivity {
         securityBean = (SecurityListBean.ListBean) getIntent().getSerializableExtra("bean");
         mId = securityBean.getSpcId();
         mLikeStatus = securityBean.getLikeStatus();
+        tvContent.setMovementMethod(new LinkMovementMethod());
+        tvContent.setParserConverter(mTagParser);
+        if (isCommont) {
+            ShowKeyboard();
+        }
         setData();
         getComments();
     }
@@ -184,8 +204,8 @@ public class SecurityDetailActivity extends BaseActivity {
         ivSeucrityHeader.setOnClickListener((v) -> {
             Bundle bundle = new Bundle();
             bundle.putBoolean("isLookOther", true);
-            bundle.putLong("mUserId",securityBean.getPublisherUserId());
-            JumpItent.jump(SecurityDetailActivity.this,SecurityPersonalActivity.class,bundle);
+            bundle.putLong("mUserId", securityBean.getPublisherUserId());
+            JumpItent.jump(SecurityDetailActivity.this, SecurityPersonalActivity.class, bundle);
         });
     }
 
@@ -220,20 +240,32 @@ public class SecurityDetailActivity extends BaseActivity {
                         tvReadCount.setText(bean.getSpcList().get(0).getReadCount() + "");
                         tvCommentCount.setText(bean.getSpcList().get(0).getCommentCount() + "");
                     }
-
-                    hideKeyboard();
+                    if (isCommont) {
+                        ShowKeyboard();
+                    } else {
+                        hideKeyboard();
+                    }
                 }));
     }
 
     public void setData() {
         // 发布人
-        tvName.setText(V.v(() -> securityBean.getAccountEntity().getNickName()));
+        tvName.setText(V.v(() -> securityBean.getAccountEntity().getRealName()));
         // 头像
         ivSeucrityHeader.setImageURI((Uri.parse(BuildConfig.OSS_SERVER + V.v(() -> securityBean.getAccountEntity().getAvatar()))));
         // 公司名称
         tvCompany.setText(securityBean.getPublisherOrg().getOrgName());
         //发布的内容
-        tvContent.setText(securityBean.getSpcContent());
+        // 艾特人
+        if (V.v(() -> (securityBean.getAtMap() != null))) {
+            atName = SecurityItemUtil.getInstance().doJonint(securityBean.getAtMap());
+        } else {
+            atName = "";
+        }
+        mContent = securityBean.getSpcContent() + atName;
+        CharSequence convertMetionString = mRangeManager.getFormatCharSequence(mContent);
+        tvContent.setText(convertMetionString);
+
         tvTime.setText(ETimeUtils.getTimeFormatText(securityBean.getCreateTime()));
         if (securityBean.getPublisherUserId().equals(EanfangApplication.get().getUserId())) {
             tvIsFocus.setVisibility(View.GONE);
@@ -392,6 +424,7 @@ public class SecurityDetailActivity extends BaseActivity {
         securityCommentBean.setCommentsContent(mComments);
         securityCommentBean.setAsId(mId);
         securityCommentBean.setCommentsAnswerId(EanfangApplication.get().getUserId());
+        securityCommentBean.setCommentsAnswerAccId(EanfangApplication.get().getUser().getAccount().getAccId());
         securityCommentBean.setCommentsCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyId());
         securityCommentBean.setCommentsTopCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getTopCompanyId());
         EanfangHttp.post(NewApiService.SERCURITY_COMMENT)
@@ -446,7 +479,8 @@ public class SecurityDetailActivity extends BaseActivity {
         etInput.requestFocus();
         etInput.setFocusable(true);
         etInput.setFocusableInTouchMode(true);
-        StringUtils.showKeyboard(this, etInput);
+        StringUtils.showKeyboard(SecurityDetailActivity.this, etInput);
+        //将光标定位
 //        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 //        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
@@ -528,5 +562,13 @@ public class SecurityDetailActivity extends BaseActivity {
         if (generalDialog != null) {
             generalDialog.dismiss();
         }
+    }
+
+    @Override
+    public void onAtClik(Long mUserId) {
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("isLookOther", true);
+        bundle.putLong("mUserId", mUserId);
+        JumpItent.jump(SecurityDetailActivity.this, SecurityPersonalActivity.class, bundle);
     }
 }

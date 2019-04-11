@@ -21,4 +21,5 @@ public class SecurityCreateBean implements Serializable {
     private String spcContent;
     private String spcImg;
     private String spcVideo;
+    private String atUserId;
 }

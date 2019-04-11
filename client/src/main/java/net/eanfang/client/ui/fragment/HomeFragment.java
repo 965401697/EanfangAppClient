@@ -49,12 +49,13 @@ import net.eanfang.client.ui.activity.worksapce.datastatistics.DataStaticsticsLi
 import net.eanfang.client.ui.activity.worksapce.datastatistics.DataStatisticsActivity;
 import net.eanfang.client.ui.activity.worksapce.install.InstallOrderParentActivity;
 import net.eanfang.client.ui.activity.worksapce.online.ExpertOnlineActivity;
+import net.eanfang.client.ui.activity.worksapce.online.FaultExplainActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.RepairTypeActivity;
 import net.eanfang.client.ui.activity.worksapce.scancode.ScanCodeActivity;
 import net.eanfang.client.ui.activity.worksapce.security.SecurityDetailActivity;
 import net.eanfang.client.ui.activity.worksapce.security.SecurityListActivity;
 import net.eanfang.client.ui.adapter.HomeDataAdapter;
-import net.eanfang.worker.ui.adapter.security.SecurityListAdapter;
+import net.eanfang.client.ui.adapter.security.SecurityListAdapter;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -262,19 +263,23 @@ public class HomeFragment extends BaseFragment {
                     JumpItent.jump(getActivity(), ScanCodeActivity.class, bundle_addfriend);
                     homeScanPopWindow.dismiss();
                     break;
-                case R.id.rl_scan_device:   // 扫设备
+                // 扫设备
+                case R.id.rl_scan_device:
                     Bundle bundle = new Bundle();
                     bundle.putString("from", EanfangConst.QR_CLIENT);
                     bundle.putString("scanType", "scan_device");
                     JumpItent.jump(getActivity(), ScanCodeActivity.class, bundle);
                     homeScanPopWindow.dismiss();
                     break;
-                case R.id.rl_scan_reapir:   // 扫客户/ 技师 报修
+                // 扫客户/ 技师 报修
+                case R.id.rl_scan_reapir:
                     Bundle bundle_repair = new Bundle();
                     bundle_repair.putString("from", EanfangConst.QR_CLIENT);
                     bundle_repair.putString("scanType", "scan_person");
                     homeScanPopWindow.dismiss();
                     JumpItent.jump(getActivity(), ScanCodeActivity.class, bundle_repair);
+                    break;
+                default:
                     break;
             }
         }
@@ -378,7 +383,7 @@ public class HomeFragment extends BaseFragment {
      * 安防圈
      */
     private void initSecurity() {
-        securityListAdapter = new SecurityListAdapter(getActivity());
+        securityListAdapter = new SecurityListAdapter(EanfangApplication.get().getApplicationContext(), false);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         rvSecurity.setLayoutManager(layoutManager);
         rvSecurity.setNestedScrollingEnabled(false);
@@ -474,21 +479,36 @@ public class HomeFragment extends BaseFragment {
         });
         securityListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             switch (view.getId()) {
+                case R.id.ll_comments:
+                    doJump(position, true);
+                    break;
                 case R.id.tv_isFocus:
                 case R.id.ll_like:
-                case R.id.ll_comments:
                 case R.id.ll_pic:
                 case R.id.iv_share:
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("bean", securityListAdapter.getData().get(position));
-                    bundle.putInt("friend", securityListAdapter.getData().get(position).getFriend());
-                    bundle.putString("type", "hot");
-                    JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
+                case R.id.ll_question:
+                case R.id.rl_video:
+                    doJump(position, false);
                     break;
                 default:
                     break;
             }
         });
+    }
+
+    public void doJump(int position, boolean isCommon) {
+        //专家问答
+        if (securityListAdapter.getData().get(position).getType() == 1) {
+            Bundle bundle_question = new Bundle();
+            bundle_question.putInt("QuestionIdZ", Integer.parseInt(securityListAdapter.getData().get(position).getQuestionId()));
+            JumpItent.jump(getActivity(), FaultExplainActivity.class, bundle_question);
+        } else {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("bean", securityListAdapter.getData().get(position));
+            bundle.putInt("friend", securityListAdapter.getData().get(position).getFriend());
+            bundle.putBoolean("isCommon", isCommon);
+            JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
+        }
     }
 
     public void doSetOrderNums(AllMessageBean bean) {

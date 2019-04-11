@@ -9,9 +9,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_30"
         android:layout_marginTop="@dimen/dimen_40"
         android:text="资源库"
-        android:layout_marginLeft="@dimen/dimen_30"
         android:textColor="@color/color_client_neworder"
         android:textSize="@dimen/textSize_15" />
 
@@ -38,14 +38,25 @@
             style="@style/style_client_work_meun"
             android:drawableTop="@mipmap/ic_client_work_change"
             android:onClick="noOpen"
-            android:text="@string/text_work_change" />
+            android:text="@string/text_work_change"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_work_file"
             style="@style/style_client_work_meun"
             android:drawableTop="@mipmap/ic_client_work_file"
             android:onClick="noOpen"
-            android:text="@string/text_work_file" />
+            android:text="@string/text_work_file"
+            android:visibility="gone" />
+
+        <TextView
+            style="@style/style_client_work_meun"
+            android:onClick="noOpen" />
+
+        <TextView
+            style="@style/style_client_work_meun"
+            android:onClick="noOpen" />
+
 
     </LinearLayout>
 
@@ -60,28 +71,32 @@
             style="@style/style_client_work_meun"
             android:drawableTop="@mipmap/ic_worker_test"
             android:onClick="noOpen"
-            android:text="@string/text_worker_test" />
+            android:text="@string/text_worker_test"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_work_finish"
             style="@style/style_client_work_meun"
             android:drawableTop="@mipmap/ic_worker_finish"
             android:onClick="noOpen"
-            android:text="@string/text_worker_project_finish" />
+            android:text="@string/text_worker_project_finish"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_work_manusl_repair"
             style="@style/style_client_work_meun"
             android:drawableTop="@mipmap/ic_worker_manusl_repair"
             android:onClick="noOpen"
-            android:text="@string/text_worker_manual_repair" />
+            android:text="@string/text_worker_manual_repair"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_work_parts_library"
             style="@style/style_client_work_meun"
             android:drawableTop="@mipmap/ic_worker_parts_library"
             android:onClick="noOpen"
-            android:text="@string/text_worker_parts_library" />
+            android:text="@string/text_worker_parts_library"
+            android:visibility="gone" />
 
     </LinearLayout>
 

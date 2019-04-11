@@ -64,6 +64,7 @@ import java.util.HashMap;
 
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.manager.IUnReadMessageObserver;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
@@ -76,7 +77,7 @@ import static com.eanfang.config.EanfangConst.MEIZU_APPKEY_CLIENT;
 import static com.eanfang.config.EanfangConst.XIAOMI_APPID_CLIENT;
 import static com.eanfang.config.EanfangConst.XIAOMI_APPKEY_CLIENT;
 
-public class MainActivity extends BaseClientActivity {
+public class MainActivity extends BaseClientActivity implements IUnReadMessageObserver {
     private static final String TAG = MainActivity.class.getSimpleName();
     protected FragmentTabHost mTabHost;
     private LoginBean user;
@@ -156,6 +157,13 @@ public class MainActivity extends BaseClientActivity {
         PrefUtils.setBoolean(getApplicationContext(), PrefUtils.GUIDE, false);//新手引导是否展示
 
         getPushMessage(getIntent());
+        final Conversation.ConversationType[] conversationTypes = {
+                Conversation.ConversationType.PRIVATE,
+                Conversation.ConversationType.GROUP, Conversation.ConversationType.SYSTEM,
+                Conversation.ConversationType.PUBLIC_SERVICE, Conversation.ConversationType.APP_PUBLIC_SERVICE
+        };
+
+        RongIM.getInstance().addUnReadMessageCountChangedObserver(this, conversationTypes);
     }
 
     private void initUpdate() {
@@ -471,6 +479,14 @@ public class MainActivity extends BaseClientActivity {
 
     }
 
+    @Override
+    public void onCountChanged(int integer) {
+        mContactNum = integer;
+        int i = mContact + integer;
+        int nums = mTotalCount + integer;
+        doChange(i, nums);
+    }
+
     public void getIMUnreadMessageCount() {
         /**
          * 获取消息页面回话列表数量
@@ -478,10 +494,6 @@ public class MainActivity extends BaseClientActivity {
         RongIM.getInstance().getTotalUnreadCount(new RongIMClient.ResultCallback<Integer>() {
             @Override
             public void onSuccess(Integer integer) {
-                mContactNum = integer;
-                int i = mContact + integer;
-                int nums = mTotalCount + integer;
-                doChange(i, nums);
             }
 
             @Override
@@ -490,7 +502,6 @@ public class MainActivity extends BaseClientActivity {
             }
         });
     }
-
 
     private void doChange(int mContactNum, int nums) {
         qBadgeViewContact.setBadgeNumber(mContactNum);

@@ -42,4 +42,12 @@ public class SecurityFoucsBean implements Serializable {
      * 被关注人总公司
      */
     private Long asTopCompanyId;
+    /**
+     * 关注人accid
+     */
+    private Long followAccId;
+    /**
+     * 被关注人accid
+     */
+    private Long asAccId;
 }
