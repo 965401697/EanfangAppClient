@@ -320,6 +320,16 @@ public interface UserApi {
      */
     String POST_FRIENDS_LIST = BuildConfig.API_HOST + "/yaf_sys/outer2user/findFriends";
 
+    /**
+     * 获取关注列表
+     */
+    String POST_FOLLOWS_LIST = BuildConfig.API_HOST + "/yaf_sys/expertsOnline/followerPeopleList";
+
+    /**
+     * 改变关注状态
+     */
+    String POST_CHANGE_FOLLOW_STATUS = BuildConfig.API_HOST + "/yaf_sys/expertsOnline/changeFollowStatus";
+
 
     /**
      * 查看是否是好友

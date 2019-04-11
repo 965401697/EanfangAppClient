@@ -1165,6 +1165,7 @@
         <activity android:name=".ui.activity.worksapce.security.SecurityPersonalPublicListActivity" />
         <activity android:name=".ui.activity.worksapce.security.SecurityFoucsListActivity" />
         <activity android:name=".ui.activity.my.UserHomeActivity"/>
+        <activity android:name=".ui.activity.im.FollowListActivity"/>
     </application>
 
 </manifest>
