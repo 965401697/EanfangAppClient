@@ -1,6 +1,8 @@
 package com.yaf.sys.entity;
 
 
+import android.os.Build;
+
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
@@ -11,6 +13,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.validation.constraints.Digits;
@@ -134,6 +137,11 @@ public class AccountEntity implements Serializable {
     @Getter
     @Setter
     private String qrCode;
+
+    /**
+     * 个人简介
+     */
+    private String personalNote;
     /**
      * 判断当前密码是否是简单密码（空 || 默认手机后六位 || 默认用户名）
      */
@@ -357,4 +365,38 @@ public class AccountEntity implements Serializable {
     }
 
 
+    /**
+     * 用户信息是否发生改变（注意：调用此方法调用者的值会发生改变）
+     *
+     * @param other
+     * @return true: 发生改变，并把变化值赋值到调用者上 false：未发生改变
+     */
+    public boolean isChanged(AccountEntity other) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (!Objects.equals(this.avatar, other.avatar)
+                    || !Objects.equals(this.nickName, other.nickName)
+                    || !Objects.equals(this.realName, other.realName)
+                    || this.birthday != other.birthday
+                    || !this.gender.equals(other.gender)
+                    || !Objects.equals(this.personalNote, other.personalNote)) {
+                this.avatar = other.avatar;
+                this.nickName = other.nickName;
+                this.realName = other.realName;
+                this.birthday = other.birthday;
+                this.gender = other.gender;
+                this.address = other.address;
+                this.personalNote = other.personalNote;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public String getPersonalNote() {
+        return personalNote;
+    }
+
+    public void setPersonalNote(String personalNote) {
+        this.personalNote = personalNote;
+    }
 }
