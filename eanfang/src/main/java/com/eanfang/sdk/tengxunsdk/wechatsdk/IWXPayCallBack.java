@@ -1,4 +1,4 @@
-package com.tengxunsdk.wechatsdk;
+package com.eanfang.sdk.tengxunsdk.wechatsdk;
 
 /**
  * created by wtt

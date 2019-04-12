@@ -25,13 +25,16 @@ import com.alipay.sdk.app.PayTask;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Constant;
+import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WXPayBean;
+import com.eanfang.sdk.SDKManager;
+import com.eanfang.sdk.alisdk.alipay.IALiPayCallBack;
 import com.eanfang.util.MessageUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
-import com.tencent.mm.opensdk.modelpay.PayReq;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.yaf.base.entity.InvoiceEntity;
 import com.yaf.base.entity.PayLogEntity;
 
@@ -367,8 +370,7 @@ public class NewPayActivity extends BaseClientActivity implements View.OnClickLi
                         Log.e("info", sign);
                         //支付宝支付
                         String finalSign = sign;
-
-                        Runnable payRunnable = () -> {
+                        /*Runnable payRunnable = () -> {
                             PayTask alipay = new PayTask(NewPayActivity.this);
                             Map<String, String> result = alipay.payV2(finalSign, true);
                             Message msg = new Message();
@@ -378,9 +380,31 @@ public class NewPayActivity extends BaseClientActivity implements View.OnClickLi
                         };
                         // 必须异步调用
                         Thread payThread = new Thread(payRunnable);
-                        payThread.start();
+                        payThread.start();*/
+                        aliP(finalSign);
                     }
                 });
+    }
+
+    private void aliP(String userInfo) {
+        SDKManager.getALipay().aLiPay(NewPayActivity.this, userInfo, true, new IALiPayCallBack() {
+            @Override
+            public void onSuccess() {
+                // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
+                ToastUtil.get().showToast(getApplicationContext(), "支付成功");
+            }
+
+            @Override
+            public void onFail(String msg) {
+                // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
+                ToastUtil.get().showToast(getApplicationContext(), "支付失败");
+            }
+
+            @Override
+            public void onCancel() {
+//                ToastUtil.get().showToast(getApplicationContext(), "支付取消");
+            }
+        });
     }
 
     /**
@@ -393,8 +417,7 @@ public class NewPayActivity extends BaseClientActivity implements View.OnClickLi
                     @Override
                     public void onSuccess(WXPayBean bean) {
                         super.onSuccess(bean);
-
-                        PayReq request = new PayReq();
+                       /* PayReq request = new PayReq();
                         request.appId = bean.getAppid();
                         request.partnerId = bean.getPartnerid();
                         request.prepayId = bean.getPrepayid();
@@ -403,8 +426,10 @@ public class NewPayActivity extends BaseClientActivity implements View.OnClickLi
                         request.timeStamp = bean.getTimestamp();
                         request.signType = "MD5";
                         request.sign = bean.getSign();
-                        ClientApplication.getWxApi().sendReq(request);
-
+                        ClientApplication.getWxApi().sendReq(request);*/
+                        IWXAPI iwxPayAPI = SDKManager.getWXPay().createWXAPI(NewPayActivity.this, EanfangConst.WX_APPID_CLIENT);
+                        SDKManager.getWXPay().wxPay(iwxPayAPI, bean.getAppid(), bean.getPartnerid(), bean.getPrepayid(), bean.getNoncestr(),
+                                bean.getTimestamp(), bean.getSign());
                     }
                 });
     }

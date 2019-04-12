@@ -5,10 +5,9 @@ import android.util.Log;
 
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.EanfangConst;
+import com.eanfang.sdk.SDKManager;
 import com.eanfang.util.SharePreferenceUtil;
 import com.mob.MobSDK;
-import com.tencent.mm.opensdk.openapi.IWXAPI;
-import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import net.eanfang.client.BuildConfig;
 import net.eanfang.client.ui.activity.im.CustomizeMessage;
@@ -31,7 +30,6 @@ import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
  */
 
 public class ClientApplication extends EanfangApplication {
-    private static IWXAPI api;
 
     @Override
     public void onCreate() {
@@ -52,9 +50,7 @@ public class ClientApplication extends EanfangApplication {
             RongIM.getInstance().registerMessageTemplate(new CustomizeVideoMessageItemProvider());
 
             //初始化微信支付
-            api = WXAPIFactory.createWXAPI(this, EanfangConst.WX_APPID_CLIENT);
-
-            api.registerApp(EanfangConst.WX_APPID_CLIENT);
+            SDKManager.getWXPay().init(this,EanfangConst.WX_APPID_CLIENT);
 
             try {
                 SharePreferenceUtil.get().set(BuildConfig.TYPE_APP,BuildConfig.TYPE);
@@ -65,10 +61,6 @@ public class ClientApplication extends EanfangApplication {
         }
 
 
-    }
-
-    public static IWXAPI getWxApi() {
-        return api;
     }
 
     /**

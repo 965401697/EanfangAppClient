@@ -1,4 +1,4 @@
-package com.tengxunsdk.xingepush;
+package com.eanfang.sdk.tengxunsdk.xingepush;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,13 +9,12 @@ import android.content.Context;
  * summary:
  */
 public interface IXGPush {
-    void setContext(Context context);
 
-    void registerPush(String account, IXGIOperateCallback callback);
+    void registerPush(String account);
 
     void unregisterPush();
 
-    void delAccount(final String account, IXGIOperateCallback callback);
+    void delAccount(final String account);
 
     IXGPushClickedResult onActivityStarted(Activity activity);
 

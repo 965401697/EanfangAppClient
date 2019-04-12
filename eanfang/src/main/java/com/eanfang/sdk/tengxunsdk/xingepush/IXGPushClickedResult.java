@@ -1,4 +1,4 @@
-package com.tengxunsdk.xingepush;
+package com.eanfang.sdk.tengxunsdk.xingepush;
 
 import lombok.Getter;
 import lombok.Setter;

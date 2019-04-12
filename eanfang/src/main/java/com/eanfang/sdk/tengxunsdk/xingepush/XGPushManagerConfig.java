@@ -1,7 +1,8 @@
-package com.tengxunsdk.xingepush;
+package com.eanfang.sdk.tengxunsdk.xingepush;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 
 import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushClickedResult;
@@ -14,11 +15,26 @@ import com.tencent.android.tpush.XGPushManager;
  * summary:
  */
 public class XGPushManagerConfig implements IXGPush {
+    private static final String TAG = "XGPushManagerConfig";
     private Context context;
 
+    public XGPushManagerConfig(Context context) {
+        this.context=context;
+    }
+
     @Override
-    public void setContext(Context context) {
-        this.context = context;
+    public void registerPush(String account) {
+        this.registerPush(account, new IXGIOperateCallback() {
+            @Override
+            public void onSuccess(Object data, int flag) {
+                Log.e(TAG, "注册成功，设备token为：" + data);
+            }
+
+            @Override
+            public void onFail(Object data, int errCode, String msg) {
+                Log.e(TAG, "注册失败，错误码：" + errCode + ",错误信息：" + msg);
+            }
+        });
     }
 
     /**
@@ -27,7 +43,6 @@ public class XGPushManagerConfig implements IXGPush {
      * @param account
      * @param callback
      */
-    @Override
     public void registerPush(String account, IXGIOperateCallback callback) {
         XGPushManager.registerPush(context, account, new XGIOperateCallback() {
             @Override
@@ -50,13 +65,27 @@ public class XGPushManagerConfig implements IXGPush {
         XGPushManager.unregisterPush(context);
     }
 
+    @Override
+    public void delAccount(String account) {
+        this.delAccount(account, new IXGIOperateCallback() {
+            @Override
+            public void onSuccess(Object data, int flag) {
+                Log.e(TAG, "信鸽退出Success");
+            }
+
+            @Override
+            public void onFail(Object data, int errCode, String msg) {
+                Log.e(TAG, "信鸽退出Fail");
+            }
+        });
+    }
+
     /**
      * 解绑指定账号（3.2.2以及3.2.2之后的版本使用，有注册回调）
      *
      * @param account
      * @param callback
      */
-    @Override
     public void delAccount(final String account, IXGIOperateCallback callback) {
         XGPushManager.delAccount(context, account, new XGIOperateCallback() {
             @Override

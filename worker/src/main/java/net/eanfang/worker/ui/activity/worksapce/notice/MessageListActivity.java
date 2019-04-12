@@ -23,11 +23,10 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.NoticeEntity;
 import com.eanfang.model.NoticeListBean;
+import com.eanfang.sdk.SDKManager;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
-import com.tengxunsdk.xingepush.IXGPushClickedResult;
-import com.tengxunsdk.xingepush.XGPushFactory;
-import com.tengxunsdk.xingepush.XGPushProxy;
+import com.eanfang.sdk.tengxunsdk.xingepush.IXGPushClickedResult;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.MessageListAdapter;
@@ -265,12 +264,10 @@ public class MessageListActivity extends BaseWorkerActivity implements
     protected void onResume() {
         super.onResume();
 //        page = 1;
-        IXGPushClickedResult clickedResult=XGPushProxy.getInstance(this ,
-                XGPushFactory.createXGPushManagerConfig()).onActivityStarted(this);
-       /* XGPushManager.onActivityStarted(this);
-        XGPushClickedResult clickedResult = XGPushManager.onActivityStarted(this);*/
+        IXGPushClickedResult clickedResult=SDKManager.getXGPush(this).onActivityStarted(this);
         Log.d("TPush", "onResumeXGPushClickedResult:" + clickedResult);
-        if (clickedResult != null) { // 判断是否来自信鸽的打开方式
+        if (clickedResult != null) {
+            // 判断是否来自信鸽的打开方式
             Toast.makeText(this, "通知被点击:" + clickedResult.toString(),
                     Toast.LENGTH_SHORT).show();
             if (clickedResult != null) {
@@ -286,7 +283,8 @@ public class MessageListActivity extends BaseWorkerActivity implements
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK) { // 监控/拦截/屏蔽返回键
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            // 监控/拦截/屏蔽返回键
             setResult(RESULT_OK);
         }
         return super.onKeyDown(keyCode, event);

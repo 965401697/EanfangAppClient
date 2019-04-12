@@ -6,10 +6,9 @@ import android.util.Log;
 import android.widget.RelativeLayout;
 
 import com.eanfang.application.EanfangApplication;
+import com.eanfang.sdk.SDKManager;
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.witget.SwitchButton;
-import com.tengxunsdk.xingepush.XGPushFactory;
-import com.tengxunsdk.xingepush.XGPushProxy;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.util.PrefUtils;
@@ -56,13 +55,10 @@ public class MessageStateView extends BaseDialog {
             PrefUtils.setBoolean(mContext, PrefUtils.RECEIVE_MSG_SWITCH_CHECK, isChecked);
             if (!isChecked) {
                 Log.e("GG", "关闭推送");
-//                XGPushManager.unregisterPush(mContext.getApplicationContext());
-                XGPushProxy.getInstance(mContext,XGPushFactory.createXGPushManagerConfig()).unregisterPush();
+                SDKManager.getXGPush(mContext).unregisterPush();
             } else {
                 Log.e("GG", "打开推送");
-//                ReceiverInit.getInstance().inits(mContext, EanfangApplication.get().getUser().getAccount().getMobile());
-                XGPushProxy.getInstance(mContext,XGPushFactory.createXGPushManagerConfig())
-                        .registerPush(EanfangApplication.get().getUser().getAccount().getMobile());
+                SDKManager.getXGPush(mContext).registerPush(EanfangApplication.get().getUser().getAccount().getMobile());
             }
         });
 

@@ -29,6 +29,8 @@ import com.eanfang.model.ConstAllBean;
 import com.eanfang.model.GroupDetailBean;
 import com.eanfang.model.LoginBean;
 import com.eanfang.model.device.User;
+import com.eanfang.sdk.SDKManager;
+import com.eanfang.sdk.tengxunsdk.xingepush.IXGPush;
 import com.eanfang.util.BadgeUtil;
 import com.eanfang.util.CleanMessageUtil;
 import com.eanfang.util.JumpItent;
@@ -37,7 +39,7 @@ import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UpdateAppManager;
-import com.tencent.android.tpush.XGPushConfig;
+
 import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.client.BuildConfig;
@@ -280,22 +282,17 @@ public class MainActivity extends BaseClientActivity {
 
 
     private void registerXinGe() {
+       IXGPush ixgPush= SDKManager.getXGPush(MainActivity.this);
         // 打开第三方推送
-        XGPushConfig.enableOtherPush(MainActivity.this, true);
+        ixgPush.enableOtherPush(true);
         //开启信鸽日志输出
-        XGPushConfig.enableDebug(MainActivity.this, true);
-        XGPushConfig.setHuaweiDebug(true);
-        /**
-         * 小米
-         * */
-        XGPushConfig.setMiPushAppId(MainActivity.this, XIAOMI_APPID_CLIENT);
-        XGPushConfig.setMiPushAppKey(MainActivity.this, XIAOMI_APPKEY_CLIENT);
-        /**
-         * 魅族
-         * */
-        XGPushConfig.setMzPushAppId(MainActivity.this, MEIZU_APPID_CLIENT);
-        XGPushConfig.setMzPushAppKey(MainActivity.this, MEIZU_APPKEY_CLIENT);
-        ReceiverInit.getInstance().inits(MainActivity.this, user.getAccount().getMobile());
+        ixgPush.enableDebug( true);
+        ixgPush.setHuaweiDebug(true);
+        //小米
+        ixgPush.setMiPush( XIAOMI_APPID_CLIENT,XIAOMI_APPKEY_CLIENT);
+        //魅族
+        ixgPush.setMzPush(MEIZU_APPID_CLIENT,MEIZU_APPKEY_CLIENT);
+        ixgPush.registerPush(user.getAccount().getMobile());
     }
 
     public void setHeaders() {

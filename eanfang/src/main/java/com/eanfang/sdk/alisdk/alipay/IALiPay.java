@@ -1,4 +1,4 @@
-package com.alisdk.alipay;
+package com.eanfang.sdk.alisdk.alipay;
 
 import android.app.Activity;
 

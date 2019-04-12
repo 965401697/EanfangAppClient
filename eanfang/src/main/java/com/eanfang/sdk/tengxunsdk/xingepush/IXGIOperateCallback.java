@@ -1,4 +1,4 @@
-package com.tengxunsdk.xingepush;
+package com.eanfang.sdk.tengxunsdk.xingepush;
 
 /**
  * created by wtt

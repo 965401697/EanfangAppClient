@@ -14,6 +14,7 @@ import com.eanfang.config.FastjsonConfig;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.LoginBean;
+import com.eanfang.sdk.SDKManager;
 import com.eanfang.util.ApkUtils;
 import com.eanfang.util.ChannelUtil;
 import com.eanfang.util.CleanMessageUtil;
@@ -57,12 +58,13 @@ public class SplashActivity extends BaseClientActivity implements GuideUtil.OnCa
         }
         setContentView(R.layout.activity_splash);
         //bugly初始化
-        CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(SplashActivity.this);
+       /* CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(SplashActivity.this);
         strategy.setAppChannel(ChannelUtil.getChannelName(SplashActivity.this));
         //App的版本
         strategy.setAppVersion(ApkUtils.getAppVersionName(SplashActivity.this));
         strategy.setAppPackageName(BuildConfig.APPLICATION_ID);
-        CrashReport.initCrashReport(getApplicationContext(), BuildConfig.BUGLY_CLIENT, false, strategy);
+        CrashReport.initCrashReport(getApplicationContext(), BuildConfig.BUGLY_CLIENT, false, strategy);*/
+        SDKManager.getBugly().init(this,BuildConfig.BUGLY_CLIENT);
         init();
     }
 

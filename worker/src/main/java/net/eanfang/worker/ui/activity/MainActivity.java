@@ -33,6 +33,8 @@ import com.eanfang.model.GroupDetailBean;
 import com.eanfang.model.LoginBean;
 import com.eanfang.model.NoticeEntity;
 import com.eanfang.model.device.User;
+import com.eanfang.sdk.SDKManager;
+import com.eanfang.sdk.tengxunsdk.xingepush.IXGPush;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.BadgeUtil;
 import com.eanfang.util.CleanMessageUtil;
@@ -46,9 +48,6 @@ import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UpdateAppManager;
 import com.picker.common.util.ScreenUtils;
-import com.tencent.android.tpush.XGPushConfig;
-import com.tengxunsdk.xingepush.XGPushFactory;
-import com.tengxunsdk.xingepush.XGPushProxy;
 import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.worker.BuildConfig;
@@ -125,16 +124,6 @@ public class MainActivity extends BaseActivity{
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         user = EanfangApplication.get().getUser();
-//        XGPushClickedResult message = XGPushManager.onActivityStarted(this);
-//        if (message != null) {
-//            // 获取自定义key-value String customContent = message.getCustomContent();
-//            //拿到数据自行处理
-//            if (isTaskRoot()) {
-//                return;
-//            }
-//            //如果有面板存在则关闭当前的面板
-//            finish();
-//        }
         setHeaders();
         initXinGe();
         initFragment();
@@ -275,25 +264,17 @@ public class MainActivity extends BaseActivity{
 
 
     private void registerXinGe() {
+        IXGPush ixgPush=SDKManager.getXGPush(MainActivity.this);
         // 打开第三方推送
-        XGPushConfig.enableOtherPush(MainActivity.this, true);
+        ixgPush.enableOtherPush( true);
         //开启信鸽日志输出
-        XGPushConfig.enableDebug(MainActivity.this, true);
-        XGPushConfig.setHuaweiDebug(true);
-        /**
-         * 小米
-         * */
-        XGPushConfig.setMiPushAppId(MainActivity.this, XIAOMI_APPID_WORKER);
-        XGPushConfig.setMiPushAppKey(MainActivity.this, XIAOMI_APPKEY_WORKER);
-        /**
-         * 魅族
-         * */
-        XGPushConfig.setMzPushAppId(MainActivity.this, MEIZU_APPID_WORKER);
-        XGPushConfig.setMzPushAppKey(MainActivity.this, MEIZU_APPKEY_WORKER);
-
-//        ReceiverInit.getInstance().inits(MainActivity.this, user.getAccount().getMobile());
-        XGPushProxy .getInstance(MainActivity.this,XGPushFactory.createXGPushManagerConfig())
-                .registerPush(user.getAccount().getMobile());
+        ixgPush.enableDebug( true);
+        ixgPush.setHuaweiDebug(true);
+        //小米
+        ixgPush.setMiPush(XIAOMI_APPID_WORKER,XIAOMI_APPKEY_WORKER);
+        //魅族
+        ixgPush.setMzPush(MEIZU_APPID_WORKER,MEIZU_APPKEY_WORKER);
+        ixgPush.registerPush(user.getAccount().getMobile());
     }
 
     /**
