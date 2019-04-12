@@ -50,9 +50,6 @@ public class FollowListAdapter extends BaseQuickAdapter<FollowDataBean.FollowLis
 
         helper.mTv_Follow_Item_FriendStatus.setVisibility(
                 item.getFriend() == 1 ? View.VISIBLE : View.GONE);
-        helper.mBtnFollowItemAddOrCancel.setSelected(item.getFollowsStatus() != 1);
-        helper.mBtnFollowItemAddOrCancel.setText(
-                helper.mBtnFollowItemAddOrCancel.isSelected() ? "+ 关注" : "已关注");
     }
 
 

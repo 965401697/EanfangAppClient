@@ -15,6 +15,7 @@ import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.my.UserHomeActivity;
 import net.eanfang.client.ui.adapter.FollowListAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
@@ -54,6 +55,11 @@ public class FollowListActivity extends BaseClientActivity {
      */
     private Button mBtnFollow;
 
+    /**
+     * 执行关注状态 1：取消关注  0：加关注
+     */
+    private int mDoFollowStatus = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,7 +83,7 @@ public class FollowListActivity extends BaseClientActivity {
                             adapter.getItem(position);
                     if (bean != null) {
                         changeFollowStatus(bean.getAsUserId(), bean.getAsCompanyId(),
-                                bean.getAsTopCompanyId(), bean.getFollowsStatus());
+                                bean.getAsTopCompanyId(), mDoFollowStatus);
                     }
                     mBtnFollow = (Button) view;
                     break;
@@ -87,7 +93,11 @@ public class FollowListActivity extends BaseClientActivity {
         });
 
         mFollowListAdapter.setOnItemClickListener((adapter, view, position) -> {
-            showToast("跳转用户主页");
+            FollowDataBean.FollowListBean bean = (FollowDataBean.FollowListBean)
+                    adapter.getItem(position);
+            if (bean != null) {
+                UserHomeActivity.startActivity(this, bean.getAsUserId());
+            }
         });
 
         mFollowListAdapter.setOnLoadMoreListener(() -> {
@@ -135,9 +145,11 @@ public class FollowListActivity extends BaseClientActivity {
         if (isFollowed) {
             mBtnFollow.setSelected(false);
             mBtnFollow.setText("已关注");
+            mDoFollowStatus = 1;
         } else {
             mBtnFollow.setSelected(true);
             mBtnFollow.setText("+ 关注");
+            mDoFollowStatus = 0;
         }
     }
 

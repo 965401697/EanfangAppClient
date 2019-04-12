@@ -72,6 +72,7 @@
         fresco:layout_constraintBottom_toBottomOf="parent"
         fresco:layout_constraintRight_toRightOf="parent"
         android:text="已关注"
+        android:textIsSelectable="false"
         fresco:layout_constraintTop_toTopOf="parent" />
     <ImageView
         android:layout_width="match_parent"

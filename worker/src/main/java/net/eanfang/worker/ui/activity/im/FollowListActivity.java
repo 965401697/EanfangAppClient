@@ -55,6 +55,11 @@ public class FollowListActivity extends BaseWorkerActivity {
      */
     private Button mBtnFollow;
 
+    /**
+     * 执行关注状态 1：取消关注  0：加关注
+     */
+    private int mDoFollowStatus = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +83,7 @@ public class FollowListActivity extends BaseWorkerActivity {
                             adapter.getItem(position);
                     if (bean != null) {
                         changeFollowStatus(bean.getAsUserId(), bean.getAsCompanyId(),
-                                bean.getAsTopCompanyId(), bean.getFollowsStatus());
+                                bean.getAsTopCompanyId(), mDoFollowStatus);
                     }
                     mBtnFollow = (Button) view;
                     break;
@@ -90,7 +95,9 @@ public class FollowListActivity extends BaseWorkerActivity {
         mFollowListAdapter.setOnItemClickListener((adapter, view, position) -> {
             FollowDataBean.FollowListBean bean = (FollowDataBean.FollowListBean)
                     adapter.getItem(position);
-            UserHomeActivity.startActivity(this, bean.getAsUserId());
+            if (bean != null) {
+                UserHomeActivity.startActivity(this, bean.getAsUserId());
+            }
         });
 
         mFollowListAdapter.setOnLoadMoreListener(() -> {
@@ -134,9 +141,11 @@ public class FollowListActivity extends BaseWorkerActivity {
         if (isFollowed) {
             mBtnFollow.setSelected(false);
             mBtnFollow.setText("已关注");
+            mDoFollowStatus = 1;
         } else {
             mBtnFollow.setSelected(true);
             mBtnFollow.setText("+ 关注");
+            mDoFollowStatus = 0;
         }
     }
 
