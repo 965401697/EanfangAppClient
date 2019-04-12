@@ -46,7 +46,7 @@ public class UserHomePageBean implements Serializable {
     /**
      * 返回关注状态
      *
-     * @return 1：关注 0：未关注
+     * @return 0：关注 1：未关注
      */
     public int getFollowStatus() {
         return followStatus;

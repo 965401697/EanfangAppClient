@@ -197,7 +197,7 @@ public class UserHomeActivity extends BaseWorkerActivity {
                         return;
                     }
                     mIsFriend = bean.getFriendStatus();
-                    mIsFollowed = bean.getFollowStatus() == 1;
+                    mIsFollowed = bean.getFollowStatus() == 0;
                     setFriendStatus();
                     setFollowStatus();
                     if (bean.getJobList() != null && bean.getJobList().size() > 0) {
