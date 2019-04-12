@@ -37,16 +37,18 @@ public class RepairTypeActivity extends BaseActivity {
     private void initView() {
         setLeftBack();
         setTitle(R.string.text_home_reapir);
+        setRightTitle("历史报修");
+        setRightImageResId(R.mipmap.ic_client_repair_list);
+        setRightTitleOnClickListener((v) -> {
+            if (PermKit.get().getRepairListPerm()) {
+                JumpItent.jump(RepairTypeActivity.this, RepairCtrlActivity.class);
+            }
+        });
     }
 
-    @OnClick({R.id.iv_repairList, R.id.iv_repairNew})
+    @OnClick({R.id.iv_repairNew})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.iv_repairList:
-                if (PermKit.get().getRepairListPerm()) {
-                    JumpItent.jump(RepairTypeActivity.this, RepairCtrlActivity.class);
-                }
-                break;
             case R.id.iv_repairNew:
                 if (PermKit.get().getRepairCreatePerm()) {
                     JumpItent.jump(RepairTypeActivity.this, RepairActivity.class);

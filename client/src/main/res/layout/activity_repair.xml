@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/color_white"
                 android:orientation="vertical"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <LinearLayout
                     android:id="@+id/ll_user_desc"
@@ -121,7 +121,8 @@
                             android:textColor="@color/color_client_neworder"
                             android:textSize="@dimen/textSize_13" />
 
-                    </LinearLayout>
+                    </LinearLayout>async
+
                 </LinearLayout>
 
                 <View style="@style/style_common_line_gray" />
