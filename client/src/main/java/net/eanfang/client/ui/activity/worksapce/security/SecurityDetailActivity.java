@@ -36,6 +36,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.my.UserHomeActivity;
 import net.eanfang.client.ui.adapter.security.SecurityCommentAdapter;
 import net.eanfang.client.ui.widget.GeneralSDialog;
 
@@ -174,6 +175,13 @@ public class SecurityDetailActivity extends BaseActivity {
             generalDialog.show();
             return false;
         });
+
+        securityCommentAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            SecurityDetailBean.ListBean listBean = (SecurityDetailBean.ListBean) adapter.getData().get(position);
+            if (listBean != null) {
+                gotoUserHomeActivity(listBean.getCommentUser().getUserId());
+            }
+        });
     }
 
     /**
@@ -274,7 +282,7 @@ public class SecurityDetailActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.ll_like, R.id.ll_comments, R.id.ll_share, R.id.tv_send, R.id.tv_isFocus})
+    @OnClick({R.id.ll_like, R.id.ll_comments, R.id.ll_share, R.id.tv_send, R.id.tv_isFocus,R.id.iv_seucrity_header})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_like:
@@ -296,16 +304,27 @@ public class SecurityDetailActivity extends BaseActivity {
                     doFoucus(securityBean);
                 }
                 break;
-
+            case R.id.iv_seucrity_header:
+                if (securityBean != null) {
+                    gotoUserHomeActivity(String.valueOf(securityBean.getPublisherUserId()));
+                }
+                break;
             default:
                 break;
         }
     }
 
     /**
+     * 跳转用户主页面
+     * @param uid
+     */
+    private void gotoUserHomeActivity(String uid) {
+        UserHomeActivity.startActivity(this, uid);
+    }
+
+    /**
      * 关注
      */
-
     private void doFoucus(SecurityListBean.ListBean listBean) {
         SecurityFoucsBean securityFoucsBean = new SecurityFoucsBean();
         securityFoucsBean.setFollowUserId(EanfangApplication.get().getUserId());
