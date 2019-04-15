@@ -1,10 +1,9 @@
 package com.eanfang.sdk;
 
-
 import android.content.Context;
 
-import com.eanfang.sdk.alisdk.alioss.IOssService;
-import com.eanfang.sdk.alisdk.alioss.OssService;
+import com.eanfang.sdk.alisdk.alioss.IOSSStorage;
+import com.eanfang.sdk.alisdk.alioss.OSSStorage;
 import com.eanfang.sdk.alisdk.alipay.ALiPayManager;
 import com.eanfang.sdk.alisdk.alipay.IALiPay;
 import com.eanfang.sdk.tengxunsdk.bugly.BuglyManager;
@@ -25,39 +24,39 @@ public class SDKManager {
     private static IWXPay WXPay;
     private static IXGPush XGPUSH;
     private static IALiPay ALPAY;
-    private static IOssService OSSSTORAGE;
+    private static IOSSStorage OSSSTORAGE;
 
-    public static IBugly getBugly(){
-        if(BUGLY==null){
-            BUGLY=new BuglyManager();
+    public static IBugly getBugly() {
+        if (BUGLY == null) {
+            BUGLY = new BuglyManager();
         }
         return BUGLY;
     }
 
-    public static IWXPay getWXPay(){
-        if(WXPay==null){
-            WXPay=new WXPayManager();
+    public static IWXPay getWXPay() {
+        if (WXPay == null) {
+            WXPay = new WXPayManager();
         }
         return WXPay;
     }
 
-    public static IXGPush getXGPush(Context context){
-        if(XGPUSH==null){
-            XGPUSH=new XGPushManagerConfig(context.getApplicationContext());
+    public static IXGPush getXGPush(Context context) {
+        if (XGPUSH == null) {
+            XGPUSH = new XGPushManagerConfig(context.getApplicationContext());
         }
         return XGPUSH;
     }
 
-    public static IALiPay getALipay(){
-        if(ALPAY==null){
-            ALPAY=new ALiPayManager();
+    public static IALiPay getALipay() {
+        if (ALPAY == null) {
+            ALPAY = new ALiPayManager();
         }
         return ALPAY;
     }
 
-    public static IOssService getIOssService(){
-        if(OSSSTORAGE==null){
-            OSSSTORAGE=new OssService();
+    public static IOSSStorage getIOSS() {
+        if (OSSSTORAGE == null) {
+            OSSSTORAGE = new OSSStorage();
         }
         return OSSSTORAGE;
     }

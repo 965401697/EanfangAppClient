@@ -27,6 +27,7 @@ import com.eanfang.model.Message;
 import com.eanfang.model.SelectAddressItem;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
+import com.eanfang.sdk.SDKManager;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.IDCardUtil;
@@ -231,8 +232,8 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
             default:
                 break;
         }
-        OSSUtils.initOSS(this).asyncPutImage(imgKey, result.getImage().getOriginalPath(), callback);
-
+//        OSSUtils.initOSS(this).asyncPutImage(imgKey, result.getImage().getOriginalPath(), callback);
+        SDKManager.getIOSS().initOSS(this).asyncPutImage(imgKey,result.getImage().getOriginalPath(),callback);
 
     }
 

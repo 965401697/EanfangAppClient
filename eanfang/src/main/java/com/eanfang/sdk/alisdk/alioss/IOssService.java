@@ -1,8 +1,9 @@
 package com.eanfang.sdk.alisdk.alioss;
 
-import android.content.Context;
 
-import com.alibaba.sdk.android.oss.OSS;
+import com.eanfang.oss.OSSCallBack;
+
+import java.util.Map;
 
 /**
  * created by wtt
@@ -10,11 +11,16 @@ import com.alibaba.sdk.android.oss.OSS;
  * summary:
  */
 public interface IOssService {
-    OSS init(Context context);
-
-    void asyncPutFile(String objectKey,String filePath,IOSSCallBack mIOSSCallBack);
-    void asyncPutImage(String objectKey,String filePath,IOSSCallBack mIOSSCallBack);
-    void asyncPutImages();
-    void asyncPutVideo(String objectKey,String filePath,IOSSCallBack mIOSSCallBack);
-
+    /**
+     * 上传单张图片
+     */
+  void  asyncPutImage(String objectKey, String urlPath, OSSCallBack ossCallBack);
+    /**
+     * 上传多张图片
+     */
+    void asyncPutImages(final Map<String, String> objectMap, final OSSCallBack callBack);
+    /**
+     * 上传视频
+     */
+    void asyncPutVideo(String objectKey, String videoPath, OSSCallBack ossCallBack);
 }
