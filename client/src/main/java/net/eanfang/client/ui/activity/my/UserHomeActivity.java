@@ -21,6 +21,7 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.UserHomePageBean;
+import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.witget.DefaultPopWindow;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -46,7 +47,7 @@ import io.rong.imlib.model.UserInfo;
  */
 public class UserHomeActivity extends BaseClientActivity {
     private static final String TAG = "UserHomeActivity";
-    private static final String EXTRA_UID = "UserHomeActivity.uid";
+    private static final String EXTRA_UID = "UserHomeActivity.accId";
     @BindView(R.id.iv_right)
     ImageView mIvRight;
     @BindView(R.id.img_user_header)
@@ -102,11 +103,11 @@ public class UserHomeActivity extends BaseClientActivity {
      * 启动用户主页页面
      *
      * @param context
-     * @param uid     被查看用户的uId
+     * @param accId   被查看用户的accId
      */
-    public static void startActivity(Context context, String uid) {
+    public static void startActivity(Context context, String accId) {
         Intent intent = new Intent(context, UserHomeActivity.class);
-        intent.putExtra(EXTRA_UID, uid);
+        intent.putExtra(EXTRA_UID, accId);
         context.startActivity(intent);
     }
 
@@ -139,8 +140,8 @@ public class UserHomeActivity extends BaseClientActivity {
         });
         mTvAddAndCancelFollow.setOnClickListener(v -> {
             if (mCompanyInfoBean != null) {
-                changeFollowStatus(mCompanyInfoBean.getUserId(), mCompanyInfoBean.getCompanyId(),
-                        mCompanyInfoBean.getTopCompanyId(),mIsFollowed);
+                changeFollowStatus(mCompanyInfoBean.getAccId(), mCompanyInfoBean.getUserId(), mCompanyInfoBean.getCompanyId(),
+                        mCompanyInfoBean.getTopCompanyId(), mIsFollowed);
             } else {
                 showToast("用户信息有误！");
             }
@@ -167,8 +168,8 @@ public class UserHomeActivity extends BaseClientActivity {
             @Override
             public void onClick(View v) {
                 if (mCompanyInfoBean != null) {
-                    changeFollowStatus(mCompanyInfoBean.getUserId(), mCompanyInfoBean.getCompanyId(),
-                            mCompanyInfoBean.getTopCompanyId(),mIsFollowed);
+                    changeFollowStatus(mCompanyInfoBean.getAccId(), mCompanyInfoBean.getUserId(), mCompanyInfoBean.getCompanyId(),
+                            mCompanyInfoBean.getTopCompanyId(), mIsFollowed);
                 } else {
                     showToast("用户信息有误！");
                 }
@@ -192,9 +193,9 @@ public class UserHomeActivity extends BaseClientActivity {
         });
     }
 
-    private void initData(String uid) {
+    private void initData(String accId) {
         EanfangHttp.post(UserApi.USER_HOME_PAGE)
-                .params("userId", uid)
+                .params("accId", accId)
                 .execute(new EanfangCallback<UserHomePageBean>(UserHomeActivity.this, true, UserHomePageBean.class, bean -> {
                     if (bean == null) {
                         return;
@@ -225,9 +226,15 @@ public class UserHomeActivity extends BaseClientActivity {
                         mTvUserInfo.setText(
                                 MessageFormat.format("{0} · {1} · {2}", accountBean.getRealName(), sex, accountBean.getBirthMonthDay()));
                         mTvPositionLocation.setText(accountBean.getAreaInfo());
-                        mTvIntro.setText(accountBean.getIntro().length() > 18
-                                ? accountBean.getIntro().substring(0, 16) + "..." :
-                                accountBean.getIntro());
+                        String intro = accountBean.getIntro();
+                        if (!StringUtils.isEmpty(intro)) {
+                            mTvIntro.setText(accountBean.getIntro().length() > 18
+                                    ? accountBean.getIntro().substring(0, 16) + "..." :
+                                    accountBean.getIntro());
+                        } else {
+                            mTvIntro.setText(getString(R.string.text_user_home_intro_default));
+                        }
+
                     }
                     mCompanyInfoBean = bean.getCompanyInfo();
                     Log.e("UserHomePageBean:", bean.toString());
@@ -271,13 +278,15 @@ public class UserHomeActivity extends BaseClientActivity {
      * @param doDelete true：删除好友 false：添加好友
      */
     private void pushFriendStatus(boolean doDelete) {
-        EanfangHttp.post(doDelete ? UserApi.POST_DELETE_FRIEND_PUSH : UserApi.POST_ADD_FRIEND_PUSH)
-                .params("senderId", EanfangApplication.get().getAccId())
-                .params("targetIds", mUserInfo.getUserId())
-                .execute(new EanfangCallback<org.json.JSONObject>(this, true, org.json.JSONObject.class, (json) -> {
-                    ToastUtil.get().showToast(this, doDelete ? "删除成功" : "发送成功");
-                    setFriendStatus();
-                }));
+        if (mUserInfo != null) {
+            EanfangHttp.post(doDelete ? UserApi.POST_DELETE_FRIEND_PUSH : UserApi.POST_ADD_FRIEND_PUSH)
+                    .params("senderId", EanfangApplication.get().getAccId())
+                    .params("targetIds", mUserInfo.getUserId())
+                    .execute(new EanfangCallback<org.json.JSONObject>(this, true, org.json.JSONObject.class, (json) -> {
+                        ToastUtil.get().showToast(this, doDelete ? "删除成功" : "发送成功");
+                        setFriendStatus();
+                    }));
+        }
     }
 
     /**
@@ -292,20 +301,23 @@ public class UserHomeActivity extends BaseClientActivity {
     /**
      * 改变用户关注状态
      *
+     * @param asAccId        被关注人accId
      * @param asUserId       被关注人id
      * @param asCompanyId    被关注人公司id
      * @param asTopCompanyId 被关注人总公司id
-     * @param isFollowed     false：关注  true：取消关注
+     * @param isFollowed     true：已关注  false：未关注
      */
-    private void changeFollowStatus(String asUserId, String asCompanyId,
+    private void changeFollowStatus(String asAccId, String asUserId, String asCompanyId,
                                     String asTopCompanyId, boolean isFollowed) {
-        Log.e("UserHomeActivity", "changeFollowStatus: asUserId:" + asUserId + "  asCompanyId:" + asCompanyId
+        Log.d("UserHomeActivity", "changeFollowStatus: asAccId :" + " asUserId:"
+                + asUserId + "  asCompanyId:" + asCompanyId
                 + "  asTopCompanyId:" + asTopCompanyId + "  isFollow:" + isFollowed);
         EanfangHttp.post(UserApi.POST_CHANGE_FOLLOW_STATUS)
+                .params("asAccId", asAccId)
                 .params("asUserId", asUserId)
                 .params("asCompanyId", asCompanyId)
                 .params("asTopCompanyId", asTopCompanyId)
-                .params("followsStatus", String.valueOf(isFollowed ? 1 : 0))
+                .params("followStatus", String.valueOf(isFollowed ? 0 : 1))
                 .execute(new EanfangCallback(this, true, JSONObject.class, bean -> {
                     Log.d("UserHomeActivity", "changeFollowStatus: 关注状态上传成功");
                     showToast(isFollowed ? "已取消关注" : "关注成功");
