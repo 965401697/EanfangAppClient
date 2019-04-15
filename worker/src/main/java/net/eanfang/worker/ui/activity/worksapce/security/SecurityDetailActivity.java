@@ -28,7 +28,6 @@ import com.eanfang.model.security.SecurityCommentBean;
 import com.eanfang.model.security.SecurityDetailBean;
 import com.eanfang.model.security.SecurityFoucsBean;
 import com.eanfang.model.security.SecurityLikeBean;
-import com.eanfang.model.security.SecurityListBean;
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.ETimeUtils;
@@ -118,7 +117,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
     @BindView(R.id.tv_content)
     MentionTextView tvContent;
 
-    private SecurityListBean.ListBean securityBean;
+    private SecurityDetailBean.SpcListBean securityDetailBean;
     private ArrayList<String> picList = new ArrayList<>();
     private Long mId;
 
@@ -140,15 +139,12 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
      * 是否评论
      */
     private boolean isCommont = false;
-    /**
-     * 是否是朋友
-     */
-    private int mFriend = 100;
 
     private Parser mTagParser = new Parser(this);
     protected FormatRangeManager mRangeManager = new FormatRangeManager();
     private String mContent = "";
     private String atName = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,21 +164,17 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         securityCommentAdapter.bindToRecyclerView(rvComments);
         rvComments.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         rvComments.setNestedScrollingEnabled(false);
-        mFriend = getIntent().getIntExtra("friend", 100);
         isCommont = getIntent().getBooleanExtra("isCommon", false);
+        mId = getIntent().getLongExtra("spcId", 0);
         initData();
     }
 
     private void initData() {
-        securityBean = (SecurityListBean.ListBean) getIntent().getSerializableExtra("bean");
-        mId = securityBean.getSpcId();
-        mLikeStatus = securityBean.getLikeStatus();
         tvContent.setMovementMethod(new LinkMovementMethod());
         tvContent.setParserConverter(mTagParser);
         if (isCommont) {
             ShowKeyboard();
         }
-        setData();
         getComments();
     }
 
@@ -204,7 +196,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         ivSeucrityHeader.setOnClickListener((v) -> {
             Bundle bundle = new Bundle();
             bundle.putBoolean("isLookOther", true);
-            bundle.putLong("mUserId", securityBean.getPublisherUserId());
+            bundle.putLong("mUserId", securityDetailBean.getPublisherUserId());
             JumpItent.jump(SecurityDetailActivity.this, SecurityPersonalActivity.class, bundle);
         });
     }
@@ -232,42 +224,45 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
                 .execute(new EanfangCallback<SecurityDetailBean>(this, true, SecurityDetailBean.class, bean -> {
                     commentList = bean.getList();
                     securityCommentAdapter.setNewData(commentList);
+                    securityDetailBean = bean.getSpcList();
 
                     /**
                      * 阅读数  评价数
                      * */
                     if (bean.getSpcList() != null) {
-                        tvReadCount.setText(bean.getSpcList().get(0).getReadCount() + "");
-                        tvCommentCount.setText(bean.getSpcList().get(0).getCommentCount() + "");
+                        tvReadCount.setText(bean.getSpcList().getReadCount() + "");
+                        tvCommentCount.setText(bean.getSpcList().getCommentCount() + "");
                     }
                     if (isCommont) {
                         ShowKeyboard();
                     } else {
                         hideKeyboard();
                     }
+                    setData(securityDetailBean);
                 }));
     }
 
-    public void setData() {
+    public void setData(SecurityDetailBean.SpcListBean securityDetailBean) {
+        mLikeStatus = securityDetailBean.getLikeStatus();
         // 发布人
-        tvName.setText(V.v(() -> securityBean.getAccountEntity().getRealName()));
+        tvName.setText(V.v(() -> securityDetailBean.getAccountEntity().getRealName()));
         // 头像
-        ivSeucrityHeader.setImageURI((Uri.parse(BuildConfig.OSS_SERVER + V.v(() -> securityBean.getAccountEntity().getAvatar()))));
+        ivSeucrityHeader.setImageURI((Uri.parse(BuildConfig.OSS_SERVER + V.v(() -> securityDetailBean.getAccountEntity().getAvatar()))));
         // 公司名称
-        tvCompany.setText(securityBean.getPublisherOrg().getOrgName());
+        tvCompany.setText(securityDetailBean.getPublisherOrg().getOrgName());
         //发布的内容
         // 艾特人
-        if (V.v(() -> (securityBean.getAtMap() != null))) {
-            atName = SecurityItemUtil.getInstance().doJonint(securityBean.getAtMap());
+        if (V.v(() -> (securityDetailBean.getAtMap() != null))) {
+            atName = SecurityItemUtil.getInstance().doJonint(securityDetailBean.getAtMap());
         } else {
             atName = "";
         }
-        mContent = securityBean.getSpcContent() + atName;
+        mContent = securityDetailBean.getSpcContent() + atName;
         CharSequence convertMetionString = mRangeManager.getFormatCharSequence(mContent);
         tvContent.setText(convertMetionString);
 
-        tvTime.setText(ETimeUtils.getTimeFormatText(securityBean.getCreateTime()));
-        if (securityBean.getPublisherUserId().equals(EanfangApplication.get().getUserId())) {
+        tvTime.setText(ETimeUtils.getTimeFormatText(securityDetailBean.getCreateTime()));
+        if (securityDetailBean.getPublisherUserId().equals(EanfangApplication.get().getUserId())) {
             tvIsFocus.setVisibility(View.GONE);
         } else {
             tvIsFocus.setVisibility(View.VISIBLE);
@@ -275,7 +270,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         /**
          * 是否是好友 2 好友 1 不是好友
          * */
-        if (mFriend == 2) {
+        if (securityDetailBean.getFriend() == 2) {
             tvFriend.setVisibility(View.VISIBLE);
         } else {
             tvFriend.setVisibility(View.GONE);
@@ -283,7 +278,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         /**
          * 是否认证
          * */
-        if (securityBean.getVerifyStatus() == 1) {
+        if (securityDetailBean.getVerifyStatus() == 1) {
             ivCertifi.setVisibility(View.VISIBLE);
         } else {
             ivCertifi.setVisibility(View.GONE);
@@ -291,7 +286,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         /**
          * 0 是关注 1 是未关注
          * */
-        if (securityBean.getFollowsStatus() == 0) {
+        if (securityDetailBean.getFollowsStatus() == 0) {
             tvIsFocus.setText("取消关注");
             isFoucus = true;
         } else {
@@ -301,14 +296,14 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         /**
          * 0 点赞 1 未点赞
          * */
-        if (securityBean.getLikeStatus() == 0) {
+        if (securityDetailBean.getLikeStatus() == 0) {
             ivLike.setImageResource(R.mipmap.ic_worker_security_like_pressed);
         } else {
             ivLike.setImageResource(R.mipmap.ic_worker_security_like_unpressed);
         }
-        if (!StringUtils.isEmpty(securityBean.getSpcImg())) {
+        if (!StringUtils.isEmpty(securityDetailBean.getSpcImg())) {
             snplPic.setVisibility(View.VISIBLE);
-            String[] pics = securityBean.getSpcImg().split(",");
+            String[] pics = securityDetailBean.getSpcImg().split(",");
             picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
 
             snplPic.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO, REQUEST_CODE_CHOOSE_PHOTO_two));
@@ -317,9 +312,9 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         } else {
             snplPic.setVisibility(View.GONE);
         }
-        if (!StringUtils.isEmpty(securityBean.getSpcVideo())) {
+        if (!StringUtils.isEmpty(securityDetailBean.getSpcVideo())) {
             rlVideo.setVisibility(View.VISIBLE);
-            ivShowVideo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + securityBean.getSpcVideo() + ".jpg"));
+            ivShowVideo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + securityDetailBean.getSpcVideo() + ".jpg"));
         } else {
             rlVideo.setVisibility(View.GONE);
         }
@@ -343,14 +338,14 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
                 break;
             case R.id.tv_isFocus:
                 if (isFoucus) {
-                    doUnFoucus(securityBean);
+                    doUnFoucus(securityDetailBean);
                 } else {
-                    doFoucus(securityBean);
+                    doFoucus(securityDetailBean);
                 }
                 break;
             case R.id.rl_video:
                 Bundle bundle = new Bundle();
-                bundle.putString("videoPath", BuildConfig.OSS_SERVER + securityBean.getSpcVideo() + ".mp4");
+                bundle.putString("videoPath", BuildConfig.OSS_SERVER + securityDetailBean.getSpcVideo() + ".mp4");
                 JumpItent.jump(SecurityDetailActivity.this, PlayVideoActivity.class, bundle);
                 break;
             default:
@@ -362,7 +357,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
      * 关注
      */
 
-    private void doFoucus(SecurityListBean.ListBean listBean) {
+    private void doFoucus(SecurityDetailBean.SpcListBean listBean) {
         SecurityFoucsBean securityFoucsBean = new SecurityFoucsBean();
         securityFoucsBean.setFollowUserId(EanfangApplication.get().getUserId());
         securityFoucsBean.setFollowCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyId());
@@ -384,7 +379,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
     /**
      * 取消关注
      */
-    private void doUnFoucus(SecurityListBean.ListBean listBean) {
+    private void doUnFoucus(SecurityDetailBean.SpcListBean listBean) {
         SecurityFoucsBean securityFoucsBean = new SecurityFoucsBean();
         securityFoucsBean.setFollowUserId(EanfangApplication.get().getUserId());
         securityFoucsBean.setFollowCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyId());

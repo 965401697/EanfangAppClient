@@ -114,7 +114,6 @@ public class SecurityCreateActivity extends BaseActivity {
         setLeftBack();
         setRightTitle("发布");
         snplAddPhoto.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_CERTIFICATE, REQUEST_CODE_PHOTO_CERTIFICATE));
-
         setRightTitleOnClickListener((v) -> {
             doCommit();
         });
@@ -156,6 +155,7 @@ public class SecurityCreateActivity extends BaseActivity {
 
 
     public void doCommit() {
+        mAtUserId = StringUtils.getSecurityId(etContent.getFormatCharSequence().toString());
         String mContent = etContent.getText().toString().trim();
         mPic = PhotoUtils.getPhotoUrl("sercurity/", snplAddPhoto, uploadMap, false);
         if (!StringUtils.isEmpty(mContent) || !StringUtils.isEmpty(mPic)) {
@@ -211,11 +211,6 @@ public class SecurityCreateActivity extends BaseActivity {
                 SecurityFoucsListBean.ListBean.UserEntityBean accountEntityBean =
                         (SecurityFoucsListBean.ListBean.UserEntityBean) data.getSerializableExtra("foucsAccountEntity");
                 etContent.insert(accountEntityBean);
-                if (StringUtils.isEmpty(mAtUserId)) {
-                    mAtUserId.append(accountEntityBean.getUserId().toString());
-                } else {
-                    mAtUserId.append("," + accountEntityBean.getUserId().toString());
-                }
                 break;
             default:
                 break;
