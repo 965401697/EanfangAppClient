@@ -54,6 +54,7 @@ import net.eanfang.worker.ui.activity.worksapce.repair.RepairCtrlActivity;
 import net.eanfang.worker.ui.activity.worksapce.scancode.ScanCodeActivity;
 import net.eanfang.worker.ui.activity.worksapce.security.SecurityDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.security.SecurityListActivity;
+import net.eanfang.worker.ui.activity.worksapce.security.SecurityPersonalActivity;
 import net.eanfang.worker.ui.activity.worksapce.tender.WorkerTenderControlActivity;
 import net.eanfang.worker.ui.adapter.HomeWaitAdapter;
 import net.eanfang.worker.ui.adapter.security.SecurityListAdapter;
@@ -387,6 +388,10 @@ public class HomeFragment extends BaseFragment {
         findViewById(R.id.iv_security_cancle).setOnClickListener((v) -> {
             rlSecurityNewMessage.setVisibility(View.GONE);
         });
+        findViewById(R.id.ll_security_new).setOnClickListener((v) -> {
+            JumpItent.jump(getActivity(), SecurityPersonalActivity.class);
+        });
+
 
     }
 

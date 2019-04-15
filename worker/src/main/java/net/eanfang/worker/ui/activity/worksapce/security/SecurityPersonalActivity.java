@@ -345,6 +345,7 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
         //下拉永远第一页
         mPage = 1;
         initData();
+        initPersonalData();
     }
 
     /**

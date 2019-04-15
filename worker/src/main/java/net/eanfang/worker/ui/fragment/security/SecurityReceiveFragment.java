@@ -50,6 +50,12 @@ public class SecurityReceiveFragment extends TemplateItemListFragment {
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mPage = 1;
+        getData();
+    }
 
     public void doJump(int position, boolean isCommon) {
         Bundle bundle = new Bundle();
