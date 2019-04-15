@@ -133,8 +133,7 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
             JumpItent.jump(SecurityPersonalPublicListActivity.this, FaultExplainActivity.class, bundle_question);
         } else {
             Bundle bundle = new Bundle();
-            bundle.putSerializable("bean", securityListAdapter.getData().get(position));
-            bundle.putInt("friend", securityListAdapter.getData().get(position).getFriend());
+            bundle.putLong("spcId", securityListAdapter.getData().get(position).getSpcId());
             bundle.putBoolean("isCommon", isCommon);
             JumpItent.jump(SecurityPersonalPublicListActivity.this, SecurityDetailActivity.class, bundle);
         }

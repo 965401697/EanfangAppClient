@@ -95,7 +95,7 @@ public class SecurityFoucsListBean implements Serializable {
 
             private class UserEntityConvert implements FormatRange.FormatData {
 
-                public static final String USER_FORMART = "<user id='%s' name = '%s'></user>";
+                public static final String USER_FORMART = "<user id='%s'></user>";
                 private final UserEntityBean accountEntityBean;
 
                 public UserEntityConvert(UserEntityBean mAccountEntityBean) {
@@ -104,7 +104,7 @@ public class SecurityFoucsListBean implements Serializable {
 
                 @Override
                 public CharSequence formatCharSequence() {
-                    return String.format(USER_FORMART, accountEntityBean.getUserId(),accountEntityBean.getAccountEntity().getRealName());
+                    return String.format(USER_FORMART, accountEntityBean.getUserId());
                 }
             }
         }

@@ -242,7 +242,8 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:text="暂时没有数据" />
+                        android:text="暂时没有数据"
+                        android:visibility="gone" />
 
                 </LinearLayout>
 

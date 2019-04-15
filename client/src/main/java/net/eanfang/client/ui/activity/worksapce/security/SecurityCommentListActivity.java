@@ -29,7 +29,7 @@ import butterknife.ButterKnife;
 public class SecurityCommentListActivity extends BaseActivity implements OnTabSelectListener {
 
     private final String[] mCommentsTitle = {
-            "我评论的", "我收到的"
+            "我收到的", "我评论的"
     };
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private MyPagerAdapter mAdapter;
@@ -43,8 +43,8 @@ public class SecurityCommentListActivity extends BaseActivity implements OnTabSe
     }
 
     private void initView() {
-        mFragments.add(SecuritySendFragment.getInstance("我评论的"));
         mFragments.add(SecurityReceiveFragment.getInstance("我收到的"));
+        mFragments.add(SecuritySendFragment.getInstance("我评论的"));
         View decorView = getWindow().getDecorView();
         ViewPager vp = ViewFindUtils.find(decorView, R.id.vp_security_comment);
         mAdapter = new MyPagerAdapter(getSupportFragmentManager());

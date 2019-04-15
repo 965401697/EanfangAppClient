@@ -7,6 +7,7 @@ import com.eanfang.util.CallUtils;
 
 import net.eanfang.worker.R;
 
+
 /**
  * @author Guanluocang
  * @date on 2018/4/23  17:27
@@ -36,7 +37,7 @@ public class PersonalServiceFragment extends BaseFragment {
 
     @Override
     protected void setListener() {
-        findViewById(R.id.tv_service_phone).setOnClickListener((view) -> CallUtils.call(getContext(), "010-58778731"));
+        findViewById(R.id.tv_service_phone).setOnClickListener((view) -> CallUtils.call(getContext(), getString(R.string.text_service_telphone)));
 
 //        findViewById(R.id.tv_service_phone).setOnClickListener((view) -> new SelectTimeDialogFragment().show(getActivity().getSupportFragmentManager(), R.string.app_name + "");)
     }

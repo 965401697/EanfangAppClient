@@ -254,4 +254,22 @@ public class StringUtils {
         }, 200);
     }
 
+    public static StringBuffer getSecurityId(String mContent) {
+        StringBuffer mId = new StringBuffer();
+        int mType = 1;
+        Pattern p = Pattern.compile("\'(.*?)\'");
+        Matcher m = p.matcher(mContent);
+        while (m.find()) {
+            if (mType == 1) {
+                mId.append(m.group(1) + "");
+            } else {
+                mId.append("," + m.group(1));
+            }
+            mType++;
+
+        }
+        return mId;
+    }
+
+
 }

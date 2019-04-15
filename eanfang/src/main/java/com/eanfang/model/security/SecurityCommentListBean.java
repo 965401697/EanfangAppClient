@@ -29,7 +29,7 @@ public class SecurityCommentListBean implements Serializable {
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class ListBean {
+    public static class ListBean implements Serializable{
 
         private AccountEntity accountEntity;
         private CommentsEntityBean commentsEntity;
@@ -45,7 +45,7 @@ public class SecurityCommentListBean implements Serializable {
         @Setter
         @NoArgsConstructor
         @AllArgsConstructor
-        public static class CommentsEntityBean {
+        public static class CommentsEntityBean implements Serializable{
 
             private String commentsContent;
             private String createTime;
@@ -56,7 +56,7 @@ public class SecurityCommentListBean implements Serializable {
         @Setter
         @NoArgsConstructor
         @AllArgsConstructor
-        public static class PublisherUserBean {
+        public static class PublisherUserBean implements Serializable{
 
             private String accId;
             private boolean companyAdmin;

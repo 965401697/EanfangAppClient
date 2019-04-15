@@ -77,12 +77,7 @@ public class HtmlTagHandler implements Html.TagHandler {
                 text.setSpan(new ClickableSpan() {
                     @Override
                     public void onClick(View widget) {
-//                        Bundle bundle = new Bundle();
-//                        bundle.putBoolean("isLookOther", true);
-//                        bundle.putLong("mUserId", t.getMUserId());
                         onAtClickListener.onAtClik(t.getMUserId());
-//                        JumpItent.jump(E, SecurityPersonalActivity.class, bundle);
-//                        Toast.makeText(widget.getContext(), t.toString(), Toast.LENGTH_SHORT).show();
                     }
                 }, where, len, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             }

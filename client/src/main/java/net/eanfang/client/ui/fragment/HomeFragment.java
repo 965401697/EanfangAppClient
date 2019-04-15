@@ -471,11 +471,7 @@ public class HomeFragment extends BaseFragment {
         findViewById(R.id.ll_repair_install).setOnClickListener(v -> startActivity(new Intent(getActivity(), DataInstallActivity.class)));
         findViewById(R.id.ll_design).setOnClickListener(v -> startActivity(new Intent(getActivity(), DataDesignActivity.class)));
         securityListAdapter.setOnItemClickListener((adapter, view, position) -> {
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("bean", securityListAdapter.getData().get(position));
-            bundle.putString("type", "hot");
-            bundle.putInt("friend", securityListAdapter.getData().get(position).getFriend());
-            JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
+            doJump(position, false);
         });
         securityListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             switch (view.getId()) {
@@ -504,7 +500,7 @@ public class HomeFragment extends BaseFragment {
             JumpItent.jump(getActivity(), FaultExplainActivity.class, bundle_question);
         } else {
             Bundle bundle = new Bundle();
-            bundle.putSerializable("bean", securityListAdapter.getData().get(position));
+            bundle.putLong("spcId", securityListAdapter.getData().get(position).getSpcId());
             bundle.putInt("friend", securityListAdapter.getData().get(position).getFriend());
             bundle.putBoolean("isCommon", isCommon);
             JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);

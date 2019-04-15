@@ -1,5 +1,6 @@
 package net.eanfang.worker.ui.fragment.security;
 
+import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.view.View;
 
@@ -9,8 +10,10 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.security.SecurityCommentListBean;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
 
+import net.eanfang.worker.ui.activity.worksapce.security.SecurityDetailActivity;
 import net.eanfang.worker.ui.adapter.security.SecurityCommentListAdapter;
 import net.eanfang.worker.ui.fragment.TemplateItemListFragment;
 
@@ -43,8 +46,15 @@ public class SecuritySendFragment extends TemplateItemListFragment {
         securityCommentListAdapter.setOnLoadMoreListener(this, mRecyclerView);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
         securityCommentListAdapter.setOnItemClickListener((adapter, view, position) -> {
-
+            doJump(position, false);
         });
+    }
+
+    public void doJump(int position, boolean isCommon) {
+        Bundle bundle = new Bundle();
+        bundle.putLong("spcId", securityCommentListAdapter.getData().get(position).getSpcId());
+        bundle.putBoolean("isCommon", isCommon);
+        JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
     }
 
     @Override

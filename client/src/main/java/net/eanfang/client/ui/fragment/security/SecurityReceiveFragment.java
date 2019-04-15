@@ -47,9 +47,15 @@ public class SecurityReceiveFragment extends TemplateItemListFragment {
         securityCommentListAdapter.setOnLoadMoreListener(this, mRecyclerView);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
         securityCommentListAdapter.setOnItemClickListener((adapter, view, position) -> {
-            Bundle bundle = new Bundle();
-            JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
+            doJump(position, false);
         });
+    }
+
+    public void doJump(int position, boolean isCommon) {
+        Bundle bundle = new Bundle();
+        bundle.putLong("spcId", securityCommentListAdapter.getData().get(position).getSpcId());
+        bundle.putBoolean("isCommon", isCommon);
+        JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
     }
 
     @Override
