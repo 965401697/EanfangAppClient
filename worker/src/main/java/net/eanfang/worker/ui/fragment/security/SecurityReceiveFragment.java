@@ -1,6 +1,5 @@
 package net.eanfang.worker.ui.fragment.security;
 
-import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.view.View;
 
@@ -10,10 +9,8 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.security.SecurityCommentListBean;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
 
-import net.eanfang.worker.ui.activity.worksapce.security.SecurityDetailActivity;
 import net.eanfang.worker.ui.adapter.security.SecurityCommentListAdapter;
 import net.eanfang.worker.ui.fragment.TemplateItemListFragment;
 
@@ -46,8 +43,11 @@ public class SecurityReceiveFragment extends TemplateItemListFragment {
         securityCommentListAdapter.setOnLoadMoreListener(this, mRecyclerView);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
         securityCommentListAdapter.setOnItemClickListener((adapter, view, position) -> {
-            Bundle bundle = new Bundle();
-            JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
+//            Bundle bundle = new Bundle();
+//            bundle.putSerializable("bean", securityCommentListAdapter.getData().get(position));
+//            bundle.putInt("friend", securityCommentListAdapter.getData().get(position).getFriend());
+//            bundle.putBoolean("isCommon", false);
+//            JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
         });
     }
 

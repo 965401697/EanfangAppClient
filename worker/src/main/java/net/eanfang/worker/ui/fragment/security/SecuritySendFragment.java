@@ -43,7 +43,11 @@ public class SecuritySendFragment extends TemplateItemListFragment {
         securityCommentListAdapter.setOnLoadMoreListener(this, mRecyclerView);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
         securityCommentListAdapter.setOnItemClickListener((adapter, view, position) -> {
-
+//            Bundle bundle = new Bundle();
+//            bundle.putSerializable("bean", securityCommentListAdapter.getData().get(position));
+//            bundle.putInt("friend", securityCommentListAdapter.getData().get(position).getFriend());
+//            bundle.putBoolean("isCommon", false);
+//            JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
         });
     }
 

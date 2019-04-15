@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:descendantFocusability="blocksDescendants"
-    android:orientation="vertical"
-    tools:context="net.eanfang.worker.ui.activity.worksapce.security.SecurityPersonalActivity">
+    android:orientation="vertical">
 
     <include layout="@layout/header" />
 
@@ -242,7 +241,8 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:text="暂时没有数据" />
+                        android:text="暂时没有数据"
+                        android:visibility="gone" />
 
                 </LinearLayout>
 
