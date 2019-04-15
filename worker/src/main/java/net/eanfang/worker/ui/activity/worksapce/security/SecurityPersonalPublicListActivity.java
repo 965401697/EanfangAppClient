@@ -70,10 +70,10 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
         initView();
     }
 
-
-    private void initView() {
+    @Override
+    protected void onResume() {
+        super.onResume();
         mType = getIntent().getStringExtra("type");
-        setLeftBack();
         /**
          * commnet 评论列表 about 艾特 foucs 关注的人
          * */
@@ -90,6 +90,10 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
             initFoucsAdapter();
             initFoucsData();
         }
+    }
+
+    private void initView() {
+        setLeftBack();
         rvSecurity.setLayoutManager(new LinearLayoutManager(this));
         swipreFresh.setOnRefreshListener(this);
         rvSecurity.addItemDecoration(new BGASpaceItemDecoration(20));

@@ -54,6 +54,7 @@ import net.eanfang.client.ui.activity.worksapce.repair.RepairTypeActivity;
 import net.eanfang.client.ui.activity.worksapce.scancode.ScanCodeActivity;
 import net.eanfang.client.ui.activity.worksapce.security.SecurityDetailActivity;
 import net.eanfang.client.ui.activity.worksapce.security.SecurityListActivity;
+import net.eanfang.client.ui.activity.worksapce.security.SecurityPersonalActivity;
 import net.eanfang.client.ui.adapter.HomeDataAdapter;
 import net.eanfang.client.ui.adapter.security.SecurityListAdapter;
 
@@ -115,6 +116,8 @@ public class HomeFragment extends BaseFragment {
     private RecyclerView rvSecurity;
     private SecurityListAdapter securityListAdapter;
     private TextView tvNoSecurity;
+    private TextView mTvSecurityNewMessage;
+    private RelativeLayout rlSecurityNewMessage;
 
     @Override
     protected int setLayoutResouceId() {
@@ -150,6 +153,8 @@ public class HomeFragment extends BaseFragment {
         tvDesitnTotal = findViewById(R.id.tv_desitn_total);
         rvSecurity = findViewById(R.id.rv_security);
         tvNoSecurity = findViewById(R.id.tv_noSecurity);
+        mTvSecurityNewMessage = findViewById(R.id.tv_security_count);
+        rlSecurityNewMessage = findViewById(R.id.rl_security_message);
         homeScanPopWindow = new HomeScanPopWindow(getActivity(), false, scanSelectItemsOnClick);
         homeScanPopWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
@@ -238,8 +243,15 @@ public class HomeFragment extends BaseFragment {
 //            new SignCtrlView(getActivity()).show();
 //        });
         // 安防圈
+        // 安防圈
         findViewById(R.id.rl_security).setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), SecurityListActivity.class));
+        });
+        findViewById(R.id.iv_security_cancle).setOnClickListener((v) -> {
+            rlSecurityNewMessage.setVisibility(View.GONE);
+        });
+        findViewById(R.id.ll_security_new).setOnClickListener((v) -> {
+            JumpItent.jump(getActivity(), SecurityPersonalActivity.class);
         });
 
     }
@@ -529,6 +541,13 @@ public class HomeFragment extends BaseFragment {
             mDesign = 0;
         }
         qBadgeViewDesign.setBadgeNumber(mDesign);
+        // @我的和评论未读
+        if (bean.getCommentNoRead() + bean.getNoReadCount() > 0) {
+            mTvSecurityNewMessage.setText(bean.getCommentNoRead() + bean.getNoReadCount() + "");
+            rlSecurityNewMessage.setVisibility(View.VISIBLE);
+        } else {
+            rlSecurityNewMessage.setVisibility(View.GONE);
+        }
         /**
          * 底部红点更新
          * */

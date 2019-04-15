@@ -59,6 +59,13 @@ public class SecuritySendFragment extends TemplateItemListFragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mPage = 1;
+        getData();
+    }
+
+    @Override
     protected void getData() {
         mQueryEntry = new QueryEntry();
         mQueryEntry.setPage(mPage);
