@@ -34,7 +34,7 @@ public class FollowListActivity extends BaseClientActivity {
     /**
      * 加载更多数据的最少个数
      */
-    private static final int LOAD_MORE_LEAST_SIZE = 5;
+    private static final int LOAD_MORE_LEAST_SIZE = 10;
     @BindView(R.id.recycler_view_followList)
     RecyclerView mRecyclerViewFollowList;
 
@@ -56,9 +56,9 @@ public class FollowListActivity extends BaseClientActivity {
     private Button mBtnFollow;
 
     /**
-     * 执行关注状态 1：取消关注  0：加关注
+     * 执行关注状态 0：取消关注  1：加关注
      */
-    private int mDoFollowStatus = 1;
+    private int mDoFollowStatus = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,8 +81,12 @@ public class FollowListActivity extends BaseClientActivity {
                 case R.id.btn_follow_item_addOrCancel:
                     FollowDataBean.FollowListBean bean = (FollowDataBean.FollowListBean)
                             adapter.getItem(position);
-                    if (bean != null) {
-                        changeFollowStatus(bean.getAsUserId(), bean.getAsCompanyId(),
+                    if (bean != null && bean.getUserEntity() != null &&
+                            bean.getUserEntity().getAccountEntity() != null&&
+                            bean.getUserEntity().getAccountEntity().getAccId() != null) {
+                        changeFollowStatus(String.valueOf(
+                                bean.getUserEntity().getAccountEntity().getAccId()),
+                                bean.getAsUserId(), bean.getAsCompanyId(),
                                 bean.getAsTopCompanyId(), mDoFollowStatus);
                     }
                     mBtnFollow = (Button) view;
@@ -95,8 +99,11 @@ public class FollowListActivity extends BaseClientActivity {
         mFollowListAdapter.setOnItemClickListener((adapter, view, position) -> {
             FollowDataBean.FollowListBean bean = (FollowDataBean.FollowListBean)
                     adapter.getItem(position);
-            if (bean != null) {
-                UserHomeActivity.startActivity(this, bean.getAsUserId());
+            if (bean != null && bean.getUserEntity() != null &&
+                    bean.getUserEntity().getAccountEntity() != null&&
+                    bean.getUserEntity().getAccountEntity().getAccId() != null) {
+                UserHomeActivity.startActivity(this,
+                        String.valueOf(bean.getUserEntity().getAccountEntity().getAccId()));
             }
         });
 
@@ -145,35 +152,37 @@ public class FollowListActivity extends BaseClientActivity {
         if (isFollowed) {
             mBtnFollow.setSelected(false);
             mBtnFollow.setText("已关注");
-            mDoFollowStatus = 1;
+            mDoFollowStatus = 0;
         } else {
             mBtnFollow.setSelected(true);
             mBtnFollow.setText("+ 关注");
-            mDoFollowStatus = 0;
+            mDoFollowStatus = 1;
         }
     }
 
     /**
      * 改变用户关注状态
      *
+     * @param asAccId        被关注人accId
      * @param asUserId       被关注人id
      * @param asCompanyId    被关注人公司id
      * @param asTopCompanyId 被关注人总公司id
-     * @param status         0：关注  1：取消关注
+     * @param status         0：取消关注  1：关注
      */
-    private void changeFollowStatus(String asUserId, String asCompanyId,
+    private void changeFollowStatus(String asAccId, String asUserId, String asCompanyId,
                                     String asTopCompanyId, int status) {
-        Log.e(TAG, "changeFollowStatus: asUserId:" + asUserId +"  asCompanyId:" +asCompanyId
+        Log.e(TAG, "changeFollowStatus: asAcciId" + asAccId + "asUserId:" + asUserId +"  asCompanyId:" +asCompanyId
         + "  asTopCompanyId:" + asTopCompanyId + "  status:" + status);
         EanfangHttp.post(UserApi.POST_CHANGE_FOLLOW_STATUS)
+                .params("asAcciId", asAccId)
                 .params("asUserId", asUserId)
                 .params("asCompanyId", asCompanyId)
                 .params("asTopCompanyId", asTopCompanyId)
-                .params("followsStatus", String.valueOf(status))
+                .params("followStatus", String.valueOf(status))
                 .execute(new EanfangCallback(this, true, JSONObject.class, bean -> {
                     Log.d(TAG, "changeFollowStatus: 关注状态上传成功");
-                    showToast(status == 1 ? "取消关注成功" : "添加关注成功");
-                    changeFollowBtnShow(status != 1);
+                    showToast(status == 0 ? "取消关注成功" : "添加关注成功");
+                    changeFollowBtnShow(status != 0);
                 }));
     }
 
