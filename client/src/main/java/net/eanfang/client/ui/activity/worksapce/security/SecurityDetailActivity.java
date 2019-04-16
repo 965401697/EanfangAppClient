@@ -178,8 +178,9 @@ public class SecurityDetailActivity extends BaseActivity {
 
         securityCommentAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             SecurityDetailBean.ListBean listBean = (SecurityDetailBean.ListBean) adapter.getData().get(position);
-            if (listBean != null) {
-                gotoUserHomeActivity(listBean.getCommentUser().getUserId());
+            if (listBean != null && listBean.getCommentUser() != null
+                    && listBean.getCommentUser().getAccId() != null) {
+                gotoUserHomeActivity(listBean.getCommentUser().getAccId());
             }
         });
     }
@@ -282,7 +283,7 @@ public class SecurityDetailActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.ll_like, R.id.ll_comments, R.id.ll_share, R.id.tv_send, R.id.tv_isFocus,R.id.iv_seucrity_header})
+    @OnClick({R.id.ll_like, R.id.ll_comments, R.id.ll_share, R.id.tv_send, R.id.tv_isFocus, R.id.iv_seucrity_header})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_like:
@@ -305,8 +306,9 @@ public class SecurityDetailActivity extends BaseActivity {
                 }
                 break;
             case R.id.iv_seucrity_header:
-                if (securityBean != null) {
-                    gotoUserHomeActivity(String.valueOf(securityBean.getPublisherUserId()));
+                if (securityBean != null && securityBean.getAccountEntity() != null
+                        && securityBean.getAccountEntity().getAccId() != null) {
+                    gotoUserHomeActivity(String.valueOf(securityBean.getAccountEntity().getAccId()));
                 }
                 break;
             default:
@@ -316,10 +318,11 @@ public class SecurityDetailActivity extends BaseActivity {
 
     /**
      * 跳转用户主页面
-     * @param uid
+     *
+     * @param accId
      */
-    private void gotoUserHomeActivity(String uid) {
-        UserHomeActivity.startActivity(this, uid);
+    private void gotoUserHomeActivity(String accId) {
+        UserHomeActivity.startActivity(this, accId);
     }
 
     /**
