@@ -262,7 +262,6 @@ public class MessageListActivity extends BaseClientActivity implements
         super.onResume();
 //        page = 1;
 //        getJPushMessage();
-        XGPushClickedResult mXGPushClickedResult = XGPushManager.onActivityStarted(this);
        IXGPushClickedResult  clickedResult=SDKManager.getXGPush(this).onActivityStarted(this);
         if (clickedResult != null) {
             String title = clickedResult.getTitle();
