@@ -2,11 +2,6 @@ package com.picker.common.popup;
 
 import android.app.Activity;
 import android.graphics.Color;
-import android.support.annotation.ColorInt;
-import android.support.annotation.IntRange;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -16,6 +11,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.picker.common.util.ConvertUtils;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.IntRange;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 
 
 /**

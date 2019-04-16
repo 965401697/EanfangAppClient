@@ -2,7 +2,6 @@ package net.eanfang.client.ui.activity.my;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -32,6 +31,7 @@ import net.eanfang.client.ui.widget.MessageStateView;
 
 import java.io.IOException;
 
+import androidx.appcompat.app.AlertDialog;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;

@@ -3,8 +3,6 @@ package net.eanfang.client.ui.fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -43,6 +41,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 /**
  * Created by MrHou
  *
@@ -60,7 +61,7 @@ public class OrderDetailFragment extends BaseFragment {
     private TextView tv_contract_name;
     private TextView tv_contract_phone;
     private TextView tv_address;
-    private android.support.v7.widget.RecyclerView rv_list;
+    private RecyclerView rv_list;
     private com.facebook.drawee.view.SimpleDraweeView iv_pic;
     private TextView tv_worker_name;
     private TextView tv_worker_company;

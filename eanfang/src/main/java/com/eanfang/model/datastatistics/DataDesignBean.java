@@ -3,26 +3,50 @@ package com.eanfang.model.datastatistics;
 import java.io.Serializable;
 import java.util.List;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 /**
  * @author guanluocang
  * @data 2018/12/14
  * @description 设计 统计
  */
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
 public class DataDesignBean implements Serializable {
 
     private List<DesignBean> design;
     private List<BussinessBean> bussiness;
     private List<FiveBean> five;
+
+    public DataDesignBean(List<DesignBean> design, List<BussinessBean> bussiness, List<FiveBean> five) {
+        this.design = design;
+        this.bussiness = bussiness;
+        this.five = five;
+    }
+
+    public DataDesignBean() {
+    }
+
+    public List<DesignBean> getDesign() {
+        return this.design;
+    }
+
+    public List<BussinessBean> getBussiness() {
+        return this.bussiness;
+    }
+
+    public List<FiveBean> getFive() {
+        return this.five;
+    }
+
+    public void setDesign(List<DesignBean> design) {
+        this.design = design;
+    }
+
+    public void setBussiness(List<BussinessBean> bussiness) {
+        this.bussiness = bussiness;
+    }
+
+    public void setFive(List<FiveBean> five) {
+        this.five = five;
+    }
 
     public static class DesignBean {
         /**

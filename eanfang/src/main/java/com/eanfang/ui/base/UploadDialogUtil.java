@@ -7,7 +7,6 @@ package com.eanfang.ui.base;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.drawable.AnimationDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,7 +44,7 @@ public class UploadDialogUtil {
         }
 
         uploadDialog.setCanceledOnTouchOutside(false);
-        uploadDialog.setOnCancelListener((DialogInterface.OnCancelListener) dialog -> {
+        uploadDialog.setOnCancelListener(dialog -> {
         });
 //        if (uploadDialog != null && !uploadDialog.isShowing()) {
 //            uploadDialog.show();
@@ -73,8 +72,8 @@ public class UploadDialogUtil {
             View view = inflater.inflate(R.layout.j_progress_view, null);
             LinearLayout linearLayout = new LinearLayout(context);
 
-            text = (TextView) view.findViewById(R.id.progress_message);
-            ImageView loadingImage = (ImageView) view
+            text = view.findViewById(R.id.progress_message);
+            ImageView loadingImage = view
                     .findViewById(R.id.progress_view);
             animationDrawable = (AnimationDrawable) loadingImage.getDrawable();
             if (animationDrawable != null) {

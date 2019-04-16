@@ -111,12 +111,12 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
     @Override
     protected void initView() {
         rlWorkerVerfity = findViewById(R.id.rl_worker_verfity);
-        tvVerfiy = (TextView) findViewById(R.id.tv_verfity_status);
-        tvExpertVerfiy = (TextView) findViewById(R.id.tv_expert_verfity_status);
-        tv_user_name = (TextView) findViewById(R.id.tv_user_name);
-        iv_header = (SimpleDraweeView) findViewById(R.id.iv_user_header);
+        tvVerfiy = findViewById(R.id.tv_verfity_status);
+        tvExpertVerfiy = findViewById(R.id.tv_expert_verfity_status);
+        tv_user_name = findViewById(R.id.tv_user_name);
+        iv_header = findViewById(R.id.iv_user_header);
         mIvPersonalQRCode = findViewById(R.id.iv_personalQRCode);
-        rlExpertVerfity = (RelativeLayout) findViewById(R.id.rl_expert_verfity);
+        rlExpertVerfity = findViewById(R.id.rl_expert_verfity);
         rbFree = findViewById(R.id.rb_free);
         rbStop = findViewById(R.id.rb_stop);
         rbWorking = findViewById(R.id.rb_working);

@@ -2,9 +2,9 @@ package net.eanfang.worker.ui.activity.worksapce;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -62,14 +62,14 @@ public class MaintenanceActivity extends BaseWorkerActivity {
     }
 
     private void initView() {
-        tv_maintenance_circle = (TextView) findViewById(R.id.tv_maintenance_circle);
-        ll_maintenance_circle = (LinearLayout) findViewById(R.id.ll_maintenance_circle);
-        iv_add = (ImageView) findViewById(R.id.iv_add);
-        rcv_detail = (RecyclerView) findViewById(R.id.rcv_detail);
-        et_contract = (EditText) findViewById(R.id.et_contract);
-        et_contract_phone = (EditText) findViewById(R.id.et_contract_phone);
-        tv_commit = (TextView) findViewById(R.id.tv_commit);
-        et_client_company_name = (EditText) findViewById(R.id.et_client_company_name);
+        tv_maintenance_circle = findViewById(R.id.tv_maintenance_circle);
+        ll_maintenance_circle = findViewById(R.id.ll_maintenance_circle);
+        iv_add = findViewById(R.id.iv_add);
+        rcv_detail = findViewById(R.id.rcv_detail);
+        et_contract = findViewById(R.id.et_contract);
+        et_contract_phone = findViewById(R.id.et_contract_phone);
+        tv_commit = findViewById(R.id.tv_commit);
+        et_client_company_name = findViewById(R.id.et_client_company_name);
 
         registerListener();
     }
@@ -153,7 +153,7 @@ public class MaintenanceActivity extends BaseWorkerActivity {
 
     private void addRepairandProtect(String json) {
         EanfangHttp.post(NewApiService.POST_ADD_MAINTAIN)
-                .upJson(json.toString())
+                .upJson(json)
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
                     Bundle bundle = new Bundle();
                     Message message = new Message();

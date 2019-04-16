@@ -181,7 +181,7 @@ public class AddTroubleActivity extends BaseWorkerActivity {
         bean.setBusinessThreeCode(dataCode);
         bean.setModelCode(Config.get().getBaseCodeByName(tvDeviceBrand.getText().toString().trim(), 2, Constant.MODEL).get(0));// 设备品牌
         bean.setBugPosition(etLocation.getText().toString().trim());
-        ;// 故障位置
+        // 故障位置
         bean.setDeviceNo(etDeviceNum.getText().toString().trim());// 故障编号
         bean.setBugDescription(evFaultDescripte.getText().toString().trim());// 故障详细描述
         bean.setSketch(tvFaultDescripte.getText().toString().trim());// 故障简述

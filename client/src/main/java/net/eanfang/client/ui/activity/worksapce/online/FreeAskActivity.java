@@ -3,7 +3,6 @@ package net.eanfang.client.ui.activity.worksapce.online;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -29,7 +28,6 @@ import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 import com.yaf.base.entity.AskQuestionsEntity;
 import com.yaf.base.entity.CustDeviceEntity;
-
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.repair.DeviceBrandActivity;

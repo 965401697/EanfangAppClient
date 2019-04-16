@@ -29,13 +29,13 @@ public class AddStaffAdapter extends BaseQuickAdapter<FriendListBean, BaseViewHo
         if (!TextUtils.isEmpty(item.getAvatar()) && item.getAvatar().length() > 0) {
             ((SimpleDraweeView) helper.getView(R.id.iv_friend_header)).setImageURI(BuildConfig.OSS_SERVER + item.getAvatar());
             helper.setVisible(R.id.iv_friend_title, false);
-            ((SimpleDraweeView) helper.getView(R.id.iv_friend_header)).setVisibility(View.VISIBLE);
+            helper.getView(R.id.iv_friend_header).setVisibility(View.VISIBLE);
         } else {
             helper.setVisible(R.id.iv_friend_title, true);
             helper.setText(R.id.iv_friend_title, item.getRealName().length() > 2 ?
-                    item.getRealName().substring(item.getRealName().length() - 2, item.getRealName().length()) :
+                    item.getRealName().substring(item.getRealName().length() - 2) :
                     item.getRealName());
-            ((SimpleDraweeView) helper.getView(R.id.iv_friend_header)).setVisibility(View.INVISIBLE);
+            helper.getView(R.id.iv_friend_header).setVisibility(View.INVISIBLE);
         }
         if (mFlag == 1) {
             if (TextUtils.isEmpty(item.getNickName())) {

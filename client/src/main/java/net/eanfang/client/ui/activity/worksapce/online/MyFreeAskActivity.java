@@ -20,7 +20,6 @@ import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
-
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
 

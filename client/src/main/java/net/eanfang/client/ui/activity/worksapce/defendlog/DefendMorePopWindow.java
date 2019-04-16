@@ -50,8 +50,8 @@ public class DefendMorePopWindow extends PopupWindow {
         this.setAnimationStyle(R.style.AnimationPreview);
 
 
-        RelativeLayout rl_detail = (RelativeLayout) content.findViewById(R.id.rl_detail);
-        RelativeLayout rl_share = (RelativeLayout) content.findViewById(R.id.rl_share);
+        RelativeLayout rl_detail = content.findViewById(R.id.rl_detail);
+        RelativeLayout rl_share = content.findViewById(R.id.rl_share);
 
         if (isVisable) {
             rl_share.setVisibility(View.GONE);

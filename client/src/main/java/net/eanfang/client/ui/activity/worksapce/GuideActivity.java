@@ -2,13 +2,14 @@ package net.eanfang.client.ui.activity.worksapce;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.MainActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class GuideActivity extends AppCompatActivity {
 

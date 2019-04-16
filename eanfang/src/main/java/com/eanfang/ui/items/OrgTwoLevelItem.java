@@ -2,10 +2,6 @@ package com.eanfang.ui.items;
 
 import android.content.Intent;
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.CheckBox;
 
@@ -21,6 +17,11 @@ import com.eanfang.util.SharePreferenceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.core.content.ContextCompat;
 
 /**
  * Created by O u r on 2018/5/31.
@@ -70,10 +71,10 @@ public class OrgTwoLevelItem extends TreeItemGroup<SectionBean> {
 
         try {
             if (SharePreferenceUtil.get().get("app", "").equals("client")) {
-                ((CheckBox) viewHolder.getView(R.id.cb_checked)).setBackground(ContextCompat.getDrawable(viewHolder.getImageView(R.id.iv_select).getContext(), R.drawable.selector_single_checked_client));
+                viewHolder.getView(R.id.cb_checked).setBackground(ContextCompat.getDrawable(viewHolder.getImageView(R.id.iv_select).getContext(), R.drawable.selector_single_checked_client));
 
             } else {
-                ((CheckBox) viewHolder.getView(R.id.cb_checked)).setBackground(ContextCompat.getDrawable(viewHolder.getImageView(R.id.iv_select).getContext(), R.drawable.selector_single_checked_worker));
+                viewHolder.getView(R.id.cb_checked).setBackground(ContextCompat.getDrawable(viewHolder.getImageView(R.id.iv_select).getContext(), R.drawable.selector_single_checked_worker));
             }
         } catch (Exception e) {
             e.printStackTrace();

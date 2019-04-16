@@ -2,7 +2,6 @@ package net.eanfang.client.ui.activity.worksapce.maintenance;
 
 import android.net.Uri;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -15,6 +14,8 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.ShopMaintenanceExamResultEntity;
 
 import net.eanfang.client.R;
+
+import androidx.annotation.RequiresApi;
 
 
 /**

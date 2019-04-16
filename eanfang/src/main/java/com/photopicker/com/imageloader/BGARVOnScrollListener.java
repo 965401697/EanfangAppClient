@@ -16,7 +16,7 @@
 package com.photopicker.com.imageloader;
 
 import android.app.Activity;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * 作者:王浩 邮件:bingoogolapple@gmail.com

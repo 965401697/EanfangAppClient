@@ -7,9 +7,6 @@ import com.baomidou.mybatisplus.enums.IdType;
 import java.io.Serializable;
 import java.util.Date;
 
-import lombok.Getter;
-import lombok.Setter;
-
 
 /**
  * 客户填写的 报修故障表
@@ -19,8 +16,6 @@ import lombok.Setter;
  * @date 2017-11-22 17:01:18
  */
 @TableName(value = "bus_repair_bug")
-@Getter
-@Setter
 public class RepairBugEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -351,6 +346,22 @@ public class RepairBugEntity implements Serializable {
      */
     public void setEditTime(Date editTime) {
         this.editTime = editTime;
+    }
+
+    public String getDeviceNo() {
+        return this.deviceNo;
+    }
+
+    public String getMp4_path() {
+        return this.mp4_path;
+    }
+
+    public void setDeviceNo(String deviceNo) {
+        this.deviceNo = deviceNo;
+    }
+
+    public void setMp4_path(String mp4_path) {
+        this.mp4_path = mp4_path;
     }
 
 

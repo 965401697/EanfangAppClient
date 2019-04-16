@@ -2,13 +2,10 @@ package com.eanfang.ui.base;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.eanfang.R;
@@ -19,6 +16,8 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import butterknife.ButterKnife;
 
 
@@ -217,7 +216,7 @@ public abstract class BaseFragment extends Fragment implements IBase {
     }
 
     public void setLeftVisible(int visible) {
-        ((ImageView) findViewById(R.id.iv_left)).setVisibility(visible);
+        findViewById(R.id.iv_left).setVisibility(visible);
     }
 
     /**

@@ -1,9 +1,9 @@
 package net.eanfang.worker.ui.activity.worksapce.repair.seefaultdetail.faultdetail;
 
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RadioButton;
@@ -134,7 +134,7 @@ public class LookTroubleDetailActivity extends BaseWorkerActivity {
         id = getIntent().getLongExtra("id", 0);
         setTitle("故障明细");
         setLeftBack();
-        rcy_consumable = (RecyclerView) findViewById(R.id.rcy_consumable);
+        rcy_consumable = findViewById(R.id.rcy_consumable);
         rcy_consumable.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
         rcy_consumable.setLayoutManager(new LinearLayoutManager(this));

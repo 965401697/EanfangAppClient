@@ -1,7 +1,6 @@
 package net.eanfang.client.ui.activity.worksapce.contacts;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;

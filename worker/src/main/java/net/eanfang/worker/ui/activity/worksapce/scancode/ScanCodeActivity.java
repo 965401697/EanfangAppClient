@@ -64,7 +64,7 @@ public class ScanCodeActivity extends BaseActivity {
     private void initView() {
         setLeftBack();
         setTitle("二维码扫描");
-        barcodeScannerView = (DecoratedBarcodeView) findViewById(R.id.zxing_barcode_scanner);
+        barcodeScannerView = findViewById(R.id.zxing_barcode_scanner);
         Collection<BarcodeFormat> formats = Arrays.asList(BarcodeFormat.QR_CODE, BarcodeFormat.CODE_39);
         barcodeScannerView.getBarcodeView().setDecoderFactory(new DefaultDecoderFactory(formats));
         barcodeScannerView.decodeContinuous(callback);

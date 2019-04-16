@@ -2,19 +2,18 @@ package net.eanfang.client.ui.activity.worksapce.online;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.config.Config;
-
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
 import java.io.Serializable;
 
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

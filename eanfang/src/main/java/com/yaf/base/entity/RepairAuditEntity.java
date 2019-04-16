@@ -10,9 +10,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Map;
 
-import lombok.Getter;
-import lombok.Setter;
-
 
 /**
  * 报修审核信息表
@@ -21,8 +18,6 @@ import lombok.Setter;
  * @email jornlin@foxmail.com
  * @date 2017-11-22 17:01:18
  */
-@Getter
-@Setter
 @TableName(value = "bus_repair_audit")
 public class RepairAuditEntity implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -256,4 +251,27 @@ public class RepairAuditEntity implements Serializable {
         this.status = status;
     }
 
+    public Map<String, String> getResultMap() {
+        return this.resultMap;
+    }
+
+    public Map<String, String> getDescribeMap() {
+        return this.describeMap;
+    }
+
+    public Map<String, String> getTimeAuditMap() {
+        return this.timeAuditMap;
+    }
+
+    public void setResultMap(Map<String, String> resultMap) {
+        this.resultMap = resultMap;
+    }
+
+    public void setDescribeMap(Map<String, String> describeMap) {
+        this.describeMap = describeMap;
+    }
+
+    public void setTimeAuditMap(Map<String, String> timeAuditMap) {
+        this.timeAuditMap = timeAuditMap;
+    }
 }

@@ -10,9 +10,6 @@ import com.yaf.sys.entity.UserEntity;
 
 import java.io.Serializable;
 
-import lombok.Getter;
-import lombok.Setter;
-
 
 /**
  * 数据绑定
@@ -45,8 +42,6 @@ public class BaseData2userEntity implements Serializable {
     private Long companyId;
 
     //数据类型
-    @Getter
-    @Setter
     //@TableField(value = "data_type")
     private Integer dataType;
 
@@ -57,8 +52,6 @@ public class BaseData2userEntity implements Serializable {
     * @param
     * @return
     **/
-    @Getter
-    @Setter
     @TableField(exist = false)
     private UserEntity userEntity;
 
@@ -69,8 +62,6 @@ public class BaseData2userEntity implements Serializable {
      * @param
      * @return
      **/
-    @Getter
-    @Setter
     @TableField(exist = false)
     private BaseDataEntity baseDataEntity;
 
@@ -155,5 +146,29 @@ public class BaseData2userEntity implements Serializable {
             return this.id.equals(((BaseData2userEntity) other).id);
         }
         return false;
+    }
+
+    public Integer getDataType() {
+        return this.dataType;
+    }
+
+    public UserEntity getUserEntity() {
+        return this.userEntity;
+    }
+
+    public BaseDataEntity getBaseDataEntity() {
+        return this.baseDataEntity;
+    }
+
+    public void setDataType(Integer dataType) {
+        this.dataType = dataType;
+    }
+
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
+    }
+
+    public void setBaseDataEntity(BaseDataEntity baseDataEntity) {
+        this.baseDataEntity = baseDataEntity;
     }
 }

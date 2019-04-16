@@ -238,11 +238,7 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
 
     public boolean equalRate(int width, int height, float rate) {
         float r = (float) width / (float) height;
-        if (Math.abs(r - rate) <= 0.2) {
-            return true;
-        } else {
-            return false;
-        }
+        return Math.abs(r - rate) <= 0.2;
     }
 
     /**

@@ -46,9 +46,9 @@ public class ConversationActivity extends BaseClientActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conversation);
         ButterKnife.bind(this);
-        String title = getIntent().getData().getQueryParameter("title").toString();//群组名称
+        String title = getIntent().getData().getQueryParameter("title");//群组名称
         //单聊就是userid 群聊就是groupid
-        mId = getIntent().getData().getQueryParameter("targetId").toString();
+        mId = getIntent().getData().getQueryParameter("targetId");
         tvTitle.setText(title);
         setLeftBack();
         endTransaction(false);

@@ -1,8 +1,6 @@
 package net.eanfang.client.ui.activity.worksapce.security;
 
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -11,6 +9,8 @@ import com.eanfang.util.QueryEntry;
 
 import net.eanfang.client.R;
 
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

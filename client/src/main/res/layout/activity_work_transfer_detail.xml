@@ -10,7 +10,7 @@
 
     <include layout="@layout/header" />
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -312,7 +312,7 @@
 
                 <View style="@style/style_common_line_gray" />
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_hand_item"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -343,7 +343,7 @@
 
                 <View style="@style/style_common_line_gray" />
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_finsh_work"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -375,7 +375,7 @@
 
                 <View style="@style/style_common_line_gray" />
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_unfinish_things"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -407,7 +407,7 @@
 
                 <View style="@style/style_common_line_gray" />
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_follow_things"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -439,14 +439,14 @@
 
                 <View style="@style/style_common_line_gray" />
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_attention_things"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:scrollbars="none" />
             </LinearLayout>
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <RelativeLayout
         android:id="@+id/rl_confirm"

@@ -2,9 +2,9 @@ package net.eanfang.worker.ui.activity.worksapce;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -164,8 +164,8 @@ public class FaultRecordListActivity extends BaseWorkerActivity implements Swipe
         queryEntry.setPage(mPage);
         if (mBundle != null) {
             queryEntry.getGtEquals().put("createTime", (String) mBundle.get("startTime"));
-            queryEntry.getLt().put("createTime", ((String) mBundle.get("endTime")) + " 23:59:59");
-            queryEntry.getLike().put("businessThreeCode", (String) mBundle.get("bugOneCode") + "%");
+            queryEntry.getLt().put("createTime", mBundle.get("endTime") + " 23:59:59");
+            queryEntry.getLike().put("businessThreeCode", mBundle.get("bugOneCode") + "%");
             queryEntry.getEquals().put("status", (String) mBundle.get("status"));
         }
 

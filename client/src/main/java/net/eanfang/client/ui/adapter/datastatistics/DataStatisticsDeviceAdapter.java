@@ -1,9 +1,6 @@
 package net.eanfang.client.ui.adapter.datastatistics;
 
 import android.net.Uri;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -15,6 +12,10 @@ import com.eanfang.model.datastatistics.DataStatisticsBean;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
+
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 /**

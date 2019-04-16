@@ -1,8 +1,10 @@
 package com.eanfang.witget;
 
 import android.content.Context;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.RecyclerView;
+import androidx.core.view.ViewCompat;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -10,7 +12,7 @@ import android.view.View;
  * Created by O u r on 2018/10/13.
  */
 
-public class SwipeRefreshListenerLayout extends android.support.v4.widget.SwipeRefreshLayout {
+public class SwipeRefreshListenerLayout extends SwipeRefreshLayout {
     public SwipeRefreshListenerLayout(Context context) {
         super(context);
     }

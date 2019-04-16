@@ -52,7 +52,7 @@ public class SystemMessageActivity extends BaseWorkerActivity {
         ButterKnife.bind(this);
         setTitle("系统消息");
         setLeftBack();
-        userInfo = (UserInfo) getIntent().getParcelableExtra("sendUserInfo");
+        userInfo = getIntent().getParcelableExtra("sendUserInfo");
 
         initViews();
     }

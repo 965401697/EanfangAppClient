@@ -1,9 +1,9 @@
 package net.eanfang.worker.ui.activity.worksapce;
 
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -61,24 +61,24 @@ public class QuotationDetailActivity extends BaseActivity {
 
 
     private void initView() {
-        rl_device_type = (RelativeLayout) findViewById(R.id.rl_device_type);
-        rl_business_type = (RelativeLayout) findViewById(R.id.rl_business_type);
-        rl_device_name = (RelativeLayout) findViewById(R.id.rl_device_name);
-        rl_brand_model = (RelativeLayout) findViewById(R.id.rl_brand_model);
-        rl_unit = (RelativeLayout) findViewById(R.id.rl_unit);
-        et_amount = (EditText) findViewById(R.id.et_amount);
-        et_price = (EditText) findViewById(R.id.et_price);
-        et_factory = (EditText) findViewById(R.id.et_factory);
-        et_product_company = (EditText) findViewById(R.id.et_product_company);
-        et_remark = (EditText) findViewById(R.id.et_remark);
-        tv_commit = (TextView) findViewById(R.id.tv_commit);
-        tv_device_type = (TextView) findViewById(R.id.tv_device_type);
-        tv_business_type = (TextView) findViewById(R.id.tv_business_type);
-        tv_device_name = (TextView) findViewById(R.id.tv_device_name);
-        tv_brand_model = (TextView) findViewById(R.id.tv_brand_model);
-        tv_unit = (TextView) findViewById(R.id.tv_unit);
-        iv_add_params = (ImageView) findViewById(R.id.iv_add_params);
-        rl_params = (RecyclerView) findViewById(R.id.rl_params);
+        rl_device_type = findViewById(R.id.rl_device_type);
+        rl_business_type = findViewById(R.id.rl_business_type);
+        rl_device_name = findViewById(R.id.rl_device_name);
+        rl_brand_model = findViewById(R.id.rl_brand_model);
+        rl_unit = findViewById(R.id.rl_unit);
+        et_amount = findViewById(R.id.et_amount);
+        et_price = findViewById(R.id.et_price);
+        et_factory = findViewById(R.id.et_factory);
+        et_product_company = findViewById(R.id.et_product_company);
+        et_remark = findViewById(R.id.et_remark);
+        tv_commit = findViewById(R.id.tv_commit);
+        tv_device_type = findViewById(R.id.tv_device_type);
+        tv_business_type = findViewById(R.id.tv_business_type);
+        tv_device_name = findViewById(R.id.tv_device_name);
+        tv_brand_model = findViewById(R.id.tv_brand_model);
+        tv_unit = findViewById(R.id.tv_unit);
+        iv_add_params = findViewById(R.id.iv_add_params);
+        rl_params = findViewById(R.id.rl_params);
         registerListener();
         initAdapter();
     }

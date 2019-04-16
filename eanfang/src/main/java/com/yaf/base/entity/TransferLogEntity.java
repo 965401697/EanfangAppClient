@@ -10,9 +10,6 @@ import com.yaf.sys.entity.UserEntity;
 import java.io.Serializable;
 import java.util.Date;
 
-import lombok.Getter;
-import lombok.Setter;
-
 
 /**
  * 业务订单，转单记录表
@@ -21,8 +18,6 @@ import lombok.Setter;
  * @email jornlin@foxmail.com
  * @date 2017-12-19 10:18:11
  */
-@Getter
-@Setter
 @TableName(value = "bus_transfer_log")
 public class TransferLogEntity implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -205,4 +200,51 @@ public class TransferLogEntity implements Serializable {
     }
 
 
+    public String getOrderNum() {
+        return this.orderNum;
+    }
+
+    public Long getOriginalOrderId() {
+        return this.originalOrderId;
+    }
+
+    public String getOriginalOrderNum() {
+        return this.originalOrderNum;
+    }
+
+    public String getRemark() {
+        return this.remark;
+    }
+
+    public UserEntity getReceiveUserEntity() {
+        return this.receiveUserEntity;
+    }
+
+    public UserEntity getOriginalUserEntity() {
+        return this.originalUserEntity;
+    }
+
+    public void setOrderNum(String orderNum) {
+        this.orderNum = orderNum;
+    }
+
+    public void setOriginalOrderId(Long originalOrderId) {
+        this.originalOrderId = originalOrderId;
+    }
+
+    public void setOriginalOrderNum(String originalOrderNum) {
+        this.originalOrderNum = originalOrderNum;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public void setReceiveUserEntity(UserEntity receiveUserEntity) {
+        this.receiveUserEntity = receiveUserEntity;
+    }
+
+    public void setOriginalUserEntity(UserEntity originalUserEntity) {
+        this.originalUserEntity = originalUserEntity;
+    }
 }

@@ -1,10 +1,6 @@
 package net.eanfang.client.ui.activity.worksapce;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 
 import com.eanfang.ui.base.BaseActivity;
@@ -17,6 +13,11 @@ import net.eanfang.client.ui.fragment.customservice.CompanyServiceFragment;
 import net.eanfang.client.ui.fragment.customservice.PersonalServiceFragment;
 
 import java.util.ArrayList;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 /**
  * @author Guanluocang

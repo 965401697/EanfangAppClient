@@ -8,7 +8,6 @@ import android.widget.EditText;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.rong.imkit.RongContext;

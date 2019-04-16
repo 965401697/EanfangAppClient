@@ -2,9 +2,9 @@ package net.eanfang.worker.ui.activity.worksapce;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
@@ -83,7 +83,7 @@ public class TakeTaskListActivity extends BaseWorkerActivity implements SwipeRef
 //                new TaskPublishDetailView(TakeTaskListActivity.this, true, (MineTaskListBean.ListBean) mAdapter.getData().get(position), true).show();
                 mCurrentPosition = position;
                 Intent intent = new Intent(TakeTaskListActivity.this, TaskPublishDetailActivitty.class);
-                intent.putExtra("bean", (MineTaskListBean.ListBean) mAdapter.getData().get(position));
+                intent.putExtra("bean", mAdapter.getData().get(position));
                 intent.putExtra("isTakePackpage", true);
                 startActivityForResult(intent, REQEST_TAKE_CODE);
             }
@@ -94,7 +94,7 @@ public class TakeTaskListActivity extends BaseWorkerActivity implements SwipeRef
             switch (view.getId()) {
                 case R.id.tv_select:
                     Intent intent = new Intent(TakeTaskListActivity.this, TaskPublishDetailActivitty.class);
-                    intent.putExtra("bean", (MineTaskListBean.ListBean) mAdapter.getData().get(position));
+                    intent.putExtra("bean", mAdapter.getData().get(position));
                     intent.putExtra("isTakePackpage", true);
                     startActivityForResult(intent, REQEST_TAKE_CODE);
 //                    new TaskPublishDetailView(TakeTaskListActivity.this, true, (MineTaskListBean.ListBean) mAdapter.getData().get(position), true).show();

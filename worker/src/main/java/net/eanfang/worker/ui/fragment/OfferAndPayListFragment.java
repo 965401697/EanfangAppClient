@@ -2,8 +2,8 @@ package net.eanfang.worker.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
 import com.alibaba.fastjson.JSONObject;
@@ -76,9 +76,9 @@ public class OfferAndPayListFragment extends BaseFragment implements
 
     @Override
     protected void initView() {
-        swiprefresh = (SwipyRefreshLayout) findViewById(R.id.swiprefresh);
+        swiprefresh = findViewById(R.id.swiprefresh);
         swiprefresh.setOnRefreshListener(this);
-        rvList = (RecyclerView) findViewById(R.id.rv_list);
+        rvList = findViewById(R.id.rv_list);
     }
 
     @Override

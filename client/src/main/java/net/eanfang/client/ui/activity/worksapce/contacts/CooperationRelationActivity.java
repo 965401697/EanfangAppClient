@@ -2,9 +2,6 @@ package net.eanfang.client.ui.activity.worksapce.contacts;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
@@ -13,15 +10,18 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.util.PermKit;
-import com.yaf.base.entity.CooperationEntity;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
+import com.yaf.base.entity.CooperationEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.adapter.CooperationRelationAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

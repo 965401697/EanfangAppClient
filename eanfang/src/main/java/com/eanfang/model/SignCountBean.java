@@ -2,9 +2,6 @@ package com.eanfang.model;
 
 import java.io.Serializable;
 
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * Created by MrHou
  *
@@ -12,8 +9,6 @@ import lombok.Setter;
  * @email houzhongzhou@yeah.net
  * @desc
  */
-@Setter
-@Getter
 public class SignCountBean implements Serializable {
 
 
@@ -23,5 +18,12 @@ public class SignCountBean implements Serializable {
 
     private int count;
 
+    public int getCount() {
+        return this.count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
 }
 

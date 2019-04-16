@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -14,9 +12,12 @@ import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
-import org.threeten.bp.format.DateTimeFormatter;
 
 import java.text.SimpleDateFormat;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
+import cn.hutool.core.date.DateUtil;
 
 /**
  * @author guanluocang
@@ -25,10 +26,6 @@ import java.text.SimpleDateFormat;
  */
 
 public class SelectCalendarDialogFragment extends DialogFragment implements OnDateSelectedListener {
-
-
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    SimpleDateFormat ss = new SimpleDateFormat("");
 
     private SelectCalendarTimeListener selectTimeListener;
 
@@ -72,7 +69,7 @@ public class SelectCalendarDialogFragment extends DialogFragment implements OnDa
             @NonNull MaterialCalendarView widget,
             @NonNull CalendarDay date,
             boolean selected) {
-        selectTimeListener.getData(FORMATTER.format(date.getDate()));
+        selectTimeListener.getData(DateUtil.formatDate(date.getDate()));
         dismiss();
     }
 

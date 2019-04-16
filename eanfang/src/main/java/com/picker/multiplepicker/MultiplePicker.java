@@ -1,7 +1,6 @@
 package com.picker.multiplepicker;
 
 import android.app.Activity;
-import android.support.annotation.NonNull;
 import android.view.Gravity;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
@@ -13,6 +12,8 @@ import com.picker.common.popup.ConfirmPopup;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import androidx.annotation.NonNull;
 
 
 /**

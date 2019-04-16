@@ -359,7 +359,7 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
             if (!StringUtils.isEmpty(changeGoodDetail.getPicture())) {
                 snplMomentAddPhotos.setVisibility(View.VISIBLE);
                 String[] invoicesPic = changeGoodDetail.getPicture().split(",");
-                picList4.addAll(Stream.of(Arrays.asList(invoicesPic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
+                picList4.addAll(Stream.of(Arrays.asList(invoicesPic)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
             } else {
                 snplMomentAddPhotos.setVisibility(View.GONE);
             }
@@ -385,7 +385,7 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
             if (!StringUtils.isEmpty(finishDetail.getPicture())) {
                 snplMomentAddPhotos.setVisibility(View.VISIBLE);
                 String[] invoicesPic = finishDetail.getPicture().split(",");
-                picList4.addAll(Stream.of(Arrays.asList(invoicesPic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
+                picList4.addAll(Stream.of(Arrays.asList(invoicesPic)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
             } else {
                 snplMomentAddPhotos.setVisibility(View.GONE);
             }
@@ -411,7 +411,7 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
             if (!StringUtils.isEmpty(unFinishDetail.getPicture())) {
                 snplMomentAddPhotos.setVisibility(View.VISIBLE);
                 String[] invoicesPic = unFinishDetail.getPicture().split(",");
-                picList4.addAll(Stream.of(Arrays.asList(invoicesPic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
+                picList4.addAll(Stream.of(Arrays.asList(invoicesPic)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
             } else {
                 snplMomentAddPhotos.setVisibility(View.GONE);
             }
@@ -437,7 +437,7 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
             if (!StringUtils.isEmpty(followThingDetail.getPicture())) {
                 snplMomentAddPhotos.setVisibility(View.VISIBLE);
                 String[] invoicesPic = followThingDetail.getPicture().split(",");
-                picList4.addAll(Stream.of(Arrays.asList(invoicesPic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
+                picList4.addAll(Stream.of(Arrays.asList(invoicesPic)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
             } else {
                 snplMomentAddPhotos.setVisibility(View.GONE);
             }
@@ -463,7 +463,7 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
             if (!StringUtils.isEmpty(attentionDetail.getPicture())) {
                 snplMomentAddPhotos.setVisibility(View.VISIBLE);
                 String[] invoicesPic = attentionDetail.getPicture().split(",");
-                picList4.addAll(Stream.of(Arrays.asList(invoicesPic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
+                picList4.addAll(Stream.of(Arrays.asList(invoicesPic)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
             } else {
                 snplMomentAddPhotos.setVisibility(View.GONE);
             }

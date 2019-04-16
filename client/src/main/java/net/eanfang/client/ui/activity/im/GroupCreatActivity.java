@@ -26,7 +26,6 @@ import com.jph.takephoto.model.TResult;
 
 import net.eanfang.client.R;
 
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -30,15 +30,15 @@ public class SharePopWindow extends PopupWindow {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.layout_share_pop, null);
-        TextView tvShareWx = (TextView) view.findViewById(R.id.tv_share_wx);
-        TextView tvShareContact = (TextView) view.findViewById(R.id.tv_share_contact);
-        Button btnCancel = (Button) view.findViewById(R.id.btn_cancel);
+        TextView tvShareWx = view.findViewById(R.id.tv_share_wx);
+        TextView tvShareContact = view.findViewById(R.id.tv_share_contact);
+        Button btnCancel = view.findViewById(R.id.btn_cancel);
 
         tvShareWx.setOnClickListener(itemsOnClick);
         tvShareContact.setOnClickListener(itemsOnClick);
         btnCancel.setOnClickListener(itemsOnClick);
 
-        int width = (int) (ScreenUtils.widthPixels(context));
+        int width = (ScreenUtils.widthPixels(context));
         setWidth(width);
         setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         setBackgroundDrawable(new ColorDrawable(0));

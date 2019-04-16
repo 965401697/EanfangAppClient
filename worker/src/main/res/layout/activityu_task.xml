@@ -141,7 +141,7 @@
                 android:layout_height="1px"
                 android:background="@color/background" />
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/task_detial_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -278,7 +278,7 @@
                     android:background="@color/background" />
 
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_team"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -331,7 +331,7 @@
                     android:background="@color/background" />
 
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_group"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />

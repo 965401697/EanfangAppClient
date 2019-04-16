@@ -7,8 +7,6 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -45,6 +43,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -209,9 +209,9 @@ public class NewPayActivity extends BaseClientActivity implements View.OnClickLi
                 if (hasFocus) {
                     // 获得焦点
                     mPayType = 3;
-                    cbCoupon.setChecked(mPayType == 3 ? true : false);
-                    cbAlipay.setChecked(!(mPayType == 3 ? true : false));
-                    cbWeixinPay.setChecked(!(mPayType == 3 ? true : false));
+                    cbCoupon.setChecked(mPayType == 3);
+                    cbAlipay.setChecked(!(mPayType == 3));
+                    cbWeixinPay.setChecked(!(mPayType == 3));
                     tvZfb.setTextColor(getResources().getColor(R.color.color_client_neworder));
                     tvWx.setTextColor(getResources().getColor(R.color.color_client_neworder));
                     tvCoupon.setTextColor(getResources().getColor(R.color.color_service_title));
@@ -235,9 +235,9 @@ public class NewPayActivity extends BaseClientActivity implements View.OnClickLi
                 break;
             case R.id.ll_wx:
                 mPayType = 1;
-                cbWeixinPay.setChecked(mPayType == 1 ? true : false);
-                cbAlipay.setChecked(!(mPayType == 1 ? true : false));
-                cbCoupon.setChecked(!(mPayType == 1 ? true : false));
+                cbWeixinPay.setChecked(mPayType == 1);
+                cbAlipay.setChecked(!(mPayType == 1));
+                cbCoupon.setChecked(!(mPayType == 1));
                 tvWx.setTextColor(getResources().getColor(R.color.color_service_title));
                 tvZfb.setTextColor(getResources().getColor(R.color.color_client_neworder));
                 tvCoupon.setTextColor(getResources().getColor(R.color.color_client_neworder));
@@ -247,9 +247,9 @@ public class NewPayActivity extends BaseClientActivity implements View.OnClickLi
                 break;
             case R.id.ll_alipay:
                 mPayType = 0;
-                cbAlipay.setChecked(mPayType == 0 ? true : false);
-                cbWeixinPay.setChecked(!(mPayType == 0 ? true : false));
-                cbCoupon.setChecked(!(mPayType == 0 ? true : false));
+                cbAlipay.setChecked(mPayType == 0);
+                cbWeixinPay.setChecked(!(mPayType == 0));
+                cbCoupon.setChecked(!(mPayType == 0));
                 tvZfb.setTextColor(getResources().getColor(R.color.color_service_title));
                 tvWx.setTextColor(getResources().getColor(R.color.color_client_neworder));
                 tvCoupon.setTextColor(getResources().getColor(R.color.color_client_neworder));
@@ -289,9 +289,9 @@ public class NewPayActivity extends BaseClientActivity implements View.OnClickLi
                 etCoupon.setFocusable(true);
                 etCoupon.setFocusableInTouchMode(true);
                 mPayType = 3;
-                cbCoupon.setChecked(mPayType == 3 ? true : false);
-                cbAlipay.setChecked(!(mPayType == 3 ? true : false));
-                cbWeixinPay.setChecked(!(mPayType == 3 ? true : false));
+                cbCoupon.setChecked(mPayType == 3);
+                cbAlipay.setChecked(!(mPayType == 3));
+                cbWeixinPay.setChecked(!(mPayType == 3));
                 tvZfb.setTextColor(getResources().getColor(R.color.color_client_neworder));
                 tvWx.setTextColor(getResources().getColor(R.color.color_client_neworder));
                 tvCoupon.setTextColor(getResources().getColor(R.color.color_service_title));

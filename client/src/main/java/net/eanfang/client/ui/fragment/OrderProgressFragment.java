@@ -1,8 +1,6 @@
 package net.eanfang.client.ui.fragment;
 
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -20,6 +18,9 @@ import net.eanfang.client.R;
 import net.eanfang.client.ui.adapter.OrderProgressAdapter;
 
 import java.util.List;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by MrHou

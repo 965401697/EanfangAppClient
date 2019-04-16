@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +29,9 @@ import net.eanfang.client.ui.activity.worksapce.oa.task.TaskAssignmentCreationAc
 
 import java.io.Serializable;
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by O u r on 2018/10/18.
@@ -113,7 +114,7 @@ public class OAPersonAdaptet extends RecyclerView.Adapter<OAPersonAdaptet.ViewHo
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("list", (Serializable) mData);
                         intent.putExtras(bundle);
-                        ((BaseActivity) mContext).startActivity(intent);
+                        mContext.startActivity(intent);
                     }
                 }
             });

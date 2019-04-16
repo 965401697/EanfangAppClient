@@ -1,11 +1,7 @@
 package net.eanfang.client.ui.activity.worksapce.maintenance;
 
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.annimon.stream.Stream;
 import com.eanfang.apiservice.NewApiService;
@@ -17,11 +13,13 @@ import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 
-
 import net.eanfang.client.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by O u r on 2018/7/16.

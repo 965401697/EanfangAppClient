@@ -3,8 +3,6 @@ package net.eanfang.client.ui.activity.worksapce.oa.workreport;
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -24,6 +22,9 @@ import net.eanfang.client.util.ImagePerviewUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by O u r on 2018/10/19.
@@ -151,12 +152,12 @@ public class WorKReportAdapter extends BaseMultiItemQuickAdapter<WorkAddReportBe
                     helper.getView(R.id.rl_thumbnail).setVisibility(View.VISIBLE);
                     helper.setVisible(R.id.iv_takevideo_work, true);
                     ((SimpleDraweeView) helper.getView(R.id.iv_takevideo_work)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getMp4_path() + ".jpg"));
-                    ((SimpleDraweeView) helper.getView(R.id.iv_takevideo_work)).setOnClickListener(new View.OnClickListener() {
+                    helper.getView(R.id.iv_takevideo_work).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             Bundle bundle_takevideo = new Bundle();
                             bundle_takevideo.putString("videoPath", BuildConfig.OSS_SERVER + item.getMp4_path() + ".mp4");
-                            JumpItent.jump((CreationWorkReportActivity) mActivity, PlayVideoActivity.class, bundle_takevideo);
+                            JumpItent.jump(mActivity, PlayVideoActivity.class, bundle_takevideo);
                         }
                     });
 
@@ -180,8 +181,8 @@ public class WorKReportAdapter extends BaseMultiItemQuickAdapter<WorkAddReportBe
             if (urls.length >= 1) {
 
                 ((SimpleDraweeView) helper.getView(R.id.iv_pic1)).setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[0]));
-                ((SimpleDraweeView) helper.getView(R.id.iv_pic1)).setVisibility(View.VISIBLE);
-                ((SimpleDraweeView) helper.getView(R.id.iv_pic1)).setOnClickListener(new View.OnClickListener() {
+                helper.getView(R.id.iv_pic1).setVisibility(View.VISIBLE);
+                helper.getView(R.id.iv_pic1).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         picList.clear();
@@ -190,13 +191,13 @@ public class WorKReportAdapter extends BaseMultiItemQuickAdapter<WorkAddReportBe
                     }
                 });
             } else {
-                ((SimpleDraweeView) helper.getView(R.id.iv_pic1)).setVisibility(View.GONE);
+                helper.getView(R.id.iv_pic1).setVisibility(View.GONE);
             }
 
             if (urls.length >= 2) {
                 ((SimpleDraweeView) helper.getView(R.id.iv_pic2)).setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[1]));
-                ((SimpleDraweeView) helper.getView(R.id.iv_pic2)).setVisibility(View.VISIBLE);
-                ((SimpleDraweeView) helper.getView(R.id.iv_pic2)).setOnClickListener(new View.OnClickListener() {
+                helper.getView(R.id.iv_pic2).setVisibility(View.VISIBLE);
+                helper.getView(R.id.iv_pic2).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         picList.clear();
@@ -205,12 +206,12 @@ public class WorKReportAdapter extends BaseMultiItemQuickAdapter<WorkAddReportBe
                     }
                 });
             } else {
-                ((SimpleDraweeView) helper.getView(R.id.iv_pic2)).setVisibility(View.GONE);
+                helper.getView(R.id.iv_pic2).setVisibility(View.GONE);
             }
             if (urls.length >= 3) {
                 ((SimpleDraweeView) helper.getView(R.id.iv_pic3)).setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[2]));
-                ((SimpleDraweeView) helper.getView(R.id.iv_pic3)).setVisibility(View.VISIBLE);
-                ((SimpleDraweeView) helper.getView(R.id.iv_pic3)).setOnClickListener(new View.OnClickListener() {
+                helper.getView(R.id.iv_pic3).setVisibility(View.VISIBLE);
+                helper.getView(R.id.iv_pic3).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         picList.clear();
@@ -219,7 +220,7 @@ public class WorKReportAdapter extends BaseMultiItemQuickAdapter<WorkAddReportBe
                     }
                 });
             } else {
-                ((SimpleDraweeView) helper.getView(R.id.iv_pic3)).setVisibility(View.GONE);
+                helper.getView(R.id.iv_pic3).setVisibility(View.GONE);
             }
         } else {
             helper.setText(R.id.tv_adjunct, "照片：无");

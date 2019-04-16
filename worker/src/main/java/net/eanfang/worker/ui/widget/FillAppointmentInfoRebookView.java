@@ -1,7 +1,7 @@
 package net.eanfang.worker.ui.widget;
 
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatRadioButton;
+import androidx.appcompat.widget.AppCompatRadioButton;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;

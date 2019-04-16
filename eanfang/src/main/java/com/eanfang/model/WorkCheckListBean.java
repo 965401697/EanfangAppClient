@@ -4,9 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * Created by Mr.hou
  *
@@ -75,8 +72,6 @@ public class WorkCheckListBean implements Serializable {
         this.list = list;
     }
 
-    @Getter
-    @Setter
     public static class ListBean implements Serializable {
         /**
          * assigneeOrg : {"orgCode":"c.c1.2","orgName":"维修部"}
@@ -271,6 +266,14 @@ public class WorkCheckListBean implements Serializable {
 
         public void setWorkInspectDetail(WorkInspectDetail workInspectDetail) {
             this.workInspectDetail = workInspectDetail;
+        }
+
+        public int getNewOrder() {
+            return this.newOrder;
+        }
+
+        public void setNewOrder(int newOrder) {
+            this.newOrder = newOrder;
         }
 
         public static class AssigneeOrgBean implements Serializable {

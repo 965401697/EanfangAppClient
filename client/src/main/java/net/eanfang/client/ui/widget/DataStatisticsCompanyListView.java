@@ -2,9 +2,6 @@ package net.eanfang.client.ui.widget;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -17,12 +14,14 @@ import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 
-
 import net.eanfang.client.R;
 import net.eanfang.client.ui.adapter.datastatistics.SwitchCompanyDataStatisticsListAdapter;
 
 import java.util.List;
 
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

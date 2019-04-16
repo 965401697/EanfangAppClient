@@ -3,10 +3,6 @@ package net.eanfang.client.ui.activity.worksapce.worktransfer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -54,6 +50,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -379,7 +379,7 @@ public class WorkTransferCreateActivity extends BaseActivity {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("unFinishDetail", (Serializable) mUnFinishList.get(position));
+                bundle.putSerializable("unFinishDetail", mUnFinishList.get(position));
                 JumpItent.jump(WorkTransferCreateActivity.this, WorkTransferCreateDetailActivity.class, bundle);
             }
         });
@@ -387,7 +387,7 @@ public class WorkTransferCreateActivity extends BaseActivity {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("finishDetail", (Serializable) mFinishWorkList.get(position));
+                bundle.putSerializable("finishDetail", mFinishWorkList.get(position));
                 JumpItent.jump(WorkTransferCreateActivity.this, WorkTransferCreateDetailActivity.class, bundle);
             }
         });
@@ -395,7 +395,7 @@ public class WorkTransferCreateActivity extends BaseActivity {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("attentionDetail", (Serializable) mAttentionList.get(position));
+                bundle.putSerializable("attentionDetail", mAttentionList.get(position));
                 JumpItent.jump(WorkTransferCreateActivity.this, WorkTransferCreateDetailActivity.class, bundle);
             }
         });
@@ -403,7 +403,7 @@ public class WorkTransferCreateActivity extends BaseActivity {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("followThingDetail", (Serializable) mFollowThingList.get(position));
+                bundle.putSerializable("followThingDetail", mFollowThingList.get(position));
                 JumpItent.jump(WorkTransferCreateActivity.this, WorkTransferCreateDetailActivity.class, bundle);
             }
         });

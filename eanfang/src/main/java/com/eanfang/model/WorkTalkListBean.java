@@ -3,21 +3,12 @@ package com.eanfang.model;
 import java.io.Serializable;
 import java.util.List;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 /**
  * 描述：面谈员工列表
  *
  * @author Guanluocang
  * @date on 2018/8/2$  19:51$
  */
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class WorkTalkListBean implements Serializable {
 
     private int currPage;
@@ -25,6 +16,17 @@ public class WorkTalkListBean implements Serializable {
     private int totalCount;
     private int totalPage;
     private List<ListBean> list;
+
+    public WorkTalkListBean(int currPage, int pageSize, int totalCount, int totalPage, List<ListBean> list) {
+        this.currPage = currPage;
+        this.pageSize = pageSize;
+        this.totalCount = totalCount;
+        this.totalPage = totalPage;
+        this.list = list;
+    }
+
+    public WorkTalkListBean() {
+    }
 
     public int getCurrPage() {
         return currPage;

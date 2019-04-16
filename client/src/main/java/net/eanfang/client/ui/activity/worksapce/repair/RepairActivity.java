@@ -3,8 +3,6 @@ package net.eanfang.client.ui.activity.worksapce.repair;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -56,6 +54,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -546,7 +546,7 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
             repairSelectTimePop = new RepairSelectTimePop(this, timeList, new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    tvTime.setText(timeList.get(i).toString());
+                    tvTime.setText(timeList.get(i));
                     repairSelectTimePop.dismiss();
                 }
             });

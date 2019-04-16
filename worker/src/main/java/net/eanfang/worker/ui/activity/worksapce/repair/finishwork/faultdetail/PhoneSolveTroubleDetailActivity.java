@@ -2,7 +2,7 @@ package net.eanfang.worker.ui.activity.worksapce.repair.finishwork.faultdetail;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
+import androidx.annotation.IdRes;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;

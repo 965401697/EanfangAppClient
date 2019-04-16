@@ -71,8 +71,6 @@ public class FileUtil {
         return filePath;
     }
 
-    ;
-
     /**
      * 获取机身储存
      *

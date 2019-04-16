@@ -2,8 +2,6 @@ package net.eanfang.client.ui.activity.worksapce.repair;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -27,6 +25,9 @@ import net.eanfang.client.ui.adapter.repair.RepairDeviceTypeRightAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

@@ -3,8 +3,8 @@ package net.eanfang.worker.ui.activity.im;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -294,7 +294,7 @@ public class CreateGroupOrganizationActivity extends BaseWorkerActivity {
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 TemplateBean bean = (TemplateBean) adapter.getData().get(position);
                 if (view.getId() == R.id.cb_all_checked) {
-                    ((CreateGroupOrganizationAdapter) adapter).checkedAll(position, bean.isChecked() == true ? false : true);
+                    ((CreateGroupOrganizationAdapter) adapter).checkedAll(position, bean.isChecked() != true);
                 } else if (view.getId() == R.id.rl_parent) {
                     ImageView imageView = view.findViewById(R.id.iv_select);
                     RecyclerView recyclerView = view.findViewById(R.id.recycler_view_group);

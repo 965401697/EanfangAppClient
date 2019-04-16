@@ -63,7 +63,7 @@
                 android:textColor="@color/color_client_neworder"
                 android:textSize="@dimen/textSize_14" />
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_hori"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -209,7 +209,7 @@
             android:paddingTop="@dimen/dimen_20"
             android:text="常用联系人" />
 
-        <android.support.v7.widget.RecyclerView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

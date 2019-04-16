@@ -1,9 +1,10 @@
 package net.eanfang.client.ui.activity.worksapce.worktransfer;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import net.eanfang.client.R;
+
+import androidx.appcompat.app.AppCompatActivity;
 /**
 * @date on 2018/7/27  15:49
 * @author Guanluocang

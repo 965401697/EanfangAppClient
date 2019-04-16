@@ -15,8 +15,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.StrictMode;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AlertDialog;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -42,6 +40,9 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 import java.util.Date;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
 
 /**
  * BaseAppCompatFragmentActivity
@@ -112,7 +113,7 @@ public abstract class BaseActivityWithTakePhoto extends com.eanfang.takephoto.Ta
     }
 
     public void setLeftBack() {
-        iv_left = (ImageView) findViewById(R.id.iv_left);
+        iv_left = findViewById(R.id.iv_left);
         iv_left.setOnClickListener(v -> finish());
     }
     /**
@@ -121,7 +122,7 @@ public abstract class BaseActivityWithTakePhoto extends com.eanfang.takephoto.Ta
      * @param listener
      */
     public void setLeftBack(View.OnClickListener listener) {
-        iv_left = (ImageView) findViewById(R.id.iv_left);
+        iv_left = findViewById(R.id.iv_left);
         iv_left.setOnClickListener(listener);
     }
 
@@ -162,7 +163,7 @@ public abstract class BaseActivityWithTakePhoto extends com.eanfang.takephoto.Ta
     }
 
     public void setRightGone() {
-        ((TextView) findViewById(R.id.tv_right)).setVisibility(View.GONE);
+        findViewById(R.id.tv_right).setVisibility(View.GONE);
     }
 
     public void setRightTitleOnClickListener(View.OnClickListener listener) {

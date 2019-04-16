@@ -1,6 +1,7 @@
 package com.eanfang.util;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 public class Base64 {
     private static char[] base64EncodeChars = new char[]{
@@ -63,7 +64,7 @@ public class Base64 {
 
     public static byte[] decode(String str) throws UnsupportedEncodingException {
         StringBuffer sb = new StringBuffer();
-        byte[] data = str.getBytes("US-ASCII");
+        byte[] data = str.getBytes(StandardCharsets.US_ASCII);
         int len = data.length;
         int i = 0;
         int b1, b2, b3, b4;

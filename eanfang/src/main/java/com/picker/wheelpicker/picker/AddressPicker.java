@@ -1,7 +1,6 @@
 package com.picker.wheelpicker.picker;
 
 import android.app.Activity;
-import android.support.annotation.NonNull;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -14,6 +13,8 @@ import com.picker.wheelpicker.widget.WheelView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
 
 
 /**

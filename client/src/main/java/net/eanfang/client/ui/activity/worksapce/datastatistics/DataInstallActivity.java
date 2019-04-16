@@ -2,8 +2,6 @@ package net.eanfang.client.ui.activity.worksapce.datastatistics;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
@@ -43,6 +41,8 @@ import net.eanfang.client.ui.widget.DataStatisticsCompanyListView;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;

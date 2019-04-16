@@ -1,13 +1,13 @@
 package com.eanfang.util.BarUtil;
 
 import android.Manifest;
+import android.Manifest.permission;
 import android.annotation.SuppressLint;
-import android.support.annotation.StringDef;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import android.Manifest.permission;
+import androidx.annotation.StringDef;
 /**
  * Created by admin on 2018/4/11.
  */

@@ -41,9 +41,9 @@ public class CompanyListAdapter extends BaseQuickAdapter<OrgUnitEntity, BaseView
 
         if (item.getIsclaim() == 0) {
             //可以认领
-            ((View) helper.getView(R.id.tv_claim)).setBackground(((View) helper.getView(R.id.tv_claim)).getResources().getDrawable(R.drawable.bg_ll_btn));
+            helper.getView(R.id.tv_claim).setBackground(helper.getView(R.id.tv_claim).getResources().getDrawable(R.drawable.bg_ll_btn));
         } else {
-            ((View) helper.getView(R.id.tv_claim)).setBackground(((View) helper.getView(R.id.tv_claim)).getResources().getDrawable(R.drawable.bg_ll_gray_btn));
+            helper.getView(R.id.tv_claim).setBackground(helper.getView(R.id.tv_claim).getResources().getDrawable(R.drawable.bg_ll_gray_btn));
         }
 
         helper.addOnClickListener(R.id.tv_claim);

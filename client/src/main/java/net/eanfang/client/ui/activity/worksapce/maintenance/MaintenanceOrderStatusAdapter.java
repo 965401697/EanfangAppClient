@@ -9,7 +9,6 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.model.OrderProgressBean;
 import com.github.vipulasri.timelineview.TimelineView;
 
-
 import net.eanfang.client.R;
 
 import java.util.List;

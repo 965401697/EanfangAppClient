@@ -1,10 +1,6 @@
 package com.eanfang.ui.items;
 
 import android.os.Build;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
 
 import com.baozi.treerecyclerview.base.ViewHolder;
@@ -15,6 +11,11 @@ import com.eanfang.R;
 import com.eanfang.model.TemplateBean;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.core.content.ContextCompat;
 
 /**
  * Created by O u r on 2018/5/31.

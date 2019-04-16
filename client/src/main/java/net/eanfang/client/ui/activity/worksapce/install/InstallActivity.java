@@ -3,7 +3,6 @@ package net.eanfang.client.ui.activity.worksapce.install;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -36,6 +35,7 @@ import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
+import androidx.appcompat.app.AlertDialog;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

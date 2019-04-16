@@ -113,8 +113,8 @@ public class WorkspaceFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        tvCompanyName = (TextView) findViewById(R.id.tv_company_name);
-        mIvDownIcon = (ImageView) findViewById(R.id.iv_down_icon);
+        tvCompanyName = findViewById(R.id.tv_company_name);
+        mIvDownIcon = findViewById(R.id.iv_down_icon);
 
         iv_company_logo = findViewById(R.id.iv_company_logo);
         setLogpic();

@@ -31,9 +31,9 @@ public class CooperationAddAdapter extends BaseQuickAdapter<String, BaseViewHold
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    checkBoxList.add(((CheckBox) helper.getView(R.id.cb_check)));
+                    checkBoxList.add(helper.getView(R.id.cb_check));
                 } else {
-                    checkBoxList.remove((CheckBox) helper.getView(R.id.cb_check));
+                    checkBoxList.remove(helper.getView(R.id.cb_check));
                 }
             }
         });

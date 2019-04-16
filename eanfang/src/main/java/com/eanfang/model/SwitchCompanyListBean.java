@@ -5,9 +5,6 @@ import com.yaf.sys.entity.OrgEntity;
 import java.io.Serializable;
 import java.util.List;
 
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * Created by MrHou
  *
@@ -15,8 +12,6 @@ import lombok.Setter;
  * @email houzhongzhou@yeah.net
  * @desc
  */
-@Setter
-@Getter
 public class SwitchCompanyListBean implements Serializable {
     private Long id;
 
@@ -27,4 +22,19 @@ public class SwitchCompanyListBean implements Serializable {
 
     private List<OrgEntity> data;
 
+    public Long getId() {
+        return this.id;
+    }
+
+    public List<OrgEntity> getData() {
+        return this.data;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setData(List<OrgEntity> data) {
+        this.data = data;
+    }
 }

@@ -10,9 +10,6 @@ import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import static com.alibaba.fastjson.parser.JSONToken.DOT;
 
 
@@ -53,8 +50,6 @@ public class BaseDataEntity implements Serializable,Cloneable {
 	/**
 	 * 数据绑定表实体类
      */
-	@Getter
-	@Setter
 	@TableField(exist = false)
 	private BaseData2userEntity baseData2userEntity;
 	
@@ -146,14 +141,10 @@ public class BaseDataEntity implements Serializable,Cloneable {
     	return dataType;	
     }
     
-    @Getter
-    @Setter
     @TableField(exist = false)
     private Long parentId;
     
     @TableField(exist = false)
-    @Getter
-    @Setter
     private List<BaseDataEntity> children = null;
     
     public void addChild(BaseDataEntity child) {
@@ -164,7 +155,6 @@ public class BaseDataEntity implements Serializable,Cloneable {
     		children.add(child);
     	}
     }
-    @Setter
     @TableField(exist = false)
     private Integer level;
 
@@ -187,7 +177,6 @@ public class BaseDataEntity implements Serializable,Cloneable {
 		level = calculateLevel();
 		return level;
 	}
-    @Setter
     @TableField(exist = false)
     private boolean isLeaf;
 
@@ -229,4 +218,36 @@ public class BaseDataEntity implements Serializable,Cloneable {
 			return null;
 		}
 	}
+
+    public BaseData2userEntity getBaseData2userEntity() {
+        return this.baseData2userEntity;
+    }
+
+    public Long getParentId() {
+        return this.parentId;
+    }
+
+    public List<BaseDataEntity> getChildren() {
+        return this.children;
+    }
+
+    public void setBaseData2userEntity(BaseData2userEntity baseData2userEntity) {
+        this.baseData2userEntity = baseData2userEntity;
+    }
+
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
+    }
+
+    public void setChildren(List<BaseDataEntity> children) {
+        this.children = children;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
+    public void setLeaf(boolean isLeaf) {
+        this.isLeaf = isLeaf;
+    }
 }

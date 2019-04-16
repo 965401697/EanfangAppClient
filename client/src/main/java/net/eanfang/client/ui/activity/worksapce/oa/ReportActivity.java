@@ -3,10 +3,6 @@ package net.eanfang.client.ui.activity.worksapce.oa;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -53,6 +49,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -442,7 +442,7 @@ public class ReportActivity extends BaseClientActivity implements View.OnClickLi
                 sendPersonAdapter.setNewData(newPresonList);
 
             } else if (isSend == 0) {
-                TemplateBean.Preson bean = (TemplateBean.Preson) presonList.get(0);
+                TemplateBean.Preson bean = presonList.get(0);
 
                 etPhoneNum.setText(bean.getMobile());
                 tvDependPerson.setText(bean.getName());

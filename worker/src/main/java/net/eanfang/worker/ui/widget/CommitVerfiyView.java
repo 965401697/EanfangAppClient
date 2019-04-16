@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-
 import com.eanfang.ui.base.BaseDialog;
 
 import net.eanfang.worker.R;

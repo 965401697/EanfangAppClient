@@ -7,9 +7,6 @@ import com.baomidou.mybatisplus.enums.IdType;
 
 import java.io.Serializable;
 
-import lombok.Getter;
-import lombok.Setter;
-
 
 /**
  * 故障处理耗材表
@@ -18,8 +15,6 @@ import lombok.Setter;
  * @email jornlin@foxmail.com
  * @date 2017-12-08 15:11:19
  */
-@Getter
-@Setter
 @TableName(value = "bus_bughandle_use_device")
 public class BughandleUseDeviceEntity implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -163,5 +158,29 @@ public class BughandleUseDeviceEntity implements Serializable {
         int result = 1;
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         return result;
+    }
+
+    public Long getShopDeviceId() {
+        return this.shopDeviceId;
+    }
+
+    public String getBusinessThreeCode() {
+        return this.businessThreeCode;
+    }
+
+    public Integer getBusinessThreeId() {
+        return this.businessThreeId;
+    }
+
+    public void setShopDeviceId(Long shopDeviceId) {
+        this.shopDeviceId = shopDeviceId;
+    }
+
+    public void setBusinessThreeCode(String businessThreeCode) {
+        this.businessThreeCode = businessThreeCode;
+    }
+
+    public void setBusinessThreeId(Integer businessThreeId) {
+        this.businessThreeId = businessThreeId;
     }
 }

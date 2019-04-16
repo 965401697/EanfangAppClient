@@ -1,8 +1,8 @@
 package com.eanfang.dialog;
 
 import android.app.Activity;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 
 /**
  * Created by jornl on 2017/9/28.

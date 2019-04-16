@@ -10,8 +10,8 @@ import android.widget.TextView;
 import com.eanfang.ui.base.BaseDialog;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.worksapce.oa.ReportActivity;
 import net.eanfang.worker.ui.activity.worksapce.WorkReportListActivity;
+import net.eanfang.worker.ui.activity.worksapce.oa.ReportActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

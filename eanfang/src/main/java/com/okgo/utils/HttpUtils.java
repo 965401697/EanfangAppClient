@@ -167,15 +167,15 @@ public class HttpUtils {
             String split = "filename=";
             int indexOf = dispositionHeader.indexOf(split);
             if (indexOf != -1) {
-                return dispositionHeader.substring(indexOf + split.length(), dispositionHeader.length());
+                return dispositionHeader.substring(indexOf + split.length());
             }
             split = "filename*=";
             indexOf = dispositionHeader.indexOf(split);
             if (indexOf != -1) {
-                String fileName = dispositionHeader.substring(indexOf + split.length(), dispositionHeader.length());
+                String fileName = dispositionHeader.substring(indexOf + split.length());
                 String encode = "UTF-8''";
                 if (fileName.startsWith(encode)) {
-                    fileName = fileName.substring(encode.length(), fileName.length());
+                    fileName = fileName.substring(encode.length());
                 }
                 return fileName;
             }

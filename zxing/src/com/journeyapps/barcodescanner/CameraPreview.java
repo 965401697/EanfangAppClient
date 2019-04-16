@@ -26,8 +26,8 @@ import com.journeyapps.barcodescanner.camera.CameraParametersCallback;
 import com.journeyapps.barcodescanner.camera.CameraSettings;
 import com.journeyapps.barcodescanner.camera.CameraSurface;
 import com.journeyapps.barcodescanner.camera.CenterCropStrategy;
-import com.journeyapps.barcodescanner.camera.FitCenterStrategy;
 import com.journeyapps.barcodescanner.camera.DisplayConfiguration;
+import com.journeyapps.barcodescanner.camera.FitCenterStrategy;
 import com.journeyapps.barcodescanner.camera.FitXYStrategy;
 import com.journeyapps.barcodescanner.camera.PreviewScalingStrategy;
 

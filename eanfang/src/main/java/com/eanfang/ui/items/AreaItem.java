@@ -1,8 +1,5 @@
 package com.eanfang.ui.items;
 
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-
 import com.annimon.stream.Stream;
 import com.baozi.treerecyclerview.base.ViewHolder;
 import com.baozi.treerecyclerview.factory.ItemHelperFactory;
@@ -12,6 +9,9 @@ import com.eanfang.R;
 import com.yaf.sys.entity.BaseDataEntity;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 /**
  * Created by O u r on 2018/7/27.

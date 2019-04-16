@@ -2,9 +2,6 @@ package com.eanfang.model;
 
 import java.util.List;
 
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * Created by MrHou
  *
@@ -14,11 +11,23 @@ import lombok.Setter;
  */
 
 public final class GrantChange {
-    @Getter
-    @Setter
     private List<Integer> addIds;
 
-    @Getter
-    @Setter
     private List<Integer> delIds;
+
+    public List<Integer> getAddIds() {
+        return this.addIds;
+    }
+
+    public List<Integer> getDelIds() {
+        return this.delIds;
+    }
+
+    public void setAddIds(List<Integer> addIds) {
+        this.addIds = addIds;
+    }
+
+    public void setDelIds(List<Integer> delIds) {
+        this.delIds = delIds;
+    }
 }

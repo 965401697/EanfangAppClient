@@ -82,7 +82,7 @@ public class ParenGroupAdapter extends BaseExpandableListAdapter {
             convertView = LayoutInflater.from(mContext).inflate(
                     R.layout.grandpa_item, null);
             holder = new ViewHolder();
-            holder.title = (TextView) convertView.findViewById(R.id.tv_grandpa);
+            holder.title = convertView.findViewById(R.id.tv_grandpa);
 //            holder.imageView = (ImageView) convertView.findViewById(R.id.iv_img);
 
             convertView.setTag(holder);

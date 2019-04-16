@@ -2,10 +2,11 @@ package com.eanfang.util;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.support.v4.app.ActivityCompat;
 
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
+
+import androidx.core.app.ActivityCompat;
 
 /**
  * Created by jornl on 2018/1/19.

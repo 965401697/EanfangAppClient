@@ -1,6 +1,5 @@
 package net.eanfang.client.ui.fragment.security;
 
-import android.support.v7.widget.DividerItemDecoration;
 import android.view.View;
 
 import com.eanfang.apiservice.NewApiService;
@@ -13,6 +12,8 @@ import com.eanfang.util.QueryEntry;
 
 import net.eanfang.client.ui.adapter.security.SecurityCommentListAdapter;
 import net.eanfang.client.ui.fragment.TemplateItemListFragment;
+
+import androidx.recyclerview.widget.DividerItemDecoration;
 
 
 /**

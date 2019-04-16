@@ -2,8 +2,6 @@ package net.eanfang.client.ui.activity.worksapce.equipment;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
@@ -17,6 +15,8 @@ import com.yaf.base.entity.CustDeviceChangeLogEntity;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

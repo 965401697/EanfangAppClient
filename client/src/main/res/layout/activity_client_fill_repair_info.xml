@@ -38,7 +38,7 @@
 
                 <View style="@style/style_common_line_gray" />
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_trouble"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -425,7 +425,7 @@
                     android:orientation="vertical"
                     android:paddingLeft="@dimen/dimen_38">
 
-                    <android.support.v7.widget.RecyclerView
+                    <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_teamwork"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

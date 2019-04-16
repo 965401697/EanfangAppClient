@@ -14,13 +14,13 @@ import com.eanfang.model.security.SecurityListBean;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
+import com.photopicker.com.imageloader.BGARVOnScrollListener;
 import com.photopicker.com.util.BGASpaceItemDecoration;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.security.SecurityDetailActivity;
 import net.eanfang.worker.ui.adapter.security.SecurityListAdapter;
 
-import cn.bingoogolapple.photopicker.imageloader.BGARVOnScrollListener;
 
 public class SecurityHotFragment extends TemplateItemListFragment {
 

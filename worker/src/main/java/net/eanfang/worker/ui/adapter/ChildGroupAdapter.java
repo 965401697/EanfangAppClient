@@ -74,7 +74,7 @@ public class ChildGroupAdapter extends BaseExpandableListAdapter {
         if (view == null) {
             view = LayoutInflater.from(mContext).inflate(R.layout.father_item, null);
             holder = new ViewHolder();
-            holder.mChildGroupTV = (TextView) view.findViewById(R.id.tv_father);
+            holder.mChildGroupTV = view.findViewById(R.id.tv_father);
             view.setTag(holder);
         } else {
             holder = (ViewHolder) view.getTag();
@@ -95,8 +95,8 @@ public class ChildGroupAdapter extends BaseExpandableListAdapter {
             view = LayoutInflater.from(mContext).inflate(
                     R.layout.son_item, null);
             holder = new ChildHolder();
-            holder.childChildTV = (TextView) view.findViewById(R.id.tv_son);
-            holder.firstName = (TextView) view.findViewById(R.id.tv_first_name);
+            holder.childChildTV = view.findViewById(R.id.tv_son);
+            holder.firstName = view.findViewById(R.id.tv_first_name);
             view.setTag(holder);
         } else {
             holder = (ChildHolder) view.getTag();

@@ -135,7 +135,7 @@ public class FaultDetailActivity extends BaseActivity {
         //修改小bug 图片读取问题
         if (StringUtils.isValid(repairBugEntity.getPictures())) {
             String[] prePic = repairBugEntity.getPictures().split(Constant.IMG_SPLIT);
-            picList1.addAll(Stream.of(Arrays.asList(prePic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
+            picList1.addAll(Stream.of(Arrays.asList(prePic)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
         }
         snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO, REQUEST_CODE_CHOOSE_PHOTO_two));
         snplMomentAddPhotos.setData(picList1);

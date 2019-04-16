@@ -4,7 +4,7 @@ import android.content.DialogInterface;
 import android.hardware.SensorManager;
 import android.media.AudioFormat;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
+import androidx.appcompat.app.AlertDialog;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;

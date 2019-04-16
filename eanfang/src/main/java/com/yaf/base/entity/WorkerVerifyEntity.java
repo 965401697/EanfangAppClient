@@ -7,9 +7,6 @@ import com.yaf.sys.entity.AccountEntity;
 import java.io.Serializable;
 import java.util.List;
 
-import lombok.Getter;
-import lombok.Setter;
-
 
 /**
  * 技师认证信息
@@ -19,8 +16,6 @@ import lombok.Setter;
  * @date 2017-11-30 20:02:44
  */
 @TableName(value = "tech_worker_verify")
-@Getter
-@Setter
 public class WorkerVerifyEntity extends TechWorkerVerifyEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     /**
@@ -43,6 +38,38 @@ public class WorkerVerifyEntity extends TechWorkerVerifyEntity implements Serial
      */
     @TableField(exist = false)
     private List<Long> regionList;
+
+    public AccountEntity getAccountEntity() {
+        return this.accountEntity;
+    }
+
+    public List<Long> getBusinessList() {
+        return this.businessList;
+    }
+
+    public List<Long> getServiceList() {
+        return this.serviceList;
+    }
+
+    public List<Long> getRegionList() {
+        return this.regionList;
+    }
+
+    public void setAccountEntity(AccountEntity accountEntity) {
+        this.accountEntity = accountEntity;
+    }
+
+    public void setBusinessList(List<Long> businessList) {
+        this.businessList = businessList;
+    }
+
+    public void setServiceList(List<Long> serviceList) {
+        this.serviceList = serviceList;
+    }
+
+    public void setRegionList(List<Long> regionList) {
+        this.regionList = regionList;
+    }
 
 
 

@@ -1,14 +1,11 @@
 package net.eanfang.client.ui.activity.my;
 
-import android.support.v7.view.menu.MenuView;
-import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.yaf.sys.entity.BaseDataEntity;
-
 
 import net.eanfang.client.R;
 
@@ -51,13 +48,13 @@ public class SkillTypeAdapter extends BaseQuickAdapter<BaseDataEntity, BaseViewH
         }
 
         if (mFlag != 0) {
-            ((CheckBox) helper.getView(R.id.cb_check)).setClickable(false);
-            ((CheckBox) helper.getView(R.id.cb_check)).setEnabled(false);
+            helper.getView(R.id.cb_check).setClickable(false);
+            helper.getView(R.id.cb_check).setEnabled(false);
         } else {
-            ((CheckBox) helper.getView(R.id.cb_check)).setClickable(true);
-            ((CheckBox) helper.getView(R.id.cb_check)).setEnabled(true);
+            helper.getView(R.id.cb_check).setClickable(true);
+            helper.getView(R.id.cb_check).setEnabled(true);
 
-            ((CheckBox) helper.getView(R.id.cb_check)).setOnClickListener(new View.OnClickListener() {
+            helper.getView(R.id.cb_check).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 

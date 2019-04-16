@@ -276,15 +276,12 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
 
         String idcard = etIdcard.getText().toString().trim();
         if (!StringUtils.isEmpty(idcard)) {
-            try {
                 if (IDCardUtil.IDCardValidate(idcard) == false) {
                     showToast("证件格式有误，请重新输入");
                     etIdcard.setText("");
                     etIdcard.setEnabled(true);
                     return false;
                 }
-            } catch (ParseException e) {
-            }
         }
 
         return true;
@@ -313,7 +310,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
 
     private void submitSuccess(String json) {
         EanfangHttp.post(UserApi.USER_INFO_UPDATE)
-                .upJson(json.toString())
+                .upJson(json)
                 .execute(new EanfangCallback(this, true, JSONObject.class, (bean) -> {
                     runOnUiThread(() -> {
                         showToast("修改成功");

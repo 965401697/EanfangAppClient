@@ -8,7 +8,7 @@
 
     <include layout="@layout/header" />
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="none">
@@ -321,7 +321,7 @@
                         android:layout_marginTop="@dimen/dimen_20"
                         android:text="协同人员：" />
 
-                    <android.support.v7.widget.RecyclerView
+                    <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recycler_view"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -354,7 +354,7 @@
 
             </LinearLayout>
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_task_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -404,7 +404,7 @@
                     android:textColor="@color/white" />
             </LinearLayout>
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 
 </LinearLayout>

@@ -2,9 +2,6 @@ package net.eanfang.client.ui.activity.worksapce.notice;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -25,6 +22,9 @@ import com.yaf.base.entity.NoticePushEntity;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

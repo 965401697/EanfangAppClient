@@ -2,8 +2,6 @@ package net.eanfang.client.ui.activity.worksapce.oa.workreport;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
@@ -31,6 +29,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -141,7 +141,7 @@ public class FiltrateTypeActivity extends BaseClientActivity implements SelectTi
                 }
                 queryEntry.getIsIn().put("type", typeIndexList);
             } else {
-                queryEntry.getEquals().put("type", String.valueOf(mTypeList.indexOf(((CheckBox) typeList.get(0)).getText().toString().trim())));
+                queryEntry.getEquals().put("type", String.valueOf(mTypeList.indexOf(typeList.get(0).getText().toString().trim())));
             }
         }
 

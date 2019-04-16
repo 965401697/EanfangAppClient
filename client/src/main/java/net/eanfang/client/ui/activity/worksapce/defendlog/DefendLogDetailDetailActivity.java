@@ -2,8 +2,6 @@ package net.eanfang.client.ui.activity.worksapce.defendlog;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.widget.TextView;
 
@@ -22,6 +20,8 @@ import net.eanfang.client.ui.base.BaseClientActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -137,7 +137,7 @@ public class DefendLogDetailDetailActivity extends BaseClientActivity {
                     listBeans.add(bean.getFalseList());
 
                     for (int i = 0; i < mAdapterList.size(); i++) {
-                        mAdapterList.get(i).setNewData((List<LogDetailsEntity>) listBeans.get(i));
+                        mAdapterList.get(i).setNewData(listBeans.get(i));
                     }
                 }));
     }

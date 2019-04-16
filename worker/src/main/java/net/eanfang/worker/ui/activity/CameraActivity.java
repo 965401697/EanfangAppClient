@@ -6,7 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
+import androidx.annotation.IdRes;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;

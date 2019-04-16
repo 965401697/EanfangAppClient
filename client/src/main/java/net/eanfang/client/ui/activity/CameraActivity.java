@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -47,6 +46,7 @@ import net.eanfang.client.ui.base.BaseClientActivity;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import androidx.annotation.IdRes;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;

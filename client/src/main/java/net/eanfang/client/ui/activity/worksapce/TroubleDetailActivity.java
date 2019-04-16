@@ -4,11 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -46,6 +41,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -187,7 +187,7 @@ public class TroubleDetailActivity extends BaseClientActivity {
                     Intent intent = new Intent(TroubleDetailActivity.this, SelectIMContactActivity.class);
 
                     bundle.putString("id", String.valueOf(repairOrderId));
-                    bundle.putString("orderNum", (String) bughandleConfirmEntity.getDetailEntityList().get(0).getFailureEntity().getDeviceName());
+                    bundle.putString("orderNum", bughandleConfirmEntity.getDetailEntityList().get(0).getFailureEntity().getDeviceName());
                     if (bughandleConfirmEntity.getDetailEntityList() != null && bughandleConfirmEntity.getDetailEntityList().size() > 0) {
                         bundle.putString("picUrl", bughandleConfirmEntity.getDetailEntityList().get(0).getFailureEntity().getPictures().split(",")[0]);
                     }
@@ -222,14 +222,14 @@ public class TroubleDetailActivity extends BaseClientActivity {
     private void initView() {
         setTitle("完工报告");
         setLeftBack();
-        rv_trouble = (RecyclerView) findViewById(R.id.rv_trouble);
-        snpl_moment_add_photos = (BGASortableNinePhotoLayout) findViewById(R.id.snpl_moment_add_photos);
-        snpl_monitor_add_photos = (BGASortableNinePhotoLayout) findViewById(R.id.snpl_monitor_add_photos);
-        snpl_tools_package_add_photos = (BGASortableNinePhotoLayout) findViewById(R.id.snpl_tools_package_add_photos);
-        snpl_form_photos = (BGASortableNinePhotoLayout) findViewById(R.id.snpl_form_photos);
+        rv_trouble = findViewById(R.id.rv_trouble);
+        snpl_moment_add_photos = findViewById(R.id.snpl_moment_add_photos);
+        snpl_monitor_add_photos = findViewById(R.id.snpl_monitor_add_photos);
+        snpl_tools_package_add_photos = findViewById(R.id.snpl_tools_package_add_photos);
+        snpl_form_photos = findViewById(R.id.snpl_form_photos);
         //两个操作按钮
-        tv_complete = (TextView) findViewById(R.id.tv_complete);
-        tv_complaint = (TextView) findViewById(R.id.tv_complaint);
+        tv_complete = findViewById(R.id.tv_complete);
+        tv_complaint = findViewById(R.id.tv_complaint);
 
 
         //非单确认状态 隐藏确认按钮
@@ -378,22 +378,22 @@ public class TroubleDetailActivity extends BaseClientActivity {
 
         if (bughandleConfirmEntity.getFrontPictures() != null) {
             String[] friontPic = bughandleConfirmEntity.getFrontPictures().split(",");
-            picList1.addAll(Stream.of(Arrays.asList(friontPic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
+            picList1.addAll(Stream.of(Arrays.asList(friontPic)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
         }
 
         if (bughandleConfirmEntity.getReverseSidePictures() != null) {
             String[] reversePic = bughandleConfirmEntity.getReverseSidePictures().split(",");
-            picList2.addAll(Stream.of(Arrays.asList(reversePic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
+            picList2.addAll(Stream.of(Arrays.asList(reversePic)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
         }
 
         if (bughandleConfirmEntity.getEquipmentCabinetPictures() != null) {
             String[] equipmentPic = bughandleConfirmEntity.getEquipmentCabinetPictures().split(",");
-            picList3.addAll(Stream.of(Arrays.asList(equipmentPic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
+            picList3.addAll(Stream.of(Arrays.asList(equipmentPic)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
         }
 
         if (bughandleConfirmEntity.getInvoicesPictures() != null) {
             String[] invoicesPic = bughandleConfirmEntity.getInvoicesPictures().split(",");
-            picList4.addAll(Stream.of(Arrays.asList(invoicesPic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
+            picList4.addAll(Stream.of(Arrays.asList(invoicesPic)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
         }
         initNinePhoto();
         // 转单记录

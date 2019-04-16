@@ -1,8 +1,6 @@
 package com.eanfang.ui.items;
 
 import android.net.Uri;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.CheckBox;
 
@@ -13,6 +11,9 @@ import com.eanfang.BuildConfig;
 import com.eanfang.R;
 import com.eanfang.model.TemplateBean;
 import com.eanfang.util.SharePreferenceUtil;
+
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
 /**
  * Created by O u r on 2018/5/31.
@@ -35,10 +36,10 @@ public class OrgSelectItem extends TreeItem<TemplateBean.Preson> {
         }
         try {
             if (SharePreferenceUtil.get().get("app", "").equals("client")) {
-                ((CheckBox) viewHolder.getView(R.id.cb_check)).setBackground(ContextCompat.getDrawable(viewHolder.getTextView(R.id.tv_name).getContext(), R.drawable.selector_single_checked_client));
+                viewHolder.getView(R.id.cb_check).setBackground(ContextCompat.getDrawable(viewHolder.getTextView(R.id.tv_name).getContext(), R.drawable.selector_single_checked_client));
 
             } else {
-                ((CheckBox) viewHolder.getView(R.id.cb_check)).setBackground(ContextCompat.getDrawable(viewHolder.getTextView (R.id.tv_name).getContext(), R.drawable.selector_single_checked_worker));
+                viewHolder.getView(R.id.cb_check).setBackground(ContextCompat.getDrawable(viewHolder.getTextView (R.id.tv_name).getContext(), R.drawable.selector_single_checked_worker));
             }
         } catch (Exception e) {
             e.printStackTrace();

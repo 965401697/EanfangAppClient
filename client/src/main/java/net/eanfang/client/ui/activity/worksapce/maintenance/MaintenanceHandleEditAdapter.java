@@ -29,11 +29,11 @@ public class MaintenanceHandleEditAdapter extends BaseQuickAdapter<ShopMaintenan
 
         if (item.getMaintenanceDetailEntity() == null) {
             helper.setText(R.id.tv_empasis_status, "去完善");
-            ((TextView) helper.getView(R.id.tv_empasis_status)).setBackground(helper.getView(R.id.tv_empasis_status).getResources().getDrawable(R.drawable.select_worker));
+            helper.getView(R.id.tv_empasis_status).setBackground(helper.getView(R.id.tv_empasis_status).getResources().getDrawable(R.drawable.select_worker));
             ((TextView) helper.getView(R.id.tv_empasis_status)).setTextColor(helper.getView(R.id.tv_empasis_status).getResources().getColor(R.color.client));
         } else {
             helper.setText(R.id.tv_empasis_status, "已完善");
-            ((TextView) helper.getView(R.id.tv_empasis_status)).setBackground(null);
+            helper.getView(R.id.tv_empasis_status).setBackground(null);
             ((TextView) helper.getView(R.id.tv_empasis_status)).setTextColor(helper.getView(R.id.tv_empasis_status).getResources().getColor(R.color.color_bottom));
         }
 

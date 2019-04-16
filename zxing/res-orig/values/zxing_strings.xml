@@ -14,9 +14,13 @@
  See the License for the specific language governing permissions and
  limitations under the License.
  -->
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
   <string name="zxing_app_name">Barcode Scanner</string>
   <string name="zxing_button_ok">OK</string>
   <string name="zxing_msg_camera_framework_bug">Sorry, the Android camera encountered a problem. You may need to restart the device.</string>
   <string name="zxing_msg_default_status">Place a barcode inside the viewfinder rectangle to scan it.</string>
+  <string name="zxing_device" tools:ignore="ExtraTranslation">请将设备二维码置于取景框内扫描</string>
+  <string name="zxing_scan_person" tools:ignore="ExtraTranslation">请将设备或技师二维码置于取景框内扫描</string>
+  <string name="zxing_scan_login" tools:ignore="ExtraTranslation">请将网页二维码置于取景框内扫描</string>
+  <string name="zxing_scan_addfriend" tools:ignore="ExtraTranslation">请将用户二维码置于取景框内扫描</string>
 </resources>

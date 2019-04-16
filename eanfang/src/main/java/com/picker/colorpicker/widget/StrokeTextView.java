@@ -5,7 +5,6 @@ import android.content.res.ColorStateList;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.support.annotation.ColorInt;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.widget.TextView;
@@ -13,6 +12,8 @@ import android.widget.TextView;
 import com.picker.common.util.ConvertUtils;
 
 import java.lang.reflect.Field;
+
+import androidx.annotation.ColorInt;
 
 
 /**

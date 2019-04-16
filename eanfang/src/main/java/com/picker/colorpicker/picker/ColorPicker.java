@@ -3,9 +3,6 @@ package com.picker.colorpicker.picker;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.ColorInt;
-import android.support.annotation.IdRes;
-import android.support.annotation.NonNull;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -18,6 +15,10 @@ import com.picker.common.popup.ConfirmPopup;
 import com.picker.common.util.ConvertUtils;
 
 import java.util.Locale;
+
+import androidx.annotation.ColorInt;
+import androidx.annotation.IdRes;
+import androidx.annotation.NonNull;
 
 
 /**

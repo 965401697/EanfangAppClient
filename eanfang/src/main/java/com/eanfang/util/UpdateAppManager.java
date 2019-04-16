@@ -53,7 +53,7 @@ public class UpdateAppManager {
                 //添加自定义参数，默认version=1.0.0（app的versionName）；apkKey=唯一表示（在AndroidManifest.xml配置）
                 .setParams(params)
                 //设置点击升级后，消失对话框，默认点击升级后，对话框显示下载进度
-                .hideDialogOnDownloading(false)
+                .hideDialogOnDownloading()
                 //设置头部，不设置显示默认的图片，设置图片后自动识别主色调，然后为按钮，进度条设置颜色
 //                .setTopPic(R.mipmap.ic_launcher)
                 //为按钮，进度条设置颜色。

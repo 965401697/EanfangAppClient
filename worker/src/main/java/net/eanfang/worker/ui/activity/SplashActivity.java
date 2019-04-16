@@ -99,7 +99,7 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
     //加载引导页
     void firstUse() {
         if (isFirst) {
-            new GuideUtil().init(this, (ViewGroup) findViewById(R.id.layout), drawables_worker, this);
+            new GuideUtil().init(this, findViewById(R.id.layout), drawables_worker, this);
             try {
                 PrefUtils.setBoolean(getApplicationContext(), PrefUtils.SHOWGUIDE, false);
             } catch (Exception e) {

@@ -22,9 +22,8 @@ public class IDCardUtil {
      *
      * @param IDStr 身份证号
      * @return true 有效：false 无效
-     * @throws ParseException
      */
-    public static boolean IDCardValidate(String IDStr) throws ParseException {
+    public static boolean IDCardValidate(String IDStr) {
         String[] ValCodeArr = {"1", "0", "X", "9", "8", "7", "6", "5", "4", "3", "2"};
         String[] Wi = {"7", "9", "10", "5", "8", "4", "2", "1", "6", "3", "7", "9", "10", "5", "8", "4", "2"};
         String Ai = "";
@@ -84,14 +83,10 @@ public class IDCardUtil {
         Ai = Ai + strVerifyCode;
 
         if (IDStr.length() == 18) {
-            if (Ai.equals(IDStr) == false) {
-                //errorInfo = "身份证无效，不是合法的身份证号码";
-                return false;
-            }
+            return Ai.equals(IDStr) != false;
         } else {
             return true;
         }
-        return true;
     }
 
     /**

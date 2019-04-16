@@ -2,10 +2,6 @@ package net.eanfang.client.ui.fragment.selectworker;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +40,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -124,7 +124,6 @@ public class AllWorkerFragment extends BaseFragment implements SwipeRefreshLayou
                 intent.putExtra("toRepairBean", toRepairBean);
                 intent.putExtra("companyUserId", selectWorkerAdapter.getData().get(position).getCompanyUserId() + "");
                 intent.putExtra("workerId", selectWorkerAdapter.getData().get(position).getId() + "");
-                ;
                 intent.putExtra("doorFee", mDoorFee);
                 startActivity(intent);
             }

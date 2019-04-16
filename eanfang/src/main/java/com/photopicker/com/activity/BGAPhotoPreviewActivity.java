@@ -19,9 +19,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v4.view.ViewCompat;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPropertyAnimatorListenerAdapter;
+import androidx.core.view.ViewCompat;
+import androidx.viewpager.widget.ViewPager;
+import androidx.core.view.ViewPropertyAnimatorListenerAdapter;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -161,8 +161,8 @@ public class BGAPhotoPreviewActivity extends BGAPPToolbarActivity implements Pho
         MenuItem menuItem = menu.findItem(R.id.item_photo_preview_title);
         View actionView = menuItem.getActionView();
 
-        mTitleTv = (TextView) actionView.findViewById(R.id.tv_photo_preview_title);
-        mDownloadIv = (ImageView) actionView.findViewById(R.id.iv_photo_preview_download);
+        mTitleTv = actionView.findViewById(R.id.tv_photo_preview_title);
+        mDownloadIv = actionView.findViewById(R.id.iv_photo_preview_download);
         mDownloadIv.setOnClickListener(new BGAOnNoDoubleClickListener() {
             @Override
             public void onNoDoubleClick(View v) {

@@ -11,9 +11,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import lombok.Getter;
-import lombok.Setter;
-
 
 /**
  * 故障处理确认信息表（上门解决）
@@ -22,8 +19,6 @@ import lombok.Setter;
  * @email jornlin@foxmail.com
  * @date 2017-12-08 15:11:19
  */
-@Getter
-@Setter
 @TableName(value = "bus_bughandle_confirm")
 public class BughandleConfirmEntity implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -566,4 +561,83 @@ public class BughandleConfirmEntity implements Serializable {
         return result;
     }
 
+    public List<BughandleDetailEntity> getDetailEntityList() {
+        return this.detailEntityList;
+    }
+
+    public TransferLogEntity getTransferLogEntity() {
+        return this.transferLogEntity;
+    }
+
+    public UserEntity getCreateUserEntity() {
+        return this.createUserEntity;
+    }
+
+    public String getSignOutCode() {
+        return this.signOutCode;
+    }
+
+    public String getSignOutAddress() {
+        return this.signOutAddress;
+    }
+
+    public String getSignOutLongitude() {
+        return this.signOutLongitude;
+    }
+
+    public String getSignOutLatitude() {
+        return this.signOutLatitude;
+    }
+
+    public String getFront_mp4_path() {
+        return this.front_mp4_path;
+    }
+
+    public String getReverse_side_mp4_path() {
+        return this.reverse_side_mp4_path;
+    }
+
+    public String getEquipment_cabinet_mp4_path() {
+        return this.equipment_cabinet_mp4_path;
+    }
+
+    public void setDetailEntityList(List<BughandleDetailEntity> detailEntityList) {
+        this.detailEntityList = detailEntityList;
+    }
+
+    public void setTransferLogEntity(TransferLogEntity transferLogEntity) {
+        this.transferLogEntity = transferLogEntity;
+    }
+
+    public void setCreateUserEntity(UserEntity createUserEntity) {
+        this.createUserEntity = createUserEntity;
+    }
+
+    public void setSignOutCode(String signOutCode) {
+        this.signOutCode = signOutCode;
+    }
+
+    public void setSignOutAddress(String signOutAddress) {
+        this.signOutAddress = signOutAddress;
+    }
+
+    public void setSignOutLongitude(String signOutLongitude) {
+        this.signOutLongitude = signOutLongitude;
+    }
+
+    public void setSignOutLatitude(String signOutLatitude) {
+        this.signOutLatitude = signOutLatitude;
+    }
+
+    public void setFront_mp4_path(String front_mp4_path) {
+        this.front_mp4_path = front_mp4_path;
+    }
+
+    public void setReverse_side_mp4_path(String reverse_side_mp4_path) {
+        this.reverse_side_mp4_path = reverse_side_mp4_path;
+    }
+
+    public void setEquipment_cabinet_mp4_path(String equipment_cabinet_mp4_path) {
+        this.equipment_cabinet_mp4_path = equipment_cabinet_mp4_path;
+    }
 }

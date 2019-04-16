@@ -21,8 +21,8 @@ public class DeviceBrandAdapter extends BaseQuickAdapter<String, BaseViewHolder>
 
     @Override
     protected void convert(BaseViewHolder helper, String item) {
-        if (!StringUtils.isEmpty(item.toString())) {
-            helper.setText(R.id.tv_item, item.toString());
+        if (!StringUtils.isEmpty(item)) {
+            helper.setText(R.id.tv_item, item);
         }
     }
 }

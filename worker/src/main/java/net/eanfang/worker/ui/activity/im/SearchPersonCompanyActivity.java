@@ -2,8 +2,8 @@ package net.eanfang.worker.ui.activity.im;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -39,7 +39,6 @@ public class SearchPersonCompanyActivity extends BaseWorkerActivity {
     private ArrayList<TemplateBean.Preson> searchDataList;
     //    private ArrayList<TemplateBean.Preson> seletedDataList = new ArrayList<>();
     private List<TemplateBean.Preson> presonList = new ArrayList<>();
-    ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

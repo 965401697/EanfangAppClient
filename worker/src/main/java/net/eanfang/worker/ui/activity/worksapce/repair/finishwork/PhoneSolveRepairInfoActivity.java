@@ -3,9 +3,9 @@ package net.eanfang.worker.ui.activity.worksapce.repair.finishwork;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -136,11 +136,11 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
     private void initView() {
         setTitle("电话解决");
         setLeftBack();
-        rv_trouble = (RecyclerView) findViewById(R.id.rv_trouble);
+        rv_trouble = findViewById(R.id.rv_trouble);
         rv_trouble.setNestedScrollingEnabled(false);
-        et_remain_question = (EditText) findViewById(R.id.et_remain_question);
-        snpl_form_photos = (BGASortableNinePhotoLayout) findViewById(R.id.snpl_form_photos);
-        tv_commit = (TextView) findViewById(R.id.tv_commit);
+        et_remain_question = findViewById(R.id.et_remain_question);
+        snpl_form_photos = findViewById(R.id.snpl_form_photos);
+        tv_commit = findViewById(R.id.tv_commit);
 
     }
 

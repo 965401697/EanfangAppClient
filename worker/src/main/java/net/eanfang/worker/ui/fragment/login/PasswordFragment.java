@@ -3,8 +3,8 @@ package net.eanfang.worker.ui.fragment.login;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.AppCompatCheckBox;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatCheckBox;
 import android.text.Selection;
 import android.text.Spannable;
 import android.text.method.HideReturnsTransformationMethod;
@@ -32,6 +32,7 @@ import net.eanfang.worker.util.PrefUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author Guanluocang
@@ -70,11 +71,11 @@ public class PasswordFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        et_phone = (EditText) findViewById(R.id.et_phone);
-        et_password = (EditText) findViewById(R.id.et_password);
-        cb = (AppCompatCheckBox) findViewById(R.id.cb);
-        read = (TextView) findViewById(R.id.tv_read_agreement);
-        btn_login = (Button) findViewById(R.id.btn_login);
+        et_phone = findViewById(R.id.et_phone);
+        et_password = findViewById(R.id.et_password);
+        cb = findViewById(R.id.cb);
+        read = findViewById(R.id.tv_read_agreement);
+        btn_login = findViewById(R.id.btn_login);
         mShow = findViewById(R.id.iv_show);
 
         try {
@@ -85,7 +86,7 @@ public class PasswordFragment extends BaseFragment {
             byte[] buffer = new byte[size];
             is.read(buffer);
             is.close();
-            legalText = new String(buffer, "UTF-8");
+            legalText = new String(buffer, StandardCharsets.UTF_8);
         } catch (IOException e1) {
             e1.printStackTrace();
         }

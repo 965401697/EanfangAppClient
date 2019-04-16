@@ -1,20 +1,16 @@
 package com.yaf.base.entity;
 
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
 import com.yaf.sys.entity.OrgEntity;
 import com.yaf.sys.entity.UserEntity;
 
-import com.baomidou.mybatisplus.annotations.TableName;
-import com.baomidou.mybatisplus.annotations.TableField;
-
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-
-import lombok.Getter;
-import lombok.Setter;
 
 
 /**
@@ -24,8 +20,6 @@ import lombok.Setter;
  * @email jornlin@foxmail.com
  * @date 2018-07-13 14:08:08
  */
-@Getter
-@Setter
 @TableName(value = "shop_maintenance_order")
 public class ShopMaintenanceOrderEntity implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -842,4 +836,11 @@ public class ShopMaintenanceOrderEntity implements Serializable {
     }
 
 
+    public Integer getNewOrder() {
+        return this.newOrder;
+    }
+
+    public void setNewOrder(Integer newOrder) {
+        this.newOrder = newOrder;
+    }
 }

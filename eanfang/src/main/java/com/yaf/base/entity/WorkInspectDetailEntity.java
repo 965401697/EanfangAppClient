@@ -9,9 +9,6 @@ import com.chad.library.adapter.base.entity.MultiItemEntity;
 import java.io.Serializable;
 import java.util.List;
 
-import lombok.Getter;
-import lombok.Setter;
-
 
 /**
  * 工作检查明细表
@@ -20,8 +17,6 @@ import lombok.Setter;
  * @email 15940525612@163.com
  * @date 2017-12-05 20:41:57
  */
-@Getter
-@Setter
 @TableName(value = "oa_work_inspect_detail")
 public class WorkInspectDetailEntity implements Serializable, MultiItemEntity {
     private static final long serialVersionUID = 1L;
@@ -204,5 +199,9 @@ public class WorkInspectDetailEntity implements Serializable, MultiItemEntity {
     @Override
     public int getItemType() {
         return itemType;
+    }
+
+    public void setItemType(int itemType) {
+        this.itemType = itemType;
     }
 }

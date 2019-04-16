@@ -170,7 +170,7 @@ public class FaPiaoActivity extends BaseClientActivity {
 
                 EanfangHttp.post(NewApiService.FA_PIAO)
                         .tag(this)
-                        .params("json", json.toString())
+                        .params("json", json)
                         .execute(new EanfangCallback(FaPiaoActivity.this, true, JSONObject.class) {
                             @Override
                             public void onSuccess(Object bean) {
@@ -269,22 +269,22 @@ public class FaPiaoActivity extends BaseClientActivity {
     }
 
     private void initView() {
-        rb_normal = (RadioButton) findViewById(R.id.rb_normal);
+        rb_normal = findViewById(R.id.rb_normal);
 //        et_head = (EditText) findViewById(R.id.et_head);
-        rb_pro = (RadioButton) findViewById(R.id.rb_pro);
-        et_company = (EditText) findViewById(R.id.et_company);
-        et_number = (EditText) findViewById(R.id.et_number);
+        rb_pro = findViewById(R.id.rb_pro);
+        et_company = findViewById(R.id.et_company);
+        et_number = findViewById(R.id.et_number);
 //        et_number_normal = (EditText) findViewById(R.id.et_number_normal);
-        et_address = (EditText) findViewById(R.id.et_address);
-        et_phone = (EditText) findViewById(R.id.et_phone);
-        et_bank = (EditText) findViewById(R.id.et_bank);
-        et_bank_number = (EditText) findViewById(R.id.et_bank_number);
-        et_name = (EditText) findViewById(R.id.et_name);
-        et_mobile_phone = (EditText) findViewById(R.id.et_mobile_phone);
-        ll_address = (LinearLayout) findViewById(R.id.ll_address);
-        et_detail_address = (EditText) findViewById(R.id.et_detail_address);
-        btn_complete = (Button) findViewById(R.id.btn_complete);
-        tv_address = (TextView) findViewById(R.id.tv_address);
+        et_address = findViewById(R.id.et_address);
+        et_phone = findViewById(R.id.et_phone);
+        et_bank = findViewById(R.id.et_bank);
+        et_bank_number = findViewById(R.id.et_bank_number);
+        et_name = findViewById(R.id.et_name);
+        et_mobile_phone = findViewById(R.id.et_mobile_phone);
+        ll_address = findViewById(R.id.ll_address);
+        et_detail_address = findViewById(R.id.et_detail_address);
+        btn_complete = findViewById(R.id.btn_complete);
+        tv_address = findViewById(R.id.tv_address);
         setTitle("填写发票信息");
         setLeftBack();
     }

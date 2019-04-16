@@ -34,11 +34,11 @@ public class BrandAdapter extends BaseQuickAdapter<BaseDataEntity, BaseViewHolde
             helper.setChecked(R.id.cb_checked, false);
         }
         if (mList.contains(item)) {
-            ((CheckBox) helper.getView(R.id.cb_checked)).setEnabled(false);
+            helper.getView(R.id.cb_checked).setEnabled(false);
             // TODO: 2019/1/21 待优化   代码的先后执行顺序来保证
             helper.setChecked(R.id.cb_checked, true);
         } else {
-            ((CheckBox) helper.getView(R.id.cb_checked)).setEnabled(true);
+            helper.getView(R.id.cb_checked).setEnabled(true);
         }
 
         helper.addOnClickListener(R.id.cb_checked);

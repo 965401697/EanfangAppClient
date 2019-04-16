@@ -2,8 +2,6 @@ package net.eanfang.client.ui.activity.worksapce.maintenance;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -23,6 +21,8 @@ import com.yaf.base.entity.ShopMaintenanceOrderEntity;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;

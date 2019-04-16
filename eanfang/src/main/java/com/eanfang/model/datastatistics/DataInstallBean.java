@@ -3,27 +3,27 @@ package com.eanfang.model.datastatistics;
 import java.io.Serializable;
 import java.util.List;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 /**
  * @author guanluocang
  * @data 2018/9/19
  * @description 保修统计
  */
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
 public class DataInstallBean implements Serializable {
 
 
     private List<InstallBean> install;
     private List<BussinessBean> bussiness;
     private List<FiveBean> five;
+
+    public DataInstallBean(List<InstallBean> install, List<BussinessBean> bussiness, List<FiveBean> five) {
+        this.install = install;
+        this.bussiness = bussiness;
+        this.five = five;
+    }
+
+    public DataInstallBean() {
+    }
 
     public List<InstallBean> getInstall() {
         return install;

@@ -336,7 +336,7 @@
             android:screenOrientation="portrait" />
 
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true"
@@ -990,7 +990,7 @@
         <activity android:name=".ui.activity.worksapce.security.SecurityPersonalActivity" />
         <activity android:name=".ui.activity.worksapce.security.SecurityCommentListActivity" />
         <activity android:name=".ui.activity.worksapce.security.SecurityPersonalPublicListActivity" />
-        <activity android:name=".ui.activity.worksapce.security.SecurityFoucsListActivity"/>
+        <activity android:name=".ui.activity.worksapce.security.SecurityFoucsListActivity" />
     </application>
 
 </manifest>

@@ -1,10 +1,7 @@
 package net.eanfang.client.ui.activity.worksapce.maintenance;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -13,11 +10,8 @@ import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.ShopMaintenanceExamDeviceEntity;
-import com.yaf.base.entity.ShopMaintenanceOrderEntity;
 
 import net.eanfang.client.R;
-
-import static android.content.Context.MODE_PRIVATE;
 
 
 /**

@@ -34,7 +34,7 @@ public abstract class BaseDialog extends Dialog {
         super(context, R.style.BaseDialog);
         this.context = context;
         if (isfull) {
-            setOwnerActivity((Activity) context);
+            setOwnerActivity(context);
         }
         setCanceledOnTouchOutside(true);
         getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
@@ -118,8 +118,8 @@ public abstract class BaseDialog extends Dialog {
 
     public void setDialogSizeMatch() {
         WindowManager.LayoutParams lp = getWindow().getAttributes();
-        lp.width = (int) (context.getResources().getDisplayMetrics().widthPixels);
-        lp.height = (int) (context.getResources().getDisplayMetrics().heightPixels);
+        lp.width = context.getResources().getDisplayMetrics().widthPixels;
+        lp.height = context.getResources().getDisplayMetrics().heightPixels;
         getWindow().setAttributes(lp);
     }
 

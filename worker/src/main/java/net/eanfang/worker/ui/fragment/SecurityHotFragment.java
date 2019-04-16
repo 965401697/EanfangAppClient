@@ -1,7 +1,9 @@
 package net.eanfang.worker.ui.fragment;
 
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.View;
 
 import com.alibaba.fastjson.JSONObject;
@@ -15,13 +17,13 @@ import com.eanfang.model.security.SecurityListBean;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
+import com.photopicker.com.imageloader.BGARVOnScrollListener;
 import com.photopicker.com.util.BGASpaceItemDecoration;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.security.SecurityDetailActivity;
 import net.eanfang.worker.ui.adapter.security.SecurityListAdapter;
 
-import cn.bingoogolapple.photopicker.imageloader.BGARVOnScrollListener;
 
 public class SecurityHotFragment extends TemplateItemListFragment {
 

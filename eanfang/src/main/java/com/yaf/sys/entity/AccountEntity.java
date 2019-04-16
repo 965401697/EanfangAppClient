@@ -16,9 +16,6 @@ import java.util.Set;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Size;
 
-import lombok.Getter;
-import lombok.Setter;
-
 
 /**
  * 系统账号
@@ -29,8 +26,6 @@ import lombok.Setter;
  */
 
 @TableName(value = "sys_account")
-@Getter
-@Setter
 public class AccountEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     //账号
@@ -41,8 +36,6 @@ public class AccountEntity implements Serializable {
 
     //账号类型0普通用户1内置用户2技师用户
     //@TableField(value = "acc_type")
-    @Getter
-    @Setter
     private Integer accType;
 
     //手机
@@ -98,41 +91,29 @@ public class AccountEntity implements Serializable {
     //性别0女1男
     //@TableField(value = "gender")
     @Digits(integer = 3, fraction = 0)
-    @Getter
-    @Setter
     private Integer gender;
 
     //生日
     //@TableField(value = "birthday")
-    @Getter
-    @Setter
     private Date birthday;
 
     //证件号码
     //@TableField(value = "id_card")
     @Size(min = 0, max = 18)
-    @Getter
-    @Setter
     private String idCard;
 
     //所在城市编号
     //@TableField(value = "area_code")
     @Size(min = 0, max = 20)
-    @Getter
-    @Setter
     private String areaCode;
 
     //详细地址
     //@TableField(value = "adress")
     @Size(min = 0, max = 200)
-    @Getter
-    @Setter
     private String address;
 
     //个人二维码
     @Size(min = 0, max = 200)
-    @Getter
-    @Setter
     private String qrCode;
     /**
      * 判断当前密码是否是简单密码（空 || 默认手机后六位 || 默认用户名）
@@ -297,37 +278,25 @@ public class AccountEntity implements Serializable {
     /**
      * 用户信息扩展
      */
-    @Getter
-    @Setter
     @TableField(exist = false)
     private Object accountExtInfo;
 
-    @Getter
-    @Setter
     @TableField(exist = false)
     private UserEntity defaultUser;
 
-    @Getter
-    @Setter
     @TableField(exist = false)
     private Long nullUser;
 
 
     /*归属的公司列表*/
-    @Getter
-    @Setter
     @TableField(exist = false)
     Set<OrgEntity> belongCompanys;
 
     /*归属的部门列表*/
-    @Getter
-    @Setter
     @TableField(exist = false)
     Set<Long> belongDepartments;
 
     /*适合当前域名的公司id列表*/
-    @Getter
-    @Setter
     @TableField(exist = false)
     Set<Long> allowCurDomainCompanys;
 
@@ -357,4 +326,115 @@ public class AccountEntity implements Serializable {
     }
 
 
+    public boolean isSimplePwd() {
+        return this.simplePwd;
+    }
+
+    public void setSimplePwd(boolean simplePwd) {
+        this.simplePwd = simplePwd;
+    }
+
+    public Integer getAccType() {
+        return this.accType;
+    }
+
+    public Integer getGender() {
+        return this.gender;
+    }
+
+    public Date getBirthday() {
+        return this.birthday;
+    }
+
+    public String getIdCard() {
+        return this.idCard;
+    }
+
+    public String getAreaCode() {
+        return this.areaCode;
+    }
+
+    public String getAddress() {
+        return this.address;
+    }
+
+    public String getQrCode() {
+        return this.qrCode;
+    }
+
+    public Object getAccountExtInfo() {
+        return this.accountExtInfo;
+    }
+
+    public UserEntity getDefaultUser() {
+        return this.defaultUser;
+    }
+
+    public Long getNullUser() {
+        return this.nullUser;
+    }
+
+    public Set<OrgEntity> getBelongCompanys() {
+        return this.belongCompanys;
+    }
+
+    public Set<Long> getBelongDepartments() {
+        return this.belongDepartments;
+    }
+
+    public Set<Long> getAllowCurDomainCompanys() {
+        return this.allowCurDomainCompanys;
+    }
+
+    public void setAccType(Integer accType) {
+        this.accType = accType;
+    }
+
+    public void setGender(Integer gender) {
+        this.gender = gender;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public void setIdCard(String idCard) {
+        this.idCard = idCard;
+    }
+
+    public void setAreaCode(String areaCode) {
+        this.areaCode = areaCode;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setQrCode(String qrCode) {
+        this.qrCode = qrCode;
+    }
+
+    public void setAccountExtInfo(Object accountExtInfo) {
+        this.accountExtInfo = accountExtInfo;
+    }
+
+    public void setDefaultUser(UserEntity defaultUser) {
+        this.defaultUser = defaultUser;
+    }
+
+    public void setNullUser(Long nullUser) {
+        this.nullUser = nullUser;
+    }
+
+    public void setBelongCompanys(Set<OrgEntity> belongCompanys) {
+        this.belongCompanys = belongCompanys;
+    }
+
+    public void setBelongDepartments(Set<Long> belongDepartments) {
+        this.belongDepartments = belongDepartments;
+    }
+
+    public void setAllowCurDomainCompanys(Set<Long> allowCurDomainCompanys) {
+        this.allowCurDomainCompanys = allowCurDomainCompanys;
+    }
 }

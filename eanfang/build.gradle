@@ -1,27 +1,29 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.jakewharton.butterknife'
 //lambda
-apply plugin: 'me.tatarka.retrolambda'
+//apply plugin: 'me.tatarka.retrolambda'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion '26.0.2'
+    compileSdkVersion cfg.compileSdkVersion
+    buildToolsVersion cfg.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion 17
-        targetSdkVersion 26
-        versionCode 19033001
-        versionName "2.3.38"
+        minSdkVersion cfg.minSdkVersion
+        targetSdkVersion cfg.targetSdkVersion
+        versionCode cfg.versionCode
+        versionName cfg.versionName
         multiDexEnabled true
 
-        buildConfigField("String", "OSS_SERVER", "\"http://oss.eanfang.net/\"")
-        buildConfigField("String", "OSS_BUCKET", "\"eanfang\"")
-        buildConfigField("String", "OSS_ENDPOINT", "\"oss-cn-beijing.aliyuncs.com/\"")
+        buildConfigField("String", "OSS_SERVER", cfg.ossServer)
+        buildConfigField("String", "OSS_BUCKET", cfg.ossBucket)
+        buildConfigField("String", "OSS_ENDPOINT", cfg.ossEndpoint)
+
+        javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility cfg.JavaVersion
+        targetCompatibility cfg.JavaVersion
     }
 
     sourceSets {
@@ -33,29 +35,17 @@ android {
 
 
     buildTypes {
-
         // 开发
         debug {
-            buildConfigField("boolean", "LOG_DEBUG", "true")
+//            buildConfigField("boolean", "DEBUG", cfg.debugMod)
 
-            // 上线url
-//             buildConfigField("String", "HOST", "\"https://api.eanfang.net\"")
-//             buildConfigField("String", "API_HOST", "\"https://api.eanfang.net\"")
-//            buildConfigField("String", "HOST", "\"http://192.168.0.222:8080\"")
-//            buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
-//            buildConfigField("String", "HOST", "\"http://192.168.0.101:8080\"")
-//            buildConfigField("String", "API_HOST", "\"http://192.168.0.101:8080\"")
-            buildConfigField("String", "HOST", "\"http://api.beta.eanfang.net\"")
-            buildConfigField("String", "API_HOST", "\"http://api.beta.eanfang.net\"")
-//            buildConfigField("String", "HOST", "\"http://ifb.ngrok.eanfang.net:89\"")
-//            buildConfigField("String", "API_HOST", "\"http://ifb.ngrok.eanfang.net:89\"")
+            buildConfigField("String", "API_HOST", cfg.localApiHost)
         }
         release {
             // 上线url
-             buildConfigField("String", "HOST", "\"https://api.eanfang.net\"")
-            buildConfigField("String", "API_HOST", "\"https://api.eanfang.net\"")
+            buildConfigField("String", "API_HOST", cfg.proApiHost)
             // 不显示Log
-            buildConfigField("boolean", "LOG_DEBUG", "false")
+//            buildConfigField("boolean", "DEBUG", cfg.debugMod)
             //Zipalign优化
             zipAlignEnabled true
             // 移除无用的resource文件
@@ -66,158 +56,91 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
     dataBinding {
         enabled = true
     }
 
     // aapt2 问题 png图片问题
     aaptOptions.cruncherEnabled = false
-    aaptOptions.useNewCruncher = false
+//    aaptOptions.useNewCruncher = false
 }
 
 dependencies {
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-
-    //noinspection GradleCompatible
-    compile 'com.android.support:support-v4:26.1.0'
-    compile 'com.android.support:appcompat-v7:26.1.0'
-
-    //    compile 'com.squareup.okhttp3:okhttp:3.8.1'
-    implementation 'com.facebook.fresco:imagepipeline-okhttp3:0.12.0+'
-    compile 'com.android.support:recyclerview-v7:26.1.0'
-    compile 'io.reactivex:rxjava:1.2.2'
-    compile 'io.reactivex:rxandroid:1.2.1'
-    compile 'com.tbruyelle.rxpermissions:rxpermissions:0.9.2'
-
-    // -------------------- 以下库是必须依赖的 ----------------------------
-
-    //    implementation 'cn.bingoogolapple:bga-photopicker:1.2.8@aar'
-    implementation 'cn.bingoogolapple:bga-baseadapter:1.2.7@aar'
-    implementation 'cn.bingoogolapple:bga-photopicker:1.1.3@aar'
-    implementation 'cn.bingoogolapple:bga-adapter:1.1.0@aar'
-
-    // -------------------- 以上库是必须依赖的 ----------------------------
-    implementation 'com.github.bumptech.glide:glide:3.7.0'
-
-    //keyValue缓存
-    compile 'com.jakewharton:disklrucache:2.0.2'
-
-    //鲁班压缩
-    compile 'top.zibin:Luban:1.1.3'
-
-    //Stram API
-    compile 'com.annimon:stream:1.1.8'
-    retrolambdaConfig 'net.orfjackal.retrolambda:retrolambda:+'
-    compile 'com.android.support:multidex:1.0.2'
-
-    // add library
-    compile 'com.alibaba:fastjson:1.2.47'
-
-    //takephoto
-    compile 'com.jph.takephoto:takephoto_library:4.0.3'
-    compile 'org.projectlombok:lombok:1.16.18'
-    annotationProcessor "org.projectlombok:lombok:1.16.18"
-
-    //OSS
-    compile 'com.aliyun.dpa:oss-android-sdk:2.4.4'
-
-    //fresco
-    implementation 'com.facebook.fresco:fresco:1.5.0'
-
-    //eventbus
-    compile 'org.greenrobot:eventbus:3.0.0'
-
-    //recyclerview adapter
-    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.9'
-
-    //fresco
-
-    //    implementation 'com.facebook.fresco:fresco:1.5.0'
-
-    //bugly
-    compile 'com.tencent.bugly:crashreport:2.6.6.1'
-
-    //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
-    compile 'com.tencent.bugly:nativecrashreport:3.3.1'
-
-    //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
-
-    //完整的信鸽依赖三个都必须有，如果发生依赖冲突请根据对应的依赖版本号选择高版本的依赖。（使用jcenter自动接入请确认libs 中没有信鸽的相关jar包）
-
-    //信鸽jar
-    compile 'com.tencent.xinge:xinge:3.2.7-Release'
-
-    //wup包
-    compile 'com.tencent.wup:wup:1.0.0.E-release'
-
-    //mid包
-    compile 'com.tencent.mid:mid:4.0.6-release'
-
-    //jg包
-    compile 'com.tencent.jg:jg:1.1'
-
-    //在集成信鸽的基础上新增华为push的jar包
-    compile 'com.tencent.xinge:xghw:3.2.8-Release'
-
-    //在集成信鸽的基础上新增小米push的jar包
-    compile 'com.tencent.xinge:mipush:3.2.8-release'
-
-    //集成信鸽的基础上新增魅族push的jar包
-    compile 'com.tencent.xinge:xgmz:3.2.8-release'
-
-    //微信
-    compile 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
-
-    //butterknife
-    compile 'com.jakewharton:butterknife:8.5.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
-
-    //badgeview
-    compile 'q.rorbin:badgeview:1.1.3'
-
-    //app updata
-    compile 'com.qianwen:update-app:3.4.1'
-
+    api fileTree(include: ['*.jar'], dir: 'libs')
     //高德
-    implementation files('libs/Amap_2DMap_V5.2.0_20170627.jar')
-    implementation files('libs/AMap_Location_V3.6.0_20170918.jar')
-    implementation files('libs/Android_Map3D_SDK_V5.4.0_20170928.jar')
-    implementation files('libs/Volley.jar')
-    implementation files('libs/AMap_Search_V5.3.1_20170817.jar')
-    implementation files('libs/alipaySdk-20170922.jar')
-    implementation files('libs/validation-api-1.0.0.GA.jar')
-    implementation files('libs/hibernate-validator-4.2.0.Final.jar')
-    compile 'com.jaeger.statusbarutil:library:1.4.0'
+//    implementation files('libs/Amap_2DMap_V5.2.0_20170627.jar')
+//    implementation files('libs/AMap_Location_V3.6.0_20170918.jar')
+//    implementation files('libs/Android_Map3D_SDK_V5.4.0_20170928.jar')
+//    implementation files('libs/Volley.jar')
+//    implementation files('libs/AMap_Search_V5.3.1_20170817.jar')
+//    implementation files('libs/alipaySdk-20170922.jar')
+//    implementation files('libs/validation-api-1.0.0.GA.jar')
+//    implementation files('libs/hibernate-validator-4.2.0.Final.jar')
+//    implementation files('libs/Msc.jar')
+//    implementation files('libs/Sunflower.jar')
+//    implementation files('libs/pldroid-shortvideo-1.14.0.jar')
+//    implementation files('libs/MobCommons-2018.1128.1916.jar')
+//    implementation files('libs/MobTools-2018.1128.1916.jar')
+//    implementation files('libs/ShareSDK-Core-3.4.0.jar')
+//    implementation files('libs/ShareSDK-Wechat-3.4.0.jar')
+//    implementation files('libs/ShareSDK-Wechat-Core-3.4.0.jar')
+//    implementation files('libs/ShareSDK-Wechat-Moments-3.4.0.jar')
+//    implementation files('libs/tbs_sdk_thirdapp_v3.6.0.1310_43612_sharewithdownload_withoutGame_obfs_20180706_163319.jar')
 
-    //中文转英语
-    implementation 'com.belerweb:pinyin4j:2.5.0'
 
-    //三级折叠
-    compile 'com.github.Jlanglang:TreeRecyclerView:1.1.2'
+    implementation pkg.constraintlayout
+    implementation pkg.legacySupportV4
+    implementation pkg.appcompat
+    implementation pkg.okhttp3
+    implementation pkg.multidex
+    implementation pkg.glide
+    implementation pkg.fresco
+    implementation pkg.lombok
+    annotationProcessor pkg.lombok
+    api pkg.eventbus
+    implementation pkg.glide
+    //butterknife
+    api pkg.butterknife
+    annotationProcessor pkg.butterknife
+    api pkg.stream
+    api pkg.aliyunOss
 
-    // 时间选择器
+    //component
+    api pkg.recyclerview
+    api pkg.bgaBaseadapter
+    api pkg.takephoto
+    api pkg.cymChad
+    api pkg.badgeview
+    implementation pkg.statusbarutil
+    api pkg.treeRecyclerView
+    api pkg.flycoRoundView
+    api pkg.flycoTabLayout
+    api pkg.mPAndroidChart
+    implementation pkg.jiaozivideoplayer
+    api pkg.prolificinteractive
 
-    //    compile 'com.contrarywind:Android-PickerView:4.1.3'
-    compile 'com.flyco.roundview:FlycoRoundView_Lib:1.1.2@aar'
-    compile 'com.flyco.tablayout:FlycoTabLayout_Lib:1.5.0@aar'
+    //rx
+    implementation pkg.rxjava
+    implementation pkg.rxandroid
+    implementation pkg.rxpermissions
 
-    // 统计饼状图
-    compile 'com.github.PhilJay:MPAndroidChart:v3.0.3'
-    implementation files('libs/Msc.jar')
-    implementation files('libs/Sunflower.jar')
-    implementation files('libs/pldroid-shortvideo-1.14.0.jar')
+    //tools
+    implementation pkg.hutoolCore
+    implementation pkg.luban
+    api pkg.fastjson
+    implementation pkg.update
+    implementation pkg.pinyin4j
 
-    // 播放视频
-    implementation 'cn.jzvd:jiaozivideoplayer:6.3.1'
-
-    // 日历
-    compile 'com.github.prolificinteractive:material-calendarview:2.0.0'
-    implementation files('libs/MobCommons-2018.1128.1916.jar')
-    implementation files('libs/MobTools-2018.1128.1916.jar')
-    implementation files('libs/ShareSDK-Core-3.4.0.jar')
-    implementation files('libs/ShareSDK-Wechat-3.4.0.jar')
-    implementation files('libs/ShareSDK-Wechat-Core-3.4.0.jar')
-    implementation files('libs/ShareSDK-Wechat-Moments-3.4.0.jar')
-    implementation files('libs/tbs_sdk_thirdapp_v3.6.0.1310_43612_sharewithdownload_withoutGame_obfs_20180706_163319.jar')
+    //tencent
+    api pkg.bugly
+    api pkg.nativecrashreport
+    api pkg.xinge
+    api pkg.wup
+    api pkg.mid
+    api pkg.jg
+    api pkg.xghw
+    api pkg.mipush
+    api pkg.xgmz
+    api pkg.wechat
 }

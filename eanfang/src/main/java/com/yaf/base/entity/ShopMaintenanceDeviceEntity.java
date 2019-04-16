@@ -2,12 +2,8 @@ package com.yaf.base.entity;
 
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.enums.IdType;
-
-import lombok.Getter;
-import lombok.Setter;
-
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.enums.IdType;
 
 import java.io.Serializable;
 
@@ -19,8 +15,6 @@ import java.io.Serializable;
  * @email jornlin@foxmail.com
  * @date 2018-07-13 14:07:11
  */
-@Getter
-@Setter
 @TableName(value = "shop_maintenance_device")
 public class ShopMaintenanceDeviceEntity implements Serializable {
     private static final long serialVersionUID = 1L;

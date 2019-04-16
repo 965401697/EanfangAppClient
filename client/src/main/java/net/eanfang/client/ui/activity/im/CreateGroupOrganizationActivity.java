@@ -3,8 +3,6 @@ package net.eanfang.client.ui.activity.im;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -30,6 +28,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -288,7 +288,7 @@ public class CreateGroupOrganizationActivity extends BaseClientActivity {
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 TemplateBean bean = (TemplateBean) adapter.getData().get(position);
                 if (view.getId() == R.id.cb_all_checked) {
-                    ((CreateGroupOrganizationAdapter) adapter).checkedAll(position, bean.isChecked() == true ? false : true);
+                    ((CreateGroupOrganizationAdapter) adapter).checkedAll(position, bean.isChecked() != true);
                 } else if (view.getId() == R.id.rl_parent) {
                     ImageView imageView = view.findViewById(R.id.iv_select);
                     ((CreateGroupOrganizationAdapter) adapter).isShow(position, imageView);

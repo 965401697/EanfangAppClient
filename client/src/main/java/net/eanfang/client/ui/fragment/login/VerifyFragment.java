@@ -4,8 +4,6 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.AppCompatCheckBox;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -27,6 +25,10 @@ import net.eanfang.client.util.PrefUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.AppCompatCheckBox;
 
 /**
  * @author Guanluocang
@@ -63,12 +65,12 @@ public class VerifyFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        et_phone = (EditText) findViewById(R.id.et_phone);
-        et_yanzheng = (EditText) findViewById(R.id.et_yanzheng);
-        tv_yanzheng = (TextView) findViewById(R.id.tv_yanzheng);
-        cb = (AppCompatCheckBox) findViewById(R.id.cb);
-        read = (TextView) findViewById(R.id.tv_read_agreement);
-        btn_login = (Button) findViewById(R.id.btn_login);
+        et_phone = findViewById(R.id.et_phone);
+        et_yanzheng = findViewById(R.id.et_yanzheng);
+        tv_yanzheng = findViewById(R.id.tv_yanzheng);
+        cb = findViewById(R.id.cb);
+        read = findViewById(R.id.tv_read_agreement);
+        btn_login = findViewById(R.id.btn_login);
 
         try {
             InputStream is = null;
@@ -78,7 +80,7 @@ public class VerifyFragment extends BaseFragment {
             byte[] buffer = new byte[size];
             is.read(buffer);
             is.close();
-            legalText = new String(buffer, "UTF-8");
+            legalText = new String(buffer, StandardCharsets.UTF_8);
         } catch (IOException e1) {
             e1.printStackTrace();
         }

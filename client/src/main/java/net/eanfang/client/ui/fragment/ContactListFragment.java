@@ -6,9 +6,6 @@ import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -49,6 +46,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.model.UIConversation;
 import io.rong.imlib.RongIMClient;
@@ -472,10 +472,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
      * @return true 有网, false 没有网络.
      */
     public boolean isNetConnect() {
-        if (isNetWork) {
-            return true;
-        }
-        return false;
+        return isNetWork;
     }
 
 }

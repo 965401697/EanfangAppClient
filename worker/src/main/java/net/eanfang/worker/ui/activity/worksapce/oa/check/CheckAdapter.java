@@ -98,12 +98,12 @@ public class CheckAdapter extends BaseMultiItemQuickAdapter<WorkAddCheckBean.Wor
                     helper.getView(R.id.rl_thumbnail).setVisibility(View.VISIBLE);
                     helper.setVisible(R.id.iv_takevideo_work, true);
                     ((SimpleDraweeView) helper.getView(R.id.iv_takevideo_work)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getMp4_path() + ".jpg"));
-                    ((SimpleDraweeView) helper.getView(R.id.iv_takevideo_work)).setOnClickListener(new View.OnClickListener() {
+                    helper.getView(R.id.iv_takevideo_work).setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             Bundle bundle_takevideo = new Bundle();
                             bundle_takevideo.putString("videoPath", BuildConfig.OSS_SERVER + item.getMp4_path() + ".mp4");
-                            JumpItent.jump((TaskAssignmentCreationActivity) mActivity, PlayVideoActivity.class, bundle_takevideo);
+                            JumpItent.jump(mActivity, PlayVideoActivity.class, bundle_takevideo);
                         }
                     });
 
@@ -129,8 +129,8 @@ public class CheckAdapter extends BaseMultiItemQuickAdapter<WorkAddCheckBean.Wor
             if (urls.length >= 1) {
 
                 ((SimpleDraweeView) helper.getView(R.id.iv_pic1)).setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[0]));
-                ((SimpleDraweeView) helper.getView(R.id.iv_pic1)).setVisibility(View.VISIBLE);
-                ((SimpleDraweeView) helper.getView(R.id.iv_pic1)).setOnClickListener(new View.OnClickListener() {
+                helper.getView(R.id.iv_pic1).setVisibility(View.VISIBLE);
+                helper.getView(R.id.iv_pic1).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         picList.clear();
@@ -139,13 +139,13 @@ public class CheckAdapter extends BaseMultiItemQuickAdapter<WorkAddCheckBean.Wor
                     }
                 });
             } else {
-                ((SimpleDraweeView) helper.getView(R.id.iv_pic1)).setVisibility(View.GONE);
+                helper.getView(R.id.iv_pic1).setVisibility(View.GONE);
             }
 
             if (urls.length >= 2) {
                 ((SimpleDraweeView) helper.getView(R.id.iv_pic2)).setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[1]));
-                ((SimpleDraweeView) helper.getView(R.id.iv_pic2)).setVisibility(View.VISIBLE);
-                ((SimpleDraweeView) helper.getView(R.id.iv_pic2)).setOnClickListener(new View.OnClickListener() {
+                helper.getView(R.id.iv_pic2).setVisibility(View.VISIBLE);
+                helper.getView(R.id.iv_pic2).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         picList.clear();
@@ -154,12 +154,12 @@ public class CheckAdapter extends BaseMultiItemQuickAdapter<WorkAddCheckBean.Wor
                     }
                 });
             } else {
-                ((SimpleDraweeView) helper.getView(R.id.iv_pic2)).setVisibility(View.GONE);
+                helper.getView(R.id.iv_pic2).setVisibility(View.GONE);
             }
             if (urls.length >= 3) {
                 ((SimpleDraweeView) helper.getView(R.id.iv_pic3)).setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[2]));
-                ((SimpleDraweeView) helper.getView(R.id.iv_pic3)).setVisibility(View.VISIBLE);
-                ((SimpleDraweeView) helper.getView(R.id.iv_pic3)).setOnClickListener(new View.OnClickListener() {
+                helper.getView(R.id.iv_pic3).setVisibility(View.VISIBLE);
+                helper.getView(R.id.iv_pic3).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         picList.clear();
@@ -168,7 +168,7 @@ public class CheckAdapter extends BaseMultiItemQuickAdapter<WorkAddCheckBean.Wor
                     }
                 });
             } else {
-                ((SimpleDraweeView) helper.getView(R.id.iv_pic3)).setVisibility(View.GONE);
+                helper.getView(R.id.iv_pic3).setVisibility(View.GONE);
             }
         } else {
             helper.setText(R.id.tv_adjunct, "照片：无");

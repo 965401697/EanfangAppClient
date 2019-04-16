@@ -85,10 +85,8 @@ public class PermKit {
      */
 
     public boolean getIsOwn() {
-        if (EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyId() <= 0) {
-            return true;//是个人
-        }
-        return false;//是公司
+        //是个人
+        return EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyId() <= 0;
     }
 
     /**

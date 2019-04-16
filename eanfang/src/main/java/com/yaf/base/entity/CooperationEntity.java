@@ -1,8 +1,5 @@
 package com.yaf.base.entity;
 
-import java.io.Serializable;
-import java.util.Date;
-
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
@@ -11,8 +8,8 @@ import com.baomidou.mybatisplus.enums.IdType;
 import com.yaf.sys.entity.OrgEntity;
 import com.yaf.sys.entity.UserEntity;
 
-import lombok.Getter;
-import lombok.Setter;
+import java.io.Serializable;
+import java.util.Date;
 
 
 /**
@@ -20,8 +17,6 @@ import lombok.Setter;
  * @email jornlin@foxmail.com
  * @date 2017-12-25 16:27:35
  */
-@Getter
-@Setter
 @TableName(value = "bus_cooperation")
 public class CooperationEntity implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -272,4 +267,51 @@ public class CooperationEntity implements Serializable {
         return result;
     }
 
+    public Long getOwnerTopCompanyId() {
+        return this.ownerTopCompanyId;
+    }
+
+    public Long getAssigneeTopCompanyId() {
+        return this.assigneeTopCompanyId;
+    }
+
+    public OrgEntity getOwnerOrg() {
+        return this.ownerOrg;
+    }
+
+    public OrgEntity getAssigneeOrg() {
+        return this.assigneeOrg;
+    }
+
+    public String getSign() {
+        return this.sign;
+    }
+
+    public UserEntity getCreateUserEntity() {
+        return this.createUserEntity;
+    }
+
+    public void setOwnerTopCompanyId(Long ownerTopCompanyId) {
+        this.ownerTopCompanyId = ownerTopCompanyId;
+    }
+
+    public void setAssigneeTopCompanyId(Long assigneeTopCompanyId) {
+        this.assigneeTopCompanyId = assigneeTopCompanyId;
+    }
+
+    public void setOwnerOrg(OrgEntity ownerOrg) {
+        this.ownerOrg = ownerOrg;
+    }
+
+    public void setAssigneeOrg(OrgEntity assigneeOrg) {
+        this.assigneeOrg = assigneeOrg;
+    }
+
+    public void setSign(String sign) {
+        this.sign = sign;
+    }
+
+    public void setCreateUserEntity(UserEntity createUserEntity) {
+        this.createUserEntity = createUserEntity;
+    }
 }

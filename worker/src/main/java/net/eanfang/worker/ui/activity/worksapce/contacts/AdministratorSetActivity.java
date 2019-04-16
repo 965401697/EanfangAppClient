@@ -74,7 +74,7 @@ public class AdministratorSetActivity extends BaseWorkerActivity {
     public void onEvent(List<TemplateBean.Preson> presonList) {
 
         if (presonList.size() > 0) {//管理员设置 单选 就一个
-            bean = (TemplateBean.Preson) presonList.get(0);
+            bean = presonList.get(0);
             name = bean.getName();
             molibe = bean.getMobile();
             tvName.setText(bean.getName());

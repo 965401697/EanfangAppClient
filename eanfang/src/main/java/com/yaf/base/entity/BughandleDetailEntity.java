@@ -10,9 +10,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import lombok.Getter;
-import lombok.Setter;
-
 
 /**
  * 故障处理表(上门解决)
@@ -21,8 +18,6 @@ import lombok.Setter;
  * @email jornlin@foxmail.com
  * @date 2017-12-08 15:11:19
  */
-@Getter
-@Setter
 @TableName(value = "bus_bughandle_detail")
 public class BughandleDetailEntity implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -339,4 +334,115 @@ public class BughandleDetailEntity implements Serializable {
         return result;
     }
 
+    public Long getBusRepairFailureId() {
+        return this.busRepairFailureId;
+    }
+
+    public Integer getStatusTwo() {
+        return this.statusTwo;
+    }
+
+    public String getPresentationPictures() {
+        return this.presentationPictures;
+    }
+
+    public String getToolPictures() {
+        return this.toolPictures;
+    }
+
+    public String getUseAdvice() {
+        return this.useAdvice;
+    }
+
+    public String getPoint_mp4_path() {
+        return this.point_mp4_path;
+    }
+
+    public String getRestore_mp4_path() {
+        return this.restore_mp4_path;
+    }
+
+    public String getAfter_handle_mp4_path() {
+        return this.after_handle_mp4_path;
+    }
+
+    public String getDevice_return_install_mp4_path() {
+        return this.device_return_install_mp4_path;
+    }
+
+    public String getPresentation_mp4_path() {
+        return this.presentation_mp4_path;
+    }
+
+    public String getTool_mp4_path() {
+        return this.tool_mp4_path;
+    }
+
+    public RepairFailureEntity getFailureEntity() {
+        return this.failureEntity;
+    }
+
+    public List<BughandleParamEntity> getParamEntityList() {
+        return this.paramEntityList;
+    }
+
+    public List<BughandleUseDeviceEntity> getUseDeviceEntityList() {
+        return this.useDeviceEntityList;
+    }
+
+    public void setBusRepairFailureId(Long busRepairFailureId) {
+        this.busRepairFailureId = busRepairFailureId;
+    }
+
+    public void setStatusTwo(Integer statusTwo) {
+        this.statusTwo = statusTwo;
+    }
+
+    public void setPresentationPictures(String presentationPictures) {
+        this.presentationPictures = presentationPictures;
+    }
+
+    public void setToolPictures(String toolPictures) {
+        this.toolPictures = toolPictures;
+    }
+
+    public void setUseAdvice(String useAdvice) {
+        this.useAdvice = useAdvice;
+    }
+
+    public void setPoint_mp4_path(String point_mp4_path) {
+        this.point_mp4_path = point_mp4_path;
+    }
+
+    public void setRestore_mp4_path(String restore_mp4_path) {
+        this.restore_mp4_path = restore_mp4_path;
+    }
+
+    public void setAfter_handle_mp4_path(String after_handle_mp4_path) {
+        this.after_handle_mp4_path = after_handle_mp4_path;
+    }
+
+    public void setDevice_return_install_mp4_path(String device_return_install_mp4_path) {
+        this.device_return_install_mp4_path = device_return_install_mp4_path;
+    }
+
+    public void setPresentation_mp4_path(String presentation_mp4_path) {
+        this.presentation_mp4_path = presentation_mp4_path;
+    }
+
+    public void setTool_mp4_path(String tool_mp4_path) {
+        this.tool_mp4_path = tool_mp4_path;
+    }
+
+    public void setFailureEntity(RepairFailureEntity failureEntity) {
+        this.failureEntity = failureEntity;
+    }
+
+    public void setParamEntityList(List<BughandleParamEntity> paramEntityList) {
+        this.paramEntityList = paramEntityList;
+    }
+
+    public void setUseDeviceEntityList(List<BughandleUseDeviceEntity> useDeviceEntityList) {
+        this.useDeviceEntityList = useDeviceEntityList;
+    }
 }

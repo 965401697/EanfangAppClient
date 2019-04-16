@@ -14,7 +14,7 @@ import com.eanfang.R;
  * Created by O u r on 2018/5/28.
  */
 
-public class SideBar extends android.support.v7.widget.AppCompatTextView {
+public class SideBar extends androidx.appcompat.widget.AppCompatTextView {
     private String[] letters = new String[]{"A", "B", "C", "D", "E", "F", "G", "H", "I",
             "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V",
             "W", "X", "Y", "Z", "#"};

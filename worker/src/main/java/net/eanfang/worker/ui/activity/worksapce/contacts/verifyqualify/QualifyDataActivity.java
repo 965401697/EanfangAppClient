@@ -1,8 +1,8 @@
 package net.eanfang.worker.ui.activity.worksapce.contacts.verifyqualify;
 
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RadioButton;
@@ -191,10 +191,7 @@ public class QualifyDataActivity extends BaseActivity {
             @Override
             public boolean setSelected(int position, BaseDataEntity baseDataEntity) {
                 Long coutn = Stream.of(systemTypeList).filter(bean -> bean.getDataId().equals(baseDataEntity.getDataId())).count();
-                if (coutn > 0) {
-                    return true;
-                }
-                return false;
+                return coutn > 0;
             }
 
         });
@@ -220,10 +217,7 @@ public class QualifyDataActivity extends BaseActivity {
             @Override
             public boolean setSelected(int position, BaseDataEntity baseDataEntity) {
                 Long coutn = Stream.of(businessTypeList).filter(bean -> bean.getDataId().equals(baseDataEntity.getDataId())).count();
-                if (coutn > 0) {
-                    return true;
-                }
-                return false;
+                return coutn > 0;
             }
         });
     }

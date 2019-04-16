@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTabHost;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -62,6 +61,7 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.HashMap;
 
+import androidx.fragment.app.FragmentTabHost;
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
@@ -168,7 +168,7 @@ public class MainActivity extends BaseClientActivity {
 
 
     private void initFragment() {
-        mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
+        mTabHost = findViewById(android.R.id.tabhost);
         mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
         mTabHost.getTabWidget().setDividerDrawable(R.color.transparent);
         View indicator = getLayoutInflater().inflate(R.layout.indicator_main_home, null);

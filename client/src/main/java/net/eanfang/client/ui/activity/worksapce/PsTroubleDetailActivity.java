@@ -2,9 +2,6 @@ package net.eanfang.client.ui.activity.worksapce;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -32,6 +29,10 @@ import net.eanfang.client.ui.base.BaseClientActivity;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by MrHou
@@ -93,7 +94,7 @@ public class PsTroubleDetailActivity extends BaseClientActivity /*implements Vie
                     Intent intent = new Intent(PsTroubleDetailActivity.this, SelectIMContactActivity.class);
 
                     bundle.putString("id", String.valueOf(repairOrderId));
-                    bundle.putString("orderNum", (String) bughandleConfirmEntity.getDetailEntityList().get(0).getFailureEntity().getDeviceName());
+                    bundle.putString("orderNum", bughandleConfirmEntity.getDetailEntityList().get(0).getFailureEntity().getDeviceName());
                     if (bughandleConfirmEntity.getDetailEntityList() != null && bughandleConfirmEntity.getDetailEntityList().size() > 0) {
                         bundle.putString("picUrl", bughandleConfirmEntity.getDetailEntityList().get(0).getFailureEntity().getPictures().split(",")[0]);
                     }
@@ -121,13 +122,13 @@ public class PsTroubleDetailActivity extends BaseClientActivity /*implements Vie
     }
 
     private void initView() {
-        iv_left = (ImageView) findViewById(R.id.iv_left);
+        iv_left = findViewById(R.id.iv_left);
         iv_left.setVisibility(View.VISIBLE);
-        rv_trouble = (RecyclerView) findViewById(R.id.rv_trouble);
-        snpl_form_photos = (BGASortableNinePhotoLayout) findViewById(R.id.snpl_form_photos);
+        rv_trouble = findViewById(R.id.rv_trouble);
+        snpl_form_photos = findViewById(R.id.snpl_form_photos);
         //两个操作按钮
-        tv_complete = (TextView) findViewById(R.id.tv_complete);
-        tv_complaint = (TextView) findViewById(R.id.tv_complaint);
+        tv_complete = findViewById(R.id.tv_complete);
+        tv_complaint = findViewById(R.id.tv_complaint);
 
         //非单确认状态 隐藏确认按钮
         if (!status.equals("待确认")) {
@@ -155,7 +156,7 @@ public class PsTroubleDetailActivity extends BaseClientActivity /*implements Vie
         picList4 = new ArrayList<>();
         if (bughandleConfirmEntity.getInvoicesPictures() != null) {
             String[] invoicesPic = bughandleConfirmEntity.getInvoicesPictures().split(",");
-            picList4.addAll(Stream.of(Arrays.asList(invoicesPic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
+            picList4.addAll(Stream.of(Arrays.asList(invoicesPic)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
         }
         initNinePhoto();
     }

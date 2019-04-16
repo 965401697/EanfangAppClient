@@ -12,9 +12,6 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import lombok.Getter;
-import lombok.Setter;
-
 
 /**
  * 基础数据
@@ -25,8 +22,6 @@ import lombok.Setter;
  */
 
 @TableName(value = "sys_base_data")
-@Getter
-@Setter
 public class BaseDataEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -89,9 +84,7 @@ public class BaseDataEntity implements Serializable {
 
             // 比较每个属性的值 一致时才返回true
 //                if (preson.id.equals(this.id) && preson.name.equals(this.name))
-            if (b.getDataId().equals(this.getDataId())) {
-                return true;
-            }
+            return b.getDataId().equals(this.getDataId());
         }
         return false;
     }
@@ -102,5 +95,93 @@ public class BaseDataEntity implements Serializable {
     @Override
     public int hashCode() {
         return this.getDataId().hashCode();
+    }
+
+    public Integer getDataId() {
+        return this.dataId;
+    }
+
+    public String getDataCode() {
+        return this.dataCode;
+    }
+
+    public String getDataName() {
+        return this.dataName;
+    }
+
+    public Integer getSortNum() {
+        return this.sortNum;
+    }
+
+    public String getRemarkInfo() {
+        return this.remarkInfo;
+    }
+
+    public Integer getDataType() {
+        return this.dataType;
+    }
+
+    public Long getParentId() {
+        return this.parentId;
+    }
+
+    public List<BaseDataEntity> getChildren() {
+        return this.children;
+    }
+
+    public Integer getLevel() {
+        return this.level;
+    }
+
+    public boolean isLeaf() {
+        return this.isLeaf;
+    }
+
+    public boolean isCheck() {
+        return this.isCheck;
+    }
+
+    public void setDataId(Integer dataId) {
+        this.dataId = dataId;
+    }
+
+    public void setDataCode(String dataCode) {
+        this.dataCode = dataCode;
+    }
+
+    public void setDataName(String dataName) {
+        this.dataName = dataName;
+    }
+
+    public void setSortNum(Integer sortNum) {
+        this.sortNum = sortNum;
+    }
+
+    public void setRemarkInfo(String remarkInfo) {
+        this.remarkInfo = remarkInfo;
+    }
+
+    public void setDataType(Integer dataType) {
+        this.dataType = dataType;
+    }
+
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
+    }
+
+    public void setChildren(List<BaseDataEntity> children) {
+        this.children = children;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
+    public void setLeaf(boolean isLeaf) {
+        this.isLeaf = isLeaf;
+    }
+
+    public void setCheck(boolean isCheck) {
+        this.isCheck = isCheck;
     }
 }

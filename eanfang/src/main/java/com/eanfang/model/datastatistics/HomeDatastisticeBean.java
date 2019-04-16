@@ -3,9 +3,6 @@ package com.eanfang.model.datastatistics;
 import java.io.Serializable;
 import java.util.List;
 
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * 描述：
  *
@@ -59,8 +56,6 @@ public class HomeDatastisticeBean implements Serializable {
         this.group = group;
     }
 
-    @Getter
-    @Setter
     public static class InstallBean {
         /**
          * count : 0
@@ -68,10 +63,15 @@ public class HomeDatastisticeBean implements Serializable {
 
         private int num;
 
+        public int getNum() {
+            return this.num;
+        }
+
+        public void setNum(int num) {
+            this.num = num;
+        }
     }
 
-    @Getter
-    @Setter
     public static class DesignBean {
         /**
          * count : 0
@@ -79,10 +79,15 @@ public class HomeDatastisticeBean implements Serializable {
 
         private int num;
 
+        public int getNum() {
+            return this.num;
+        }
+
+        public void setNum(int num) {
+            this.num = num;
+        }
     }
 
-    @Getter
-    @Setter
     public static class GroupBean {
         /**
          * count : 77
@@ -107,6 +112,14 @@ public class HomeDatastisticeBean implements Serializable {
 
         public void setNum(int num) {
             this.num = num;
+        }
+
+        public String getTypeNum() {
+            return this.typeNum;
+        }
+
+        public void setTypeNum(String typeNum) {
+            this.typeNum = typeNum;
         }
     }
 }

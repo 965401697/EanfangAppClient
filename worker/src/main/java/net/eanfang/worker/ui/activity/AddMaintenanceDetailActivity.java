@@ -74,25 +74,25 @@ public class AddMaintenanceDetailActivity extends BaseWorkerActivity {
     }
 
     private void initView() {
-        tv_business_type = (TextView) findViewById(R.id.tv_business_type);
-        rl_business_type = (RelativeLayout) findViewById(R.id.rl_business_type);
-        tv_device_type = (TextView) findViewById(R.id.tv_device_type);
-        rl_device_type = (RelativeLayout) findViewById(R.id.rl_device_type);
-        tv_device_name = (TextView) findViewById(R.id.tv_device_name);
-        rl_device_name = (RelativeLayout) findViewById(R.id.rl_device_name);
-        tv_brand_model = (TextView) findViewById(R.id.tv_brand_model);
-        rl_brand_model = (RelativeLayout) findViewById(R.id.rl_brand_model);
-        et_amount = (EditText) findViewById(R.id.et_amount);
-        et_price = (EditText) findViewById(R.id.et_price);
-        tv_main_leave = (TextView) findViewById(R.id.tv_main_leave);
-        rl_main_leave = (RelativeLayout) findViewById(R.id.rl_main_leave);
-        tv_main_result = (TextView) findViewById(R.id.tv_main_result);
-        rl_main_result = (RelativeLayout) findViewById(R.id.rl_main_result);
-        et_question = (EditText) findViewById(R.id.et_question);
-        et_maintenance_measures = (EditText) findViewById(R.id.et_maintenance_measures);
-        et_reason_analysis = (EditText) findViewById(R.id.et_reason_analysis);
-        mPhotosSnpl = (BGASortableNinePhotoLayout) findViewById(R.id.snpl_monitor_add_photos);
-        tv_commit = (TextView) findViewById(R.id.tv_commit);
+        tv_business_type = findViewById(R.id.tv_business_type);
+        rl_business_type = findViewById(R.id.rl_business_type);
+        tv_device_type = findViewById(R.id.tv_device_type);
+        rl_device_type = findViewById(R.id.rl_device_type);
+        tv_device_name = findViewById(R.id.tv_device_name);
+        rl_device_name = findViewById(R.id.rl_device_name);
+        tv_brand_model = findViewById(R.id.tv_brand_model);
+        rl_brand_model = findViewById(R.id.rl_brand_model);
+        et_amount = findViewById(R.id.et_amount);
+        et_price = findViewById(R.id.et_price);
+        tv_main_leave = findViewById(R.id.tv_main_leave);
+        rl_main_leave = findViewById(R.id.rl_main_leave);
+        tv_main_result = findViewById(R.id.tv_main_result);
+        rl_main_result = findViewById(R.id.rl_main_result);
+        et_question = findViewById(R.id.et_question);
+        et_maintenance_measures = findViewById(R.id.et_maintenance_measures);
+        et_reason_analysis = findViewById(R.id.et_reason_analysis);
+        mPhotosSnpl = findViewById(R.id.snpl_monitor_add_photos);
+        tv_commit = findViewById(R.id.tv_commit);
     }
 
 

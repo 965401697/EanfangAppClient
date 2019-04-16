@@ -1,7 +1,5 @@
 package net.eanfang.client.ui.activity.im;
 
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
@@ -16,6 +14,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by O u r on 2018/11/15.
@@ -109,7 +110,7 @@ public class CreateGroupOrganizationAdapter extends BaseQuickAdapter<TemplateBea
      * @param isCheckAll
      */
     public void checkedAll(int position, boolean isCheckAll) {
-        TemplateBean bean = (TemplateBean) getData().get(position);
+        TemplateBean bean = getData().get(position);
         bean.setChecked(isCheckAll);
 
         for (TemplateBean.Preson preson : bean.getPresons()) {

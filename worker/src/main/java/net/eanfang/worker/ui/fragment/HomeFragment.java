@@ -2,12 +2,12 @@ package net.eanfang.worker.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.PagerSnapHelper;
-import android.support.v7.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.PagerSnapHelper;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -143,10 +143,10 @@ public class HomeFragment extends BaseFragment {
         rvWait = findViewById(R.id.rv_wait);
         rvSecurity = findViewById(R.id.rv_security);
         homeWaitIndicator = findViewById(R.id.indicator);
-        tlDataStatisticsList = (SlidingTabLayout) findViewById(R.id.tl_datastatistics);
-        rlAllData = (RelativeLayout) findViewById(R.id.rl_allData);
-        customHomeViewPager = (CustomHomeViewPager) findViewById(R.id.vp_datastatistics);
-        tvHomeTitle = (TextView) findViewById(R.id.tv_homeTitle);
+        tlDataStatisticsList = findViewById(R.id.tl_datastatistics);
+        rlAllData = findViewById(R.id.rl_allData);
+        customHomeViewPager = findViewById(R.id.vp_datastatistics);
+        tvHomeTitle = findViewById(R.id.tv_homeTitle);
         tvNoSecurity = findViewById(R.id.tv_noSecurity);
         homeScanPopWindow = new HomeScanPopWindow(getActivity(), true, scanSelectItemsOnClick);
         homeScanPopWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
@@ -548,10 +548,10 @@ public class HomeFragment extends BaseFragment {
         try {
             for (int i = 0; i < data.size(); i++) {
                 View view = View.inflate(getContext(), R.layout.rolltext_item, null);
-                TextView content = (TextView) view.findViewById(R.id.tv_roll_item_text);
-                TextView title = (TextView) view.findViewById(R.id.tv_roll_item_title);
-                title.setText(titleList.get(i).toString());
-                content.setText(data.get(i).toString());
+                TextView content = view.findViewById(R.id.tv_roll_item_text);
+                TextView title = view.findViewById(R.id.tv_roll_item_title);
+                title.setText(titleList.get(i));
+                content.setText(data.get(i));
                 views.add(view);
             }
         } catch (NullPointerException e) {

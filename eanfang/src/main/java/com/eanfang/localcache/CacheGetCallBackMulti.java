@@ -7,5 +7,5 @@ import java.util.List;
  */
 
 public interface CacheGetCallBackMulti{
-    public void readValue(List<String> result);
+    void readValue(List<String> result);
 }

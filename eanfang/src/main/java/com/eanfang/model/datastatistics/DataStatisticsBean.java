@@ -3,11 +3,6 @@ package com.eanfang.model.datastatistics;
 import java.io.Serializable;
 import java.util.List;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 
 /**
  * 描述：报修统计Bean
@@ -15,10 +10,6 @@ import lombok.Setter;
  * @author Guanluocang
  * @date on 2018/7/10$  18:33$
  */
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
 public class DataStatisticsBean implements Serializable {
 
 
@@ -35,6 +26,17 @@ public class DataStatisticsBean implements Serializable {
     private List<BussinessBean> bussiness;
     private List<FiveBean> five;
     private List<DeviceBean> device;
+
+    public DataStatisticsBean(List<RepairBean> repair, List<FailureBean> failure, List<BussinessBean> bussiness, List<FiveBean> five, List<DeviceBean> device) {
+        this.repair = repair;
+        this.failure = failure;
+        this.bussiness = bussiness;
+        this.five = five;
+        this.device = device;
+    }
+
+    public DataStatisticsBean() {
+    }
 
     public List<DataStatisticsBean.RepairBean> getRepair() {
         return repair;

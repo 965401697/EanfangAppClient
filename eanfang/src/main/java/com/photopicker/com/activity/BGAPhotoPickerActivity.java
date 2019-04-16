@@ -18,11 +18,11 @@ package com.photopicker.com.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.app.AppCompatDialog;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.core.view.ViewCompat;
+import androidx.appcompat.app.AppCompatDialog;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -216,9 +216,9 @@ public class BGAPhotoPickerActivity extends BGAPPToolbarActivity implements BGAO
         MenuItem menuItem = menu.findItem(R.id.item_photo_picker_title);
         View actionView = menuItem.getActionView();
 
-        mTitleTv = (TextView) actionView.findViewById(R.id.tv_photo_picker_title);
-        mArrowIv = (ImageView) actionView.findViewById(R.id.iv_photo_picker_arrow);
-        mSubmitTv = (TextView) actionView.findViewById(R.id.tv_photo_picker_submit);
+        mTitleTv = actionView.findViewById(R.id.tv_photo_picker_title);
+        mArrowIv = actionView.findViewById(R.id.iv_photo_picker_arrow);
+        mSubmitTv = actionView.findViewById(R.id.tv_photo_picker_submit);
 
         mTitleTv.setOnClickListener(mOnClickShowPhotoFolderListener);
         mArrowIv.setOnClickListener(mOnClickShowPhotoFolderListener);

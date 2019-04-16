@@ -18,9 +18,6 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import lombok.Getter;
-import lombok.Setter;
-
 
 /**
  * 组织机构
@@ -31,8 +28,6 @@ import lombok.Setter;
  */
 
 @TableName(value = "sys_org")
-@Getter
-@Setter
 public class OrgEntity implements Serializable, Cloneable {
 
     private static final long serialVersionUID = 1L;
@@ -83,7 +78,6 @@ public class OrgEntity implements Serializable, Cloneable {
     private String orgCode;
 
     //层级
-    @Setter
     //@TableField(value = "level")
     @NotNull
     @Digits(integer = 10, fraction = 0)
@@ -120,18 +114,12 @@ public class OrgEntity implements Serializable, Cloneable {
     }
 
     /* 当org为公司时，adminUserId为管理员，登录时自动设置*/
-    @Getter
-    @Setter
     private Long adminUserId;
     //更新人
-    @Getter
-    @Setter
     //@TableField(value = "update_user")
     @Digits(integer = 19, fraction = 0)
     private Long updateUser;
 
-    @Getter
-    @Setter
     //更新时间
     //@TableField(value = "update_time")
     private Date updateTime;
@@ -279,28 +267,19 @@ public class OrgEntity implements Serializable, Cloneable {
     @TableField(exist = false)
     private OrgEntity belongTopCompany;
 
-    @Getter
-    @Setter
     @TableField(exist = false)
     private UserEntity updateUserEntity;
 
 
-    @Getter
-    @Setter
     @TableField(exist = false)
     private List<OrgEntity> children;
 
-    @Getter
-    @Setter
     @TableField(exist = false)
     private List<UserEntity> staff;
 
-    @Getter
-    @Setter
     @TableField(exist = false)
     private OrgUnitEntity orgUnitEntity;
 
-    @Getter
     @TableField(exist = false)
     private Object parentEntity;
 
@@ -369,4 +348,87 @@ public class OrgEntity implements Serializable, Cloneable {
     }
 
 
+    public OrgEntity getBelongCompany() {
+        return this.belongCompany;
+    }
+
+    public OrgEntity getBelongTopCompany() {
+        return this.belongTopCompany;
+    }
+
+    public void setBelongCompany(OrgEntity belongCompany) {
+        this.belongCompany = belongCompany;
+    }
+
+    public void setBelongTopCompany(OrgEntity belongTopCompany) {
+        this.belongTopCompany = belongTopCompany;
+    }
+
+    public void setParentEntity(Object parentEntity) {
+        this.parentEntity = parentEntity;
+    }
+
+    public Long getAdminUserId() {
+        return this.adminUserId;
+    }
+
+    public Long getUpdateUser() {
+        return this.updateUser;
+    }
+
+    public Date getUpdateTime() {
+        return this.updateTime;
+    }
+
+    public UserEntity getUpdateUserEntity() {
+        return this.updateUserEntity;
+    }
+
+    public List<OrgEntity> getChildren() {
+        return this.children;
+    }
+
+    public List<UserEntity> getStaff() {
+        return this.staff;
+    }
+
+    public OrgUnitEntity getOrgUnitEntity() {
+        return this.orgUnitEntity;
+    }
+
+    public Object getParentEntity() {
+        return this.parentEntity;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
+    public void setAdminUserId(Long adminUserId) {
+        this.adminUserId = adminUserId;
+    }
+
+    public void setUpdateUser(Long updateUser) {
+        this.updateUser = updateUser;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public void setUpdateUserEntity(UserEntity updateUserEntity) {
+        this.updateUserEntity = updateUserEntity;
+    }
+
+    public void setChildren(List<OrgEntity> children) {
+        this.children = children;
+    }
+
+    public void setStaff(List<UserEntity> staff) {
+        this.staff = staff;
+    }
+
+    public void setOrgUnitEntity(OrgUnitEntity orgUnitEntity) {
+        this.orgUnitEntity = orgUnitEntity;
+    }
 }

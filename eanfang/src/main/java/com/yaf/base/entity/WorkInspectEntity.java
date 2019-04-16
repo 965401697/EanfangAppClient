@@ -9,9 +9,6 @@ import com.yaf.sys.entity.UserEntity;
 import java.io.Serializable;
 import java.util.List;
 
-import lombok.Getter;
-import lombok.Setter;
-
 
 /**
  * 工作检查表
@@ -20,8 +17,6 @@ import lombok.Setter;
  * @email 15940525612@163.com
  * @date 2017-12-05 20:41:57
  */
-@Getter
-@Setter
 public class WorkInspectEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 

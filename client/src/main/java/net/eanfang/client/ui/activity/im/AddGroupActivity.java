@@ -23,7 +23,6 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

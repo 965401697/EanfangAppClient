@@ -3,8 +3,8 @@ package net.eanfang.worker.ui.activity.worksapce.security;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -264,7 +264,7 @@ public class SecurityDetailActivity extends BaseActivity {
         if (!StringUtils.isEmpty(securityBean.getSpcImg())) {
             snplPic.setVisibility(View.VISIBLE);
             String[] pics = securityBean.getSpcImg().split(",");
-            picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
+            picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
 
             snplPic.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO, REQUEST_CODE_CHOOSE_PHOTO_two));
             snplPic.setData(picList);
@@ -480,13 +480,8 @@ public class SecurityDetailActivity extends BaseActivity {
             int top = leftTop[1];
             int bottom = top + v.getHeight();
             int right = left + v.getWidth();
-            if (event.getX() > left && event.getX() < right
-                    && event.getY() > top && event.getY() < bottom) {
-                // 点击的是输入框区域，保留点击EditText的事件
-                return false;
-            } else {
-                return true;
-            }
+            return !(event.getX() > left) || !(event.getX() < right)
+                    || !(event.getY() > top) || !(event.getY() < bottom);
         }
         return false;
     }

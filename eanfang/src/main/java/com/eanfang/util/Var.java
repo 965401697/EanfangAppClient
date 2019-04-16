@@ -25,9 +25,7 @@ public class Var {
     }
 
     public static void remove(String key) {
-        if (varInstanceMap.containsKey(key)) {
-            varInstanceMap.remove(key);
-        }
+        varInstanceMap.remove(key);
     }
 
     public void setChangeListener(ChangeListener changeListener) {

@@ -10,7 +10,7 @@
 
     <include layout="@layout/header" />
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none">
@@ -249,7 +249,7 @@
                 android:textColor="@color/color_white"
                 android:textSize="@dimen/textSize_15" />
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 
 </LinearLayout>

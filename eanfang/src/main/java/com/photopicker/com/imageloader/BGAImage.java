@@ -16,7 +16,7 @@
 package com.photopicker.com.imageloader;
 
 import android.app.Activity;
-import android.support.annotation.DrawableRes;
+import androidx.annotation.DrawableRes;
 import android.widget.ImageView;
 
 /**

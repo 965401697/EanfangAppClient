@@ -18,7 +18,6 @@ import com.yaf.base.entity.PayLogEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.pay.NewPayActivity;
-import net.eanfang.client.ui.activity.pay.PayActivity;
 import net.eanfang.client.ui.activity.worksapce.PayOrderDetailActivity;
 import net.eanfang.client.ui.adapter.PayOrderListAdapter;
 

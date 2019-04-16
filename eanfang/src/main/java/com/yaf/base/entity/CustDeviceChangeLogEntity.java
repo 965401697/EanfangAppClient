@@ -8,9 +8,6 @@ import com.baomidou.mybatisplus.enums.IdType;
 import com.yaf.sys.entity.OrgEntity;
 import com.yaf.sys.entity.UserEntity;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -23,8 +20,6 @@ import java.util.List;
  * @email jornlin@foxmail.com
  * @date 2018-06-04 16:20:38
  */
-@Getter
-@Setter
 @TableName(value = "cust_device_change_log")
 public class CustDeviceChangeLogEntity implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -362,4 +357,20 @@ public class CustDeviceChangeLogEntity implements Serializable {
     public UserEntity chargeUserEntity;
     @TableField(exist = false)
     public OrgEntity chargeOrgEntity;
+
+    public UserEntity getChargeUserEntity() {
+        return this.chargeUserEntity;
+    }
+
+    public OrgEntity getChargeOrgEntity() {
+        return this.chargeOrgEntity;
+    }
+
+    public void setChargeUserEntity(UserEntity chargeUserEntity) {
+        this.chargeUserEntity = chargeUserEntity;
+    }
+
+    public void setChargeOrgEntity(OrgEntity chargeOrgEntity) {
+        this.chargeOrgEntity = chargeOrgEntity;
+    }
 }

@@ -3,16 +3,14 @@ package net.eanfang.worker.ui.activity.worksapce.online;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
@@ -24,7 +22,6 @@ import com.eanfang.util.QueryEntry;
 import com.eanfang.witget.BannerView;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.worksapce.repair.SelectDeviceTypeActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import java.io.Serializable;

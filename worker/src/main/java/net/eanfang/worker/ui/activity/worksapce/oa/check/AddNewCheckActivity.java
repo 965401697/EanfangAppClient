@@ -4,9 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -539,16 +539,12 @@ public class AddNewCheckActivity extends BaseActivity implements SelectTimeDialo
     }
 
     private boolean closeTaskWrite() {
-        if (TextUtils.isEmpty(etInputContent.getText().toString().trim()) &&
+        return TextUtils.isEmpty(etInputContent.getText().toString().trim()) &&
                 TextUtils.isEmpty(etInputTitle.getText().toString().trim()) &&
                 TextUtils.isEmpty(tvDeviceName.getText().toString().trim()) &&
                 TextUtils.isEmpty(etInputAddress.getText().toString().trim()) &&
-                snplPhotosWork.getData().size() == 0 && TextUtils.isEmpty(mUploadKey)) {
+                snplPhotosWork.getData().size() == 0 && TextUtils.isEmpty(mUploadKey);
 
-            return true;
-        }
-
-        return false;
     }
 
     private void inputVoice(EditText editText) {

@@ -2,9 +2,6 @@ package net.eanfang.client.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,6 +58,9 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import q.rorbin.badgeview.QBadgeView;
 
 import static com.eanfang.util.V.v;
@@ -140,10 +140,10 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        tvMonitor = (TextView) findViewById(R.id.tv_monitor);
-        rvData = (RecyclerView) findViewById(R.id.rv_reapir_data);
-        tvHomeTitle = (TextView) findViewById(R.id.tv_homeTitle);
-        rlAllData = (RelativeLayout) findViewById(R.id.rl_allData);
+        tvMonitor = findViewById(R.id.tv_monitor);
+        rvData = findViewById(R.id.rv_reapir_data);
+        tvHomeTitle = findViewById(R.id.tv_homeTitle);
+        rlAllData = findViewById(R.id.rl_allData);
         tvReapirTotal = findViewById(R.id.tv_reapir_total);
         tvInstallTotal = findViewById(R.id.tv_install_total);
         tvDesitnTotal = findViewById(R.id.tv_desitn_total);
@@ -358,10 +358,10 @@ public class HomeFragment extends BaseFragment {
         try {
             for (int i = 0; i < data.size(); i++) {
                 View view = View.inflate(getContext(), R.layout.rolltext_item, null);
-                TextView content = (TextView) view.findViewById(R.id.tv_roll_item_text);
-                TextView title = (TextView) view.findViewById(R.id.tv_roll_item_title);
-                title.setText(titleList.get(i).toString());
-                content.setText(data.get(i).toString());
+                TextView content = view.findViewById(R.id.tv_roll_item_text);
+                TextView title = view.findViewById(R.id.tv_roll_item_title);
+                title.setText(titleList.get(i));
+                content.setText(data.get(i));
                 views.add(view);
             }
         } catch (NullPointerException e) {

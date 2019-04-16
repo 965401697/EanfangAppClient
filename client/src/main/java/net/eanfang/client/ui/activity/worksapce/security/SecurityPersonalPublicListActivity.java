@@ -1,9 +1,6 @@
 package net.eanfang.client.ui.activity.worksapce.security;
 
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
@@ -21,6 +18,9 @@ import com.photopicker.com.util.BGASpaceItemDecoration;
 import net.eanfang.client.R;
 import net.eanfang.worker.ui.adapter.security.SecurityListAdapter;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

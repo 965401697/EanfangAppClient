@@ -4,9 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -412,14 +412,10 @@ public class TaskAssignmentCreationActivity extends BaseWorkerActivity {
     }
 
     private boolean closeTaskWrite() {
-        if (TextUtils.isEmpty(etInputContent.getText().toString().trim()) && TextUtils.isEmpty(etInputTitle.getText().toString().trim()) && TextUtils.isEmpty(etInputTarget.getText().toString().trim())
+        return TextUtils.isEmpty(etInputContent.getText().toString().trim()) && TextUtils.isEmpty(etInputTitle.getText().toString().trim()) && TextUtils.isEmpty(etInputTarget.getText().toString().trim())
                 && TextUtils.isEmpty(etInputStander.getText().toString().trim())
-                && oaAddPersonAdaptet.getData().size() == 0 && snplPhotosWork.getData().size() == 0 && TextUtils.isEmpty(mUploadKey)) {
+                && oaAddPersonAdaptet.getData().size() == 0 && snplPhotosWork.getData().size() == 0 && TextUtils.isEmpty(mUploadKey);
 
-            return true;
-        }
-
-        return false;
     }
 
     private void submit() {
@@ -431,7 +427,6 @@ public class TaskAssignmentCreationActivity extends BaseWorkerActivity {
         }
         if (mTaskAdapter == null || mTaskAdapter.getData().size() == 0) {
             showToast("任务明细请最少填写一条");
-            ;
             return;
         }
 

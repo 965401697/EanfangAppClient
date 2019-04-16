@@ -286,7 +286,7 @@ public class AddCertificationActivity extends BaseActivityWithTakePhoto implemen
 //                .build();
     }
 
-    @Override
+//    @Override
     public void getData(String time) {
         if (StringUtils.isEmpty(time) || " ".equals(time)) {
             tvTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));

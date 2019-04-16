@@ -167,7 +167,7 @@ public class MaintenanceAddCheckResultActivity extends BaseWorkerActivity {
         Bundle bundle = new Bundle();
         bundle.putSerializable("bean", resultEntity);
         bundle.putLong("orderId", mId);
-        bundle.putSerializable("list", (Serializable) examResultList);
+        bundle.putSerializable("list", examResultList);
         bundle.putString("type", "scanDevice");
         JumpItent.jump(MaintenanceAddCheckResultActivity.this, MaintenanceHandleActivity.class, bundle);
         finishSelf();

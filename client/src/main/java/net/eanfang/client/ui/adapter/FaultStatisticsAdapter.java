@@ -24,28 +24,28 @@ public class FaultStatisticsAdapter extends BaseQuickAdapter<FaultTotleBean, Bas
         String name = Config.get().getBusinessNameByCode(item.getBugOneCode(), 1);
         if (name.equals("电视监控")) {
             helper.setText(R.id.tv_classfiy_name, name);
-            ((ImageView) helper.getView(R.id.iv_classfiy_pic)).setImageDrawable(((ImageView) helper.getView(R.id.iv_classfiy_pic)).getResources().getDrawable(R.mipmap.ic_monitoring));
+            ((ImageView) helper.getView(R.id.iv_classfiy_pic)).setImageDrawable(helper.getView(R.id.iv_classfiy_pic).getResources().getDrawable(R.mipmap.ic_monitoring));
         } else if (name.equals("防盗报警")) {
             helper.setText(R.id.tv_classfiy_name, name);
-            ((ImageView) helper.getView(R.id.iv_classfiy_pic)).setImageDrawable(((ImageView) helper.getView(R.id.iv_classfiy_pic)).getResources().getDrawable(R.mipmap.ic_guard));
+            ((ImageView) helper.getView(R.id.iv_classfiy_pic)).setImageDrawable(helper.getView(R.id.iv_classfiy_pic).getResources().getDrawable(R.mipmap.ic_guard));
         } else if (name.equals("公共报警")) {
             helper.setText(R.id.tv_classfiy_name, name);
-            ((ImageView) helper.getView(R.id.iv_classfiy_pic)).setImageDrawable(((ImageView) helper.getView(R.id.iv_classfiy_pic)).getResources().getDrawable(R.mipmap.ic_commonality));
+            ((ImageView) helper.getView(R.id.iv_classfiy_pic)).setImageDrawable(helper.getView(R.id.iv_classfiy_pic).getResources().getDrawable(R.mipmap.ic_commonality));
         } else if (name.contains("门禁")) {
             helper.setText(R.id.tv_classfiy_name, name);
-            ((ImageView) helper.getView(R.id.iv_classfiy_pic)).setImageDrawable(((ImageView) helper.getView(R.id.iv_classfiy_pic)).getResources().getDrawable(R.mipmap.ic_entrance));
+            ((ImageView) helper.getView(R.id.iv_classfiy_pic)).setImageDrawable(helper.getView(R.id.iv_classfiy_pic).getResources().getDrawable(R.mipmap.ic_entrance));
         } else if (name.equals("可视对讲")) {
             helper.setText(R.id.tv_classfiy_name, name);
-            ((ImageView) helper.getView(R.id.iv_classfiy_pic)).setImageDrawable(((ImageView) helper.getView(R.id.iv_classfiy_pic)).getResources().getDrawable(R.mipmap.ic_talkback));
+            ((ImageView) helper.getView(R.id.iv_classfiy_pic)).setImageDrawable(helper.getView(R.id.iv_classfiy_pic).getResources().getDrawable(R.mipmap.ic_talkback));
         } else if (name.equals("停车场")) {
             helper.setText(R.id.tv_classfiy_name, name);
-            ((ImageView) helper.getView(R.id.iv_classfiy_pic)).setImageDrawable(((ImageView) helper.getView(R.id.iv_classfiy_pic)).getResources().getDrawable(R.mipmap.ic_park));
+            ((ImageView) helper.getView(R.id.iv_classfiy_pic)).setImageDrawable(helper.getView(R.id.iv_classfiy_pic).getResources().getDrawable(R.mipmap.ic_park));
         } else if (name.equals("EAS")) {
             helper.setText(R.id.tv_classfiy_name, name);
-            ((ImageView) helper.getView(R.id.iv_classfiy_pic)).setImageDrawable(((ImageView) helper.getView(R.id.iv_classfiy_pic)).getResources().getDrawable(R.mipmap.ic_eas));
+            ((ImageView) helper.getView(R.id.iv_classfiy_pic)).setImageDrawable(helper.getView(R.id.iv_classfiy_pic).getResources().getDrawable(R.mipmap.ic_eas));
         } else if (name.equals("公共广播")) {
             helper.setText(R.id.tv_classfiy_name, name);
-            ((ImageView) helper.getView(R.id.iv_classfiy_pic)).setImageDrawable(((ImageView) helper.getView(R.id.iv_classfiy_pic)).getResources().getDrawable(R.mipmap.ic_broadcast));
+            ((ImageView) helper.getView(R.id.iv_classfiy_pic)).setImageDrawable(helper.getView(R.id.iv_classfiy_pic).getResources().getDrawable(R.mipmap.ic_broadcast));
         }
 
 

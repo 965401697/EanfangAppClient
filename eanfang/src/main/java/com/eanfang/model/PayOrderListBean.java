@@ -8,9 +8,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.Getter;
-import lombok.Setter;
-
 /**
  * Created by yaosheng on 2017/5/22.
  */
@@ -66,8 +63,6 @@ public class PayOrderListBean implements Serializable {
         this.list = list;
     }
 
-    @Getter
-    @Setter
     public static class ListBean {
 
         private String assigneeOrgCode;
@@ -314,6 +309,14 @@ public class PayOrderListBean implements Serializable {
 
         public void setFailureEntity(RepairFailureEntity failureEntity) {
             this.failureEntity = failureEntity;
+        }
+
+        public int getNewOrder() {
+            return this.newOrder;
+        }
+
+        public void setNewOrder(int newOrder) {
+            this.newOrder = newOrder;
         }
     }
 }

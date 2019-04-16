@@ -1,19 +1,16 @@
 package com.yaf.base.entity;
 
 import com.alibaba.fastjson.JSON;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.enums.IdType;
-import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.enums.IdType;
 import com.yaf.sys.entity.OrgEntity;
 import com.yaf.sys.entity.UserEntity;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-
-import lombok.Getter;
-import lombok.Setter;
 
 
 /**
@@ -23,8 +20,6 @@ import lombok.Setter;
  * @email jornlin@foxmail.com
  * @date 2018-05-28 09:15:32
  */
-@Getter
-@Setter
 @TableName(value = "bus_repair_order")
 public class RepairOrderEntity implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -888,5 +883,13 @@ public class RepairOrderEntity implements Serializable {
         int result = 1;
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         return result;
+    }
+
+    public int getNewOrder() {
+        return this.newOrder;
+    }
+
+    public void setNewOrder(int newOrder) {
+        this.newOrder = newOrder;
     }
 }

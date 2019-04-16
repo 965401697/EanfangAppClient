@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  * @author wen
- *         Created at 2017/3/2
+ * Created at 2017/3/2
  * @desc app配置信息
  */
 public class Config {
@@ -88,6 +88,7 @@ public class Config {
         }
         return businessList;
     }
+
     //系统类别-----级别
     public List<BaseDataEntity> getBusinessList(int level) {
         return Stream.of(getBusinessList()).filter(bean -> bean.getLevel().equals(level + 1)).toList();
@@ -148,6 +149,7 @@ public class Config {
         }
         return modelList;
     }
+
     //品牌-----级别
     public List<BaseDataEntity> getModelList(int level) {
         return Stream.of(getModelList()).filter(bean -> bean.getLevel().equals(level + 1)).toList();

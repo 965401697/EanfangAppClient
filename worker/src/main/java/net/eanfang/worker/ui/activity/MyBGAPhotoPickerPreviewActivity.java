@@ -3,9 +3,9 @@ package net.eanfang.worker.ui.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.ViewCompat;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPropertyAnimatorListenerAdapter;
+import androidx.core.view.ViewCompat;
+import androidx.viewpager.widget.ViewPager;
+import androidx.core.view.ViewPropertyAnimatorListenerAdapter;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -197,8 +197,8 @@ public class MyBGAPhotoPickerPreviewActivity extends BGAPPToolbarActivity implem
         View actionView = menuItem.getActionView();
         menuItem.setVisible(false);
 
-        mTitleTv = (TextView) actionView.findViewById(R.id.tv_photo_picker_preview_title);
-        mSubmitTv = (TextView) actionView.findViewById(R.id.tv_photo_picker_preview_submit);
+        mTitleTv = actionView.findViewById(R.id.tv_photo_picker_preview_title);
+        mSubmitTv = actionView.findViewById(R.id.tv_photo_picker_preview_submit);
         mSubmitTv.setOnClickListener(new BGAOnNoDoubleClickListener() {
             @Override
             public void onNoDoubleClick(View v) {

@@ -4,8 +4,8 @@
 
 package com.eanfang.application;
 
-import android.support.multidex.MultiDexApplication;
-import android.support.v4.util.ArrayMap;
+import androidx.collection.ArrayMap;
+import androidx.multidex.MultiDexApplication;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -27,7 +27,7 @@ import java.util.List;
  * CustomeApplication
  *
  * @author hou
- *         Created at 2016/12/1 13:58
+ * Created at 2016/12/1 13:58
  * @desc 程序入口
  */
 

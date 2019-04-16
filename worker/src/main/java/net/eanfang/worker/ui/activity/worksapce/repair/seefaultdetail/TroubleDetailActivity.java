@@ -3,11 +3,11 @@ package net.eanfang.worker.ui.activity.worksapce.repair.seefaultdetail;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -186,7 +186,7 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
                     Intent intent = new Intent(TroubleDetailActivity.this, SelectIMContactActivity.class);
 
                     bundle.putString("id", String.valueOf(bughandleConfirmEntity.getBusRepairOrderId()));
-                    bundle.putString("orderNum", (String) bughandleConfirmEntity.getDetailEntityList().get(0).getFailureEntity().getDeviceName());
+                    bundle.putString("orderNum", bughandleConfirmEntity.getDetailEntityList().get(0).getFailureEntity().getDeviceName());
                     if (bughandleConfirmEntity.getDetailEntityList() != null && bughandleConfirmEntity.getDetailEntityList().size() > 0) {
                         bundle.putString("picUrl", bughandleConfirmEntity.getDetailEntityList().get(0).getFailureEntity().getPictures().split(",")[0]);
                     }
@@ -371,21 +371,21 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
 
         if (StringUtils.isValid(bughandleConfirmEntity.getFrontPictures())) {
             String[] friontPic = bughandleConfirmEntity.getFrontPictures().split(",");
-            picList1.addAll(Stream.of(Arrays.asList(friontPic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
+            picList1.addAll(Stream.of(Arrays.asList(friontPic)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
         }
         if (StringUtils.isValid(bughandleConfirmEntity.getReverseSidePictures())) {
             String[] reversePic = bughandleConfirmEntity.getReverseSidePictures().split(",");
-            picList2.addAll(Stream.of(Arrays.asList(reversePic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
+            picList2.addAll(Stream.of(Arrays.asList(reversePic)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
         }
 
         if (StringUtils.isValid(bughandleConfirmEntity.getEquipmentCabinetPictures())) {
             String[] equipmentPic = bughandleConfirmEntity.getEquipmentCabinetPictures().split(",");
-            picList3.addAll(Stream.of(Arrays.asList(equipmentPic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
+            picList3.addAll(Stream.of(Arrays.asList(equipmentPic)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
         }
 
         if (StringUtils.isValid(bughandleConfirmEntity.getInvoicesPictures())) {
             String[] invoicesPic = bughandleConfirmEntity.getInvoicesPictures().split(",");
-            picList4.addAll(Stream.of(Arrays.asList(invoicesPic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
+            picList4.addAll(Stream.of(Arrays.asList(invoicesPic)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
         }
     }
 

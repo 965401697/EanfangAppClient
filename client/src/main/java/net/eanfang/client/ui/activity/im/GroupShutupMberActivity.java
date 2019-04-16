@@ -2,8 +2,6 @@ package net.eanfang.client.ui.activity.im;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -16,11 +14,12 @@ import com.eanfang.util.ToastUtil;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
-
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

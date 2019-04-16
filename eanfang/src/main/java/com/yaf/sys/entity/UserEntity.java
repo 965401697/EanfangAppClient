@@ -1,7 +1,6 @@
 package com.yaf.sys.entity;
 
 
-
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
@@ -13,9 +12,6 @@ import java.util.Date;
 
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
-
-import lombok.Getter;
-import lombok.Setter;
 
 
 
@@ -68,8 +64,6 @@ public class UserEntity implements Serializable {
     //账号类别Const.UserType
     //@TableField(value = "user_type")
     @Digits(integer = 3, fraction = 0)
-    @Getter
-    @Setter
     private Integer userType;
     
 	//创建人
@@ -218,31 +212,21 @@ public class UserEntity implements Serializable {
 	/**
 	 * 用户信息扩展
 	 */ 
-    @Getter
-    @Setter
-	@TableField(exist = false)
+    @TableField(exist = false)
 	private Object userExtInfo;
     
-    @Getter
-    @Setter
     @TableField(exist = false)
     private AccountEntity accountEntity;
 
-    @Getter
-    @Setter
     @TableField(exist = false)
     private UserEntity createUserEntity;
 
-    @Getter
-    @Setter
     @TableField(exist = false)
     private UserEntity updateUserEntity;
 
     /**
      * 归属总公司
      */
-    @Getter
-    @Setter
     @TableField(exist = false)
     private OrgEntity topCompanyEntity;
 
@@ -250,16 +234,12 @@ public class UserEntity implements Serializable {
     /**
      * 归属公司
      */
-    @Getter
-    @Setter
     @TableField(exist = false)
     private OrgEntity companyEntity;
 
     /**
      * 归属部门
      */
-    @Getter
-    @Setter
     @TableField(exist = false)
     private OrgEntity departmentEntity;
 
@@ -286,5 +266,69 @@ public class UserEntity implements Serializable {
             return this.userId.equals(((UserEntity) other).userId);   
         }   
         return false; 
+    }
+
+    public Integer getUserType() {
+        return this.userType;
+    }
+
+    public Object getUserExtInfo() {
+        return this.userExtInfo;
+    }
+
+    public AccountEntity getAccountEntity() {
+        return this.accountEntity;
+    }
+
+    public UserEntity getCreateUserEntity() {
+        return this.createUserEntity;
+    }
+
+    public UserEntity getUpdateUserEntity() {
+        return this.updateUserEntity;
+    }
+
+    public OrgEntity getTopCompanyEntity() {
+        return this.topCompanyEntity;
+    }
+
+    public OrgEntity getCompanyEntity() {
+        return this.companyEntity;
+    }
+
+    public OrgEntity getDepartmentEntity() {
+        return this.departmentEntity;
+    }
+
+    public void setUserType(Integer userType) {
+        this.userType = userType;
+    }
+
+    public void setUserExtInfo(Object userExtInfo) {
+        this.userExtInfo = userExtInfo;
+    }
+
+    public void setAccountEntity(AccountEntity accountEntity) {
+        this.accountEntity = accountEntity;
+    }
+
+    public void setCreateUserEntity(UserEntity createUserEntity) {
+        this.createUserEntity = createUserEntity;
+    }
+
+    public void setUpdateUserEntity(UserEntity updateUserEntity) {
+        this.updateUserEntity = updateUserEntity;
+    }
+
+    public void setTopCompanyEntity(OrgEntity topCompanyEntity) {
+        this.topCompanyEntity = topCompanyEntity;
+    }
+
+    public void setCompanyEntity(OrgEntity companyEntity) {
+        this.companyEntity = companyEntity;
+    }
+
+    public void setDepartmentEntity(OrgEntity departmentEntity) {
+        this.departmentEntity = departmentEntity;
     }
 }

@@ -3,7 +3,6 @@ package net.eanfang.client.ui.activity.worksapce;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -22,6 +21,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
+import androidx.annotation.IdRes;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;

@@ -8,10 +8,7 @@ ext.artifactId = 'zxing-android-embedded'
 dependencies {
     compile project.zxingCore
 
-    compile 'com.android.support:support-v4:26+'
-
-    testCompile 'junit:junit:4.12'
-    testCompile "org.mockito:mockito-core:1.9.5"
+    compile 'androidx.legacy:legacy-support-v4:1.0.0'
 }
 
 android {
@@ -25,7 +22,7 @@ android {
             res.srcDirs = ['res-orig', 'res']
             assets.srcDirs = ['assets']
         }
-        test.setRoot('test');
+        test.setRoot('test')
     }
     buildTypes {
         debug {

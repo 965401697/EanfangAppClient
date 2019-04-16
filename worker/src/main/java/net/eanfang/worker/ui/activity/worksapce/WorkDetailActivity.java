@@ -4,9 +4,9 @@ import android.content.Context;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.daimajia.numberprogressbar.NumberProgressBar;
+import com.daimajia.numberprogressbar.DaiMaJiaNumberProgressBar;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.config.Config;
@@ -82,7 +82,7 @@ public class WorkDetailActivity extends BaseActivity {
     @BindView(R.id.rv_list1)
     RecyclerView rvList1;
     @BindView(R.id.iv_haopinglv)
-    NumberProgressBar ivHaopinglv;
+    DaiMaJiaNumberProgressBar ivHaopinglv;
     @BindView(R.id.tv_haopinglv)
     TextView tvHaopinglv;
     @BindView(R.id.rb_star1)
@@ -346,7 +346,7 @@ public class WorkDetailActivity extends BaseActivity {
         // 口碑
         tvMouthGrade.setText(v(() -> bean.getPublicPraise() + "分"));
         // 好评率
-        tvGoodGrade.setText(v(() -> (SplitAndRound((Double) (bean.getGoodRate() * 0.01), 2) + "%")));
+        tvGoodGrade.setText(v(() -> (SplitAndRound((bean.getGoodRate() * 0.01), 2) + "%")));
         arcprogressview.setProgress(bean.getGoodRate());
         // 资质  0否，1是
         if (v(() -> bean.getQualification()) != null && bean.getQualification() == 0) {
@@ -367,7 +367,7 @@ public class WorkDetailActivity extends BaseActivity {
             tvWorkerTrain.setVisibility(View.VISIBLE);
         }
         if (bean.getGoodRate() != 0) {
-            tvHaopinglv.setText((SplitAndRound((Double) (bean.getGoodRate() * 0.01), 2) + "%"));
+            tvHaopinglv.setText((SplitAndRound((bean.getGoodRate() * 0.01), 2) + "%"));
             ivHaopinglv.setProgress(bean.getGoodRate());
         }
         // 设计订单

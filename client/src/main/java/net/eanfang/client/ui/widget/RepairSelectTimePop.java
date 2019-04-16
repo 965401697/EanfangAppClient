@@ -35,7 +35,7 @@ public class RepairSelectTimePop extends PopupWindow {
         this.mTimeList = list;
         View view = LayoutInflater.from(context).inflate(R.layout.layout_pop_select, null);
 
-        mLvType = (ListView) view.findViewById(R.id.lv_type);
+        mLvType = view.findViewById(R.id.lv_type);
         mTitle = view.findViewById(R.id.tv_title);
         MyAdapter adapter = new MyAdapter(context, list);
         mLvType.setAdapter(adapter);
@@ -84,7 +84,7 @@ public class RepairSelectTimePop extends PopupWindow {
                 view = LayoutInflater.from(context).inflate(R.layout.layout_data_select_item, viewGroup, false);
             }
             TextView tvName = ViewHolder.get(view, R.id.tv_typeName);
-            tvName.setText(list.get(i).toString());
+            tvName.setText(list.get(i));
             return view;
         }
     }

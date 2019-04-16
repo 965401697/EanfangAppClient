@@ -1,7 +1,6 @@
 package net.eanfang.client.ui.activity.worksapce.maintenance;
 
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 

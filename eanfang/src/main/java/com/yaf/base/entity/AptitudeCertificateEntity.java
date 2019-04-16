@@ -8,9 +8,6 @@ import com.baomidou.mybatisplus.enums.IdType;
 import java.io.Serializable;
 import java.util.Date;
 
-import lombok.Getter;
-import lombok.Setter;
-
 
 
 /**
@@ -22,8 +19,6 @@ import lombok.Setter;
  *
  */
 @TableName(value = "shop_aptitude_certificate" )
-@Getter
-@Setter
 public class AptitudeCertificateEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 

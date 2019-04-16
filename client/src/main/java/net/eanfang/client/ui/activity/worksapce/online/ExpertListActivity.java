@@ -2,9 +2,6 @@ package net.eanfang.client.ui.activity.worksapce.online;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -20,12 +17,14 @@ import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 import com.yaf.sys.entity.BaseDataEntity;
 
-
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
 import java.util.List;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;

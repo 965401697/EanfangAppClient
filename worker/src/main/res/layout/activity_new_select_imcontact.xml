@@ -6,7 +6,7 @@
 
     <include layout="@layout/view_title_bar" />
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -78,7 +78,7 @@
                         android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_14" />
 
-                    <android.support.v7.widget.RecyclerView
+                    <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recycler_view_hori"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -208,7 +208,7 @@
 
                 <TextView style="@style/style_common_line_gray" />
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_company"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -242,7 +242,7 @@
                     android:gravity="center"
                     android:text="暂无数据" />
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -250,5 +250,5 @@
                     android:visibility="gone" />
             </LinearLayout>
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 </LinearLayout>

@@ -2,9 +2,6 @@ package com.eanfang.model;
 
 import java.io.Serializable;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-
 /**
  * Created by MrHou
  *
@@ -13,8 +10,6 @@ import lombok.NoArgsConstructor;
  * @desc
  */
 
-@AllArgsConstructor
-@NoArgsConstructor
 public class Message implements Serializable {
 
     private String title;
@@ -24,6 +19,19 @@ public class Message implements Serializable {
     private boolean isShowLogo;
     private boolean isShowOkBtn;
     private String tip;
+
+    public Message(String title, String msgTitle, String msgContent, String msgHelp, boolean isShowLogo, boolean isShowOkBtn, String tip) {
+        this.title = title;
+        this.msgTitle = msgTitle;
+        this.msgContent = msgContent;
+        this.msgHelp = msgHelp;
+        this.isShowLogo = isShowLogo;
+        this.isShowOkBtn = isShowOkBtn;
+        this.tip = tip;
+    }
+
+    public Message() {
+    }
 
     public String getTitle() {
         return title == null ? "" : title;

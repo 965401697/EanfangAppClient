@@ -63,15 +63,15 @@ public class TakePhotoActivity extends BaseActivity implements CameraFocusView.I
     private void init() {
         mCameraModel = new CameraModel(this, cameraSurfaceView);
         //控件获取
-        cameraSurfaceView = (CameraSurfaceView) findViewById(R.id.cameraSurfaceView);
-        cameraFocusView = (CameraFocusView) findViewById(R.id.cameraFocusView);
-        openFlashImg = (ImageView) findViewById(R.id.openFlashImg);
-        cameraSwitchBtn = (ImageView) findViewById(R.id.cameraSwitchBtn);
-        closeBtn = (ImageView) findViewById(R.id.closeBtn);
-        cameraTopLayout = (RelativeLayout) findViewById(R.id.cameraTopLayout);
-        cancelBtn = (ImageView) findViewById(R.id.cancelBtn);
-        takePhotoBtn = (ImageView) findViewById(R.id.takePhotoBtn);
-        okBtn = (ImageView) findViewById(R.id.okBtn);
+        cameraSurfaceView = findViewById(R.id.cameraSurfaceView);
+        cameraFocusView = findViewById(R.id.cameraFocusView);
+        openFlashImg = findViewById(R.id.openFlashImg);
+        cameraSwitchBtn = findViewById(R.id.cameraSwitchBtn);
+        closeBtn = findViewById(R.id.closeBtn);
+        cameraTopLayout = findViewById(R.id.cameraTopLayout);
+        cancelBtn = findViewById(R.id.cancelBtn);
+        takePhotoBtn = findViewById(R.id.takePhotoBtn);
+        okBtn = findViewById(R.id.okBtn);
         //控件处理
         cameraFocusView.setmIAutoFocus(this);
         openFlashImg.setOnClickListener(v -> openFlash());

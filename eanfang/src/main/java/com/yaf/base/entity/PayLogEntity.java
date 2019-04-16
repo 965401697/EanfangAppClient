@@ -8,9 +8,6 @@ import com.baomidou.mybatisplus.enums.IdType;
 import java.io.Serializable;
 import java.util.Date;
 
-import lombok.Getter;
-import lombok.Setter;
-
 
 /**
  * 支付记录表
@@ -21,8 +18,6 @@ import lombok.Setter;
  */
 
 @TableName(value = "bus_pay_log")
-@Getter
-@Setter
 public class PayLogEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -364,5 +359,13 @@ public class PayLogEntity implements Serializable {
         int result = 1;
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         return result;
+    }
+
+    public String getOrderNum() {
+        return this.orderNum;
+    }
+
+    public void setOrderNum(String orderNum) {
+        this.orderNum = orderNum;
     }
 }

@@ -6,8 +6,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -25,6 +23,8 @@ import net.eanfang.client.R;
 import net.eanfang.client.ui.adapter.AddStaffAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -97,7 +97,7 @@ public class AddStaffActivity extends BaseClientActivity {
         }
 
         Intent intent = new Intent(AddStaffActivity.this, AddStaffNextActivity.class);
-        intent.putExtra("bean", (FriendListBean) mAddStaffAdapter.getData().get(0));
+        intent.putExtra("bean", mAddStaffAdapter.getData().get(0));
         startActivity(intent);
     }
 

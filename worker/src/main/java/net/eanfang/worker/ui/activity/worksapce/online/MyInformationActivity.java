@@ -2,20 +2,17 @@ package net.eanfang.worker.ui.activity.worksapce.online;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.util.JsonUtils;
-import com.eanfang.util.QueryEntry;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.flyco.tablayout.SlidingTabLayout;
 

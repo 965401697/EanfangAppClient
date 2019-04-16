@@ -10,9 +10,6 @@ import com.yaf.sys.entity.UserEntity;
 import java.io.Serializable;
 import java.util.Date;
 
-import lombok.Getter;
-import lombok.Setter;
-
 
 /**
  * 发票信息表
@@ -21,8 +18,6 @@ import lombok.Setter;
  * @email jornlin@foxmail.com
  * @date 2017-12-27 11:12:01
  */
-@Getter
-@Setter
 @TableName(value = "bus_invoice")
 public class InvoiceEntity implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -270,4 +265,44 @@ public class InvoiceEntity implements Serializable {
      */
     @TableField(exist = false)
     private UserEntity createUser;
+
+    public Long getReceiveId() {
+        return this.receiveId;
+    }
+
+    public Long getOrderId() {
+        return this.orderId;
+    }
+
+    public Integer getOrderType() {
+        return this.orderType;
+    }
+
+    public ReceiveAddressEntity getReceiveAddressEntity() {
+        return this.receiveAddressEntity;
+    }
+
+    public UserEntity getCreateUser() {
+        return this.createUser;
+    }
+
+    public void setReceiveId(Long receiveId) {
+        this.receiveId = receiveId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
+    }
+
+    public void setOrderType(Integer orderType) {
+        this.orderType = orderType;
+    }
+
+    public void setReceiveAddressEntity(ReceiveAddressEntity receiveAddressEntity) {
+        this.receiveAddressEntity = receiveAddressEntity;
+    }
+
+    public void setCreateUser(UserEntity createUser) {
+        this.createUser = createUser;
+    }
 }

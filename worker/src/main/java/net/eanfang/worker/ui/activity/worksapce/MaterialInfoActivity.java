@@ -63,15 +63,15 @@ public class MaterialInfoActivity extends BaseWorkerActivity {
     }
 
     private void initView() {
-        ll_business = (LinearLayout) findViewById(R.id.ll_business);
-        tv_business = (TextView) findViewById(R.id.tv_business);
-        ll_equipment = (LinearLayout) findViewById(R.id.ll_equipment);
-        tv_equipment = (TextView) findViewById(R.id.tv_equipment);
-        ll_model = (LinearLayout) findViewById(R.id.ll_model);
-        tv_model = (TextView) findViewById(R.id.tv_model);
-        ll_location = (LinearLayout) findViewById(R.id.ll_location);
-        ll_code = (LinearLayout) findViewById(R.id.ll_code);
-        btn_add = (Button) findViewById(R.id.btn_add);
+        ll_business = findViewById(R.id.ll_business);
+        tv_business = findViewById(R.id.tv_business);
+        ll_equipment = findViewById(R.id.ll_equipment);
+        tv_equipment = findViewById(R.id.tv_equipment);
+        ll_model = findViewById(R.id.ll_model);
+        tv_model = findViewById(R.id.tv_model);
+        ll_location = findViewById(R.id.ll_location);
+        ll_code = findViewById(R.id.ll_code);
+        btn_add = findViewById(R.id.btn_add);
         btn_add.setVisibility(View.GONE);
         setTitle("耗材详情");
         setLeftBack();

@@ -8,9 +8,6 @@ import com.baomidou.mybatisplus.enums.IdType;
 import java.io.Serializable;
 import java.util.Date;
 
-import lombok.Getter;
-import lombok.Setter;
-
 
 
 /**
@@ -22,8 +19,6 @@ import lombok.Setter;
  *
  */
 @TableName(value = "tech_honor_certificate" )
-@Getter
-@Setter
 public class HonorCertificateEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -200,4 +195,12 @@ public class HonorCertificateEntity implements Serializable {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
+
+    public Long getOrgId() {
+        return this.orgId;
+    }
+
+    public void setOrgId(Long orgId) {
+        this.orgId = orgId;
+    }
 }

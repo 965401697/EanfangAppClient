@@ -12,14 +12,10 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import lombok.Getter;
-import lombok.Setter;
 
 
 /**
@@ -84,8 +80,6 @@ public class TechWorkerVerifyEntity implements Serializable {
     //头像
     //@TableField(value = "avatar_photo")
     @NotBlank
-    @Getter
-    @Setter
     @Size(min = 0, max = 255)
     private String avatarPhoto;
 
@@ -132,8 +126,6 @@ public class TechWorkerVerifyEntity implements Serializable {
     private Date createTime;
 
     //更新时间
-    @Getter
-    @Setter
     //@TableField(value = "update_time")
     private Date updateTime;
 
@@ -462,13 +454,41 @@ public class TechWorkerVerifyEntity implements Serializable {
     }
     /*手工代码写在下面*/
 
-    @Getter
-    @Setter
     @TableField(exist = false)
     private AccountEntity accountEntity;
 
-    @Getter
-    @Setter
     @TableField(exist = false)
     private UserEntity userEntity;
+
+    public String getAvatarPhoto() {
+        return this.avatarPhoto;
+    }
+
+    public Date getUpdateTime() {
+        return this.updateTime;
+    }
+
+    public AccountEntity getAccountEntity() {
+        return this.accountEntity;
+    }
+
+    public UserEntity getUserEntity() {
+        return this.userEntity;
+    }
+
+    public void setAvatarPhoto(String avatarPhoto) {
+        this.avatarPhoto = avatarPhoto;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public void setAccountEntity(AccountEntity accountEntity) {
+        this.accountEntity = accountEntity;
+    }
+
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
+    }
 }

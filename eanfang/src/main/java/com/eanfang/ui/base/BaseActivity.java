@@ -13,9 +13,6 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -38,6 +35,10 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 
 /**
  * Created by jornl on 2018/1/19.
@@ -145,7 +146,7 @@ public class BaseActivity extends AppCompatActivity implements
     }
 
     public void setLeftBack() {
-        iv_left = (ImageView) findViewById(R.id.iv_left);
+        iv_left = findViewById(R.id.iv_left);
         iv_left.setVisibility(View.VISIBLE);
         iv_left.setOnClickListener(v -> finish());
     }
@@ -156,7 +157,7 @@ public class BaseActivity extends AppCompatActivity implements
      * @param listener
      */
     public void setLeftBack(View.OnClickListener listener) {
-        iv_left = (ImageView) findViewById(R.id.iv_left);
+        iv_left = findViewById(R.id.iv_left);
         iv_left.setVisibility(View.VISIBLE);
         iv_left.setOnClickListener(listener);
     }
@@ -178,7 +179,7 @@ public class BaseActivity extends AppCompatActivity implements
     }
 
     public void supprotToolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("");
         toolbar.setNavigationIcon(R.mipmap.ic_back);
         setSupportActionBar(toolbar);
@@ -212,19 +213,19 @@ public class BaseActivity extends AppCompatActivity implements
     }
 
     public void setRightGone() {
-        ((TextView) findViewById(R.id.tv_right)).setVisibility(View.GONE);
+        findViewById(R.id.tv_right).setVisibility(View.GONE);
     }
 
     public void setRightVisible() {
-        ((TextView) findViewById(R.id.tv_right)).setVisibility(View.VISIBLE);
+        findViewById(R.id.tv_right).setVisibility(View.VISIBLE);
     }
 
     public void setLeftGone() {
-        ((ImageView) findViewById(R.id.iv_left)).setVisibility(View.GONE);
+        findViewById(R.id.iv_left).setVisibility(View.GONE);
     }
 
     public void setLeftVisible() {
-        ((ImageView) findViewById(R.id.iv_left)).setVisibility(View.VISIBLE);
+        findViewById(R.id.iv_left).setVisibility(View.VISIBLE);
     }
 
     public void setRightImageOnClickListener(View.OnClickListener listener) {

@@ -58,7 +58,7 @@ public class CollectionWorkerListAdapter extends BaseQuickAdapter<CollectionWork
             java.text.NumberFormat percentFormat = java.text.NumberFormat.getPercentInstance();
 
             //自动转换成百分比显示..
-            helper.setText(R.id.tv_haopinglv, (SplitAndRound((Double) (item.getWorkerEntity().getGoodRate() * 0.01), 2) + "%"));
+            helper.setText(R.id.tv_haopinglv, (SplitAndRound((item.getWorkerEntity().getGoodRate() * 0.01), 2) + "%"));
         }
         // 认证
         if (v(() -> item.getWorkerEntity().getVerifyStatus()) != null && item.getWorkerEntity().getVerifyStatus() == 1) {

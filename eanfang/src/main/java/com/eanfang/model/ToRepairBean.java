@@ -4,12 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.Setter;
-
 /**
  * Created by Administrator on 2017/4/12.
  */
-@Setter
 public class ToRepairBean implements Serializable {
     private String company;
     private String detailAddress;
@@ -78,5 +75,57 @@ public class ToRepairBean implements Serializable {
             return new ArrayList<>();
         }
         return beanList;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public void setDetailAddress(String detailAddress) {
+        this.detailAddress = detailAddress;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public void setBusiness(String business) {
+        this.business = business;
+    }
+
+    public void setBugOneUid(String bugOneUid) {
+        this.bugOneUid = bugOneUid;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setBeanList(List<AddTroubleBean> beanList) {
+        this.beanList = beanList;
     }
 }

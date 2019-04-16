@@ -1,6 +1,6 @@
 package net.eanfang.worker.ui.fragment.security;
 
-import android.support.v7.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import android.view.View;
 
 import com.eanfang.apiservice.NewApiService;

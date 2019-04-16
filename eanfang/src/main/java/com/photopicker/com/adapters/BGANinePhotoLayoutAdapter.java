@@ -1,7 +1,7 @@
 package com.photopicker.com.adapters;
 
 
-import android.databinding.BindingAdapter;
+import androidx.databinding.BindingAdapter;
 
 import com.photopicker.com.widget.BGANinePhotoLayout;
 

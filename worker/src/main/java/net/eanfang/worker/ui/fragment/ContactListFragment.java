@@ -6,9 +6,9 @@ import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.SwipeRefreshLayout;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -41,10 +41,7 @@ import net.eanfang.worker.ui.activity.im.IMPresonInfoActivity;
 import net.eanfang.worker.ui.activity.im.MorePopWindow;
 import net.eanfang.worker.ui.activity.im.MyConversationListFragment;
 import net.eanfang.worker.ui.activity.im.SystemMessageActivity;
-import net.eanfang.worker.ui.activity.worksapce.notice.MessageListActivity;
 import net.eanfang.worker.ui.activity.worksapce.notice.MessageNotificationActivity;
-import net.eanfang.worker.ui.activity.worksapce.notice.OfficialListActivity;
-import net.eanfang.worker.ui.activity.worksapce.notice.SystemNoticeActivity;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -62,7 +59,6 @@ import io.rong.imlib.model.UserInfo;
 import q.rorbin.badgeview.QBadgeView;
 
 import static android.app.Activity.RESULT_CANCELED;
-import static android.app.Activity.RESULT_OK;
 import static com.okgo.utils.HttpUtils.runOnUiThread;
 
 /**
@@ -503,10 +499,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
      * @return true 有网, false 没有网络.
      */
     public boolean isNetConnect() {
-        if (isNetWork) {
-            return true;
-        }
-        return false;
+        return isNetWork;
     }
 
 }

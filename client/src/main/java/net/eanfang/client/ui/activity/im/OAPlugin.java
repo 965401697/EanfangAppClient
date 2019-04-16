@@ -4,9 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import com.eanfang.util.PermKit;
@@ -14,6 +11,9 @@ import com.eanfang.util.ToastUtil;
 
 import net.eanfang.client.R;
 
+import androidx.annotation.RequiresApi;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import io.rong.imkit.RongExtension;
 import io.rong.imkit.plugin.IPluginModule;
 import io.rong.imlib.model.Conversation;

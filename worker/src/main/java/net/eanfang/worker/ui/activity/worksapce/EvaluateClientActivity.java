@@ -3,7 +3,7 @@ package net.eanfang.worker.ui.activity.worksapce;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
+import androidx.annotation.IdRes;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;

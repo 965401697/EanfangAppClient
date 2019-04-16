@@ -32,15 +32,15 @@ public class CooperationRelationAdapter extends BaseQuickAdapter<CooperationEnti
         //0 待审核 1:审核通过 2：失效/拒绝
         if (item.getStatus() == 0) {
             helper.setText(R.id.tv_status, "待审核");
-            ((TextView) helper.getView(R.id.tv_status)).setBackground(helper.getView(R.id.tv_status).getContext().getResources().getDrawable(R.drawable.shape_cooperation__relation_audit));
+            helper.getView(R.id.tv_status).setBackground(helper.getView(R.id.tv_status).getContext().getResources().getDrawable(R.drawable.shape_cooperation__relation_audit));
             ((TextView) helper.getView(R.id.tv_status)).setTextColor(helper.getView(R.id.tv_status).getContext().getResources().getColor(R.color.white));
         } else if (item.getStatus() == 1) {
-            ((TextView) helper.getView(R.id.tv_status)).setBackground(helper.getView(R.id.tv_status).getContext().getResources().getDrawable(R.drawable.shape_cooperation__relation_succee));
+            helper.getView(R.id.tv_status).setBackground(helper.getView(R.id.tv_status).getContext().getResources().getDrawable(R.drawable.shape_cooperation__relation_succee));
             ((TextView) helper.getView(R.id.tv_status)).setTextColor(helper.getView(R.id.tv_status).getContext().getResources().getColor(R.color.colorPrimary));
             helper.setText(R.id.tv_status, "审核通过");
         } else if (item.getStatus() == 2) {
             helper.setText(R.id.tv_status, "失效/拒绝");
-            ((TextView) helper.getView(R.id.tv_status)).setBackground(helper.getView(R.id.tv_status).getContext().getResources().getDrawable(R.drawable.shape_cooperation__relation_reject));
+            helper.getView(R.id.tv_status).setBackground(helper.getView(R.id.tv_status).getContext().getResources().getDrawable(R.drawable.shape_cooperation__relation_reject));
             ((TextView) helper.getView(R.id.tv_status)).setTextColor(helper.getView(R.id.tv_status).getContext().getResources().getColor(R.color.color_bottom));
         }
     }

@@ -36,7 +36,7 @@ public class PersonalQRCodeDialog extends Dialog {
     }
 
     private void initView(View view, String path) {
-        SimpleDraweeView mIvPersonalQRCode = (SimpleDraweeView) view.findViewById(R.id.iv_personalQRCode);
+        SimpleDraweeView mIvPersonalQRCode = view.findViewById(R.id.iv_personalQRCode);
         // 个人二维码
         mIvPersonalQRCode.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + path));
     }

@@ -16,9 +16,6 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import lombok.Getter;
-import lombok.Setter;
-
 
 /**
  * 系统通知
@@ -212,36 +209,71 @@ public class NoticeEntity implements Serializable {
     }
 
     /*手工代码写在下面*/
-    @Getter
-    @Setter
     private AccountEntity reciveAccEntity;
 
-    @Getter
-    @Setter
     @TableField(exist = false)
     private UserEntity senderEntity;
 
-    @Getter
-    @Setter
     @TableField(exist = false)
     private OrgEntity companyEntity;
 
     //各业务根据params扩展自己的信息
-    @Getter
-    @Setter
     @TableField(exist = false)
     Object extInfo;
 
     // 通知标题，通过NoticeConst配置内容自动生成
-    @Getter
-    @Setter
     @TableField(exist = false)
     String content;
 
-    @Getter
-    @Setter
     @TableField(exist = false)
     String title;
 
 
+    public AccountEntity getReciveAccEntity() {
+        return this.reciveAccEntity;
+    }
+
+    public UserEntity getSenderEntity() {
+        return this.senderEntity;
+    }
+
+    public OrgEntity getCompanyEntity() {
+        return this.companyEntity;
+    }
+
+    public Object getExtInfo() {
+        return this.extInfo;
+    }
+
+    public String getContent() {
+        return this.content;
+    }
+
+    public String getTitle() {
+        return this.title;
+    }
+
+    public void setReciveAccEntity(AccountEntity reciveAccEntity) {
+        this.reciveAccEntity = reciveAccEntity;
+    }
+
+    public void setSenderEntity(UserEntity senderEntity) {
+        this.senderEntity = senderEntity;
+    }
+
+    public void setCompanyEntity(OrgEntity companyEntity) {
+        this.companyEntity = companyEntity;
+    }
+
+    public void setExtInfo(Object extInfo) {
+        this.extInfo = extInfo;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 }

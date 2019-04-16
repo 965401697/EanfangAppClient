@@ -16,10 +16,6 @@
 
 package com.picker;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -37,6 +33,10 @@ import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 
 import com.eanfang.R;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple dialog containing an {@link android.widget.DatePicker}.
@@ -116,8 +116,8 @@ public class DoubleDatePickerDialog extends AlertDialog implements OnClickListen
         LayoutInflater inflater = (LayoutInflater) themeContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.date_picker_dialog, null);
         setView(view);
-        mDatePicker_start = (DatePicker) view.findViewById(R.id.datePickerStart);
-        mDatePicker_end = (DatePicker) view.findViewById(R.id.datePickerEnd);
+        mDatePicker_start = view.findViewById(R.id.datePickerStart);
+        mDatePicker_end = view.findViewById(R.id.datePickerEnd);
 
         resizePikcer(mDatePicker_start);
         resizePikcer(mDatePicker_end);

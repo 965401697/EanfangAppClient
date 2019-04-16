@@ -9,7 +9,7 @@
 
     <include layout="@layout/header" />
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -78,7 +78,7 @@
 
                 </LinearLayout>
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_check_result"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -126,7 +126,7 @@
 
                 </LinearLayout>
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_device_handle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -450,7 +450,7 @@
                     android:background="@color/background" />
 
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_team"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
@@ -472,6 +472,6 @@
                 android:textSize="@dimen/textSize_14" />
 
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

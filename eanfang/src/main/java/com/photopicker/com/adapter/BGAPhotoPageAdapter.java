@@ -17,7 +17,7 @@ package com.photopicker.com.adapter;
 
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
-import android.support.v4.view.PagerAdapter;
+import androidx.viewpager.widget.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 

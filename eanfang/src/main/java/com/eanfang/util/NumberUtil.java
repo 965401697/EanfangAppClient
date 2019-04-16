@@ -80,7 +80,7 @@ public class NumberUtil {
 
     public static String floatOne(float number) {
         DecimalFormat format = new DecimalFormat("#0.0");
-        return format.format(number).toString();
+        return format.format(number);
     }
 
     public static double DoubleFormat(double sourceNum) {

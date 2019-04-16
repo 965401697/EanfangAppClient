@@ -6,6 +6,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 import io.rong.common.ParcelUtils;
 import io.rong.imlib.MessageTag;
@@ -43,12 +44,7 @@ public class CustomizeVideoMessage extends MessageContent {
             io.rong.common.RLog.e("CustomizeVideoMessage", "JSONException " + var4.getMessage());
         }
 
-        try {
-            return jsonObj.toString().getBytes("UTF-8");
-        } catch (UnsupportedEncodingException var3) {
-            var3.printStackTrace();
-            return null;
-        }
+        return jsonObj.toString().getBytes(StandardCharsets.UTF_8);
     }
 
 
@@ -59,11 +55,7 @@ public class CustomizeVideoMessage extends MessageContent {
     public CustomizeVideoMessage(byte[] data) {
         String jsonStr = null;
 
-        try {
-            jsonStr = new String(data, "UTF-8");
-        } catch (UnsupportedEncodingException var5) {
-            var5.printStackTrace();
-        }
+        jsonStr = new String(data, StandardCharsets.UTF_8);
         try {
             JSONObject jsonObj = new JSONObject(jsonStr);
             if (jsonObj.has("mp4Path")) {

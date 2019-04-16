@@ -2,8 +2,8 @@ package net.eanfang.worker.ui.activity.worksapce.contacts;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -111,7 +111,7 @@ public class CooperationSearchClientActivity extends BaseWorkerActivity {
         }
 
         Intent intent = new Intent(CooperationSearchClientActivity.this, CooperationAddActivity.class);
-        intent.putExtra("bean", (CooperationSearchBean.ListBean) mCooperationSearchAdapter.getData().get(mOldPosition));
+        intent.putExtra("bean", mCooperationSearchAdapter.getData().get(mOldPosition));
         startActivity(intent);
     }
 

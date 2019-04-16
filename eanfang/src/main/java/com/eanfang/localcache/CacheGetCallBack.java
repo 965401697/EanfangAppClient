@@ -5,5 +5,5 @@ package com.eanfang.localcache;
  */
 
 public interface CacheGetCallBack {
-    public void readValue(String result);
+    void readValue(String result);
 }

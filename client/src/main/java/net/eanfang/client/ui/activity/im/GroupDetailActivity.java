@@ -115,7 +115,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
         setTitle("群组信息");
         setLeftBack();
         groupId = getIntent().getStringExtra(EanfangConst.RONG_YUN_ID);
-        id = EanfangApplication.getApplication().get().get(groupId, 0);
+        id = EanfangApplication.get().get(groupId, 0);
         title = getIntent().getStringExtra("title");
         BaseActivity.transactionActivities.add(this);
         initData();
@@ -208,13 +208,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                             }
 
 
-                            if (bean.getList().get(0).getStatus() == 0) {
-//                                group_shutup.setChecked(false);
-                                isCheckedGag = false;
-                            } else {
-//                                group_shutup.setChecked(true);
-                                isCheckedGag = true;
-                            }
+                            isCheckedGag = bean.getList().get(0).getStatus() != 0;
                         }
                     }
 
@@ -636,7 +630,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == UPDATA_GROUP_NAME) {
-                String title = data.getStringExtra("updata_Name").toString();
+                String title = data.getStringExtra("updata_Name");
                 updataGroupInfo(title, headPortrait, "", "");
                 groupName.setText(title);
                 Group groupInfo = new Group(groupId, title, Uri.parse(BuildConfig.OSS_SERVER + headPortrait));

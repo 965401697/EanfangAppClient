@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.view.ViewGroup;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
@@ -97,7 +96,7 @@ public class SplashActivity extends BaseClientActivity implements GuideUtil.OnCa
     //加载引导页
     void firstUse() {
         if (isFirst) {
-            new GuideUtil().init(this, (ViewGroup) findViewById(R.id.layout), drawables_client, this);
+            new GuideUtil().init(this, findViewById(R.id.layout), drawables_client, this);
             try {
                 PrefUtils.setBoolean(getApplicationContext(), PrefUtils.SHOWGUIDE, false);
             } catch (Exception e) {

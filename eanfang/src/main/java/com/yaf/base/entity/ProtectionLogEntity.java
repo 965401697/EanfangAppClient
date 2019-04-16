@@ -12,9 +12,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import lombok.Getter;
-import lombok.Setter;
-
 
 /**
  * 布放日志
@@ -24,8 +21,6 @@ import lombok.Setter;
  * @date 2018-05-22 16:46:20
  */
 @TableName(value = "oa_protection_log")
-@Getter
-@Setter
 public class ProtectionLogEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -398,5 +393,37 @@ public class ProtectionLogEntity implements Serializable {
         int result = 1;
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         return result;
+    }
+
+    public int getNewOrder() {
+        return this.newOrder;
+    }
+
+    public UserEntity getOwnerUser() {
+        return this.ownerUser;
+    }
+
+    public OrgEntity getOwnerCompany() {
+        return this.ownerCompany;
+    }
+
+    public OrgEntity getOwnerDepartment() {
+        return this.ownerDepartment;
+    }
+
+    public void setNewOrder(int newOrder) {
+        this.newOrder = newOrder;
+    }
+
+    public void setOwnerUser(UserEntity ownerUser) {
+        this.ownerUser = ownerUser;
+    }
+
+    public void setOwnerCompany(OrgEntity ownerCompany) {
+        this.ownerCompany = ownerCompany;
+    }
+
+    public void setOwnerDepartment(OrgEntity ownerDepartment) {
+        this.ownerDepartment = ownerDepartment;
     }
 }

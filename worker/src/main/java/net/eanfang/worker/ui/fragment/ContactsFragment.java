@@ -3,10 +3,10 @@ package net.eanfang.worker.ui.fragment;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.Nullable;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -123,7 +123,7 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
                     } else {
                         mDatas = Collections.EMPTY_LIST;
                     }
-                    ((android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setRefreshing(false);
+                    ((SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setRefreshing(false);
 
                     initAdapter();
                 }));
@@ -166,15 +166,15 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
     @Override
     protected void initView() {
 
-        ((android.support.v4.widget.NestedScrollView) view.findViewById(R.id.nested_view)).getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+        view.findViewById(R.id.nested_view).getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
             @Override
             public void onScrollChanged() {
-                ((android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setEnabled(((android.support.v4.widget.NestedScrollView) view.findViewById(R.id.nested_view)).getScrollY() == 0);
+                view.findViewById(R.id.swipre_fresh).setEnabled(view.findViewById(R.id.nested_view).getScrollY() == 0);
             }
         });
 
 
-        rl_create_team = (RelativeLayout) view.findViewById(R.id.rl_create_team);
+        rl_create_team = view.findViewById(R.id.rl_create_team);
 
         view.findViewById(R.id.ll_my_friends).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -210,10 +210,10 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
         });
 
 
-        ((android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setOnRefreshListener(this);
+        ((SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setOnRefreshListener(this);
 
 
-        rev_list = (RecyclerView) view.findViewById(R.id.rev_list);
+        rev_list = view.findViewById(R.id.rev_list);
 //        rev_list.setHasFixedSize(true);//应该reycylerview reqestlayout()计算
         rev_list.setNestedScrollingEnabled(false);
 
@@ -230,11 +230,7 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 OrgEntity bean = (OrgEntity) adapter.getData().get(position);
                 if (position == mOldPosition) {
-                    if (isFirstShow) {
-                        isFirstShow = false;
-                    } else {
-                        isFirstShow = true;
-                    }
+                    isFirstShow = !isFirstShow;
                 } else {
                     mOrgEntity.setFlag(false);
                     isFirstShow = true;

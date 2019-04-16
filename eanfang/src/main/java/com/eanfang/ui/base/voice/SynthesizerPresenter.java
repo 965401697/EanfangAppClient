@@ -2,7 +2,6 @@ package com.eanfang.ui.base.voice;
 
 import android.content.Context;
 import android.media.AudioManager;
-import android.util.Log;
 
 import com.camera.util.LogUtil;
 import com.eanfang.application.EanfangApplication;
@@ -11,7 +10,6 @@ import com.eanfang.util.StringUtils;
 import com.iflytek.cloud.ErrorCode;
 import com.iflytek.cloud.InitListener;
 import com.iflytek.cloud.SpeechConstant;
-import com.iflytek.cloud.SpeechError;
 import com.iflytek.cloud.SpeechSynthesizer;
 
 /**

@@ -1,9 +1,6 @@
 package net.eanfang.client.ui.activity.worksapce;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 
 import com.eanfang.util.GetConstDataUtils;
 import com.flyco.tablayout.SlidingTabLayout;
@@ -15,6 +12,9 @@ import net.eanfang.client.ui.fragment.DesignOrderListFragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

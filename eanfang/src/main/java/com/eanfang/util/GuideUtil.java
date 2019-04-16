@@ -9,12 +9,6 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +19,13 @@ import com.eanfang.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 
 /**
@@ -47,7 +48,7 @@ public class GuideUtil {
         mOnCallback = onCallback;
         View view = LayoutInflater.from(mContext).inflate(R.layout.j_view_pager, null);
         parent.addView(view);
-        mPager = (ViewPager) view.findViewById(R.id.pager);
+        mPager = view.findViewById(R.id.pager);
         mAdapter = new FragmentAdapter(((FragmentActivity) activity).getSupportFragmentManager());
         int index = 0;
         for (int i : guides) {

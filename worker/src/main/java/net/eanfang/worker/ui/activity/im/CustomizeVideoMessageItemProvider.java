@@ -61,8 +61,8 @@ public class CustomizeVideoMessageItemProvider extends IContainerItemProvider.Me
     public View newView(Context context, ViewGroup viewGroup) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_custom_vedio_message, null);
         ViewHolder holder = new ViewHolder();
-        holder.rlPlay = (RelativeLayout) view.findViewById(R.id.rl_play);
-        holder.ivVedio = (SimpleDraweeView) view.findViewById(R.id.iv_video);
+        holder.rlPlay = view.findViewById(R.id.rl_play);
+        holder.ivVedio = view.findViewById(R.id.iv_video);
 
         view.setTag(holder);
         return view;

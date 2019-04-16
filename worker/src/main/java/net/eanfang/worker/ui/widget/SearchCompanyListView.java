@@ -2,13 +2,10 @@ package net.eanfang.worker.ui.widget;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.http.EanfangCallback;
@@ -24,6 +21,8 @@ import net.eanfang.worker.ui.adapter.SearchCompanyAdapter;
 
 import java.util.List;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

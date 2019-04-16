@@ -34,7 +34,7 @@ public class SelectCompanyPop extends PopupWindow {
         this.mTimeList = list;
         View view = LayoutInflater.from(context).inflate(R.layout.layout_pop_select_company, null);
 
-        mLvCompany = (ListView) view.findViewById(R.id.lv_company);
+        mLvCompany = view.findViewById(R.id.lv_company);
         MyAdapter adapter = new MyAdapter(context, list);
         mLvCompany.setAdapter(adapter);
         mLvCompany.setOnItemClickListener(listener);
@@ -81,7 +81,7 @@ public class SelectCompanyPop extends PopupWindow {
                 view = LayoutInflater.from(context).inflate(R.layout.layout_data_select_item, viewGroup, false);
             }
             TextView tvName = ViewHolder.get(view, R.id.tv_typeName);
-            tvName.setText(list.get(i).toString());
+            tvName.setText(list.get(i));
             return view;
         }
     }

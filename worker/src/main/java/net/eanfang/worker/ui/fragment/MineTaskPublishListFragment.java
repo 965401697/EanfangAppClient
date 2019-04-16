@@ -97,7 +97,7 @@ public class MineTaskPublishListFragment extends TemplateItemListFragment {
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> {
 
             mCurrentPosition = position;
-            MineTaskListBean.ListBean bean = (MineTaskListBean.ListBean) mAdapter.getData().get(position);
+            MineTaskListBean.ListBean bean = mAdapter.getData().get(position);
             switch (view.getId()) {
                 case R.id.tv_do_first:
                     switch (bean.getStatus()) {

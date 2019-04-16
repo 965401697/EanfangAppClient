@@ -11,7 +11,6 @@ import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.StringUtils;
 import com.github.vipulasri.timelineview.TimelineView;
 
-
 import net.eanfang.client.R;
 
 import java.util.List;

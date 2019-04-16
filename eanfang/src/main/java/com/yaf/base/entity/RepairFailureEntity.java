@@ -11,9 +11,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import lombok.Getter;
-import lombok.Setter;
-
 
 /**
  * 报修单的真实故障信息
@@ -23,8 +20,6 @@ import lombok.Setter;
  * @date 2017-11-22 17:01:18
  */
 @TableName(value = "bus_repair_failure")
-@Getter
-@Setter
 public class RepairFailureEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -427,4 +422,123 @@ public class RepairFailureEntity implements Serializable {
     private OrgEntity assigneeOrgEntity;
 
 
+    public String getDeviceNo() {
+        return this.deviceNo;
+    }
+
+    public Long getOwnerUserId() {
+        return this.ownerUserId;
+    }
+
+    public Long getOwnerTopCompanyId() {
+        return this.ownerTopCompanyId;
+    }
+
+    public String getOwnerOrgCode() {
+        return this.ownerOrgCode;
+    }
+
+    public Long getAssigneeUserId() {
+        return this.assigneeUserId;
+    }
+
+    public Long getAssigneeTopCompanyId() {
+        return this.assigneeTopCompanyId;
+    }
+
+    public String getAssigneeOrgCode() {
+        return this.assigneeOrgCode;
+    }
+
+    public String getPlaceId() {
+        return this.placeId;
+    }
+
+    public String getMp4_path() {
+        return this.mp4_path;
+    }
+
+    public List<BughandleDetailEntity> getBughandleDetailEntityList() {
+        return this.bughandleDetailEntityList;
+    }
+
+    public RepairOrderEntity getRepairOrderEntity() {
+        return this.repairOrderEntity;
+    }
+
+    public UserEntity getOwnerUserEntity() {
+        return this.ownerUserEntity;
+    }
+
+    public OrgEntity getOwnerOrgEntity() {
+        return this.ownerOrgEntity;
+    }
+
+    public UserEntity getAssigneeUserEntity() {
+        return this.assigneeUserEntity;
+    }
+
+    public OrgEntity getAssigneeOrgEntity() {
+        return this.assigneeOrgEntity;
+    }
+
+    public void setDeviceNo(String deviceNo) {
+        this.deviceNo = deviceNo;
+    }
+
+    public void setOwnerUserId(Long ownerUserId) {
+        this.ownerUserId = ownerUserId;
+    }
+
+    public void setOwnerTopCompanyId(Long ownerTopCompanyId) {
+        this.ownerTopCompanyId = ownerTopCompanyId;
+    }
+
+    public void setOwnerOrgCode(String ownerOrgCode) {
+        this.ownerOrgCode = ownerOrgCode;
+    }
+
+    public void setAssigneeUserId(Long assigneeUserId) {
+        this.assigneeUserId = assigneeUserId;
+    }
+
+    public void setAssigneeTopCompanyId(Long assigneeTopCompanyId) {
+        this.assigneeTopCompanyId = assigneeTopCompanyId;
+    }
+
+    public void setAssigneeOrgCode(String assigneeOrgCode) {
+        this.assigneeOrgCode = assigneeOrgCode;
+    }
+
+    public void setPlaceId(String placeId) {
+        this.placeId = placeId;
+    }
+
+    public void setMp4_path(String mp4_path) {
+        this.mp4_path = mp4_path;
+    }
+
+    public void setBughandleDetailEntityList(List<BughandleDetailEntity> bughandleDetailEntityList) {
+        this.bughandleDetailEntityList = bughandleDetailEntityList;
+    }
+
+    public void setRepairOrderEntity(RepairOrderEntity repairOrderEntity) {
+        this.repairOrderEntity = repairOrderEntity;
+    }
+
+    public void setOwnerUserEntity(UserEntity ownerUserEntity) {
+        this.ownerUserEntity = ownerUserEntity;
+    }
+
+    public void setOwnerOrgEntity(OrgEntity ownerOrgEntity) {
+        this.ownerOrgEntity = ownerOrgEntity;
+    }
+
+    public void setAssigneeUserEntity(UserEntity assigneeUserEntity) {
+        this.assigneeUserEntity = assigneeUserEntity;
+    }
+
+    public void setAssigneeOrgEntity(OrgEntity assigneeOrgEntity) {
+        this.assigneeOrgEntity = assigneeOrgEntity;
+    }
 }

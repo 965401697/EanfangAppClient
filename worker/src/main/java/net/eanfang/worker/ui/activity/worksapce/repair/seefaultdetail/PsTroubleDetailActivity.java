@@ -2,9 +2,9 @@ package net.eanfang.worker.ui.activity.worksapce.repair.seefaultdetail;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
@@ -94,7 +94,7 @@ public class PsTroubleDetailActivity extends BaseWorkerActivity /*implements Vie
                     Intent intent = new Intent(PsTroubleDetailActivity.this, SelectIMContactActivity.class);
 
                     bundle.putString("id", String.valueOf(bughandleConfirmEntity.getBusRepairOrderId()));
-                    bundle.putString("orderNum", (String) bughandleConfirmEntity.getDetailEntityList().get(0).getFailureEntity().getDeviceName());
+                    bundle.putString("orderNum", bughandleConfirmEntity.getDetailEntityList().get(0).getFailureEntity().getDeviceName());
                     if (bughandleConfirmEntity.getDetailEntityList() != null && bughandleConfirmEntity.getDetailEntityList().size() > 0) {
                         bundle.putString("picUrl", bughandleConfirmEntity.getDetailEntityList().get(0).getFailureEntity().getPictures().split(",")[0]);
                     }
@@ -133,7 +133,7 @@ public class PsTroubleDetailActivity extends BaseWorkerActivity /*implements Vie
         initAdapter();
         if (bughandleConfirmEntity.getInvoicesPictures() != null) {
             String[] invoicesPic = bughandleConfirmEntity.getInvoicesPictures().split(",");
-            picList4.addAll(Stream.of(Arrays.asList(invoicesPic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
+            picList4.addAll(Stream.of(Arrays.asList(invoicesPic)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
         }
         initNinePhoto();
     }

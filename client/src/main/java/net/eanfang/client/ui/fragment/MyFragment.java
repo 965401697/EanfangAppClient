@@ -49,8 +49,8 @@ public class MyFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        tv_user_name = (TextView) findViewById(R.id.tv_user_name);
-        iv_header = (SimpleDraweeView) findViewById(R.id.iv_user_header);
+        tv_user_name = findViewById(R.id.tv_user_name);
+        iv_header = findViewById(R.id.iv_user_header);
         mIvPersonalQRCode = findViewById(R.id.iv_personalQRCode);
         findViewById(R.id.iv_user_header).setOnClickListener((v) -> {
             PersonInfoActivity.jumpToActivity(getActivity());

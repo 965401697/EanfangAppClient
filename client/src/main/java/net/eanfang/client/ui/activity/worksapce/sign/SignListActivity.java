@@ -2,9 +2,6 @@ package net.eanfang.client.ui.activity.worksapce.sign;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,10 +22,12 @@ import com.photopicker.com.util.BGASpaceItemDecoration;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.adapter.SignListAdapter;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -202,7 +201,7 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
         Bundle bundle = new Bundle();
         bundle.putString("id", signListAdapter.getData().get(mFirstPosition).getList().get(position).getId());
         bundle.putInt("status", signListAdapter.getData().get(mFirstPosition).getList().get(position).getStatus());
-        bundle.putSerializable("bean", (Serializable) signListAdapter.getData().get(mFirstPosition).getList().get(position));
+        bundle.putSerializable("bean", signListAdapter.getData().get(mFirstPosition).getList().get(position));
         JumpItent.jump(SignListActivity.this, SignListDetailActivity.class, bundle);
     }
 

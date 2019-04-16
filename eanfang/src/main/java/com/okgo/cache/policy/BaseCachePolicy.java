@@ -89,7 +89,7 @@ public abstract class BaseCachePolicy<T> implements CachePolicy<T> {
     }
 
     @Override
-    public synchronized Call prepareRawCall() throws Throwable {
+    public synchronized Call prepareRawCall() {
         if (executed) {
             throw HttpException.COMMON("Already executed!");
         }
@@ -151,7 +151,7 @@ public abstract class BaseCachePolicy<T> implements CachePolicy<T> {
             }
 
             @Override
-            public void onResponse(Call call, okhttp3.Response response) throws IOException {
+            public void onResponse(Call call, okhttp3.Response response) {
                 int responseCode = response.code();
 
                 //network error

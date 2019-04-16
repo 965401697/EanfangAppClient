@@ -46,14 +46,14 @@ public class MorePopWindow extends PopupWindow {
         this.setAnimationStyle(R.style.AnimationPreview);
 
 
-        RelativeLayout re_addfriends = (RelativeLayout) content.findViewById(R.id.re_addfriends);
-        RelativeLayout re_chatroom = (RelativeLayout) content.findViewById(R.id.re_chatroom);
+        RelativeLayout re_addfriends = content.findViewById(R.id.re_addfriends);
+        RelativeLayout re_chatroom = content.findViewById(R.id.re_chatroom);
         if (isVisable) {
             re_addfriends.setVisibility(View.GONE);
             re_chatroom.setVisibility(View.GONE);
         }
-        RelativeLayout re_scanner = (RelativeLayout) content.findViewById(R.id.re_scanner);
-        RelativeLayout re_group = (RelativeLayout) content.findViewById(R.id.re_group);
+        RelativeLayout re_scanner = content.findViewById(R.id.re_scanner);
+        RelativeLayout re_group = content.findViewById(R.id.re_group);
         re_addfriends.setOnClickListener(new View.OnClickListener() {
 
             @Override

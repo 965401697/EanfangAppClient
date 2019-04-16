@@ -1,7 +1,6 @@
 package com.picker.wheelpicker.picker;
 
 import android.app.Activity;
-import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
@@ -16,6 +15,8 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import androidx.annotation.NonNull;
 
 
 /**

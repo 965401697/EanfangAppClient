@@ -1,13 +1,14 @@
 package com.picker.wheelpicker.picker;
 
 import android.app.Activity;
-import android.support.annotation.NonNull;
 
 import com.picker.wheelpicker.entity.CarNumberCity;
 import com.picker.wheelpicker.entity.CarNumberProvince;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.annotation.NonNull;
 
 
 /**

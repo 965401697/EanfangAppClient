@@ -10,9 +10,6 @@ import com.yaf.sys.entity.OrgEntity;
 import java.io.Serializable;
 import java.util.List;
 
-import lombok.Getter;
-import lombok.Setter;
-
 
 /**
  * user扩展信息表，描述worker
@@ -22,8 +19,6 @@ import lombok.Setter;
  * @date 2017-11-30 20:02:44
  */
 @TableName(value = "tech_worker")
-@Getter
-@Setter
 public class WorkerEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -353,5 +348,164 @@ public class WorkerEntity implements Serializable {
     private OrgEntity departmentEntity;
 
 
+    public Integer getVerifyStatus() {
+        return this.verifyStatus;
+    }
+
+    public String getLon() {
+        return this.lon;
+    }
+
+    public String getLat() {
+        return this.lat;
+    }
+
+    public String getPlaceCode() {
+        return this.placeCode;
+    }
+
+    public Integer getI() {
+        return this.i;
+    }
+
+    public List<QualificationCertificateEntity> getQualificationList() {
+        return this.qualificationList;
+    }
+
+    public Integer getQualification() {
+        return this.qualification;
+    }
+
+    public Integer getTrainStatus() {
+        return this.trainStatus;
+    }
+
+    public Integer getDesignNum() {
+        return this.designNum;
+    }
+
+    public Integer getInstallNum() {
+        return this.installNum;
+    }
+
+    public Integer getEvaluateNum() {
+        return this.evaluateNum;
+    }
+
+    public Long getCompanyUserId() {
+        return this.companyUserId;
+    }
+
+    public AccountEntity getAccountEntity() {
+        return this.accountEntity;
+    }
+
+    public WorkerVerifyEntity getVerifyEntity() {
+        return this.verifyEntity;
+    }
+
+    public List<Integer> getBusinessList() {
+        return this.businessList;
+    }
+
+    public List<Integer> getServiceList() {
+        return this.serviceList;
+    }
+
+    public List<Integer> getRegionList() {
+        return this.regionList;
+    }
+
+    public OrgEntity getCompanyEntity() {
+        return this.companyEntity;
+    }
+
+    public Long getCollectId() {
+        return this.collectId;
+    }
+
+    public OrgEntity getDepartmentEntity() {
+        return this.departmentEntity;
+    }
+
+    public void setVerifyStatus(Integer verifyStatus) {
+        this.verifyStatus = verifyStatus;
+    }
+
+    public void setLon(String lon) {
+        this.lon = lon;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public void setPlaceCode(String placeCode) {
+        this.placeCode = placeCode;
+    }
+
+    public void setI(Integer i) {
+        this.i = i;
+    }
+
+    public void setQualificationList(List<QualificationCertificateEntity> qualificationList) {
+        this.qualificationList = qualificationList;
+    }
+
+    public void setQualification(Integer qualification) {
+        this.qualification = qualification;
+    }
+
+    public void setTrainStatus(Integer trainStatus) {
+        this.trainStatus = trainStatus;
+    }
+
+    public void setDesignNum(Integer designNum) {
+        this.designNum = designNum;
+    }
+
+    public void setInstallNum(Integer installNum) {
+        this.installNum = installNum;
+    }
+
+    public void setEvaluateNum(Integer evaluateNum) {
+        this.evaluateNum = evaluateNum;
+    }
+
+    public void setCompanyUserId(Long companyUserId) {
+        this.companyUserId = companyUserId;
+    }
+
+    public void setAccountEntity(AccountEntity accountEntity) {
+        this.accountEntity = accountEntity;
+    }
+
+    public void setVerifyEntity(WorkerVerifyEntity verifyEntity) {
+        this.verifyEntity = verifyEntity;
+    }
+
+    public void setBusinessList(List<Integer> businessList) {
+        this.businessList = businessList;
+    }
+
+    public void setServiceList(List<Integer> serviceList) {
+        this.serviceList = serviceList;
+    }
+
+    public void setRegionList(List<Integer> regionList) {
+        this.regionList = regionList;
+    }
+
+    public void setCompanyEntity(OrgEntity companyEntity) {
+        this.companyEntity = companyEntity;
+    }
+
+    public void setCollectId(Long collectId) {
+        this.collectId = collectId;
+    }
+
+    public void setDepartmentEntity(OrgEntity departmentEntity) {
+        this.departmentEntity = departmentEntity;
+    }
 }
 

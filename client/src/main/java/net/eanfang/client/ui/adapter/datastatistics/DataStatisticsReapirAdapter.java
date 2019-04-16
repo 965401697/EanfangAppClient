@@ -1,9 +1,6 @@
 package net.eanfang.client.ui.adapter.datastatistics;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +10,10 @@ import com.eanfang.model.datastatistics.DataStatisticsBean;
 import com.eanfang.util.GetConstDataUtils;
 
 import net.eanfang.client.R;
+
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 /**

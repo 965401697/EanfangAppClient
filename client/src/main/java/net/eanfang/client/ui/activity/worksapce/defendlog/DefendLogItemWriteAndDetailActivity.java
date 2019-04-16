@@ -76,11 +76,11 @@ public class DefendLogItemWriteAndDetailActivity extends BaseClientActivity impl
             etDefendNext.setText(dataBean.getAlarmNum() + "");
 
             if (mPosition == 1) {
-                tvDefendReason.setText(GetConstDataUtils.getThroughCause().get(dataBean.getAlarmReason()).toString());
+                tvDefendReason.setText(GetConstDataUtils.getThroughCause().get(dataBean.getAlarmReason()));
             } else if (mPosition == 2) {
-                tvDefendReason.setText(GetConstDataUtils.getFlaseCause().get(dataBean.getAlarmReason()).toString());
+                tvDefendReason.setText(GetConstDataUtils.getFlaseCause().get(dataBean.getAlarmReason()));
             } else {
-                tvDefendReason.setText(GetConstDataUtils.getBypassCause().get(dataBean.getAlarmReason()).toString());
+                tvDefendReason.setText(GetConstDataUtils.getBypassCause().get(dataBean.getAlarmReason()));
             }
             evDefendDesc.setText(dataBean.getNoteInfo());
             llComit.setVisibility(View.GONE);
@@ -122,8 +122,8 @@ public class DefendLogItemWriteAndDetailActivity extends BaseClientActivity impl
 
 
                 LogDetailsEntity bean = new LogDetailsEntity();
-                bean.setNoteInfo(evDefendDesc.getText().toString().toString());
-                bean.setPlayLocaltion(etDefendPosition.getText().toString().toString());
+                bean.setNoteInfo(evDefendDesc.getText().toString());
+                bean.setPlayLocaltion(etDefendPosition.getText().toString());
 
                 if (mPosition == 1) {
                     bean.setAlarmReason(GetConstDataUtils.getThroughCause().indexOf(tvDefendReason.getText().toString().trim()));
@@ -136,7 +136,7 @@ public class DefendLogItemWriteAndDetailActivity extends BaseClientActivity impl
                 bean.setSlipNum(etDefendCode.getText().toString().trim());
                 bean.setCreateUserId(EanfangApplication.getApplication().getUserId());
                 bean.setLogType(mPosition);
-                bean.setAlarmNum(Integer.parseInt(etDefendNext.getText().toString().toString()));
+                bean.setAlarmNum(Integer.parseInt(etDefendNext.getText().toString()));
                 Intent intent = new Intent();
                 intent.putExtra("bean", bean);
                 setResult(RESULT_OK, intent);

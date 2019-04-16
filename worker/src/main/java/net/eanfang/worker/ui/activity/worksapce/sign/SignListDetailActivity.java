@@ -126,7 +126,7 @@ public class SignListDetailActivity extends BaseActivity {
 
         if (StringUtils.isValid(listBean.getPictures())) {
             String[] friontPic = listBean.getPictures().split(",");
-            imageList.addAll(Stream.of(Arrays.asList(friontPic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
+            imageList.addAll(Stream.of(Arrays.asList(friontPic)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
         }
         snplMomentPhotos.setDelegate(new BGASortableDelegate(this));
         snplMomentPhotos.setData(imageList);

@@ -171,10 +171,7 @@ public class AuthWorkerBizActivity extends BaseActivity {
             @Override
             public boolean setSelected(int position, BaseDataEntity baseDataEntity) {
                 Long coutn = Stream.of(byNetGrant.getList()).filter(bean -> bean.getDataId().equals(baseDataEntity.getDataId())).count();
-                if (coutn > 0) {
-                    return true;
-                }
-                return false;
+                return coutn > 0;
             }
         });
         tagWorkType.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {

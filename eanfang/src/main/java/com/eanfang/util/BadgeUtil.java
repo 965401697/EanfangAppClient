@@ -11,10 +11,11 @@ import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.NotificationCompat;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+
+import androidx.core.app.NotificationCompat;
 
 public class BadgeUtil {
     private BadgeUtil() throws InstantiationException {

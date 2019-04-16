@@ -95,8 +95,8 @@ public class GroupsDetailAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.item_group, null);
             holder = new ViewHolder();
 
-            holder.iv_icon = (SimpleDraweeView) convertView.findViewById(R.id.iv_icon);
-            holder.tv_name = (TextView) convertView.findViewById(R.id.tv_name);
+            holder.iv_icon = convertView.findViewById(R.id.iv_icon);
+            holder.tv_name = convertView.findViewById(R.id.tv_name);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();

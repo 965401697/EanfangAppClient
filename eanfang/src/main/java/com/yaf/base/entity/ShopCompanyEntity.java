@@ -16,9 +16,6 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-import lombok.Getter;
-import lombok.Setter;
-
 
 /**
  * 安防公司资料及认证信息
@@ -28,8 +25,6 @@ import lombok.Setter;
  * @date 2017-12-22 14:22:20
  */
 @TableName(value = "shop_company")
-@Getter
-@Setter
 public class ShopCompanyEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -461,4 +456,107 @@ public class ShopCompanyEntity implements Serializable {
     @TableField(exist = false)
     private BigDecimal goodReputation;
 
+    public Integer getDesignCount() {
+        return this.designCount;
+    }
+
+    public Integer getMaintainCount() {
+        return this.maintainCount;
+    }
+
+    public Integer getGoodNum() {
+        return this.goodNum;
+    }
+
+    public Integer getEvaluateNum() {
+        return this.evaluateNum;
+    }
+
+    public Integer getGeneralEvaluation() {
+        return this.generalEvaluation;
+    }
+
+    public Integer getShowWww() {
+        return this.showWww;
+    }
+
+    public int getWorking_level() {
+        return this.working_level;
+    }
+
+    public int getWorking_year() {
+        return this.working_year;
+    }
+
+    public int getIs_manufacturer() {
+        return this.is_manufacturer;
+    }
+
+    public UserEntity getAdminUserEntity() {
+        return this.adminUserEntity;
+    }
+
+    public CooperationEntity getCooperationEntity() {
+        return this.cooperationEntity;
+    }
+
+    public List<BaseDataEntity> getBaseDataEntityList() {
+        return this.baseDataEntityList;
+    }
+
+    public BigDecimal getGoodReputation() {
+        return this.goodReputation;
+    }
+
+    public void setDesignCount(Integer designCount) {
+        this.designCount = designCount;
+    }
+
+    public void setMaintainCount(Integer maintainCount) {
+        this.maintainCount = maintainCount;
+    }
+
+    public void setGoodNum(Integer goodNum) {
+        this.goodNum = goodNum;
+    }
+
+    public void setEvaluateNum(Integer evaluateNum) {
+        this.evaluateNum = evaluateNum;
+    }
+
+    public void setGeneralEvaluation(Integer generalEvaluation) {
+        this.generalEvaluation = generalEvaluation;
+    }
+
+    public void setShowWww(Integer showWww) {
+        this.showWww = showWww;
+    }
+
+    public void setWorking_level(int working_level) {
+        this.working_level = working_level;
+    }
+
+    public void setWorking_year(int working_year) {
+        this.working_year = working_year;
+    }
+
+    public void setIs_manufacturer(int is_manufacturer) {
+        this.is_manufacturer = is_manufacturer;
+    }
+
+    public void setAdminUserEntity(UserEntity adminUserEntity) {
+        this.adminUserEntity = adminUserEntity;
+    }
+
+    public void setCooperationEntity(CooperationEntity cooperationEntity) {
+        this.cooperationEntity = cooperationEntity;
+    }
+
+    public void setBaseDataEntityList(List<BaseDataEntity> baseDataEntityList) {
+        this.baseDataEntityList = baseDataEntityList;
+    }
+
+    public void setGoodReputation(BigDecimal goodReputation) {
+        this.goodReputation = goodReputation;
+    }
 }

@@ -49,16 +49,16 @@ public class HomeScanPopWindow extends PopupWindow {
         this.setAnimationStyle(R.style.AnimationPreview);
 
         //登录
-        RelativeLayout rl_scan_login = (RelativeLayout) content.findViewById(R.id.rl_scan_login);
+        RelativeLayout rl_scan_login = content.findViewById(R.id.rl_scan_login);
         ImageView iv_login = content.findViewById(R.id.iv_login);
         //加好友
-        RelativeLayout rl_scan_addfriend = (RelativeLayout) content.findViewById(R.id.rl_scan_addfriend);
+        RelativeLayout rl_scan_addfriend = content.findViewById(R.id.rl_scan_addfriend);
         ImageView iv_addfriend = content.findViewById(R.id.iv_addfriend);
         //扫设备
-        RelativeLayout rl_scan_device = (RelativeLayout) content.findViewById(R.id.rl_scan_device);
+        RelativeLayout rl_scan_device = content.findViewById(R.id.rl_scan_device);
         ImageView iv_device = content.findViewById(R.id.iv_device);
         //扫报修
-        RelativeLayout rl_scan_repair = (RelativeLayout) content.findViewById(R.id.rl_scan_reapir);
+        RelativeLayout rl_scan_repair = content.findViewById(R.id.rl_scan_reapir);
 
         // 技师端
         if (isVisable) {

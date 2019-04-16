@@ -29,6 +29,7 @@ import com.eanfang.ui.base.BaseActivity;
 import com.tencent.smtt.sdk.TbsReaderView;
 
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 
 import butterknife.BindView;
@@ -116,7 +117,7 @@ public class FileDisplayActivity extends BaseActivity implements TbsReaderView.R
             } else {
                 byte[] b;
                 try {
-                    b = String.valueOf(c).getBytes("utf-8");
+                    b = String.valueOf(c).getBytes(StandardCharsets.UTF_8);
                 } catch (Exception ex) {
                     System.out.println(ex);
                     b = new byte[0];
@@ -191,7 +192,7 @@ public class FileDisplayActivity extends BaseActivity implements TbsReaderView.R
             return type;
         }
         /* 获取文件的后缀名 */
-        String end = fName.substring(dotIndex, fName.length()).toLowerCase();
+        String end = fName.substring(dotIndex).toLowerCase();
         if (end == "") {
             return type;
         }

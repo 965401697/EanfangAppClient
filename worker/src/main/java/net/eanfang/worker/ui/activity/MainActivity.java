@@ -5,7 +5,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTabHost;
+import androidx.fragment.app.FragmentTabHost;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -219,7 +219,7 @@ public class MainActivity extends BaseActivity{
 
 
     private void initFragment() {
-        mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
+        mTabHost = findViewById(android.R.id.tabhost);
         mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
         mTabHost.getTabWidget().setDividerDrawable(R.color.transparent);
         View indicator = getLayoutInflater().inflate(R.layout.indicator_main_home, null);
@@ -632,10 +632,10 @@ public class MainActivity extends BaseActivity{
     private void customDialog(String t, String c, Object extInfo, long id) {
         final Dialog dialog = new Dialog(this, R.style.NormalDialogStyle);
         View view = View.inflate(this, R.layout.dialog_normal, null);
-        TextView cancel = (TextView) view.findViewById(R.id.cancel);
-        TextView confirm = (TextView) view.findViewById(R.id.confirm);
-        TextView content = (TextView) view.findViewById(R.id.content);
-        TextView title = (TextView) view.findViewById(R.id.title);
+        TextView cancel = view.findViewById(R.id.cancel);
+        TextView confirm = view.findViewById(R.id.confirm);
+        TextView content = view.findViewById(R.id.content);
+        TextView title = view.findViewById(R.id.title);
 
         title.setText(t);
         if (extInfo != null) {

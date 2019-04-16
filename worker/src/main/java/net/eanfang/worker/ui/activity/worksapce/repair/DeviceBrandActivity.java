@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -82,7 +82,7 @@ public class DeviceBrandActivity extends BaseActivity {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent();
-                intent.putExtra("deviceBrandName", deviceBrandAdapter.getData().get(position).toString());
+                intent.putExtra("deviceBrandName", deviceBrandAdapter.getData().get(position));
                 setResult(RESULT_ADDRESS_CALLBACK_CODE, intent);
                 finishSelf();
             }

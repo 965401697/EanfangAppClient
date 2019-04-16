@@ -2,7 +2,6 @@ package net.eanfang.client.ui.activity.worksapce.contacts;
 
 import android.content.Intent;
 import android.os.Bundle;
-
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
@@ -12,13 +11,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.config.Config;
-
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.FriendListBean;
 import com.eanfang.model.OrganizationBean;
 import com.eanfang.model.SectionBean;
-
 import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.util.ToastUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -29,7 +26,6 @@ import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
 import org.greenrobot.eventbus.Subscribe;
-
 
 import java.util.ArrayList;
 

@@ -2,14 +2,13 @@ package net.eanfang.worker.ui.activity.worksapce.repair;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -25,8 +24,6 @@ import com.eanfang.util.ToastUtil;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.online.ExpertListActivity;
-import net.eanfang.worker.ui.activity.worksapce.online.ExpertOnlineActivity;
-import net.eanfang.worker.ui.activity.worksapce.online.FindExpertActivity;
 import net.eanfang.worker.ui.adapter.repair.FaultLibraryAdapter;
 
 import java.util.ArrayList;

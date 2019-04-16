@@ -12,9 +12,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import lombok.Getter;
-import lombok.Setter;
-
 
 /**
  * 客户设备表
@@ -23,8 +20,6 @@ import lombok.Setter;
  * @email jornlin@foxmail.com
  * @date 2018-06-04 16:20:38
  */
-@Getter
-@Setter
 @TableName(value = "cust_device")
 public class CustDeviceEntity implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -775,4 +770,20 @@ public class CustDeviceEntity implements Serializable {
     public UserEntity chargeUserEntity;
     @TableField(exist = false)
     public OrgEntity chargeOrgEntity;
+
+    public UserEntity getChargeUserEntity() {
+        return this.chargeUserEntity;
+    }
+
+    public OrgEntity getChargeOrgEntity() {
+        return this.chargeOrgEntity;
+    }
+
+    public void setChargeUserEntity(UserEntity chargeUserEntity) {
+        this.chargeUserEntity = chargeUserEntity;
+    }
+
+    public void setChargeOrgEntity(OrgEntity chargeOrgEntity) {
+        this.chargeOrgEntity = chargeOrgEntity;
+    }
 }

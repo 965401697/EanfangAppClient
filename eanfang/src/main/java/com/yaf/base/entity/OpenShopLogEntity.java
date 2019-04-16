@@ -11,9 +11,6 @@ import com.yaf.sys.entity.UserEntity;
 import java.io.Serializable;
 import java.util.Date;
 
-import lombok.Getter;
-import lombok.Setter;
-
 
 /**
  * @author jornlin
@@ -21,8 +18,6 @@ import lombok.Setter;
  * @date 2018-05-22 16:37:44
  */
 @TableName(value = "oa_open_shop_log")
-@Getter
-@Setter
 public class OpenShopLogEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -417,5 +412,37 @@ public class OpenShopLogEntity implements Serializable {
         int result = 1;
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         return result;
+    }
+
+    public UserEntity getOwnerUser() {
+        return this.ownerUser;
+    }
+
+    public OrgEntity getOwnerCompany() {
+        return this.ownerCompany;
+    }
+
+    public OrgEntity getOwnerDepartment() {
+        return this.ownerDepartment;
+    }
+
+    public int getNewOrder() {
+        return this.newOrder;
+    }
+
+    public void setOwnerUser(UserEntity ownerUser) {
+        this.ownerUser = ownerUser;
+    }
+
+    public void setOwnerCompany(OrgEntity ownerCompany) {
+        this.ownerCompany = ownerCompany;
+    }
+
+    public void setOwnerDepartment(OrgEntity ownerDepartment) {
+        this.ownerDepartment = ownerDepartment;
+    }
+
+    public void setNewOrder(int newOrder) {
+        this.newOrder = newOrder;
     }
 }

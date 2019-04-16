@@ -2,7 +2,7 @@ package net.eanfang.worker.ui.activity.worksapce.online;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -10,24 +10,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.apiservice.RepairApi;
-import com.eanfang.application.EanfangApplication;
-import com.eanfang.config.Config;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
-import com.eanfang.util.JsonUtils;
 import com.eanfang.util.PhotoUtils;
-import com.eanfang.util.QueryEntry;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
-import com.yaf.base.entity.CooperationEntity;
-import com.yaf.base.entity.RepairFailureEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;

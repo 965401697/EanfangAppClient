@@ -36,8 +36,8 @@ public class DialogUtil {
 
     public static Dialog createTipDialog(final Context context, String title, String msgContent, View.OnClickListener listener) {
         View view = LayoutInflater.from(context).inflate(R.layout.tip_dialog, null);
-        TextView tvMsg = (TextView) view.findViewById(R.id.tv_msg_title);
-        TextView tvMsgContent = (TextView) view.findViewById(R.id.tv_msg_content);
+        TextView tvMsg = view.findViewById(R.id.tv_msg_title);
+        TextView tvMsgContent = view.findViewById(R.id.tv_msg_content);
         tvMsg.setText(title);
         tvMsgContent.setText(msgContent);
         final Dialog dialog = new Dialog(context, R.style.my_tip_dialog);
@@ -56,8 +56,8 @@ public class DialogUtil {
 
     public static Dialog createAuthDialog(final Context context, String title, String msgContent) {
         View view = LayoutInflater.from(context).inflate(R.layout.tip_auth_dialog, null);
-        TextView tvMsg = (TextView) view.findViewById(R.id.tv_msg_title);
-        TextView tvMsgContent = (TextView) view.findViewById(R.id.tv_msg_content);
+        TextView tvMsg = view.findViewById(R.id.tv_msg_title);
+        TextView tvMsgContent = view.findViewById(R.id.tv_msg_content);
         tvMsg.setText(title);
         tvMsgContent.setText(msgContent);
         final Dialog dialog = new Dialog(context, R.style.my_tip_dialog);

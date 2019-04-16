@@ -56,7 +56,7 @@ public class SelectWorkerAdapter extends BaseQuickAdapter<WorkerEntity, BaseView
             java.text.NumberFormat percentFormat = java.text.NumberFormat.getPercentInstance();
 
             //自动转换成百分比显示..
-            helper.setText(R.id.tv_haopinglv, (SplitAndRound((Double) (item.getGoodRate() * 0.01), 2) + "%"));
+            helper.setText(R.id.tv_haopinglv, (SplitAndRound((item.getGoodRate() * 0.01), 2) + "%"));
         }
 
         // 认证

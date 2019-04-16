@@ -1,9 +1,9 @@
 package net.eanfang.worker.ui.activity.worksapce;
 
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -61,16 +61,16 @@ public class MaintenanceHistoryDetailActivity extends BaseActivity {
 
 
     private void initView() {
-        tv_maintenance_circle = (TextView) findViewById(R.id.tv_maintenance_circle);
-        ll_maintenance_circle = (LinearLayout) findViewById(R.id.ll_maintenance_circle);
-        rcv_detail = (RecyclerView) findViewById(R.id.rcv_detail);
-        et_contract = (EditText) findViewById(R.id.et_contract);
+        tv_maintenance_circle = findViewById(R.id.tv_maintenance_circle);
+        ll_maintenance_circle = findViewById(R.id.ll_maintenance_circle);
+        rcv_detail = findViewById(R.id.rcv_detail);
+        et_contract = findViewById(R.id.et_contract);
         et_contract.setFocusable(false);
-        et_contract_phone = (EditText) findViewById(R.id.et_contract_phone);
+        et_contract_phone = findViewById(R.id.et_contract_phone);
         et_contract_phone.setFocusable(false);
-        et_client_company_name = (EditText) findViewById(R.id.et_client_company_name);
+        et_client_company_name = findViewById(R.id.et_client_company_name);
         et_client_company_name.setFocusable(false);
-        tv_commit = (TextView) findViewById(R.id.tv_commit);
+        tv_commit = findViewById(R.id.tv_commit);
         tv_commit.setVisibility(View.GONE);
         ivLeft.setOnClickListener((v) -> finishSelf());
 

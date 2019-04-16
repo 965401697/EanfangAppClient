@@ -2,8 +2,6 @@ package net.eanfang.client.ui.activity.worksapce.contacts;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -36,6 +34,8 @@ import org.greenrobot.eventbus.Subscribe;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -143,7 +143,7 @@ public class PermissionManagerActivity extends BaseClientActivity {
 
 
         if (presonList.size() > 0) {
-            mBean = (TemplateBean.Preson) presonList.get(0);
+            mBean = presonList.get(0);
             departmentId = mBean.getDepartmentId();
             llSelectStaff.setVisibility(View.GONE);
             rlCheckedStaff.setVisibility(View.VISIBLE);

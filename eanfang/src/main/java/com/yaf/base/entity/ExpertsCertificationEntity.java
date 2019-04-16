@@ -11,9 +11,6 @@ import com.yaf.sys.entity.UserEntity;
 import java.io.Serializable;
 import java.util.Date;
 
-import lombok.Getter;
-import lombok.Setter;
-
 
 
 /**
@@ -565,28 +562,18 @@ public class ExpertsCertificationEntity implements Serializable {
         return result;
     }
 
-    @Getter
-    @Setter
     @TableField(exist = false)
     private AccountEntity accountEntity;
 
-    @Getter
-    @Setter
     @TableField(exist = false)
     private UserEntity userEntity;
 
-    @Getter
-    @Setter
     @TableField(exist = false)
     private BaseData2userEntity baseData2userEntity;
 
-    @Getter
-    @Setter
     @TableField(exist = false)
     private BaseDataEntity baseDataEntity;
 
-    @Getter
-    @Setter
     @TableField(exist = false)
     private Long questionId;
 
@@ -598,12 +585,58 @@ public class ExpertsCertificationEntity implements Serializable {
      * @param
      * @return
      **/
-    @Getter
-    @Setter
     private String brandName;
 
 
     public void setGender(int gender) {
         this.gender = gender;
+    }
+
+    public AccountEntity getAccountEntity() {
+        return this.accountEntity;
+    }
+
+    public UserEntity getUserEntity() {
+        return this.userEntity;
+    }
+
+    public BaseData2userEntity getBaseData2userEntity() {
+        return this.baseData2userEntity;
+    }
+
+    public BaseDataEntity getBaseDataEntity() {
+        return this.baseDataEntity;
+    }
+
+    public Long getQuestionId() {
+        return this.questionId;
+    }
+
+    public String getBrandName() {
+        return this.brandName;
+    }
+
+    public void setAccountEntity(AccountEntity accountEntity) {
+        this.accountEntity = accountEntity;
+    }
+
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
+    }
+
+    public void setBaseData2userEntity(BaseData2userEntity baseData2userEntity) {
+        this.baseData2userEntity = baseData2userEntity;
+    }
+
+    public void setBaseDataEntity(BaseDataEntity baseDataEntity) {
+        this.baseDataEntity = baseDataEntity;
+    }
+
+    public void setQuestionId(Long questionId) {
+        this.questionId = questionId;
+    }
+
+    public void setBrandName(String brandName) {
+        this.brandName = brandName;
     }
 }

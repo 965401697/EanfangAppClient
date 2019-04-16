@@ -30,9 +30,9 @@ public class WorkSpaceSelectMapPopWindow extends PopupWindow {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.layout_pop_select_map, null);
-        Button btnGaoDe = (Button) view.findViewById(R.id.btn_gaodeMap);
-        Button btnBaiDu = (Button) view.findViewById(R.id.btn_baiduMap);
-        Button btnCancel = (Button) view.findViewById(R.id.btn_cancel);
+        Button btnGaoDe = view.findViewById(R.id.btn_gaodeMap);
+        Button btnBaiDu = view.findViewById(R.id.btn_baiduMap);
+        Button btnCancel = view.findViewById(R.id.btn_cancel);
 
         btnGaoDe.setOnClickListener(itemsOnClick);
         btnBaiDu.setOnClickListener(itemsOnClick);

@@ -25,8 +25,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicReference;
 
-import lombok.Getter;
-
 
 /**
  * Created by oss on 2015/12/7 0007.
@@ -45,7 +43,6 @@ public class OssService {
 
     private List<OSSAsyncTask<PutObjectResult>> uploadThreads = new ArrayList<>();
 
-    @Getter
     private static AtomicReference<OSSCallBack> ossCallBack = new AtomicReference<>();
 
     private Timer timer;
@@ -56,6 +53,10 @@ public class OssService {
         this.oss = oss;
         this.bucket = bucket;
         this.activity = activity;
+    }
+
+    public static AtomicReference<OSSCallBack> getOssCallBack() {
+        return OssService.ossCallBack;
     }
 
     /**
@@ -110,7 +111,7 @@ public class OssService {
         //如果为空  则跳过
         if (put == null) {
             resultJson.put("code", UPLOAD_SUCCESS);
-            int curr = this.getOssCallBack().get().getCurrent() + 1;
+            int curr = getOssCallBack().get().getCurrent() + 1;
             getOssCallBack().get().setCurrent(curr);
             EventBus.getDefault().post(resultJson);
             return;
@@ -154,7 +155,7 @@ public class OssService {
             //如果为空  则跳过
             if (put == null) {
                 resultJson.put("code", UPLOAD_SUCCESS);
-                int curr = this.getOssCallBack().get().getCurrent() + 1;
+                int curr = getOssCallBack().get().getCurrent() + 1;
                 getOssCallBack().get().setCurrent(curr);
                 EventBus.getDefault().post(resultJson);
                 return;
@@ -207,8 +208,8 @@ public class OssService {
         }
         //清空线程
         uploadThreads.clear();
-        this.getOssCallBack().get().setTotal(1);
-        this.getOssCallBack().set(ossCallBack);
+        getOssCallBack().get().setTotal(1);
+        getOssCallBack().set(ossCallBack);
         putVideo(objectKey, videoPath);
         //开始执行检测线程
         asyncCheck();
@@ -223,8 +224,8 @@ public class OssService {
         }
         //清空线程
         uploadThreads.clear();
-        this.getOssCallBack().get().setTotal(1);
-        this.getOssCallBack().set(ossCallBack);
+        getOssCallBack().get().setTotal(1);
+        getOssCallBack().set(ossCallBack);
         putImage(objectKey, urlPath);
         //开始执行检测线程
         asyncCheck();
@@ -236,8 +237,8 @@ public class OssService {
      */
     public void asyncPutImages(final Map<String, String> objectMap, final OSSCallBack callBack) {
         //初始化 总数
-        this.getOssCallBack().get().setTotal(objectMap.keySet().size());
-        this.getOssCallBack().set(callBack);
+        getOssCallBack().get().setTotal(objectMap.keySet().size());
+        getOssCallBack().set(callBack);
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
@@ -247,7 +248,7 @@ public class OssService {
         //如果没有了 则成功
         if (objectMap == null || objectMap.size() <= 0 || objectMap.keySet().size() <= 0) {
             activity.runOnUiThread(() -> {
-                this.getOssCallBack().get().onSuccess(null, null);
+                getOssCallBack().get().onSuccess(null, null);
                 //取消任务
                 cancelTask();
                 EventBus.getDefault().unregister(this);
@@ -275,15 +276,15 @@ public class OssService {
             //code 为 -1 代表失败
             if (code.equals(UPLOAD_FAILED)) {
                 activity.runOnUiThread(() -> {
-                    this.getOssCallBack().get().onFailure(null, null, null);
+                    getOssCallBack().get().onFailure(null, null, null);
                 });
                 //取消任务
                 cancelTask();
                 EventBus.getDefault().unregister(this);
                 return;
             }
-            int mTotal = this.getOssCallBack().get().getTotal();
-            int mCurrent = this.getOssCallBack().get().getCurrent();
+            int mTotal = getOssCallBack().get().getTotal();
+            int mCurrent = getOssCallBack().get().getCurrent();
             //如果当前上传的图片 >= 总数 则代表成功  直接解绑。
             Log.e("ossService", "onEvent: total:" + mTotal + "  curr:" + mCurrent);
             if (mCurrent >= mTotal) {

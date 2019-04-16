@@ -3,8 +3,8 @@ package net.eanfang.worker.ui.activity.worksapce.online;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -25,7 +25,6 @@ import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
-import net.eanfang.worker.util.ImagePerviewUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -162,7 +161,7 @@ public class ExpertAnswerActivity extends BaseWorkerActivity {
                         }
                         if (!StringUtils.isEmpty(bean.getAnswerInfo().getAnswerPics())) {
                             String[] pics = bean.getAnswerInfo().getAnswerPics().split(",");
-                            picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
+                            picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
                             snplPic.setDelegate(new BGASortableDelegate(ExpertAnswerActivity.this, REQUEST_CODE_CHOOSE_PHOTO, REQUEST_CODE_CHOOSE_PHOTO_two));
                             //            snplPic.init(this);
                             snplPic.setData(picList);

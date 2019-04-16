@@ -5,8 +5,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TimePicker;
@@ -17,11 +15,12 @@ import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
-import org.threeten.bp.LocalDate;
-import org.threeten.bp.format.DateTimeFormatter;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
+import cn.hutool.core.date.DateUtil;
 
 /**
  * @author guanluocang
@@ -30,8 +29,6 @@ import java.util.Date;
  */
 
 public class SelectTimeDialogFragment extends DialogFragment implements OnDateSelectedListener {
-
-    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     private SelectTimeListener selectTimeListener;
 
@@ -102,8 +99,7 @@ public class SelectTimeDialogFragment extends DialogFragment implements OnDateSe
         timePicker.setIs24HourView(true);
         TimeListener times = new TimeListener();
         timePicker.setOnTimeChangedListener(times);
-        final LocalDate instance = LocalDate.now();
-        widget.setSelectedDate(instance);
+        widget.setSelectedDate(DateUtil.date());
         widget.setOnDateChangedListener(this);
 
         if (mTag.equals("tender")) {
@@ -148,7 +144,7 @@ public class SelectTimeDialogFragment extends DialogFragment implements OnDateSe
             @NonNull MaterialCalendarView widget,
             @NonNull CalendarDay date,
             boolean selected) {
-        mCalendarTime = FORMATTER.format(date.getDate());
+        mCalendarTime = DateUtil.formatDate(date.getDate());
     }
 
     // 时分选择控件

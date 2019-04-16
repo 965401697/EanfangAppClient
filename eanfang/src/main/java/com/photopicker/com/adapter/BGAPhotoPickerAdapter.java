@@ -15,7 +15,7 @@
  */
 package com.photopicker.com.adapter;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.eanfang.R;
 import com.photopicker.com.imageloader.BGAImage;

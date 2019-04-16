@@ -14,9 +14,6 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import lombok.Getter;
-import lombok.Setter;
-
 
 /**
  * 组织单位
@@ -103,8 +100,6 @@ public class OrgUnitEntity implements Serializable {
     //是否 认领过
     private Integer isclaim;
     //更新时间
-    @Getter
-    @Setter
     //@TableField(value = "update_time")
     private Date updateTime;
     //状态0草稿 1认证中，2认证通过，3认证拒绝，4禁用/删除
@@ -439,18 +434,43 @@ public class OrgUnitEntity implements Serializable {
     }
 
     //手工代码
-    @Getter
-    @Setter
     @TableField(exist = false)
     private UserEntity userEntity;
     //手工代码
-    @Getter
-    @Setter
     @TableField(exist = false)
     private ShopCompanyEntity shopCompanyEntity;
 
-    @Getter
-    @Setter
     private Long accId;
 
+    public Date getUpdateTime() {
+        return this.updateTime;
+    }
+
+    public UserEntity getUserEntity() {
+        return this.userEntity;
+    }
+
+    public ShopCompanyEntity getShopCompanyEntity() {
+        return this.shopCompanyEntity;
+    }
+
+    public Long getAccId() {
+        return this.accId;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
+    }
+
+    public void setShopCompanyEntity(ShopCompanyEntity shopCompanyEntity) {
+        this.shopCompanyEntity = shopCompanyEntity;
+    }
+
+    public void setAccId(Long accId) {
+        this.accId = accId;
+    }
 }

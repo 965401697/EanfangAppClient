@@ -18,7 +18,6 @@ import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 import com.yaf.base.entity.ShopBughandleMaintenanceDetailEntity;
 import com.yaf.base.entity.ShopMaintenanceExamDeviceEntity;
 
-
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
 

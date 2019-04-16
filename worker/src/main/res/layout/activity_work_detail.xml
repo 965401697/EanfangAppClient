@@ -10,7 +10,7 @@
 
     <include layout="@layout/header" />
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/sv_worker_detail"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -731,7 +731,7 @@
                         android:src="@mipmap/ic_worker_detail_area_down" />
                 </LinearLayout>
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_list1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -757,7 +757,7 @@
                 android:orientation="vertical"
                 android:padding="@dimen/dimen_30">
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_qualification"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -782,7 +782,7 @@
                 android:orientation="vertical"
                 android:padding ="@dimen/dimen_30">
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_honor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -822,7 +822,7 @@
                         android:textColor="@color/roll_content"
                         android:textSize="@dimen/textSize_12" />
 
-                    <com.daimajia.numberprogressbar.NumberProgressBar
+                    <com.daimajia.numberprogressbar.DaiMaJiaNumberProgressBar
                         android:id="@+id/iv_haopinglv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -834,7 +834,6 @@
                         custom:progress_current="100"
                         custom:progress_max="100"
                         custom:progress_reached_color="@color/client"
-                        custom:progress_text_visibility="invisible"
                         custom:progress_unreached_color="#CCCCCC" />
 
                     <TextView
@@ -1035,6 +1034,6 @@
 
 
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

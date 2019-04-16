@@ -16,7 +16,6 @@ import com.eanfang.model.AllMessageBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
 
-
 import net.eanfang.client.R;
 
 import org.greenrobot.eventbus.EventBus;

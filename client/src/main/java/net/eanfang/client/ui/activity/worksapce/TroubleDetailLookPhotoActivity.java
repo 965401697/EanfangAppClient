@@ -283,37 +283,37 @@ public class TroubleDetailLookPhotoActivity extends BaseActivity {
         if (StringUtils.isValid(bughandleDetailEntity.getPresentationPictures())) {
             snpl_moment_add_photos.setVisibility(View.VISIBLE);
             String[] prePic = bughandleDetailEntity.getPresentationPictures().split(Constant.IMG_SPLIT);
-            picList1.addAll(Stream.of(Arrays.asList(prePic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
+            picList1.addAll(Stream.of(Arrays.asList(prePic)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
         }
         //工具及蓝布照片
         if (StringUtils.isValid(bughandleDetailEntity.getToolPictures())) {
             snpl_monitor_add_photos.setVisibility(View.VISIBLE);
             String[] toolPic = bughandleDetailEntity.getToolPictures().split(Constant.IMG_SPLIT);
-            picList2.addAll(Stream.of(Arrays.asList(toolPic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
+            picList2.addAll(Stream.of(Arrays.asList(toolPic)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
         }
         //故障点照片
         if (StringUtils.isValid(bughandleDetailEntity.getPointPictures())) {
             snpl_tools_package_add_photos.setVisibility(View.VISIBLE);
             String[] ponitPic = bughandleDetailEntity.getPointPictures().split(Constant.IMG_SPLIT);
-            picList3.addAll(Stream.of(Arrays.asList(ponitPic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
+            picList3.addAll(Stream.of(Arrays.asList(ponitPic)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
         }
         //处理后现场照片
         if (StringUtils.isValid(bughandleDetailEntity.getAfterHandlePictures())) {
             snpl_after_processing_locale.setVisibility(View.VISIBLE);
             String[] afterHandlePic = bughandleDetailEntity.getAfterHandlePictures().split(Constant.IMG_SPLIT);
-            picList4.addAll(Stream.of(Arrays.asList(afterHandlePic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
+            picList4.addAll(Stream.of(Arrays.asList(afterHandlePic)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
         }
         //设备回装照片
         if (StringUtils.isValid(bughandleDetailEntity.getDeviceReturnInstallPictures())) {
             snpl_machine_fit_back.setVisibility(View.VISIBLE);
             String[] returnInstallPic = bughandleDetailEntity.getDeviceReturnInstallPictures().split(Constant.IMG_SPLIT);
-            picList5.addAll(Stream.of(Arrays.asList(returnInstallPic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
+            picList5.addAll(Stream.of(Arrays.asList(returnInstallPic)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
         }
         //故障恢复后表象照片
         if (StringUtils.isValid(bughandleDetailEntity.getRestorePictures())) {
             snpl_failure_recover_phenomena.setVisibility(View.VISIBLE);
             String[] restorePic = bughandleDetailEntity.getRestorePictures().split(Constant.IMG_SPLIT);
-            picList6.addAll(Stream.of(Arrays.asList(restorePic)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
+            picList6.addAll(Stream.of(Arrays.asList(restorePic)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
         }
 
     }
