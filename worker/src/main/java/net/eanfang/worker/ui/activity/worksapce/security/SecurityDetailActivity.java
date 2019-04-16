@@ -409,6 +409,9 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
      * 评论
      */
     private void doComments() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        imm.showSoftInput(etInput, InputMethodManager.SHOW_FORCED);
+        etInput.requestFocus();
         ShowKeyboard();
         String mComments = etInput.getText().toString().trim();
         if (StringUtils.isEmpty(mComments)) {
@@ -489,7 +492,8 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         //隐藏布局
         llEditComments.setVisibility(View.GONE);
         llBottom.setVisibility(View.VISIBLE);
-        etInput.setText("");//清空输入
+        //清空输入
+        etInput.setText("");
         View view = getWindow().peekDecorView();
         if (view != null) {
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -511,15 +515,17 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
 
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 if (imm != null) {
+                    assert v != null;
                     imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                    llEditComments.setVisibility(View.GONE);
+                    llBottom.setVisibility(View.VISIBLE);
                 }
             }
             return super.dispatchTouchEvent(ev);
         }
         // 必不可少，否则所有的组件都不会有TouchEvent了
+        //window是否消费该事件,touch事件分发从这里开始
         if (getWindow().superDispatchTouchEvent(ev)) {
-            llEditComments.setVisibility(View.GONE);
-            llBottom.setVisibility(View.VISIBLE);
             return true;
         }
         return onTouchEvent(ev);
@@ -537,6 +543,8 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
             if (event.getX() > left && event.getX() < right
                     && event.getY() > top && event.getY() < bottom) {
                 // 点击的是输入框区域，保留点击EditText的事件
+                llEditComments.setVisibility(View.VISIBLE);
+                llBottom.setVisibility(View.GONE);
                 return false;
             } else {
                 return true;

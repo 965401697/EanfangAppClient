@@ -42,7 +42,7 @@ public class SecuritySendFragment extends TemplateItemListFragment {
 
     @Override
     protected void initAdapter() {
-        securityCommentListAdapter = new SecurityCommentListAdapter();
+        securityCommentListAdapter = new SecurityCommentListAdapter(false);
         securityCommentListAdapter.bindToRecyclerView(mRecyclerView);
         securityCommentListAdapter.setOnLoadMoreListener(this, mRecyclerView);
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
