@@ -76,6 +76,11 @@ ext {
             glide              : "com.github.bumptech.glide:glide:3.7.0",
             eventbus           : "org.greenrobot:eventbus:3.1.1",
             butterknife        : "com.jakewharton:butterknife:10.1.0",
+            material           : "com.google.android.material:material:1.0.0",
+            cardview           : "androidx.cardview:cardview:1.0.0",
+            timelineview       : "com.github.vipulasri:timelineview:1.0.5",
+            materialratingbar  : "me.zhanghai.android.materialratingbar:library:1.0.2",
+            flowlayout         : "com.zhy:flowlayout-lib:1.0.3",
 
             //component
             recyclerview       : "androidx.recyclerview:recyclerview:1.0.0",
