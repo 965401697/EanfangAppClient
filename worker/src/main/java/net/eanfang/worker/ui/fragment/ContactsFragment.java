@@ -33,6 +33,7 @@ import com.eanfang.witget.recycleview.FullyLinearLayoutManager;
 import com.yaf.sys.entity.OrgEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.im.FollowListActivity;
 import net.eanfang.worker.ui.activity.im.MorePopWindow;
 import net.eanfang.worker.ui.activity.im.MyFriendsListActivity;
 import net.eanfang.worker.ui.activity.im.MyGroupsListActivity;
@@ -191,12 +192,12 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
             }
         });
 
-//        findViewById(R.id.rl_focus).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
+        view.findViewById(R.id.rl_focus).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), FollowListActivity.class));
+            }
+        });
 
         view.findViewById(R.id.ll_add).setOnClickListener(new View.OnClickListener() {
             @Override

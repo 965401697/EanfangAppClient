@@ -215,11 +215,11 @@
                             <TextView style="@style/style_common_line_gray" />
 
                             <RelativeLayout
+                                android:id="@+id/rl_focus"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
                                 android:onClick="noOpen"
                                 android:orientation="horizontal">
-
 
                                 <TextView
                                     android:layout_width="wrap_content"

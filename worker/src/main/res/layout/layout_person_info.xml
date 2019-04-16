@@ -22,7 +22,7 @@
             <LinearLayout
                 android:id="@+id/ll_header"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_130"
+                android:layout_height="@dimen/dimen_126"
                 android:background="@color/white"
                 android:gravity="center">
 
@@ -31,15 +31,28 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_36"
                     android:layout_weight="1"
+                    android:drawableLeft="@mipmap/ic_must_input"
+                    android:drawablePadding="@dimen/dimen_10"
                     android:text="@string/text_personal_head"
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_14" />
+
+                <TextView
+                    android:id="@+id/tv_noHeader_show"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dimen_24"
+                    android:text="请上传"
+                    android:textColor="#999999"
+                    android:textSize="14sp"
+                    android:visibility="gone" />
 
                 <com.facebook.drawee.view.SimpleDraweeView
                     android:id="@+id/iv_user_header"
                     android:layout_width="@dimen/dimen_80"
                     android:layout_height="@dimen/dimen_80"
                     android:layout_marginRight="@dimen/dimen_24"
+                    android:visibility="gone"
                     fresco:placeholderImage="@mipmap/ic_header"
                     fresco:roundAsCircle="true" />
 
@@ -65,8 +78,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/dimen_36"
+                    android:drawableLeft="@mipmap/ic_must_input"
                     android:drawablePadding="@dimen/dimen_10"
-                    android:drawableRight="@mipmap/ic_must_input"
                     android:text="昵称"
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_14" />
@@ -125,7 +138,7 @@
             <LinearLayout
                 android:id="@+id/ll_area"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_90"
+                android:layout_height="@dimen/dimen_94"
                 android:layout_marginTop="@dimen/dimen_2"
                 android:background="@color/white">
 
@@ -134,9 +147,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/dimen_36"
+                    android:drawableLeft="@mipmap/ic_must_input"
                     android:drawablePadding="@dimen/dimen_10"
-                    android:drawableRight="@mipmap/ic_must_input"
-                    android:text="所在城市"
+                    android:text="当前城市"
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_14" />
 
@@ -149,23 +162,24 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:gravity="right|center_vertical"
-                    android:hint="请选择所在区域"
+                    android:hint="请选择"
                     android:inputType="textPersonName"
                     android:textColor="@color/font_color"
                     android:textSize="14sp" />
 
                 <ImageView
-                    android:layout_width="@dimen/dimen_14"
-                    android:layout_height="@dimen/dimen_26"
+                    android:id="@+id/img_position"
+                    android:layout_width="@dimen/dimen_34"
+                    android:layout_height="@dimen/dimen_44"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="@dimen/dimen_34"
-                    android:src="@mipmap/arrow_right" />
+                    android:src="@drawable/icon_geographical_position" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/ll_address"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_90"
+                android:layout_height="@dimen/dimen_94"
                 android:layout_marginTop="@dimen/dimen_2"
                 android:background="@color/white">
 
@@ -174,9 +188,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/dimen_36"
-                    android:drawablePadding="@dimen/dimen_10"
-                    android:drawableRight="@mipmap/ic_must_input"
-                    android:text="详细地址"
+                    android:text="当前地址"
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_14" />
 
@@ -189,7 +201,7 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:gravity="right|center_vertical"
-                    android:hint="请输入详细地址"
+                    android:hint="请输入"
                     android:inputType="textPersonName"
                     android:textColor="@color/font_color"
                     android:textSize="14sp" />
@@ -219,8 +231,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/dimen_36"
-                    android:drawablePadding="@dimen/dimen_10"
-                    android:drawableRight="@mipmap/ic_must_input"
                     android:text="真实姓名"
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_14" />
@@ -234,59 +244,57 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:gravity="right|center_vertical"
-                    android:hint="请输入真实姓名"
+                    android:hint="请输入"
                     android:inputType="textPersonName"
                     android:textColor="@color/font_color"
                     android:textSize="14sp" />
             </LinearLayout>
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_90"
                 android:layout_marginTop="@dimen/dimen_2"
-                android:background="@color/white">
+                android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/dimen_36"
-                    android:text="性别"
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:text="生日"
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_14" />
 
-                <RadioGroup
-                    android:id="@+id/rg_sex"
+                <TextView
+                    android:id="@+id/tv_birthday"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginRight="@dimen/dimen_76"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/dimen_40"
+                    android:layout_marginRight="@dimen/dimen_30"
                     android:layout_weight="1"
-                    android:gravity="right"
-                    android:orientation="horizontal">
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:hint="请选择"
+                    android:inputType="textPersonName"
+                    android:textColor="@color/font_color"
+                    android:textSize="14sp" />
 
-                    <RadioButton
-                        android:id="@+id/rb_man"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="男生"
-                        android:textColor="@color/black" />
-
-                    <RadioButton
-                        android:id="@+id/rb_woman"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="女生"
-                        android:textColor="@color/black" />
-                </RadioGroup>
+                <ImageView
+                    android:id="@+id/img_calendar"
+                    android:layout_width="@dimen/dimen_40"
+                    android:layout_height="@dimen/dimen_38"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/dimen_34"
+                    android:src="@drawable/icon_calendar" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_90"
                 android:layout_marginTop="@dimen/dimen_2"
-                android:background="@color/white">
+                android:background="@color/white"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -313,7 +321,166 @@
                     android:textSize="14sp" />
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_110"
+                android:layout_marginTop="@dimen/dimen_2"
+                android:background="@color/white">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dimen_36"
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:text="性别"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_14" />
+
+                <Button
+                    android:id="@+id/btn_man"
+                    android:layout_width="@dimen/dimen_120"
+                    android:layout_height="@dimen/dimen_60"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dimen_324"
+                    android:background="@drawable/bg_button_blue_selector"
+                    android:gravity="center"
+                    android:text="男"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:id="@+id/btn_woman"
+                    android:layout_width="@dimen/dimen_120"
+                    android:layout_height="@dimen/dimen_60"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dimen_30"
+                    android:background="@drawable/bg_button_blue_selector"
+                    android:gravity="center"
+                    android:text="女"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_20"
+                android:background="#F5F3F3" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_90"
+                android:layout_marginTop="@dimen/dimen_2"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/dimen_36"
+                android:text="个人简介"
+                android:textColor="#333333"
+                android:textSize="14sp" />
+
+            <EditText
+                android:id="@+id/et_personal_note"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_146"
+                android:background="#ffffff"
+                android:cursorVisible="false"
+                android:gravity="start"
+                android:hint="请输入..."
+                android:paddingLeft="@dimen/dimen_36"
+                android:textColor="@color/font_color"
+                android:textSize="13sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#F5F3F3"
+                android:paddingTop="@dimen/dimen_20">
+
+                <LinearLayout
+                    android:id="@+id/ll_saveAndAuth"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_84"
+                        android:layout_marginTop="@dimen/dimen_38"
+                        android:text="中国安防运维平台——易安防"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_84"
+                        android:text="提示您：平台接单需要开启【技师认证】"
+                        android:textSize="14sp" />
+
+                    <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginTop="@dimen/dimen_32"-->
+                    <!--android:orientation="horizontal">-->
+
+                    <!--<Button-->
+                    <!--android:id="@+id/btn_save"-->
+                    <!--android:layout_width="@dimen/dimen_308"-->
+                    <!--android:layout_height="@dimen/dimen_88"-->
+                    <!--android:layout_gravity="center_horizontal"-->
+                    <!--android:layout_marginLeft="@dimen/dimen_40"-->
+                    <!--android:layout_marginTop="@dimen/dimen_36"-->
+                    <!--android:background="@drawable/bg_button_gradation_yellow"-->
+                    <!--android:gravity="center"-->
+                    <!--android:text="保存"-->
+                    <!--android:textColor="@color/white"-->
+                    <!--android:textSize="13sp" />-->
+
+
+                    <!--<Button-->
+                    <!--android:id="@+id/btn_auth"-->
+                    <!--android:layout_width="@dimen/dimen_308"-->
+                    <!--android:layout_height="@dimen/dimen_88"-->
+                    <!--android:layout_gravity="center_horizontal"-->
+                    <!--android:layout_marginLeft="@dimen/dimen_28"-->
+                    <!--android:layout_marginTop="@dimen/dimen_36"-->
+                    <!--android:background="@drawable/bg_button_gradation_blue"-->
+                    <!--android:gravity="center"-->
+                    <!--android:text="前往实名认证"-->
+                    <!--android:textColor="@color/white"-->
+                    <!--android:textSize="13sp" />-->
+
+                    <!--</LinearLayout>-->
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_bigSave"
+                    android:layout_width="@dimen/dimen_600"
+                    android:layout_height="@dimen/dimen_88"
+                    android:layout_below="@id/ll_saveAndAuth"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/dimen_36"
+                    android:background="@drawable/bg_button_gradation_blue"
+                    android:text="保存"
+                    android:textColor="@color/white"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/tv_toWorkerAuth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/btn_bigSave"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="@dimen/dimen_32"
+                    android:layout_marginEnd="@dimen/dimen_76"
+                    android:layout_marginBottom="@dimen/dimen_30"
+                    android:drawableLeft="@drawable/icon_choose_to_auth_selector"
+                    android:drawablePadding="@dimen/dimen_8"
+                    android:text="前往技师认证"
+                    android:textColor="#999999"
+                    android:textIsSelectable="true"
+                    android:textSize="12sp" />
+            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 

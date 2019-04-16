@@ -57,6 +57,10 @@ public interface UserApi {
      */
     String GET_USER_INFO = BASE_URL + "/yaf_sys/sys/userinfo";
 
+    /**
+     * 用户主页
+     */
+    String USER_HOME_PAGE = BASE_URL + "/yaf_sys/expertsOnline/homepage";
 
     /**
      * 合作公司
@@ -315,6 +319,16 @@ public interface UserApi {
      * 获取好有列表
      */
     String POST_FRIENDS_LIST = BuildConfig.API_HOST + "/yaf_sys/outer2user/findFriends";
+
+    /**
+     * 获取关注列表
+     */
+    String POST_FOLLOWS_LIST = BuildConfig.API_HOST + "/yaf_sys/expertsOnline/followerPeopleList";
+
+    /**
+     * 改变关注状态
+     */
+    String POST_CHANGE_FOLLOW_STATUS = BuildConfig.API_HOST + "/yaf_sys/expertsOnline/changeFollowStatus";
 
 
     /**

@@ -29,6 +29,7 @@ import com.eanfang.model.security.SecurityCommentBean;
 import com.eanfang.model.security.SecurityDetailBean;
 import com.eanfang.model.security.SecurityFoucsBean;
 import com.eanfang.model.security.SecurityLikeBean;
+import com.eanfang.model.security.SecurityListBean;
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.ETimeUtils;
@@ -43,6 +44,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.my.UserHomeActivity;
 import net.eanfang.client.ui.adapter.security.SecurityCommentAdapter;
 import net.eanfang.client.ui.widget.GeneralSDialog;
 
@@ -192,11 +194,13 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
             generalDialog.show();
             return false;
         });
-        ivSeucrityHeader.setOnClickListener((v) -> {
-            Bundle bundle = new Bundle();
-            bundle.putBoolean("isLookOther", true);
-            bundle.putLong("mUserId", securityDetailBean.getPublisherUserId());
-            JumpItent.jump(SecurityDetailActivity.this, SecurityPersonalActivity.class, bundle);
+
+        securityCommentAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            SecurityDetailBean.ListBean listBean = (SecurityDetailBean.ListBean) adapter.getData().get(position);
+            if (listBean != null && listBean.getCommentUser() != null
+                    && listBean.getCommentUser().getAccId() != null) {
+                gotoUserHomeActivity(listBean.getCommentUser().getAccId());
+            }
         });
     }
 
@@ -325,7 +329,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
     }
 
 
-    @OnClick({R.id.ll_like, R.id.ll_comments, R.id.ll_share, R.id.tv_send, R.id.tv_isFocus, R.id.rl_video})
+    @OnClick({R.id.ll_like, R.id.ll_comments, R.id.ll_share, R.id.tv_send, R.id.tv_isFocus, R.id.iv_seucrity_header, R.id.rl_video})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_like:
@@ -352,15 +356,29 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
                 bundle.putString("videoPath", BuildConfig.OSS_SERVER + securityDetailBean.getSpcVideo() + ".mp4");
                 JumpItent.jump(SecurityDetailActivity.this, PlayVideoActivity.class, bundle);
                 break;
+            case R.id.iv_seucrity_header:
+                if (securityDetailBean != null && securityDetailBean.getAccountEntity() != null
+                        && securityDetailBean.getAccountEntity().getAccId() != null) {
+                    gotoUserHomeActivity(String.valueOf(securityDetailBean.getAccountEntity().getAccId()));
+                }
+                break;
             default:
                 break;
         }
     }
 
     /**
+     * 跳转用户主页面
+     *
+     * @param accId
+     */
+    private void gotoUserHomeActivity(String accId) {
+        UserHomeActivity.startActivity(this, accId);
+    }
+
+    /**
      * 关注
      */
-
     private void doFoucus(SecurityDetailBean.SpcListBean listBean) {
         SecurityFoucsBean securityFoucsBean = new SecurityFoucsBean();
         securityFoucsBean.setFollowUserId(EanfangApplication.get().getUserId());
