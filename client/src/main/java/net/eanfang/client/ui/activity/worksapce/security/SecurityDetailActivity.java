@@ -139,6 +139,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
      * 是否评点击论按钮进入
      */
     private boolean isClickCommont = false;
+    private boolean isFirstCome = true;
 
     private Parser mTagParser = new Parser(this);
     protected FormatRangeManager mRangeManager = new FormatRangeManager();
@@ -232,7 +233,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
                         tvReadCount.setText(bean.getSpcList().getReadCount() + "");
                         tvCommentCount.setText(bean.getSpcList().getCommentCount() + "");
                     }
-                    if (isClickCommont) {
+                    if (isClickCommont && isFirstCome) {
                         ShowKeyboard();
                     } else {
                         hideKeyboard();
@@ -413,7 +414,6 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
      * 评论
      */
     private void doComments() {
-        ShowKeyboard();
         String mComments = etInput.getText().toString().trim();
         if (StringUtils.isEmpty(mComments)) {
             showToast("请输入评论内容");
@@ -431,6 +431,8 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         EanfangHttp.post(NewApiService.SERCURITY_COMMENT)
                 .upJson(JSONObject.toJSONString(securityCommentBean))
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
+                    isFirstCome = false;
+                    hideKeyboard();
                     getComments();
                 }));
 
@@ -481,9 +483,6 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         etInput.setFocusable(true);
         etInput.setFocusableInTouchMode(true);
         StringUtils.showKeyboard(SecurityDetailActivity.this, etInput);
-        //将光标定位
-//        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-//        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
 
     /**
@@ -495,7 +494,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         llBottom.setVisibility(View.VISIBLE);
         //清空输入
         etInput.setText("");
-        View view = getWindow().peekDecorView();
+        View view = getWindow().getDecorView();
         if (view != null) {
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
@@ -512,36 +511,34 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
             View v = getCurrentFocus();
-            if (isShouldHideInput(v, ev)) {
-
+            if (isShouldHideInput(v, ev, tvSend)) {
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 if (imm != null) {
                     imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                    llEditComments.setVisibility(View.GONE);
+                    llBottom.setVisibility(View.VISIBLE);
                 }
             }
-            return super.dispatchTouchEvent(ev);
         }
-        // 必不可少，否则所有的组件都不会有TouchEvent了
-        if (getWindow().superDispatchTouchEvent(ev)) {
-            llEditComments.setVisibility(View.GONE);
-            llBottom.setVisibility(View.VISIBLE);
-            return true;
-        }
-        return onTouchEvent(ev);
+        return super.dispatchTouchEvent(ev);
     }
 
-    public boolean isShouldHideInput(View v, MotionEvent event) {
+    public boolean isShouldHideInput(View v, MotionEvent event, TextView tvSend) {
         if (v != null && (v instanceof EditText)) {
             int[] leftTop = {0, 0};
+            int[] sendLeftTop = {0, 0};
             //获取输入框当前的location位置
             v.getLocationInWindow(leftTop);
-            int left = leftTop[0];
-            int top = leftTop[1];
-            int bottom = top + v.getHeight();
-            int right = left + v.getWidth();
+            tvSend.getLocationInWindow(sendLeftTop);
+            int left = leftTop[0], top = leftTop[1], bottom = top + v.getHeight(), right = left + v.getWidth();
+            int sendLeft = sendLeftTop[0], sendTop = sendLeftTop[1], sendBottom = sendTop + tvSend.getHeight(), sendRight = sendLeft + tvSend.getWidth();
             if (event.getX() > left && event.getX() < right
                     && event.getY() > top && event.getY() < bottom) {
                 // 点击的是输入框区域，保留点击EditText的事件
+                return false;
+            } else if (event.getX() > sendLeft && event.getX() < sendRight
+                    && event.getY() > sendTop && event.getY() < sendBottom) {
+                // 点击的是发送按钮区域，保留点击事件
                 return false;
             } else {
                 return true;
@@ -549,6 +546,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         }
         return false;
     }
+
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
