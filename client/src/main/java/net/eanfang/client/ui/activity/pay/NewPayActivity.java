@@ -89,7 +89,15 @@ public class NewPayActivity extends BaseClientActivity implements View.OnClickLi
     LinearLayout llCoupons;
     @BindView(R.id.tv_outline_pay)
     TextView tvOutlinePay;
-    private int mPayType = 1;//微信 1 支付宝 0 优惠券 3
+    /**
+     * 微信 1 支付宝 0 优惠券 3
+     * 微信和支付宝：价格原始不变 优惠券 实际价格:0
+     */
+    private static final int PAYMENT_MODE_WEIXIN = 1;
+    private static final int PAYMENT_MODE_ZHIFUBAO = 0;
+    private static final int PAYMENT_MODE_COUPON = 3;
+
+    private int mPayType = 1;
     private String mPayPrice;
 
     private Boolean isFaPiao = false;
@@ -98,7 +106,10 @@ public class NewPayActivity extends BaseClientActivity implements View.OnClickLi
     private PayLogEntity payLogEntity;
     private Handler mHandler;
     private InvoiceEntity mInvoiceEntity;
-    private final int INVOCIE_REQUEST_CODE = 1;//发票的code
+    /**
+     * 发票的code
+     */
+    private final int INVOCIE_REQUEST_CODE = 1;
 
     {
         mHandler = new Handler() {
@@ -187,7 +198,6 @@ public class NewPayActivity extends BaseClientActivity implements View.OnClickLi
                     if (mInvoiceEntity == null) {
                         ll.setVisibility(View.VISIBLE);
                     } else {
-
                         tvEditInvoice.setText("修改发票信息");
                         tvInvoiceName.setText(mInvoiceEntity.getTitle());
 
@@ -209,13 +219,8 @@ public class NewPayActivity extends BaseClientActivity implements View.OnClickLi
                 if (hasFocus) {
                     // 获得焦点
                     mPayType = 3;
-                    cbCoupon.setChecked(mPayType == 3 ? true : false);
-                    cbAlipay.setChecked(!(mPayType == 3 ? true : false));
-                    cbWeixinPay.setChecked(!(mPayType == 3 ? true : false));
-                    tvZfb.setTextColor(getResources().getColor(R.color.color_client_neworder));
-                    tvWx.setTextColor(getResources().getColor(R.color.color_client_neworder));
-                    tvCoupon.setTextColor(getResources().getColor(R.color.color_service_title));
-                    tvPrice.setText(0 + "");
+                    setPayViewShow();
+                    tvPrice.setText("0");
                 }
             }
         });
@@ -235,24 +240,14 @@ public class NewPayActivity extends BaseClientActivity implements View.OnClickLi
                 break;
             case R.id.ll_wx:
                 mPayType = 1;
-                cbWeixinPay.setChecked(mPayType == 1 ? true : false);
-                cbAlipay.setChecked(!(mPayType == 1 ? true : false));
-                cbCoupon.setChecked(!(mPayType == 1 ? true : false));
-                tvWx.setTextColor(getResources().getColor(R.color.color_service_title));
-                tvZfb.setTextColor(getResources().getColor(R.color.color_client_neworder));
-                tvCoupon.setTextColor(getResources().getColor(R.color.color_client_neworder));
+                setPayViewShow();
                 etCoupon.setVisibility(View.GONE);
                 tvPrice.setText(mPayPrice);
                 doGoneCoupon();
                 break;
             case R.id.ll_alipay:
                 mPayType = 0;
-                cbAlipay.setChecked(mPayType == 0 ? true : false);
-                cbWeixinPay.setChecked(!(mPayType == 0 ? true : false));
-                cbCoupon.setChecked(!(mPayType == 0 ? true : false));
-                tvZfb.setTextColor(getResources().getColor(R.color.color_service_title));
-                tvWx.setTextColor(getResources().getColor(R.color.color_client_neworder));
-                tvCoupon.setTextColor(getResources().getColor(R.color.color_client_neworder));
+                setPayViewShow();
                 tvPrice.setText(mPayPrice);
                 etCoupon.setVisibility(View.GONE);
                 doGoneCoupon();
@@ -268,19 +263,8 @@ public class NewPayActivity extends BaseClientActivity implements View.OnClickLi
                 finishSelf();
                 break;
             case R.id.tv_pay:
-                if (mPayType == 0) {
-                    //支付宝支付
-                    payLogEntity.setPayType(0);
-                    doPayType(mPayType);
-                } else if (mPayType == 1) {
-                    //微信支付
-                    payLogEntity.setPayType(1);
-                    doPayType(mPayType);
-                } else if (mPayType == 3) {
-                    //优惠券支付
-                    payLogEntity.setPayType(3);
-                    doPayType(mPayType);
-                }
+                payLogEntity.setPayType(mPayType);
+                doPayType(mPayType);
                 break;
             case R.id.ll_coupons:
                 etCoupon.setVisibility(View.VISIBLE);
@@ -289,15 +273,27 @@ public class NewPayActivity extends BaseClientActivity implements View.OnClickLi
                 etCoupon.setFocusable(true);
                 etCoupon.setFocusableInTouchMode(true);
                 mPayType = 3;
-                cbCoupon.setChecked(mPayType == 3 ? true : false);
-                cbAlipay.setChecked(!(mPayType == 3 ? true : false));
-                cbWeixinPay.setChecked(!(mPayType == 3 ? true : false));
-                tvZfb.setTextColor(getResources().getColor(R.color.color_client_neworder));
-                tvWx.setTextColor(getResources().getColor(R.color.color_client_neworder));
-                tvCoupon.setTextColor(getResources().getColor(R.color.color_service_title));
-                tvPrice.setText(0 + "");
+                setPayViewShow();
+                tvPrice.setText("0");
+                break;
+            default:
                 break;
         }
+    }
+
+    /**
+     * 设置支付view显示状态
+     */
+    private void setPayViewShow(){
+        cbWeixinPay.setChecked(mPayType == PAYMENT_MODE_WEIXIN);
+        cbAlipay.setChecked(mPayType == PAYMENT_MODE_ZHIFUBAO);
+        cbCoupon.setChecked(mPayType == PAYMENT_MODE_COUPON);
+        tvZfb.setTextColor(getResources().getColor(mPayType == PAYMENT_MODE_ZHIFUBAO
+                ? R.color.color_service_title : R.color.color_client_neworder));
+        tvWx.setTextColor(getResources().getColor(mPayType == PAYMENT_MODE_WEIXIN
+                ? R.color.color_service_title : R.color.color_client_neworder));
+        tvCoupon.setTextColor(getResources().getColor(mPayType == PAYMENT_MODE_COUPON
+                ? R.color.color_service_title : R.color.color_client_neworder));
     }
 
     public void doVaiCoupons() {
@@ -331,22 +327,22 @@ public class NewPayActivity extends BaseClientActivity implements View.OnClickLi
                         intent.putExtras(bundle);
                         startActivity(intent);
                     }
-
                 });
-
     }
 
     /**
      * 判断支付方式 进行修改价格
      */
-    public void doPayType(int type) { // 支付方式  0、1：微信和支付宝：价格原始不变    3： 优惠券 实际价格:0
-        if (type == 1) {
+    public void doPayType(int type) {
+        if (type == PAYMENT_MODE_WEIXIN) {
             isWeixinAvilible(NewPayActivity.this);
-        } else if (type == 0) {
+        } else if (type == PAYMENT_MODE_ZHIFUBAO) {
             aliPay();
-        } else if (type == 3) {
-            payLogEntity.setReducedPrice(payLogEntity.getOriginPrice());//OriginPrice() 原始价格 ReducedPrice 优惠价格(默认为0)
-            payLogEntity.setPayPrice(0);// PayPrice支付价格
+        } else if (type == PAYMENT_MODE_COUPON) {
+            //OriginPrice() 原始价格 ReducedPrice 优惠价格(默认为0)
+            payLogEntity.setReducedPrice(payLogEntity.getOriginPrice());
+            // PayPrice支付价格
+            payLogEntity.setPayPrice(0);
             doVaiCoupons();
         }
 
@@ -393,7 +389,6 @@ public class NewPayActivity extends BaseClientActivity implements View.OnClickLi
                     @Override
                     public void onSuccess(WXPayBean bean) {
                         super.onSuccess(bean);
-
                         PayReq request = new PayReq();
                         request.appId = bean.getAppid();
                         request.partnerId = bean.getPartnerid();
@@ -404,19 +399,20 @@ public class NewPayActivity extends BaseClientActivity implements View.OnClickLi
                         request.signType = "MD5";
                         request.sign = bean.getSign();
                         ClientApplication.getWxApi().sendReq(request);
-
                     }
                 });
     }
 
 
     private boolean isWeixinAvilible(Context mContext) {
-        final PackageManager packageManager = mContext.getPackageManager();// 获取packagemanager
-        List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);// 获取所有已安装程序的包信息
+        // 获取packagemanager
+        final PackageManager packageManager = mContext.getPackageManager();
+        // 获取所有已安装程序的包信息
+        List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);
         if (pinfo != null) {
             for (int i = 0; i < pinfo.size(); i++) {
                 String pn = pinfo.get(i).packageName;
-                if (pn.equals("com.tencent.mm")) {
+                if ("com.tencent.mm".equals(pn)) {
                     wxPay();
 //                    WxPaymentUtils wxPaymentUtils = new WxPaymentUtils(this);
 //                    wxPaymentUtils.wxPay(PayActivity.this,payLogEntity);
@@ -459,7 +455,8 @@ public class NewPayActivity extends BaseClientActivity implements View.OnClickLi
     public void subInvoice() {
 
         if (!cbInvoice.isChecked()) {
-            if (mPayType == 1) {//支付宝支付 优惠券支付
+            if (mPayType == 1) {
+                //支付宝支付 优惠券支付
                 EanfangApplication.get().closeActivity(NewPayActivity.class.getName());
                 Intent intent = new Intent(NewPayActivity.this, StateChangeActivity.class);
                 Bundle bundle = new Bundle();
@@ -478,7 +475,8 @@ public class NewPayActivity extends BaseClientActivity implements View.OnClickLi
                 .execute(new EanfangCallback(NewPayActivity.this, false, JSONObject.class) {
                     @Override
                     public void onSuccess(Object bean) {
-                        if (mPayType == 1) {       //支付宝支付 优惠券支付
+                        if (mPayType == 1) {
+                            //支付宝支付 优惠券支付
                             EanfangApplication.get().closeActivity(NewPayActivity.class.getName());
                             Intent intent = new Intent(NewPayActivity.this, StateChangeActivity.class);
                             Bundle bundle = new Bundle();
@@ -548,9 +546,11 @@ public class NewPayActivity extends BaseClientActivity implements View.OnClickLi
      * 取消优惠码输入焦点
      */
     public void doGoneCoupon() {
-        etCoupon.clearFocus();//取消焦点
+        //取消焦点
+        etCoupon.clearFocus();
+        //关闭输入法
         ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
-                .hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);//关闭输入法
+                .hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 }
 
