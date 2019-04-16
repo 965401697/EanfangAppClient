@@ -109,12 +109,15 @@ public class XGPushManagerConfig implements IXGPush {
     @Override
     public IXGPushClickedResult onActivityStarted(Activity activity) {
         XGPushClickedResult mXGPushClickedResult = XGPushManager.onActivityStarted(activity);
-        IXGPushClickedResult mIXGPushClickedResult = new IXGPushClickedResult();
-        mIXGPushClickedResult.setTitle(mXGPushClickedResult.getTitle());
-        mIXGPushClickedResult.setMsgId(mXGPushClickedResult.getMsgId());
-        mIXGPushClickedResult.setContent(mXGPushClickedResult.getContent());
-        mIXGPushClickedResult.setActionType((int) mXGPushClickedResult.getActionType());
-        return mIXGPushClickedResult;
+        if(mXGPushClickedResult!=null){
+            IXGPushClickedResult mIXGPushClickedResult = new IXGPushClickedResult();
+            mIXGPushClickedResult.setTitle(mXGPushClickedResult.getTitle());
+            mIXGPushClickedResult.setMsgId(mXGPushClickedResult.getMsgId());
+            mIXGPushClickedResult.setContent(mXGPushClickedResult.getContent());
+            mIXGPushClickedResult.setActionType((int) mXGPushClickedResult.getActionType());
+            return mIXGPushClickedResult;
+        }
+        return null;
     }
 
     /**

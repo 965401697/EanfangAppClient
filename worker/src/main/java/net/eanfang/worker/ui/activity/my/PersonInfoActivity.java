@@ -232,8 +232,8 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
             default:
                 break;
         }
-//        OSSUtils.initOSS(this).asyncPutImage(imgKey, result.getImage().getOriginalPath(), callback);
-        SDKManager.getIOSS().initOSS(this).asyncPutImage(imgKey,result.getImage().getOriginalPath(),callback);
+        OSSUtils.initOSS(this).asyncPutImage(imgKey, result.getImage().getOriginalPath(), callback);
+//        SDKManager.getIOSS().initOSS(this).asyncPutImage(imgKey,result.getImage().getOriginalPath(),callback);
 
     }
 

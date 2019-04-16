@@ -1,4 +1,4 @@
-package com.eanfang.oss;
+package com.eanfang.sdk.alisdk.alioss;
 
 import com.alibaba.sdk.android.oss.common.auth.OSSFederationCredentialProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSFederationToken;
@@ -32,7 +32,7 @@ public class STSGetter extends OSSFederationCredentialProvider {
                 stsJson = response.body().string();
 
                 JSONObject stsJsonObj = new JSONObject(stsJson);
-                org.json.JSONObject jsonObjs = stsJsonObj.optJSONObject("data");
+                JSONObject jsonObjs = stsJsonObj.optJSONObject("data");
                 String ak = jsonObjs.getString("AccessKeyId");
                 String sk = jsonObjs.getString("AccessKeySecret");
                 String token = jsonObjs.getString("Security");

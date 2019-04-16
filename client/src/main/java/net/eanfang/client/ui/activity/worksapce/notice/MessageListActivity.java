@@ -23,6 +23,8 @@ import com.eanfang.sdk.SDKManager;
 import com.eanfang.sdk.tengxunsdk.xingepush.IXGPushClickedResult;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
+import com.tencent.android.tpush.XGPushClickedResult;
+import com.tencent.android.tpush.XGPushManager;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.adapter.MessageListAdapter;
@@ -260,6 +262,7 @@ public class MessageListActivity extends BaseClientActivity implements
         super.onResume();
 //        page = 1;
 //        getJPushMessage();
+        XGPushClickedResult mXGPushClickedResult = XGPushManager.onActivityStarted(this);
        IXGPushClickedResult  clickedResult=SDKManager.getXGPush(this).onActivityStarted(this);
         if (clickedResult != null) {
             String title = clickedResult.getTitle();

@@ -7,7 +7,6 @@ import com.alibaba.sdk.android.oss.OSS;
 import com.alibaba.sdk.android.oss.OSSClient;
 import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
 import com.eanfang.BuildConfig;
-import com.eanfang.oss.STSGetter;
 
 /**
  * created by wtt
