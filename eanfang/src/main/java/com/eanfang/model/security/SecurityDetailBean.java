@@ -151,7 +151,7 @@ public class SecurityDetailBean implements Serializable {
         @Setter
         public static class PublisherUserBean implements Serializable {
 
-            private String accId;
+            private Long accId;
             private boolean companyAdmin;
             private String createTime;
             private boolean superAdmin;

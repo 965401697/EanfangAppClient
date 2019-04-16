@@ -366,6 +366,8 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         securityFoucsBean.setAsUserId(listBean.getPublisherUserId());
         securityFoucsBean.setAsCompanyId(listBean.getPublisherCompanyId());
         securityFoucsBean.setAsTopCompanyId(listBean.getPublisherTopCompanyId());
+        securityFoucsBean.setAsAccId(listBean.getPublisherUser().getAccId());
+        securityFoucsBean.setFollowAccId(EanfangApplication.get().getAccId());
         EanfangHttp.post(NewApiService.SERCURITY_FOUCUS)
                 .upJson(JSONObject.toJSONString(securityFoucsBean))
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
