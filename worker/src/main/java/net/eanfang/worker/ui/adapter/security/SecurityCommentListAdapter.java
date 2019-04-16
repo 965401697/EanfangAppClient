@@ -15,8 +15,12 @@ import net.eanfang.worker.R;
  */
 
 public class SecurityCommentListAdapter extends BaseQuickAdapter<SecurityCommentListBean.ListBean, BaseViewHolder> {
-    public SecurityCommentListAdapter() {
+
+    private boolean mIsUnRead = false;
+
+    public SecurityCommentListAdapter(boolean isUnRead) {
         super(R.layout.layout_security_comment_list_item);
+        this.mIsUnRead = isUnRead;
     }
 
     @Override
@@ -31,12 +35,12 @@ public class SecurityCommentListAdapter extends BaseQuickAdapter<SecurityComment
         } else {
             helper.setText(R.id.tv_content, item.getSpcContent());
         }
-        helper.setText(R.id.tv_time, item.getCreateTime());
-        if (item.getReadStatus() == 0) {
+        if (item.getReadStatus() == 0 && mIsUnRead) {
             helper.setVisible(R.id.tv_unread, true);
         } else {
             helper.setVisible(R.id.tv_unread, false);
         }
+        helper.setText(R.id.tv_time, item.getCreateTime());
 
     }
 }

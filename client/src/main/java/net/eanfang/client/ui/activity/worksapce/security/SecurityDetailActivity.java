@@ -493,7 +493,8 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         //隐藏布局
         llEditComments.setVisibility(View.GONE);
         llBottom.setVisibility(View.VISIBLE);
-        etInput.setText("");//清空输入
+        //清空输入
+        etInput.setText("");
         View view = getWindow().peekDecorView();
         if (view != null) {
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
