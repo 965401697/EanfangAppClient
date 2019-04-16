@@ -376,10 +376,11 @@ public class AccountEntity implements Serializable {
             if (!Objects.equals(this.avatar, other.avatar)
                     || !Objects.equals(this.nickName, other.nickName)
                     || !Objects.equals(this.realName, other.realName)
-                    || this.birthday != other.birthday
-                    || !this.gender.equals(other.gender)
+                    || !Objects.equals(this.birthday, other.birthday)
+                    || !Objects.equals(this.gender, other.gender)
                     || !Objects.equals(this.address, other.address)
-                    || !Objects.equals(this.personalNote, other.personalNote)) {
+                    || !Objects.equals(this.personalNote, other.personalNote)
+                    || !Objects.equals(this.areaCode, other.areaCode)) {
                 this.avatar = other.avatar;
                 this.nickName = other.nickName;
                 this.realName = other.realName;
@@ -387,6 +388,7 @@ public class AccountEntity implements Serializable {
                 this.gender = other.gender;
                 this.address = other.address;
                 this.personalNote = other.personalNote;
+                this.areaCode = other.areaCode;
                 return true;
             }
         }

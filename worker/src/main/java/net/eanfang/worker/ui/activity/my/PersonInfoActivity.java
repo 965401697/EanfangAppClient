@@ -112,8 +112,8 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
     private String path;
     private boolean isUploadHead = false;
     private LoginBean loginBean;
-
     private AccountEntity mAccountEntity;
+    private String mAreaCode;
     /**
      * 城市
      */
@@ -240,6 +240,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
             etAddress.setText(address);
         }
         if (!StringUtils.isEmpty(accountEntity.getAreaCode())) {
+            mAreaCode = accountEntity.getAreaCode();
             tvArea.setText(Config.get().getAddressByCode(accountEntity.getAreaCode()));
         }
         boolean auth = false;
@@ -337,6 +338,8 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         accountEntity.setPersonalNote(mEtPersonalNote.getText().toString());
         if (!StringUtils.isEmpty(city) && !StringUtils.isEmpty(contry)) {
             accountEntity.setAreaCode(Config.get().getAreaCodeByName(city, contry));
+        } else {
+            accountEntity.setAreaCode(mAreaCode);
         }
         return mAccountEntity.isChanged(accountEntity);
     }
