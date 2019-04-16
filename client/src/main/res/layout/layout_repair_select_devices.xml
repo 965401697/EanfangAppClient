@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/bg_client_contact_create"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/dimen_40"
+    android:paddingLeft="@dimen/dimen_40"
+    android:paddingRight="@dimen/dimen_40">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_width="@dimen/dimen_80"
+            android:layout_height="@dimen/dimen_80"
+            android:layout_alignParentRight="true"
+            android:padding="@dimen/dimen_25"
+            android:src="@mipmap/ic_contact_create_close" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_30"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_device_type"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/dimen_34"
+            android:drawableTop="@mipmap/ic_repair_device_type"
+            android:gravity="center"
+            android:text="按设备类别粗选"
+            android:textColor="@color/color_client_neworder"
+            android:textSize="@dimen/textSize_14" />
+
+        <TextView
+            android:id="@+id/tv_device_warehouse"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawablePadding="@dimen/dimen_34"
+            android:drawableTop="@mipmap/ic_repair_device_warehouse"
+            android:gravity="center"
+            android:text="设备库精选"
+            android:textColor="@color/color_client_neworder"
+            android:textSize="@dimen/textSize_14" />
+    </LinearLayout>
+</LinearLayout>

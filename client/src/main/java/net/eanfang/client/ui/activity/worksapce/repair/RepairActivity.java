@@ -61,64 +61,92 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Created by MrHou
- *
- * @on 2017/11/20  13:33
- * @email houzhongzhou@yeah.net
+ * @on 2019年4月15日 16:46:24
+ * @email guanluocang
  * @desc 我要报修
  */
 public class RepairActivity extends BaseClientActivity implements RadioGroup.OnCheckedChangeListener {
 
-    //报修地址回调 code
+    /**
+     * 报修地址回调 code
+     */
     private final int REPAIR_ADDRESS_CALLBACK_CODE = 1;
-    //添加故障明细回调
+    /**
+     * 添加故障明细回调
+     */
     private final int ADD_TROUBLE_CALLBACK_CODE = 2;
 
-    // 公司名称
+    /**
+     * 公司名称
+     */
     @BindView(R.id.tv_repairCompanyName)
     TextView tvRepairCompanyName;
     @BindView(R.id.et_repairCompanyName)
     EditText etCompanyName;
-    // 用户名
+    /**
+     * 用户名
+     */
     @BindView(R.id.tv_repairUserName)
     TextView tvRepairUserName;
-    // 用户电话
+    /**
+     * 用户电话
+     */
     @BindView(R.id.tv_repairUserPhone)
     TextView tvRepairUserPhone;
-    //地址信息 省市区 详细地址
+    /**
+     * 地址信息 省市区 详细地址
+     */
     @BindView(R.id.tv_address)
     TextView tvAddress;
     @BindView(R.id.et_detail_address)
     EditText etDetailAddress;
-    // 选择定位
+    /**
+     * 选择定位
+     */
     @BindView(R.id.tv_selectAdress)
     TextView tvSelectAdress;
-    // 联系人行么
+    /**
+     * 联系人姓名
+     */
     @BindView(R.id.et_contact)
     EditText etContact;
-    // 性别
+    /**
+     * 性别
+     */
     @BindView(R.id.rb_man)
     RadioButton rbMan;
     @BindView(R.id.rb_woman)
     RadioButton rbWoman;
     @BindView(R.id.rg_sex)
     RadioGroup rgSex;
-    // 联系人电话
+    /**
+     * 联系人电话
+     */
     @BindView(R.id.et_phone)
     EditText etPhone;
-    // 到达时限
+    /**
+     * 到达时限
+     */
     @BindView(R.id.tv_time)
     TextView tvTime;
-    // 故障明细数量
+    /**
+     * 故障明细数量
+     */
     @BindView(R.id.tv_faultNum)
     TextView tvFaultNum;
-    //添加故障
+    /**
+     * 添加故障
+     */
     @BindView(R.id.btn_add_trouble)
     TextView btnAddTrouble;
-    // 故障列表
+    /**
+     * 故障列表
+     */
     @BindView(R.id.rv_list)
     RecyclerView rvList;
-    // 下一步
+    /**
+     * 下一步
+     */
     @BindView(R.id.tv_next)
     TextView tvNext;
 
@@ -151,24 +179,38 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
     private String address = "";
     private ToRepairAdapter evaluateAdapter = null;
 
-    // 扫码选择技师 传递的值
+    /**
+     * 扫码选择技师 传递的值
+     */
     private RepairOrderEntity repairOrderEntity;
     private String isScan = "";
-    // 判断是否是个人还是公司用户
+    /**
+     * 判断是否是个人还是公司用户
+     */
     private boolean mIsCompany = true;
 
-    // 选择性别 默认是男
+    /**
+     * 选择性别 默认是男
+     */
     private int mSex = 1;
-    // 区县ID
+    /**
+     * 区县ID
+     */
     private int mAreaId;
     private Long mOwnerOrgId;
 
-    // 扫码报修
+    /**
+     * 扫码报修
+     */
     private boolean isScanRepair = false;
 
-    //项目名称的集合
+    /**
+     * 项目名称的集合
+     */
     private List<String> projectName;
-    //项目的projectid 默认值
+    /**
+     * 项目的projectid 默认值
+     */
     private int currentIndex = -1;
     private List<ProjectEntity> mProjectList;
 
@@ -199,14 +241,16 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
         //个人客户 单位名称自己输入
         if (user.getAccount().getDefaultUser().getCompanyId() <= 0) {
             name = user.getAccount().getRealName();
-            mIsCompany = true;// 个人用户为true
+            // 个人用户为true
+            mIsCompany = true;
             tvRepairCompanyName.setVisibility(View.GONE);
             etCompanyName.setVisibility(View.VISIBLE);
 
             ll_user_info.setVisibility(View.VISIBLE);
             iv_arrow.setImageDrawable(getResources().getDrawable(R.mipmap.ic_worker_detail_area_down));
         } else {
-            mIsCompany = false;// 公司用户为false
+            // 公司用户为false
+            mIsCompany = false;
             name = user.getAccount().getDefaultUser().getCompanyEntity().getOrgName();
             tvRepairCompanyName.setVisibility(View.VISIBLE);
             etCompanyName.setVisibility(View.GONE);

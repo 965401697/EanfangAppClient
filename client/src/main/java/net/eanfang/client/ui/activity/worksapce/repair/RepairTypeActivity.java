@@ -21,8 +21,6 @@ import butterknife.OnClick;
  */
 public class RepairTypeActivity extends BaseActivity {
 
-    @BindView(R.id.iv_repairList)
-    ImageView ivRepairList;
     @BindView(R.id.iv_repairNew)
     ImageView ivRepairNew;
 
@@ -51,8 +49,10 @@ public class RepairTypeActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.iv_repairNew:
                 if (PermKit.get().getRepairCreatePerm()) {
-                    JumpItent.jump(RepairTypeActivity.this, RepairActivity.class);
+                    JumpItent.jump(RepairTypeActivity.this, AddTroubleActivity.class);
                 }
+                break;
+            default:
                 break;
         }
     }

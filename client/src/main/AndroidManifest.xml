@@ -967,7 +967,7 @@
         <activity
             android:name=".ui.activity.worksapce.security.SecurityDetailActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden"></activity>
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".ui.activity.worksapce.online.FindExpertActivity"
             android:launchMode="singleTask" />
@@ -990,7 +990,8 @@
         <activity android:name=".ui.activity.worksapce.security.SecurityPersonalActivity" />
         <activity android:name=".ui.activity.worksapce.security.SecurityCommentListActivity" />
         <activity android:name=".ui.activity.worksapce.security.SecurityPersonalPublicListActivity" />
-        <activity android:name=".ui.activity.worksapce.security.SecurityFoucsListActivity"/>
+        <activity android:name=".ui.activity.worksapce.security.SecurityFoucsListActivity" />
+        <activity android:name=".ui.activity.worksapce.repair.TroubleListActivity"></activity>
     </application>
 
 </manifest>

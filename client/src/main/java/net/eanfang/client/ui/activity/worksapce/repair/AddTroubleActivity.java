@@ -41,8 +41,10 @@ import com.yaf.base.entity.RepairBugEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.equipment.EquipmentAddActivity;
+import net.eanfang.client.ui.activity.worksapce.equipment.EquipmentListActivity;
 import net.eanfang.client.ui.activity.worksapce.scancode.ScanCodeActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
+import net.eanfang.client.ui.widget.RepairSelectDevicesDialog;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -89,66 +91,92 @@ public class AddTroubleActivity extends BaseClientActivity {
      * 扫码报修
      */
     private final int SCAN_REAPIR_ADDTROUBLE = 20190116;
-    //故障设备名称
+    /**
+     * 故障设备名称
+     */
     @BindView(R.id.tv_faultDeviceName)
     TextView tvFaultDeviceName;
-    @BindView(R.id.ll_faultDeviceName)
-    LinearLayout llFaultDeviceName;
-    // 故障设备编号
+    /**
+     * 故障设备编号
+     */
     @BindView(R.id.tv_deviceNumHint)
     TextView tvDeviceNameHint;
     @BindView(R.id.tv_deviceNum)
     TextView tvDeviceNum;
     @BindView(R.id.ll_deviceNum)
     LinearLayout llDeviceNum;
-    // 故障设备编号
+    /**
+     * 故障设备编号
+     */
     @BindView(R.id.tv_deviceLocationHint)
     TextView tvDeviceLocationHint;
     @BindView(R.id.tv_deviceLocation)
     TextView tvDeviceLocation;
     @BindView(R.id.ll_deviceLocaltion)
     LinearLayout llDeviceLocaltion;
-    // 故障设备品牌
+    /**
+     * 故障设备品牌
+     */
     @BindView(R.id.tv_deviceBrand)
     TextView tvDeviceBrand;
     @BindView(R.id.ll_deviceBrand)
     LinearLayout llDeviceBrand;
-    // 故障设备型号
+    /**
+     * 故障设备型号
+     */
     @BindView(R.id.tv_deviceModelHint)
     TextView tvDeviceModelHint;
     @BindView(R.id.tv_deviceModel)
     TextView tvDeviceModel;
     @BindView(R.id.ll_devicesModel)
     LinearLayout llDevicesModel;
-    // 故障简述
+    /**
+     * 故障简述
+     */
     @BindView(R.id.tv_faultDescripte)
     TextView tvFaultDescripte;
-    // 故障编号
+    /**
+     * 故障编号
+     */
     @BindView(R.id.tv_faultNum)
     TextView tvFaultNum;
     @BindView(R.id.snpl_moment_add_photos)
     BGASortableNinePhotoLayout snplMomentAddPhotos;
-    // 故障详细描述
+    /**
+     * 故障详细描述
+     */
     @BindView(R.id.ev_faultDescripte)
     EditText evFaultDescripte;
-    // 确定
+    /**
+     * 确定e
+     */
     @BindView(R.id.rl_confirmDevice)
     RelativeLayout rlConfirmDevice;
-    // 设备库
+    /**
+     * 设备库
+     */
     @BindView(R.id.ll_deviceHouse)
     LinearLayout llDeviceHouse;
-    // 设备编号
+    /**
+     * 设备编号
+     */
     @BindView(R.id.et_deviceNum)
     EditText etDeviceNum;
-    // 设备位置
+    /**
+     * 设备位置
+     */
     @BindView(R.id.et_deviceLocation)
     EditText etDeviceLocation;
     @BindView(R.id.et_faultNum)
     EditText etFaultNum;
-    // 故障信息
+    /**
+     * 故障信息
+     */
     @BindView(R.id.ll_faultInfo)
     LinearLayout llFaultInfo;
-    // 位置编号
+    /**
+     * 位置编号
+     */
     @BindView(R.id.et_deviceLocationNum)
     EditText etDeviceLocationNum;
     @BindView(R.id.iv_input_voice)
@@ -157,7 +185,9 @@ public class AddTroubleActivity extends BaseClientActivity {
     LinearLayout ll_scan;
     @BindView(R.id.iv_right)
     ImageView ivRight;
-    // 拍摄视频
+    /**
+     * 拍摄视频
+     */
     @BindView(R.id.tv_addViedeo)
     TextView tvAddViedeo;
     @BindView(R.id.iv_thumbnail)
@@ -176,19 +206,25 @@ public class AddTroubleActivity extends BaseClientActivity {
 
     private Map<String, String> uploadMap = new HashMap<>();
 
-    // 设备code 设备id
+    /**
+     * 设备code 设备id
+     */
     private String dataCode = "";
     private Long dataId;
     //   系统类别
     private String businessOneCode = "";
 
-    // 添加记录
+    /**
+     * 添加记录
+     */
     List<CooperationEntity> cooperationEntities = new ArrayList<>();
     private List<RepairBugEntity> beanList = new ArrayList<>();
 
     private RepairBugEntity repairBugEntity = new RepairBugEntity();
 
-    // 扫码查看设备 报修
+    /**
+     * 扫码查看设备 报修
+     */
     private CustDeviceEntity mDeviceBean;
     private boolean isScanRepair = false;
 
@@ -201,6 +237,11 @@ public class AddTroubleActivity extends BaseClientActivity {
      */
     private String mVieoPath = "";
 
+    /**
+     * 选择故障设备
+     */
+    private RepairSelectDevicesDialog repairSelectDevicesDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -211,10 +252,12 @@ public class AddTroubleActivity extends BaseClientActivity {
         setListener();
     }
 
-    // 扫码获取数据
+    /**
+     * 扫码获取数据
+     */
     private void initData() {
         if (mDeviceBean != null) {
-            //故障设备名称
+            //故障设备名称a
             tvFaultDeviceName.setText(mDeviceBean.getDeviceName());
 
             dataCode = V.v(() -> mDeviceBean.getBusinessThreeCode());
@@ -412,9 +455,21 @@ public class AddTroubleActivity extends BaseClientActivity {
     @OnClick({R.id.ll_deviceHouse, R.id.ll_faultDeviceName, R.id.ll_deviceNum, R.id.ll_deviceLocaltion, R.id.ll_deviceBrand, R.id.ll_devicesModel, R.id.ll_faultInfo})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            //故障设备名称
+            //故障设备
             case R.id.ll_faultDeviceName:
-                JumpItent.jump(AddTroubleActivity.this, SelectDeviceTypeActivity.class, REQUEST_FAULTDEVICEINFO);
+                repairSelectDevicesDialog = new RepairSelectDevicesDialog(this, new RepairSelectDevicesDialog.OnSelectListener() {
+                    @Override
+                    public void onDeviceType() {
+                        JumpItent.jump(AddTroubleActivity.this, SelectDeviceTypeActivity.class, REQUEST_FAULTDEVICEINFO);
+                    }
+
+                    @Override
+                    public void onDeviceWareHouse() {
+                        JumpItent.jump(AddTroubleActivity.this, EquipmentListActivity.class, REQUEST_FAULTDEVICEINFO);
+                    }
+                });
+                repairSelectDevicesDialog.show();
+
                 break;
             //前往设备库
             case R.id.ll_deviceHouse:
@@ -426,6 +481,7 @@ public class AddTroubleActivity extends BaseClientActivity {
                 Bundle b = new Bundle();
                 b.putString("businessOneCode", dataCode);
                 JumpItent.jump(AddTroubleActivity.this, EquipmentAddActivity.class, b, REQUEST_EQUIPMENT);
+//                EquipmentListActivity
                 break;
             // 故障设备编号
             case R.id.ll_deviceNum:
@@ -493,8 +549,8 @@ public class AddTroubleActivity extends BaseClientActivity {
         EanfangHttp.post(RepairApi.GET_REAPIR_DO_VERIRFY)
                 .upJson(JSON.toJSONString(cooperationEntities))
                 .execute(new EanfangCallback<CooperationEntity>(this, true, CooperationEntity.class, (bean) -> {
-
-                    if (isScanRepair) {// 扫码添加故障
+                    // 扫码添加故障
+                    if (isScanRepair) {
                         Intent intent = new Intent();
                         if (bean != null) {
                             intent.putExtra("mOwnerOrgId", bean.getOwnerOrgId());
@@ -540,5 +596,12 @@ public class AddTroubleActivity extends BaseClientActivity {
         initData();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (repairSelectDevicesDialog != null) {
+            repairSelectDevicesDialog.dismiss();
+        }
+    }
 
 }

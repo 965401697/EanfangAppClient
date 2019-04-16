@@ -60,7 +60,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen_5"
-                            android:text="扫码输入"
+                            android:text="扫一扫"
                             android:textColor="@color/colorPrimary"
                             android:textSize="@dimen/textSize_12" />
 
@@ -80,7 +80,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="故障设备"
-                        android:textColor="@color/color_client_neworder"
+                        android:textColor="@color/color_bottom"
                         android:textSize="@dimen/textSize_13" />
 
                     <TextView
