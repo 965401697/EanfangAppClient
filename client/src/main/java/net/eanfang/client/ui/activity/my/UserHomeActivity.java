@@ -21,12 +21,14 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.UserHomePageBean;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.witget.DefaultPopWindow;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.worksapce.security.SecurityPersonalActivity;
 import net.eanfang.client.ui.adapter.UserHomeAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
@@ -187,8 +189,14 @@ public class UserHomeActivity extends BaseClientActivity {
         mImgCircle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtil.get().showToast(UserHomeActivity.this, "跳转圈子动态");
-
+                if (mCompanyInfoBean != null) {
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean("isLookOther", true);
+                    bundle.putLong("mUserId", Long.parseLong(mCompanyInfoBean.getUserId()));
+                    JumpItent.jump(UserHomeActivity.this, SecurityPersonalActivity.class, bundle);
+                } else {
+                    showToast("用户信息有误！");
+                }
             }
         });
     }
