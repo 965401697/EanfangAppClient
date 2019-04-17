@@ -271,6 +271,7 @@ public class UserHomeActivity extends BaseWorkerActivity {
             mBtnConcern.setText("+ 关注");
             mBtnConcern.setTextColor(Color.WHITE);
             mBtnConcern.setSelected(true);
+            mBtnConcern.setClickable(true);
         }
     }
 

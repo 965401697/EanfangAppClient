@@ -277,6 +277,7 @@ public class UserHomeActivity extends BaseClientActivity {
             mBtnConcern.setText("+ 关注");
             mBtnConcern.setTextColor(Color.WHITE);
             mBtnConcern.setSelected(true);
+            mBtnConcern.setClickable(true);
         }
     }
 
