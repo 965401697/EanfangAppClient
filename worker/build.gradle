@@ -5,7 +5,7 @@ android {
     compileSdkVersion cfg.compileSdkVersion
     buildToolsVersion cfg.buildToolsVersion
     defaultConfig {
-        applicationId cfg.clientId
+        applicationId cfg.workerId
         minSdkVersion cfg.minSdkVersion
         targetSdkVersion cfg.targetSdkVersion
         versionCode cfg.versionCode
@@ -171,8 +171,8 @@ dependencies {
 //    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
 
     //butterknife
-//    compile 'com.jakewharton:butterknife:10.1.0'
-//    annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
+    implementation 'com.jakewharton:butterknife:10.1.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
     // add library
     implementation project(':IMKit')
     implementation project(':zxing')
