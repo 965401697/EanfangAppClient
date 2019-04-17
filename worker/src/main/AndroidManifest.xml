@@ -1131,7 +1131,9 @@
             android:name=".ui.activity.worksapce.security.SecurityListActivity"
             android:theme="@style/NewBaseTheme" />
         <activity android:name=".ui.activity.worksapce.security.SecurityCreateActivity" />
-        <activity android:name=".ui.activity.worksapce.security.SecurityDetailActivity" />
+        <activity
+            android:name=".ui.activity.worksapce.security.SecurityDetailActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".ui.activity.my.specialist.SpecialistSkillInfoDetailActivity" />
         <activity
             android:name=".ui.activity.worksapce.online.ExpertOnlineActivity"

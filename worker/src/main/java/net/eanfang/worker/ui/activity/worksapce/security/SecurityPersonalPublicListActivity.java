@@ -103,7 +103,14 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
      * 点赞、我的
      * */
     public void initLikeAndAboutAdapter() {
-        securityListAdapter = new SecurityListAdapter(EanfangApplication.get().getApplicationContext(), true);
+        /**
+         * 点赞不需要已读未读
+         * */
+        if (mLike.equals(mType)) {
+            securityListAdapter = new SecurityListAdapter(EanfangApplication.get().getApplicationContext(), false);
+        } else {
+            securityListAdapter = new SecurityListAdapter(EanfangApplication.get().getApplicationContext(), true);
+        }
         securityListAdapter.bindToRecyclerView(rvSecurity);
         securityListAdapter.setOnLoadMoreListener(this, rvSecurity);
         securityListAdapter.setOnItemClickListener((adapter, view, position) -> {
