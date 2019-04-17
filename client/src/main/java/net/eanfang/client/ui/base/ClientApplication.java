@@ -57,11 +57,11 @@ public class ClientApplication extends EanfangApplication {
             api.registerApp(EanfangConst.WX_APPID_CLIENT);
 
             try {
-                SharePreferenceUtil.get().set(BuildConfig.TYPE_APP,BuildConfig.TYPE);
+                SharePreferenceUtil.get().set("APP_TYPE", BuildConfig.APP_TYPE);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            MobSDK.init(this,"22bb8de378eab","f93cc21381c6f51702be823efde3e402");
+            MobSDK.init(this, "22bb8de378eab", "f93cc21381c6f51702be823efde3e402");
         }
 
 

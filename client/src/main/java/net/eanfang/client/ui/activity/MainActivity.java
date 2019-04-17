@@ -161,7 +161,7 @@ public class MainActivity extends BaseClientActivity {
     private void initUpdate() {
         if (!EanfangApplication.isUpdated) {
             //app更新
-            UpdateAppManager.update(this, BuildConfig.TYPE, false);
+            UpdateAppManager.update(this, BuildConfig.APP_TYPE, false);
             EanfangApplication.isUpdated = true;
         }
     }

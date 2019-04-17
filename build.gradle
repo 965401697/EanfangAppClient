@@ -54,12 +54,29 @@ ext {
             ossServer        : "\"http://oss.eanfang.net/\"",
             ossBucket        : "\"eanfang\"",
             ossEndpoint      : "\"oss-cn-beijing.aliyuncs.com/\"",
-            JavaVersion      : JavaVersion.VERSION_1_8,
+            javaVersion      : JavaVersion.VERSION_1_8,
             debugMod         : "true",
             betaApiHost      : "\"http://api.beta.eanfang.net\"",
             proApiHost       : "\"https://api.eanfang.net\"",
-
             localApiHost     : "\"http://192.168.0.222:8080\"",
+            clientId         : "net.eanfang.client",
+            workerId         : "net.eanfang.worker",
+            clientBetaBugly  : "\"6f03b7d57f\"",
+            clientProBugly   : "\"3a5df914f4\"",
+
+            workerBetaBugly  : "\"fecc678a04\"",
+            workerProBugly   : "\"a6bae9f6ee\"",
+
+            //xinge config
+            xgClientAccessId : "2100270001",
+            xgClientAccessKey: "ADCL916N8D7M",
+            xgClientAmapKey  : "5c53bd9d6c8d249f637bf025d8f44977",
+            xgClientHwAppid  : "100379427",
+
+            xgWorkerAccessId : "2100270002",
+            xgWorkerAccessKey: "A72E1ECQX57G",
+            xgWorkerAmapKey  : "db2be5c0ebed1c47388afd3c361bbfe3",
+            xgWorkerHwAppid  : "100379649",
 
             // client config
 

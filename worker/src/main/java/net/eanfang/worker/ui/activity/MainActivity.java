@@ -212,7 +212,7 @@ public class MainActivity extends BaseActivity{
 
         if (!EanfangApplication.isUpdated) {
             //app更新
-            UpdateAppManager.update(this, BuildConfig.TYPE, false);
+            UpdateAppManager.update(this, BuildConfig.APP_TYPE, false);
             EanfangApplication.isUpdated = true;
         }
     }

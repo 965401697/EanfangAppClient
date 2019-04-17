@@ -72,7 +72,7 @@ public class WorkerApplication extends EanfangApplication {
             RongIM.getInstance().setReadReceiptConversationTypeList(types);
 
             try {
-                SharePreferenceUtil.get().set(BuildConfig.TYPE_APP, BuildConfig.TYPE);
+                SharePreferenceUtil.get().set("APP_TYPE", BuildConfig.APP_TYPE);
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -76,7 +76,7 @@ public class AboutUsView extends BaseDialog {
         });
         // 版本更新
         llUpdate.setOnClickListener((v) -> {
-            UpdateAppManager.update(mContext, BuildConfig.TYPE, true);
+            UpdateAppManager.update(mContext, BuildConfig.APP_TYPE, true);
 
 //            UpdateManager manager = new UpdateManager(mContext, BuildConfig.TYPE);
 //            manager.checkUpdate();

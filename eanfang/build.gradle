@@ -22,8 +22,8 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility cfg.JavaVersion
-        targetCompatibility cfg.JavaVersion
+        sourceCompatibility cfg.javaVersion
+        targetCompatibility cfg.javaVersion
     }
 
     sourceSets {

@@ -1,14 +1,13 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 28
-    buildToolsVersion '28.0.3'
-
+    compileSdkVersion cfg.compileSdkVersion
+    buildToolsVersion cfg.buildToolsVersion
     defaultConfig {
-        minSdkVersion 17
-        targetSdkVersion 28
-        versionCode 18111601
-        versionName "2.3.28"
+        minSdkVersion cfg.minSdkVersion
+        targetSdkVersion cfg.targetSdkVersion
+        versionCode cfg.versionCode
+        versionName cfg.versionName
     }
 
     buildTypes {
@@ -32,13 +31,13 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    implementation pkg.legacySupportV4
 }
-
-repositories {
-    maven {
-        url 'https://maven.google.com/'
-        name 'Google'
-    }
-}
+//
+//repositories {
+//    maven {
+//        url 'https://maven.google.com/'
+//        name 'Google'
+//    }
+//}

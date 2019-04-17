@@ -28,10 +28,5 @@ public class LookMaterialAdapter extends BaseQuickAdapter<BughandleUseDeviceEnti
 
         helper.addOnClickListener(R.id.tv_delete);
 
-        //客户端隐藏删除按钮
-        if (BuildConfig.APP_TYPE == 0) {
-            helper.setVisible(R.id.tv_delete, false);
-        }
-
     }
 }
