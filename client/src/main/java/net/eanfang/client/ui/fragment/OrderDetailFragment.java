@@ -119,7 +119,7 @@ public class OrderDetailFragment extends BaseFragment {
     private TextView tv_phone_desc;
     private LinearLayout ll_wait;
     private View line;
-    private PayLogEntity payLogEntity;
+    private PayLogEntity payLogEntity = null;
 
 
     public static OrderDetailFragment getInstance(Long id) {
@@ -196,12 +196,14 @@ public class OrderDetailFragment extends BaseFragment {
 
         // 确认完工  立即评价
         tvBottomRight.setOnClickListener((v) -> {
-            if (mOrderStatus == 4) {// 确认完工
+            if (mOrderStatus == 4) {
+                // 确认完工
                 if (doCompare(mOwnerUserId, mUserId)) {
                     new TroubleDetalilListActivity(getActivity(), true, mItemId, mIsPhoneSolve, "待确认", false).show();
                 }
 
-            } else if (mOrderStatus == 5) {//立即评价
+            } else if (mOrderStatus == 5) {
+                //立即评价
                 if (doCompare(mOwnerUserId, mUserId)) {
                     startActivity(new Intent(getActivity(), EvaluateWorkerActivity.class)
                             .putExtra("ordernum", mOrderNum)
@@ -282,13 +284,14 @@ public class OrderDetailFragment extends BaseFragment {
                 .execute(new EanfangCallback<RepairOrderEntity>(getActivity(), true, RepairOrderEntity.class, (bean) -> {
                     //================================================================
                     //初始化支付对象
-                    payLogEntity = new PayLogEntity();
-                    payLogEntity.setOrderId(bean.getId());
-                    payLogEntity.setOrderNum(bean.getOrderNum());
-                    payLogEntity.setOrderType(Constant.OrderType.REPAIR.ordinal());
-                    payLogEntity.setAssigneeUserId(bean.getOwnerUserId());
-                    payLogEntity.setAssigneeOrgCode(bean.getOwnerOrgCode());
-                    payLogEntity.setAssigneeTopCompanyId(bean.getOwnerTopCompanyId());
+                    payLogEntity = bean.getPayLogEntity();
+//                    payLogEntity = new PayLogEntity();
+//                    payLogEntity.setOrderId(bean.getId());
+//                    payLogEntity.setOrderNum(bean.getOrderNum());
+//                    payLogEntity.setOrderType(Constant.OrderType.REPAIR.ordinal());
+//                    payLogEntity.setAssigneeUserId(bean.getOwnerUserId());
+//                    payLogEntity.setAssigneeOrgCode(bean.getOwnerOrgCode());
+//                    payLogEntity.setAssigneeTopCompanyId(bean.getOwnerTopCompanyId());
                     //==================================================================
 
                     hashMap.put("id", String.valueOf(bean.getId()));
