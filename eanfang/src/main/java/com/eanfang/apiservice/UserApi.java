@@ -326,6 +326,11 @@ public interface UserApi {
     String POST_FOLLOWS_LIST = BuildConfig.API_HOST + "/yaf_sys/expertsOnline/followerPeopleList";
 
     /**
+     * 获取同行人脉列表
+     */
+    String POST_CONNECTIONS_LIST = BuildConfig.API_HOST + "/yaf_sys/askspcfollowers/connectionsList";
+
+    /**
      * 改变关注状态
      */
     String POST_CHANGE_FOLLOW_STATUS = BuildConfig.API_HOST + "/yaf_sys/expertsOnline/changeFollowStatus";

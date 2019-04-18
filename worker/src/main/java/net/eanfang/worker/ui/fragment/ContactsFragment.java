@@ -34,6 +34,7 @@ import com.yaf.sys.entity.OrgEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.im.FollowListActivity;
+import net.eanfang.worker.ui.activity.im.PeerConnectionListActivity;
 import net.eanfang.worker.ui.activity.im.MorePopWindow;
 import net.eanfang.worker.ui.activity.im.MyFriendsListActivity;
 import net.eanfang.worker.ui.activity.im.MyGroupsListActivity;
@@ -210,7 +211,13 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
             }
         });
 
-
+        view.findViewById(R.id.rl_peer_connection).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //同行人脉
+                startActivity(new Intent(getActivity(), PeerConnectionListActivity.class));
+            }
+        });
         ((android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setOnRefreshListener(this);
 
 
