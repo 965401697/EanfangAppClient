@@ -71,10 +71,6 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
      * 报修地址回调 code
      */
     private final int REPAIR_ADDRESS_CALLBACK_CODE = 1;
-    /**
-     * 添加故障明细回调
-     */
-    private final int ADD_TROUBLE_CALLBACK_CODE = 2;
 
     /**
      * 公司名称
@@ -140,11 +136,6 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
     @BindView(R.id.btn_add_trouble)
     TextView btnAddTrouble;
     /**
-     * 故障列表
-     */
-    @BindView(R.id.rv_list)
-    RecyclerView rvList;
-    /**
      * 下一步
      */
     @BindView(R.id.tv_next)
@@ -169,7 +160,6 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
 
     //选择时限 Popwindow
     private RepairSelectTimePop repairSelectTimePop;
-    private List<RepairBugEntity> beanList = new ArrayList<>();
 
     private String latitude = "";
     private String longitude = "";
@@ -177,7 +167,6 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
     private String city = "";
     private String county = "";
     private String address = "";
-    private ToRepairAdapter evaluateAdapter = null;
 
     /**
      * 扫码选择技师 传递的值
@@ -197,12 +186,8 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
      * 区县ID
      */
     private int mAreaId;
-    private Long mOwnerOrgId;
 
-    /**
-     * 扫码报修
-     */
-    private boolean isScanRepair = false;
+
 
     /**
      * 项目名称的集合
@@ -227,7 +212,6 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
         ButterKnife.bind(this);
         initData();
         initListener();
-        initAdapter();
 //        initScanRepair();
 
         getProjectList();
@@ -276,54 +260,7 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
     }
 
 
-    private void initAdapter() {
-        evaluateAdapter = new ToRepairAdapter(R.layout.item_trouble, beanList);
-        evaluateAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
-        rvList.setLayoutManager(new LinearLayoutManager(this));
-        rvList.addOnItemTouchListener(new OnItemChildClickListener() {
-            @Override
-            public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                beanList.remove(position);
-                evaluateAdapter.notifyDataSetChanged();
-            }
-        });
-        rvList.setAdapter(evaluateAdapter);
-    }
 
-    /**
-     * 选择技师
-     */
-    private void goSelectWorker() {
-        if (!checkInfo()) {
-            return;
-        }
-        // 查找上门费 判断当前城市是否开通  如果没有开通，提示 您报修的城市暂未开通服务。不能继续选技师
-        EanfangHttp.post(RepairApi.GET_REAPIR_PAY_PRICE)
-                .params("baseDataId", mAreaId)
-                .execute(new EanfangCallback<RepairOpenAreaBean>(RepairActivity.this, true, RepairOpenAreaBean.class, bean -> {
-                    /**
-                     * status   0：停用，1启用
-                     * */
-                    if (bean.getStatus() == 1) {
-                        // 扫码已经选择完技师 ，直接确认
-                        if (!StringUtils.isEmpty(isScan) && isScan.equals("scaning")) {
-                            Intent intent_scan = new Intent(RepairActivity.this, OrderConfirmActivity.class);
-                            intent_scan.putExtra("bean", doQrFillBean());
-                            intent_scan.putExtra("doorFee", bean.getDoorFee());
-                            startActivity(intent_scan);
-                        } else {
-                            Intent intent = new Intent(RepairActivity.this, SelectWorkerActivity.class);
-                            intent.putExtra("bean", fillBean());
-                            intent.putExtra("doorFee", bean.getDoorFee());
-                            intent.putExtra("mOwnerOrgId", mOwnerOrgId);
-                            intent.putStringArrayListExtra("businessIds", (ArrayList<String>) Stream.of(beanList).map(beans -> Config.get().getBusinessIdByCode(beans.getBusinessThreeCode(), 1) + "").distinct().toList());
-                            startActivity(intent);
-                        }
-                    } else {
-                        showToast("所在城市暂未开通服务");
-                    }
-                }));
-    }
 
     /**
      * 放弃报修
@@ -332,15 +269,6 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
         new TrueFalseDialog(this, "系统提示", "是否放弃报修？", () -> {
             finish();
         }).showDialog();
-    }
-
-    /**
-     * 故障明细
-     */
-    public void addTouble() {
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("beanList", (Serializable) beanList);
-        JumpItent.jump(this, AddTroubleActivity.class, bundle, ADD_TROUBLE_CALLBACK_CODE);
     }
 
     /**
@@ -491,16 +419,6 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
         return repairOrderEntity;
     }
 
-    /**
-     * 监听 返回键
-     */
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            giveUp();
-        }
-        return false;
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -523,14 +441,6 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
 
                 //将选择的地址 取 显示值
                 etDetailAddress.setText(address);
-                break;
-            case ADD_TROUBLE_CALLBACK_CODE:
-                isScanRepair = data.getBooleanExtra("isScanRepair", false);
-                RepairBugEntity repairBugEntity = (RepairBugEntity) data.getSerializableExtra("bean");
-                beanList.add(repairBugEntity);
-                evaluateAdapter.notifyDataSetChanged();
-                mOwnerOrgId = getIntent().getLongExtra("mOwnerOrgId", 0);
-//                initData();
                 break;
             default:
                 break;
@@ -607,15 +517,9 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
     }
 
 
-    @OnClick({R.id.iv_left, R.id.tv_selectAdress, R.id.btn_add_trouble, R.id.ll_user_desc, R.id.tv_next})
+    @OnClick({ R.id.tv_selectAdress, R.id.btn_add_trouble, R.id.ll_user_desc, R.id.tv_next})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.iv_left:
-                giveUp();
-                break;
-            case R.id.btn_add_trouble:
-                addTouble();
-                break;
             case R.id.tv_next:
                 goSelectWorker();
                 break;

@@ -89,7 +89,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dimen_40"
                         android:layout_weight="1"
-                        android:text=""
+                        android:gravity="right"
                         android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_13" />
 
@@ -125,75 +125,64 @@
 
                 <View style="@style/style_common_line_gray" />
 
+
                 <LinearLayout
-                    android:id="@+id/ll_deviceHouse"
+                    android:id="@+id/ll_deviceBrand"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="15dp"
-                    android:visibility="visible">
+                    android:padding="15dp">
 
                     <TextView
-                        android:layout_width="@dimen/dimen_160"
-                        android:layout_height="@dimen/dimen_50"
-                        android:background="@drawable/bg_client_camera_text_back_pressed"
-                        android:gravity="center"
-                        android:text="设备档案库"
-                        android:textColor="@color/color_white"
-                        android:textSize="@dimen/textSize_12" />
-
-                    <TextView
+                        android:id="@+id/tv_deviceBrandHint"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="设备品牌"
+                        android:textColor="@color/color_bottom"
+                        android:textSize="@dimen/textSize_13" />
+
+                    <TextView
+                        android:id="@+id/tv_deviceBrand"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_36"
                         android:layout_weight="1"
                         android:gravity="right"
-                        android:text="前往设备库"
-                        android:textColor="@color/color_bottom"
+                        android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_13" />
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="@dimen/dimen_16"
+                        android:layout_marginLeft="5dp"
                         android:src="@mipmap/ic_icon_right" />
                 </LinearLayout>
 
                 <View style="@style/style_common_line_gray" />
 
                 <LinearLayout
-                    android:id="@+id/ll_deviceNum"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:padding="15dp"
-                    android:visibility="gone">
+                    android:padding="15dp">
 
                     <TextView
-                        android:id="@+id/tv_deviceNumHint"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="请输入设备编号"
+                        android:text="故障位置"
                         android:textColor="@color/color_bottom"
                         android:textSize="@dimen/textSize_13" />
 
-                    <TextView
-                        android:id="@+id/tv_deviceNum"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dimen_36"
-                        android:layout_weight="1"
-                        android:text=""
-                        android:textColor="@color/color_client_neworder"
-                        android:textSize="@dimen/textSize_13" />
-
                     <EditText
-                        android:id="@+id/et_deviceNum"
+                        android:id="@+id/et_deviceLocation"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="@dimen/dimen_36"
                         android:layout_weight="1"
                         android:background="@null"
+                        android:gravity="right"
+                        android:hint="请输入故障位置"
                         android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_13" />
                 </LinearLayout>
@@ -210,20 +199,9 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="位置编号:"
-                        android:textColor="@color/color_client_neworder"
+                        android:text="位置编号"
+                        android:textColor="@color/color_bottom"
                         android:textSize="@dimen/textSize_13" />
-
-                    <!--<TextView-->
-                    <!--android:id="@+id/tv_deviceLocationNum"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_marginLeft="@dimen/dimen_36"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:text=""-->
-                    <!--android:textColor="@color/color_client_neworder"-->
-                    <!--android:textSize="@dimen/textSize_13"-->
-                    <!--android:visibility="gone" />-->
 
                     <EditText
                         android:id="@+id/et_deviceLocationNum"
@@ -232,87 +210,11 @@
                         android:layout_marginLeft="@dimen/dimen_36"
                         android:layout_weight="1"
                         android:background="@null"
+                        android:gravity="right"
                         android:hint="请输入位置编号"
                         android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_13" />
                 </LinearLayout>
-
-                <View style="@style/style_common_line_gray" />
-
-                <LinearLayout
-                    android:id="@+id/ll_deviceLocaltion"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="15dp">
-
-                    <TextView
-                        android:id="@+id/tv_deviceLocationHint"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="故障位置:"
-                        android:textColor="@color/color_client_neworder"
-                        android:textSize="@dimen/textSize_13" />
-
-                    <TextView
-                        android:id="@+id/tv_deviceLocation"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dimen_36"
-                        android:layout_weight="1"
-                        android:text=""
-                        android:textColor="@color/color_client_neworder"
-                        android:textSize="@dimen/textSize_13"
-                        android:visibility="gone" />
-
-                    <EditText
-                        android:id="@+id/et_deviceLocation"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="@dimen/dimen_36"
-                        android:layout_weight="1"
-                        android:background="@null"
-                        android:hint="请输入故障位置"
-                        android:textColor="@color/color_client_neworder"
-                        android:textSize="@dimen/textSize_13" />
-                </LinearLayout>
-
-                <View style="@style/style_common_line_gray" />
-
-                <LinearLayout
-                    android:id="@+id/ll_deviceBrand"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="15dp">
-
-                    <TextView
-                        android:id="@+id/tv_deviceBrandHint"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="请选择设备品牌"
-                        android:textColor="@color/color_client_neworder"
-                        android:textSize="@dimen/textSize_13" />
-
-                    <TextView
-                        android:id="@+id/tv_deviceBrand"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dimen_36"
-                        android:layout_weight="1"
-                        android:text=""
-                        android:textColor="@color/color_client_neworder"
-                        android:textSize="@dimen/textSize_13" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginLeft="5dp"
-                        android:src="@mipmap/ic_icon_right" />
-                </LinearLayout>
-
-                <View style="@style/style_common_line_gray" />
 
                 <LinearLayout
                     android:id="@+id/ll_input_brand"
@@ -405,19 +307,20 @@
                     <TextView
                         android:layout_width="@dimen/dimen_120"
                         android:layout_height="@dimen/dimen_50"
-                        android:background="@drawable/bg_client_camera_text_back_pressed"
                         android:gravity="center"
                         android:text="故障简述"
-                        android:textColor="@color/color_white"
+                        android:textColor="@color/color_bottom"
                         android:textSize="@dimen/textSize_13" />
 
+
                     <TextView
+                        android:id="@+id/tv_faultDescripte"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="right"
-                        android:text="前往故障库"
-                        android:textColor="@color/color_bottom"
+                        android:hint="前往故障库"
+                        android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_13" />
 
                     <ImageView
@@ -427,43 +330,9 @@
                         android:layout_marginLeft="@dimen/dimen_16"
                         android:src="@mipmap/ic_icon_right" />
 
-                    <!--<EditText-->
-                    <!--android:id="@+id/et_faultDescripte"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:layout_marginLeft="@dimen/dimen_36"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:background="@null"-->
-                    <!--android:textColor="@color/color_client_neworder"-->
-                    <!--android:textSize="@dimen/textSize_13" />-->
                 </LinearLayout>
 
                 <View style="@style/style_common_line_gray" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/dimen_30">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="故障名称:"
-                        android:textColor="@color/color_client_neworder"
-                        android:textSize="@dimen/textSize_13" />
-
-                    <TextView
-                        android:id="@+id/tv_faultDescripte"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dimen_40"
-                        android:layout_weight="1"
-                        android:text="暂无"
-                        android:textColor="@color/color_bottom"
-                        android:textSize="@dimen/textSize_13"
-                        android:visibility="visible" />
-                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -519,7 +388,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/dimen_30"
                         android:text="@string/text_fault_description"
-                        android:textColor="@color/color_client_neworder"
+                        android:textColor="@color/color_bottom"
                         android:textSize="@dimen/textSize_13" />
 
                     <ImageView
@@ -536,10 +405,12 @@
                 <EditText
                     android:id="@+id/ev_faultDescripte"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_margin="@dimen/dimen_30"
-                    android:background="@drawable/bg_client_camera_text_back"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_30"
+                    android:layout_marginRight="@dimen/dimen_30"
+                    android:background="@null"
                     android:gravity="left"
+                    android:inputType="textMultiLine"
                     android:padding="10dp"
                     android:text=""
                     android:textColor="@color/color_client_neworder"
@@ -569,27 +440,18 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="故障现象图片"
-                            android:textColor="@color/color_client_neworder"
+                            android:textColor="@color/color_bottom"
                             android:textSize="@dimen/textSize_13" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="(最多上传3张)"
-                            android:textColor="@color/color_client_neworder"
+                            android:textColor="@color/color_bottom"
                             android:textSize="@dimen/textSize_13" />
 
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/tv_addViedeo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:background="@drawable/bg_client_camera_text_back_pressed"
-                        android:padding="@dimen/dimen_10"
-                        android:text="添加视频"
-                        android:textColor="@color/color_white" />
                 </RelativeLayout>
 
 
@@ -601,27 +463,28 @@
                     <com.photopicker.com.widget.BGASortableNinePhotoLayout
                         android:id="@+id/snpl_moment_add_photos"
                         android:layout_width="wrap_content"
-                        android:layout_height="@dimen/dimen_200"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_30"
                         app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
                         app:bga_snpl_deleteDrawableOverlapQuarter="false"
                         app:bga_snpl_editable="true"
                         app:bga_snpl_itemCornerRadius="0dp"
                         app:bga_snpl_itemSpanCount="3"
-                        app:bga_snpl_itemWhiteSpacing="0dp"
-                        app:bga_snpl_itemWidth="0dp"
+                        app:bga_snpl_itemWhiteSpacing="10dp"
+                        app:bga_snpl_itemWidth="@dimen/dimen_100"
                         app:bga_snpl_maxItemCount="3"
                         app:bga_snpl_otherWhiteSpacing="100dp"
                         app:bga_snpl_placeholderDrawable="@mipmap/ic_nodata"
-                        app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
+                        app:bga_snpl_plusDrawable="@mipmap/ic_pic_add"
                         app:bga_snpl_plusEnable="true"
                         app:bga_snpl_sortable="true" />
 
                     <RelativeLayout
                         android:id="@+id/rl_thumbnail"
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/dimen_200"
+                        android:layout_width="@dimen/dimen_100"
+                        android:layout_height="@dimen/dimen_100"
                         android:layout_marginLeft="@dimen/dimen_20"
+                        android:layout_marginTop="@dimen/dimen_40"
                         android:visibility="gone">
 
 
@@ -631,19 +494,20 @@
                             android:layout_height="@dimen/dimen_150"
                             android:layout_centerInParent="true" />
 
-                        <RelativeLayout
-                            android:layout_width="@dimen/dimen_150"
-                            android:layout_height="@dimen/dimen_150"
-                            android:layout_centerInParent="true"
-                            android:background="#1A000000"
-                            android:visibility="visible" />
-
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
                             android:src="@mipmap/ic_play_video" />
                     </RelativeLayout>
+
+                    <ImageView
+                        android:id="@+id/iv_add_video"
+                        android:layout_width="@dimen/dimen_100"
+                        android:layout_height="@dimen/dimen_100"
+                        android:layout_marginLeft="@dimen/dimen_20"
+                        android:layout_marginTop="@dimen/dimen_40"
+                        android:src="@mipmap/ic_add_video" />
 
                 </LinearLayout>
 
@@ -654,21 +518,38 @@
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
 
-    <RelativeLayout
-        android:id="@+id/rl_confirmDevice"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@mipmap/ic_repair_bottom_confim">
+        android:layout_marginBottom="@dimen/dimen_50"
+        android:layout_marginTop="@dimen/dimen_50"
+        android:orientation="horizontal">
+
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerInParent="true"
-            android:layout_centerVertical="true"
+            android:id="@+id/tv_save"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dimen_70"
+            android:layout_marginLeft="@dimen/dimen_40"
+            android:layout_marginRight="@dimen/dimen_40"
+            android:layout_weight="1"
+            android:background="@drawable/shape_bg_sure"
             android:gravity="center"
-            android:text="确  定"
-            android:textColor="@color/color_white"
+            android:text="保存"
+            android:textColor="@color/white"
             android:textSize="@dimen/textSize_13" />
-    </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_add"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dimen_70"
+            android:layout_marginRight="@dimen/dimen_40"
+            android:layout_weight="1"
+            android:background="@drawable/shape_bg_sure"
+            android:gravity="center"
+            android:text="再来一条"
+            android:textColor="@color/white"
+            android:textSize="@dimen/textSize_13" />
+
+    </LinearLayout>
 </LinearLayout>

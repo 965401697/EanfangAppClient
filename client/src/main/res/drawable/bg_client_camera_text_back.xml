@@ -6,7 +6,7 @@
     <solid android:color="@color/color_white" />
     <stroke
         android:width="@dimen/dimen_1"
-        android:color="@color/color_camera_input_radiobutton_stoke" />
+        android:color="@color/color_bottom" />
 
 
     <!-- android:radius 圆角的半径 -->
