@@ -43,7 +43,7 @@ public class FollowListActivity extends BaseClientActivity {
     /**
      * 当前页数
      */
-    private int mCurrPage;
+    private int mCurrPage = 1;
 
     /**
      * 总页数
@@ -55,10 +55,7 @@ public class FollowListActivity extends BaseClientActivity {
      */
     private Button mBtnFollow;
 
-    /**
-     * 执行关注状态 0：取消关注  1：加关注
-     */
-    private int mDoFollowStatus = 0;
+    private FollowDataBean.FollowListBean mFollowListBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +63,13 @@ public class FollowListActivity extends BaseClientActivity {
         setContentView(R.layout.activity_my_follow_list);
         ButterKnife.bind(this);
         initView();
-        initDate();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initDate();
     }
 
     private void initView() {
@@ -79,15 +81,14 @@ public class FollowListActivity extends BaseClientActivity {
         mFollowListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             switch (view.getId()) {
                 case R.id.btn_follow_item_addOrCancel:
-                    FollowDataBean.FollowListBean bean = (FollowDataBean.FollowListBean)
-                            adapter.getItem(position);
-                    if (bean != null && bean.getUserEntity() != null &&
-                            bean.getUserEntity().getAccountEntity() != null&&
-                            bean.getUserEntity().getAccountEntity().getAccId() != null) {
+                    mFollowListBean = (FollowDataBean.FollowListBean) adapter.getItem(position);
+                    if (mFollowListBean != null && mFollowListBean.getUserEntity() != null &&
+                            mFollowListBean.getUserEntity().getAccountEntity() != null &&
+                            mFollowListBean.getUserEntity().getAccountEntity().getAccId() != null) {
                         changeFollowStatus(String.valueOf(
-                                bean.getUserEntity().getAccountEntity().getAccId()),
-                                bean.getAsUserId(), bean.getAsCompanyId(),
-                                bean.getAsTopCompanyId(), mDoFollowStatus);
+                                mFollowListBean.getUserEntity().getAccountEntity().getAccId()),
+                                mFollowListBean.getAsUserId(), mFollowListBean.getAsCompanyId(),
+                                mFollowListBean.getAsTopCompanyId(), mFollowListBean.getFollowsStatus());
                     }
                     mBtnFollow = (Button) view;
                     break;
@@ -97,13 +98,12 @@ public class FollowListActivity extends BaseClientActivity {
         });
 
         mFollowListAdapter.setOnItemClickListener((adapter, view, position) -> {
-            FollowDataBean.FollowListBean bean = (FollowDataBean.FollowListBean)
-                    adapter.getItem(position);
-            if (bean != null && bean.getUserEntity() != null &&
-                    bean.getUserEntity().getAccountEntity() != null&&
-                    bean.getUserEntity().getAccountEntity().getAccId() != null) {
+            mFollowListBean = (FollowDataBean.FollowListBean) adapter.getItem(position);
+            if (mFollowListBean != null && mFollowListBean.getUserEntity() != null &&
+                    mFollowListBean.getUserEntity().getAccountEntity() != null &&
+                    mFollowListBean.getUserEntity().getAccountEntity().getAccId() != null) {
                 UserHomeActivity.startActivity(this,
-                        String.valueOf(bean.getUserEntity().getAccountEntity().getAccId()));
+                        String.valueOf(mFollowListBean.getUserEntity().getAccountEntity().getAccId()));
             }
         });
 
@@ -146,17 +146,22 @@ public class FollowListActivity extends BaseClientActivity {
 
     /**
      * 改变按钮的展示
+     *
      * @param isFollowed true：关注 false：未关注
      */
-    private void changeFollowBtnShow(boolean isFollowed){
+    private void changeFollowBtnShow(boolean isFollowed) {
         if (isFollowed) {
             mBtnFollow.setSelected(false);
             mBtnFollow.setText("已关注");
-            mDoFollowStatus = 0;
+            if (mFollowListBean != null) {
+                mFollowListBean.setFollowsStatus(0);
+            }
         } else {
             mBtnFollow.setSelected(true);
             mBtnFollow.setText("+ 关注");
-            mDoFollowStatus = 1;
+            if (mFollowListBean != null) {
+                mFollowListBean.setFollowsStatus(1);
+            }
         }
     }
 
@@ -171,10 +176,10 @@ public class FollowListActivity extends BaseClientActivity {
      */
     private void changeFollowStatus(String asAccId, String asUserId, String asCompanyId,
                                     String asTopCompanyId, int status) {
-        Log.e(TAG, "changeFollowStatus: asAcciId" + asAccId + "asUserId:" + asUserId +"  asCompanyId:" +asCompanyId
-        + "  asTopCompanyId:" + asTopCompanyId + "  status:" + status);
+        Log.e(TAG, "changeFollowStatus: asAccId" + asAccId + "asUserId:" + asUserId + "  asCompanyId:" + asCompanyId
+                + "  asTopCompanyId:" + asTopCompanyId + "  status:" + status);
         EanfangHttp.post(UserApi.POST_CHANGE_FOLLOW_STATUS)
-                .params("asAcciId", asAccId)
+                .params("asAccId", asAccId)
                 .params("asUserId", asUserId)
                 .params("asCompanyId", asCompanyId)
                 .params("asTopCompanyId", asTopCompanyId)
