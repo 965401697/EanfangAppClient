@@ -592,8 +592,9 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
             mAllCount = 0;
         }
         // 首页小红点的显示
-        if (bean.getRepair() > 0 || bean.getInstall() > 0 || bean.getDesign() > 0) {
-            mHome = bean.getRepair() + bean.getInstall() + bean.getDesign();
+        if (bean.getRepair() > 0 || bean.getInstall() > 0 || bean.getDesign() > 0
+                || bean.getNoReadCount() > 0 || bean.getCommentNoRead() > 0) {
+            mHome = bean.getRepair() + bean.getInstall() + bean.getDesign() + bean.getNoReadCount() + bean.getCommentNoRead();
 
         } else {
             mHome = 0;
