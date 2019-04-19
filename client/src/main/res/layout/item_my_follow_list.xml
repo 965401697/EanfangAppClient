@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen_128">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/iv_follow_item_header"
+        android:layout_width="@dimen/dimen_80"
+        android:layout_height="@dimen/dimen_80"
+        android:layout_marginStart="@dimen/dimen_36"
+        fresco:layout_constraintBottom_toBottomOf="parent"
+        fresco:layout_constraintStart_toStartOf="parent"
+        fresco:layout_constraintTop_toTopOf="parent"
+        fresco:placeholderImage="@mipmap/ic_header"
+        fresco:roundAsCircle="true" />
+
+    <TextView
+        android:id="@+id/tv_follow_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_24"
+        android:layout_marginTop="@dimen/dimen_30"
+        android:text="王璐"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        fresco:layout_constraintLeft_toRightOf="@id/iv_follow_item_header"
+        fresco:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_follow_item_company"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_24"
+        android:layout_marginTop="@dimen/dimen_4"
+        android:text="王璐"
+        android:textColor="@color/color_text_default"
+        android:textSize="13sp"
+        fresco:layout_constraintLeft_toRightOf="@id/iv_follow_item_header"
+        fresco:layout_constraintTop_toBottomOf="@id/tv_follow_item_name" />
+
+    <TextView
+        android:id="@+id/tv_follow_item_friendStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_8"
+        android:layout_marginTop="@dimen/dimen_5"
+        android:text="(好友)"
+        android:textColor="@color/color_text_default"
+        android:textSize="12sp"
+        fresco:layout_constraintLeft_toRightOf="@id/tv_follow_item_name"
+        fresco:layout_constraintTop_toTopOf="@id/tv_follow_item_name" />
+
+    <ImageView
+        android:id="@+id/img_follow_item_auth"
+        android:layout_width="@dimen/dimen_32"
+        android:layout_height="@dimen/dimen_34"
+        android:layout_marginLeft="@dimen/dimen_8"
+        android:layout_marginTop="@dimen/dimen_30"
+        fresco:layout_constraintLeft_toRightOf="@id/tv_follow_item_friendStatus"
+        fresco:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/icon_user_auth"/>
+
+    <Button
+        android:id="@+id/btn_follow_item_addOrCancel"
+        android:layout_width="@dimen/dimen_124"
+        android:layout_height="@dimen/dimen_48"
+        android:layout_marginRight="@dimen/dimen_26"
+        android:gravity="center"
+        android:background="@drawable/btn_follow_selector"
+        android:textColor="@drawable/btn_textcolor_follow_selector"
+        fresco:layout_constraintBottom_toBottomOf="parent"
+        fresco:layout_constraintRight_toRightOf="parent"
+        android:text="已关注"
+        android:textIsSelectable="false"
+        fresco:layout_constraintTop_toTopOf="parent" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_2"
+        android:background="@color/color_item_line"
+        fresco:layout_constraintBottom_toBottomOf="parent"/>
+</android.support.constraint.ConstraintLayout>

@@ -36,6 +36,7 @@ import com.jph.takephoto.model.TImage;
 import com.jph.takephoto.model.TResult;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.my.UserHomeActivity;
 import net.eanfang.worker.ui.adapter.GroupsDetailAdapter;
 
 import org.json.JSONException;
@@ -307,10 +308,12 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                     startActivityForResult(intent, UPDATA_GROUP_OWN);
 
                 } else {
-                    Intent intent = new Intent(GroupDetailActivity.this, IMPresonInfoActivity.class);
-                    intent.putExtra(EanfangConst.RONG_YUN_ID, temp.get(position).getAccId());
-                    startActivity(intent);
-
+//                    Intent intent = new Intent(GroupDetailActivity.this, IMPresonInfoActivity.class);
+//                    intent.putExtra(EanfangConst.RONG_YUN_ID, temp.get(position).getAccId());
+//                    startActivity(intent);
+                    if (temp.get(position) != null) {
+                        UserHomeActivity.startActivity(GroupDetailActivity.this, temp.get(position).getAccId());
+                    }
                 }
             }
         });

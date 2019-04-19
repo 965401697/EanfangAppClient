@@ -35,9 +35,11 @@ import com.eanfang.witget.recycleview.FullyLinearLayoutManager;
 import com.yaf.sys.entity.OrgEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.im.FollowListActivity;
 import net.eanfang.client.ui.activity.im.MorePopWindow;
 import net.eanfang.client.ui.activity.im.MyFriendsListActivity;
 import net.eanfang.client.ui.activity.im.MyGroupsListActivity;
+import net.eanfang.client.ui.activity.im.PeerConnectionListActivity;
 import net.eanfang.client.ui.activity.worksapce.ExternalCompanyActivity;
 import net.eanfang.client.ui.activity.worksapce.PartnerActivity;
 import net.eanfang.client.ui.activity.worksapce.SubcompanyActivity;
@@ -198,12 +200,20 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
             }
         });
 
-//        findViewById(R.id.rl_focus).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
+        view.findViewById(R.id.rl_focus).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), FollowListActivity.class));
+            }
+        });
+
+        view.findViewById(R.id.rl_peer_connection).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //同行人脉
+                startActivity(new Intent(getActivity(), PeerConnectionListActivity.class));
+            }
+        });
 
         view.findViewById(R.id.ll_add).setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen_150"
+    android:orientation="horizontal">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/img_company"
+        android:layout_width="@dimen/dimen_78"
+        android:layout_height="@dimen/dimen_78"
+        android:scaleType="fitXY"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="@dimen/dimen_38" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="@dimen/dimen_30"
+        android:layout_toEndOf="@id/img_company"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_company"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_client_neworder"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_inServiceTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_client_neworder"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_jobPosition"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="@dimen/dimen_34"
+        android:textColor="@color/color_client_neworder"
+        android:textSize="14sp" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_2"
+        android:background="#E8E8E8" />
+</RelativeLayout>

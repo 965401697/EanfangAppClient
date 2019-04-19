@@ -57,4 +57,6 @@
     <color name="color_my_back_border">#EAEAEA</color>
     <color name="color_my_line">#DBDCDF</color>
     <color name="color_home_security_message">#4587E2</color>
+    <color name="color_text_default">#999999</color>
+    <color name="color_item_line">#E8E8E8</color>
 </resources>

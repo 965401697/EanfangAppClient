@@ -54,5 +54,6 @@
     <color name="color_auth_top_text">#FFCB7A30</color>
     <color name="color_monitor_consulting">#363636</color>
     <color name="color_worker_detail_circle">#FB973B</color>
-
+    <color name="color_text_default">#999999</color>
+    <color name="color_item_line">#E8E8E8</color>
 </resources>
