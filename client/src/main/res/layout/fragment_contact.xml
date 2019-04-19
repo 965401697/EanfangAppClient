@@ -225,7 +225,7 @@
                             android:layout_alignParentLeft="true"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="@dimen/dimen_36"
-                            android:src="@mipmap/ic_contact_like" />
+                            android:src="@drawable/icon_peer_connection" />
 
                         <TextView
                             android:layout_width="wrap_content"
