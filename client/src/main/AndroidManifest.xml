@@ -72,7 +72,7 @@
         android:roundIcon="@drawable/client_logo"
         android:supportsRtl="true"
         android:theme="@style/NewBaseTheme"
-        tools:replace="android:name">
+        tools:replace="android:name,android:theme">
 
         <!-- 多渠道打包 -->
         <meta-data

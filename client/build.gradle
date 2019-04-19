@@ -97,6 +97,9 @@ android {
     dexOptions {//解决分包gradle 编译oom问题
         javaMaxHeapSize "4g"
     }
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+    }
 // aapt2 问题 png图片问题
     aaptOptions.cruncherEnabled = false
     aaptOptions.useNewCruncher = false
@@ -179,7 +182,7 @@ dependencies {
     implementation 'com.android.support:recyclerview-v7:26.1.0'
     implementation 'cn.bingoogolapple:bga-baseadapter:1.2.7@aar'
     // -------------------- 以上4个库是必须依赖的 ----------------------------
-    implementation 'com.github.bumptech.glide:glide:3.7.0'
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
     implementation 'com.android.support:design:26.1.0'
     implementation 'com.android.support:cardview-v7:26.1.0'
     compile 'com.github.vipulasri:timelineview:1.0.5'
