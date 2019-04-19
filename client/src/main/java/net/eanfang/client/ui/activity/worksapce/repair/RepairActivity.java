@@ -3,11 +3,8 @@ package net.eanfang.client.ui.activity.worksapce.repair;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -18,15 +15,11 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.annimon.stream.Stream;
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
-import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.MultiClickListener;
@@ -37,22 +30,18 @@ import com.eanfang.model.SelectAddressItem;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.util.JumpItent;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
 import com.yaf.base.entity.ProjectEntity;
-import com.yaf.base.entity.RepairBugEntity;
 import com.yaf.base.entity.RepairOrderEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.OrderConfirmActivity;
 import net.eanfang.client.ui.activity.worksapce.SelectWorkerActivity;
-import net.eanfang.client.ui.adapter.ToRepairAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.ui.widget.RepairSelectTimePop;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,24 +60,6 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
      * 报修地址回调 code
      */
     private final int REPAIR_ADDRESS_CALLBACK_CODE = 1;
-
-    /**
-     * 公司名称
-     */
-    @BindView(R.id.tv_repairCompanyName)
-    TextView tvRepairCompanyName;
-    @BindView(R.id.et_repairCompanyName)
-    EditText etCompanyName;
-    /**
-     * 用户名
-     */
-    @BindView(R.id.tv_repairUserName)
-    TextView tvRepairUserName;
-    /**
-     * 用户电话
-     */
-    @BindView(R.id.tv_repairUserPhone)
-    TextView tvRepairUserPhone;
     /**
      * 地址信息 省市区 详细地址
      */
@@ -102,39 +73,10 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
     @BindView(R.id.tv_selectAdress)
     TextView tvSelectAdress;
     /**
-     * 联系人姓名
-     */
-    @BindView(R.id.et_contact)
-    EditText etContact;
-    /**
-     * 性别
-     */
-    @BindView(R.id.rb_man)
-    RadioButton rbMan;
-    @BindView(R.id.rb_woman)
-    RadioButton rbWoman;
-    @BindView(R.id.rg_sex)
-    RadioGroup rgSex;
-    /**
-     * 联系人电话
-     */
-    @BindView(R.id.et_phone)
-    EditText etPhone;
-    /**
      * 到达时限
      */
     @BindView(R.id.tv_time)
     TextView tvTime;
-    /**
-     * 故障明细数量
-     */
-    @BindView(R.id.tv_faultNum)
-    TextView tvFaultNum;
-    /**
-     * 添加故障
-     */
-    @BindView(R.id.btn_add_trouble)
-    TextView btnAddTrouble;
     /**
      * 下一步
      */
@@ -147,18 +89,16 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
 
     @BindView(R.id.ll_user_info)
     LinearLayout ll_user_info;
-    @BindView(R.id.ll_project_name)
-    LinearLayout ll_project_name;
-    @BindView(R.id.et_project_name)
-    EditText et_project_name;
+    @BindView(R.id.tv_project_name)
+    TextView tv_project_name;
     @BindView(R.id.et_notice)
     EditText et_notice;
     @BindView(R.id.iv_arrow)
     ImageView iv_arrow;
-    @BindView(R.id.iv_project_arrow)
-    ImageView iv_project_arrow;
 
-    //选择时限 Popwindow
+    /**
+     * 选择时限 Popwindow
+     */
     private RepairSelectTimePop repairSelectTimePop;
 
     private String latitude = "";
@@ -186,7 +126,6 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
      * 区县ID
      */
     private int mAreaId;
-
 
 
     /**
@@ -259,17 +198,6 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
         rgSex.setOnCheckedChangeListener(this);
     }
 
-
-
-
-    /**
-     * 放弃报修
-     */
-    private void giveUp() {
-        new TrueFalseDialog(this, "系统提示", "是否放弃报修？", () -> {
-            finish();
-        }).showDialog();
-    }
 
     /**
      * 选择地址
@@ -352,10 +280,10 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
             showToast("请选择到达时限");
             return false;
         }
-        if (beanList.isEmpty()) {
-            showToast("请填写故障明细");
-            return false;
-        }
+//        if (beanList.isEmpty()) {
+//            showToast("请填写故障明细");
+//            return false;
+//        }
         return true;
     }
 
@@ -364,7 +292,7 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
      */
     private RepairOrderEntity fillBean() {
         RepairOrderEntity bean = new RepairOrderEntity();
-        bean.setBugEntityList(beanList);
+//        bean.setBugEntityList(beanList);
         bean.setLatitude(latitude);
         bean.setLongitude(longitude);
         bean.setAddress(etDetailAddress.getText().toString().trim());
@@ -400,7 +328,7 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
      */
     private RepairOrderEntity doQrFillBean() {
         // 扫码已经选择完技师 ，直接确认
-        repairOrderEntity.setBugEntityList(beanList);
+//        repairOrderEntity.setBugEntityList(beanList);
         repairOrderEntity.setLatitude(latitude);
         repairOrderEntity.setLongitude(longitude);
         repairOrderEntity.setAddress(etDetailAddress.getText().toString().trim());
@@ -517,35 +445,50 @@ public class RepairActivity extends BaseClientActivity implements RadioGroup.OnC
     }
 
 
-    @OnClick({ R.id.tv_selectAdress, R.id.btn_add_trouble, R.id.ll_user_desc, R.id.tv_next})
+    @OnClick({R.id.tv_selectAdress, R.id.btn_add_trouble, R.id.tv_next})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_next:
                 goSelectWorker();
-                break;
-            case R.id.ll_user_desc://
-                if (ll_user_info.getVisibility() == View.VISIBLE) {
-                    ll_user_info.setVisibility(View.GONE);
-                    iv_arrow.setImageDrawable(getResources().getDrawable(R.mipmap.arrow_black_right));
-                } else {
-                    ll_user_info.setVisibility(View.VISIBLE);
-                    iv_arrow.setImageDrawable(getResources().getDrawable(R.mipmap.ic_worker_detail_area_down));
-                }
                 break;
             default:
                 break;
         }
     }
 
-    @Override
-    public void onCheckedChanged(RadioGroup radioGroup, int i) {
-        switch (radioGroup.getCheckedRadioButtonId()) {
-            case R.id.rb_man:
-                mSex = 1;
-                break;
-            case R.id.rb_woman:
-                mSex = 0;
-                break;
+    /**
+     * 选择技师
+     */
+    private void goSelectWorker() {
+        if (!checkInfo()) {
+            return;
         }
+        // 查找上门费 判断当前城市是否开通  如果没有开通，提示 您报修的城市暂未开通服务。不能继续选技师
+        EanfangHttp.post(RepairApi.GET_REAPIR_PAY_PRICE)
+                .params("baseDataId", mAreaId)
+                .execute(new EanfangCallback<RepairOpenAreaBean>(RepairActivity.this, true, RepairOpenAreaBean.class, bean -> {
+                    /**
+                     * status   0：停用，1启用
+                     * */
+                    if (bean.getStatus() == 1) {
+                        // 扫码已经选择完技师 ，直接确认
+                        if (!StringUtils.isEmpty(isScan) && isScan.equals("scaning")) {
+                            Intent intent_scan = new Intent(RepairActivity.this, OrderConfirmActivity.class);
+                            intent_scan.putExtra("bean", doQrFillBean());
+                            intent_scan.putExtra("doorFee", bean.getDoorFee());
+                            startActivity(intent_scan);
+                        } else {
+                            Intent intent = new Intent(RepairActivity.this, SelectWorkerActivity.class);
+                            intent.putExtra("bean", fillBean());
+                            intent.putExtra("doorFee", bean.getDoorFee());
+                            intent.putExtra("mOwnerOrgId", mOwnerOrgId);
+                            intent.putStringArrayListExtra("businessIds", (ArrayList<String>) Stream.of(beanList).map(beans -> Config.get().getBusinessIdByCode(beans.getBusinessThreeCode(), 1) + "").distinct().toList());
+                            startActivity(intent);
+                        }
+                    } else {
+                        showToast("所在城市暂未开通服务");
+                    }
+                }));
     }
+
 }

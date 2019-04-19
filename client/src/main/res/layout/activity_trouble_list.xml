@@ -12,8 +12,22 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:layout_weight="1"
         android:scrollbars="none" />
+
+    <TextView
+        android:id="@+id/tv_next"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_80"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/dimen_50"
+        android:background="@drawable/shape_bg_sure"
+        android:gravity="center"
+        android:text="立即报修"
+        android:textColor="@color/color_white"
+        android:textSize="@dimen/textSize_13" />
 </LinearLayout>

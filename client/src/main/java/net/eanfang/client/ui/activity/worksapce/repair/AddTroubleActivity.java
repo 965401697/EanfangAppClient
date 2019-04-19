@@ -47,6 +47,7 @@ import net.eanfang.client.ui.widget.RepairSelectDevicesDialog;
 
 import org.greenrobot.eventbus.Subscribe;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -159,17 +160,8 @@ public class AddTroubleActivity extends BaseClientActivity {
      */
     @BindView(R.id.et_deviceLocationNum)
     EditText etDeviceLocationNum;
-    @BindView(R.id.iv_input_voice)
-    ImageView ivInputVoice;
-    @BindView(R.id.ll_scan)
-    LinearLayout ll_scan;
     @BindView(R.id.iv_right)
     ImageView ivRight;
-    /**
-     * 拍摄视频
-     */
-    @BindView(R.id.iv_add_video)
-    ImageView ivAddViedeo;
     @BindView(R.id.iv_thumbnail)
     ImageView ivThumbnail;
     @BindView(R.id.rl_thumbnail)
@@ -189,7 +181,7 @@ public class AddTroubleActivity extends BaseClientActivity {
      * 设备code 设备id
      */
     private String dataCode = "";
-    private Long dataId;
+    private Long dataId = null;
     /**
      * 系统类别
      */
@@ -205,13 +197,14 @@ public class AddTroubleActivity extends BaseClientActivity {
      */
     private boolean fromTroubleList = false;
 
-    private RepairBugEntity repairBugEntity = new RepairBugEntity();
+    private RepairBugEntity repairBugEntity;
+    ;
 
     /**
      * 扫码查看设备 报修
      */
     private CustDeviceEntity mDeviceBean;
-    private boolean isScanRepair = false;
+    private String isScan = "";
 
     /**
      * 视频上传key
@@ -226,6 +219,14 @@ public class AddTroubleActivity extends BaseClientActivity {
      * 选择故障设备
      */
     private RepairSelectDevicesDialog repairSelectDevicesDialog;
+    /**
+     * 是否再来一条
+     */
+    private boolean isAgainAdd = false;
+    /**
+     * 设备库选择设备
+     */
+    private boolean isFromDevicesHouse = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -240,8 +241,10 @@ public class AddTroubleActivity extends BaseClientActivity {
     private void initView() {
         setTitle("新增故障");
         setLeftBack();
-        beanList = (List<RepairBugEntity>) getIntent().getSerializableExtra("beanList");
         fromTroubleList = getIntent().getBooleanExtra("fromTroubleList", false);
+        if (fromTroubleList) {
+            beanList = (List<RepairBugEntity>) getIntent().getSerializableExtra("beanList");
+        }
         //个人客户 不显示设备库选择
         if (EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyId() == null) {
         }
@@ -272,30 +275,10 @@ public class AddTroubleActivity extends BaseClientActivity {
 
     private void setListener() {
         // 保存
-        tvSave.setOnClickListener(new MultiClickListener(AddTroubleActivity.this, this::checkInfo, this::onSubmitClient));
+        tvSave.setOnClickListener(new MultiClickListener(AddTroubleActivity.this, this::isSave, this::onSubmitClient));
         // 再来一条
-        tvAdd.setOnClickListener(new MultiClickListener(AddTroubleActivity.this, this::checkInfo, this::onSubmitClient));
-        ivInputVoice.setOnClickListener((v) -> {
-            PermissionUtils.get(this).getVoicePermission(() -> {
-                RecognitionManager.getSingleton().startRecognitionWithDialog(AddTroubleActivity.this, evFaultDescripte);
-            });
-        });
-        // 扫一扫设备
-        ll_scan.setOnClickListener((v) -> {
-            startActivity(new Intent(AddTroubleActivity.this, ScanCodeActivity.class).putExtra("from", EanfangConst.QR_CLIENT));
-        });
-        // 拍摄视频
-        ivAddViedeo.setOnClickListener((v) -> {
-            Bundle bundle = new Bundle();
-            bundle.putString("videoPath", "addtrouble_" + new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-            JumpItent.jump(AddTroubleActivity.this, TakeVideoActivity.class, bundle);
-        });
-        //视频展示
-        ivThumbnail.setOnClickListener((v) -> {
-            Bundle bundle = new Bundle();
-            bundle.putString("videoPath", mVieoPath);
-            JumpItent.jump(AddTroubleActivity.this, PlayVideoActivity.class, bundle);
-        });
+        tvAdd.setOnClickListener(new MultiClickListener(AddTroubleActivity.this, this::isAgainAdd, this::onSubmitClient));
+
     }
 
     /**
@@ -335,7 +318,9 @@ public class AddTroubleActivity extends BaseClientActivity {
             showToast("网络异常，请检查网络");
             return;
         }
-
+        if (!isFromDevicesHouse) {
+            repairBugEntity = new RepairBugEntity();
+        }
         repairBugEntity.setBusinessThreeCode(dataCode);
         // 设备品牌
         repairBugEntity.setModelCode(Config.get().getBaseCodeByName(tvDeviceBrand.getText().toString().trim(), 2, Constant.MODEL).get(0));
@@ -396,12 +381,16 @@ public class AddTroubleActivity extends BaseClientActivity {
         cooperationEntity_now.setBusType(0);
         cooperationEntity_now.setBusinessOneCode(Config.get().getBaseCodeByLevel(repairBugEntity.getBusinessThreeCode(), 1));
         cooperationEntities.add(cooperationEntity_now);
+        beanList.add(repairBugEntity);
 
         EanfangHttp.post(RepairApi.GET_REAPIR_DO_VERIRFY)
                 .upJson(JSON.toJSONString(cooperationEntities))
                 .execute(new EanfangCallback<CooperationEntity>(this, true, CooperationEntity.class, (bean) -> {
-                    // 扫码添加故障
-                    doTranValue(bean);
+                    if (isAgainAdd) {
+                        doCleanAllValue();
+                    } else {
+                        doTranValue(bean);
+                    }
                 }));
     }
 
@@ -411,8 +400,7 @@ public class AddTroubleActivity extends BaseClientActivity {
         if (cooperationEntity != null) {
             bundle.putSerializable("mOwnerOrgId", cooperationEntity.getOwnerOrgId());
         }
-        bundle.putSerializable("bean", repairBugEntity);
-        bundle.putBoolean("isScanRepair", isScanRepair);
+        bundle.putSerializable("beanList", (Serializable) beanList);
         intent.putExtras(bundle);
         /**
          * 故障列表页面添加
@@ -425,7 +413,55 @@ public class AddTroubleActivity extends BaseClientActivity {
         finish();
     }
 
-    @OnClick({R.id.ll_faultDeviceName, R.id.ll_deviceBrand, R.id.ll_devicesModel, R.id.ll_faultInfo})
+    /**
+     * 是否再来一条
+     */
+    private boolean isAgainAdd() {
+        /**
+         *  从故障列表添加
+         * */
+        isAgainAdd = true;
+        return checkInfo();
+
+    }
+
+    /**
+     * 保存
+     */
+    private boolean isSave() {
+        isAgainAdd = false;
+        return checkInfo();
+
+    }
+
+    /**
+     * 清楚页面的值
+     */
+    private void doCleanAllValue() {
+        mDeviceNum = "";
+        uploadMap.clear();
+        dataCode = "";
+        dataId = null;
+        businessOneCode = "";
+        mUploadKey = "";
+        mVieoPath = "";
+        tvFaultDeviceName.setText("");
+        tvDeviceBrand.setText("");
+        etDeviceLocation.setText("");
+        etDeviceLocationNum.setText("");
+        tvFaultDescripte.setText("");
+        evFaultDescripte.setText("");
+        snplMomentAddPhotos.getData().clear();
+        snplMomentAddPhotos.removeAllViews();
+        rlThumbnail.setVisibility(View.GONE);
+        etDeviceLocationNum.setFocusable(true);
+        etDeviceLocation.setFocusable(true);
+        llDeviceBrand.setClickable(true);
+
+    }
+
+    @OnClick({R.id.ll_faultDeviceName, R.id.ll_deviceBrand, R.id.ll_devicesModel, R.id.ll_faultInfo, R.id.ll_scan, R.id.iv_add_video, R.id.iv_input_voice,
+            R.id.iv_thumbnail, R.id.tv_next})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             //故障设备
@@ -445,16 +481,10 @@ public class AddTroubleActivity extends BaseClientActivity {
                         bundle.putBoolean("repair", true);
                         JumpItent.jump(AddTroubleActivity.this, EquipmentListActivity.class, bundle, REQUEST_EQUIPMENT);
                         repairSelectDevicesDialog.dismiss();
-                        //前往设备库
-//                        Bundle b = new Bundle();
-//                        b.putString("businessOneCode", dataCode);
-//                        JumpItent.jump(AddTroubleActivity.this, EquipmentAddActivity.class, b, REQUEST_EQUIPMENT);
                     }
                 });
                 repairSelectDevicesDialog.show();
-
                 break;
-
             // 故障设备品牌
             case R.id.ll_deviceBrand:
                 String busOneCode = Config.get().getBaseCodeByName(Config.get().getBusinessNameByCode(dataCode, 1), 1, Constant.MODEL).get(0);
@@ -478,6 +508,30 @@ public class AddTroubleActivity extends BaseClientActivity {
                 } else {
                     showToast("请选择故障设备");
                 }
+                break;
+            //扫一扫设备
+            case R.id.ll_scan:
+                startActivity(new Intent(AddTroubleActivity.this, ScanCodeActivity.class).putExtra("from", EanfangConst.QR_CLIENT));
+                break;
+            // 拍摄视频
+            case R.id.iv_add_video:
+                Bundle bundle = new Bundle();
+                bundle.putString("videoPath", "addtrouble_" + new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+                JumpItent.jump(AddTroubleActivity.this, TakeVideoActivity.class, bundle);
+                break;
+            case R.id.iv_input_voice:
+                PermissionUtils.get(this).getVoicePermission(() -> {
+                    RecognitionManager.getSingleton().startRecognitionWithDialog(AddTroubleActivity.this, evFaultDescripte);
+                });
+                break;
+            //视频展示
+            case R.id.iv_thumbnail:
+                Bundle bundle_thumbnail = new Bundle();
+                bundle_thumbnail.putString("videoPath", mVieoPath);
+                JumpItent.jump(AddTroubleActivity.this, PlayVideoActivity.class, bundle_thumbnail);
+                break;
+            case R.id.tv_next:
+
                 break;
             default:
                 break;
@@ -510,11 +564,6 @@ public class AddTroubleActivity extends BaseClientActivity {
                 StringUtils.showKeyboard(AddTroubleActivity.this, etDevice);
             } else {
                 llInputDevice.setVisibility(View.GONE);
-                //将光标定位
-                etDeviceLocation.requestFocus();
-                etDeviceLocation.setFocusable(true);
-                etDeviceLocation.setFocusableInTouchMode(true);
-                StringUtils.showKeyboard(AddTroubleActivity.this, etDeviceLocation);
             }
 
         } else if (requestCode == REQUEST_FAULTDESINFO && resultCode == RESULT_FAULTDESCODE) {
@@ -537,13 +586,18 @@ public class AddTroubleActivity extends BaseClientActivity {
             etDeviceLocationNum.setText(custDeviceEntity.getLocationNumber());
             etDeviceLocation.setText(custDeviceEntity.getLocation());
             tvDeviceBrand.setText(Config.get().getModelNameByCode(custDeviceEntity.getModelCode(), 2));
-
-
+            isFromDevicesHouse = true;
+            repairBugEntity = new RepairBugEntity();
             repairBugEntity.setMaintenanceStatus(custDeviceEntity.getWarrantyStatus());
             repairBugEntity.setRepairCount(custDeviceEntity.getDeviceVersion());
         } else if (resultCode == RESULT_DEVICE_BRAND_CODE && requestCode == REQUEST_DEVICE_BRAND_CODE) {
             // 设备品牌
             tvDeviceBrand.setText(data.getStringExtra("deviceBrandName"));
+            //将光标定位
+            etDeviceLocation.requestFocus();
+            etDeviceLocation.setFocusable(true);
+            etDeviceLocation.setFocusableInTouchMode(true);
+            StringUtils.showKeyboard(AddTroubleActivity.this, etDeviceLocation);
         }
     }
 
@@ -565,7 +619,7 @@ public class AddTroubleActivity extends BaseClientActivity {
     @Subscribe
     public void onEventBScanReapirAddtrouble(Bundle bundle_repair) {
         mDeviceBean = (CustDeviceEntity) bundle_repair.getSerializable("scan_repair");
-        isScanRepair = bundle_repair.getBoolean("isScanRepair", false);
+//        isScanRepair = bundle_repair.getBoolean("isScanRepair", false);
         initData();
     }
 

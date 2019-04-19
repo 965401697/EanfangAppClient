@@ -39,7 +39,7 @@ import com.yaf.base.entity.RepairOrderEntity;
 import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.worksapce.repair.RepairActivity;
+import net.eanfang.client.ui.activity.worksapce.repair.AddTroubleActivity;
 import net.eanfang.client.ui.adapter.WorkDetailHonorAdapter;
 import net.eanfang.client.ui.adapter.WorkDetailQualificationAdapter;
 import net.eanfang.client.ui.adapter.WorkerDetailAdapter;
@@ -304,7 +304,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
             Intent intent;
             // 直接进入报修页面
             if (isComeIn) {
-                intent = new Intent(WorkerDetailActivity.this, RepairActivity.class);
+                intent = new Intent(WorkerDetailActivity.this, AddTroubleActivity.class);
                 intent.putExtra("qrcode", "scaning");
                 intent.putExtra("repairbean", mScanRepairBean);
             } else {
