@@ -723,8 +723,10 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
     @Subscribe
     public void onEventBottomRedIcon(AllMessageBean bean) {
         // 首页小红点的显示
-        if (bean.getRepair() > 0 || bean.getInstall() > 0 || bean.getDesign() > 0 || bean.getMaintain() > 0) {
-            mHome = bean.getRepair() + bean.getInstall() + bean.getDesign() + bean.getMaintain();
+        if (bean.getRepair() > 0 || bean.getInstall() > 0 || bean.getDesign() > 0 || bean.getQuote() > 0
+                || bean.getMaintain() > 0 || bean.getNoReadCount() > 0 || bean.getCommentNoRead() > 0) {
+            mHome = bean.getRepair() + bean.getInstall() + bean.getDesign() + bean.getQuote() +
+                    bean.getMaintain() + bean.getNoReadCount() + bean.getCommentNoRead();
         } else {
             mHome = 0;
         }

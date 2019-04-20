@@ -5,8 +5,7 @@
     android:id="@+id/rl_security_create"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_white"
-    tools:context="net.eanfang.worker.ui.activity.worksapce.security.SecurityCreateActivity">
+    android:background="@color/color_white">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -65,7 +64,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dimen_30"
-                app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
+                app:bga_snpl_deleteDrawable="@mipmap/ic_security_photo_delete"
                 app:bga_snpl_deleteDrawableOverlapQuarter="false"
                 app:bga_snpl_editable="true"
                 app:bga_snpl_itemCornerRadius="0dp"

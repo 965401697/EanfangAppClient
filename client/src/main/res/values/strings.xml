@@ -55,4 +55,6 @@
     <string name="text_fault">故障</string>
     <string name="text_vistor">拜访对象:</string>
 
+    <string name="text_user_home_intro_default">暂无内容</string>
+
 </resources>

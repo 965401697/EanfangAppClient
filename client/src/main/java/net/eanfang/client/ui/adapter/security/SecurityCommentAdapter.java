@@ -55,6 +55,7 @@ public class SecurityCommentAdapter extends BaseQuickAdapter<SecurityDetailBean.
         } else {
             helper.setVisible(R.id.iv_certifi, false);
         }
-
+        helper.addOnClickListener(R.id.iv_seucrity_header);
+        helper.addOnClickListener(R.id.tv_name);
     }
 }

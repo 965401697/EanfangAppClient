@@ -992,6 +992,9 @@
         <activity android:name=".ui.activity.worksapce.security.SecurityPersonalPublicListActivity" />
         <activity android:name=".ui.activity.worksapce.security.SecurityFoucsListActivity" />
         <activity android:name=".ui.activity.worksapce.repair.TroubleListActivity"></activity>
+        <activity android:name=".ui.activity.my.UserHomeActivity" />
+        <activity android:name=".ui.activity.im.FollowListActivity" />
+        <activity android:name=".ui.activity.im.PeerConnectionListActivity" />
     </application>
 
 </manifest>

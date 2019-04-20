@@ -21,6 +21,7 @@ import com.eanfang.util.ToastUtil;
 import com.eanfang.witget.SideBar;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.my.UserHomeActivity;
 import net.eanfang.client.ui.adapter.FriendsAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
@@ -43,7 +44,10 @@ public class MyFriendsListActivity extends BaseClientActivity {
     @BindView(R.id.side_bar)
     SideBar sideBar;
     private FriendsAdapter mFriendsAdapter;
-    private int flag = 0;//显示不显示checkbox的标志位
+    /**
+     * 显示不显示checkbox的标志位
+     */
+    private int flag = 0;
 
 
     @Override
@@ -72,13 +76,15 @@ public class MyFriendsListActivity extends BaseClientActivity {
                     if (list.size() > 0) {
 
                         for (FriendListBean bean : list) {
-                            // 根据姓名获取拼音
-                            if (TextUtils.isEmpty(bean.getNickName())) {//名字为空字符串
+                            // 根据姓名获取拼音 名字为空字符串
+                            if (TextUtils.isEmpty(bean.getNickName())) {
                                 continue;
                             }
                             bean.setPinyin(bean.getNickName());
-                            bean.setFirstLetter(Cn2Spell.getPinYin(bean.getNickName()).substring(0, 1).toUpperCase()); // 获取拼音首字母并转成大写
-                            if (!Cn2Spell.getPinYin(bean.getNickName()).substring(0, 1).toUpperCase().matches("[A-Z]")) { // 如果不在A-Z中则默认为“#”
+                            // 获取拼音首字母并转成大写
+                            bean.setFirstLetter(Cn2Spell.getPinYin(bean.getNickName()).substring(0, 1).toUpperCase());
+                            if (!Cn2Spell.getPinYin(bean.getNickName()).substring(0, 1).toUpperCase().matches("[A-Z]")) {
+                                // 如果不在A-Z中则默认为“#”
                                 bean.setFirstLetter("#");
                             }
                         }
@@ -94,7 +100,18 @@ public class MyFriendsListActivity extends BaseClientActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mFriendsAdapter = new FriendsAdapter(R.layout.item_friend_list, flag);
         mFriendsAdapter.bindToRecyclerView(recyclerView);
-        startConv();
+        mFriendsAdapter.setOnItemClickListener((adapter, view, position) -> {
+            FriendListBean bean = (FriendListBean) adapter.getData().get(position);
+            if (bean != null) {
+                //跳转用户主页
+                UserHomeActivity.startActivity(MyFriendsListActivity.this, bean.getAccId());
+            }
+            //跳转聊天页
+//                UserInfo userInfo = new UserInfo(bean.getAccId(), bean.getNickName(), Uri.parse(BuildConfig.OSS_SERVER + bean.getAvatar()));
+//                RongIM.getInstance().refreshUserInfoCache(userInfo);
+//                RongIM.getInstance().startConversation(MyFriendsListActivity.this, Conversation.ConversationType.PRIVATE, ((FriendListBean) adapter.getData().get(position)).getAccId(), ((FriendListBean) adapter.getData().get(position)).getNickName());
+
+        });
 
 
         //删除好友
@@ -112,7 +129,8 @@ public class MyFriendsListActivity extends BaseClientActivity {
             public void onSelectStr(int index, String selectStr) {
                 for (int i = 0; i < mFriendsAdapter.getData().size(); i++) {
                     if (selectStr.equalsIgnoreCase(mFriendsAdapter.getData().get(i).getFirstLetter())) {
-                        recyclerView.scrollToPosition(i); // 选择到首字母出现的位置
+                        // 选择到首字母出现的位置
+                        recyclerView.scrollToPosition(i);
                         return;
                     }
                 }
@@ -120,27 +138,13 @@ public class MyFriendsListActivity extends BaseClientActivity {
         });
     }
 
-    /**
-     * 开始聊天
-     */
-    private void startConv() {
-        mFriendsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                FriendListBean bean = (FriendListBean) adapter.getData().get(position);
-                UserInfo userInfo = new UserInfo(bean.getAccId(), bean.getNickName(), Uri.parse(BuildConfig.OSS_SERVER + bean.getAvatar()));
-                RongIM.getInstance().refreshUserInfoCache(userInfo);
-                RongIM.getInstance().startConversation(MyFriendsListActivity.this, Conversation.ConversationType.PRIVATE, ((FriendListBean) adapter.getData().get(position)).getAccId(), ((FriendListBean) adapter.getData().get(position)).getNickName());
-
-            }
-        });
-    }
-
     private void DialogShow(String userId, String name, int position) {
         AlertDialog dialog = new AlertDialog.Builder(this)
 //                .setIcon(R.mipmap.icon)//设置标题的图片
-                .setTitle("删除好友")//设置对话框的标题
-                .setMessage("您确定删除“" + name + "”好友？")//设置对话框的内容
+                //设置对话框的标题
+                .setTitle("删除好友")
+                //设置对话框的内容
+                .setMessage("您确定删除“" + name + "”好友？")
                 //设置对话框的按钮
                 .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
