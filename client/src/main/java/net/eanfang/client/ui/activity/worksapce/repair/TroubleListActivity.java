@@ -145,11 +145,16 @@ public class TroubleListActivity extends BaseActivity {
         return false;
     }
 
-    @OnClick({R.id.iv_left})
+    @OnClick({R.id.iv_left, R.id.tv_next})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_left:
                 giveUp();
+                break;
+            case R.id.tv_next:
+                Bundle bundle = new Bundle();
+                bundle.putLong("mOwnerOrgId", mOwnerOrgId);
+                JumpItent.jump(TroubleListActivity.this, RepairActivity.class, bundle);
                 break;
             default:
                 break;

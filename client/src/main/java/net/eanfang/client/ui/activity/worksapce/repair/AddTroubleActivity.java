@@ -398,7 +398,7 @@ public class AddTroubleActivity extends BaseClientActivity {
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
         if (cooperationEntity != null) {
-            bundle.putSerializable("mOwnerOrgId", cooperationEntity.getOwnerOrgId());
+            bundle.putLong("mOwnerOrgId", cooperationEntity.getOwnerOrgId());
         }
         bundle.putSerializable("beanList", (Serializable) beanList);
         intent.putExtras(bundle);
