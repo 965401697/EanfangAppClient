@@ -22,10 +22,12 @@ import net.eanfang.client.R;
 public class SecurityFoucsListAdapter extends BaseQuickAdapter<SecurityFoucsListBean.ListBean, BaseViewHolder> {
 
     private Context mContext;
+    private boolean isCreate;
 
-    public SecurityFoucsListAdapter(Context context) {
+    public SecurityFoucsListAdapter(Context context, boolean mIsCreate) {
         super(R.layout.layout_security_foucs_item);
         this.mContext = context;
+        this.isCreate = mIsCreate;
     }
 
     @Override
@@ -52,6 +54,14 @@ public class SecurityFoucsListAdapter extends BaseQuickAdapter<SecurityFoucsList
             helper.setVisible(R.id.iv_certifi, true);
         } else {
             helper.setVisible(R.id.iv_certifi, false);
+        }
+        /**
+         * 创建安防圈 不显示关注人
+         * */
+        if (isCreate) {
+            helper.setVisible(R.id.tv_isFocus, false);
+        } else {
+            helper.setVisible(R.id.tv_isFocus, true);
         }
         /**
          * 0 是关注 1 是未关注

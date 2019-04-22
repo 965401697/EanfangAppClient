@@ -161,7 +161,7 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
      * 关注人的列表
      */
     public void initFoucsAdapter() {
-        securityFoucsListAdapter = new SecurityFoucsListAdapter(EanfangApplication.getApplication().getApplicationContext());
+        securityFoucsListAdapter = new SecurityFoucsListAdapter(EanfangApplication.getApplication().getApplicationContext(), isCreate);
         securityFoucsListAdapter.bindToRecyclerView(rvSecurity);
         securityFoucsListAdapter.setOnLoadMoreListener(this, rvSecurity);
         securityFoucsListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
