@@ -258,6 +258,7 @@ public class SecurityCreateActivity extends BaseActivity {
             case R.id.iv_about:
                 Bundle bundle_foucus = new Bundle();
                 bundle_foucus.putString("type", "foucs");
+                bundle_foucus.putBoolean("create",true);
                 JumpItent.jump(SecurityCreateActivity.this, SecurityPersonalPublicListActivity.class, bundle_foucus, REQUEST_CODE_ABOUT);
                 break;
             case R.id.iv_question:
