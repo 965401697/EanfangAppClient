@@ -716,5 +716,10 @@ public interface NewApiService {
      */
     String SERCURITY_FOUCS_LIST = BASE_URL + "/yaf_spc/spcircle/followerManList";
 
+    /**
+     * 报修获取用户信息列表
+     */
+    String REPAIR_PERSONAL_INFO_LIST = BASE_URL + "/yaf_sys/receive/list";
+
 
 }

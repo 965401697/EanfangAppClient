@@ -461,7 +461,7 @@ public class AddTroubleActivity extends BaseClientActivity {
     }
 
     @OnClick({R.id.ll_faultDeviceName, R.id.ll_deviceBrand, R.id.ll_devicesModel, R.id.ll_faultInfo, R.id.ll_scan, R.id.iv_add_video, R.id.iv_input_voice,
-            R.id.iv_thumbnail, R.id.tv_next})
+            R.id.iv_thumbnail})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             //故障设备
@@ -529,9 +529,6 @@ public class AddTroubleActivity extends BaseClientActivity {
                 Bundle bundle_thumbnail = new Bundle();
                 bundle_thumbnail.putString("videoPath", mVieoPath);
                 JumpItent.jump(AddTroubleActivity.this, PlayVideoActivity.class, bundle_thumbnail);
-                break;
-            case R.id.tv_next:
-
                 break;
             default:
                 break;

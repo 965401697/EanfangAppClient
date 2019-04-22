@@ -53,6 +53,7 @@ public class SecurityFoucsListAdapter extends BaseQuickAdapter<SecurityFoucsList
         } else {
             helper.setVisible(R.id.iv_certifi, false);
         }
+
         /**
          * 0 是关注 1 是未关注
          * */

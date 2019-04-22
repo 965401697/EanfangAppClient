@@ -154,6 +154,7 @@ public class TroubleListActivity extends BaseActivity {
             case R.id.tv_next:
                 Bundle bundle = new Bundle();
                 bundle.putLong("mOwnerOrgId", mOwnerOrgId);
+                bundle.putSerializable("troubleList", (Serializable) evaluateAdapter.getData());
                 JumpItent.jump(TroubleListActivity.this, RepairActivity.class, bundle);
                 break;
             default:

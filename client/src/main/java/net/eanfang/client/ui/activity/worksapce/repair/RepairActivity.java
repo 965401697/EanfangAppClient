@@ -1,6 +1,5 @@
 package net.eanfang.client.ui.activity.worksapce.repair;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.annimon.stream.Stream;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.application.EanfangApplication;
@@ -38,7 +36,6 @@ import net.eanfang.client.ui.activity.worksapce.SelectWorkerActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.ui.widget.RepairSelectTimePop;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -116,11 +113,7 @@ public class RepairActivity extends BaseClientActivity {
     private int currentIndex = -1;
     private List<ProjectEntity> mProjectList;
 
-    public static void jumpToActivity(Context context) {
-        Intent intent = new Intent();
-        intent.setClass(context, RepairActivity.class);
-        ((BaseClientActivity) context).startAnimActivity(intent);
-    }
+    private Long mOwnerOrgId = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,8 +122,6 @@ public class RepairActivity extends BaseClientActivity {
         ButterKnife.bind(this);
         initData();
         initListener();
-//        initScanRepair();
-
         getProjectList();
     }
 
@@ -140,6 +131,7 @@ public class RepairActivity extends BaseClientActivity {
         // 扫码 报修
         repairOrderEntity = (RepairOrderEntity) getIntent().getSerializableExtra("repairbean");
         isScan = getIntent().getStringExtra("qrcode");
+        mOwnerOrgId = getIntent().getLongExtra("mOwnerOrgId", 0);
     }
 
     private void initListener() {
@@ -153,12 +145,8 @@ public class RepairActivity extends BaseClientActivity {
      * 选择地址
      */
     public void address() {
-//        if (ConnectivityChangeReceiver.isNetConnected(getApplicationContext())) {
         Intent intent = new Intent(this, SelectAddressActivity.class);
         startActivityForResult(intent, REPAIR_ADDRESS_CALLBACK_CODE);
-//        } else {
-//            showToast("网络异常，请检查网络");
-//        }
     }
 
     /**
@@ -197,29 +185,28 @@ public class RepairActivity extends BaseClientActivity {
      */
     private RepairOrderEntity fillBean() {
         RepairOrderEntity bean = new RepairOrderEntity();
-//        bean.setBugEntityList(beanList);
         bean.setLatitude(latitude);
         bean.setLongitude(longitude);
         bean.setAddress(etDetailAddress.getText().toString().trim());
         bean.setPlaceCode(Config.get().getAreaCodeByName(city, county));
         bean.setPlaceId(Config.get().getBaseIdByCode(bean.getPlaceCode(), 3, Constant.AREA) + "");
-        bean.setRepairCompany(tvRepairCompanyName.getText().toString().trim());
+//        bean.setRepairCompany(tvRepairCompanyName.getText().toString().trim());
         if (currentIndex != -1) {
             bean.setProjectId(String.valueOf(mProjectList.get(currentIndex).getId()));
         }
-        bean.setProjectName(et_project_name.getText().toString().trim());
+//        bean.setProjectName(et_project_name.getText().toString().trim());
         if (!StringUtils.isEmpty(et_notice.getText().toString().trim())) {
             bean.setRemarkInfo(et_notice.getText().toString().trim());
         }
 
-        bean.setRepairContactPhone(etPhone.getText().toString().trim());
-        bean.setRepairContacts(etContact.getText().toString().trim());
+//        bean.setRepairContactPhone(etPhone.getText().toString().trim());
+//        bean.setRepairContacts(etContact.getText().toString().trim());
         bean.setArriveTimeLimit(GetConstDataUtils.getArriveList().indexOf(tvTime.getText().toString().trim()));
         bean.setOwnerUserId(EanfangApplication.getApplication().getUserId());
         bean.setOwnerCompanyId(EanfangApplication.getApplication().getCompanyId());
         bean.setOwnerTopCompanyId(EanfangApplication.getApplication().getTopCompanyId());
         bean.setOwnerOrgCode(EanfangApplication.getApplication().getOrgCode());
-        bean.setSex(mSex);
+//        bean.setSex(mSex);
         bean.setRepairWay(0);
         return bean;
     }
@@ -235,15 +222,15 @@ public class RepairActivity extends BaseClientActivity {
         repairOrderEntity.setAddress(etDetailAddress.getText().toString().trim());
         repairOrderEntity.setPlaceCode(Config.get().getAreaCodeByName(city, county));
         repairOrderEntity.setPlaceId(Config.get().getBaseIdByCode(repairOrderEntity.getPlaceCode(), 3, Constant.AREA) + "");
-        repairOrderEntity.setRepairCompany(etCompanyName.getText().toString().trim());
-        repairOrderEntity.setRepairContactPhone(etPhone.getText().toString().trim());
-        repairOrderEntity.setRepairContacts(etContact.getText().toString().trim());
+//        repairOrderEntity.setRepairCompany(etCompanyName.getText().toString().trim());
+//        repairOrderEntity.setRepairContactPhone(etPhone.getText().toString().trim());
+//        repairOrderEntity.setRepairContacts(etContact.getText().toString().trim());
         repairOrderEntity.setArriveTimeLimit(GetConstDataUtils.getArriveList().indexOf(tvTime.getText().toString().trim()));
         repairOrderEntity.setOwnerUserId(EanfangApplication.getApplication().getUserId());
         repairOrderEntity.setOwnerCompanyId(EanfangApplication.getApplication().getCompanyId());
         repairOrderEntity.setOwnerTopCompanyId(EanfangApplication.getApplication().getTopCompanyId());
         repairOrderEntity.setOwnerOrgCode(EanfangApplication.getApplication().getOrgCode());
-        repairOrderEntity.setSex(mSex);
+//        repairOrderEntity.setSex(mSex);
         repairOrderEntity.setRepairWay(0);
         return repairOrderEntity;
     }
@@ -357,7 +344,7 @@ public class RepairActivity extends BaseClientActivity {
                             intent.putExtra("bean", fillBean());
                             intent.putExtra("doorFee", bean.getDoorFee());
                             intent.putExtra("mOwnerOrgId", mOwnerOrgId);
-                            intent.putStringArrayListExtra("businessIds", (ArrayList<String>) Stream.of(beanList).map(beans -> Config.get().getBusinessIdByCode(beans.getBusinessThreeCode(), 1) + "").distinct().toList());
+//                            intent.putStringArrayListExtra("businessIds", (ArrayList<String>) Stream.of(beanList).map(beans -> Config.get().getBusinessIdByCode(beans.getBusinessThreeCode(), 1) + "").distinct().toList());
                             startActivity(intent);
                         }
                     } else {
