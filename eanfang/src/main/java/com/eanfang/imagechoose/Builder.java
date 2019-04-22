@@ -28,7 +28,7 @@ public class Builder {
     /**
      * 最大图片选择数量
      */
-    private int maxSelectNum = 3;
+    private int maxSelectNum = 9;
     /**
      * 裁剪比例 如16:9 3:2 3:4 1:1 可自定义
      */
@@ -49,31 +49,50 @@ public class Builder {
     /**
      * 拍照保存图片格式后缀,默认jpeg
      */
-    private String imageFormat=PictureMimeType.JPEG;
+    private String imageFormat=PictureMimeType.PNG;
+
+    /**
+     * 单独拍照
+     */
+    private boolean openCamera=true;
+
+    public boolean isOpenCamera() {
+        return openCamera;
+    }
+
+    public Builder setOpenCamera(boolean openCamera) {
+        this.openCamera = openCamera;
+        return this;
+    }
 
     public String getImageFormat() {
         return imageFormat;
     }
 
-    public void setImageFormat(String imageFormat) {
+    public Builder setImageFormat(String imageFormat) {
         this.imageFormat = imageFormat;
+        return this;
     }
 
-    public void setMaxSelectNum(int maxSelectNum) {
+    public Builder setMaxSelectNum(int maxSelectNum) {
         this.maxSelectNum = maxSelectNum;
+        return this;
     }
 
-    public void setThemeId(int themeId) {
+    public Builder setThemeId(int themeId) {
         this.themeId = themeId;
+        return this;
     }
 
-    public void setAspect_ratio_x_y(int aspect_ratio_x, int aspect_ratio_y) {
+    public Builder setAspect_ratio_x_y(int aspect_ratio_x, int aspect_ratio_y) {
         this.aspect_ratio_x = aspect_ratio_x;
         this.aspect_ratio_y = aspect_ratio_y;
+        return this;
     }
 
-    public void setChooseMode(int chooseMode) {
+    public Builder setChooseMode(int chooseMode) {
         this.chooseMode = chooseMode;
+        return this;
     }
 
     public Builder setSelectionMode(int selectionMode) {
@@ -91,8 +110,9 @@ public class Builder {
         return this;
     }
 
-    public void setFreeStyleCropEnabled(boolean freeStyleCropEnabled) {
+    public Builder setFreeStyleCropEnabled(boolean freeStyleCropEnabled) {
         this.freeStyleCropEnabled = freeStyleCropEnabled;
+        return this;
     }
 
     public IImageChoose create(){

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 
 import com.eanfang.R;
+import com.luck.picture.lib.PictureSelectionModel;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
@@ -96,7 +97,11 @@ public class ImageChoose implements IImageChoose {
     /**
      * 拍照保存图片格式后缀,默认jpeg
      */
-    private String imageFormat=PictureMimeType.JPEG;
+    private String imageFormat=PictureMimeType.PNG;
+    /**
+     * 单独拍照
+     */
+    private boolean openCamera=true;
     /**
      * 结果回调onActivityResult code
      */
@@ -116,6 +121,7 @@ public class ImageChoose implements IImageChoose {
         this.freeStyleCropEnabled = builder.isFreeStyleCropEnabled();
         this.themeId = builder.getThemeId();
         this.imageFormat=builder.getImageFormat();
+        this.openCamera=builder.isOpenCamera();
     }
 
     public static IImageChoose getInstance(Builder builder) {
@@ -145,7 +151,14 @@ public class ImageChoose implements IImageChoose {
         imageChoose(pictureSelector);
     }
     private void imageChoose(PictureSelector pictureSelector){
-        pictureSelector.openGallery(chooseMode)
+        PictureSelectionModel pictureSelectionModel;
+        if(!openCamera){
+            pictureSelectionModel=pictureSelector.openGallery(chooseMode);
+        }else{
+            pictureSelectionModel=  pictureSelector.openCamera(chooseMode);
+        }
+
+        pictureSelectionModel
                 .theme(themeId)
                 .maxSelectNum(maxSelectNum)
                 .minSelectNum(minSelectNum)

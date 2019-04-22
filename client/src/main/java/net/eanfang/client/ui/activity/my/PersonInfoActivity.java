@@ -26,6 +26,7 @@ import com.eanfang.model.LoginBean;
 import com.eanfang.model.SelectAddressItem;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
+import com.eanfang.sdk.SDKManager;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.IDCardUtil;
@@ -34,12 +35,14 @@ import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jph.takephoto.model.TResult;
+import com.luck.picture.lib.entity.LocalMedia;
 import com.yaf.sys.entity.AccountEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.OwnDataHintActivity;
 
 import java.text.ParseException;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -131,7 +134,8 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         setLeftBack();
         rbMan.isChecked();
         llHeader.setOnClickListener(v -> {
-            takePhoto(PersonInfoActivity.this, HEAD_PHOTO);
+//            takePhoto(PersonInfoActivity.this, HEAD_PHOTO);
+            headImagechoose();
         });
         tvArea.setOnClickListener(v -> {
             Intent intent = new Intent(PersonInfoActivity.this, SelectAddressActivity.class);
@@ -140,8 +144,39 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
 
         setRightTitleOnClickListener(new MultiClickListener(this, this::checkInfo, this::submit));
     }
+    private void headImagechoose() {
+        takePhoto(PersonInfoActivity.this, HEAD_PHOTO, new OnImageChooseCallBack() {
+            @Override
+            public void onSuccess(List<LocalMedia> list) {
+                getImage(list);
+            }
+        });
+    }
+    private void getImage(List<LocalMedia> list) {
+        OSSCallBack callback = null;
+        String imgKey = "account/" + UuidUtil.getUUID() + ".png";
+        if (list != null && list.size() > 0) {
+            LocalMedia media = list.get(0);
+            if (media.isCompressed()) {
+                ivUpload.setImageURI("file://" + media.getCompressPath());
+                callback = new OSSCallBack(this, true) {
+                    @Override
+                    public void onOssSuccess() {
+                        runOnUiThread(() -> {
+                            LoginBean entity = EanfangApplication.getApplication().getUser();
+                            entity.getAccount().setAvatar(imgKey);
+                            path = entity.getAccount().getAvatar();
+                        });
 
+                    }
+                };
+                SDKManager.getIOSS().initOSS(this).asyncPutImage(imgKey, media.getCompressPath(), callback);
 
+            }
+
+        }
+
+    }
     private void initData() {
         EanfangHttp.get(UserApi.GET_USER_INFO)
                 .tag(this)
