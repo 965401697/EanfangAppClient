@@ -24,111 +24,111 @@ public class ImageChoose implements IImageChoose {
     /**
      * 全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
      */
-    private int chooseMode = PictureMimeType.ofImage();
+    private static  int chooseMode = PictureMimeType.ofImage();
     /**
      * 主题样式设置 具体参考 values/styles   用法：R.style.picture.white.style
      */
-    private int themeId = R.style.picture_default_style;
+    private static int themeId = R.style.picture_default_style;
     /**
      * 最大图片选择数量
      */
-    private int maxSelectNum = 9;
+    private static int maxSelectNum = 9;
 
     /**
      * 最小选择数量
      */
-    private int minSelectNum = 1;
+    private static int minSelectNum = 1;
 
     /**
      * 每行显示个数
      */
-    private int imageSpanCount = 4;
+    private static int imageSpanCount = 4;
 
     /**
      * 多选 or 单选
      * 多选 PictureConfig.MULTIPLE
      * 单选 PictureConfig.SINGLE
      */
-    private int selectionMode = PictureConfig.SINGLE;
+    private static int selectionMode = PictureConfig.SINGLE;
 
     /**
      * 是否可预览图片
      */
-    private boolean preview_img = true;
+    private static boolean preview_img = true;
     /**
      * 是否显示拍照按钮
      */
-    private boolean isCamera = true;
+    private static  boolean isCamera = true;
     /**
      * 是否裁剪
      */
-    private boolean crop = false;
+    private static boolean crop = false;
     /**
      * 是否压缩
      */
-    private boolean compress = false;
+    private static boolean compress = false;
     /**
      * 同步true或异步false 压缩 默认同步
      */
-    private boolean synOrAsy = true;
+    private static boolean synOrAsy = true;
     /**
      * glide 加载宽高，越小图片列表越流畅，但会影响列表图片浏览的清晰度
      */
-    private int widch = 160;
-    private int height = 160;
+    private static int widch = 160;
+    private static int height = 160;
     /**
      * 裁剪比例 如16:9 3:2 3:4 1:1 可自定义
      */
-    private int aspect_ratio_x = 0;
-    private int aspect_ratio_y = 0;
+    private static int aspect_ratio_x = 0;
+    private static int aspect_ratio_y = 0;
     /**
      * 裁剪框是否可拖拽
      */
-    private boolean freeStyleCropEnabled = false;
+    private static boolean freeStyleCropEnabled = false;
     /**
      * 是否传入已选图片
      */
-    private List<LocalMedia> selectList = new ArrayList<>();
+    private static List<LocalMedia> selectList = new ArrayList<>();
 
     /**
      * 小于100kb的图片不压缩
      */
-    private int imageSize = 100;
+    private static int imageSize = 100;
     /**
      * 拍照保存图片格式后缀,默认jpeg
      */
-    private String imageFormat=PictureMimeType.PNG;
+    private static String imageFormat=PictureMimeType.PNG;
     /**
      * 单独拍照
      */
-    private boolean openCamera=true;
+    private static boolean openCamera=true;
     /**
      * 结果回调onActivityResult code
      */
-    private int resultCode = PictureConfig.CHOOSE_REQUEST;
-    private int RESULT_OK = -1;
-    private IImageChooseCallBack iImageChooseCallBack;
+    private static int resultCode = PictureConfig.CHOOSE_REQUEST;
+    private static int RESULT_OK = -1;
+    private  IImageChooseCallBack iImageChooseCallBack;
     private static IImageChoose iImageChoose;
-
-    public ImageChoose(Builder builder) {
-        this.chooseMode = builder.getChooseMode();
-        this.selectionMode = builder.getSelectionMode();
-        this.maxSelectNum = builder.getMaxSelectNum();
-        this.compress = builder.isCompress();
-        this.crop = builder.isCrop();
-        this.aspect_ratio_x = builder.getAspect_ratio_x();
-        this.aspect_ratio_y = builder.getAspect_ratio_y();
-        this.freeStyleCropEnabled = builder.isFreeStyleCropEnabled();
-        this.themeId = builder.getThemeId();
-        this.imageFormat=builder.getImageFormat();
-        this.openCamera=builder.isOpenCamera();
-    }
 
     public static IImageChoose getInstance(Builder builder) {
         if (iImageChoose == null) {
-            iImageChoose = new ImageChoose(builder);
+            iImageChoose = new ImageChoose();
         }
+        setData(builder);
         return iImageChoose;
+    }
+    private static  void setData(Builder builder){
+        chooseMode = builder.getChooseMode();
+        selectionMode = builder.getSelectionMode();
+        maxSelectNum = builder.getMaxSelectNum();
+        compress = builder.isCompress();
+        crop = builder.isCrop();
+        aspect_ratio_x = builder.getAspect_ratio_x();
+        aspect_ratio_y = builder.getAspect_ratio_y();
+        freeStyleCropEnabled = builder.isFreeStyleCropEnabled();
+        themeId = builder.getThemeId();
+        imageFormat=builder.getImageFormat();
+        openCamera=builder.isOpenCamera();
     }
 
     public void setiImageChooseCallBack(IImageChooseCallBack iImageChooseCallBack) {
