@@ -61,6 +61,10 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
      */
     private boolean isFoucs = true;
     private SecurityFoucsListBean.ListBean securityFoucsListBean;
+    /**
+     * 创建安防圈 艾特人
+     */
+    private boolean isCreate = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +78,7 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
     protected void onResume() {
         super.onResume();
         mType = getIntent().getStringExtra("type");
+        isCreate = getIntent().getBooleanExtra("create", false);
         /**
          * commnet 评论列表 about 艾特 foucs 关注的人
          * */
@@ -154,7 +159,7 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
      * 关注人的列表
      */
     public void initFoucsAdapter() {
-        securityFoucsListAdapter = new SecurityFoucsListAdapter(EanfangApplication.getApplication().getApplicationContext());
+        securityFoucsListAdapter = new SecurityFoucsListAdapter(EanfangApplication.getApplication().getApplicationContext(), isCreate);
         securityFoucsListAdapter.bindToRecyclerView(rvSecurity);
         securityFoucsListAdapter.setOnLoadMoreListener(this, rvSecurity);
         securityFoucsListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
