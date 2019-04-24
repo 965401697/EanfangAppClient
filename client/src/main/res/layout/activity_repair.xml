@@ -104,6 +104,7 @@
             <View style="@style/style_common_line_gray" />
 
             <LinearLayout
+                android:id="@+id/ll_projectName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_ll_selctor"
@@ -113,7 +114,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/text_repair_arrivetime"
+                    android:text="项目名称"
                     android:textColor="@color/color_bottom"
                     android:textSize="@dimen/textSize_13" />
 
@@ -121,7 +122,6 @@
                     android:id="@+id/tv_project_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/dimen_30"
                     android:layout_weight="1"
                     android:background="@null"
                     android:drawablePadding="@dimen/dimen_10"
@@ -198,13 +198,13 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:paddingTop="@dimen/dimen_30"
+            android:layout_marginBottom="@dimen/dimen_40"
             android:layout_marginLeft="@dimen/dimen_40"
             android:layout_marginRight="@dimen/dimen_40"
-            android:paddingBottom="@dimen/dimen_30"
-            android:layout_marginBottom="@dimen/dimen_40"
             android:background="@drawable/shape_bg_sure"
             android:gravity="center"
+            android:paddingBottom="@dimen/dimen_30"
+            android:paddingTop="@dimen/dimen_30"
             android:text="提交"
             android:textColor="@color/color_white"
             android:textSize="@dimen/textSize_13" />

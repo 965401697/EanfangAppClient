@@ -165,13 +165,13 @@ public class RepairActivity extends BaseClientActivity {
         if (currentIndex != -1) {
             bean.setProjectId(String.valueOf(mProjectList.get(currentIndex).getId()));
         }
-//        bean.setProjectName(et_project_name.getText().toString().trim());
+        bean.setProjectName(tvProjectName.getText().toString().trim());
         if (!StringUtils.isEmpty(etNotice.getText().toString().trim())) {
             bean.setRemarkInfo(etNotice.getText().toString().trim());
         }
 
         bean.setRepairContactPhone(repairPersonalInfoEntity.getPhone());
-//        bean.setRepairContacts(etContact.getText().toString().trim());
+        bean.setRepairContacts(repairPersonalInfoEntity.getName());
         bean.setArriveTimeLimit(GetConstDataUtils.getArriveList().indexOf(tvTime.getText().toString().trim()));
         bean.setOwnerUserId(EanfangApplication.getApplication().getUserId());
         bean.setOwnerCompanyId(EanfangApplication.getApplication().getCompanyId());
@@ -193,7 +193,7 @@ public class RepairActivity extends BaseClientActivity {
         repairOrderEntity.setPlaceId(Config.get().getBaseIdByCode(repairOrderEntity.getPlaceCode(), 3, Constant.AREA) + "");
         repairOrderEntity.setRepairCompany(repairPersonalInfoEntity.getConmpanyName());
         repairOrderEntity.setRepairContactPhone(repairPersonalInfoEntity.getPhone());
-//        repairOrderEntity.setRepairContacts(etContact.getText().toString().trim());
+        repairOrderEntity.setRepairContacts(repairPersonalInfoEntity.getName());
         repairOrderEntity.setArriveTimeLimit(GetConstDataUtils.getArriveList().indexOf(tvTime.getText().toString().trim()));
         repairOrderEntity.setOwnerUserId(EanfangApplication.getApplication().getUserId());
         repairOrderEntity.setOwnerCompanyId(EanfangApplication.getApplication().getCompanyId());
@@ -248,11 +248,14 @@ public class RepairActivity extends BaseClientActivity {
     }
 
 
-    @OnClick({R.id.tv_next})
+    @OnClick({R.id.tv_next, R.id.tv_project_name})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_next:
                 goSelectWorker();
+                break;
+            case R.id.tv_project_name:
+
                 break;
             default:
                 break;
