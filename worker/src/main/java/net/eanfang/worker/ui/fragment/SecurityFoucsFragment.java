@@ -142,7 +142,11 @@ public class SecurityFoucsFragment extends TemplateItemListFragment {
         securityFoucsBean.setAsTopCompanyId(listBean.getPublisherTopCompanyId());
         securityFoucsBean.setAsAccId(listBean.getPublisherUser().getAccId());
         securityFoucsBean.setFollowAccId(EanfangApplication.get().getAccId());
-        EanfangHttp.post(NewApiService.SERCURITY_DELETEFOUCUS)
+        /**
+         * 状态：0 关注 1 未关注
+         * */
+        securityFoucsBean.setFollowsStatus(listBean.getFollowsStatus() == 0 ? 1 : 0);
+        EanfangHttp.post(NewApiService.SERCURITY_FOUCUS)
                 .upJson(JSONObject.toJSONString(securityFoucsBean))
                 .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class, bean -> {
                     showToast("已取消关注");

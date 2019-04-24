@@ -50,4 +50,5 @@ public class SecurityFoucsBean implements Serializable {
      * 被关注人accid
      */
     private Long asAccId;
+    private int followsStatus;
 }

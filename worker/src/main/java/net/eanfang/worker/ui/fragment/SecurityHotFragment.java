@@ -115,11 +115,7 @@ public class SecurityHotFragment extends TemplateItemListFragment {
         /**
          * 状态：0 点赞 1 未点赞
          * */
-        if (listBean.getLikeStatus() == 0) {
-            securityLikeBean.setLikeStatus("1");
-        } else {
-            securityLikeBean.setLikeStatus("0");
-        }
+        securityLikeBean.setLikeStatus(listBean.getLikeStatus() == 0 ? "1" : "0");
         securityLikeBean.setLikeUserId(EanfangApplication.get().getUserId());
         securityLikeBean.setLikeCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyId());
         securityLikeBean.setLikeTopCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getTopCompanyId());
@@ -145,6 +141,10 @@ public class SecurityHotFragment extends TemplateItemListFragment {
 
         securityFoucsBean.setAsAccId(listBean.getPublisherUser().getAccId());
         securityFoucsBean.setFollowAccId(EanfangApplication.get().getAccId());
+        /**
+         * 状态：0 关注 1 未关注
+         * */
+        securityFoucsBean.setFollowsStatus(listBean.getFollowsStatus() == 0 ? 1 : 0);
         EanfangHttp.post(NewApiService.SERCURITY_FOUCUS)
                 .upJson(JSONObject.toJSONString(securityFoucsBean))
                 .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class, bean -> {

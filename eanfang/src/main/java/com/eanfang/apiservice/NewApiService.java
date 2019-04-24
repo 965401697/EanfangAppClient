@@ -666,13 +666,9 @@ public interface NewApiService {
      */
     String SERCURITY_CREATE = BASE_URL + "/yaf_spc/spcircle/create";
     /**
-     * 安防圈 关注
+     * 安防圈 关注 取消关注
      */
-    String SERCURITY_FOUCUS = BASE_URL + "/yaf_spc/spcircle/follower";
-    /**
-     * 安防圈 取消关注
-     */
-    String SERCURITY_DELETEFOUCUS = BASE_URL + "/yaf_spc/spcircle/deleteFollower";
+    String SERCURITY_FOUCUS = BASE_URL + "/yaf_spc/spcircle/followers";
     /**
      * 安防圈 点赞
      */
