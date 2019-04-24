@@ -23,7 +23,7 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_4"
+            android:layout_height="@dimen/dimen_2"
             android:paddingLeft="@dimen/dimen_20"
             android:paddingRight="@dimen/dimen_20"
             android:src="@color/color_pop_line" />
@@ -39,7 +39,7 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_4"
+            android:layout_height="@dimen/dimen_2"
             android:paddingLeft="@dimen/dimen_20"
             android:paddingRight="@dimen/dimen_20"
             android:src="@color/color_pop_line" />
