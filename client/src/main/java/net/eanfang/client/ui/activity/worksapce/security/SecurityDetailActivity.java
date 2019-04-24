@@ -385,6 +385,8 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         securityFoucsBean.setAsUserId(listBean.getPublisherUserId());
         securityFoucsBean.setAsCompanyId(listBean.getPublisherCompanyId());
         securityFoucsBean.setAsTopCompanyId(listBean.getPublisherTopCompanyId());
+        securityFoucsBean.setAsAccId(listBean.getPublisherUser().getAccId());
+        securityFoucsBean.setFollowAccId(EanfangApplication.get().getAccId());
         /**
          * 状态：0 关注 1 未关注
          * */
