@@ -720,6 +720,17 @@ public interface NewApiService {
      * 报修获取用户信息列表
      */
     String REPAIR_PERSONAL_INFO_LIST = BASE_URL + "/yaf_sys/receive/list";
+    /**
+     * 刪除用户信息
+     */
+    String REPAIR_PERSONAL_INFO_DELETE = BASE_URL + "/yaf_sys/receive/delete";
 
-
+    /**
+     * 报修增加个人信息
+     */
+    String REPAIR_PRESONAL_INFO_ADD = BASE_URL + "/yaf_sys/receive/create";
+    /**
+     * 报修增加个人信息修改
+     */
+    String REPAIR_PRESONAL_INFO_UPDATAE = BASE_URL + "/yaf_sys/receive/update";
 }

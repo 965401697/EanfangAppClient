@@ -74,7 +74,7 @@ public class RepairPersonalInfoEntity implements Serializable {
     private String placeCode;
     //区域code对应的id
     //@TableField(value = "place_id")
-    private Long placeId;
+    private int placeId;
     //纬度
     //@TableField(value = "latitude")
     private String latitude;

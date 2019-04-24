@@ -116,7 +116,7 @@
             android:id="@+id/rec_career_info"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-        
+
         <ImageView
             android:id="@+id/img_noData"
             android:layout_width="@dimen/dimen_214"
@@ -125,7 +125,7 @@
             android:layout_marginTop="@dimen/dimen_50"
             android:src="@drawable/img_no_data"
             android:visibility="gone"/>
-        
+
         <TextView
             android:id="@+id/tv_noData"
             android:layout_width="wrap_content"
@@ -137,7 +137,7 @@
             android:layout_centerHorizontal="true"
             android:visibility="gone"/>
     </RelativeLayout>
-    
+
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -995,7 +995,8 @@
         <activity android:name=".ui.activity.my.UserHomeActivity" />
         <activity android:name=".ui.activity.im.FollowListActivity" />
         <activity android:name=".ui.activity.im.PeerConnectionListActivity" />
-        <activity android:name=".ui.activity.worksapce.repair.RepairPersonInfoListActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.repair.RepairPersonInfoListActivity" />
+        <activity android:name=".ui.activity.worksapce.repair.RepairInfoEditActivity"></activity>
     </application>
 
 </manifest>
