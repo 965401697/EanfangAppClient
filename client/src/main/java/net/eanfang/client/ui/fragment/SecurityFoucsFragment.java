@@ -66,10 +66,10 @@ public class SecurityFoucsFragment extends TemplateItemListFragment {
         securityListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             switch (view.getId()) {
                 case R.id.tv_isFocus:
-                    doFoucus(securityListAdapter.getData().get(position));
+                    doFoucus(position,securityListAdapter.getData().get(position));
                     break;
                 case R.id.ll_like:
-                    doLike(securityListAdapter.getData().get(position));
+                    doLike(position, securityListAdapter.getData().get(position));
                     break;
                 case R.id.ll_comments:
                     doJump(position, true);
@@ -107,7 +107,7 @@ public class SecurityFoucsFragment extends TemplateItemListFragment {
     /**
      * 进行点赞
      */
-    private void doLike(SecurityListBean.ListBean listBean) {
+    private void doLike(int position, SecurityListBean.ListBean listBean) {
         SecurityLikeBean securityLikeBean = new SecurityLikeBean();
         securityLikeBean.setAsId(listBean.getSpcId());
         securityLikeBean.setType("0");
@@ -115,8 +115,12 @@ public class SecurityFoucsFragment extends TemplateItemListFragment {
          *状态：0 点赞 1 未点赞
          * */
         if (listBean.getLikeStatus() == 0) {
+            listBean.setLikeStatus(1);
+            listBean.setLikesCount(listBean.getLikesCount() - 1);
             securityLikeBean.setLikeStatus("1");
         } else {
+            listBean.setLikeStatus(0);
+            listBean.setLikesCount(listBean.getLikesCount() + 1);
             securityLikeBean.setLikeStatus("0");
         }
         securityLikeBean.setLikeUserId(EanfangApplication.get().getUserId());
@@ -125,15 +129,17 @@ public class SecurityFoucsFragment extends TemplateItemListFragment {
         EanfangHttp.post(NewApiService.SERCURITY_LIKE)
                 .upJson(JSONObject.toJSONString(securityLikeBean))
                 .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class, bean -> {
-//                    mRecyclerView.scrollToPosition(0);
-                    getData();
+                    getActivity().runOnUiThread(() -> {
+                        securityListAdapter.notifyItemChanged(position);
+                    });
                 }));
     }
+
 
     /**
      * 取消关注
      */
-    private void doFoucus(SecurityListBean.ListBean listBean) {
+    private void doFoucus(int position,SecurityListBean.ListBean listBean) {
         SecurityFoucsBean securityFoucsBean = new SecurityFoucsBean();
         securityFoucsBean.setFollowUserId(EanfangApplication.get().getUserId());
         securityFoucsBean.setFollowCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyId());
@@ -147,12 +153,18 @@ public class SecurityFoucsFragment extends TemplateItemListFragment {
         /**
          * 状态：0 关注 1 未关注
          * */
+        if (listBean.getFollowsStatus() == 0) {
+            listBean.setFollowsStatus(1);
+        } else {
+            listBean.setFollowsStatus(0);
+        }
         securityFoucsBean.setFollowsStatus(listBean.getFollowsStatus() == 0 ? 1 : 0);
         EanfangHttp.post(NewApiService.SERCURITY_FOUCUS)
                 .upJson(JSONObject.toJSONString(securityFoucsBean))
                 .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class, bean -> {
-                    showToast("已取消关注");
-                    getData();
+                    getActivity().runOnUiThread(() -> {
+                        securityListAdapter.notifyItemChanged(position);
+                    });
                 }));
     }
 
