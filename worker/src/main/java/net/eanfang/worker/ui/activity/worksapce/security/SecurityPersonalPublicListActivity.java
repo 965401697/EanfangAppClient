@@ -181,11 +181,7 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
      * 关注和取关
      */
     private void doFoucsOrUnFoucs(SecurityFoucsListBean.ListBean listBean, int position) {
-        if (isFoucs) {
-            doUnFoucs(listBean, position);
-        } else {
-            doFoucs(listBean, position);
-        }
+        doUnFoucs(listBean, position);
     }
 
     private void doUnFoucs(SecurityFoucsListBean.ListBean listBean, int position) {
@@ -199,37 +195,27 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
         securityFoucsBean.setAsTopCompanyId(listBean.getAskSpCircleEntity().getPublisherTopCompanyId());
         securityFoucsBean.setAsAccId(listBean.getUserEntity().getAccountEntity().getAccId());
         securityFoucsBean.setFollowAccId(EanfangApplication.get().getAccId());
-        EanfangHttp.post(NewApiService.SERCURITY_DELETEFOUCUS)
-                .upJson(JSONObject.toJSONString(securityFoucsBean))
-                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
-                    showToast("已取消关注");
-                    listBean.setFollowsStatus(1);
-                    securityFoucsListAdapter.getData().set(position, listBean);
-                    securityFoucsListAdapter.notifyItemChanged(position);
-                    isFoucs = false;
-                }));
-    }
-
-    private void doFoucs(SecurityFoucsListBean.ListBean listBean, int position) {
-        SecurityFoucsBean securityFoucsBean = new SecurityFoucsBean();
-        securityFoucsBean.setFollowUserId(EanfangApplication.get().getUserId());
-        securityFoucsBean.setFollowCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyId());
-        securityFoucsBean.setFollowTopCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getTopCompanyId());
-
-        securityFoucsBean.setAsUserId(listBean.getAskSpCircleEntity().getPublisherUserId());
-        securityFoucsBean.setAsCompanyId(listBean.getAskSpCircleEntity().getPublisherCompanyId());
-        securityFoucsBean.setAsTopCompanyId(listBean.getAskSpCircleEntity().getPublisherTopCompanyId());
-
-        securityFoucsBean.setAsAccId(listBean.getUserEntity().getAccountEntity().getAccId());
-        securityFoucsBean.setFollowAccId(EanfangApplication.get().getAccId());
+        /**
+         * 状态：0 关注 1 未关注
+         * */
+        securityFoucsBean.setFollowsStatus(listBean.getFollowsStatus() == 0 ? 1 : 0);
         EanfangHttp.post(NewApiService.SERCURITY_FOUCUS)
                 .upJson(JSONObject.toJSONString(securityFoucsBean))
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
-                    showToast("关注成功");
-                    listBean.setFollowsStatus(0);
-                    securityFoucsListAdapter.getData().set(position, listBean);
-                    securityFoucsListAdapter.notifyItemChanged(position);
-                    isFoucs = true;
+                    if (isFoucs) {
+                        showToast("已取消关注");
+                        listBean.setFollowsStatus(1);
+                        securityFoucsListAdapter.getData().set(position, listBean);
+                        securityFoucsListAdapter.notifyItemChanged(position);
+                        isFoucs = false;
+                    } else {
+                        showToast("关注成功");
+                        listBean.setFollowsStatus(0);
+                        securityFoucsListAdapter.getData().set(position, listBean);
+                        securityFoucsListAdapter.notifyItemChanged(position);
+                        isFoucs = true;
+                    }
+
                 }));
     }
 

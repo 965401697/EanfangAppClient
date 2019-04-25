@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -40,6 +41,7 @@ public abstract class TemplateItemListFragment extends BaseFragment implements S
 
         mSwipeRefreshLayout = findViewById(R.id.swipre_fresh);
         mSwipeRefreshLayout.setOnRefreshListener(this);
+        ((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
 
         mTvNoData = findViewById(R.id.tv_no_datas);
         initAdapter();

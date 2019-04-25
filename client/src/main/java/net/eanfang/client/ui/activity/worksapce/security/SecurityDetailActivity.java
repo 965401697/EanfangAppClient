@@ -29,7 +29,6 @@ import com.eanfang.model.security.SecurityCommentBean;
 import com.eanfang.model.security.SecurityDetailBean;
 import com.eanfang.model.security.SecurityFoucsBean;
 import com.eanfang.model.security.SecurityLikeBean;
-import com.eanfang.model.security.SecurityListBean;
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.ETimeUtils;
@@ -346,11 +345,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
                 doComments();
                 break;
             case R.id.tv_isFocus:
-                if (isFoucus) {
-                    doUnFoucus(securityDetailBean);
-                } else {
-                    doFoucus(securityDetailBean);
-                }
+                doUnFoucus(securityDetailBean);
                 break;
             case R.id.rl_video:
                 Bundle bundle = new Bundle();
@@ -377,30 +372,9 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         UserHomeActivity.startActivity(this, accId);
     }
 
+
     /**
      * 关注
-     */
-    private void doFoucus(SecurityDetailBean.SpcListBean listBean) {
-        SecurityFoucsBean securityFoucsBean = new SecurityFoucsBean();
-        securityFoucsBean.setFollowUserId(EanfangApplication.get().getUserId());
-        securityFoucsBean.setFollowCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyId());
-        securityFoucsBean.setFollowTopCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getTopCompanyId());
-
-        securityFoucsBean.setAsUserId(listBean.getPublisherUserId());
-        securityFoucsBean.setAsCompanyId(listBean.getPublisherCompanyId());
-        securityFoucsBean.setAsTopCompanyId(listBean.getPublisherTopCompanyId());
-        EanfangHttp.post(NewApiService.SERCURITY_FOUCUS)
-                .upJson(JSONObject.toJSONString(securityFoucsBean))
-                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
-                    showToast("关注成功");
-                    tvIsFocus.setText("取消关注");
-                    isFoucus = true;
-                }));
-    }
-
-
-    /**
-     * 取消关注
      */
     private void doUnFoucus(SecurityDetailBean.SpcListBean listBean) {
         SecurityFoucsBean securityFoucsBean = new SecurityFoucsBean();
@@ -413,12 +387,22 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         securityFoucsBean.setAsTopCompanyId(listBean.getPublisherTopCompanyId());
         securityFoucsBean.setAsAccId(listBean.getPublisherUser().getAccId());
         securityFoucsBean.setFollowAccId(EanfangApplication.get().getAccId());
-        EanfangHttp.post(NewApiService.SERCURITY_DELETEFOUCUS)
+        /**
+         * 状态：0 关注 1 未关注
+         * */
+        securityFoucsBean.setFollowsStatus(listBean.getFollowsStatus() == 0 ? 1 : 0);
+        EanfangHttp.post(NewApiService.SERCURITY_FOUCUS)
                 .upJson(JSONObject.toJSONString(securityFoucsBean))
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
-                    showToast("已取消关注");
-                    tvIsFocus.setText("关注");
-                    isFoucus = false;
+                    if (isFoucus) {
+                        showToast("已取消关注");
+                        tvIsFocus.setText("关注");
+                        isFoucus = false;
+                    } else {
+                        showToast("关注成功");
+                        tvIsFocus.setText("取消关注");
+                        isFoucus = true;
+                    }
                 }));
     }
 
