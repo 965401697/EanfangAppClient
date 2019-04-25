@@ -66,6 +66,8 @@ public class RepairInfoEditActivity extends BaseActivity implements RadioGroup.O
     EditText etName;
     @BindView(R.id.et_phone)
     EditText etPhone;
+    @BindView(R.id.tv_next)
+    TextView tvNext;
     /**
      * 默认是男
      */
@@ -79,7 +81,7 @@ public class RepairInfoEditActivity extends BaseActivity implements RadioGroup.O
     private String county = "";
     private String address = "";
 
-    private RepairPersonalInfoEntity repairPersonalInfoEntity;
+    private RepairPersonalInfoEntity.ListBean repairPersonalInfoEntity;
 
     /**
      * 是否是編輯
@@ -101,12 +103,17 @@ public class RepairInfoEditActivity extends BaseActivity implements RadioGroup.O
     }
 
     private void initData() {
-        repairPersonalInfoEntity = new RepairPersonalInfoEntity();
         isEdit = getIntent().getBooleanExtra("isEdit", false);
-        repairPersonalInfoEntity = (RepairPersonalInfoEntity) getIntent().getSerializableExtra("infoEntity");
+        repairPersonalInfoEntity = (RepairPersonalInfoEntity.ListBean) getIntent().getSerializableExtra("infoEntity");
+        if (repairPersonalInfoEntity == null) {
+            repairPersonalInfoEntity = new RepairPersonalInfoEntity.ListBean();
+        }
         if (isEdit) {
             doFillBean();
         }
+
+        tvNext.setOnClickListener(new MultiClickListener(RepairInfoEditActivity.this, this::checkInfo, this::doCreatePersonalInfo));
+        rgSex.setOnCheckedChangeListener(this);
     }
 
 
@@ -125,7 +132,6 @@ public class RepairInfoEditActivity extends BaseActivity implements RadioGroup.O
                         super.onSuccess(bean);
                         setResult(RESULT_OK);
                         finishSelf();
-                        showToast("创建成功");
                     }
                 });
     }
@@ -164,7 +170,7 @@ public class RepairInfoEditActivity extends BaseActivity implements RadioGroup.O
         return true;
     }
 
-    private RepairPersonalInfoEntity fillBean() {
+    private RepairPersonalInfoEntity.ListBean fillBean() {
         repairPersonalInfoEntity.setAccId(EanfangApplication.get().getAccId());
         repairPersonalInfoEntity.setName(etName.getText().toString().trim());
         repairPersonalInfoEntity.setPhone(etPhone.getText().toString().trim());
@@ -201,7 +207,6 @@ public class RepairInfoEditActivity extends BaseActivity implements RadioGroup.O
                 JumpItent.jump(this, SelectAddressActivity.class, REPAIR_ADDRESS_CALLBACK_CODE);
                 break;
             case R.id.tv_next:
-                new MultiClickListener(RepairInfoEditActivity.this, this::checkInfo, this::doCreatePersonalInfo);
                 break;
             default:
                 break;
@@ -220,6 +225,9 @@ public class RepairInfoEditActivity extends BaseActivity implements RadioGroup.O
         etPhone.setText(repairPersonalInfoEntity.getPhone());
         rbMan.setChecked(repairPersonalInfoEntity.getGender() == 1);
         rbWoman.setChecked(repairPersonalInfoEntity.getGender() == 0);
+        province = repairPersonalInfoEntity.getProvince();
+        city = repairPersonalInfoEntity.getCity();
+        county = repairPersonalInfoEntity.getCounty();
     }
 
     @Override
@@ -241,6 +249,7 @@ public class RepairInfoEditActivity extends BaseActivity implements RadioGroup.O
                 tvAddress.setText(province + "-" + city + "-" + county);
                 //将选择的地址 取 显示值
                 tvAddressDetail.setText(address);
+                repairPersonalInfoEntity.setProvince(item.getProvince());
                 repairPersonalInfoEntity.setCity(item.getCity());
                 repairPersonalInfoEntity.setCounty(item.getAddress());
                 break;
@@ -249,4 +258,5 @@ public class RepairInfoEditActivity extends BaseActivity implements RadioGroup.O
 
         }
     }
+
 }

@@ -12,6 +12,16 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_projectList"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:scrollbars="none" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dimen_50"
+        android:gravity="center"
+        android:text="没发现您的项目？请点击右上角，手动添加。"
+        android:textColor="@color/color_bottom"
+        android:textSize="@dimen/textSize_12" />
 </LinearLayout>

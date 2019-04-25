@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tb_projectName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_36"
+        android:layout_marginTop="@dimen/dimen_26"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/textSize_15" />
+
+    <TextView
+        android:id="@+id/tb_companyName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_36"
+        android:layout_marginTop="@dimen/dimen_29"
+        android:textColor="@color/color_client_neworder"
+        android:textSize="@dimen/textSize_14" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_36"
+        android:layout_marginTop="@dimen/dimen_29"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:id="@+id/tb_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_client_neworder"
+            android:textSize="@dimen/textSize_14" />
+
+        <TextView
+            android:id="@+id/tb_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_40"
+            android:textColor="@color/color_client_neworder"
+            android:textSize="@dimen/textSize_14" />
+
+    </LinearLayout>
+
+    <View
+        style="@style/style_common_line_gray"
+        android:layout_marginTop="@dimen/dimen_40" />
+
+</LinearLayout>

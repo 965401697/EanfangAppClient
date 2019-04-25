@@ -18,14 +18,15 @@ import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.ProjectListBean;
+import com.eanfang.listener.MultiClickListener;
 import com.eanfang.model.RepairOpenAreaBean;
 import com.eanfang.model.reapair.RepairPersonalInfoEntity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
-import com.yaf.base.entity.ProjectEntity;
+import com.yaf.base.entity.RepairBugEntity;
 import com.yaf.base.entity.RepairOrderEntity;
 
 import net.eanfang.client.R;
@@ -34,6 +35,7 @@ import net.eanfang.client.ui.activity.worksapce.SelectWorkerActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.ui.widget.RepairSelectTimePop;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -41,13 +43,15 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
+ * @author admin
  * @on 2019年4月15日 16:46:24
  * @email guanluocang
  * @desc 我要报修
  */
 public class RepairActivity extends BaseClientActivity {
 
-
+    private static final int REQUEST_PROJECT_NAME_CODE = 1009;
+    private static final int REQUEST_PERSONAL_INFO = 1008;
     /**
      * 到达时限
      */
@@ -72,6 +76,20 @@ public class RepairActivity extends BaseClientActivity {
     TextView tvCreatePersonalInfo;
     @BindView(R.id.ll_noPersonalInfo)
     LinearLayout llNoPersonalInfo;
+    @BindView(R.id.tv_name)
+    TextView tvName;
+    @BindView(R.id.tv_sex)
+    TextView tvSex;
+    @BindView(R.id.tv_default)
+    TextView tvDefault;
+    @BindView(R.id.tv_phone)
+    TextView tvPhone;
+    @BindView(R.id.tv_home_type)
+    TextView tvHomeType;
+    @BindView(R.id.tv_home_address)
+    TextView tvHomeAddress;
+    @BindView(R.id.tv_address)
+    TextView tvAddress;
 
     /**
      * 选择时限 Popwindow
@@ -84,18 +102,21 @@ public class RepairActivity extends BaseClientActivity {
     private RepairOrderEntity repairOrderEntity;
     private String isScan = "";
 
-    /**
-     * 项目的projectid 默认值
-     */
-    private int currentIndex = -1;
-    private List<ProjectEntity> mProjectList;
 
     private Long mOwnerOrgId = null;
+    /**
+     * 故障列表
+     */
+    private List<RepairBugEntity> beanList = new ArrayList<>();
 
     /**
      * 个人信息
      */
-    private RepairPersonalInfoEntity repairPersonalInfoEntity;
+    private RepairPersonalInfoEntity.ListBean repairPersonalInfoEntity;
+    /**
+     * 項目ID
+     */
+    private String mProjectId = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +126,12 @@ public class RepairActivity extends BaseClientActivity {
         initView();
         initData();
         initListener();
-//        getProjectList();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        doChekInfo();
     }
 
     private void initView() {
@@ -114,15 +140,20 @@ public class RepairActivity extends BaseClientActivity {
         repairOrderEntity = (RepairOrderEntity) getIntent().getSerializableExtra("repairbean");
         isScan = getIntent().getStringExtra("qrcode");
         mOwnerOrgId = getIntent().getLongExtra("mOwnerOrgId", 0);
-        repairPersonalInfoEntity = (RepairPersonalInfoEntity) getIntent().getSerializableExtra("infoEntity");
+        beanList = (List<RepairBugEntity>) getIntent().getSerializableExtra("troubleList");
+//        repairPersonalInfoEntity = (RepairPersonalInfoEntity.ListBean) getIntent().getSerializableExtra("infoEntity");
     }
 
     private void initData() {
-        doChekInfo();
     }
 
 
     private void initListener() {
+        // 查看个人信息列表
+        llPersonalInfoTop.setOnClickListener((v) -> {
+            JumpItent.jump(this, RepairPersonInfoListActivity.class, REQUEST_PERSONAL_INFO);
+        });
+        tvNext.setOnClickListener(new MultiClickListener(this, this::doChekcInfo, this::goSelectWorker));
     }
 
     /**
@@ -134,7 +165,15 @@ public class RepairActivity extends BaseClientActivity {
         EanfangHttp.post(NewApiService.REPAIR_PERSONAL_INFO_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<RepairPersonalInfoEntity>(this, true, RepairPersonalInfoEntity.class, bean -> {
-
+                    if (bean.getList() != null && bean.getList().size() > 0) {
+                        llPersonalInfoTop.setVisibility(View.VISIBLE);
+                        llNoPersonalInfo.setVisibility(View.GONE);
+                    } else {
+                        llPersonalInfoTop.setVisibility(View.GONE);
+                        llNoPersonalInfo.setVisibility(View.VISIBLE);
+                    }
+                    repairPersonalInfoEntity = bean.getList().get(0);
+                    doSetPersonalInfo(bean.getList().get(0));
                 }));
     }
 
@@ -156,15 +195,14 @@ public class RepairActivity extends BaseClientActivity {
      */
     private RepairOrderEntity fillBean() {
         RepairOrderEntity bean = new RepairOrderEntity();
+        bean.setBugEntityList(beanList);
         bean.setLatitude(repairPersonalInfoEntity.getLatitude());
         bean.setLongitude(repairPersonalInfoEntity.getLongitude());
         bean.setAddress(repairPersonalInfoEntity.getAddress());
         bean.setPlaceCode(Config.get().getAreaCodeByName(repairPersonalInfoEntity.getCity(), repairPersonalInfoEntity.getCounty()));
         bean.setPlaceId(Config.get().getBaseIdByCode(bean.getPlaceCode(), 3, Constant.AREA) + "");
         bean.setRepairCompany(repairPersonalInfoEntity.getConmpanyName());
-        if (currentIndex != -1) {
-            bean.setProjectId(String.valueOf(mProjectList.get(currentIndex).getId()));
-        }
+        bean.setProjectId(mProjectId);
         bean.setProjectName(tvProjectName.getText().toString().trim());
         if (!StringUtils.isEmpty(etNotice.getText().toString().trim())) {
             bean.setRemarkInfo(etNotice.getText().toString().trim());
@@ -186,6 +224,8 @@ public class RepairActivity extends BaseClientActivity {
      * 扫码报修 填充数据
      */
     private RepairOrderEntity doQrFillBean() {
+        // 扫码已经选择完技师 ，直接确认
+        repairOrderEntity.setBugEntityList(beanList);
         repairOrderEntity.setLatitude(repairPersonalInfoEntity.getLatitude());
         repairOrderEntity.setLongitude(repairOrderEntity.getLongitude());
         repairOrderEntity.setAddress(repairPersonalInfoEntity.getAddress());
@@ -202,23 +242,6 @@ public class RepairActivity extends BaseClientActivity {
         repairOrderEntity.setSex(repairPersonalInfoEntity.getGender());
         repairOrderEntity.setRepairWay(0);
         return repairOrderEntity;
-    }
-
-
-    /**
-     * 项目列表名称
-     */
-
-    private void getProjectList() {
-
-        QueryEntry queryEntry = new QueryEntry();
-
-        EanfangHttp.post(NewApiService.REPAIR_PROJECT_LIST)
-                .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<ProjectListBean>(RepairActivity.this, false, ProjectListBean.class, (bean) -> {
-                    mProjectList = bean.getList();
-
-                }));
     }
 
     /**
@@ -248,25 +271,39 @@ public class RepairActivity extends BaseClientActivity {
     }
 
 
-    @OnClick({R.id.tv_next, R.id.tv_project_name})
+    @OnClick({R.id.tv_project_name, R.id.ll_noPersonalInfo})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.tv_next:
-                goSelectWorker();
-                break;
+            //  创建项目名称
             case R.id.tv_project_name:
-
+                JumpItent.jump(this, RepairProjectListActivity.class, REQUEST_PROJECT_NAME_CODE);
+                break;
+            //  创建个人信息
+            case R.id.ll_noPersonalInfo:
+                JumpItent.jump(this, RepairPersonInfoListActivity.class, REQUEST_PERSONAL_INFO);
                 break;
             default:
                 break;
         }
     }
 
+    public boolean doChekcInfo() {
+        if (StringUtils.isEmpty(tvProjectName.getText().toString().trim())) {
+            showToast("请填写项目名称");
+            return false;
+        }
+        if (StringUtils.isEmpty(tvTime.getText().toString().trim())) {
+            showToast("请选择到达时限");
+            return false;
+        }
+        return true;
+    }
+
     /**
      * 选择技师
      */
     private void goSelectWorker() {
-        int mAreaId = Config.get().getBaseIdByCode(Config.get().getAreaCodeByName(repairPersonalInfoEntity.getCity(), repairPersonalInfoEntity.getAddress()), 3, Constant.AREA);
+        int mAreaId = Config.get().getBaseIdByCode(Config.get().getAreaCodeByName(repairPersonalInfoEntity.getCity(), repairPersonalInfoEntity.getCounty()), 3, Constant.AREA);
         if (!checkInfo()) {
             return;
         }
@@ -289,7 +326,7 @@ public class RepairActivity extends BaseClientActivity {
                             intent.putExtra("bean", fillBean());
                             intent.putExtra("doorFee", bean.getDoorFee());
                             intent.putExtra("mOwnerOrgId", mOwnerOrgId);
-//                            intent.putStringArrayListExtra("businessIds", (ArrayList<String>) Stream.of(beanList).map(beans -> Config.get().getBusinessIdByCode(beans.getBusinessThreeCode(), 1) + "").distinct().toList());
+                            intent.putStringArrayListExtra("businessIds", (ArrayList<String>) com.annimon.stream.Stream.of(beanList).map(beans -> Config.get().getBusinessIdByCode(beans.getBusinessThreeCode(), 1) + "").distinct().toList());
                             startActivity(intent);
                         }
                     } else {
@@ -298,4 +335,39 @@ public class RepairActivity extends BaseClientActivity {
                 }));
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data == null) {
+            return;
+        }
+        switch (requestCode) {
+            //创建项目名称
+            case REQUEST_PROJECT_NAME_CODE:
+                tvProjectName.setText(data.getStringExtra("projectName"));
+                mProjectId = data.getStringExtra("projectId");
+                break;
+            // 修改当前默认
+            case REQUEST_PERSONAL_INFO:
+                repairPersonalInfoEntity = (RepairPersonalInfoEntity.ListBean) data.getSerializableExtra("infoEntity");
+                doSetPersonalInfo(repairPersonalInfoEntity);
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void doSetPersonalInfo(RepairPersonalInfoEntity.ListBean bean) {
+        //姓名
+        tvName.setText(bean.getName());
+        // 性别0女1男
+        tvSex.setText(bean.getGender() == 0 ? " (女士) " : " (先生) ");
+        // 电话
+        tvPhone.setText(bean.getPhone());
+        // 单位
+        tvHomeType.setText("[" + bean.getSelectAddress() + "]");
+        tvHomeAddress.setText(bean.getConmpanyName());
+        // 地址
+        tvAddress.setText(bean.getAddress());
+    }
 }

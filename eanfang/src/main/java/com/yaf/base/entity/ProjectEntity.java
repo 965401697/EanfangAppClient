@@ -1,15 +1,20 @@
 package com.yaf.base.entity;
 
 import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.enums.IdType;
+import com.yaf.sys.entity.AccountEntity;
 import com.yaf.sys.entity.OrgEntity;
 import com.yaf.sys.entity.UserEntity;
-import com.baomidou.mybatisplus.annotations.TableName;
-import com.baomidou.mybatisplus.annotations.TableField;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 /**
@@ -19,7 +24,10 @@ import java.util.Date;
  * @email jornlin@foxmail.com
  * @date 2018-07-13 14:05:54
  */
-@TableName(value = "bus_project")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProjectEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -115,6 +123,7 @@ public class ProjectEntity implements Serializable {
     //修改时间
     //@TableField(value = "update_time")
     private Date updateTime;
+    private OwnerAssumeUserEntityBean ownerAssumeUserEntity;
 
     /**
      * 设置：主键递增
@@ -587,7 +596,7 @@ public class ProjectEntity implements Serializable {
         return ownerOrgEntity;
     }
 
-    public void setOwnerOrgEntity(OrgEntity ownerOrgEntity) {
+    public void setOwnerOrgEntity(OrgEntity getOwnerAssumeUserEntity) {
         this.ownerOrgEntity = ownerOrgEntity;
     }
 
@@ -607,5 +616,11 @@ public class ProjectEntity implements Serializable {
         this.assigneeOrgEntity = assigneeOrgEntity;
     }
 
-
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public class OwnerAssumeUserEntityBean implements Serializable {
+        public AccountEntity accountEntity;
+    }
 }

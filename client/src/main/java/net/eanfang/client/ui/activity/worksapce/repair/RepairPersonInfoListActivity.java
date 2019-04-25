@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
@@ -36,8 +37,10 @@ public class RepairPersonInfoListActivity extends BaseActivity {
     private static final int REPAIR_ADDINFO_CALLBACK_CODE = 100;
     @BindView(R.id.rv_personalInfo)
     RecyclerView rvPersonalInfo;
+    @BindView(R.id.tv_nodata)
+    TextView tvNodata;
     private RepairPersonalInfoAdapter repairPersonalInfoAdapter;
-    private List<RepairPersonalInfoEntity> repairPersonalInfoEntities;
+    private List<RepairPersonalInfoEntity.ListBean> repairPersonalInfoEntities;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,7 +82,7 @@ public class RepairPersonInfoListActivity extends BaseActivity {
                     Bundle bundleDelete = new Bundle();
                     bundleDelete.putBoolean("isEdit", true);
                     bundleDelete.putSerializable("infoEntity", repairPersonalInfoAdapter.getData().get(position));
-                    JumpItent.jump(this, RepairInfoEditActivity.class, bundleDelete);
+                    JumpItent.jump(this, RepairInfoEditActivity.class, bundleDelete, REPAIR_ADDINFO_CALLBACK_CODE);
                     break;
                 default:
                     break;
@@ -116,15 +119,14 @@ public class RepairPersonInfoListActivity extends BaseActivity {
         EanfangHttp.post(NewApiService.REPAIR_PERSONAL_INFO_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<RepairPersonalInfoEntity>(this, true, RepairPersonalInfoEntity.class, bean -> {
+                    repairPersonalInfoEntities = bean.getList();
+                    repairPersonalInfoAdapter.setNewData(repairPersonalInfoEntities);
                 }));
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (data == null) {
-            return;
-        }
         switch (requestCode) {
             case REPAIR_ADDINFO_CALLBACK_CODE:
                 initData();
