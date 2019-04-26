@@ -32,7 +32,7 @@ public class Base64 {
     };
 
     public static String encode(byte[] data) {
-        StringBuffer sb = new StringBuffer();
+  /*      StringBuffer sb = new StringBuffer();
         int len = data.length;
         int i = 0;
         int b1, b2, b3;
@@ -58,11 +58,12 @@ public class Base64 {
             sb.append(base64EncodeChars[((b2 & 0x0f) << 2) | ((b3 & 0xc0) >>> 6)]);
             sb.append(base64EncodeChars[b3 & 0x3f]);
         }
-        return sb.toString();
+        return sb.toString();*/
+        return cn.hutool.core.codec.Base64.encode(data);
     }
 
     public static byte[] decode(String str) throws UnsupportedEncodingException {
-        StringBuffer sb = new StringBuffer();
+   /*     StringBuffer sb = new StringBuffer();
         byte[] data = str.getBytes("US-ASCII");
         int len = data.length;
         int i = 0;
@@ -109,7 +110,8 @@ public class Base64 {
             }
             sb.append((char) (((b3 & 0x03) << 6) | b4));
         }
-        return sb.toString().getBytes("iso8859-1");
+        return sb.toString().getBytes("iso8859-1");*/
+   return cn.hutool.core.codec.Base64.decode(str);
     }
 }
 
