@@ -1,5 +1,6 @@
 package net.eanfang.worker.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -9,7 +10,6 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.security.SecurityFoucsBean;
 import com.eanfang.model.security.SecurityLikeBean;
 import com.eanfang.model.security.SecurityListBean;
 import com.eanfang.util.JsonUtils;
@@ -23,12 +23,16 @@ import net.eanfang.worker.ui.activity.worksapce.security.SecurityDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.security.SecurityListActivity;
 import net.eanfang.worker.ui.adapter.security.SecurityListAdapter;
 
+import java.util.Iterator;
+
 public class SecurityFoucsFragment extends TemplateItemListFragment {
 
     private String mTitle;
 
     private QueryEntry mQueryEntry;
     private SecurityListAdapter securityListAdapter;
+    public static final int REFRESH_ITEM = 1010;
+    private SecurityListBean.ListBean securityDetailBean;
 
     public static SecurityFoucsFragment getInstance(String title) {
         SecurityFoucsFragment sf = new SecurityFoucsFragment();
@@ -46,11 +50,6 @@ public class SecurityFoucsFragment extends TemplateItemListFragment {
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        getData();
-    }
 
     @Override
     protected void initAdapter() {
@@ -64,11 +63,8 @@ public class SecurityFoucsFragment extends TemplateItemListFragment {
         securityListAdapter.setOnLoadMoreListener(this, mRecyclerView);
         securityListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             switch (view.getId()) {
-                case R.id.tv_isFocus:
-                    doFoucus(position,securityListAdapter.getData().get(position));
-                    break;
                 case R.id.ll_like:
-                    doLike(position,securityListAdapter.getData().get(position));
+                    doLike(position, securityListAdapter.getData().get(position));
                     break;
                 case R.id.ll_comments:
                     doJump(position, true);
@@ -98,7 +94,8 @@ public class SecurityFoucsFragment extends TemplateItemListFragment {
             Bundle bundle = new Bundle();
             bundle.putLong("spcId", securityListAdapter.getData().get(position).getSpcId());
             bundle.putBoolean("isCommon", isCommon);
-            JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
+            securityDetailBean = securityListAdapter.getData().get(position);
+            getActivity().startActivityForResult(new Intent(getActivity(), SecurityDetailActivity.class).putExtras(bundle), REFRESH_ITEM);
         }
     }
 
@@ -135,37 +132,6 @@ public class SecurityFoucsFragment extends TemplateItemListFragment {
     }
 
 
-    /**
-     * 取消关注
-     */
-    private void doFoucus(int position,SecurityListBean.ListBean listBean) {
-        SecurityFoucsBean securityFoucsBean = new SecurityFoucsBean();
-        securityFoucsBean.setFollowUserId(EanfangApplication.get().getUserId());
-        securityFoucsBean.setFollowCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyId());
-        securityFoucsBean.setFollowTopCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getTopCompanyId());
-
-        securityFoucsBean.setAsUserId(listBean.getPublisherUserId());
-        securityFoucsBean.setAsCompanyId(listBean.getPublisherCompanyId());
-        securityFoucsBean.setAsTopCompanyId(listBean.getPublisherTopCompanyId());
-        securityFoucsBean.setAsAccId(listBean.getPublisherUser().getAccId());
-        securityFoucsBean.setFollowAccId(EanfangApplication.get().getAccId());
-        /**
-         * 状态：0 关注 1 未关注
-         * */
-        if (listBean.getFollowsStatus() == 0) {
-            listBean.setFollowsStatus(1);
-        } else {
-            listBean.setFollowsStatus(0);
-        }
-        securityFoucsBean.setFollowsStatus(listBean.getFollowsStatus() == 0 ? 1 : 0);
-        EanfangHttp.post(NewApiService.SERCURITY_FOUCUS)
-                .upJson(JSONObject.toJSONString(securityFoucsBean))
-                .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class, bean -> {
-                    getActivity().runOnUiThread(() -> {
-                        securityListAdapter.notifyItemChanged(position);
-                    });
-                }));
-    }
     @Override
     protected void getData() {
         if (mQueryEntry == null) {
@@ -225,11 +191,49 @@ public class SecurityFoucsFragment extends TemplateItemListFragment {
                 });
     }
 
+    @Override
+    public void onRefresh() {
+        mQueryEntry = null;
+        mPage = 1;
+        getData();
+    }
+
     /**
-     * 刷新已读未读的状态
+     * 刷新 创建安防圈
      */
     public void refreshStatus() {
+        mQueryEntry = null;
+        mPage = 1;
         getData();
+    }
+
+    /**
+     * 刷新点赞 关注状态
+     */
+    public void refreshItemStatus(Intent intentData) {
+        if (securityDetailBean != null && intentData != null) {
+            SecurityListBean.ListBean mSecurityDetailBean = (SecurityListBean.ListBean) intentData.getSerializableExtra("itemStatus");
+            if (intentData.getBooleanExtra("isLikeEdit", false)) {
+                securityDetailBean.setLikeStatus(mSecurityDetailBean.getLikeStatus());
+                securityDetailBean.setLikesCount(mSecurityDetailBean.getLikesCount());
+            }
+            if (intentData.getBooleanExtra("isFoucsEdit", false)) {
+                securityDetailBean.setFollowsStatus(mSecurityDetailBean.getFollowsStatus());
+                Iterator<SecurityListBean.ListBean> iterator = securityListAdapter.getData().iterator();
+                while (iterator.hasNext()) {
+                    if (iterator.next().getAccountEntity().getAccId().equals(mSecurityDetailBean.getAccountEntity().getAccId())) {
+                        iterator.remove();
+                    }
+                }
+            }
+            securityDetailBean.setReadCount(mSecurityDetailBean.getReadCount());
+            securityListAdapter.notifyDataSetChanged();
+            if (securityListAdapter.getData() != null && securityListAdapter.getData().size() > 0) {
+                mTvNoData.setVisibility(View.GONE);
+            } else {
+                mTvNoData.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
 }

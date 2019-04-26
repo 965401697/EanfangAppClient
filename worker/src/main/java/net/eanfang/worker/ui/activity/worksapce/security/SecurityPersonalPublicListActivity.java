@@ -39,6 +39,7 @@ import butterknife.ButterKnife;
 
 public class SecurityPersonalPublicListActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
 
+    public static final int REFRESH_ITEM = 1011;
     @BindView(R.id.rv_security)
     RecyclerView rvSecurity;
     @BindView(R.id.tv_no_datas)
@@ -65,6 +66,8 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
      * 创建安防圈 艾特人
      */
     private boolean isCreate = false;
+    private SecurityListBean.ListBean securityDetailBean;
+    private int mPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,11 +77,14 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
         initView();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+
+    private void initView() {
+        setLeftBack();
         mType = getIntent().getStringExtra("type");
         isCreate = getIntent().getBooleanExtra("create", false);
+        rvSecurity.setLayoutManager(new LinearLayoutManager(this));
+        swipreFresh.setOnRefreshListener(this);
+        rvSecurity.addItemDecoration(new BGASpaceItemDecoration(20));
         /**
          * commnet 评论列表 about 艾特 foucs 关注的人
          * */
@@ -95,13 +101,6 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
             initFoucsAdapter();
             initFoucsData();
         }
-    }
-
-    private void initView() {
-        setLeftBack();
-        rvSecurity.setLayoutManager(new LinearLayoutManager(this));
-        swipreFresh.setOnRefreshListener(this);
-        rvSecurity.addItemDecoration(new BGASpaceItemDecoration(20));
     }
 
     /***
@@ -151,7 +150,9 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
             Bundle bundle = new Bundle();
             bundle.putLong("spcId", securityListAdapter.getData().get(position).getSpcId());
             bundle.putBoolean("isCommon", isCommon);
-            JumpItent.jump(SecurityPersonalPublicListActivity.this, SecurityDetailActivity.class, bundle);
+            mPosition = position;
+            securityDetailBean = securityListAdapter.getData().get(position);
+            JumpItent.jump(SecurityPersonalPublicListActivity.this, SecurityDetailActivity.class, bundle, REFRESH_ITEM);
         }
     }
 
@@ -369,6 +370,46 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
             initData();
         } else if (mFoucs.equals(mType)) {
             initFoucsData();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == REFRESH_ITEM) {
+            refreshItemStatus(data);
+        }
+    }
+
+    /**
+     * 刷新点赞 关注状态
+     */
+
+    public void refreshItemStatus(Intent intentData) {
+        if (securityDetailBean != null && intentData != null) {
+            SecurityListBean.ListBean mSecurityDetailBean = (SecurityListBean.ListBean) intentData.getSerializableExtra("itemStatus");
+            if (intentData.getBooleanExtra("isLikeEdit", false)) {
+                securityDetailBean.setLikeStatus(mSecurityDetailBean.getLikeStatus());
+                securityDetailBean.setLikesCount(mSecurityDetailBean.getLikesCount());
+                securityListAdapter.getData().remove(mPosition);
+            }
+            if (intentData.getBooleanExtra("isFoucsEdit", false)) {
+                for (int i = 0; i < securityListAdapter.getData().size(); i++) {
+                    if (securityListAdapter.getData().get(i).getAccountEntity().getAccId().equals(mSecurityDetailBean.getAccountEntity().getAccId())) {
+                        securityListAdapter.getData().get(i).setFollowsStatus(mSecurityDetailBean.getFollowsStatus());
+                    }
+                }
+            }
+            securityDetailBean.setReadCount(mSecurityDetailBean.getReadCount());
+            securityDetailBean.setReadStatus(mSecurityDetailBean.getReadStatus());
+            securityListAdapter.notifyDataSetChanged();
+            if (securityListAdapter.getData() != null && securityListAdapter.getData().size() > 0) {
+                tvNoDatas.setVisibility(View.GONE);
+                rvSecurity.setVisibility(View.VISIBLE);
+            } else {
+                tvNoDatas.setVisibility(View.VISIBLE);
+                rvSecurity.setVisibility(View.GONE);
+            }
         }
     }
 }

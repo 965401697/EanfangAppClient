@@ -24,6 +24,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import q.rorbin.badgeview.QBadgeView;
 
+import static net.eanfang.worker.ui.fragment.SecurityHotFragment.REFRESH_ITEM;
+
 /**
  * @author guanluocang
  * @data 2019/2/12
@@ -114,6 +116,12 @@ public class SecurityListActivity extends BaseActivity {
                 ((SecurityFoucsFragment) mFragments.get(currentTab)).refreshStatus();
             } else {
                 ((SecurityHotFragment) mFragments.get(currentTab)).refreshStatus();
+            }
+        } else if (resultCode == RESULT_OK && requestCode == REFRESH_ITEM) {
+            if (currentTab == 0) {
+                ((SecurityFoucsFragment) mFragments.get(currentTab)).refreshItemStatus(data);
+            } else {
+                ((SecurityHotFragment) mFragments.get(currentTab)).refreshItemStatus(data);
             }
         }
     }

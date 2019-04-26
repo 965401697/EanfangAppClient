@@ -313,6 +313,7 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
                 bundle_like.putString("type", "like");
                 JumpItent.jump(SecurityPersonalActivity.this, SecurityPersonalPublicListActivity.class, bundle_like);
                 break;
+            // 艾特我的列表
             case R.id.tv_aboutme:
                 Bundle bundle_about = new Bundle();
                 bundle_about.putString("type", "about");

@@ -1,5 +1,6 @@
 package net.eanfang.worker.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -30,7 +31,9 @@ public class SecurityHotFragment extends TemplateItemListFragment {
     private String mTitle;
     private QueryEntry mQueryEntry;
     private SecurityListAdapter securityListAdapter;
-
+    public static final int REFRESH_ITEM = 1010;
+    private SecurityListBean.ListBean securityDetailBean;
+    private int mPosition;
 
     public static SecurityHotFragment getInstance(String title) {
         SecurityHotFragment sf = new SecurityHotFragment();
@@ -43,21 +46,16 @@ public class SecurityHotFragment extends TemplateItemListFragment {
         return mTitle;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        getData();
-    }
 
     @Override
     protected void setListener() {
         securityListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             switch (view.getId()) {
                 case R.id.tv_isFocus:
-                    doFoucus(position,securityListAdapter.getData().get(position));
+                    doFoucus(securityListAdapter.getData().get(position));
                     break;
                 case R.id.ll_like:
-                    doLike(position,securityListAdapter.getData().get(position));
+                    doLike(position, securityListAdapter.getData().get(position));
                     break;
                 case R.id.ll_comments:
                     doJump(position, true);
@@ -87,7 +85,9 @@ public class SecurityHotFragment extends TemplateItemListFragment {
             Bundle bundle = new Bundle();
             bundle.putLong("spcId", securityListAdapter.getData().get(position).getSpcId());
             bundle.putBoolean("isCommon", isCommon);
-            JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
+            securityDetailBean = securityListAdapter.getData().get(position);
+            mPosition = position;
+            getActivity().startActivityForResult(new Intent(getActivity(), SecurityDetailActivity.class).putExtras(bundle), REFRESH_ITEM);
         }
     }
 
@@ -141,7 +141,7 @@ public class SecurityHotFragment extends TemplateItemListFragment {
     /**
      * 取消关注
      */
-    private void doFoucus(int position,SecurityListBean.ListBean listBean) {
+    private void doFoucus(SecurityListBean.ListBean listBean) {
         SecurityFoucsBean securityFoucsBean = new SecurityFoucsBean();
         securityFoucsBean.setFollowUserId(EanfangApplication.get().getUserId());
         securityFoucsBean.setFollowCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyId());
@@ -157,16 +157,20 @@ public class SecurityHotFragment extends TemplateItemListFragment {
          * */
         if (listBean.getFollowsStatus() == 0) {
             listBean.setFollowsStatus(1);
+            securityFoucsBean.setFollowsStatus(1);
         } else {
             listBean.setFollowsStatus(0);
+            securityFoucsBean.setFollowsStatus(0);
         }
-        securityFoucsBean.setFollowsStatus(listBean.getFollowsStatus() == 0 ? 1 : 0);
         EanfangHttp.post(NewApiService.SERCURITY_FOUCUS)
                 .upJson(JSONObject.toJSONString(securityFoucsBean))
                 .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class, bean -> {
-                    getActivity().runOnUiThread(() -> {
-                        securityListAdapter.notifyItemChanged(position);
-                    });
+                    for (int i = 0; i < securityListAdapter.getData().size(); i++) {
+                        if (securityListAdapter.getData().get(i).getAccountEntity().getAccId().equals(listBean.getAccountEntity().getAccId())) {
+                            securityListAdapter.getData().get(i).setFollowsStatus(listBean.getFollowsStatus());
+                            securityListAdapter.notifyDataSetChanged();
+                        }
+                    }
                 }));
     }
 
@@ -232,12 +236,43 @@ public class SecurityHotFragment extends TemplateItemListFragment {
                 });
     }
 
-    /**
-     * 刷新已读未读的状态
-     */
-    public void refreshStatus() {
+    @Override
+    public void onRefresh() {
+        mQueryEntry = null;
+        mPage = 1;
         getData();
     }
 
+    /**
+     * 刷新 创建安防圈
+     */
+    public void refreshStatus() {
+        mQueryEntry = null;
+        mPage = 1;
+        getData();
+    }
+
+    /**
+     * 刷新点赞 关注状态
+     */
+    public void refreshItemStatus(Intent intentData) {
+        if (securityDetailBean != null && intentData != null) {
+            SecurityListBean.ListBean mSecurityDetailBean = (SecurityListBean.ListBean) intentData.getSerializableExtra("itemStatus");
+            if (intentData.getBooleanExtra("isLikeEdit", false)) {
+                securityDetailBean.setLikeStatus(mSecurityDetailBean.getLikeStatus());
+                securityDetailBean.setLikesCount(mSecurityDetailBean.getLikesCount());
+            }
+            if (intentData.getBooleanExtra("isFoucsEdit", false)) {
+                securityDetailBean.setFollowsStatus(mSecurityDetailBean.getFollowsStatus());
+            }
+            securityDetailBean.setReadCount(mSecurityDetailBean.getReadCount());
+            securityListAdapter.notifyDataSetChanged();
+            if (securityListAdapter.getData() != null && securityListAdapter.getData().size() > 0) {
+                mTvNoData.setVisibility(View.GONE);
+            } else {
+                mTvNoData.setVisibility(View.VISIBLE);
+            }
+        }
+    }
 
 }

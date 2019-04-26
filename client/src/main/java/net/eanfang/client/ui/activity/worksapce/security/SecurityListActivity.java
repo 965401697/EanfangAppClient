@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 
 import com.eanfang.application.EanfangApplication;
+import com.eanfang.model.security.SecurityListBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
 import com.flyco.tablayout.SlidingTabLayout;
@@ -23,6 +24,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import q.rorbin.badgeview.QBadgeView;
+
+import static net.eanfang.client.ui.fragment.SecurityFoucsFragment.REFRESH_ITEM;
 
 /**
  * @author guanluocang
@@ -114,6 +117,12 @@ public class SecurityListActivity extends BaseActivity {
                 ((SecurityFoucsFragment) mFragments.get(currentTab)).refreshStatus();
             } else {
                 ((SecurityHotFragment) mFragments.get(currentTab)).refreshStatus();
+            }
+        } else if (resultCode == RESULT_OK && requestCode == REFRESH_ITEM) {
+            if (currentTab == 0) {
+                ((SecurityFoucsFragment) mFragments.get(currentTab)).refreshItemStatus(data);
+            } else {
+                ((SecurityHotFragment) mFragments.get(currentTab)).refreshItemStatus(data);
             }
         }
     }
