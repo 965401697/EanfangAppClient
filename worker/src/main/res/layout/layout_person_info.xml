@@ -3,6 +3,7 @@
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#E8E8E8"
     android:orientation="vertical">
 
     <include layout="@layout/header" />
@@ -10,7 +11,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="10dp">
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -92,11 +93,11 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:gravity="right|center_vertical"
-                    android:hint="请输入昵称"
+                    android:hint="请输入"
                     android:inputType="textPersonName"
                     android:maxLength="8"
                     android:paddingRight="@dimen/dimen_40"
-                    android:textColor="@color/font_color"
+                    android:textColor="@color/color_client_neworder"
                     android:textSize="14sp" />
 
             </LinearLayout>
@@ -254,6 +255,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_90"
                 android:layout_marginTop="@dimen/dimen_2"
+                android:background="@color/white"
                 android:orientation="horizontal">
 
                 <TextView
@@ -338,6 +340,7 @@
                     android:textSize="@dimen/textSize_14" />
 
                 <Button
+                    style="?android:attr/borderlessButtonStyle"
                     android:id="@+id/btn_man"
                     android:layout_width="@dimen/dimen_120"
                     android:layout_height="@dimen/dimen_60"
@@ -346,14 +349,17 @@
                     android:background="@drawable/bg_button_blue_selector"
                     android:gravity="center"
                     android:text="男"
+                    android:textColor="@drawable/selector_text_color_person_info_sex"
                     android:textSize="12sp" />
 
                 <Button
+                    style="?android:attr/borderlessButtonStyle"
                     android:id="@+id/btn_woman"
                     android:layout_width="@dimen/dimen_120"
                     android:layout_height="@dimen/dimen_60"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/dimen_30"
+                    android:textColor="@drawable/selector_text_color_person_info_sex"
                     android:background="@drawable/bg_button_blue_selector"
                     android:gravity="center"
                     android:text="女"
@@ -368,19 +374,18 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_90"
-                android:layout_marginTop="@dimen/dimen_2"
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:paddingLeft="@dimen/dimen_36"
                 android:text="个人简介"
-                android:textColor="#333333"
+                android:textColor="@color/color_client_neworder"
                 android:textSize="14sp" />
 
             <EditText
                 android:id="@+id/et_personal_note"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_146"
-                android:background="#ffffff"
+                android:background="@color/white"
                 android:cursorVisible="false"
                 android:gravity="start"
                 android:hint="请输入..."
@@ -406,6 +411,7 @@
                         android:layout_marginLeft="@dimen/dimen_84"
                         android:layout_marginTop="@dimen/dimen_38"
                         android:text="中国安防运维平台——易安防"
+                        android:textColor="@color/color_client_neworder"
                         android:textSize="14sp" />
 
                     <TextView
@@ -413,6 +419,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dimen_84"
                         android:text="提示您：平台接单需要开启【技师认证】"
+                        android:textColor="@color/color_client_neworder"
                         android:textSize="14sp" />
 
                     <!--<LinearLayout-->
@@ -453,6 +460,7 @@
                 </LinearLayout>
 
                 <Button
+                    style="?android:attr/borderlessButtonStyle"
                     android:id="@+id/btn_bigSave"
                     android:layout_width="@dimen/dimen_600"
                     android:layout_height="@dimen/dimen_88"
@@ -477,7 +485,7 @@
                     android:drawableLeft="@drawable/icon_choose_to_auth_selector"
                     android:drawablePadding="@dimen/dimen_8"
                     android:text="前往技师认证"
-                    android:textColor="#999999"
+                    android:textColor="@color/color_text_default"
                     android:textIsSelectable="true"
                     android:textSize="12sp" />
             </RelativeLayout>

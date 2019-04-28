@@ -55,6 +55,8 @@
     <string name="text_fault">故障</string>
     <string name="text_vistor">拜访对象:</string>
 
-    <string name="text_user_home_intro_default">暂无内容</string>
+    <string name="text_user_home_intro_default">这家伙很懒，没有留下任何内容</string>
+
+    <string name="text_to_install_worker"><u>易安防技师端 >></u></string>
 
 </resources>

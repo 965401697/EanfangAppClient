@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
@@ -64,10 +65,6 @@ public class UserHomeActivity extends BaseClientActivity {
     ImageView mImgCircle;
     @BindView(R.id.rec_career_info)
     RecyclerView mRecCareerInfo;
-    @BindView(R.id.btn_concern)
-    Button mBtnConcern;
-    @BindView(R.id.btn_add)
-    Button mBtnAdd;
     @BindView(R.id.tv_position_location)
     TextView mTvPositionLocation;
     @BindView(R.id.tv_intro)
@@ -76,6 +73,18 @@ public class UserHomeActivity extends BaseClientActivity {
     ImageView mImgNoData;
     @BindView(R.id.tv_noData)
     TextView mTvNoData;
+    @BindView(R.id.rl_user_home_concern)
+    RelativeLayout mRlUserHomeConcern;
+    @BindView(R.id.rl_user_home_friend)
+    RelativeLayout mRlUserHomeFriend;
+    @BindView(R.id.tv_user_home_concern)
+    TextView mTvUserHomeConcern;
+    @BindView(R.id.img_user_home_concern)
+    ImageView mImgUserHomeConcern;
+    @BindView(R.id.tv_user_home_friend)
+    TextView mTvUserHomeFriend;
+    @BindView(R.id.img_user_home_friend)
+    ImageView mImgUserHomeFriend;
 
     /**
      * 调用聊天传入userInfo对像
@@ -125,7 +134,6 @@ public class UserHomeActivity extends BaseClientActivity {
 
     private void initView() {
         setRightImageResId(R.drawable.icon_right_more);
-
         mPopWindowContent = LayoutInflater.from(this).inflate(R.layout.layout_pop_user_home_select, null);
         mTvAddAndCancelFriend = mPopWindowContent.findViewById(R.id.tv_addAndCancelFriend);
         mTvAddAndCancelFollow = mPopWindowContent.findViewById(R.id.tv_addAndCancelFollow);
@@ -134,6 +142,22 @@ public class UserHomeActivity extends BaseClientActivity {
         mUserHomeAdapter = new UserHomeAdapter
                 (R.layout.item_user_home_careerinfo);
         mUserHomeAdapter.bindToRecyclerView(mRecCareerInfo);
+        mImgAnswer.setFocusable(true);
+        mImgAnswer.setFocusableInTouchMode(true);
+        mImgAnswer.requestFocus();
+        setFollowStatus();
+        mImgAnswer.post(() -> {
+            int width = mImgAnswer.getWidth();
+            int height = (int) (width * 0.4);
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width, height);
+            mImgAnswer.setLayoutParams(params);
+        });
+        mImgCircle.post(() -> {
+            int width = mImgCircle.getWidth();
+            int height = (int) (width * 0.4);
+            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width, height);
+            mImgCircle.setLayoutParams(params);
+        });
         DefaultPopWindow popWindow = new DefaultPopWindow(mPopWindowContent);
         popWindow.setOnDismissListener(() -> popWindow.backgroundAlpha(UserHomeActivity.this, 1.0f));
         mTvAddAndCancelFriend.setOnClickListener(v -> {
@@ -158,7 +182,7 @@ public class UserHomeActivity extends BaseClientActivity {
             popWindow.backgroundAlpha(UserHomeActivity.this, 0.5f);
         });
         setLeftBack();
-        mBtnAdd.setOnClickListener(v -> {
+        mRlUserHomeFriend.setOnClickListener(v -> {
             if (mIsFriend) {
                 startChat();
             } else {
@@ -166,7 +190,7 @@ public class UserHomeActivity extends BaseClientActivity {
             }
         });
 
-        mBtnConcern.setOnClickListener(new View.OnClickListener() {
+        mRlUserHomeConcern.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mCompanyInfoBean != null) {
@@ -230,10 +254,25 @@ public class UserHomeActivity extends BaseClientActivity {
                         mImgUserHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + accountBean.getAvatar()));
                         mTvNickname.setText(accountBean.getNickName());
                         mTvNickname.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-                        String sex = accountBean.getGender() == 0 ? "女" : "男";
-                        mTvUserInfo.setText(
-                                MessageFormat.format("{0} · {1} · {2}", accountBean.getRealName(), sex, accountBean.getBirthMonthDay()));
-                        mTvPositionLocation.setText(accountBean.getAreaInfo());
+                        if (!StringUtils.isEmpty(accountBean.getRealName())) {
+                            mTvUserInfo.setVisibility(View.VISIBLE);
+                            String sex = accountBean.getGender() == 0 ? "女" : "男";
+                            if (StringUtils.isEmpty(accountBean.getBirthMonthDay())) {
+                                mTvUserInfo.setText(
+                                        MessageFormat.format("{0} · {1}", accountBean.getRealName(), sex));
+                            } else {
+                                mTvUserInfo.setText(
+                                        MessageFormat.format("{0} · {1} · {2}", accountBean.getRealName(), sex, accountBean.getBirthMonthDay()));
+                            }
+                        } else {
+                            mTvUserInfo.setVisibility(View.INVISIBLE);
+                        }
+                        if (!StringUtils.isEmpty(accountBean.getAreaInfo())) {
+                            mTvPositionLocation.setVisibility(View.VISIBLE);
+                            mTvPositionLocation.setText(accountBean.getAreaInfo());
+                        } else {
+                            mTvPositionLocation.setVisibility(View.INVISIBLE);
+                        }
                         String intro = accountBean.getIntro();
                         if (!StringUtils.isEmpty(intro)) {
                             mTvIntro.setText(accountBean.getIntro().length() > 18
@@ -255,10 +294,12 @@ public class UserHomeActivity extends BaseClientActivity {
     private void setFriendStatus() {
         if (mIsFriend) {
             mTvAddAndCancelFriend.setText("删除好友");
-            mBtnAdd.setText("聊天");
+            mTvUserHomeFriend.setText("聊天");
+            mImgUserHomeFriend.setVisibility(View.GONE);
         } else {
             mTvAddAndCancelFriend.setText("添加好友");
-            mBtnAdd.setText("+ 好友");
+            mTvUserHomeFriend.setText("加好友");
+            mImgUserHomeFriend.setVisibility(View.VISIBLE);
         }
     }
 
@@ -268,16 +309,18 @@ public class UserHomeActivity extends BaseClientActivity {
     private void setFollowStatus() {
         if (mIsFollowed) {
             mTvAddAndCancelFollow.setText("取消关注");
-            mBtnConcern.setText("已关注");
-            mBtnConcern.setTextColor(getResources().getColor(R.color.colorPrimary));
-            mBtnConcern.setSelected(false);
-            mBtnConcern.setClickable(false);
+            mTvUserHomeConcern.setText("已关注");
+            mTvUserHomeConcern.setTextColor(getResources().getColor(R.color.color_user_home_add_and_concern));
+            mRlUserHomeConcern.setSelected(false);
+            mRlUserHomeConcern.setClickable(false);
+            mImgUserHomeConcern.setVisibility(View.GONE);
         } else {
             mTvAddAndCancelFollow.setText("添加关注");
-            mBtnConcern.setText("+ 关注");
-            mBtnConcern.setTextColor(Color.WHITE);
-            mBtnConcern.setSelected(true);
-            mBtnConcern.setClickable(true);
+            mTvUserHomeConcern.setText("关注");
+            mTvUserHomeConcern.setTextColor(Color.WHITE);
+            mRlUserHomeConcern.setSelected(true);
+            mRlUserHomeConcern.setClickable(true);
+            mImgUserHomeConcern.setVisibility(View.VISIBLE);
         }
     }
 

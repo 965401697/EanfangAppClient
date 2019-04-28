@@ -2,7 +2,8 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dimen_128">
+    android:layout_height="@dimen/dimen_128"
+    android:background="@color/white">
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/iv_follow_item_header"
@@ -57,26 +58,29 @@
         android:layout_height="@dimen/dimen_34"
         android:layout_marginLeft="@dimen/dimen_8"
         android:layout_marginTop="@dimen/dimen_30"
+        android:src="@drawable/icon_user_auth"
         fresco:layout_constraintLeft_toRightOf="@id/tv_follow_item_friendStatus"
-        fresco:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/icon_user_auth"/>
+        fresco:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btn_follow_item_addOrCancel"
+        style="?android:attr/borderlessButtonStyle"
         android:layout_width="@dimen/dimen_124"
         android:layout_height="@dimen/dimen_48"
         android:layout_marginRight="@dimen/dimen_26"
-        android:gravity="center"
         android:background="@drawable/btn_follow_selector"
+        android:gravity="center"
+        android:text="已关注"
         android:textColor="@drawable/btn_textcolor_follow_selector"
+        android:textIsSelectable="false"
+        android:textSize="12sp"
         fresco:layout_constraintBottom_toBottomOf="parent"
         fresco:layout_constraintRight_toRightOf="parent"
-        android:text="已关注"
-        android:textIsSelectable="false"
         fresco:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_2"
         android:background="@color/color_item_line"
-        fresco:layout_constraintBottom_toBottomOf="parent"/>
+        fresco:layout_constraintBottom_toBottomOf="parent" />
 </android.support.constraint.ConstraintLayout>

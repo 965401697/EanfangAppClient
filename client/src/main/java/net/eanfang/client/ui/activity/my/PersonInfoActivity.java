@@ -83,8 +83,6 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
     SimpleDraweeView ivUpload;
     @BindView(R.id.tv_title)
     TextView tvTitle;
-    @BindView(R.id.iv_right)
-    ImageView ivRight;
     @BindView(R.id.tv_nickname)
     EditText tvNickname;
     @BindView(R.id.et_realname)
@@ -99,8 +97,6 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
     EditText etAddress;
     @BindView(R.id.ll_address)
     LinearLayout llAddress;
-    @BindView(R.id.tv_right)
-    TextView tvRight;
     @BindView(R.id.ll_header)
     LinearLayout llHeader;
     @BindView(R.id.img_position)
@@ -151,7 +147,6 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
 
     private void initView() {
         setTitle("我的资料");
-        setRightTitle("保存");
         setLeftBack();
         llHeader.setOnClickListener(v -> {
             takePhoto(PersonInfoActivity.this, HEAD_PHOTO);
@@ -169,7 +164,6 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         mTvBirthday.setOnClickListener(this::setBirthday);
         mImgCalendar.setOnClickListener(this::setBirthday);
         mTvSave.setOnClickListener(new MultiClickListener(this, this::checkInfo, this::submitSuccess));
-        setRightTitleOnClickListener(new MultiClickListener(this, this::checkInfo, this::submitSuccess));
     }
 
     /**
