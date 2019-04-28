@@ -90,7 +90,8 @@ public class NumberUtil {
     }
 
     public static int parseInt(String str, int def) {
-        if (str == null || str.length() == 0) {
+        return cn.hutool.core.util.NumberUtil.parseInt(str);
+      /*  if (str == null || str.length() == 0) {
             return def;
         }
 
@@ -112,7 +113,7 @@ public class NumberUtil {
         } catch (NumberFormatException e) {
             Log.d(TAG, "String to Long Error! Use def value!");
         }
-        return def;
+        return def;*/
     }
 
     public static float parseFloat(String str, float def) {
@@ -184,8 +185,9 @@ public class NumberUtil {
      * 取一位整数和两位小数
      */
     public static String getEndTwoNum(double a) {
-        DecimalFormat df = new DecimalFormat("0.00");
-        return df.format(a);
+        /*DecimalFormat df = new DecimalFormat("0.00");
+        return df.format(a);*/
+        return cn.hutool.core.util.NumberUtil.decimalFormat("0.00",a);
     }
 
     /**

@@ -8,6 +8,8 @@ import java.util.Hashtable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import cn.hutool.core.util.IdcardUtil;
+
 /**
  * Created by Mr.hou
  *
@@ -25,7 +27,7 @@ public class IDCardUtil {
      * @throws ParseException
      */
     public static boolean IDCardValidate(String IDStr) throws ParseException {
-        String[] ValCodeArr = {"1", "0", "X", "9", "8", "7", "6", "5", "4", "3", "2"};
+      /*  String[] ValCodeArr = {"1", "0", "X", "9", "8", "7", "6", "5", "4", "3", "2"};
         String[] Wi = {"7", "9", "10", "5", "8", "4", "2", "1", "6", "3", "7", "9", "10", "5", "8", "4", "2"};
         String Ai = "";
         // ================ 号码的长度18位 ================
@@ -91,7 +93,8 @@ public class IDCardUtil {
         } else {
             return true;
         }
-        return true;
+        return true;*/
+        return IdcardUtil.isValidCard(IDStr);
     }
 
     /**
