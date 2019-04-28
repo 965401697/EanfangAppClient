@@ -20,7 +20,6 @@ import com.photopicker.com.util.BGASpaceItemDecoration;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.online.FaultExplainActivity;
 import net.eanfang.client.ui.activity.worksapce.security.SecurityDetailActivity;
-import net.eanfang.client.ui.activity.worksapce.security.SecurityListActivity;
 import net.eanfang.client.ui.adapter.security.SecurityListAdapter;
 
 
@@ -149,9 +148,6 @@ public class SecurityFoucsFragment extends TemplateItemListFragment {
                             securityListAdapter.setNewData(bean.getList());
                             mSwipeRefreshLayout.setRefreshing(false);
                             securityListAdapter.loadMoreComplete();
-                            if (bean.getList().size() > 0) {
-                                ((SecurityListActivity) getActivity()).doRefreshMessage(bean.getList().get(0).getCountMap().getCommentNoRead() + bean.getList().get(0).getCountMap().getNoReadCount());
-                            }
                             if (bean.getList().size() < 10) {
                                 securityListAdapter.loadMoreEnd();
                                 mQueryEntry = null;

@@ -132,6 +132,7 @@ public class HomeFragment extends BaseFragment {
     private TextView tvNoSecurity;
     private TextView mTvSecurityNewMessage;
     private RelativeLayout rlSecurityNewMessage;
+    private int mSecurityNum;
 
     @Override
     protected void initData(Bundle arguments) {
@@ -383,7 +384,9 @@ public class HomeFragment extends BaseFragment {
         });
         // 安防圈
         findViewById(R.id.rl_security).setOnClickListener((v) -> {
-            startActivity(new Intent(getActivity(), SecurityListActivity.class));
+            Bundle bundle = new Bundle();
+            bundle.putInt("mSecurityNum", mSecurityNum);
+            JumpItent.jump(getActivity(), SecurityListActivity.class, bundle);
         });
         findViewById(R.id.iv_security_cancle).setOnClickListener((v) -> {
             rlSecurityNewMessage.setVisibility(View.GONE);
@@ -647,7 +650,8 @@ public class HomeFragment extends BaseFragment {
         qBadgeViewQuota.setBadgeNumber(mQuota);
         // @我的和评论未读
         if (bean.getCommentNoRead() + bean.getNoReadCount() > 0) {
-            mTvSecurityNewMessage.setText(bean.getCommentNoRead() + bean.getNoReadCount() + "");
+            mSecurityNum = bean.getCommentNoRead() + bean.getNoReadCount();
+            mTvSecurityNewMessage.setText(mSecurityNum + "");
             rlSecurityNewMessage.setVisibility(View.VISIBLE);
         } else {
             rlSecurityNewMessage.setVisibility(View.GONE);

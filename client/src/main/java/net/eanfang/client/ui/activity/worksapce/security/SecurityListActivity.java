@@ -9,7 +9,6 @@ import android.support.v4.view.ViewPager;
 import android.view.Gravity;
 
 import com.eanfang.application.EanfangApplication;
-import com.eanfang.model.security.SecurityListBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
 import com.flyco.tablayout.SlidingTabLayout;
@@ -44,8 +43,10 @@ public class SecurityListActivity extends BaseActivity {
     private String[] mTitles = {"关注", "热门"};
     private MyPagerAdapter mAdapter;
 
+    private final int REQUEST_LIST = 1021;
     private final int FILTRATE_TYPE_CODE = 101;
 
+    private int mSecurityNum;
     private QBadgeView qBadgeViewMaintain = new QBadgeView(EanfangApplication.get().getApplicationContext());
 
     @Override
@@ -63,6 +64,7 @@ public class SecurityListActivity extends BaseActivity {
         setRightImageResId(R.mipmap.ic_security_right);
         mFragments.add(SecurityFoucsFragment.getInstance("关注"));
         mFragments.add(SecurityHotFragment.getInstance("热门"));
+        mSecurityNum = getIntent().getIntExtra("mSecurityNum", 0);
 
         mAdapter = new MyPagerAdapter(getSupportFragmentManager());
         vpSecurityList.setAdapter(mAdapter);
@@ -71,10 +73,11 @@ public class SecurityListActivity extends BaseActivity {
         vpSecurityList.setCurrentItem(0);
 
         setRightTitleOnClickListener((v) -> {
-            JumpItent.jump(SecurityListActivity.this, SecurityPersonalActivity.class);
+            JumpItent.jump(SecurityListActivity.this, SecurityPersonalActivity.class, REQUEST_LIST);
         });
 
         qBadgeViewMaintain.bindTarget(findViewById(R.id.tv_right))
+                .setBadgeNumber(mSecurityNum)
                 .setBadgeBackgroundColor(0xFFFF0000)
                 .setBadgePadding(3, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
@@ -118,16 +121,18 @@ public class SecurityListActivity extends BaseActivity {
             } else {
                 ((SecurityHotFragment) mFragments.get(currentTab)).refreshStatus();
             }
+
         } else if (resultCode == RESULT_OK && requestCode == REFRESH_ITEM) {
             if (currentTab == 0) {
                 ((SecurityFoucsFragment) mFragments.get(currentTab)).refreshItemStatus(data);
             } else {
                 ((SecurityHotFragment) mFragments.get(currentTab)).refreshItemStatus(data);
             }
+        } else if (resultCode == RESULT_OK && requestCode == REQUEST_LIST) {
+            // list 回来更新数量
+            mSecurityNum = data.getIntExtra("mSecurityNum", 0);
+            qBadgeViewMaintain.setBadgeNumber(mSecurityNum);
         }
     }
 
-    public void doRefreshMessage(int mMessageCount) {
-        qBadgeViewMaintain.setBadgeNumber(mMessageCount);
-    }
 }
