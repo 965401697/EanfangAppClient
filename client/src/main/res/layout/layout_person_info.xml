@@ -386,10 +386,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_146"
                 android:background="#ffffff"
-                android:cursorVisible="false"
                 android:gravity="start"
                 android:hint="请输入..."
                 android:paddingLeft="@dimen/dimen_36"
+                android:inputType="text"
                 android:textColor="@color/font_color"
                 android:textSize="13sp" />
 
