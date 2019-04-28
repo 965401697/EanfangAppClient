@@ -1,6 +1,7 @@
 package net.eanfang.client.ui.activity.worksapce.security;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -29,6 +30,7 @@ import com.eanfang.model.security.SecurityCommentBean;
 import com.eanfang.model.security.SecurityDetailBean;
 import com.eanfang.model.security.SecurityFoucsBean;
 import com.eanfang.model.security.SecurityLikeBean;
+import com.eanfang.model.security.SecurityListBean;
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.ETimeUtils;
@@ -129,6 +131,8 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
      * 点赞状态
      */
     private int mLikeStatus = 100;
+    private int mLikeCount;
+    private boolean isLikeEdit = false;
 
     private GeneralSDialog generalDialog;
 
@@ -136,16 +140,22 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
      * 是否关注
      */
     private boolean isFoucus = false;
+    private boolean isFoucsEdit = false;
     /**
      * 是否评点击论按钮进入
      */
     private boolean isClickCommont = false;
     private boolean isFirstCome = true;
+    private boolean isCommentEdit = false;
 
     private Parser mTagParser = new Parser(this);
     protected FormatRangeManager mRangeManager = new FormatRangeManager();
     private String mContent = "";
     private String atName = "";
+    /**
+     * 修改item状态
+     */
+    private SecurityListBean.ListBean mItenSecurityDetailBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,7 +168,6 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
 
 
     private void initView() {
-        setLeftBack();
         setTitle("安防圈");
         securityCommentAdapter = new SecurityCommentAdapter();
         rvComments.setLayoutManager(new LinearLayoutManager(this));
@@ -167,6 +176,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         rvComments.setNestedScrollingEnabled(false);
         isClickCommont = getIntent().getBooleanExtra("isCommon", false);
         mId = getIntent().getLongExtra("spcId", 0);
+        mItenSecurityDetailBean = new SecurityListBean.ListBean();
         initData();
     }
 
@@ -200,6 +210,21 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
             if (listBean != null && listBean.getCommentUser() != null
                     && listBean.getCommentUser().getAccId() != null) {
                 gotoUserHomeActivity(listBean.getCommentUser().getAccId());
+            }
+        });
+        setLeftBack((v) -> {
+            Intent intent = new Intent();
+            intent.putExtra("itemStatus", mItenSecurityDetailBean);
+            intent.putExtra("isLikeEdit", isLikeEdit);
+            intent.putExtra("isFoucsEdit", isFoucsEdit);
+            intent.putExtra("isCommentEdit", isCommentEdit);
+            setResult(RESULT_OK, intent);
+            finishSelf();
+        });
+        tvCommentCount.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                return false;
             }
         });
     }
@@ -241,12 +266,17 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
                     } else {
                         hideKeyboard();
                     }
-
+                    mItenSecurityDetailBean.setCommentCount(bean.getSpcList().getCommentCount());
                     setData(securityDetailBean);
                 }));
     }
 
     public void setData(SecurityDetailBean.SpcListBean securityDetailBean) {
+        mLikeStatus = securityDetailBean.getLikeStatus();
+        mLikeCount = securityDetailBean.getLikesCount();
+        mItenSecurityDetailBean.setReadCount(securityDetailBean.getReadCount());
+        mItenSecurityDetailBean.setAccountEntity(securityDetailBean.getAccountEntity());
+        mItenSecurityDetailBean.setReadStatus(securityDetailBean.getReadStatus());
         // 发布人
         tvName.setText(V.v(() -> securityDetailBean.getAccountEntity().getRealName()));
         // 头像
@@ -309,6 +339,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         } else {
             ivLike.setImageResource(R.mipmap.ic_worker_security_like_unpressed);
         }
+        snplPic.setData(null);
         if (!StringUtils.isEmpty(securityDetailBean.getSpcImg())) {
             snplPic.setVisibility(View.VISIBLE);
             String[] pics = securityDetailBean.getSpcImg().split(",");
@@ -403,6 +434,8 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
                         tvIsFocus.setText("取消关注");
                         isFoucus = true;
                     }
+                    mItenSecurityDetailBean.setFollowsStatus(listBean.getFollowsStatus() == 0 ? 1 : 0);
+                    isFoucsEdit = true;
                 }));
     }
 
@@ -434,6 +467,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
                 .upJson(JSONObject.toJSONString(securityCommentBean))
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
                     isFirstCome = false;
+                    isCommentEdit = true;
                     hideKeyboard();
                     getComments();
                 }));
@@ -467,10 +501,15 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
                     if (mLikeStatus == 0) {
                         mLikeStatus = 1;
                         ivLike.setImageResource(R.mipmap.ic_worker_security_like_unpressed);
+                        mItenSecurityDetailBean.setLikeStatus(1);
+                        mItenSecurityDetailBean.setLikesCount(mLikeCount - 1);
                     } else {
                         ivLike.setImageResource(R.mipmap.ic_worker_security_like_pressed);
                         mLikeStatus = 0;
+                        mItenSecurityDetailBean.setLikeStatus(0);
+                        mItenSecurityDetailBean.setLikesCount(mLikeCount + 1);
                     }
+                    isLikeEdit = true;
                 }));
     }
 
@@ -555,6 +594,15 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             hideKeyboard();
         }
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            Intent intent = new Intent();
+            intent.putExtra("itemStatus", mItenSecurityDetailBean);
+            intent.putExtra("isLikeEdit", isLikeEdit);
+            intent.putExtra("isFoucsEdit", isFoucsEdit);
+            intent.putExtra("isCommentEdit", isCommentEdit);
+            setResult(RESULT_OK, intent);
+            finishSelf();
+        }
         return super.onKeyDown(keyCode, event);
     }
 
@@ -573,4 +621,5 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         bundle.putLong("mUserId", mUserId);
         JumpItent.jump(SecurityDetailActivity.this, SecurityPersonalActivity.class, bundle);
     }
+
 }

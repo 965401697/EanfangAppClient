@@ -150,7 +150,6 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
 
     private void initView() {
         setTitle("我的资料");
-        setRightTitle("保存");
         setLeftBack();
         setSexChoose();
         setHeaderShow(false);
@@ -180,7 +179,6 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         mTvBirthday.setOnClickListener(this::setBirthday);
         mImgCalendar.setOnClickListener(this::setBirthday);
         mBtnBigSave.setOnClickListener(new MultiClickListener(this, this::checkInfo, this::submitSuccess));
-        setRightTitleOnClickListener(new MultiClickListener(this, this::checkInfo, this::submitSuccess));
     }
 
     private void initData() {

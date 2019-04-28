@@ -19,7 +19,9 @@ import java.util.Set;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Size;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
@@ -34,6 +36,8 @@ import lombok.Setter;
 @TableName(value = "sys_account")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class AccountEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     //账号

@@ -118,6 +118,7 @@ public class HomeFragment extends BaseFragment {
     private TextView tvNoSecurity;
     private TextView mTvSecurityNewMessage;
     private RelativeLayout rlSecurityNewMessage;
+    private int mSecurityNum;
 
     @Override
     protected int setLayoutResouceId() {
@@ -238,14 +239,11 @@ public class HomeFragment extends BaseFragment {
             homeScanPopWindow.backgroundAlpha(0.5f);
         });
 
-        //签到
-//        findViewById(R.id.ll_sign).setOnClickListener((v) -> {
-//            new SignCtrlView(getActivity()).show();
-//        });
-        // 安防圈
         // 安防圈
         findViewById(R.id.rl_security).setOnClickListener((v) -> {
-            startActivity(new Intent(getActivity(), SecurityListActivity.class));
+            Bundle bundle = new Bundle();
+            bundle.putInt("mSecurityNum", mSecurityNum);
+            JumpItent.jump(getActivity(), SecurityListActivity.class, bundle);
         });
         findViewById(R.id.iv_security_cancle).setOnClickListener((v) -> {
             rlSecurityNewMessage.setVisibility(View.GONE);

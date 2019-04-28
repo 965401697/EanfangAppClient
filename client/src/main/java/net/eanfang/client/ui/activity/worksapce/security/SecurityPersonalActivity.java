@@ -1,5 +1,6 @@
 package net.eanfang.client.ui.activity.worksapce.security;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
@@ -7,6 +8,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -91,6 +93,8 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
     private boolean isLookOther = false;
     private Long mUserId;
 
+    private int mSecurityNum;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,7 +113,6 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
 
 
     private void initView() {
-        setLeftBack();
         isLookOther = getIntent().getBooleanExtra("isLookOther", false);
         mUserId = getIntent().getLongExtra("mUserId", 0);
         if (isLookOther) {
@@ -178,6 +181,12 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
                 .setGravityOffset(15, 0, true)
                 .setBadgeTextSize(11, true);
 
+        setLeftBack((v) -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt("mSecurityNum", mSecurityNum);
+            setResult(RESULT_OK, new Intent());
+            finishSelf();
+        });
     }
 
     public void doJump(int position, boolean isCommon) {
@@ -229,6 +238,7 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
                     qBadgeViewComment.setBadgeNumber(bean.getCommentNoRead());
                     //艾特我未读
                     qBadgeViewAbout.setBadgeNumber(bean.getNoReadCount());
+                    mSecurityNum = bean.getCommentNoRead() + bean.getNoReadCount();
                 }));
 
     }
@@ -313,6 +323,7 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
                 bundle_like.putString("type", "like");
                 JumpItent.jump(SecurityPersonalActivity.this, SecurityPersonalPublicListActivity.class, bundle_like);
                 break;
+            // 艾特我的列表
             case R.id.tv_aboutme:
                 Bundle bundle_about = new Bundle();
                 bundle_about.putString("type", "about");
@@ -352,5 +363,17 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
     public void onLoadMoreRequested() {
         mPage++;
         initData();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            Bundle bundle = new Bundle();
+            bundle.putInt("mSecurityNum", mSecurityNum);
+            setResult(RESULT_OK, new Intent().putExtras(bundle));
+            finishSelf();
+        }
+        return super.onKeyDown(keyCode, event);
+
     }
 }
