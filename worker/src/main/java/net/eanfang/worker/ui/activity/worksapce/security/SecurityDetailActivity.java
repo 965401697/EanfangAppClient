@@ -146,6 +146,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
      */
     private boolean isCommont = false;
     private boolean isFirstCome = true;
+    private boolean isCommentEdit = false;
 
     private Parser mTagParser = new Parser(this);
     protected FormatRangeManager mRangeManager = new FormatRangeManager();
@@ -218,6 +219,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
             intent.putExtra("itemStatus", mItenSecurityDetailBean);
             intent.putExtra("isLikeEdit", isLikeEdit);
             intent.putExtra("isFoucsEdit", isFoucsEdit);
+            intent.putExtra("isCommentEdit", isCommentEdit);
             setResult(RESULT_OK, intent);
             finishSelf();
         });
@@ -260,6 +262,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
                     } else {
                         hideKeyboard();
                     }
+                    mItenSecurityDetailBean.setCommentCount(bean.getSpcList().getCommentCount());
                     setData(securityDetailBean);
                 }));
     }
@@ -327,6 +330,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         } else {
             ivLike.setImageResource(R.mipmap.ic_worker_security_like_unpressed);
         }
+        snplPic.setData(null);
         if (!StringUtils.isEmpty(securityDetailBean.getSpcImg())) {
             snplPic.setVisibility(View.VISIBLE);
             String[] pics = securityDetailBean.getSpcImg().split(",");
@@ -453,6 +457,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
                 .upJson(JSONObject.toJSONString(securityCommentBean))
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
                     isFirstCome = false;
+                    isCommentEdit = true;
                     hideKeyboard();
                     getComments();
 
@@ -584,6 +589,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
             intent.putExtra("itemStatus", mItenSecurityDetailBean);
             intent.putExtra("isLikeEdit", isLikeEdit);
             intent.putExtra("isFoucsEdit", isFoucsEdit);
+            intent.putExtra("isCommentEdit", isCommentEdit);
             setResult(RESULT_OK, intent);
             finishSelf();
         }

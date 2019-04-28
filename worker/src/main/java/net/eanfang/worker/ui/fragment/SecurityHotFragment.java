@@ -258,12 +258,24 @@ public class SecurityHotFragment extends TemplateItemListFragment {
     public void refreshItemStatus(Intent intentData) {
         if (securityDetailBean != null && intentData != null) {
             SecurityListBean.ListBean mSecurityDetailBean = (SecurityListBean.ListBean) intentData.getSerializableExtra("itemStatus");
+            /**
+             * 是否点赞
+             * */
             if (intentData.getBooleanExtra("isLikeEdit", false)) {
                 securityDetailBean.setLikeStatus(mSecurityDetailBean.getLikeStatus());
                 securityDetailBean.setLikesCount(mSecurityDetailBean.getLikesCount());
             }
+            /**
+             * 是否关注
+             * */
             if (intentData.getBooleanExtra("isFoucsEdit", false)) {
                 securityDetailBean.setFollowsStatus(mSecurityDetailBean.getFollowsStatus());
+            }
+            /**
+             * 是否评论
+             * */
+            if (intentData.getBooleanExtra("isCommentEdit", false)) {
+                securityDetailBean.setCommentCount(mSecurityDetailBean.getCommentCount());
             }
             securityDetailBean.setReadCount(mSecurityDetailBean.getReadCount());
             securityListAdapter.notifyDataSetChanged();
