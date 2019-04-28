@@ -138,7 +138,7 @@ public class SecurityFoucsFragment extends TemplateItemListFragment {
         }
         mQueryEntry.setPage(mPage);
         mQueryEntry.setSize(10);
-        mQueryEntry.getEquals().put("followUserId", EanfangApplication.get().getUserId() + "");
+        mQueryEntry.getEquals().put("followAccId", EanfangApplication.get().getAccId() + "");
         EanfangHttp.post(NewApiService.SERCURITY_FOUCS)
                 .upJson(JsonUtils.obj2String(mQueryEntry))
                 .execute(new EanfangCallback<SecurityListBean>(getActivity(), true, SecurityListBean.class) {
