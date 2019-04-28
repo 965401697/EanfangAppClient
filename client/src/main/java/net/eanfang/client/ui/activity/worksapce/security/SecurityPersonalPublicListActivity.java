@@ -236,7 +236,7 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
         String mUrl = null;
         if (mLike.equals(mType)) {
             mUrl = NewApiService.SERCURITY_LIKE_LIST;
-            queryEntry.getEquals().put("likeUserId", EanfangApplication.get().getUserId() + "");
+            queryEntry.getEquals().put("likeAccId", EanfangApplication.get().getAccId() + "");
         } else if (mAbout.equals(mType)) {
             mUrl = NewApiService.SERCURITY_ABOUT_LIST;
             queryEntry.getLike().put("atUserId", EanfangApplication.get().getUserId() + "");
