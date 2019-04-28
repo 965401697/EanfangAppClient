@@ -11,7 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -29,6 +28,7 @@ import com.eanfang.witget.DefaultPopWindow;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.worksapce.online.ExpertOnlineActivity;
 import net.eanfang.client.ui.activity.worksapce.security.SecurityPersonalActivity;
 import net.eanfang.client.ui.adapter.UserHomeAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
@@ -205,8 +205,7 @@ public class UserHomeActivity extends BaseClientActivity {
         mImgAnswer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtil.get().showToast(UserHomeActivity.this, "跳转在线问答");
-
+                startActivity(new Intent(UserHomeActivity.this, ExpertOnlineActivity.class));
             }
         });
 

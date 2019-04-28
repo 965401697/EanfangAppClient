@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
+import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
@@ -71,6 +72,8 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
     Button mTvSave;
     @BindView(R.id.tv_noHeader_show)
     TextView mTvNoHeaderShow;
+    @BindView(R.id.tv_download_worker)
+    TextView mTvDownloadWorker;
     /**
      * 性别默认是男
      */
@@ -164,6 +167,14 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         mTvBirthday.setOnClickListener(this::setBirthday);
         mImgCalendar.setOnClickListener(this::setBirthday);
         mTvSave.setOnClickListener(new MultiClickListener(this, this::checkInfo, this::submitSuccess));
+        mTvDownloadWorker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uri = Uri.parse(NewApiService.DOWNLOAD_WORKER);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        });
     }
 
     /**
@@ -407,7 +418,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this,  new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 mTvBirthday.setText(GetDateUtils.dateToDateString(new GregorianCalendar

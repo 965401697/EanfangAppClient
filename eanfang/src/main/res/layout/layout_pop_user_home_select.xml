@@ -42,7 +42,8 @@
             android:layout_height="@dimen/dimen_2"
             android:paddingLeft="@dimen/dimen_20"
             android:paddingRight="@dimen/dimen_20"
-            android:src="@color/color_pop_line" />
+            android:src="@color/color_pop_line"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/tv_pullBack"
@@ -52,7 +53,8 @@
             android:layout_marginLeft="@dimen/dimen_52"
             android:text="拉黑"
             android:textColor="@color/color_client_neworder"
-            android:textSize="13sp" />
+            android:textSize="13sp"
+            android:visibility="gone"/>
 
     </LinearLayout>
 

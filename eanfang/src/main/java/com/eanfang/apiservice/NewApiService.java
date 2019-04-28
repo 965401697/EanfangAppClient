@@ -17,6 +17,11 @@ public interface NewApiService {
     String YAF_SYS = "/yaf_sys";
 
     /**
+     * 下载技师端url
+     */
+    String DOWNLOAD_WORKER = BuildConfig.API_HOST + YAF_SYS + "/update/worker/download";
+
+    /**
      * 获取基础数据
      */
     String GET_BASE_DATA = BuildConfig.API_HOST + "/yaf_sys/basedata/listall";

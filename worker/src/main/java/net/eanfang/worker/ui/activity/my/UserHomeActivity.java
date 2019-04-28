@@ -28,6 +28,7 @@ import com.eanfang.witget.DefaultPopWindow;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.worksapce.online.ExpertOnlineActivity;
 import net.eanfang.worker.ui.activity.worksapce.security.SecurityPersonalActivity;
 import net.eanfang.worker.ui.adapter.UserHomeAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
@@ -201,8 +202,7 @@ public class UserHomeActivity extends BaseWorkerActivity {
         mImgAnswer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToastUtil.get().showToast(UserHomeActivity.this, "跳转在线问答");
-
+                startActivity(new Intent(UserHomeActivity.this, ExpertOnlineActivity.class));
             }
         });
 
