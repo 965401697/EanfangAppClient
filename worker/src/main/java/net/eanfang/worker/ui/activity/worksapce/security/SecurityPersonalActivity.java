@@ -79,7 +79,8 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
     @BindView(R.id.tv_secuirtypersonal)
     TextView tvSecuirtypersonal;
 
-    private QueryEntry queryEntry;
+    private QueryEntry queryEntry1;
+    private QueryEntry queryEntry2;
     private int mPage = 1;
     private SecurityListAdapter securityListAdapter;
 
@@ -92,6 +93,7 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
      */
     private boolean isLookOther = false;
     private Long mUserId;
+    private long mAccId;
 
     private int mSecurityNum;
 
@@ -116,6 +118,7 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
         setLeftBack();
         isLookOther = getIntent().getBooleanExtra("isLookOther", false);
         mUserId = getIntent().getLongExtra("mUserId", 0);
+        mAccId = getIntent().getLongExtra("mAccId", 0);
         if (isLookOther) {
             setTitle("用户主页");
             llSecuritypersonal.setVisibility(View.GONE);
@@ -213,18 +216,20 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
      */
     private void initPersonalData() {
         String url = null;
-        if (queryEntry == null) {
-            queryEntry = new QueryEntry();
+        if (queryEntry1 == null) {
+            queryEntry1 = new QueryEntry();
         }
         if (isLookOther) {
-            queryEntry.getEquals().put("publisherUserId", mUserId + "");
+            queryEntry1.getEquals().put("publisherAccId", mAccId + "");
+            queryEntry1.getEquals().put("publisherUserId", mUserId + "");
             url = NewApiService.SERCURITY_PERSONAL_OTHER_TOP;
         } else {
-            queryEntry.getEquals().put("publisherUserId", EanfangApplication.get().getUserId() + "");
+            queryEntry1.getEquals().put("publisherAccId", EanfangApplication.get().getAccId() + "");
+            queryEntry1.getEquals().put("publisherUserId", EanfangApplication.get().getUserId() + "");
             url = NewApiService.SERCURITY_PERSONAL_TOP;
         }
         EanfangHttp.post(url)
-                .upJson(JsonUtils.obj2String(queryEntry))
+                .upJson(JsonUtils.obj2String(queryEntry1))
                 .execute(new EanfangCallback<SecurityPersonalTopBean>(SecurityPersonalActivity.this, true, SecurityPersonalTopBean.class, bean -> {
                     ivHead.setImageURI((Uri.parse(BuildConfig.OSS_SERVER + bean.getUserEntity().getAccountEntity().getAvatar())));
                     tvName.setText(bean.getUserEntity().getAccountEntity().getRealName());
@@ -247,21 +252,21 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
 
     private void initData() {
         String url = null;
-        if (queryEntry == null) {
-            queryEntry = new QueryEntry();
+        if (queryEntry2 == null) {
+            queryEntry2 = new QueryEntry();
         }
-        queryEntry.setPage(mPage);
-        queryEntry.setSize(10);
+        queryEntry2.setPage(mPage);
+        queryEntry2.setSize(10);
         if (isLookOther) {
-            queryEntry.getEquals().put("publisherUserId", mUserId + "");
+            queryEntry2.getEquals().put("publisherAccId", mAccId + "");
             url = NewApiService.SERCURITY_PERSONAL_OTHER;
         } else {
-            queryEntry.getEquals().put("publisherUserId", EanfangApplication.get().getUserId() + "");
+            queryEntry2.getEquals().put("publisherAccId", EanfangApplication.get().getAccId() + "");
             url = NewApiService.SERCURITY_PERSONAL;
         }
 
         EanfangHttp.post(url)
-                .upJson(JsonUtils.obj2String(queryEntry))
+                .upJson(JsonUtils.obj2String(queryEntry2))
                 .execute(new EanfangCallback<SecurityListBean>(SecurityPersonalActivity.this, true, SecurityListBean.class) {
                     @Override
                     public void onSuccess(SecurityListBean bean) {
@@ -275,7 +280,7 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
 
                             if (bean.getList().size() < 10) {
                                 securityListAdapter.loadMoreEnd();
-                                queryEntry = null;
+                                queryEntry2 = null;
                             }
 
                             if (bean.getList().size() > 0) {

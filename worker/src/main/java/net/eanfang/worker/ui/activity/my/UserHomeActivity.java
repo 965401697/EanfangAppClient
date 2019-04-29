@@ -95,6 +95,10 @@ public class UserHomeActivity extends BaseWorkerActivity {
     private TextView mTvAddAndCancelFollow;
     private TextView mTvPullBack;
     /**
+     * 是否是本人
+     */
+    private boolean mIsSelf;
+    /**
      * 是否是好友
      */
     private boolean mIsFriend;
@@ -125,8 +129,9 @@ public class UserHomeActivity extends BaseWorkerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_home);
         ButterKnife.bind(this);
-        String uid = getIntent().getStringExtra(EXTRA_UID);
-        initData(uid);
+        String accId = getIntent().getStringExtra(EXTRA_UID);
+        mIsSelf = accId != null && accId.equals(String.valueOf(EanfangApplication.get().getAccId()));
+        initData(accId);
         initView();
     }
 
@@ -158,7 +163,11 @@ public class UserHomeActivity extends BaseWorkerActivity {
         DefaultPopWindow popWindow = new DefaultPopWindow(mPopWindowContent);
         popWindow.setOnDismissListener(() -> popWindow.backgroundAlpha(UserHomeActivity.this, 1.0f));
         mTvAddAndCancelFriend.setOnClickListener(v -> {
-            pushFriendStatus(mIsFriend);
+            if (mUserInfo != null) {
+                pushFriendStatus(mIsFriend);
+            } else {
+                showToast("用户信息有误！");
+            }
             popWindow.dismiss();
         });
         mTvAddAndCancelFollow.setOnClickListener(v -> {
@@ -180,10 +189,14 @@ public class UserHomeActivity extends BaseWorkerActivity {
         });
         setLeftBack();
         mRlUserHomeFriend.setOnClickListener(v -> {
-            if (mIsFriend) {
-                startChat();
+            if (mUserInfo != null) {
+                if (mIsFriend) {
+                    startChat();
+                } else {
+                    pushFriendStatus(false);
+                }
             } else {
-                pushFriendStatus(false);
+                showToast("用户信息有误！");
             }
         });
 
@@ -211,7 +224,8 @@ public class UserHomeActivity extends BaseWorkerActivity {
             public void onClick(View v) {
                 if (mCompanyInfoBean != null) {
                     Bundle bundle = new Bundle();
-                    bundle.putBoolean("isLookOther", true);
+                    bundle.putBoolean("isLookOther", !mIsSelf);
+                    bundle.putLong("mAccId", Long.parseLong(mCompanyInfoBean.getAccId()));
                     bundle.putLong("mUserId", Long.parseLong(mCompanyInfoBean.getUserId()));
                     JumpItent.jump(UserHomeActivity.this, SecurityPersonalActivity.class, bundle);
                 } else {
@@ -324,7 +338,7 @@ public class UserHomeActivity extends BaseWorkerActivity {
      * @param doDelete true：删除好友 false：添加好友
      */
     private void pushFriendStatus(boolean doDelete) {
-        if (mUserInfo != null) {
+        if (!mIsSelf) {
             EanfangHttp.post(doDelete ? UserApi.POST_DELETE_FRIEND_PUSH : UserApi.POST_ADD_FRIEND_PUSH)
                     .params("senderId", EanfangApplication.get().getAccId())
                     .params("targetIds", mUserInfo.getUserId())
@@ -332,6 +346,8 @@ public class UserHomeActivity extends BaseWorkerActivity {
                         ToastUtil.get().showToast(this, doDelete ? "删除成功" : "发送成功");
                         setFriendStatus();
                     }));
+        } else {
+            showSelfHint();
         }
     }
 
@@ -339,9 +355,13 @@ public class UserHomeActivity extends BaseWorkerActivity {
      * 开始聊天
      */
     private void startChat() {
-        RongIM.getInstance().refreshUserInfoCache(mUserInfo);
-        RongIM.getInstance().startConversation(this, Conversation.ConversationType.PRIVATE,
-                mUserInfo.getUserId(), mUserInfo.getName());
+        if (!mIsSelf) {
+            RongIM.getInstance().refreshUserInfoCache(mUserInfo);
+            RongIM.getInstance().startConversation(this, Conversation.ConversationType.PRIVATE,
+                    mUserInfo.getUserId(), mUserInfo.getName());
+        } else {
+            showSelfHint();
+        }
     }
 
     /**
@@ -358,18 +378,30 @@ public class UserHomeActivity extends BaseWorkerActivity {
         Log.d("UserHomeActivity", "changeFollowStatus:asAccId:" + asAccId +
                 " asUserId:" + asUserId + "  asCompanyId:" + asCompanyId +
                 "  asTopCompanyId:" + asTopCompanyId + "  isFollow:" + isFollowed);
-        EanfangHttp.post(UserApi.POST_CHANGE_FOLLOW_STATUS)
-                .params("asAccId", asAccId)
-                .params("asUserId", asUserId)
-                .params("asCompanyId", asCompanyId)
-                .params("asTopCompanyId", asTopCompanyId)
-                .params("followStatus", String.valueOf(isFollowed ? 0 : 1))
-                .execute(new EanfangCallback(this, true, JSONObject.class, bean -> {
-                    Log.d("UserHomeActivity", "changeFollowStatus: 关注状态上传成功");
-                    showToast(isFollowed ? "已取消关注" : "关注成功");
-                    mIsFollowed = !isFollowed;
-                    setFollowStatus();
-                }));
+        if (!mIsSelf) {
+            EanfangHttp.post(UserApi.POST_CHANGE_FOLLOW_STATUS)
+                    .params("asAccId", asAccId)
+                    .params("asUserId", asUserId)
+                    .params("asCompanyId", asCompanyId)
+                    .params("asTopCompanyId", asTopCompanyId)
+                    .params("followStatus", String.valueOf(isFollowed ? 0 : 1))
+                    .execute(new EanfangCallback(this, true, JSONObject.class, bean -> {
+                        Log.d("UserHomeActivity", "changeFollowStatus: 关注状态上传成功");
+                        showToast(isFollowed ? "已取消关注" : "关注成功");
+                        mIsFollowed = !isFollowed;
+                        setFollowStatus();
+                    }));
+        } else {
+            showSelfHint();
+        }
     }
+
+    /**
+     * 自己的个人主页点击按钮提示
+     */
+    private void showSelfHint() {
+        showToast("不能对自己进行操作");
+    }
+
 
 }
