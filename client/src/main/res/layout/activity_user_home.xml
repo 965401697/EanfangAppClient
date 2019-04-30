@@ -108,7 +108,8 @@
                     android:layout_width="@dimen/dimen_182"
                     android:layout_height="@dimen/dimen_182"
                     android:layout_centerInParent="true"
-                    fresco:placeholderImage="@mipmap/ic_header"
+                    android:scaleType="centerCrop"
+                    fresco:placeholderImage="@mipmap/ic_header_userinfo"
                     android:background="@drawable/bg_user_home_circle_head"
                     android:padding="@dimen/dimen_10"
                     fresco:roundAsCircle="true" />
@@ -121,7 +122,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/dimen_40"
-                android:text="昵称昵称昵称"
+                android:text="昵称"
                 android:textColor="@color/color_client_neworder"
                 android:textSize="16sp" />
 

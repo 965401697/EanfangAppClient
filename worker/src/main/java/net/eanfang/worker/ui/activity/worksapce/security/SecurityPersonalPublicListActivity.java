@@ -298,7 +298,7 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
 
         String mUrl = null;
         mUrl = NewApiService.SERCURITY_FOUCS_LIST;
-        queryEntry.getEquals().put("followUserId", EanfangApplication.get().getUserId() + "");
+        queryEntry.getEquals().put("followAccId", EanfangApplication.get().getAccId() + "");
         EanfangHttp.post(mUrl)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<SecurityFoucsListBean>(SecurityPersonalPublicListActivity.this, true, SecurityFoucsListBean.class) {
