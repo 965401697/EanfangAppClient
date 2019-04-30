@@ -654,6 +654,7 @@ public class HomeFragment extends BaseFragment {
             mTvSecurityNewMessage.setText(mSecurityNum + "");
             rlSecurityNewMessage.setVisibility(View.VISIBLE);
         } else {
+            mSecurityNum = 0;
             rlSecurityNewMessage.setVisibility(View.GONE);
         }
         /**
