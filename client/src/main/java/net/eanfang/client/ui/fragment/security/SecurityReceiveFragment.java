@@ -71,7 +71,7 @@ public class SecurityReceiveFragment extends TemplateItemListFragment {
         mQueryEntry.setPage(mPage);
         mQueryEntry.setSize(10);
         //我发出的评论
-        mQueryEntry.getEquals().put("asUserId", EanfangApplication.get().getUserId() + "");
+        mQueryEntry.getEquals().put("asAccid", EanfangApplication.get().getUserId() + "");
         EanfangHttp.post(NewApiService.SERCURITY_COMMENT_LIST)
                 .upJson(JsonUtils.obj2String(mQueryEntry))
                 .execute(new EanfangCallback<SecurityCommentListBean>(getActivity(), true, SecurityCommentListBean.class) {

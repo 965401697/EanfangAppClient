@@ -22,6 +22,8 @@ import net.eanfang.client.ui.activity.worksapce.online.FaultExplainActivity;
 import net.eanfang.client.ui.activity.worksapce.security.SecurityDetailActivity;
 import net.eanfang.client.ui.adapter.security.SecurityListAdapter;
 
+import java.util.Iterator;
+
 
 public class SecurityFoucsFragment extends TemplateItemListFragment {
 
@@ -220,9 +222,10 @@ public class SecurityFoucsFragment extends TemplateItemListFragment {
              * */
             if (intentData.getBooleanExtra("isFoucsEdit", false)) {
                 securityDetailBean.setFollowsStatus(mSecurityDetailBean.getFollowsStatus());
-                for (int i = 0; i < securityListAdapter.getData().size(); i++) {
-                    if (securityListAdapter.getData().get(i).getAccountEntity().getAccId().equals(mSecurityDetailBean.getAccountEntity().getAccId())) {
-                        securityListAdapter.remove(i);
+                Iterator<SecurityListBean.ListBean> iterator = securityListAdapter.getData().iterator();
+                while (iterator.hasNext()) {
+                    if (iterator.next().getAccountEntity().getAccId().equals(mSecurityDetailBean.getAccountEntity().getAccId())) {
+                        iterator.remove();
                     }
                 }
             }
