@@ -541,9 +541,11 @@ public class HomeFragment extends BaseFragment {
         qBadgeViewDesign.setBadgeNumber(mDesign);
         // @我的和评论未读
         if (bean.getCommentNoRead() + bean.getNoReadCount() > 0) {
+            mSecurityNum = bean.getCommentNoRead() + bean.getNoReadCount();
             mTvSecurityNewMessage.setText(bean.getCommentNoRead() + bean.getNoReadCount() + "");
             rlSecurityNewMessage.setVisibility(View.VISIBLE);
         } else {
+            mSecurityNum = 0;
             rlSecurityNewMessage.setVisibility(View.GONE);
         }
         /**
