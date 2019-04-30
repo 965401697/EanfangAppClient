@@ -145,8 +145,8 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight="3"
                         android:gravity="right"
-                        android:visibility="gone"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="visible">
 
                         <RadioButton
                             android:id="@+id/rb_add"
@@ -156,7 +156,7 @@
                             android:button="@null"
                             android:checked="true"
                             android:gravity="center"
-                            android:text="家"
+                            android:text="添加"
                             android:textColor="@drawable/select_client_camera_text_back"
                             android:textSize="12sp" />
 

@@ -2,6 +2,7 @@ package net.eanfang.client.ui.activity.worksapce.repair;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
@@ -21,6 +22,7 @@ import net.eanfang.client.ui.adapter.repair.RepairPersonalInfoAdapter;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -41,6 +43,8 @@ public class RepairPersonInfoListActivity extends BaseActivity {
     TextView tvNodata;
     private RepairPersonalInfoAdapter repairPersonalInfoAdapter;
     private List<RepairPersonalInfoEntity.ListBean> repairPersonalInfoEntities;
+    private List<RepairPersonalInfoEntity.ListBean> mDeleteList = new ArrayList();
+    private List<RepairPersonalInfoEntity.ListBean> mAllList = new ArrayList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +64,7 @@ public class RepairPersonInfoListActivity extends BaseActivity {
 
         rvPersonalInfo.setLayoutManager(new LinearLayoutManager(this));
         repairPersonalInfoAdapter = new RepairPersonalInfoAdapter();
+        rvPersonalInfo.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         repairPersonalInfoAdapter.bindToRecyclerView(rvPersonalInfo);
     }
 
@@ -71,7 +76,7 @@ public class RepairPersonInfoListActivity extends BaseActivity {
             switch (view.getId()) {
                 // 设为默认
                 case R.id.cb_default:
-
+                    doChangeAddress(repairPersonalInfoAdapter.getData().get(position).getId(), position);
                     break;
                 // 删除
                 case R.id.tv_delete:
@@ -109,6 +114,34 @@ public class RepairPersonInfoListActivity extends BaseActivity {
                     public void onSuccess(JSONObject bean) {
                         super.onSuccess(bean);
                         initData();
+                    }
+                });
+    }
+
+    /**
+     * 设为默认
+     */
+    private void doChangeAddress(Long id, int position) {
+        EanfangHttp.post(NewApiService.REPAIR_PERSONAL_INFO_DEFAULT)
+                .params("id", id)
+                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class) {
+                    @Override
+                    public void onSuccess(JSONObject bean) {
+                        super.onSuccess(bean);
+                        runOnUiThread(() -> {
+                            RepairPersonalInfoEntity.ListBean listBean = repairPersonalInfoAdapter.getData().get(position);
+                            mAllList = repairPersonalInfoAdapter.getData();
+                            // 0不默认，1默认
+                            if (listBean.getIsDefault() == 0) {
+                                mDeleteList.clear();
+                                repairPersonalInfoAdapter.getData().get(0).setIsDefault(0);
+                                listBean.setIsDefault(1);
+                                mDeleteList.add(listBean);
+                                repairPersonalInfoAdapter.getData().remove(position);
+                                repairPersonalInfoAdapter.addData(0, mDeleteList);
+                                repairPersonalInfoAdapter.notifyDataSetChanged();
+                            }
+                        });
                     }
                 });
     }

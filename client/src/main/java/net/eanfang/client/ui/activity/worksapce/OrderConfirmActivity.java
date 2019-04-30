@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -20,10 +21,12 @@ import com.eanfang.apiservice.RepairApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
+import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.MultiClickListener;
 import com.eanfang.model.Message;
+import com.eanfang.model.reapair.RepairPersonalInfoEntity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.V;
@@ -35,8 +38,6 @@ import com.yaf.base.entity.RepairOrderEntity;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.pay.NewPayActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.FaultDetailActivity;
-import net.eanfang.client.ui.activity.worksapce.repair.RepairActivity;
-import net.eanfang.client.ui.activity.worksapce.repair.RepairTypeActivity;
 import net.eanfang.client.ui.adapter.RepairOrderConfirmAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
@@ -44,6 +45,8 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.eanfang.util.V.v;
 
 
 /**
@@ -53,16 +56,8 @@ import butterknife.ButterKnife;
 public class OrderConfirmActivity extends BaseClientActivity {
 
     private static final String TAG = "OrderConfirmActivity";
-    @BindView(R.id.tv_contact)
-    TextView tvContact;
-    @BindView(R.id.tv_phone)
-    TextView tvPhone;
-    @BindView(R.id.tv_company)
-    TextView tvCompany;
     @BindView(R.id.tv_time)
     TextView tvTime;
-    @BindView(R.id.tv_address)
-    TextView tvAddress;
     @BindView(R.id.rv_list)
     RecyclerView mRecyclerView;
     @BindView(R.id.btn_complete)
@@ -75,6 +70,24 @@ public class OrderConfirmActivity extends BaseClientActivity {
     TextView tvRealname;
     @BindView(R.id.tv_company_name)
     TextView tvCompanyName;
+    @BindView(R.id.tv_name)
+    TextView tvName;
+    @BindView(R.id.tv_sex)
+    TextView tvSex;
+    @BindView(R.id.tv_default)
+    TextView tvDefault;
+    @BindView(R.id.tv_phone)
+    TextView tvPhone;
+    @BindView(R.id.tv_home_type)
+    TextView tvHomeType;
+    @BindView(R.id.tv_home_address)
+    TextView tvHomeAddress;
+    @BindView(R.id.tv_address)
+    TextView tvAddress;
+    @BindView(R.id.tv_projectName)
+    TextView tvProjectName;
+    @BindView(R.id.tv_projectInfo)
+    TextView tvProjectInfo;
     private ArrayList<RepairBugEntity> mDataList = new ArrayList<>();
     private LinearLayoutManager llm;
 
@@ -87,6 +100,10 @@ public class OrderConfirmActivity extends BaseClientActivity {
     private String comapnyName = "";
 
     private int mDoorFee;
+    /**
+     * 个人信息
+     */
+    private RepairPersonalInfoEntity.ListBean repairPersonalInfoEntity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,21 +122,36 @@ public class OrderConfirmActivity extends BaseClientActivity {
         mRecyclerView.setLayoutManager(llm);
         mRecyclerView.setNestedScrollingEnabled(false);
         scrollView.smoothScrollTo(0, 20);
-        setLeftBack();
         setTitle("订单确认");
         headUrl = getIntent().getStringExtra("headUrl");
         workerName = getIntent().getStringExtra("workName");
         comapnyName = getIntent().getStringExtra("companyName");
         mDoorFee = getIntent().getIntExtra("doorFee", 0);
+        repairPersonalInfoEntity = v(() -> (RepairPersonalInfoEntity.ListBean) getIntent().getSerializableExtra("topInfo"));
     }
 
     private void initData() {
-        tvContact.setText(repairOrderEntity.getRepairContacts());
-        tvPhone.setText(repairOrderEntity.getRepairContactPhone());
-        tvCompany.setText(repairOrderEntity.getRepairCompany());
+        //姓名
+        tvName.setText(repairPersonalInfoEntity.getName());
+        // 性别0女1男
+        tvSex.setText(repairPersonalInfoEntity.getGender() == 0 ? " (女士) " : " (先生) ");
+        // 电话
+        tvPhone.setText(repairPersonalInfoEntity.getPhone());
+        // 单位
+        tvHomeType.setText("[" + repairPersonalInfoEntity.getSelectAddress() + "]");
+        tvHomeAddress.setText(repairPersonalInfoEntity.getConmpanyName());
+        // 地址
+        tvAddress.setText(repairPersonalInfoEntity.getAddress());
+        // 是否默认信息
+        tvDefault.setVisibility(repairPersonalInfoEntity.getIsDefault() == 1 ? View.VISIBLE : View.GONE);
+        // 项目名称
+        tvProjectName.setText(repairOrderEntity.getProjectName());
+        // 备注信息
+        tvProjectInfo.setText(repairOrderEntity.getRemarkInfo());
         ivHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + headUrl));
         tvRealname.setText(workerName);
         tvCompanyName.setText(comapnyName);
+
         if (repairOrderEntity.getArriveTimeLimit() >= 0) {
             tvTime.setText(GetConstDataUtils.getArriveList().get(repairOrderEntity.getArriveTimeLimit()));
         }
@@ -158,11 +190,14 @@ public class OrderConfirmActivity extends BaseClientActivity {
     private void getData() {
         Intent intent = getIntent();
         repairOrderEntity = V.v(() -> (RepairOrderEntity) intent.getSerializableExtra("bean"));
+        repairPersonalInfoEntity = (RepairPersonalInfoEntity.ListBean) intent.getSerializableExtra("topInfo");
     }
 
     private void registerListener() {
         btnComplete.setOnClickListener(new MultiClickListener(this, this::doHttpSubmit));
-
+        setLeftBack((v)->{
+            giveUp();
+        });
     }
 
     private void doHttpSubmit() {
@@ -235,11 +270,28 @@ public class OrderConfirmActivity extends BaseClientActivity {
     }
 
     private void closeActivity() {
-        EanfangApplication.get().closeActivity(RepairTypeActivity.class.getName());
-        EanfangApplication.get().closeActivity(RepairActivity.class.getName());
-        EanfangApplication.get().closeActivity(SelectWorkerActivity.class.getName());
         EanfangApplication.get().closeActivity(WorkerDetailActivity.class.getName());
         finishSelf();
+    }
+
+    /**
+     * 监听 返回键
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            giveUp();
+        }
+        return false;
+    }
+
+    /**
+     * 放弃报修
+     */
+    private void giveUp() {
+        new TrueFalseDialog(this, "系统提示", "是否放弃报修？", () -> {
+            closeActivity();
+        }).showDialog();
     }
 
 }

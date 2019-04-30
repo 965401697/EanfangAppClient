@@ -64,6 +64,7 @@ public class RepairProjectListActivity extends BaseActivity {
             bundle.putString("projectId", projectListAdapter.getData().get(position).getId() + "");
             bundle.putString("projectName", projectListAdapter.getData().get(position).getProjectName());
             setResult(RESULT_OK, new Intent().putExtras(bundle));
+            finishSelf();
         }));
     }
 
@@ -72,8 +73,10 @@ public class RepairProjectListActivity extends BaseActivity {
         EanfangHttp.post(NewApiService.REPAIR_PROJECT_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<ProjectListBean>(RepairProjectListActivity.this, false, ProjectListBean.class, (bean) -> {
-                    if (bean.getList() != null)
+                    if (bean.getList() != null) {
                         mProjectList = bean.getList();
+                        projectListAdapter.setNewData(mProjectList);
+                    }
                 }));
     }
 

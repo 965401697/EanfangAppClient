@@ -23,6 +23,7 @@ import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.Message;
+import com.eanfang.model.reapair.RepairPersonalInfoEntity;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
@@ -37,6 +38,7 @@ import net.eanfang.client.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.client.ui.activity.worksapce.WorkerDetailActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.RepairActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.RepairTypeActivity;
+import net.eanfang.client.ui.activity.worksapce.repair.TroubleListActivity;
 import net.eanfang.client.ui.adapter.SelectWorkerAdapter;
 
 import java.util.ArrayList;
@@ -69,12 +71,17 @@ public class ServicedWorkerFragment extends BaseFragment implements SwipeRefresh
     private Long mOwnerOrgId;
     public int mPage = 1;
     private QueryEntry mQueryEntry;
+    /**
+     * 个人信息
+     */
+    RepairPersonalInfoEntity.ListBean repairPersonalInfoEntity;
 
-    public static ServicedWorkerFragment getInstance(RepairOrderEntity toRepairBean, ArrayList<String> businessIds, int doorfee, Long ownerOrgId) {
+    public static ServicedWorkerFragment getInstance(RepairOrderEntity toRepairBean, RepairPersonalInfoEntity.ListBean repairPersonalInfoEntity, ArrayList<String> businessIds, int doorfee, Long ownerOrgId) {
         ServicedWorkerFragment servicedWorkerFragment = new ServicedWorkerFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("toRepairBean", toRepairBean);
         bundle.putStringArrayList("bussinsList", businessIds);
+        bundle.putSerializable("topInfo", repairPersonalInfoEntity);
         bundle.putInt("doorFee", doorfee);
         bundle.putLong("mOwnerOrgId", ownerOrgId);
         servicedWorkerFragment.setArguments(bundle);
@@ -90,6 +97,7 @@ public class ServicedWorkerFragment extends BaseFragment implements SwipeRefresh
     protected void initData(Bundle arguments) {
         Bundle bundle = getArguments();
         toRepairBean = (RepairOrderEntity) bundle.getSerializable("toRepairBean");
+        repairPersonalInfoEntity = (RepairPersonalInfoEntity.ListBean) bundle.getSerializable("topInfo");
         businessIds = bundle.getStringArrayList("bussinsList");
         mDoorFee = bundle.getInt("doorFee", 0);
         mOwnerOrgId = bundle.getLong("mOwnerOrgId", 0);
@@ -117,6 +125,7 @@ public class ServicedWorkerFragment extends BaseFragment implements SwipeRefresh
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(getActivity(), WorkerDetailActivity.class);
                 intent.putExtra("toRepairBean", toRepairBean);
+                intent.putExtra("topInfo", repairPersonalInfoEntity);
                 intent.putExtra("companyUserId", selectWorkerAdapter.getData().get(position).getCompanyUserId() + "");
                 intent.putExtra("workerId", selectWorkerAdapter.getData().get(position).getId() + "");
                 intent.putExtra("doorFee", mDoorFee);
@@ -268,6 +277,7 @@ public class ServicedWorkerFragment extends BaseFragment implements SwipeRefresh
     private void closeActivity() {
         EanfangApplication.get().closeActivity(RepairTypeActivity.class.getName());
         EanfangApplication.get().closeActivity(RepairActivity.class.getName());
+        EanfangApplication.get().closeActivity(TroubleListActivity.class.getName());
         EanfangApplication.get().closeActivity(SelectWorkerActivity.class.getName());
         finishSelf();
     }

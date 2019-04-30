@@ -27,6 +27,7 @@ import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.widget.CommonView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,7 +39,7 @@ import butterknife.OnClick;
  * @description 报修个人信息页面 编辑页面
  */
 
-public class RepairInfoEditActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener {
+public class RepairInfoEditActivity extends BaseActivity implements RadioGroup.OnCheckedChangeListener, CommonView.ConfirmListener {
 
     /**
      * 报修地址回调 code
@@ -69,6 +70,17 @@ public class RepairInfoEditActivity extends BaseActivity implements RadioGroup.O
     @BindView(R.id.tv_next)
     TextView tvNext;
     /**
+     * 标签
+     */
+    @BindView(R.id.rb_add)
+    RadioButton rbAdd;
+    @BindView(R.id.rb_home)
+    RadioButton rbHome;
+    @BindView(R.id.rb_company)
+    RadioButton rbCompany;
+    @BindView(R.id.rg_type)
+    RadioGroup rgType;
+    /**
      * 默认是男
      */
     private int mSex = 1;
@@ -87,6 +99,8 @@ public class RepairInfoEditActivity extends BaseActivity implements RadioGroup.O
      * 是否是編輯
      */
     private boolean isEdit = false;
+
+    private String mType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,6 +128,7 @@ public class RepairInfoEditActivity extends BaseActivity implements RadioGroup.O
 
         tvNext.setOnClickListener(new MultiClickListener(RepairInfoEditActivity.this, this::checkInfo, this::doCreatePersonalInfo));
         rgSex.setOnCheckedChangeListener(this);
+        rgType.setOnCheckedChangeListener(this);
     }
 
 
@@ -141,11 +156,11 @@ public class RepairInfoEditActivity extends BaseActivity implements RadioGroup.O
      */
     private boolean checkInfo() {
 
-        if ("请选择地址".equals(etCompanyName.getText().toString().trim())) {
+        if (StringUtils.isEmpty(etCompanyName.getText().toString().trim())) {
             showToast("请选择单位名称");
             return false;
         }
-        if ("请选择地址".equals(tvAddress.getText().toString().trim())) {
+        if (StringUtils.isEmpty(tvAddress.getText().toString().trim())) {
             showToast("请选择地址");
             return false;
         }
@@ -167,6 +182,7 @@ public class RepairInfoEditActivity extends BaseActivity implements RadioGroup.O
             showToast("请输入电话");
             return false;
         }
+
         return true;
     }
 
@@ -181,7 +197,7 @@ public class RepairInfoEditActivity extends BaseActivity implements RadioGroup.O
         repairPersonalInfoEntity.setConmpanyName(etCompanyName.getText().toString().trim());
         repairPersonalInfoEntity.setGender(mSex);
         repairPersonalInfoEntity.setAddress(tvAddressDetail.getText().toString().trim());
-        repairPersonalInfoEntity.setSelectAddress("测试家");
+        repairPersonalInfoEntity.setSelectAddress(mType);
         return repairPersonalInfoEntity;
     }
 
@@ -194,9 +210,26 @@ public class RepairInfoEditActivity extends BaseActivity implements RadioGroup.O
             case R.id.rb_woman:
                 mSex = 0;
                 break;
+            case R.id.rb_home:
+                mType = "家";
+                break;
+            case R.id.rb_company:
+                mType = "公司";
+                break;
+            case R.id.rb_add:
+                doAddTip();
+                break;
             default:
                 break;
         }
+    }
+
+    /**
+     * 添加标签
+     */
+    private void doAddTip() {
+        CommonView commonView = new CommonView(this, "添加标签", this);
+        commonView.show();
     }
 
     @OnClick({R.id.ll_selectAddress, R.id.tv_next})
@@ -259,4 +292,8 @@ public class RepairInfoEditActivity extends BaseActivity implements RadioGroup.O
         }
     }
 
+    @Override
+    public void doConfim(String mContent) {
+        mType = mContent;
+    }
 }

@@ -168,12 +168,12 @@ public class RepairActivity extends BaseClientActivity {
                     if (bean.getList() != null && bean.getList().size() > 0) {
                         llPersonalInfoTop.setVisibility(View.VISIBLE);
                         llNoPersonalInfo.setVisibility(View.GONE);
+                        repairPersonalInfoEntity = bean.getList().get(0);
+                        doSetPersonalInfo(bean.getList().get(0));
                     } else {
                         llPersonalInfoTop.setVisibility(View.GONE);
                         llNoPersonalInfo.setVisibility(View.VISIBLE);
                     }
-                    repairPersonalInfoEntity = bean.getList().get(0);
-                    doSetPersonalInfo(bean.getList().get(0));
                 }));
     }
 
@@ -288,6 +288,10 @@ public class RepairActivity extends BaseClientActivity {
     }
 
     public boolean doChekcInfo() {
+        if (repairPersonalInfoEntity == null) {
+            showToast("请添加用户信息");
+            return false;
+        }
         if (StringUtils.isEmpty(tvProjectName.getText().toString().trim())) {
             showToast("请填写项目名称");
             return false;
@@ -296,6 +300,7 @@ public class RepairActivity extends BaseClientActivity {
             showToast("请选择到达时限");
             return false;
         }
+
         return true;
     }
 
@@ -318,12 +323,14 @@ public class RepairActivity extends BaseClientActivity {
                         // 扫码已经选择完技师 ，直接确认
                         if (!StringUtils.isEmpty(isScan) && isScan.equals("scaning")) {
                             Intent intent_scan = new Intent(RepairActivity.this, OrderConfirmActivity.class);
+                            intent_scan.putExtra("topInfo", repairPersonalInfoEntity);
                             intent_scan.putExtra("bean", doQrFillBean());
                             intent_scan.putExtra("doorFee", bean.getDoorFee());
                             startActivity(intent_scan);
                         } else {
                             Intent intent = new Intent(RepairActivity.this, SelectWorkerActivity.class);
                             intent.putExtra("bean", fillBean());
+                            intent.putExtra("topInfo", repairPersonalInfoEntity);
                             intent.putExtra("doorFee", bean.getDoorFee());
                             intent.putExtra("mOwnerOrgId", mOwnerOrgId);
                             intent.putStringArrayListExtra("businessIds", (ArrayList<String>) com.annimon.stream.Stream.of(beanList).map(beans -> Config.get().getBusinessIdByCode(beans.getBusinessThreeCode(), 1) + "").distinct().toList());
@@ -369,5 +376,6 @@ public class RepairActivity extends BaseClientActivity {
         tvHomeAddress.setText(bean.getConmpanyName());
         // 地址
         tvAddress.setText(bean.getAddress());
+        tvDefault.setVisibility(bean.getIsDefault() == 1 ? View.VISIBLE : View.GONE);
     }
 }

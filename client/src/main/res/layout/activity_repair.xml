@@ -34,7 +34,6 @@
                     android:textColor="@color/color_client_data_item_title"
                     android:textSize="@dimen/textSize_15" />
 
-
             </LinearLayout>
 
             <View style="@style/style_common_line_gray" />

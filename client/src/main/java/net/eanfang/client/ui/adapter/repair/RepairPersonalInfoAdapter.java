@@ -6,6 +6,9 @@ import com.eanfang.model.reapair.RepairPersonalInfoEntity;
 
 import net.eanfang.client.R;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author guanluocang
  * @data 2019/4/22
@@ -13,6 +16,8 @@ import net.eanfang.client.R;
  */
 
 public class RepairPersonalInfoAdapter extends BaseQuickAdapter<RepairPersonalInfoEntity.ListBean, BaseViewHolder> {
+    private List<Integer> isCheck = new ArrayList<>();
+
     public RepairPersonalInfoAdapter() {
         super(R.layout.layout_repair_personal_info);
     }
@@ -25,8 +30,14 @@ public class RepairPersonalInfoAdapter extends BaseQuickAdapter<RepairPersonalIn
         String sex = item.getGender() == 0 ? "(女士)" : "(先生)";
         helper.setText(R.id.tv_sex, sex);
         // 0不默认，1默认
-        helper.setVisible(R.id.tv_default, item.getIsDefault() == 0 ? false : true);
-        helper.setChecked(R.id.cb_default, item.getIsDefault() == 0 ? false : true);
+        if (item.getIsDefault() == 0) {
+            helper.setVisible(R.id.tv_default, false);
+            helper.setChecked(R.id.cb_default, false);
+            helper.addOnClickListener(R.id.cb_default);
+        } else {
+            helper.setVisible(R.id.tv_default, true);
+            helper.setChecked(R.id.cb_default, true);
+        }
         // 电话
         helper.setText(R.id.tv_phone, item.getPhone());
         // 单位
@@ -34,7 +45,6 @@ public class RepairPersonalInfoAdapter extends BaseQuickAdapter<RepairPersonalIn
         helper.setText(R.id.tv_home_address, item.getConmpanyName());
         // 地址
         helper.setText(R.id.tv_address, item.getAddress());
-        helper.addOnClickListener(R.id.cb_default);
         helper.addOnClickListener(R.id.tv_delete);
         helper.addOnClickListener(R.id.tv_edit);
     }

@@ -720,6 +720,10 @@ public interface NewApiService {
      * 刪除用户信息
      */
     String REPAIR_PERSONAL_INFO_DELETE = BASE_URL + "/yaf_sys/receive/delete";
+    /**
+     * 设置默认用户信息
+     * */
+    String REPAIR_PERSONAL_INFO_DEFAULT = BASE_URL +"/yaf_sys/receive/setDefault";
 
     /**
      * 报修增加个人信息
