@@ -141,9 +141,7 @@ public class SkillTypeActivity extends BaseWorkerActivity {
         hashMapData.put("workerBizGrantChange", grantChange_business);
 
         String requestContent = com.alibaba.fastjson.JSONObject.toJSONString(hashMapData);
-        EanfangHttp.post(UserApi.TECH_WORKER_VERIFY)
-                .upJson(requestContent)
-                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
+        EanfangHttp.post(UserApi.TECH_WORKER_VERIFY).upJson(requestContent).execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
 
                     osCooperationAddAdapter.getScheckedId().clear();
                     osCooperationAddAdapter.getUnSCheckedId().clear();

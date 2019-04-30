@@ -17,6 +17,7 @@ import com.eanfang.util.PermKit;
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.contacts.baseinfo.AuthCompanyFirstBActivity;
 import net.eanfang.worker.ui.activity.worksapce.contacts.verifyqualify.AuthQualifyFirstActivity;
+import net.eanfang.worker.ui.fragment.ContactsFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -67,6 +68,7 @@ public class SubmitSuccessfullyQyActivity extends BaseActivity {
             case 2:
                 authenticationTv.setText("去添加资质与荣誉");
                 initInt();
+                ContactsFragment.isRefresh = true;
                 break;
             case 3:
                 authenticationTv.setText("去添加更多能力");
