@@ -1,0 +1,175 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.jakewharton.butterknife'
+
+android {
+    compileSdkVersion cfg.compileSdkVersion
+    buildToolsVersion cfg.buildToolsVersion
+    defaultConfig {
+        applicationId cfg.workerId
+        minSdkVersion cfg.minSdkVersion
+        targetSdkVersion cfg.targetSdkVersion
+        versionCode cfg.versionCode
+        versionName cfg.versionName
+        multiDexEnabled true
+
+        // gradle 3.0.0 以上需要有这个
+        flavorDimensions "app"
+        buildConfigField("String", "APP_TYPE", "\"worker\"")
+
+
+        ndk {
+            // 设置支持的SO库架构
+            abiFilters 'armeabi'
+        }
+        //信鸽配置
+        manifestPlaceholders = [
+                XG_ACCESS_ID : cfg.xgWorkerAccessId,
+                XG_ACCESS_KEY: cfg.xgWorkerAccessKey,
+                AMAP_KEY     : cfg.xgWorkerAmapKey,
+                HW_APPID     : cfg.xgWorkerHwAppid,
+                PACKAGE_NAME : cfg.workerId
+
+        ]
+        javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
+
+    }
+
+    //签名设置
+    signingConfigs {
+        release {
+            keyAlias KEY_ALIAS_WORKER
+            keyPassword KEY_PASSWORD_WORKER
+            storeFile file('../worker/keystore/worker.jks')
+            storePassword KEYSTORE_PASSWORD_WORKER
+        }
+    }
+    sourceSets {
+        main {
+            jni.srcDirs = []
+            jniLibs.srcDirs = ['src/main/jnilibs']
+            res.srcDirs = [
+                    'src/main/res/layout/online',
+                    'src/main/res'
+            ]
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.release
+            buildConfigField("String", "BUGLY_WORKER", cfg.workerBetaBugly)
+//            buildConfigField("String", "API_HOST", cfg.betaApiHost)
+        }
+        release {
+            //签名配置
+            signingConfig signingConfigs.release
+//            buildConfigField("String", "API_HOST", cfg.proApiHost)
+            //正式环境bugly
+            buildConfigField("String", "BUGLY_WORKER", cfg.workerProBugly)
+            //Zipalign优化
+            zipAlignEnabled true
+            //混淆
+            minifyEnabled true
+            //加载默认混淆配置文件
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            applicationVariants.all { variant ->
+                if (variant.buildType.name.equals('release')) {
+                    variant.outputs.all {
+                        outputFileName = "worker_release_v${variant.versionName}_${releaseTime()}${variant.flavorName}.apk"
+                    }
+                }
+            }
+            // 批量打包(gradle 3.0.0 以上)
+            android.applicationVariants.all { variant ->
+                variant.outputs.all {
+                    outputFileName = "worker_release_v${variant.versionName}_${releaseTime()}${variant.flavorName}.apk"
+                }
+            }
+        }
+
+    }
+
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+
+    compileOptions {
+        sourceCompatibility cfg.javaVersion
+        targetCompatibility cfg.javaVersion
+    }
+
+    // aapt2 问题 png图片问题
+    aaptOptions.cruncherEnabled = false
+
+    productFlavors {
+        // gradle 3.0.0 以上需要有这个
+        // dimension "app"
+        "xiaomi" {
+            dimension "app"
+            manifestPlaceholders = [tac_channel: "xiaomi"]
+        }
+        "baidu" {
+            dimension "app"
+            manifestPlaceholders = [tac_channel: "baidu"]
+        }
+        "huawei" {
+            dimension "app"
+            manifestPlaceholders = [tac_channel: "baidu"]
+        }
+        "wandoujia" {
+            dimension "app"
+            manifestPlaceholders = [tac_channel: "wandoujia"]
+        }
+        "meizu" {
+            dimension "app"
+            manifestPlaceholders = [tac_channel: "meizu"]
+        }
+        "tencent" {
+            dimension "app"
+            manifestPlaceholders = [tac_channel: "tencent"]
+        }
+        "qh360" {
+            dimension "app"
+            manifestPlaceholders = [tac_channel: "qh360"]
+        }
+        "oppo" {
+            dimension "app"
+            manifestPlaceholders = [tac_channel: "oppo"]
+        }
+        "vivo" {
+            dimension "app"
+            manifestPlaceholders = [tac_channel: "vivo"]
+        }
+        "lenovo" {
+            dimension "app"
+            manifestPlaceholders = [tac_channel: "lenovo"]
+        }
+        "samsung" {
+            dimension "app"
+            manifestPlaceholders = [tac_channel: "samsung"]
+        }
+    }
+    dataBinding {
+        enabled = true
+    }
+}
+
+static def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation pkg.constraintlayout
+
+
+    //butterknife
+    implementation pkg.butterknife
+    annotationProcessor pkg.butterknifeCompiler
+    implementation pkg.lombok
+    annotationProcessor pkg.lombok
+
+    // add library
+    implementation project(':view:eanfang')
+
+}

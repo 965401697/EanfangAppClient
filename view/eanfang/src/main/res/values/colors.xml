@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--通用颜色-->
+
+
+    <!--客户端颜色-->
+    <color name="colorPrimaryC">#FF7C26</color>
+    <color name="color_main_client">#FB973B</color>
+
+    <!--技师端颜色-->
+    <color name="colorPrimaryW">#006BFF</color>
+    <color name="color_main_worker">#4988F5</color>
+
+    <!--应用颜色-->
+    <color name="color_main">#01b1c9</color>
+    <color name="color_white">#FFFFFF</color>
+    <color name="color_main_gray">#b0b0b0</color>
+    <color name="color_00">#00000000</color>
+    <color name="color_gray">#cccccc</color>
+    <color name="white">#ffffff</color>
+    <color name="colorPrimary">#FF7C26</color>
+    <color name="transparent_gray">#f8f8f8</color>
+    <color name="transparent">#00000000</color>
+
+    <color name="colorPrimaryDark">#FF7C26</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary_client">#3F51B5</color>
+    <!--<color name="colorPrimaryDark">#303F9F</color>-->
+    <color name="title_bar_color">#FF7C26</color>
+    <color name="title_zyr_color">#FB973B</color>
+    <color name="window_background">#f0f0f0</color>
+    <color name="client">#2c88cb</color>
+    <color name="font_color">#8b8b8b</color>
+    <color name="font_dark_color">#313131</color>
+    <color name="content_bg">#F5F5F5</color>
+    <color name="tab_selected">#2297e8</color>
+    <color name="background">#F5F5F5</color>
+    <color name="background20">#00F5F5F5</color>
+    <color name="black">#000</color>
+    <color name="preson_leave_admin">#00d08e</color>
+    <color name="preson_leave_manager">#ffa53a</color>
+    <color name="preson_leave_employee">#cccccc</color>
+    <color name="gray">#acacac</color>
+    <color name="admin">#21ce90</color>
+    <color name="manage">#fda447</color>
+    <color name="staff">#ccc</color>
+    <color name="common_ext_color">#7f7f7f</color>
+
+    <color name="client_form_title_color">#009E97</color>
+    <!--<color name="worker_form_title_color">#E60013</color>-->
+    <color name="worker_form_title_color">#009E97</color>
+    <color name="config_black_color">#323333</color>
+    <color name="camera_color">#ff0000</color>
+    <color name="work_logo_color">#2196f3</color>
+
+    <color name="color_text_selected">#00ff00</color>
+    <color name="color_text_normal">#e6e6e6</color>
+
+    <color name="roll_title">#333333</color>
+    <color name="roll_content">#666666</color>
+
+    <!--bg_home_data_one-->
+    <!-- 首页 -->
+    <color name="color_client_menu">#666</color>
+    <color name="color_client_neworder">#333333</color>
+
+    <color name="color_client_data_item_title">#FB973B</color>
+    <color name="color_worker_data_item_title">#4988F5</color>
+    <color name="color_bottom_back">#fbfbfb</color>
+    <color name="color_bottom_back_line">#d7d7d7</color>
+    <color name="color_new_line">#E8E8E8</color>
+    <color name="color_bottom">#999999</color>
+    <color name="color_contact_line_gray">#F5F3F3</color>
+    <color name="color_personal_text">#E16531</color>
+    <color name="color_camera_input_stoke">#D6D6D6</color>
+    <color name="color_camera_input_radiobutton_stoke">#666</color>
+
+    <color name="color_contact_create_cancel_back">#c6c6c6</color>
+    <color name="color_contact_create_line">#CCC</color>
+    <color name="color_messagedeatil_back">#F5F3F3</color>
+    <color name="color_service_tel">#4A83F5</color>
+
+    <color name="color_service_deiveder">#CDCDCD</color>
+    <color name="color_data_line">#CBCBCB</color>
+    <color name="color_data_number">#FF9037</color>
+    <color name="color_data_bottom">#000033</color>
+    <color name="color_data_repair">#FF9037</color>
+    <color name="color_data_statics_repairs">#18A5F3</color>
+    <color name="color_data_statics_repair_two">#F5584D</color>
+
+    <color name="color_contact_authentication">#D3D3D3</color>
+    <color name="color_order_status_line">#EFF0F0</color>
+    <color name="color_pop_line">#DADADA</color>
+    <color name="color_pop_title_back">#FAE9CE</color>
+    <color name="color_pop_title">#D1A060</color>
+    <color name="color_order_list_price">#F35D3F</color>
+    <color name="color_repair_fault_num">#F35D3F</color>
+    <color name="color_put_up_order">#C0C0C0</color>
+    <color name="color_check_cancle">#FFFF7307</color>
+    <color name="color_worker_detail_top_back">#FF4988F5</color>
+    <color name="color_worker_detail_type">#F2F2F2</color>
+    <color name="color_worker_detail_top_grade">#2466D8</color>
+    <color name="color_no_contact">#FCDEDC</color>
+    <color name="color_no_contact_text">#AD7171</color>
+    <color name="color_security_detail_bottom_back">#F7F7F7</color>
+    <color name="color_home_security_like">#EC5353</color>
+    <color name="color_security_personal_one">#788697</color>
+    <color name="color_security_personal_two">#425062</color>
+    <color name="color_home_titile">#141E34</color>
+    <color name="rc_plugins_bg">#F8F8F8</color>
+
+</resources>

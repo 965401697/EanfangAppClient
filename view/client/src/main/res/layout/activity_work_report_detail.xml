@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="vertical"
+    tools:context="net.eanfang.client.ui.activity.worksapce.oa.workreport.WorkReportDetailActivity">
+
+    <include layout="@layout/header_eanfang" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white">
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/iv_header"
+                    android:layout_width="@dimen/dimen_100"
+                    android:layout_height="@dimen/dimen_100"
+                    android:layout_marginLeft="@dimen/dimen_36"
+                    android:layout_marginTop="@dimen/dimen_40"
+                    android:layout_toRightOf="@+id/cb_checked"
+                    fresco:placeholderImage="@mipmap/ic_header"
+                    fresco:roundAsCircle="true" />
+
+                <TextView
+                    android:id="@+id/tv_company"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/iv_header"
+                    android:layout_marginLeft="@dimen/dimen_30"
+                    android:layout_toRightOf="@+id/iv_header"
+                    android:text=" "
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_15" />
+
+                <TextView
+                    android:id="@+id/tv_section"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/iv_header"
+                    android:layout_marginLeft="@dimen/dimen_30"
+                    android:layout_toRightOf="@+id/iv_header"
+                    android:text=" "
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_15" />
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_section"
+                    android:layout_marginBottom="@dimen/dimen_40"
+                    android:layout_marginLeft="@dimen/dimen_30"
+                    android:layout_marginTop="@dimen/dimen_20"
+                    android:layout_toRightOf="@+id/iv_header"
+                    android:text=" "
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_15" />
+
+                <TextView
+                    android:id="@+id/tv_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignTop="@+id/iv_header"
+                    android:layout_marginLeft="@dimen/dimen_30"
+                    android:layout_marginRight="@dimen/dimen_36"
+                    android:text=" " />
+
+                <TextView
+                    android:id="@+id/tv_week"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/iv_header"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:layout_marginRight="@dimen/dimen_36"
+                    android:text=" " />
+
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/tv_week"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:layout_marginRight="@dimen/dimen_36"
+                    android:layout_marginTop="@dimen/dimen_20"
+                    android:text=" " />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_90">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dimen_36"
+                    android:layout_weight="1"
+                    android:text="完成工作"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_16" />
+
+                <TextView
+                    android:id="@+id/tv_work"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/dimen_36"
+                    android:text="无"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_work_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_90">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dimen_36"
+                    android:layout_weight="1"
+                    android:text="发现问题"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_16" />
+
+                <TextView
+                    android:id="@+id/tv_question"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/dimen_36"
+                    android:text="无"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_question_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_90">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dimen_36"
+                    android:layout_weight="1"
+                    android:text="后续计划"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_16" />
+
+                <TextView
+                    android:id="@+id/tv_plan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/dimen_36"
+                    android:text="无"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_plan_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>

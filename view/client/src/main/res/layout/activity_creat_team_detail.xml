@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="net.eanfang.client.ui.activity.worksapce.contacts.CreatTeamDetailActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/header"
+            layout="@layout/header_eanfang" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_100"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/tv_company_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dimen_38"
+                android:layout_marginRight="@dimen/dimen_38"
+                android:text="团队名称"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_15" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_created"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@mipmap/ic_repair_bottom_confim"
+        android:gravity="center"
+        android:text="创建"
+        android:textColor="@color/color_white"
+        android:textSize="@dimen/textSize_13" />
+
+</RelativeLayout>

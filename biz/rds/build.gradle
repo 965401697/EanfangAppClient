@@ -1,0 +1,39 @@
+apply plugin: 'com.android.library'
+
+android {
+
+    compileSdkVersion cfg.compileSdkVersion
+    buildToolsVersion cfg.buildToolsVersion
+    defaultConfig {
+        minSdkVersion cfg.minSdkVersion
+        targetSdkVersion cfg.targetSdkVersion
+        versionCode cfg.versionCode
+        versionName cfg.versionName
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility cfg.javaVersion
+        targetCompatibility cfg.javaVersion
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation pkg.appcompat
+
+    implementation pkg.lombok
+    annotationProcessor pkg.lombok
+
+    api project(':base:network')
+    implementation project(':biz:model')
+
+}

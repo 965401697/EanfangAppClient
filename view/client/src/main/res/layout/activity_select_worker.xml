@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tl="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/header_eanfang" />
+
+        <com.flyco.tablayout.SlidingTabLayout
+            android:id="@+id/slidingtablayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_100"
+            android:background="#fff"
+            app:tl_divider_color="@color/color_service_deiveder"
+            app:tl_divider_width="@dimen/dimen_1"
+            app:tl_underline_color="@color/color_service_deiveder"
+            app:tl_underline_height="@dimen/dimen_1"
+            tl:tl_indicator_color="@color/color_service_title"
+            tl:tl_tab_padding="0dp"
+            tl:tl_tab_space_equal="true"
+            tl:tl_textSelectColor="@color/color_service_title"
+            tl:tl_textUnselectColor="@color/color_client_neworder"
+            tl:tl_textsize="@dimen/textSize_13" />
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/vp_selectWork"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+</RelativeLayout>

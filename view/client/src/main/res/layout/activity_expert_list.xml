@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="net.eanfang.client.ui.activity.worksapce.online.ExpertListActivity">
+
+    <include layout="@layout/header_eanfang"
+        android:id="@+id/to"/>
+
+    <include layout="@layout/fragment_template_item_list"
+        android:layout_below="@id/to"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent" />
+
+    <ImageView
+        android:id="@+id/tiao_zhuan"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:src="@mipmap/ic_back"
+        android:visibility="visible" />
+</RelativeLayout>

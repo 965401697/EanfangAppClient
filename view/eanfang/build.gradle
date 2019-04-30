@@ -1,0 +1,150 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.jakewharton.butterknife'
+//lambda
+//apply plugin: 'me.tatarka.retrolambda'
+
+android {
+    compileSdkVersion cfg.compileSdkVersion
+    buildToolsVersion cfg.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion cfg.minSdkVersion
+        targetSdkVersion cfg.targetSdkVersion
+        versionCode cfg.versionCode
+        versionName cfg.versionName
+        multiDexEnabled true
+
+        buildConfigField("String", "OSS_SERVER", cfg.ossServer)
+        buildConfigField("String", "OSS_BUCKET", cfg.ossBucket)
+        buildConfigField("String", "OSS_ENDPOINT", cfg.ossEndpoint)
+
+        javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
+    }
+
+    compileOptions {
+        sourceCompatibility cfg.javaVersion
+        targetCompatibility cfg.javaVersion
+    }
+
+    sourceSets {
+        main {
+            jni.srcDirs = []
+            jniLibs.srcDirs = ['src/main/jnilibs']
+        }
+    }
+
+
+    buildTypes {
+        // 开发
+        debug {
+//            buildConfigField("boolean", "DEBUG", cfg.debugMod)
+
+            buildConfigField("String", "API_HOST", cfg.betaApiHost)
+        }
+        release {
+            // 上线url
+            buildConfigField("String", "API_HOST", cfg.proApiHost)
+            // 不显示Log
+//            buildConfigField("boolean", "DEBUG", cfg.debugMod)
+            //Zipalign优化
+            zipAlignEnabled true
+            // 移除无用的resource文件
+            shrinkResources false
+            //混淆
+            minifyEnabled true
+            //加载默认混淆配置文件
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    // aapt2 问题 png图片问题
+    aaptOptions.cruncherEnabled = false
+}
+
+dependencies {
+    api fileTree(include: ['*.jar'], dir: 'libs')
+
+    api project(':lib:zxing')
+    api project(':lib:IMKit')
+    api project(':lib:IMLib')
+
+    api project(':biz:rds')
+    api project(':biz:model')
+
+    api project(':base:kit')
+
+    implementation pkg.constraintlayout
+    implementation pkg.legacySupportV4
+    implementation pkg.appcompat
+    implementation pkg.okhttp3
+    implementation pkg.multidex
+    implementation pkg.glide
+
+    //butterknife
+    implementation pkg.butterknife
+    annotationProcessor pkg.butterknifeCompiler
+
+    implementation pkg.databindingCompiler
+    annotationProcessor pkg.databindingCompiler
+//    implementation "com.android.tools.build.jetifier:jetifier-core:1.0.0-beta04"
+
+
+    implementation pkg.lombok
+    annotationProcessor pkg.lombok
+
+    api pkg.eventbus
+    api pkg.fresco
+    api pkg.stream
+    api pkg.aliyunOss
+    api pkg.material
+    api pkg.cardview
+    api pkg.timelineview
+    api pkg.materialratingbar
+    api pkg.flowlayout
+    //component
+    api pkg.recyclerview
+    api pkg.bgaBaseadapter
+    api pkg.takephoto
+    api pkg.cymChad
+    api pkg.badgeview
+    api pkg.prolificinteractive
+    api pkg.treeRecyclerView
+    api pkg.flycoRoundView
+    api pkg.flycoTabLayout
+    api pkg.mPAndroidChart
+    implementation pkg.statusbarutil
+    implementation pkg.jiaozivideoplayer
+
+
+    //rx
+    api pkg.rxjava2
+    api pkg.rxandroid2
+    api pkg.rxpermissions
+    api pkg.rxlifecycle
+    api pkg.rxlifecycleAndroid
+    api pkg.rxlifecycleComponents
+
+
+    //tools
+    implementation pkg.hutoolCore
+    implementation pkg.luban
+    api pkg.fastjson
+    implementation pkg.update
+    implementation pkg.pinyin4j
+
+    //tencent
+    api pkg.bugly
+    api pkg.nativecrashreport
+    api pkg.xinge
+    api pkg.wup
+    api pkg.mid
+    api pkg.jg
+    api pkg.xghw
+    api pkg.mipush
+    api pkg.xgmz
+    api pkg.wechat
+}

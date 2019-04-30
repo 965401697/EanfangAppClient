@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/header_eanfang" />
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/dimen_38">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/sdv_workerHead"
+                android:layout_width="@dimen/dimen_120"
+                android:layout_height="@dimen/dimen_120"
+                fresco:placeholderImage="@mipmap/ic_nodata" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_46"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/dimen_20"
+                    android:text="整体印象："
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_15" />
+
+                <TextView
+                    android:id="@+id/tv_wonderful"
+                    android:layout_width="@dimen/dimen_130"
+                    android:layout_height="@dimen/dimen_60"
+                    android:background="@drawable/bg_client_repair_text_back_pressed"
+                    android:gravity="center"
+                    android:textColor="@drawable/select_client_repair_sex_text_back"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_client"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:text="工作配合程度"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_13" />
+
+                <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                    android:id="@+id/rb_star1"
+                    style="@style/Widget.MaterialRatingBar.RatingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:isIndicator="false"
+                    android:maxHeight="20dp"
+                    android:minHeight="20dp"
+                    android:progressBackgroundTint="@color/font_color"
+                    android:progressTint="#FFA53A"
+                    android:rating="5"
+                    android:secondaryProgressTint="@color/font_color"
+                    android:stepSize="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:text="结算及时程度"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_13" />
+
+                <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                    android:id="@+id/rb_star2"
+                    style="@style/Widget.MaterialRatingBar.RatingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:isIndicator="false"
+                    android:maxHeight="20dp"
+                    android:minHeight="20dp"
+                    android:progressBackgroundTint="@color/font_color"
+                    android:progressTint="#FFA53A"
+                    android:rating="5"
+                    android:secondaryProgressTint="@color/font_color"
+                    android:stepSize="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:text="额外要求合理度"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_13" />
+
+                <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                    android:id="@+id/rb_star3"
+                    style="@style/Widget.MaterialRatingBar.RatingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:isIndicator="false"
+                    android:maxHeight="20dp"
+                    android:minHeight="20dp"
+                    android:progressBackgroundTint="@color/font_color"
+                    android:progressTint="#FFA53A"
+                    android:rating="5"
+                    android:secondaryProgressTint="@color/font_color"
+                    android:stepSize="1" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_worker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:text="解释清故障原因及处理措施"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_13" />
+
+                <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                    android:id="@+id/rb_worker_star1"
+                    style="@style/Widget.MaterialRatingBar.RatingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:isIndicator="false"
+                    android:maxHeight="20dp"
+                    android:minHeight="20dp"
+                    android:progressBackgroundTint="@color/font_color"
+                    android:progressTint="#FFA53A"
+                    android:rating="5"
+                    android:secondaryProgressTint="@color/font_color"
+                    android:stepSize="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:text="服务态度热情友好"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_13" />
+
+                <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                    android:id="@+id/rb_worker_star2"
+                    style="@style/Widget.MaterialRatingBar.RatingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:isIndicator="false"
+                    android:maxHeight="20dp"
+                    android:minHeight="20dp"
+                    android:progressBackgroundTint="@color/font_color"
+                    android:progressTint="#FFA53A"
+                    android:rating="5"
+                    android:secondaryProgressTint="@color/font_color"
+                    android:stepSize="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:text="作业符合规范"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_13" />
+
+                <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                    android:id="@+id/rb_worker_star3"
+                    style="@style/Widget.MaterialRatingBar.RatingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:isIndicator="false"
+                    android:maxHeight="20dp"
+                    android:minHeight="20dp"
+                    android:progressBackgroundTint="@color/font_color"
+                    android:progressTint="#FFA53A"
+                    android:rating="5"
+                    android:secondaryProgressTint="@color/font_color"
+                    android:stepSize="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:text="技术能力水平"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_13" />
+
+                <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                    android:id="@+id/rb_worker_star4"
+                    style="@style/Widget.MaterialRatingBar.RatingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:isIndicator="false"
+                    android:maxHeight="20dp"
+                    android:minHeight="20dp"
+                    android:progressBackgroundTint="@color/font_color"
+                    android:progressTint="#FFA53A"
+                    android:rating="5"
+                    android:secondaryProgressTint="@color/font_color"
+                    android:stepSize="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#fff"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:text="响应时间"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_13" />
+
+                <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                    android:id="@+id/rb_worker_star5"
+                    style="@style/Widget.MaterialRatingBar.RatingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:isIndicator="false"
+                    android:maxHeight="20dp"
+                    android:minHeight="20dp"
+                    android:progressBackgroundTint="@color/font_color"
+                    android:progressTint="#FFA53A"
+                    android:rating="5"
+                    android:secondaryProgressTint="@color/font_color"
+                    android:stepSize="1" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

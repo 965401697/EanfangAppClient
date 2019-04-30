@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="net.eanfang.client.ui.activity.im.CreateGroupActivity">
+
+    <include layout="@layout/header_eanfang" />
+
+    <LinearLayout
+        android:id="@+id/ll_header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_130"
+        android:background="@color/white"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_36"
+            android:layout_weight="1"
+            android:text="设置群头像"
+            android:textColor="@color/color_client_neworder"
+            android:textSize="@dimen/textSize_14" />
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/iv_group_pic"
+            android:layout_width="@dimen/dimen_80"
+            android:layout_height="@dimen/dimen_80"
+            android:layout_marginRight="@dimen/dimen_24"
+            fresco:placeholderImage="@mipmap/ic_header"
+            fresco:roundAsCircle="true" />
+
+
+        <ImageView
+            android:layout_width="@dimen/dimen_14"
+            android:layout_height="@dimen/dimen_26"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/dimen_34"
+            android:src="@mipmap/arrow_right" />
+
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_2"
+        android:background="@color/content_bg" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_90"
+        android:layout_marginTop="@dimen/dimen_2"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dimen_36"
+            android:text="群名称"
+            android:textColor="@color/color_client_neworder"
+            android:textSize="@dimen/textSize_14" />
+
+        <EditText
+            android:id="@+id/tv_group_name"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dimen_40"
+            android:layout_weight="1"
+            android:background="@null"
+            android:gravity="right|center_vertical"
+            android:hint="请输入群名称"
+            android:inputType="textPersonName"
+            android:maxLength="8"
+            android:paddingRight="@dimen/dimen_40"
+            android:textColor="@color/font_color"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_100"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dimen_36"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:text="群成员"
+            android:textColor="@color/color_client_neworder" />
+
+        <TextView
+            android:id="@+id/tv_num"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/dimen_36"
+            android:gravity="right|center_vertical"
+            android:text="2"
+            android:textColor="@color/font_color" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_2"
+        android:background="@color/content_bg" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_team"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:paddingLeft="@dimen/dimen_15"
+        android:paddingRight="@dimen/dimen_15" />
+
+
+    <Button
+        android:id="@+id/btn_create"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/dimen_40"
+        android:background="@drawable/bg_ll_btn"
+        android:text="完成创建"
+        android:textColor="@color/white" />
+
+</LinearLayout>
