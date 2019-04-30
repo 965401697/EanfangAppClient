@@ -207,7 +207,6 @@ public class RepairActivity extends BaseClientActivity {
         if (!StringUtils.isEmpty(etNotice.getText().toString().trim())) {
             bean.setRemarkInfo(etNotice.getText().toString().trim());
         }
-
         bean.setRepairContactPhone(repairPersonalInfoEntity.getPhone());
         bean.setRepairContacts(repairPersonalInfoEntity.getName());
         bean.setArriveTimeLimit(GetConstDataUtils.getArriveList().indexOf(tvTime.getText().toString().trim()));
@@ -232,6 +231,11 @@ public class RepairActivity extends BaseClientActivity {
         repairOrderEntity.setPlaceCode(Config.get().getAreaCodeByName(repairPersonalInfoEntity.getCity(), repairPersonalInfoEntity.getCounty()));
         repairOrderEntity.setPlaceId(Config.get().getBaseIdByCode(repairOrderEntity.getPlaceCode(), 3, Constant.AREA) + "");
         repairOrderEntity.setRepairCompany(repairPersonalInfoEntity.getConmpanyName());
+        repairOrderEntity.setProjectId(mProjectId);
+        repairOrderEntity.setProjectName(tvProjectName.getText().toString().trim());
+        if (!StringUtils.isEmpty(etNotice.getText().toString().trim())) {
+            repairOrderEntity.setRemarkInfo(etNotice.getText().toString().trim());
+        }
         repairOrderEntity.setRepairContactPhone(repairPersonalInfoEntity.getPhone());
         repairOrderEntity.setRepairContacts(repairPersonalInfoEntity.getName());
         repairOrderEntity.setArriveTimeLimit(GetConstDataUtils.getArriveList().indexOf(tvTime.getText().toString().trim()));

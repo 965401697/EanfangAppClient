@@ -323,6 +323,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
                 intent.putExtra("doorFee", getIntent().getIntExtra("doorFee", 0));
             }
             startActivity(intent);
+            finishSelf();
 
         });
         // 区域

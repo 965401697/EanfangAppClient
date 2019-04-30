@@ -280,7 +280,7 @@ public class AddTroubleActivity extends BaseClientActivity {
         // 再来一条
         tvAdd.setOnClickListener(new MultiClickListener(AddTroubleActivity.this, this::isAgainAdd, this::onSubmitClient));
 
-        setLeftBack((v)->{
+        setLeftBack((v) -> {
             doTranValue();
         });
     }
@@ -407,6 +407,8 @@ public class AddTroubleActivity extends BaseClientActivity {
         }
         bundle.putSerializable("beanList", (Serializable) beanList);
         intent.putExtras(bundle);
+        bundle.putString("qrcode", getIntent().getStringExtra("qrcode"));
+        bundle.putSerializable("repairbean", getIntent().getSerializableExtra("repairbean"));
         /**
          * 故障列表页面添加
          * */

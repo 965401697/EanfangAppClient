@@ -155,6 +155,8 @@ public class TroubleListActivity extends BaseActivity {
                 Bundle bundle = new Bundle();
                 bundle.putLong("mOwnerOrgId", mOwnerOrgId);
                 bundle.putSerializable("troubleList", (Serializable) evaluateAdapter.getData());
+                bundle.putString("qrcode", getIntent().getStringExtra("qrcode"));
+                bundle.putSerializable("repairbean", getIntent().getSerializableExtra("repairbean"));
                 JumpItent.jump(TroubleListActivity.this, RepairActivity.class, bundle);
                 break;
             default:
