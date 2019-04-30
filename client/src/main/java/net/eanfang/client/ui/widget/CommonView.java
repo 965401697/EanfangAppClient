@@ -35,7 +35,7 @@ public class CommonView extends BaseDialog {
 
     private Activity mContext;
     private String mTitle;
-
+    private String mContent;
     //回调函数
     private ConfirmListener mConfimListener;
 
@@ -44,10 +44,11 @@ public class CommonView extends BaseDialog {
         this.mContext = context;
     }
 
-    public CommonView(Activity context, String title, ConfirmListener confirmListener) {
+    public CommonView(Activity context, String title, String content, ConfirmListener confirmListener) {
         super(context);
         this.mConfimListener = confirmListener;
         this.mTitle = title;
+        this.mContent = content;
         this.mContext = context;
     }
 
@@ -64,6 +65,7 @@ public class CommonView extends BaseDialog {
 
     private void initView() {
         tvTitle.setText(mTitle);
+        etInputCompany.setText(mContent);
         tvCancle.setOnClickListener(v -> dismiss());
         tlClose.setOnClickListener(v -> dismiss());
         tvConfirm.setOnClickListener(v -> mConfimListener.doConfim(doSetContent()));

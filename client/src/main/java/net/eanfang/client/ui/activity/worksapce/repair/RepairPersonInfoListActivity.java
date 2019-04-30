@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.TextView;
 
 import com.eanfang.apiservice.NewApiService;
@@ -152,8 +153,16 @@ public class RepairPersonInfoListActivity extends BaseActivity {
         EanfangHttp.post(NewApiService.REPAIR_PERSONAL_INFO_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<RepairPersonalInfoEntity>(this, true, RepairPersonalInfoEntity.class, bean -> {
-                    repairPersonalInfoEntities = bean.getList();
-                    repairPersonalInfoAdapter.setNewData(repairPersonalInfoEntities);
+                    if (bean.getList() != null && bean.getList().size() > 0) {
+                        rvPersonalInfo.setVisibility(View.VISIBLE);
+                        tvNodata.setVisibility(View.GONE);
+                        repairPersonalInfoEntities = bean.getList();
+                        repairPersonalInfoAdapter.setNewData(repairPersonalInfoEntities);
+                    } else {
+                        rvPersonalInfo.setVisibility(View.GONE);
+                        tvNodata.setVisibility(View.VISIBLE);
+                    }
+
                 }));
     }
 

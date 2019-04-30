@@ -129,6 +129,9 @@ public class RepairInfoEditActivity extends BaseActivity implements RadioGroup.O
         tvNext.setOnClickListener(new MultiClickListener(RepairInfoEditActivity.this, this::checkInfo, this::doCreatePersonalInfo));
         rgSex.setOnCheckedChangeListener(this);
         rgType.setOnCheckedChangeListener(this);
+        rbAdd.setOnClickListener((view) -> {
+            doAddTip();
+        });
     }
 
 
@@ -216,9 +219,6 @@ public class RepairInfoEditActivity extends BaseActivity implements RadioGroup.O
             case R.id.rb_company:
                 mType = "公司";
                 break;
-            case R.id.rb_add:
-                doAddTip();
-                break;
             default:
                 break;
         }
@@ -228,7 +228,7 @@ public class RepairInfoEditActivity extends BaseActivity implements RadioGroup.O
      * 添加标签
      */
     private void doAddTip() {
-        CommonView commonView = new CommonView(this, "添加标签", this);
+        CommonView commonView = new CommonView(this, "添加标签", mType, this);
         commonView.show();
     }
 
@@ -294,6 +294,7 @@ public class RepairInfoEditActivity extends BaseActivity implements RadioGroup.O
 
     @Override
     public void doConfim(String mContent) {
+        rbAdd.setText(mContent);
         mType = mContent;
     }
 }
