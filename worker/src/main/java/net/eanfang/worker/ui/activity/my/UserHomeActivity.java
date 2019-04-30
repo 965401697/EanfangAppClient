@@ -1,5 +1,6 @@
 package net.eanfang.worker.ui.activity.my;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -49,7 +50,8 @@ import io.rong.imlib.model.UserInfo;
  * Describe: 用户主页
  */
 public class UserHomeActivity extends BaseWorkerActivity {
-    private static final String EXTRA_UID = "UserHomeActivity.accId";
+    public static final String EXTRA_ACCID = "UserHomeActivity.accId";
+    public static final String RESULT_FOLLOW_STATE = "UserHomeActivity.followState";
     @BindView(R.id.iv_right)
     ImageView mIvRight;
     @BindView(R.id.img_user_header)
@@ -120,7 +122,7 @@ public class UserHomeActivity extends BaseWorkerActivity {
      */
     public static void startActivity(Context context, String accId) {
         Intent intent = new Intent(context, UserHomeActivity.class);
-        intent.putExtra(EXTRA_UID, accId);
+        intent.putExtra(EXTRA_ACCID, accId);
         context.startActivity(intent);
     }
 
@@ -129,7 +131,7 @@ public class UserHomeActivity extends BaseWorkerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_home);
         ButterKnife.bind(this);
-        String accId = getIntent().getStringExtra(EXTRA_UID);
+        String accId = getIntent().getStringExtra(EXTRA_ACCID);
         mIsSelf = accId != null && accId.equals(String.valueOf(EanfangApplication.get().getAccId()));
         initData(accId);
         initView();
@@ -390,6 +392,9 @@ public class UserHomeActivity extends BaseWorkerActivity {
                         showToast(isFollowed ? "已取消关注" : "关注成功");
                         mIsFollowed = !isFollowed;
                         setFollowStatus();
+                        Intent intent = new Intent();
+                        intent.putExtra(RESULT_FOLLOW_STATE, mIsFollowed);
+                        setResult(Activity.RESULT_OK, intent);
                     }));
         } else {
             showSelfHint();
@@ -402,6 +407,4 @@ public class UserHomeActivity extends BaseWorkerActivity {
     private void showSelfHint() {
         showToast("不能对自己进行操作");
     }
-
-
 }
