@@ -3,9 +3,13 @@ package net.eanfang.worker.ui.activity.authentication;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.eanfang.apiservice.UserApi;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
@@ -62,6 +66,7 @@ public class SubmitSuccessfullyQyActivity extends BaseActivity {
                 break;
             case 2:
                 authenticationTv.setText("去添加资质与荣誉");
+                initInt();
                 break;
             case 3:
                 authenticationTv.setText("去添加更多能力");
@@ -79,6 +84,12 @@ public class SubmitSuccessfullyQyActivity extends BaseActivity {
                 break;
             default:
         }
+    }
+
+    private void initInt() {
+        EanfangHttp.get(UserApi.JS_RZ_TJ_INFO+mOrgId).execute(new EanfangCallback<String>(this, true, String.class, (bean) -> {
+            Log.d("56483666", "bean: " + bean);
+        }));
     }
 
     @OnClick({R.id.authentication_tv, R.id.call_tv})

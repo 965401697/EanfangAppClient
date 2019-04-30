@@ -1,10 +1,18 @@
 package net.eanfang.worker.ui.activity.techniciancertification;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
+import android.icu.util.Calendar;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -31,6 +39,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.jph.takephoto.model.TImage;
 import com.jph.takephoto.model.TResult;
 import com.yaf.sys.entity.AccountEntity;
+import com.yaf.sys.entity.UserEntity;
 
 import net.eanfang.worker.R;
 
@@ -61,7 +70,7 @@ public class PerfectingPersonalDataActivity extends BaseActivityWithTakePhoto {
     //联系人姓名
 
     @BindView(R.id.tv_contact_name)
-    TextView tvContactName;
+    EditText tvContactName;
 
     @BindView(R.id.iv_header)
     SimpleDraweeView ivHeader;
@@ -82,7 +91,7 @@ public class PerfectingPersonalDataActivity extends BaseActivityWithTakePhoto {
     private String itemcity;
     private String itemzone;
     private String areaCode = "";
-    private LoginBean loginBean = new LoginBean();
+
     /**
      * 地址回掉code
      */
@@ -103,23 +112,14 @@ public class PerfectingPersonalDataActivity extends BaseActivityWithTakePhoto {
         setTitle("个人资料");
         mStatus = getIntent().getIntExtra("status", -1);
         statusB = getIntent().getIntExtra("statusB", -1);
-        String contactName = EanfangApplication.get().getUser().getAccount().getRealName();
-
-        if (!StringUtils.isEmpty(contactName)) {
-            tvContactName.setText(contactName);
-        }
         llHeaders.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(this, HEADER_PIC)));
-        if (mStatus > 0) {
-            EanfangHttp.get(UserApi.GET_USER_INFO).params("userId", EanfangApplication.get().getUserId()).tag(this).execute(new EanfangCallback<LoginBean>(this, true, LoginBean.class, (bean) -> {
-                runOnUiThread(() -> {
-                    loginBean = bean;
-                    accountEntity = loginBean.getAccount();
-                    fillData();
-                });
-            }));
-        } else {
-            loginBean = new LoginBean();
-        }
+        EanfangHttp.get(UserApi.GET_USER_INFO).params("userId", EanfangApplication.get().getUserId()).tag(this).execute(new EanfangCallback<LoginBean>(this, true, LoginBean.class, (bean) -> {
+            runOnUiThread(() -> {
+                accountEntity = bean.getAccount();
+                fillData();
+            });
+        }));
+
         llOfficeAddress.setOnClickListener((v) -> {
             Intent intent = new Intent(this, SelectAddressActivity.class);
             startActivityForResult(intent, ADDRESS_CALLBACK_CODE);
@@ -128,26 +128,32 @@ public class PerfectingPersonalDataActivity extends BaseActivityWithTakePhoto {
 
     @SuppressLint("NewApi")
     private void fillData() {
-        ivHeader.setImageURI(BuildConfig.OSS_SERVER + loginBean.getAccount().getAvatar());
+        ivHeader.setImageURI(BuildConfig.OSS_SERVER + accountEntity.getAvatar());
         String contactName = EanfangApplication.get().getUser().getAccount().getRealName();
-        if (!StringUtils.isEmpty(contactName)) {
+        if ((!StringUtils.isEmpty(contactName)) & (!contactName.contains("易安防")) & (!contactName.contains("匿名用户"))) {
             tvContactName.setText(contactName);
         }
-        if (!StringUtils.isEmpty(loginBean.getAccount().getNickName())) {
-            ncEt.setText(loginBean.getAccount().getNickName());
+        if (!StringUtils.isEmpty(accountEntity.getNickName())) {
+            ncEt.setText(accountEntity.getNickName());
         }
-        if (loginBean.getAccount().getAreaCode() != null) {
-            areaCode = loginBean.getAccount().getAreaCode();
-            tvOfficeAddress.setText(Config.get().getAddressByCode(loginBean.getAccount().getAreaCode()));
+        if (accountEntity.getAreaCode() != null) {
+            areaCode = accountEntity.getAreaCode();
+            tvOfficeAddress.setText(Config.get().getAddressByCode(accountEntity.getAreaCode()));
         }
-        if (loginBean.getAccount().getAddress() != null) {
-            dqDzEt.setText(loginBean.getAccount().getAddress());
+        if (accountEntity.getIdCard() != null) {
+            etCardId.setText(accountEntity.getIdCard());
         }
-        if (loginBean.getAccount().getPersonalNote() != null) {
-            etIntro.setText(loginBean.getAccount().getPersonalNote());
+        if (accountEntity.getRealName() != null) {
+            tvContactName.setText(accountEntity.getRealName());
         }
-        if (loginBean.getAccount().getBirthday() != null) {
-            srEt.setText(new SimpleDateFormat("yyyyMMdd").format(loginBean.getAccount().getBirthday()));
+        if (accountEntity.getAddress() != null) {
+            dqDzEt.setText(accountEntity.getAddress());
+        }
+        if (accountEntity.getPersonalNote() != null) {
+            etIntro.setText(accountEntity.getPersonalNote());
+        }
+        if (accountEntity.getBirthday() != null) {
+            srEt.setText(new SimpleDateFormat("yyyyMMdd").format(accountEntity.getBirthday()));
         }
         etCardId.setText(EanfangApplication.get().getUser().getAccount().getIdCard());
         //0女1男
@@ -156,7 +162,7 @@ public class PerfectingPersonalDataActivity extends BaseActivityWithTakePhoto {
         } else {
             rbMan.setChecked(true);
         }
-        etIntro.setText(loginBean.getAccount().getPersonalNote());
+        etIntro.setText(accountEntity.getPersonalNote());
     }
 
     private void initData() {
@@ -188,7 +194,7 @@ public class PerfectingPersonalDataActivity extends BaseActivityWithTakePhoto {
             return;
         }
         TImage image = result.getImage();
-        String imgKey = "account/" + UuidUtil.getUUID() + ".png";
+        String imgKey = "account/" + UuidUtil.getUUID() + "tx.png";
         switch (resultCode) {
             case HEADER_PIC:
                 accountEntity.setAvatar(imgKey);
@@ -201,6 +207,46 @@ public class PerfectingPersonalDataActivity extends BaseActivityWithTakePhoto {
 
 
         });
+//        setRq();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void setRq() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.activity_dialog_date, null);
+        final DatePicker datePicker = (DatePicker) view.findViewById(R.id.date_picker);
+        //设置日期简略显示 否则详细显示 包括:星期周
+        datePicker.setCalendarViewShown(false);
+        Calendar calendar = Calendar.getInstance();
+        //初始化当前日期
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        //初始化当前日期
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        datePicker.init(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), null);
+        /**
+         * 下面这行代吗 设置的是只显示年月
+         */
+        ((ViewGroup) ((ViewGroup) datePicker.getChildAt(0)).getChildAt(0)).getChildAt(2).setVisibility(View.GONE);
+        //设置date布局
+        builder.setView(view);
+        builder.setTitle("设置日期信息");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                int year = datePicker.getYear();
+                int month = datePicker.getMonth()+1;
+                //我勒个去,系统获取的日期居然不准
+
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+
 
     }
 
@@ -211,8 +257,8 @@ public class PerfectingPersonalDataActivity extends BaseActivityWithTakePhoto {
         String ncE = ncEt.getText().toString().trim();
         String dqDzEtS = dqDzEt.getText().toString().trim();
         String srEts = srEt.getText().toString().trim();
-
-        if (StringUtils.isEmpty(loginBean.getAccount().getAvatar())) {
+        String tvContactNames = tvContactName.getText().toString().trim();
+        if (StringUtils.isEmpty(accountEntity.getAvatar())) {
             showToast("请选择技师头像");
             return;
         }
@@ -228,26 +274,31 @@ public class PerfectingPersonalDataActivity extends BaseActivityWithTakePhoto {
             showToast("请输入当前地址");
             return;
         }
-
+        if (StringUtils.isEmpty(cardId)) {
+            showToast("请输入身份证号");
+            return;
+        }
+        if (StringUtils.isEmpty(tvContactNames)) {
+            showToast("请输入真实姓名");
+            return;
+        }
         if (StringUtils.isEmpty(srEts)) {
             showToast("请输入生日");
             return;
         }
 
-        if (StringUtils.isEmpty(cardId)) {
-            showToast("请输入身份证号");
-            return;
-        }
+
         if (StringUtils.isEmpty(info)) {
             showToast("请输入个人简介");
             return;
         }
         try {
-            accountEntity.setBirthday( new SimpleDateFormat("yyyy-MM-dd").parse(dqDzEtS));
+            accountEntity.setBirthday(new SimpleDateFormat("yyyy-MM-dd").parse(dqDzEtS));
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
+        accountEntity.setRealName(tvContactNames);
         accountEntity.setAddress(dqDzEtS);
         accountEntity.setNickName(ncE);
         accountEntity.setAccId(EanfangApplication.get().getAccId());
@@ -255,14 +306,15 @@ public class PerfectingPersonalDataActivity extends BaseActivityWithTakePhoto {
         accountEntity.setIdCard(cardId);
         accountEntity.setGender(rbMan.isChecked() ? 1 : 0);
         accountEntity.setPersonalNote(info);
-        accountEntity.getDefaultUser().setUserId( EanfangApplication.get().getUserId());
-        accountEntity.setAccId( EanfangApplication.get().getAccId());
-
+        UserEntity userEntity = new UserEntity();
+        userEntity.setUserId(EanfangApplication.get().getUserId());
+        accountEntity.setDefaultUser(userEntity);
+        accountEntity.setAccId(EanfangApplication.get().getAccId());
+        LoginBean loginBean = new LoginBean();
         loginBean.setAccount(accountEntity);
-        Log.d("78987", "setData: " + loginBean.getAccount().getNickName() + "  " + loginBean.getAccount().getPersonalNote() + JSONObject.toJSONString(loginBean) + "\n" + UserApi.BC_GR_ZL);
+        Log.d("78987", "setData: " + accountEntity.getNickName() + "  " + accountEntity.getPersonalNote() + JSONObject.toJSONString(loginBean) + "\n" + UserApi.BC_GR_ZL);
         EanfangHttp.post(UserApi.BC_GR_ZL).upJson(JSONObject.toJSONString(accountEntity)).execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
             Intent intent = new Intent(this, RealNameAuthenticationActivity.class);
-            intent.putExtra("bean", loginBean);
             intent.putExtra("statusB", statusB);
             startActivity(intent);
             finish();
@@ -271,6 +323,10 @@ public class PerfectingPersonalDataActivity extends BaseActivityWithTakePhoto {
 
     @OnClick(R.id.tv_confim)
     public void onViewClicked() {
-        setData();
+        if (accountEntity != null) {
+            setData();
+        } else {
+            showToast("请添加头像");
+        }
     }
 }

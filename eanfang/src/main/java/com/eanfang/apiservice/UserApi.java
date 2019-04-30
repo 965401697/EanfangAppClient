@@ -171,6 +171,10 @@ public interface UserApi {
      */
     String GET_WORKER_INFO_B = BuildConfig.API_HOST + "/yaf_sys/sys/userinfo ";
     /**
+     * 技师认证提交：后台用于更改认证状态
+     */
+    String JS_RZ_TJ_INFO = BuildConfig.API_HOST + "/yaf_sys/orgunit/sendverify/";
+    /**
      * 获取技师信息
      */
     String GET_WORKER_INFO = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/loadprofile";

@@ -147,10 +147,7 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
                 }
             } else {
                 ToastUtil.get().showToast(getActivity(), "请先进行技师认证");
-
             }
-
-
         });
 
     }

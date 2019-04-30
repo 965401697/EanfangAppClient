@@ -412,6 +412,7 @@
                     <RelativeLayout
                         android:id="@+id/rl_worker_verfity"
                         style="@style/my_item_style"
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
@@ -455,7 +456,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:text="技师认证B"
+                            android:text="技师认证"
                             android:textColor="@color/color_contact_companyname"
                             android:textSize="@dimen/textSize_14" />
 
@@ -555,6 +556,7 @@
                     <RelativeLayout
                         android:id="@+id/rl_expert_verfity"
                         style="@style/my_item_style"
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
@@ -598,7 +600,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:text="专家认证B"
+                            android:text="专家认证"
                             android:textColor="@color/color_client_neworder"
                             android:textSize="@dimen/textSize_14" />
 

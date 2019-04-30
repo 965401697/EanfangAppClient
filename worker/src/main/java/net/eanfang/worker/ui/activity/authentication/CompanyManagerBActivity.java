@@ -115,6 +115,7 @@ public class CompanyManagerBActivity extends BaseActivity implements DissloveTea
                 intent.putExtra("status", status);
                 intent.putExtra("orgName", mOrgName);
                 startActivity(intent);
+                finish();
                 break;
             case R.id.rl_admin_set:
                 break;

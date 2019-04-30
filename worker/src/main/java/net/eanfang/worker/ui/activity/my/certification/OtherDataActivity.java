@@ -31,6 +31,8 @@ import net.eanfang.worker.ui.widget.WQLeftRightClickTextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -80,6 +82,7 @@ public class OtherDataActivity extends BaseWorkerActivity {
         setLeftBack();
         EanfangHttp.get(UserApi.GET_WORKER_INFO).execute(new EanfangCallback<TechWorkerVerifyEntity>(this, true, TechWorkerVerifyEntity.class, (bean) -> {
             mTechWorkerVerifyEntity = bean;
+            Log.d("564866", "bean: " + bean.toString());
             if (!TextUtils.isEmpty(mTechWorkerVerifyEntity.getContactName())) {
                 fillData();
             }
@@ -101,20 +104,24 @@ public class OtherDataActivity extends BaseWorkerActivity {
         }
         etUrgentPhone.setText(mTechWorkerVerifyEntity.getContactPhone());
 
-        String[] crimePic = mTechWorkerVerifyEntity.getCrimePic().split(",");
-        if (crimePic.length > 0) {
-            for (byte i = 0; i < crimePic.length; i++) {
-                picList_crim.add(BuildConfig.OSS_SERVER + crimePic[i]);
+        if (!mTechWorkerVerifyEntity.getCrimePic().equals("")) {
+            String[] crimePic = mTechWorkerVerifyEntity.getCrimePic().split(",");
+            if (crimePic.length > 0) {
+                for (byte i = 0; i < crimePic.length; i++) {
+                    picList_crim.add(BuildConfig.OSS_SERVER + crimePic[i]);
+                }
+                snplMomentCrim.setData(picList_crim);
             }
-            snplMomentCrim.setData(picList_crim);
         }
 
-        String[] accidentPics = mTechWorkerVerifyEntity.getAccidentPics().split(",");
-        if (accidentPics.length > 0) {
-            for (byte i = 0; i < accidentPics.length; i++) {
-                picList_accident.add(BuildConfig.OSS_SERVER + accidentPics[i]);
+        if (!mTechWorkerVerifyEntity.getAccidentPics().equals("")) {
+            String[] accidentPics = mTechWorkerVerifyEntity.getAccidentPics().split(",");
+            if (accidentPics.length > 0) {
+                for (byte i = 0; i < accidentPics.length; i++) {
+                    picList_accident.add(BuildConfig.OSS_SERVER + accidentPics[i]);
+                }
+                snplMomentAccident.setData(picList_accident);
             }
-            snplMomentAccident.setData(picList_accident);
         }
     }
 
@@ -137,24 +144,43 @@ public class OtherDataActivity extends BaseWorkerActivity {
         String mUrgentPhone = etUrgentPhone.getText().toString().trim();
         String yxEtS = yxEt.getText().toString().trim();
 
-        if (StringUtils.isEmpty(yxEtS)) {
-            showToast("请输入电子邮箱");
+        if (!isEmail(yxEtS)) {
+            showToast("请输入正确的电子邮箱");
             return;
-        }  if (StringUtils.isEmpty(mUrgentName)) {
+        }
+        if (StringUtils.isEmpty(mUrgentName)) {
             showToast("请输入紧急联系人");
             return;
         }
-        if (StringUtils.isEmpty(mUrgentPhone)) {
-            showToast("请输入紧急联系人电话");
+        if (!isMobileNO(mUrgentPhone)) {
+            showToast("请输入正确的电话号码");
             return;
         }
+
+
+        mTechWorkerVerifyEntity.seteMail(yxEtS);
         mTechWorkerVerifyEntity.setContactName(mUrgentName);
         mTechWorkerVerifyEntity.setContactPhone(mUrgentPhone);
-        String accidentPic = PhotoUtils.getPhotoUrl("account/verify/", snplMomentAccident, uploadMap, false);
-        mTechWorkerVerifyEntity.setAccidentPics(accidentPic);
-        String crimePic = PhotoUtils.getPhotoUrl("account/verify/", snplMomentCrim, uploadMap, false);
-        mTechWorkerVerifyEntity.setCrimePic(crimePic);
 
+
+        String crimePic = PhotoUtils.getPhotoUrl("account/verify/", snplMomentCrim, uploadMap, false);
+        if (crimePic.equals("")) {
+            showToast("请上传无犯罪证明");
+            return;
+
+        } else {
+            mTechWorkerVerifyEntity.setCrimePic(crimePic);
+        }
+
+        String accidentPic = PhotoUtils.getPhotoUrl("account/verify/", snplMomentAccident, uploadMap, false);
+        if (accidentPic.equals("")) {
+            showToast("请上传保险状态");
+            return;
+        } else {
+            mTechWorkerVerifyEntity.setAccidentPics(accidentPic);
+        }
+
+        Log.d("5648", "doSave: " + accidentPic + " " + crimePic);
         /**
          * 提交照片
          * */
@@ -214,4 +240,24 @@ public class OtherDataActivity extends BaseWorkerActivity {
         builder.setCancelable(true);
         builder.create().show();
     }
+
+    /**
+     * 判断手机格式是否正确
+     */
+    public static boolean isMobileNO(String mobiles) {
+        Pattern p = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(17[0-9])|(18[0-9]))\\d{8}$");
+        Matcher m = p.matcher(mobiles);
+        return m.matches();
+    }
+
+    /**
+     * 判断邮箱格式是否正确
+     */
+    public static boolean isEmail(String email) {
+        String str = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$";
+        Pattern p = Pattern.compile(str);
+        Matcher m = p.matcher(email);
+        return m.matches();
+    }
+
 }

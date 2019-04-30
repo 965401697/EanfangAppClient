@@ -49,7 +49,6 @@
                     android:background="@null"
                     android:gravity="right"
                     android:hint="请输入"
-                    android:maxLength="11"
                     android:textColor="@color/color_bottom"
                     android:textSize="@dimen/textSize_13" />
             </LinearLayout>

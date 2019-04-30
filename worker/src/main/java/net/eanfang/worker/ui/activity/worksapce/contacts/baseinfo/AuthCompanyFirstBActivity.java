@@ -39,6 +39,8 @@ import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.authentication.SubmitSuccessfullyQyActivity;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -171,7 +173,7 @@ public class AuthCompanyFirstBActivity extends BaseActivityWithTakePhoto {
         }  if (StringUtils.isEmpty(etCompany.getText().toString().trim())) {
             showToast("请输入单位名称");
             return;
-        } else if (StringUtils.isEmpty(etMoney.getText().toString().trim())) {
+        } else if (!isEmail(etMoney.getText().toString().trim())) {
             showToast("请输入电子邮箱");
             return;
         } else if (StringUtils.isEmpty(tvType.getText().toString().trim())) {
@@ -316,5 +318,13 @@ public class AuthCompanyFirstBActivity extends BaseActivityWithTakePhoto {
         startActivity(intent);
         finish();
     }
-
+    /**
+     * 判断邮箱格式是否正确
+     */
+    public static boolean isEmail(String email) {
+        String str = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$";
+        Pattern p = Pattern.compile(str);
+        Matcher m = p.matcher(email);
+        return m.matches();
+    }
 }
