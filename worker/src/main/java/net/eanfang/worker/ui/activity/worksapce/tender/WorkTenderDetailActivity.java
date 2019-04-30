@@ -19,7 +19,11 @@ import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.FileDisplayActivity;
 import com.eanfang.util.GetDateUtils;
 
+
+
+
 import net.eanfang.worker.R;
+
 import net.eanfang.worker.ui.adapter.worktender.WorkTenderAdjunctAdapter;
 import net.eanfang.worker.util.ImagePerviewUtil;
 
@@ -140,6 +144,7 @@ public class WorkTenderDetailActivity extends BaseActivity {
 //                        }
 //                    });
                 }
+
             }
         });
     }

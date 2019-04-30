@@ -15,7 +15,18 @@ class CommonQuestionsBean {
         private int totalPage;
         private List<ListBean> list;
 
-        public int getCurrPage() {
+    @Override
+    public String toString() {
+        return "CommonQuestionsBean{" +
+                "currPage=" + currPage +
+                ", pageSize=" + pageSize +
+                ", totalCount=" + totalCount +
+                ", totalPage=" + totalPage +
+                ", list=" + list +
+                '}';
+    }
+
+    public int getCurrPage() {
             return currPage;
         }
 
@@ -99,6 +110,32 @@ class CommonQuestionsBean {
             private String questionUserId;
             private int questionViewCount;
             private int weight;
+
+            @Override
+            public String toString() {
+                return "ListBean{" +
+                        "businessOneCode='" + businessOneCode + '\'' +
+                        ", commonWeight=" + commonWeight +
+                        ", dataCode='" + dataCode + '\'' +
+                        ", deviceFailureId='" + deviceFailureId + '\'' +
+                        ", expertsCertification=" + expertsCertification +
+                        ", failureTypeId='" + failureTypeId + '\'' +
+                        ", modelCode='" + modelCode + '\'' +
+                        ", questionAnswerCount=" + questionAnswerCount +
+                        ", questionCompanyId='" + questionCompanyId + '\'' +
+                        ", questionContent='" + questionContent + '\'' +
+                        ", questionCreateDate='" + questionCreateDate + '\'' +
+                        ", questionId=" + questionId +
+                        ", questionLikeCount=" + questionLikeCount +
+                        ", questionPics='" + questionPics + '\'' +
+                        ", questionSketch='" + questionSketch + '\'' +
+                        ", questionStatus=" + questionStatus +
+                        ", questionTopCompanyId='" + questionTopCompanyId + '\'' +
+                        ", questionUserId='" + questionUserId + '\'' +
+                        ", questionViewCount=" + questionViewCount +
+                        ", weight=" + weight +
+                        '}';
+            }
 
             public String getBusinessOneCode() {
                 return businessOneCode;
@@ -322,6 +359,41 @@ class CommonQuestionsBean {
                 private String updateTime;
                 private String userId;
                 private int workingAge;
+
+                @Override
+                public String toString() {
+                    return "ExpertsCertificationBean{" +
+                            "accId='" + accId + '\'' +
+                            ", approveTime='" + approveTime + '\'' +
+                            ", approveType=" + approveType +
+                            ", avatarPhoto='" + avatarPhoto + '\'' +
+                            ", brandName='" + brandName + '\'' +
+                            ", company='" + company + '\'' +
+                            ", createTime='" + createTime + '\'' +
+                            ", expertName='" + expertName + '\'' +
+                            ", favorableRate=" + favorableRate +
+                            ", gender=" + gender +
+                            ", id=" + id +
+                            ", idCard='" + idCard + '\'' +
+                            ", idCardFront='" + idCardFront + '\'' +
+                            ", idCardHand='" + idCardHand + '\'' +
+                            ", idCardSide='" + idCardSide + '\'' +
+                            ", impowerUrl='" + impowerUrl + '\'' +
+                            ", intro='" + intro + '\'' +
+                            ", jobLce=" + jobLce +
+                            ", jobLevel=" + jobLevel +
+                            ", payAccount='" + payAccount + '\'' +
+                            ", payType=" + payType +
+                            ", phonenumber='" + phonenumber + '\'' +
+                            ", price=" + price +
+                            ", responsibleBrand='" + responsibleBrand + '\'' +
+                            ", status=" + status +
+                            ", systemType='" + systemType + '\'' +
+                            ", updateTime='" + updateTime + '\'' +
+                            ", userId='" + userId + '\'' +
+                            ", workingAge=" + workingAge +
+                            '}';
+                }
 
                 public String getAccId() {
                     return accId;

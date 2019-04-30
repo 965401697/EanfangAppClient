@@ -81,7 +81,6 @@ public class OwmHistoryActivity extends BaseWorkerActivity {
 
     private void getData() {
         QueryEntry queryEntry = new QueryEntry();
-
         queryEntry.getEquals().put("accId", String.valueOf(EanfangApplication.get().getAccId()));
         queryEntry.getEquals().put("type", "0");
         EanfangHttp.post(UserApi.GET_TECH_WORKER_EDUCATION_LIST)
@@ -137,7 +136,6 @@ public class OwmHistoryActivity extends BaseWorkerActivity {
                 break;
 
             case R.id.tv_add_education:
-
                 startActivityForResult(new Intent(OwmHistoryActivity.this, AddEducationHistoryActivity.class), ADD_EDUCATION_CODE);
                 break;
         }

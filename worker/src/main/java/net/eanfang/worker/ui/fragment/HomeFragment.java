@@ -251,7 +251,7 @@ public class HomeFragment extends BaseFragment {
      * 安防圈
      */
     private void initSecurity() {
-        securityListAdapter = new SecurityListAdapter(getActivity());
+        securityListAdapter = new SecurityListAdapter(EanfangApplication.get().getApplicationContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         rvSecurity.setLayoutManager(layoutManager);
         rvSecurity.setNestedScrollingEnabled(false);
@@ -307,7 +307,7 @@ public class HomeFragment extends BaseFragment {
             }
         });
         //专家问答
-        findViewById(R.id.tv_onLine).setOnClickListener((v) -> {
+        findViewById(R.id.tv_onLine).setOnClickListener((v) -> {//wq==
 //            if (!PermKit.get().getRepairListPerm()) return;
             if (workerApprove()) {
                 startActivity(new Intent(getActivity(), ExpertOnlineActivity.class));

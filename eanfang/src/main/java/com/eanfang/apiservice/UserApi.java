@@ -169,11 +169,19 @@ public interface UserApi {
     /**
      * 获取技师信息
      */
+    String GET_WORKER_INFO_B = BuildConfig.API_HOST + "/yaf_sys/sys/userinfo ";
+    /**
+     * 获取技师信息
+     */
     String GET_WORKER_INFO = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/loadprofile";
     /**
      * 填写技师信息
      */
     String GET_TECH_WORKER_ADD = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/insert";
+    /**
+     * 填写技师信息 实名认证
+     */
+    String GET_TECH_WORKER_ADD_V3 = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/saveIdCards";
     /**
      * 填写技师信息 实名认证
      */
@@ -251,6 +259,46 @@ public interface UserApi {
     String GET_EXPERT_EDU_LIST = BuildConfig.API_HOST + "/yaf_shop/educationexperience/listByAccId";
 
 
+    /**
+     * 安防公司认证，更多能力---工具机械设备---点击添加--进入修改页面：
+     */
+    String XG_JX_SB_QY_NL = BuildConfig.API_HOST + "/yaf_sys/company2basedata/changeTool";
+    /**
+     * 安防公司认证，更多能力---施工组织能力---点击添加--进入修改页面
+     */
+    String XG_SG_ZZ_NL_QY_NL = BuildConfig.API_HOST + "/yaf_sys/company2basedata/changeAbility";
+    /**
+     * 安防公司认证，更多能力页面---展示工具机械设备列表
+     */
+    String GJ_JX_SB_QY_NL = BuildConfig.API_HOST + "/yaf_sys/company2basedata/toolList";
+    /**
+     * 技师端：展示实名认证页面的身份证照片
+     */
+    String ZS_SFZ = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/showIdCards";
+    /**
+     * 安防公司认证，更多能力页面---展示施工组织能力列表
+     */
+    String SG_ZZ_NL_QY_NL = BuildConfig.API_HOST + "/yaf_sys/company2basedata/abilityList";
+    /**
+     * 点击关注 添加关注及取消关注
+     */
+    String DJ_GZ = BuildConfig.API_HOST + "/yaf_sys/expertsOnline/changeFollowStatus";
+    /**
+     * 查看专家详情
+     */
+    String CK_ZJ_DLS = BuildConfig.API_HOST + "/yaf_sys/expertsOnline/expertDetails";
+    /**
+     * 查看安防公司详情
+     */
+    String CK_AN_GS_DLS = BuildConfig.API_HOST + "/yaf_sys/orgunit/orgUnitInfo/";
+    /**
+     * 加载技师认证显示已选能力标签
+     */
+    String ADD_JS_NL = BuildConfig.API_HOST + "/yaf_sys/basedata2user/showTag/";
+    /**
+     * 加载技师认证显示已选能力标签
+     */
+    String GET_JS_NL = BuildConfig.API_HOST + "/yaf_sys/basedata2user/list/";
     /**
      * 加载系统类别
      */
@@ -508,6 +556,14 @@ public interface UserApi {
     String EXPERT_DETAIL_VERIFY = BuildConfig.API_HOST + "/yaf_sys/expertscertification/detail/sp1";
 
     /**
+     * 安防公司认证，绑定施工组织能力和工具机械设备的列表提交
+     */
+    String ALL_ZZ_JX_TJ = BuildConfig.API_HOST + "/yaf_sys/orgunit/shop/insertV3";
+    /**
+     * 保存个人资料
+     */
+    String BC_GR_ZL = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/profile";
+    /**
      * 技师技能认证的 系统类别和业务类型的提交
      */
     String TECH_WORKER_VERIFY = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/updateV2";
@@ -519,6 +575,18 @@ public interface UserApi {
      * 技师技能认证修改资质证书
      */
     String TECH_WORKER_UPDATA_QUALIFY = BuildConfig.API_HOST + "/yaf_shop/qualificationcertificate/update";
+    /**
+     * 上传专家技能认证资质证书
+     */
+    String UP_WORKER_LIST_QUALIFY_C = BuildConfig.API_HOST + "/yaf_sys/expertscertification/verifyOrgPic";
+    /**
+     * 专家技能认证查看资质证书
+     */
+    String TECH_WORKER_LIST_QUALIFY_C = BuildConfig.API_HOST + "/yaf_sys/expertscertification/orgPicInfo";
+    /**
+     * 专家技能认证查看资质证书列表
+     */
+    String TECH_WORKER_LIST_QUALIFY_B = BuildConfig.API_HOST + "/yaf_shop/qualificationcertificate/listByAccId";
     /**
      * 技师技能认证查看资质证书列表
      */

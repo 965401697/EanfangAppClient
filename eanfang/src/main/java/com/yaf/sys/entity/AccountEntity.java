@@ -67,6 +67,109 @@ public class AccountEntity implements Serializable {
     @Size(min = 0, max = 255)
     private String avatar;
 
+    public String getPersonalNote() {
+        return personalNote;
+    }
+
+    public void setPersonalNote(String personalNote) {
+        this.personalNote = personalNote;
+    }
+
+    //个人简介
+    private String personalNote;
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public Integer getAccType() {
+        return accType;
+    }
+
+    public void setAccType(Integer accType) {
+        this.accType = accType;
+    }
+
+    public Integer getGender() {
+        return gender;
+    }
+
+    public void setGender(Integer gender) {
+        this.gender = gender;
+    }
+
+    public Date getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getIdCard() {
+        return idCard;
+    }
+
+    public void setIdCard(String idCard) {
+        this.idCard = idCard;
+    }
+
+    public String getAreaCode() {
+        return areaCode;
+    }
+
+    public void setAreaCode(String areaCode) {
+        this.areaCode = areaCode;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getQrCode() {
+        return qrCode;
+    }
+
+    public void setQrCode(String qrCode) {
+        this.qrCode = qrCode;
+    }
+
+    public boolean isSimplePwd() {
+        return simplePwd;
+    }
+
+    public void setSimplePwd(boolean simplePwd) {
+        this.simplePwd = simplePwd;
+    }
+
+    public Object getAccountExtInfo() {
+        return accountExtInfo;
+    }
+
+    public void setAccountExtInfo(Object accountExtInfo) {
+        this.accountExtInfo = accountExtInfo;
+    }
+
+    public UserEntity getDefaultUser() {
+        return defaultUser;
+    }
+
+    public void setDefaultUser(UserEntity defaultUser) {
+        this.defaultUser = defaultUser;
+    }
+
+    public Long getNullUser() {
+        return nullUser;
+    }
+
+    public void setNullUser(Long nullUser) {
+        this.nullUser = nullUser;
+    }
+
     //密码
     //@TableField(value = "passwd")
     @Size(min = 0, max = 50)

@@ -99,7 +99,6 @@ public class CertificateListActivity extends BaseWorkerActivity {
     private void getData() {
         String url = "";
         QueryEntry queryEntry = new QueryEntry();
-
         queryEntry.getEquals().put("type", "0");
         if (!TextUtils.isEmpty(isCompany) && isCompany.equals("company")) {
             queryEntry.getEquals().put("orgId", orgid + "");

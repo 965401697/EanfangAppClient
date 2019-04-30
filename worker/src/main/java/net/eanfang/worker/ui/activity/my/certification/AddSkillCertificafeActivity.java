@@ -52,7 +52,8 @@ public class AddSkillCertificafeActivity extends BaseActivityWithTakePhoto {
     TextView tvTime;
     @BindView(R.id.snpl_moment_accident)
     BGASortableNinePhotoLayout snplMomentAccident;
-
+    @BindView(R.id.tv_save)
+    TextView tvSave;
     /**
      * 证书照片
      */
@@ -73,15 +74,17 @@ public class AddSkillCertificafeActivity extends BaseActivityWithTakePhoto {
         setContentView(R.layout.activity_add_skill_certificafe);
         ButterKnife.bind(this);
         setLeftBack();
-
         bean = (QualificationCertificateEntity) getIntent().getSerializableExtra("bean");
         snplMomentAccident.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_CERTIFICATE, REQUEST_CODE_PHOTO_CERTIFICATE));
-
+        setRightTitle("保存");
+        setRightTitleOnClickListener(view -> setData());
         if (bean != null) {
             fillData();
-            setTitle("修改技能资质");
+            setTitle("编辑资质证书");
+            tvSave.setVisibility(View.VISIBLE);
+
         } else {
-            setTitle("添加技能资质");
+            setTitle("添加资质证书");
         }
     }
 
@@ -237,8 +240,19 @@ public class AddSkillCertificafeActivity extends BaseActivityWithTakePhoto {
 
                 break;
             case R.id.tv_save:
-                setData();
+                delete();
+
                 break;
+                default:
         }
+    }
+    private void delete() {
+        EanfangHttp.post(UserApi.TECH_WORKER_DELETE_QUALIFY + "/" + bean.getId()).execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class) {
+                    @Override
+                    public void onSuccess(JSONObject bean) {
+                        showToast("删除成功");
+                        finish();
+                    }
+                });
     }
 }

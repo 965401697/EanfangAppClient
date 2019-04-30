@@ -105,8 +105,7 @@ public class AuthCompanySecondActivity extends BaseActivityWithTakePhoto {
         }));
 
         llType.setOnClickListener(v -> showTradType());
-        llCompanyScale.setOnClickListener(v -> PickerSelectUtil.singleTextPicker(this, "",
-                tvCompanyScale, GetConstDataUtils.getOrgUnitScaleList()));
+        llCompanyScale.setOnClickListener(v -> PickerSelectUtil.singleTextPicker(this, "", tvCompanyScale, GetConstDataUtils.getOrgUnitScaleList()));
 
         btnComplete.setOnClickListener((v) -> {
             doVerify();

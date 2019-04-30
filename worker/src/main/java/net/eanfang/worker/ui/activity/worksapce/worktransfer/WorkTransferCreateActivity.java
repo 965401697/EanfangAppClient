@@ -289,9 +289,9 @@ public class WorkTransferCreateActivity extends BaseActivity {
                 break;
             // 接收人
             case R.id.ll_receiver_person:
-                Intent in_receiver = new Intent(this, SelectOrganizationActivity.class);
-                in_receiver.putExtra("isRadio", "isRadio");
-                startActivity(in_receiver);
+                Intent inReceiver = new Intent(this, SelectOrganizationActivity.class);
+                inReceiver.putExtra("isRadio", "isRadio");
+                startActivity(inReceiver);
                 break;
             //交接物品
             case R.id.tv_add_hand:

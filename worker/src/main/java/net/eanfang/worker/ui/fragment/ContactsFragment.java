@@ -33,6 +33,7 @@ import com.eanfang.witget.recycleview.FullyLinearLayoutManager;
 import com.yaf.sys.entity.OrgEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.authentication.CompanyManagerBActivity;
 import net.eanfang.worker.ui.activity.im.MorePopWindow;
 import net.eanfang.worker.ui.activity.im.MyFriendsListActivity;
 import net.eanfang.worker.ui.activity.im.MyGroupsListActivity;
@@ -313,7 +314,8 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
                     bundle.putString("orgName", mDatas.get(position).getOrgName());
                     bundle.putString("isAuth", mDatas.get(position).getVerifyStatus() + "");
                     bundle.putString("adminUserId", String.valueOf(mDatas.get(position).getAdminUserId()));
-                    JumpItent.jump(getActivity(), CompanyManagerActivity.class, bundle, CREAT_TEAM_CODE);
+//                    JumpItent.jump(getActivity(), CompanyManagerActivity.class, bundle, CREAT_TEAM_CODE);
+                    JumpItent.jump(getActivity(), CompanyManagerBActivity.class, bundle, CREAT_TEAM_CODE);
                     break;
                 default:
                     break;

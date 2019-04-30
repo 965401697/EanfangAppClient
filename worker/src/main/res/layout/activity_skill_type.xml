@@ -41,7 +41,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/dimen_38"
-                        android:text="技能能力"
+                        android:text="业务信息"
                         android:textColor="@color/colorPrimary"
                         android:textSize="@dimen/textSize_13" />
 
@@ -54,13 +54,6 @@
                         android:textColor="@color/color_bottom"
                         android:textSize="@dimen/textSize_13" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/dimen_38"
-                        android:text="资质证书"
-                        android:textColor="@color/color_bottom"
-                        android:textSize="@dimen/textSize_13" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -94,17 +87,6 @@
                         android:layout_height="wrap_content"
                         android:src="@mipmap/point_0" />
 
-                    <TextView
-                        android:layout_width="@dimen/dimen_120"
-                        android:layout_height="@dimen/dimen_2"
-                        android:layout_gravity="center_vertical"
-                        android:background="#DEDEDE" />
-
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/point_0" />
 
                     <TextView
                         android:layout_width="@dimen/dimen_120"
@@ -129,10 +111,10 @@
                 android:layout_marginTop="@dimen/dimen_20"
                 android:background="@color/white"
                 android:orientation="horizontal"
-                android:paddingBottom="@dimen/dimen_20"
                 android:paddingLeft="@dimen/dimen_36"
+                android:paddingTop="@dimen/dimen_20"
                 android:paddingRight="@dimen/dimen_34"
-                android:paddingTop="@dimen/dimen_20">
+                android:paddingBottom="@dimen/dimen_20">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -148,8 +130,8 @@
                     android:layout_marginLeft="20dp"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:drawablePadding="@dimen/dimen_14"
                     android:drawableRight="@mipmap/arrow_down"
+                    android:drawablePadding="@dimen/dimen_14"
                     android:gravity="right"
                     android:text=""
                     android:textColor="@color/color_bottom"
@@ -158,37 +140,38 @@
 
             <View style="@style/style_common_line_gray" />
 
+
+
             <LinearLayout
-                android:id="@+id/ll_ability"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="@dimen/dimen_14"
                 android:background="@color/white"
-                android:orientation="horizontal"
-                android:paddingBottom="@dimen/dimen_20"
-                android:paddingLeft="@dimen/dimen_36"
-                android:paddingRight="@dimen/dimen_34"
-                android:paddingTop="@dimen/dimen_20">
+                android:orientation="vertical">
+
 
                 <TextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="能力等级"
+                    android:layout_height="@dimen/dimen_90"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:gravity="center_vertical"
+                    android:text="选择业务类型"
                     android:textColor="@color/color_client_neworder"
-                    android:textSize="@dimen/textSize_14" />
+                    android:textSize="@dimen/textSize_15" />
 
-                <TextView
-                    android:id="@+id/tv_ability"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="20dp"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:drawablePadding="@dimen/dimen_14"
-                    android:drawableRight="@mipmap/arrow_down"
-                    android:gravity="right"
-                    android:text=""
-                    android:textColor="@color/color_bottom"
-                    android:textSize="@dimen/textSize_13" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_2"
+                    android:background="@color/content_bg" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_view_classfiy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -223,38 +206,6 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="@dimen/dimen_14"
-                android:background="@color/white"
-                android:orientation="vertical">
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dimen_90"
-                    android:layout_marginLeft="@dimen/dimen_20"
-                    android:gravity="center_vertical"
-                    android:text="选择业务类型"
-                    android:textColor="@color/color_client_neworder"
-                    android:textSize="@dimen/textSize_15" />
-
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_2"
-                    android:background="@color/content_bg" />
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recycler_view_classfiy"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-            </LinearLayout>
-
 
         </LinearLayout>
 
@@ -270,7 +221,7 @@
         android:background="@drawable/bg_btn_trouble_detail_add_trouble"
         android:gravity="center"
         android:padding="@dimen/dimen_30"
-        android:text="去设置服务区域→"
+        android:text="去设置服务区域"
         android:textColor="@color/color_white"
         android:textSize="@dimen/textSize_13" />
 

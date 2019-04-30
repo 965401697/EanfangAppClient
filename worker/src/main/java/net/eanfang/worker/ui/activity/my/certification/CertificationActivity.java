@@ -67,9 +67,7 @@ public class CertificationActivity extends BaseActivityWithTakePhoto {
         ButterKnife.bind(this);
         setTitle("实名认证");
         setLeftBack();
-
         mStatus = getIntent().getIntExtra("status", -1);
-
         initViews();
         setOnClick();
         if (mStatus > 0) {
@@ -117,8 +115,6 @@ public class CertificationActivity extends BaseActivityWithTakePhoto {
     }
 
     private void setOnClick() {
-
-
         llHeaders.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(CertificationActivity.this, HEADER_PIC)));
     }
 
@@ -153,16 +149,12 @@ public class CertificationActivity extends BaseActivityWithTakePhoto {
     }
 
     private void setData() {
-
-
         String cardId = etCardId.getText().toString().trim();
         String info = etIntro.getText().toString().trim();
-
         if (StringUtils.isEmpty(mTechWorkerVerifyEntity.getAvatarPhoto())) {
             showToast("请选择技师头像");
             return;
         }
-
         if (StringUtils.isEmpty(cardId)) {
             showToast("请输入身份证号");
             return;
@@ -172,7 +164,6 @@ public class CertificationActivity extends BaseActivityWithTakePhoto {
             return;
         }
 
-
         mTechWorkerVerifyEntity.setAccId(EanfangApplication.get().getAccId());
         AccountEntity accountEntity = new AccountEntity();
         accountEntity.setRealName(tvContactName.getText().toString().trim());
@@ -181,7 +172,6 @@ public class CertificationActivity extends BaseActivityWithTakePhoto {
         accountEntity.setGender(rbMan.isChecked() ? 1 : 0);
         mTechWorkerVerifyEntity.setAccountEntity(accountEntity);
         mTechWorkerVerifyEntity.setIntro(info);
-
         Intent intent = new Intent(this, IdentityCardCertification.class);
         intent.putExtra("bean", mTechWorkerVerifyEntity);
         startActivity(intent);

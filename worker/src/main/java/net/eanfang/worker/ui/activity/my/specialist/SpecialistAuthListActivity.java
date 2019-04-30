@@ -134,17 +134,15 @@ public class SpecialistAuthListActivity extends BaseWorkerActivity {
                     ToastUtil.get().showToast(this, "请先进行实名认证");
                     return;
                 }
-                if (verify == 1 || verify == 2) {//如果是认证中  和 认证完成 跳到详情界面 不可修改
+                if (verify == 1 || verify == 2) {
+                    //如果是认证中  和 认证完成 跳到详情界面 不可修改
                     JumpItent.jump(this, SpecialistSkillInfoDetailActivity.class);
                 } else {
-
                     if (mAuthStatusBean == null) {
                         //多次访问状态的接口 造成mAuthStatusBean == null
                         ToastUtil.get().showToast(this, "请稍后操作");
-
                         return;
                     }
-
                     startActivity(new Intent(this, SpecialistSkillTypeActivity.class).putExtra("status", mAuthStatusBean.qual));
                 }
                 break;
@@ -224,8 +222,7 @@ public class SpecialistAuthListActivity extends BaseWorkerActivity {
 
     // 提交认证
     private void commitVerfiy(CommitVerfiyView verfiyView) {
-        EanfangHttp.post(UserApi.POST_EXPERT_SEND_VERIFY)
-                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
+        EanfangHttp.post(UserApi.POST_EXPERT_SEND_VERIFY).execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
                     verfiyView.dismiss();
                     doJumpConfirm();
                 }));

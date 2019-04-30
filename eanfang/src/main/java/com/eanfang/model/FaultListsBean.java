@@ -13,6 +13,18 @@ public class FaultListsBean {
     private int pageSize;
     private int totalCount;
     private int totalPage;
+
+    @Override
+    public String toString() {
+        return "FaultListsBean{" +
+                "currPage=" + currPage +
+                ", pageSize=" + pageSize +
+                ", totalCount=" + totalCount +
+                ", totalPage=" + totalPage +
+                ", list=" + list +
+                '}';
+    }
+
     private List<RepairFailureEntity> list;
 
     public int getCurrPage() {

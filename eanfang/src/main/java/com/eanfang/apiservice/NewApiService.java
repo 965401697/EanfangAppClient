@@ -525,9 +525,18 @@ public interface NewApiService {
      */
     String EXPERT_AUTH_REVOKE = BASE_URL + "/yaf_sys/expertscertification/rollBack/";
     /**
+     * 企业管理
+     */
+    String BUSINESS_MANAGEMENT = BASE_URL + "/yaf_sys/orgunit/shop/management/";
+//    String BUSINESS_MANAGEMENT = "http://192.168.0.110:8080/yaf_sys/orgunit/shop/management/";
+    /**
      * 安防公司编辑
      */
     String COMPANY_SECURITY_AUTH_REVOKE = BASE_URL + "/yaf_sys/orgunit/shop/rollback/";
+    /**
+     * 企业主页
+     */
+    String COMPANY_SECURITY_HOMEPAGE = BASE_URL + "/yaf_sys/orgunit/shop/homepage";
 
     /**
      * 企业认证编辑

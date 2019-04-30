@@ -148,14 +148,12 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
 
 
     private void initData() {
-        EanfangHttp.get(UserApi.GET_USER_INFO)
-                .tag(this)
-                .execute(new EanfangCallback<LoginBean>(PersonInfoActivity.this, true, LoginBean.class, (bean) -> {
-                    runOnUiThread(() -> {
-                        fillData(bean);
-                        loginBean = bean;
-                    });
-                }));
+        EanfangHttp.get(UserApi.GET_USER_INFO).tag(this).execute(new EanfangCallback<LoginBean>(PersonInfoActivity.this, true, LoginBean.class, (bean) -> {
+            runOnUiThread(() -> {
+                fillData(bean);
+                loginBean = bean;
+            });
+        }));
     }
 
 

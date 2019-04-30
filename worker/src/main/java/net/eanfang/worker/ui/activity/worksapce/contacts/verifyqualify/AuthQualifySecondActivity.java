@@ -1,5 +1,6 @@
 package net.eanfang.worker.ui.activity.worksapce.contacts.verifyqualify;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ExpandableListView;
@@ -15,11 +16,11 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.GrantChange;
 import com.eanfang.model.SystypeBean;
 import com.eanfang.ui.base.BaseActivity;
-import com.eanfang.util.JumpItent;
 import com.yaf.sys.entity.BaseDataEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.GroupAdapter;
+import net.eanfang.worker.ui.activity.authentication.SubmitSuccessfullyQyActivity;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -69,7 +70,7 @@ public class AuthQualifySecondActivity extends BaseActivity {
     }
 
     private void initView() {
-        setTitle("技能资质");
+        setTitle("服务认证");
         setLeftBack();
         orgid = getIntent().getLongExtra("orgid", 0);
         verifyStatus = getIntent().getIntExtra("verifyStatus", 0);
@@ -208,12 +209,15 @@ public class AuthQualifySecondActivity extends BaseActivity {
 
     }
 
+    private int order = 2;
+
     private void commitVerfiy() {
 
-        Bundle bundle = new Bundle();
-        bundle.putLong("orgid", orgid);
-        bundle.putInt("verifyStatus", verifyStatus);
-        JumpItent.jump(AuthQualifySecondActivity.this, AuthQualifyListActivity.class, bundle);
-
+        Intent intent = new Intent(this, SubmitSuccessfullyQyActivity.class);
+        intent.putExtra("mOrgId", orgid);
+        intent.putExtra("status", verifyStatus);
+        intent.putExtra("order", order);
+        startActivity(intent);
+        finish();
     }
 }

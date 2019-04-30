@@ -64,29 +64,39 @@ public class SpecialistSkillTypeActivity extends BaseWorkerActivity {
     LinearLayout llFactory;
     @BindView(R.id.snpl_impower)
     com.photopicker.com.widget.BGASortableNinePhotoLayout snplImpower;
-
     private SpecialistBrandAdapter brandAdapter;
     private SkillTypeAdapter osCooperationAddAdapter;
     private final int ADD_BRAND_REQESET_CODE = 100;
     private final int IMPOWER_PHOTO_REQUST = 101;
     private final int IMPOWER_PHOTO_CHOSE = 102;
     private HashMap<String, String> uploadMap = new HashMap<>();
-
     private ArrayList<String> imPowerList = new ArrayList<>();
     // 获取系统类别
+
     List<BaseDataEntity> systemTypeList = Config.get().getBusinessList(1);
+
     //品牌
+
     private List<BaseDataEntity> mDeviceBrandList = Stream.of(Config.get().getModelList(2)).toList();
+
     //品牌默认数据
+
     List<BaseDataEntity> brandIdList = new ArrayList<>();
+
     // 系统类别
+
     private GrantChange grantChange_system = new GrantChange();
+
     // 品牌
+
     private GrantChange grantChange_brand = new GrantChange();
 
     //选择的品牌id
+
     List<Integer> mCheckedBrandIds = new ArrayList<>();
+
     //删除的品牌id
+
     List<Integer> mDeldBrandIds = new ArrayList<>();
 
     private ExpertsCertificationEntity expertsCertificationEntity;
@@ -98,13 +108,11 @@ public class SpecialistSkillTypeActivity extends BaseWorkerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_specialist_skill_type);
         ButterKnife.bind(this);
-        setTitle("技能资质");
+        setTitle("专家认证");
         setLeftBack();
         startTransaction(true);
         mStatus = getIntent().getIntExtra("status", -1);
-
         initViews();
-
         getSkillInfo();
 
     }
@@ -112,22 +120,14 @@ public class SpecialistSkillTypeActivity extends BaseWorkerActivity {
     private void initViews() {
         recyclerViewBrand.setLayoutManager(new GridLayoutManager(this, 3));
         recyclerViewOs.setLayoutManager(new GridLayoutManager(this, 3));
-
         brandAdapter = new SpecialistBrandAdapter(this);
         osCooperationAddAdapter = new SkillTypeAdapter(R.layout.item_cooperation_add);
-
         recyclerViewBrand.setAdapter(brandAdapter);
         osCooperationAddAdapter.bindToRecyclerView(recyclerViewOs);
-
-
         // TODO: 2018/11/30  今天集合的对象引用 有待优化
         for (BaseDataEntity s : systemTypeList) {
             s.setCheck(false);
         }
-//        for (BaseDataEntity s : mDeviceBrandList) {
-//            s.setCheck(false);
-//        }
-
         osCooperationAddAdapter.setNewData(systemTypeList);
         brandAdapter.setOnCheckClickListener(new SpecialistBrandAdapter.onCheckClickListener() {
             @Override
@@ -155,42 +155,30 @@ public class SpecialistSkillTypeActivity extends BaseWorkerActivity {
 
     private void doVerify() {
 
-        String mYear = tvLimit.getText().toString().trim();
         String mAbility = tvType.getText().toString().trim();
-        if (StringUtils.isEmpty(mYear)) {
-            showToast("请选择从业年限");
-            return;
-        }
+
         if (StringUtils.isEmpty(mAbility)) {
             showToast("请选择认证类型");
             return;
         }
-
         if (llFactory.getVisibility() == View.VISIBLE) {
             if (StringUtils.isEmpty(etFactoryName.getText().toString().trim())) {
                 showToast("请输入厂商名称");
                 return;
             }
-
             impowerUrl = PhotoUtils.getPhotoUrl("", snplImpower, uploadMap, false);
             if (StringUtils.isEmpty(impowerUrl)) {
                 showToast("请选择授权书");
                 return;
             }
-
         }
-
         grantChange_system.setAddIds(osCooperationAddAdapter.getScheckedId());
         grantChange_system.setDelIds(osCooperationAddAdapter.getUnSCheckedId());
-
         grantChange_brand.setAddIds(mCheckedBrandIds);
         grantChange_brand.setDelIds(mDeldBrandIds);
-
         expertsCertificationEntity = new ExpertsCertificationEntity();
         expertsCertificationEntity.setApproveType(GetConstDataUtils.getExpertTypeList().indexOf(mAbility));
-        expertsCertificationEntity.setWorkingAge(GetConstDataUtils.getWorkingYearList().indexOf(mYear));
         expertsCertificationEntity.setAccId(EanfangApplication.get().getAccId());
-
         if (llFactory.getVisibility() == View.VISIBLE) {
             expertsCertificationEntity.setBrandName(etFactoryName.getText().toString().trim());
             expertsCertificationEntity.setImpowerUrl(impowerUrl);
@@ -212,65 +200,51 @@ public class SpecialistSkillTypeActivity extends BaseWorkerActivity {
     }
 
     private void commitData() {
-
         HashMap hashMapData = new HashMap();
         hashMapData.put("expertsCertification", expertsCertificationEntity);
         hashMapData.put("expertSysGrantChange", grantChange_system);
         hashMapData.put("expertModelGrantChange", grantChange_brand);
-
         String requestContent = com.alibaba.fastjson.JSONObject.toJSONString(hashMapData);
-        EanfangHttp.post(UserApi.EXPERT_VERIFY)
-                .upJson(requestContent)
-                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
-
-                    osCooperationAddAdapter.getScheckedId().clear();
-                    osCooperationAddAdapter.getUnSCheckedId().clear();
-
-                    startActivity(new Intent(this, SpecialistSkillCertificafeListActivity.class).putExtra("status", mStatus));
-                }));
+        EanfangHttp.post(UserApi.EXPERT_VERIFY).upJson(requestContent).execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
+            osCooperationAddAdapter.getScheckedId().clear();
+            osCooperationAddAdapter.getUnSCheckedId().clear();
+            startActivity(new Intent(this, SpecialistSkillCertificafeListActivity.class).putExtra("status", mStatus));
+        }));
     }
 
     private void getSkillInfo() {
-
-        EanfangHttp.post(UserApi.EXPERT_DETAIL_VERIFY)
-                .params("accId", String.valueOf(EanfangApplication.getApplication().getAccId()))
-                .execute(new EanfangCallback<ExpertVerifySkillBean>(this, true, ExpertVerifySkillBean.class, bean -> {
-                    if (bean != null) {
-                        List<BaseDataEntity> SystemBusinessList = bean.getBaseData2userList();
-
-
-                        // 系统类别
-                        for (BaseDataEntity checkedS : SystemBusinessList) {
-                            if (checkedS.getDataType() == 1) {
-                                for (BaseDataEntity s : systemTypeList) {
-                                    if ((String.valueOf(s.getDataId()).equals(String.valueOf(checkedS.getDataId())))) {
-                                        s.setCheck(true);
-                                        break;
-                                    }
-                                }
-                            } else {
-                                for (BaseDataEntity checkedB : mDeviceBrandList) {
-                                    if (String.valueOf(checkedB.getDataId()).equals(String.valueOf(checkedS.getDataId()))) {
-                                        checkedB.setCheck(true);
-                                        brandIdList.add(checkedB);
-                                        break;
-                                    }
-                                }
+        EanfangHttp.post(UserApi.EXPERT_DETAIL_VERIFY).params("accId", String.valueOf(EanfangApplication.getApplication().getAccId())).execute(new EanfangCallback<ExpertVerifySkillBean>(this, true, ExpertVerifySkillBean.class, bean -> {
+            if (bean != null) {
+                List<BaseDataEntity> SystemBusinessList = bean.getBaseData2userList();
+                // 系统类别
+                for (BaseDataEntity checkedS : SystemBusinessList) {
+                    if (checkedS.getDataType() == 1) {
+                        for (BaseDataEntity s : systemTypeList) {
+                            if ((String.valueOf(s.getDataId()).equals(String.valueOf(checkedS.getDataId())))) {
+                                s.setCheck(true);
+                                break;
                             }
                         }
-
-                        osCooperationAddAdapter.setNewData(systemTypeList);
-                        brandAdapter.setNewData(brandIdList);
-
-                        fillData(bean);
+                    } else {
+                        for (BaseDataEntity checkedB : mDeviceBrandList) {
+                            if (String.valueOf(checkedB.getDataId()).equals(String.valueOf(checkedS.getDataId()))) {
+                                checkedB.setCheck(true);
+                                brandIdList.add(checkedB);
+                                break;
+                            }
+                        }
                     }
-                }));
+                }
+
+                osCooperationAddAdapter.setNewData(systemTypeList);
+                brandAdapter.setNewData(brandIdList);
+
+                fillData(bean);
+            }
+        }));
     }
 
     private void fillData(ExpertVerifySkillBean bean) {
-        if (bean.getExpertVerify().getWorkingAge() != null) {
-            tvLimit.setText(GetConstDataUtils.getWorkingYearList().get(bean.getExpertVerify().getWorkingAge()));
-        }
         if (bean.getExpertVerify().getApproveType() != null) {
             tvType.setText(GetConstDataUtils.getExpertTypeList().get(bean.getExpertVerify().getApproveType()));
             if (bean.getExpertVerify().getApproveType() == 1) {
@@ -287,8 +261,6 @@ public class SpecialistSkillTypeActivity extends BaseWorkerActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-
         if (resultCode == RESULT_OK && requestCode == ADD_BRAND_REQESET_CODE) {
             List<BaseDataEntity> list = (ArrayList<BaseDataEntity>) data.getSerializableExtra("list");
             for (BaseDataEntity b : list) {
@@ -296,16 +268,14 @@ public class SpecialistSkillTypeActivity extends BaseWorkerActivity {
                     mCheckedBrandIds.add(b.getDataId());
                 }
             }
-
             brandAdapter.setData(list);
-
-
         }
 
         switch (requestCode) {
             case IMPOWER_PHOTO_CHOSE:
                 snplImpower.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
                 break;
+            default:
         }
 
     }
@@ -314,32 +284,22 @@ public class SpecialistSkillTypeActivity extends BaseWorkerActivity {
     @OnClick(R.id.tv_go)
     public void onViewClicked() {
         doVerify();
-
 //        startAnimActivity(new Intent(this, SpecialistSkillCertificafeListActivity.class).putExtra("status", mStatus));
     }
 
-    @OnClick({R.id.ll_limit, R.id.ll_ability})
+    @OnClick({ R.id.ll_ability})
     public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.ll_limit:
-                PickerSelectUtil.singleTextPicker(this, "", tvLimit, GetConstDataUtils.getWorkingYearList());
-                break;
-            case R.id.ll_ability:
-                PickerSelectUtil.singleTextPicker(this, "", tvType, GetConstDataUtils.getExpertTypeList(), new PickerSelectUtil.OnOptionPickListener() {
-
-                    @Override
-                    public void picker(int index, String item) {
-                        tvType.setText(GetConstDataUtils.getExpertTypeList().get(index));
-                        if (index == 1) {
-                            //说明是厂商售后专家
-                            llFactory.setVisibility(View.VISIBLE);
-                        } else {
-                            llFactory.setVisibility(View.GONE);
-                        }
-                    }
-                });
-
-                break;
-        }
+        PickerSelectUtil.singleTextPicker(this, "", tvType, GetConstDataUtils.getExpertTypeList(), new PickerSelectUtil.OnOptionPickListener() {
+            @Override
+            public void picker(int index, String item) {
+                tvType.setText(GetConstDataUtils.getExpertTypeList().get(index));
+                if (index == 1) {
+                    //说明是厂商售后专家
+                    llFactory.setVisibility(View.VISIBLE);
+                } else {
+                    llFactory.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 }

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/custom_pic_iv"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/custom_text_tv"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:text="设计单位"
+        android:textColor="#000" />
+
+    <TextView
+        android:id="@+id/custom_date_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:text="111"
+        android:textColor="@android:color/holo_red_dark" />
+
+</LinearLayout>

@@ -73,8 +73,6 @@ public class AuthQualifyListActivity extends BaseActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         qualifyListAdapter = new QualifyListAdapter(true);
         qualifyListAdapter.bindToRecyclerView(recyclerView);
-
-
         qualifyListAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
@@ -95,7 +93,6 @@ public class AuthQualifyListActivity extends BaseActivity {
 
     private void initData() {
         QueryEntry queryEntry = new QueryEntry();
-
         queryEntry.getEquals().put("orgId", mOrgId + "");
         queryEntry.getEquals().put("type", "0");
         EanfangHttp.post(UserApi.LIST_QUALIFY)

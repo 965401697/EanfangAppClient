@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -151,8 +152,8 @@ public class EanfangCallback<T> extends StringCallback {
             Class<T> clazz = getClazz();
             //指定date类型自动格式化
             JSON.DEFFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm";
-
             resultJson = JsonUtils.str2JSON(response.body());
+            Log.d("wq_wl_cs", "onSuccess: "+"\n"+response.body());
             Integer code = -100;
             String message = null;
             JSONObject resultObject = null;

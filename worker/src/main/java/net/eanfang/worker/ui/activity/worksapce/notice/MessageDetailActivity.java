@@ -1,6 +1,7 @@
 package net.eanfang.worker.ui.activity.worksapce.notice;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.eanfang.apiservice.NewApiService;
@@ -35,9 +36,11 @@ public class MessageDetailActivity extends BaseActivity {
     TextView tvFinishTime;
     @BindView(R.id.tv_detailTime)
     TextView tvDetailTime;
-
-    //消息ID
+    /**
+     * 消息ID
+     */
     private Long mInfoId;
+    private String FH = "{";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,11 +71,13 @@ public class MessageDetailActivity extends BaseActivity {
                     runOnUiThread(() -> {
                         tvDetailTitle.setText(bean.getTitle());
                         String extInfo = null;
-                        if (bean.getExtInfo() != null && !bean.getExtInfo().toString().contains("{")) {
+                        if (bean.getExtInfo() != null && !bean.getExtInfo().toString().contains(FH)) {
                             extInfo = bean.getExtInfo().toString();
                         }
-                        tvDetailContent.setText(bean.getContent() + "\r\n\t" + "\r\n\t" + (extInfo != null ? extInfo : ""));
+                        tvDetailContent.setText(bean.getContent());
                         tvDetailTime.setText(GetDateUtils.dateToDateTimeString(bean.getCreateTime()));
+                        // Log.d("MessageDetailActivity_JS", "initData: "+NewApiService.GET_PUSH_MSG_INFO + mInfoId+"\n"+bean.toString());
+
                     });
                 })));
     }

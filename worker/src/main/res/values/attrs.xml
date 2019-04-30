@@ -10,5 +10,20 @@
         <!-- 圆点间间距的大小 -->
         <attr name="space" format="dimension" />
     </declare-styleable>
-
+    <declare-styleable name="WQLeftRightClickTextView">
+        <attr name="tvLeftImage" format="reference" />
+        <attr name="tvTopImage" format="reference" />
+        <attr name="tvRightImage" format="reference" />
+        <attr name="tvBottomImage" format="reference" />
+        <attr name="tvImageWidth" format="dimension" />
+        <attr name="tvImageHeight" format="dimension" />
+    </declare-styleable>
+    <declare-styleable name="WqLrDisplayTextView">
+        <attr name="left_text" format="string" />
+        <attr name="left_color" format="color" />
+        <attr name="left_size" format="dimension" />
+        <attr name="right_text" format="string" />
+        <attr name="right_color" format="color" />
+        <attr name="right_size" format="dimension" />
+    </declare-styleable>
 </resources>

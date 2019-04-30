@@ -195,6 +195,7 @@ public class SpecialistAddSkillCertificafeActivity extends BaseActivityWithTakeP
             case REQUEST_CODE_CHOOSE_CERTIFICATE:
                 snplMomentAccident.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
                 break;
+            default:
         }
     }
 
@@ -205,40 +206,28 @@ public class SpecialistAddSkillCertificafeActivity extends BaseActivityWithTakeP
                 Calendar c = Calendar.getInstance();
                 // 最后一个false表示不显示日期，如果要显示日期，最后参数可以是true或者不用输入
                 new DoubleDatePickerDialog(SpecialistAddSkillCertificafeActivity.this, 0, new DoubleDatePickerDialog.OnDateSetListener() {
-
                     @Override
-                    public void onDateSet(DatePicker startDatePicker, int startYear, int startMonthOfYear,
-                                          int startDayOfMonth, DatePicker endDatePicker, int endYear, int endMonthOfYear,
-                                          int endDayOfMonth) {
-                        String textString = String.format("%d-%d-%d～%d-%d-%d", startYear,
-                                startMonthOfYear + 1, startDayOfMonth, endYear, endMonthOfYear + 1, endDayOfMonth);
-
+                    public void onDateSet(DatePicker startDatePicker, int startYear, int startMonthOfYear, int startDayOfMonth, DatePicker endDatePicker, int endYear, int endMonthOfYear, int endDayOfMonth) {
+                        String textString = String.format("%d-%d-%d～%d-%d-%d", startYear, startMonthOfYear + 1, startDayOfMonth, endYear, endMonthOfYear + 1, endDayOfMonth);
                         String startTime = String.format("%d-%d-%d", startYear, startMonthOfYear + 1, startDayOfMonth);
                         String endTime = String.format("%d-%d-%d", endYear, endMonthOfYear + 1, endDayOfMonth);
-
                         if (GetDateUtils.getTimeStamp(startTime, "yyyy-MM-dd") > GetDateUtils.getTimeStamp(endTime, "yyyy-MM-dd")) {
                             ToastUtil.get().showToast(SpecialistAddSkillCertificafeActivity.this, "开始时间不能大于结束时间");
-
                             return;
                         }
-
-
                         tvTime.setText(textString);
-
                     }
 
                     @Override
                     public void cancle() {
 
                     }
-
-
                 }, c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE), true).show();
-
                 break;
             case R.id.tv_save:
                 setData();
                 break;
+            default:
         }
     }
 }

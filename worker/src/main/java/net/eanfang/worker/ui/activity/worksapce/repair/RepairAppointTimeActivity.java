@@ -2,16 +2,19 @@ package net.eanfang.worker.ui.activity.worksapce.repair;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.ui.fragment.SelectTimeDialogFragment;
+import com.eanfang.util.JsonUtils;
 import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
@@ -82,12 +85,15 @@ public class RepairAppointTimeActivity extends BaseActivity implements SelectTim
 //        queryEntry.getEquals().put("orderId", orderId + "");
 //        queryEntry.getEquals().put("solve", solve + "");
 //        queryEntry.getEquals().put("bookTime", bookTime);
+
         EanfangHttp.post(RepairApi.POST_FLOW_SCREENING)
                 .params("orderId", orderId + "")
                 .params("solve", solve + "")
                 .params("bookTime", bookTime)
 //                .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<JSONObject>(RepairAppointTimeActivity.this, true, JSONObject.class, (bean) -> {
+
+                    Log.d("电话回访，电话预约上门时间a",RepairApi.POST_FLOW_SCREENING+"\n"+"orderId: "+orderId+"\n"+"solve: "+solve+"\n"+"bookTime: "+bookTime+"\n"+bean.toString());
                     showToast("预约成功");
                     setResult(RESULT_OK);
                     finishSelf();

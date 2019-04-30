@@ -111,11 +111,6 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
     private String itemcity;
     private String itemzone;
     private Long orgid;
-
-    // 区别
-    //  private String mAssign = "";
-
-    // 是否编辑
     private boolean isEdit = false;
 
     @Override
@@ -135,9 +130,6 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
         setLeftBack();
         orgid = getIntent().getLongExtra("orgid", 0);
         orgName = getIntent().getStringExtra("orgName");
-        // mAssign = getIntent().getStringExtra("assign");
-
-        // 完善资料
         btnComplete.setText("保存资料");
         etCompany.setText(orgName);
 
@@ -198,7 +190,6 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
         List<BaseDataEntity> tradeFirst = Stream.of(baseDataBeanList).filter(beanFirst -> beanFirst.getLevel() == 2).toList();
         List<String> tradeFirststr = Stream.of(tradeFirst).map(first -> first.getDataName()).toList();
         List<List<String>> secondStr = Stream.of(tradeFirst).map(firtstr -> Stream.of(baseDataBeanList).filter(second -> second.getLevel() == 3 && second.getDataCode().startsWith(firtstr.getDataCode())).map(second -> second.getDataName()).toList()).toList();
-
         PickerSelectUtil.linkagePicker(this, "行业类型", tradeFirststr, secondStr, ((first, second) -> {
             firstTraed = first;
             secondTraed = second;
@@ -426,7 +417,6 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
             itemcity = item.getCity();
             itemzone = item.getAddress();
             tvOfficeAddress.setText(item.getProvince() + itemcity + itemzone);
-
             //将选择的地址 取 显示值
             etDetailOfficeAddress.setText(item.getName());
 

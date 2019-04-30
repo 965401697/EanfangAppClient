@@ -75,7 +75,6 @@ public class WorkHistoryActivity extends BaseWorkerActivity {
 
     private void getData() {
         QueryEntry queryEntry = new QueryEntry();
-
         queryEntry.getEquals().put("accId", String.valueOf(EanfangApplication.get().getAccId()));
         queryEntry.getEquals().put("type", "0");
         EanfangHttp.post(UserApi.GET_TECH_WORKER_WORK_LIST)
@@ -129,8 +128,7 @@ public class WorkHistoryActivity extends BaseWorkerActivity {
                 break;
             case R.id.tv_sub:
                 Intent intent = new Intent(WorkHistoryActivity.this, OwnDataHintActivity.class);
-                intent.putExtra("info", "尊敬的用户，您可以添加荣誉证书，\n" +
-                        "以展示更强的权威性");
+                intent.putExtra("info", "尊敬的用户，您可以添加荣誉证书，\n" + "以展示更强的权威性");
                 intent.putExtra("go", "去添加荣誉证书");
                 intent.putExtra("desc", "如有疑问，请联系客服处理");
                 intent.putExtra("service", "客服热线：" + R.string.text_service_telphone);
@@ -144,7 +142,6 @@ public class WorkHistoryActivity extends BaseWorkerActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (resultCode == RESULT_OK && requestCode == ADD_WORK_CODE) {
             getData();
 

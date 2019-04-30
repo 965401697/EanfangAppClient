@@ -59,12 +59,13 @@ public class QualificationAdapter extends BaseQuickAdapter<QualificationCertific
         }
 
         helper.addOnClickListener(R.id.tv_delete);
+        helper.setVisible(R.id.tv_delete, false);
 
-        if (mFlag != 0) {
-            helper.setVisible(R.id.tv_delete, false);
-        } else {
-            helper.setVisible(R.id.tv_delete, true);
-        }
+//        if (mFlag != 0) {
+//            helper.setVisible(R.id.tv_delete, false);
+//        } else {
+//            helper.setVisible(R.id.tv_delete, true);
+//        }
     }
 }
 
