@@ -110,6 +110,7 @@ public class SecurityDetailBean implements Serializable {
         private Long publisherTopCompanyId;
         private PublisherUserBean publisherUser;
         private Long publisherUserId;
+        private Long publisherAccId;
         private int readStatus;
         private String spcContent;
         private int spcId;

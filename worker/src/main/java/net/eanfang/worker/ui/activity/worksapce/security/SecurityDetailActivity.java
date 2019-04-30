@@ -291,7 +291,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         tvContent.setText(convertMetionString);
 
         tvTime.setText(ETimeUtils.getTimeFormatText(securityDetailBean.getCreateTime()));
-        if (securityDetailBean.getPublisherUserId().equals(EanfangApplication.get().getAccId())) {
+        if (securityDetailBean.getPublisherAccId().equals(EanfangApplication.get().getAccId())) {
             tvIsFocus.setVisibility(View.GONE);
         } else {
             tvIsFocus.setVisibility(View.VISIBLE);
