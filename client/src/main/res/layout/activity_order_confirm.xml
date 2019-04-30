@@ -243,20 +243,45 @@
 
             </LinearLayout>
 
-            <TextView
+            <RelativeLayout
+                android:id="@+id/rl_faultList"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_16"
+                android:layout_height="match_parent"
                 android:background="@color/color_white"
-                android:drawableLeft="@mipmap/ic_repair_fault"
-                android:drawablePadding="@dimen/dimen_20"
-                android:orientation="vertical"
-                android:paddingBottom="@dimen/dimen_20"
-                android:paddingLeft="@dimen/dimen_38"
-                android:paddingTop="@dimen/dimen_20"
-                android:text="故障信息"
-                android:textColor="@color/color_client_neworder"
-                android:textSize="@dimen/textSize_14" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/dimen_30">
+
+                <TextView
+                    android:id="@+id/tv_fault"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/ic_repair_fault"
+                    android:drawablePadding="@dimen/dimen_20"
+                    android:text="故障明细"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_14" />
+
+                <TextView
+                    android:id="@+id/tv_faultNum"
+                    android:layout_width="@dimen/dimen_36"
+                    android:layout_height="@dimen/dimen_36"
+                    android:layout_marginLeft="@dimen/dimen_30"
+                    android:layout_toRightOf="@id/tv_fault"
+                    android:background="@drawable/bg_repair_fault_num"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSize_10"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/iv_faultIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:src="@mipmap/arrow_up" />
+            </RelativeLayout>
 
 
             <View style="@style/style_common_line_gray" />

@@ -76,6 +76,10 @@ public class CommonView extends BaseDialog {
         if (StringUtils.isEmpty(mContens)) {
             return null;
         }
+        if(mContens.length()>5){
+            showToast("最多输入5个字");
+            return null;
+        }
         dismiss();
         return mContens;
     }

@@ -3,6 +3,7 @@ package net.eanfang.client.ui.activity.worksapce.repair;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -227,6 +228,7 @@ public class AddTroubleActivity extends BaseClientActivity {
      * 设备库选择设备
      */
     private boolean isFromDevicesHouse = false;
+    private Long mOwnerOrgId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -240,7 +242,6 @@ public class AddTroubleActivity extends BaseClientActivity {
 
     private void initView() {
         setTitle("新增故障");
-        setLeftBack();
         fromTroubleList = getIntent().getBooleanExtra("fromTroubleList", false);
         if (fromTroubleList) {
             beanList = (List<RepairBugEntity>) getIntent().getSerializableExtra("beanList");
@@ -279,6 +280,9 @@ public class AddTroubleActivity extends BaseClientActivity {
         // 再来一条
         tvAdd.setOnClickListener(new MultiClickListener(AddTroubleActivity.this, this::isAgainAdd, this::onSubmitClient));
 
+        setLeftBack((v)->{
+            doTranValue();
+        });
     }
 
     /**
@@ -389,16 +393,17 @@ public class AddTroubleActivity extends BaseClientActivity {
                     if (isAgainAdd) {
                         doCleanAllValue();
                     } else {
-                        doTranValue(bean);
+                        mOwnerOrgId = bean.getOwnerOrgId();
+                        doTranValue();
                     }
                 }));
     }
 
-    public void doTranValue(CooperationEntity cooperationEntity) {
+    public void doTranValue() {
         Intent intent = new Intent();
         Bundle bundle = new Bundle();
-        if (cooperationEntity != null) {
-            bundle.putLong("mOwnerOrgId", cooperationEntity.getOwnerOrgId());
+        if (mOwnerOrgId != null) {
+            bundle.putLong("mOwnerOrgId", mOwnerOrgId);
         }
         bundle.putSerializable("beanList", (Serializable) beanList);
         intent.putExtras(bundle);
@@ -628,4 +633,13 @@ public class AddTroubleActivity extends BaseClientActivity {
         }
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            if (beanList != null && beanList.size() > 0) {
+                doTranValue();
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }

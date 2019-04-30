@@ -3,6 +3,7 @@ package net.eanfang.client.ui.adapter.repair;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.model.reapair.RepairPersonalInfoEntity;
+import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.R;
 
@@ -41,7 +42,9 @@ public class RepairPersonalInfoAdapter extends BaseQuickAdapter<RepairPersonalIn
         // 电话
         helper.setText(R.id.tv_phone, item.getPhone());
         // 单位
-        helper.setText(R.id.tv_home_type, "[" + item.getSelectAddress() + "]");
+        if (!StringUtils.isEmpty(item.getSelectAddress())) {
+            helper.setText(R.id.tv_home_type, "[" + item.getSelectAddress() + "]");
+        }
         helper.setText(R.id.tv_home_address, item.getConmpanyName());
         // 地址
         helper.setText(R.id.tv_address, item.getAddress());

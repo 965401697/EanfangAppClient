@@ -9,6 +9,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -37,7 +39,11 @@ import com.yaf.base.entity.RepairOrderEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.pay.NewPayActivity;
+import net.eanfang.client.ui.activity.worksapce.repair.AddTroubleActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.FaultDetailActivity;
+import net.eanfang.client.ui.activity.worksapce.repair.RepairActivity;
+import net.eanfang.client.ui.activity.worksapce.repair.RepairTypeActivity;
+import net.eanfang.client.ui.activity.worksapce.repair.TroubleListActivity;
 import net.eanfang.client.ui.adapter.RepairOrderConfirmAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
@@ -88,6 +94,12 @@ public class OrderConfirmActivity extends BaseClientActivity {
     TextView tvProjectName;
     @BindView(R.id.tv_projectInfo)
     TextView tvProjectInfo;
+    @BindView(R.id.tv_faultNum)
+    TextView tvFaultNum;
+    @BindView(R.id.iv_faultIcon)
+    ImageView ivFaultIcon;
+    @BindView(R.id.rl_faultList)
+    RelativeLayout rlFaultList;
     private ArrayList<RepairBugEntity> mDataList = new ArrayList<>();
     private LinearLayoutManager llm;
 
@@ -104,6 +116,10 @@ public class OrderConfirmActivity extends BaseClientActivity {
      * 个人信息
      */
     private RepairPersonalInfoEntity.ListBean repairPersonalInfoEntity;
+    /**
+     * 故障列表默认显示
+     */
+    private boolean isShowFaultList = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -158,11 +174,16 @@ public class OrderConfirmActivity extends BaseClientActivity {
         tvAddress.setText(Config.get().getAddressByCode(repairOrderEntity.getPlaceCode()) + "\r\n" + repairOrderEntity.getAddress());
 
         mDataList = (ArrayList<RepairBugEntity>) repairOrderEntity.getBugEntityList();
+        if (mDataList != null && mDataList.size() > 0) {
+            tvFaultNum.setVisibility(View.VISIBLE);
+            tvFaultNum.setText(mDataList.size() + "");
+        }
     }
 
     private void initAdapter() {
         BaseQuickAdapter evaluateAdapter = new RepairOrderConfirmAdapter(R.layout.item_order_confirm, mDataList);
         evaluateAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
+        mRecyclerView.setNestedScrollingEnabled(false);
         mRecyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
             @Override
             public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
@@ -195,8 +216,19 @@ public class OrderConfirmActivity extends BaseClientActivity {
 
     private void registerListener() {
         btnComplete.setOnClickListener(new MultiClickListener(this, this::doHttpSubmit));
-        setLeftBack((v)->{
+        setLeftBack((v) -> {
             giveUp();
+        });
+        rlFaultList.setOnClickListener((v) -> {
+            if (!isShowFaultList) {
+                mRecyclerView.setVisibility(View.GONE);
+                ivFaultIcon.setImageDrawable(getResources().getDrawable(R.mipmap.arrow_up));
+                isShowFaultList = true;
+            } else {
+                mRecyclerView.setVisibility(View.VISIBLE);
+                ivFaultIcon.setImageDrawable(getResources().getDrawable(R.mipmap.arrow_down));
+                isShowFaultList = false;
+            }
         });
     }
 
@@ -270,6 +302,11 @@ public class OrderConfirmActivity extends BaseClientActivity {
     }
 
     private void closeActivity() {
+        EanfangApplication.get().closeActivity(RepairTypeActivity.class.getName());
+        EanfangApplication.get().closeActivity(AddTroubleActivity.class.getName());
+        EanfangApplication.get().closeActivity(TroubleListActivity.class.getName());
+        EanfangApplication.get().closeActivity(RepairActivity.class.getName());
+        EanfangApplication.get().closeActivity(SelectWorkerActivity.class.getName());
         EanfangApplication.get().closeActivity(WorkerDetailActivity.class.getName());
         finishSelf();
     }
@@ -288,6 +325,7 @@ public class OrderConfirmActivity extends BaseClientActivity {
     /**
      * 放弃报修
      */
+
     private void giveUp() {
         new TrueFalseDialog(this, "系统提示", "是否放弃报修？", () -> {
             closeActivity();

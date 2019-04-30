@@ -200,7 +200,9 @@ public class RepairInfoEditActivity extends BaseActivity implements RadioGroup.O
         repairPersonalInfoEntity.setConmpanyName(etCompanyName.getText().toString().trim());
         repairPersonalInfoEntity.setGender(mSex);
         repairPersonalInfoEntity.setAddress(tvAddressDetail.getText().toString().trim());
-        repairPersonalInfoEntity.setSelectAddress(mType);
+        if (!StringUtils.isEmpty(mType)) {
+            repairPersonalInfoEntity.setSelectAddress(mType);
+        }
         return repairPersonalInfoEntity;
     }
 
@@ -228,7 +230,7 @@ public class RepairInfoEditActivity extends BaseActivity implements RadioGroup.O
      * 添加标签
      */
     private void doAddTip() {
-        CommonView commonView = new CommonView(this, "添加标签", mType, this);
+        CommonView commonView = new CommonView(this, "添加标签", rbAdd.getText().toString().trim(), this);
         commonView.show();
     }
 
@@ -261,6 +263,20 @@ public class RepairInfoEditActivity extends BaseActivity implements RadioGroup.O
         province = repairPersonalInfoEntity.getProvince();
         city = repairPersonalInfoEntity.getCity();
         county = repairPersonalInfoEntity.getCounty();
+        if ("家".equals(repairPersonalInfoEntity.getSelectAddress())) {
+            rbHome.setChecked(true);
+            rbCompany.setChecked(false);
+            rbAdd.setChecked(false);
+        } else if ("公司".equals(repairPersonalInfoEntity.getSelectAddress())) {
+            rbHome.setChecked(false);
+            rbCompany.setChecked(true);
+            rbAdd.setChecked(false);
+        } else {
+            rbHome.setChecked(false);
+            rbCompany.setChecked(false);
+            rbAdd.setChecked(true);
+            rbAdd.setText(repairPersonalInfoEntity.getSelectAddress());
+        }
     }
 
     @Override
