@@ -3,6 +3,7 @@ package net.eanfang.worker.ui.activity.my.specialist;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -127,6 +128,7 @@ public class SpecialistSkillCertificafeListActivity extends BaseActivityWithTake
             showToast("请添加培训认定文件");
             return;
         } else {
+            Log.d("684587441", "seData: "+UserApi.UP_WORKER_LIST_QUALIFY_C+"\n"+ EanfangApplication.get().getUserId()+"\n"+verifyOrg+"\n"+verifyPicUrl);
             EanfangHttp.post(UserApi.UP_WORKER_LIST_QUALIFY_C).params("userId", EanfangApplication.get().getUserId()).params("verifyOrg", verifyOrg).params("verifyPicUrl", verifyPicUrl).execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
                 Intent intent = new Intent(SpecialistSkillCertificafeListActivity.this, OwnDataHintActivity.class);
                 intent.putExtra("info", "尊敬的用户，您的认证资料我们已收到\n" + "我们将在24小时内审核，\n" + "您可以先去逛逛在线问答哦。");

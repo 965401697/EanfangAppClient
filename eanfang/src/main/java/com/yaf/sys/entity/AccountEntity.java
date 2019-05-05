@@ -41,8 +41,6 @@ public class AccountEntity implements Serializable {
 
     //账号类型0普通用户1内置用户2技师用户
     //@TableField(value = "acc_type")
-    @Getter
-    @Setter
     private Integer accType;
 
     //手机
@@ -201,41 +199,29 @@ public class AccountEntity implements Serializable {
     //性别0女1男
     //@TableField(value = "gender")
     @Digits(integer = 3, fraction = 0)
-    @Getter
-    @Setter
     private Integer gender;
 
     //生日
     //@TableField(value = "birthday")
-    @Getter
-    @Setter
     private Date birthday;
 
     //证件号码
     //@TableField(value = "id_card")
     @Size(min = 0, max = 18)
-    @Getter
-    @Setter
     private String idCard;
 
     //所在城市编号
     //@TableField(value = "area_code")
     @Size(min = 0, max = 20)
-    @Getter
-    @Setter
     private String areaCode;
 
     //详细地址
     //@TableField(value = "adress")
     @Size(min = 0, max = 200)
-    @Getter
-    @Setter
     private String address;
 
     //个人二维码
     @Size(min = 0, max = 200)
-    @Getter
-    @Setter
     private String qrCode;
     /**
      * 判断当前密码是否是简单密码（空 || 默认手机后六位 || 默认用户名）
@@ -400,37 +386,25 @@ public class AccountEntity implements Serializable {
     /**
      * 用户信息扩展
      */
-    @Getter
-    @Setter
     @TableField(exist = false)
     private Object accountExtInfo;
 
-    @Getter
-    @Setter
     @TableField(exist = false)
     private UserEntity defaultUser;
 
-    @Getter
-    @Setter
     @TableField(exist = false)
     private Long nullUser;
 
 
     /*归属的公司列表*/
-    @Getter
-    @Setter
     @TableField(exist = false)
     Set<OrgEntity> belongCompanys;
 
     /*归属的部门列表*/
-    @Getter
-    @Setter
     @TableField(exist = false)
     Set<Long> belongDepartments;
 
     /*适合当前域名的公司id列表*/
-    @Getter
-    @Setter
     @TableField(exist = false)
     Set<Long> allowCurDomainCompanys;
 

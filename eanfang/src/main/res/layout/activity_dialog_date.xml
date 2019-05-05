@@ -5,15 +5,17 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    android:background="@color/colorPrimary"
+    android:background="@color/white"
     >
 
-    <DatePicker
-        android:id="@+id/date_picker"
-        android:layout_gravity="center"
+    <CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:datePickerMode="spinner"
-        >
-    </DatePicker>
+        android:firstDayOfWeek="1"
+        android:selectedWeekBackgroundColor="#9BFFFF"
+        android:showWeekNumber="true"
+        android:shownWeekCount="14"
+        android:descendantFocusability="beforeDescendants"
+       />
 </LinearLayout>

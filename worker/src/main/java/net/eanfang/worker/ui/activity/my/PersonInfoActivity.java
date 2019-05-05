@@ -312,7 +312,6 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         if (!StringUtils.isEmpty(city) && !StringUtils.isEmpty(contry)) {
             accountEntity.setAreaCode(Config.get().getAreaCodeByName(city, contry));
         }
-
         submitSuccess(JSON.toJSONString(accountEntity));
     }
 
@@ -322,8 +321,6 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
                 .execute(new EanfangCallback(this, true, JSONObject.class, (bean) -> {
                     runOnUiThread(() -> {
                         showToast("成功");
-
-
                         LoginBean user = EanfangApplication.get().getUser();
                         user.setAccount(accountEntity);
 

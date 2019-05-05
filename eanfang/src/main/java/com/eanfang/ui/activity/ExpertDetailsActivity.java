@@ -105,7 +105,7 @@ public class ExpertDetailsActivity extends BaseActivity {
 
     private void setGuanZhu(boolean isgz) {
         gzTv.setEnabled(false);
-        EanfangHttp.post(UserApi.DJ_GZ).params("followStatus", isgz ? "1" : "0").execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
+        EanfangHttp.post(UserApi.DJ_GZ).params("userId", "1082922712729456642").params("followStatus", isgz ? "1" : "0").execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
             gzTv.setEnabled(true);
             isGz=!isGz;
             gzTv.setText(isGz ? "取消关注" : "+ 关注");

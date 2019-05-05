@@ -116,11 +116,17 @@
 
                                     <TextView
                                         android:id="@+id/tv_user_name"
-                                        android:layout_width="wrap_content"
+                                        android:layout_width="@dimen/dimen_200"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
                                         android:gravity="center_vertical"
                                         android:text="小明童鞋"
+                                        android:ellipsize="marquee"
+                                        android:focusable="true"
+                                        android:marqueeRepeatLimit="marquee_forever"
+                                        android:focusableInTouchMode="true"
+                                        android:scrollHorizontally="true"
+                                        android:singleLine="true"
                                         android:textColor="@color/color_white"
                                         android:textSize="@dimen/textSize_18" />
 

@@ -1,23 +1,23 @@
 package net.eanfang.worker.ui.activity.techniciancertification;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
-import android.icu.util.Calendar;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.DatePicker;
+import android.widget.CalendarView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
@@ -44,6 +44,7 @@ import com.yaf.sys.entity.UserEntity;
 import net.eanfang.worker.R;
 
 import java.text.ParseException;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,7 +61,7 @@ public class PerfectingPersonalDataActivity extends BaseActivityWithTakePhoto {
     @BindView(R.id.dq_dz_et)
     EditText dqDzEt;
     @BindView(R.id.sr_et)
-    EditText srEt;
+    TextView srEt;
     private int mStatus;
     private int statusB;
     private final int HEADER_PIC = 107;
@@ -91,6 +92,8 @@ public class PerfectingPersonalDataActivity extends BaseActivityWithTakePhoto {
     private String itemcity;
     private String itemzone;
     private String areaCode = "";
+    private Date date;
+    private String content = "";
 
     /**
      * 地址回掉code
@@ -104,9 +107,9 @@ public class PerfectingPersonalDataActivity extends BaseActivityWithTakePhoto {
         setContentView(R.layout.activity_perfecting_personal_data);
         ButterKnife.bind(this);
         initView();
-        initData();
     }
 
+    @TargetApi(Build.VERSION_CODES.N)
     private void initView() {
         setLeftBack();
         setTitle("个人资料");
@@ -124,6 +127,7 @@ public class PerfectingPersonalDataActivity extends BaseActivityWithTakePhoto {
             Intent intent = new Intent(this, SelectAddressActivity.class);
             startActivityForResult(intent, ADDRESS_CALLBACK_CODE);
         });
+        srEt.setOnClickListener(view -> setRq());
     }
 
     @SuppressLint("NewApi")
@@ -153,7 +157,8 @@ public class PerfectingPersonalDataActivity extends BaseActivityWithTakePhoto {
             etIntro.setText(accountEntity.getPersonalNote());
         }
         if (accountEntity.getBirthday() != null) {
-            srEt.setText(new SimpleDateFormat("yyyyMMdd").format(accountEntity.getBirthday()));
+            date = accountEntity.getBirthday();
+            srEt.setText(new SimpleDateFormat("yyyyMMdd").format(date));
         }
         etCardId.setText(EanfangApplication.get().getUser().getAccount().getIdCard());
         //0女1男
@@ -163,9 +168,6 @@ public class PerfectingPersonalDataActivity extends BaseActivityWithTakePhoto {
             rbMan.setChecked(true);
         }
         etIntro.setText(accountEntity.getPersonalNote());
-    }
-
-    private void initData() {
     }
 
     @Override
@@ -205,49 +207,33 @@ public class PerfectingPersonalDataActivity extends BaseActivityWithTakePhoto {
         }
         OSSUtils.initOSS(this).asyncPutImage(imgKey, image.getOriginalPath(), new OSSCallBack(this, true) {
 
-
         });
-//        setRq();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void setRq() {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.activity_dialog_date, null);
-        final DatePicker datePicker = (DatePicker) view.findViewById(R.id.date_picker);
-        //设置日期简略显示 否则详细显示 包括:星期周
-        datePicker.setCalendarViewShown(false);
-        Calendar calendar = Calendar.getInstance();
-        //初始化当前日期
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        //初始化当前日期
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        datePicker.init(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH), null);
-        /**
-         * 下面这行代吗 设置的是只显示年月
-         */
-        ((ViewGroup) ((ViewGroup) datePicker.getChildAt(0)).getChildAt(0)).getChildAt(2).setVisibility(View.GONE);
-        //设置date布局
-        builder.setView(view);
-        builder.setTitle("设置日期信息");
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                int year = datePicker.getYear();
-                int month = datePicker.getMonth()+1;
-                //我勒个去,系统获取的日期居然不准
-
-            }
+        CalendarView datePicker = (CalendarView) view.findViewById(R.id.calendarView);
+        datePicker.setDate(19991010);
+        datePicker.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
+            content = year + (month + 1) + dayOfMonth+"";
+            Log.d("567481566", "onSelectedDayChange: " + content);
+            Toast.makeText(PerfectingPersonalDataActivity.this, "你选择了:\n" + content, Toast.LENGTH_SHORT).show();
         });
-        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-
+        new AlertDialog.Builder(this).setView(view).setCancelable(false).setPositiveButton("确定", (dialogInterface, i) -> {
+            if (content.equals("")) {
+                showToast("请选择日期");
+            } else {
+                DateFormat df = new SimpleDateFormat("yyyyMMdd");
+                try {
+                    date = df.parse(content);
+                } catch (ParseException pe) {
+                    System.out.println(pe.getMessage());
+                }
+                srEt.setText(new SimpleDateFormat("yyyyMMdd").format(date));
+                dialogInterface.dismiss();
             }
-        });
-
-
+        }).show();
     }
 
     @SuppressLint("NewApi")
@@ -298,6 +284,7 @@ public class PerfectingPersonalDataActivity extends BaseActivityWithTakePhoto {
             e.printStackTrace();
         }
 
+        accountEntity.setBirthday(date);
         accountEntity.setRealName(tvContactNames);
         accountEntity.setAddress(dqDzEtS);
         accountEntity.setNickName(ncE);
@@ -314,6 +301,11 @@ public class PerfectingPersonalDataActivity extends BaseActivityWithTakePhoto {
         loginBean.setAccount(accountEntity);
         Log.d("78987", "setData: " + accountEntity.getNickName() + "  " + accountEntity.getPersonalNote() + JSONObject.toJSONString(loginBean) + "\n" + UserApi.BC_GR_ZL);
         EanfangHttp.post(UserApi.BC_GR_ZL).upJson(JSONObject.toJSONString(accountEntity)).execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
+            LoginBean user = EanfangApplication.get().getUser();
+            AccountEntity accountEntity1 = user.getAccount();
+            accountEntity1.setNickName(ncE);
+            user.setAccount(accountEntity1);
+            EanfangApplication.get().saveUser(user);
             Intent intent = new Intent(this, RealNameAuthenticationActivity.class);
             intent.putExtra("statusB", statusB);
             startActivity(intent);
