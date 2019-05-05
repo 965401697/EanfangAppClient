@@ -1,5 +1,6 @@
 package net.eanfang.client.ui.activity.worksapce.security;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -157,6 +158,11 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
      */
     private SecurityListBean.ListBean mItenSecurityDetailBean;
 
+    /**
+     * 跳转用户首页的是否是发布内容的人
+     */
+    private boolean mIsPubUid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -209,6 +215,8 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
             SecurityDetailBean.ListBean listBean = (SecurityDetailBean.ListBean) adapter.getData().get(position);
             if (listBean != null && listBean.getCommentUser() != null
                     && listBean.getCommentUser().getAccId() != null) {
+                mIsPubUid = listBean.getCommentUser().getAccId().
+                        equals(String.valueOf(securityDetailBean.getAccountEntity().getAccId()));
                 gotoUserHomeActivity(listBean.getCommentUser().getAccId());
             }
         });
@@ -386,6 +394,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
             case R.id.iv_seucrity_header:
                 if (securityDetailBean != null && securityDetailBean.getAccountEntity() != null
                         && securityDetailBean.getAccountEntity().getAccId() != null) {
+                    mIsPubUid = true;
                     gotoUserHomeActivity(String.valueOf(securityDetailBean.getAccountEntity().getAccId()));
                 }
                 break;
@@ -619,4 +628,14 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         UserHomeActivity.startActivityForUid(this, mUserId);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK && data != null) {
+            if (mIsPubUid) {
+                isFoucus = data.getBooleanExtra(UserHomeActivity.RESULT_FOLLOW_STATE, true);
+                tvIsFocus.setText(isFoucus ? "取消关注" : "关注");
+            }
+        }
+    }
 }

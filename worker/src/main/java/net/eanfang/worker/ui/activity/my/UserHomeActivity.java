@@ -1,7 +1,6 @@
 package net.eanfang.worker.ui.activity.my;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -51,6 +50,10 @@ import io.rong.imlib.model.UserInfo;
  * Describe: 用户主页
  */
 public class UserHomeActivity extends BaseWorkerActivity {
+    /**
+     * 带返回值请求用户首页code
+     */
+    public static final int REQUEST_USER_HOME_CODE = 100;
     public static final String EXTRA_ACCID = "UserHomeActivity.accId";
     public static final String EXTRA_UID = "UserHomeActivity.userId";
     public static final String RESULT_FOLLOW_STATE = "UserHomeActivity.followState";
@@ -119,25 +122,25 @@ public class UserHomeActivity extends BaseWorkerActivity {
     /**
      * 启动用户主页页面
      *
-     * @param context
+     * @param activity
      * @param accId   被查看用户的accId
      */
-    public static void startActivityForAccId(Context context, String accId) {
-        Intent intent = new Intent(context, UserHomeActivity.class);
+    public static void startActivityForAccId(Activity activity, String accId) {
+        Intent intent = new Intent(activity, UserHomeActivity.class);
         intent.putExtra(EXTRA_ACCID, accId);
-        context.startActivity(intent);
+        activity.startActivityForResult(intent, REQUEST_USER_HOME_CODE);
     }
 
     /**
      * uid启动用户主页页面
      *
-     * @param context
+     * @param activity
      * @param uid   被查看用户的uid
      */
-    public static void startActivityForUid(Context context, Long uid) {
-        Intent intent = new Intent(context, UserHomeActivity.class);
+    public static void startActivityForUid(Activity activity, Long uid) {
+        Intent intent = new Intent(activity, UserHomeActivity.class);
         intent.putExtra(UserHomeActivity.EXTRA_UID, uid);
-        context.startActivity(intent);
+        activity.startActivityForResult(intent, REQUEST_USER_HOME_CODE);
     }
 
     @Override
