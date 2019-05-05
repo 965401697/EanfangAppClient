@@ -5,7 +5,7 @@ import android.net.Uri;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.yaf.sys.entity.OrgEntity;
+import com.eanfang.model.sys.OrgEntity;
 
 import net.eanfang.worker.R;
 

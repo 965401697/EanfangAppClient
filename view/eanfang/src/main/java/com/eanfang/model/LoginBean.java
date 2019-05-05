@@ -1,6 +1,6 @@
 package com.eanfang.model;
 
-import com.yaf.sys.entity.AccountEntity;
+import com.eanfang.model.sys.AccountEntity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ import java.util.List;
  * @email houzhongzhou@yeah.net
  * @desc
  */
-public class LoginBean implements Serializable {
+class LoginBean implements Serializable {
     /**
      * 权限列表
      */

@@ -34,7 +34,7 @@ import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.ToastUtil;
-import com.yaf.sys.entity.UserEntity;
+import com.eanfang.model.sys.UserEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.AddReportCompleteActivity;

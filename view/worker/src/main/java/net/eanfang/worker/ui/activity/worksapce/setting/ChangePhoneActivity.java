@@ -16,7 +16,6 @@ import com.eanfang.listener.MultiClickListener;
 import com.eanfang.sys.activity.LoginActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.CleanMessageUtil;
-import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
@@ -126,7 +125,7 @@ public class ChangePhoneActivity extends BaseActivity {
                 .execute(new EanfangCallback<com.alibaba.fastjson.JSONObject>(this, true, com.alibaba.fastjson.JSONObject.class, (bean) -> {
                     RongIM.getInstance().logout();//退出融云
                     CleanMessageUtil.clearAllCache(EanfangApplication.get());
-                    SharePreferenceUtil.get().clear();
+//                    SharePreferenceUtil.get().clear();
                     startActivity(new Intent(ChangePhoneActivity.this, LoginActivity.class));
                     finishSelf();
                 }));

@@ -27,7 +27,7 @@ import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.yaf.base.entity.OpenShopLogEntity;
-import com.yaf.sys.entity.UserEntity;
+import com.eanfang.model.sys.UserEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.im.CreateGroupOrganizationActivity;

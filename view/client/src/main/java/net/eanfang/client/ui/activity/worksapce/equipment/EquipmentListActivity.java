@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.eanfang.config.Config;
 import com.flyco.tablayout.SlidingTabLayout;
-import com.yaf.sys.entity.BaseDataEntity;
+import com.eanfang.model.sys.BaseDataEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;

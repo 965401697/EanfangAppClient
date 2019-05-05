@@ -9,7 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.eanfang.util.ViewHolder;
-import com.yaf.sys.entity.BaseDataEntity;
+import com.eanfang.model.sys.BaseDataEntity;
 
 
 import net.eanfang.worker.R;

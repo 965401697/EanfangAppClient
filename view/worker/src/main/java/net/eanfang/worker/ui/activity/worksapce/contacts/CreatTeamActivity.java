@@ -19,7 +19,7 @@ import com.eanfang.model.OrgUnitListBean;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.ToastUtil;
-import com.yaf.sys.entity.OrgUnitEntity;
+import com.eanfang.model.sys.OrgUnitEntity;
 
 import net.eanfang.worker.R;
 

@@ -16,7 +16,7 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.config.Config;
 import com.eanfang.swipefresh.SwipyRefreshLayout;
 import com.eanfang.ui.base.BaseActivity;
-import com.yaf.sys.entity.BaseDataEntity;
+import com.eanfang.model.sys.BaseDataEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.online.DividerItemDecoration;

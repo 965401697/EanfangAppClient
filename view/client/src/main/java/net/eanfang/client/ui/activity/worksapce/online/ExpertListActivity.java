@@ -15,7 +15,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.ExpertListBean;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
-import com.yaf.sys.entity.BaseDataEntity;
+import com.eanfang.model.sys.BaseDataEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;

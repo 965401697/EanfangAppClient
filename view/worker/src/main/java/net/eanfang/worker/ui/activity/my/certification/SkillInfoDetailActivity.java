@@ -17,7 +17,7 @@ import com.eanfang.model.WorkerVerifySkillBean;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
-import com.yaf.sys.entity.BaseDataEntity;
+import com.eanfang.model.sys.BaseDataEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
@@ -78,12 +78,12 @@ public class SkillInfoDetailActivity extends BaseWorkerActivity {
                     // 系统类别
                     for (BaseDataEntity checkedS : SystemBusinessList) {
                         for (BaseDataEntity s : systemTypeList) {
-                            if (s.getDataType() == 1 && (s.getDataId() == checkedS.getDataId())) {
+                            if (s.getDataType() == 1 && (s.getDataId().equals(checkedS.getDataId()))) {
                                 s.setCheck(true);
                                 break;
                             } else {
                                 for (BaseDataEntity checkedB : businessTypeList) {
-                                    if (checkedB.getDataId() == checkedS.getDataId()) {
+                                    if (checkedB.getDataId().equals(checkedS.getDataId())) {
                                         checkedB.setCheck(true);
                                         break;
                                     }

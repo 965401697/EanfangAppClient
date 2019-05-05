@@ -10,7 +10,7 @@ import com.eanfang.R2;
 import com.eanfang.config.Config;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.ui.items.AreaItem;
-import com.yaf.sys.entity.BaseDataEntity;
+import com.eanfang.model.sys.BaseDataEntity;
 
 import java.util.ArrayList;
 import java.util.List;

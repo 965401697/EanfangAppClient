@@ -7,20 +7,14 @@ package com.eanfang.application;
 import androidx.collection.ArrayMap;
 import androidx.multidex.MultiDexApplication;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.parser.Feature;
 import com.camera.util.LogUtil;
-import com.eanfang.config.FastjsonConfig;
-import com.eanfang.model.LoginBean;
+import com.eanfang.kit.cache.CacheKit;
+import com.eanfang.model.bean.LoginBean;
 import com.eanfang.ui.base.IBase;
-import com.eanfang.util.SharePreferenceUtil;
-import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
 import com.eanfang.util.message.J_MessageVerify;
 
 import java.io.IOException;
-import java.util.List;
 
 
 /**
@@ -70,13 +64,9 @@ public abstract class CustomeApplication extends MultiDexApplication {
      * @throws IOException
      */
     public void set(String key, Object value) {
-        synchronized (this) {
-            try {
-                SharePreferenceUtil.get().set(key, value);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        // SharePreferenceUtil.get().set(key, value);
+        CacheKit.get().put(key, value);
+
     }
 
 //    /**
@@ -106,59 +96,63 @@ public abstract class CustomeApplication extends MultiDexApplication {
     }
 
     public String get(String key, Object defaultValue) {
-        synchronized (this) {
-            try {
-                String jsonString = SharePreferenceUtil.get().get(key, defaultValue).toString();
-                if (StringUtils.isEmpty(jsonString)) {
-                    return null;
-                }
-                return jsonString;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
+        String s = CacheKit.get().getStr(key);
+        return s != null ? s : defaultValue.toString();
+//        synchronized (this) {
+//            try {
+//                String jsonString = SharePreferenceUtil.get().get(key, defaultValue).toString();
+//                if (StringUtils.isEmpty(jsonString)) {
+//                    return null;
+//                }
+//                return jsonString;
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        return null;
     }
 
     public <T> Object get(String key, Class<T> clazz) {
-        String json = get(key, "");
-        if (StringUtils.isEmpty(json)) {
-            return null;
-        }
-        try {
-            return JSONObject.parseObject(json, clazz);
-        } catch (Exception e) {
-            return JSONObject.parseObject(json, clazz, Feature.DisableCircularReferenceDetect);
-        }
+        return CacheKit.get().get(key, clazz);
+//        String json = get(key, "");
+//        if (StringUtils.isEmpty(json)) {
+//            return null;
+//        }
+//        try {
+//            return JSONObject.parseObject(json, clazz);
+//        } catch (Exception e) {
+//            return JSONObject.parseObject(json, clazz, Feature.DisableCircularReferenceDetect);
+//        }
     }
 
-    public <T> List<T> getArr(String key, Class<T> clazz) {
-        String json = get(key, "");
-        if (StringUtils.isEmpty(json)) {
-            return null;
-        }
-        try {
-            return JSONArray.parseArray(json, clazz);
-        } catch (Exception e) {
-            return JSONArray.parseArray(json, clazz);
-        }
-    }
+//    public <T> List<T> getArr(String key, Class<T> clazz) {
+//        String json = get(key, "");
+//        if (StringUtils.isEmpty(json)) {
+//            return null;
+//        }
+//        try {
+//            return JSONArray.parseArray(json, clazz);
+//        } catch (Exception e) {
+//            return JSONArray.parseArray(json, clazz);
+//        }
+//    }
 
 
     public void remove(String key) {
-        SharePreferenceUtil.get().remove(key);
+        CacheKit.get().remove(key);
     }
-
-    public void saveUser(LoginBean user) {
-        set(LoginBean.class.getName(), JSONObject.toJSONString(user, FastjsonConfig.config));
-    }
+//
+//    public void saveUser(LoginBean user) {
+//        set(LoginBean.class.getName(), JSONObject.toJSONString(user, FastjsonConfig.config));
+//    }
 
     public LoginBean getUser() {
-        String json = get(LoginBean.class.getName(), "");
-        if (StringUtils.isEmpty(json)) {
-            return null;
-        }
-        return JSONObject.parseObject(json, LoginBean.class, Feature.DisableCircularReferenceDetect);
+        return CacheKit.get().get(LoginBean.class.getName(), LoginBean.class);
+//        String json = get(LoginBean.class.getName(), "");
+//        if (StringUtils.isEmpty(json)) {
+//            return null;
+//        }
+//        return JSONObject.parseObject(json, LoginBean.class, Feature.DisableCircularReferenceDetect);
     }
 
     public Long getUserId() {

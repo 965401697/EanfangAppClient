@@ -1,7 +1,7 @@
 package com.eanfang.model;
 
 import com.yaf.base.entity.ExpertsCertificationEntity;
-import com.yaf.sys.entity.BaseDataEntity;
+import com.eanfang.model.sys.BaseDataEntity;
 
 import java.util.List;
 

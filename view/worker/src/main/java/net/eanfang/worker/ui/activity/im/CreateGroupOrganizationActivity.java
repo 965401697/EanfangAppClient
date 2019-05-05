@@ -20,7 +20,7 @@ import com.eanfang.model.OrganizationBean;
 import com.eanfang.model.SectionBean;
 import com.eanfang.model.TemplateBean;
 import com.eanfang.util.DialogUtil;
-import com.yaf.sys.entity.UserEntity;
+import com.eanfang.model.sys.UserEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;

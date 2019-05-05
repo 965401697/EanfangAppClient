@@ -187,11 +187,10 @@ public class LoginViewModel extends BaseViewModel {
             emitter.onComplete();
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(txt -> {
+                .subscribe((txt) -> {
                     loginVo.getLegalText().set(txt);
                     verifyBinding.setLoginVo(loginVo);
                     passwordBinding.setLoginVo(loginVo);
-//                    loginVo.notifyChange();
                 });
     }
 }

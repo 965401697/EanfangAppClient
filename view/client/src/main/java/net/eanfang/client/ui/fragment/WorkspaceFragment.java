@@ -24,7 +24,7 @@ import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.yaf.sys.entity.OrgEntity;
+import com.eanfang.model.sys.OrgEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.CameraActivity;

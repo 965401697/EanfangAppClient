@@ -110,7 +110,6 @@
 -keep class com.alibaba.fastjson.**{*; }
 -keep class com.eanfang.model.*{*;}
 -keep class com.yaf.base.entity.*{*;}
--keep class com.yaf.sys.entity.*{*;}
 -keepattributes Exceptions,InnerClasses,Signature,Deprecated,SourceFile,LineNumberTable,LocalVariable*Table,Synthetic,EnclosingMethod
 
 #======================================================fresco start=======================================

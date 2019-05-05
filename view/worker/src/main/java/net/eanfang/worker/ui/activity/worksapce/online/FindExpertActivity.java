@@ -19,7 +19,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.ExpertVerifySkillBean;
 import com.eanfang.model.GrantChange;
 import com.yaf.base.entity.ExpertsCertificationEntity;
-import com.yaf.sys.entity.BaseDataEntity;
+import com.eanfang.model.sys.BaseDataEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.my.certification.SkillTypeAdapter;

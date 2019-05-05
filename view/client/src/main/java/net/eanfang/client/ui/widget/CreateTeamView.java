@@ -14,10 +14,11 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.FastjsonConfig;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.LoginBean;
+import com.eanfang.model.bean.LoginBean;
+import com.eanfang.model.sys.OrgUnitEntity;
+import com.eanfang.network.config.HttpConfig;
 import com.eanfang.sys.activity.LoginActivity;
 import com.eanfang.ui.base.BaseDialog;
-import com.yaf.sys.entity.OrgUnitEntity;
 
 import net.eanfang.client.R;
 
@@ -94,9 +95,10 @@ public class CreateTeamView extends BaseDialog {
                 .params("companyId", companyid)
                 .execute(new EanfangCallback<LoginBean>(mContext, true, LoginBean.class, (bean) -> {
                     EanfangApplication.get().remove(LoginBean.class.getName());
-                    EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
+                    EanfangApplication.get().set(LoginBean.class.getName(), bean);
 
                     EanfangHttp.setToken(EanfangApplication.get().getUser().getToken());
+                    HttpConfig.get().setToken(EanfangApplication.get().getUser().getToken());
                     EanfangHttp.setClient();
                     dismiss();
                 }));
@@ -109,7 +111,7 @@ public class CreateTeamView extends BaseDialog {
                     public void onSuccess(Object bean) {
                         super.onSuccess(bean);
                         LoginBean loginBean = (LoginBean) bean;
-                        EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(loginBean, FastjsonConfig.config));
+                        EanfangApplication.get().set(LoginBean.class.getName(), loginBean);
 
                     }
 

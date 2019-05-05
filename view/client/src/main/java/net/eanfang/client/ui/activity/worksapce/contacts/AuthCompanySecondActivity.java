@@ -32,8 +32,8 @@ import com.eanfang.util.UuidUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jph.takephoto.model.TImage;
 import com.jph.takephoto.model.TResult;
-import com.yaf.sys.entity.BaseDataEntity;
-import com.yaf.sys.entity.OrgUnitEntity;
+import com.eanfang.model.sys.BaseDataEntity;
+import com.eanfang.model.sys.OrgUnitEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.StateChangeActivity;

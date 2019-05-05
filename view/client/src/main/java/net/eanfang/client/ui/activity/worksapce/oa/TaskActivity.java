@@ -24,7 +24,7 @@ import com.eanfang.model.WorkTaskInfoBean;
 import com.eanfang.ui.activity.SelectOAPresonActivity;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.util.ToastUtil;
-import com.yaf.sys.entity.UserEntity;
+import com.eanfang.model.sys.UserEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.AddWorkTaskDeitailActivity;

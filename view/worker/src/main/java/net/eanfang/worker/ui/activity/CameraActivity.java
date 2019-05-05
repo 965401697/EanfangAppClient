@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.LocationManager;
 import android.os.Bundle;
-import androidx.annotation.IdRes;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -16,6 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
+import androidx.annotation.IdRes;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -30,6 +31,7 @@ import com.camera.util.BitmapUtil;
 import com.camera.util.ImageUtil;
 import com.camera.view.TakePhotoActivity;
 import com.eanfang.application.EanfangApplication;
+import com.eanfang.kit.cache.CacheKit;
 import com.eanfang.model.CameraBean;
 import com.eanfang.model.SelectAddressItem;
 import com.eanfang.ui.activity.SelectAddressActivity;
@@ -37,7 +39,6 @@ import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.ConnectivityChangeUtil;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.PermissionUtils;
-import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.V;
@@ -47,7 +48,6 @@ import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -216,17 +216,12 @@ public class CameraActivity extends BaseWorkerActivity implements AMapLocationLi
      * 取出本地数据
      */
     private void getData() {
-        try {
-            if (SharePreferenceUtil.get().get(CameraBean.class.getName(), CameraBean.class) != null) {
-                cameraBean = (CameraBean) SharePreferenceUtil.get().get(CameraBean.class.getName(), CameraBean.class);
-
-                etProjectName.setText(cameraBean.getProjectName());
-                etProjectConment.setText(cameraBean.getProjectContent());
-                etRegionName.setText(cameraBean.getLocalPosition());
-                etAddress.setText(cameraBean.getLocalAddress());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        cameraBean = CacheKit.get().get(CameraBean.class.getName(), CameraBean.class);
+        if (cameraBean != null) {
+            etProjectName.setText(cameraBean.getProjectName());
+            etProjectConment.setText(cameraBean.getProjectContent());
+            etRegionName.setText(cameraBean.getLocalPosition());
+            etAddress.setText(cameraBean.getLocalAddress());
         }
     }
 
@@ -340,17 +335,13 @@ public class CameraActivity extends BaseWorkerActivity implements AMapLocationLi
     }
 
     private void setData() {
-        try {
-            cameraBean = new CameraBean();
-            cameraBean.setLocalPosition(V.v(() -> etRegionName.getText().toString()));
-            cameraBean.setNetAddress(V.v(() -> tvLocationAddress.getText().toString()));
-            cameraBean.setProjectName(V.v(() -> etProjectName.getText().toString()));
-            cameraBean.setProjectContent(V.v(() -> etProjectConment.getText().toString()));
-            cameraBean.setLocalAddress(V.v(() -> etAddress.getText().toString()));
-            SharePreferenceUtil.get().set(CameraBean.class.getName(), cameraBean);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        cameraBean = new CameraBean();
+        cameraBean.setLocalPosition(V.v(() -> etRegionName.getText().toString()));
+        cameraBean.setNetAddress(V.v(() -> tvLocationAddress.getText().toString()));
+        cameraBean.setProjectName(V.v(() -> etProjectName.getText().toString()));
+        cameraBean.setProjectContent(V.v(() -> etProjectConment.getText().toString()));
+        cameraBean.setLocalAddress(V.v(() -> etAddress.getText().toString()));
+        CacheKit.get().put(CameraBean.class.getName(), cameraBean);
     }
 
     /**

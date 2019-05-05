@@ -7,8 +7,8 @@ import com.annimon.stream.Stream;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.model.BaseDataBean;
 import com.eanfang.model.ConstAllBean;
+import com.eanfang.model.sys.BaseDataEntity;
 import com.eanfang.util.StringUtils;
-import com.yaf.sys.entity.BaseDataEntity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -436,7 +436,7 @@ public class Config {
         if (id == null || id <= 0) {
             return null;
         }
-        return Stream.of(getDataListByType(type)).filter(bean -> bean.getDataType() == type && bean.getDataId() == id).map(bean -> bean.getDataName() + "").findFirst().orElseGet(() -> null);
+        return Stream.of(getDataListByType(type)).filter(bean -> bean.getDataType() == type && bean.getDataId().intValue() == id).map(bean -> bean.getDataName() + "").findFirst().orElseGet(() -> null);
     }
 
     /**
@@ -508,7 +508,7 @@ public class Config {
             return null;
         }
         return Stream.of(getDataListByType(type)).filter(bean -> bean.getDataType() == type && code.startsWith(bean.getDataCode()) && bean.getLevel() == (level + 1)).
-                map(bean -> bean.getDataId()).findFirst().orElseGet(() -> null);
+                map(bean -> bean.getDataId().intValue()).findFirst().orElseGet(() -> null);
 
     }
 

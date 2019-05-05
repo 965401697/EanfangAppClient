@@ -22,7 +22,7 @@ import com.eanfang.model.QualifyCertificafeListBean;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
-import com.yaf.sys.entity.BaseDataEntity;
+import com.eanfang.model.sys.BaseDataEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.my.certification.QualificationAdapter;

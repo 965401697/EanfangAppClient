@@ -12,7 +12,7 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.LoginBean;
+import com.eanfang.model.bean.LoginBean;
 import com.eanfang.model.Message;
 import com.eanfang.model.TakeApplyAddBean;
 import com.eanfang.oss.OSSCallBack;

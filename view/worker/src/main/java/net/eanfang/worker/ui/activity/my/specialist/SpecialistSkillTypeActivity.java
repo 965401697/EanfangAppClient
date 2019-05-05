@@ -26,7 +26,7 @@ import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.yaf.base.entity.ExpertsCertificationEntity;
-import com.yaf.sys.entity.BaseDataEntity;
+import com.eanfang.model.sys.BaseDataEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.my.certification.SkillTypeAdapter;

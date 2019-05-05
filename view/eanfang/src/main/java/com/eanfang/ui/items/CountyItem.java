@@ -1,11 +1,11 @@
 package com.eanfang.ui.items;
 
+import androidx.annotation.NonNull;
+
 import com.baozi.treerecyclerview.base.ViewHolder;
 import com.baozi.treerecyclerview.item.TreeItem;
 import com.eanfang.R;
-import com.yaf.sys.entity.BaseDataEntity;
-
-import androidx.annotation.NonNull;
+import com.eanfang.model.sys.BaseDataEntity;
 
 /**
  * Created by O u r on 2018/7/27.

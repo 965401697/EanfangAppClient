@@ -14,11 +14,11 @@ import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.kit.cache.CacheKit;
 import com.eanfang.sys.activity.LoginActivity;
 import com.eanfang.util.CleanMessageUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
-import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.witget.SwitchButton;
 import com.tencent.android.tpush.XGIOperateCallback;
@@ -30,8 +30,6 @@ import net.eanfang.client.ui.activity.worksapce.setting.UpdatePasswordActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.ui.widget.AboutUsView;
 import net.eanfang.client.ui.widget.MessageStateView;
-
-import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -102,25 +100,19 @@ public class SettingActivity extends BaseClientActivity {
         llMsgSetting.setOnClickListener(v -> new MessageStateView(SettingActivity.this).show());
 
         boolean isOpen = true;
-        try {
-            isOpen = (Boolean) SharePreferenceUtil.get().get("XGNoticeVoice", true);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            isOpen = (Boolean) SharePreferenceUtil.get().get("XGNoticeVoice", true);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+        isOpen = CacheKit.get().getBool("XGNoticeVoice", true);
         if (isOpen) {
             sbVoice.setChecked(true);
         } else {
             sbVoice.setChecked(false);
         }
-        sbVoice.setOnCheckedChangeListener(new SwitchButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(SwitchButton view, boolean isChecked) {
-                try {
-                    SharePreferenceUtil.get().set("XGNoticeVoice", isChecked);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+        sbVoice.setOnCheckedChangeListener((view, isChecked) -> {
+            CacheKit.get().put("XGNoticeVoice", isChecked);
         });
     }
 
@@ -157,7 +149,7 @@ public class SettingActivity extends BaseClientActivity {
                     });
                     RongIM.getInstance().logout();//退出融云
                     PermKit.permList.clear();//清空权限
-                    SharePreferenceUtil.get().clear();
+//                    SharePreferenceUtil.get().clear();
                     CleanMessageUtil.clearAllCache(EanfangApplication.get());
                     finishSelf();
                     startActivity(new Intent(SettingActivity.this, LoginActivity.class));

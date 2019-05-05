@@ -19,7 +19,7 @@ import com.eanfang.util.Cn2Spell;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.witget.SideBar;
-import com.yaf.sys.entity.AccountEntity;
+import com.eanfang.model.sys.AccountEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;

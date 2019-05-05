@@ -15,7 +15,7 @@ import com.eanfang.model.OuterListBean;
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
-import com.yaf.sys.entity.UserEntity;
+import com.eanfang.model.sys.UserEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.StaffAdapter;

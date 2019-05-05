@@ -1,8 +1,8 @@
 package com.eanfang.model;
 
 import com.yaf.base.entity.WorkerEntity;
-import com.yaf.sys.entity.OrgEntity;
-import com.yaf.sys.entity.UserEntity;
+import com.eanfang.model.sys.OrgEntity;
+import com.eanfang.model.sys.UserEntity;
 
 import java.io.Serializable;
 import java.util.ArrayList;

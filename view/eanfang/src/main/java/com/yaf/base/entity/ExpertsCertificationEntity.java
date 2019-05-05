@@ -1,8 +1,8 @@
 package com.yaf.base.entity;
 
 import com.alibaba.fastjson.JSON;
-import com.yaf.sys.entity.AccountEntity;
-import com.yaf.sys.entity.UserEntity;
+import com.eanfang.model.sys.AccountEntity;
+import com.eanfang.model.sys.UserEntity;
 
 import java.io.Serializable;
 import java.util.Date;

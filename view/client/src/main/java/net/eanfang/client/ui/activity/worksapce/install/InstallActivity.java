@@ -23,7 +23,7 @@ import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.InstallOrderConfirmBean;
-import com.eanfang.model.LoginBean;
+import com.eanfang.model.bean.LoginBean;
 import com.eanfang.model.Message;
 import com.eanfang.model.SelectAddressItem;
 import com.eanfang.ui.activity.SelectAddressActivity;

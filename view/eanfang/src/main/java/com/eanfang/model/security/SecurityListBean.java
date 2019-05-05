@@ -1,7 +1,7 @@
 package com.eanfang.model.security;
 
-import com.yaf.sys.entity.AccountEntity;
-import com.yaf.sys.entity.OrgUnitEntity;
+import com.eanfang.model.sys.AccountEntity;
+import com.eanfang.model.sys.OrgUnitEntity;
 
 import java.io.Serializable;
 import java.util.Date;

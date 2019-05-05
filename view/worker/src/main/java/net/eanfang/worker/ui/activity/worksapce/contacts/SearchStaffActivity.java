@@ -22,7 +22,7 @@ import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.V;
 import com.eanfang.witget.SideBar;
-import com.yaf.sys.entity.AccountEntity;
+import com.eanfang.model.sys.AccountEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;

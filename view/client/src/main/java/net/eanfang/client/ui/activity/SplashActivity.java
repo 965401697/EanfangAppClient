@@ -14,7 +14,8 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.FastjsonConfig;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.LoginBean;
+import com.eanfang.model.bean.LoginBean;
+import com.eanfang.network.config.HttpConfig;
 import com.eanfang.util.ApkUtils;
 import com.eanfang.util.ChannelUtil;
 import com.eanfang.util.GuideUtil;
@@ -77,6 +78,7 @@ public class SplashActivity extends BaseClientActivity implements GuideUtil.OnCa
                 goLogin();
             } else {
                 EanfangHttp.setToken(user.getToken());
+                HttpConfig.get().setToken(EanfangApplication.get().getUser().getToken());
                 if (isConnected()) {
                     loginByToken();
                 } else {
@@ -112,7 +114,7 @@ public class SplashActivity extends BaseClientActivity implements GuideUtil.OnCa
                     @Override
                     public void onSuccess(LoginBean bean) {
                         if (bean != null && !StringUtils.isEmpty(bean.getToken())) {
-                            EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
+                            EanfangApplication.get().set(LoginBean.class.getName(),bean);
                             goMain();
                         } else {
                             goLogin();

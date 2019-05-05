@@ -30,7 +30,7 @@ import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.yaf.base.entity.LogDetailsEntity;
 import com.yaf.base.entity.ProtectionLogEntity;
-import com.yaf.sys.entity.UserEntity;
+import com.eanfang.model.sys.UserEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.im.CreateGroupOrganizationActivity;

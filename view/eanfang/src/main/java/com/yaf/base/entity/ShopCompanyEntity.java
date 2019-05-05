@@ -1,11 +1,11 @@
 package com.yaf.base.entity;
 
 import com.alibaba.fastjson.JSON;
-import com.yaf.sys.entity.AccountEntity;
-import com.yaf.sys.entity.BaseDataEntity;
-import com.yaf.sys.entity.OrgEntity;
-import com.yaf.sys.entity.OrgUnitEntity;
-import com.yaf.sys.entity.UserEntity;
+import com.eanfang.model.sys.AccountEntity;
+import com.eanfang.model.sys.BaseDataEntity;
+import com.eanfang.model.sys.OrgEntity;
+import com.eanfang.model.sys.OrgUnitEntity;
+import com.eanfang.model.sys.UserEntity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

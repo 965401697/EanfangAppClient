@@ -8,7 +8,7 @@ import com.eanfang.apiservice.UserApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseActivity;
-import com.yaf.sys.entity.OrgEntity;
+import com.eanfang.model.sys.OrgEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.adapter.ConstactsAdapter;

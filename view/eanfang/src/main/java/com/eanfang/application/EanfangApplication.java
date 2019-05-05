@@ -3,12 +3,9 @@ package com.eanfang.application;
 import android.util.Log;
 
 import com.camera.CameraApplication;
-import com.eanfang.BuildConfig;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.network.Leaves;
-import com.eanfang.network.config.HttpConfig;
 import com.eanfang.ui.base.voice.RecognitionManager;
-import com.eanfang.util.SharePreferenceUtil;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.backends.pipeline.PipelineDraweeControllerBuilderSupplier;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -46,10 +43,6 @@ public class EanfangApplication extends CustomeApplication {
      * 是否自动更新过
      */
     public static boolean isUpdated = false;
-    /**
-     * app类型
-     */
-    public static String AppType;
 
     private OkGo http;
 
@@ -106,7 +99,7 @@ public class EanfangApplication extends CustomeApplication {
 
 //        Fresco.initialize(this, FrecsoImagePipelineUtil.getImagePipelineConfig(getApplicationContext()));
         SimpleDraweeView.initialize(new PipelineDraweeControllerBuilderSupplier(this));
-        SharePreferenceUtil.get().init(mEanfangApplication);
+//        SharePreferenceUtil.get().init(mEanfangApplication);
 
     }
 
@@ -153,21 +146,19 @@ public class EanfangApplication extends CustomeApplication {
         //全局公共参数
         EanfangHttp.setHttp(http);
 
-        if (EanfangApplication.get().getUser() != null) {
-            EanfangHttp.setToken(EanfangApplication.get().getUser().getToken());
-        }
 
-        try {
-            String appType = (String) SharePreferenceUtil.get().get("app", "");
-            if (appType.equals("client")) {
-                EanfangHttp.setClient();
-            } else if (appType.equals("worker")) {
-                EanfangHttp.setWorker();
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            String appType = (String) SharePreferenceUtil.get().get("app", "");
+//
+//            if (appType.equals("client")) {
+//                EanfangHttp.setClient();
+//            } else if (appType.equals("worker")) {
+//                EanfangHttp.setWorker();
+//            }
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
 
 //        if (EanfangApplication.AppType != null && EanfangApplication.AppType.equals("client")) {
 //            EanfangHttp.setClient();

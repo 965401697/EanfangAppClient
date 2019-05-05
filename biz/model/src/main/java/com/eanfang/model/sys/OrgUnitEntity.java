@@ -1,12 +1,11 @@
 package com.eanfang.model.sys;
 
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
+
+import lombok.Getter;
+import lombok.Setter;
 
 
 /**
@@ -138,13 +137,13 @@ public class OrgUnitEntity implements Serializable {
     private AccountEntity accountEntity;
 
 
-//    /**
+    //    /**
 //     * orgUnit 对应的 org实体
 //     */
 //    private OrgEntity orgEntity;
 //
 //
-//    private ShopCompanyEntity shopCompanyEntity;
+    private ShopCompanyEntity shopCompanyEntity;
 //
 //    private Integer cooperationStatus;
 //    //用于区分当前实体类是否为子公司，（0，总公司。1，子公司）

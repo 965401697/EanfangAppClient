@@ -1,6 +1,7 @@
 package com.eanfang.model.vo;
 
 import androidx.databinding.BaseObservable;
+import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 
 import java.io.Serializable;
@@ -24,8 +25,8 @@ public class LoginVo extends BaseObservable implements Serializable {
 
     private transient ObservableField<String> legalText = new ObservableField<>();
 
-    private transient ObservableField<Boolean> legalCk = new ObservableField<>(true);
-    private transient ObservableField<Boolean> showPwd = new ObservableField<>(false);
+    private transient ObservableBoolean legalCk = new ObservableBoolean(true);
+    private transient ObservableBoolean showPwd = new ObservableBoolean(false);
 
 
 }

@@ -9,11 +9,9 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModel;
 import androidx.viewpager.widget.ViewPager;
 
-import com.alibaba.fastjson.JSONObject;
 import com.eanfang.R;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.base.BaseActivity;
-import com.eanfang.config.FastjsonConfig;
 import com.eanfang.databinding.ActivityLoginEanfangBinding;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.bean.LoginBean;
@@ -44,7 +42,6 @@ public class LoginActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login_eanfang);
         binding.setApp(getApp());
-//        binding.notifyChange();
         setTitle("登录");
     }
 
@@ -81,9 +78,9 @@ public class LoginActivity extends BaseActivity {
 
     //登录成功的回调
     private void handlerLogin(LoginBean loginBean) {
-        EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(loginBean, FastjsonConfig.config));
+        EanfangApplication.get().set(LoginBean.class.getName(), loginBean);
         //老版的 兼容考虑
-        EanfangApplication.get().set(com.eanfang.model.LoginBean.class.getName(), JSONObject.toJSONString(loginBean, FastjsonConfig.config));
+//        EanfangApplication.get().set(com.eanfang.model.LoginBean.class.getName(), JSONObject.toJSONString(loginBean, FastjsonConfig.config));
         EanfangHttp.setToken(loginBean.getToken());
         HttpConfig.get().setToken(loginBean.getToken());
         setResult(LOGIN_BACK_CODE, null);

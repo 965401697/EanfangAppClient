@@ -20,7 +20,7 @@ import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
 import com.yaf.base.entity.TechWorkerVerifyEntity;
-import com.yaf.sys.entity.BaseDataEntity;
+import com.eanfang.model.sys.BaseDataEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
@@ -186,7 +186,7 @@ public class SkillTypeActivity extends BaseWorkerActivity {
                                 }
                             } else {
                                 for (BaseDataEntity checkedB : businessTypeList) {
-                                    if (checkedB.getDataId() == checkedS.getDataId()) {
+                                    if (checkedB.getDataId().equals(checkedS.getDataId())) {
                                         checkedB.setCheck(true);
                                         break;
                                     }

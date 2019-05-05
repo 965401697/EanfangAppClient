@@ -10,7 +10,7 @@ import com.eanfang.network.exception.base.BaseException;
 public class ResultInvalidException extends BaseException {
 
     public ResultInvalidException(int code) {
-        super(HttpCode.CODE_RESULT_INVALID, "无效请求 " + code);
+        super(HttpCode.CODE_RESULT_INVALID, "服务器连接失败 " + code);
     }
 
 }

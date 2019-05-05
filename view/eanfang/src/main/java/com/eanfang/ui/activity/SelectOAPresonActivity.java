@@ -27,7 +27,7 @@ import com.eanfang.ui.items.OrgSelectGroupMultipleItem;
 import com.eanfang.ui.items.OrgSelectGroupSingleItem;
 import com.eanfang.ui.items.OrgSelectItem;
 import com.eanfang.util.ToastUtil;
-import com.yaf.sys.entity.UserEntity;
+import com.eanfang.model.sys.UserEntity;
 
 import org.greenrobot.eventbus.EventBus;
 

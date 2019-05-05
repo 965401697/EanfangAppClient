@@ -21,10 +21,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+
 import com.eanfang.R;
 import com.eanfang.application.CustomeApplication;
 import com.eanfang.application.EanfangApplication;
-import com.eanfang.model.LoginBean;
+import com.eanfang.model.bean.LoginBean;
 import com.eanfang.util.DialogUtil;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.ToastUtil;
@@ -35,10 +39,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.app.ActivityCompat;
 
 /**
  * Created by jornl on 2018/1/19.

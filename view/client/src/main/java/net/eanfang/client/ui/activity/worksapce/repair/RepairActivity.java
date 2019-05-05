@@ -28,7 +28,7 @@ import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.MultiClickListener;
-import com.eanfang.model.LoginBean;
+import com.eanfang.model.bean.LoginBean;
 import com.eanfang.model.ProjectListBean;
 import com.eanfang.model.RepairOpenAreaBean;
 import com.eanfang.model.SelectAddressItem;

@@ -1,13 +1,14 @@
 package net.eanfang.worker.ui.activity.worksapce.contacts.verifyqualify;
 
 import android.os.Bundle;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -17,13 +18,13 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.AptitudeCertificateBean;
 import com.eanfang.model.QualifyFirstBean;
+import com.eanfang.model.sys.BaseDataEntity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.V;
-import com.yaf.sys.entity.BaseDataEntity;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -126,9 +127,9 @@ public class QualifyDataActivity extends BaseActivity {
                     tvAbility.setText(V.v(() -> GetConstDataUtils.getWorkingLevelList().get(bean.getOrgUnit().getShopCompanyEntity().getWorkingLevel())));
                     tvLimit.setText(V.v(() -> GetConstDataUtils.getWorkingYearList().get(V.v(() -> bean.getOrgUnit().getShopCompanyEntity().getWorkingYear()))));
                     // 厂商
-                    if (V.v(() -> bean.getOrgUnit().getShopCompanyEntity().getIs_manufacturer()) == 2) {
+                    if (V.v(() -> bean.getOrgUnit().getShopCompanyEntity().getIsManufacturer()) == 2) {
                         rvVendor.setChecked(true);
-                    } else if (V.v(() -> bean.getOrgUnit().getShopCompanyEntity().getIs_manufacturer()) == 1) {// 公司
+                    } else if (V.v(() -> bean.getOrgUnit().getShopCompanyEntity().getIsManufacturer()) == 1) {// 公司
                         rbCompany.setChecked(true);
                     }
                     initBusinessData(bean);

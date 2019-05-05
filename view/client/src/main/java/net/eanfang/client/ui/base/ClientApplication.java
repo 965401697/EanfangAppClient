@@ -5,8 +5,9 @@ import android.util.Log;
 
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.EanfangConst;
+import com.eanfang.http.EanfangHttp;
+import com.eanfang.kit.cache.CacheKit;
 import com.eanfang.network.config.HttpConfig;
-import com.eanfang.util.SharePreferenceUtil;
 import com.mob.MobSDK;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -18,8 +19,6 @@ import net.eanfang.client.ui.activity.im.CustomizeVideoMessage;
 import net.eanfang.client.ui.activity.im.CustomizeVideoMessageItemProvider;
 import net.eanfang.client.ui.activity.im.MyConversationClickListener;
 import net.eanfang.client.ui.activity.im.SampleExtensionModule;
-
-import java.io.IOException;
 
 import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
@@ -57,12 +56,14 @@ public class ClientApplication extends EanfangApplication {
 
             api.registerApp(EanfangConst.WX_APPID_CLIENT);
 
-            try {
-                SharePreferenceUtil.get().set("APP_TYPE", BuildConfig.APP_TYPE);
-                HttpConfig.init(com.eanfang.BuildConfig.API_HOST, BuildConfig.APP_TYPE);
-            } catch (IOException e) {
-                e.printStackTrace();
+            HttpConfig.init(com.eanfang.BuildConfig.API_HOST, BuildConfig.APP_TYPE);
+            CacheKit.init(this).put("APP_TYPE", BuildConfig.APP_TYPE);
+            EanfangHttp.setClient();
+            if (EanfangApplication.get().getUser() != null) {
+                EanfangHttp.setToken(EanfangApplication.get().getUser().getToken());
+                HttpConfig.get().setToken(EanfangApplication.get().getUser().getToken());
             }
+
             MobSDK.init(this, "22bb8de378eab", "f93cc21381c6f51702be823efde3e402");
         }
 

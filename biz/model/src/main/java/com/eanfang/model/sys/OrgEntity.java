@@ -1,12 +1,12 @@
 package com.eanfang.model.sys;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.experimental.Accessors;
-
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
 
 @Getter
@@ -84,6 +84,8 @@ public class OrgEntity implements Serializable, Cloneable {
     private Object parentEntity;
 
     private int countStaff = 0;
+
+    private boolean flag;
 
 
 }

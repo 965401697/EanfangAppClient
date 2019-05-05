@@ -1,7 +1,7 @@
 package com.eanfang.model;
 
 import com.baozi.treerecyclerview.base.BaseItemData;
-import com.yaf.sys.entity.UserEntity;
+import com.eanfang.model.sys.UserEntity;
 
 import java.io.Serializable;
 import java.util.List;

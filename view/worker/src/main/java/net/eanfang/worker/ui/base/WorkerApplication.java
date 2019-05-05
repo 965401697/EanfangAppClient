@@ -5,8 +5,9 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.eanfang.application.EanfangApplication;
+import com.eanfang.http.EanfangHttp;
+import com.eanfang.kit.cache.CacheKit;
 import com.eanfang.network.config.HttpConfig;
-import com.eanfang.util.SharePreferenceUtil;
 import com.mob.MobSDK;
 
 import net.eanfang.worker.BuildConfig;
@@ -17,8 +18,6 @@ import net.eanfang.worker.ui.activity.im.CustomizeVideoMessage;
 import net.eanfang.worker.ui.activity.im.CustomizeVideoMessageItemProvider;
 import net.eanfang.worker.ui.activity.im.MyConversationClickListener;
 import net.eanfang.worker.ui.activity.im.SampleExtensionModule;
-
-import java.io.IOException;
 
 import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
@@ -72,12 +71,15 @@ public class WorkerApplication extends EanfangApplication {
             };
             RongIM.getInstance().setReadReceiptConversationTypeList(types);
 
-            try {
-                SharePreferenceUtil.get().set("APP_TYPE", BuildConfig.APP_TYPE);
-                HttpConfig.init(com.eanfang.BuildConfig.API_HOST, BuildConfig.APP_TYPE);
-            } catch (IOException e) {
-                e.printStackTrace();
+
+            HttpConfig.init(com.eanfang.BuildConfig.API_HOST, BuildConfig.APP_TYPE);
+            CacheKit.init(this).put("APP_TYPE", BuildConfig.APP_TYPE);
+            EanfangHttp.setWorker();
+            if (EanfangApplication.get().getUser() != null) {
+                EanfangHttp.setToken(EanfangApplication.get().getUser().getToken());
+                HttpConfig.get().setToken(EanfangApplication.get().getUser().getToken());
             }
+
             MobSDK.init(this, "299cfb8d27500", "91afc15795a7f3dc04b5cab818c097c9");
         }
 

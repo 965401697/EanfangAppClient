@@ -1,6 +1,6 @@
 package com.eanfang.model;
 
-import com.yaf.sys.entity.OrgEntity;
+import com.eanfang.model.sys.OrgEntity;
 
 import java.io.Serializable;
 import java.util.List;

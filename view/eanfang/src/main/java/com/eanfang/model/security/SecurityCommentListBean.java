@@ -1,7 +1,7 @@
 package com.eanfang.model.security;
 
 import com.yaf.base.entity.WorkerEntity;
-import com.yaf.sys.entity.AccountEntity;
+import com.eanfang.model.sys.AccountEntity;
 
 import java.io.Serializable;
 import java.util.List;

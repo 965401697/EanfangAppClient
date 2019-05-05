@@ -15,7 +15,6 @@ import com.eanfang.model.TemplateBean;
 import com.eanfang.sys.activity.LoginActivity;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.util.CleanMessageUtil;
-import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.client.R;
@@ -115,7 +114,7 @@ public class AdministratorSetActivity extends BaseClientActivity {
         signout();
         CleanMessageUtil.clearAllCache(EanfangApplication.get());
         ToastUtil.get().showToast(AdministratorSetActivity.this, "退出登录成功");
-        SharePreferenceUtil.get().clear();
+//        SharePreferenceUtil.get().clear();
         startActivity(new Intent(AdministratorSetActivity.this, LoginActivity.class));
         finishSelf();
 

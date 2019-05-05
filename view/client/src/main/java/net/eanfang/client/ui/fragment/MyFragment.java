@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.application.EanfangApplication;
-import com.eanfang.model.LoginBean;
+import com.eanfang.model.bean.LoginBean;
 import com.eanfang.ui.activity.QrCodeShowActivity;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JumpItent;

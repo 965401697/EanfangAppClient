@@ -12,7 +12,7 @@ import com.eanfang.apiservice.UserApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.TemplateBean;
-import com.yaf.sys.entity.AccountEntity;
+import com.eanfang.model.sys.AccountEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.im.MyGroupsListActivity;

@@ -7,26 +7,25 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.PopupWindow;
 
-import com.alibaba.fastjson.JSONObject;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
-import com.eanfang.config.FastjsonConfig;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.LoginBean;
+import com.eanfang.model.bean.LoginBean;
+import com.eanfang.model.sys.OrgEntity;
+import com.eanfang.network.config.HttpConfig;
 import com.eanfang.util.PermKit;
 import com.picker.common.util.ScreenUtils;
-import com.yaf.sys.entity.OrgEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.adapter.SwitchCompanyListAdapter;
 
 import java.util.List;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by MrHou
@@ -94,8 +93,9 @@ public class CompanyListView extends PopupWindow {
                     if (bean != null) {
                         PermKit.permList.clear();
                         EanfangApplication.get().remove(LoginBean.class.getName());
-                        EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
+                        EanfangApplication.get().set(LoginBean.class.getName(), bean);
                         EanfangHttp.setToken(EanfangApplication.get().getUser().getToken());
+                        HttpConfig.get().setToken(EanfangApplication.get().getUser().getToken());
                         EanfangHttp.setClient();
                         String companyName = null;
                         dismiss();

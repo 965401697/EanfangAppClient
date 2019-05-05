@@ -5,23 +5,23 @@ import android.os.Build;
 import android.view.View;
 import android.widget.CheckBox;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.core.content.ContextCompat;
+
 import com.baozi.treerecyclerview.base.ViewHolder;
 import com.baozi.treerecyclerview.factory.ItemHelperFactory;
 import com.baozi.treerecyclerview.item.TreeItem;
 import com.baozi.treerecyclerview.item.TreeItemGroup;
 import com.eanfang.R;
 import com.eanfang.application.EanfangApplication;
+import com.eanfang.kit.cache.CacheKit;
 import com.eanfang.model.OrganizationBean;
 import com.eanfang.model.SectionBean;
 import com.eanfang.ui.activity.SelectPresonActivity;
-import com.eanfang.util.SharePreferenceUtil;
 
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.core.content.ContextCompat;
 
 
 /**
@@ -74,7 +74,7 @@ public class OrgOneLevelItem extends TreeItemGroup<OrganizationBean> {
 
 
         try {
-            if (SharePreferenceUtil.get().get("app", "").equals("client")) {
+            if (CacheKit.get().isClient()) {
                 viewHolder.getView(R.id.cb_checked).setBackground(ContextCompat.getDrawable(viewHolder.getImageView(R.id.iv_select).getContext(), R.drawable.selector_single_checked_client));
 
             } else {

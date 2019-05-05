@@ -23,7 +23,6 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
-import com.eanfang.config.Constant;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -31,9 +30,10 @@ import com.eanfang.model.AllMessageBean;
 import com.eanfang.model.BaseDataBean;
 import com.eanfang.model.ConstAllBean;
 import com.eanfang.model.GroupDetailBean;
-import com.eanfang.model.LoginBean;
 import com.eanfang.model.NoticeEntity;
+import com.eanfang.model.bean.LoginBean;
 import com.eanfang.model.device.User;
+import com.eanfang.network.config.HttpConfig;
 import com.eanfang.sys.activity.LoginActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.BadgeUtil;
@@ -43,7 +43,6 @@ import com.eanfang.util.JumpItent;
 import com.eanfang.util.LocationUtil;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.QueryEntry;
-import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UpdateAppManager;
@@ -309,13 +308,16 @@ public class MainActivity extends BaseActivity {
         }
         EanfangHttp.get(url)
                 .tag(this)
-                .execute(new EanfangCallback<JSONObject>(this, false, JSONObject.class, (jsonObject) -> {
-                    new Thread(() -> {
-                        if (jsonObject != null && !jsonObject.isEmpty() && jsonObject.containsKey("data") && !jsonObject.get("data").equals(Constant.NO_UPDATE)) {
-//                            BaseDataBean newDate = jsonObject.toJavaObject(BaseDataBean.class);
-                            EanfangApplication.get().set(BaseDataBean.class.getName(), jsonObject.toJSONString());
-                        }
-                    }).start();
+                .execute(new EanfangCallback<BaseDataBean>(this, false, BaseDataBean.class, (baseDataBean) -> {
+                    if (baseDataBean != null) {
+                        EanfangApplication.get().set(BaseDataBean.class.getName(), baseDataBean);
+                    }
+//                    new Thread(() -> {
+//                        if (jsonObject != null && !jsonObject.isEmpty() && jsonObject.containsKey("data") && !jsonObject.get("data").equals(Constant.NO_UPDATE)) {
+////                            BaseDataBean newDate = jsonObject.toJavaObject(BaseDataBean.class);
+//                            EanfangApplication.get().set(BaseDataBean.class.getName(), jsonObject.toJavaObject(BaseDataBean.class));
+//                        }
+//                    }).start();
                 }));
     }
 
@@ -332,19 +334,23 @@ public class MainActivity extends BaseActivity {
         }
         EanfangHttp.get(url)
                 .tag(this)
-                .execute(new EanfangCallback<JSONObject>(this, false, JSONObject.class, (jsonObject) -> {
-                    new Thread(() -> {
-                        if (jsonObject != null && !jsonObject.isEmpty() && jsonObject.containsKey("data") && !jsonObject.get("data").equals(Constant.NO_UPDATE)) {
-//                            ConstAllBean newDate = JSONObject.parseObject(str, ConstAllBean.class);
-                            EanfangApplication.get().set(ConstAllBean.class.getName(), jsonObject.toJSONString());
-                        }
-                    }).start();
+                .execute(new EanfangCallback<ConstAllBean>(this, false, ConstAllBean.class, (constAllBean) -> {
+                    if (constAllBean != null) {
+                        EanfangApplication.get().set(ConstAllBean.class.getName(), constAllBean);
+                    }
+//                    new Thread(() -> {
+//                        if (jsonObject != null && !jsonObject.isEmpty() && jsonObject.containsKey("data") && !jsonObject.get("data").equals(Constant.NO_UPDATE)) {
+////                            ConstAllBean newDate = JSONObject.parseObject(str, ConstAllBean.class);
+//
+//                        }
+//                    }).start();
                 }));
     }
 
     public void setHeaders() {
         if (EanfangApplication.get().getUser() != null) {
             EanfangHttp.setToken(EanfangApplication.get().getUser().getToken());
+            HttpConfig.get().setToken(EanfangApplication.get().getUser().getToken());
         }
         EanfangHttp.setWorker();
     }
@@ -599,7 +605,7 @@ public class MainActivity extends BaseActivity {
             mExitTime = System.currentTimeMillis();
 
             CleanMessageUtil.clearAllCache(EanfangApplication.get());
-            SharePreferenceUtil.get().clear();
+//            SharePreferenceUtil.get().clear();
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
             RongIM.getInstance().logout();
             MainActivity.this.finish();

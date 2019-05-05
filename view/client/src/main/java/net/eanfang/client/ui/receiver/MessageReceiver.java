@@ -8,8 +8,8 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.camera.util.LogUtil;
+import com.eanfang.kit.cache.CacheKit;
 import com.eanfang.ui.base.voice.SynthesizerPresenter;
-import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.Var;
 import com.tencent.android.tpush.XGPushBaseReceiver;
@@ -48,13 +48,9 @@ public class MessageReceiver extends XGPushBaseReceiver {
         if (!StringUtils.isEmpty(jsonObject.toJSONString())) {
             System.err.println("---------------------jsonObject:" + jsonObject.toJSONString());
             if (jsonObject.containsKey("audio") && !StringUtils.isEmpty(jsonObject.getString("audio"))) {
-                try {
-                    boolean isOpen = (Boolean) SharePreferenceUtil.get().get("XGNoticeVoice", true);
-                    if (isOpen) {
-                        SynthesizerPresenter.getInstance().start(jsonObject.getString("audio"));
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
+                boolean isOpen = CacheKit.get().getBool("XGNoticeVoice", true);
+                if (isOpen) {
+                    SynthesizerPresenter.getInstance().start(jsonObject.getString("audio"));
                 }
             }
         }

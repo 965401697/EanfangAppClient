@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.eanfang.ui.base.BaseActivity;
-import com.yaf.sys.entity.OrgEntity;
+import com.eanfang.model.sys.OrgEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.adapter.ConstactsAdapter;

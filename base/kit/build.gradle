@@ -18,6 +18,10 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility cfg.javaVersion
+        targetCompatibility cfg.javaVersion
+    }
 }
 
 dependencies {
@@ -26,4 +30,8 @@ dependencies {
 
     implementation pkg.rxjava2
     implementation pkg.rxandroid2
+
+    implementation pkg.disklrucache
+    implementation pkg.hutoolCore
+    implementation pkg.fastjson
 }

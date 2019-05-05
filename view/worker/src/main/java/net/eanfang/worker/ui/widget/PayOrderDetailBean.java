@@ -1,6 +1,6 @@
 package net.eanfang.worker.ui.widget;
 
-import com.yaf.sys.entity.UserEntity;
+import com.eanfang.model.sys.UserEntity;
 
 import java.io.Serializable;
 import java.util.List;

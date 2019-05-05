@@ -5,7 +5,7 @@ import android.content.Intent;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.ui.activity.NoPermissionActivity;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  * 用户权限 工具类
@@ -17,7 +17,7 @@ public class PermKit {
 
     private static PermKit permKit = new PermKit();
 
-    public static List<String> permList = EanfangApplication.get().getUser().getPerms();
+    public static Set<String> permList = EanfangApplication.get().getUser().getPerms();
 
     private void permList() {
         permList = EanfangApplication.get().getUser().getPerms();

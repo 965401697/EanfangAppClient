@@ -22,7 +22,7 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.FastjsonConfig;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.LoginBean;
+import com.eanfang.model.bean.LoginBean;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.StringUtils;
 
@@ -178,7 +178,7 @@ public class PasswordFragment extends BaseFragment {
                 .upJson(object.toJSONString())
                 .execute(new EanfangCallback<LoginBean>(getActivity(), true, LoginBean.class, (bean) -> {
                     isUpdataPassword = bean.getAccount().isSimplePwd();
-                    EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
+                    EanfangApplication.get().set(LoginBean.class.getName(), bean);
                     EanfangHttp.setToken(bean.getToken());
                     goMain();
                 }));

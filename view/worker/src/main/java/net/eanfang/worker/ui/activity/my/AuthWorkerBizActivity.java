@@ -18,7 +18,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.GrantChange;
 import com.eanfang.model.SystypeBean;
 import com.eanfang.ui.base.BaseActivity;
-import com.yaf.sys.entity.BaseDataEntity;
+import com.eanfang.model.sys.BaseDataEntity;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -141,12 +141,12 @@ public class AuthWorkerBizActivity extends BaseActivity {
     }
 
     private void commit() {
-        List<Integer> checkList = Stream.of(bizTypeList).filter(beans -> beans.isCheck() == true
+        List<Integer> checkList = Stream.of(bizTypeList).filter(beans -> beans.isCheck()
                 && Stream.of(byNetGrant.getList()).filter(existsBean -> existsBean.getDataId().equals(beans.getDataId())).count() == 0)
-                .map(beans -> beans.getDataId()).toList();
-        List<Integer> unCheckList = Stream.of(bizTypeList).filter(beans -> beans.isCheck() == false
+                .map(BaseDataEntity::getDataId).toList();
+        List<Integer> unCheckList = Stream.of(bizTypeList).filter(beans -> !beans.isCheck()
                 && Stream.of(byNetGrant.getList()).filter(existsBean -> existsBean.getDataId().equals(beans.getDataId())).count() > 0)
-                .map(beans -> beans.getDataId()).toList();
+                .map(BaseDataEntity::getDataId).toList();
 
         grantChange.setAddIds(checkList);
         grantChange.setDelIds(unCheckList);

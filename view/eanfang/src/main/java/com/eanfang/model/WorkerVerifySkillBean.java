@@ -1,7 +1,7 @@
 package com.eanfang.model;
 
 import com.yaf.base.entity.TechWorkerVerifyEntity;
-import com.yaf.sys.entity.BaseDataEntity;
+import com.eanfang.model.sys.BaseDataEntity;
 
 import java.io.Serializable;
 import java.util.List;

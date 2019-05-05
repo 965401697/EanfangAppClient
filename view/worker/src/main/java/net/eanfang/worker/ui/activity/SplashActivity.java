@@ -14,13 +14,13 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.FastjsonConfig;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.LoginBean;
+import com.eanfang.model.bean.LoginBean;
+import com.eanfang.network.config.HttpConfig;
 import com.eanfang.sys.activity.LoginActivity;
 import com.eanfang.util.ApkUtils;
 import com.eanfang.util.ChannelUtil;
 import com.eanfang.util.CleanMessageUtil;
 import com.eanfang.util.GuideUtil;
-import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.tencent.bugly.crashreport.CrashReport;
@@ -82,6 +82,7 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
                 goLogin();
             } else {
                 EanfangHttp.setToken(user.getToken());
+                HttpConfig.get().setToken(EanfangApplication.get().getUser().getToken());
 
                 if (isConnected()) {
                     loginByToken();
@@ -121,7 +122,7 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
                     @Override
                     public void onSuccess(LoginBean bean) {
                         if (bean != null && !StringUtils.isEmpty(bean.getToken())) {
-                            EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
+                            EanfangApplication.get().set(LoginBean.class.getName(), bean);
                             goMain();
                         } else {
                             goLogin();
@@ -166,7 +167,7 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
         isFirst = true;
         ToastUtil.get().showToast(this, "登录失效，请重新登录！");
         CleanMessageUtil.clearAllCache(EanfangApplication.get());
-        SharePreferenceUtil.get().clear();
+//        SharePreferenceUtil.get().clear();
         startActivity(new Intent(this, LoginActivity.class));
         finishSelf();
     }

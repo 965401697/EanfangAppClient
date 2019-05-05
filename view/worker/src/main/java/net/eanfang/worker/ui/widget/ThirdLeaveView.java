@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.eanfang.ui.base.BaseDialog;
-import com.yaf.sys.entity.OrgEntity;
+import com.eanfang.model.sys.OrgEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.StaffAdapter;

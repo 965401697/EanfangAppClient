@@ -1,10 +1,12 @@
 package com.eanfang.model;
 
-import com.yaf.sys.entity.BaseDataEntity;
+import com.eanfang.model.sys.BaseDataEntity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
+
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Created by MrHou
@@ -13,29 +15,15 @@ import java.util.List;
  * @email houzhongzhou@yeah.net
  * @desc
  */
-
+@Getter
+@Setter
 public class BaseDataBean implements Serializable {
 
     private List<BaseDataEntity> data;
     private String MD5;
 
-    public List<BaseDataEntity> getData() {
-        if (data == null) {
-            return new ArrayList<>();
-        }
-        return data;
-    }
-
-    public void setData(List<BaseDataEntity> data) {
-        this.data = data;
-    }
-
     public String getMD5() {
         return MD5 == null ? "" : MD5;
-    }
-
-    public void setMD5(String MD5) {
-        this.MD5 = MD5;
     }
 }
 

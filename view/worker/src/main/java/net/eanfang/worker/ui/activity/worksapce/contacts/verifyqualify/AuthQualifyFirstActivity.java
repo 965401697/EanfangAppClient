@@ -18,15 +18,15 @@ import com.eanfang.model.AuthCompanyBaseInfoBean;
 import com.eanfang.model.GrantChange;
 import com.eanfang.model.QualifyFirstBean;
 import com.eanfang.model.SystypeBean;
+import com.eanfang.model.sys.BaseDataEntity;
+import com.eanfang.model.sys.OrgUnitEntity;
+import com.eanfang.model.sys.ShopCompanyEntity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
-import com.yaf.base.entity.ShopCompanyEntity;
-import com.yaf.sys.entity.BaseDataEntity;
-import com.yaf.sys.entity.OrgUnitEntity;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -150,9 +150,9 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
                     tvAbility.setText(V.v(() -> GetConstDataUtils.getWorkingLevelList().get(bean.getOrgUnit().getShopCompanyEntity().getWorkingLevel())));
                     tvLimit.setText(V.v(() -> GetConstDataUtils.getWorkingYearList().get(bean.getOrgUnit().getShopCompanyEntity().getWorkingYear())));
                     // 厂商
-                    if (V.v(() -> bean.getOrgUnit().getShopCompanyEntity().getIs_manufacturer() == 2)) {
+                    if (V.v(() -> bean.getOrgUnit().getShopCompanyEntity().getIsManufacturer() == 2)) {
                         rvVendor.setChecked(true);
-                    } else if (V.v(() -> bean.getOrgUnit().getShopCompanyEntity().getIs_manufacturer() == 1)) {// 公司
+                    } else if (V.v(() -> bean.getOrgUnit().getShopCompanyEntity().getIsManufacturer() == 1)) {// 公司
                         rbCompany.setChecked(true);
                     }
                 }));
@@ -279,9 +279,9 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
 //            }
 //        }
 
-        shopCompanyEntity.setWorking_level(GetConstDataUtils.getWorkingLevelList().indexOf(mAbility));
-        shopCompanyEntity.setWorking_year(GetConstDataUtils.getWorkingYearList().indexOf(mYear));
-        shopCompanyEntity.setIs_manufacturer(mCompanyType);
+        shopCompanyEntity.setWorkingLevel(GetConstDataUtils.getWorkingLevelList().indexOf(mAbility));
+        shopCompanyEntity.setWorkingYear(GetConstDataUtils.getWorkingYearList().indexOf(mYear));
+        shopCompanyEntity.setIsManufacturer(mCompanyType);
         orgUnitEntity.setOrgId(orgid);
         orgUnitEntity.setShopCompanyEntity(shopCompanyEntity);
 

@@ -15,7 +15,6 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.ErrorCodeConst;
 import com.eanfang.ui.activity.NoPermissionActivity;
 import com.eanfang.util.DialogUtil;
-import com.eanfang.util.JsonUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.Var;
@@ -152,7 +151,7 @@ public class EanfangCallback<T> extends StringCallback {
             //指定date类型自动格式化
             JSON.DEFFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm";
 
-            resultJson = JsonUtils.str2JSON(response.body());
+            resultJson = JSONObject.parseObject(response.body());
             Integer code = -100;
             String message = null;
             JSONObject resultObject = null;
@@ -187,13 +186,17 @@ public class EanfangCallback<T> extends StringCallback {
             switch (code) {
                 //请求成功 回调 success
                 case ErrorCodeConst.REQUEST_SUCCESS:
-//                    T result = null;
+                    T result = null;
 //                    List<T> list = new ArrayList();
                     if (resultArray != null) {
                         onSuccessArray(resultArray.toJavaList(clazz));
                     } else if (resultObject != null) {
-                        //result = JSONObject.parseObject(resultObject.toJSONString(), clazz);
-                        onSuccess(resultObject.toJavaObject(clazz));
+                        try {
+                            onSuccess(resultObject.toJavaObject(clazz));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+//                            this.onSuccess((T) null);
+                        }
                     } else {
 //                        result = (T) resultString;
                         onSuccess((T) resultString);

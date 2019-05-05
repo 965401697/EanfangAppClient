@@ -19,8 +19,8 @@ import com.eanfang.model.SectionBean;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.util.ToastUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.yaf.sys.entity.AccountEntity;
-import com.yaf.sys.entity.UserEntity;
+import com.eanfang.model.sys.AccountEntity;
+import com.eanfang.model.sys.UserEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;

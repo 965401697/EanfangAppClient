@@ -18,7 +18,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.GrantChange;
 import com.eanfang.model.SystypeBean;
 import com.eanfang.ui.base.BaseActivity;
-import com.yaf.sys.entity.BaseDataEntity;
+import com.eanfang.model.sys.BaseDataEntity;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -142,11 +142,11 @@ public class AuthWorkerSysTypeActivity extends BaseActivity {
 
     private void commit() {
         List<Integer> checkList = Stream.of(businessOneList)
-                .filter(beans -> beans.isCheck() == true && Stream.of(byNetGrant.getList()).filter(existsBean -> existsBean.getDataId().equals(beans.getDataId())).count() == 0)
-                .map(beans -> beans.getDataId()).distinct().toList();
-        List<Integer> unCheckList = Stream.of(businessOneList).filter(beans -> beans.isCheck() == false
+                .filter(beans -> beans.isCheck() && Stream.of(byNetGrant.getList()).filter(existsBean -> existsBean.getDataId().equals(beans.getDataId())).count() == 0)
+                .map(BaseDataEntity::getDataId).distinct().toList();
+        List<Integer> unCheckList = Stream.of(businessOneList).filter(beans -> !beans.isCheck()
                 && Stream.of(byNetGrant.getList()).filter(existsBean -> existsBean.getDataId().equals(beans.getDataId())).count() > 0)
-                .map(beans -> beans.getDataId()).distinct().toList();
+                .map(BaseDataEntity::getDataId).distinct().toList();
 
         grantChange.setAddIds(checkList);
         grantChange.setDelIds(unCheckList);

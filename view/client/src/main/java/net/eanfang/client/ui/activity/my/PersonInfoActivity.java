@@ -22,8 +22,9 @@ import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.MultiClickListener;
-import com.eanfang.model.LoginBean;
 import com.eanfang.model.SelectAddressItem;
+import com.eanfang.model.bean.LoginBean;
+import com.eanfang.model.sys.AccountEntity;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.activity.SelectAddressActivity;
@@ -34,12 +35,9 @@ import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jph.takephoto.model.TResult;
-import com.yaf.sys.entity.AccountEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.OwnDataHintActivity;
-
-import java.text.ParseException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -276,12 +274,12 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
 
         String idcard = etIdcard.getText().toString().trim();
         if (!StringUtils.isEmpty(idcard)) {
-                if (IDCardUtil.IDCardValidate(idcard) == false) {
-                    showToast("证件格式有误，请重新输入");
-                    etIdcard.setText("");
-                    etIdcard.setEnabled(true);
-                    return false;
-                }
+            if (IDCardUtil.IDCardValidate(idcard) == false) {
+                showToast("证件格式有误，请重新输入");
+                etIdcard.setText("");
+                etIdcard.setEnabled(true);
+                return false;
+            }
         }
 
         return true;
@@ -321,7 +319,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
                         if (!StringUtils.isEmpty(tvNickname.getText().toString().trim())) {
                             user.getAccount().setNickName(tvNickname.getText().toString().trim());
                         }
-                        EanfangApplication.get().saveUser(user);
+                        EanfangApplication.get().set(LoginBean.class.getName(), user);
 
                         UserInfo userInfo;
                         if (!StringUtils.isEmpty(path)) {

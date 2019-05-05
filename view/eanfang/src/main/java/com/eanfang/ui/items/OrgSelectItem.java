@@ -4,16 +4,16 @@ import android.net.Uri;
 import android.view.View;
 import android.widget.CheckBox;
 
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+
 import com.baozi.treerecyclerview.base.ViewHolder;
 import com.baozi.treerecyclerview.item.TreeItem;
 import com.baozi.treerecyclerview.item.TreeItemGroup;
 import com.eanfang.BuildConfig;
 import com.eanfang.R;
+import com.eanfang.kit.cache.CacheKit;
 import com.eanfang.model.TemplateBean;
-import com.eanfang.util.SharePreferenceUtil;
-
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 
 /**
  * Created by O u r on 2018/5/31.
@@ -35,11 +35,11 @@ public class OrgSelectItem extends TreeItem<TemplateBean.Preson> {
             viewHolder.getView(R.id.cb_check).setVisibility(View.INVISIBLE);
         }
         try {
-            if (SharePreferenceUtil.get().get("app", "").equals("client")) {
+            if (CacheKit.get().isClient()) {
                 viewHolder.getView(R.id.cb_check).setBackground(ContextCompat.getDrawable(viewHolder.getTextView(R.id.tv_name).getContext(), R.drawable.selector_single_checked_client));
 
             } else {
-                viewHolder.getView(R.id.cb_check).setBackground(ContextCompat.getDrawable(viewHolder.getTextView (R.id.tv_name).getContext(), R.drawable.selector_single_checked_worker));
+                viewHolder.getView(R.id.cb_check).setBackground(ContextCompat.getDrawable(viewHolder.getTextView(R.id.tv_name).getContext(), R.drawable.selector_single_checked_worker));
             }
         } catch (Exception e) {
             e.printStackTrace();
