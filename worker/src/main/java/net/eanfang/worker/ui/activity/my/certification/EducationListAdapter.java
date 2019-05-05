@@ -41,7 +41,6 @@ public class EducationListAdapter extends BaseQuickAdapter<EducationExperienceEn
 
         } else {
             helper.setText(R.id.tv_school_time, "起止时间：" + " 至");
-
         }
 
         if (item.getCertificatePics() != null) {

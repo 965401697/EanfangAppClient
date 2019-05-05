@@ -1,8 +1,12 @@
 package net.eanfang.worker.ui.activity.my.certification;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.EditText;
 
 import com.alibaba.fastjson.JSONObject;
@@ -21,11 +25,14 @@ import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 import com.yaf.base.entity.TechWorkerVerifyEntity;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.worksapce.OwnDataHintActivity;
+import net.eanfang.worker.ui.activity.techniciancertification.SubmitSuccessfullyJsActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
+import net.eanfang.worker.ui.widget.WQLeftRightClickTextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -51,8 +58,11 @@ public class OtherDataActivity extends BaseWorkerActivity {
     EditText etUrgentName;
     @BindView(R.id.et_urgent_phone)
     EditText etUrgentPhone;
+    @BindView(R.id.ts_lr_tv)
+    WQLeftRightClickTextView tsLrTv;
+    @BindView(R.id.yx_et)
+    EditText yxEt;
     private ArrayList<String> picList_accident = new ArrayList<>();
-
     private TechWorkerVerifyEntity mTechWorkerVerifyEntity;
     /**
      * 犯罪照片
@@ -68,38 +78,50 @@ public class OtherDataActivity extends BaseWorkerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_other_data);
         ButterKnife.bind(this);
-        setTitle("实名认证");
+        setTitle("保障信息");
         setLeftBack();
-
-        mTechWorkerVerifyEntity = (TechWorkerVerifyEntity) getIntent().getSerializableExtra("bean");
-
+        EanfangHttp.get(UserApi.GET_WORKER_INFO).execute(new EanfangCallback<TechWorkerVerifyEntity>(this, true, TechWorkerVerifyEntity.class, (bean) -> {
+            mTechWorkerVerifyEntity = bean;
+            Log.d("564866", "bean: " + bean.toString());
+            if (!TextUtils.isEmpty(mTechWorkerVerifyEntity.getContactName())) {
+                fillData();
+            }
+        }));
         initViews();
-
-        if (!TextUtils.isEmpty(mTechWorkerVerifyEntity.getContactName())) {
-            fillData();
-        }
     }
 
     private void fillData() {
-        etUrgentName.setText(mTechWorkerVerifyEntity.getContactName());
+        Log.d("5648", "fillData: " + mTechWorkerVerifyEntity.getContactName());
+        if (StringUtils.isEmpty(mTechWorkerVerifyEntity.geteMail()) | mTechWorkerVerifyEntity.geteMail() == null) {
+
+        } else {
+            yxEt.setText(mTechWorkerVerifyEntity.geteMail());
+        }
+        if (StringUtils.isEmpty(mTechWorkerVerifyEntity.getContactName()) | mTechWorkerVerifyEntity.getContactName() == null) {
+
+        } else {
+            etUrgentName.setText(mTechWorkerVerifyEntity.getContactName());
+        }
         etUrgentPhone.setText(mTechWorkerVerifyEntity.getContactPhone());
 
-        String[] crimePic = mTechWorkerVerifyEntity.getCrimePic().split(",");
-        if (crimePic.length > 0) {
-
-            for (byte i = 0; i < crimePic.length; i++) {
-                picList_crim.add(BuildConfig.OSS_SERVER + crimePic[i]);
+        if (!mTechWorkerVerifyEntity.getCrimePic().equals("")) {
+            String[] crimePic = mTechWorkerVerifyEntity.getCrimePic().split(",");
+            if (crimePic.length > 0) {
+                for (byte i = 0; i < crimePic.length; i++) {
+                    picList_crim.add(BuildConfig.OSS_SERVER + crimePic[i]);
+                }
+                snplMomentCrim.setData(picList_crim);
             }
-            snplMomentCrim.setData(picList_crim);
         }
 
-        String[] accidentPics = mTechWorkerVerifyEntity.getAccidentPics().split(",");
-        if (accidentPics.length > 0) {
-            for (byte i = 0; i < accidentPics.length; i++) {
-                picList_accident.add(BuildConfig.OSS_SERVER + accidentPics[i]);
+        if (!mTechWorkerVerifyEntity.getAccidentPics().equals("")) {
+            String[] accidentPics = mTechWorkerVerifyEntity.getAccidentPics().split(",");
+            if (accidentPics.length > 0) {
+                for (byte i = 0; i < accidentPics.length; i++) {
+                    picList_accident.add(BuildConfig.OSS_SERVER + accidentPics[i]);
+                }
+                snplMomentAccident.setData(picList_accident);
             }
-
-            snplMomentAccident.setData(picList_accident);
         }
     }
 
@@ -107,7 +129,6 @@ public class OtherDataActivity extends BaseWorkerActivity {
         // 保险照
         snplMomentAccident.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_ACCIDENT, REQUEST_CODE_PHOTO_ACCIDENT));
         snplMomentAccident.setData(picList_accident);
-
         // 犯罪照
         snplMomentCrim.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_CRIM, REQUEST_CODE_PHOTO_CRIM));
         snplMomentCrim.setData(picList_crim);
@@ -121,34 +142,45 @@ public class OtherDataActivity extends BaseWorkerActivity {
     private void doSave() {
         String mUrgentName = etUrgentName.getText().toString().trim();
         String mUrgentPhone = etUrgentPhone.getText().toString().trim();
+        String yxEtS = yxEt.getText().toString().trim();
 
+        if (!isEmail(yxEtS)) {
+            showToast("请输入正确的电子邮箱");
+            return;
+        }
         if (StringUtils.isEmpty(mUrgentName)) {
             showToast("请输入紧急联系人");
             return;
         }
-        if (StringUtils.isEmpty(mUrgentPhone)) {
-            showToast("请输入紧急联系人电话");
+        if (!isMobileNO(mUrgentPhone)) {
+            showToast("请输入正确的电话号码");
             return;
         }
+
+
+        mTechWorkerVerifyEntity.seteMail(yxEtS);
         mTechWorkerVerifyEntity.setContactName(mUrgentName);
         mTechWorkerVerifyEntity.setContactPhone(mUrgentPhone);
 
-        String accidentPic = PhotoUtils.getPhotoUrl("account/verify/", snplMomentAccident, uploadMap, false);
-//        if (StringUtils.isEmpty(accidentPic)) {
-//            showToast("请添加保险照");
-//            return;
-//        }
-        mTechWorkerVerifyEntity.setAccidentPics(accidentPic);
-
 
         String crimePic = PhotoUtils.getPhotoUrl("account/verify/", snplMomentCrim, uploadMap, false);
-//        if (StringUtils.isEmpty(crimePic)) {
-//            showToast("请添加犯罪照");
-//            return;
-//        }
-        mTechWorkerVerifyEntity.setCrimePic(crimePic);
+        if (crimePic.equals("")) {
+            showToast("请上传无犯罪证明");
+            return;
 
+        } else {
+            mTechWorkerVerifyEntity.setCrimePic(crimePic);
+        }
 
+        String accidentPic = PhotoUtils.getPhotoUrl("account/verify/", snplMomentAccident, uploadMap, false);
+        if (accidentPic.equals("")) {
+            showToast("请上传保险状态");
+            return;
+        } else {
+            mTechWorkerVerifyEntity.setAccidentPics(accidentPic);
+        }
+
+        Log.d("5648", "doSave: " + accidentPic + " " + crimePic);
         /**
          * 提交照片
          * */
@@ -156,38 +188,22 @@ public class OtherDataActivity extends BaseWorkerActivity {
             OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
                 @Override
                 public void onOssSuccess() {
-                    runOnUiThread(() -> {
-
-                        EanfangHttp.post(UserApi.GET_TECH_WORKER_ADD_V2)
-                                .upJson(JSONObject.toJSONString(mTechWorkerVerifyEntity))
-                                .execute(new EanfangCallback<JSONObject>(OtherDataActivity.this, true, JSONObject.class, (bean) -> {
-                                    Intent intent = new Intent(OtherDataActivity.this, OwnDataHintActivity.class);
-                                    intent.putExtra("info", "尊敬的用户，您必须进行资质认证\n" +
-                                            "才可以接单，并获得更多订单");
-                                    intent.putExtra("go", "前往资质认证");
-                                    intent.putExtra("desc", "如有疑问，请联系客服处理");
-                                    intent.putExtra("service", "客服热线：" + R.string.text_service_telphone);
-                                    intent.putExtra("class", SkillTypeActivity.class);
-                                    closeActivity();
-                                }));
-
-
-                    });
+                    runOnUiThread(() -> EanfangHttp.post(UserApi.GET_TECH_WORKER_ADD_V2).upJson(JSONObject.toJSONString(mTechWorkerVerifyEntity)).execute(new EanfangCallback<JSONObject>(OtherDataActivity.this, true, JSONObject.class, (bean) -> {
+                        Intent intent = new Intent(OtherDataActivity.this, SubmitSuccessfullyJsActivity.class);
+                        intent.putExtra("order", 3);
+                        startAnimActivity(intent);
+                        closeActivity();
+                    })));
                 }
             });
             return;
         } else {
-            EanfangHttp.post(UserApi.GET_TECH_WORKER_ADD_V2)
-                    .upJson(JSONObject.toJSONString(mTechWorkerVerifyEntity))
-                    .execute(new EanfangCallback<JSONObject>(OtherDataActivity.this, true, JSONObject.class, (bean) -> {
-                        Intent intent = new Intent(OtherDataActivity.this, OwnDataHintActivity.class);
-                        intent.putExtra("info", "尊敬的用户，您必须进行资质认证\n" +
-                                "才可以接单，并获得更多订单");
-                        intent.putExtra("go", "前往资质认证");
-                        intent.putExtra("desc", "如有疑问，请联系客服处理");
-                        intent.putExtra("service", "客服热线：" + R.string.text_service_telphone);
-                        closeActivity();
-                    }));
+            EanfangHttp.post(UserApi.GET_TECH_WORKER_ADD_V2).upJson(JSONObject.toJSONString(mTechWorkerVerifyEntity)).execute(new EanfangCallback<JSONObject>(OtherDataActivity.this, true, JSONObject.class, (bean) -> {
+                Intent intent = new Intent(this, SubmitSuccessfullyJsActivity.class);
+                intent.putExtra("order", 3);
+                startAnimActivity(intent);
+                closeActivity();
+            }));
 
         }
 
@@ -206,6 +222,7 @@ public class OtherDataActivity extends BaseWorkerActivity {
             case REQUEST_CODE_CHOOSE_CRIM:
                 snplMomentCrim.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
                 break;
+            default:
         }
     }
 
@@ -214,4 +231,33 @@ public class OtherDataActivity extends BaseWorkerActivity {
         EanfangApplication.get().closeActivity(IdentityCardCertification.class.getName());
         finishSelf();
     }
+
+    @OnClick(R.id.ts_lr_tv)
+    public void onClick() {
+        View layout = LayoutInflater.from(this).inflate(R.layout.activity_ts_wz, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(layout);
+        builder.setCancelable(true);
+        builder.create().show();
+    }
+
+    /**
+     * 判断手机格式是否正确
+     */
+    public static boolean isMobileNO(String mobiles) {
+        Pattern p = Pattern.compile("^((13[0-9])|(15[^4,\\D])|(17[0-9])|(18[0-9]))\\d{8}$");
+        Matcher m = p.matcher(mobiles);
+        return m.matches();
+    }
+
+    /**
+     * 判断邮箱格式是否正确
+     */
+    public static boolean isEmail(String email) {
+        String str = "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$";
+        Pattern p = Pattern.compile(str);
+        Matcher m = p.matcher(email);
+        return m.matches();
+    }
+
 }

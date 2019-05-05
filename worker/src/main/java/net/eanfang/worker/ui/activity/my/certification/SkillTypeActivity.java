@@ -44,10 +44,8 @@ public class SkillTypeActivity extends BaseWorkerActivity {
     TextView tvLimit;
     @BindView(R.id.ll_limit)
     LinearLayout llLimit;
-    @BindView(R.id.tv_ability)
-    TextView tvAbility;
-    @BindView(R.id.ll_ability)
-    LinearLayout llAbility;
+
+
     @BindView(R.id.recycler_view_classfiy)
     RecyclerView recyclerViewBusiness;
     @BindView(R.id.recycler_view_kind)
@@ -75,15 +73,12 @@ public class SkillTypeActivity extends BaseWorkerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_skill_type);
         ButterKnife.bind(this);
-        setTitle("技能资质");
+        setTitle("服务认证");
         setLeftBack();
         startTransaction(true);
         mStatus = getIntent().getIntExtra("status", -1);
-
         initViews();
 //        initData();
-
-
         getSkillInfo();
 
     }
@@ -112,17 +107,14 @@ public class SkillTypeActivity extends BaseWorkerActivity {
     private void doVerify() {
 
         String mYear = tvLimit.getText().toString().trim();
-        String mAbility = tvAbility.getText().toString().trim();
-        Log.i("mYear++mAbility",mYear+"++"+mAbility);
+
+        Log.i("mYear++mAbility", mYear + "++");
 
         if (StringUtils.isEmpty(mYear)) {
             showToast("请选择从业年限");
             return;
         }
-        if (StringUtils.isEmpty(mAbility)) {
-            showToast("请选择能力等级");
-            return;
-        }
+
 
         grantChange_system.setAddIds(osCooperationAddAdapter.getScheckedId());
         grantChange_system.setDelIds(osCooperationAddAdapter.getUnSCheckedId());
@@ -133,7 +125,7 @@ public class SkillTypeActivity extends BaseWorkerActivity {
 
 
         workerInfoBean = new TechWorkerVerifyEntity();
-        workerInfoBean.setWorkingLevel(GetConstDataUtils.getWorkingLevelList().indexOf(mAbility));
+
         workerInfoBean.setWorkingYear(GetConstDataUtils.getWorkingYearList().indexOf(mYear));
 
         workerInfoBean.setAccId(EanfangApplication.get().getAccId());
@@ -149,9 +141,7 @@ public class SkillTypeActivity extends BaseWorkerActivity {
         hashMapData.put("workerBizGrantChange", grantChange_business);
 
         String requestContent = com.alibaba.fastjson.JSONObject.toJSONString(hashMapData);
-        EanfangHttp.post(UserApi.TECH_WORKER_VERIFY)
-                .upJson(requestContent)
-                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
+        EanfangHttp.post(UserApi.TECH_WORKER_VERIFY).upJson(requestContent).execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
 
                     osCooperationAddAdapter.getScheckedId().clear();
                     osCooperationAddAdapter.getUnSCheckedId().clear();
@@ -162,6 +152,7 @@ public class SkillTypeActivity extends BaseWorkerActivity {
 
 
                     startAnimActivity(new Intent(this, SkillAreaActivity.class).putExtra("status", mStatus));
+                    finish();
                 }));
 
 
@@ -169,13 +160,9 @@ public class SkillTypeActivity extends BaseWorkerActivity {
 
     private void getSkillInfo() {
 
-        EanfangHttp.post(UserApi.TECH_WORKER_DETAIL)
-                .params("accId", String.valueOf(EanfangApplication.getApplication().getAccId()))
-                .execute(new EanfangCallback<WorkerVerifySkillBean>(this, true, WorkerVerifySkillBean.class, bean -> {
+        EanfangHttp.post(UserApi.TECH_WORKER_DETAIL).params("accId", String.valueOf(EanfangApplication.getApplication().getAccId())).execute(new EanfangCallback<WorkerVerifySkillBean>(this, true, WorkerVerifySkillBean.class, bean -> {
                     if (bean != null) {
                         List<BaseDataEntity> SystemBusinessList = bean.getBaseData2userList();
-
-
                         // 系统类别
                         for (BaseDataEntity checkedS : SystemBusinessList) {
                             if (checkedS.getDataType() == 1) {
@@ -194,7 +181,6 @@ public class SkillTypeActivity extends BaseWorkerActivity {
                                 }
                             }
                         }
-
                         osCooperationAddAdapter.setNewData(systemTypeList);
                         businessCooperationAddAdapter.setNewData(businessTypeList);
                         fillData(bean);
@@ -206,9 +192,6 @@ public class SkillTypeActivity extends BaseWorkerActivity {
         if (bean.getWorkerVerify().getWorkingYear() != null) {
             tvLimit.setText(GetConstDataUtils.getWorkingYearList().get(bean.getWorkerVerify().getWorkingYear()));
         }
-        if (bean.getWorkerVerify().getWorkingLevel() != null) {
-            tvAbility.setText(GetConstDataUtils.getWorkingLevelList().get(bean.getWorkerVerify().getWorkingLevel()));
-        }
     }
 
     @OnClick(R.id.tv_go)
@@ -216,15 +199,13 @@ public class SkillTypeActivity extends BaseWorkerActivity {
         doVerify();
     }
 
-    @OnClick({R.id.ll_limit, R.id.ll_ability})
+    @OnClick({R.id.ll_limit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_limit:
                 PickerSelectUtil.singleTextPicker(this, "", tvLimit, GetConstDataUtils.getWorkingYearList());
                 break;
-            case R.id.ll_ability:
-                PickerSelectUtil.singleTextPicker(this, "", tvAbility, GetConstDataUtils.getWorkingLevelList());
-                break;
+            default:
         }
     }
 }

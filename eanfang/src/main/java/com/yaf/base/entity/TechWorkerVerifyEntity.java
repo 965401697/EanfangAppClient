@@ -1,6 +1,5 @@
 package com.yaf.base.entity;
 
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
@@ -12,7 +11,6 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
@@ -33,6 +31,15 @@ import lombok.Setter;
 @TableName(value = "tech_worker_verify")
 public class TechWorkerVerifyEntity implements Serializable {
     private static final long serialVersionUID = 1L;
+    private int isEnable;
+
+    public int getIsEnable() {
+        return isEnable;
+    }
+
+    public void setIsEnable(int isEnable) {
+        this.isEnable = isEnable;
+    }
 
     //主键自增
     //@TableField(value = "id")
@@ -89,6 +96,35 @@ public class TechWorkerVerifyEntity implements Serializable {
     @Size(min = 0, max = 255)
     private String avatarPhoto;
 
+    @Override
+    public String toString() {
+        return "TechWorkerVerifyEntity{" +
+                "id=" + id +
+                ", accId=" + accId +
+                ", userId=" + userId +
+                ", contactName='" + contactName + '\'' +
+                ", contactPhone='" + contactPhone + '\'' +
+                ", payType=" + payType +
+                ", payAccount='" + payAccount + '\'' +
+                ", workingLevel=" + workingLevel +
+                ", workingYear=" + workingYear +
+                ", avatarPhoto='" + avatarPhoto + '\'' +
+                ", crimePic='" + crimePic + '\'' +
+                ", idCardFront='" + idCardFront + '\'' +
+                ", idCardSide='" + idCardSide + '\'' +
+                ", idCardHand='" + idCardHand + '\'' +
+                ", accidentPics='" + accidentPics + '\'' +
+                ", intro='" + intro + '\'' +
+                ", status=" + status +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", verifyTime=" + verifyTime +
+                ", verifyUserName='" + verifyUserName + '\'' +
+                ", verifyMessage='" + verifyMessage + '\'' +
+                ", accountEntity=" + accountEntity +
+                ", userEntity=" + userEntity +
+                '}';
+    }
 
     //无犯罪证明图片
     //@TableField(value = "crime_pic")
@@ -114,7 +150,6 @@ public class TechWorkerVerifyEntity implements Serializable {
     //@TableField(value = "accident_pics")
     @Size(min = 0, max = 200)
     private String accidentPics;
-
 
 
     //个人简介
@@ -146,6 +181,15 @@ public class TechWorkerVerifyEntity implements Serializable {
     //@TableField(value = "verify_user_name")
     @Size(min = 0, max = 10)
     private String verifyUserName;
+    private String eMail;
+
+    public String geteMail() {
+        return eMail;
+    }
+
+    public void seteMail(String eMail) {
+        this.eMail = eMail;
+    }
 
     //备注信息（审核意见）
     //@TableField(value = "verify_message")
@@ -324,7 +368,7 @@ public class TechWorkerVerifyEntity implements Serializable {
     /**
      * 设置：手持身份证图片
      */
-    public void setIdCardHand(String idCardHand) {
+    public void setIdCardHand(String idCardHand) {//手持身份证图片 idCardHand  , 身份证反面 idCardSide
         this.idCardHand = idCardHand;
     }
 
@@ -334,8 +378,6 @@ public class TechWorkerVerifyEntity implements Serializable {
     public String getIdCardHand() {
         return idCardHand;
     }
-
-
 
 
     /**
@@ -434,11 +476,6 @@ public class TechWorkerVerifyEntity implements Serializable {
      */
     public String getVerifyMessage() {
         return verifyMessage;
-    }
-
-    @Override
-    public String toString() {
-        return JSON.toJSONString(this);
     }
 
     @Override

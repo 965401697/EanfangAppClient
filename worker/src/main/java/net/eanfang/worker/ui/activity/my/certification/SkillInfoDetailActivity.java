@@ -133,9 +133,7 @@ public class SkillInfoDetailActivity extends BaseWorkerActivity {
                 .execute(new EanfangCallback<QualifyCertificafeListBean>(this, true, QualifyCertificafeListBean.class) {
                     @Override
                     public void onSuccess(QualifyCertificafeListBean bean) {
-
                         initViews();
-
                         if (bean.getList().size() > 0) {
                             adapter.setNewData(bean.getList());
                         }

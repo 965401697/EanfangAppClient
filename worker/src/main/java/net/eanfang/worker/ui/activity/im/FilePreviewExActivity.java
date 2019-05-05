@@ -55,6 +55,18 @@ public class FilePreviewExActivity extends FilePreviewActivity {
                     }
                 });
             }
+//            QbSdk.openFileReader(this, fileSavePath, null, new ValueCallback<String>() {
+//                @Override
+//                public void onReceiveValue(String s) {
+//                    if (s.equals("can not open")) {
+//                        ToastUtil.get().showToast(FilePreviewExActivity.this,"此文件无法查看");
+//                        finish();
+//                        return;
+//                    }
+//                }
+//
+//            });
+
         }
     }
 }

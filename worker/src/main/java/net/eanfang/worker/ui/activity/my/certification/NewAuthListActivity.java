@@ -57,7 +57,6 @@ public class NewAuthListActivity extends BaseWorkerActivity {
         setContentView(R.layout.activity_new_auth_list);
         ButterKnife.bind(this);
 
-
         setRightTitleOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,14 +70,13 @@ public class NewAuthListActivity extends BaseWorkerActivity {
                     ToastUtil.get().showToast(NewAuthListActivity.this, "认证信息还没有提交，不能撤销");
                     return;
                 }
-                new TrueFalseDialog(NewAuthListActivity.this, "系统提示", "是否撤销认证并保存信息", () -> {
-                    EanfangHttp.post(NewApiService.WORKER_AUTH_REVOKE + EanfangApplication.getApplication().getAccId())
+                new TrueFalseDialog(NewAuthListActivity.this, "系统提示", "是否撤销认证并保存信息", () ->
+                        EanfangHttp.post(NewApiService.WORKER_AUTH_REVOKE + EanfangApplication.getApplication().getAccId())
                             .execute(new EanfangCallback<JSONPObject>(NewAuthListActivity.this, true, JSONPObject.class, bean -> {
                                 tvConfim.setVisibility(View.VISIBLE);
                                 verify = 0;//撤销认证  状态没有时时的刷新 减少请求 本地改变状态
                                 setRightTitle("");//重置状态
-                            }));
-                }).showDialog();
+                            }))).showDialog();
             }
         });
 
@@ -120,9 +118,7 @@ public class NewAuthListActivity extends BaseWorkerActivity {
                     JumpItent.jump(this, CertificationInfoActivity.class);
                 } else {
                     if (mAuthStatusBean == null) {
-
                         ToastUtil.get().showToast(this, "请稍后操作");
-
                         return;
                     }
                     startActivity(new Intent(this, CertificationActivity.class).putExtra("status", mAuthStatusBean.getBase()));

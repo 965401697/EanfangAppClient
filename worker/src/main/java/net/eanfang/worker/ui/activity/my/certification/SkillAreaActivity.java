@@ -20,6 +20,7 @@ import com.yaf.sys.entity.BaseDataEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.GroupAdapter;
+import net.eanfang.worker.ui.activity.techniciancertification.SubmitSuccessfullyJsActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import java.util.ArrayList;
@@ -66,7 +67,7 @@ public class SkillAreaActivity extends BaseWorkerActivity {
     }
 
     private void initView() {
-        setTitle("技能资质");
+        setTitle("服务认证");
         setLeftBack();
 
         mStatus = getIntent().getIntExtra("status", -1);
@@ -108,11 +109,10 @@ public class SkillAreaActivity extends BaseWorkerActivity {
     }
 
     private void initData() {
-        EanfangHttp.get(UserApi.GET_TECH_WORKER_SYS + userid + "/AREA")
-                .execute(new EanfangCallback<SystypeBean>(this, true, SystypeBean.class, (bean) -> {
-                    byNetGrant = bean;
-                    fillData();
-                }));
+        EanfangHttp.get(UserApi.GET_TECH_WORKER_SYS + userid + "/AREA").execute(new EanfangCallback<SystypeBean>(this, true, SystypeBean.class, (bean) -> {
+            byNetGrant = bean;
+            fillData();
+        }));
     }
 
 
@@ -189,25 +189,63 @@ public class SkillAreaActivity extends BaseWorkerActivity {
         // TODO: 2018/11/6     集合加集合填补进去
         SystypeBean grant = new SystypeBean();
         grant.getList().addAll(byNetGrant.getList());
-        for (int i = 0; i < byNetGrant.getList().size(); i++) {
-            for (Integer j : unCheckListId) {
-                if (byNetGrant.getList().get(i).getDataId() == j) {
-                    grant.getList().remove(i);
-                }
-            }
-        }
 
-        if ((checkListId.size() == 0) && (byNetGrant.getList().size() == 0)) {
-            showToast("请至少选择一个服务区域");
-        } else {
-            EanfangHttp.post(UserApi.POST_TECH_WORKER_AREA)
-                    .upJson(JSONObject.toJSONString(grantChange))
-                    .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
-                        Intent intent = new Intent(this, SkillCertificafeListActivity.class);
-                        intent.putExtra("status", mStatus);
-                        startAnimActivity(intent);
-                    }));
-        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i < byNetGrant.getList().size(); i++) {
+                    for (Integer j : unCheckListId) {
+                        if (byNetGrant.getList().get(i).getDataId() == j) {
+                            grant.getList().remove(i);
+                        }
+                    }
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if ((checkListId.size() == 0) && (byNetGrant.getList().size() == 0)) {
+                            showToast("请至少选择一个服务区域");
+                        } else {
+                            setData();
+                        }
+                    }
+                });
+
+            }
+        }).start();
+
+
+//        for (int i = 0; i < byNetGrant.getList().size(); i++) {
+//            for (Integer j : unCheckListId) {
+//                if (byNetGrant.getList().get(i).getDataId() == j) {
+//                    grant.getList().remove(i);
+//                }
+//            }
+//        }
+//
+//        if ((checkListId.size() == 0) && (byNetGrant.getList().size() == 0)) {
+//            showToast("请至少选择一个服务区域");
+//        } else {
+//            EanfangHttp.post(UserApi.POST_TECH_WORKER_AREA)
+//                    .upJson(JSONObject.toJSONString(grantChange))
+//                    .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
+//                        Intent intent = new Intent(this, SubmitSuccessfullyJsActivity.class);
+//                        intent.putExtra("status", mStatus);
+//                        intent.putExtra("order", 2);
+//                        startAnimActivity(intent);
+//                        finish();
+//                    }));
+//        }
+    }
+
+    private void setData() {
+        EanfangHttp.post(UserApi.POST_TECH_WORKER_AREA).upJson(JSONObject.toJSONString(grantChange)).execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
+            Intent intent = new Intent(this, SubmitSuccessfullyJsActivity.class);
+            intent.putExtra("status", mStatus);
+            intent.putExtra("order", 2);
+            startAnimActivity(intent);
+            finish();
+        }));
     }
 
     @OnClick(R.id.tv_go)

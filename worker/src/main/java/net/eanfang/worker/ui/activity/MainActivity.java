@@ -209,9 +209,7 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
                 workerEntity.setLon(location.getLongitude() + "");
                 workerEntity.setPlaceCode(Config.get().getAreaCodeByName(location.getCity(), location.getDistrict()));
                 //技师上报位置
-                EanfangHttp.post(UserApi.POST_WORKER_SUBMIT_LOCATION)
-                        .upJson(JSONObject.toJSONString(workerEntity))
-                        .execute(new EanfangCallback(this, false, String.class));
+                EanfangHttp.post(UserApi.POST_WORKER_SUBMIT_LOCATION).upJson(JSONObject.toJSONString(workerEntity)).execute(new EanfangCallback(this, false, String.class));
             });
         }).start();
     }
@@ -255,9 +253,7 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-
             if ((System.currentTimeMillis() - mExitTime) > 2000) {
                 Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
 
@@ -359,9 +355,7 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
      * 获取融云的token
      */
     private void getRongYToken() {
-        EanfangHttp.post(UserApi.POST_RONGY_TOKEN)
-                .params("userId", EanfangApplication.get().getAccId())
-                .execute(new EanfangCallback<String>(MainActivity.this, false, String.class, (str) -> {
+        EanfangHttp.post(UserApi.POST_RONGY_TOKEN).params("userId", EanfangApplication.get().getAccId()).execute(new EanfangCallback<String>(MainActivity.this, false, String.class, (str) -> {
                     if (!TextUtils.isEmpty(str)) {
                         JSONObject json = JSONObject.parseObject(str);
                         String token = json.getString("token");

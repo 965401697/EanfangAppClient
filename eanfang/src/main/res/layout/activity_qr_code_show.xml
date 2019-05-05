@@ -42,41 +42,46 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/dimen_30">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:paddingBottom="@dimen/dimen_30"
-                    android:paddingTop="@dimen/dimen_30">
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/iv_qrcode"
+                    android:layout_width="@dimen/dimen_400"
+                    android:layout_height="@dimen/dimen_400"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center_horizontal"
+                    app:placeholderImage="@drawable/bga_pp_ic_holder_dark" />
 
-                    <com.facebook.drawee.view.SimpleDraweeView
-                        android:id="@+id/iv_qrcode"
-                        android:layout_width="@dimen/dimen_400"
-                        android:layout_height="@dimen/dimen_400"
-                        android:layout_centerInParent="true"
-                        app:placeholderImage="@drawable/bga_pp_ic_holder_dark" />
-                </RelativeLayout>
-
-                <View style="@style/style_common_line_gray" />
-
-                <RelativeLayout
+                <TextView
+                    android:id="@+id/lj_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/dimen_30">
+                    android:layout_below="@id/iv_qrcode"
+                    android:layout_marginTop="@dimen/dimen_30"
+                    android:gravity="center"
+                    android:padding="@dimen/dimen_20"
+                    android:text="点击复制链接"
+                    android:textColor="#03A9F4" />
 
-                    <TextView
-                        android:id="@+id/tv_qrcode_message"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:textColor="@color/color_client_neworder"
-                        android:textSize="@dimen/textSize_13" />
+                <View
+                    style="@style/style_common_line_gray"
+                    android:layout_marginTop="@dimen/dimen_30" />
 
+                <TextView
+                    android:id="@+id/tv_qrcode_message"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/dimen_20"
+                    android:text="添加好友"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_13" />
 
-                </RelativeLayout>
             </LinearLayout>
 
         </LinearLayout>
@@ -94,8 +99,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:drawablePadding="@dimen/dimen_10"
                 android:drawableRight="@mipmap/ic_qrcode_icon_save"
+                android:drawablePadding="@dimen/dimen_10"
                 android:text="保存到相册"
                 android:textColor="@color/color_client_neworder"
                 android:textSize="@dimen/textSize_15" />

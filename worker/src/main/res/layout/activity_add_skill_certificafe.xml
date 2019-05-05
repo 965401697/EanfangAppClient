@@ -236,7 +236,8 @@
         android:background="@drawable/bg_btn_trouble_detail_add_trouble"
         android:gravity="center"
         android:padding="@dimen/dimen_30"
-        android:text="保存"
+        android:text="删除"
+        android:visibility="gone"
         android:textColor="@color/color_white"
         android:textSize="@dimen/textSize_14" />
 

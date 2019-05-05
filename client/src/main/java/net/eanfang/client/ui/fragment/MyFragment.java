@@ -16,6 +16,7 @@ import com.eanfang.witget.PersonalQRCodeDialog;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.TechnicianDetailsActivity;
 import net.eanfang.client.ui.activity.my.CollectActivity;
 import net.eanfang.client.ui.activity.my.EvaluateActivity;
 import net.eanfang.client.ui.activity.my.PersonInfoActivity;
@@ -65,6 +66,9 @@ public class MyFragment extends BaseFragment {
         findViewById(R.id.rl_ivite).setOnClickListener((v) -> {
             InviteView inviteView = new InviteView(getActivity(), true);
             inviteView.show();
+        });
+        findViewById(R.id.rl_ivite_b).setOnClickListener((v) -> {
+           startActivity(new Intent(getActivity(), TechnicianDetailsActivity.class));
         });
         findViewById(R.id.iv_setting).setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), SettingActivity.class));

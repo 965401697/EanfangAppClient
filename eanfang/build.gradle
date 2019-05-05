@@ -11,7 +11,7 @@ android {
         minSdkVersion 17
         targetSdkVersion 26
         versionCode 19041901
-        versionName "2.3.39_beta"
+        versionName "2.3.40_beta"
         multiDexEnabled true
 
         buildConfigField("String", "OSS_SERVER", "\"http://oss.eanfang.net/\"")
@@ -199,9 +199,10 @@ dependencies {
     // 时间选择器
 
     //    compile 'com.contrarywind:Android-PickerView:4.1.3'
+    compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.flyco.roundview:FlycoRoundView_Lib:1.1.2@aar'
-    compile 'com.flyco.tablayout:FlycoTabLayout_Lib:1.5.0@aar'
-
+//    compile 'com.flyco.tablayout:FlycoTabLayout_Lib:1.5.0@aar'
+    compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
     // 统计饼状图
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.3'
     implementation files('libs/Msc.jar')
@@ -210,6 +211,7 @@ dependencies {
 
     // 播放视频
     implementation 'cn.jzvd:jiaozivideoplayer:6.3.1'
+//    compile 'com.android.support:design:26+'
 
     // 日历
     compile 'com.github.prolificinteractive:material-calendarview:2.0.0'
@@ -220,4 +222,5 @@ dependencies {
     implementation files('libs/ShareSDK-Wechat-Core-3.4.0.jar')
     implementation files('libs/ShareSDK-Wechat-Moments-3.4.0.jar')
     implementation files('libs/tbs_sdk_thirdapp_v3.6.0.1310_43612_sharewithdownload_withoutGame_obfs_20180706_163319.jar')
+    implementation project(':zxing')
 }

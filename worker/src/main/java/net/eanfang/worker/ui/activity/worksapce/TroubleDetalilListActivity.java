@@ -54,7 +54,9 @@ public class TroubleDetalilListActivity extends BaseDialog {
     private Intent intent;
     private List<BughandleConfirmEntity> mDataList;
     private boolean isVisible;
-    public TroubleDetalilListActivity(Activity context, boolean isfull, Long id, int isPhoneSolve,boolean isVisible) {
+    private boolean isIntoFaultHandling = false;
+
+    public TroubleDetalilListActivity(Activity context, boolean isfull, Long id, int isPhoneSolve, boolean isVisible) {
         super(context, isfull);
         this.mContext = context;
         this.busRepairOrderId = id;
@@ -62,12 +64,26 @@ public class TroubleDetalilListActivity extends BaseDialog {
         this.isVisible = isVisible;
     }
 
+    public TroubleDetalilListActivity(Activity context, boolean isfull, Long id, int isPhoneSolve, boolean isVisible, List<BughandleConfirmEntity> mDataList) {
+        super(context, isfull);
+        this.mContext = context;
+        this.busRepairOrderId = id;
+        this.isPhoneSolve = isPhoneSolve;
+        this.isVisible = isVisible;
+        this.mDataList = mDataList;
+        isIntoFaultHandling = true;
+    }
+
     @Override
     protected void initCustomView(Bundle savedInstanceState) {
         setContentView(R.layout.activity_trouble_list_detail);
         ButterKnife.bind(this);
         initView();
-        initData();
+        if (isIntoFaultHandling) {
+            initAdapter();
+        } else {
+            initData();
+        }
     }
 
     private void initData() {
@@ -87,6 +103,8 @@ public class TroubleDetalilListActivity extends BaseDialog {
                     }
 
                 }));
+        initAdapter();
+
     }
 
     private void initView() {

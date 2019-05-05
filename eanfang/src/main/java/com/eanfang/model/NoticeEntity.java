@@ -74,6 +74,26 @@ public class NoticeEntity implements Serializable {
     @Digits(integer = 19, fraction = 0)
     private Long companyId;
 
+    @Override
+    public String toString() {
+        return "NoticeEntity{" +
+                "id=" + id +
+                ", reciveAccId=" + reciveAccId +
+                ", senderUserId=" + senderUserId +
+                ", noticeType=" + noticeType +
+                ", createTime=" + createTime +
+                ", status=" + status +
+                ", params='" + params + '\'' +
+                ", companyId=" + companyId +
+                ", reciveAccEntity=" + reciveAccEntity +
+                ", senderEntity=" + senderEntity +
+                ", companyEntity=" + companyEntity +
+                ", extInfo=" + extInfo +
+                ", content='" + content + '\'' +
+                ", title='" + title + '\'' +
+                '}';
+    }
+
     /**
      * 设置：通知ID
      */
@@ -184,11 +204,6 @@ public class NoticeEntity implements Serializable {
      */
     public Long getCompanyId() {
         return companyId;
-    }
-
-    @Override
-    public String toString() {
-        return JSON.toJSONString(this);
     }
 
     @Override

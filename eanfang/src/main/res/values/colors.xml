@@ -13,6 +13,7 @@
     <color name="transparent">#00000000</color>
 
     <color name="colorPrimaryDark">#FF7C26</color>
+    <color name="colorX">#FF7C26</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorPrimary_client">#3F51B5</color>
     <!--<color name="colorPrimaryDark">#303F9F</color>-->
@@ -78,6 +79,7 @@
     <color name="color_data_repair">#FF9037</color>
     <color name="color_data_statics_repairs">#18A5F3</color>
     <color name="color_data_statics_repair_two">#F5584D</color>
+    <color name="color_service_title">#33B0FF</color>
 
     <color name="color_contact_authentication">#D3D3D3</color>
     <color name="color_order_status_line">#EFF0F0</color>

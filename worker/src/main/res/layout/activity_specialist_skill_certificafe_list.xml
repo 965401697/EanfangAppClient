@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/color_new_line"
     android:orientation="vertical"
     tools:context="net.eanfang.worker.ui.activity.my.certification.CertificateListActivity">
 
@@ -46,7 +46,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/dimen_38"
-                    android:text="资质证书"
+                    android:text="资格信息"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/textSize_13" />
 
@@ -103,7 +103,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_120"
-            android:background="@color/white">
+            android:background="@color/white"
+            android:visibility="gone">
 
 
             <TextView
@@ -116,16 +117,67 @@
                 android:drawablePadding="@dimen/dimen_14"
                 android:gravity="center_vertical"
                 android:paddingLeft="@dimen/dimen_64"
-                android:text="添加资质证书"
+                android:text="添加资格信息"
                 android:textColor="@color/white"
                 android:textSize="@dimen/textSize_15" />
 
         </RelativeLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:padding="@dimen/dimen_30">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="专家认定单位:"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_13" />
+
+            <EditText
+                android:id="@+id/et_company"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="right"
+                android:hint="请输入"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_13" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/dimen_20"
+                android:layout_marginLeft="@dimen/dimen_30"
+                android:text="培训认定文件" />
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/iv_upload2"
+                android:layout_width="@dimen/dimen_200"
+                android:layout_height="@dimen/dimen_200"
+                android:layout_margin="@dimen/dimen_30"
+                fresco:placeholderImage="@mipmap/bga_pp_ic_plus" />
+
+        </LinearLayout>
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:visibility="gone"
             android:layout_weight="1"
             android:background="@color/white" />
     </LinearLayout>

@@ -51,7 +51,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/dimen_38"
-                        android:text="资质证书"
+                        android:text="资格信息"
                         android:textColor="@color/color_bottom"
                         android:textSize="@dimen/textSize_13" />
 
@@ -111,6 +111,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_20"
                 android:background="@color/white"
+                android:visibility="gone"
                 android:orientation="horizontal"
                 android:paddingBottom="@dimen/dimen_20"
                 android:paddingLeft="@dimen/dimen_36"
@@ -335,7 +336,7 @@
         android:background="@drawable/bg_btn_trouble_detail_add_trouble"
         android:gravity="center"
         android:padding="@dimen/dimen_30"
-        android:text="去添加资质证书→"
+        android:text="去认证资格信息"
         android:textColor="@color/color_white"
         android:textSize="@dimen/textSize_13" />
 

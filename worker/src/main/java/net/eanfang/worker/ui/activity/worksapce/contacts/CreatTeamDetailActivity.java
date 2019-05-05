@@ -16,6 +16,7 @@ import com.yaf.sys.entity.OrgUnitEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.LoginActivity;
+import net.eanfang.worker.ui.activity.authentication.SubmitSuccessfullyQyActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 import net.eanfang.worker.ui.fragment.ContactsFragment;
 
@@ -81,16 +82,20 @@ public class CreatTeamDetailActivity extends BaseWorkerActivity {
     }
 
     private void updateData() {
-        EanfangHttp.get(UserApi.GET_USER_INFO)
-                .execute(new EanfangCallback(this, true, LoginBean.class) {
+        EanfangHttp.get(UserApi.GET_USER_INFO).execute(new EanfangCallback(this, true, LoginBean.class) {
                     @Override
                     public void onSuccess(Object bean) {
                         super.onSuccess(bean);
                         LoginBean loginBean = (LoginBean) bean;
                         EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(loginBean, FastjsonConfig.config));
-
-                        startActivity(new Intent(CreatTeamDetailActivity.this, CreatTeamStatusHintActivity.class).
-                                putExtra("orgName", mName).putExtra("orgid", mOrgid));
+//                        startActivity(new Intent(CreatTeamDetailActivity.this, CreatTeamStatusHintActivity.class).putExtra("orgName", mName).putExtra("orgid", mOrgid));
+                        Intent intent = new Intent(CreatTeamDetailActivity.this, SubmitSuccessfullyQyActivity.class);
+                        intent.putExtra("mOrgId", mOrgid);
+                        intent.putExtra("status", 0);
+                        intent.putExtra("orgName", mName);
+                        intent.putExtra("order", 5);
+                        startActivity(intent);
+                        finishSelf();
                         ContactsFragment.isRefresh = true;
                         endTransaction(true);
                     }

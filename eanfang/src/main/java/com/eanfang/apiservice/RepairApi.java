@@ -167,6 +167,10 @@ public interface RepairApi {
     String POST_BUGHANDLE_LIST = BuildConfig.API_HOST + "/yaf_repair/bughandle/list";
 
     /**
+     * 29.查看技师详情
+     */
+    String CK_JS_DETAIL = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/techWorkerDetails";
+   /**
      * 29.查看报修单的故障处理详情
      */
     String GET_BUGHANDLE_DETAIL = BuildConfig.API_HOST + "/yaf_repair/bughandle/detail";

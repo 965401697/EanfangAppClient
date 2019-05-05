@@ -6,13 +6,12 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
@@ -24,7 +23,6 @@ import com.eanfang.util.QueryEntry;
 import com.eanfang.witget.BannerView;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.worksapce.repair.SelectDeviceTypeActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import java.io.Serializable;
@@ -49,8 +47,8 @@ public class ExpertOnlineActivity extends BaseWorkerActivity {
     @BindView(R.id.tv_no_datas)
     TextView tvNoDatas;
     private CommonQuestionsAdapter commonQuestionsAdapter;
-    //private List<CommonQuestionsBean.ListBean> list;
-    //private CommentFaultSearchAdapter mAdapter;
+    private List<CommonQuestionsBean.ListBean> list;
+    private CommentFaultSearchAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -221,30 +219,28 @@ public class ExpertOnlineActivity extends BaseWorkerActivity {
         QueryEntry queryEntry = new QueryEntry();
         queryEntry.setSize(4);
         queryEntry.setPage(1);
+
         EanfangHttp.post(NewApiService.CommonQuestions)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<CommonQuestionsBean>(this, true, CommonQuestionsBean.class) {
                     @Override
                     public void onSuccess(CommonQuestionsBean bean) {
+
                         //list = bean.getList();
                         if (bean.getList()!=null) {
                             tvNoDatas.setVisibility(View.GONE);
+                        Log.d("WQ_CommonQuestions", NewApiService.CommonQuestions+"\n"+JsonUtils.obj2String(queryEntry)+"\n"+bean.toString());
+                        if ((bean.getList()!=null)&&(bean.getList().size() > 0)) {
+                            list = bean.getList();   //WQ--
+
                             commonQuestionsAdapter.setNewData(bean.getList());
                         } else {
                             tvNoDatas.setVisibility(View.VISIBLE);
                         }
                     }
 
-                    @Override
-                    public void onNoData(String message) {
-
-                    }
-
-                    @Override
-                    public void onCommitAgain() {
-
-                    }
-                });
+                    }}
+                    );
 
     }
 

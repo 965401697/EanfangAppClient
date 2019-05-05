@@ -83,6 +83,7 @@
         <LinearLayout
             android:id="@+id/ll_education"
             android:layout_width="match_parent"
+            android:visibility="gone"
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:orientation="horizontal"
@@ -269,7 +270,8 @@
         android:background="@drawable/bg_btn_trouble_detail_add_trouble"
         android:gravity="center"
         android:padding="@dimen/dimen_30"
-        android:text="保存"
+        android:visibility="gone"
+        android:text="删除此条目"
         android:textColor="@color/color_white"
         android:textSize="@dimen/textSize_14" />
 

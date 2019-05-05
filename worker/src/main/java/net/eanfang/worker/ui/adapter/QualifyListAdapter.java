@@ -1,7 +1,6 @@
 package net.eanfang.worker.ui.adapter;
 
 import android.net.Uri;
-import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -29,9 +28,10 @@ public class QualifyListAdapter extends BaseQuickAdapter<AptitudeCertificateEnti
 
     @Override
     protected void convert(BaseViewHolder helper, AptitudeCertificateEntity item) {
-        helper.setText(R.id.tv_school_name, "证书名称：" + item.getCertificateName());
-        helper.setText(R.id.tv_school_major, "资质等级：" + item.getCertificateLevel());
-        helper.setText(R.id.tv_school_time, "起止时间：" + V.v(() -> DateUtils.formatDate(item.getBeginTime(), "yyyy-MM-dd")) + "至" + V.v(() -> DateUtils.formatDate(item.getEndTime(), "yyyy-MM-dd")));
+        helper.setText(R.id.tv_school_name, "资质名称：" + item.getCertificateName());
+        helper.setText(R.id.tv_school_major, "颁发机构：" + item.getAwardOrg());
+        helper.setText(R.id.tv_school_time, "有效截止期：" +  V.v(() -> DateUtils.formatDate(item.getEndTime(), "yyyy-MM-dd")));
+        //V.v(() -> DateUtils.formatDate(item.getBeginTime(), "yyyy-MM-dd")) + "至" +
 
         if (item.getCertificatePics() != null) {
             String[] urls = V.v(() -> item.getCertificatePics().split(","));
@@ -40,11 +40,13 @@ public class QualifyListAdapter extends BaseQuickAdapter<AptitudeCertificateEnti
         } else {
             ((SimpleDraweeView) helper.getView(R.id.iv_pic)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER));
         }
-        if (isDelete) {// 可以删除
-            helper.getView(R.id.tv_delete).setVisibility(View.VISIBLE);
-        } else {// 不可删除
-            helper.getView(R.id.tv_delete).setVisibility(View.GONE);
-        }
-        helper.addOnClickListener(R.id.tv_delete);
+//        if (isDelete) {
+//            // 可以删除
+//            helper.getView(R.id.tv_delete).setVisibility(View.VISIBLE);
+//        } else {
+//            // 不可删除
+//            helper.getView(R.id.tv_delete).setVisibility(View.GONE);
+//        }
+//        helper.addOnClickListener(R.id.tv_delete);
     }
 }

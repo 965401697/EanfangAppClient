@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_contact_line_gray"
+    android:orientation="vertical">
+
+    <include layout="@layout/header" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#BFDAFF"
+        android:gravity="center"
+        android:padding="@dimen/dimen_40"
+        android:text="推荐认证流程"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/rz_lc_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#BFDAFF"
+        android:gravity="center"
+        android:paddingBottom="@dimen/dimen_40"
+        android:text="实名认证⇒服务认证⇒保障信息⇒资质与能力"
+        android:textSize="14sp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="@dimen/dimen_20"
+        android:src="@mipmap/tj_cg" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:text="提交成功"
+        android:textColor="#ff333333"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_40"
+        android:gravity="center"
+        android:text="尊敬的用户，您的认证资料我们已收到，\n您需要继续完善认证流程。"
+        android:textColor="#ff999999"
+        android:textSize="15sp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/authentication_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_40"
+        android:background="@drawable/bg_gradual_change_ellipse"
+        android:gravity="center"
+        android:padding="@dimen/dimen_30"
+        android:text="去认证"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="@dimen/dimen_60">
+
+        <ImageView
+            android:id="@+id/logo_iv"
+            android:layout_width="@dimen/dimen_100"
+            android:layout_height="@dimen/dimen_100"
+            android:src="@mipmap/worker_logo" />
+
+        <TextView
+            android:id="@+id/yw_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_20"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:layout_toRightOf="@id/logo_iv"
+            android:text="如有疑问，请联系客服处理，"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/yw_b_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/yw_tv"
+            android:layout_marginLeft="@dimen/dimen_20"
+            android:layout_toRightOf="@id/logo_iv"
+            android:text="客服热线: "
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/call_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/yw_tv"
+            android:layout_marginLeft="@dimen/dimen_20"
+            android:layout_toRightOf="@id/yw_b_tv"
+            android:autoLink="all"
+            android:text="010-5877-8731"
+            android:textColor="#4988F5"
+            android:textSize="14sp" />
+    </RelativeLayout>
+</LinearLayout>
