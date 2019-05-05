@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -51,6 +52,7 @@ import io.rong.imlib.model.UserInfo;
  */
 public class UserHomeActivity extends BaseWorkerActivity {
     public static final String EXTRA_ACCID = "UserHomeActivity.accId";
+    public static final String EXTRA_UID = "UserHomeActivity.userId";
     public static final String RESULT_FOLLOW_STATE = "UserHomeActivity.followState";
     @BindView(R.id.iv_right)
     ImageView mIvRight;
@@ -74,10 +76,10 @@ public class UserHomeActivity extends BaseWorkerActivity {
     ImageView mImgNoData;
     @BindView(R.id.tv_noData)
     TextView mTvNoData;
-    @BindView(R.id.rl_user_home_concern)
-    RelativeLayout mRlUserHomeConcern;
-    @BindView(R.id.rl_user_home_friend)
-    RelativeLayout mRlUserHomeFriend;
+    @BindView(R.id.ll_user_home_concern)
+    LinearLayout mLlUserHomeConcern;
+    @BindView(R.id.ll_user_home_friend)
+    LinearLayout mLlUserHomeFriend;
     @BindView(R.id.tv_user_home_concern)
     TextView mTvUserHomeConcern;
     @BindView(R.id.img_user_home_concern)
@@ -120,9 +122,21 @@ public class UserHomeActivity extends BaseWorkerActivity {
      * @param context
      * @param accId   被查看用户的accId
      */
-    public static void startActivity(Context context, String accId) {
+    public static void startActivityForAccId(Context context, String accId) {
         Intent intent = new Intent(context, UserHomeActivity.class);
         intent.putExtra(EXTRA_ACCID, accId);
+        context.startActivity(intent);
+    }
+
+    /**
+     * uid启动用户主页页面
+     *
+     * @param context
+     * @param uid   被查看用户的uid
+     */
+    public static void startActivityForUid(Context context, Long uid) {
+        Intent intent = new Intent(context, UserHomeActivity.class);
+        intent.putExtra(UserHomeActivity.EXTRA_UID, uid);
         context.startActivity(intent);
     }
 
@@ -132,8 +146,10 @@ public class UserHomeActivity extends BaseWorkerActivity {
         setContentView(R.layout.activity_user_home);
         ButterKnife.bind(this);
         String accId = getIntent().getStringExtra(EXTRA_ACCID);
-        mIsSelf = accId != null && accId.equals(String.valueOf(EanfangApplication.get().getAccId()));
-        initData(accId);
+        Long userId = getIntent().getLongExtra(EXTRA_UID, 0);
+        mIsSelf = (accId != null && accId.equals(String.valueOf(EanfangApplication.get().getAccId())))
+        || userId.equals(EanfangApplication.get().getUserId());
+        initData(accId, String.valueOf(userId));
         initView();
     }
 
@@ -190,7 +206,7 @@ public class UserHomeActivity extends BaseWorkerActivity {
             popWindow.backgroundAlpha(UserHomeActivity.this, 0.5f);
         });
         setLeftBack();
-        mRlUserHomeFriend.setOnClickListener(v -> {
+        mLlUserHomeFriend.setOnClickListener(v -> {
             if (mUserInfo != null) {
                 if (mIsFriend) {
                     startChat();
@@ -202,7 +218,7 @@ public class UserHomeActivity extends BaseWorkerActivity {
             }
         });
 
-        mRlUserHomeConcern.setOnClickListener(new View.OnClickListener() {
+        mLlUserHomeConcern.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mCompanyInfoBean != null) {
@@ -237,9 +253,9 @@ public class UserHomeActivity extends BaseWorkerActivity {
         });
     }
 
-    private void initData(String accId) {
+    private void initData(String accId, String userId) {
         EanfangHttp.post(UserApi.USER_HOME_PAGE)
-                .params("accId", accId)
+                .params(!StringUtils.isEmpty(accId) ? "accId" : "userId", !StringUtils.isEmpty(accId) ? accId : userId)
                 .execute(new EanfangCallback<UserHomePageBean>(UserHomeActivity.this, true, UserHomePageBean.class, bean -> {
                     if (bean == null) {
                         return;
@@ -321,15 +337,15 @@ public class UserHomeActivity extends BaseWorkerActivity {
             mTvAddAndCancelFollow.setText("取消关注");
             mTvUserHomeConcern.setText("已关注");
             mTvUserHomeConcern.setTextColor(getResources().getColor(R.color.colorPrimary));
-            mRlUserHomeConcern.setSelected(false);
-            mRlUserHomeConcern.setClickable(false);
+            mLlUserHomeConcern.setSelected(false);
+            mLlUserHomeConcern.setClickable(false);
             mImgUserHomeConcern.setVisibility(View.GONE);
         } else {
             mTvAddAndCancelFollow.setText("添加关注");
             mTvUserHomeConcern.setText("关注");
             mTvUserHomeConcern.setTextColor(Color.WHITE);
-            mRlUserHomeConcern.setSelected(true);
-            mRlUserHomeConcern.setClickable(true);
+            mLlUserHomeConcern.setSelected(true);
+            mLlUserHomeConcern.setClickable(true);
             mImgUserHomeConcern.setVisibility(View.VISIBLE);
         }
     }

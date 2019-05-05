@@ -400,7 +400,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
      * @param accId
      */
     private void gotoUserHomeActivity(String accId) {
-        UserHomeActivity.startActivity(this, accId);
+        UserHomeActivity.startActivityForAccId(this, accId);
     }
 
 
@@ -616,10 +616,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
 
     @Override
     public void onAtClik(Long mUserId) {
-        Bundle bundle = new Bundle();
-        bundle.putBoolean("isLookOther", true);
-        bundle.putLong("mUserId", mUserId);
-        JumpItent.jump(SecurityDetailActivity.this, SecurityPersonalActivity.class, bundle);
+        UserHomeActivity.startActivityForUid(this, mUserId);
     }
 
 }

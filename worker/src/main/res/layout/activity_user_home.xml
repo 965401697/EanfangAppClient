@@ -20,8 +20,8 @@
         android:layout_marginBottom="@dimen/dimen_56"
         android:orientation="horizontal">
 
-        <RelativeLayout
-            android:id="@+id/rl_user_home_concern"
+        <LinearLayout
+            android:id="@+id/ll_user_home_concern"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="@dimen/dimen_280"
             android:layout_height="@dimen/dimen_88"
@@ -29,7 +29,16 @@
             android:layout_marginRight="@dimen/dimen_45"
             android:layout_weight="1"
             android:gravity="center"
+            android:orientation="horizontal"
             android:background="@drawable/bg_button_selector_userhome_follow">
+
+            <ImageView
+                android:id="@+id/img_user_home_concern"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dimen_10"
+                android:layout_centerVertical="true"
+                android:src="@drawable/image_add" />
 
             <TextView
                 android:id="@+id/tv_user_home_concern"
@@ -40,25 +49,26 @@
                 android:textColor="@color/white"
                 android:textSize="15sp" />
 
-            <ImageView
-                android:id="@+id/img_user_home_concern"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/dimen_10"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@id/tv_user_home_concern"
-                android:src="@drawable/image_add" />
-        </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/rl_user_home_friend"
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_user_home_friend"
             android:layout_width="@dimen/dimen_280"
             android:layout_height="@dimen/dimen_88"
             android:layout_marginLeft="@dimen/dimen_45"
             android:layout_marginRight="@dimen/dimen_36"
             android:layout_weight="1"
             android:gravity="center"
+            android:orientation="horizontal"
             android:background="@drawable/button_bg_userhome_friend">
+            <ImageView
+                android:id="@+id/img_user_home_friend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dimen_10"
+                android:src="@drawable/image_add" />
 
             <TextView
                 android:id="@+id/tv_user_home_friend"
@@ -69,15 +79,8 @@
                 android:textColor="@color/white"
                 android:textSize="15sp" />
 
-            <ImageView
-                android:id="@+id/img_user_home_friend"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/dimen_10"
-                android:layout_toLeftOf="@id/tv_user_home_friend"
-                android:src="@drawable/image_add" />
-        </RelativeLayout>
+
+        </LinearLayout>
     </LinearLayout>
 
 

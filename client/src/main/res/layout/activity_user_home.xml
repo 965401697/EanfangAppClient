@@ -21,16 +21,24 @@
         android:paddingBottom="@dimen/dimen_56">
 
 
-        <RelativeLayout
-            android:id="@+id/rl_user_home_concern"
+        <LinearLayout
+            android:id="@+id/ll_user_home_concern"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="@dimen/dimen_280"
             android:layout_height="@dimen/dimen_88"
             android:layout_marginLeft="@dimen/dimen_36"
             android:layout_marginRight="@dimen/dimen_45"
             android:layout_weight="1"
-            android:gravity="center"
-            android:background="@drawable/bg_button_selector_userhome_follow">
+            android:background="@drawable/bg_button_selector_userhome_follow"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/img_user_home_concern"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dimen_10"
+                android:src="@drawable/image_add" />
 
             <TextView
                 android:id="@+id/tv_user_home_concern"
@@ -40,26 +48,25 @@
                 android:text="关注"
                 android:textColor="@color/white"
                 android:textSize="15sp" />
+        </LinearLayout>
 
-            <ImageView
-                android:id="@+id/img_user_home_concern"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/dimen_10"
-                android:layout_toLeftOf="@id/tv_user_home_concern"
-                android:src="@drawable/image_add" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:id="@+id/rl_user_home_friend"
+        <LinearLayout
+            android:id="@+id/ll_user_home_friend"
             android:layout_width="@dimen/dimen_280"
             android:layout_height="@dimen/dimen_88"
             android:layout_marginLeft="@dimen/dimen_45"
             android:layout_marginRight="@dimen/dimen_36"
             android:layout_weight="1"
-            android:gravity="center"
-            android:background="@drawable/button_bg_user_home_selected">
+            android:background="@drawable/button_bg_user_home_selected"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/img_user_home_friend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/dimen_10"
+                android:src="@drawable/image_add" />
 
             <TextView
                 android:id="@+id/tv_user_home_friend"
@@ -69,16 +76,7 @@
                 android:text="加好友"
                 android:textColor="@color/white"
                 android:textSize="15sp" />
-
-            <ImageView
-                android:id="@+id/img_user_home_friend"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/dimen_10"
-                android:layout_toLeftOf="@id/tv_user_home_friend"
-                android:src="@drawable/image_add" />
-        </RelativeLayout>
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -108,10 +106,10 @@
                     android:layout_width="@dimen/dimen_182"
                     android:layout_height="@dimen/dimen_182"
                     android:layout_centerInParent="true"
-                    android:scaleType="centerCrop"
-                    fresco:placeholderImage="@mipmap/ic_header_userinfo"
                     android:background="@drawable/bg_user_home_circle_head"
                     android:padding="@dimen/dimen_10"
+                    android:scaleType="centerCrop"
+                    fresco:placeholderImage="@mipmap/ic_header_userinfo"
                     fresco:roundAsCircle="true" />
 
             </RelativeLayout>
