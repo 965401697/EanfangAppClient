@@ -11,6 +11,7 @@ import com.eanfang.model.DesignOrderListBean;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
+import com.yaf.base.entity.RepairOrderEntity;
 
 import net.eanfang.client.ui.activity.worksapce.DesignOrderListActivity;
 import net.eanfang.client.ui.adapter.DesignOrderAdapter;
@@ -53,6 +54,9 @@ public class DesignOrderListFragment extends TemplateItemListFragment {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if (PermKit.get().getDesignDetailPrem()) {
+                    //刷新已读未读
+                    ((DesignOrderListBean.ListBean) adapter.getData().get(position)).setNewOrder(0);
+                    adapter.notifyItemChanged(position);
                     new LookDesignOrderInfoView(getActivity(), true, ((DesignOrderListBean.ListBean) adapter.getData().get(position)).getId()).show();
                 }
             }

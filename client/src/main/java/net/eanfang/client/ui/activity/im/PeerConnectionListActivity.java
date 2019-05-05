@@ -1,5 +1,7 @@
 package net.eanfang.client.ui.activity.im;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,9 +33,10 @@ import butterknife.ButterKnife;
 public class PeerConnectionListActivity extends BaseClientActivity {
     private static final String TAG = "ConnectionListActivity";
     /**
-     * 加载更多数据的最少个数
+     * 带返回值请求用户首页code
      */
-    private static final int LOAD_MORE_LEAST_SIZE = 10;
+    private static final int REQUEST_USER_HOME_CODE = 1;
+
     @BindView(R.id.recycler_view_connectionList)
     RecyclerView mRecyclerViewConnectionList;
 
@@ -59,17 +62,17 @@ public class PeerConnectionListActivity extends BaseClientActivity {
      */
     private Button mBtnFollow;
 
+    /**
+     * 当前item位置
+     */
+    private int mClickPosition = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_peer_connection_list);
         ButterKnife.bind(this);
         initView();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
         initDate();
     }
 
@@ -87,7 +90,7 @@ public class PeerConnectionListActivity extends BaseClientActivity {
                     if (mListBean != null && mListBean.getDefaultUser() != null) {
                         PeerConnectionDataBean.ListBean.DefaultUserBean defaultUserBean = mListBean.getDefaultUser();
                         changeFollowStatus(defaultUserBean.getAccId(), defaultUserBean.getUserId(), defaultUserBean.getCompanyId(),
-                                defaultUserBean.getTopCompanyId(), defaultUserBean.getFollowStatus());
+                                defaultUserBean.getTopCompanyId(), defaultUserBean.getFollowStatus(), position);
                     }
                     break;
                 default:
@@ -96,10 +99,13 @@ public class PeerConnectionListActivity extends BaseClientActivity {
         });
 
         mPeerConnectionListAdapter.setOnItemClickListener((adapter, view, position) -> {
+            mClickPosition = position;
             PeerConnectionDataBean.ListBean bean = (PeerConnectionDataBean.ListBean)
                     adapter.getItem(position);
             if (bean != null) {
-                UserHomeActivity.startActivity(PeerConnectionListActivity.this, bean.getAccId());
+                Intent intent = new Intent(PeerConnectionListActivity.this, UserHomeActivity.class);
+                intent.putExtra(UserHomeActivity.EXTRA_ACCID, bean.getAccId());
+                startActivityForResult(intent, REQUEST_USER_HOME_CODE);
             }
         });
 
@@ -114,7 +120,7 @@ public class PeerConnectionListActivity extends BaseClientActivity {
 
     private void initDate() {
         QueryEntry entry = new QueryEntry();
-        entry.setSize(LOAD_MORE_LEAST_SIZE);
+        entry.setSize(50);
         entry.setPage(mCurrPage);
         EanfangHttp.post(UserApi.POST_CONNECTIONS_LIST)
                 .upJson(JsonUtils.obj2String(entry))
@@ -131,7 +137,7 @@ public class PeerConnectionListActivity extends BaseClientActivity {
                         mPeerConnectionListAdapter.addData(bean.getList());
                     }
                     mPeerConnectionListAdapter.loadMoreComplete();
-                    if (bean.getList().size() < LOAD_MORE_LEAST_SIZE) {
+                    if (bean.getCurrPage() >= mTotalPage) {
                         mPeerConnectionListAdapter.loadMoreEnd();
                     }
                 }));
@@ -140,20 +146,34 @@ public class PeerConnectionListActivity extends BaseClientActivity {
     /**
      * 改变关注按钮显示
      *
-     * @param doFollow 1 加关注  0 取消关注
+     * @param doFollow    1 加关注  0 取消关注
+     * @param changeIndex 修改item的下标
      */
-    private void changeBtnShow(int doFollow) {
+    private void changeBtnShow(int doFollow, int changeIndex) {
         if (doFollow == 1) {
             mBtnFollow.setSelected(false);
             mBtnFollow.setText("已关注");
             if (mListBean != null && mListBean.getDefaultUser() != null) {
                 mListBean.getDefaultUser().setFollowStatus(0);
             }
+            mPeerConnectionListAdapter.remove(changeIndex);
         } else {
             mBtnFollow.setSelected(true);
             mBtnFollow.setText("+ 关注");
             if (mListBean != null && mListBean.getDefaultUser() != null) {
                 mListBean.getDefaultUser().setFollowStatus(1);
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK && data != null) {
+            boolean isFollow = data.getBooleanExtra(UserHomeActivity.RESULT_FOLLOW_STATE, true);
+            if (isFollow) {
+                mPeerConnectionListAdapter.remove(mClickPosition);
+                mPeerConnectionListAdapter.notifyDataSetChanged();
             }
         }
     }
@@ -165,9 +185,10 @@ public class PeerConnectionListActivity extends BaseClientActivity {
      * @param asCompanyId    被关注人公司id
      * @param asTopCompanyId 被关注人总公司id
      * @param doFollow       1：添加关注  0：取消关注
+     * @param changeIndex    修改item的下标
      */
     private void changeFollowStatus(String asAccId, String asUserId, String asCompanyId,
-                                    String asTopCompanyId, int doFollow) {
+                                    String asTopCompanyId, int doFollow, int changeIndex) {
         Log.d(TAG, "changeFollowStatus: asAccId " + asAccId + "asUserId:" + asUserId + "  asCompanyId:" + asCompanyId
                 + "  asTopCompanyId:" + asTopCompanyId + "  doFollow:" + doFollow);
         EanfangHttp.post(UserApi.POST_CHANGE_FOLLOW_STATUS)
@@ -178,7 +199,7 @@ public class PeerConnectionListActivity extends BaseClientActivity {
                 .params("followStatus", String.valueOf(doFollow))
                 .execute(new EanfangCallback(this, true, JSONObject.class, bean -> {
                     Log.d(TAG, "changeFollowStatus: 关注状态上传成功");
-                    changeBtnShow(doFollow);
+                    changeBtnShow(doFollow, changeIndex);
                     showToast(doFollow == 0 ? "取消关注成功" : "添加关注成功");
                 }));
     }

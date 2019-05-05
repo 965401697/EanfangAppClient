@@ -14,6 +14,7 @@ import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
+import com.yaf.base.entity.RepairOrderEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.install.InstallOrderDetailActivity;
@@ -61,6 +62,9 @@ public class WorkInstallListFragment extends TemplateItemListFragment {
                 case R.id.tv_look:
                     if (PermKit.get().getInstallDetailPrem()) {
                         Bundle bundle = new Bundle();
+                        //刷新已读未读
+                        ((WorkspaceInstallBean.ListBean) adapter.getData().get(position)).setNewOrder(0);
+                        adapter.notifyItemChanged(position);
                         bundle.putLong("orderId", bean.getId());
                         JumpItent.jump(getActivity(), InstallOrderDetailActivity.class, bundle);
                     }

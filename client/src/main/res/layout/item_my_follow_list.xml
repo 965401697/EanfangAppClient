@@ -16,6 +16,22 @@
         fresco:placeholderImage="@mipmap/ic_header"
         fresco:roundAsCircle="true" />
 
+    <Button
+        android:id="@+id/btn_follow_item_addOrCancel"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="@dimen/dimen_124"
+        android:layout_height="@dimen/dimen_48"
+        android:layout_marginRight="@dimen/dimen_26"
+        android:background="@drawable/btn_follow_selector"
+        android:gravity="center"
+        android:text="已关注"
+        android:textColor="@drawable/btn_textcolor_follow_selector"
+        android:textIsSelectable="false"
+        android:textSize="12sp"
+        fresco:layout_constraintBottom_toBottomOf="parent"
+        fresco:layout_constraintRight_toRightOf="parent"
+        fresco:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/tv_follow_item_name"
         android:layout_width="wrap_content"
@@ -37,6 +53,10 @@
         android:text="王璐"
         android:textColor="@color/color_text_default"
         android:textSize="13sp"
+        android:lines="1"
+        fresco:layout_constrainedWidth="true"
+        fresco:layout_constraintHorizontal_bias="0"
+        fresco:layout_constraintRight_toLeftOf="@id/btn_follow_item_addOrCancel"
         fresco:layout_constraintLeft_toRightOf="@id/iv_follow_item_header"
         fresco:layout_constraintTop_toBottomOf="@id/tv_follow_item_name" />
 
@@ -60,22 +80,6 @@
         android:layout_marginTop="@dimen/dimen_30"
         android:src="@drawable/icon_user_auth"
         fresco:layout_constraintLeft_toRightOf="@id/tv_follow_item_friendStatus"
-        fresco:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btn_follow_item_addOrCancel"
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_width="@dimen/dimen_124"
-        android:layout_height="@dimen/dimen_48"
-        android:layout_marginRight="@dimen/dimen_26"
-        android:background="@drawable/btn_follow_selector"
-        android:gravity="center"
-        android:text="已关注"
-        android:textColor="@drawable/btn_textcolor_follow_selector"
-        android:textIsSelectable="false"
-        android:textSize="12sp"
-        fresco:layout_constraintBottom_toBottomOf="parent"
-        fresco:layout_constraintRight_toRightOf="parent"
         fresco:layout_constraintTop_toTopOf="parent" />
 
     <ImageView

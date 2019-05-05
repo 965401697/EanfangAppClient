@@ -16,31 +16,6 @@
         fresco:placeholderImage="@mipmap/ic_header"
         fresco:roundAsCircle="true" />
 
-    <TextView
-        android:id="@+id/tv_connection_item_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen_24"
-        android:layout_marginTop="@dimen/dimen_30"
-        android:text="王璐"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        fresco:layout_constraintLeft_toRightOf="@id/iv_connection_item_header"
-        fresco:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tv_connection_item_company"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dimen_24"
-        android:layout_marginTop="@dimen/dimen_4"
-        android:text="王璐"
-        android:textColor="@color/color_text_default"
-        android:textSize="13sp"
-        fresco:layout_constraintLeft_toRightOf="@id/iv_connection_item_header"
-        fresco:layout_constraintTop_toBottomOf="@id/tv_connection_item_name" />
-
-
     <Button
         android:id="@+id/btn_connection_item_addOrCancel"
         style="?android:attr/borderlessButtonStyle"
@@ -55,6 +30,38 @@
         fresco:layout_constraintBottom_toBottomOf="parent"
         fresco:layout_constraintRight_toRightOf="parent"
         fresco:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_connection_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_24"
+        android:layout_marginTop="@dimen/dimen_30"
+        android:lines="1"
+        android:text="王璐"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        fresco:layout_constrainedWidth="true"
+        fresco:layout_constraintHorizontal_bias="0"
+        fresco:layout_constraintLeft_toRightOf="@id/iv_connection_item_header"
+        fresco:layout_constraintRight_toLeftOf="@id/btn_connection_item_addOrCancel"
+        fresco:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_connection_item_company"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_24"
+        android:layout_marginTop="@dimen/dimen_4"
+        android:lines="1"
+        android:text="王璐"
+        android:textColor="@color/color_text_default"
+        android:textSize="13sp"
+        fresco:layout_constrainedWidth="true"
+        fresco:layout_constraintHorizontal_bias="0"
+        fresco:layout_constraintLeft_toRightOf="@id/iv_connection_item_header"
+        fresco:layout_constraintRight_toLeftOf="@id/btn_connection_item_addOrCancel"
+        fresco:layout_constraintTop_toBottomOf="@id/tv_connection_item_name" />
 
     <ImageView
         android:layout_width="match_parent"
