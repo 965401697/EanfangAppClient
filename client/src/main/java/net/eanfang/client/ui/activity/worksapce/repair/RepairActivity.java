@@ -330,6 +330,9 @@ public class RepairActivity extends BaseClientActivity {
                             intent_scan.putExtra("topInfo", repairPersonalInfoEntity);
                             intent_scan.putExtra("bean", doQrFillBean());
                             intent_scan.putExtra("doorFee", bean.getDoorFee());
+                            intent_scan.putExtra("headUrl", getIntent().getStringExtra("headUrl"));
+                            intent_scan.putExtra("workName", getIntent().getStringExtra("workName"));
+                            intent_scan.putExtra("companyName", getIntent().getStringExtra("companyName"));
                             startActivity(intent_scan);
                         } else {
                             Intent intent = new Intent(RepairActivity.this, SelectWorkerActivity.class);

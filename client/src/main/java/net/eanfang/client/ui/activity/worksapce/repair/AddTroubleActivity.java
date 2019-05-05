@@ -393,7 +393,9 @@ public class AddTroubleActivity extends BaseClientActivity {
                     if (isAgainAdd) {
                         doCleanAllValue();
                     } else {
-                        mOwnerOrgId = bean.getOwnerOrgId();
+                        if (bean != null) {
+                            mOwnerOrgId = bean.getOwnerOrgId();
+                        }
                         doTranValue();
                     }
                 }));
@@ -409,6 +411,9 @@ public class AddTroubleActivity extends BaseClientActivity {
         intent.putExtras(bundle);
         bundle.putString("qrcode", getIntent().getStringExtra("qrcode"));
         bundle.putSerializable("repairbean", getIntent().getSerializableExtra("repairbean"));
+        bundle.putString("headUrl", getIntent().getStringExtra("headUrl"));
+        bundle.putString("workName", getIntent().getStringExtra("workName"));
+        bundle.putString("companyName", getIntent().getStringExtra("companyName"));
         /**
          * 故障列表页面添加
          * */

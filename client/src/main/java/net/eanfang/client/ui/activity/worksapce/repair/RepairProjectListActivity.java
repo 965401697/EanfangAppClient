@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.TextView;
 
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
@@ -35,6 +37,8 @@ public class RepairProjectListActivity extends BaseActivity {
     private static final int REQUEST_ADD_PROJECT_NAME = 1008;
     @BindView(R.id.rv_projectList)
     RecyclerView rvProjectList;
+    @BindView(R.id.tv_nodata)
+    TextView tvNodata;
     private RepairProjectListAdapter projectListAdapter;
     private List<ProjectEntity> mProjectList;
 
@@ -73,9 +77,14 @@ public class RepairProjectListActivity extends BaseActivity {
         EanfangHttp.post(NewApiService.REPAIR_PROJECT_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<ProjectListBean>(RepairProjectListActivity.this, false, ProjectListBean.class, (bean) -> {
-                    if (bean.getList() != null) {
+                    if (bean.getList() != null && bean.getList().size() > 0) {
                         mProjectList = bean.getList();
                         projectListAdapter.setNewData(mProjectList);
+                        rvProjectList.setVisibility(View.VISIBLE);
+                        tvNodata.setVisibility(View.GONE);
+                    } else {
+                        rvProjectList.setVisibility(View.GONE);
+                        tvNodata.setVisibility(View.VISIBLE);
                     }
                 }));
     }

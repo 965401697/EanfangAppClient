@@ -313,14 +313,17 @@ public class WorkerDetailActivity extends BaseClientActivity {
                 intent = new Intent(WorkerDetailActivity.this, AddTroubleActivity.class);
                 intent.putExtra("qrcode", "scaning");
                 intent.putExtra("repairbean", mScanRepairBean);
-            } else {
-                intent = new Intent(WorkerDetailActivity.this, OrderConfirmActivity.class);
-                intent.putExtra("bean", toRepairBean);
                 intent.putExtra("headUrl", headUrl);
-                intent.putExtra("topInfo", repairPersonalInfoEntity);
                 intent.putExtra("workName", workerName);
                 intent.putExtra("companyName", comapnyName);
+            } else {
+                intent = new Intent(WorkerDetailActivity.this, OrderConfirmActivity.class);
+                intent.putExtra("topInfo", repairPersonalInfoEntity);
+                intent.putExtra("bean", toRepairBean);
                 intent.putExtra("doorFee", getIntent().getIntExtra("doorFee", 0));
+                intent.putExtra("headUrl", headUrl);
+                intent.putExtra("workName", workerName);
+                intent.putExtra("companyName", comapnyName);
             }
             startActivity(intent);
             finishSelf();
