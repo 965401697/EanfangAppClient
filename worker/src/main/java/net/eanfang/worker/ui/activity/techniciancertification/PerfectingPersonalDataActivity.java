@@ -1,13 +1,9 @@
 package net.eanfang.worker.ui.activity.techniciancertification;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.icu.text.DateFormat;
 import android.icu.text.SimpleDateFormat;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
@@ -17,7 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
@@ -32,6 +27,7 @@ import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
+import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
@@ -43,8 +39,8 @@ import com.yaf.sys.entity.UserEntity;
 
 import net.eanfang.worker.R;
 
-import java.text.ParseException;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -93,7 +89,7 @@ public class PerfectingPersonalDataActivity extends BaseActivityWithTakePhoto {
     private String itemzone;
     private String areaCode = "";
     private Date date;
-    private String content = "";
+
 
     /**
      * 地址回掉code
@@ -109,7 +105,7 @@ public class PerfectingPersonalDataActivity extends BaseActivityWithTakePhoto {
         initView();
     }
 
-    @TargetApi(Build.VERSION_CODES.N)
+
     private void initView() {
         setLeftBack();
         setTitle("个人资料");
@@ -158,7 +154,7 @@ public class PerfectingPersonalDataActivity extends BaseActivityWithTakePhoto {
         }
         if (accountEntity.getBirthday() != null) {
             date = accountEntity.getBirthday();
-            srEt.setText(new SimpleDateFormat("yyyyMMdd").format(date));
+            srEt.setText(new SimpleDateFormat("yyyy年MM月dd日").format(date));
         }
         etCardId.setText(EanfangApplication.get().getUser().getAccount().getIdCard());
         //0女1男
@@ -210,29 +206,16 @@ public class PerfectingPersonalDataActivity extends BaseActivityWithTakePhoto {
         });
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
+
     private void setRq() {
         View view = getLayoutInflater().inflate(R.layout.activity_dialog_date, null);
         CalendarView datePicker = (CalendarView) view.findViewById(R.id.calendarView);
-        datePicker.setDate(19991010);
         datePicker.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
-            content = year + (month + 1) + dayOfMonth+"";
-            Log.d("567481566", "onSelectedDayChange: " + content);
-            Toast.makeText(PerfectingPersonalDataActivity.this, "你选择了:\n" + content, Toast.LENGTH_SHORT).show();
+            date = new GregorianCalendar(year, month, dayOfMonth).getTime();
+            srEt.setText(GetDateUtils.dateToDateString(date));
         });
         new AlertDialog.Builder(this).setView(view).setCancelable(false).setPositiveButton("确定", (dialogInterface, i) -> {
-            if (content.equals("")) {
-                showToast("请选择日期");
-            } else {
-                DateFormat df = new SimpleDateFormat("yyyyMMdd");
-                try {
-                    date = df.parse(content);
-                } catch (ParseException pe) {
-                    System.out.println(pe.getMessage());
-                }
-                srEt.setText(new SimpleDateFormat("yyyyMMdd").format(date));
-                dialogInterface.dismiss();
-            }
+            dialogInterface.dismiss();
         }).show();
     }
 
@@ -272,18 +255,10 @@ public class PerfectingPersonalDataActivity extends BaseActivityWithTakePhoto {
             showToast("请输入生日");
             return;
         }
-
-
         if (StringUtils.isEmpty(info)) {
             showToast("请输入个人简介");
             return;
         }
-        try {
-            accountEntity.setBirthday(new SimpleDateFormat("yyyy-MM-dd").parse(dqDzEtS));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
         accountEntity.setBirthday(date);
         accountEntity.setRealName(tvContactNames);
         accountEntity.setAddress(dqDzEtS);
@@ -299,7 +274,6 @@ public class PerfectingPersonalDataActivity extends BaseActivityWithTakePhoto {
         accountEntity.setAccId(EanfangApplication.get().getAccId());
         LoginBean loginBean = new LoginBean();
         loginBean.setAccount(accountEntity);
-        Log.d("78987", "setData: " + accountEntity.getNickName() + "  " + accountEntity.getPersonalNote() + JSONObject.toJSONString(loginBean) + "\n" + UserApi.BC_GR_ZL);
         EanfangHttp.post(UserApi.BC_GR_ZL).upJson(JSONObject.toJSONString(accountEntity)).execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
             LoginBean user = EanfangApplication.get().getUser();
             AccountEntity accountEntity1 = user.getAccount();
