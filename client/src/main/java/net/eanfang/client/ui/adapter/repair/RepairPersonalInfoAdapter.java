@@ -1,5 +1,7 @@
 package net.eanfang.client.ui.adapter.repair;
 
+import android.widget.CheckBox;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.model.reapair.RepairPersonalInfoEntity;
@@ -25,6 +27,7 @@ public class RepairPersonalInfoAdapter extends BaseQuickAdapter<RepairPersonalIn
 
     @Override
     protected void convert(BaseViewHolder helper, RepairPersonalInfoEntity.ListBean item) {
+        CheckBox cbDefault = helper.getView(R.id.cb_default);
         //姓名
         helper.setText(R.id.tv_name, item.getName());
         // 性别0女1男
@@ -35,9 +38,11 @@ public class RepairPersonalInfoAdapter extends BaseQuickAdapter<RepairPersonalIn
             helper.setVisible(R.id.tv_default, false);
             helper.setChecked(R.id.cb_default, false);
             helper.addOnClickListener(R.id.cb_default);
+            cbDefault.setEnabled(true);
         } else {
             helper.setVisible(R.id.tv_default, true);
             helper.setChecked(R.id.cb_default, true);
+            cbDefault.setEnabled(false);
         }
         // 电话
         helper.setText(R.id.tv_phone, item.getPhone());

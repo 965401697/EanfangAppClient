@@ -158,11 +158,11 @@ public class RepairPersonInfoListActivity extends BaseActivity {
                         tvNodata.setVisibility(View.GONE);
                         repairPersonalInfoEntities = bean.getList();
                         repairPersonalInfoAdapter.setNewData(repairPersonalInfoEntities);
+                        repairPersonalInfoAdapter.notifyDataSetChanged();
                     } else {
                         rvPersonalInfo.setVisibility(View.GONE);
                         tvNodata.setVisibility(View.VISIBLE);
                     }
-
                 }));
     }
 

@@ -177,7 +177,7 @@ public class RepairInfoEditActivity extends BaseActivity implements RadioGroup.O
             return false;
         }
 
-        if (StringUtils.isEmpty(etCompanyName.getText().toString().trim())) {
+        if (StringUtils.isEmpty(etName.getText().toString().trim())) {
             showToast("请输入联系人姓名");
             return false;
         }
