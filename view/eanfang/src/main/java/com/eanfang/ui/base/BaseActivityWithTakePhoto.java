@@ -7,6 +7,7 @@ package com.eanfang.ui.base;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -25,6 +26,8 @@ import android.widget.Toast;
 
 import com.eanfang.R;
 import com.eanfang.application.CustomeApplication;
+import com.eanfang.kit.imagechoose.IImageChooseCallBack;
+import com.eanfang.kit.imagechoose.ImageChooseManager;
 import com.eanfang.util.ETimeUtils;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.ToastUtil;
@@ -33,6 +36,8 @@ import com.jph.takephoto.compress.CompressConfig;
 import com.jph.takephoto.model.CropOptions;
 import com.jph.takephoto.model.TResult;
 import com.jph.takephoto.model.TakePhotoOptions;
+import com.luck.picture.lib.config.PictureConfig;
+import com.luck.picture.lib.entity.LocalMedia;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -40,6 +45,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 import java.util.Date;
+import java.util.List;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
@@ -334,4 +340,69 @@ public abstract class BaseActivityWithTakePhoto extends com.eanfang.takephoto.Ta
         }
     }
 
+    public void takePhoto(Activity activity,int resultCode,OnImageChooseCallBack onImageChooseCallBack){
+        setOnImageChooseCallBack(onImageChooseCallBack);
+        initDialogs(activity);
+    }
+    private void initDialogs(Context context) {
+        if (!((Activity) context).isFinishing()) {
+            builder = new AlertDialog.Builder(this)
+                    .setTitle("选择图片：")
+                    .setItems(new String[]{"相机", "图库"}, new android.content.DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch (which) {
+                                case 1:
+                                    imageChoose(false);
+                                    break;
+                                case 0:
+                                    imageChoose(true);
+                                    break;
+                                default:
+                                    break;
+                            }
+
+                        }
+                    });
+            builder.create().show();
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        ImageChooseManager.Builder().create().onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void imageChoose(boolean openCamera) {
+        ImageChooseManager.Builder()
+                .setOpenCamera(openCamera)
+                .setSelectionMode(PictureConfig.SINGLE)
+                .setCrop(true)
+                .setCompress(true)
+                .create()
+                .photoChoose(BaseActivityWithTakePhoto.this, new IImageChooseCallBack() {
+                    @Override
+                    public void onSuccess(List<LocalMedia> list) {
+                        if (list != null && list.size() > 0) {
+                            if (getOnImageChooseCallBack() != null) {
+                                OnImageChooseCallBack.onSuccess(list);
+                            }
+                        }
+                    }
+                });
+    }
+
+    OnImageChooseCallBack OnImageChooseCallBack;
+
+    public interface OnImageChooseCallBack {
+        void onSuccess(List<LocalMedia> list);
+    }
+
+    public void setOnImageChooseCallBack(OnImageChooseCallBack onImageChooseCallBack) {
+        OnImageChooseCallBack = onImageChooseCallBack;
+    }
+
+    public OnImageChooseCallBack getOnImageChooseCallBack() {
+        return OnImageChooseCallBack;
+    }
 }

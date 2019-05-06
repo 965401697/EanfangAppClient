@@ -19,6 +19,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import cn.hutool.core.io.FileUtil;
+
 import static com.eanfang.config.Config.VIDEO_STORAGE_DIR;
 
 /**
@@ -80,10 +82,11 @@ public class FileUtils {
      * 初始化文件夹目录
      */
     public static void initDirectory(String path) {
-        File f = new File(path);
+        File file=FileUtil.touch(path);
+        /*File f = new File(path);
         if (!f.exists()) {
             f.mkdirs();
-        }
+        }*/
     }
 
     /**
@@ -161,7 +164,8 @@ public class FileUtils {
      * @return
      */
     public static void deleteFile(String fileName) {
-        File f = new File(fileName);
+        FileUtil.del(fileName);
+     /*   File f = new File(fileName);
         if (f.exists()) {
             if (f.isFile()) {
                 f.delete();
@@ -171,7 +175,7 @@ public class FileUtils {
                     deleteFile(fileName + filelist[i]);
                 }
             }
-        }
+        }*/
     }
 
     public static void deleteFileDir(String fileName) {

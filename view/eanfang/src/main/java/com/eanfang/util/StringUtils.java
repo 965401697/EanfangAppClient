@@ -16,6 +16,8 @@ import java.util.TimerTask;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import cn.hutool.core.util.StrUtil;
+
 /**
  * @author wen
  *         Created at 2017/3/2
@@ -106,7 +108,8 @@ public class StringUtils {
      * @return
      */
     public static boolean isEmpty(CharSequence str) {
-        return TextUtils.isEmpty(str);
+//        return TextUtils.isEmpty(str);
+        return StrUtil.isEmpty(str);
     }
 
     /*

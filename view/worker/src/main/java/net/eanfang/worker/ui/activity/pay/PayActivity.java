@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.alipay.sdk.app.PayTask;
 import com.eanfang.apiservice.BaseService;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
@@ -22,12 +21,12 @@ import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WXPayBean;
+import com.eanfang.kit.sdk.SDKManager;
+import com.eanfang.kit.sdk.alisdk.alipay.IALiPayCallBack;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.MessageUtil;
 import com.eanfang.util.ToastUtil;
-import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
-import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.yaf.base.entity.PayLogEntity;
 
 import net.eanfang.worker.R;
@@ -201,18 +200,39 @@ public class PayActivity extends BaseWorkerActivity {
                         Log.e("info", sign);
                         //支付宝支付
                         String finalSign = sign;
-                        runOnUiThread(() -> {
+                        aliP(finalSign);
+                  /*      runOnUiThread(() -> {
                             PayTask payTask = new PayTask(PayActivity.this);
                             Map<String, String> result = payTask.payV2(finalSign, true);
                             Message msg = new Message();
                             msg.what = SDK_PAY_FLAG;
                             msg.obj = result;
                             mHandler.sendMessage(msg);
-                        });
+                        });*/
                     }
                 });
     }
 
+    private void aliP(String userInfo) {
+        SDKManager.getALipay().aLiPay(PayActivity.this, userInfo, true, new IALiPayCallBack() {
+            @Override
+            public void onSuccess() {
+                // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
+                ToastUtil.get().showToast(getApplicationContext(), "支付成功");
+            }
+
+            @Override
+            public void onFail(String msg) {
+                // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
+                ToastUtil.get().showToast(getApplicationContext(), "支付失败");
+            }
+
+            @Override
+            public void onCancel() {
+//                ToastUtil.get().showToast(getApplicationContext(), "支付取消");
+            }
+        });
+    }
     /**
      * 微信支付
      */
@@ -225,8 +245,7 @@ public class PayActivity extends BaseWorkerActivity {
                         super.onSuccess(bean);
                         wxPayBean = bean;
                         // Config.get().setAppId(wxPayBean.getAppid());
-
-                        final IWXAPI msgApi = WXAPIFactory.createWXAPI(PayActivity.this, null);
+                 /*       final IWXAPI msgApi = WXAPIFactory.createWXAPI(PayActivity.this, null);
                         // 将该app注册到微信
                         msgApi.registerApp(wxPayBean.getAppid());
                         PayReq request = new PayReq();
@@ -237,7 +256,10 @@ public class PayActivity extends BaseWorkerActivity {
 //                        request.nonceStr = wxPayBean.getNoncestr();
 //                        request.timeStamp = wxPayBean.getTimestamp();
                         request.sign = wxPayBean.getSign();
-                        msgApi.sendReq(request);
+                        msgApi.sendReq(request);*/
+                        IWXAPI iwxPayAPI=SDKManager.getWXPay().createWXAPI(PayActivity.this,null);
+                        iwxPayAPI.registerApp(wxPayBean.getAppid());
+                        SDKManager.getWXPay().wxPay(iwxPayAPI,bean.getAppid(),bean.getSign());
                     }
                 });
     }
