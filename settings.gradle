@@ -1,4 +1,3 @@
-include ':kit'
 include 'view:client', 'view:eanfang', 'view:worker'
 include 'biz:model', 'biz:rds'
 include 'base:network', 'base:kit'
