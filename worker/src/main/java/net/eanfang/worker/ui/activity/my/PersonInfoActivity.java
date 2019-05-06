@@ -36,6 +36,8 @@ import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
+import com.eanfang.util.contentsafe.ContentDefaultAuditing;
+import com.eanfang.util.contentsafe.ContentSecurityAuditUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jph.takephoto.model.TResult;
 import com.yaf.sys.entity.AccountEntity;
@@ -178,8 +180,17 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         });
         mTvBirthday.setOnClickListener(this::setBirthday);
         mImgCalendar.setOnClickListener(this::setBirthday);
-        mBtnBigSave.setOnClickListener(new MultiClickListener(this, this::checkInfo, this::submitSuccess));
         mTvToWorkerAuth.setSelected(true);
+        mBtnBigSave.setOnClickListener(v -> ContentSecurityAuditUtil.getInstance().toAuditing
+                (mEtPersonalNote.getText().toString(), new ContentDefaultAuditing(PersonInfoActivity.this) {
+                    @Override
+                    public void auditingSuccess() {
+                        if (checkInfo()) {
+                            submitSuccess();
+                        }
+                    }
+                })
+        );
     }
 
     private void initData() {
@@ -429,7 +440,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this,  new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 mTvBirthday.setText(GetDateUtils.dateToDateString(new GregorianCalendar

@@ -23,13 +23,14 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.listener.MultiClickListener;
 import com.eanfang.model.LoginBean;
 import com.eanfang.model.SelectAddressItem;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
+import com.eanfang.util.contentsafe.ContentDefaultAuditing;
+import com.eanfang.util.contentsafe.ContentSecurityAuditUtil;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.PermissionUtils;
@@ -166,7 +167,16 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         });
         mTvBirthday.setOnClickListener(this::setBirthday);
         mImgCalendar.setOnClickListener(this::setBirthday);
-        mTvSave.setOnClickListener(new MultiClickListener(this, this::checkInfo, this::submitSuccess));
+        mTvSave.setOnClickListener(v -> ContentSecurityAuditUtil.getInstance().toAuditing
+                (mEtPersonalNote.getText().toString(), new ContentDefaultAuditing(PersonInfoActivity.this) {
+                    @Override
+                    public void auditingSuccess() {
+                        if (checkInfo()) {
+                            submitSuccess();
+                        }
+                    }
+                })
+        );
         mTvDownloadWorker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

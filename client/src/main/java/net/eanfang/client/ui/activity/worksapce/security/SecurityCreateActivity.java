@@ -28,6 +28,8 @@ import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
+import com.eanfang.util.contentsafe.ContentDefaultAuditing;
+import com.eanfang.util.contentsafe.ContentSecurityAuditUtil;
 import com.eanfang.witget.TakeVideoPopWindow;
 import com.eanfang.witget.mentionedittext.edit.MentionEditText;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -138,10 +140,10 @@ public class SecurityCreateActivity extends BaseActivity {
                     char mentionChar = s.toString().charAt(start);
                     int selectionStart = etContent.getSelectionStart();
                     if (mentionChar == '@') {
-                        Bundle bundle_foucus = new Bundle();
-                        bundle_foucus.putString("type", "foucs");
-                        bundle_foucus.putBoolean("create", true);
-                        JumpItent.jump(SecurityCreateActivity.this, SecurityPersonalPublicListActivity.class, bundle_foucus, REQUEST_CODE_CHOOSE_VIDEO);
+                        Bundle bundleFoucus = new Bundle();
+                        bundleFoucus.putString("type", "foucs");
+                        bundleFoucus.putBoolean("create", true);
+                        JumpItent.jump(SecurityCreateActivity.this, SecurityPersonalPublicListActivity.class, bundleFoucus, REQUEST_CODE_CHOOSE_VIDEO);
                         etContent.getText().delete(selectionStart - 1, selectionStart);
                     }
                 }
@@ -164,22 +166,27 @@ public class SecurityCreateActivity extends BaseActivity {
         String mContent = etContent.getText().toString().trim();
         mPic = PhotoUtils.getPhotoUrl("sercurity/", snplAddPhoto, uploadMap, false);
         if (!StringUtils.isEmpty(mContent) || !StringUtils.isEmpty(mPic)) {
-            securityCreateBean.setSpcContent(mContent);
-            securityCreateBean.setSpcImg(mPic);
-            securityCreateBean.setSpcVideo(mUploadKey);
-            securityCreateBean.setAtUserId(mAtUserId.toString());
-            if (uploadMap.size() != 0) {
-                OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
-                    @Override
-                    public void onOssSuccess() {
-                        runOnUiThread(() -> {
-                            doSubmit();
+
+            ContentSecurityAuditUtil.getInstance().toAuditing(mContent, new ContentDefaultAuditing(SecurityCreateActivity.this) {
+                @Override
+                public void auditingSuccess() {
+                    securityCreateBean.setSpcContent(mContent);
+                    securityCreateBean.setSpcImg(mPic);
+                    securityCreateBean.setSpcVideo(mUploadKey);
+                    securityCreateBean.setAtUserId(mAtUserId.toString());
+                    if (uploadMap.size() != 0) {
+                        OSSUtils.initOSS(SecurityCreateActivity.this).asyncPutImages(uploadMap, new OSSCallBack(SecurityCreateActivity.this, true) {
+                            @Override
+                            public void onOssSuccess() {
+                                runOnUiThread(SecurityCreateActivity.this::doSubmit);
+                            }
                         });
+                    } else {
+                        doSubmit();
                     }
-                });
-            } else {
-                doSubmit();
-            }
+                }
+            });
+
         } else {
             showToast("请输入发布内容");
         }
@@ -228,9 +235,9 @@ public class SecurityCreateActivity extends BaseActivity {
             switch (view.getId()) {
                 // 拍摄
                 case R.id.tv_take:
-                    Bundle bundle_addvideo = new Bundle();
-                    bundle_addvideo.putString("videoPath", "addsecurity_" + new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-                    JumpItent.jump(SecurityCreateActivity.this, TakeVideoActivity.class, bundle_addvideo);
+                    Bundle bundleAddvideo = new Bundle();
+                    bundleAddvideo.putString("videoPath", "addsecurity_" + new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+                    JumpItent.jump(SecurityCreateActivity.this, TakeVideoActivity.class, bundleAddvideo);
                     takeVideoPopWindow.dismiss();
                     break;
                 // 相册选择
@@ -261,10 +268,10 @@ public class SecurityCreateActivity extends BaseActivity {
                 break;
             // 艾特人
             case R.id.iv_about:
-                Bundle bundle_foucus = new Bundle();
-                bundle_foucus.putString("type", "foucs");
-                bundle_foucus.putBoolean("create", true);
-                JumpItent.jump(SecurityCreateActivity.this, SecurityPersonalPublicListActivity.class, bundle_foucus, REQUEST_CODE_ABOUT);
+                Bundle bundleFoucus = new Bundle();
+                bundleFoucus.putString("type", "foucs");
+                bundleFoucus.putBoolean("create", true);
+                JumpItent.jump(SecurityCreateActivity.this, SecurityPersonalPublicListActivity.class, bundleFoucus, REQUEST_CODE_ABOUT);
                 break;
             case R.id.iv_question:
                 JumpItent.jump(SecurityCreateActivity.this, FreeAskActivity.class);

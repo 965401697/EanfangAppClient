@@ -146,4 +146,6 @@
     <string name="text_new_order_area1">地域：%1$s</string>
     <string name="text_new_order_time_end_get_file">获取招标文件截止时间：%1$s</string>
     <string name="text_new_order_screen_choose_area">已选%1$d个地区</string>
+    <string name="text_content_audit_fail">内容包括"\"%s\""未通过审核</string>
+
 </resources>
