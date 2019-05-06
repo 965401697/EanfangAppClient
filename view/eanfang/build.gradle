@@ -95,32 +95,22 @@ dependencies {
 
     implementation pkg.lombok
     annotationProcessor pkg.lombok
-
     api pkg.eventbus
     api pkg.fresco
     api pkg.stream
     api pkg.aliyunOss
     api pkg.material
     api pkg.cardview
-    api pkg.timelineview
-    api pkg.materialratingbar
-    api pkg.flowlayout
+
+
     //component
     api pkg.recyclerview
     api pkg.bgaBaseadapter
     api pkg.takephoto
     api pkg.cymChad
-    api pkg.badgeview
-    api pkg.prolificinteractive
     api pkg.treeRecyclerView
-    api pkg.flycoRoundView
-    api pkg.flycoTabLayout
-    api pkg.mPAndroidChart
     implementation pkg.statusbarutil
     implementation pkg.jiaozivideoplayer
-//    api pkg.numberprogressbar
-    api pkg.pictureselector
-
 
     //rx
     api pkg.rxjava2

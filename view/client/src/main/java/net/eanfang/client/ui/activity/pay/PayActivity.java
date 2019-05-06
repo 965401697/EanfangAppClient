@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.alipay.sdk.app.PayTask;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Constant;
@@ -25,8 +24,8 @@ import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WXPayBean;
-import com.eanfang.sdk.SDKManager;
-import com.eanfang.sdk.alisdk.alipay.IALiPayCallBack;
+import com.eanfang.kit.sdk.SDKManager;
+import com.eanfang.kit.sdk.alisdk.alipay.IALiPayCallBack;
 import com.eanfang.util.MessageUtil;
 import com.eanfang.util.ToastUtil;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
@@ -36,7 +35,6 @@ import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.FaPiaoActivity;
 import net.eanfang.client.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
-import net.eanfang.client.ui.base.ClientApplication;
 
 import java.util.List;
 import java.util.Map;

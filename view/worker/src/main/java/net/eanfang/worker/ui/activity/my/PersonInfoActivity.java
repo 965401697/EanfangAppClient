@@ -21,13 +21,14 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.kit.sdk.alisdk.alioss.OSSCallBack;
 import com.eanfang.listener.MultiClickListener;
 import com.eanfang.model.Message;
 import com.eanfang.model.SelectAddressItem;
 import com.eanfang.model.bean.LoginBean;
 import com.eanfang.model.sys.AccountEntity;
-import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
+import com.eanfang.sys.viewmodel.OSSViewModel;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.IDCardUtil;
@@ -37,9 +38,12 @@ import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jph.takephoto.model.TResult;
+import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.StateChangeActivity;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -134,7 +138,8 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         setLeftBack();
         rbMan.isChecked();
         llHeader.setOnClickListener(v -> {
-            takePhoto(PersonInfoActivity.this, HEAD_PHOTO);
+//            takePhoto(PersonInfoActivity.this, HEAD_PHOTO);
+            headImagechoose();
         });
         tvArea.setOnClickListener(v -> {
             Intent intent = new Intent(PersonInfoActivity.this, SelectAddressActivity.class);
@@ -142,6 +147,43 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         });
 
         setRightTitleOnClickListener(new MultiClickListener(this, this::checkInfo, this::submit));
+    }
+    private void headImagechoose() {
+        takePhoto(PersonInfoActivity.this, HEAD_PHOTO, new OnImageChooseCallBack() {
+            @Override
+            public void onSuccess(List<LocalMedia> list) {
+                getImage(list);
+            }
+        });
+    }
+
+    private void getImage(List<LocalMedia> list) {
+        OSSCallBack callback = null;
+        String imgKey = "account/" + UuidUtil.getUUID() + ".png";
+        if (list != null && list.size() > 0) {
+            LocalMedia media = list.get(0);
+            if (media.isCompressed()) {
+                ivUpload.setImageURI("file://" + media.getCompressPath());
+                callback = new OSSCallBack(this, true) {
+                    @Override
+                    public void onOssSuccess() {
+                        runOnUiThread(() -> {
+                            LoginBean entity = EanfangApplication.getApplication().getUser();
+                            entity.getAccount().setAvatar(imgKey);
+                            path = entity.getAccount().getAvatar();
+                        });
+
+                    }
+                };
+                OSSViewModel ossViewModel=new OSSViewModel();
+                ossViewModel.getToken(this,imgKey,media.getCompressPath(),callback);
+//                ossRepo.getToken().observe(bean-> SDKManager.getIOSS().initOSS(,bean).);
+//                SDKManager.getIOSS().initOSS(this).asyncPutImage(imgKey, media.getCompressPath(), callback);
+
+            }
+
+        }
+
     }
 
 
@@ -229,7 +271,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
             default:
                 break;
         }
-        OSSUtils.initOSS(this).asyncPutImage(imgKey, result.getImage().getOriginalPath(), callback);
+//        OSSUtils.initOSS(this).asyncPutImage(imgKey, result.getImage().getOriginalPath(), callback);
 
 
     }

@@ -34,4 +34,29 @@ dependencies {
     implementation pkg.disklrucache
     implementation pkg.hutoolCore
     implementation pkg.fastjson
+
+    api pkg.pictureselector
+    api pkg.badgeview
+    api pkg.prolificinteractive
+    api pkg.flycoRoundView
+    api pkg.flycoTabLayout
+    api pkg.materialratingbar
+    api pkg.mPAndroidChart
+    api pkg.timelineview
+    implementation pkg.update
+    api pkg.flowlayout
+    api pkg.aliyunOss
+    api pkg.eventbus
+    implementation pkg.lombok
+    annotationProcessor pkg.lombok
+    implementation pkg.luban
+    api pkg.stream
+    implementation project(':base:network')
+    api pkg.bugly
+    api pkg.wechat
+    api pkg.xinge
+    api pkg.xghw
+    api pkg.mipush
+    api pkg.xgmz
+
 }
