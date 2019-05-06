@@ -125,21 +125,22 @@
                         android:textStyle="bold"
                         android:textColor="@color/colorPrimary"
                         android:textSize="14sp" />
+
                     <TextView
                         android:id="@+id/tv_des"
                         android:layout_width="@dimen/dimen_160"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:layout_marginTop="@dimen/dimen_6"
-                        android:padding="@dimen/dimen_14"
                         android:layout_below="@id/show_more_tv"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentBottom="true"
+                        android:layout_marginTop="@dimen/dimen_6"
                         android:background="@drawable/bg_gradual_change_ellipse"
-                        android:text="去认证"
-                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:padding="@dimen/dimen_14"
+                        android:text="去认证→"
                         android:textColor="@color/white"
-                        android:textSize="14sp" />
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
                 </RelativeLayout>
 
 
@@ -327,6 +328,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:scaleType="centerCrop"
-        android:src="@mipmap/ic_client_circle" />
+        android:src="@mipmap/qyrzdbiv" />
 
 </LinearLayout>

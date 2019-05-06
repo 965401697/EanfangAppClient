@@ -28,7 +28,7 @@
         app:tvImageHeight="@dimen/app_sy_wq_tv_lr_size"
         app:tvImageWidth="@dimen/app_sy_wq_tv_lr_size"
         app:tvLeftImage="@mipmap/gs_qyrz"
-        app:tvRightImage="@mipmap/ic_icon_right" />
+        app:tvRightImage="@mipmap/jtriv" />
 
     <Space
         android:layout_width="match_parent"
@@ -48,7 +48,7 @@
         app:tvImageHeight="@dimen/app_sy_wq_tv_lr_size"
         app:tvImageWidth="@dimen/app_sy_wq_tv_lr_size"
         app:tvLeftImage="@mipmap/fw_qyrz"
-        app:tvRightImage="@mipmap/ic_icon_right" />
+        app:tvRightImage="@mipmap/jtriv" />
 
     <Space
         android:layout_width="match_parent"
@@ -68,7 +68,7 @@
         app:tvImageHeight="@dimen/app_sy_wq_tv_lr_size"
         app:tvImageWidth="@dimen/app_sy_wq_tv_lr_size"
         app:tvLeftImage="@mipmap/ry_qyrz"
-        app:tvRightImage="@mipmap/ic_icon_right" />
+        app:tvRightImage="@mipmap/jtriv" />
 
     <Space
         android:layout_width="match_parent"
@@ -88,7 +88,7 @@
         app:tvImageHeight="@dimen/app_sy_wq_tv_lr_size"
         app:tvImageWidth="@dimen/app_sy_wq_tv_lr_size"
         app:tvLeftImage="@mipmap/gd_qyrz"
-        app:tvRightImage="@mipmap/ic_icon_right" />
+        app:tvRightImage="@mipmap/jtriv" />
 
     <Space
         android:layout_width="match_parent"

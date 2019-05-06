@@ -46,7 +46,6 @@
         </LinearLayout>
 
         <View style="@style/style_common_line_gray" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -60,7 +59,40 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="发证机构"
+                android:text="证书编号"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_14" />
+
+            <EditText
+                android:id="@+id/et_num"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="right"
+                android:hint="请输入"
+                android:inputType="number"
+                android:maxLength="11"
+                android:textColor="@color/color_bottom"
+                android:textSize="@dimen/textSize_13" />
+        </LinearLayout>
+
+        <View style="@style/style_common_line_gray" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/dimen_20"
+            android:paddingLeft="@dimen/dimen_36"
+            android:paddingRight="@dimen/dimen_34"
+            android:paddingTop="@dimen/dimen_20">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="颁发机构"
                 android:textColor="@color/color_client_neworder"
                 android:textSize="@dimen/textSize_14" />
 
@@ -115,39 +147,7 @@
 
         <View style="@style/style_common_line_gray" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="horizontal"
-            android:paddingBottom="@dimen/dimen_20"
-            android:paddingLeft="@dimen/dimen_36"
-            android:paddingRight="@dimen/dimen_34"
-            android:paddingTop="@dimen/dimen_20">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="证书编号"
-                android:textColor="@color/color_client_neworder"
-                android:textSize="@dimen/textSize_14" />
-
-            <EditText
-                android:id="@+id/et_num"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
-                android:layout_weight="1"
-                android:background="@null"
-                android:gravity="right"
-                android:hint="请输入"
-                android:inputType="number"
-                android:maxLength="11"
-                android:textColor="@color/color_bottom"
-                android:textSize="@dimen/textSize_13" />
-        </LinearLayout>
-
-        <View style="@style/style_common_line_gray" />
 
         <LinearLayout
             android:id="@+id/ll_begin_date"
@@ -163,7 +163,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="开始时间"
+                android:text="有效期起"
                 android:textColor="@color/color_client_neworder"
                 android:textSize="@dimen/textSize_14" />
 
@@ -196,7 +196,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="结束时间"
+                android:text="有效期止"
                 android:textColor="@color/color_client_neworder"
                 android:textSize="@dimen/textSize_14" />
 
@@ -227,7 +227,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dimen_30"
-                android:text="证书照片"
+                android:text="证书"
                 android:textColor="@color/color_client_neworder"
                 android:textSize="@dimen/textSize_15" />
 

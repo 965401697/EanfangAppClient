@@ -45,6 +45,8 @@ android {
 //            buildConfigField("String", "API_HOST", "\"http://192.168.0.222:8080\"")
 //            buildConfigField("String", "HOST", "\"http://192.168.0.106:8080\"")
 //            buildConfigField("String", "API_HOST", "\"http://192.168.0.106:8080\"")
+//            buildConfigField("String", "HOST", "\"http://192.168.0.104:8080\"")
+//            buildConfigField("String", "API_HOST", "\"http://192.168.0.104:8080\"")
             buildConfigField("String", "HOST", "\"http://api.beta.eanfang.net\"")
             buildConfigField("String", "API_HOST", "\"http://api.beta.eanfang.net\"")
 //            buildConfigField("String", "HOST", "\"http://ifb.ngrok.eanfang.net:89\"")

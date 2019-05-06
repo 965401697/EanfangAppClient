@@ -123,8 +123,7 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
     }
 
     private void initData() {
-        EanfangHttp.get(UserApi.GET_COMPANY_ORG_INFO + orgid)
-                .execute(new EanfangCallback<AuthCompanyBaseInfoBean>(this, true, AuthCompanyBaseInfoBean.class, (beans) -> {
+        EanfangHttp.get(UserApi.GET_COMPANY_ORG_INFO + orgid).execute(new EanfangCallback<AuthCompanyBaseInfoBean>(this, true, AuthCompanyBaseInfoBean.class, (beans) -> {
                     initSystemData();
                     initBusinessData();
                     initBaseInfo();

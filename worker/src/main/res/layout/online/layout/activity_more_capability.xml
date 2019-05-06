@@ -36,7 +36,7 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/dimen_20"
                     android:text="施工组织能力"
-                    android:textColor="@color/color_service_tel"
+                    android:textColor="#333333"
                     android:textSize="16sp" />
 
                 <Space
@@ -50,12 +50,12 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginRight="@dimen/dimen_20"
-                    android:background="@drawable/bg_gradual_change_ellipse"
+                    android:background="@drawable/bg_gradual_change_ellipse_b"
                     android:gravity="center"
-                    android:padding="@dimen/dimen_10"
+                    android:padding="@dimen/dimen_6"
                     android:text="  + 添加  "
                     android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
             <Space
                 android:layout_width="match_parent"
@@ -80,7 +80,7 @@
                 android:gravity="center"
                 android:padding="@dimen/dimen_20"
                 android:text="查看所有 ⇩"
-                android:textColor="@color/color_service_tel"
+                android:textColor="#999999"
                 android:textSize="16sp" />
 
             <LinearLayout
@@ -103,7 +103,7 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/dimen_20"
                     android:text="工具机械设备"
-                    android:textColor="@color/color_service_tel"
+                    android:textColor="#333333"
                     android:textSize="16sp" />
 
                 <Space
@@ -117,12 +117,12 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginRight="@dimen/dimen_20"
-                    android:background="@drawable/bg_gradual_change_ellipse"
+                    android:background="@drawable/bg_gradual_change_ellipse_b"
                     android:gravity="center"
-                    android:padding="@dimen/dimen_10"
+                    android:padding="@dimen/dimen_6"
                     android:text="  + 添加  "
                     android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    android:textSize="14sp" />
             </LinearLayout>
             <Space
                 android:layout_width="match_parent"
@@ -147,7 +147,7 @@
                 android:gravity="center"
                 android:padding="@dimen/dimen_20"
                 android:text="查看所有 ⇩"
-                android:textColor="@color/color_service_tel"
+                android:textColor="#999999"
                 android:textSize="16sp" />
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
