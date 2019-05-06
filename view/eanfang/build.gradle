@@ -118,6 +118,8 @@ dependencies {
     api pkg.mPAndroidChart
     implementation pkg.statusbarutil
     implementation pkg.jiaozivideoplayer
+//    api pkg.numberprogressbar
+    api pkg.pictureselector
 
 
     //rx

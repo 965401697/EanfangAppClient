@@ -12,13 +12,14 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.eanfang.config.EanfangConst;
+import com.eanfang.sdk.SDKManager;
 import com.eanfang.ui.base.BaseActivity;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
-import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
 
 import net.eanfang.client.ui.activity.pay.NewPayActivity;
 
@@ -34,8 +35,9 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        iwxapi = WXAPIFactory.createWXAPI(WXPayEntryActivity.this, EanfangConst.WX_APPID_CLIENT);
-        iwxapi.handleIntent(getIntent(), WXPayEntryActivity.this);
+        iwxapi=SDKManager.getWXPay().createWXAPI(this, EanfangConst.WX_APPID_CLIENT);
+        iwxapi.handleIntent(getIntent(),this);
+
     }
 
     @Override

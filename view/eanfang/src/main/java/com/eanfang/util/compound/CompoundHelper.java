@@ -8,9 +8,12 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.eanfang.BuildConfig;
 import com.eanfang.model.GroupDetailBean;
 
@@ -66,10 +69,9 @@ public class CompoundHelper {
         for (GroupDetailBean.ListBean b : bean.getList()) {
 
             //生成图片
-            Glide.with(context).load(BuildConfig.OSS_SERVER + b.getAccountEntity().getAvatar()).asBitmap().into(new SimpleTarget<Bitmap>() {
+            Glide.with(context).asBitmap().load(BuildConfig.OSS_SERVER + b.getAccountEntity().getAvatar()).into(new SimpleTarget<Bitmap>() {
                 @Override
-                public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-
+                public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                     synchronized (this) {
                         if (resource != null) {
                             bitmapList.add(resource);
@@ -137,12 +139,9 @@ public class CompoundHelper {
             } else {
                 imgUrl = BuildConfig.OSS_SERVER + b;
             }
-            //生成图片
-            Glide.with(context).load(imgUrl).asBitmap().into(new SimpleTarget<Bitmap>() {
-
+            SimpleTarget<Bitmap> simpleTarget=new SimpleTarget<Bitmap>() {
                 @Override
-                public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-
+                public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition transition) {
 
                     synchronized (this) {
                         if (resource != null) {
@@ -190,8 +189,8 @@ public class CompoundHelper {
                 }
 
                 @Override
-                public void onLoadFailed(Exception e, Drawable errorDrawable) {
-                    super.onLoadFailed(e, errorDrawable);
+                public void onLoadFailed(@Nullable Drawable errorDrawable) {
+                    super.onLoadFailed(errorDrawable);
                     num--;
                     if (num == 0) {
                         Log.e("zzw", "开始合成=" + num);
@@ -232,7 +231,9 @@ public class CompoundHelper {
                         threadPoolExecutor.execute(loadBitmapTask);
                     }
                 }
-            });
+            };
+            //生成图片
+            Glide.with(context).asBitmap().load(imgUrl).into( simpleTarget);
 
         }
     }

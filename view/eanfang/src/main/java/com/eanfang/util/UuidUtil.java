@@ -2,6 +2,8 @@ package com.eanfang.util;
 
 import java.util.UUID;
 
+import cn.hutool.core.util.IdUtil;
+
 /**
  * 生成随机UUID
  * Created by Administrator on 2017/3/20.
@@ -14,9 +16,10 @@ public class UuidUtil {
      * @return
      */
     public static String getUUID() {
-        UUID uuid = UUID.randomUUID();
+        /*UUID uuid = UUID.randomUUID();
         String str = uuid.toString();
         String uuidStr = str.replace("-", "");
-        return uuidStr;
+        return uuidStr;*/
+        return IdUtil.simpleUUID();
     }
 }

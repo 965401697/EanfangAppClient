@@ -6,12 +6,11 @@ import android.util.Log;
 import android.widget.RelativeLayout;
 
 import com.eanfang.application.EanfangApplication;
+import com.eanfang.sdk.SDKManager;
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.witget.SwitchButton;
-import com.tencent.android.tpush.XGPushManager;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.receiver.ReceiverInit;
 import net.eanfang.client.util.PrefUtils;
 
 import butterknife.BindView;
@@ -56,10 +55,10 @@ public class MessageStateView extends BaseDialog {
 
             if (!isChecked) {
                 Log.e("GG", "关闭推送");
-                XGPushManager.unregisterPush(mContext.getApplicationContext());
+                SDKManager.getXGPush(mContext).unregisterPush();
             } else {
                 Log.e("GG", "打开推送");
-                ReceiverInit.getInstance().inits(mContext, EanfangApplication.get().getUser().getAccount().getMobile());
+                SDKManager.getXGPush(mContext).registerPush(EanfangApplication.get().getUser().getAccount().getMobile());
             }
         });
 

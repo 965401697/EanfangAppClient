@@ -120,6 +120,8 @@ ext {
             mPAndroidChart       : "com.github.PhilJay:MPAndroidChart:v3.0.3",
             jiaozivideoplayer    : "cn.jzvd:jiaozivideoplayer:6.3.1",
             prolificinteractive  : "com.prolificinteractive:material-calendarview:1.4.3",
+//            numberprogressbar    :"com.daimajia.numberprogressbar:library:1.4@aar",
+            pictureselector      :"com.github.LuckSiege.PictureSelector:picture_library:v2.2.3",
 
             //rx
             rxjava2              : "io.reactivex.rxjava2:rxjava:2.2.3",
