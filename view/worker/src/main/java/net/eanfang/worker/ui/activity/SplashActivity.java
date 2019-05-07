@@ -11,19 +11,16 @@ import androidx.annotation.Nullable;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
-import com.eanfang.config.FastjsonConfig;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.kit.SDKManager;
 import com.eanfang.model.bean.LoginBean;
 import com.eanfang.network.config.HttpConfig;
 import com.eanfang.sys.activity.LoginActivity;
-import com.eanfang.util.ApkUtils;
-import com.eanfang.util.ChannelUtil;
 import com.eanfang.util.CleanMessageUtil;
 import com.eanfang.util.GuideUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
-import com.tencent.bugly.crashreport.CrashReport;
 
 import net.eanfang.worker.BuildConfig;
 import net.eanfang.worker.R;
@@ -59,12 +56,13 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
         }
         setContentView(R.layout.activity_splash);
         //bugly初始化
-        CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(SplashActivity.this);
-        strategy.setAppChannel(ChannelUtil.getChannelName(SplashActivity.this));
-        //App的版本
-        strategy.setAppVersion(ApkUtils.getAppVersionName(SplashActivity.this));
-        strategy.setAppPackageName(BuildConfig.APPLICATION_ID);
-        CrashReport.initCrashReport(getApplicationContext(), BuildConfig.BUGLY_WORKER, false, strategy);
+        SDKManager.getBugly().init(this, BuildConfig.BUGLY_WORKER, BuildConfig.DEBUG);
+//        CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(SplashActivity.this);
+//        strategy.setAppChannel(ChannelUtil.getChannelName(SplashActivity.this));
+//        //App的版本
+//        strategy.setAppVersion(ApkUtils.getAppVersionName(SplashActivity.this));
+//        strategy.setAppPackageName(BuildConfig.APPLICATION_ID);
+//        CrashReport.initCrashReport(getApplicationContext(), BuildConfig.BUGLY_WORKER, false, strategy);
         init();
     }
 

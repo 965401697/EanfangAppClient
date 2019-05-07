@@ -194,8 +194,8 @@ public class EanfangCallback<T> extends StringCallback {
                         try {
                             onSuccess(resultObject.toJavaObject(clazz));
                         } catch (Exception e) {
-                            e.printStackTrace();
-//                            this.onSuccess((T) null);
+//                            e.printStackTrace();
+                            this.onSuccess((T) null);
                         }
                     } else {
 //                        result = (T) resultString;

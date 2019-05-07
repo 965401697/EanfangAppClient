@@ -23,12 +23,13 @@ class DisCacheKit {
     private static int appVersion;
     private static File cacheDir;
 
+    private static DiskLruCache diskLruCache;
+
     public static DisCacheKit get(int appVersion, File cacheDir) {
         DisCacheKit.appVersion = appVersion;
         DisCacheKit.cacheDir = cacheDir;
         return new DisCacheKit();
     }
-
 
     /**
      * 放值
@@ -42,14 +43,12 @@ class DisCacheKit {
             return null;
         }
         Observable.create(emitter -> {
-            try (DiskLruCache cache = getDisk()) {
-                DiskLruCache.Editor editor = cache.edit(hashKeyForDisk(key));
-                if (editor != null) {
-                    editor.set(0, JSONObject.toJSONString(value));
-                    editor.commit();
-                }
-                cache.flush();
+            DiskLruCache.Editor editor = getDisk().edit(hashKeyForDisk(key));
+            if (editor != null) {
+                editor.set(0, JSONObject.toJSONString(value));
+                editor.commit();
             }
+            getDisk().flush();
             emitter.onComplete();
         }).subscribeOn(Schedulers.io())
                 .subscribe();
@@ -67,19 +66,17 @@ class DisCacheKit {
     public <T> void get(String key, Class<T> clazz, Consumer<T> callBack) {
         Observable.create((ObservableOnSubscribe<T>) emitter -> {
             T result = null;
-            try (DiskLruCache cache = getDisk()) {
-                DiskLruCache.Snapshot shot = cache.get(hashKeyForDisk(key));
-                if (shot != null) {
-                    String json = shot.getString(0);
-                    //如果是json格式
-                    if (json.startsWith("{") && json.endsWith("}")) {
-                        result = JSON.parseObject(json, clazz);
-                    } else {
-                        result = (T) json;
-                    }
+            DiskLruCache.Snapshot shot = getDisk().get(hashKeyForDisk(key));
+            if (shot != null) {
+                String json = shot.getString(0);
+                //如果是json格式
+                if (json.startsWith("{") && json.endsWith("}")) {
+                    result = JSON.parseObject(json, clazz);
+                } else {
+                    result = (T) json;
                 }
-                cache.flush();
             }
+            getDisk().flush();
             emitter.onNext(result);
             emitter.onComplete();
         }).subscribeOn(Schedulers.io())
@@ -98,8 +95,8 @@ class DisCacheKit {
     public <T> T get(String key, Class<T> clazz) {
         DiskLruCache.Snapshot shot;
         T result = null;
-        try (DiskLruCache cache = getDisk()) {
-            shot = cache.get(hashKeyForDisk(key));
+        try {
+            shot = getDisk().get(hashKeyForDisk(key));
             if (shot != null) {
                 String json = shot.getString(0);
                 if (json.startsWith("{") && json.endsWith("}")) {
@@ -110,7 +107,7 @@ class DisCacheKit {
                     result = (T) json;
                 }
             }
-            cache.flush();
+            getDisk().flush();
             return result;
         } catch (IOException e) {
             // e.printStackTrace();
@@ -129,19 +126,17 @@ class DisCacheKit {
     public <T> void getArr(String key, Class<T> clazz, Consumer<List<T>> callBack) {
         Observable.create((ObservableOnSubscribe<List<T>>) emitter -> {
             List<T> result = null;
-            try (DiskLruCache cache = getDisk()) {
-                DiskLruCache.Snapshot shot = cache.get(hashKeyForDisk(key));
-                if (shot != null) {
-                    String json = shot.getString(0);
-                    //如果是json格式
-                    if (json.startsWith("[") && json.endsWith("]")) {
-                        result = JSON.parseArray(json, clazz);
-                    } else {
-                        result = Collections.singletonList((T) json);
-                    }
+            DiskLruCache.Snapshot shot = getDisk().get(hashKeyForDisk(key));
+            if (shot != null) {
+                String json = shot.getString(0);
+                //如果是json格式
+                if (json.startsWith("[") && json.endsWith("]")) {
+                    result = JSON.parseArray(json, clazz);
+                } else {
+                    result = Collections.singletonList((T) json);
                 }
-                cache.flush();
             }
+            getDisk().flush();
             emitter.onNext(result);
             emitter.onComplete();
         }).subscribeOn(Schedulers.io())
@@ -159,8 +154,9 @@ class DisCacheKit {
      */
     public <T> List<T> getArr(String key, Class<T> clazz) {
         List<T> result = null;
-        try (DiskLruCache cache = getDisk()) {
-            DiskLruCache.Snapshot shot = cache.get(hashKeyForDisk(key));
+        DiskLruCache.Snapshot shot = null;
+        try {
+            shot = getDisk().get(hashKeyForDisk(key));
             if (shot != null) {
                 String json = shot.getString(0);
                 //如果是json格式
@@ -169,10 +165,10 @@ class DisCacheKit {
                 } else {
                     result = Collections.singletonList((T) json);
                 }
+                getDisk().flush();
             }
-            cache.flush();
         } catch (IOException e) {
-            //e.printStackTrace();
+            e.printStackTrace();
         }
         return result;
     }
@@ -184,10 +180,8 @@ class DisCacheKit {
      */
     public void remove(String key) {
         Observable.create(emitter -> {
-            try (DiskLruCache cache = getDisk()) {
-                cache.remove(hashKeyForDisk(key));
-                cache.flush();
-            }
+            getDisk().remove(hashKeyForDisk(key));
+            getDisk().flush();
             emitter.onComplete();
         }).subscribeOn(Schedulers.io())
                 .subscribe();
@@ -198,13 +192,14 @@ class DisCacheKit {
             cacheDir.mkdirs();
         }
         try {
-            return DiskLruCache.open(cacheDir, appVersion, 1, 10 * 1024 * 1024);
+            if (diskLruCache == null) {
+                diskLruCache = DiskLruCache.open(cacheDir, appVersion, 1, 10 * 1024 * 1024);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        return diskLruCache;
     }
-
 
     private String hashKeyForDisk(String key) {
         String cacheKey;

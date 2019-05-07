@@ -11,16 +11,13 @@ import androidx.annotation.Nullable;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
-import com.eanfang.config.FastjsonConfig;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.kit.SDKManager;
 import com.eanfang.model.bean.LoginBean;
 import com.eanfang.network.config.HttpConfig;
-import com.eanfang.util.ApkUtils;
-import com.eanfang.util.ChannelUtil;
 import com.eanfang.util.GuideUtil;
 import com.eanfang.util.StringUtils;
-import com.tencent.bugly.crashreport.CrashReport;
 
 import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
@@ -55,12 +52,13 @@ public class SplashActivity extends BaseClientActivity implements GuideUtil.OnCa
         }
         setContentView(R.layout.activity_splash);
         //bugly初始化
-        CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(SplashActivity.this);
-        strategy.setAppChannel(ChannelUtil.getChannelName(SplashActivity.this));
-        //App的版本
-        strategy.setAppVersion(ApkUtils.getAppVersionName(SplashActivity.this));
-        strategy.setAppPackageName(BuildConfig.APPLICATION_ID);
-        CrashReport.initCrashReport(getApplicationContext(), BuildConfig.BUGLY_CLIENT, false, strategy);
+        SDKManager.getBugly().init(this, BuildConfig.BUGLY_CLIENT, BuildConfig.DEBUG);
+//        CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(SplashActivity.this);
+//        strategy.setAppChannel(ChannelUtil.getChannelName(SplashActivity.this));
+//        //App的版本
+//        strategy.setAppVersion(ApkUtils.getAppVersionName(SplashActivity.this));
+//        strategy.setAppPackageName(BuildConfig.APPLICATION_ID);
+//        CrashReport.initCrashReport(getApplicationContext(), BuildConfig.BUGLY_CLIENT, false, strategy);
         init();
     }
 
@@ -114,7 +112,7 @@ public class SplashActivity extends BaseClientActivity implements GuideUtil.OnCa
                     @Override
                     public void onSuccess(LoginBean bean) {
                         if (bean != null && !StringUtils.isEmpty(bean.getToken())) {
-                            EanfangApplication.get().set(LoginBean.class.getName(),bean);
+                            EanfangApplication.get().set(LoginBean.class.getName(), bean);
                             goMain();
                         } else {
                             goLogin();

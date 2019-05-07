@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.eanfang.util;
+package com.eanfang.kit.utils;
 
 import android.content.Context;
 import android.content.Intent;
@@ -24,6 +24,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.util.Log;
 
+import androidx.core.content.FileProvider;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,8 +33,6 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
-
-import androidx.core.content.FileProvider;
 
 /**
  * ================================================
@@ -118,10 +118,15 @@ public class ApkUtils {
      */
     public static String getPackageName(Context context, String filePath) {
         PackageManager packageManager = context.getPackageManager();
-        PackageInfo info = packageManager.getPackageArchiveInfo(filePath, PackageManager.GET_ACTIVITIES);
-        if (info != null) {
-            ApplicationInfo appInfo = info.applicationInfo;
-            return appInfo.packageName;  //得到安装包名称
+        PackageInfo info;
+        if (filePath != null) {
+            info = packageManager.getPackageArchiveInfo(filePath, PackageManager.GET_ACTIVITIES);
+            if (info != null) {
+                ApplicationInfo appInfo = info.applicationInfo;
+                return appInfo.packageName;  //得到安装包名称
+            }
+        } else {
+            return context.getApplicationInfo().packageName;
         }
         return null;
     }

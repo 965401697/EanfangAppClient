@@ -7,7 +7,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.eanfang.ui.base.BaseDialog;
-import com.eanfang.util.ApkUtils;
+import com.eanfang.kit.utils.ApkUtils;
 import com.eanfang.util.UpdateAppManager;
 
 import net.eanfang.client.BuildConfig;
