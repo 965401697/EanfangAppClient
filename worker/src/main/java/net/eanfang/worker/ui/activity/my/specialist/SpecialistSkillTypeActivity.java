@@ -118,8 +118,8 @@ public class SpecialistSkillTypeActivity extends BaseWorkerActivity {
     }
 
     private void initViews() {
-        recyclerViewBrand.setLayoutManager(new GridLayoutManager(this, 3));
-        recyclerViewOs.setLayoutManager(new GridLayoutManager(this, 3));
+        recyclerViewBrand.setLayoutManager(new GridLayoutManager(this, 4));
+        recyclerViewOs.setLayoutManager(new GridLayoutManager(this, 4));
         brandAdapter = new SpecialistBrandAdapter(this);
         osCooperationAddAdapter = new SkillTypeAdapter(R.layout.item_cooperation_add);
         recyclerViewBrand.setAdapter(brandAdapter);

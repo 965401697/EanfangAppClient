@@ -84,8 +84,8 @@ public class SkillTypeActivity extends BaseWorkerActivity {
     }
 
     private void initViews() {
-        recyclerViewBusiness.setLayoutManager(new GridLayoutManager(this, 3));
-        recyclerViewOs.setLayoutManager(new GridLayoutManager(this, 3));
+        recyclerViewBusiness.setLayoutManager(new GridLayoutManager(this, 4));
+        recyclerViewOs.setLayoutManager(new GridLayoutManager(this, 4));
 
         businessCooperationAddAdapter = new SkillTypeAdapter(R.layout.item_cooperation_add);
         osCooperationAddAdapter = new SkillTypeAdapter(R.layout.item_cooperation_add);
@@ -115,21 +115,13 @@ public class SkillTypeActivity extends BaseWorkerActivity {
             return;
         }
 
-
         grantChange_system.setAddIds(osCooperationAddAdapter.getScheckedId());
         grantChange_system.setDelIds(osCooperationAddAdapter.getUnSCheckedId());
-
-
         grantChange_business.setAddIds(businessCooperationAddAdapter.getBcheckedId());
         grantChange_business.setDelIds(businessCooperationAddAdapter.getUnbCheckedId());
-
-
         workerInfoBean = new TechWorkerVerifyEntity();
-
         workerInfoBean.setWorkingYear(GetConstDataUtils.getWorkingYearList().indexOf(mYear));
-
         workerInfoBean.setAccId(EanfangApplication.get().getAccId());
-
         commitData();
     }
 
@@ -142,15 +134,10 @@ public class SkillTypeActivity extends BaseWorkerActivity {
 
         String requestContent = com.alibaba.fastjson.JSONObject.toJSONString(hashMapData);
         EanfangHttp.post(UserApi.TECH_WORKER_VERIFY).upJson(requestContent).execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
-
                     osCooperationAddAdapter.getScheckedId().clear();
                     osCooperationAddAdapter.getUnSCheckedId().clear();
-
-
                     businessCooperationAddAdapter.getBcheckedId().clear();
                     businessCooperationAddAdapter.getUnbCheckedId().clear();
-
-
                     startAnimActivity(new Intent(this, SkillAreaActivity.class).putExtra("status", mStatus));
                     finish();
                 }));

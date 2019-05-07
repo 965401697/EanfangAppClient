@@ -1,7 +1,11 @@
 package net.eanfang.worker.ui.activity.techniciancertification;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -58,6 +62,15 @@ public class TechnicianCertificationActivity extends BaseActivity {
     private void initView() {
         setLeftBack();
         setTitle("技师认证");
+        SpannableString spannableString = new SpannableString("实名认证（必填）");
+        spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#333333")), 0, 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#FF3F3F")), 4, spannableString.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE );
+        smRzWqTv.setText(spannableString);
+        SpannableString spannableStringb = new SpannableString("服务认证（必填）");
+        spannableStringb.setSpan(new ForegroundColorSpan(Color.parseColor("#333333")), 0, 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableStringb.setSpan(new ForegroundColorSpan(Color.parseColor("#FF3F3F")), 4, spannableString.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE );
+        fwRzWqTv.setText(spannableStringb);
+
         setRightTitleOnClickListener(view -> {
             if (verify == 1) {
                 showToast("信息认证中，不能撤销");

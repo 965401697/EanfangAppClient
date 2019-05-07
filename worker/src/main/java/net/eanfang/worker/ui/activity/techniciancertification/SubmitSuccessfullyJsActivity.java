@@ -1,8 +1,13 @@
 package net.eanfang.worker.ui.activity.techniciancertification;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.view.View;
 import android.widget.TextView;
 
@@ -27,6 +32,8 @@ public class SubmitSuccessfullyJsActivity extends BaseActivity {
     TextView authenticationTv;
     @BindView(R.id.call_tv)
     TextView callTv;
+    @BindView(R.id.ts_tv)
+    TextView tsTv;
     private Long mOrgId;
     private int status = 0;
     private int order = 1;
@@ -45,6 +52,18 @@ public class SubmitSuccessfullyJsActivity extends BaseActivity {
     private void initView() {
         setLeftBack();
         setTitle("提交成功");
+        SpannableString spannableString = new SpannableString("实名认证→服务认证→资质能力→其他信息");
+        spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#333333")), 0, 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#A5CAFC")), 4, 5, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+        spannableString.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 4, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#333333")), 5, 9, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#A5CAFC")), 9, 10, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+        spannableString.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 9, 10, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#333333")), 10, 14, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#A5CAFC")), 14, 15, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+        spannableString.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 14, 15, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#333333")), 15, 19, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        rzLcTv.setText(spannableString);
     }
 
     private void initData() {
@@ -54,10 +73,12 @@ public class SubmitSuccessfullyJsActivity extends BaseActivity {
 
         switch (order) {
             case 1:
-                authenticationTv.setText("去添加服务认证");
+                authenticationTv.setText("去服务认证");
+                tsTv.setText("尊敬的用户，您的认证资料我们已收到\n您可以继续进行服务认证。");
                 break;
             case 2:
                 authenticationTv.setText("去完善保障信息");
+                tsTv.setText("尊敬的用户，您的认证资料我们已收到\n我们将在24小时内审核，\n您可以完善保障信息");
                 break;
             case 3:
                 authenticationTv.setText("去完善资质与能力");

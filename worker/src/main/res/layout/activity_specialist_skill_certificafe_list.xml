@@ -36,8 +36,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/dimen_38"
-                    android:text="技能能力"
+                    android:layout_marginRight="@dimen/dimen_130"
+                    android:text="专业信息"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/textSize_13" />
 
@@ -45,7 +45,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/dimen_38"
+                    android:layout_marginRight="@dimen/dimen_130"
                     android:text="资格信息"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/textSize_13" />
@@ -73,7 +73,7 @@
 
 
                 <TextView
-                    android:layout_width="@dimen/dimen_120"
+                    android:layout_width="@dimen/dimen_200"
                     android:layout_height="@dimen/dimen_2"
                     android:layout_gravity="center_vertical"
                     android:background="@color/colorPrimary" />
@@ -85,7 +85,7 @@
                     android:src="@mipmap/point_1" />
 
                 <TextView
-                    android:layout_width="@dimen/dimen_120"
+                    android:layout_width="@dimen/dimen_200"
                     android:layout_height="@dimen/dimen_2"
                     android:layout_gravity="center_vertical"
                     android:background="#DEDEDE" />
@@ -134,7 +134,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="专家认定单位:"
-                android:textColor="@color/color_client_neworder"
+                android:textColor="#333333"
                 android:textSize="@dimen/textSize_13" />
 
             <EditText
@@ -161,6 +161,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="@dimen/dimen_20"
+                android:textColor="#333333"
                 android:layout_marginLeft="@dimen/dimen_30"
                 android:text="培训认定文件" />
 
@@ -188,10 +189,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_margin="@dimen/dimen_20"
-        android:background="@drawable/bg_btn_trouble_detail_add_trouble"
+        android:background="@drawable/bg_gradual_change_ellipse"
         android:gravity="center"
         android:padding="@dimen/dimen_30"
-        android:text="提交"
+        android:text="提交认证"
         android:textColor="@color/color_white"
         android:textSize="@dimen/textSize_13"
         android:visibility="visible" />

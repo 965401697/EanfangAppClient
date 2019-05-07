@@ -67,6 +67,7 @@
         android:textSize="14sp"
         app:tvImageHeight="@dimen/app_sy_wq_tv_lr_size"
         app:tvImageWidth="@dimen/app_sy_wq_tv_lr_size"
+        android:textColor="#333333"
         app:tvLeftImage="@mipmap/ry_qyrz"
         app:tvRightImage="@mipmap/jtriv" />
 
@@ -83,6 +84,7 @@
         android:drawablePadding="@dimen/dimen_30"
         android:gravity="left"
         android:padding="@dimen/dimen_30"
+        android:textColor="#333333"
         android:text="更多能力"
         android:textSize="14sp"
         app:tvImageHeight="@dimen/app_sy_wq_tv_lr_size"

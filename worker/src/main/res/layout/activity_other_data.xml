@@ -101,7 +101,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="紧急电话"
+                    android:text="紧急联系人手机"
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_14" />
 
@@ -179,7 +179,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/dimen_30"
-                    android:text="上传保险状态"
+                    android:text="上传保险状况"
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_15" />
 
@@ -226,7 +226,7 @@
         android:layout_marginTop="@dimen/dimen_20"
         android:layout_marginRight="@dimen/dimen_40"
         android:layout_marginBottom="@dimen/dimen_20"
-        android:background="@drawable/bg_btn_trouble_detail_add_trouble"
+        android:background="@drawable/bg_gradual_change_ellipse"
         android:gravity="center"
         android:padding="@dimen/dimen_30"
         android:text="保存"
