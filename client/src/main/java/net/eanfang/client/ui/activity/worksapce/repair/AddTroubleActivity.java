@@ -602,10 +602,13 @@ public class AddTroubleActivity extends BaseClientActivity {
         } else if (resultCode == RESULT_DEVICE_BRAND_CODE && requestCode == REQUEST_DEVICE_BRAND_CODE) {
             // 设备品牌
             tvDeviceBrand.setText(data.getStringExtra("deviceBrandName"));
+            etDeviceLocationNum.setFocusable(true);
+            etDeviceLocationNum.setFocusableInTouchMode(true);
             //将光标定位
-            etDeviceLocation.requestFocus();
             etDeviceLocation.setFocusable(true);
             etDeviceLocation.setFocusableInTouchMode(true);
+            etDeviceLocation.requestFocus();
+            etDeviceLocation.findFocus();
             StringUtils.showKeyboard(AddTroubleActivity.this, etDeviceLocation);
         }
     }
