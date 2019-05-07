@@ -21,9 +21,11 @@ import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
+import com.eanfang.util.StringUtils;
 import com.photopicker.com.util.BGASpaceItemDecoration;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.im.SelectIMContactActivity;
 import net.eanfang.client.ui.activity.worksapce.online.FaultExplainActivity;
 import net.eanfang.client.ui.adapter.security.SecurityFoucsListAdapter;
 import net.eanfang.client.ui.adapter.security.SecurityListAdapter;
@@ -129,11 +131,12 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
                 case R.id.ll_comments:
                     doJump(position, true);
                     break;
+                case R.id.iv_share:
+                    doShare(securityListAdapter.getData().get(position));
+                    break;
                 case R.id.tv_isFocus:
                 case R.id.ll_like:
-
                 case R.id.ll_pic:
-                case R.id.iv_share:
                 case R.id.ll_question:
                 case R.id.rl_video:
                     doJump(position, false);
@@ -225,6 +228,28 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
                 }));
     }
 
+    /**
+     * 分享 分享到好友
+     */
+    private void doShare(SecurityListBean.ListBean listBean) {
+        //分享聊天
+        if (listBean != null) {
+            Intent intent = new Intent(SecurityPersonalPublicListActivity.this, SelectIMContactActivity.class);
+            Bundle bundle = new Bundle();
+
+            bundle.putString("id", String.valueOf(listBean.getSpcId()));
+            bundle.putString("orderNum", listBean.getPublisherOrg().getOrgName());
+            if (!StringUtils.isEmpty(listBean.getSpcImg())) {
+                bundle.putString("picUrl", listBean.getSpcImg().split(",")[0]);
+            }
+            bundle.putString("creatTime", listBean.getSpcContent());
+            bundle.putString("workerName", listBean.getAccountEntity().getRealName());
+            bundle.putString("status", String.valueOf(listBean.getFollowsStatus()));
+            bundle.putString("shareType", "8");
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }
+    }
 
     private void initData() {
         if (queryEntry == null) {

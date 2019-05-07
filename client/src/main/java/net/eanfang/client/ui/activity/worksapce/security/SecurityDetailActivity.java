@@ -46,6 +46,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.im.SelectIMContactActivity;
 import net.eanfang.client.ui.activity.my.UserHomeActivity;
 import net.eanfang.client.ui.adapter.security.SecurityCommentAdapter;
 import net.eanfang.client.ui.widget.GeneralSDialog;
@@ -449,9 +450,26 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
     }
 
     /**
-     * 分享
+     * 分享 分享到好友
      */
     private void doShare() {
+        //分享聊天
+        if (securityDetailBean != null) {
+            Intent intent = new Intent(SecurityDetailActivity.this, SelectIMContactActivity.class);
+            Bundle bundle = new Bundle();
+
+            bundle.putString("id", String.valueOf(securityDetailBean.getSpcId()));
+            bundle.putString("orderNum", securityDetailBean.getPublisherOrg().getOrgName());
+            if (!StringUtils.isEmpty(securityDetailBean.getSpcImg())) {
+                bundle.putString("picUrl", securityDetailBean.getSpcImg().split(",")[0]);
+            }
+            bundle.putString("creatTime", securityDetailBean.getSpcContent());
+            bundle.putString("workerName", securityDetailBean.getAccountEntity().getRealName());
+            bundle.putString("status", String.valueOf(securityDetailBean.getFollowsStatus()));
+            bundle.putString("shareType", "8");
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }
     }
 
     /**
