@@ -41,7 +41,7 @@ import com.jph.takephoto.model.TResult;
 import com.yaf.sys.entity.AccountEntity;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.my.certification.NewAuthListActivity;
+import net.eanfang.worker.ui.activity.techniciancertification.TechnicianCertificationActivity;
 import net.eanfang.worker.ui.activity.worksapce.StateChangeActivity;
 
 import java.util.Calendar;
@@ -179,6 +179,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
         mTvBirthday.setOnClickListener(this::setBirthday);
         mImgCalendar.setOnClickListener(this::setBirthday);
         mBtnBigSave.setOnClickListener(new MultiClickListener(this, this::checkInfo, this::submitSuccess));
+        mTvToWorkerAuth.setSelected(true);
     }
 
     private void initData() {
@@ -241,16 +242,9 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
             mAreaCode = accountEntity.getAreaCode();
             tvArea.setText(Config.get().getAddressByCode(accountEntity.getAreaCode()));
         }
-        boolean auth = false;
-        if (auth) {
-            mLlSaveAndAuth.setVisibility(View.GONE);
-            mTvToWorkerAuth.setVisibility(View.GONE);
-            mIsToAuth = false;
-        } else {
-            mLlSaveAndAuth.setVisibility(View.VISIBLE);
-            mTvToWorkerAuth.setVisibility(View.VISIBLE);
-            mTvToWorkerAuth.setSelected(true);
-        }
+        boolean auth = accountEntity.getRealVerify() == 0;
+        mLlSaveAndAuth.setVisibility(auth ?View.GONE : View.VISIBLE);
+        mTvToWorkerAuth.setVisibility(auth ?View.GONE : View.VISIBLE);
     }
 
     @Override
@@ -371,7 +365,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
                         bundle.putSerializable("message", message);
 
                         if (mIsToAuth) {
-                            JumpItent.jump(this, NewAuthListActivity.class);
+                            JumpItent.jump(this, TechnicianCertificationActivity.class);
                         } else {
                             JumpItent.jump(PersonInfoActivity.this, StateChangeActivity.class, bundle);
                         }

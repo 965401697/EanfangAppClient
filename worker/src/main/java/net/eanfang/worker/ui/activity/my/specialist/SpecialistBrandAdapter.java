@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.yaf.sys.entity.BaseDataEntity;
@@ -45,22 +44,18 @@ public class SpecialistBrandAdapter extends RecyclerView.Adapter<SpecialistBrand
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         if (getItemCount() == (position + 1)) {
             holder.tvName.setBackground(mContext.getResources().getDrawable(R.mipmap.add_brand));
-            holder.ivSub.setVisibility(View.GONE);
             holder.tvName.setText("");
             holder.tvName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     monCheckClickListener.onAddClickListener();
                 }
             });
         } else {
             BaseDataEntity data = mDataList.get(position);
             holder.tvName.setText(data.getDataName());
-            holder.ivSub.setVisibility(View.VISIBLE);
-            holder.tvName.setBackground(mContext.getResources().getDrawable(R.drawable.shape_add_brand_checked));
-            holder.tvName.setOnClickListener(null);
-            holder.ivSub.setOnClickListener(new View.OnClickListener() {
+            holder.tvName.setBackground(mContext.getResources().getDrawable(R.drawable.bg_worker_camera_text_back_pressed_b));
+            holder.tvName.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     monCheckClickListener.onSubClickListener(data);
@@ -106,12 +101,9 @@ public class SpecialistBrandAdapter extends RecyclerView.Adapter<SpecialistBrand
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView tvName;
-        public ImageView ivSub;
-
         public ViewHolder(View itemView) {
             super(itemView);
             tvName = itemView.findViewById(R.id.tv_name);
-            ivSub = itemView.findViewById(R.id.iv_sub);
         }
     }
 

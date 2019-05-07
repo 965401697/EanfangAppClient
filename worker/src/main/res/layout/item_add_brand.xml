@@ -3,12 +3,11 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-
     <TextView
         android:id="@+id/tv_name"
-        android:layout_width="@dimen/dimen_180"
-        android:layout_height="@dimen/dimen_70"
-        android:layout_margin="@dimen/dimen_10"
+        android:layout_width="@dimen/dimen_140"
+        android:layout_height="@dimen/dimen_60"
+        android:layout_margin="@dimen/dimen_15"
         android:background="@mipmap/add_brand"
         android:gravity="center"
         android:textColor="@color/color_main_worker"
@@ -17,12 +16,12 @@
 
     </TextView>
 
-    <ImageView
-        android:id="@+id/iv_sub"
-        android:layout_width="@dimen/dimen_30"
-        android:layout_height="@dimen/dimen_30"
-        android:layout_marginRight="15dp"
-        android:layout_gravity="right"
-        android:layout_marginBottom="@dimen/dimen_30"
-        android:src="@mipmap/im_sub" />
+    <!--<ImageView-->
+        <!--android:id="@+id/iv_sub"-->
+        <!--android:layout_width="@dimen/dimen_30"-->
+        <!--android:layout_height="@dimen/dimen_30"-->
+        <!--android:layout_marginRight="15dp"-->
+        <!--android:layout_gravity="right"-->
+        <!--android:layout_marginBottom="@dimen/dimen_30"-->
+        <!--android:src="@mipmap/im_sub" />-->
 </FrameLayout>

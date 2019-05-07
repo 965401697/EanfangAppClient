@@ -4,7 +4,8 @@
     <!-- 填充的颜色 -->
     <solid android:color="@color/color_white" />
     <stroke
-        android:width="@dimen/dimen_1"
+        android:width="@dimen/dimen_2"
         android:color="#006BFF" />
+    <corners android:radius="@dimen/dimen_4"/>
 
 </shape>
