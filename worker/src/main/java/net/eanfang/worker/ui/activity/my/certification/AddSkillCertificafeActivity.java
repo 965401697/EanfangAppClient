@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -54,6 +55,8 @@ public class AddSkillCertificafeActivity extends BaseActivityWithTakePhoto {
     BGASortableNinePhotoLayout snplMomentAccident;
     @BindView(R.id.tv_save)
     TextView tvSave;
+    @BindView(R.id.ll_date)
+    LinearLayout llDate;
     /**
      * 证书照片
      */
@@ -76,16 +79,36 @@ public class AddSkillCertificafeActivity extends BaseActivityWithTakePhoto {
         setLeftBack();
         bean = (QualificationCertificateEntity) getIntent().getSerializableExtra("bean");
         snplMomentAccident.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_CERTIFICATE, REQUEST_CODE_PHOTO_CERTIFICATE));
-        setRightTitle("保存");
         setRightTitleOnClickListener(view -> setData());
         if (bean != null) {
+            setTitle("资质证书");
+            setRightTitle("编辑");
+            setZhiDu(false);
             fillData();
-            setTitle("编辑资质证书");
-            tvSave.setVisibility(View.VISIBLE);
+            setRightTitleOnClickListener(view -> {
+                        setRightTitle("保存");
+                        setZhiDu(true);
+                        setRightTitleOnClickListener(view1 -> setData());
+                    }
+
+            );
 
         } else {
-            setTitle("添加资质证书");
+            setTitle("资质证书");
+            setRightTitle("保存");
+            tvSave.setVisibility(View.GONE);
         }
+    }
+
+    private void setZhiDu(boolean isZd) {
+        tvSave.setVisibility(isZd ? View.VISIBLE : View.GONE);
+        etCertificateName.setEnabled(isZd);
+        etNum.setEnabled(isZd);
+        etOrg.setEnabled(isZd);
+        etLevel.setEnabled(isZd);
+        llDate.setEnabled(isZd);
+        snplMomentAccident.setPlusEnable(isZd);
+        snplMomentAccident.setEditable(isZd);
     }
 
 
@@ -243,16 +266,17 @@ public class AddSkillCertificafeActivity extends BaseActivityWithTakePhoto {
                 delete();
 
                 break;
-                default:
+            default:
         }
     }
+
     private void delete() {
         EanfangHttp.post(UserApi.TECH_WORKER_DELETE_QUALIFY + "/" + bean.getId()).execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class) {
-                    @Override
-                    public void onSuccess(JSONObject bean) {
-                        showToast("删除成功");
-                        finish();
-                    }
-                });
+            @Override
+            public void onSuccess(JSONObject bean) {
+                showToast("删除成功");
+                finish();
+            }
+        });
     }
 }

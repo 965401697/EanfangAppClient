@@ -39,7 +39,7 @@ public class TwoTextPicText extends LinearLayout {
 
             String picText = typedArray.getString(R.styleable.TwoTextPicText_text_a);
             int picTextColor = typedArray.getColor(R.styleable.TwoTextPicText_text_color_a, Color.BLACK);
-            int picTextSize = typedArray.getDimensionPixelSize(R.styleable.TwoTextPicText_text_size_a, 32);
+            int picTextSize = typedArray.getDimensionPixelSize(R.styleable.TwoTextPicText_text_size_a, 24);
             customTextTv.setText(picText);
             customTextTv.setTextColor(picTextColor);
             customTextTv.setTextSize(TypedValue.COMPLEX_UNIT_PX,picTextSize);
@@ -47,7 +47,7 @@ public class TwoTextPicText extends LinearLayout {
 
             String picTextB = typedArray.getString(R.styleable.TwoTextPicText_text_b);
             int picTextColorB = typedArray.getColor(R.styleable.TwoTextPicText_text_color_b, Color.RED);
-            int picTextSizeB = typedArray.getDimensionPixelSize(R.styleable.TwoTextPicText_text_size_b, 28);
+            int picTextSizeB = typedArray.getDimensionPixelSize(R.styleable.TwoTextPicText_text_size_b, 24);
             customDateTv.setText(picTextB);
             customDateTv.setTextColor(picTextColorB);
             customDateTv.setTextSize(TypedValue.COMPLEX_UNIT_PX,picTextSizeB);
