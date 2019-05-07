@@ -480,6 +480,7 @@ public class HomeFragment extends BaseFragment {
         }
     }
 
+
     /**
      * 统计
      */

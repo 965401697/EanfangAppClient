@@ -28,6 +28,7 @@ import net.eanfang.client.ui.activity.worksapce.oa.check.DealWithFirstActivity;
 import net.eanfang.client.ui.activity.worksapce.oa.task.TaskDetailActivity;
 import net.eanfang.client.ui.activity.worksapce.oa.workreport.WorkReportDetailActivity;
 import net.eanfang.client.ui.activity.worksapce.openshop.OpenShopLogDetailActivity;
+import net.eanfang.client.ui.activity.worksapce.security.SecurityDetailActivity;
 import net.eanfang.client.ui.activity.worksapce.worktalk.WorkTalkDetailActivity;
 import net.eanfang.client.ui.activity.worksapce.worktransfer.WorkTransferDetailActivity;
 
@@ -134,6 +135,13 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
             holder.creatTime.setText("创建时间：" + customizeMessage.getCreatTime());
             holder.workerName.setVisibility(View.GONE);
             holder.status.setText(Integer.parseInt(customizeMessage.getStatus()) == 1 ? "已读" : "未读");
+        } else if (customizeMessage.getShareType().equals("10")) {
+            holder.title.setText("安防圈");
+            holder.orderNum.setText("公司：" + customizeMessage.getOrderNum());
+            holder.simpleDraweeView.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + customizeMessage.getPicUrl()));
+            holder.creatTime.setText("标题：" + customizeMessage.getCreatTime());
+            holder.workerName.setText("发布人：" + customizeMessage.getWorkerName());
+            holder.status.setVisibility(View.INVISIBLE);
         }
 
         if (uiMessage.getMessageDirection() == Message.MessageDirection.SEND) {//消息方向，自己发送的
@@ -171,6 +179,8 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
             return new SpannableString("开店日志(快去查看吧!)");
         } else if (customizeMessage.getShareType().equals("9")) {
             return new SpannableString("布防日志(快去查看吧!)");
+        } else if (customizeMessage.getShareType().equals("10")) {
+            return new SpannableString("安防圈(快去查看吧!)");
         }
         return null;
     }
@@ -226,7 +236,10 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
             }
             view.getContext().startActivity(new Intent((Activity) view.getContext(), DefendLogDetailActivity.class).putExtra("id", customizeMessage.getOrderId()).putExtra("isVisible", true));
 
+        } else if (customizeMessage.getShareType().equals("10")) {
+            view.getContext().startActivity(new Intent((Activity) view.getContext(), SecurityDetailActivity.class).putExtra("spcId", Long.parseLong(customizeMessage.getOrderId())));
         }
+
     }
 
     @Override

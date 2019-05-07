@@ -33,7 +33,6 @@ import java.util.Arrays;
 
 public class SecurityListAdapter extends BaseQuickAdapter<SecurityListBean.ListBean, BaseViewHolder> {
 
-    private Context context;
     private ArrayList<String> picList = new ArrayList<>();
     private String[] pics = null;
     private boolean mIsUnRead = false;
@@ -42,7 +41,6 @@ public class SecurityListAdapter extends BaseQuickAdapter<SecurityListBean.ListB
 
     public SecurityListAdapter(Context mContext, boolean isUnRead) {
         super(R.layout.layout_security_item);
-        this.context = mContext;
         this.mIsUnRead = isUnRead;
     }
 
