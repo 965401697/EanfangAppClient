@@ -29,13 +29,13 @@
                 android:layout_marginTop="@dimen/dimen_40"
                 android:layout_marginBottom="@dimen/dimen_40"
                 android:src="@mipmap/worker_logo"
-                fresco:placeholderImage="@mipmap/bga_re_ic_plus" />
+                fresco:placeholderImage="@mipmap/sfzzmiv" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="身份证正面"
+                android:text="请上传身份证正面"
                 android:textColor="@color/color_client_neworder"
                 android:textSize="@dimen/textSize_14" />
 
@@ -47,13 +47,13 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/dimen_40"
                 android:layout_marginBottom="@dimen/dimen_40"
-                fresco:placeholderImage="@mipmap/bga_re_ic_plus" />
+                fresco:placeholderImage="@mipmap/sfzfmiv" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="身份证反面"
                 android:layout_gravity="center_horizontal"
+                android:text="请上传身份证反面"
                 android:textColor="@color/color_client_neworder"
                 android:textSize="@dimen/textSize_14" />
 
@@ -65,13 +65,13 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/dimen_40"
                 android:layout_marginBottom="@dimen/dimen_40"
-                fresco:placeholderImage="@mipmap/bga_re_ic_plus" />
+                fresco:placeholderImage="@mipmap/shouhciiv" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="手持身份证"
+                android:text="请上传手持身份证照片"
                 android:textColor="@color/color_client_neworder"
                 android:textSize="@dimen/textSize_14" />
 
@@ -86,7 +86,7 @@
         android:layout_marginTop="@dimen/dimen_20"
         android:layout_marginRight="@dimen/dimen_40"
         android:layout_marginBottom="@dimen/dimen_20"
-        android:background="@drawable/bg_btn_trouble_detail_add_trouble"
+        android:background="@drawable/bg_gradual_change_ellipse"
         android:gravity="center"
         android:padding="@dimen/dimen_30"
         android:text="提交"

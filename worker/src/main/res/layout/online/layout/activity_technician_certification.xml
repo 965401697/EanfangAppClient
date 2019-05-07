@@ -28,7 +28,7 @@
         app:tvImageHeight="@dimen/app_sy_wq_tv_lr_size"
         app:tvImageWidth="@dimen/app_sy_wq_tv_lr_size"
         app:tvLeftImage="@mipmap/smrz_iv"
-        app:tvRightImage="@mipmap/ic_icon_right" />
+        app:tvRightImage="@mipmap/jtriv" />
 
     <Space
         android:layout_width="match_parent"
@@ -48,7 +48,7 @@
         app:tvImageHeight="@dimen/app_sy_wq_tv_lr_size"
         app:tvImageWidth="@dimen/app_sy_wq_tv_lr_size"
         app:tvLeftImage="@mipmap/fw_qyrz"
-        app:tvRightImage="@mipmap/ic_icon_right" />
+        app:tvRightImage="@mipmap/jtriv" />
 
     <Space
         android:layout_width="match_parent"
@@ -64,11 +64,12 @@
         android:gravity="left"
         android:padding="@dimen/dimen_30"
         android:text="保障信息"
+        android:textColor="#333333"
         android:textSize="14sp"
         app:tvImageHeight="@dimen/app_sy_wq_tv_lr_size"
         app:tvImageWidth="@dimen/app_sy_wq_tv_lr_size"
         app:tvLeftImage="@mipmap/gd_qyrz"
-        app:tvRightImage="@mipmap/ic_icon_right" />
+        app:tvRightImage="@mipmap/jtriv" />
 
     <Space
         android:layout_width="match_parent"
@@ -83,12 +84,13 @@
         android:drawablePadding="@dimen/dimen_30"
         android:gravity="left"
         android:padding="@dimen/dimen_30"
+        android:textColor="#333333"
         android:text="资质与能力"
         android:textSize="14sp"
         app:tvImageHeight="@dimen/app_sy_wq_tv_lr_size"
         app:tvImageWidth="@dimen/app_sy_wq_tv_lr_size"
         app:tvLeftImage="@mipmap/ry_qyrz"
-        app:tvRightImage="@mipmap/ic_icon_right" />
+        app:tvRightImage="@mipmap/jtriv" />
 
     <Space
         android:layout_width="match_parent"
@@ -100,9 +102,9 @@
         android:layout_weight="1" />
 
     <ImageView
+        android:id="@+id/js_rz_gg_iv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/js_rz_gg_iv"
         android:scaleType="fitXY"
         android:src="@mipmap/jsrz_banner" />
 </LinearLayout>

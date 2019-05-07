@@ -107,6 +107,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
+                android:gravity="center"
                 android:orientation="horizontal"
                 android:padding="@dimen/dimen_10">
 
@@ -114,43 +115,48 @@
                     android:id="@+id/sj_dd_iv"
                     android:layout_width="@dimen/app_two_pic_text"
                     android:layout_height="@dimen/app_two_pic_text"
-                    android:layout_weight="1"
                     android:gravity="center"
                     app:pic="@mipmap/sjdd_iv"
                     app:text_a="设计订单"
                     app:text_b="66"
                     app:text_size_a="@dimen/app_two_a_text_size"
                     app:text_size_b="@dimen/app_two_b_text_size" />
-
+<Space
+    android:layout_width="wrap_content"
+    android:layout_weight="1"
+    android:layout_height="wrap_content" />
                 <com.customview.TwoTextPicText
                     android:id="@+id/wx_dd_iv"
                     android:layout_width="@dimen/app_two_pic_text"
                     android:layout_height="@dimen/app_two_pic_text"
-                    android:layout_weight="1"
                     android:gravity="center"
                     app:pic="@mipmap/wxdd_iv"
                     app:text_a="维修订单"
                     app:text_b="66"
                     app:text_size_a="@dimen/app_two_a_text_size"
                     app:text_size_b="@dimen/app_two_b_text_size" />
-
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
                 <com.customview.TwoTextPicText
                     android:id="@+id/sg_dd_iv"
                     android:layout_width="@dimen/app_two_pic_text"
                     android:layout_height="@dimen/app_two_pic_text"
-                    android:layout_weight="1"
                     android:gravity="center"
                     app:pic="@mipmap/sgdd_iv"
                     app:text_a="施工订单"
                     app:text_b="66"
                     app:text_size_a="@dimen/app_two_a_text_size"
                     app:text_size_b="@dimen/app_two_b_text_size" />
-
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content" />
                 <com.customview.TwoTextPicText
                     android:id="@+id/pl_iv"
                     android:layout_width="@dimen/app_two_pic_text"
                     android:layout_height="@dimen/app_two_pic_text"
-                    android:layout_weight="1"
                     android:gravity="center"
                     app:pic="@mipmap/pl_iv"
                     app:text_a="评论"

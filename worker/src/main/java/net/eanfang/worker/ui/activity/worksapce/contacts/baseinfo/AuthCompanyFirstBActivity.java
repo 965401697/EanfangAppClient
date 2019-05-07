@@ -167,23 +167,30 @@ public class AuthCompanyFirstBActivity extends BaseActivityWithTakePhoto {
      * 进行字段的约束判断
      */
     public void doVerify() {
+
+        if (StringUtils.isEmpty(etCompany.getText().toString().trim())) {
+            showToast("请输入单位名称");
+            return;
+        }
+
+        if (StringUtils.isEmpty(tvType.getText().toString().trim())) {
+            showToast("请选择行业类型");
+            return;
+        }
+        if (StringUtils.isEmpty(etDetailOfficeAddress.getText().toString().trim())) {
+            showToast("请输入办公地址");
+            return;
+        }
+        if (!isEmail(etMoney.getText().toString().trim())) {
+            showToast("请输入正确的电子邮箱");
+            return;
+        }
         if (StringUtils.isEmpty(etPhone.getText().toString().trim())) {
             showToast("请输入单位电话");
             return;
-        }  if (StringUtils.isEmpty(etCompany.getText().toString().trim())) {
-            showToast("请输入单位名称");
-            return;
-        } else if (!isEmail(etMoney.getText().toString().trim())) {
-            showToast("请输入电子邮箱");
-            return;
-        } else if (StringUtils.isEmpty(tvType.getText().toString().trim())) {
-            showToast("请选择行业类型");
-            return;
-        } else if (StringUtils.isEmpty(etDesc.getText().toString().trim())) {
-            showToast("请输入单位简介");
-            return;
-        } else if (StringUtils.isEmpty(etDetailOfficeAddress.getText().toString().trim())) {
-            showToast("请输入办公地址");
+        }
+        if (StringUtils.isEmpty(etDesc.getText().toString().trim())) {
+            showToast("请输入公司简介");
             return;
         } else {
             setData();
@@ -318,6 +325,7 @@ public class AuthCompanyFirstBActivity extends BaseActivityWithTakePhoto {
         startActivity(intent);
         finish();
     }
+
     /**
      * 判断邮箱格式是否正确
      */

@@ -15,6 +15,7 @@
         android:background="@drawable/bg_nl_tv"
         android:padding="@dimen/dimen_10"
         android:lines="1"
+        android:textColor="#666666"
         android:gravity="center"
         android:text="任职机构" />
 

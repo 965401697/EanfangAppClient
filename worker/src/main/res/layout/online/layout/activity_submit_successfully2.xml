@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_contact_line_gray"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <include layout="@layout/header" />
@@ -42,7 +42,7 @@
         android:layout_gravity="center_horizontal"
         android:gravity="center"
         android:text="提交成功"
-        android:textColor="#ff333333"
+        android:textColor="#333333"
         android:textSize="20sp" />
 
     <TextView
@@ -50,8 +50,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dimen_40"
         android:gravity="center"
+        android:id="@+id/ts_tv"
         android:text="尊敬的用户，您的认证资料我们已收到，\n您需要继续完善认证流程。"
-        android:textColor="#ff999999"
+        android:textColor="#999999"
         android:textSize="15sp" />
 
     <Space
