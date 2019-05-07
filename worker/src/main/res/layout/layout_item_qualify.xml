@@ -16,9 +16,10 @@
         android:layout_width="@dimen/dimen_168"
         android:layout_height="@dimen/dimen_168"
         android:layout_centerVertical="true"
-        android:layout_marginBottom="@dimen/dimen_50"
-        android:layout_marginLeft="@dimen/dimen_26"
+        android:layout_marginRight="@dimen/dimen_30"
         android:layout_marginTop="@dimen/dimen_50"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="@dimen/dimen_50"
         android:focusable="false"
         android:scaleType="centerCrop"
         fresco:placeholderImage="@mipmap/ic_nodata" />
@@ -29,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/iv_pic"
         android:layout_marginLeft="@dimen/dimen_28"
-        android:layout_toRightOf="@+id/iv_pic"
+
         android:text="河南工程学院" />
 
     <TextView
@@ -38,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/dimen_28"
-        android:layout_toRightOf="@+id/iv_pic"
+
         android:text="河南工程学院" />
 
     <TextView
@@ -47,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/iv_pic"
         android:layout_marginLeft="@dimen/dimen_28"
-        android:layout_toRightOf="@+id/iv_pic"
+
         android:text="河南工程学院" />
 
 
@@ -57,6 +58,7 @@
         android:layout_height="@dimen/dimen_60"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:visibility="gone"
         android:layout_marginRight="@dimen/dimen_26"
         android:background="@drawable/select_camera_back"
         android:gravity="center"

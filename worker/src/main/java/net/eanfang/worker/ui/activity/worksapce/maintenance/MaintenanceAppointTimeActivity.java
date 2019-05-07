@@ -2,6 +2,7 @@ package net.eanfang.worker.ui.activity.worksapce.maintenance;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -95,13 +96,17 @@ public class MaintenanceAppointTimeActivity extends BaseActivity implements Sele
             url = NewApiService.MAINTENANCE_UPDATE_APPOINT_TIME;
         }
 
+        String finalUrl = url;
         EanfangHttp.post(url)
                 .upJson(JsonUtils.obj2String(object))
                 .execute(new EanfangCallback<JSONObject>(MaintenanceAppointTimeActivity.this, true, JSONObject.class, (bean) -> {
                     showToast("预约成功");
                     if (mType == 1) {
                         EventBus.getDefault().post(new BaseEvent());//刷新item
+
                     }
+           Log.d("电话回访，电话预约上门时间b", finalUrl +"\n"+JsonUtils.obj2String(object)+"\n"+bean.toString());
+
                     finishSelf();
                     EanfangApplication.get().closeActivity(MaintenanceAppointTimeActivity.class.getName());
                 }));

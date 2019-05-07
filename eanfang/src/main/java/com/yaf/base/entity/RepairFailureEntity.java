@@ -28,6 +28,48 @@ import lombok.Setter;
 public class RepairFailureEntity implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    @Override
+    public String toString() {
+        return "RepairFailureEntity{" +
+                "id=" + id +
+                ", busRepairOrderId=" + busRepairOrderId +
+                ", isMisinformation=" + isMisinformation +
+                ", businessThreeCode='" + businessThreeCode + '\'' +
+                ", modelCode='" + modelCode + '\'' +
+                ", pictures='" + pictures + '\'' +
+                ", bugPosition='" + bugPosition + '\'' +
+                ", bugDescription='" + bugDescription + '\'' +
+                ", custDeviceId=" + custDeviceId +
+                ", headDeviceFailureId=" + headDeviceFailureId +
+                ", headDeviceId=" + headDeviceId +
+                ", deviceName='" + deviceName + '\'' +
+                ", deviceNo='" + deviceNo + '\'' +
+                ", createUserId=" + createUserId +
+                ", createTime=" + createTime +
+                ", editUserId=" + editUserId +
+                ", editTime=" + editTime +
+                ", status=" + status +
+                ", ownerUserId=" + ownerUserId +
+                ", ownerTopCompanyId=" + ownerTopCompanyId +
+                ", ownerOrgCode='" + ownerOrgCode + '\'' +
+                ", assigneeUserId=" + assigneeUserId +
+                ", assigneeTopCompanyId=" + assigneeTopCompanyId +
+                ", assigneeOrgCode='" + assigneeOrgCode + '\'' +
+                ", placeId='" + placeId + '\'' +
+                ", sketch='" + sketch + '\'' +
+                ", locationNumber='" + locationNumber + '\'' +
+                ", maintenanceStatus=" + maintenanceStatus +
+                ", repairCount=" + repairCount +
+                ", mp4_path='" + mp4_path + '\'' +
+                ", bughandleDetailEntityList=" + bughandleDetailEntityList +
+                ", repairOrderEntity=" + repairOrderEntity +
+                ", ownerUserEntity=" + ownerUserEntity +
+                ", ownerOrgEntity=" + ownerOrgEntity +
+                ", assigneeUserEntity=" + assigneeUserEntity +
+                ", assigneeOrgEntity=" + assigneeOrgEntity +
+                '}';
+    }
+
     //主键
     //@TableField(value = "id")
     //数据库id 默认自增，如果全局唯一，请使用 IdType.ID_WORKER

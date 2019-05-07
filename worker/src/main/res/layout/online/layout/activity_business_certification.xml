@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_contact_line_gray"
+    android:orientation="vertical">
+
+    <include layout="@layout/header" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dimen_20"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dimen_20"
+            android:text="点击上传营业执照，自动读取信息"
+            android:textColor="#333333" />
+
+        <ImageView
+            android:id="@+id/iv_uploadlogo"
+            android:layout_width="@dimen/dimen_200"
+            android:layout_height="@dimen/dimen_200"
+            android:layout_margin="@dimen/dimen_20"
+            android:src="@mipmap/bga_pp_ic_plus" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:divider="@drawable/divider"
+        android:orientation="vertical"
+        android:padding="@dimen/dimen_20"
+        android:showDividers="middle">
+
+        <com.customview.LtReView
+            android:id="@+id/dw_mc_lrv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="right|center_horizontal"
+            android:hint="请输入"
+            android:padding="@dimen/app_dp_gs_rz_item_size"
+            android:textColor="#333333"
+            android:textSize="@dimen/app_sp_gs_rz_item_size"
+            app:isShowDownLine="false"
+            app:leftText="公司名称"
+            app:leftTextSize="@dimen/app_sp_gs_rz_item_b_size" />
+
+
+        <com.customview.LtReView
+            android:id="@+id/nsh_lrv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="right|center_horizontal"
+            android:hint="请输入"
+            android:padding="@dimen/app_dp_gs_rz_item_size"
+            android:textColor="#333333"
+            android:textSize="@dimen/app_sp_gs_rz_item_size"
+            app:isShowDownLine="false"
+            app:leftText="纳税人识别号"
+            app:leftTextSize="@dimen/app_sp_gs_rz_item_b_size" />
+
+
+        <com.customview.LtReView
+            android:id="@+id/zc_dz_lrv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="right|center_horizontal"
+            android:hint="请输入"
+            android:padding="@dimen/app_dp_gs_rz_item_size"
+            android:textColor="#333333"
+            android:textSize="@dimen/app_sp_gs_rz_item_size"
+            app:isShowDownLine="false"
+            app:leftText="注册地址"
+            app:leftTextSize="@dimen/app_sp_gs_rz_item_b_size" />
+
+
+        <com.customview.LtReView
+            android:id="@+id/fr_db_lrv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="right|center_horizontal"
+            android:hint="请输入"
+            android:padding="@dimen/app_dp_gs_rz_item_size"
+            android:textColor="#333333"
+            android:textSize="@dimen/app_sp_gs_rz_item_size"
+            app:isShowDownLine="false"
+            app:leftText="法人代表"
+            app:leftTextSize="@dimen/app_sp_gs_rz_item_b_size" />
+
+
+        <com.customview.LtReView
+            android:id="@+id/zc_zj_lrv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="right|center_horizontal"
+            android:hint="请输入"
+            android:padding="@dimen/app_dp_gs_rz_item_size"
+            android:textColor="#333333"
+            android:textSize="@dimen/app_sp_gs_rz_item_size"
+            app:isShowDownLine="false"
+            app:leftText="注册资金"
+            app:leftTextSize="@dimen/app_sp_gs_rz_item_b_size" />
+
+
+        <com.customview.LtReView
+            android:id="@+id/cl_rq_lrv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:drawableRight="@mipmap/rliv"
+            android:drawablePadding="@dimen/dp_10"
+            android:gravity="right|center_horizontal"
+            android:hint="请输入"
+            android:padding="@dimen/app_dp_gs_rz_item_size"
+            android:textColor="#333333"
+            android:textSize="@dimen/app_sp_gs_rz_item_size"
+            app:isShowDownLine="false"
+            android:focusable="false"
+            app:leftText="成立日期"
+            app:leftTextSize="@dimen/app_sp_gs_rz_item_b_size" />
+
+        <com.customview.LtReView
+            android:id="@+id/jz_rq_lrv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="right|center_horizontal"
+            android:hint="请输入"
+            android:padding="@dimen/app_dp_gs_rz_item_size"
+            android:textColor="#333333"
+            android:textSize="@dimen/app_sp_gs_rz_item_size"
+            app:isShowDownLine="false"
+            app:leftText="截至日期"
+            app:leftTextSize="@dimen/app_sp_gs_rz_item_b_size" />
+    </LinearLayout>
+
+</LinearLayout>

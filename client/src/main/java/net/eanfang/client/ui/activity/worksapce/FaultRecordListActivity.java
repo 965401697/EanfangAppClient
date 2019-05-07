@@ -175,31 +175,32 @@ public class FaultRecordListActivity extends BaseClientActivity implements Swipe
                 .execute(new EanfangCallback<FaultListsBean>(this, true, FaultListsBean.class) {
                     @Override
                     public void onSuccess(FaultListsBean bean) {
+                        if (bean.getList() != null) {
+                            if (mPage == 1) {
+                                mAdapter.getData().clear();
+                                mAdapter.setNewData(bean.getList());
+                                mSwipeRefreshLayout.setRefreshing(false);
+                                mAdapter.loadMoreComplete();
+                                if (bean.getList().size() < 10) {
+                                    mAdapter.loadMoreEnd();
+                                }
 
-                        if (mPage == 1) {
-                            mAdapter.getData().clear();
-                            mAdapter.setNewData(bean.getList());
-                            mSwipeRefreshLayout.setRefreshing(false);
-                            mAdapter.loadMoreComplete();
-                            if (bean.getList().size() < 10) {
-                                mAdapter.loadMoreEnd();
-                            }
+                                if (bean.getList().size() > 0) {
+                                    mTvNoData.setVisibility(View.GONE);
+                                } else {
+                                    mTvNoData.setVisibility(View.VISIBLE);
+                                }
 
-                            if (bean.getList().size() > 0) {
-                                mTvNoData.setVisibility(View.GONE);
+
                             } else {
-                                mTvNoData.setVisibility(View.VISIBLE);
+                                mAdapter.addData(bean.getList());
+                                mAdapter.loadMoreComplete();
+                                if (bean.getList().size() < 10) {
+                                    mAdapter.loadMoreEnd();
+                                }
                             }
 
-
-                        } else {
-                            mAdapter.addData(bean.getList());
-                            mAdapter.loadMoreComplete();
-                            if (bean.getList().size() < 10) {
-                                mAdapter.loadMoreEnd();
-                            }
                         }
-
                     }
 
                     @Override

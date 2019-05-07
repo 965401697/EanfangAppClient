@@ -117,6 +117,8 @@ public class GroupDetailBean implements Serializable {
         public void setRcloudGroupId(String rcloudGroupId) {
             this.rcloudGroupId = rcloudGroupId;
         }
+
+
     }
 
     public static class ListBean implements Serializable {

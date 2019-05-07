@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="@dimen/dimen_10">
+
+
+
+    <TextView
+        android:id="@+id/a_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_nl_tv"
+        android:padding="@dimen/dimen_10"
+        android:lines="1"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:focusable="true"
+        android:textColor="#666666"
+        android:focusableInTouchMode="true"
+        android:gravity="center"
+        android:text="任职机构" />
+
+
+</LinearLayout>

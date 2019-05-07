@@ -1,6 +1,8 @@
 package net.eanfang.worker.ui.activity.worksapce;
 
 import android.content.Intent;
+import android.graphics.Paint;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -12,6 +14,7 @@ import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 public class OwnDataHintActivity extends BaseWorkerActivity {
@@ -20,10 +23,9 @@ public class OwnDataHintActivity extends BaseWorkerActivity {
     TextView tvInfo;
     @BindView(R.id.tv_go)
     TextView tvGo;
-    @BindView(R.id.tv_desc)
-    TextView tvDesc;
-    @BindView(R.id.tv_service)
-    TextView tvService;
+    @BindView(R.id.call_tv)
+    TextView callTv;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +44,8 @@ public class OwnDataHintActivity extends BaseWorkerActivity {
 
         if (!TextUtils.isEmpty(info)) {
             tvInfo.setText(info);
-            tvDesc.setText(desc);
-            tvService.setText(service);
+//            tvDesc.setText(desc);
+//            tvService.setText(service);
         }
         if (TextUtils.isEmpty(go)) {
             tvGo.setVisibility(View.GONE);
@@ -65,6 +67,14 @@ public class OwnDataHintActivity extends BaseWorkerActivity {
                 finishSelf();
             }
         });
+
+        callTv.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG );
     }
 
+    @OnClick(R.id.call_tv)
+    public void onClick() {
+        Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + "01058778731"));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
 }

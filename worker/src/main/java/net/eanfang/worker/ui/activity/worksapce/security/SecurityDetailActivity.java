@@ -1,5 +1,6 @@
 package net.eanfang.worker.ui.activity.worksapce.security;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -44,6 +45,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.im.SelectIMContactActivity;
 import net.eanfang.worker.ui.activity.my.UserHomeActivity;
 import net.eanfang.worker.ui.adapter.security.SecurityCommentAdapter;
 import net.eanfang.worker.ui.widget.DividerItemDecoration;
@@ -153,6 +155,10 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
     private String mContent = "";
     private String atName = "";
 
+    /**
+     * 跳转用户首页的是否是发布内容的人
+     */
+    private boolean mIsPubUid;
 
     /**
      * 修改item状态
@@ -211,6 +217,8 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
             SecurityDetailBean.ListBean listBean = (SecurityDetailBean.ListBean) adapter.getData().get(position);
             if (listBean != null && listBean.getCommentUser() != null &&
                     listBean.getCommentUser().getAccId() != null) {
+                mIsPubUid = listBean.getCommentUser().getAccId().
+                        equals(String.valueOf(securityDetailBean.getAccountEntity().getAccId()));
                 gotoUserHomeActivity(listBean.getCommentUser().getAccId());
             }
         });
@@ -377,6 +385,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
             case R.id.iv_seucrity_header:
                 if (securityDetailBean != null && securityDetailBean.getAccountEntity() != null
                         && securityDetailBean.getAccountEntity().getAccId() != null) {
+                    mIsPubUid = true;
                     gotoUserHomeActivity(String.valueOf(securityDetailBean.getAccountEntity().getAccId()));
                 }
                 break;
@@ -391,7 +400,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
      * @param accId
      */
     private void gotoUserHomeActivity(String accId) {
-        UserHomeActivity.startActivity(this, accId);
+        UserHomeActivity.startActivityForAccId(this, accId);
     }
 
     /**
@@ -430,9 +439,26 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
     }
 
     /**
-     * 分享
+     * 分享 分享到好友
      */
     private void doShare() {
+        //分享聊天
+        if (securityDetailBean != null) {
+            Intent intent = new Intent(SecurityDetailActivity.this, SelectIMContactActivity.class);
+            Bundle bundle = new Bundle();
+
+            bundle.putString("id", String.valueOf(securityDetailBean.getSpcId()));
+            bundle.putString("orderNum", securityDetailBean.getPublisherOrg().getOrgName());
+            if (!StringUtils.isEmpty(securityDetailBean.getSpcImg())) {
+                bundle.putString("picUrl", securityDetailBean.getSpcImg().split(",")[0]);
+            }
+            bundle.putString("creatTime", securityDetailBean.getSpcContent());
+            bundle.putString("workerName", securityDetailBean.getAccountEntity().getRealName());
+            bundle.putString("status", String.valueOf(securityDetailBean.getFollowsStatus()));
+            bundle.putString("shareType", "8");
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }
     }
 
     /**
@@ -606,9 +632,17 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
 
     @Override
     public void onAtClik(Long mUserId) {
-        Bundle bundle = new Bundle();
-        bundle.putBoolean("isLookOther", true);
-        bundle.putLong("mUserId", mUserId);
-        JumpItent.jump(SecurityDetailActivity.this, SecurityPersonalActivity.class, bundle);
+        UserHomeActivity.startActivityForUid(this, mUserId);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK && data != null) {
+            if (mIsPubUid) {
+                isFoucus = data.getBooleanExtra(UserHomeActivity.RESULT_FOLLOW_STATE, true);
+                tvIsFocus.setText(isFoucus ? "取消关注" : "关注");
+            }
+        }
     }
 }

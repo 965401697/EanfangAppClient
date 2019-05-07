@@ -8,12 +8,15 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.PageUtils;
 import com.eanfang.model.RepairedOrderBean;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.CallUtils;
@@ -24,6 +27,7 @@ import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.V;
+import com.yaf.base.entity.BughandleConfirmEntity;
 import com.yaf.base.entity.RepairOrderEntity;
 
 import net.eanfang.worker.R;
@@ -35,8 +39,12 @@ import net.eanfang.worker.ui.activity.worksapce.repair.RepairCtrlActivity;
 import net.eanfang.worker.ui.activity.worksapce.SignInActivity;
 import net.eanfang.worker.ui.activity.worksapce.TroubleDetalilListActivity;
 import net.eanfang.worker.ui.activity.worksapce.repair.SolveModeActivity;
+import net.eanfang.worker.ui.activity.worksapce.repair.seefaultdetail.PsTroubleDetailActivity;
+import net.eanfang.worker.ui.activity.worksapce.repair.seefaultdetail.TroubleDetailActivity;
 import net.eanfang.worker.ui.adapter.RepairedManageOrderAdapter;
 import net.eanfang.worker.ui.widget.FillAppointmentInfoRebookView;
+
+import java.util.List;
 
 import static com.eanfang.config.EanfangConst.BOTTOM_REFRESH;
 import static com.eanfang.config.EanfangConst.TOP_REFRESH;
@@ -196,7 +204,7 @@ public class OrderListFragment extends BaseFragment implements
                         CallUtils.call(getActivity(), V.v(() -> item.getAssigneeUser().getAccountEntity().getMobile()));
                         break;
                     case R.id.tv_do_second:
-                        new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), false).show();
+                        intoFaultHandling(item.getId(), item.getIsPhoneSolve());
                         break;
                     default:
                         break;
@@ -205,10 +213,14 @@ public class OrderListFragment extends BaseFragment implements
             //待评价
             case 5:
                 switch (view.getId()) {
-
                     case R.id.tv_do_first:
                         //查看故障处理
-                        new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), false).show();
+//                        new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), false).show();
+                        //if (doCompare(item.getAssigneeUserId(), mUseId)) {
+                        //查看故障处理
+                        intoFaultHandling(item.getId(), item.getIsPhoneSolve());
+//                      new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), false).show();
+                        //}
                         break;
                     case R.id.tv_do_second:
 //                        if (!item.getAssigneeUserId().equals(EanfangApplication.get().getUserId())) {
@@ -236,6 +248,42 @@ public class OrderListFragment extends BaseFragment implements
         }
     }
 
+    private List<BughandleConfirmEntity> mDataList;
+    private void intoFaultHandling(Long busRepairOrderId, int isPhoneSolve) {
+        QueryEntry queryEntry = new QueryEntry();
+        queryEntry.getEquals().put("busRepairOrderId", busRepairOrderId + "");
+        EanfangHttp.post(RepairApi.POST_BUGHANDLE_LIST)
+                .upJson(JsonUtils.obj2String(queryEntry))
+                .execute(new EanfangCallback<PageUtils<JSONObject>>(getActivity(), true, PageUtils.class, (list) -> {
+                    mDataList = JSONArray.parseArray(JSONArray.toJSONString(list.getList()), BughandleConfirmEntity.class);
+                    if (mDataList.size() == 1) {
+                        jump(0, isPhoneSolve);
+                    } else if (mDataList.size() == 0) {
+                        showToast("暂无数据");
+                    } else {
+                        new TroubleDetalilListActivity(getActivity(), true, busRepairOrderId, isPhoneSolve, false,mDataList).show();
+                    }
+
+                }));
+    }
+
+    private void jump(int position, int isPhoneSolve) {
+        /**
+         * 获取：是否电话解决（0：未解决，1：已解决）
+         */
+        Intent intent;
+
+        if (isPhoneSolve == 0) {
+            intent = new Intent(getActivity(), TroubleDetailActivity.class);
+        } else {
+            intent = new Intent(getActivity(), PsTroubleDetailActivity.class);
+        }
+        intent.putExtra("orderId", mDataList.get(position).getId());
+        intent.putExtra("phoneSolve", isPhoneSolve);
+        intent.putExtra("bean", mDataList.get(position));
+        intent.putExtra("isVisible", false);
+        getActivity().startActivity(intent);
+    }
 
     @Override
     protected int setLayoutResouceId() {
@@ -285,6 +333,8 @@ public class OrderListFragment extends BaseFragment implements
 
 
                                  } else {
+
+                                     Log.d("RepairApi.GET_REPAIR_LIST", RepairApi.GET_REPAIR_LIST+"\n"+JsonUtils.obj2String(queryEntry)+"\n"+bean.toString());
                                      adapter.addData(bean.getList());
                                      adapter.loadMoreComplete();
                                      if (bean.getList().size() < 10) {

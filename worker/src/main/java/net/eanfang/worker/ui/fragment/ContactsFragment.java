@@ -35,6 +35,7 @@ import com.yaf.sys.entity.OrgEntity;
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.im.FollowListActivity;
 import net.eanfang.worker.ui.activity.im.PeerConnectionListActivity;
+import net.eanfang.worker.ui.activity.authentication.CompanyManagerBActivity;
 import net.eanfang.worker.ui.activity.im.MorePopWindow;
 import net.eanfang.worker.ui.activity.im.MyFriendsListActivity;
 import net.eanfang.worker.ui.activity.im.MyGroupsListActivity;
@@ -104,29 +105,19 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
 
     @Override
     protected void initData(Bundle arguments) {
-//        getData();
+
     }
 
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        getData();
-//    }
 
     private void getData() {
-        EanfangHttp.get(UserApi.GET_STAFFINCOMPANY_LISTTREE)
-                .execute(new EanfangCallback<OrgEntity>(getActivity(), true, OrgEntity.class, true, (list) -> {
-
-
+        EanfangHttp.get(UserApi.GET_STAFFINCOMPANY_LISTTREE).execute(new EanfangCallback<OrgEntity>(getActivity(), true, OrgEntity.class, true, (list) -> {
                     if (list != null && !list.isEmpty()) {
                         //排除默认公司
                         mDatas = Stream.of(list).filter(bean -> bean.getOrgId() != 0).toList();
-
                     } else {
                         mDatas = Collections.EMPTY_LIST;
                     }
                     ((android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setRefreshing(false);
-
                     initAdapter();
                 }));
 
@@ -134,7 +125,6 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
 
     @SuppressLint("ClickableViewAccessibility")
     private void initAdapter() {
-
         //客户公司
         mDatas = Stream.of(mDatas).filter(beans -> beans.getOrgUnitEntity() != null && beans.getOrgUnitEntity().getUnitType() == 3).toList();
         if (mDatas.size() <= 0 || mDatas == null) {
@@ -144,7 +134,6 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
             //显示与隐藏
             rl_create_team.setVisibility(View.GONE);
             rev_list.setVisibility(View.VISIBLE);
-
             Long companyId = EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgId();
             // 获取默认公司 进行排序和添加到第一个item
             List<OrgEntity> firstList = Stream.of(mDatas).filter((bean) -> bean.getCompanyId().equals(companyId)).toList();
@@ -152,9 +141,7 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
                 mDatas.removeAll(firstList);
                 mDatas.addAll(0, firstList);
             }
-
             parentAdapter.setNewData(mDatas);
-
             //重置数据
             isFirstShow = true;
             mOldPosition = 0;
@@ -167,17 +154,13 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
 
     @Override
     protected void initView() {
-
         ((android.support.v4.widget.NestedScrollView) view.findViewById(R.id.nested_view)).getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
             @Override
             public void onScrollChanged() {
                 ((android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setEnabled(((android.support.v4.widget.NestedScrollView) view.findViewById(R.id.nested_view)).getScrollY() == 0);
             }
         });
-
-
         rl_create_team = (RelativeLayout) view.findViewById(R.id.rl_create_team);
-
         view.findViewById(R.id.ll_my_friends).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -205,7 +188,6 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
             public void onClick(View v) {
                 //添加好友界面
 //                startActivity(new Intent(getActivity(), AddFriendActivity.class));
-
                 MorePopWindow morePopWindow = new MorePopWindow(getActivity(), true);
                 morePopWindow.showPopupWindow(view.findViewById(R.id.ll_add));
             }
@@ -218,21 +200,16 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
                 startActivity(new Intent(getActivity(), PeerConnectionListActivity.class));
             }
         });
+
         ((android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setOnRefreshListener(this);
-
-
         rev_list = (RecyclerView) view.findViewById(R.id.rev_list);
 //        rev_list.setHasFixedSize(true);//应该reycylerview reqestlayout()计算
         rev_list.setNestedScrollingEnabled(false);
-
         //设置布局样式
         rev_list.setLayoutManager(new FullyLinearLayoutManager(getActivity()));
         rev_list.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
-
-
         parentAdapter = new ParentAdapter();
         parentAdapter.bindToRecyclerView(rev_list);
-
         parentAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -255,33 +232,23 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
                 parentAdapter.notifyItemChanged(position);
             }
         });
-
-
         parentAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-
             if (!String.valueOf(((OrgEntity) adapter.getData().get(position)).getCompanyId()).equals(String.valueOf(EanfangApplication.get().getCompanyId()))) {
                 ToastUtil.get().showToast(getActivity(), "请到工作台切换当前被点击的公司");
                 return;
             }
-
             switch (view.getId()) {
                 //组织结构
                 case R.id.ll_org:
-
                     if (!PermKit.get().getCompanyDepartmentListPerm()) {
                         return;
                     }
-
                     OrganizationBean organizationBean = new OrganizationBean();
-
                     organizationBean.setOrgName(mDatas.get(position).getOrgName());
-
                     int num = 0;
-
                     if (mDatas.get(position).getStaff() != null) {
                         num = mDatas.get(position).getStaff().size();
                     }
-
                     if (mDatas.get(position).getChildren() != null) {
                         num += mDatas.get(position).getChildren().size();
                     }
@@ -321,7 +288,8 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
                     bundle.putString("orgName", mDatas.get(position).getOrgName());
                     bundle.putString("isAuth", mDatas.get(position).getVerifyStatus() + "");
                     bundle.putString("adminUserId", String.valueOf(mDatas.get(position).getAdminUserId()));
-                    JumpItent.jump(getActivity(), CompanyManagerActivity.class, bundle, CREAT_TEAM_CODE);
+//                    JumpItent.jump(getActivity(), CompanyManagerActivity.class, bundle, CREAT_TEAM_CODE);
+                    JumpItent.jump(getActivity(), CompanyManagerBActivity.class, bundle, CREAT_TEAM_CODE);
                     break;
                 default:
                     break;
@@ -376,9 +344,7 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
     }
 
     private void SwitchCompany() {
-        EanfangHttp.get(NewApiService.SWITCH_COMPANY_ALL_LIST)
-                .params("companyId", 0)
-                .execute(new EanfangCallback<LoginBean>(getActivity(), false, LoginBean.class, (bean) -> {
+        EanfangHttp.get(NewApiService.SWITCH_COMPANY_ALL_LIST).params("companyId", 0).execute(new EanfangCallback<LoginBean>(getActivity(), false, LoginBean.class, (bean) -> {
                     if (bean != null) {
                         PermKit.permList.clear();
                         EanfangApplication.get().remove(LoginBean.class.getName());

@@ -55,7 +55,8 @@ public class AddWorkActivity extends BaseActivityWithTakePhoto {
     EditText etCertificate;
     @BindView(R.id.snpl_moment_accident)
     BGASortableNinePhotoLayout snplMomentAccident;
-
+    @BindView(R.id.tv_save)
+    TextView tvSave;
     /**
      * 证书照片
      */
@@ -75,16 +76,16 @@ public class AddWorkActivity extends BaseActivityWithTakePhoto {
         ButterKnife.bind(this);
         setTitle("工作经历");
         setLeftBack();
-
         bean = (JobExperienceEntity) getIntent().getSerializableExtra("bean");
-
-
         snplMomentAccident.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_CERTIFICATE, REQUEST_CODE_PHOTO_CERTIFICATE));
         snplMomentAccident.setData(picList_certificate);
-
+        setRightTitle("保存");
+        setRightTitleOnClickListener(view -> setData());
         if (bean != null) {
             fillData();
-            setTitle("修改工作经历");
+            setTitle("编辑工作经历");
+            tvSave.setVisibility(View.VISIBLE);
+
         } else {
             setTitle("添加工作经历");
         }
@@ -226,12 +227,22 @@ public class AddWorkActivity extends BaseActivityWithTakePhoto {
 
                 break;
             case R.id.tv_save:
+                delete();
 
-                setData();
                 break;
+            default:
         }
     }
-
+    private void delete() {
+        EanfangHttp.post(UserApi.GET_TECH_WORKER_WORK_DELETE + "/" + bean.getId())
+                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class) {
+                    @Override
+                    public void onSuccess(JSONObject bean) {
+                        showToast("删除成功");
+                        finish();
+                    }
+                });
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

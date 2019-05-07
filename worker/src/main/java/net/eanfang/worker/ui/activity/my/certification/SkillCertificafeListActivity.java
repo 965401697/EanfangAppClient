@@ -70,7 +70,6 @@ public class SkillCertificafeListActivity extends BaseWorkerActivity {
 
     private void getData() {
         QueryEntry queryEntry = new QueryEntry();
-
         queryEntry.getEquals().put("accId", String.valueOf(EanfangApplication.get().getAccId()));
         queryEntry.getEquals().put("type", "0");
         EanfangHttp.post(UserApi.TECH_WORKER_LIST_QUALIFY)
@@ -114,8 +113,7 @@ public class SkillCertificafeListActivity extends BaseWorkerActivity {
         switch (view.getId()) {
             case R.id.tv_sub:
                 Intent intent = new Intent(SkillCertificafeListActivity.this, OwnDataHintActivity.class);
-                intent.putExtra("info", "尊敬的用户，您可以添加个人经历，\n" +
-                        "以提高行业内声望");
+                intent.putExtra("info", "尊敬的用户，您可以添加个人经历，\n" + "以提高行业内声望");
                 intent.putExtra("go", "去添加个人经历");
                 intent.putExtra("desc", "如有疑问，请联系客服处理");
                 intent.putExtra("service", "客服热线：400-890-9280");

@@ -61,4 +61,15 @@ public class NoticeListBean implements Serializable {
     public void setList(List<NoticeEntity> list) {
         this.list = list;
     }
+
+    @Override
+    public String toString() {
+        return "NoticeListBean{" +
+                "currPage=" + currPage +
+                ", pageSize=" + pageSize +
+                ", totalCount=" + totalCount +
+                ", totalPage=" + totalPage +
+                ", list=" + list +
+                '}';
+    }
 }

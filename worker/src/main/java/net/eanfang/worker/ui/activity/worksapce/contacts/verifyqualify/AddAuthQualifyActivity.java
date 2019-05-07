@@ -1,5 +1,6 @@
 package net.eanfang.worker.ui.activity.worksapce.contacts.verifyqualify;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
@@ -34,6 +36,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,18 +51,23 @@ import butterknife.OnClick;
 public class AddAuthQualifyActivity extends BaseActivityWithTakePhoto implements SelectTimeDialogFragment.SelectTimeListener {
 
     // 证书名称
+
     @BindView(R.id.et_certificate_name)
     EditText etCertificateName;
     // 发证机构
+
     @BindView(R.id.et_org)
     EditText etOrg;
     // 资质等级
+
     @BindView(R.id.et_level)
     EditText etLevel;
     // 证书编号
+
     @BindView(R.id.et_num)
     EditText etNum;
     // 有效时间
+
     @BindView(R.id.tv_begin_time)
     TextView tvBeginTime;
     @BindView(R.id.ll_begin_date)
@@ -73,28 +81,18 @@ public class AddAuthQualifyActivity extends BaseActivityWithTakePhoto implements
     @BindView(R.id.tv_save)
     TextView tvSave;
 
-
     /**
      * 证书照片
      */
     private ArrayList<String> picList_certificate = new ArrayList<>();
     private HashMap<String, String> uploadMap = new HashMap<>();
-
-
     private static final int REQUEST_CODE_CHOOSE_CERTIFICATE = 1;
     private static final int REQUEST_CODE_PHOTO_CERTIFICATE = 101;
     private String pic;
-
-    //    private TimePickerView mTimeYearMonthDay;
     private String url = "";
     private AptitudeCertificateEntity aptitudeCertificateEntity;
-
-    // 起始 or 结束
     private boolean isBegin = true;
-
-    // 认证状态
     private String isAuth;
-
     private Long mOrgId;
 
     @Override
@@ -103,36 +101,29 @@ public class AddAuthQualifyActivity extends BaseActivityWithTakePhoto implements
         setContentView(R.layout.activity_add_auth_qualify);
         ButterKnife.bind(this);
         initView();
-        initData();
-
     }
 
     private void initView() {
-        setTitle("技能资质");
         setLeftBack();
         isAuth = getIntent().getStringExtra("isAuth");
         mOrgId = getIntent().getLongExtra("orgid", 0);
-        // 查看详情
         aptitudeCertificateEntity = (AptitudeCertificateEntity) getIntent().getSerializableExtra("bean");
-
         snplMomentAccident.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_CERTIFICATE, REQUEST_CODE_PHOTO_CERTIFICATE));
         snplMomentAccident.setData(picList_certificate);
-
         doSelectYearMonthDay();
-
+        setRightTitle("保存");
         if (aptitudeCertificateEntity != null) {
+            setTitle("修改资质证书");
+            tvSave.setVisibility(View.VISIBLE);
             fillData();
+        } else {
+            setTitle("添加资质证书");
+            tvSave.setVisibility(View.GONE);
         }
-        /**
-         * 已认证  进行查看资质认证
-         * */
-        if ("2".equals(isAuth) || "1".equals(isAuth)) {
-            doUnWrite();
-        }
-    }
-
-    private void initData() {
-
+//        if ("2".equals(isAuth) || "1".equals(isAuth)) {
+//            doUnWrite();
+//        }
+        setRightTitleOnClickListener(view -> doVerify());
     }
 
     private void fillData() {
@@ -144,7 +135,6 @@ public class AddAuthQualifyActivity extends BaseActivityWithTakePhoto implements
                 picList.add(BuildConfig.OSS_SERVER + pics[i]);
             }
         }
-
         // 证书名称
         etCertificateName.setText(aptitudeCertificateEntity.getCertificateName());
         // 发证机构
@@ -167,7 +157,8 @@ public class AddAuthQualifyActivity extends BaseActivityWithTakePhoto implements
         // 发证机构
         String mOrg = etOrg.getText().toString().trim();
         // 资质等级
-        String mLevel = etLevel.getText().toString().trim();
+
+        String mLevel = "1";
         // 证书编号
         String mNum = etNum.getText().toString().trim();
         // 有效时间
@@ -225,13 +216,10 @@ public class AddAuthQualifyActivity extends BaseActivityWithTakePhoto implements
         OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
             @Override
             public void onOssSuccess() {
-                runOnUiThread(() -> {
-                    EanfangHttp.post(url).upJson(JSONObject.toJSONString(bean))
-                            .execute(new EanfangCallback<JSONObject>(AddAuthQualifyActivity.this, true, JSONObject.class, bean1 -> {
-                                setResult(RESULT_OK);
-                                finishSelf();
-                            }));
-                });
+                runOnUiThread(() -> EanfangHttp.post(url).upJson(JSONObject.toJSONString(bean)).execute(new EanfangCallback<JSONObject>(AddAuthQualifyActivity.this, true, JSONObject.class, bean1 -> {
+                    setResult(RESULT_OK);
+                    finishSelf();
+                })));
             }
         });
     }
@@ -240,6 +228,8 @@ public class AddAuthQualifyActivity extends BaseActivityWithTakePhoto implements
      * 只进行查看操作不看编辑
      */
     private void doUnWrite() {
+        setRightTitle("");
+        setRightTitleOnClickListener(null);
         tvSave.setVisibility(View.GONE);
         etCertificateName.setEnabled(false);
         etOrg.setEnabled(false);
@@ -255,22 +245,35 @@ public class AddAuthQualifyActivity extends BaseActivityWithTakePhoto implements
         switch (view.getId()) {
             case R.id.ll_begin_date:
                 isBegin = true;
-                // 隐藏软键盘
-                ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(AddAuthQualifyActivity.this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-//                mTimeYearMonthDay.show();
+                ((InputMethodManager) Objects.requireNonNull(getSystemService(Context.INPUT_METHOD_SERVICE))).hideSoftInputFromWindow(Objects.requireNonNull(AddAuthQualifyActivity.this.getCurrentFocus()).getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 new SelectTimeDialogFragment().show(getSupportFragmentManager(), R.string.app_name + "");
                 break;
             case R.id.ll_end_date:
                 isBegin = false;
-                // 隐藏软键盘
-                ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(AddAuthQualifyActivity.this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-//                mTimeYearMonthDay.show();
+                ((InputMethodManager) Objects.requireNonNull(getSystemService(Context.INPUT_METHOD_SERVICE))).hideSoftInputFromWindow(Objects.requireNonNull(AddAuthQualifyActivity.this.getCurrentFocus()).getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 new SelectTimeDialogFragment().show(getSupportFragmentManager(), R.string.app_name + "");
                 break;
             case R.id.tv_save:
-                doVerify();
+                if (aptitudeCertificateEntity != null) {
+                    delete();
+                } else {
+                    finish();
+                }
                 break;
+            default:
         }
+    }
+
+    private void delete() {
+        EanfangHttp.post(UserApi.DELETE_QUALIFY + "/" + aptitudeCertificateEntity.getId())
+                .execute(new EanfangCallback<org.json.JSONObject>(this, true, org.json.JSONObject.class) {
+                    @Override
+                    public void onSuccess(org.json.JSONObject bean) {
+                        Toast.makeText(AddAuthQualifyActivity.this, "删除成功", Toast.LENGTH_LONG).show();
+                        finish();
+                    }
+
+                });
     }
 
     @Override
@@ -279,10 +282,8 @@ public class AddAuthQualifyActivity extends BaseActivityWithTakePhoto implements
         if (data == null) {
             return;
         }
-        switch (requestCode) {
-            case REQUEST_CODE_CHOOSE_CERTIFICATE:
-                snplMomentAccident.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
-                break;
+        if (requestCode == REQUEST_CODE_CHOOSE_CERTIFICATE) {
+            snplMomentAccident.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
         }
     }
 
@@ -290,36 +291,14 @@ public class AddAuthQualifyActivity extends BaseActivityWithTakePhoto implements
      * 选择年月日
      */
     public void doSelectYearMonthDay() {
-        Calendar selectedDate = Calendar.getInstance();
         Calendar startDate = Calendar.getInstance();
         Calendar endDate = Calendar.getInstance();
         startDate.set(1960, 1, 1);
         endDate.set(2040, 11, 31);
-//        mTimeYearMonthDay = new TimePickerBuilder(this, new OnTimeSelectListener() {
-//            @Override
-//            public void onTimeSelect(Date date, View v) {//选中事件回调
-//                if (isBegin) {
-//                    tvBeginTime.setText(ETimeUtils.getTimeByYearMonthDay(date));
-//                } else {
-//                    tvEndTime.setText(ETimeUtils.getTimeByYearMonthDay(date));
-//                }
-//            }
-//        })
-//                .setType(new boolean[]{true, true, true, false, false, false})// 默认全部显示
-//                .setCancelText("取消")//取消按钮文字
-//                .setSubmitText("确定")//确认按钮文字
-//                .setContentTextSize(18)//滚轮文字大小
-//                .setTitleSize(20)//标题文字大小
-////                .setTitleText("上门日期")//标题文字
-//                .setOutSideCancelable(true)//点击屏幕，点在控件外部范围时，是否取消显示
-//                .setDate(selectedDate)// 如果不设置的话，默认是系统时间*/
-//                .setRangDate(startDate, endDate)//起始终止年月日设定
-//                .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
-//                .isDialog(false)//是否显示为对话框样式
-//                .build();
     }
 
 
+    @SuppressLint("SimpleDateFormat")
     @Override
     public void getData(String time) {
         if (isBegin) {

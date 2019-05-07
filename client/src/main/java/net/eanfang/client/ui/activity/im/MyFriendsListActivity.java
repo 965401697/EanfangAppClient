@@ -104,7 +104,7 @@ public class MyFriendsListActivity extends BaseClientActivity {
             FriendListBean bean = (FriendListBean) adapter.getData().get(position);
             if (bean != null) {
                 //跳转用户主页
-                UserHomeActivity.startActivity(MyFriendsListActivity.this, bean.getAccId());
+                UserHomeActivity.startActivityForAccId(MyFriendsListActivity.this, bean.getAccId());
             }
             //跳转聊天页
 //                UserInfo userInfo = new UserInfo(bean.getAccId(), bean.getNickName(), Uri.parse(BuildConfig.OSS_SERVER + bean.getAvatar()));

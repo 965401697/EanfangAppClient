@@ -2,7 +2,6 @@ package net.eanfang.worker.ui.activity.worksapce.contacts;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 
 import net.eanfang.worker.R;
@@ -30,15 +29,9 @@ public class CreatTeamStatusHintActivity extends BaseWorkerActivity {
         ButterKnife.bind(this);
         setTitle("提交成功");
         setLeftBack();
-
-        findViewById(R.id.tv_go).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                startActivity(new Intent(CreatTeamStatusHintActivity.this, AuthCompanyFirstActivity.class).
-                        putExtra("orgName", getIntent().getStringExtra("orgName")).putExtra("orgid", getIntent().getLongExtra("orgid", 0)));
-                finishSelf();
-            }
+        findViewById(R.id.tv_go).setOnClickListener(v -> {
+            startActivity(new Intent(CreatTeamStatusHintActivity.this, AuthCompanyFirstActivity.class).putExtra("orgName", getIntent().getStringExtra("orgName")).putExtra("orgid", getIntent().getLongExtra("orgid", 0)));
+            finishSelf();
         });
     }
 }

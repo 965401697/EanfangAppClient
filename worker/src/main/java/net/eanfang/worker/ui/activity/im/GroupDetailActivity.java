@@ -312,7 +312,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
 //                    intent.putExtra(EanfangConst.RONG_YUN_ID, temp.get(position).getAccId());
 //                    startActivity(intent);
                     if (temp.get(position) != null) {
-                        UserHomeActivity.startActivity(GroupDetailActivity.this, temp.get(position).getAccId());
+                        UserHomeActivity.startActivityForAccId(GroupDetailActivity.this, temp.get(position).getAccId());
                     }
                 }
             }

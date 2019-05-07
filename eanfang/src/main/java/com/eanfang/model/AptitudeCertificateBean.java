@@ -17,6 +17,17 @@ public class AptitudeCertificateBean {
     private int totalPage;
     private List<AptitudeCertificateEntity> list;
 
+    @Override
+    public String toString() {
+        return "AptitudeCertificateBean{" +
+                "currPage=" + currPage +
+                ", pageSize=" + pageSize +
+                ", totalCount=" + totalCount +
+                ", totalPage=" + totalPage +
+                ", list=" + list +
+                '}';
+    }
+
     public int getCurrPage() {
         return currPage;
     }

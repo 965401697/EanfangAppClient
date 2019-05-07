@@ -50,13 +50,6 @@
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/textSize_13" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/dimen_38"
-                    android:text="资质证书"
-                    android:textColor="@color/color_bottom"
-                    android:textSize="@dimen/textSize_13" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -89,18 +82,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@mipmap/point_1" />
-
-                <TextView
-                    android:layout_width="@dimen/dimen_120"
-                    android:layout_height="@dimen/dimen_2"
-                    android:layout_gravity="center_vertical"
-                    android:background="#DEDEDE" />
-
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/point_0" />
 
                 <TextView
                     android:layout_width="@dimen/dimen_120"
@@ -165,7 +146,7 @@
         android:background="@drawable/bg_btn_trouble_detail_add_trouble"
         android:gravity="center"
         android:padding="@dimen/dimen_30"
-        android:text="去添加资质证书→"
+        android:text="提交认证"
         android:textColor="@color/color_white"
         android:textSize="@dimen/textSize_13" />
 

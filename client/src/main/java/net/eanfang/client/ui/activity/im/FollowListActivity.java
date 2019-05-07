@@ -33,10 +33,6 @@ import butterknife.ButterKnife;
  */
 public class FollowListActivity extends BaseClientActivity {
     private static final String TAG = "FollowListActivity";
-    /**
-     * 带返回值请求用户首页code
-     */
-    private static final int REQUEST_USER_HOME_CODE = 1;
 
     @BindView(R.id.recycler_view_followList)
     RecyclerView mRecyclerViewFollowList;
@@ -105,10 +101,7 @@ public class FollowListActivity extends BaseClientActivity {
             if (mFollowListBean != null && mFollowListBean.getUserEntity() != null &&
                     mFollowListBean.getUserEntity().getAccountEntity() != null &&
                     mFollowListBean.getUserEntity().getAccountEntity().getAccId() != null) {
-                Intent intent = new Intent(FollowListActivity.this, UserHomeActivity.class);
-                intent.putExtra(UserHomeActivity.EXTRA_ACCID,
-                        String.valueOf(mFollowListBean.getUserEntity().getAccountEntity().getAccId()));
-                startActivityForResult(intent, REQUEST_USER_HOME_CODE);
+                UserHomeActivity.startActivityForAccId(FollowListActivity.this, String.valueOf(mFollowListBean.getUserEntity().getAccountEntity().getAccId()));
             }
         });
 

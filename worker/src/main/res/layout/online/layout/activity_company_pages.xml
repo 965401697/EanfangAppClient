@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_contact_line_gray"
+    android:orientation="vertical">
+
+    <include layout="@layout/header" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_20" />
+
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_20"
+        android:elevation="@dimen/dimen_100"
+        app:cardBackgroundColor="@color/color_white"
+        app:cardCornerRadius="@dimen/dimen_16">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dimen_20">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/gs_log_sdv"
+                android:layout_width="@dimen/dimen_100"
+                android:layout_height="@dimen/dimen_100"
+                android:layout_marginRight="@dimen/dimen_20"
+                app:placeholderImage="@mipmap/ic_launcher"
+                app:roundAsCircle="true" />
+
+            <TextView
+                android:id="@+id/gs_name_tv"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:layout_toRightOf="@id/gs_log_sdv"
+                android:text="北京市法安视科技有限公司"
+                android:textColor="#ff333333"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/iv_verify"
+                android:layout_width="@dimen/dimen_32"
+                android:layout_height="@dimen/dimen_32"
+                android:layout_below="@id/gs_name_tv"
+                android:layout_marginTop="@dimen/dimen_2"
+                android:layout_toRightOf="@id/gs_log_sdv"
+                android:src="@mipmap/ic_contact_noauth"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tv_auth_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/gs_name_tv"
+                android:layout_marginTop="@dimen/dimen_2"
+                android:layout_toRightOf="@id/iv_verify"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:text="未认证"
+                android:textColor="@color/color_contact_auth_text"
+                android:textSize="@dimen/textSize_12"
+                android:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/gs_xq_iv"
+                android:layout_width="@dimen/dimen_12"
+                android:layout_height="@dimen/dimen_20"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="@dimen/dimen_30"
+                android:layout_marginRight="10dp"
+                android:src="@mipmap/ic_icon_right" />
+
+            <TextView
+                android:id="@+id/gs_xq_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/gs_log_sdv"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:text="公司简介"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/show_more_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/gs_xq_tv"
+                android:layout_alignParentLeft="true"
+                android:text="[更多]"
+                android:textColor="@color/colorPrimary"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_des"
+                android:layout_width="@dimen/dimen_160"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/show_more_tv"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="@dimen/dimen_6"
+                android:background="@drawable/bg_gradual_change_ellipse"
+                android:gravity="center"
+                android:padding="@dimen/dimen_14"
+                android:text="去认证"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <com.customview.SuperTextView
+        android:id="@+id/gs_gm_tv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/app_qy_zy_item_size"
+        android:background="@color/white"
+        android:padding="@dimen/dimen_10"
+        app:sCenterViewGravity="center"
+        app:sLeftTextString="公司规模"
+        app:sRightTextString="" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_2" />
+
+    <com.customview.SuperTextView
+        android:id="@+id/hy_lx_tv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/app_qy_zy_item_size"
+        android:background="@color/white"
+        android:padding="@dimen/dimen_10"
+        app:sCenterViewGravity="center"
+        app:sLeftTextString="行业类型"
+        app:sRightTextString="默认-二级目录" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_30" />
+
+    <com.customview.SuperTextView
+        android:id="@+id/bg_dz_tv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/app_qy_zy_item_size"
+        android:background="@color/white"
+        android:padding="@dimen/dimen_10"
+        app:sCenterViewGravity="center"
+        app:sLeftTextString="办公地址"
+        app:sRightTextString="默认-办公地址" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_2" />
+
+    <com.customview.SuperTextView
+        android:id="@+id/xx_dz_tv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/app_qy_zy_item_size"
+        android:background="@color/white"
+        android:padding="@dimen/dimen_10"
+        app:sCenterViewGravity="center"
+        app:sLeftTextString="详细地址"
+        app:sRightTextString="默认-详细地址" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_2" />
+
+    <com.customview.SuperTextView
+        android:id="@+id/dz_yx_tv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/app_qy_zy_item_size"
+        android:background="@color/white"
+        android:padding="@dimen/dimen_10"
+        app:sCenterViewGravity="center"
+        app:sLeftTextString="电子邮箱"
+        app:sRightTextString="默认-电子邮箱" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_2" />
+
+    <com.customview.SuperTextView
+        android:id="@+id/dw_dh_tv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/app_qy_zy_item_size"
+        android:background="@color/white"
+        android:padding="@dimen/dimen_10"
+        app:sCenterViewGravity="center"
+        app:sLeftTextString="单位电话"
+        app:sRightTextString="默认-单位电话" />
+</LinearLayout>

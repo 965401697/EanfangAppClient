@@ -95,6 +95,7 @@ public class IdentityCardCertification extends BaseActivityWithTakePhoto {
         }
 
         Intent intent = new Intent(this, OtherDataActivity.class);
+//        Intent intent = new Intent(this, SubmitSuccessfullyJsActivity.class);
         intent.putExtra("bean", mTechWorkerVerifyEntity);
         startActivity(intent);
     }

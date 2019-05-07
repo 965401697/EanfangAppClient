@@ -314,7 +314,7 @@ public class HomeFragment extends BaseFragment {
             }
         });
         //专家问答
-        findViewById(R.id.tv_onLine).setOnClickListener((v) -> {
+        findViewById(R.id.tv_onLine).setOnClickListener((v) -> {//wq==
 //            if (!PermKit.get().getRepairListPerm()) return;
             if (workerApprove()) {
                 startActivity(new Intent(getActivity(), ExpertOnlineActivity.class));
@@ -479,6 +479,7 @@ public class HomeFragment extends BaseFragment {
             JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
         }
     }
+
 
     /**
      * 统计

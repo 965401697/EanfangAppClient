@@ -247,6 +247,7 @@ public class OrderDetailFragment extends BaseFragment {
 
                     //技师端
                     if (bean.getOwnerUser() != null) {
+                        if (bean.getOwnerUser().getAccountEntity()!=null)
                         iv_pic.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(bean.getOwnerUser().getAccountEntity().getAvatar()));
                         tv_worker_name.setText(bean.getRepairContacts());
                         if (bean.getOwnerOrg() != null) {
