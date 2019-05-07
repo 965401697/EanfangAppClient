@@ -48,21 +48,30 @@ public class LoginViewModel extends BaseViewModel {
     /**
      * 密码登录
      *
-     * @param userName userName
-     * @param password password
+     * @param userName userName 手机号
+     * @param password password 密码
      */
     private void loginPassword(String userName, String password) {
         loginRepo.loginPassword(userName, password).observe(lifecycleOwner, bean -> loginLiveData.setValue(bean));
     }
 
     /**
-     * 密码登录
+     * 验证码登录
      *
-     * @param userName userName
-     * @param code     code
+     * @param userName userName 手机号
+     * @param code     code 验证码
      */
     private void loginVerify(String userName, String code) {
         loginRepo.loginVerify(userName, code).observe(lifecycleOwner, bean -> loginLiveData.setValue(bean));
+    }
+
+    /**
+     * 获取验证码
+     *
+     * @param userName 手机号
+     */
+    private void verifyCode(String userName) {
+        loginRepo.verifyCode(userName).observe(lifecycleOwner, this::showToast);
     }
 
     /**
@@ -113,11 +122,11 @@ public class LoginViewModel extends BaseViewModel {
             showToast("请输入正确手机号");
             return;
         }
-        loginRepo.verifyCode(loginVo.getUsername().get()).observe(lifecycleOwner, this::showToast);
-
+        verifyCode(loginVo.getUsername().get());
         verifyBinding.tvYanzheng.setEnabled(false);
         timer.start();
     }
+
 
     //验证码倒计时
     @Getter

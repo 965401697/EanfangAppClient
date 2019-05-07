@@ -10,6 +10,10 @@ import lombok.Setter;
 public class HttpConfig {
     private String apiUrl = "";
     private String requestFrom = "";
+
+    private String ossEndpoint = "";
+    private String ossBucket = "";
+
     @Setter
     private String token;
     /**
@@ -31,10 +35,12 @@ public class HttpConfig {
      * @param api  api地址
      * @param from 请求来源
      */
-    public static void init(String api, String from) {
+    public static void init(String api, String from, String ossEndpoint, String ossBucket) {
         config = new HttpConfig();
         config.apiUrl = api;
         config.requestFrom = from.toUpperCase();
+        config.ossEndpoint = ossEndpoint;
+        config.ossBucket = ossBucket;
 
     }
 

@@ -80,9 +80,10 @@ public class ControlToolManager {
         }
         return IPIECHART;
     }
-    public static ICalendarView calendarV(){
-        if(ICALENDARVIEW==null){
-            ICALENDARVIEW=new CalendarViewManager();
+
+    public static ICalendarView calendarV() {
+        if (ICALENDARVIEW == null) {
+            ICALENDARVIEW = new CalendarViewManager();
         }
         return ICALENDARVIEW;
     }

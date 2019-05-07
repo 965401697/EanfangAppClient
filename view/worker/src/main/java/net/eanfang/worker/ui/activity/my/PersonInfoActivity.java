@@ -21,14 +21,13 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.kit.sdk.alisdk.alioss.OSSCallBack;
+import com.eanfang.kit.SDKManager;
+import com.eanfang.kit.ali.alioss.OSSCallBack;
 import com.eanfang.listener.MultiClickListener;
 import com.eanfang.model.Message;
 import com.eanfang.model.SelectAddressItem;
 import com.eanfang.model.bean.LoginBean;
 import com.eanfang.model.sys.AccountEntity;
-import com.eanfang.oss.OSSUtils;
-import com.eanfang.sys.viewmodel.OSSViewModel;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.IDCardUtil;
@@ -148,6 +147,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
 
         setRightTitleOnClickListener(new MultiClickListener(this, this::checkInfo, this::submit));
     }
+
     private void headImagechoose() {
         takePhoto(PersonInfoActivity.this, HEAD_PHOTO, new OnImageChooseCallBack() {
             @Override
@@ -175,8 +175,9 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto {
 
                     }
                 };
-                OSSViewModel ossViewModel=new OSSViewModel();
-                ossViewModel.getToken(this,imgKey,media.getCompressPath(),callback);
+                SDKManager.getIOSS().initOSS(this).asyncPutImage(imgKey, media.getCompressPath(), callback);
+//                OSSViewModel ossViewModel=new OSSViewModel();
+//                ossViewModel.getToken(this,imgKey,media.getCompressPath(),callback);
 //                ossRepo.getToken().observe(bean-> SDKManager.getIOSS().initOSS(,bean).);
 //                SDKManager.getIOSS().initOSS(this).asyncPutImage(imgKey, media.getCompressPath(), callback);
 
