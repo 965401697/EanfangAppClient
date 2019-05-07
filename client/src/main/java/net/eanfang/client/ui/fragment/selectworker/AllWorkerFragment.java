@@ -178,11 +178,9 @@ public class AllWorkerFragment extends BaseFragment implements SwipeRefreshLayou
                             if (bean.size() > 0) {
                                 rvAllWorker.setVisibility(View.VISIBLE);
                                 llNodata.setVisibility(View.GONE);
-                                btnKeyTwo.setVisibility(View.VISIBLE);
                             } else {
                                 rvAllWorker.setVisibility(View.GONE);
                                 llNodata.setVisibility(View.VISIBLE);
-                                btnKeyTwo.setVisibility(View.GONE);
                             }
                         } else {
                             selectWorkerAdapter.addData(bean);

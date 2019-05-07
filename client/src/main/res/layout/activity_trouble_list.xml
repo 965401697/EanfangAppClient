@@ -25,6 +25,8 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/dimen_50"
+        android:layout_marginEnd="@dimen/dimen_40"
+        android:layout_marginStart="@dimen/dimen_40"
         android:background="@drawable/shape_bg_sure"
         android:gravity="center"
         android:text="立即报修"

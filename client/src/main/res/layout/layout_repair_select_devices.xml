@@ -6,9 +6,7 @@
     android:layout_gravity="center"
     android:background="@drawable/bg_client_contact_create"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/dimen_40"
-    android:paddingLeft="@dimen/dimen_40"
-    android:paddingRight="@dimen/dimen_40">
+    android:paddingBottom="@dimen/dimen_40" >
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -27,6 +25,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_30"
+        android:layout_marginStart="@dimen/dimen_40"
+        android:layout_marginEnd="@dimen/dimen_40"
         android:orientation="horizontal">
 
         <TextView

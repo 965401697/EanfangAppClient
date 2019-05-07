@@ -128,11 +128,6 @@ public class RepairActivity extends BaseClientActivity {
         initListener();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        doChekInfo();
-    }
 
     private void initView() {
         setTitle("我要报修");
@@ -145,6 +140,7 @@ public class RepairActivity extends BaseClientActivity {
     }
 
     private void initData() {
+        doChekInfo();
     }
 
 
