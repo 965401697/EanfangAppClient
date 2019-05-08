@@ -31,7 +31,6 @@ android {
                 AMAP_KEY     : "db2be5c0ebed1c47388afd3c361bbfe3",
                 HW_APPID     : "100379649",
                 PACKAGE_NAME : "net.eanfang.worker"
-
         ]
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
 

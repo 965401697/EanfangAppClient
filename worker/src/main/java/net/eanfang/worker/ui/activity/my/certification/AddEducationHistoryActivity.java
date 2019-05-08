@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -59,6 +60,10 @@ public class AddEducationHistoryActivity extends BaseActivityWithTakePhoto {
     BGASortableNinePhotoLayout snplMomentAccident;
     @BindView(R.id.tv_save)
     TextView tvSave;
+    @BindView(R.id.ll_education)
+    LinearLayout llEducation;
+    @BindView(R.id.ll_date)
+    LinearLayout llDate;
 
 
     /**
@@ -83,15 +88,35 @@ public class AddEducationHistoryActivity extends BaseActivityWithTakePhoto {
         bean = (EducationExperienceEntity) getIntent().getSerializableExtra("bean");
         snplMomentAccident.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_CERTIFICATE, REQUEST_CODE_PHOTO_CERTIFICATE));
         snplMomentAccident.setData(picList_certificate);
-        setRightTitle("保存");
         setRightTitleOnClickListener(view -> setData());
         if (bean != null) {
+            setTitle("教育培训");
+            setRightTitle("编辑");
+            setZhiDu(false);
             fillData();
-            setTitle("编辑教育培训");
-            tvSave.setVisibility(View.VISIBLE);
+            setRightTitleOnClickListener(view -> {
+                        setRightTitle("保存");
+                        setZhiDu(true);
+                        setRightTitleOnClickListener(view1 -> setData());
+                    }
+
+            );
         } else {
-            setTitle("添加教育培训");
+            setTitle("教育培训");
+            setRightTitle("保存");
+            tvSave.setVisibility(View.GONE);
         }
+    }
+
+    private void setZhiDu(boolean isZd) {
+        tvSave.setVisibility(isZd ? View.VISIBLE : View.GONE);
+        etNum.setEnabled(isZd);
+        etSchoolName.setEnabled(isZd);
+        etMajor.setEnabled(isZd);
+        llEducation.setEnabled(isZd);
+        llDate.setEnabled(isZd);
+        snplMomentAccident.setPlusEnable(isZd);
+        snplMomentAccident.setEditable(isZd);
     }
 
     private void fillData() {
@@ -211,7 +236,6 @@ public class AddEducationHistoryActivity extends BaseActivityWithTakePhoto {
             ToastUtil.get().showToast(this, "请选择起止时间");
             return true;
         }
-
         pic = PhotoUtils.getPhotoUrl("", snplMomentAccident, uploadMap, false);
         if (StringUtils.isEmpty(pic)) {
             showToast("请添加证书照片");

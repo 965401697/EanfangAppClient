@@ -204,11 +204,11 @@
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
         android:layout_margin="@dimen/dimen_40"
-        android:background="@drawable/bg_btn_trouble_detail_add_trouble"
+        android:background="@drawable/bg_new_cc"
         android:gravity="center"
-        android:padding="@dimen/dimen_30"
+        android:padding="@dimen/dimen_20"
         android:text="删除"
-        android:textColor="@color/color_white"
+        android:textColor="#FF3F3F"
         android:textSize="@dimen/textSize_14" />
 
 </RelativeLayout>

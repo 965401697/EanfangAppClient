@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -57,6 +58,8 @@ public class AddWorkActivity extends BaseActivityWithTakePhoto {
     BGASortableNinePhotoLayout snplMomentAccident;
     @BindView(R.id.tv_save)
     TextView tvSave;
+    @BindView(R.id.ll_date)
+    LinearLayout llDate;
     /**
      * 证书照片
      */
@@ -74,22 +77,41 @@ public class AddWorkActivity extends BaseActivityWithTakePhoto {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_work);
         ButterKnife.bind(this);
-        setTitle("工作经历");
         setLeftBack();
         bean = (JobExperienceEntity) getIntent().getSerializableExtra("bean");
         snplMomentAccident.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_CERTIFICATE, REQUEST_CODE_PHOTO_CERTIFICATE));
         snplMomentAccident.setData(picList_certificate);
-        setRightTitle("保存");
         setRightTitleOnClickListener(view -> setData());
         if (bean != null) {
             fillData();
-            setTitle("编辑工作经历");
-            tvSave.setVisibility(View.VISIBLE);
+            setTitle("工作经历");
+            setRightTitle("编辑");
+            setZhiDu(false);
+            fillData();
+            setRightTitleOnClickListener(view -> {
+                        setRightTitle("保存");
+                        setZhiDu(true);
+                        setRightTitleOnClickListener(view1 -> setData());
+                    }
+            );
 
         } else {
-            setTitle("添加工作经历");
+            setTitle("工作经历");
+            setRightTitle("保存");
+            tvSave.setVisibility(View.GONE);
         }
 
+    }
+
+    private void setZhiDu(boolean isZd) {
+        tvSave.setVisibility(isZd ? View.VISIBLE : View.GONE);
+        etCompanyName.setEnabled(isZd);
+        etPosition.setEnabled(isZd);
+        etJobPosition.setEnabled(isZd);
+        llDate.setEnabled(isZd);
+        etCertificate.setEnabled(isZd);
+        snplMomentAccident.setPlusEnable(isZd);
+        snplMomentAccident.setEditable(isZd);
     }
 
     private void fillData() {
@@ -233,6 +255,7 @@ public class AddWorkActivity extends BaseActivityWithTakePhoto {
             default:
         }
     }
+
     private void delete() {
         EanfangHttp.post(UserApi.GET_TECH_WORKER_WORK_DELETE + "/" + bean.getId())
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class) {
@@ -243,6 +266,7 @@ public class AddWorkActivity extends BaseActivityWithTakePhoto {
                     }
                 });
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

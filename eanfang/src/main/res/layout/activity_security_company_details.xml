@@ -79,7 +79,7 @@
 
                 <TextView
                     android:id="@+id/bfz_tv"
-                    android:layout_width="@dimen/dimen_160"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/gs_xq_iv"
                     android:layout_alignParentRight="true"
@@ -121,10 +121,12 @@
                     app:text_b="66"
                     app:text_size_a="@dimen/app_two_a_text_size"
                     app:text_size_b="@dimen/app_two_b_text_size" />
-<Space
-    android:layout_width="wrap_content"
-    android:layout_weight="1"
-    android:layout_height="wrap_content" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
                 <com.customview.TwoTextPicText
                     android:id="@+id/wx_dd_iv"
                     android:layout_width="@dimen/app_two_pic_text"
@@ -135,10 +137,12 @@
                     app:text_b="66"
                     app:text_size_a="@dimen/app_two_a_text_size"
                     app:text_size_b="@dimen/app_two_b_text_size" />
+
                 <Space
                     android:layout_width="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
                 <com.customview.TwoTextPicText
                     android:id="@+id/sg_dd_iv"
                     android:layout_width="@dimen/app_two_pic_text"
@@ -149,10 +153,12 @@
                     app:text_b="66"
                     app:text_size_a="@dimen/app_two_a_text_size"
                     app:text_size_b="@dimen/app_two_b_text_size" />
+
                 <Space
                     android:layout_width="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
                 <com.customview.TwoTextPicText
                     android:id="@+id/pl_iv"
                     android:layout_width="@dimen/app_two_pic_text"
@@ -205,15 +211,10 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/kh_al_rv"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/dimen_20"
-                android:paddingRight="@dimen/dimen_20">
+                android:layout_height="wrap_content" />
 
-            </android.support.v7.widget.RecyclerView>
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_10" />
+
 
 
             <com.flyco.tablayout.SlidingTabLayout
@@ -221,13 +222,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="#006AFE"
-                app:tl_indicator_color="@color/gray"
+                app:tl_indicator_color="@color/white"
                 app:tl_tab_space_equal="true"
-                app:tl_underline_color="#006AFE"
-                app:tl_underline_height="2dp"
                 app:tl_textAllCaps="true"
                 app:tl_textBold="BOTH"
-                app:tl_textsize="14sp" />
+                app:tl_textsize="14sp"
+                app:tl_underline_color="#006AFE"
+                app:tl_underline_height="1dp" />
 
             <com.customview.ViewPagerForScrollView
                 android:id="@+id/vp_service"
