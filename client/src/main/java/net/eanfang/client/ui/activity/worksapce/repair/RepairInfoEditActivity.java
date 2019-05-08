@@ -185,6 +185,11 @@ public class RepairInfoEditActivity extends BaseActivity implements RadioGroup.O
             showToast("请输入电话");
             return false;
         }
+        //电话号码是否符合格式
+        if (!StringUtils.isMobileString(etPhone.getText().toString().trim())) {
+            showToast("请输入正确手机号");
+            return false;
+        }
 
         return true;
     }
@@ -215,11 +220,14 @@ public class RepairInfoEditActivity extends BaseActivity implements RadioGroup.O
             case R.id.rb_woman:
                 mSex = 0;
                 break;
+            case R.id.rb_add:
+                mType = rbAdd.getText().toString().trim();
+                break;
             case R.id.rb_home:
                 mType = "家";
                 break;
             case R.id.rb_company:
-                mType = "公司";
+                mType = "单位";
                 break;
             default:
                 break;
@@ -310,6 +318,7 @@ public class RepairInfoEditActivity extends BaseActivity implements RadioGroup.O
 
     @Override
     public void doConfim(String mContent) {
+        rbAdd.setCompoundDrawables(null, null, null, null);
         rbAdd.setText(mContent);
         mType = mContent;
     }

@@ -20,6 +20,7 @@ import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.MultiClickListener;
+import com.eanfang.model.LoginBean;
 import com.eanfang.model.RepairOpenAreaBean;
 import com.eanfang.model.reapair.RepairPersonalInfoEntity;
 import com.eanfang.ui.base.voice.RecognitionManager;
@@ -95,6 +96,8 @@ public class RepairActivity extends BaseClientActivity {
     TextView tvAddress;
     @BindView(R.id.iv_info_right)
     ImageView ivInfoRight;
+    @BindView(R.id.ll_projectName)
+    LinearLayout llProjectName;
 
     /**
      * 选择时限 Popwindow
@@ -122,6 +125,7 @@ public class RepairActivity extends BaseClientActivity {
      * 項目ID
      */
     private String mProjectId = null;
+    private LoginBean user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,6 +147,9 @@ public class RepairActivity extends BaseClientActivity {
         mOwnerOrgId = getIntent().getLongExtra("mOwnerOrgId", 0);
         beanList = (List<RepairBugEntity>) getIntent().getSerializableExtra("troubleList");
         ivInfoRight.setVisibility(View.VISIBLE);
+        //个人客户 单位名称自己输入
+        user = EanfangApplication.getApplication().getUser();
+        llProjectName.setVisibility(user.getAccount().getDefaultUser().getCompanyId() <= 0 ? View.GONE : View.VISIBLE);
 //        repairPersonalInfoEntity = (RepairPersonalInfoEntity.ListBean) getIntent().getSerializableExtra("infoEntity");
     }
 
@@ -304,10 +311,13 @@ public class RepairActivity extends BaseClientActivity {
             showToast("请添加用户信息");
             return false;
         }
-        if (StringUtils.isEmpty(tvProjectName.getText().toString().trim())) {
-            showToast("请填写项目名称");
-            return false;
+        if (user.getAccount().getDefaultUser().getCompanyId() > 0) {
+            if (StringUtils.isEmpty(tvProjectName.getText().toString().trim())) {
+                showToast("请填写项目名称");
+                return false;
+            }
         }
+
         if (StringUtils.isEmpty(tvTime.getText().toString().trim())) {
             showToast("请选择到达时限");
             return false;

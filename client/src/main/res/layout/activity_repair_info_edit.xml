@@ -155,11 +155,12 @@
                             android:background="@drawable/select_client_camera_back"
                             android:button="@null"
                             android:checked="false"
+                            android:drawableLeft="@mipmap/ic_repair_info_add"
                             android:gravity="center"
                             android:maxLength="5"
                             android:maxLines="1"
-                            android:paddingLeft="@dimen/dimen_10"
-                            android:paddingRight="@dimen/dimen_10"
+                            android:paddingLeft="@dimen/dimen_20"
+                            android:paddingRight="@dimen/dimen_20"
                             android:textColor="@drawable/select_client_camera_text_back"
                             android:textSize="12sp" />
 
@@ -185,7 +186,7 @@
                             android:button="@null"
                             android:checked="false"
                             android:gravity="center"
-                            android:text="公司"
+                            android:text="单位"
                             android:textColor="@drawable/select_client_camera_text_back"
                             android:textSize="12sp" />
 
@@ -267,9 +268,11 @@
                         android:layout_marginLeft="@dimen/dimen_36"
                         android:layout_weight="1"
                         android:background="@null"
+                        android:digits="1234567890"
                         android:gravity="right"
                         android:hint="请输入"
-                        android:inputType="number"
+                        android:inputType="phone|number"
+                        android:maxLength="11"
                         android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_13" />
                 </LinearLayout>

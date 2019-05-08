@@ -74,6 +74,7 @@ public class CommonView extends BaseDialog {
     public String doSetContent() {
         String mContens = etInputCompany.getText().toString().trim();
         if (StringUtils.isEmpty(mContens)) {
+            dismiss();
             return null;
         }
         if(mContens.length()>5){

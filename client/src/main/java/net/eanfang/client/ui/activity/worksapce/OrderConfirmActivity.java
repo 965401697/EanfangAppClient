@@ -138,7 +138,7 @@ public class OrderConfirmActivity extends BaseClientActivity {
         mRecyclerView.setLayoutManager(llm);
         mRecyclerView.setNestedScrollingEnabled(false);
         scrollView.smoothScrollTo(0, 20);
-        setTitle("订单确认");
+        setTitle("工单确认");
         headUrl = getIntent().getStringExtra("headUrl");
         workerName = getIntent().getStringExtra("workName");
         comapnyName = getIntent().getStringExtra("companyName");
