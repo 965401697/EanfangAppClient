@@ -11,6 +11,7 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.model.GroupDetailBean;
 import com.eanfang.util.Cn2Spell;
+import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.witget.SideBar;
 
@@ -63,12 +64,17 @@ public class GroupMoreMemberActivity extends BaseWorkerActivity {
 
             for (GroupDetailBean.ListBean bean : mList) {
                 // 根据姓名获取拼音
-                bean.getAccountEntity().setPinyin(bean.getAccountEntity().getNickName());
-                bean.getAccountEntity().setFirstLetter(Cn2Spell.getPinYin(bean.getAccountEntity().getNickName()).substring(0, 1).toUpperCase()); // 获取拼音首字母并转成大写
-                if (!Cn2Spell.getPinYin(bean.getAccountEntity().getNickName()).substring(0, 1).toUpperCase().matches("[A-Z]")) { // 如果不在A-Z中则默认为“#”
+                String nickName = bean.getAccountEntity().getNickName();
+                if (!StringUtils.isEmpty(nickName)) {
+                    bean.getAccountEntity().setPinyin(nickName);
+                    bean.getAccountEntity().setFirstLetter(Cn2Spell.getPinYin
+                            (nickName).substring(0, 1).toUpperCase()); // 获取拼音首字母并转成大写
+                    if (!Cn2Spell.getPinYin(nickName).substring(0, 1).toUpperCase().matches("[A-Z]")) { // 如果不在A-Z中则默认为“#”
+                        bean.getAccountEntity().setFirstLetter("#");
+                    }
+                } else {
                     bean.getAccountEntity().setFirstLetter("#");
                 }
-
                 list.add(bean.getAccountEntity());
             }
 
