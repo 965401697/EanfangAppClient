@@ -166,7 +166,30 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_ll_selctor"
-                android:orientation="horizontal">
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_30"
+                        android:text="备注信息"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/color_bottom"
+                        android:textSize="@dimen/textSize_13" />
+
+                    <ImageView
+                        android:id="@+id/iv_input_voice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerInParent="true"
+                        android:padding="@dimen/dimen_20"
+                        android:src="@mipmap/ic_client_voice_input" />
+                </RelativeLayout>
 
                 <EditText
                     android:id="@+id/et_notice"

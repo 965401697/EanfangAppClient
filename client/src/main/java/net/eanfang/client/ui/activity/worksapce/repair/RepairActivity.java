@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.annimon.stream.Stream;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.application.EanfangApplication;
@@ -21,9 +22,11 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.MultiClickListener;
 import com.eanfang.model.RepairOpenAreaBean;
 import com.eanfang.model.reapair.RepairPersonalInfoEntity;
+import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
+import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
 import com.yaf.base.entity.RepairBugEntity;
@@ -90,6 +93,8 @@ public class RepairActivity extends BaseClientActivity {
     TextView tvHomeAddress;
     @BindView(R.id.tv_address)
     TextView tvAddress;
+    @BindView(R.id.iv_info_right)
+    ImageView ivInfoRight;
 
     /**
      * 选择时限 Popwindow
@@ -131,11 +136,13 @@ public class RepairActivity extends BaseClientActivity {
 
     private void initView() {
         setTitle("我要报修");
+        setLeftBack();
         // 扫码报修
         repairOrderEntity = (RepairOrderEntity) getIntent().getSerializableExtra("repairbean");
         isScan = getIntent().getStringExtra("qrcode");
         mOwnerOrgId = getIntent().getLongExtra("mOwnerOrgId", 0);
         beanList = (List<RepairBugEntity>) getIntent().getSerializableExtra("troubleList");
+        ivInfoRight.setVisibility(View.VISIBLE);
 //        repairPersonalInfoEntity = (RepairPersonalInfoEntity.ListBean) getIntent().getSerializableExtra("infoEntity");
     }
 
@@ -271,7 +278,7 @@ public class RepairActivity extends BaseClientActivity {
     }
 
 
-    @OnClick({R.id.tv_project_name, R.id.ll_noPersonalInfo})
+    @OnClick({R.id.tv_project_name, R.id.ll_noPersonalInfo, R.id.iv_input_voice})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             //  创建项目名称
@@ -281,6 +288,11 @@ public class RepairActivity extends BaseClientActivity {
             //  创建个人信息
             case R.id.ll_noPersonalInfo:
                 JumpItent.jump(this, RepairPersonInfoListActivity.class, REQUEST_PERSONAL_INFO);
+                break;
+            case R.id.iv_input_voice:
+                PermissionUtils.get(this).getVoicePermission(() -> {
+                    RecognitionManager.getSingleton().startRecognitionWithDialog(RepairActivity.this, etNotice);
+                });
                 break;
             default:
                 break;
@@ -336,7 +348,7 @@ public class RepairActivity extends BaseClientActivity {
                             intent.putExtra("topInfo", repairPersonalInfoEntity);
                             intent.putExtra("doorFee", bean.getDoorFee());
                             intent.putExtra("mOwnerOrgId", mOwnerOrgId);
-                            intent.putStringArrayListExtra("businessIds", (ArrayList<String>) com.annimon.stream.Stream.of(beanList).map(beans -> Config.get().getBusinessIdByCode(beans.getBusinessThreeCode(), 1) + "").distinct().toList());
+                            intent.putStringArrayListExtra("businessIds", (ArrayList<String>) Stream.of(beanList).map(beans -> Config.get().getBusinessIdByCode(beans.getBusinessThreeCode(), 1) + "").distinct().toList());
                             startActivity(intent);
                         }
                     } else {

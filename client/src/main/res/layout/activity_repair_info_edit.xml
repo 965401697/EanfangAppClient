@@ -160,7 +160,6 @@
                             android:maxLines="1"
                             android:paddingLeft="@dimen/dimen_10"
                             android:paddingRight="@dimen/dimen_10"
-                            android:text="添加"
                             android:textColor="@drawable/select_client_camera_text_back"
                             android:textSize="12sp" />
 
