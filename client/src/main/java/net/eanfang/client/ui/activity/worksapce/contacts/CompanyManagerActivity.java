@@ -1,7 +1,6 @@
 package net.eanfang.client.ui.activity.worksapce.contacts;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -30,7 +29,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * @author Guanluocang
+ * @author Guanluocang 客户端企业管理
  * @date on 2018/5/7  11:06
  * @decision
  */
@@ -75,16 +74,11 @@ public class CompanyManagerActivity extends BaseActivity implements DissloveTeam
         mOrgName = getIntent().getStringExtra("orgName");
         isAuth = getIntent().getStringExtra("isAuth");
         adminUserId = getIntent().getStringExtra("adminUserId");
-        if (String.valueOf(EanfangApplication.get().getUserId()).equals(adminUserId)){
+        if (String.valueOf(EanfangApplication.get().getUserId()).equals(adminUserId)) {
             setRightTitle("解散团队");
-        }else {
+        } else {
             setRightTitle("");
-            setRightTitleOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    return;
-                }
-            });
+            setRightTitleOnClickListener(v -> { return; });
         }
         /**
          *  0 未认证，待认证
@@ -126,14 +120,6 @@ public class CompanyManagerActivity extends BaseActivity implements DissloveTeam
                     JumpItent.jump(CompanyManagerActivity.this, AuthCompanyFirstActivity.class, bundle_prefect);
                 }
                 break;
-//            case R.id.rl_auth:
-//                Bundle bundle_auth = new Bundle();
-//                bundle_auth.putLong("orgid", mOrgId);
-//                bundle_auth.putString("orgName", mOrgName);
-//                bundle_auth.putString("assign", "auth");
-//                JumpItent.jump(CompanyManagerActivity.this, AuthCompanyDataActivity.class, bundle_auth);
-//
-//                break;
             // 管理员转让
             case R.id.rl_admin_set:
                 if (String.valueOf(EanfangApplication.get().getUserId()).equals(adminUserId)) {
@@ -195,12 +181,11 @@ public class CompanyManagerActivity extends BaseActivity implements DissloveTeam
             return;
         }
         new TrueFalseDialog(this, "系统提示", "是否撤销认证并保存信息", () -> {
-            EanfangHttp.post(NewApiService.COMPANY_ENTERPRISE_AUTH_REVOKE + mOrgId)
-                    .execute(new EanfangCallback<JSONPObject>(this, true, JSONPObject.class, bean -> {
-                        showToast("撤销成功");
-                        isAuth = "0";
-                        tvAgainAuth.setVisibility(View.GONE);
-                    }));
+            EanfangHttp.post(NewApiService.COMPANY_ENTERPRISE_AUTH_REVOKE + mOrgId).execute(new EanfangCallback<JSONPObject>(this, true, JSONPObject.class, bean -> {
+                showToast("撤销成功");
+                isAuth = "0";
+                tvAgainAuth.setVisibility(View.GONE);
+            }));
         }).showDialog();
     }
 

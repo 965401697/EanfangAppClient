@@ -196,6 +196,15 @@ public class TechWorkerVerifyEntity implements Serializable {
     @Size(min = 0, max = 200)
     private String verifyMessage;
 
+    private String idCardNum;
+
+    public String getIdCardNum() {
+        return idCardNum;
+    }
+
+    public void setIdCardNum(String idCardNum) {
+        this.idCardNum = idCardNum;
+    }
 
     /**
      * 设置：主键自增

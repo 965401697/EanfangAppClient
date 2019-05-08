@@ -105,7 +105,6 @@ public class AddSkillCertificafeActivity extends BaseActivityWithTakePhoto {
         etCertificateName.setEnabled(isZd);
         etNum.setEnabled(isZd);
         etOrg.setEnabled(isZd);
-        etLevel.setEnabled(isZd);
         llDate.setEnabled(isZd);
         snplMomentAccident.setPlusEnable(isZd);
         snplMomentAccident.setEditable(isZd);
@@ -124,7 +123,6 @@ public class AddSkillCertificafeActivity extends BaseActivityWithTakePhoto {
 
         etCertificateName.setText(bean.getCertificateName());
         etOrg.setText(bean.getAwardOrg());
-        etLevel.setText(bean.getCertificateLevel());
         etNum.setText(bean.getCertificateNumber());
         tvTime.setText(DateUtils.formatDate(bean.getBeginTime(), "yyyy-MM-dd") + " ～ " + DateUtils.formatDate(bean.getEndTime(), "yyyy-MM-dd"));
         snplMomentAccident.setData(picList);
@@ -150,7 +148,6 @@ public class AddSkillCertificafeActivity extends BaseActivityWithTakePhoto {
         entity.setAccId(EanfangApplication.get().getAccId());
         entity.setBeginTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[0], "yyyy-MM-dd"));
         entity.setEndTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[1], "yyyy-MM-dd"));
-        entity.setCertificateLevel(etLevel.getText().toString().trim());
         entity.setCertificateNumber(etNum.getText().toString().trim());
         entity.setCertificatePics(pic);
 
@@ -182,20 +179,14 @@ public class AddSkillCertificafeActivity extends BaseActivityWithTakePhoto {
             ToastUtil.get().showToast(this, "请输入证书名称");
             return true;
         }
-
-        if (TextUtils.isEmpty(etOrg.getText().toString())) {
-            ToastUtil.get().showToast(this, "请输入发证机构");
-            return true;
-        }
-        if (TextUtils.isEmpty(etLevel.getText().toString())) {
-            ToastUtil.get().showToast(this, "请输入资质等级");
-            return true;
-        }
         if (TextUtils.isEmpty(etNum.getText().toString())) {
             ToastUtil.get().showToast(this, "请输入证书编号");
             return true;
         }
-
+        if (TextUtils.isEmpty(etOrg.getText().toString())) {
+            ToastUtil.get().showToast(this, "请输入发证机构");
+            return true;
+        }
         if (TextUtils.isEmpty(tvTime.getText().toString())) {
             ToastUtil.get().showToast(this, "请选择有效时间");
             return true;
@@ -206,8 +197,6 @@ public class AddSkillCertificafeActivity extends BaseActivityWithTakePhoto {
             showToast("请添加证书照片");
             return true;
         }
-
-
         return false;
     }
 
@@ -233,22 +222,14 @@ public class AddSkillCertificafeActivity extends BaseActivityWithTakePhoto {
                 new DoubleDatePickerDialog(AddSkillCertificafeActivity.this, 0, new DoubleDatePickerDialog.OnDateSetListener() {
 
                     @Override
-                    public void onDateSet(DatePicker startDatePicker, int startYear, int startMonthOfYear,
-                                          int startDayOfMonth, DatePicker endDatePicker, int endYear, int endMonthOfYear,
-                                          int endDayOfMonth) {
-                        String textString = String.format("%d-%d-%d～%d-%d-%d", startYear,
-                                startMonthOfYear + 1, startDayOfMonth, endYear, endMonthOfYear + 1, endDayOfMonth);
-
+                    public void onDateSet(DatePicker startDatePicker, int startYear, int startMonthOfYear, int startDayOfMonth, DatePicker endDatePicker, int endYear, int endMonthOfYear, int endDayOfMonth) {
+                        String textString = String.format("%d-%d-%d～%d-%d-%d", startYear, startMonthOfYear + 1, startDayOfMonth, endYear, endMonthOfYear + 1, endDayOfMonth);
                         String startTime = String.format("%d-%d-%d", startYear, startMonthOfYear + 1, startDayOfMonth);
                         String endTime = String.format("%d-%d-%d", endYear, endMonthOfYear + 1, endDayOfMonth);
-
                         if (GetDateUtils.getTimeStamp(startTime, "yyyy-MM-dd") > GetDateUtils.getTimeStamp(endTime, "yyyy-MM-dd")) {
                             ToastUtil.get().showToast(AddSkillCertificafeActivity.this, "开始时间不能大于结束时间");
-
                             return;
                         }
-
-
                         tvTime.setText(textString);
 
                     }

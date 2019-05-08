@@ -104,7 +104,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="20dp"
                 android:layout_weight="1"
-                android:drawableEnd="@mipmap/date_template"
+                android:drawableEnd="@mipmap/rliv"
                 android:drawablePadding="@dimen/dimen_10"
                 android:gravity="right"
                 android:textColor="@color/color_bottom"

@@ -24,7 +24,6 @@ import com.eanfang.model.BusinessManagementData;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.tencent.android.tpush.common.Constants;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.contacts.baseinfo.AuthCompanyFirstBActivity;
@@ -171,7 +170,7 @@ public class CompanyManagerBActivity extends BaseActivity implements DissloveTea
             spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#006BFF")), 0, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             gsXqTv.setText(spannableString);
         } else {
-            SpannableString spannableString = new SpannableString("公司简介: ");
+            SpannableString spannableString = new SpannableString("公司简介: "+data.getIntro());
             spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#006BFF")), 0, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#333333")), 5, spannableString.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
             gsXqTv.setText(spannableString);
@@ -201,7 +200,7 @@ public class CompanyManagerBActivity extends BaseActivity implements DissloveTea
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         if (hasFocus) {
-            if (gsXqTv.getLineCount() < Constants.REGISTER_OK) {
+            if (gsXqTv.getLineCount() < 4) {
                 showMoreTv.setVisibility(View.GONE);
                 flag = true;
             } else {

@@ -107,7 +107,7 @@ public class TechnicianCertificationActivity extends BaseActivity {
                         ToastUtil.get().showToast(this, "请稍后操作");
                         return;
                     }
-                    startActivity(new Intent(this, PerfectingPersonalDataActivity.class).putExtra("status", mAuthStatusBean.getBase()).putExtra("statusB", mAuthStatusBean.getApt()));
+                    startActivity(new Intent(this, RealNameAuthenticationActivity.class).putExtra("status", mAuthStatusBean.getBase()).putExtra("statusB", mAuthStatusBean.getApt()));
                 }
                 break;
             case R.id.fw_rz_wq_tv:
