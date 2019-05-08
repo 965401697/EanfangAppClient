@@ -96,10 +96,10 @@
                         android:visibility="visible" />
 
                     <ImageView
-                        android:layout_width="@dimen/dimen_32"
-                        android:layout_height="@dimen/dimen_60"
+                        android:layout_width="@dimen/dimen_62"
+                        android:layout_height="@dimen/dimen_80"
                         android:layout_alignParentRight="true"
-                        android:padding="@dimen/dimen_10"
+                        android:padding="@dimen/dimen_20"
                         android:layout_marginTop="@dimen/dimen_30"
                         android:id="@+id/gs_xq_iv"
                         android:layout_marginRight="10dp"

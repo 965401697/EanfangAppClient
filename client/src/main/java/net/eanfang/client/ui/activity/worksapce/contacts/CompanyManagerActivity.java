@@ -1,20 +1,35 @@
 package net.eanfang.client.ui.activity.worksapce.contacts;
 
+import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextUtils;
+import android.text.method.ScrollingMovementMethod;
+import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONPObject;
+import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.AuthCompanyBaseInfoBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.ToastUtil;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.setting.UpdatePasswordActivity;
@@ -42,6 +57,34 @@ public class CompanyManagerActivity extends BaseActivity implements DissloveTeam
     // 重新认证
     @BindView(R.id.tv_againAuth)
     TextView tvAgainAuth;
+    @BindView(R.id.gs_log_sdv)
+    SimpleDraweeView gsLogSdv;
+    @BindView(R.id.gs_name_tv)
+    TextView gsNameTv;
+    @BindView(R.id.iv_verify)
+    ImageView ivVerify;
+    @BindView(R.id.tv_auth_status)
+    TextView tvAuthStatus;
+    @BindView(R.id.gs_xq_iv)
+    ImageView gsXqIv;
+    @BindView(R.id.gs_xq_tv)
+    TextView gsXqTv;
+    @BindView(R.id.show_more_tv)
+    TextView showMoreTv;
+    @BindView(R.id.tv_des)
+    TextView tvDes;
+    @BindView(R.id.rl_admin_set)
+    RelativeLayout rlAdminSet;
+    @BindView(R.id.rl_creat_section)
+    RelativeLayout rlCreatSection;
+    @BindView(R.id.rl_add_staff)
+    RelativeLayout rlAddStaff;
+    @BindView(R.id.rl_permission)
+    RelativeLayout rlPermission;
+    @BindView(R.id.ll_cooperation_relation)
+    LinearLayout llCooperationRelation;
+    @BindView(R.id.gg_iv)
+    ImageView ggIv;
     //    @BindView(R.id.rl_auth)
 //    RelativeLayout rlAuth;
     private Long mOrgId;
@@ -50,8 +93,10 @@ public class CompanyManagerActivity extends BaseActivity implements DissloveTeam
 
     //认证中显示标示
     private String isAuth = "";
+    private int status = 0;
 
     private String adminUserId = "";
+    private AuthCompanyBaseInfoBean byNetBean;
 
     /**
      * 解散团队
@@ -67,6 +112,7 @@ public class CompanyManagerActivity extends BaseActivity implements DissloveTeam
         initView();
     }
 
+
     private void initView() {
         setLeftBack();
         setTitle("企业管理");
@@ -78,7 +124,9 @@ public class CompanyManagerActivity extends BaseActivity implements DissloveTeam
             setRightTitle("解散团队");
         } else {
             setRightTitle("");
-            setRightTitleOnClickListener(v -> { return; });
+            setRightTitleOnClickListener(v -> {
+                return;
+            });
         }
         /**
          *  0 未认证，待认证
@@ -96,14 +144,98 @@ public class CompanyManagerActivity extends BaseActivity implements DissloveTeam
         } else {
             tvAgainAuth.setVisibility(View.GONE);
         }
+        initData();
     }
 
-    @OnClick({R.id.rl_prefectInfo, R.id.rl_admin_set, R.id.rl_creat_section, R.id.rl_add_staff, R.id.rl_permission,
-            R.id.ll_cooperation_relation, R.id.tv_againAuth, R.id.tv_right})
+    private void initData() {
+        EanfangHttp.get(UserApi.GET_COMPANY_ORG_INFO + mOrgId)
+                .execute(new EanfangCallback<AuthCompanyBaseInfoBean>(this, true, AuthCompanyBaseInfoBean.class, (beans) -> {
+                    byNetBean = beans;
+                    setData();
+                }));
+    }
+
+    private void setData() {
+        Log.d("BUSINESS_MANAGEMENT", "setData: " + byNetBean.toString());
+        gsNameTv.setText(byNetBean.getName());
+        gsLogSdv.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(byNetBean.getLogoPic()));
+        if (byNetBean.getIntro() == null) {
+            SpannableString spannableString = new SpannableString("公司简介: ");
+            spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#006BFF")), 0, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            gsXqTv.setText(spannableString);
+        } else {
+            SpannableString spannableString = new SpannableString("公司简介: " + byNetBean.getIntro());
+            spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#006BFF")), 0, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#333333")), 5, spannableString.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
+            gsXqTv.setText(spannableString);
+        }
+        status = byNetBean.getStatus();
+        switch (status) {
+            case 1:
+                tvAuthStatus.setText("认证中");
+                tvDes.setText("修改认证");
+                break;
+            case 2:
+                ivVerify.setImageResource(R.mipmap.ic_contact_auth);
+                tvAuthStatus.setText("已认证");
+                tvDes.setText("查看认证");
+                break;
+            case 3:
+                tvAuthStatus.setText("认证拒绝");
+                tvDes.setText("修改认证");
+                break;
+            case 4:
+                break;
+            default:
+        }
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus) {
+            if (gsXqTv.getLineCount() < 4) {
+                showMoreTv.setVisibility(View.GONE);
+                flag = true;
+            } else {
+                flag = false;
+            }
+        }
+    }
+
+    private Boolean flag = false;
+
+    public void showMoreTv() {
+        gsXqTv.setMovementMethod(ScrollingMovementMethod.getInstance());
+        if (flag) {
+            gsXqTv.setEllipsize(TextUtils.TruncateAt.END);
+            gsXqTv.setLines(3);
+            showMoreTv.setText("更多");
+        } else {
+            gsXqTv.setMovementMethod(ScrollingMovementMethod.getInstance());
+            gsXqTv.setEllipsize(null);
+            gsXqTv.setSingleLine(false);
+            showMoreTv.setText("收起");
+        }
+        flag = !flag;
+    }
+
+    @OnClick({R.id.tv_des, R.id.show_more_tv, R.id.gs_xq_iv, R.id.rl_admin_set, R.id.rl_creat_section, R.id.rl_add_staff, R.id.rl_permission, R.id.ll_cooperation_relation, R.id.tv_againAuth, R.id.tv_right})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.tv_des:
+                Intent intent = new Intent(this, EnterpriseCertificationActivity.class);
+                intent.putExtra("mOrgId", mOrgId);
+                intent.putExtra("status", status);
+                intent.putExtra("orgName", mOrgName);
+                startActivity(intent);
+                finish();
+                break;
+            case R.id.show_more_tv:
+                showMoreTv();
+                break;
             // 完善资料
-            case R.id.rl_prefectInfo:
+            case R.id.gs_xq_iv:
                 Bundle bundle_prefect = new Bundle();
                 bundle_prefect.putLong("orgid", mOrgId);
                 bundle_prefect.putString("orgName", mOrgName);

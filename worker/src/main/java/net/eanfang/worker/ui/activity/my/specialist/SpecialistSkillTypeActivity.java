@@ -231,6 +231,7 @@ public class SpecialistSkillTypeActivity extends BaseWorkerActivity {
             osCooperationAddAdapter.getScheckedId().clear();
             osCooperationAddAdapter.getUnSCheckedId().clear();
             startActivity(new Intent(this, SpecialistSkillCertificafeListActivity.class).putExtra("status", mStatus));
+            finish();
         }));
     }
 

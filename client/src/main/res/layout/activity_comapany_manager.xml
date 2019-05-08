@@ -100,12 +100,12 @@
 
                     <ImageView
                         android:id="@+id/gs_xq_iv"
-                        android:layout_width="@dimen/dimen_32"
-                        android:layout_height="@dimen/dimen_60"
+                        android:layout_width="@dimen/dimen_62"
+                        android:layout_height="@dimen/dimen_80"
                         android:layout_alignParentRight="true"
                         android:layout_marginTop="@dimen/dimen_30"
                         android:layout_marginRight="10dp"
-                        android:padding="@dimen/dimen_10"
+                        android:padding="@dimen/dimen_20"
                         android:src="@mipmap/ic_icon_right" />
 
                     <TextView
@@ -126,8 +126,8 @@
                         android:layout_below="@id/gs_xq_tv"
                         android:layout_alignParentLeft="true"
                         android:text="[更多]"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="14sp"
+                        android:textColor="@color/color_bl"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -381,5 +381,5 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:scaleType="centerCrop"
-        android:src="@mipmap/qyrzdbiv" />
+        android:src="@mipmap/gg_cl_iv" />
 </LinearLayout>

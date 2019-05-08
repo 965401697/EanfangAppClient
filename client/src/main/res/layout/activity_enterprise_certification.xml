@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/header" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:src="@mipmap/qyrz_wsxx_cl" />
+
+    <net.eanfang.client.ui.widget.WQLeftRightClickTextView
+        android:id="@+id/gs_rz_wq_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:clickable="true"
+        android:drawablePadding="@dimen/dimen_30"
+        android:gravity="left"
+        android:padding="@dimen/dimen_30"
+        android:text="工商认证"
+        android:textSize="14sp"
+        app:tvImageHeight="18dp"
+        app:tvImageWidth="18dp"
+        app:tvLeftImage="@mipmap/gs_qyrz_cl"
+        app:tvRightImage="@mipmap/jtriv_cl" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/color_contact_line_gray" />
+</LinearLayout>

@@ -70,6 +70,7 @@ public class SpecialistSkillCertificafeListActivity extends BaseActivityWithTake
 
                 } else {
                     verifyOrg = bean.getVerifyOrg();
+                    verifyPicUrl=bean.getVerifyPicUrl();
                     etCompany.setText(verifyOrg);
                     ivUpload2.setImageURI(BuildConfig.OSS_SERVER + bean.getVerifyPicUrl());
                     if (bean.getStatus() == 1) {
@@ -137,6 +138,7 @@ public class SpecialistSkillCertificafeListActivity extends BaseActivityWithTake
                 intent.putExtra("service", "客服热线：400-890-9280");
                 intent.putExtra("class", ExpertOnlineActivity.class);
                 startActivity(intent);
+                finish();
             }));
         }
     }

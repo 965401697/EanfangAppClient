@@ -48,16 +48,17 @@
     <uses-permission android:name="com.huawei.android.launcher.permission.CHANGE_BADGE" />
 
     <application
+        tools:replace="android:icon"
         android:name=".ui.base.ClientApplication"
         android:allowBackup="true"
         android:icon="@drawable/client_logo"
         android:label="@string/app_name"
         android:roundIcon="@drawable/client_logo"
         android:supportsRtl="true"
-        android:theme="@style/NewBaseTheme"
-        tools:replace="android:name">
-        <activity android:name=".ui.activity.TechnicianDetailsActivity"></activity>
-        <!-- 多渠道打包 -->
+        android:theme="@style/NewBaseTheme">
+        <activity android:name=".ui.activity.worksapce.contacts.BusinessCertificationActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.contacts.EnterpriseCertificationActivity" />
+        <activity android:name=".ui.activity.TechnicianDetailsActivity" /> <!-- 多渠道打包 -->
         <meta-data
             android:name="com.tencent.tac.channel"
             android:value="${tac_channel}" /> <!-- 高德地图 -->
@@ -836,10 +837,10 @@
         <activity android:name=".ui.activity.worksapce.security.SecurityPersonalActivity" />
         <activity android:name=".ui.activity.worksapce.security.SecurityCommentListActivity" />
         <activity android:name=".ui.activity.worksapce.security.SecurityPersonalPublicListActivity" />
-        <activity android:name=".ui.activity.worksapce.security.SecurityFoucsListActivity"/>
-        <activity android:name=".ui.activity.my.UserHomeActivity"/>
-        <activity android:name=".ui.activity.im.FollowListActivity"/>
-        <activity android:name=".ui.activity.im.PeerConnectionListActivity"/>
+        <activity android:name=".ui.activity.worksapce.security.SecurityFoucsListActivity" />
+        <activity android:name=".ui.activity.my.UserHomeActivity" />
+        <activity android:name=".ui.activity.im.FollowListActivity" />
+        <activity android:name=".ui.activity.im.PeerConnectionListActivity" />
     </application>
 
 </manifest>
