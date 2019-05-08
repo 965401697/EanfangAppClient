@@ -11,11 +11,14 @@ import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.config.Config;
+import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.GrantChange;
 import com.eanfang.model.SystypeBean;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.SharePreferenceUtil;
+import com.eanfang.util.StringUtils;
 import com.yaf.sys.entity.BaseDataEntity;
 
 import net.eanfang.worker.R;
@@ -44,7 +47,7 @@ public class AuthQualifySecondActivity extends BaseActivity {
     @BindView(R.id.tv_confim)
     TextView tvConfim;
 
-    List<BaseDataEntity> areaListBean = Config.get().getRegionList(1);
+    List<BaseDataEntity> areaListBean;
     @BindView(R.id.ll_title)
     LinearLayout llTitle;
     private GroupAdapter mAdapter;
@@ -64,7 +67,6 @@ public class AuthQualifySecondActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth_qualify_second);
         ButterKnife.bind(this);
-        doLoadArea();
         initView();
         initData();
     }
@@ -83,30 +85,15 @@ public class AuthQualifySecondActivity extends BaseActivity {
 
     }
 
-    private void doLoadArea() {
-        new Thread(() -> {
-            //获得全部 地区数据
-            List<BaseDataEntity> allAreaList = new ArrayList<>(Config.get().getRegionList());
-            for (int i = 0; i < areaListBean.size(); i++) {
-                BaseDataEntity provinceEntity = areaListBean.get(i);
-                //处理当前省下的所有市
-                List<BaseDataEntity> cityList = Stream.of(allAreaList).filter(bean -> bean.getParentId() != null && bean.getParentId().intValue() == provinceEntity.getDataId()).toList();
-                //查询出来后，移除，以增加效率
-                allAreaList.removeAll(cityList);
-                for (int j = 0; j < cityList.size(); j++) {
-                    BaseDataEntity cityEntity = cityList.get(j);
-                    //处理当前市下所有区县
-                    List<BaseDataEntity> countyList = Stream.of(allAreaList).filter(bean -> bean.getParentId() != null && bean.getParentId().intValue() == cityEntity.getDataId()).toList();
-                    //查询出来后，移除，以增加效率
-                    allAreaList.removeAll(countyList);
-                    cityList.get(j).setChildren(countyList);
-                }
-                areaListBean.get(i).setChildren(cityList);
-            }
-        }).start();
-    }
-
     private void initData() {
+        //获取国家区域
+        String areaString = SharePreferenceUtil.get().getString(Constant.COUNTRY_AREA_LIST, "");
+        if (StringUtils.isEmpty(areaString)){
+            showToast("加载服务区域失败！");
+            return;
+        }
+        BaseDataEntity entity = JSONObject.toJavaObject(JSONObject.parseObject(areaString), BaseDataEntity.class);
+        areaListBean = entity.getChildren();
         EanfangHttp.get(UserApi.GET_COMPANY_ORG_SYS_INFO + orgid + "/AREA")
                 .execute(new EanfangCallback<SystypeBean>(this, true, SystypeBean.class, (bean) -> {
                     byNetGrant = bean;

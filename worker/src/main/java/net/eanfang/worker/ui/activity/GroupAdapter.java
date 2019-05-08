@@ -97,12 +97,14 @@ public class GroupAdapter extends BaseExpandableListAdapter {
             finalHolder.cb.setOnClickListener(v -> {
                 boolean isChecked = finalHolder.cb.isChecked();
                 mListData.get(groupPosition).setCheck(isChecked);
-                for (int i = 0; i < mListData.get(groupPosition).getChildren().size(); i++) {
-                    BaseDataEntity secondModel = mListData.get(groupPosition).getChildren().get(i);
-                    secondModel.setCheck(isChecked);
-                    for (int j = 0; j < secondModel.getChildren().size(); j++) {
-                        BaseDataEntity thirdModel = secondModel.getChildren().get(j);
-                        thirdModel.setCheck(isChecked);
+                if (mListData.get(groupPosition).getChildren() != null) {
+                    for (int i = 0; i < mListData.get(groupPosition).getChildren().size(); i++) {
+                        BaseDataEntity secondModel = mListData.get(groupPosition).getChildren().get(i);
+                        secondModel.setCheck(isChecked);
+                        for (int j = 0; j < secondModel.getChildren().size(); j++) {
+                            BaseDataEntity thirdModel = secondModel.getChildren().get(j);
+                            thirdModel.setCheck(isChecked);
+                        }
                     }
                 }
                 notifyDataSetChanged();
