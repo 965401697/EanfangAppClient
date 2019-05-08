@@ -114,7 +114,7 @@ public class OtherDataActivity extends BaseWorkerActivity {
             }
         }
 
-        if (!mTechWorkerVerifyEntity.getAccidentPics().equals("")) {
+        if (!StringUtils.isEmpty(mTechWorkerVerifyEntity.getAccidentPics())) {
             String[] accidentPics = mTechWorkerVerifyEntity.getAccidentPics().split(",");
             if (accidentPics.length > 0) {
                 for (byte i = 0; i < accidentPics.length; i++) {

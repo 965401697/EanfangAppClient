@@ -50,7 +50,7 @@ public class MoreMemberAdapter extends BaseQuickAdapter<GroupDetailBean.ListBean
         for (int i = 0; i < getData().size(); i++) {
             String sortStr = getData().get(i).getFirstLetter();
             if (sortStr != null) {
-                if (catalog.equalsIgnoreCase(sortStr)) {
+                if (sortStr.equalsIgnoreCase(catalog)) {
                     return i;
                 }
             }

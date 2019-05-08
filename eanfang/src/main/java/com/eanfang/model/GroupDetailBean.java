@@ -241,10 +241,13 @@ public class GroupDetailBean implements Serializable {
 
             @Override
             public int compare(AccountEntityBean o1, AccountEntityBean o2) {
-                //这里主要是用来对数据里面的数据根据ABCDEFG...来排序
-                if (o2.getFirstLetter().equals("#")) {
+                if (o1 == null || o1.getFirstLetter() == null || o2 == null || o2.getFirstLetter() == null) {
                     return -1;
-                } else if (o1.getFirstLetter().equals("#")) {
+                }
+                //这里主要是用来对数据里面的数据根据ABCDEFG...来排序
+                if ("#".equals(o2.getFirstLetter())) {
+                    return -1;
+                } else if ("#".equals(o1.getFirstLetter())) {
                     return 1;
                 } else {
                     return o1.getFirstLetter().compareTo(o2.getFirstLetter());
