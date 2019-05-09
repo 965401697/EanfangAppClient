@@ -30,7 +30,7 @@ public class ObjectUtil {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ObjectOutputStream oos = new ObjectOutputStream(baos);
         oos.writeObject(object);
-        String result = new String(Base64.encode(baos.toByteArray()));
+        String result = Base64.encode(baos.toByteArray());
         result = DES.encryptDES(result, "43215768");
         return result;
     }

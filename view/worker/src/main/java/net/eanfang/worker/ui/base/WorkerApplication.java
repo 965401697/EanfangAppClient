@@ -55,14 +55,14 @@ public class WorkerApplication extends EanfangApplication {
 
 
             RongExtensionManager.getInstance().registerExtensionModule(new SampleExtensionModule());
-            RongIM.getInstance().setConversationClickListener(new MyConversationClickListener());
+            RongIM.setConversationClickListener(new MyConversationClickListener());
 
             RongIM.registerMessageType(CustomizeMessage.class);
             RongIM.registerMessageType(CustomizeVideoMessage.class);
 
 
-            RongIM.getInstance().registerMessageTemplate(new CustomizeMessageItemProvider());
-            RongIM.getInstance().registerMessageTemplate(new CustomizeVideoMessageItemProvider());
+            RongIM.registerMessageTemplate(new CustomizeMessageItemProvider());
+            RongIM.registerMessageTemplate(new CustomizeVideoMessageItemProvider());
 
             Conversation.ConversationType[] types = new Conversation.ConversationType[]{
                     Conversation.ConversationType.PRIVATE,

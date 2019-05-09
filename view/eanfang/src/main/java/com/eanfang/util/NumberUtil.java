@@ -167,7 +167,7 @@ public class NumberUtil {
      * @param needNum  //获取随机个数
      */
     public static int[] getRandom(int startNum, int endNum, int needNum) {
-        int nums[] = new int[needNum];
+        int[] nums = new int[needNum];
         Set<Integer> integerSet = new HashSet<Integer>();
         while (integerSet.size() < needNum) {
             int num = (int) (Math.round(Math.random() * (endNum - startNum) + startNum));
@@ -191,9 +191,9 @@ public class NumberUtil {
     /**
      * @return int[]
      */
-    public static int[] getMachineSelectionNum(int size, int numbers[]) {
+    public static int[] getMachineSelectionNum(int size, int[] numbers) {
         int length = numbers.length;
-        int num[] = new int[size];
+        int[] num = new int[size];
         Random random = new Random();
         Set<Integer> set = new HashSet<Integer>();
         while (set.size() < size) {
@@ -218,9 +218,9 @@ public class NumberUtil {
     /**
      * @return int[]
      */
-    public static int[] getMachineSelectionNumNo(int size, int numbers[]) {
+    public static int[] getMachineSelectionNumNo(int size, int[] numbers) {
         int length = numbers.length;
-        int num[] = new int[size];
+        int[] num = new int[size];
         Random random = new Random();
         List<Integer> list = new ArrayList<Integer>();
         while (list.size() < size) {
@@ -234,7 +234,7 @@ public class NumberUtil {
         return num;
     }
 
-    public static int[] getUseNums(int allNums[], int havaNums[]) {
+    public static int[] getUseNums(int[] allNums, int[] havaNums) {
         List<Integer> integers = new ArrayList<Integer>();
         for (int allNum : allNums) {
             int n = 0;
@@ -247,7 +247,7 @@ public class NumberUtil {
                 integers.add(allNum);
             }
         }
-        int numbers[] = new int[integers.size()];
+        int[] numbers = new int[integers.size()];
         for (int i = 0; i < integers.size(); i++) {
             numbers[i] = integers.get(i);
         }

@@ -149,7 +149,7 @@ public class FileUtil {
             try {
                 File file = new File(filePath);
                 if (file.isDirectory()) {// 处理目录
-                    File files[] = file.listFiles();
+                    File[] files = file.listFiles();
                     for (int i = 0; i < files.length; i++) {
                         deleteFolderFile(files[i].getAbsolutePath(), true);
                     }

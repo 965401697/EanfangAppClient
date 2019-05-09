@@ -52,7 +52,7 @@ public class MaintenanceHandleEditAdapter extends BaseQuickAdapter<ShopMaintenan
             helper.setText(R.id.tv_status, "维保状态    保外");
         }
 
-        helper.setText(R.id.tv_history, "维修历史    " + String.valueOf(item.getRepairCount()));
+        helper.setText(R.id.tv_history, "维修历史    " + item.getRepairCount());
 
     }
 }

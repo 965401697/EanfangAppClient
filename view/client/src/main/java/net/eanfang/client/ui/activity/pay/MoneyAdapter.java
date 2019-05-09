@@ -18,6 +18,6 @@ public class MoneyAdapter extends BaseQuickAdapter<NewPayActivity.MoneyBean, Bas
     @Override
     protected void convert(BaseViewHolder helper, NewPayActivity.MoneyBean item) {
         helper.setText(R.id.tv_title, item.title);
-        helper.setText(R.id.tv_money, String.valueOf(item.money) + "元");
+        helper.setText(R.id.tv_money, item.money + "元");
     }
 }

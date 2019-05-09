@@ -42,7 +42,7 @@ public class DES {
     public static String decryptDES(String decryptString, String decryptKey) {
         String mykey = (decryptKey == null || decryptKey.equals("")) ? DEFAULT_KEY
                 : decryptKey;
-        byte decryptedData[] = null;
+        byte[] decryptedData = null;
         try {
             byte[] byteMi = Base64.decode(decryptString);
             IvParameterSpec zeroIv = new IvParameterSpec(iv);

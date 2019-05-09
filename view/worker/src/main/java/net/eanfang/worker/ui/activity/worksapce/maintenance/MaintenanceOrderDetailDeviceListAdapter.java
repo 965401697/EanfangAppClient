@@ -22,7 +22,7 @@ public class MaintenanceOrderDetailDeviceListAdapter extends BaseQuickAdapter<Sh
         helper.setText(R.id.tv_os_type, (helper.getAdapterPosition() + 1) + ". " + Config.get().getBaseNameByCode(Constant.SYS_TYPE, item.getBusinessThreeCode(), 3));
         helper.setText(R.id.tv_brand, "品牌：" + Config.get().getBaseNameByCode(Constant.MODEL, item.getBusinessFourCode(), 2));
         helper.setText(R.id.tv_mode, "型号：" + item.getSpecification());
-        helper.setText(R.id.tv_count, "数量：" + String.valueOf(item.getAmount()));
+        helper.setText(R.id.tv_count, "数量：" + item.getAmount());
         helper.setText(R.id.tv_position_num, "位置编号    " + item.getLocationNumber());
         helper.setText(R.id.tv_notice, "备注信息    " + item.getDeviceInfo());
     }
