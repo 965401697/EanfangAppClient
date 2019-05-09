@@ -73,7 +73,6 @@ public class OpenShopLogActivity extends BaseClientActivity {
         });
     }
 
-
     private class MyPagerAdapter extends FragmentPagerAdapter {
         public MyPagerAdapter(FragmentManager fm) {
             super(fm);

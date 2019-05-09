@@ -13,8 +13,8 @@ import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.ErrorCodeConst;
+import com.eanfang.kit.loading.LoadKit;
 import com.eanfang.ui.activity.NoPermissionActivity;
-import com.eanfang.util.DialogUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.Var;
@@ -73,7 +73,8 @@ public class EanfangCallback<T> extends StringCallback {
         this.clazz = clazz;
         this.iSuccess = iSuccess;
         if (showDialog) {
-            loadingDialog = DialogUtil.createLoadingDialog(activity);
+            //loadingDialog = DialogUtil.createLoadingDialog(activity);
+            loadingDialog = LoadKit.dialog(activity, null);
         }
     }
 
@@ -82,7 +83,8 @@ public class EanfangCallback<T> extends StringCallback {
         this.clazz = clazz;
         this.iSuccessArray = iSuccess;
         if (showDialog) {
-            loadingDialog = DialogUtil.createLoadingDialog(activity);
+            //loadingDialog = DialogUtil.createLoadingDialog(activity);
+            loadingDialog = LoadKit.dialog(activity, null);
         }
     }
 
@@ -95,7 +97,8 @@ public class EanfangCallback<T> extends StringCallback {
         this.activity = activity;
         this.type = type;
         if (showDialog) {
-            loadingDialog = DialogUtil.createLoadingDialog(activity);
+            // loadingDialog = DialogUtil.createLoadingDialog(activity);
+            loadingDialog = LoadKit.dialog(activity, null);
         }
     }
 
@@ -108,7 +111,8 @@ public class EanfangCallback<T> extends StringCallback {
         this.activity = activity;
         this.clazz = clazz;
         if (showDialog) {
-            loadingDialog = DialogUtil.createLoadingDialog(activity);
+            //loadingDialog = DialogUtil.createLoadingDialog(activity);
+            loadingDialog = LoadKit.dialog(activity, null);
         }
     }
 
@@ -130,10 +134,7 @@ public class EanfangCallback<T> extends StringCallback {
     @Override
     public final void onFinish() {
         if (loadingDialog != null && loadingDialog.isShowing()) {
-            try {
-                loadingDialog.dismiss();
-            } catch (Exception e) {
-            }
+            LoadKit.closeDialog(loadingDialog);
         }
     }
 
@@ -231,6 +232,7 @@ public class EanfangCallback<T> extends StringCallback {
                     Intent intent = new Intent(EanfangApplication.getApplication(), NoPermissionActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     EanfangApplication.getApplication().startActivity(intent);
+                    activity.finish();
                     break;
                 default:
                     onFail(code, message, null);

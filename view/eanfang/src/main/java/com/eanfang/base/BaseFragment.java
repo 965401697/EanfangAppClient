@@ -1,6 +1,6 @@
 package com.eanfang.base;
 
-import android.app.ProgressDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModel;
 
+import com.eanfang.kit.loading.LoadKit;
 import com.eanfang.network.config.HttpConfig;
 import com.eanfang.network.event.BaseActionEvent;
 import com.eanfang.rds.base.IViewModelAction;
@@ -21,8 +22,6 @@ import com.trello.rxlifecycle2.components.support.RxFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.ButterKnife;
-
 
 /**
  * @author jornl
@@ -30,7 +29,7 @@ import butterknife.ButterKnife;
  */
 public abstract class BaseFragment extends RxFragment {
 
-    private ProgressDialog loadingDialog;
+    private Dialog loadingDialog;
     protected FragmentActivity mActivity;
     protected View mRootView;
     protected boolean mIsVisible;
@@ -46,7 +45,6 @@ public abstract class BaseFragment extends RxFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mRootView = initView(inflater, container);
-        ButterKnife.bind(this, mRootView);
         mIsPrepare = true;
         return mRootView;
     }
@@ -149,19 +147,18 @@ public abstract class BaseFragment extends RxFragment {
         startLoading(null);
     }
 
-    protected void startLoading(String message) {
+    private void startLoading(String message) {
         if (loadingDialog == null) {
-            loadingDialog = new ProgressDialog(getContext());
+            loadingDialog = LoadKit.dialog(getContext(), message);
             loadingDialog.setCancelable(false);
             loadingDialog.setCanceledOnTouchOutside(false);
         }
-        loadingDialog.setTitle(message);
         loadingDialog.show();
     }
 
-    protected void dismissLoading() {
+    private void dismissLoading() {
         if (loadingDialog != null && loadingDialog.isShowing()) {
-            loadingDialog.dismiss();
+            LoadKit.closeDialog(loadingDialog);
         }
     }
 

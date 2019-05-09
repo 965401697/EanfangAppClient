@@ -12,7 +12,6 @@ import com.eanfang.kit.cache.CacheKit;
 import com.eanfang.model.bean.LoginBean;
 import com.eanfang.ui.base.IBase;
 import com.eanfang.util.V;
-import com.eanfang.util.message.J_MessageVerify;
 
 import java.io.IOException;
 
@@ -39,10 +38,6 @@ public abstract class CustomeApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         mJCustomeApplication = this;
-    }
-
-    public void initConfig() {
-        J_MessageVerify.get().init(60);
     }
 
     public void push(IBase j_iBase) {

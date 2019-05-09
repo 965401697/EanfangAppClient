@@ -3,7 +3,6 @@
     android:id="@+id/guide"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/j_guide2"
     android:gravity="bottom|center_horizontal"
     android:orientation="horizontal">
 
@@ -15,10 +14,10 @@
         android:layout_marginLeft="0dp"
         android:layout_marginBottom="10dp"
         android:background="@android:color/transparent"
-        android:paddingBottom="50dp"
         android:paddingLeft="100dp"
-        android:paddingRight="100dp"
         android:paddingTop="50dp"
+        android:paddingRight="100dp"
+        android:paddingBottom="50dp"
         android:text=""
         android:textColor="#ffffff" />
 

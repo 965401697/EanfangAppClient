@@ -1,6 +1,6 @@
 package com.eanfang.base;
 
-import android.app.ProgressDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.ViewModel;
 
 import com.eanfang.R;
+import com.eanfang.kit.loading.LoadKit;
 import com.eanfang.network.config.HttpConfig;
 import com.eanfang.network.event.BaseActionEvent;
 import com.eanfang.rds.base.IViewModelAction;
@@ -25,7 +26,6 @@ import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.ButterKnife;
 import lombok.Getter;
 
 
@@ -35,13 +35,13 @@ import lombok.Getter;
  */
 public abstract class BaseActivity extends RxAppCompatActivity {
 
-    private ProgressDialog loadingDialog;
+    //    private ProgressDialog loadingDialog;
+    private Dialog loadingDialog;
     private ImageView iv_left;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ButterKnife.bind(this);
         initViewModelEvent();
     }
 
@@ -193,17 +193,16 @@ public abstract class BaseActivity extends RxAppCompatActivity {
 
     protected void startLoading(String message) {
         if (loadingDialog == null) {
-            loadingDialog = new ProgressDialog(this);
+            loadingDialog = LoadKit.dialog(this, message);
             loadingDialog.setCancelable(false);
             loadingDialog.setCanceledOnTouchOutside(false);
         }
-        loadingDialog.setTitle(message);
         loadingDialog.show();
     }
 
     protected void dismissLoading() {
         if (loadingDialog != null && loadingDialog.isShowing()) {
-            loadingDialog.dismiss();
+            LoadKit.closeDialog(loadingDialog);
         }
     }
 
