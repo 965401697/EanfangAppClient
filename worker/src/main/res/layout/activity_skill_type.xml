@@ -213,13 +213,12 @@
 
     <TextView
         android:id="@+id/tv_go"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="@dimen/dimen_20"
+        android:layout_width="@dimen/dimen_600"
+        android:layout_height="@dimen/dimen_88"
+        android:layout_margin="@dimen/dimen_40"
+        android:layout_gravity="center"
         android:background="@drawable/bg_gradual_change_ellipse"
         android:gravity="center"
-        android:padding="@dimen/dimen_30"
         android:text="去设置服务区域"
         android:textColor="@color/color_white"
         android:textSize="@dimen/textSize_13" />

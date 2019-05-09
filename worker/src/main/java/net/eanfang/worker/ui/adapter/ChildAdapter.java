@@ -80,7 +80,7 @@ public class ChildAdapter extends BaseExpandableListAdapter {
         ViewHolder holder = null;
         if (convertView == null) {
             holder = new ViewHolder();
-            convertView = mInflate.inflate(R.layout.item_expand_lv_third, parent, false);
+            convertView = mInflate.inflate(R.layout.item_expand_lv_second, parent, false);
             holder.tv = ((TextView) convertView.findViewById(R.id.tv));
             holder.cb = ((CheckBox) convertView.findViewById(R.id.cb));
             convertView.setTag(holder);
