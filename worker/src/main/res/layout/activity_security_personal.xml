@@ -42,7 +42,8 @@
                         <com.facebook.drawee.view.SimpleDraweeView
                             android:id="@+id/iv_head"
                             android:layout_width="@dimen/dimen_100"
-                            android:layout_height="@dimen/dimen_100" />
+                            android:layout_height="@dimen/dimen_100"
+                            app:roundAsCircle="true" />
 
                         <LinearLayout
                             android:layout_width="match_parent"

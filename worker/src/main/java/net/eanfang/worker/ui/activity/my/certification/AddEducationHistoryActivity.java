@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -59,6 +60,12 @@ public class AddEducationHistoryActivity extends BaseActivityWithTakePhoto {
     BGASortableNinePhotoLayout snplMomentAccident;
     @BindView(R.id.tv_save)
     TextView tvSave;
+    @BindView(R.id.ll_education)
+    LinearLayout llEducation;
+    @BindView(R.id.ll_date)
+    LinearLayout llDate;
+    @BindView(R.id.cheng_ji)
+    EditText chengJi;
 
 
     /**
@@ -83,15 +90,36 @@ public class AddEducationHistoryActivity extends BaseActivityWithTakePhoto {
         bean = (EducationExperienceEntity) getIntent().getSerializableExtra("bean");
         snplMomentAccident.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_CERTIFICATE, REQUEST_CODE_PHOTO_CERTIFICATE));
         snplMomentAccident.setData(picList_certificate);
-        setRightTitle("保存");
         setRightTitleOnClickListener(view -> setData());
         if (bean != null) {
+            setTitle("教育培训");
+            setRightTitle("编辑");
+            setZhiDu(false);
             fillData();
-            setTitle("编辑教育培训");
-            tvSave.setVisibility(View.VISIBLE);
+            setRightTitleOnClickListener(view -> {
+                        setRightTitle("保存");
+                        setZhiDu(true);
+                        setRightTitleOnClickListener(view1 -> setData());
+                    }
+
+            );
         } else {
-            setTitle("添加教育培训");
+            setTitle("教育培训");
+            setRightTitle("保存");
+            tvSave.setVisibility(View.GONE);
         }
+    }
+
+    private void setZhiDu(boolean isZd) {
+        tvSave.setVisibility(isZd ? View.VISIBLE : View.GONE);
+        etNum.setEnabled(isZd);
+        etSchoolName.setEnabled(isZd);
+        etMajor.setEnabled(isZd);
+        llEducation.setEnabled(isZd);
+        llDate.setEnabled(isZd);
+        chengJi.setEnabled(isZd);
+        snplMomentAccident.setPlusEnable(isZd);
+        snplMomentAccident.setEditable(isZd);
     }
 
     private void fillData() {
@@ -102,6 +130,7 @@ public class AddEducationHistoryActivity extends BaseActivityWithTakePhoto {
         }
         etSchoolName.setText(bean.getSchoolName());
         etMajor.setText(bean.getMajorName());
+        chengJi.setText(bean.getScore());
         tvEducation.setText(GetConstDataUtils.getDiplomaList().get(bean.getDiploma()));
         tvTime.setText(DateUtils.formatDate(bean.getBeginTime(), "yyyy-MM-dd") + " ～ " + DateUtils.formatDate(bean.getEndTime(), "yyyy-MM-dd"));
         snplMomentAccident.setData(picList);
@@ -168,6 +197,7 @@ public class AddEducationHistoryActivity extends BaseActivityWithTakePhoto {
         }
         entity.setSchoolName(etSchoolName.getText().toString().trim());
         entity.setMajorName(etMajor.getText().toString().trim());
+        entity.setScore(chengJi.getText().toString().trim());
         entity.setDiploma(GetConstDataUtils.getDiplomaList().indexOf(tvEducation.getText().toString().trim()));
         entity.setCertificateNumber(etNum.getText().toString().trim());
         entity.setBeginTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[0], "yyyy-MM-dd"));
@@ -178,7 +208,6 @@ public class AddEducationHistoryActivity extends BaseActivityWithTakePhoto {
             @Override
             public void onOssSuccess() {
                 runOnUiThread(() -> {
-
                     EanfangHttp.post(url).upJson(JSONObject.toJSONString(entity)).execute(new EanfangCallback<JSONObject>(AddEducationHistoryActivity.this, true, JSONObject.class, (bean) -> {
                         setResult(RESULT_OK);
                         finish();
@@ -189,29 +218,30 @@ public class AddEducationHistoryActivity extends BaseActivityWithTakePhoto {
     }
 
     private boolean checkedData() {
-        if (TextUtils.isEmpty(etSchoolName.getText().toString())) {
-            ToastUtil.get().showToast(this, "请输入学校名称");
-            return true;
-        }
-
         if (TextUtils.isEmpty(etMajor.getText().toString())) {
-            ToastUtil.get().showToast(this, "请输入专业名称");
-            return true;
-        }
-
-        if (TextUtils.isEmpty(tvEducation.getText().toString())) {
-            ToastUtil.get().showToast(this, "请选学历层次");
+            ToastUtil.get().showToast(this, "请输入专业或培训内容");
             return true;
         }
         if (TextUtils.isEmpty(etNum.getText().toString())) {
-            ToastUtil.get().showToast(this, "请输入学历编号");
+            ToastUtil.get().showToast(this, "请输入证书编号");
+            return true;
+        }
+        if (TextUtils.isEmpty(tvEducation.getText().toString())) {
+            ToastUtil.get().showToast(this, "请选学位或级别");
+            return true;
+        }
+        if (TextUtils.isEmpty(etSchoolName.getText().toString())) {
+            ToastUtil.get().showToast(this, "请输入学校名称");
             return true;
         }
         if (TextUtils.isEmpty(tvTime.getText().toString())) {
             ToastUtil.get().showToast(this, "请选择起止时间");
             return true;
         }
-
+        if (TextUtils.isEmpty(chengJi.getText().toString())) {
+            ToastUtil.get().showToast(this, "请输入成绩");
+            return true;
+        }
         pic = PhotoUtils.getPhotoUrl("", snplMomentAccident, uploadMap, false);
         if (StringUtils.isEmpty(pic)) {
             showToast("请添加证书照片");

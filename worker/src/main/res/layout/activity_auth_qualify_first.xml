@@ -284,8 +284,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/color_white"
-                        android:padding="@dimen/dimen_30"
+                        android:layout_margin="@dimen/dimen_15"
                         android:scrollbars="none"
+                        android:clipChildren="false"
                         app:max_select="-1" />
                 </LinearLayout>
 
@@ -313,8 +314,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/color_white"
-                        android:padding="@dimen/dimen_30"
+                        android:layout_margin="@dimen/dimen_15"
                         android:scrollbars="none"
+                        android:clipChildren="false"
                         app:max_select="-1" />
                 </LinearLayout>
             </LinearLayout>
@@ -322,12 +324,12 @@
 
             <TextView
                 android:id="@+id/tv_confim"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/dimen_600"
+                android:layout_height="@dimen/dimen_88"
                 android:layout_margin="@dimen/dimen_30"
-                android:background="@drawable/bg_btn_trouble_detail_add_trouble"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_button_gradation_blue"
                 android:gravity="center"
-                android:padding="@dimen/dimen_30"
                 android:text="去设置服务区域"
                 android:textColor="@color/color_white"
                 android:textSize="@dimen/textSize_13" />

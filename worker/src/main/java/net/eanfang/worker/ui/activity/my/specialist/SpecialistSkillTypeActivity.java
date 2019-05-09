@@ -5,11 +5,13 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.annimon.stream.Stream;
+import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
@@ -22,9 +24,9 @@ import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PhotoUtils;
-import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
+import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 import com.yaf.base.entity.ExpertsCertificationEntity;
 import com.yaf.sys.entity.BaseDataEntity;
 
@@ -50,10 +52,6 @@ public class SpecialistSkillTypeActivity extends BaseWorkerActivity {
     TextView tvLimit;
     @BindView(R.id.ll_limit)
     LinearLayout llLimit;
-    @BindView(R.id.tv_type)
-    TextView tvType;
-    @BindView(R.id.ll_ability)
-    LinearLayout llAbility;
     @BindView(R.id.recycler_brand)
     RecyclerView recyclerViewBrand;
     @BindView(R.id.recycler_view_kind)
@@ -63,7 +61,11 @@ public class SpecialistSkillTypeActivity extends BaseWorkerActivity {
     @BindView(R.id.ll_factory)
     LinearLayout llFactory;
     @BindView(R.id.snpl_impower)
-    com.photopicker.com.widget.BGASortableNinePhotoLayout snplImpower;
+    BGASortableNinePhotoLayout snplImpower;
+    @BindView(R.id.btn_auth_type_expert)
+    Button mBtnAuthTypeExpert;
+    @BindView(R.id.btn_auth_type_service)
+    Button mBtnAuthTypeService;
     private SpecialistBrandAdapter brandAdapter;
     private SkillTypeAdapter osCooperationAddAdapter;
     private final int ADD_BRAND_REQESET_CODE = 100;
@@ -102,6 +104,10 @@ public class SpecialistSkillTypeActivity extends BaseWorkerActivity {
     private ExpertsCertificationEntity expertsCertificationEntity;
     private int mStatus;
     private String impowerUrl;
+    /**
+     * 认证类型
+     */
+    private String mAbility;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,6 +135,7 @@ public class SpecialistSkillTypeActivity extends BaseWorkerActivity {
             s.setCheck(false);
         }
         osCooperationAddAdapter.setNewData(systemTypeList);
+
         brandAdapter.setOnCheckClickListener(new SpecialistBrandAdapter.onCheckClickListener() {
             @Override
             public void onAddClickListener() {
@@ -150,17 +157,32 @@ public class SpecialistSkillTypeActivity extends BaseWorkerActivity {
             }
         });
         snplImpower.setDelegate(new BGASortableDelegate(this, IMPOWER_PHOTO_CHOSE, IMPOWER_PHOTO_REQUST));
+        mBtnAuthTypeExpert.setText(GetConstDataUtils.getExpertTypeList().get(0));
+        if (GetConstDataUtils.getExpertTypeList().size() > 1) {
+            mBtnAuthTypeService.setText(GetConstDataUtils.getExpertTypeList().get(1));
+        }
+        mBtnAuthTypeExpert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseAuthType(true);
+                mAbility = mBtnAuthTypeExpert.getText().toString().trim();
+            }
+        });
+        mBtnAuthTypeService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseAuthType(false);
+                mAbility = mBtnAuthTypeService.getText().toString().trim();
+            }
+        });
+
+        mAbility = mBtnAuthTypeExpert.getText().toString().trim();
+        chooseAuthType(true);
     }
 
 
     private void doVerify() {
 
-        String mAbility = tvType.getText().toString().trim();
-
-        if (StringUtils.isEmpty(mAbility)) {
-            showToast("请选择认证类型");
-            return;
-        }
         if (llFactory.getVisibility() == View.VISIBLE) {
             if (StringUtils.isEmpty(etFactoryName.getText().toString().trim())) {
                 showToast("请输入厂商名称");
@@ -209,6 +231,7 @@ public class SpecialistSkillTypeActivity extends BaseWorkerActivity {
             osCooperationAddAdapter.getScheckedId().clear();
             osCooperationAddAdapter.getUnSCheckedId().clear();
             startActivity(new Intent(this, SpecialistSkillCertificafeListActivity.class).putExtra("status", mStatus));
+            finish();
         }));
     }
 
@@ -246,10 +269,9 @@ public class SpecialistSkillTypeActivity extends BaseWorkerActivity {
 
     private void fillData(ExpertVerifySkillBean bean) {
         if (bean.getExpertVerify().getApproveType() != null) {
-            tvType.setText(GetConstDataUtils.getExpertTypeList().get(bean.getExpertVerify().getApproveType()));
             if (bean.getExpertVerify().getApproveType() == 1) {
                 etFactoryName.setText(bean.getExpertVerify().getBrandName());
-                imPowerList.add(com.eanfang.BuildConfig.OSS_SERVER + bean.getExpertVerify().getImpowerUrl());
+                imPowerList.add(BuildConfig.OSS_SERVER + bean.getExpertVerify().getImpowerUrl());
                 snplImpower.setData(imPowerList);
                 llFactory.setVisibility(View.VISIBLE);
                 impowerUrl = bean.getExpertVerify().getImpowerUrl();
@@ -287,19 +309,10 @@ public class SpecialistSkillTypeActivity extends BaseWorkerActivity {
 //        startAnimActivity(new Intent(this, SpecialistSkillCertificafeListActivity.class).putExtra("status", mStatus));
     }
 
-    @OnClick({ R.id.ll_ability})
-    public void onViewClicked(View view) {
-        PickerSelectUtil.singleTextPicker(this, "", tvType, GetConstDataUtils.getExpertTypeList(), new PickerSelectUtil.OnOptionPickListener() {
-            @Override
-            public void picker(int index, String item) {
-                tvType.setText(GetConstDataUtils.getExpertTypeList().get(index));
-                if (index == 1) {
-                    //说明是厂商售后专家
-                    llFactory.setVisibility(View.VISIBLE);
-                } else {
-                    llFactory.setVisibility(View.GONE);
-                }
-            }
-        });
+    private void chooseAuthType(boolean isExport) {
+        mBtnAuthTypeExpert.setSelected(isExport);
+        mBtnAuthTypeService.setSelected(!isExport);
+        //厂商售后显示专家隐藏
+        llFactory.setVisibility(isExport ? View.GONE : View.VISIBLE);
     }
 }

@@ -55,9 +55,10 @@
         android:roundIcon="@drawable/client_logo"
         android:supportsRtl="true"
         android:theme="@style/NewBaseTheme"
-        tools:replace="android:name">
-        <activity android:name=".ui.activity.TechnicianDetailsActivity"></activity>
-        <!-- 多渠道打包 -->
+        tools:replace="android:icon">
+        <activity android:name=".ui.activity.worksapce.contacts.BusinessCertificationActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.contacts.EnterpriseCertificationActivity" />
+        <activity android:name=".ui.activity.TechnicianDetailsActivity" /> <!-- 多渠道打包 -->
         <meta-data
             android:name="com.tencent.tac.channel"
             android:value="${tac_channel}" /> <!-- 高德地图 -->
@@ -843,8 +844,8 @@
         <activity android:name=".ui.activity.im.PeerConnectionListActivity" />
         <activity android:name=".ui.activity.worksapce.repair.RepairPersonInfoListActivity" />
         <activity android:name=".ui.activity.worksapce.repair.RepairInfoEditActivity" />
-        <activity android:name=".ui.activity.worksapce.repair.RepairProjectListActivity"/>
-        <activity android:name=".ui.activity.worksapce.repair.RepairAddProjectAcitivity"/>
+        <activity android:name=".ui.activity.worksapce.repair.RepairProjectListActivity" />
+        <activity android:name=".ui.activity.worksapce.repair.RepairAddProjectAcitivity" />
     </application>
 
 </manifest>

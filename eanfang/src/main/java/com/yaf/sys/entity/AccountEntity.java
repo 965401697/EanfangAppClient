@@ -224,6 +224,11 @@ public class AccountEntity implements Serializable {
      * 个人简介
      */
     private String personalNote;
+
+    /**
+     * 技师认证 0是1否
+     */
+    private int realVerify;
     /**
      * 判断当前密码是否是简单密码（空 || 默认手机后六位 || 默认用户名）
      */

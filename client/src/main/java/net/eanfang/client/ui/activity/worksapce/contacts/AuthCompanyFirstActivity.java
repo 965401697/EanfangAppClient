@@ -38,7 +38,7 @@ import butterknife.ButterKnife;
  * Created by guanluocang
  * 2018年10月12日 10:48:52
  *
- * @desc 公司认证 第一步
+ * @desc 新公司认证
  */
 public class AuthCompanyFirstActivity extends BaseActivityWithTakePhoto {
 
@@ -247,9 +247,11 @@ public class AuthCompanyFirstActivity extends BaseActivityWithTakePhoto {
                 .upJson(json)
                 .execute(new EanfangCallback<OrgUnitEntity>(this, true, OrgUnitEntity.class, (bean) -> {
                     //保存成功后，提交认证
-                    byNetBean = new AuthCompanyBaseInfoBean();
-                    byNetBean.setOrgId(bean.getOrgId());
-                    doJumpSecond();
+//                    byNetBean = new AuthCompanyBaseInfoBean();
+//                    byNetBean.setOrgId(bean.getOrgId());
+//                    doJumpSecond();
+                    showToast("提交成功");
+                    finish();
                 }));
     }
 

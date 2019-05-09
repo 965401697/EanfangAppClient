@@ -15,7 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:scrollbars="none">
+        android:scrollbars="none"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -142,38 +143,51 @@
 
             <View style="@style/style_common_line_gray" />
 
-            <LinearLayout
-                android:id="@+id/ll_ability"
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/dimen_86"
                 android:background="@color/white"
-                android:orientation="horizontal"
-                android:paddingBottom="@dimen/dimen_20"
+                android:gravity="left|center_vertical"
+                android:layout_marginTop="@dimen/dimen_20"
                 android:paddingLeft="@dimen/dimen_36"
-                android:paddingRight="@dimen/dimen_34"
-                android:paddingTop="@dimen/dimen_20">
+                android:text="认证类型"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_14" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="选择认证类型"
-                    android:textColor="@color/color_client_neworder"
-                    android:textSize="@dimen/textSize_14" />
+            <View style="@style/style_common_line_gray" />
 
-                <TextView
-                    android:id="@+id/tv_type"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="20dp"
-                    android:layout_weight="1"
-                    android:background="@null"
-                    android:drawablePadding="@dimen/dimen_14"
-                    android:drawableRight="@mipmap/arrow_down"
-                    android:gravity="right"
-                    android:text=""
-                    android:textColor="@color/color_bottom"
-                    android:textSize="@dimen/textSize_13" />
-            </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_130"
+            android:layout_marginBottom="@dimen/dimen_20"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_auth_type_expert"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="@dimen/dimen_140"
+                android:layout_height="@dimen/dimen_60"
+                android:layout_gravity="center"
+                android:background="@drawable/select_camera_back_b2"
+                android:layout_marginLeft="@dimen/dimen_38"
+                android:text="行业专家"
+                android:textColor="@drawable/select_trouble_repair_result_b2"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/btn_auth_type_service"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="@dimen/dimen_140"
+                android:layout_height="@dimen/dimen_60"
+                android:layout_gravity="center"
+                android:background="@drawable/select_camera_back_b2"
+                android:layout_marginLeft="@dimen/dimen_30"
+                android:text="厂商售后"
+                android:textColor="@drawable/select_trouble_repair_result_b2"
+                android:textSize="12sp" />
+        </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/ll_factory"
@@ -327,17 +341,19 @@
     </android.support.v4.widget.NestedScrollView>
 
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_180">
     <TextView
         android:id="@+id/tv_go"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="@dimen/dimen_20"
+        android:layout_width="@dimen/dimen_600"
+        android:layout_height="@dimen/dimen_88"
         android:background="@drawable/bg_gradual_change_ellipse"
         android:gravity="center"
-        android:padding="@dimen/dimen_30"
+        android:layout_centerInParent="true"
         android:text="去认证资格信息"
-        android:textColor="@color/color_white"
+        android:textColor="@color/white"
         android:textSize="@dimen/textSize_13" />
-
+    </RelativeLayout>
 </LinearLayout>
+

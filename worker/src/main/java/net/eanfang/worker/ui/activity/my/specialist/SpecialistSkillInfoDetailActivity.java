@@ -141,8 +141,8 @@ public class SpecialistSkillInfoDetailActivity extends BaseWorkerActivity {
         tvLimit.setText(GetConstDataUtils.getWorkingYearList().get(mExpertVerifySkillBean.getExpertVerify().getWorkingAge()));
         tvAbility.setText(GetConstDataUtils.getExpertTypeList().get(mExpertVerifySkillBean.getExpertVerify().getApproveType()));
 
-        recyclerViewBusiness.setLayoutManager(new GridLayoutManager(this, 3));
-        recyclerViewBrand.setLayoutManager(new GridLayoutManager(this, 3));
+        recyclerViewBusiness.setLayoutManager(new GridLayoutManager(this, 4));
+        recyclerViewBrand.setLayoutManager(new GridLayoutManager(this, 4));
         recyclerViewBusiness.setNestedScrollingEnabled(false);
         recyclerViewBrand.setNestedScrollingEnabled(false);
 

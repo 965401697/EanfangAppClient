@@ -229,6 +229,7 @@ public class EanfangCallback<T> extends StringCallback {
                     Intent intent = new Intent(EanfangApplication.getApplication(), NoPermissionActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     EanfangApplication.getApplication().startActivity(intent);
+                    activity.finish();
                     break;
                 default:
                     onFail(code, message, null);

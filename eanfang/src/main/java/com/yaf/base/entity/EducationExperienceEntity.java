@@ -44,6 +44,17 @@ public class EducationExperienceEntity implements Serializable {
 	//专业名称
 	//@TableField(value = "major_name")
 	private String majorName;
+	//成绩
+	private String score ;
+
+	public String getScore() {
+		return score;
+	}
+
+	public void setScore(String score) {
+		this.score = score;
+	}
+
 	//学历or文凭
 	//@TableField(value = "diploma")
 	private Integer diploma;
@@ -128,6 +139,7 @@ public class EducationExperienceEntity implements Serializable {
 	public String getMajorName() {
 	    return majorName;
 	}
+
 	    /**
 	 * 设置：学历or文凭
 	 */

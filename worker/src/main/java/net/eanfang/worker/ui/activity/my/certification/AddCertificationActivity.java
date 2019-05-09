@@ -104,27 +104,32 @@ public class AddCertificationActivity extends BaseActivityWithTakePhoto implemen
         snplMomentAccident.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_CERTIFICATE, REQUEST_CODE_PHOTO_CERTIFICATE));
         snplMomentAccident.setData(picList_certificate);
         doSelectYearMonthDay();
-        setRightTitle("保存");
+        setRightTitleOnClickListener(view -> setData());
         if (bean != null) {
+            setTitle("荣誉");
+            setRightTitle("编辑");
+            setZhiDu(false);
             fillData();
-            setTitle("编辑荣誉");
-            tvSave.setVisibility(View.VISIBLE);
+            setRightTitleOnClickListener(view -> {
+                        setRightTitle("保存");
+                        setZhiDu(true);
+                        setRightTitleOnClickListener(view1 -> setData());
+                    }
+
+            );
         } else {
-            setTitle("添加荣誉");
+            setRightTitle("保存");
+            setTitle("荣誉");
             tvSave.setVisibility(View.GONE);
         }
-        setRightTitleOnClickListener(view -> setData());
     }
-
-    /**
-     * 只进行查看操作不看编辑
-     */
-    private void doUnWrite() {
-        tvSave.setVisibility(View.GONE);
-        etName.setEnabled(false);
-        etOrg.setEnabled(false);
-        llDate.setEnabled(false);
-        snplMomentAccident.setEditable(false);
+    private void setZhiDu(boolean isZd) {
+        tvSave.setVisibility(isZd?View.VISIBLE:View.GONE);
+        etOrg.setEnabled(isZd);
+        etName.setEnabled(isZd);
+        llDate.setEnabled(isZd);
+        snplMomentAccident.setPlusEnable(isZd);
+        snplMomentAccident.setEditable(isZd);
     }
 
     private void fillData() {

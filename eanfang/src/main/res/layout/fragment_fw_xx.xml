@@ -28,6 +28,11 @@
 
     </android.support.v7.widget.RecyclerView>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_1"
+        android:background="#F2F2F2" />
+
     <Space
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_10" />
@@ -50,7 +55,10 @@
         android:paddingRight="@dimen/dimen_20">
 
     </android.support.v7.widget.RecyclerView>
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_1"
+        android:background="#F2F2F2" />
     <Space
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_10" />

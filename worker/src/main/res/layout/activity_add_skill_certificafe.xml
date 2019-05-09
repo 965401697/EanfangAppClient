@@ -44,7 +44,39 @@
                 android:textColor="@color/color_bottom"
                 android:textSize="@dimen/textSize_13" />
         </LinearLayout>
+        <View style="@style/style_common_line_gray" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/dimen_20"
+            android:paddingLeft="@dimen/dimen_36"
+            android:paddingRight="@dimen/dimen_34"
+            android:paddingTop="@dimen/dimen_20">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="证书编号"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_14" />
+
+            <EditText
+                android:id="@+id/et_num"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_weight="1"
+                android:background="@null"
+                android:inputType="number"
+                android:gravity="right"
+                android:hint="请输入"
+                android:maxLength="11"
+                android:textColor="@color/color_bottom"
+                android:textSize="@dimen/textSize_13" />
+        </LinearLayout>
         <View style="@style/style_common_line_gray" />
 
         <LinearLayout
@@ -87,6 +119,7 @@
             android:background="@color/white"
             android:orientation="horizontal"
             android:paddingBottom="@dimen/dimen_20"
+            android:visibility="gone"
             android:paddingLeft="@dimen/dimen_36"
             android:paddingRight="@dimen/dimen_34"
             android:paddingTop="@dimen/dimen_20">
@@ -112,39 +145,7 @@
                 android:textSize="@dimen/textSize_13" />
         </LinearLayout>
 
-        <View style="@style/style_common_line_gray" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:orientation="horizontal"
-            android:paddingBottom="@dimen/dimen_20"
-            android:paddingLeft="@dimen/dimen_36"
-            android:paddingRight="@dimen/dimen_34"
-            android:paddingTop="@dimen/dimen_20">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="证书编号"
-                android:textColor="@color/color_client_neworder"
-                android:textSize="@dimen/textSize_14" />
-
-            <EditText
-                android:id="@+id/et_num"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
-                android:layout_weight="1"
-                android:background="@null"
-                android:inputType="number"
-                android:gravity="right"
-                android:hint="请输入"
-                android:maxLength="11"
-                android:textColor="@color/color_bottom"
-                android:textSize="@dimen/textSize_13" />
-        </LinearLayout>
 
         <View style="@style/style_common_line_gray" />
 
@@ -172,7 +173,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="20dp"
                 android:layout_weight="1"
-                android:drawableEnd="@mipmap/date_template"
+                android:drawableEnd="@mipmap/rliv"
                 android:drawablePadding="@dimen/dimen_14"
                 android:gravity="right"
                 android:textColor="@color/color_bottom"
@@ -233,12 +234,12 @@
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
         android:layout_margin="@dimen/dimen_40"
-        android:background="@drawable/bg_btn_trouble_detail_add_trouble"
+        android:background="@drawable/bg_new_cc"
         android:gravity="center"
-        android:padding="@dimen/dimen_30"
-        android:text="删除"
+        android:padding="@dimen/dimen_20"
+        android:text="删除此条目"
         android:visibility="gone"
-        android:textColor="@color/color_white"
+        android:textColor="#FF3F3F"
         android:textSize="@dimen/textSize_14" />
 
 </RelativeLayout>

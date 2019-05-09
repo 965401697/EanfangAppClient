@@ -261,7 +261,7 @@ public class AuthCompanyFirstBActivity extends BaseActivityWithTakePhoto {
             }
         }
         if (infoBean != null) {
-            if (infoBean.getRegisterAssets() != null) {
+            if (infoBean.geteMail() != null) {
                 etMoney.setText(infoBean.geteMail());
             }
 

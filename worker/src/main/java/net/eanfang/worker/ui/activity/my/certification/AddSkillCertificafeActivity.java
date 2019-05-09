@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -54,6 +55,8 @@ public class AddSkillCertificafeActivity extends BaseActivityWithTakePhoto {
     BGASortableNinePhotoLayout snplMomentAccident;
     @BindView(R.id.tv_save)
     TextView tvSave;
+    @BindView(R.id.ll_date)
+    LinearLayout llDate;
     /**
      * 证书照片
      */
@@ -76,16 +79,35 @@ public class AddSkillCertificafeActivity extends BaseActivityWithTakePhoto {
         setLeftBack();
         bean = (QualificationCertificateEntity) getIntent().getSerializableExtra("bean");
         snplMomentAccident.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_CERTIFICATE, REQUEST_CODE_PHOTO_CERTIFICATE));
-        setRightTitle("保存");
         setRightTitleOnClickListener(view -> setData());
         if (bean != null) {
+            setTitle("资质证书");
+            setRightTitle("编辑");
+            setZhiDu(false);
             fillData();
-            setTitle("编辑资质证书");
-            tvSave.setVisibility(View.VISIBLE);
+            setRightTitleOnClickListener(view -> {
+                        setRightTitle("保存");
+                        setZhiDu(true);
+                        setRightTitleOnClickListener(view1 -> setData());
+                    }
+
+            );
 
         } else {
-            setTitle("添加资质证书");
+            setTitle("资质证书");
+            setRightTitle("保存");
+            tvSave.setVisibility(View.GONE);
         }
+    }
+
+    private void setZhiDu(boolean isZd) {
+        tvSave.setVisibility(isZd ? View.VISIBLE : View.GONE);
+        etCertificateName.setEnabled(isZd);
+        etNum.setEnabled(isZd);
+        etOrg.setEnabled(isZd);
+        llDate.setEnabled(isZd);
+        snplMomentAccident.setPlusEnable(isZd);
+        snplMomentAccident.setEditable(isZd);
     }
 
 
@@ -101,7 +123,6 @@ public class AddSkillCertificafeActivity extends BaseActivityWithTakePhoto {
 
         etCertificateName.setText(bean.getCertificateName());
         etOrg.setText(bean.getAwardOrg());
-        etLevel.setText(bean.getCertificateLevel());
         etNum.setText(bean.getCertificateNumber());
         tvTime.setText(DateUtils.formatDate(bean.getBeginTime(), "yyyy-MM-dd") + " ～ " + DateUtils.formatDate(bean.getEndTime(), "yyyy-MM-dd"));
         snplMomentAccident.setData(picList);
@@ -127,7 +148,6 @@ public class AddSkillCertificafeActivity extends BaseActivityWithTakePhoto {
         entity.setAccId(EanfangApplication.get().getAccId());
         entity.setBeginTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[0], "yyyy-MM-dd"));
         entity.setEndTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[1], "yyyy-MM-dd"));
-        entity.setCertificateLevel(etLevel.getText().toString().trim());
         entity.setCertificateNumber(etNum.getText().toString().trim());
         entity.setCertificatePics(pic);
 
@@ -159,20 +179,14 @@ public class AddSkillCertificafeActivity extends BaseActivityWithTakePhoto {
             ToastUtil.get().showToast(this, "请输入证书名称");
             return true;
         }
-
-        if (TextUtils.isEmpty(etOrg.getText().toString())) {
-            ToastUtil.get().showToast(this, "请输入发证机构");
-            return true;
-        }
-        if (TextUtils.isEmpty(etLevel.getText().toString())) {
-            ToastUtil.get().showToast(this, "请输入资质等级");
-            return true;
-        }
         if (TextUtils.isEmpty(etNum.getText().toString())) {
             ToastUtil.get().showToast(this, "请输入证书编号");
             return true;
         }
-
+        if (TextUtils.isEmpty(etOrg.getText().toString())) {
+            ToastUtil.get().showToast(this, "请输入发证机构");
+            return true;
+        }
         if (TextUtils.isEmpty(tvTime.getText().toString())) {
             ToastUtil.get().showToast(this, "请选择有效时间");
             return true;
@@ -183,8 +197,6 @@ public class AddSkillCertificafeActivity extends BaseActivityWithTakePhoto {
             showToast("请添加证书照片");
             return true;
         }
-
-
         return false;
     }
 
@@ -210,22 +222,14 @@ public class AddSkillCertificafeActivity extends BaseActivityWithTakePhoto {
                 new DoubleDatePickerDialog(AddSkillCertificafeActivity.this, 0, new DoubleDatePickerDialog.OnDateSetListener() {
 
                     @Override
-                    public void onDateSet(DatePicker startDatePicker, int startYear, int startMonthOfYear,
-                                          int startDayOfMonth, DatePicker endDatePicker, int endYear, int endMonthOfYear,
-                                          int endDayOfMonth) {
-                        String textString = String.format("%d-%d-%d～%d-%d-%d", startYear,
-                                startMonthOfYear + 1, startDayOfMonth, endYear, endMonthOfYear + 1, endDayOfMonth);
-
+                    public void onDateSet(DatePicker startDatePicker, int startYear, int startMonthOfYear, int startDayOfMonth, DatePicker endDatePicker, int endYear, int endMonthOfYear, int endDayOfMonth) {
+                        String textString = String.format("%d-%d-%d～%d-%d-%d", startYear, startMonthOfYear + 1, startDayOfMonth, endYear, endMonthOfYear + 1, endDayOfMonth);
                         String startTime = String.format("%d-%d-%d", startYear, startMonthOfYear + 1, startDayOfMonth);
                         String endTime = String.format("%d-%d-%d", endYear, endMonthOfYear + 1, endDayOfMonth);
-
                         if (GetDateUtils.getTimeStamp(startTime, "yyyy-MM-dd") > GetDateUtils.getTimeStamp(endTime, "yyyy-MM-dd")) {
                             ToastUtil.get().showToast(AddSkillCertificafeActivity.this, "开始时间不能大于结束时间");
-
                             return;
                         }
-
-
                         tvTime.setText(textString);
 
                     }
@@ -243,16 +247,17 @@ public class AddSkillCertificafeActivity extends BaseActivityWithTakePhoto {
                 delete();
 
                 break;
-                default:
+            default:
         }
     }
+
     private void delete() {
         EanfangHttp.post(UserApi.TECH_WORKER_DELETE_QUALIFY + "/" + bean.getId()).execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class) {
-                    @Override
-                    public void onSuccess(JSONObject bean) {
-                        showToast("删除成功");
-                        finish();
-                    }
-                });
+            @Override
+            public void onSuccess(JSONObject bean) {
+                showToast("删除成功");
+                finish();
+            }
+        });
     }
 }

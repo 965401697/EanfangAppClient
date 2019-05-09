@@ -191,5 +191,6 @@ dependencies {
     implementation project(':zxing')
     implementation project(':IMKit')
     implementation project(':IMLib')
+    compile project(path: ':ocr_ui')
     //    implementation project(':Sight')
 }

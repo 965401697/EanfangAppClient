@@ -15,7 +15,7 @@
         android:textSize="12sp"
         android:gravity="center"
         android:text=" "
-        android:textColor="@drawable/selector_cooperation_add_text">
+        android:textColor="@drawable/selector_cooperation_add_text_b">
 
     </CheckBox>
 </LinearLayout>

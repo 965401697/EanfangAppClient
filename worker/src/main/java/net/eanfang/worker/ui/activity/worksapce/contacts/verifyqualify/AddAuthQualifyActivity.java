@@ -111,26 +111,40 @@ public class AddAuthQualifyActivity extends BaseActivityWithTakePhoto implements
         snplMomentAccident.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_CERTIFICATE, REQUEST_CODE_PHOTO_CERTIFICATE));
         snplMomentAccident.setData(picList_certificate);
         doSelectYearMonthDay();
-        setRightTitle("保存");
+        setRightTitleOnClickListener(view -> doVerify());
         if (aptitudeCertificateEntity != null) {
-            setTitle("修改资质证书");
-            tvSave.setVisibility(View.VISIBLE);
+            setTitle("资质证书");
+            setRightTitle("编辑");
+            setZhiDu(false);
             fillData();
+            setRightTitleOnClickListener(view -> {
+                        setRightTitle("保存");
+                        setZhiDu(true);
+                        setRightTitleOnClickListener(view1 -> doVerify());
+                    }
+            );
         } else {
-            setTitle("添加资质证书");
+            setRightTitle("保存");
+            setTitle("资质证书");
             tvSave.setVisibility(View.GONE);
         }
-//        if ("2".equals(isAuth) || "1".equals(isAuth)) {
-//            doUnWrite();
-//        }
-        setRightTitleOnClickListener(view -> doVerify());
+    }
+
+    private void setZhiDu(boolean isZd) {
+        tvSave.setVisibility(isZd?View.VISIBLE:View.GONE);
+        etCertificateName.setEnabled(isZd);
+        etNum.setEnabled(isZd);
+        etOrg.setEnabled(isZd);
+        llBeginDate.setEnabled(isZd);
+        llEndDate.setEnabled(isZd);
+        snplMomentAccident.setPlusEnable(isZd);
+        snplMomentAccident.setEditable(isZd);
     }
 
     private void fillData() {
         ArrayList<String> picList = new ArrayList<>();
         if (aptitudeCertificateEntity.getCertificatePics() != null) {
             String[] pics = aptitudeCertificateEntity.getCertificatePics().split(",");
-
             for (int i = 0; i < pics.length; i++) {
                 picList.add(BuildConfig.OSS_SERVER + pics[i]);
             }
@@ -224,21 +238,6 @@ public class AddAuthQualifyActivity extends BaseActivityWithTakePhoto implements
         });
     }
 
-    /**
-     * 只进行查看操作不看编辑
-     */
-    private void doUnWrite() {
-        setRightTitle("");
-        setRightTitleOnClickListener(null);
-        tvSave.setVisibility(View.GONE);
-        etCertificateName.setEnabled(false);
-        etOrg.setEnabled(false);
-        etLevel.setEnabled(false);
-        etNum.setEnabled(false);
-        snplMomentAccident.setEditable(false);
-        llBeginDate.setEnabled(false);
-        llEndDate.setEnabled(false);
-    }
 
     @OnClick({R.id.ll_begin_date, R.id.ll_end_date, R.id.tv_save})
     public void onViewClicked(View view) {
@@ -314,6 +313,5 @@ public class AddAuthQualifyActivity extends BaseActivityWithTakePhoto implements
                 tvEndTime.setText(time);
             }
         }
-
     }
 }
