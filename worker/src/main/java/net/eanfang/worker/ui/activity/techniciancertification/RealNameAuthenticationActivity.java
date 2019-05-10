@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -94,6 +93,9 @@ public class RealNameAuthenticationActivity extends BaseActivityWithTakePhoto {
     }
 
     private void fillData() {
+        if (mTechWorkerVerifyEntity.getIdCardNum() != null) {
+            idCardNum = mTechWorkerVerifyEntity.getIdCardNum();
+        }
         if (mTechWorkerVerifyEntity.getIdCardFront() != null) {
             ivIdCardFront.setImageURI(com.eanfang.BuildConfig.OSS_SERVER + mTechWorkerVerifyEntity.getIdCardFront());
         }
@@ -108,6 +110,8 @@ public class RealNameAuthenticationActivity extends BaseActivityWithTakePhoto {
     private String idCardNum = "";
 
     private void doSave() {
+        Log.d("recIDCard6688866", "doSave: " + idCardNum);
+
         if (StringUtils.isEmpty(idCardNum)) {
             showToast("请添加正确的身份证正面照");
             return;
@@ -147,15 +151,18 @@ public class RealNameAuthenticationActivity extends BaseActivityWithTakePhoto {
             case ID_CARD_SIDE:
                 mTechWorkerVerifyEntity.setIdCardSide(imgKey);
                 ivIdCardBack.setImageURI("file://" + image.getOriginalPath());
+                OSSUtils.initOSS(this).asyncPutImage(imgKey, image.getOriginalPath(), new OSSCallBack(this, true) {
+                });
                 break;
             case ID_CARD_HAND:
                 mTechWorkerVerifyEntity.setIdCardHand(imgKey);
                 ivIdCardInHand.setImageURI("file://" + image.getOriginalPath());
+                OSSUtils.initOSS(this).asyncPutImage(imgKey, image.getOriginalPath(), new OSSCallBack(this, true) {
+                });
                 break;
             default:
         }
-        OSSUtils.initOSS(this).asyncPutImage(imgKey, image.getOriginalPath(), new OSSCallBack(this, true) {
-        });
+
     }
 
     @Override
@@ -163,21 +170,12 @@ public class RealNameAuthenticationActivity extends BaseActivityWithTakePhoto {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ID_CARD_FRONT && resultCode == Activity.RESULT_OK) {
             if (data != null) {
-                String imgKey = UuidUtil.getUUID() + "idc.png";
                 String contentType = data.getStringExtra(CameraActivity.KEY_CONTENT_TYPE);
                 String filePath = FileUtil.getSaveFile(getApplicationContext()).getAbsolutePath();
-                Log.d("recIDCard669", "onActivityResult: " + filePath);
-                mTechWorkerVerifyEntity.setIdCardFront(imgKey);
                 ivIdCardFront.setImageURI("file://" + filePath);
-                OSSUtils.initOSS(this).asyncPutImage(imgKey, filePath, new OSSCallBack(this, true) {
-                });
-                if (!TextUtils.isEmpty(contentType)) {
-                    if (CameraActivity.CONTENT_TYPE_ID_CARD_FRONT.equals(contentType)) {
-                        recIDCard(IDCardParams.ID_CARD_SIDE_FRONT, filePath);
-                    } else if (CameraActivity.CONTENT_TYPE_ID_CARD_BACK.equals(contentType)) {
-                        recIDCard(IDCardParams.ID_CARD_SIDE_BACK, filePath);
-                    }
-                }
+                Log.d("recIDCard669", "onActivityResult: " + filePath);
+                nem++;
+                recIDCard(IDCardParams.ID_CARD_SIDE_FRONT, filePath);
             }
         }
     }
@@ -226,8 +224,16 @@ public class RealNameAuthenticationActivity extends BaseActivityWithTakePhoto {
             public void onResult(IDCardResult result) {
                 if (result != null) {
                     Log.d("recIDCard66", result.toString());
-                    idCardNum = result.getIdNumber().toString();
-
+                    String imgKey = UuidUtil.getUUID() + "idCl.jpg";
+                    if ((result.getIdNumber()!= null) && (!result.getIdNumber().toString().equals(""))) {
+                        Log.d("recIDCard66888", result.toString());
+                        idCardNum = result.getIdNumber().toString();
+                        mTechWorkerVerifyEntity.setIdCardFront(imgKey);
+                        OSSUtils.initOSS(RealNameAuthenticationActivity.this).asyncPutImage(imgKey, filePath, new OSSCallBack(RealNameAuthenticationActivity.this, true) {
+                        });
+                    } else {
+                        idCardNum = "";
+                    }
                 }
             }
 
@@ -269,9 +275,11 @@ public class RealNameAuthenticationActivity extends BaseActivityWithTakePhoto {
         super.onDestroy();
     }
 
+    private static int nem = 0;
+
     public static class FileUtil {
         public static File getSaveFile(Context context) {
-            File file = new File(context.getFilesDir(), "idc.png");
+            File file = new File(context.getFilesDir(), nem + "idCl.jpg");
             return file;
         }
     }

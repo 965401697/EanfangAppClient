@@ -8,6 +8,12 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
+import com.eanfang.apiservice.UserApi;
+import com.eanfang.application.EanfangApplication;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
+
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.contacts.CreatTeamActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
@@ -68,7 +74,12 @@ public class OwnDataHintActivity extends BaseWorkerActivity {
             }
         });
 
-        callTv.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG );
+        callTv.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+
+        EanfangHttp.post(UserApi.ZJ_TJ_RZ).params("accId", EanfangApplication.get().getAccId()).execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
+
+        }));
+
     }
 
     @OnClick(R.id.call_tv)

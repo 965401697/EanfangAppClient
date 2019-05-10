@@ -30,6 +30,7 @@ import com.jph.takephoto.model.TResult;
 import com.yaf.sys.entity.OrgUnitEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.fragment.ContactsFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -250,6 +251,7 @@ public class AuthCompanyFirstActivity extends BaseActivityWithTakePhoto {
 //                    byNetBean = new AuthCompanyBaseInfoBean();
 //                    byNetBean.setOrgId(bean.getOrgId());
 //                    doJumpSecond();
+                    ContactsFragment.isRefresh = true;
                     showToast("提交成功");
                     finish();
                 }));

@@ -58,7 +58,7 @@ public class SubmitSuccessfullyQyActivity extends BaseActivity {
     private void initView() {
         setLeftBack();
         setTitle("提交成功");
-        SpannableString spannableString = new SpannableString("工商服务→服务认证→资质认证→更多能力");
+        SpannableString spannableString = new SpannableString("工商服务→服务认证→资质荣誉→更多能力");
         spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#333333")), 0, 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#A5CAFC")), 4, 5, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
         spannableString.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 4, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -98,6 +98,7 @@ public class SubmitSuccessfullyQyActivity extends BaseActivity {
             case 5:
                 authenticationTv.setText("去完善公司资料");
                 tsTv.setText("恭喜您！尊敬的用户，团队已创建成功。\n您可以完善公司资料");
+                setTitle("创建成功");
                 break;
             case 6:
                 authenticationTv.setText("去完善企业认证");

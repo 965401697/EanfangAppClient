@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -37,7 +36,6 @@ import net.eanfang.worker.ui.adapter.JsbQualificationsAndAbilitiesAdapter;
 import net.eanfang.worker.ui.adapter.JscQualificationsAndAbilitiesAdapter;
 import net.eanfang.worker.ui.adapter.JsdQualificationsAndAbilitiesAdapter;
 import net.eanfang.worker.ui.adapter.JseQualificationsAndAbilitiesAdapter;
-import net.eanfang.worker.ui.adapter.JseQualificationsAndAbilitiesGetListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -260,10 +258,10 @@ public class JsQualificationsAndAbilitiesActivity extends BaseActivity {
     private void showRvView(boolean isV, RecyclerView recyclerView, TextView ryTv) {
         if (!isV) {
             recyclerView.setVisibility(View.VISIBLE);
-            ryTv.setText("收起 ⇧");
+            ryTv.setText("收起 ∧");
         } else {
             recyclerView.setVisibility(View.GONE);
-            ryTv.setText("查看所有 ⇩");
+            ryTv.setText("查看所有 ∨");
         }
     }
 

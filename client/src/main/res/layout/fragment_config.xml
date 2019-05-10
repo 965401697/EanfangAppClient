@@ -707,6 +707,7 @@
                 <RelativeLayout
                     android:id="@+id/rl_ivite_b"
                     android:layout_width="match_parent"
+                    android:visibility="gone"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_ll_selctor"
                     android:padding="10dp">

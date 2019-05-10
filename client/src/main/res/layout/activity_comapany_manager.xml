@@ -61,7 +61,7 @@
                         android:layout_width="@dimen/dimen_100"
                         android:layout_height="@dimen/dimen_100"
                         android:layout_marginRight="@dimen/dimen_20"
-                        app:placeholderImage="@mipmap/ic_launcher"
+                        app:placeholderImage="@mipmap/worker_logo"
                         app:roundAsCircle="true" />
 
                     <TextView
@@ -100,8 +100,8 @@
 
                     <ImageView
                         android:id="@+id/gs_xq_iv"
-                        android:layout_width="@dimen/dimen_62"
-                        android:layout_height="@dimen/dimen_80"
+                        android:layout_width="@dimen/dimen_60"
+                        android:layout_height="@dimen/dimen_60"
                         android:layout_alignParentRight="true"
                         android:layout_marginTop="@dimen/dimen_30"
                         android:layout_marginRight="10dp"
@@ -128,7 +128,7 @@
                         android:text="[更多]"
                         android:textColor="@color/color_bl"
                         android:textSize="12sp"
-                        android:textStyle="bold" />
+                    />
 
                     <TextView
                         android:id="@+id/tv_des"
@@ -381,5 +381,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:scaleType="centerCrop"
+        android:background="#FDB789"
         android:src="@mipmap/gg_cl_iv" />
 </LinearLayout>

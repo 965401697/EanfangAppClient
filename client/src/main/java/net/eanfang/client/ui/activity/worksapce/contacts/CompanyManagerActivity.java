@@ -11,6 +11,7 @@ import android.text.method.ScrollingMovementMethod;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -158,7 +159,9 @@ public class CompanyManagerActivity extends BaseActivity implements DissloveTeam
     private void setData() {
         Log.d("BUSINESS_MANAGEMENT", "setData: " + byNetBean.toString());
         gsNameTv.setText(byNetBean.getName());
-        gsLogSdv.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(byNetBean.getLogoPic()));
+        if (byNetBean.getLogoPic() != null) {
+            gsLogSdv.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(byNetBean.getLogoPic()));
+        }
         if (byNetBean.getIntro() == null) {
             SpannableString spannableString = new SpannableString("公司简介: ");
             spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#006BFF")), 0, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -168,6 +171,22 @@ public class CompanyManagerActivity extends BaseActivity implements DissloveTeam
             spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#006BFF")), 0, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#333333")), 5, spannableString.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
             gsXqTv.setText(spannableString);
+            gsXqTv.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    Log.d("getLineCount: ", "行数" + gsXqTv.getLineCount());
+                    if (gsXqTv.getLineCount() < 4) {
+                        showMoreTv.setVisibility(View.GONE);
+                        flag = true;
+                    } else {
+                        showMoreTv.setVisibility(View.VISIBLE);
+                        flag = false;
+                        gsXqTv.setEllipsize(TextUtils.TruncateAt.END);
+                        gsXqTv.setLines(3);
+                    }
+                    gsXqTv.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                }
+            });
         }
         status = byNetBean.getStatus();
         switch (status) {

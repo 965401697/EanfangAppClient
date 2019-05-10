@@ -96,8 +96,8 @@
                         android:visibility="visible" />
 
                     <ImageView
-                        android:layout_width="@dimen/dimen_62"
-                        android:layout_height="@dimen/dimen_80"
+                        android:layout_width="@dimen/dimen_60"
+                        android:layout_height="@dimen/dimen_60"
                         android:layout_alignParentRight="true"
                         android:padding="@dimen/dimen_20"
                         android:layout_marginTop="@dimen/dimen_30"
@@ -112,7 +112,6 @@
                         android:layout_height="wrap_content"
                         android:ellipsize="end"
                         android:text="公司简介"
-                        android:lines="3"
                         android:textSize="12sp" />
                     <TextView
                         android:id="@+id/show_more_tv"
@@ -121,7 +120,6 @@
                         android:layout_alignParentLeft="true"
                         android:layout_below="@id/gs_xq_tv"
                         android:text="[更多]"
-                        android:textStyle="bold"
                         android:textColor="@color/colorPrimary"
                         android:textSize="12sp" />
 
@@ -139,7 +137,7 @@
                         android:text="去认证→"
                         android:textColor="@color/white"
                         android:textSize="14sp"
-                        android:textStyle="bold" />
+                         />
                 </RelativeLayout>
 
 
@@ -165,7 +163,7 @@
                         android:layout_height="match_parent"
                         android:layout_alignParentTop="true"
                         android:layout_marginStart="12dp"
-                        android:drawableLeft="@mipmap/ic_admin"
+                        android:drawableLeft="@mipmap/ic_admin_b"
                         android:drawablePadding="@dimen/dimen_22"
                         android:gravity="center_vertical"
                         android:text="管理员设置"
@@ -197,7 +195,7 @@
                         android:layout_height="match_parent"
                         android:layout_alignParentTop="true"
                         android:layout_marginStart="12dp"
-                        android:drawableLeft="@mipmap/ic_section"
+                        android:drawableLeft="@mipmap/ic_section_b"
                         android:drawablePadding="@dimen/dimen_22"
                         android:gravity="center_vertical"
                         android:text="创建部门"
@@ -229,7 +227,7 @@
                         android:layout_height="match_parent"
                         android:layout_alignParentTop="true"
                         android:layout_marginStart="12dp"
-                        android:drawableLeft="@mipmap/ic_add_preson"
+                        android:drawableLeft="@mipmap/ic_add_preson_b"
                         android:drawablePadding="@dimen/dimen_22"
                         android:gravity="center_vertical"
                         android:text="添加人员"
@@ -261,7 +259,7 @@
                         android:layout_height="match_parent"
                         android:layout_alignParentTop="true"
                         android:layout_marginStart="12dp"
-                        android:drawableLeft="@mipmap/ic_presion"
+                        android:drawableLeft="@mipmap/ic_presion_b"
                         android:drawablePadding="@dimen/dimen_22"
                         android:gravity="center_vertical"
                         android:text="权限管理"
@@ -297,7 +295,7 @@
                         android:layout_height="match_parent"
                         android:layout_alignParentTop="true"
                         android:layout_marginStart="12dp"
-                        android:drawableLeft="@mipmap/ic_cooperation"
+                        android:drawableLeft="@mipmap/ic_cooperation_b"
                         android:drawablePadding="@dimen/dimen_22"
                         android:gravity="center_vertical"
                         android:text="合作关系"

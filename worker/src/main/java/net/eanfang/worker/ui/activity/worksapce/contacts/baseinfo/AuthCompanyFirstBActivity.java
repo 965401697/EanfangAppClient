@@ -1,8 +1,10 @@
 package net.eanfang.worker.ui.activity.worksapce.contacts.baseinfo;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -57,25 +59,18 @@ public class AuthCompanyFirstBActivity extends BaseActivityWithTakePhoto {
      * 营业执照 take photo回调 code
      */
     private final int LICENSE_CALLBACK_CODE = 300;
-
     @BindView(R.id.et_company)
     EditText etCompany;
-
     @BindView(R.id.et_money)
     EditText etMoney;
     @BindView(R.id.et_phone)
     EditText etPhone;
-
     @BindView(R.id.tv_office_address)
     TextView tvOfficeAddress;
     @BindView(R.id.ll_office_address)
     LinearLayout llOfficeAddress;
     @BindView(R.id.et_detail_office_address)
     EditText etDetailOfficeAddress;
-
-    /**
-     * 公司LOGO take photo 回调 code
-     */
     private final int ADPIC_CALLBACK_CODE = 400;
     @BindView(R.id.tv_company_scale)
     TextView tvCompanyScale;
@@ -125,6 +120,23 @@ public class AuthCompanyFirstBActivity extends BaseActivityWithTakePhoto {
         etCompany.setText(orgName);
         tvRightB.setText("保存");
         tvRightB.setOnClickListener(view -> doVerify());
+        setSeCt();
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private void setSeCt() {//解决与NestedScrollView冲突
+        etDesc.setOnTouchListener((view, motionEvent) -> {
+            if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                view.getParent().requestDisallowInterceptTouchEvent(true);
+            }
+            if (motionEvent.getAction() == MotionEvent.ACTION_MOVE) {
+                view.getParent().requestDisallowInterceptTouchEvent(true);
+            }
+            if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                view.getParent().requestDisallowInterceptTouchEvent(false);
+            }
+            return false;
+        });
     }
 
     private void initListener() {
@@ -139,9 +151,6 @@ public class AuthCompanyFirstBActivity extends BaseActivityWithTakePhoto {
         llCompanyScale.setOnClickListener(v -> PickerSelectUtil.singleTextPicker(this, "", tvCompanyScale, GetConstDataUtils.getOrgUnitScaleList()));
     }
 
-    /**
-     * 行业类型
-     */
     private void showTradType() {
         List<BaseDataEntity> baseDataBeanList = Config.get().getIndustryList();
         List<BaseDataEntity> tradeFirst = Stream.of(baseDataBeanList).filter(beanFirst -> beanFirst.getLevel() == 2).toList();
@@ -158,21 +167,15 @@ public class AuthCompanyFirstBActivity extends BaseActivityWithTakePhoto {
         EanfangHttp.get(UserApi.GET_COMPANY_ORG_INFO + orgid).execute(new EanfangCallback<AuthCompanyBaseInfoBean>(this, true, AuthCompanyBaseInfoBean.class, (beans) -> {
             infoBean = beans;
             Log.d("584866", "fillData: " + infoBean.getStatus());
-
             fillData();
         }));
     }
 
-    /**
-     * 进行字段的约束判断
-     */
     public void doVerify() {
-
         if (StringUtils.isEmpty(etCompany.getText().toString().trim())) {
             showToast("请输入单位名称");
             return;
         }
-
         if (StringUtils.isEmpty(tvType.getText().toString().trim())) {
             showToast("请选择行业类型");
             return;
@@ -201,7 +204,6 @@ public class AuthCompanyFirstBActivity extends BaseActivityWithTakePhoto {
         infoBean.setName(etCompany.getText().toString().trim());
         infoBean.seteMail(etMoney.getText().toString().trim());
         infoBean.setOrgId(orgid);
-
         infoBean.setTelPhone(etPhone.getText().toString().trim());
         infoBean.setOfficeAddress(etDetailOfficeAddress.getText().toString().trim());
         if (!StringUtils.isEmpty(itemcity) && !StringUtils.isEmpty(itemzone)) {
@@ -224,15 +226,11 @@ public class AuthCompanyFirstBActivity extends BaseActivityWithTakePhoto {
      * 初始化  填充数据
      */
     private void fillData() {
-        //如果不是 状态0草稿  或者3认证拒绝  隐藏提交按钮
-        // 0 草稿 3 认证拒绝 1 认证中 2 认证通过
         if (infoBean.getStatus() != 0) {
             etCompany.setEnabled(false);
         }
         Log.d("5848", "fillData: " + infoBean.getStatus());
         if (infoBean.getStatus() == 1) {
-//            setRightTitle("");
-//            setRightTitleOnClickListener(null);
             tvRightB.setVisibility(View.GONE);
             etMoney.setEnabled(false);
             llOfficeAddress.setEnabled(false);
@@ -244,7 +242,6 @@ public class AuthCompanyFirstBActivity extends BaseActivityWithTakePhoto {
             llCompanyScale.setEnabled(false);
             etDesc.setEnabled(false);
         }
-
         if (infoBean != null) {
             if (infoBean.getTradeTypeCode() != null) {
                 tvType.setText(Config.get().getBaseNameByCode(infoBean.getTradeTypeCode(), Constant.INDUSTRY));
@@ -264,7 +261,6 @@ public class AuthCompanyFirstBActivity extends BaseActivityWithTakePhoto {
             if (infoBean.geteMail() != null) {
                 etMoney.setText(infoBean.geteMail());
             }
-
             if (infoBean.getTelPhone() != null) {
                 etPhone.setText(infoBean.getTelPhone());
             }

@@ -35,6 +35,7 @@ import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.fragment.ContactsFragment;
 
 import java.io.File;
 import java.io.IOException;
@@ -98,7 +99,9 @@ public class BusinessCertificationActivity extends BaseActivity {
     }
 
     public void getData() {
-        if ("".equals(infoBean.getLicensePic()) || infoBean.getLicensePic() == null) {
+        if (dwMcLrv.getText().toString().trim().equals("无") & frDbLrv.getText().toString().trim().equals("无")) {
+            showToast("请上传正确的营业执照");
+        } else if ("".equals(infoBean.getLicensePic()) || infoBean.getLicensePic() == null) {
             showToast("请点击加号,上传营业执照");
             return;
         } else if (StringUtils.isEmpty(dwMcLrv.getText().toString().trim())) {
@@ -139,9 +142,10 @@ public class BusinessCertificationActivity extends BaseActivity {
 
     @SuppressLint("LongLogTag")
     private void commit(String json) {
-        EanfangHttp.post(UserApi.GET_ORGUNIT_SHOP_INSERT).upJson(json).execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
+        EanfangHttp.post(UserApi.GET_ORGUNIT_ENT_INSERT).upJson(json).execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
             Log.d("REQUEST_CODE_BUSINESS_LICENSE6:", UserApi.GET_ORGUNIT_SHOP_INSERT + "\n" + json + "\n" + bean.toJSONString());
             showToast("保存成功");
+            ContactsFragment.isRefresh = true;
             finish();
         }));
     }
@@ -166,22 +170,14 @@ public class BusinessCertificationActivity extends BaseActivity {
         initAccessToken();
         EanfangHttp.get(UserApi.GET_COMPANY_ORG_INFO + mOrgId).execute(new EanfangCallback<AuthCompanyBaseInfoBean>(this, true, AuthCompanyBaseInfoBean.class, (beans) -> {
             infoBean = beans;
-            switch (status) {
+            switch (infoBean.getStatus()) {
                 case 0:
                     setData(beans);
                     break;
-                case 1:
-                    setData(beans);
-                    break;
-                case 2:
+                default:
                     setRightTitle("只读");
                     setData(beans);
                     setView();
-                    break;
-                case 3:
-                    setData(beans);
-                    break;
-                default:
             }
         }));
     }
