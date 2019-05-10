@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_contact_line_gray"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="net.eanfang.worker.ui.activity.worksapce.repair.DeviceParameterActivity">
+
+    <include layout="@layout/header" />
+
+
+    <LinearLayout
+        android:id="@+id/ll_add_param"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:id="@+id/tl_select_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_white"
+            android:padding="@dimen/dimen_38">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="请选择参数类别"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_13" />
+
+            <TextView
+                android:id="@+id/tv_device_param_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:drawablePadding="@dimen/dimen_18"
+                android:drawableRight="@mipmap/ic_icon_right"
+                android:text=""
+                android:textColor="@color/color_bottom"
+                android:textSize="@dimen/textSize_13" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_100"
+            android:layout_marginTop="@dimen/dimen_16"
+            android:background="@color/color_white"
+            android:paddingLeft="@dimen/dimen_38"
+            android:paddingRight="@dimen/dimen_38">
+
+            <EditText
+                android:id="@+id/et_input_content"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="请输入参数内容"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_13" />
+
+            <TextView
+                android:id="@+id/tv_finish"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:background="@drawable/bg_worker_camera_text_back_pressed"
+                android:paddingBottom="@dimen/dimen_18"
+                android:paddingLeft="@dimen/dimen_36"
+                android:paddingRight="@dimen/dimen_36"
+                android:paddingTop="@dimen/dimen_18"
+                android:text="完成"
+                android:textColor="@color/color_white"
+                android:textSize="@dimen/textSize_12" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_16">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_param"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_add_param"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_100"
+        android:background="@drawable/bg_add_param"
+        android:drawableLeft="@mipmap/ic_addparam_add"
+        android:drawablePadding="@dimen/dimen_24"
+        android:paddingBottom="@dimen/dimen_28"
+        android:paddingLeft="@dimen/dimen_36"
+        android:paddingRight="@dimen/dimen_50"
+        android:paddingTop="@dimen/dimen_28"
+        android:text="添加参数"
+        android:textColor="@color/color_worker_data_item_title" />
+
+</LinearLayout>

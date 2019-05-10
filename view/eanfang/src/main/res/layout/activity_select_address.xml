@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_title_bar" />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
+
+
+        <com.amap.api.maps.MapView
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true">
+
+            <!--<Button-->
+            <!--android:id="@+id/tv_fuwei"-->
+            <!--android:layout_width="30dp"-->
+            <!--android:layout_height="30dp"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_marginTop="260dp"-->
+            <!--android:background="@mipmap/btn_map_reset"-->
+            <!--android:elevation="0dp" />-->
+        </com.amap.api.maps.MapView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_80"
+            android:layout_marginLeft="@dimen/dimen_40"
+            android:layout_marginRight="@dimen/dimen_120"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:background="@drawable/bg_select_adress_search"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dimen_20">
+
+            <EditText
+                android:id="@+id/atv_text"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3.5"
+                android:background="@null"
+                android:drawableLeft="@mipmap/ic_contact_search"
+                android:drawablePadding="@dimen/dimen_10"
+                android:hint="搜索"
+                android:inputType="text"
+                android:padding="2dp"
+                android:textSize="@dimen/textSize_12" />
+
+        </LinearLayout>
+        <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:background="#fff"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:padding="5dp"-->
+        <!--android:visibility="gone">-->
+
+        <!--<EditText-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center_vertical"-->
+        <!--android:layout_weight="1"-->
+        <!--android:background="@null"-->
+        <!--android:hint="请输入位置"-->
+        <!--android:padding="10dp"-->
+        <!--android:textColor="@color/font_color"-->
+        <!--android:textSize="16sp" />-->
+
+        <!--<Button-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center_vertical"-->
+        <!--android:text="搜索"-->
+        <!--android:textColor="@color/font_color"-->
+        <!--android:textSize="16sp" />-->
+        <!--</LinearLayout>-->
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp" />
+
+</LinearLayout>

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_white"
+    android:orientation="vertical">
+
+    <include layout="@layout/header" />
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_32"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/ll_repair_datasticstics"
+                android:layout_width="@dimen/dimen_282"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/ic_client_home_data_back"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_repair_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_32"
+                    android:layout_marginTop="@dimen/dimen_44"
+                    android:text="当日维修"
+                    android:textColor="@color/color_client_data_item_title"
+                    android:textSize="@dimen/textSize_15" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_32"
+                    android:layout_marginTop="@dimen/dimen_30"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="总数:"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_12" />
+
+                    <TextView
+                        android:id="@+id/tv_reapir_total"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:text=""
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_12" />
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_reapir_data"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_10"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:scrollbars="none" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_repair_install"
+                android:layout_width="@dimen/dimen_282"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/ic_client_home_data_back"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_install_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_32"
+                    android:layout_marginTop="@dimen/dimen_44"
+                    android:text="当日报装"
+                    android:textColor="@color/color_client_data_item_title"
+                    android:textSize="@dimen/textSize_15" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_32"
+                    android:layout_marginTop="@dimen/dimen_30"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="总数:"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_12" />
+
+                    <TextView
+                        android:id="@+id/tv_install_total"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:text=""
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_12" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_design"
+                android:layout_width="@dimen/dimen_282"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/ic_client_home_data_back"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_design_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_32"
+                    android:layout_marginTop="@dimen/dimen_44"
+                    android:text="当日设计"
+                    android:textColor="@color/color_client_data_item_title"
+                    android:textSize="@dimen/textSize_15" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_32"
+                    android:layout_marginTop="@dimen/dimen_30"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="总数:"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_12" />
+
+                    <TextView
+                        android:id="@+id/tv_desitn_total"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:text=""
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_12" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </HorizontalScrollView>
+</LinearLayout>

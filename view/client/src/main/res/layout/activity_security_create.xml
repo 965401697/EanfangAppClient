@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_security_create"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_white"
+    tools:context="net.eanfang.worker.ui.activity.worksapce.security.SecurityCreateActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <include layout="@layout/header_eanfang" />
+
+        <EditText
+            android:id="@+id/et_content"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_300"
+            android:background="@null"
+            android:gravity="start"
+            android:padding="@dimen/dimen_40"
+            android:textColor="@color/color_bottom"
+            android:textSize="@dimen/textSize_15" />
+
+        <com.photopicker.com.widget.BGASortableNinePhotoLayout
+            android:id="@+id/snpl_add_photo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen_30"
+            app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
+            app:bga_snpl_deleteDrawableOverlapQuarter="false"
+            app:bga_snpl_editable="true"
+            app:bga_snpl_itemCornerRadius="0dp"
+            app:bga_snpl_itemSpanCount="3"
+            app:bga_snpl_itemWhiteSpacing="4dp"
+            app:bga_snpl_itemWidth="0dp"
+            app:bga_snpl_maxItemCount="9"
+            app:bga_snpl_otherWhiteSpacing="100dp"
+            app:bga_snpl_placeholderDrawable="@mipmap/ic_nodata"
+            app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
+            app:bga_snpl_plusEnable="true"
+            app:bga_snpl_sortable="true" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_96"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_security_detail_bottom_back"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+
+        <ImageView
+            android:id="@+id/iv_video"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleType="center"
+            android:src="@mipmap/ic_security_video" />
+
+        <ImageView
+            android:id="@+id/iv_about"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleType="center"
+            android:src="@mipmap/ic_security_about" />
+
+        <ImageView
+            android:id="@+id/iv_question"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleType="center"
+            android:src="@mipmap/ic_security_question" />
+
+        <ImageView
+            android:id="@+id/iv_workers"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleType="center"
+            android:src="@mipmap/ic_security_workers" />
+    </LinearLayout>
+</RelativeLayout>

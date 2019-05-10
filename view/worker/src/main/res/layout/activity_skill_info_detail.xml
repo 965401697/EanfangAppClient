@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_contact_line_gray"
+    android:orientation="vertical"
+    tools:context="net.eanfang.worker.ui.activity.my.certification.CertificationActivity">
+
+
+    <include layout="@layout/header" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:id="@+id/ll_limit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/dimen_20"
+                android:paddingLeft="@dimen/dimen_36"
+                android:paddingRight="@dimen/dimen_34"
+                android:paddingTop="@dimen/dimen_20">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="从业年限"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_14" />
+
+                <TextView
+                    android:id="@+id/tv_limit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:drawablePadding="@dimen/dimen_14"
+                    android:gravity="right"
+                    android:text=""
+                    android:textColor="@color/color_bottom"
+                    android:textSize="@dimen/textSize_13" />
+            </LinearLayout>
+
+            <View style="@style/style_common_line_gray" />
+
+            <LinearLayout
+                android:id="@+id/ll_ability"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/dimen_20"
+                android:paddingLeft="@dimen/dimen_36"
+                android:paddingRight="@dimen/dimen_34"
+                android:paddingTop="@dimen/dimen_20">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="能力等级"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_14" />
+
+                <TextView
+                    android:id="@+id/tv_ability"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:drawablePadding="@dimen/dimen_14"
+                    android:gravity="right"
+                    android:text=""
+                    android:textColor="@color/color_bottom"
+                    android:textSize="@dimen/textSize_13" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="@dimen/dimen_14"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dimen_90"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:gravity="center_vertical"
+                    android:text="选择系统类别"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_15" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_2"
+                    android:background="@color/content_bg" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view_kind"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="@dimen/dimen_14"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dimen_90"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:gravity="center_vertical"
+                    android:text="选择业务类型"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_15" />
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_2"
+                    android:background="@color/content_bg" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view_classfiy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:background="@color/color_white"
+                android:drawableRight="@mipmap/ic_icon_right"
+                android:padding="@dimen/dimen_20"
+                android:text="服务区域"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_15" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:background="@color/color_white"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_20"
+                    android:background="@color/color_white"
+                    android:padding="@dimen/dimen_20"
+                    android:text="资质证书"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_15" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</LinearLayout>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:my="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="net.eanfang.client.ui.activity.worksapce.repair.FaultLibraryActivity">
+
+    <include layout="@layout/header_eanfang" />
+
+    <include layout="@layout/layout_search" />
+
+    <com.eanfang.swipefresh.SwipyRefreshLayout
+        android:id="@+id/swiprefresh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        my:direction="both">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_faultList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.eanfang.swipefresh.SwipyRefreshLayout>
+    <TextView
+        android:id="@+id/tv_go"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/dimen_20"
+        android:layout_marginTop="@dimen/dimen_270"
+        android:background="@mipmap/ic_next_background"
+        android:gravity="center"
+        android:padding="@dimen/dimen_30"
+        android:text="下一步"
+        android:textColor="@color/color_white"
+        android:textSize="@dimen/textSize_13" />
+
+</LinearLayout>
+

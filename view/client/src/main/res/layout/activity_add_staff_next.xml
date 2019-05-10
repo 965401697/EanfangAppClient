@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/header_eanfang" />
+
+        <include layout="@layout/item_add_staff" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_section"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_90"
+        android:layout_below="@+id/header"
+        android:layout_marginTop="@dimen/dimen_14"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dimen_36"
+            android:text="选择部门"
+            android:textColor="@color/color_client_neworder"
+            android:textSize="@dimen/textSize_14" />
+
+
+        <TextView
+            android:id="@+id/tv_section_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dimen_36"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:paddingRight="@dimen/dimen_20"
+            android:text="  "
+            android:textColor="#999999"
+            android:textSize="@dimen/textSize_14" />
+
+        <ImageView
+            android:layout_width="@dimen/dimen_14"
+            android:layout_height="@dimen/dimen_26"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/dimen_34"
+            android:src="@mipmap/arrow_right" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_role"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_90"
+        android:layout_below="@+id/ll_section"
+        android:layout_marginTop="@dimen/dimen_14"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dimen_36"
+            android:text="分配角色"
+            android:textColor="@color/color_client_neworder"
+            android:textSize="@dimen/textSize_14" />
+
+
+        <TextView
+            android:id="@+id/tv_role"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dimen_36"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:paddingRight="@dimen/dimen_20"
+            android:text="  "
+            android:textColor="#999999"
+            android:textSize="@dimen/textSize_14" />
+
+        <ImageView
+            android:layout_width="@dimen/dimen_14"
+            android:layout_height="@dimen/dimen_26"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/dimen_34"
+            android:src="@mipmap/arrow_right" />
+    </LinearLayout>
+
+
+
+</RelativeLayout>

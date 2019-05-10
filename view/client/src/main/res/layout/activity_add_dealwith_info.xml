@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/header_eanfang" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <EditText
+                    android:id="@+id/et_input_check_content"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dimen_180"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_ll_selctor"
+                    android:gravity="start"
+                    android:hint="请填写处理明细"
+                    android:padding="@dimen/dimen_30"
+                    android:textColor="@color/color_client_neworder"
+                    android:textColorHint="@color/color_bottom"
+                    android:textSize="@dimen/textSize_14" />
+
+                <ImageView
+                    android:id="@+id/iv_dealwith_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:layout_marginRight="@dimen/dimen_20"
+                    android:padding="@dimen/dimen_20"
+                    android:src="@mipmap/ic_client_voice_input" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <EditText
+                    android:id="@+id/et_remark"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dimen_180"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_ll_selctor"
+                    android:gravity="start"
+                    android:hint="请填写备注"
+                    android:padding="@dimen/dimen_30"
+                    android:textColor="@color/color_client_neworder"
+                    android:textColorHint="@color/color_bottom"
+                    android:textSize="@dimen/textSize_14" />
+
+                <ImageView
+                    android:id="@+id/iv_note"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:layout_marginRight="@dimen/dimen_20"
+                    android:padding="@dimen/dimen_20"
+                    android:src="@mipmap/ic_client_voice_input" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/dimen_30">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="添加附件"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_15" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="（最多上传3张）"
+                        android:textColor="@color/font_color"
+                        android:textSize="@dimen/textSize_15" />
+                </LinearLayout>
+
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/dimen_30">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:id="@+id/rl_thumbnail_work"
+                        android:layout_width="@dimen/dimen_100"
+                        android:layout_height="@dimen/dimen_100"
+                        android:layout_marginTop="@dimen/dimen_10"
+                        android:visibility="gone">
+
+
+                        <com.facebook.drawee.view.SimpleDraweeView
+                            android:id="@+id/iv_takevideo_work"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@mipmap/ic_launcher"
+                            app:placeholderImage="@mipmap/ic_launcher" />
+
+
+                        <ImageView
+                            android:layout_width="@dimen/dimen_50"
+                            android:layout_height="@dimen/dimen_50"
+                            android:layout_centerInParent="true"
+                            android:src="@mipmap/ic_play_video" />
+                    </RelativeLayout>
+
+                    <com.photopicker.com.widget.BGASortableNinePhotoLayout
+                        android:id="@+id/snpl_photos_work"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
+                        app:bga_snpl_deleteDrawableOverlapQuarter="false"
+                        app:bga_snpl_editable="true"
+                        app:bga_snpl_itemCornerRadius="0dp"
+                        app:bga_snpl_itemSpanCount="3"
+                        app:bga_snpl_itemWhiteSpacing="@dimen/dimen_20"
+                        app:bga_snpl_itemWidth="@dimen/dimen_100"
+                        app:bga_snpl_maxItemCount="3"
+                        app:bga_snpl_placeholderDrawable="@mipmap/ic_nodata"
+                        app:bga_snpl_plusDrawable="@mipmap/ic_pic_add"
+                        app:bga_snpl_plusEnable="true"
+                        app:bga_snpl_sortable="true" />
+
+
+                    <ImageView
+                        android:id="@+id/tv_add_video"
+                        android:layout_width="@dimen/dimen_100"
+                        android:layout_height="@dimen/dimen_100"
+                        android:layout_marginLeft="@dimen/dimen_20"
+                        android:layout_marginTop="@dimen/dimen_10"
+                        android:src="@mipmap/ic_add_video" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/dimen_30">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/dimen_92"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="工作协同人员"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="16sp" />
+
+
+                </LinearLayout>
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_team_work"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_sub"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_90"
+                android:layout_margin="@dimen/dimen_40"
+                android:background="@drawable/shape_bg_sure"
+                android:gravity="center"
+                android:text="提交"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+</LinearLayout>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/tv_a"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimen_20"
+        android:text="系统类型" />
+
+    <TextView
+        android:id="@+id/tv_b"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_400"
+        android:padding="@dimen/dimen_20"
+        android:text="系统类型" />
+
+    <TextView
+        android:id="@+id/tv_c"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_a"
+        android:padding="@dimen/dimen_20"
+        android:text="系统类型" />
+
+    <TextView
+        android:id="@+id/tv_d"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_b"
+        android:layout_marginLeft="@dimen/dimen_400"
+        android:padding="@dimen/dimen_20"
+        android:text="系统类型" />
+
+</RelativeLayout>

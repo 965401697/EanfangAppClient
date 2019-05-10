@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/header_eanfang" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <com.eanfang.witget.MyGridView
+                android:id="@+id/grid_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:gravity="center_horizontal"
+                android:horizontalSpacing="@dimen/dimen_20"
+                android:listSelector="@android:color/transparent"
+                android:numColumns="5"
+                android:paddingBottom="@dimen/dimen_40"
+                android:paddingLeft="@dimen/dimen_36"
+                android:paddingRight="@dimen/dimen_36"
+                android:paddingTop="@dimen/dimen_40"
+                android:verticalSpacing="10dp" />
+
+
+            <RelativeLayout
+                android:id="@+id/group_member_size_item"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@color/white"
+                android:clickable="true">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_2"
+                    android:layout_alignParentTop="true"
+                    android:background="@color/content_bg" />
+
+                <TextView
+                    android:id="@+id/group_member_size"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="14dp"
+                    android:text="@string/all_group_member"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_14" />
+
+                <ImageView
+                    android:layout_width="@dimen/dimen_14"
+                    android:layout_height="@dimen/dimen_26"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="@dimen/dimen_34"
+                    android:src="@mipmap/arrow_right" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_group_port"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_126"
+                android:layout_marginTop="@dimen/dimen_14"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:text="@string/group_portrait"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_14" />
+
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/group_header"
+                    android:layout_width="@dimen/dimen_80"
+                    android:layout_height="@dimen/dimen_80"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/dimen_24"
+                    fresco:placeholderImage="@mipmap/ic_header"
+                    fresco:roundAsCircle="true" />
+
+                <ImageView
+                    android:layout_width="@dimen/dimen_14"
+                    android:layout_height="@dimen/dimen_26"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/dimen_34"
+                    android:src="@mipmap/arrow_right" />
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_2"
+                android:layout_alignParentTop="true"
+                android:background="@color/content_bg" />
+
+            <LinearLayout
+                android:id="@+id/ll_group_name"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_90"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@string/group_name"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_14" />
+
+                <TextView
+                    android:id="@+id/group_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="@dimen/dimen_24"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:gravity="right"
+                    android:maxLines="1"
+                    android:text=" "
+                    android:textColor="#999"
+                    android:textSize="@dimen/textSize_13" />
+
+                <ImageView
+                    android:layout_width="@dimen/dimen_14"
+                    android:layout_height="@dimen/dimen_26"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/dimen_34"
+                    android:src="@mipmap/arrow_right" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_2"
+                android:layout_alignParentTop="true"
+                android:background="@color/content_bg" />
+
+            <LinearLayout
+                android:id="@+id/ll_group_qr"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_90"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:text="@string/group_qrt"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_14" />
+
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/group_qr"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center"
+                    android:layout_marginRight="@dimen/dimen_24"
+                    fresco:placeholderImage="@mipmap/ic_group_code" />
+
+
+                <ImageView
+                    android:layout_width="@dimen/dimen_14"
+                    android:layout_height="@dimen/dimen_26"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/dimen_34"
+                    android:src="@mipmap/arrow_right" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_2"
+                android:layout_alignParentTop="true"
+                android:background="@color/content_bg" />
+
+            <LinearLayout
+                android:id="@+id/group_announcement"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_128"
+                android:background="@color/white"
+                android:clickable="true"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="16dp"
+                        android:paddingTop="@dimen/dimen_24"
+                        android:text="@string/group_announcement"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_14" />
+
+                    <TextView
+                        android:id="@+id/group_notice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginBottom="@dimen/dimen_26"
+                        android:layout_marginLeft="16dp"
+                        android:ellipsize="end"
+                        android:gravity="right"
+                        android:singleLine="true"
+                        android:text="赶快去设置群公告"
+                        android:textColor="#999"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="@dimen/dimen_14"
+                    android:layout_height="@dimen/dimen_26"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/dimen_34"
+                    android:src="@mipmap/arrow_right" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_2"
+                android:layout_alignParentTop="true"
+                android:background="@color/content_bg" />
+
+            <LinearLayout
+                android:id="@+id/group_transfer"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@color/white"
+                android:clickable="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:text="@string/group_transfer"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_14" />
+
+                <ImageView
+                    android:layout_width="@dimen/dimen_14"
+                    android:layout_height="@dimen/dimen_26"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/dimen_34"
+                    android:src="@mipmap/arrow_right" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_2"
+                android:layout_alignParentTop="true"
+                android:background="@color/content_bg" />
+
+            <LinearLayout
+                android:id="@+id/group_shutup_mber"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@color/white"
+                android:clickable="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:text="成员禁言"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_14" />
+
+                <ImageView
+                    android:layout_width="@dimen/dimen_14"
+                    android:layout_height="@dimen/dimen_26"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/dimen_34"
+                    android:src="@mipmap/arrow_right" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_2"
+                android:layout_alignParentTop="true"
+                android:background="@color/content_bg" />
+
+            <LinearLayout
+                android:id="@+id/ll_shut_up"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:text="@string/group_shutup"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_14" />
+
+                <com.eanfang.witget.SwitchButton
+                    android:id="@+id/sb_group_shutup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/dimen_34"
+                    app:sb_background="@color/background"
+                    app:sb_button_color="@color/color_white"
+                    app:sb_checked_color="#32cd32"
+                    app:sb_checkline_color="@color/white"
+                    app:sb_uncheckcircle_color="#32cd32" />
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_2"
+                android:layout_alignParentTop="true"
+                android:background="@color/content_bg" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_gravity="center_vertical"
+                android:background="#ffffff"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:text="@string/set_top"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_14" />
+
+                <com.eanfang.witget.SwitchButton
+                    android:id="@+id/sb_group_top"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/dimen_34"
+                    app:sb_background="@color/background"
+                    app:sb_button_color="@color/color_white"
+                    app:sb_checked_color="#32cd32"
+                    app:sb_checkline_color="@color/white"
+                    app:sb_uncheckcircle_color="#32cd32" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_2"
+                android:layout_alignParentTop="true"
+                android:background="@color/content_bg" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="#ffffff"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:text="@string/message_notice"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_14" />
+
+
+                <com.eanfang.witget.SwitchButton
+                    android:id="@+id/sb_group_notfaction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/dimen_34"
+                    app:sb_background="@color/background"
+                    app:sb_button_color="@color/color_white"
+                    app:sb_checked_color="#32cd32"
+                    app:sb_checkline_color="@color/white"
+                    app:sb_uncheckcircle_color="#32cd32" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_2"
+                android:layout_alignParentTop="true"
+                android:background="@color/content_bg" />
+
+            <LinearLayout
+                android:id="@+id/group_clean"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@color/white"
+                android:clickable="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="343dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:text="@string/clean_message"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_14" />
+
+
+                <ImageView
+                    android:layout_width="@dimen/dimen_14"
+                    android:layout_height="@dimen/dimen_26"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="@dimen/dimen_34"
+                    android:src="@mipmap/arrow_right" />
+
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/group_quit"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_90"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:background="#ffff5d3d"
+                android:text="@string/quit_group"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textSize_14" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

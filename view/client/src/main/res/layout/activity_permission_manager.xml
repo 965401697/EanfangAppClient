@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/header_eanfang" />
+
+
+    <RelativeLayout
+        android:id="@+id/rl_checked_staff"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/header"
+        android:background="@color/white"
+        android:visibility="gone">
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/iv_user_header"
+            android:layout_width="@dimen/dimen_80"
+            android:layout_height="@dimen/dimen_80"
+            android:layout_marginBottom="@dimen/dimen_24"
+            android:layout_marginLeft="@dimen/dimen_36"
+            android:layout_marginTop="@dimen/dimen_24"
+            fresco:placeholderImage="@mipmap/ic_header"
+            fresco:roundAsCircle="true" />
+
+        <TextView
+            android:id="@+id/tv_name_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_38"
+            android:layout_marginTop="@dimen/dimen_30"
+            android:layout_toRightOf="@+id/iv_user_header"
+            android:text=" "
+            android:textColor="@color/color_client_neworder"
+            android:textSize="@dimen/textSize_15" />
+
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_name_phone"
+            android:layout_marginBottom="@dimen/dimen_30"
+            android:layout_marginLeft="@dimen/dimen_38"
+            android:layout_toRightOf="@+id/iv_user_header"
+            android:text="  "
+            android:textColor="#999999"
+            android:textSize="@dimen/textSize_12" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_select_staff"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_90"
+        android:layout_below="@+id/rl_checked_staff"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dimen_36"
+            android:layout_weight="1"
+            android:text="选择人员"
+            android:textColor="@color/color_client_neworder"
+            android:textSize="@dimen/textSize_14" />
+
+
+        <ImageView
+            android:layout_width="@dimen/dimen_14"
+            android:layout_height="@dimen/dimen_26"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/dimen_34"
+            android:src="@mipmap/arrow_right" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_role"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_90"
+        android:layout_below="@+id/ll_select_staff"
+        android:layout_marginTop="@dimen/dimen_14"
+        android:background="@color/white"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dimen_36"
+            android:text="分配角色"
+            android:textColor="@color/color_client_neworder"
+            android:textSize="@dimen/textSize_14" />
+
+
+        <TextView
+            android:id="@+id/tv_role"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dimen_36"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:paddingRight="@dimen/dimen_20"
+            android:text="  "
+            android:textColor="#999999"
+            android:textSize="@dimen/textSize_14" />
+
+        <ImageView
+            android:layout_width="@dimen/dimen_14"
+            android:layout_height="@dimen/dimen_26"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/dimen_34"
+            android:visibility="gone"
+            android:src="@mipmap/arrow_right" />
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:visibility="gone"
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ll_role" />
+</RelativeLayout>

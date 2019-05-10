@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="net.eanfang.client.ui.activity.worksapce.contacts.AddStaffActivity">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/header_eanfang" />
+
+    <LinearLayout
+        android:id="@+id/ll"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_70"
+        android:layout_below="@+id/header"
+        android:layout_marginLeft="@dimen/dimen_36"
+        android:layout_marginRight="@dimen/dimen_36"
+        android:layout_marginTop="@dimen/dimen_26"
+        android:background="#f5f5f5"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="@dimen/dimen_24"
+            android:layout_height="@dimen/dimen_24"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dimen_20"
+            android:src="@mipmap/ic_contact_search" />
+
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="4dp"
+            android:background="@null"
+            android:hint="请输入名字或者手机号"
+            android:textColor="@color/color_bottom"
+            android:textSize="@dimen/textSize_12" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:orientation="vertical"
+        android:visibility="invisible">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_46"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/dimen_34"
+            android:text="搜索结果"
+            android:textColor="@color/color_client_neworder"
+            android:textSize="@dimen/textSize_14" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+</RelativeLayout>

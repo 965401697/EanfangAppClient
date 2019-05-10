@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="net.eanfang.worker.ui.activity.worksapce.tender.FilterTenderActivity">
+
+    <include layout="@layout/header" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dimen_20">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dimen_90"
+                    android:layout_marginLeft="@dimen/dimen_30"
+                    android:gravity="center_vertical"
+                    android:text="按系统类别筛选"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_15" />
+
+                <com.zhy.view.flowlayout.TagFlowLayout
+                    android:id="@+id/tag_system_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_white"
+                    android:padding="@dimen/dimen_30"
+                    android:scrollbars="none"
+                    app:max_select="1" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dimen_40">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dimen_90"
+                    android:layout_marginLeft="@dimen/dimen_30"
+                    android:gravity="center_vertical"
+                    android:text="按项目地区筛选"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_15" />
+
+                <EditText
+                    android:id="@+id/et_adress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_30"
+                    android:layout_marginRight="@dimen/dimen_30"
+                    android:layout_marginTop="@dimen/dimen_30"
+                    android:background="@drawable/bg_camera_input_back"
+                    android:hint="请输入"
+                    android:padding="@dimen/dimen_15"
+                    android:textColor="@color/color_client_neworder"
+                    android:textColorHint="@color/color_bottom"
+                    android:textSize="@dimen/textSize_14" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_start"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_90"
+                android:layout_marginTop="@dimen/dimen_40"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="@dimen/dimen_20">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="开始时间"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_14" />
+
+                <TextView
+                    android:id="@+id/tv_start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:drawablePadding="@dimen/dimen_14"
+                    android:drawableRight="@mipmap/arrow_right"
+                    android:gravity="right"
+                    android:text=""
+                    android:textColor="@color/color_bottom"
+                    android:textSize="@dimen/textSize_13" />
+            </LinearLayout>
+
+            <View style="@style/style_common_line_gray" />
+
+            <LinearLayout
+                android:id="@+id/ll_end"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_90"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="@dimen/dimen_20">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="结束时间"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_14" />
+
+                <TextView
+                    android:id="@+id/tv_end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:drawablePadding="@dimen/dimen_14"
+                    android:drawableRight="@mipmap/arrow_right"
+                    android:gravity="right"
+                    android:text=""
+                    android:textColor="@color/color_bottom"
+                    android:textSize="@dimen/textSize_13" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dimen_50"
+                android:layout_marginTop="@dimen/dimen_50"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_cancle"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dimen_70"
+                    android:layout_marginLeft="@dimen/dimen_40"
+                    android:layout_marginRight="@dimen/dimen_40"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_bg_cancel"
+                    android:gravity="center"
+                    android:text="取消"
+                    android:textColor="@color/color_client_neworder" />
+
+                <TextView
+                    android:id="@+id/tv_sure"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/dimen_70"
+                    android:layout_marginRight="@dimen/dimen_40"
+                    android:layout_weight="1"
+                    android:background="@drawable/shape_bg_sure"
+                    android:gravity="center"
+                    android:text="确定"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>
+

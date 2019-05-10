@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_contact_line_gray"
+    android:orientation="vertical">
+
+    <include layout="@layout/header" />
+
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="@dimen/dimen_20">
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/gs_log_sdv"
+                    android:layout_width="@dimen/dimen_100"
+                    android:layout_height="@dimen/dimen_100"
+                    android:layout_marginRight="@dimen/dimen_20"
+                    app:placeholderImage="@mipmap/ic_launcher"
+                    app:roundAsCircle="true" />
+
+                <ImageView
+                    android:id="@+id/gs_xq_iv"
+                    android:layout_width="@dimen/dimen_160"
+                    android:layout_height="@dimen/dimen_160"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:src="@mipmap/qz_iv" />
+
+
+                <TextView
+                    android:id="@+id/gs_name_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:layout_toRightOf="@id/gs_log_sdv"
+                    android:text="北京市"
+                    android:textColor="#ff333333"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/rz_tv_b"
+                    android:layout_width="wrap_content"
+                    android:background="@drawable/bg_gradual_change_yz"
+                    android:layout_height="wrap_content"
+                    android:text="易安防专家认证"
+                   android:paddingLeft="@dimen/dimen_20"
+                    android:paddingRight="@dimen/dimen_20"
+                    android:paddingTop="@dimen/dimen_12"
+                    android:paddingBottom="@dimen/dimen_12"
+                    android:textSize="10sp"
+                    android:textColor="@color/white"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:layout_marginTop="@dimen/dimen_4"
+                    android:layout_toRightOf="@id/gs_name_tv" />
+
+                <com.customview.SuperTextView
+                    android:id="@+id/rz_tv"
+                    android:visibility="gone"
+                    android:layout_width="@dimen/dimen_280"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:layout_toRightOf="@id/gs_name_tv"
+                    android:textSize="16sp"
+                    app:sCenterTextColor="@color/white"
+                    app:sCenterTextString="易安防专家认证"
+                    app:sShapeCornersBottomRightRadius="10dp"
+                    app:sShapeCornersTopLeftRadius="10dp"
+                    app:sShapeSelectorNormalColor="#006AFE"
+                    app:sShapeSelectorPressedColor="#72A9F5"
+                    app:sShapeStrokeColor="#006AFE"
+                    app:sShapeStrokeWidth="0.2dp"
+                    app:sUseShape="true" />
+
+                <TextView
+                    android:id="@+id/xyz_s_tv"
+                    android:layout_width="@dimen/dimen_160"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="@dimen/dimen_40"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    android:text="99"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/xyz_tv"
+                    android:layout_width="@dimen/dimen_160"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/xyz_s_tv"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    android:text="好评率"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/bfz_tv"
+                    android:layout_width="@dimen/dimen_160"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/gs_xq_iv"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    android:text="100%" />
+
+
+                <com.customview.SuperTextView
+                    android:id="@+id/bq_stv"
+                    android:layout_width="60dp"
+                    android:layout_height="26dp"
+                    android:layout_below="@id/gs_name_tv"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:layout_toRightOf="@id/gs_log_sdv"
+                    android:padding="@dimen/dimen_6"
+                    android:textColor="#F74545"
+                    app:sCenterTextSize="14sp"
+                    app:sCenterTextString="培训"
+                    app:sShapeCornersBottomLeftRadius="15dp"
+                    app:sShapeCornersBottomRightRadius="15dp"
+                    app:sShapeCornersTopLeftRadius="15dp"
+                    app:sShapeCornersTopRightRadius="15dp"
+                    app:sShapeSelectorPressedColor="#006AFE"
+                    app:sShapeStrokeColor="#006AFE"
+                    app:sShapeStrokeWidth="0.4dp"
+                    app:sUseShape="true" />
+            </RelativeLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_10" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="@dimen/dimen_20"
+                android:text="基本介绍"
+                android:textColor="@color/color_main_worker"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/sc_pp_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingLeft="@dimen/dimen_20"
+                android:paddingRight="@dimen/dimen_20"
+                android:paddingBottom="@dimen/dimen_20"
+                android:text="擅长品牌："
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/sc_sb_lx_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:paddingLeft="@dimen/dimen_20"
+                android:paddingRight="@dimen/dimen_20"
+                android:paddingBottom="@dimen/dimen_20"
+                android:text="认证模块："
+                android:textSize="14sp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_10" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="@dimen/dimen_20"
+                android:text="咨询印象"
+                android:textColor="@color/color_main_worker"
+                android:textSize="16sp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_2" />
+
+            <com.customview.SuperTextView
+                android:id="@+id/yx_a_stv"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:background="@color/white"
+                android:gravity="right"
+                android:padding="@dimen/dimen_10"
+                app:sCenterBottomLines="1"
+                app:sLeftTextSize="13sp"
+                app:sLeftTextColor="#666666"
+                app:sCenterTextGravity="right"
+                app:sLeftTextString="清楚解释故障原因及处理"
+                app:sRightTextColor="@color/colorX"
+                app:sRightTextString="★★★★★" />
+
+            <com.customview.SuperTextView
+                android:id="@+id/yx_b_stv"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:background="@color/white"
+                android:gravity="right"
+                android:padding="@dimen/dimen_10"
+                app:sLeftTextSize="13sp"
+                app:sLeftTextColor="#666666"
+                app:sCenterBottomLines="1"
+                app:sCenterTextGravity="right"
+                app:sLeftTextString="服务态度"
+                app:sRightTextColor="@color/colorX"
+                app:sRightTextString="★★★★★" />
+
+            <com.customview.SuperTextView
+                android:id="@+id/yx_c_stv"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:background="@color/white"
+                android:gravity="right"
+                android:padding="@dimen/dimen_10"
+                app:sCenterBottomLines="1"
+                app:sLeftTextSize="13sp"
+                app:sLeftTextColor="#666666"
+                app:sCenterTextGravity="right"
+                app:sLeftTextString="作业规范"
+                app:sRightTextColor="@color/colorX"
+                app:sRightTextString="★★★★★" />
+
+            <com.customview.SuperTextView
+                android:id="@+id/yx_d_stv"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:background="@color/white"
+                android:gravity="right"
+                android:padding="@dimen/dimen_10"
+                app:sLeftTextSize="13sp"
+                app:sLeftTextColor="#666666"
+                app:sCenterBottomLines="1"
+                app:sCenterTextGravity="right"
+                app:sLeftTextString="技术水平"
+                app:sRightTextColor="@color/colorX"
+                app:sRightTextString="★★★★★" />
+
+            <com.customview.SuperTextView
+                android:id="@+id/yx_e_stv"
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:background="@color/white"
+                android:gravity="right"
+                android:padding="@dimen/dimen_10"
+                app:sCenterBottomLines="1"
+                app:sLeftTextSize="13sp"
+                app:sLeftTextColor="#666666"
+                app:sCenterTextGravity="right"
+                app:sLeftTextString="响应时间"
+                app:sRightTextColor="@color/colorX"
+                app:sRightTextString="★★★★★" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_10" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dimen_20"
+                    android:text="用户评价"
+                    android:textColor="@color/color_main_worker"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/rs_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/dimen_20"
+                    android:text="(666人)"
+                    android:textColor="@color/gray"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_2" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/pj_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:nestedScrollingEnabled="false">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/dimen_20">
+
+        <TextView
+            android:id="@+id/gz_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:background="#F7BB40"
+            android:gravity="center"
+            android:padding="@dimen/dimen_20"
+            android:text="+ 关注"
+            android:textColor="@color/white" />
+
+        <Space
+            android:layout_width="@dimen/dimen_20"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tw_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:background="#006AFE"
+            android:gravity="center"
+            android:padding="@dimen/dimen_20"
+            android:text="去提问"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_contact_line_gray"
+    android:orientation="vertical">
+
+    <include layout="@layout/header" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_20"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_20"
+                        android:background="@color/white"
+                        android:orientation="horizontal"
+                        android:paddingBottom="@dimen/dimen_20"
+                        android:paddingLeft="@dimen/dimen_36"
+                        android:paddingRight="@dimen/dimen_34"
+                        android:paddingTop="@dimen/dimen_20">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="从业年限"
+                            android:textColor="@color/color_client_neworder"
+                            android:textSize="@dimen/textSize_14" />
+
+                        <TextView
+                            android:id="@+id/tv_limit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="20dp"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:gravity="right"
+                            android:textColor="@color/color_bottom"
+                            android:textSize="@dimen/textSize_13" />
+                    </LinearLayout>
+
+                    <View style="@style/style_common_line_gray" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:orientation="horizontal"
+                        android:paddingBottom="@dimen/dimen_20"
+                        android:paddingLeft="@dimen/dimen_36"
+                        android:paddingRight="@dimen/dimen_34"
+                        android:paddingTop="@dimen/dimen_20">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="能力等级"
+                            android:textColor="@color/color_client_neworder"
+                            android:textSize="@dimen/textSize_14" />
+
+                        <TextView
+                            android:id="@+id/tv_ability"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="20dp"
+                            android:layout_weight="1"
+                            android:background="@null"
+                            android:gravity="right"
+                            android:text=""
+                            android:textColor="@color/color_bottom"
+                            android:textSize="@dimen/textSize_13" />
+                    </LinearLayout>
+
+                    <View style="@style/style_common_line_gray" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/white"
+                        android:orientation="horizontal"
+                        android:paddingBottom="@dimen/dimen_20"
+                        android:paddingLeft="@dimen/dimen_36"
+                        android:paddingRight="@dimen/dimen_34"
+                        android:paddingTop="@dimen/dimen_20">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="公司类型"
+                            android:textColor="@color/color_client_neworder"
+                            android:textSize="@dimen/textSize_14" />
+
+                        <RadioGroup
+                            android:id="@+id/rg_company_type"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/rb_company"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/dimen_26"
+                                android:background="@drawable/select_camera_back"
+                                android:button="@null"
+                                android:checked="true"
+                                android:gravity="center"
+                                android:padding="@dimen/dimen_10"
+                                android:text="安防工程公司"
+                                android:textColor="@drawable/select_camera_text_back"
+                                android:textSize="12sp" />
+
+                            <RadioButton
+                                android:id="@+id/rv_vendor"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/select_camera_back"
+                                android:button="@null"
+                                android:gravity="center"
+                                android:padding="@dimen/dimen_10"
+                                android:text="设备生产厂商"
+                                android:textColor="@drawable/select_camera_text_back"
+                                android:textSize="12sp" />
+                        </RadioGroup>
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_20"
+                    android:background="@color/color_white"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/color_white"
+                        android:padding="@dimen/dimen_30"
+                        android:text="选择系统类别"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_14" />
+
+                    <View style="@style/style_common_line_gray" />
+
+
+                    <com.zhy.view.flowlayout.TagFlowLayout
+                        android:id="@+id/tag_system_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/color_white"
+                        android:padding="@dimen/dimen_30"
+                        android:scrollbars="none"
+                        app:max_select="-1" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_20"
+                    android:background="@color/color_white"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/color_white"
+                        android:padding="@dimen/dimen_30"
+                        android:text="选择业务类别"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_14" />
+
+                    <View style="@style/style_common_line_gray" />
+
+
+                    <com.zhy.view.flowlayout.TagFlowLayout
+                        android:id="@+id/tag_business_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/color_white"
+                        android:padding="@dimen/dimen_30"
+                        android:scrollbars="none"
+                        app:max_select="-1" />
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:background="@color/color_white"
+                android:drawableRight="@mipmap/ic_icon_right"
+                android:padding="@dimen/dimen_20"
+                android:text="服务区域"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_14" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:background="@color/color_white"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_20"
+                    android:background="@color/color_white"
+                    android:padding="@dimen/dimen_20"
+                    android:text="资质证书"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_14" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+</LinearLayout>

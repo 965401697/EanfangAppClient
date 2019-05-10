@@ -1,0 +1,62 @@
+apply plugin: 'com.android.library'
+
+android {
+
+    compileSdkVersion cfg.compileSdkVersion
+    buildToolsVersion cfg.buildToolsVersion
+    defaultConfig {
+        minSdkVersion cfg.minSdkVersion
+        targetSdkVersion cfg.targetSdkVersion
+        versionCode cfg.versionCode
+        versionName cfg.versionName
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility cfg.javaVersion
+        targetCompatibility cfg.javaVersion
+    }
+}
+
+dependencies {
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    implementation pkg.legacySupportV4
+
+    implementation pkg.rxjava2
+    implementation pkg.rxandroid2
+
+    implementation pkg.disklrucache
+    implementation pkg.hutoolCore
+    implementation pkg.fastjson
+
+    api pkg.pictureselector
+    api pkg.badgeview
+    api pkg.prolificinteractive
+    api pkg.flycoRoundView
+    api pkg.flycoTabLayout
+    api pkg.materialratingbar
+    api pkg.mPAndroidChart
+    api pkg.timelineview
+    implementation pkg.update
+    api pkg.flowlayout
+    api pkg.aliyunOss
+    api pkg.eventbus
+    implementation pkg.lombok
+    annotationProcessor pkg.lombok
+    implementation pkg.luban
+    api pkg.stream
+    implementation project(':base:network')
+    api pkg.bugly
+    api pkg.wechat
+    api pkg.xinge
+    api pkg.xghw
+    api pkg.mipush
+    api pkg.xgmz
+
+}
