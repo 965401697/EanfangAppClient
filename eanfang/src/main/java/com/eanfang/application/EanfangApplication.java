@@ -22,6 +22,7 @@ import com.okgo.model.HttpHeaders;
 import com.photopicker.com.imageloader.BGAGlideImageLoader;
 import com.photopicker.com.imageloader.BGAImage;
 import com.tencent.smtt.sdk.QbSdk;
+import com.yaf.sys.entity.BaseDataEntity;
 
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -43,6 +44,10 @@ public class EanfangApplication extends CustomeApplication {
      * 是否自动更新过
      */
     public static boolean isUpdated = false;
+    /**
+     * 存储地域
+     */
+    public BaseDataEntity sSaveArea;
     /**
      * app类型
      */
