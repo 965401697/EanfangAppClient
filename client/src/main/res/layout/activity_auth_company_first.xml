@@ -117,7 +117,7 @@
                         android:layout_height="wrap_content"
                         android:text="单位名称:"
                         android:textColor="@color/color_client_neworder"
-                        android:textSize="@dimen/textSize_13" />
+                        android:textSize="@dimen/textSize_14" />
 
                     <EditText
                         android:id="@+id/et_company"
@@ -128,7 +128,7 @@
                         android:background="@null"
                         android:hint="单位名称"
                         android:textColor="@color/color_bottom"
-                        android:textSize="@dimen/textSize_13" />
+                        android:textSize="@dimen/textSize_14" />
                 </LinearLayout>
 
                 <View style="@style/style_common_line_gray" />
@@ -144,7 +144,7 @@
                         android:layout_height="wrap_content"
                         android:text="单位电话:"
                         android:textColor="@color/color_client_neworder"
-                        android:textSize="@dimen/textSize_13" />
+                        android:textSize="@dimen/textSize_14" />
 
                     <EditText
                         android:id="@+id/et_phone"
@@ -157,7 +157,7 @@
                         android:inputType="phone|number"
                         android:maxLength="11"
                         android:textColor="@color/color_bottom"
-                        android:textSize="@dimen/textSize_13" />
+                        android:textSize="@dimen/textSize_14" />
                 </LinearLayout>
 
                 <View style="@style/style_common_line_gray" />
@@ -173,7 +173,7 @@
                         android:layout_height="wrap_content"
                         android:text="法人代表:"
                         android:textColor="@color/color_client_neworder"
-                        android:textSize="@dimen/textSize_13" />
+                        android:textSize="@dimen/textSize_14" />
 
                     <EditText
                         android:id="@+id/et_legal_persion"
@@ -184,7 +184,7 @@
                         android:background="@null"
                         android:hint="法人代表"
                         android:textColor="@color/color_bottom"
-                        android:textSize="@dimen/textSize_13" />
+                        android:textSize="@dimen/textSize_14" />
                 </LinearLayout>
 
                 <View style="@style/style_common_line_gray" />
@@ -192,7 +192,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:background="#fff"
                     android:orientation="vertical">
 
@@ -202,7 +201,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:padding="@dimen/dimen_30">
+                        android:gravity="center_vertical"
+                       android:padding="@dimen/dimen_30">
 
                         <TextView
                             android:layout_width="350dp"
@@ -210,7 +210,7 @@
                             android:layout_weight="1"
                             android:text="办公地址"
                             android:textColor="@color/color_client_neworder"
-                            android:textSize="@dimen/textSize_13" />
+                            android:textSize="@dimen/textSize_14" />
 
                         <TextView
                             android:id="@+id/tv_office_address"
@@ -218,7 +218,8 @@
                             android:layout_height="wrap_content"
                             android:text=""
                             android:textColor="@color/color_bottom"
-                            android:textSize="@dimen/textSize_13" />
+                            android:layout_marginRight="@dimen/dimen_20"
+                            android:textSize="@dimen/textSize_14" />
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -240,7 +241,7 @@
                             android:layout_height="wrap_content"
                             android:text="详细地址:"
                             android:textColor="@color/color_client_neworder"
-                            android:textSize="@dimen/textSize_13" />
+                            android:textSize="@dimen/textSize_14" />
 
 
                         <EditText
@@ -253,7 +254,7 @@
                             android:gravity="right"
                             android:hint="请填写详细地址"
                             android:textColor="@color/color_bottom"
-                            android:textSize="@dimen/textSize_13" />
+                            android:textSize="@dimen/textSize_14" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -281,7 +282,9 @@
                     android:id="@+id/iv_uploadlogo"
                     android:layout_width="@dimen/dimen_200"
                     android:layout_height="@dimen/dimen_200"
-                    android:layout_margin="@dimen/dimen_40"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:layout_marginTop="@dimen/dimen_40"
+                    android:layout_marginBottom="@dimen/dimen_40"
                     fresco:placeholderImage="@mipmap/bga_pp_ic_plus" />
 
             </LinearLayout>
@@ -312,7 +315,7 @@
                     android:gravity="top"
                     android:hint="请输入..."
                     android:padding="15dp"
-                    android:textSize="@dimen/textSize_13" />
+                    android:textSize="@dimen/textSize_14" />
             </LinearLayout>
 
             <Button
@@ -320,11 +323,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
-                android:background="@drawable/bg_ll_btn"
+                android:background="@drawable/bg_gradual_change_ellipse_cl"
                 android:padding="10dp"
                 android:text="提交"
                 android:textColor="@color/color_white"
-                android:textSize="@dimen/textSize_13" />
+                android:textSize="@dimen/textSize_14" />
         </LinearLayout>
 
 

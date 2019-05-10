@@ -61,7 +61,7 @@
                         android:layout_width="@dimen/dimen_100"
                         android:layout_height="@dimen/dimen_100"
                         android:layout_marginRight="@dimen/dimen_20"
-                        app:placeholderImage="@mipmap/worker_logo"
+                        app:placeholderImage="@drawable/client_logo"
                         app:roundAsCircle="true" />
 
                     <TextView
@@ -71,7 +71,7 @@
                         android:layout_marginTop="@dimen/dimen_10"
                         android:layout_toRightOf="@id/gs_log_sdv"
                         android:text="公司"
-                        android:textColor="#ff333333"
+                        android:textColor="#333333"
                         android:textSize="16sp" />
 
                     <ImageView
@@ -115,7 +115,6 @@
                         android:layout_below="@id/gs_log_sdv"
                         android:layout_marginTop="@dimen/dimen_20"
                         android:ellipsize="end"
-                        android:lines="2"
                         android:text="公司简介"
                         android:textSize="12sp" />
 
@@ -143,7 +142,7 @@
                         android:padding="@dimen/dimen_14"
                         android:text="去认证→"
                         android:textColor="@color/white"
-                        android:textSize="14sp"
+                        android:textSize="12sp"
                         android:textStyle="bold" />
                 </RelativeLayout>
 
@@ -183,7 +182,9 @@
                         android:layout_marginRight="@dimen/dimen_40"
                         android:src="@mipmap/ic_icon_right" />
                 </RelativeLayout>
-
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_2" />
                 <RelativeLayout
                     android:id="@+id/rl_creat_section"
                     android:layout_width="match_parent"
@@ -211,7 +212,9 @@
                         android:layout_marginRight="@dimen/dimen_40"
                         android:src="@mipmap/ic_icon_right" />
                 </RelativeLayout>
-
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_2" />
                 <RelativeLayout
                     android:id="@+id/rl_add_staff"
                     android:layout_width="match_parent"
@@ -239,7 +242,9 @@
                         android:layout_marginRight="@dimen/dimen_40"
                         android:src="@mipmap/ic_icon_right" />
                 </RelativeLayout>
-
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_2" />
                 <RelativeLayout
                     android:id="@+id/rl_permission"
                     android:layout_width="match_parent"
@@ -380,7 +385,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:scaleType="centerCrop"
+        android:scaleType="fitXY"
         android:background="#FDB789"
         android:src="@mipmap/gg_cl_iv" />
 </LinearLayout>

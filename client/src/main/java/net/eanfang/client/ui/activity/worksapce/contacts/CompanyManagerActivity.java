@@ -229,7 +229,7 @@ public class CompanyManagerActivity extends BaseActivity implements DissloveTeam
         if (flag) {
             gsXqTv.setEllipsize(TextUtils.TruncateAt.END);
             gsXqTv.setLines(3);
-            showMoreTv.setText("更多");
+            showMoreTv.setText("[更多]");
         } else {
             gsXqTv.setMovementMethod(ScrollingMovementMethod.getInstance());
             gsXqTv.setEllipsize(null);
