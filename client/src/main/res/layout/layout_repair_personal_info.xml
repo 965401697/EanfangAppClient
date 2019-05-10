@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_white"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_repair_personal_info_top" />
+
+    <View style="@style/style_common_line_gray" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_80">
+
+        <CheckBox
+            android:id="@+id/cb_default"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/dimen_30"
+            android:button="@null"
+            android:checked="false"
+            android:drawableLeft="@drawable/selector_repair_info"
+            android:drawablePadding="@dimen/dimen_16"
+            android:text="设为默认"
+            android:textColor="@color/color_client_neworder"
+            android:textSize="@dimen/textSize_13" />
+
+        <TextView
+            android:id="@+id/tv_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@id/tv_edit"
+            android:drawableLeft="@mipmap/ic_repair_info_delete"
+            android:drawablePadding="@dimen/dimen_16"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/dimen_18"
+            android:paddingRight="@dimen/dimen_26"
+            android:text="删除"
+            android:textColor="#FF4848"
+            android:textSize="@dimen/textSize_13" />
+
+        <TextView
+            android:id="@+id/tv_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:drawableLeft="@mipmap/ic_repair_info_edit"
+            android:drawablePadding="@dimen/dimen_16"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/dimen_26"
+            android:paddingRight="@dimen/dimen_18"
+            android:text="编辑"
+            android:textColor="@color/color_client_neworder"
+            android:textSize="@dimen/textSize_13" />
+    </RelativeLayout>
+
+</LinearLayout>

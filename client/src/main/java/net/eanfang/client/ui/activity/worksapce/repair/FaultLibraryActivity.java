@@ -51,7 +51,9 @@ public class FaultLibraryActivity extends BaseActivity implements SwipyRefreshLa
     EditText etSearch;
     @BindView(R.id.tv_go)
     TextView tvGo;
-    //搜索状态不让用户上拉
+    /**
+     * 搜索状态不让用户上拉
+     */
     private boolean mFlag = false;
 
     private FaultLibraryAdapter faultLibraryAdapter;
