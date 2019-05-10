@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<CheckBox xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/cb_check"
+
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/dimen_140"
     android:layout_height="@dimen/dimen_60"
     android:layout_margin="@dimen/dimen_15"
     android:background="@drawable/select_camera_back_b"
-    android:button="@null"
-    android:checked="false"
+    android:text=""
     android:gravity="center"
-    android:text=" "
     android:textSize="12sp"
-    android:textColor="@drawable/select_trouble_repair_result_b">
-
-</CheckBox>
+    android:textColor="@drawable/select_trouble_repair_result_b" />

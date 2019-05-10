@@ -201,23 +201,23 @@
                         android:layout_width="@dimen/dimen_120"
                         android:layout_height="@dimen/dimen_60"
                         android:layout_marginRight="@dimen/dimen_30"
-                        android:background="@drawable/select_camera_back"
+                        android:background="@drawable/bg_button_blue_selector"
                         android:button="@null"
                         android:checked="true"
                         android:gravity="center"
                         android:text="男"
 
-                        android:textColor="@drawable/select_trouble_repair_result" />
+                        android:textColor="@drawable/selector_text_color_person_info_sex" />
 
                     <RadioButton
                         android:id="@+id/rb_woman"
                         android:layout_width="@dimen/dimen_120"
                         android:layout_height="@dimen/dimen_60"
-                        android:background="@drawable/select_camera_back"
+                        android:background="@drawable/bg_button_blue_selector"
                         android:button="@null"
                         android:gravity="center"
                         android:text="女"
-                        android:textColor="@drawable/select_trouble_repair_result" />
+                        android:textColor="@drawable/selector_text_color_person_info_sex" />
 
                 </RadioGroup>
 

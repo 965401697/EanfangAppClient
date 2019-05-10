@@ -22,7 +22,6 @@ import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PickerSelectUtil;
-import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
 import com.yaf.base.entity.ShopCompanyEntity;
 import com.yaf.sys.entity.BaseDataEntity;
@@ -242,7 +241,7 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
         tagSystemType.setAdapter(new TagAdapter<BaseDataEntity>(systemTypeList) {
             @Override
             public View getView(FlowLayout parent, int position, BaseDataEntity mrepairResult) {
-                TextView tv = (TextView) LayoutInflater.from(AuthQualifyFirstActivity.this).inflate(R.layout.layout_trouble_result_item, tagSystemType, false);
+                TextView tv = (TextView) LayoutInflater.from(AuthQualifyFirstActivity.this).inflate(R.layout.layout_trouble_result_item_b, tagSystemType, false);
                 tv.setText(mrepairResult.getDataName());
                 return tv;
             }
@@ -276,7 +275,7 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
         tagBusinessType.setAdapter(new TagAdapter<BaseDataEntity>(businessTypeList) {
             @Override
             public View getView(FlowLayout parent, int position, BaseDataEntity mrepairResult) {
-                TextView tv = (TextView) LayoutInflater.from(AuthQualifyFirstActivity.this).inflate(R.layout.layout_trouble_result_item, tagBusinessType, false);
+                TextView tv = (TextView) LayoutInflater.from(AuthQualifyFirstActivity.this).inflate(R.layout.layout_trouble_result_item_b, tagBusinessType, false);
                 tv.setText(mrepairResult.getDataName());
                 return tv;
             }

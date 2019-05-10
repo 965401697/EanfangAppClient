@@ -10,22 +10,18 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.config.Config;
-import com.eanfang.config.Constant;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.GrantChange;
 import com.eanfang.model.SystypeBean;
 import com.eanfang.ui.base.BaseActivity;
-import com.eanfang.util.SharePreferenceUtil;
-import com.eanfang.util.StringUtils;
 import com.yaf.sys.entity.BaseDataEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.GroupAdapter;
 import net.eanfang.worker.ui.activity.authentication.SubmitSuccessfullyQyActivity;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -87,12 +83,11 @@ public class AuthQualifySecondActivity extends BaseActivity {
 
     private void initData() {
         //获取国家区域
-        String areaString = SharePreferenceUtil.get().getString(Constant.COUNTRY_AREA_LIST, "");
-        if (StringUtils.isEmpty(areaString)){
+        if (EanfangApplication.get().sSaveArea == null) {
             showToast("加载服务区域失败！");
             return;
         }
-        BaseDataEntity entity = JSONObject.toJavaObject(JSONObject.parseObject(areaString), BaseDataEntity.class);
+        BaseDataEntity entity = EanfangApplication.get().sSaveArea;
         areaListBean = entity.getChildren();
         EanfangHttp.get(UserApi.GET_COMPANY_ORG_SYS_INFO + orgid + "/AREA")
                 .execute(new EanfangCallback<SystypeBean>(this, true, SystypeBean.class, (bean) -> {
