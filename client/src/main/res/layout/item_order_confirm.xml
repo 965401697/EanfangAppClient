@@ -12,7 +12,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingBottom="@dimen/dimen_10"
-        android:paddingLeft="@dimen/dimen_30"
         android:paddingRight="@dimen/dimen_20"
         android:paddingTop="@dimen/dimen_10">
 
@@ -21,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text=""
+            android:text="1111"
             android:textColor="@color/color_repair_fault_num"
             android:textSize="@dimen/textSize_13" />
 
@@ -39,7 +38,6 @@
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingBottom="@dimen/dimen_10"
-            android:paddingLeft="@dimen/dimen_30"
             android:paddingRight="@dimen/dimen_20"
             android:paddingTop="@dimen/dimen_10">
 
@@ -184,9 +182,9 @@
             android:orientation="horizontal"
             android:paddingBottom="@dimen/dimen_10"
             android:paddingLeft="@dimen/dimen_30"
-            android:visibility="gone"
             android:paddingRight="@dimen/dimen_20"
-            android:paddingTop="@dimen/dimen_10">
+            android:paddingTop="@dimen/dimen_10"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"

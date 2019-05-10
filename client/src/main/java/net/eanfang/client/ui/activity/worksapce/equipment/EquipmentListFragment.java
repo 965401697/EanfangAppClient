@@ -31,6 +31,7 @@ public class EquipmentListFragment extends TemplateItemListFragment {
      * 是否报修
      */
     private Boolean isRepair = false;
+    private QueryEntry mQueryEntry;
 
     public static EquipmentListFragment getInstance(String type, Boolean mIsRepair) {
         EquipmentListFragment f = new EquipmentListFragment();
@@ -96,12 +97,14 @@ public class EquipmentListFragment extends TemplateItemListFragment {
 
     @Override
     public void getData() {
-        QueryEntry queryEntry = new QueryEntry();
-        queryEntry.setSize(10);
-        queryEntry.setPage(mPage);
-        queryEntry.getLike().put("businessThreeCode", mType + "%");
+        if (mQueryEntry == null) {
+            mQueryEntry = new QueryEntry();
+        }
+        mQueryEntry.setSize(10);
+        mQueryEntry.setPage(mPage);
+        mQueryEntry.getLike().put("businessThreeCode", mType + "%");
         EanfangHttp.post(NewApiService.DEVICE_LIST_CLIENT)
-                .upJson(JsonUtils.obj2String(queryEntry))
+                .upJson(JsonUtils.obj2String(mQueryEntry))
                 .execute(new EanfangCallback<EquipmentBean>(getActivity(), true, EquipmentBean.class) {
                     @Override
                     public void onSuccess(EquipmentBean bean) {
@@ -113,6 +116,8 @@ public class EquipmentListFragment extends TemplateItemListFragment {
                             mAdapter.loadMoreComplete();
                             if (bean.getList().size() < 10) {
                                 mAdapter.loadMoreEnd();
+                                //释放对象
+                                mQueryEntry = null;
                             }
 
                             if (bean.getList().size() > 0) {

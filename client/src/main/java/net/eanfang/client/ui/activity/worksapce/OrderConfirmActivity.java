@@ -8,7 +8,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -66,8 +65,8 @@ public class OrderConfirmActivity extends BaseClientActivity {
     TextView tvTime;
     @BindView(R.id.rv_list)
     RecyclerView mRecyclerView;
-    @BindView(R.id.btn_complete)
-    Button btnComplete;
+    @BindView(R.id.tv_complete)
+    TextView tvComplete;
     @BindView(R.id.sv)
     NestedScrollView scrollView;
     @BindView(R.id.iv_header)
@@ -215,7 +214,7 @@ public class OrderConfirmActivity extends BaseClientActivity {
     }
 
     private void registerListener() {
-        btnComplete.setOnClickListener(new MultiClickListener(this, this::doHttpSubmit));
+        tvComplete.setOnClickListener(new MultiClickListener(this, this::doHttpSubmit));
         setLeftBack((v) -> {
             giveUp();
         });
