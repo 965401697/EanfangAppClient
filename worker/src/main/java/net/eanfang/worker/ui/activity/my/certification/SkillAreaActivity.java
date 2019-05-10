@@ -11,19 +11,17 @@ import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
-import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.GrantChange;
 import com.eanfang.model.SystypeBean;
-import com.eanfang.util.SharePreferenceUtil;
-import com.eanfang.util.StringUtils;
 import com.yaf.sys.entity.BaseDataEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.GroupAdapter;
 import net.eanfang.worker.ui.activity.techniciancertification.SubmitSuccessfullyJsActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
+import net.eanfang.worker.ui.interfaces.AreaCheckChangeListener;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -36,7 +34,7 @@ import butterknife.OnClick;
 /**
  * 技能资质的区域
  */
-public class SkillAreaActivity extends BaseWorkerActivity {
+public class SkillAreaActivity extends BaseWorkerActivity implements AreaCheckChangeListener {
 
     @BindView(R.id.elv_area)
     ExpandableListView elvArea;
@@ -79,13 +77,11 @@ public class SkillAreaActivity extends BaseWorkerActivity {
 
     private void initData() {
         //获取国家区域
-        String areaString = SharePreferenceUtil.get().getString(Constant.COUNTRY_AREA_LIST, "");
-        if (StringUtils.isEmpty(areaString)){
+        if (EanfangApplication.get().sSaveArea == null) {
             showToast("加载服务区域失败！");
             return;
         }
-        BaseDataEntity entity = JSONObject.toJavaObject(JSONObject.parseObject(areaString), BaseDataEntity.class);
-        areaListBean = entity.getChildren();
+        areaListBean = EanfangApplication.get().sSaveArea.getChildren();
         EanfangHttp.get(UserApi.GET_TECH_WORKER_SYS + userid + "/AREA").execute(new EanfangCallback<SystypeBean>(this, true, SystypeBean.class, (bean) -> {
             byNetGrant = bean;
             fillData();
@@ -102,6 +98,7 @@ public class SkillAreaActivity extends BaseWorkerActivity {
 
     private void initAdapter(List<BaseDataEntity> areaListBean) {
         mAdapter = new GroupAdapter(this, areaListBean);
+        mAdapter.setListener(this);
         elvArea.setAdapter(mAdapter);
         if (isLook) {
             mAdapter.isAuth = true;
@@ -182,5 +179,42 @@ public class SkillAreaActivity extends BaseWorkerActivity {
     @OnClick(R.id.tv_go)
     public void onViewClicked() {
         commit();
+    }
+
+    @Override
+    public void onCheckAreaChange(int onPos, int secPos, int thirdPos, boolean isCheck) {
+        if (thirdPos != -1) {
+            areaListBean.get(onPos).getChildren().get(secPos).getChildren().get(thirdPos).setCheck(isCheck);
+        } else if (secPos != -1) {
+            areaListBean.get(onPos).getChildren().get(secPos).setCheck(isCheck);
+        } else {
+            areaListBean.get(onPos).setCheck(isCheck);
+        }
+        int checkAreaSize = 0;
+        int areaSize = 0;
+        for (BaseDataEntity entity2 : areaListBean.get(onPos).getChildren()) {
+            if (entity2.getChildren().size() == 0) {
+                if (entity2.isCheck()) {
+                    checkAreaSize += 1;
+                }
+            } else {
+                for (BaseDataEntity entity3 : entity2.getChildren()) {
+                    if (entity3.isCheck()) {
+                        checkAreaSize += 1;
+                    }
+                }
+            }
+            areaSize += entity2.getChildren().size() == 0 ? 1 : entity2.getChildren().size();
+        }
+        GroupAdapter.FirstHolder holder = mAdapter.getChangeTextView(onPos);
+        if (holder != null) {
+            if (areaSize == checkAreaSize) {
+                holder.tv_cb.setText("取消全选");
+            } else {
+                holder.tv_cb.setText("全选");
+
+            }
+            holder.tv.setText(areaListBean.get(onPos).getDataName() + "(" + checkAreaSize + "/" + areaSize + ")");
+        }
     }
 }
