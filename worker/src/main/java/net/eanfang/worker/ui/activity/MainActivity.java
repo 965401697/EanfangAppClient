@@ -322,40 +322,47 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
 //                            BaseDataBean newDate = jsonObject.toJavaObject(BaseDataBean.class);
                             EanfangApplication.get().set(BaseDataBean.class.getName(), jsonObject.toJSONString());
                         }
-                        //预加载国家区域
-                        String areaJson = SharePreferenceUtil.get().getString(Constant.COUNTRY_AREA_LIST, "");
-                        if (StringUtils.isEmpty(areaJson)) {
-                            BaseDataEntity entity = new BaseDataEntity();
-                            List<BaseDataEntity> areaListBean = Config.get().getRegionList(1);
-                            //获得全部 地区数据
-                            List<BaseDataEntity> allAreaList = new ArrayList<>(Config.get().getRegionList());
-                            for (int i = 0; i < areaListBean.size(); i++) {
-                                BaseDataEntity provinceEntity = areaListBean.get(i);
-                                //处理当前省下的所有市
-                                List<BaseDataEntity> cityList = Stream.of(allAreaList).filter(bean -> bean.getParentId() != null
-                                        && bean.getParentId().intValue() == provinceEntity.getDataId()).toList();
-                                //查询出来后，移除，以增加效率
-                                allAreaList.removeAll(cityList);
-                                for (int j = 0; j < cityList.size(); j++) {
-                                    BaseDataEntity cityEntity = cityList.get(j);
-                                    //处理当前市下所有区县
-                                    List<BaseDataEntity> countyList = Stream.of(allAreaList).filter(bean -> bean.getParentId() != null
-                                            && bean.getParentId().intValue() == cityEntity.getDataId()).toList();
-                                    //查询出来后，移除，以增加效率
-                                    allAreaList.removeAll(countyList);
-                                    cityEntity.setChildren(countyList);
-                                }
-                                provinceEntity.setChildren(cityList);
-                            }
-                            entity.setChildren(areaListBean);
-                            try {
-                                SharePreferenceUtil.get().set(Constant.COUNTRY_AREA_LIST, JSON.toJSONString(entity));
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
+                        saveArea();
                     }).start();
                 }));
+    }
+
+    private void saveArea(){
+        //预加载国家区域
+        String areaJson = SharePreferenceUtil.get().getString(Constant.COUNTRY_AREA_LIST, "");
+        if (StringUtils.isEmpty(areaJson)) {
+            BaseDataEntity entity = new BaseDataEntity();
+            List<BaseDataEntity> areaListBean = Config.get().getRegionList(1);
+            //获得全部 地区数据
+            List<BaseDataEntity> allAreaList = new ArrayList<>(Config.get().getRegionList());
+            for (int i = 0; i < areaListBean.size(); i++) {
+                BaseDataEntity provinceEntity = areaListBean.get(i);
+                //处理当前省下的所有市
+                List<BaseDataEntity> cityList = Stream.of(allAreaList).filter(bean -> bean.getParentId() != null
+                        && bean.getParentId().intValue() == provinceEntity.getDataId()).toList();
+                //查询出来后，移除，以增加效率
+                allAreaList.removeAll(cityList);
+                for (int j = 0; j < cityList.size(); j++) {
+                    BaseDataEntity cityEntity = cityList.get(j);
+                    //处理当前市下所有区县
+                    List<BaseDataEntity> countyList = Stream.of(allAreaList).filter(bean -> bean.getParentId() != null
+                            && bean.getParentId().intValue() == cityEntity.getDataId()).toList();
+                    //查询出来后，移除，以增加效率
+                    allAreaList.removeAll(countyList);
+                    cityEntity.setChildren(countyList);
+                }
+                provinceEntity.setChildren(cityList);
+            }
+            entity.setChildren(areaListBean);
+            EanfangApplication.get().sSaveArea = entity;
+            try {
+                SharePreferenceUtil.get().set(Constant.COUNTRY_AREA_LIST, JSON.toJSONString(entity));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }else {
+            EanfangApplication.get().sSaveArea = JSONObject.toJavaObject(JSONObject.parseObject(areaJson), BaseDataEntity.class);
+        }
     }
 
     /**
