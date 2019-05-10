@@ -259,7 +259,7 @@
                     android:layout_height="wrap_content"
                     android:drawableLeft="@mipmap/ic_repair_fault"
                     android:drawablePadding="@dimen/dimen_20"
-                    android:text="故障明细"
+                    android:text="故障信息"
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_14" />
 
@@ -299,8 +299,12 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_300"
-                android:background="@color/color_white">
+                android:layout_height="wrap_content"
+                android:background="@color/color_white"
+                android:layout_marginTop="@dimen/dimen_30"
+                android:layout_marginBottom="@dimen/dimen_30"
+                android:layout_marginStart="@dimen/dimen_40"
+                android:layout_marginEnd="@dimen/dimen_40" >
 
                 <Button
                     android:id="@+id/btn_complete"
@@ -308,9 +312,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="@dimen/dimen_40"
-                    android:background="@mipmap/ic_repair_bottom_confim"
-                    android:padding="10dp"
+                    android:background="@drawable/shape_bg_sure"
                     android:text="提交"
                     android:textColor="@color/color_white"
                     android:textSize="@dimen/textSize_13" />

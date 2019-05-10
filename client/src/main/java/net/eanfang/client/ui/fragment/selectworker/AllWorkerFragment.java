@@ -36,6 +36,10 @@ import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.pay.NewPayActivity;
 import net.eanfang.client.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.client.ui.activity.worksapce.WorkerDetailActivity;
+import net.eanfang.client.ui.activity.worksapce.repair.AddTroubleActivity;
+import net.eanfang.client.ui.activity.worksapce.repair.RepairActivity;
+import net.eanfang.client.ui.activity.worksapce.repair.RepairTypeActivity;
+import net.eanfang.client.ui.activity.worksapce.repair.TroubleListActivity;
 import net.eanfang.client.ui.adapter.SelectWorkerAdapter;
 
 import java.util.ArrayList;
@@ -258,7 +262,6 @@ public class AllWorkerFragment extends BaseFragment implements SwipeRefreshLayou
         intent.putExtras(bundle);
         startActivity(intent);
         closeActivity();
-
     }
 
     /**
@@ -291,6 +294,10 @@ public class AllWorkerFragment extends BaseFragment implements SwipeRefreshLayou
     }
 
     private void closeActivity() {
+        EanfangApplication.get().closeActivity(RepairTypeActivity.class.getName());
+        EanfangApplication.get().closeActivity(AddTroubleActivity.class.getName());
+        EanfangApplication.get().closeActivity(TroubleListActivity.class.getName());
+        EanfangApplication.get().closeActivity(RepairActivity.class.getName());
         finishSelf();
     }
 
