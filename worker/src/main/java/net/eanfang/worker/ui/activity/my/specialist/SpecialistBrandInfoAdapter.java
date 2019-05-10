@@ -20,7 +20,7 @@ public class SpecialistBrandInfoAdapter extends BaseQuickAdapter<BaseDataEntity,
     @Override
     protected void convert(BaseViewHolder helper, BaseDataEntity item) {
         helper.setText(R.id.tv_name, item.getDataName());
-        helper.getView(R.id.iv_sub).setVisibility(View.GONE);
+//        helper.getView(R.id.iv_sub).setVisibility(View.GONE);
         helper.getView(R.id.tv_name).setBackground(mContext.getResources().getDrawable(R.drawable.shape_add_brand_checked));
     }
 }

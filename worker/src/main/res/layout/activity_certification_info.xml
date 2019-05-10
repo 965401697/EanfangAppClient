@@ -25,13 +25,13 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:paddingBottom="@dimen/dimen_20"
                 android:paddingLeft="@dimen/dimen_36"
+                android:paddingTop="@dimen/dimen_20"
                 android:paddingRight="@dimen/dimen_34"
-                android:paddingTop="@dimen/dimen_20">
+                android:paddingBottom="@dimen/dimen_20"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -64,7 +64,9 @@
 
             </LinearLayout>
 
-            <View style="@style/style_common_line_gray" />
+            <View
+                style="@style/style_common_line_gray"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -72,10 +74,10 @@
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingBottom="@dimen/dimen_20"
                 android:paddingLeft="@dimen/dimen_36"
+                android:paddingTop="@dimen/dimen_20"
                 android:paddingRight="@dimen/dimen_34"
-                android:paddingTop="@dimen/dimen_20">
+                android:paddingBottom="@dimen/dimen_20">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -107,10 +109,10 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="horizontal"
-                android:paddingBottom="@dimen/dimen_20"
                 android:paddingLeft="@dimen/dimen_36"
+                android:paddingTop="@dimen/dimen_20"
                 android:paddingRight="@dimen/dimen_34"
-                android:paddingTop="@dimen/dimen_20">
+                android:paddingBottom="@dimen/dimen_20">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -141,10 +143,10 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="horizontal"
-                android:paddingBottom="@dimen/dimen_20"
                 android:paddingLeft="@dimen/dimen_36"
+                android:paddingTop="@dimen/dimen_20"
                 android:paddingRight="@dimen/dimen_34"
-                android:paddingTop="@dimen/dimen_20">
+                android:paddingBottom="@dimen/dimen_20">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -174,10 +176,10 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="horizontal"
-                android:paddingBottom="@dimen/dimen_20"
                 android:paddingLeft="@dimen/dimen_36"
+                android:paddingTop="@dimen/dimen_20"
                 android:paddingRight="@dimen/dimen_34"
-                android:paddingTop="@dimen/dimen_20">
+                android:paddingBottom="@dimen/dimen_20">
 
                 <TextView
                     android:layout_width="0dp"
@@ -201,7 +203,7 @@
                         android:layout_width="@dimen/dimen_120"
                         android:layout_height="@dimen/dimen_60"
                         android:layout_marginRight="@dimen/dimen_30"
-                        android:background="@drawable/select_camera_back"
+                        android:background="@drawable/select_camera_back_b"
                         android:button="@null"
                         android:checked="true"
                         android:gravity="center"
@@ -213,7 +215,7 @@
                         android:id="@+id/rb_woman"
                         android:layout_width="@dimen/dimen_120"
                         android:layout_height="@dimen/dimen_60"
-                        android:background="@drawable/select_camera_back"
+                        android:background="@drawable/select_camera_back_b"
                         android:button="@null"
                         android:gravity="center"
                         android:text="女"
@@ -230,7 +232,8 @@
                 android:background="@color/color_white"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -258,6 +261,7 @@
 
             </LinearLayout>
 
+            <View style="@style/style_common_line_gray" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -283,8 +287,8 @@
                         android:layout_width="@dimen/dimen_400"
                         android:layout_height="@dimen/dimen_180"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginBottom="@dimen/dimen_40"
                         android:layout_marginTop="@dimen/dimen_40"
+                        android:layout_marginBottom="@dimen/dimen_40"
                         app:placeholderImageScaleType="centerCrop"
                         fresco:placeholderImage="@mipmap/ic_nodata" />
 
@@ -314,8 +318,8 @@
                         android:layout_width="@dimen/dimen_400"
                         android:layout_height="@dimen/dimen_180"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginBottom="@dimen/dimen_40"
                         android:layout_marginTop="@dimen/dimen_40"
+                        android:layout_marginBottom="@dimen/dimen_40"
                         app:placeholderImageScaleType="centerCrop"
                         fresco:placeholderImage="@mipmap/ic_nodata" />
 
@@ -342,8 +346,8 @@
                         android:layout_width="@dimen/dimen_400"
                         android:layout_height="@dimen/dimen_180"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginBottom="@dimen/dimen_40"
                         android:layout_marginTop="@dimen/dimen_40"
+                        android:layout_marginBottom="@dimen/dimen_40"
                         android:scaleType="fitXY"
                         app:placeholderImageScaleType="centerCrop"
                         fresco:placeholderImage="@mipmap/ic_nodata" />
@@ -357,10 +361,11 @@
                     android:layout_marginTop="@dimen/dimen_20"
                     android:background="@color/white"
                     android:orientation="horizontal"
-                    android:paddingBottom="@dimen/dimen_20"
                     android:paddingLeft="@dimen/dimen_36"
+                    android:paddingTop="@dimen/dimen_20"
                     android:paddingRight="@dimen/dimen_34"
-                    android:paddingTop="@dimen/dimen_20">
+                    android:paddingBottom="@dimen/dimen_20"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -383,17 +388,21 @@
                         android:textSize="@dimen/textSize_13" />
                 </LinearLayout>
 
-                <View style="@style/style_common_line_gray" />
+                <View
+                    style="@style/style_common_line_gray"
+                    android:visibility="gone" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:orientation="horizontal"
-                    android:paddingBottom="@dimen/dimen_20"
                     android:paddingLeft="@dimen/dimen_36"
+                    android:paddingTop="@dimen/dimen_20"
+
                     android:paddingRight="@dimen/dimen_34"
-                    android:paddingTop="@dimen/dimen_20">
+                    android:paddingBottom="@dimen/dimen_20"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -423,7 +432,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen_16"
                     android:background="@color/color_white"
-                    android:orientation="vertical">
+
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -466,7 +477,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen_16"
                     android:background="@color/color_white"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"

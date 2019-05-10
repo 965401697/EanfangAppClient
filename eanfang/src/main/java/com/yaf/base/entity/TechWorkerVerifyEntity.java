@@ -99,7 +99,8 @@ public class TechWorkerVerifyEntity implements Serializable {
     @Override
     public String toString() {
         return "TechWorkerVerifyEntity{" +
-                "id=" + id +
+                "isEnable=" + isEnable +
+                ", id=" + id +
                 ", accId=" + accId +
                 ", userId=" + userId +
                 ", contactName='" + contactName + '\'' +
@@ -120,7 +121,12 @@ public class TechWorkerVerifyEntity implements Serializable {
                 ", updateTime=" + updateTime +
                 ", verifyTime=" + verifyTime +
                 ", verifyUserName='" + verifyUserName + '\'' +
+                ", eMail='" + eMail + '\'' +
+                ", idCardName='" + idCardName + '\'' +
+                ", idCardGender='" + idCardGender + '\'' +
+                ", idCardBirth='" + idCardBirth + '\'' +
                 ", verifyMessage='" + verifyMessage + '\'' +
+                ", idCardNum='" + idCardNum + '\'' +
                 ", accountEntity=" + accountEntity +
                 ", userEntity=" + userEntity +
                 '}';
@@ -182,6 +188,33 @@ public class TechWorkerVerifyEntity implements Serializable {
     @Size(min = 0, max = 10)
     private String verifyUserName;
     private String eMail;
+    private String idCardName;
+    private String idCardGender;
+    private String idCardBirth;
+
+    public String getIdCardName() {
+        return idCardName;
+    }
+
+    public void setIdCardName(String idCardName) {
+        this.idCardName = idCardName;
+    }
+
+    public String getIdCardGender() {
+        return idCardGender;
+    }
+
+    public void setIdCardGender(String idCardGender) {
+        this.idCardGender = idCardGender;
+    }
+
+    public String getIdCardBirth() {
+        return idCardBirth;
+    }
+
+    public void setIdCardBirth(String idCardBirth) {
+        this.idCardBirth = idCardBirth;
+    }
 
     public String geteMail() {
         return eMail;

@@ -140,11 +140,11 @@
                         android:textSize="@dimen/textSize_14" />
 
                     <ImageView
-                        android:layout_width="18sp"
-                        android:layout_height="18sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="5dp"
-                        android:src="@mipmap/arrow_right" />
+                        android:src="@mipmap/icx_iv" />
                 </LinearLayout>
 
 
@@ -181,12 +181,12 @@
 
                     <ImageView
                         android:id="@+id/iv_type"
-                        android:layout_width="18sp"
-                        android:layout_height="18sp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="5dp"
-                        android:src="@mipmap/arrow_right" />
+                        android:src="@mipmap/icx_iv" />
                 </RelativeLayout>
 
                 <View style="@style/style_common_line_gray" />
@@ -234,7 +234,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:src="@mipmap/arrow_right" />
+                    android:src="@mipmap/dw_iv" />
             </LinearLayout>
 
             <View style="@style/style_common_line_gray" />

@@ -14,9 +14,10 @@
         android:background="#BFDAFF"
         android:gravity="center"
         android:padding="@dimen/dimen_40"
+        android:textColor="#333333"
         android:text="推荐认证流程"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        android:textSize="15sp"
+         />
 
     <TextView
         android:id="@+id/rz_lc_tv"
@@ -24,10 +25,11 @@
         android:layout_height="wrap_content"
         android:background="#BFDAFF"
         android:gravity="center"
+        android:textColor="#333333"
         android:paddingBottom="@dimen/dimen_40"
-        android:text="工商服务→服务认证→资质认证→更多能力"
-        android:textSize="14sp"
-        android:textStyle="bold" />
+        android:text="工商服务➝服务认证➝资质认证➝更多能力"
+        android:textSize="13sp"
+         />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -71,7 +73,7 @@
         android:padding="@dimen/dimen_30"
         android:text="去认证"
         android:textColor="@color/white"
-        android:textSize="16sp"
+        android:textSize="13sp"
         android:textStyle="bold" />
 
     <Space
@@ -99,7 +101,8 @@
             android:layout_marginTop="@dimen/dimen_10"
             android:layout_toRightOf="@id/logo_iv"
             android:text="如有疑问，请联系客服处理，"
-            android:textSize="14sp" />
+            android:textColor="#999999"
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/yw_b_tv"
@@ -109,7 +112,8 @@
             android:layout_marginLeft="@dimen/dimen_20"
             android:layout_toRightOf="@id/logo_iv"
             android:text="客服热线: "
-            android:textSize="14sp" />
+            android:textColor="#999999"
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/call_tv"
@@ -121,6 +125,6 @@
             android:autoLink="all"
             android:text="010-5877-8731"
             android:textColor="#4988F5"
-            android:textSize="14sp" />
+            android:textSize="13sp" />
     </RelativeLayout>
 </LinearLayout>

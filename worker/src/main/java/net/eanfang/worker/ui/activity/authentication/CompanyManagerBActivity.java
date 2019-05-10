@@ -134,7 +134,11 @@ public class CompanyManagerBActivity extends BaseActivity implements DissloveTea
             case R.id.gg_iv:
                 break;
             case R.id.gs_xq_iv:
-                startActivity(new Intent(this, AuthCompanyFirstBActivity.class).putExtra("orgName", mOrgName).putExtra("orgid", mOrgId));
+                if (status == 1 | status == 2) {
+                    startActivity(new Intent(this, CompanyPagesActivity.class).putExtra("mOrgId", mOrgId).putExtra("status", status));
+                } else {
+                    startActivity(new Intent(this, AuthCompanyFirstBActivity.class).putExtra("orgName", mOrgName).putExtra("orgid", mOrgId));
+                }
                 finish();
                 break;
             default:

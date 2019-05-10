@@ -182,7 +182,6 @@ public class SpecialistSkillTypeActivity extends BaseWorkerActivity {
 
 
     private void doVerify() {
-
         if (llFactory.getVisibility() == View.VISIBLE) {
             if (StringUtils.isEmpty(etFactoryName.getText().toString().trim())) {
                 showToast("请输入厂商名称");

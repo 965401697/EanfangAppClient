@@ -474,6 +474,17 @@ public class GetDateUtils {
         }
         return weekDays[w];
     }
+    /***
+     * 传入String格式日期格式化并返回日期
+     * @param   "20110101"
+     * @return  "yyyy年MM月dd日"
+     * @throws ParseException
+     */
+    public static String strToDate(String date) throws ParseException{
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        Date datab = sdf.parse(date);
+        return dateToFormatString(datab, "yyyy年MM月dd日");
+    }
 
 
 }

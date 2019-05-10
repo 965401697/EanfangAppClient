@@ -72,7 +72,6 @@ public class CompanyManagerActivity extends BaseActivity implements DissloveTeam
     private void initView() {
         setLeftBack();
         setTitle("企业管理");
-
         mOrgId = getIntent().getLongExtra("orgid", 0);
         mOrgName = getIntent().getStringExtra("orgName");
         isAuth = getIntent().getStringExtra("isAuth");

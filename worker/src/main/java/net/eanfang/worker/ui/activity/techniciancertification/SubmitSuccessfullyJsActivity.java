@@ -56,7 +56,7 @@ public class SubmitSuccessfullyJsActivity extends BaseActivity {
     private void initView() {
         setLeftBack();
         setTitle("提交成功");
-        SpannableString spannableString = new SpannableString("实名认证→服务认证→资质能力→其他信息");
+        SpannableString spannableString = new SpannableString("实名认证➝服务认证➝资质能力➝其他信息");
         spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#333333")), 0, 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#A5CAFC")), 4, 5, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
         spannableString.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 4, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
