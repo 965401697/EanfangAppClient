@@ -90,6 +90,7 @@ public class ChildAdapter extends BaseExpandableListAdapter {
             convertView = mInflate.inflate(R.layout.item_expand_lv_second, parent, false);
             holder.tv = ((TextView) convertView.findViewById(R.id.tv));
             holder.cb = ((CheckBox) convertView.findViewById(R.id.cb));
+            holder.cb_img = ((CheckBox) convertView.findViewById(R.id.cb_img));
             holder.img_area = ((ImageView) convertView.findViewById(R.id.img_area));
             convertView.setTag(holder);
         } else {
@@ -102,11 +103,12 @@ public class ChildAdapter extends BaseExpandableListAdapter {
             boolean isChecked = finalHolder.cb.isChecked();
             if (entities.size() > 0) {
                 finalHolder.cb.setText(isChecked ? "取消全选" : "全选");
-                finalHolder.cb.setBackground(null);
+                finalHolder.cb.setVisibility(View.VISIBLE);
+                finalHolder.cb_img.setVisibility(View.GONE);
             } else {
-                finalHolder.cb.setText(null);
-                finalHolder.cb.setButtonDrawable(R.drawable.icon_choose_area_checktor);
-                finalHolder.cb.setChecked(isChecked);
+                finalHolder.cb.setVisibility(View.GONE);
+                finalHolder.cb_img.setVisibility(View.VISIBLE);
+                finalHolder.cb_img.setChecked(isChecked);
             }
             mDatas.get(groupPosition).setCheck(isChecked);
             for (int i = 0; i < entities.size(); i++) {
@@ -122,12 +124,13 @@ public class ChildAdapter extends BaseExpandableListAdapter {
             holder.cb.setChecked(mDatas.get(groupPosition).isCheck());
             holder.img_area.setSelected(isExpanded);
             holder.cb.setText(mDatas.get(groupPosition).isCheck() ? "取消全选" : "全选");
-            holder.cb.setBackground(null);
+            holder.cb.setVisibility(View.VISIBLE);
+            holder.cb_img.setVisibility(View.GONE);
         } else {
             holder.img_area.setVisibility(View.INVISIBLE);
-            holder.cb.setButtonDrawable(R.drawable.icon_choose_area_checktor);
-            holder.cb.setText(null);
-            holder.cb.setChecked(mDatas.get(groupPosition).isCheck());
+            holder.cb_img.setVisibility(View.VISIBLE);
+            holder.cb.setVisibility(View.GONE);
+            holder.cb_img.setChecked(mDatas.get(groupPosition).isCheck());
         }
         return convertView;
     }
@@ -135,7 +138,9 @@ public class ChildAdapter extends BaseExpandableListAdapter {
     class ViewHolder {
         TextView tv;
         CheckBox cb;
+        CheckBox cb_img;
         ImageView img_area;
+
     }
 
     /**
