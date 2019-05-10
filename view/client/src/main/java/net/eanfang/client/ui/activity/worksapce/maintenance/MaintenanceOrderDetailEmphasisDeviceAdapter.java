@@ -46,7 +46,7 @@ public class MaintenanceOrderDetailEmphasisDeviceAdapter extends BaseQuickAdapte
         }
 
 
-        helper.setText(R.id.tv_history, "维修历史    " + String.valueOf(item.getRepairCount()));
+        helper.setText(R.id.tv_history, "维修历史    " + item.getRepairCount());
 
         if (isSelect==4||isSelect==5){
             helper.setVisible(R.id.iv_arrow, true);

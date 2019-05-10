@@ -114,7 +114,7 @@ public class BadgeUtil {
         localIntent.setAction("com.sonyericsson.home.action.UPDATE_BADGE");
         localIntent.putExtra("com.sonyericsson.home.intent.extra.badge.SHOW_MESSAGE", isShow);//是否显示
         localIntent.putExtra("com.sonyericsson.home.intent.extra.badge.ACTIVITY_NAME", launcherClassName);//启动页
-        localIntent.putExtra("com.sonyericsson.home.intent.extra.badge.MESSAGE", String.valueOf(count));//数字
+        localIntent.putExtra("com.sonyericsson.home.intent.extra.badge.MESSAGE", count);//数字
         localIntent.putExtra("com.sonyericsson.home.intent.extra.badge.PACKAGE_NAME", context.getPackageName());//包名
         context.sendBroadcast(localIntent);
     }

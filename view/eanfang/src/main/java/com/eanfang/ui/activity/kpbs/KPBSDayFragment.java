@@ -225,13 +225,13 @@ public class KPBSDayFragment extends BaseFragment {
                 } else if (mType == 1) {
                     double d = SplitAndRound(Double.parseDouble(String.valueOf((kpbs * 60 * 60 * 24 * day * vidiconNum / 8 / 1024 / 1024 / 1024))), 2);
                     if (d < 0.99d) {
-                        tvResult.setText(String.valueOf(d * 1024) + "GB");
+                        tvResult.setText(d * 1024 + "GB");
                     }
 //                    else if (d < 1.00d) {
 //                        tvResult.setText(String.valueOf(d) + "TB");
 //                    }
                     else {
-                        tvResult.setText(String.valueOf(Math.rint(d)) + "TB");
+                        tvResult.setText(Math.rint(d) + "TB");
                     }
                 } else {
                     double temp = new BigDecimal(sdNum * 1024).multiply(new BigDecimal(1024 * 1024)).multiply(new BigDecimal("8")).doubleValue();
@@ -243,7 +243,7 @@ public class KPBSDayFragment extends BaseFragment {
                         tvResult.setText(findDis(o, t));
                     } else {
                         float f = (float) (kp * 1024);
-                        tvResult.setText(String.valueOf(SplitAndRound(f, 1)) + "    Kb");
+                        tvResult.setText(SplitAndRound(f, 1) + "    Kb");
                     }
                 }
                 imm.hideSoftInputFromWindow(v.getWindowToken(), 0); //强制隐藏键盘

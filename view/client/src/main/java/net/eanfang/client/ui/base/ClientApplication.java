@@ -43,13 +43,13 @@ public class ClientApplication extends EanfangApplication {
 //            RongIM.registerMessageTemplate(new SightMessageItemProvider());
 
             RongExtensionManager.getInstance().registerExtensionModule(new SampleExtensionModule());
-            RongIM.getInstance().setConversationClickListener(new MyConversationClickListener());
+            RongIM.setConversationClickListener(new MyConversationClickListener());
 
             RongIM.registerMessageType(CustomizeMessage.class);
-            RongIM.getInstance().registerMessageTemplate(new CustomizeMessageItemProvider());
+            RongIM.registerMessageTemplate(new CustomizeMessageItemProvider());
 
             RongIM.registerMessageType(CustomizeVideoMessage.class);
-            RongIM.getInstance().registerMessageTemplate(new CustomizeVideoMessageItemProvider());
+            RongIM.registerMessageTemplate(new CustomizeVideoMessageItemProvider());
 
             //初始化微信支付
             api = WXAPIFactory.createWXAPI(this, EanfangConst.WX_APPID_CLIENT);

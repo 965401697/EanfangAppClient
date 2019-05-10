@@ -105,7 +105,7 @@ public class VideoSelectedActivity extends BaseClientActivity {
         for (String s : pathList) {
             FileMessage fileMessage = FileMessage.obtain(Uri.parse("file://" + s));
             Message message = Message.obtain(mTargetId, mConversationType, fileMessage);
-            RongIM.getInstance().sendMediaMessage(message, (String) null, (String) null, new IRongCallback.ISendMediaMessageCallback() {
+            RongIM.getInstance().sendMediaMessage(message, null, null, new IRongCallback.ISendMediaMessageCallback() {
                 @Override
                 public void onProgress(Message message, int i) {
 

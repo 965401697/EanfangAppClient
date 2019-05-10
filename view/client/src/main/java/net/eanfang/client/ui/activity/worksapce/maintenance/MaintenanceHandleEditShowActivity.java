@@ -74,7 +74,7 @@ public class MaintenanceHandleEditShowActivity extends BaseClientActivity {
             tvStatus.setText("维保状态    保外");
         }
 
-        tvHistory.setText("维修历史    " + String.valueOf(examDeviceEntity.getRepairCount()));
+        tvHistory.setText("维修历史    " + examDeviceEntity.getRepairCount());
 
         etCheck.setText(examDeviceEntity.getMaintenanceDetailEntity().getCheckProcess());
         etHandle.setText(examDeviceEntity.getMaintenanceDetailEntity().getMeasure());

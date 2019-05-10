@@ -1,6 +1,7 @@
 package com.eanfang.kit.ali.alioss;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.os.Handler;
 import android.os.Looper;
 
@@ -10,7 +11,7 @@ import com.alibaba.sdk.android.oss.callback.OSSCompletedCallback;
 import com.alibaba.sdk.android.oss.callback.OSSProgressCallback;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
-import com.eanfang.kit.ali.alioss.utils.UploadDialogUtil;
+import com.eanfang.kit.loading.LoadKit;
 import com.eanfang.network.holder.ToastHolder;
 
 import cn.hutool.core.util.StrUtil;
@@ -23,7 +24,7 @@ public abstract class OSSCallBack implements OSSProgressCallback<PutObjectReques
 
     private Activity activity;
     private boolean showDialog;
-    private UploadDialogUtil.UploadDialog uploadDialog;
+    private Dialog uploadDialog;
 
     private static Integer total;
     private static Integer current;
@@ -62,8 +63,7 @@ public abstract class OSSCallBack implements OSSProgressCallback<PutObjectReques
         handler = new Handler(Looper.getMainLooper());
         handler.post(() -> {
             if (showDialog) {
-                uploadDialog = UploadDialogUtil.uploadDialogUtil.buildUploadDialog(activity);
-                uploadDialog.setTextContent("玩命上传中...");
+                uploadDialog = LoadKit.dialog(activity, "玩命上传中...");
 
                 if (!uploadDialog.isShowing()) {
                     uploadDialog.show();
@@ -81,7 +81,7 @@ public abstract class OSSCallBack implements OSSProgressCallback<PutObjectReques
     public void onFinish() {
         handler.post(() -> {
             if (uploadDialog != null && uploadDialog.isShowing()) {
-                uploadDialog.dismiss();
+                LoadKit.closeDialog(uploadDialog);
             }
         });
 
@@ -119,10 +119,9 @@ public abstract class OSSCallBack implements OSSProgressCallback<PutObjectReques
     public void onOssProgress(PutObjectRequest request, long currentSize, long totalSize) {
         handler.post(() -> {
             if (uploadDialog != null) {
-                uploadDialog.setTextContent("正在上传（" + currentSize + "/" + totalSize + "）");
+                LoadKit.setText(uploadDialog, "正在上传（" + currentSize + "/" + totalSize + "）");
             }
         });
-
     }
 
     /**

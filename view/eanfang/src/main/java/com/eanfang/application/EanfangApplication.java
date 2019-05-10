@@ -90,7 +90,7 @@ public class EanfangApplication extends CustomeApplication {
     }
 
 
-    @Override
+    //    @Override
     public void initConfig() {
         /**fresco加载图片*/
         OkHttpClient mOkHttpClient = new OkHttpClient();

@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.eanfang.R;
+import com.eanfang.kit.loading.LoadKit;
 
 
 /**
@@ -67,11 +68,11 @@ public class DialogUtil {
     }
 
     public static Dialog createLoadingDialog(Context context) {
-        LayoutInflater inflater = LayoutInflater.from(context);
-        View v = inflater.inflate(R.layout.loading_dialog, null);
-        final Dialog dialog = new Dialog(context, R.style.dialog);
-        dialog.setContentView(v);
-        return dialog;
+//        LayoutInflater inflater = LayoutInflater.from(context);
+//        View v = inflater.inflate(R.layout.loading_dialog, null);
+//        final Dialog dialog = new Dialog(context, R.style.dialog);
+//        dialog.setContentView(v);
+        return LoadKit.dialog(context, null);
     }
 
 

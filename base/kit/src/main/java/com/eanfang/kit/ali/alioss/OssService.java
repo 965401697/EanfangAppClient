@@ -60,8 +60,8 @@ public class OssService implements IOssService {
         }
         //清空线程
         uploadThreads.clear();
-        this.getOssCallBack().get().setTotal(1);
-        this.getOssCallBack().set(ossCallBack);
+        OssService.getOssCallBack().get().setTotal(1);
+        OssService.getOssCallBack().set(ossCallBack);
         putImage(objectKey, urlPath);
         //开始执行检测线程
         asyncCheck();
@@ -70,8 +70,8 @@ public class OssService implements IOssService {
     @Override
     public void asyncPutImages(Map<String, String> objectMap, OSSCallBack callBack) {
         //初始化 总数
-        this.getOssCallBack().get().setTotal(objectMap.keySet().size());
-        this.getOssCallBack().set(callBack);
+        OssService.getOssCallBack().get().setTotal(objectMap.keySet().size());
+        OssService.getOssCallBack().set(callBack);
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
@@ -81,7 +81,7 @@ public class OssService implements IOssService {
         //如果没有了 则成功
         if (objectMap == null || objectMap.size() <= 0 || objectMap.keySet().size() <= 0) {
             activity.runOnUiThread(() -> {
-                this.getOssCallBack().get().onSuccess(null, null);
+                OssService.getOssCallBack().get().onSuccess(null, null);
                 //取消任务
                 cancelTask();
                 EventBus.getDefault().unregister(this);
@@ -107,8 +107,8 @@ public class OssService implements IOssService {
         }
         //清空线程
         uploadThreads.clear();
-        this.getOssCallBack().get().setTotal(1);
-        this.getOssCallBack().set(ossCallBack);
+        OssService.getOssCallBack().get().setTotal(1);
+        OssService.getOssCallBack().set(ossCallBack);
         putVideo(objectKey, videoPath);
         //开始执行检测线程
         asyncCheck();
@@ -123,7 +123,7 @@ public class OssService implements IOssService {
         //如果为空  则跳过
         if (put == null) {
             resultJson.put("code", UPLOAD_SUCCESS);
-            int curr = this.getOssCallBack().get().getCurrent() + 1;
+            int curr = OssService.getOssCallBack().get().getCurrent() + 1;
             getOssCallBack().get().setCurrent(curr);
             EventBus.getDefault().post(resultJson);
             return;
@@ -167,7 +167,7 @@ public class OssService implements IOssService {
             //如果为空  则跳过
             if (put == null) {
                 resultJson.put("code", UPLOAD_SUCCESS);
-                int curr = this.getOssCallBack().get().getCurrent() + 1;
+                int curr = OssService.getOssCallBack().get().getCurrent() + 1;
                 getOssCallBack().get().setCurrent(curr);
                 EventBus.getDefault().post(resultJson);
                 return;
@@ -274,15 +274,15 @@ public class OssService implements IOssService {
             //code 为 -1 代表失败
             if (code.equals(UPLOAD_FAILED)) {
                 activity.runOnUiThread(() -> {
-                    this.getOssCallBack().get().onFailure(null, null, null);
+                    OssService.getOssCallBack().get().onFailure(null, null, null);
                 });
                 //取消任务
                 cancelTask();
                 EventBus.getDefault().unregister(this);
                 return;
             }
-            int mTotal = this.getOssCallBack().get().getTotal();
-            int mCurrent = this.getOssCallBack().get().getCurrent();
+            int mTotal = OssService.getOssCallBack().get().getTotal();
+            int mCurrent = OssService.getOssCallBack().get().getCurrent();
             //如果当前上传的图片 >= 总数 则代表成功  直接解绑。
             Log.e("ossService", "onEvent: total:" + mTotal + "  curr:" + mCurrent);
             if (mCurrent >= mTotal) {

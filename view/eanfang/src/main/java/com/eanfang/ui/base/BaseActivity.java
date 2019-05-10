@@ -237,12 +237,6 @@ public class BaseActivity extends AppCompatActivity implements
         super.onStop();
     }
 
-/*    @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-//        J_Config.get().onSaveInstanceState();
-        super.onSaveInstanceState(outState, outPersistentState);
-    }*/
-
 
     /**
      * @param containThis 完成时是否关闭当前Activity true为关闭

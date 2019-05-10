@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <data>
-
-        <variable
-            name="app"
-            type="Integer" />
-    </data>
-
     <RelativeLayout
         android:id="@+id/titles_bar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@{app==0?@color/colorPrimaryC:@color/colorPrimaryW}"
+        android:background="@color/colorPrimaryC"
         android:orientation="horizontal">
 
         <ImageView
