@@ -27,7 +27,6 @@
                 android:id="@+id/tv_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
                 android:textColor="@color/color_repair_fault_num"
                 android:textSize="@dimen/textSize_14" />
 

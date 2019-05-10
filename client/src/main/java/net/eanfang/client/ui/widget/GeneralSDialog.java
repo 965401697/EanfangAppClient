@@ -79,4 +79,6 @@ public class GeneralSDialog extends BaseDialog {
     public interface OnConfimClickListener {
         void onConfim();
     }
+
+
 }

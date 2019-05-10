@@ -11,7 +11,6 @@ import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GetConstDataUtils;
 import com.flyco.tablayout.SlidingTabLayout;
 
-
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.fragment.worktransfer.WorkTransferFragment;
 

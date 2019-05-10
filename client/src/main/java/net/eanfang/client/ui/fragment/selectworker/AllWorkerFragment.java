@@ -24,6 +24,7 @@ import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.Message;
+import com.eanfang.model.reapair.RepairPersonalInfoEntity;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
@@ -33,11 +34,12 @@ import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.pay.NewPayActivity;
-import net.eanfang.client.ui.activity.worksapce.SelectWorkerActivity;
 import net.eanfang.client.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.client.ui.activity.worksapce.WorkerDetailActivity;
+import net.eanfang.client.ui.activity.worksapce.repair.AddTroubleActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.RepairActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.RepairTypeActivity;
+import net.eanfang.client.ui.activity.worksapce.repair.TroubleListActivity;
 import net.eanfang.client.ui.adapter.SelectWorkerAdapter;
 
 import java.util.ArrayList;
@@ -77,12 +79,18 @@ public class AllWorkerFragment extends BaseFragment implements SwipeRefreshLayou
     public int mPage = 1;
     private QueryEntry mQueryEntry;
 
-    public static AllWorkerFragment getInstance(RepairOrderEntity toRepairBean, ArrayList<String> businessIds, int doorfee, Long ownerOrgId) {
+    /**
+     * 个人信息
+     */
+    RepairPersonalInfoEntity.ListBean repairPersonalInfoEntity;
+
+    public static AllWorkerFragment getInstance(RepairOrderEntity toRepairBean, RepairPersonalInfoEntity.ListBean repairPersonalInfoEntity, ArrayList<String> businessIds, int doorfee, Long ownerOrgId) {
         AllWorkerFragment allWorkerFragment = new AllWorkerFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("toRepairBean", toRepairBean);
         bundle.putStringArrayList("bussinsList", businessIds);
         bundle.putInt("doorFee", doorfee);
+        bundle.putSerializable("topInfo", repairPersonalInfoEntity);
         bundle.putLong("mOwnerOrgId", ownerOrgId);
         allWorkerFragment.setArguments(bundle);
         return allWorkerFragment;
@@ -98,6 +106,7 @@ public class AllWorkerFragment extends BaseFragment implements SwipeRefreshLayou
 
         Bundle bundle = getArguments();
         toRepairBean = (RepairOrderEntity) bundle.getSerializable("toRepairBean");
+        repairPersonalInfoEntity = (RepairPersonalInfoEntity.ListBean) bundle.getSerializable("topInfo");
         businessIds = bundle.getStringArrayList("bussinsList");
         mDoorFee = bundle.getInt("doorFee", 0);
         mOwnerOrgId = bundle.getLong("mOwnerOrgId", 0);
@@ -122,6 +131,7 @@ public class AllWorkerFragment extends BaseFragment implements SwipeRefreshLayou
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(getActivity(), WorkerDetailActivity.class);
                 intent.putExtra("toRepairBean", toRepairBean);
+                intent.putExtra("topInfo", repairPersonalInfoEntity);
                 intent.putExtra("companyUserId", selectWorkerAdapter.getData().get(position).getCompanyUserId() + "");
                 intent.putExtra("workerId", selectWorkerAdapter.getData().get(position).getId() + "");
                 ;
@@ -172,11 +182,9 @@ public class AllWorkerFragment extends BaseFragment implements SwipeRefreshLayou
                             if (bean.size() > 0) {
                                 rvAllWorker.setVisibility(View.VISIBLE);
                                 llNodata.setVisibility(View.GONE);
-                                btnKeyTwo.setVisibility(View.VISIBLE);
                             } else {
                                 rvAllWorker.setVisibility(View.GONE);
                                 llNodata.setVisibility(View.VISIBLE);
-                                btnKeyTwo.setVisibility(View.GONE);
                             }
                         } else {
                             selectWorkerAdapter.addData(bean);
@@ -254,7 +262,6 @@ public class AllWorkerFragment extends BaseFragment implements SwipeRefreshLayou
         intent.putExtras(bundle);
         startActivity(intent);
         closeActivity();
-
     }
 
     /**
@@ -288,8 +295,9 @@ public class AllWorkerFragment extends BaseFragment implements SwipeRefreshLayou
 
     private void closeActivity() {
         EanfangApplication.get().closeActivity(RepairTypeActivity.class.getName());
+        EanfangApplication.get().closeActivity(AddTroubleActivity.class.getName());
+        EanfangApplication.get().closeActivity(TroubleListActivity.class.getName());
         EanfangApplication.get().closeActivity(RepairActivity.class.getName());
-        EanfangApplication.get().closeActivity(SelectWorkerActivity.class.getName());
         finishSelf();
     }
 
