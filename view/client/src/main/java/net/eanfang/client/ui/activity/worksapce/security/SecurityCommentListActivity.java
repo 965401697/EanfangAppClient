@@ -3,6 +3,11 @@ package net.eanfang.client.ui.activity.worksapce.security;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.ViewFindUtils;
 import com.flyco.tablayout.SlidingTabLayout;
@@ -14,10 +19,6 @@ import net.eanfang.client.ui.fragment.security.SecuritySendFragment;
 
 import java.util.ArrayList;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 import butterknife.ButterKnife;
 
 /**
@@ -29,7 +30,7 @@ import butterknife.ButterKnife;
 public class SecurityCommentListActivity extends BaseActivity implements OnTabSelectListener {
 
     private final String[] mCommentsTitle = {
-            "我评论的", "我收到的"
+            "我收到的", "我评论的"
     };
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private MyPagerAdapter mAdapter;
@@ -43,8 +44,8 @@ public class SecurityCommentListActivity extends BaseActivity implements OnTabSe
     }
 
     private void initView() {
-        mFragments.add(SecuritySendFragment.getInstance("我评论的"));
         mFragments.add(SecurityReceiveFragment.getInstance("我收到的"));
+        mFragments.add(SecuritySendFragment.getInstance("我评论的"));
         View decorView = getWindow().getDecorView();
         ViewPager vp = ViewFindUtils.find(decorView, R.id.vp_security_comment);
         mAdapter = new MyPagerAdapter(getSupportFragmentManager());

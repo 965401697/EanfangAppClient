@@ -7,12 +7,11 @@ package com.eanfang.application;
 import androidx.collection.ArrayMap;
 import androidx.multidex.MultiDexApplication;
 
-import com.alibaba.fastjson.JSONObject;
 import com.camera.util.LogUtil;
-import com.eanfang.config.FastjsonConfig;
 import com.eanfang.kit.cache.CacheKit;
 import com.eanfang.model.bean.LoginBean;
 import com.eanfang.ui.base.IBase;
+import com.eanfang.util.J_MessageVerify;
 import com.eanfang.util.V;
 
 import java.io.IOException;
@@ -40,6 +39,10 @@ public abstract class CustomeApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         mJCustomeApplication = this;
+    }
+
+    public void initConfig() {
+        J_MessageVerify.get().init(60);
     }
 
     public void push(IBase j_iBase) {
@@ -139,9 +142,9 @@ public abstract class CustomeApplication extends MultiDexApplication {
         CacheKit.get().remove(key);
     }
 //
-    public void saveUser(LoginBean user) {
-        set(LoginBean.class.getName(), JSONObject.toJSONString(user, FastjsonConfig.config));
-    }
+//    public void saveUser(LoginBean user) {
+//        set(LoginBean.class.getName(), JSONObject.toJSONString(user, FastjsonConfig.config));
+//    }
 
     public LoginBean getUser() {
         return CacheKit.get().get(LoginBean.class.getName(), LoginBean.class);

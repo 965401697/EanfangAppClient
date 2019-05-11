@@ -279,7 +279,7 @@ public class PerfectingPersonalDataActivity extends BaseActivityWithTakePhoto {
             AccountEntity accountEntity1 = user.getAccount();
             accountEntity1.setNickName(ncE);
             user.setAccount(accountEntity1);
-            EanfangApplication.get().saveUser(user);
+            EanfangApplication.get().set(LoginBean.class.getName(), user);
             Intent intent = new Intent(this, RealNameAuthenticationActivity.class);
             intent.putExtra("statusB", statusB);
             startActivity(intent);

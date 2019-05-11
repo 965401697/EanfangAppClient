@@ -20,6 +20,7 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
+import com.eanfang.config.Constant;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -29,12 +30,11 @@ import com.eanfang.model.ConstAllBean;
 import com.eanfang.model.GroupDetailBean;
 import com.eanfang.model.bean.LoginBean;
 import com.eanfang.model.device.User;
-import com.eanfang.network.config.HttpConfig;
-import com.eanfang.sys.activity.LoginActivity;
 import com.eanfang.util.BadgeUtil;
 import com.eanfang.util.CleanMessageUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermissionUtils;
+import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UpdateAppManager;
@@ -65,6 +65,7 @@ import java.util.HashMap;
 
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.manager.IUnReadMessageObserver;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
@@ -77,7 +78,7 @@ import static com.eanfang.config.EanfangConst.MEIZU_APPKEY_CLIENT;
 import static com.eanfang.config.EanfangConst.XIAOMI_APPID_CLIENT;
 import static com.eanfang.config.EanfangConst.XIAOMI_APPKEY_CLIENT;
 
-public class MainActivity extends BaseClientActivity {
+public class MainActivity extends BaseClientActivity implements IUnReadMessageObserver {
     private static final String TAG = MainActivity.class.getSimpleName();
     protected FragmentTabHost mTabHost;
     private LoginBean user;
@@ -157,6 +158,13 @@ public class MainActivity extends BaseClientActivity {
         PrefUtils.setBoolean(getApplicationContext(), PrefUtils.GUIDE, false);//新手引导是否展示
 
         getPushMessage(getIntent());
+        final Conversation.ConversationType[] conversationTypes = {
+                Conversation.ConversationType.PRIVATE,
+                Conversation.ConversationType.GROUP, Conversation.ConversationType.SYSTEM,
+                Conversation.ConversationType.PUBLIC_SERVICE, Conversation.ConversationType.APP_PUBLIC_SERVICE
+        };
+
+        RongIM.getInstance().addUnReadMessageCountChangedObserver(this, conversationTypes);
     }
 
     private void initUpdate() {
@@ -169,7 +177,7 @@ public class MainActivity extends BaseClientActivity {
 
 
     private void initFragment() {
-        mTabHost = findViewById(android.R.id.tabhost);
+        mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
         mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
         mTabHost.getTabWidget().setDividerDrawable(R.color.transparent);
         View indicator = getLayoutInflater().inflate(R.layout.indicator_main_home, null);
@@ -228,7 +236,26 @@ public class MainActivity extends BaseClientActivity {
     /**
      * 请求基础数据
      */
-
+  /*  private void getBaseData() {
+        String url;
+        BaseDataBean dataBean = Config.get().getBaseDataBean();
+        if (dataBean == null || StringUtils.isEmpty(dataBean.getMD5())) {
+            url = NewApiService.GET_BASE_DATA_CACHE + "0";
+        } else {
+            url = NewApiService.GET_BASE_DATA_CACHE + dataBean.getMD5();
+        }
+        EanfangHttp.get(url)
+                .tag(this)
+                .execute(new EanfangCallback<JSONObject>(this, false, JSONObject.class, (jsonObject) -> {
+                    new Thread(() -> {
+                        if (jsonObject != null && !jsonObject.isEmpty() && jsonObject.containsKey("data") && !jsonObject.get("data").equals(Constant.NO_UPDATE)) {
+//                            BaseDataBean newDate = jsonObject.toJavaObject(BaseDataBean.class);
+                            EanfangApplication.get().set(BaseDataBean.class.getName(), jsonObject.toJSONString());
+                            Config.get().cleanBaseDataBean();
+                        }
+                    }).start();
+                }));
+    }*/
     private void getBaseData() {
         String url;
         BaseDataBean dataBean = Config.get().getBaseDataBean();
@@ -247,7 +274,6 @@ public class MainActivity extends BaseClientActivity {
 //                        if (jsonObject != null && !jsonObject.isEmpty() && jsonObject.containsKey("data") && !jsonObject.get("data").equals(Constant.NO_UPDATE)) {
 ////                            BaseDataBean newDate = jsonObject.toJavaObject(BaseDataBean.class);
 //                            EanfangApplication.get().set(BaseDataBean.class.getName(), jsonObject.toJavaObject(BaseDataBean.class));
-//                            Config.get().cleanBaseDataBean();
 //                        }
 //                    }).start();
                 }));
@@ -270,13 +296,12 @@ public class MainActivity extends BaseClientActivity {
                     if (constAllBean != null) {
                         EanfangApplication.get().set(ConstAllBean.class.getName(), constAllBean);
                     }
-//                    new Thread(() -> {
-//                        if (jsonObject != null && !jsonObject.isEmpty() && jsonObject.containsKey("data") && !jsonObject.get("data").equals(Constant.NO_UPDATE)) {
-////                            ConstAllBean newDate = JSONObject.parseObject(str, ConstAllBean.class);
-//                            EanfangApplication.get().set(ConstAllBean.class.getName(), jsonObject.toJavaObject(ConstAllBean.class));
+                    /*  new Thread(() -> {
+                        if (jsonObject != null && !jsonObject.isEmpty() && jsonObject.containsKey("data") && !jsonObject.get("data").equals(Constant.NO_UPDATE)) {
+//                            ConstAllBean newDate = JSONObject.parseObject(str, ConstAllBean.class);
 //                            Config.get().cleanConstBean();
-//                        }
-//                    }).start();
+                        }
+                    }).start();*/
                 }));
     }
 
@@ -308,8 +333,6 @@ public class MainActivity extends BaseClientActivity {
     public void setHeaders() {
         if (EanfangApplication.get().getUser() != null) {
             EanfangHttp.setToken(EanfangApplication.get().getUser().getToken());
-            HttpConfig.get().setToken(EanfangApplication.get().getUser().getToken());
-
         }
         EanfangHttp.setClient();
     }
@@ -480,6 +503,14 @@ public class MainActivity extends BaseClientActivity {
 
     }
 
+    @Override
+    public void onCountChanged(int integer) {
+        mContactNum = integer;
+        int i = mContact + integer;
+        int nums = mTotalCount + integer;
+        doChange(i, nums);
+    }
+
     public void getIMUnreadMessageCount() {
         /**
          * 获取消息页面回话列表数量
@@ -487,10 +518,6 @@ public class MainActivity extends BaseClientActivity {
         RongIM.getInstance().getTotalUnreadCount(new RongIMClient.ResultCallback<Integer>() {
             @Override
             public void onSuccess(Integer integer) {
-                mContactNum = integer;
-                int i = mContact + integer;
-                int nums = mTotalCount + integer;
-                doChange(i, nums);
             }
 
             @Override
@@ -499,7 +526,6 @@ public class MainActivity extends BaseClientActivity {
             }
         });
     }
-
 
     private void doChange(int mContactNum, int nums) {
         qBadgeViewContact.setBadgeNumber(mContactNum);
@@ -566,7 +592,7 @@ public class MainActivity extends BaseClientActivity {
             mExitTime = System.currentTimeMillis();
 
             CleanMessageUtil.clearAllCache(EanfangApplication.get());
-//            SharePreferenceUtil.get().clear();
+            SharePreferenceUtil.get().clear();
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
 //            RongIM.getInstance().logout();
             MainActivity.this.finish();
@@ -590,8 +616,9 @@ public class MainActivity extends BaseClientActivity {
             mAllCount = 0;
         }
         // 首页小红点的显示
-        if (bean.getRepair() > 0 || bean.getInstall() > 0 || bean.getDesign() > 0) {
-            mHome = bean.getRepair() + bean.getInstall() + bean.getDesign();
+        if (bean.getRepair() > 0 || bean.getInstall() > 0 || bean.getDesign() > 0
+                || bean.getNoReadCount() > 0 || bean.getCommentNoRead() > 0) {
+            mHome = bean.getRepair() + bean.getInstall() + bean.getDesign() + bean.getNoReadCount() + bean.getCommentNoRead();
 
         } else {
             mHome = 0;

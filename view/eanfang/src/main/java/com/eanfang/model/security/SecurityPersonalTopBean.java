@@ -1,5 +1,6 @@
 package com.eanfang.model.security;
 
+
 import com.eanfang.model.sys.UserEntity;
 
 import java.io.Serializable;

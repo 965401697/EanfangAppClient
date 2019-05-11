@@ -1,6 +1,7 @@
 package com.eanfang.config;
 
 import android.os.Environment;
+import android.util.Log;
 
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
@@ -52,6 +53,7 @@ public class Config {
         if (constBean == null) {
             synchronized (Config.class) {
                 if (constBean == null) {
+                    Log.d("config","=========================="+EanfangApplication.get().get(ConstAllBean.class.getName(), ConstAllBean.class));
                     constBean = (ConstAllBean) EanfangApplication.get().get(ConstAllBean.class.getName(), ConstAllBean.class);
                 }
             }

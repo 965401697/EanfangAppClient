@@ -3,14 +3,15 @@ package net.eanfang.client.ui.activity.worksapce.security;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.client.R;
 
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

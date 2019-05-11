@@ -6,17 +6,20 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/header_eanfang" />
+    <include layout="@layout/header" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:descendantFocusability="blocksDescendants"
             android:orientation="vertical">
 
 
@@ -115,32 +118,62 @@
                         android:visibility="gone" />
                 </RelativeLayout>
 
-                <TextView
+                <com.eanfang.witget.mentionedittext.text.MentionTextView
                     android:id="@+id/tv_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen_18"
-                    android:ellipsize="end"
-                    android:maxLines="3"
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_15" />
 
-
-                <com.photopicker.com.widget.BGASortableNinePhotoLayout
-                    android:id="@+id/snpl_pic"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_4"
-                    android:paddingLeft="-16dp"
-                    app:bga_snpl_editable="true"
-                    app:bga_snpl_itemCornerRadius="@dimen/dimen_10"
-                    app:bga_snpl_itemSpanCount="3"
-                    app:bga_snpl_itemWhiteSpacing="@dimen/dimen_32"
-                    app:bga_snpl_maxItemCount="9"
-                    app:bga_snpl_otherWhiteSpacing="100dp"
-                    app:bga_snpl_placeholderDrawable="@mipmap/ic_nodata"
-                    app:bga_snpl_plusEnable="false"
-                    app:bga_snpl_sortable="false" />
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:id="@+id/rl_video"
+                        android:layout_width="@dimen/dimen_170"
+                        android:layout_height="@dimen/dimen_170"
+                        android:visibility="gone">
+
+
+                        <com.facebook.drawee.view.SimpleDraweeView
+                            android:id="@+id/iv_show_video"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerInParent="true" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_centerInParent="true"
+                            android:background="#1A000000"
+                            android:visibility="visible" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:src="@mipmap/ic_play_video" />
+                    </RelativeLayout>
+
+                    <com.photopicker.com.widget.BGASortableNinePhotoLayout
+                        android:id="@+id/snpl_pic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_4"
+                        android:paddingLeft="-16dp"
+                        app:bga_snpl_editable="true"
+                        app:bga_snpl_itemCornerRadius="@dimen/dimen_10"
+                        app:bga_snpl_itemSpanCount="3"
+                        app:bga_snpl_itemWhiteSpacing="@dimen/dimen_32"
+                        app:bga_snpl_maxItemCount="9"
+                        app:bga_snpl_otherWhiteSpacing="100dp"
+                        app:bga_snpl_placeholderDrawable="@mipmap/ic_nodata"
+                        app:bga_snpl_plusEnable="false"
+                        app:bga_snpl_sortable="false" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/ll_question"
@@ -172,7 +205,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_2">
+                    android:layout_marginTop="@dimen/dimen_20">
 
                     <LinearLayout
                         android:id="@+id/linearLayout"
@@ -246,6 +279,7 @@
                         android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_15" />
                 </LinearLayout>
+
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_comments"

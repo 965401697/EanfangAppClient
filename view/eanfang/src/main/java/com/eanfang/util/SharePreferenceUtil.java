@@ -8,10 +8,10 @@ import java.io.IOException;
 
 /**
  * @author wen
- * Created at 2017/3/2
+ *         Created at 2017/3/2
  * @desc
  */
-class SharePreferenceUtil {
+public class SharePreferenceUtil {
     static String NAME = "config";
     private static volatile SharePreferenceUtil util = new SharePreferenceUtil();
     Context mContext;

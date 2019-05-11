@@ -152,7 +152,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(0, 0, true)
                 .setBadgeTextSize(10, true);
-//        ((android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setOnRefreshListener(this);
+//        ((androidx.swiperefreshlayout.widget.SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setOnRefreshListener(this);
 
         myConversationListFragment = new MyConversationListFragment();
         //设置私聊会话，该会话聚合显示

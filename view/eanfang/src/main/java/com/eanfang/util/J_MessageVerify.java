@@ -2,7 +2,7 @@
  * Copyright (c) 2016. Huangrui All rights reserved.
  */
 
-package com.eanfang.util.message;
+package com.eanfang.util;
 
 import android.os.Handler;
 

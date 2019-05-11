@@ -37,7 +37,7 @@ import net.eanfang.client.util.PrefUtils;
 public class SplashActivity extends BaseClientActivity implements GuideUtil.OnCallback {
 
     private static final String TAG = SplashActivity.class.getSimpleName();
-    int[] drawables_client = {R.mipmap.ic_client_splash_one, R.mipmap.ic_client_splash_two, R.mipmap.ic_client_splash_three};
+    int[] drawables_client = {R.mipmap.ic_client_splash_one, R.mipmap.ic_client_splash_two, R.mipmap.ic_client_splash_three,R.mipmap.ic_client_splash_end};
     // 是第一次
     private boolean isFirst = true;
 

@@ -1,6 +1,8 @@
 package com.eanfang.model.sys;
 
 
+import android.os.Build;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -8,6 +10,7 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -135,5 +138,37 @@ public class AccountEntity implements Serializable, Cloneable {
      * 公司信息
      */
     private OrgEntity orgEntity;
-
+    /**
+     * 技师认证 0是1否
+     */
+    private int realVerify;
+    /**
+     * 用户信息是否发生改变（注意：调用此方法调用者的值会发生改变）
+     *
+     * @param other
+     * @return true: 发生改变，并把变化值赋值到调用者上 false：未发生改变
+     */
+    public boolean isChanged(AccountEntity other) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (!Objects.equals(this.avatar, other.avatar)
+                    || !Objects.equals(this.nickName, other.nickName)
+                    || !Objects.equals(this.realName, other.realName)
+                    || !Objects.equals(this.birthday, other.birthday)
+                    || !Objects.equals(this.gender, other.gender)
+                    || !Objects.equals(this.address, other.address)
+                    || !Objects.equals(this.personalNote, other.personalNote)
+                    || !Objects.equals(this.areaCode, other.areaCode)) {
+                this.avatar = other.avatar;
+                this.nickName = other.nickName;
+                this.realName = other.realName;
+                this.birthday = other.birthday;
+                this.gender = other.gender;
+                this.address = other.address;
+                this.personalNote = other.personalNote;
+                this.areaCode = other.areaCode;
+                return true;
+            }
+        }
+        return false;
+    }
 }

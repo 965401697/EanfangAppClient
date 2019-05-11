@@ -10,6 +10,12 @@ import android.view.ViewTreeObserver;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -19,21 +25,21 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.FastjsonConfig;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.bean.LoginBean;
 import com.eanfang.model.OrganizationBean;
-import com.eanfang.network.config.HttpConfig;
+import com.eanfang.model.bean.LoginBean;
+import com.eanfang.model.sys.OrgEntity;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.witget.recycleview.FullyLinearLayoutManager;
-import com.eanfang.model.sys.OrgEntity;
-
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.im.FollowListActivity;
 import net.eanfang.client.ui.activity.im.MorePopWindow;
 import net.eanfang.client.ui.activity.im.MyFriendsListActivity;
 import net.eanfang.client.ui.activity.im.MyGroupsListActivity;
+import net.eanfang.client.ui.activity.im.PeerConnectionListActivity;
 import net.eanfang.client.ui.activity.worksapce.ExternalCompanyActivity;
 import net.eanfang.client.ui.activity.worksapce.PartnerActivity;
 import net.eanfang.client.ui.activity.worksapce.SubcompanyActivity;
@@ -43,11 +49,6 @@ import net.eanfang.client.ui.adapter.ParentAdapter;
 
 import java.util.Collections;
 import java.util.List;
-
-import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -173,16 +174,16 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
     @Override
     protected void initView() {
 
-        view.findViewById(R.id.nested_view).getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+        ((NestedScrollView) view.findViewById(R.id.nested_view)).getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
             @Override
             public void onScrollChanged() {
-                view.findViewById(R.id.swipre_fresh).setEnabled(view.findViewById(R.id.nested_view).getScrollY() == 0);
+                ((SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setEnabled(((NestedScrollView) view.findViewById(R.id.nested_view)).getScrollY() == 0);
             }
         });
 
 
-        rl_create_team = view.findViewById(R.id.rl_create_team);
-        tv_noTeam = view.findViewById(R.id.tv_noTeam);
+        rl_create_team = (RelativeLayout) view.findViewById(R.id.rl_create_team);
+        tv_noTeam = (TextView) view.findViewById(R.id.tv_noTeam);
 
         view.findViewById(R.id.ll_my_friends).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -199,12 +200,20 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
             }
         });
 
-//        findViewById(R.id.rl_focus).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
+        view.findViewById(R.id.rl_focus).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), FollowListActivity.class));
+            }
+        });
+
+        view.findViewById(R.id.rl_peer_connection).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //同行人脉
+                startActivity(new Intent(getActivity(), PeerConnectionListActivity.class));
+            }
+        });
 
         view.findViewById(R.id.ll_add).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -221,7 +230,7 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
         ((SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setOnRefreshListener(this);
 
 
-        rev_list = view.findViewById(R.id.rev_list);
+        rev_list = (RecyclerView) view.findViewById(R.id.rev_list);
 //        rev_list.setHasFixedSize(true);//应该reycylerview reqestlayout()计算
         rev_list.setNestedScrollingEnabled(false);
 
@@ -237,7 +246,11 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 OrgEntity bean = (OrgEntity) adapter.getData().get(position);
                 if (position == mOldPosition) {
-                    isFirstShow = !isFirstShow;
+                    if (isFirstShow) {
+                        isFirstShow = false;
+                    } else {
+                        isFirstShow = true;
+                    }
                 } else {
                     mOrgEntity.setFlag(false);
                     isFirstShow = true;
@@ -384,9 +397,8 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
                     if (bean != null) {
                         PermKit.permList.clear();
                         EanfangApplication.get().remove(LoginBean.class.getName());
-                        EanfangApplication.get().set(LoginBean.class.getName(), bean);
+                        EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
                         EanfangHttp.setToken(EanfangApplication.get().getUser().getToken());
-                        HttpConfig.get().setToken(EanfangApplication.get().getUser().getToken());
                         EanfangHttp.setClient();
                     }
                 }));

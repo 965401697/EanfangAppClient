@@ -1,5 +1,6 @@
 package com.eanfang.model.bean;
 
+
 import com.eanfang.model.sys.AccountEntity;
 
 import java.io.Serializable;

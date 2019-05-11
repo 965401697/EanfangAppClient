@@ -2,11 +2,14 @@ package net.eanfang.worker.ui.activity.worksapce.security;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
 import com.flyco.tablayout.SlidingTabLayout;
@@ -20,6 +23,9 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import q.rorbin.badgeview.QBadgeView;
+
+import static net.eanfang.worker.ui.fragment.SecurityHotFragment.REFRESH_ITEM;
 
 /**
  * @author guanluocang
@@ -38,8 +44,11 @@ public class SecurityListActivity extends BaseActivity {
     private String[] mTitles = {"关注", "热门"};
     private MyPagerAdapter mAdapter;
 
-
+    private final int REQUEST_LIST = 1021;
     private final int FILTRATE_TYPE_CODE = 101;
+
+    private int mSecurityNum;
+    private QBadgeView qBadgeViewMaintain = new QBadgeView(EanfangApplication.get().getApplicationContext());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +61,9 @@ public class SecurityListActivity extends BaseActivity {
     private void initView() {
         setTitle("安防圈");
         setLeftBack();
-        setRightTitle("个人中心");
+        setRightTitle("我的");
+        setRightImageResId(R.mipmap.ic_security_right);
+        mSecurityNum = getIntent().getIntExtra("mSecurityNum", 0);
         mFragments.add(SecurityFoucsFragment.getInstance("关注"));
         mFragments.add(SecurityHotFragment.getInstance("热门"));
 
@@ -63,8 +74,16 @@ public class SecurityListActivity extends BaseActivity {
         vpSecurityList.setCurrentItem(0);
 
         setRightTitleOnClickListener((v) -> {
-            JumpItent.jump(SecurityListActivity.this, SecurityPersonalActivity.class);
+            JumpItent.jump(SecurityListActivity.this, SecurityPersonalActivity.class,REQUEST_LIST);
         });
+
+        qBadgeViewMaintain.bindTarget(findViewById(R.id.tv_right))
+                .setBadgeNumber(mSecurityNum)
+                .setBadgeBackgroundColor(0xFFFF0000)
+                .setBadgePadding(3, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setGravityOffset(0, 6, true)
+                .setBadgeTextSize(11, true);
     }
 
     @OnClick(R.id.iv_create)
@@ -103,6 +122,17 @@ public class SecurityListActivity extends BaseActivity {
             } else {
                 ((SecurityHotFragment) mFragments.get(currentTab)).refreshStatus();
             }
+        } else if (resultCode == RESULT_OK && requestCode == REFRESH_ITEM) {
+            if (currentTab == 0) {
+                ((SecurityFoucsFragment) mFragments.get(currentTab)).refreshItemStatus(data);
+            } else {
+                ((SecurityHotFragment) mFragments.get(currentTab)).refreshItemStatus(data);
+            }
+        }else if (resultCode == RESULT_OK && requestCode == REQUEST_LIST) {
+            // list 回来更新数量
+            mSecurityNum = data.getIntExtra("mSecurityNum", 0);
+            qBadgeViewMaintain.setBadgeNumber(mSecurityNum);
         }
     }
+
 }
