@@ -98,6 +98,7 @@ public class SkillAreaActivity extends BaseWorkerActivity implements AreaCheckCh
 
     private void initAdapter(List<BaseDataEntity> areaListBean) {
         mAdapter = new GroupAdapter(this, areaListBean);
+        mAdapter.setListener(this);
         elvArea.setAdapter(mAdapter);
         if (isLook) {
             mAdapter.isAuth = true;
