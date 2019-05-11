@@ -7,6 +7,7 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.kit.cache.CacheKit;
+import com.eanfang.kit.loading.LoadKit;
 import com.eanfang.network.config.HttpConfig;
 import com.mob.MobSDK;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
@@ -57,6 +58,7 @@ public class ClientApplication extends EanfangApplication {
             api.registerApp(EanfangConst.WX_APPID_CLIENT);
 
             HttpConfig.init(com.eanfang.BuildConfig.API_HOST, BuildConfig.APP_TYPE, com.eanfang.BuildConfig.OSS_ENDPOINT, com.eanfang.BuildConfig.OSS_BUCKET);
+            LoadKit.initLoadSir();
             CacheKit.init(this).put("APP_TYPE", BuildConfig.APP_TYPE);
             EanfangHttp.setClient();
             if (EanfangApplication.get().getUser() != null) {

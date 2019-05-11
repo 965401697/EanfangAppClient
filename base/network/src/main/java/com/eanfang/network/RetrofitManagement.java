@@ -1,8 +1,14 @@
 package com.eanfang.network;
 
+import androidx.lifecycle.MutableLiveData;
+
 import com.eanfang.network.config.HttpCode;
 import com.eanfang.network.converter.FastJsonConverterFactory;
+import com.eanfang.network.event.BaseActionEvent;
 import com.eanfang.network.exception.AccountInvalidException;
+import com.eanfang.network.exception.ParameterInvalidException;
+import com.eanfang.network.exception.RequestFastException;
+import com.eanfang.network.exception.RequestFromException;
 import com.eanfang.network.exception.ServerResultException;
 import com.eanfang.network.exception.TokenInvalidException;
 import com.eanfang.network.holder.ContextHolder;
@@ -83,25 +89,45 @@ public enum RetrofitManagement {
                 .build();
     }
 
-    public <T> ObservableTransformer<BaseResponseBody<T>, Object> applySchedulers() {
+    public <T> ObservableTransformer<BaseResponseBody<T>, Object> applySchedulers(MutableLiveData<BaseActionEvent> actionLiveData) {
         return observable -> observable.subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .flatMap(result -> {
                     switch (result.getCode()) {
-                        case HttpCode.CODE_SUCCESS: {
+                        case HttpCode.CODE_REQUEST_FAST:
+                            actionLiveData.setValue(new BaseActionEvent(BaseActionEvent.REQUEST_FAST));
+                            throw new RequestFastException();
+//                            break;
+                        case HttpCode.CODE_SUCCESS:
+                            actionLiveData.setValue(new BaseActionEvent(BaseActionEvent.SUCCESS));
                             return createData(result.getData());
-                        }
-                        case HttpCode.CODE_TOKEN_INVALID: {
+//                        break;
+                        case HttpCode.CODE_UNKNOWN:
+                            actionLiveData.setValue(new BaseActionEvent(BaseActionEvent.SERVER_ERROR));
+                            break;
+                        case HttpCode.CODE_TOKEN_INVALID:
+                            actionLiveData.setValue(new BaseActionEvent(BaseActionEvent.TOKEN_ERROR));
                             throw new TokenInvalidException();
-                        }
-                        case HttpCode.CODE_ACCOUNT_INVALID: {
+                        case HttpCode.CODE_ACCOUNT_INVALID:
                             throw new AccountInvalidException();
-                        }
-                        default: {
+                        case HttpCode.CODE_PERMISSION_INVALID:
+                            actionLiveData.setValue(new BaseActionEvent(BaseActionEvent.PERMISSION_ERROR));
+                            break;
+                        case HttpCode.CODE_PARAMETER_INVALID:
+                            actionLiveData.setValue(new BaseActionEvent(BaseActionEvent.PARAM_ERROR));
+                            throw new ParameterInvalidException();
+//                            break;
+                        case HttpCode.CODE_FROM_INVALID:
+                            throw new RequestFromException();
+//                            break;
+                        case HttpCode.CODE_RESULT_INVALID:
+                            actionLiveData.setValue(new BaseActionEvent(BaseActionEvent.EMPTY_DATA));
+                            break;
+                        default:
                             throw new ServerResultException(result.getCode(), result.getMessage());
-                        }
                     }
+                    return createData(result.getMessage());
                 });
     }
 

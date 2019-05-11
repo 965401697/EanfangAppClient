@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.eanfang.base.BaseFragment;
 import com.eanfang.databinding.FragmentVerifyEanfangBinding;
+import com.eanfang.network.event.BaseActionEvent;
 import com.eanfang.sys.viewmodel.LoginViewModel;
 
 import lombok.Setter;
@@ -30,9 +31,28 @@ public class VerifyFragment extends BaseFragment {
         return new VerifyFragment().setLoginViewModel(loginViewModel);
     }
 
+//    @Override
+//    protected void initLoadSir() {
+//        super.initLoadSir();
+//        emptyBack = true;
+//        errorBack = true;
+//        loginViewModel.getActionLiveData().setValue(new BaseActionEvent(BaseActionEvent.EMPTY_DATA));
+//    }
+//
+//    @Override
+//    protected void onNetReload(View view) {
+//        super.onNetReload(view);
+//        loginViewModel.getActionLiveData().setValue(new BaseActionEvent(BaseActionEvent.SERVER_ERROR));
+//    }
+
     @Override
     protected ViewModel initViewModel() {
         return loginViewModel;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
     }
 
     @SuppressLint("CheckResult")
@@ -49,7 +69,6 @@ public class VerifyFragment extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        loginViewModel.getTimer().cancel();
     }
 
 }

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color_bottom">#999999</color>
+
+    <!--客户端颜色-->
+    <color name="colorPrimaryC">#FF7C26</color>
+    <color name="color_main_client">#FB973B</color>
+
+    <!--技师端颜色-->
+    <color name="colorPrimaryW">#006BFF</color>
+    <color name="color_main_worker">#4988F5</color>
+
+</resources>

@@ -78,7 +78,7 @@ ext {
 
             // client config
 
-    ] 
+    ]
     pkg = [
             constraintlayout     : "androidx.constraintlayout:constraintlayout:1.1.3",
             legacySupportV4      : "androidx.legacy:legacy-support-v4:1.0.0",
@@ -103,7 +103,6 @@ ext {
             materialratingbar    : "me.zhanghai.android.materialratingbar:library:1.0.2",
             flowlayout           : "com.zhy:flowlayout-lib:1.0.3",
             zxing                : "com.google.zxing:core:3.3.2",
-
             databindingCompiler  : "androidx.databinding:databinding-compiler:3.4.0",
             databindingRuntime   : 'androidx.databinding:databinding-runtime:3.4.0',
 
@@ -120,7 +119,8 @@ ext {
             mPAndroidChart       : "com.github.PhilJay:MPAndroidChart:v3.0.3",
             jiaozivideoplayer    : "cn.jzvd:jiaozivideoplayer:6.3.1",
             prolificinteractive  : "com.prolificinteractive:material-calendarview:1.4.3",
-            pictureselector      :"com.github.LuckSiege.PictureSelector:picture_library:v2.2.3",
+            pictureselector      : "com.github.LuckSiege.PictureSelector:picture_library:v2.2.3",
+            loadsir              : "com.kingja.loadsir:loadsir:1.3.6",
 
             //rx
             rxjava2              : "io.reactivex.rxjava2:rxjava:2.2.3",

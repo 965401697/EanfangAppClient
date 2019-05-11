@@ -1,9 +1,12 @@
 package com.eanfang.rds.base;
 
+import androidx.lifecycle.MutableLiveData;
+
 import com.eanfang.network.RetrofitManagement;
 import com.eanfang.network.callback.RequestCallback;
 import com.eanfang.network.callback.RequestMultiplyCallback;
 import com.eanfang.network.config.HttpConfig;
+import com.eanfang.network.event.BaseActionEvent;
 import com.eanfang.network.model.BaseResponseBody;
 
 import java.util.concurrent.TimeUnit;
@@ -26,6 +29,7 @@ public abstract class BaseRemoteDataSource {
 
     private BaseViewModel baseViewModel;
 
+
     public BaseRemoteDataSource(BaseViewModel baseViewModel) {
         this.compositeDisposable = new CompositeDisposable();
         this.baseViewModel = baseViewModel;
@@ -40,7 +44,7 @@ public abstract class BaseRemoteDataSource {
     }
 
     private <T> ObservableTransformer<BaseResponseBody<T>, Object> applySchedulers() {
-        return RetrofitManagement.getInstance().applySchedulers();
+        return RetrofitManagement.getInstance().applySchedulers(baseViewModel.getActionLiveData());
     }
 
     protected <T> void execute(Observable observable, RequestCallback<T> callback) {
@@ -95,6 +99,14 @@ public abstract class BaseRemoteDataSource {
                 .unsubscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(disposable -> startLoading())
+                .doFinally(this::dismissLoading);
+    }
+
+    private <T> ObservableTransformer<T, T> loadSirTransformer() {
+        return observable -> observable
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(this::dismissLoading);
     }
 

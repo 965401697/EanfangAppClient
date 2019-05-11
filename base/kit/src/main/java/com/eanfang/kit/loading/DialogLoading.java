@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.eanfang.kit.R;
 
-class Loading {
+class DialogLoading {
 
     static Dialog createLoadingDialog(Context context, String msg) {
         LayoutInflater inflater = LayoutInflater.from(context);

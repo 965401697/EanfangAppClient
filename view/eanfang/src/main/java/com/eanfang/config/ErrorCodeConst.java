@@ -23,7 +23,7 @@ public class ErrorCodeConst {
     /**
      * 请求缺少参数
      */
-    public static final int MISSING_PARAMETER = 50022;
+    public static final int MISSING_PARAMETER = 50050;
     public static final String MISSING_PARAMETER_STR = "缺少参数";
 
     /**

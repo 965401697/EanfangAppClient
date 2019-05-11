@@ -78,10 +78,8 @@ public class LoginActivity extends BaseActivity {
 
     //登录成功的回调
     private void handlerLogin(LoginBean loginBean) {
-
         EanfangApplication.get().set(LoginBean.class.getName(), loginBean);
         //老版的 兼容考虑
-//        EanfangApplication.get().set(com.eanfang.model.LoginBean.class.getName(), JSONObject.toJSONString(loginBean, FastjsonConfig.config));
         EanfangHttp.setToken(loginBean.getToken());
         HttpConfig.get().setToken(loginBean.getToken());
         setResult(LOGIN_BACK_CODE, null);

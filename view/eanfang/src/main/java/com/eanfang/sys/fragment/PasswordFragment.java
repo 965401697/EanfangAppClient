@@ -30,6 +30,11 @@ public class PasswordFragment extends BaseFragment {
     }
 
     @Override
+    protected ViewModel initViewModel() {
+        return loginViewModel;
+    }
+
+    @Override
     protected View initView(LayoutInflater inflater, ViewGroup container) {
         binding = FragmentPasswordEanfangBinding.inflate(getLayoutInflater());
         binding.setVm(loginViewModel);
@@ -38,11 +43,6 @@ public class PasswordFragment extends BaseFragment {
         loginViewModel.setPasswordBinding(binding);
         loginViewModel.LegalText(mActivity);
         return binding.getRoot();
-    }
-
-    @Override
-    protected ViewModel initViewModel() {
-        return loginViewModel;
     }
 
 

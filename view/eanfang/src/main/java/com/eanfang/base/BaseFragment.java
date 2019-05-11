@@ -14,9 +14,16 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModel;
 
 import com.eanfang.kit.loading.LoadKit;
+import com.eanfang.kit.loading.callback.EmptyCallback;
+import com.eanfang.kit.loading.callback.ErrorCallback;
+import com.eanfang.kit.loading.callback.NotFoundCallback;
+import com.eanfang.kit.loading.callback.PermissionCallback;
+import com.eanfang.kit.loading.callback.TimeoutCallback;
 import com.eanfang.network.config.HttpConfig;
 import com.eanfang.network.event.BaseActionEvent;
 import com.eanfang.rds.base.IViewModelAction;
+import com.kingja.loadsir.core.LoadService;
+import com.kingja.loadsir.core.LoadSir;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
 import java.util.ArrayList;
@@ -29,6 +36,17 @@ import java.util.List;
  */
 public abstract class BaseFragment extends RxFragment {
 
+    protected LoadService loadService;
+    //是否启用服务器错误回调页
+    protected boolean errorBack = false;
+    //是否启用空数据回调页
+    protected boolean emptyBack = false;
+    //是否启用超时回调页
+    protected boolean timeoutBack = false;
+    //是否启用无权限回调页
+    protected boolean permissionBack = false;
+    //是否启用未找到回调页
+    private boolean notFoundBack = false;
     private Dialog loadingDialog;
     protected FragmentActivity mActivity;
     protected View mRootView;
@@ -45,8 +63,28 @@ public abstract class BaseFragment extends RxFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mRootView = initView(inflater, container);
+        loadService = LoadSir.getDefault().register(mRootView, this::onNetReload);
         mIsPrepare = true;
-        return mRootView;
+        return loadService.getLoadLayout();
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initLoadSir();
+    }
+
+    /**
+     * 初始化loadSir默认打开页面
+     */
+    protected void initLoadSir() {
+        loadService.showSuccess();
+    }
+
+    /**
+     * 加载失败点击重试 的方法
+     */
+    protected void onNetReload(View view) {
     }
 
     @Override
@@ -127,6 +165,42 @@ public abstract class BaseFragment extends RxFragment {
                             }
                             case BaseActionEvent.SHOW_TOAST: {
                                 showToast(baseActionEvent.getMessage());
+                                //释放消息  不继续传递
+                                viewModelAction.getActionLiveData().setValue(new BaseActionEvent(BaseActionEvent.DEFAULT));
+                                break;
+                            }
+                            case BaseActionEvent.SUCCESS: {
+                                loadService.showSuccess();
+                                break;
+                            }
+                            case BaseActionEvent.EMPTY_DATA: {
+                                if (emptyBack) {
+                                    loadService.showCallback(EmptyCallback.class);
+                                }
+                                break;
+                            }
+                            case BaseActionEvent.PERMISSION_ERROR: {
+                                if (permissionBack) {
+                                    loadService.showCallback(PermissionCallback.class);
+                                }
+                                break;
+                            }
+                            case BaseActionEvent.NOT_FIND: {
+                                if (notFoundBack) {
+                                    loadService.showCallback(NotFoundCallback.class);
+                                }
+                                break;
+                            }
+                            case BaseActionEvent.TIME_OUT: {
+                                if (timeoutBack) {
+                                    loadService.showCallback(TimeoutCallback.class);
+                                }
+                                break;
+                            }
+                            case BaseActionEvent.SERVER_ERROR: {
+                                if (errorBack) {
+                                    loadService.showCallback(ErrorCallback.class);
+                                }
                                 break;
                             }
                         }
