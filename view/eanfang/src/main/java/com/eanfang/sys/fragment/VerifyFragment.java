@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModel;
 
 import com.eanfang.base.BaseFragment;
 import com.eanfang.databinding.FragmentVerifyEanfangBinding;
-import com.eanfang.network.event.BaseActionEvent;
 import com.eanfang.sys.viewmodel.LoginViewModel;
 
 import lombok.Setter;
@@ -31,6 +30,7 @@ public class VerifyFragment extends BaseFragment {
         return new VerifyFragment().setLoginViewModel(loginViewModel);
     }
 
+//    演示loadSir用法 解开注释即可查看到效果。
 //    @Override
 //    protected void initLoadSir() {
 //        super.initLoadSir();
