@@ -13,9 +13,12 @@ import com.yaf.sys.entity.BaseDataEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.ChildAdapter;
+import net.eanfang.worker.ui.interfaces.AreaCheckChangeListener;
 import net.eanfang.worker.ui.widget.CustomExpandableListView;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by MrHou
@@ -31,11 +34,14 @@ public class GroupAdapter extends BaseExpandableListAdapter {
     private Context context;
     public int firstPostion;
     public boolean isAuth = false;
+    private AreaCheckChangeListener mListener;
+    private Map<Integer, FirstHolder> mTextViews;
 
     public GroupAdapter(Context context, List<BaseDataEntity> mListData) {
         this.mListData = mListData;
         this.context = context;
         this.mInflate = LayoutInflater.from(context);
+        mTextViews = new HashMap<>();
     }
 
     @Override
@@ -90,11 +96,11 @@ public class GroupAdapter extends BaseExpandableListAdapter {
         } else {
             holder = (FirstHolder) convertView.getTag();
         }
-        holder.tv.setText(mListData.get(groupPosition).getDataName());
+        final FirstHolder finalHolder = holder;
+        mTextViews.put(groupPosition, holder);
         if (isAuth) {
             holder.tv_cb.setEnabled(false);
         } else {
-            FirstHolder finalHolder = holder;
             holder.tv_cb.setOnClickListener(v -> {
                 boolean isChecked = finalHolder.tv_cb.isChecked();
                 finalHolder.tv_cb.setText(isChecked ? "取消全选" : "全选");
@@ -109,12 +115,17 @@ public class GroupAdapter extends BaseExpandableListAdapter {
                         }
                     }
                 }
+                mListener.onCheckAreaChange(groupPosition, -1, -1, isChecked);
                 notifyDataSetChanged();
             });
         }
+        finalHolder.tv_cb.setChecked(mListData.get(groupPosition).isCheck());
         holder.img_area.setSelected(isExpanded);
         holder.tv_cb.setChecked(mListData.get(groupPosition).isCheck());
-        holder.tv_cb.setText(holder.tv_cb.isChecked() ? "取消全选" : "全选");
+        holder.tv.setText(mListData.get(groupPosition).getDataName());
+        mListener.onCheckAreaChange(groupPosition, -1, -1, mListData.get(groupPosition).isCheck());
+//        holder.tv.setText(mListData.get(groupPosition).getDataName() + "(" + mListData.get(groupPosition).getCheckChildren() + "/" + mListData.get(groupPosition).getChildrenSize() + ")");
+
         return convertView;
     }
 
@@ -132,6 +143,7 @@ public class GroupAdapter extends BaseExpandableListAdapter {
 
         ChildAdapter secondAdapter = new ChildAdapter(context, mListData.get(groupPosition).getChildren(), groupPosition);
         lv.setAdapter(secondAdapter);
+        secondAdapter.setListener(mListener);
         return lv;
     }
 
@@ -140,12 +152,20 @@ public class GroupAdapter extends BaseExpandableListAdapter {
         return true;
     }
 
-
-    class FirstHolder {
-        TextView tv;
-        CheckBox tv_cb;
-        ImageView img_area;
+    public void setListener(AreaCheckChangeListener listener) {
+        this.mListener = listener;
     }
 
+    public class FirstHolder {
+        public TextView tv;
+        public CheckBox tv_cb;
+        public ImageView img_area;
+    }
 
+    public FirstHolder getChangeTextView(int position) {
+        if (mTextViews.keySet().contains(position)) {
+            return mTextViews.get(position);
+        }
+        return null;
+    }
 }
