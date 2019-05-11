@@ -97,9 +97,9 @@ public class SkillInfoDetailActivity extends BaseWorkerActivity {
     private void initViews() {
 
         tvLimit.setText(GetConstDataUtils.getWorkingYearList().get(mWorkerVerifySkillBean.getWorkerVerify().getWorkingYear()));
-
-        tvAbility.setText(GetConstDataUtils.getWorkingLevelList().get(mWorkerVerifySkillBean.getWorkerVerify().getWorkingLevel()));
-
+        if (mWorkerVerifySkillBean.getWorkerVerify() != null && mWorkerVerifySkillBean.getWorkerVerify().getWorkingLevel() != null) {
+            tvAbility.setText(GetConstDataUtils.getWorkingLevelList().get(mWorkerVerifySkillBean.getWorkerVerify().getWorkingLevel()));
+        }
 
         recyclerViewBusiness.setLayoutManager(new GridLayoutManager(this, 3));
         recyclerViewOs.setLayoutManager(new GridLayoutManager(this, 3));
@@ -120,7 +120,7 @@ public class SkillInfoDetailActivity extends BaseWorkerActivity {
 
     @OnClick(R.id.tv_area)
     public void onViewClicked() {
-        startActivity(new Intent(SkillInfoDetailActivity.this, SkillAreaActivity.class).putExtra("isLook",true));
+        startActivity(new Intent(SkillInfoDetailActivity.this, SkillAreaActivity.class).putExtra("isLook", true));
     }
 
     private void getData() {

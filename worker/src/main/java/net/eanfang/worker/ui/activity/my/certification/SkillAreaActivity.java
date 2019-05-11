@@ -166,15 +166,11 @@ public class SkillAreaActivity extends BaseWorkerActivity implements AreaCheckCh
 
     private void setData() {
         EanfangHttp.post(UserApi.POST_TECH_WORKER_AREA).upJson(JSONObject.toJSONString(grantChange)).execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
-            if (bean.toJSONString().contains("失败原因")) {
-//                showToast("请查看认证失败原因并修改后再提交");
-            } else {
-                Intent intent = new Intent(this, SubmitSuccessfullyJsActivity.class);
-                intent.putExtra("status", mStatus);
-                intent.putExtra("order", 2);
-                startAnimActivity(intent);
-                finish();
-            }
+            Intent intent = new Intent(this, SubmitSuccessfullyJsActivity.class);
+            intent.putExtra("status", mStatus);
+            intent.putExtra("order", 2);
+            startAnimActivity(intent);
+            finish();
         }));
     }
 

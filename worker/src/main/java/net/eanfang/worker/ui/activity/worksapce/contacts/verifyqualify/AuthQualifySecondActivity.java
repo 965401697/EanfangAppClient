@@ -176,19 +176,14 @@ public class AuthQualifySecondActivity extends BaseActivity implements AreaCheck
         if ((checkListId.size() == 0) && (unCheckListId.size() == 0) && (byNetGrant.getList().size() <= 0)) {
             showToast("请至少选择一个服务区域");
         } else {
-            for (int i = 0; i < areaListBean.size(); i++) {
-                if (areaListBean.get(i).isCheck()) {
 
-                    EanfangHttp.post(UserApi.GET_ORGUNIT_SHOP_ADD_AREA + orgid)
-                            .upJson(JSONObject.toJSONString(grantChange))
-                            .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
+            EanfangHttp.post(UserApi.GET_ORGUNIT_SHOP_ADD_AREA + orgid)
+                    .upJson(JSONObject.toJSONString(grantChange))
+                    .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
 //                            showToast("认证资料提交成功");
-                                commitVerfiy();
-                            }));
-                    break;
-                }
+                        commitVerfiy();
+                    }));
 
-            }
         }
 
     }

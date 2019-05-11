@@ -93,9 +93,9 @@ public class CertificationInfoActivity extends BaseWorkerActivity {
         etCardId.setText(EanfangApplication.get().getUser().getAccount().getIdCard());
         //0女1男
         if (EanfangApplication.get().getUser().getAccount().getGender() == 0) {
-            rbWoman.setChecked(true);
+            rbWoman.setSelected(true);
         } else {
-            rbMan.setChecked(true);
+            rbMan.setSelected(true);
         }
         rbWoman.setClickable(false);
         rbMan.setClickable(false);

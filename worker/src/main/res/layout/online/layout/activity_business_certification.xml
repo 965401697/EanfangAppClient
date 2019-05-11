@@ -122,7 +122,7 @@
             android:drawableRight="@mipmap/rliv"
             android:drawablePadding="@dimen/dp_10"
             android:gravity="right|center_horizontal"
-            android:hint="请输入"
+            android:hint="请选择"
             android:padding="@dimen/app_dp_gs_rz_item_size"
             android:cursorVisible="false"
             android:focusableInTouchMode="false"
