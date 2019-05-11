@@ -79,9 +79,9 @@ public class SubmitSuccessfullyJsActivity extends BaseActivity {
             case 1:
                 authenticationTv.setText("去服务认证");
                 tsTv.setText("尊敬的用户，您的认证资料我们已收到\n您可以继续进行服务认证。");
-                initNet();
                 break;
             case 2:
+                initNet();
                 authenticationTv.setText("去完善保障信息");
                 tsTv.setText("尊敬的用户，您的认证资料我们已收到\n我们将在24小时内审核，\n您可以完善保障信息");
                 break;

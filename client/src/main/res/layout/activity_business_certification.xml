@@ -129,6 +129,8 @@
             android:padding="@dimen/app_dp_gs_rz_item_size"
             android:textColor="#333333"
             android:textSize="@dimen/app_sp_gs_rz_item_size"
+            android:cursorVisible="false"
+            android:focusableInTouchMode="false"
             app:isShowDownLine="false"
             app:leftText="成立日期"
             app:leftTextColor="#333333"

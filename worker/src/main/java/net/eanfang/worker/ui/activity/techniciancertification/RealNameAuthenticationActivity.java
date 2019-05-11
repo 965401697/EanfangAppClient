@@ -89,7 +89,7 @@ public class RealNameAuthenticationActivity extends BaseActivityWithTakePhoto {
         EanfangHttp.post(UserApi.ZS_SFZ).params("userId", EanfangApplication.get().getUserId()).execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
             if (bean != null) {
                 Log.d("ss56", "initData: " + bean.toString());
-                mTechWorkerVerifyEntity = JSONObject.toJavaObject(bean, TechWorkerVerifyEntity.class);
+                mTechWorkerVerifyEntity = (TechWorkerVerifyEntity) JSONObject.toJavaObject(bean, TechWorkerVerifyEntity.class);
                 Log.d("ss566", "initData: " + mTechWorkerVerifyEntity.toString());
                 if (mTechWorkerVerifyEntity != null) {
                     fillData();

@@ -80,7 +80,7 @@ public class SkillAreaActivity extends BaseWorkerActivity {
     private void initData() {
         //获取国家区域
         String areaString = SharePreferenceUtil.get().getString(Constant.COUNTRY_AREA_LIST, "");
-        if (StringUtils.isEmpty(areaString)){
+        if (StringUtils.isEmpty(areaString)) {
             showToast("加载服务区域失败！");
             return;
         }
@@ -168,15 +168,17 @@ public class SkillAreaActivity extends BaseWorkerActivity {
     }
 
     private void setData() {
-        EanfangHttp.post(UserApi.POST_TECH_WORKER_AREA)
-                .upJson(JSONObject.toJSONString(grantChange))
-                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
-                    Intent intent = new Intent(this, SubmitSuccessfullyJsActivity.class);
-                    intent.putExtra("status", mStatus);
-                    intent.putExtra("order", 2);
-                    startAnimActivity(intent);
-                    finish();
-                }));
+        EanfangHttp.post(UserApi.POST_TECH_WORKER_AREA).upJson(JSONObject.toJSONString(grantChange)).execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
+            if (bean.toJSONString().contains("失败原因")) {
+//                showToast("请查看认证失败原因并修改后再提交");
+            } else {
+                Intent intent = new Intent(this, SubmitSuccessfullyJsActivity.class);
+                intent.putExtra("status", mStatus);
+                intent.putExtra("order", 2);
+                startAnimActivity(intent);
+                finish();
+            }
+        }));
     }
 
     @OnClick(R.id.tv_go)

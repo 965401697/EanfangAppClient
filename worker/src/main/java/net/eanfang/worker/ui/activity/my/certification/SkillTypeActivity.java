@@ -78,7 +78,6 @@ public class SkillTypeActivity extends BaseWorkerActivity {
         startTransaction(true);
         mStatus = getIntent().getIntExtra("status", -1);
         initViews();
-//        initData();
         getSkillInfo();
 
     }
@@ -133,14 +132,23 @@ public class SkillTypeActivity extends BaseWorkerActivity {
         hashMapData.put("workerBizGrantChange", grantChange_business);
 
         String requestContent = com.alibaba.fastjson.JSONObject.toJSONString(hashMapData);
+        Log.d("555654555555", requestContent);
         EanfangHttp.post(UserApi.TECH_WORKER_VERIFY).upJson(requestContent).execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
-                    osCooperationAddAdapter.getScheckedId().clear();
-                    osCooperationAddAdapter.getUnSCheckedId().clear();
-                    businessCooperationAddAdapter.getBcheckedId().clear();
-                    businessCooperationAddAdapter.getUnbCheckedId().clear();
-                    startAnimActivity(new Intent(this, SkillAreaActivity.class).putExtra("status", mStatus));
-                    finish();
-                }));
+            if (osCooperationAddAdapter.getScheckedId() != null) {
+                osCooperationAddAdapter.getScheckedId().clear();
+            }
+            if (osCooperationAddAdapter.getUnSCheckedId() != null) {
+                osCooperationAddAdapter.getUnSCheckedId().clear();
+            }
+            if (businessCooperationAddAdapter.getBcheckedId() != null) {
+                businessCooperationAddAdapter.getBcheckedId().clear();
+            }
+            if (businessCooperationAddAdapter.getUnbCheckedId() != null) {
+                businessCooperationAddAdapter.getUnbCheckedId().clear();
+            }
+            startAnimActivity(new Intent(this, SkillAreaActivity.class).putExtra("status", mStatus));
+            finish();
+        }));
 
 
     }
@@ -148,35 +156,37 @@ public class SkillTypeActivity extends BaseWorkerActivity {
     private void getSkillInfo() {
 
         EanfangHttp.post(UserApi.TECH_WORKER_DETAIL).params("accId", String.valueOf(EanfangApplication.getApplication().getAccId())).execute(new EanfangCallback<WorkerVerifySkillBean>(this, true, WorkerVerifySkillBean.class, bean -> {
-                    if (bean != null) {
-                        List<BaseDataEntity> SystemBusinessList = bean.getBaseData2userList();
-                        // 系统类别
-                        for (BaseDataEntity checkedS : SystemBusinessList) {
-                            if (checkedS.getDataType() == 1) {
-                                for (BaseDataEntity s : systemTypeList) {
-                                    if ((String.valueOf(s.getDataId()).equals(String.valueOf(checkedS.getDataId())))) {
-                                        s.setCheck(true);
-                                        break;
-                                    }
-                                }
-                            } else {
-                                for (BaseDataEntity checkedB : businessTypeList) {
-                                    if (checkedB.getDataId() == checkedS.getDataId()) {
-                                        checkedB.setCheck(true);
-                                        break;
-                                    }
-                                }
+            if (bean != null) {
+                List<BaseDataEntity> SystemBusinessList = bean.getBaseData2userList();
+                // 系统类别
+                for (BaseDataEntity checkedS : SystemBusinessList) {
+                    if (checkedS.getDataType() == 1) {
+                        for (BaseDataEntity s : systemTypeList) {
+                            if ((String.valueOf(s.getDataId()).equals(String.valueOf(checkedS.getDataId())))) {
+                                s.setCheck(true);
+                                break;
                             }
                         }
-                        osCooperationAddAdapter.setNewData(systemTypeList);
-                        businessCooperationAddAdapter.setNewData(businessTypeList);
-                        fillData(bean);
+                    } else {
+                        for (BaseDataEntity checkedB : businessTypeList) {
+                            if (checkedB.getDataId() == checkedS.getDataId()) {
+                                checkedB.setCheck(true);
+                                break;
+                            }
+                        }
                     }
-                }));
+                }
+                osCooperationAddAdapter.setNewData(systemTypeList);
+                businessCooperationAddAdapter.setNewData(businessTypeList);
+                fillData(bean);
+            }
+        }));
     }
 
     private void fillData(WorkerVerifySkillBean bean) {
         if (bean.getWorkerVerify().getWorkingYear() != null) {
+            Log.d("555654", bean.getWorkerVerify().getWorkingYear().toString() + " ");
+            Log.d("5556545", GetConstDataUtils.getWorkingYearList().get(bean.getWorkerVerify().getWorkingYear()) + " ");
             tvLimit.setText(GetConstDataUtils.getWorkingYearList().get(bean.getWorkerVerify().getWorkingYear()));
         }
     }

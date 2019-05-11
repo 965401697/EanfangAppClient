@@ -121,6 +121,7 @@
                     android:id="@+id/ll_company_scale"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:padding="@dimen/dimen_30">
 
@@ -154,6 +155,7 @@
                 <RelativeLayout
                     android:id="@+id/ll_type"
                     android:layout_width="match_parent"
+                    android:gravity="center_vertical"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/dimen_30">
 
@@ -185,6 +187,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_gravity="center_vertical"
+                        android:layout_centerVertical="true"
                         android:layout_marginLeft="5dp"
                         android:src="@mipmap/icx_iv" />
                 </RelativeLayout>

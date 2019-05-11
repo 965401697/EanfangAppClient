@@ -158,9 +158,7 @@ public class AddSkillCertificafeActivity extends BaseActivityWithTakePhoto {
             public void onOssSuccess() {
                 runOnUiThread(() -> {
 
-                    EanfangHttp.post(url)
-                            .upJson(JSONObject.toJSONString(entity))
-                            .execute(new EanfangCallback<JSONObject>(AddSkillCertificafeActivity.this, true, JSONObject.class, (bean) -> {
+                    EanfangHttp.post(url).upJson(JSONObject.toJSONString(entity)).execute(new EanfangCallback<JSONObject>(AddSkillCertificafeActivity.this, true, JSONObject.class, (bean) -> {
                                 setResult(RESULT_OK);
                                 finish();
                             }));
@@ -184,7 +182,7 @@ public class AddSkillCertificafeActivity extends BaseActivityWithTakePhoto {
             return true;
         }
         if (TextUtils.isEmpty(etOrg.getText().toString())) {
-            ToastUtil.get().showToast(this, "请输入发证机构");
+            ToastUtil.get().showToast(this, "请输入颁发机构");
             return true;
         }
         if (TextUtils.isEmpty(tvTime.getText().toString())) {
@@ -194,7 +192,7 @@ public class AddSkillCertificafeActivity extends BaseActivityWithTakePhoto {
 
         pic = PhotoUtils.getPhotoUrl("", snplMomentAccident, uploadMap, false);
         if (StringUtils.isEmpty(pic)) {
-            showToast("请添加证书照片");
+            showToast("请添加证书");
             return true;
         }
         return false;

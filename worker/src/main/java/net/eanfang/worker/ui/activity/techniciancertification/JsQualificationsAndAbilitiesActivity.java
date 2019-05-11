@@ -1,6 +1,7 @@
 package net.eanfang.worker.ui.activity.techniciancertification;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -258,10 +259,16 @@ public class JsQualificationsAndAbilitiesActivity extends BaseActivity {
     private void showRvView(boolean isV, RecyclerView recyclerView, TextView ryTv) {
         if (!isV) {
             recyclerView.setVisibility(View.VISIBLE);
-            ryTv.setText("收起 ∧");
+            ryTv.setText("收起");
+            Drawable drawable = getResources().getDrawable(R.mipmap.sjt_s_iv);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            ryTv.setCompoundDrawables(null, null, drawable, null);
         } else {
             recyclerView.setVisibility(View.GONE);
-            ryTv.setText("查看所有 ∨");
+            ryTv.setText("查看所有");
+            Drawable drawable = getResources().getDrawable(R.mipmap.sjt_x_iv);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            ryTv.setCompoundDrawables(null, null, drawable, null);
         }
     }
 

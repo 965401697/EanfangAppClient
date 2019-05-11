@@ -48,6 +48,7 @@ public class TechnicianCertificationActivity extends BaseActivity {
     @BindView(R.id.js_rz_gg_iv)
     ImageView jsRzGgIv;
     private int verify = -1;
+    private int realVerify = -1;
     private AuthStatusBean mAuthStatusBean;
 
     @Override
@@ -56,7 +57,6 @@ public class TechnicianCertificationActivity extends BaseActivity {
         setContentView(R.layout.activity_technician_certification);
         ButterKnife.bind(this);
         initView();
-        initData();
     }
 
     private void initView() {
@@ -84,11 +84,19 @@ public class TechnicianCertificationActivity extends BaseActivity {
                 setRightTitle("");
             }))).showDialog();
         });
+        initData();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        initView();
     }
 
     private void initData() {
         EanfangHttp.post(UserApi.POST_WORKER_AUTH_STATUS).params("accId", EanfangApplication.getApplication().getAccId()).execute(new EanfangCallback<AuthStatusBean>(this, true, AuthStatusBean.class, (bean) -> {
             verify = bean.getVerify();
+            realVerify = bean.getRealVerify();
             if (verify == 2) {
                 setRightTitle("重新认证");
             }
@@ -96,11 +104,12 @@ public class TechnicianCertificationActivity extends BaseActivity {
         }));
     }
 
+
     @OnClick({R.id.sm_rz_wq_tv, R.id.fw_rz_wq_tv, R.id.bz_xx_wq_tv, R.id.zz_nl_wq_tv, R.id.js_rz_gg_iv})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.sm_rz_wq_tv:
-                if (verify == 1 || verify == 2) {
+                if (realVerify == 0) {
                     JumpItent.jump(this, CertificationInfoActivity.class);
                 } else {
                     if (mAuthStatusBean == null) {
@@ -111,7 +120,7 @@ public class TechnicianCertificationActivity extends BaseActivity {
                 }
                 break;
             case R.id.fw_rz_wq_tv:
-                if (mAuthStatusBean.getBase() == 0) {
+                if (realVerify == 1) {
                     ToastUtil.get().showToast(this, "请先进行实名认证");
                     return;
                 }

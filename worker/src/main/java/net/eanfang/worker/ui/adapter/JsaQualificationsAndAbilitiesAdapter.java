@@ -36,7 +36,7 @@ public class JsaQualificationsAndAbilitiesAdapter extends BaseQuickAdapter<Quali
             helper.setText(R.id.tv_school_name, "资质名称：");
 
         }
-        if (!TextUtils.isEmpty(item.getCertificateLevel())) {
+        if (!TextUtils.isEmpty(item.getAwardOrg())) {
             helper.setText(R.id.tv_school_major, "颁发机构：" + item.getAwardOrg());
         } else {
             helper.setText(R.id.tv_school_major, "颁发机构：");
