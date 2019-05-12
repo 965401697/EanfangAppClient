@@ -98,11 +98,9 @@ public enum RetrofitManagement {
                         case HttpCode.CODE_REQUEST_FAST:
                             actionLiveData.setValue(new BaseActionEvent(BaseActionEvent.REQUEST_FAST));
                             throw new RequestFastException();
-//                            break;
                         case HttpCode.CODE_SUCCESS:
                             actionLiveData.setValue(new BaseActionEvent(BaseActionEvent.SUCCESS));
                             return createData(result.getData());
-//                        break;
                         case HttpCode.CODE_UNKNOWN:
                             actionLiveData.setValue(new BaseActionEvent(BaseActionEvent.SERVER_ERROR));
                             break;
@@ -117,10 +115,8 @@ public enum RetrofitManagement {
                         case HttpCode.CODE_PARAMETER_INVALID:
                             actionLiveData.setValue(new BaseActionEvent(BaseActionEvent.PARAM_ERROR));
                             throw new ParameterInvalidException();
-//                            break;
                         case HttpCode.CODE_FROM_INVALID:
                             throw new RequestFromException();
-//                            break;
                         case HttpCode.CODE_RESULT_INVALID:
                             actionLiveData.setValue(new BaseActionEvent(BaseActionEvent.EMPTY_DATA));
                             break;
