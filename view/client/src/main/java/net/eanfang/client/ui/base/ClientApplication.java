@@ -57,7 +57,14 @@ public class ClientApplication extends EanfangApplication {
 
             api.registerApp(EanfangConst.WX_APPID_CLIENT);
 
-            HttpConfig.init(com.eanfang.BuildConfig.API_HOST, BuildConfig.APP_TYPE, com.eanfang.BuildConfig.OSS_ENDPOINT, com.eanfang.BuildConfig.OSS_BUCKET);
+            HttpConfig.init(com.eanfang.BuildConfig.API_HOST,
+                    BuildConfig.APP_TYPE,
+                    com.eanfang.BuildConfig.OSS_ENDPOINT,
+                    com.eanfang.BuildConfig.OSS_BUCKET,
+                    CacheKit.getDiskCacheDir(this).getPath(),
+                    BuildConfig.DEBUG,
+                    BuildConfig.VERSION_CODE
+            );
             LoadKit.initLoadSir();
             CacheKit.init(this).put("APP_TYPE", BuildConfig.APP_TYPE);
             EanfangHttp.setClient();

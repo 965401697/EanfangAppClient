@@ -1,6 +1,10 @@
 package com.eanfang.network.config;
 
+import com.eanfang.network.converter.FastJsonDiskConverter;
 import com.eanfang.network.exception.base.BaseException;
+import com.zchu.rxcache.RxCache;
+
+import java.io.File;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -10,10 +14,11 @@ import lombok.Setter;
 public class HttpConfig {
     private String apiUrl = "";
     private String requestFrom = "";
-
     private String ossEndpoint = "";
     private String ossBucket = "";
-
+    private String cachePath = "";
+    private boolean isDebug = true;
+    private int versionCode;
     @Setter
     private String token;
     /**
@@ -26,7 +31,8 @@ public class HttpConfig {
 
     private static HttpConfig config;
 
-    private HttpConfig() {
+    private HttpConfig(String cachePath) {
+        initRxCache(cachePath);
     }
 
     /**
@@ -35,13 +41,15 @@ public class HttpConfig {
      * @param api  api地址
      * @param from 请求来源
      */
-    public static void init(String api, String from, String ossEndpoint, String ossBucket) {
-        config = new HttpConfig();
+    public static void init(String api, String from, String ossEndpoint, String ossBucket, String cachePath, boolean isDebug, int versionCode) {
+        config = new HttpConfig(cachePath);
         config.apiUrl = api;
         config.requestFrom = from.toUpperCase();
         config.ossEndpoint = ossEndpoint;
         config.ossBucket = ossBucket;
-
+        config.cachePath = cachePath;
+        config.isDebug = isDebug;
+        config.versionCode = versionCode;
     }
 
     public static HttpConfig get() {
@@ -61,5 +69,23 @@ public class HttpConfig {
             return app = 1;
         }
         return app = -1;
+    }
+
+    /**
+     * 初始化RxCache
+     *
+     * @param cachePath cachePath
+     */
+    private void initRxCache(String cachePath) {
+        RxCache.initializeDefault(new RxCache.Builder()
+                .appVersion(versionCode)
+                .diskDir(new File(cachePath + File.separator + "data-cache"))
+                .diskConverter(new FastJsonDiskConverter())
+                //50MB
+                .diskMax((50 * 1024 * 1024L))
+                //50MB
+                .memoryMax(50 * 1024 * 1024)
+                .setDebug(isDebug)
+                .build());
     }
 }
