@@ -101,8 +101,8 @@ public class SkillInfoDetailActivity extends BaseWorkerActivity {
             tvAbility.setText(GetConstDataUtils.getWorkingLevelList().get(mWorkerVerifySkillBean.getWorkerVerify().getWorkingLevel()));
         }
 
-        recyclerViewBusiness.setLayoutManager(new GridLayoutManager(this, 3));
-        recyclerViewOs.setLayoutManager(new GridLayoutManager(this, 3));
+        recyclerViewBusiness.setLayoutManager(new GridLayoutManager(this, 4));
+        recyclerViewOs.setLayoutManager(new GridLayoutManager(this, 4));
 
         businessCooperationAddAdapter = new SkillTypeAdapter(R.layout.item_cooperation_add, 1);
         osCooperationAddAdapter = new SkillTypeAdapter(R.layout.item_cooperation_add, 1);

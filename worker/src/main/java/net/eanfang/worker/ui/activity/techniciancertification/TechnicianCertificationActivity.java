@@ -64,11 +64,11 @@ public class TechnicianCertificationActivity extends BaseActivity {
         setTitle("技师认证");
         SpannableString spannableString = new SpannableString("实名认证（必填）");
         spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#333333")), 0, 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#FF3F3F")), 4, spannableString.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE );
+        spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#FF3F3F")), 4, spannableString.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
         smRzWqTv.setText(spannableString);
         SpannableString spannableStringb = new SpannableString("服务认证（必填）");
         spannableStringb.setSpan(new ForegroundColorSpan(Color.parseColor("#333333")), 0, 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        spannableStringb.setSpan(new ForegroundColorSpan(Color.parseColor("#FF3F3F")), 4, spannableString.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE );
+        spannableStringb.setSpan(new ForegroundColorSpan(Color.parseColor("#FF3F3F")), 4, spannableString.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
         fwRzWqTv.setText(spannableStringb);
 
         setRightTitleOnClickListener(view -> {
@@ -81,7 +81,9 @@ public class TechnicianCertificationActivity extends BaseActivity {
             }
             new TrueFalseDialog(TechnicianCertificationActivity.this, "系统提示", "是否撤销认证并保存信息", () -> EanfangHttp.post(NewApiService.WORKER_AUTH_REVOKE + EanfangApplication.getApplication().getAccId()).execute(new EanfangCallback<JSONPObject>(TechnicianCertificationActivity.this, true, JSONPObject.class, bean -> {
                 verify = 0;
+                realVerify = 1;
                 setRightTitle("");
+                initView();
             }))).showDialog();
         });
         initData();
@@ -111,7 +113,7 @@ public class TechnicianCertificationActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.sm_rz_wq_tv:
-                if (realVerify == 0) {
+                if (verify ==1) {
                     JumpItent.jump(this, CertificationInfoActivity.class);
                 } else {
                     if (mAuthStatusBean == null) {

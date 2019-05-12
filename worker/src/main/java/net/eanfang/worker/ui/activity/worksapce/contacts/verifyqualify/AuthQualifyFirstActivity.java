@@ -1,7 +1,10 @@
 package net.eanfang.worker.ui.activity.worksapce.contacts.verifyqualify;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -74,9 +77,12 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
     RadioButton rvVendor;
     @BindView(R.id.rg_company_type)
     RadioGroup rgCompanyType;
+    @BindView(R.id.jc_ll)
+    LinearLayout jcLl;
 
     private Long orgid;
     private int verifyStatus;
+    private int status;
 
     // 获取系统类别
     List<BaseDataEntity> systemTypeList = Config.get().getBusinessList(1);
@@ -105,13 +111,13 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
         ButterKnife.bind(this);
         initView();
         initData();
-        initListener();
     }
 
     private void initView() {
         setTitle("服务认证");
         setLeftBack();
         orgid = getIntent().getLongExtra("orgid", 0);
+        status = getIntent().getIntExtra("status", 0);
         // TODO: 2018/11/30  今天集合的对象引用 有待优化
         for (BaseDataEntity b : businessTypeList) {
             b.setCheck(false);
@@ -119,14 +125,22 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
         for (BaseDataEntity s : systemTypeList) {
             s.setCheck(false);
         }
+        if (status == 1 | status == 2) {
+            setTitle("服务详情(只读)");
+            jcLl.setVisibility(View.GONE);
+            tvConfim.setVisibility(View.GONE);
+
+        } else {
+            initListener();
+        }
     }
 
     private void initData() {
         EanfangHttp.get(UserApi.GET_COMPANY_ORG_INFO + orgid).execute(new EanfangCallback<AuthCompanyBaseInfoBean>(this, true, AuthCompanyBaseInfoBean.class, (beans) -> {
-                    initSystemData();
-                    initBusinessData();
-                    initBaseInfo();
-                }));
+            initSystemData();
+            initBusinessData();
+            initBaseInfo();
+        }));
 
     }
 
@@ -171,7 +185,7 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
         rgCompanyType.setOnCheckedChangeListener(this);
         tvConfim.setOnClickListener((v) -> {
 //            if (verifyStatus == 0 || verifyStatus == 3) {
-                doVerify();
+            doVerify();
 //            }
         });
 
@@ -230,6 +244,7 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
         commitData();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     public void addSysResult() {
         for (int i = 0; i < systemTypeList.size(); i++) {
             for (int j = 0; j < byNetGrant_system.getList().size(); j++) {
@@ -260,6 +275,10 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
             systemTypeList.get(position).setCheck(!systemTypeList.get(position).isCheck());
             return true;
         });
+        if (status == 1 | status == 2) {
+            tagSystemType.setEnabled(false);
+            tagSystemType.setClickable(false);
+        }
 
     }
 
@@ -272,7 +291,7 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
                 }
             }
         }
-        tagBusinessType.setAdapter(new TagAdapter<BaseDataEntity>(businessTypeList) {
+        TagAdapter tagAdaptera = new TagAdapter<BaseDataEntity>(businessTypeList) {
             @Override
             public View getView(FlowLayout parent, int position, BaseDataEntity mrepairResult) {
                 TextView tv = (TextView) LayoutInflater.from(AuthQualifyFirstActivity.this).inflate(R.layout.layout_trouble_result_item_b, tagBusinessType, false);
@@ -287,12 +306,19 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
                     return true;
                 }
                 return false;
+
             }
-        });
+        };
+
+        tagBusinessType.setAdapter(tagAdaptera);
         tagBusinessType.setOnTagClickListener((view, position, parent) -> {
             businessTypeList.get(position).setCheck(!businessTypeList.get(position).isCheck());
             return true;
         });
+        if (status == 1 | status == 2) {
+            tagBusinessType.setEnabled(false);
+            tagBusinessType.setClickable(false);
+        }
     }
 
 
@@ -303,7 +329,7 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
         hashMapData.put("companySysGrantChange", grantChange_system);
         hashMapData.put("companyBizGrantChange", grantChange_business);
 
-        String requestContent = com.alibaba.fastjson.JSONObject.toJSONString(hashMapData);
+        String requestContent = JSONObject.toJSONString(hashMapData);
         EanfangHttp.post(UserApi.GET_WORKER_COMPANY_QUALIFY)
                 .upJson(requestContent)
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {

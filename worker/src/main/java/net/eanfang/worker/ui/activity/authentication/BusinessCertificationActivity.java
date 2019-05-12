@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CalendarView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
@@ -70,7 +71,7 @@ public class BusinessCertificationActivity extends BaseActivity {
     @BindView(R.id.zc_zj_lrv)
     LtReView zcZjLrv;
     @BindView(R.id.cl_rq_lrv)
-    LtReView clRqLrv;
+    TextView clRqLrv;
     @BindView(R.id.jz_rq_lrv)
     LtReView jzRqLrv;
     private AlertDialog.Builder alertDialog;
@@ -78,6 +79,7 @@ public class BusinessCertificationActivity extends BaseActivity {
     private static final int REQUEST_CODE_BUSINESS_LICENSE = 123;
     private Long mOrgId;
     private int status = 0;
+    private int bizCertify = 0;
     private int order = 1;
     private AuthCompanyBaseInfoBean infoBean = new AuthCompanyBaseInfoBean();
     private Date date;
@@ -123,7 +125,7 @@ public class BusinessCertificationActivity extends BaseActivity {
             showToast("请输入注册资金");
             return;
         } else if (StringUtils.isEmpty(clRqLrv.getText().toString().trim())) {
-            showToast("请输入成立日期");
+            showToast("请选择成立日期");
             return;
         } else if (StringUtils.isEmpty(jzRqLrv.getText().toString().trim())) {
             showToast("营业截至日期");
@@ -154,7 +156,7 @@ public class BusinessCertificationActivity extends BaseActivity {
             intent.putExtra("order", order);
             startActivity(intent);
             ContactsFragment.isRefresh = true;
-            finishSelf();
+            finish();
         }));
     }
 
@@ -174,18 +176,25 @@ public class BusinessCertificationActivity extends BaseActivity {
     private void initData() {
         mOrgId = getIntent().getLongExtra("mOrgId", 0);
         status = getIntent().getIntExtra("status", 0);
+        bizCertify = getIntent().getIntExtra("bizCertify", 0);
         clRqLrv.setOnClickListener(view -> setRq());
         initAccessToken();
         EanfangHttp.get(UserApi.GET_COMPANY_ORG_INFO + mOrgId).execute(new EanfangCallback<AuthCompanyBaseInfoBean>(this, true, AuthCompanyBaseInfoBean.class, (beans) -> {
             infoBean = beans;
-            switch (infoBean.getStatus()) {
+            switch (bizCertify) {
                 case 0:
-                    setData(beans);
-                    break;
-                default:
                     setRightTitle("只读");
                     setData(beans);
                     setView();
+                    break;
+                default:
+                    if ((infoBean.getStatus() == 1) | (infoBean.getStatus() == 2)) {
+                        setRightTitle("只读");
+                        setData(beans);
+                        setView();
+                    } else {
+                        setData(beans);
+                    }
             }
         }));
     }
@@ -198,6 +207,7 @@ public class BusinessCertificationActivity extends BaseActivity {
         frDbLrv.setEnabled(false);
         zcZjLrv.setEnabled(false);
         clRqLrv.setEnabled(false);
+        clRqLrv.setClickable(false);
         jzRqLrv.setEnabled(false);
         setRightTitleOnClickListener(null);
     }

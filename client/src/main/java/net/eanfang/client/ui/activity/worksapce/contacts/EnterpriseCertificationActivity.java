@@ -10,6 +10,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.BusinessManagementData;
 import com.eanfang.ui.base.BaseActivity;
 
 import net.eanfang.client.R;
@@ -18,6 +21,8 @@ import net.eanfang.client.ui.widget.WQLeftRightClickTextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.eanfang.apiservice.NewApiService.BUSINESS_MANAGEMENT;
 
 public class EnterpriseCertificationActivity extends BaseActivity {
 
@@ -35,6 +40,7 @@ public class EnterpriseCertificationActivity extends BaseActivity {
     private Long mOrgId;
     private int status = 0;
     private String mOrgName = "";
+    private int bizCertify = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +48,6 @@ public class EnterpriseCertificationActivity extends BaseActivity {
         setContentView(R.layout.activity_enterprise_certification);
         ButterKnife.bind(this);
         initView();
-        initData();
     }
 
     private void initView() {
@@ -52,7 +57,7 @@ public class EnterpriseCertificationActivity extends BaseActivity {
         spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#333333")), 0, 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#FF3F3F")), 4, spannableString.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
         gsRzWqTv.setText(spannableString);
-
+        initData();
     }
 
     private void initData() {
@@ -60,9 +65,18 @@ public class EnterpriseCertificationActivity extends BaseActivity {
         status = getIntent().getIntExtra("status", 0);
         mOrgName = getIntent().getStringExtra("orgName");
 
+        EanfangHttp.post(BUSINESS_MANAGEMENT).params("orgId", mOrgId).execute(new EanfangCallback<>(this, true, BusinessManagementData.DataBean.class, this::setData));
 
     }
-
+    private void setData(BusinessManagementData.DataBean data) {
+        bizCertify = data.getBizCertify();
+        status = data.getStatus();
+    }
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        initData();
+    }
     @OnClick({R.id.gs_rz_wq_tv})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -70,6 +84,7 @@ public class EnterpriseCertificationActivity extends BaseActivity {
                 Intent intent = new Intent(this, BusinessCertificationActivity.class);
                 intent.putExtra("mOrgId", mOrgId);
                 intent.putExtra("status", status);
+                intent.putExtra("bizCertify", bizCertify);
                 startActivity(intent);
                 break;
             default:

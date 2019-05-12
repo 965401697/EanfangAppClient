@@ -91,7 +91,7 @@ public class RealNameAuthenticationActivity extends BaseActivityWithTakePhoto {
                 Log.d("ss56", "initData: " + bean.toString());
                 mTechWorkerVerifyEntity = (TechWorkerVerifyEntity) JSONObject.toJavaObject(bean, TechWorkerVerifyEntity.class);
                 Log.d("ss566", "initData: " + mTechWorkerVerifyEntity.toString());
-                if (mTechWorkerVerifyEntity != null) {
+                if (mTechWorkerVerifyEntity != null && (mTechWorkerVerifyEntity.getStatus() != 0)) {
                     fillData();
                 }
             }

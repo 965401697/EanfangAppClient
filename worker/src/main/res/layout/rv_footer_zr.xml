@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/dimen_40"
-        android:text="查看所有荣誉 ⇩"
+        android:text="查看所有"
         android:textColor="@color/color_service_tel"
         android:textSize="18sp" />
     <!--⇧ ⇩-->

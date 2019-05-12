@@ -1,6 +1,7 @@
 package net.eanfang.worker.ui.activity.my.certification;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -91,6 +92,7 @@ public class CertificationInfoActivity extends BaseWorkerActivity {
         etCardId.setFocusable(false);
         //Log.i("zhangyanran",EanfangApplication.get().getUser().getAccount().getIdCard()+"-----------"+EanfangApplication.get().getUser().getAccount().getRealName());
         etCardId.setText(EanfangApplication.get().getUser().getAccount().getIdCard());
+        Log.d("66566", "initViews: "+EanfangApplication.get().getUser().getAccount().getGender());
         //0女1男
         if (EanfangApplication.get().getUser().getAccount().getGender() == 0) {
             rbWoman.setSelected(true);
