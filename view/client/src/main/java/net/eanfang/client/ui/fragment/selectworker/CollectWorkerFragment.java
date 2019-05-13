@@ -19,6 +19,7 @@ import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.Message;
+import com.eanfang.model.reapair.RepairPersonalInfoEntity;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
@@ -70,13 +71,17 @@ public class CollectWorkerFragment extends BaseFragment implements SwipeRefreshL
     private Long mOwnerOrgId;
     public int mPage = 1;
     private QueryEntry mQueryEntry;
-
-    public static CollectWorkerFragment getInstance(RepairOrderEntity toRepairBean, ArrayList<String> businessIds, int doorfee, Long ownerOrgId) {
+    /**
+     * 个人信息
+     */
+    RepairPersonalInfoEntity.ListBean repairPersonalInfoEntity;
+    public static CollectWorkerFragment getInstance(RepairOrderEntity toRepairBean, RepairPersonalInfoEntity.ListBean repairPersonalInfoEntity, ArrayList<String> businessIds, int doorfee, Long ownerOrgId) {
         CollectWorkerFragment collectWorkerFragment = new CollectWorkerFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("toRepairBean", toRepairBean);
         bundle.putStringArrayList("bussinsList", businessIds);
         bundle.putInt("doorFee", doorfee);
+        bundle.putSerializable("topInfo", repairPersonalInfoEntity);
         bundle.putLong("mOwnerOrgId", ownerOrgId);
         collectWorkerFragment.setArguments(bundle);
         return collectWorkerFragment;
@@ -91,6 +96,7 @@ public class CollectWorkerFragment extends BaseFragment implements SwipeRefreshL
     protected void initData(Bundle arguments) {
         Bundle bundle = getArguments();
         toRepairBean = (RepairOrderEntity) bundle.getSerializable("toRepairBean");
+        repairPersonalInfoEntity = (RepairPersonalInfoEntity.ListBean) bundle.getSerializable("topInfo");
         businessIds = bundle.getStringArrayList("bussinsList");
         mDoorFee = bundle.getInt("doorFee", 0);
         mOwnerOrgId = bundle.getLong("mOwnerOrgId", 0);
@@ -118,6 +124,7 @@ public class CollectWorkerFragment extends BaseFragment implements SwipeRefreshL
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(getActivity(), WorkerDetailActivity.class);
                 intent.putExtra("toRepairBean", toRepairBean);
+                intent.putExtra("topInfo", repairPersonalInfoEntity);
                 intent.putExtra("companyUserId", selectWorkerAdapter.getData().get(position).getCompanyUserId() + "");
                 intent.putExtra("workerId", selectWorkerAdapter.getData().get(position).getId() + "");
                 startActivity(intent);

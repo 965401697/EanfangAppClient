@@ -1,5 +1,6 @@
 package net.eanfang.worker.ui.activity.worksapce.contacts.verifyqualify;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ExpandableListView;
@@ -9,19 +10,18 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.config.Config;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.GrantChange;
 import com.eanfang.model.SystypeBean;
-import com.eanfang.ui.base.BaseActivity;
-import com.eanfang.util.JumpItent;
 import com.eanfang.model.sys.BaseDataEntity;
+import com.eanfang.ui.base.BaseActivity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.GroupAdapter;
+import net.eanfang.worker.ui.activity.authentication.SubmitSuccessfullyQyActivity;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -43,7 +43,7 @@ public class AuthQualifySecondActivity extends BaseActivity {
     @BindView(R.id.tv_confim)
     TextView tvConfim;
 
-    List<BaseDataEntity> areaListBean = Config.get().getRegionList(1);
+    List<BaseDataEntity> areaListBean;
     @BindView(R.id.ll_title)
     LinearLayout llTitle;
     private GroupAdapter mAdapter;
@@ -63,13 +63,12 @@ public class AuthQualifySecondActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth_qualify_second);
         ButterKnife.bind(this);
-        doLoadArea();
         initView();
         initData();
     }
 
     private void initView() {
-        setTitle("技能资质");
+        setTitle("服务认证");
         setLeftBack();
         orgid = getIntent().getLongExtra("orgid", 0);
         verifyStatus = getIntent().getIntExtra("verifyStatus", 0);
@@ -82,30 +81,14 @@ public class AuthQualifySecondActivity extends BaseActivity {
 
     }
 
-    private void doLoadArea() {
-        new Thread(() -> {
-            //获得全部 地区数据
-            List<BaseDataEntity> allAreaList = new ArrayList<>(Config.get().getRegionList());
-            for (int i = 0; i < areaListBean.size(); i++) {
-                BaseDataEntity provinceEntity = areaListBean.get(i);
-                //处理当前省下的所有市
-                List<BaseDataEntity> cityList = Stream.of(allAreaList).filter(bean -> bean.getParentId() != null && bean.getParentId().intValue() == provinceEntity.getDataId()).toList();
-                //查询出来后，移除，以增加效率
-                allAreaList.removeAll(cityList);
-                for (int j = 0; j < cityList.size(); j++) {
-                    BaseDataEntity cityEntity = cityList.get(j);
-                    //处理当前市下所有区县
-                    List<BaseDataEntity> countyList = Stream.of(allAreaList).filter(bean -> bean.getParentId() != null && bean.getParentId().intValue() == cityEntity.getDataId()).toList();
-                    //查询出来后，移除，以增加效率
-                    allAreaList.removeAll(countyList);
-                    cityList.get(j).setChildren(countyList);
-                }
-                areaListBean.get(i).setChildren(cityList);
-            }
-        }).start();
-    }
-
     private void initData() {
+        //获取国家区域
+        if (EanfangApplication.get().sSaveArea == null) {
+            showToast("加载服务区域失败！");
+            return;
+        }
+        BaseDataEntity entity = EanfangApplication.get().sSaveArea;
+        areaListBean = entity.getChildren();
         EanfangHttp.get(UserApi.GET_COMPANY_ORG_SYS_INFO + orgid + "/AREA")
                 .execute(new EanfangCallback<SystypeBean>(this, true, SystypeBean.class, (bean) -> {
                     byNetGrant = bean;
@@ -208,12 +191,15 @@ public class AuthQualifySecondActivity extends BaseActivity {
 
     }
 
+    private int order = 2;
+
     private void commitVerfiy() {
 
-        Bundle bundle = new Bundle();
-        bundle.putLong("orgid", orgid);
-        bundle.putInt("verifyStatus", verifyStatus);
-        JumpItent.jump(AuthQualifySecondActivity.this, AuthQualifyListActivity.class, bundle);
-
+        Intent intent = new Intent(this, SubmitSuccessfullyQyActivity.class);
+        intent.putExtra("mOrgId", orgid);
+        intent.putExtra("status", verifyStatus);
+        intent.putExtra("order", order);
+        startActivity(intent);
+        finish();
     }
 }

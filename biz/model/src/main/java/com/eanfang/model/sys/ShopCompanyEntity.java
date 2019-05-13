@@ -68,6 +68,13 @@ public class ShopCompanyEntity implements Serializable {
     private Integer isManufacturer;
     //是否官网显示（0：不显示，1：显示）
     private Integer showWww;
+    // 从业年限
+    private int working_level;
+    // 能力等级
+    private int working_year;
+    // 公司类型
+    //是否生产厂商
+    private int is_manufacturer;
 
 
     /*

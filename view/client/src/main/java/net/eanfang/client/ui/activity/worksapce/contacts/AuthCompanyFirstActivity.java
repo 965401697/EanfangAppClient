@@ -30,6 +30,7 @@ import com.jph.takephoto.model.TResult;
 import com.eanfang.model.sys.OrgUnitEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.fragment.ContactsFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -241,15 +242,17 @@ public class AuthCompanyFirstActivity extends BaseActivityWithTakePhoto {
         });
 
     }
-
     private void commit(String json) {
         EanfangHttp.post(UserApi.GET_ORGUNIT_ENT_INSERT)
                 .upJson(json)
                 .execute(new EanfangCallback<OrgUnitEntity>(this, true, OrgUnitEntity.class, (bean) -> {
                     //保存成功后，提交认证
-                    byNetBean = new AuthCompanyBaseInfoBean();
-                    byNetBean.setOrgId(bean.getOrgId());
-                    doJumpSecond();
+//                    byNetBean = new AuthCompanyBaseInfoBean();
+//                    byNetBean.setOrgId(bean.getOrgId());
+//                    doJumpSecond();
+                    ContactsFragment.isRefresh = true;
+                    showToast("提交成功");
+                    finish();
                 }));
     }
 

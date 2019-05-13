@@ -19,6 +19,7 @@ import com.baidu.ocr.sdk.OCR;
 import com.baidu.ocr.sdk.OnResultListener;
 import com.baidu.ocr.sdk.exception.OCRError;
 import com.baidu.ocr.sdk.model.AccessToken;
+import com.baidu.ocr.ui.camera.CameraActivity;
 import com.customview.LtReView;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
@@ -33,8 +34,9 @@ import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.RecognizeService;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
-import com.baidu.ocr.ui.camera.CameraActivity;
+
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.fragment.ContactsFragment;
 
 import java.io.File;
 import java.io.IOException;
@@ -101,7 +103,9 @@ public class BusinessCertificationActivity extends BaseActivity {
     }
 
     public void getData() {
-        if ("".equals(infoBean.getLicensePic()) || infoBean.getLicensePic() == null) {
+        if (dwMcLrv.getText().toString().trim().equals("无") & frDbLrv.getText().toString().trim().equals("无")) {
+            showToast("请上传正确的营业执照");
+        } else if ("".equals(infoBean.getLicensePic()) || infoBean.getLicensePic() == null) {
             showToast("请点击加号,上传营业执照");
             return;
         } else if (StringUtils.isEmpty(dwMcLrv.getText().toString().trim())) {
@@ -150,6 +154,7 @@ public class BusinessCertificationActivity extends BaseActivity {
             intent.putExtra("status", status);
             intent.putExtra("order", order);
             startActivity(intent);
+            ContactsFragment.isRefresh = true;
             finishSelf();
         }));
     }
@@ -174,22 +179,14 @@ public class BusinessCertificationActivity extends BaseActivity {
         initAccessToken();
         EanfangHttp.get(UserApi.GET_COMPANY_ORG_INFO + mOrgId).execute(new EanfangCallback<AuthCompanyBaseInfoBean>(this, true, AuthCompanyBaseInfoBean.class, (beans) -> {
             infoBean = beans;
-            switch (status) {
+            switch (infoBean.getStatus()) {
                 case 0:
                     setData(beans);
                     break;
-                case 1:
-                    setData(beans);
-                    break;
-                case 2:
+                default:
                     setRightTitle("只读");
                     setData(beans);
                     setView();
-                    break;
-                case 3:
-                    setData(beans);
-                    break;
-                default:
             }
         }));
     }
@@ -266,6 +263,7 @@ public class BusinessCertificationActivity extends BaseActivity {
                 String token = accessToken.getAccessToken();
                 hasGotToken = true;
             }
+
             @Override
             public void onError(OCRError error) {
                 error.printStackTrace();
@@ -288,7 +286,6 @@ public class BusinessCertificationActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        // 识别成功回调，营业执照识别
         if (requestCode == REQUEST_CODE_BUSINESS_LICENSE && resultCode == Activity.RESULT_OK) {
             RecognizeService.recBusinessLicense(this, new File(getApplication().getFilesDir(), "pic.jpg").getAbsolutePath(),
                     result -> {

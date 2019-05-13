@@ -53,13 +53,13 @@
                     android:textSize="14sp" />
             </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
+            <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_view_a"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone">
 
-            </androidx.recyclerview.widget.RecyclerView>
+            </android.support.v7.widget.RecyclerView>
 
             <Space
                 android:layout_width="match_parent"
@@ -72,7 +72,7 @@
                 android:background="@color/white"
                 android:gravity="center"
                 android:padding="@dimen/dimen_20"
-                android:text="查看所有 ⇩"
+                android:text="查看所有∨"
                 android:textColor="#999999"
                 android:textSize="16sp" />
 
@@ -113,13 +113,13 @@
                     android:textSize="14sp" />
             </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
+            <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_view_b"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone">
 
-            </androidx.recyclerview.widget.RecyclerView>
+            </android.support.v7.widget.RecyclerView>
 
             <Space
                 android:layout_width="match_parent"
@@ -132,7 +132,7 @@
                 android:background="@color/white"
                 android:gravity="center"
                 android:padding="@dimen/dimen_20"
-                android:text="查看所有 ⇩"
+                android:text="查看所有∨"
                 android:textColor="#999999"
                 android:textSize="16sp" />
 
@@ -172,13 +172,13 @@
                     android:textSize="14sp" />
             </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
+            <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_view_c"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone">
 
-            </androidx.recyclerview.widget.RecyclerView>
+            </android.support.v7.widget.RecyclerView>
 
             <Space
                 android:layout_width="match_parent"
@@ -191,7 +191,7 @@
                 android:background="@color/white"
                 android:gravity="center"
                 android:padding="@dimen/dimen_20"
-                android:text="查看所有 ⇩"
+                android:text="查看所有∨"
                 android:textColor="#999999"
                 android:textSize="16sp" />
 
@@ -231,13 +231,13 @@
                     android:textSize="14sp" />
             </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
+            <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_view_d"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone">
 
-            </androidx.recyclerview.widget.RecyclerView>
+            </android.support.v7.widget.RecyclerView>
 
             <Space
                 android:layout_width="match_parent"
@@ -250,7 +250,7 @@
                 android:background="@color/white"
                 android:gravity="center"
                 android:padding="@dimen/dimen_20"
-                android:text="查看所有 ⇩"
+                android:text="查看所有∨"
                 android:textColor="#999999"
                 android:textSize="16sp" />
 
@@ -290,14 +290,14 @@
                     android:textSize="14sp" />
             </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
+            <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_view_e"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:visibility="gone">
 
-            </androidx.recyclerview.widget.RecyclerView>
+            </android.support.v7.widget.RecyclerView>
 
             <Space
                 android:layout_width="match_parent"
@@ -310,7 +310,7 @@
                 android:background="@color/white"
                 android:gravity="center"
                 android:padding="@dimen/dimen_20"
-                android:text="查看所有 ⇩"
+                android:text="查看所有∨"
                 android:textColor="#999999"
                 android:textSize="16sp" />
 

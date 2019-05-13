@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.eanfang.model.sys.BaseDataEntity;
@@ -83,33 +84,37 @@ public class GroupAdapter extends BaseExpandableListAdapter {
             holder = new FirstHolder();
             convertView = mInflate.inflate(R.layout.item_expand_lv_first, parent, false);
             holder.tv = convertView.findViewById(R.id.tv);
-            holder.cb = convertView.findViewById(R.id.cb);
+            holder.tv_cb = ((CheckBox) convertView.findViewById(R.id.tv_cb));
+            holder.img_area = ((ImageView) convertView.findViewById(R.id.img_area));
             convertView.setTag(holder);
         } else {
             holder = (FirstHolder) convertView.getTag();
         }
         holder.tv.setText(mListData.get(groupPosition).getDataName());
-
-        final FirstHolder finalHolder = holder;
         if (isAuth) {
-            finalHolder.cb.setEnabled(false);
+            holder.tv_cb.setEnabled(false);
         } else {
-            finalHolder.cb.setOnClickListener(v -> {
-                boolean isChecked = finalHolder.cb.isChecked();
+            FirstHolder finalHolder = holder;
+            holder.tv_cb.setOnClickListener(v -> {
+                boolean isChecked = finalHolder.tv_cb.isChecked();
+                finalHolder.tv_cb.setText(isChecked ? "取消全选" : "全选");
                 mListData.get(groupPosition).setCheck(isChecked);
-                for (int i = 0; i < mListData.get(groupPosition).getChildren().size(); i++) {
-                    BaseDataEntity secondModel = mListData.get(groupPosition).getChildren().get(i);
-                    secondModel.setCheck(isChecked);
-                    for (int j = 0; j < secondModel.getChildren().size(); j++) {
-                        BaseDataEntity thirdModel = secondModel.getChildren().get(j);
-                        thirdModel.setCheck(isChecked);
+                if (mListData.get(groupPosition).getChildren() != null) {
+                    for (int i = 0; i < mListData.get(groupPosition).getChildren().size(); i++) {
+                        BaseDataEntity secondModel = mListData.get(groupPosition).getChildren().get(i);
+                        secondModel.setCheck(isChecked);
+                        for (int j = 0; j < secondModel.getChildren().size(); j++) {
+                            BaseDataEntity thirdModel = secondModel.getChildren().get(j);
+                            thirdModel.setCheck(isChecked);
+                        }
                     }
                 }
                 notifyDataSetChanged();
             });
         }
-        finalHolder.cb.setChecked(mListData.get(groupPosition).isCheck());
-
+        holder.img_area.setSelected(isExpanded);
+        holder.tv_cb.setChecked(mListData.get(groupPosition).isCheck());
+        holder.tv_cb.setText(holder.tv_cb.isChecked() ? "取消全选" : "全选");
         return convertView;
     }
 
@@ -121,6 +126,8 @@ public class GroupAdapter extends BaseExpandableListAdapter {
         CustomExpandableListView lv = ((CustomExpandableListView) convertView);
         if (convertView == null) {
             lv = new CustomExpandableListView(context);
+            lv.setGroupIndicator(null);
+            lv.setDivider(null);
         }
 
         ChildAdapter secondAdapter = new ChildAdapter(context, mListData.get(groupPosition).getChildren(), groupPosition);
@@ -136,7 +143,8 @@ public class GroupAdapter extends BaseExpandableListAdapter {
 
     class FirstHolder {
         TextView tv;
-        CheckBox cb;
+        CheckBox tv_cb;
+        ImageView img_area;
     }
 
 

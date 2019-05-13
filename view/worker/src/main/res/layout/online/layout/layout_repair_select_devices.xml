@@ -35,11 +35,11 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:drawablePadding="@dimen/dimen_34"
-            android:drawableTop="@mipmap/ic_repair_device_type"
             android:gravity="center"
             android:text="按设备类别粗选"
             android:textColor="@color/color_client_neworder"
             android:textSize="@dimen/textSize_14" />
+        <!--android:drawableTop="@mipmap/ic_repair_device_type"-->
 
         <TextView
             android:id="@+id/tv_device_warehouse"
@@ -47,10 +47,11 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:drawablePadding="@dimen/dimen_34"
-            android:drawableTop="@mipmap/ic_repair_device_warehouse"
             android:gravity="center"
             android:text="设备库精选"
             android:textColor="@color/color_client_neworder"
             android:textSize="@dimen/textSize_14" />
+        <!--android:drawableTop="@mipmap/ic_repair_device_warehouse"-->
+
     </LinearLayout>
 </LinearLayout>

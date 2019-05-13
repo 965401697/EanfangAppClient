@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.http.EanfangCallback;
@@ -27,8 +30,6 @@ import net.eanfang.client.ui.adapter.repair.FaultLibraryAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -51,7 +52,9 @@ public class FaultLibraryActivity extends BaseActivity implements SwipyRefreshLa
     EditText etSearch;
     @BindView(R.id.tv_go)
     TextView tvGo;
-    //搜索状态不让用户上拉
+    /**
+     * 搜索状态不让用户上拉
+     */
     private boolean mFlag = false;
 
     private FaultLibraryAdapter faultLibraryAdapter;

@@ -1,28 +1,28 @@
 package net.eanfang.worker.ui.activity.my.specialist;
 
 import android.os.Bundle;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSONObject;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
+import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.ExpertVerifySkillBean;
-import com.eanfang.model.QualifyCertificafeListBean;
-import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.JsonUtils;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 import com.eanfang.model.sys.BaseDataEntity;
+import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.StringUtils;
+import com.photopicker.com.widget.BGASortableNinePhotoLayout;
+import com.yaf.base.entity.ZjZgBean;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.my.certification.QualificationAdapter;
@@ -30,6 +30,7 @@ import net.eanfang.worker.ui.activity.my.certification.SkillTypeAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -52,15 +53,16 @@ public class SpecialistSkillInfoDetailActivity extends BaseWorkerActivity {
     List<BaseDataEntity> brandList = Stream.of(Config.get().getModelList(2)).toList();
     List<BaseDataEntity> myBrandList = new ArrayList<>();
 
-    @BindView(R.id.recycler_view)
-    RecyclerView recyclerView;
-
     @BindView(R.id.ll_factory)
     LinearLayout llFactory;
     @BindView(R.id.et_factory_name)
     EditText etFactoryName;
     @BindView(R.id.snpl_impower)
     BGASortableNinePhotoLayout snplImpower;
+    @BindView(R.id.et_company)
+    EditText etCompany;
+    @BindView(R.id.snpl_pic)
+    BGASortableNinePhotoLayout snplPic;
 
 
     private SkillTypeAdapter businessCooperationAddAdapter;
@@ -137,12 +139,13 @@ public class SpecialistSkillInfoDetailActivity extends BaseWorkerActivity {
             snplImpower.setData(list);
         }
 
-
-        tvLimit.setText(GetConstDataUtils.getWorkingYearList().get(mExpertVerifySkillBean.getExpertVerify().getWorkingAge()));
+        if (mExpertVerifySkillBean.getExpertVerify().getWorkingAge() != null) {
+            tvLimit.setText(GetConstDataUtils.getWorkingYearList().get(mExpertVerifySkillBean.getExpertVerify().getWorkingAge()));
+        }
         tvAbility.setText(GetConstDataUtils.getExpertTypeList().get(mExpertVerifySkillBean.getExpertVerify().getApproveType()));
 
-        recyclerViewBusiness.setLayoutManager(new GridLayoutManager(this, 3));
-        recyclerViewBrand.setLayoutManager(new GridLayoutManager(this, 3));
+        recyclerViewBusiness.setLayoutManager(new GridLayoutManager(this, 4));
+        recyclerViewBrand.setLayoutManager(new GridLayoutManager(this, 4));
         recyclerViewBusiness.setNestedScrollingEnabled(false);
         recyclerViewBrand.setNestedScrollingEnabled(false);
 
@@ -155,39 +158,28 @@ public class SpecialistSkillInfoDetailActivity extends BaseWorkerActivity {
         businessCooperationAddAdapter.setNewData(systemTypeList);
         brandAdapter.setNewData(myBrandList);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setNestedScrollingEnabled(false);
-        adapter = new QualificationAdapter(1);
-        adapter.bindToRecyclerView(recyclerView);
+
     }
-
+    private ArrayList<String> picList = new ArrayList<>();
     private void getData() {
+        EanfangHttp.post(UserApi.TECH_WORKER_LIST_QUALIFY_C).execute(new EanfangCallback<ZjZgBean>(this, true, ZjZgBean.class) {
+            @Override
+            public void onSuccess(ZjZgBean bean) {
+                if ((bean == null) || (bean.getVerifyOrg() == null)) {
 
-        JSONObject object = new JSONObject();
-        object.put("accId", String.valueOf(EanfangApplication.get().getAccId()));
-        object.put("type", "1");
-        EanfangHttp.post(UserApi.TECH_WORKER_LIST_QUALIFY)
-                .upJson(JsonUtils.obj2String(object))
-                .execute(new EanfangCallback<QualifyCertificafeListBean>(this, true, QualifyCertificafeListBean.class) {
-                    @Override
-                    public void onSuccess(QualifyCertificafeListBean bean) {
-
-
-                        if (bean.getList().size() > 0) {
-                            adapter.setNewData(bean.getList());
-                        }
-
+                } else {
+                    snplPic.setData(null);
+                    if (!StringUtils.isEmpty(bean.getVerifyPicUrl())) {
+                        String[] pics = bean.getVerifyPicUrl().split(",");
+                        picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
+                        snplPic.setDelegate(new BGASortableDelegate(SpecialistSkillInfoDetailActivity.this, 1, 1));
+                        snplPic.setData(picList);
+                        snplPic.setEditable(false);
+                        etCompany.setEnabled(false);
+                        etCompany.setText(bean.getVerifyOrg());
                     }
-
-                    @Override
-                    public void onNoData(String message) {
-
-                    }
-
-                    @Override
-                    public void onCommitAgain() {
-
-                    }
-                });
+                }
+            }
+        });
     }
 }

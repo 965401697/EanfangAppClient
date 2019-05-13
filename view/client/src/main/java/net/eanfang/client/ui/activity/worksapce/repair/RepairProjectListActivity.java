@@ -3,10 +3,11 @@ package net.eanfang.client.ui.activity.worksapce.repair;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;

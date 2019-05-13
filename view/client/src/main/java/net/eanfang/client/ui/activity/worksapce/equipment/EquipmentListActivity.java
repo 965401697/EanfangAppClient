@@ -2,9 +2,14 @@ package net.eanfang.client.ui.activity.worksapce.equipment;
 
 import android.os.Bundle;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
 import com.eanfang.config.Config;
-import com.flyco.tablayout.SlidingTabLayout;
 import com.eanfang.model.sys.BaseDataEntity;
+import com.flyco.tablayout.SlidingTabLayout;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
@@ -12,10 +17,6 @@ import net.eanfang.client.ui.base.BaseClientActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -32,7 +33,11 @@ public class EquipmentListActivity extends BaseClientActivity {
     private List<BaseDataEntity> allmTitles = Config.get().getBusinessList(1);
     private List<String> mTitlesList = new ArrayList<>();
     private String[] mTitles;
-    private Bundle mBundle;
+
+    /**
+     * 是否报修
+     */
+    private Boolean isRepair = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,13 +47,13 @@ public class EquipmentListActivity extends BaseClientActivity {
         setTitle("设备列表");
         setLeftBack();
         initView();
-        mBundle = getIntent().getExtras();
     }
 
     private void initView() {
+        isRepair = getIntent().getBooleanExtra("repair", false);
         mTitles = new String[allmTitles.size()];
         for (BaseDataEntity baseDataEntity : allmTitles) {
-            mFragments.add(EquipmentListFragment.getInstance(baseDataEntity.getDataCode()));
+            mFragments.add(EquipmentListFragment.getInstance(baseDataEntity.getDataCode(), isRepair));
             mTitlesList.add(baseDataEntity.getDataName());
         }
         mTitlesList.toArray(mTitles);
@@ -56,7 +61,6 @@ public class EquipmentListActivity extends BaseClientActivity {
         vpEquipment.setAdapter(mAdapter);
         tlEquipment.setViewPager(vpEquipment, mTitles, this, mFragments);
         vpEquipment.setCurrentItem(0);
-
     }
 
 
@@ -81,8 +85,5 @@ public class EquipmentListActivity extends BaseClientActivity {
         }
     }
 
-    public Bundle getmBundle() {
-        return mBundle;
-    }
 }
 

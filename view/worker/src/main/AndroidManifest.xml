@@ -80,7 +80,21 @@
         android:supportsRtl="true"
         android:theme="@style/NewBaseTheme"
         tools:replace="android:name,android:theme">
-
+        <activity android:name=".ui.activity.worksapce.contacts.baseinfo.AuthCompanyFirstBActivity"></activity>
+        <activity android:name=".ui.activity.techniciancertification.JsCapabilityTagActivity" />
+        <activity android:name=".ui.activity.techniciancertification.JsQualificationsAndAbilitiesActivity" />
+        <activity android:name=".ui.activity.techniciancertification.SubmitSuccessfullyJsActivity" />
+        <activity android:name=".ui.activity.techniciancertification.RealNameAuthenticationActivity" />
+        <activity android:name=".ui.activity.techniciancertification.PerfectingPersonalDataActivity" />
+        <activity android:name=".ui.activity.techniciancertification.TechnicianCertificationActivity" />
+        <activity android:name=".ui.activity.authentication.MechanicalOrganizationActivity" />
+        <activity android:name=".ui.activity.authentication.MoreCapabilityActivity" />
+        <activity android:name=".ui.activity.authentication.QualificationsAndHonoursActivity" />
+        <activity android:name=".ui.activity.authentication.SubmitSuccessfullyQyActivity" />
+        <activity android:name=".ui.activity.authentication.BusinessCertificationActivity" />
+        <activity android:name=".ui.activity.authentication.CompanyPagesActivity" />
+        <activity android:name=".ui.activity.authentication.EnterpriseCertificationActivity" />
+        <activity android:name=".ui.activity.authentication.CompanyManagerBActivity" />
         <!-- 多渠道打包 -->
         <meta-data
             android:name="com.tencent.tac.channel"
@@ -1162,8 +1176,9 @@
         <activity android:name=".ui.activity.worksapce.security.SecurityCommentListActivity" />
         <activity android:name=".ui.activity.worksapce.security.SecurityPersonalPublicListActivity" />
         <activity android:name=".ui.activity.worksapce.security.SecurityFoucsListActivity" />
-        <activity android:name=".ui.activity.techniciancertification.TechnicianCertificationActivity" />
-        <activity android:name=".ui.activity.techniciancertification.PerfectingPersonalDataActivity" />
+        <activity android:name=".ui.activity.my.UserHomeActivity"/>
+        <activity android:name=".ui.activity.im.FollowListActivity"/>
+        <activity android:name=".ui.activity.im.PeerConnectionListActivity"/>
     </application>
 
 </manifest>

@@ -39,6 +39,7 @@ public class WorkReportListAdapter extends BaseQuickAdapter<WorkReportListBean.L
             helper.getView(R.id.tv_order_read).setVisibility(View.GONE);
         }
         helper.setText(R.id.tv_company_name, item.getCreateCompany().getOrgName());
+        if(item.getCreateOrg()!=null)
         helper.setText(R.id.tv_depart_name, "部门            " + item.getCreateOrg().getOrgName());
         helper.setText(R.id.tv_type, "类型            " + GetConstDataUtils.getWorkReportTypeList().get(item.getType()));
         helper.setText(R.id.tv_pub_person, "发布人        " + item.getCreateUser().getAccountEntity().getRealName());

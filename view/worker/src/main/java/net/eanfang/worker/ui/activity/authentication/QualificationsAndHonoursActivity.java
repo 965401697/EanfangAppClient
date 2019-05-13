@@ -173,10 +173,10 @@ public class QualificationsAndHonoursActivity extends BaseActivity {
     private void showRvView(boolean isV, RecyclerView recyclerView, TextView ryTv) {
         if (!isV) {
             recyclerView.setVisibility(View.VISIBLE);
-            ryTv.setText("收起 ⇧");
+            ryTv.setText("收起∧");
         } else {
             recyclerView.setVisibility(View.GONE);
-            ryTv.setText("查看所有 ⇩");
+            ryTv.setText("查看所有∨");
         }
     }
 }

@@ -25,7 +25,6 @@ import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PickerSelectUtil;
-import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
@@ -110,7 +109,7 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
     }
 
     private void initView() {
-        setTitle("完善资料");
+        setTitle("服务认证");
         setLeftBack();
         orgid = getIntent().getLongExtra("orgid", 0);
         // TODO: 2018/11/30  今天集合的对象引用 有待优化
@@ -123,23 +122,11 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
     }
 
     private void initData() {
-        EanfangHttp.get(UserApi.GET_COMPANY_ORG_INFO + orgid)
-                .execute(new EanfangCallback<AuthCompanyBaseInfoBean>(this, true, AuthCompanyBaseInfoBean.class, (beans) -> {
-                    if (beans == null || StringUtils.isEmpty(beans.getLicenseCode())) {
-                        showToast("请先完善企业资料");
-                        finishSelf();
-                        return;
-                    }
-                    verifyStatus = beans.getStatus();
-                    // 已认证 或者 认证中
-                    if ((verifyStatus != 0 && verifyStatus != 3)) {
-                        tagSystemType.setEnabled(false);
-                        tagBusinessType.setEnabled(false);
-                    }
-                    initSystemData();
-                    initBusinessData();
-                    initBaseInfo();
-                }));
+        EanfangHttp.get(UserApi.GET_COMPANY_ORG_INFO + orgid).execute(new EanfangCallback<AuthCompanyBaseInfoBean>(this, true, AuthCompanyBaseInfoBean.class, (beans) -> {
+            initSystemData();
+            initBusinessData();
+            initBaseInfo();
+        }));
 
     }
 
@@ -150,9 +137,9 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
                     tvAbility.setText(V.v(() -> GetConstDataUtils.getWorkingLevelList().get(bean.getOrgUnit().getShopCompanyEntity().getWorkingLevel())));
                     tvLimit.setText(V.v(() -> GetConstDataUtils.getWorkingYearList().get(bean.getOrgUnit().getShopCompanyEntity().getWorkingYear())));
                     // 厂商
-                    if (V.v(() -> bean.getOrgUnit().getShopCompanyEntity().getIsManufacturer() == 2)) {
+                    if (V.v(() -> bean.getOrgUnit().getShopCompanyEntity().getIs_manufacturer() == 2)) {
                         rvVendor.setChecked(true);
-                    } else if (V.v(() -> bean.getOrgUnit().getShopCompanyEntity().getIsManufacturer() == 1)) {// 公司
+                    } else if (V.v(() -> bean.getOrgUnit().getShopCompanyEntity().getIs_manufacturer() == 1)) {// 公司
                         rbCompany.setChecked(true);
                     }
                 }));
@@ -183,9 +170,9 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
     private void initListener() {
         rgCompanyType.setOnCheckedChangeListener(this);
         tvConfim.setOnClickListener((v) -> {
-            if (verifyStatus == 0 || verifyStatus == 3) {
-                doVerify();
-            }
+//            if (verifyStatus == 0 || verifyStatus == 3) {
+            doVerify();
+//            }
         });
 
         //从业年限
@@ -200,28 +187,9 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
     }
 
     private void doVerify() {
-
-        String mYear = tvLimit.getText().toString().trim();
-        String mAbility = tvAbility.getText().toString().trim();
-        if (StringUtils.isEmpty(mYear)) {
-            showToast("请选择从业年限");
-            return;
-        }
-        if (StringUtils.isEmpty(mAbility)) {
-            showToast("请选择能力等级");
-            return;
-        }
-
         // 系统类别
-
-        List<Integer> checkList_system = Stream.of(systemTypeList)
-                .filter(beans -> beans.isCheck() == true && Stream.of(byNetGrant_system.getList()).filter(existsBean -> existsBean.getDataId().equals(beans.getDataId())).count() == 0)
-                .map(beans -> beans.getDataId()).distinct().toList();
-
-        List<Integer> unCheckList_system = Stream.of(systemTypeList)
-                .filter(beans -> beans.isCheck() == false && Stream.of(byNetGrant_system.getList()).filter(existsBean -> existsBean.getDataId().equals(beans.getDataId())).count() > 0)
-                .map(beans -> beans.getDataId()).distinct().toList();
-
+        List<Integer> checkList_system = Stream.of(systemTypeList).filter(beans -> beans.isCheck() == true && Stream.of(byNetGrant_system.getList()).filter(existsBean -> existsBean.getDataId().equals(beans.getDataId())).count() == 0).map(beans -> beans.getDataId()).distinct().toList();
+        List<Integer> unCheckList_system = Stream.of(systemTypeList).filter(beans -> beans.isCheck() == false && Stream.of(byNetGrant_system.getList()).filter(existsBean -> existsBean.getDataId().equals(beans.getDataId())).count() > 0).map(beans -> beans.getDataId()).distinct().toList();
         grantChange_system.setAddIds(checkList_system);
         grantChange_system.setDelIds(unCheckList_system);
         if (checkList_system.size() <= 0) {// 当前本地提示没有进行选择
@@ -235,24 +203,10 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
                 }
             }
         }
-//        if (byNetGrant_system.getList().size() <= 0) {
-//            if (checkList_system.size() <= 0) {// 当前选择的数量 == 0 进行提示选择
-//                return;
-//            }
-//        } else {
-//            if (unCheckList_system.size() == byNetGrant_system.getList().size()) {// 删除的数量 == 网络获取的数量 进行提示选择
-//                showToast("请选择一种系统类别");
-//                return;
-//            }
-//        }
 
         // 业务类别
-        List<Integer> checkList_business = Stream.of(businessTypeList)
-                .filter(beans -> beans.isCheck() == true && Stream.of(byNetGrant_business.getList()).filter(existsBean -> existsBean.getDataId().equals(beans.getDataId())).count() == 0)
-                .map(beans -> beans.getDataId()).distinct().toList();
-        List<Integer> unCheckList_business = Stream.of(businessTypeList)
-                .filter(beans -> beans.isCheck() == false && Stream.of(byNetGrant_business.getList()).filter(existsBean -> existsBean.getDataId().equals(beans.getDataId())).count() > 0)
-                .map(beans -> beans.getDataId()).distinct().toList();
+        List<Integer> checkList_business = Stream.of(businessTypeList).filter(beans -> beans.isCheck() == true && Stream.of(byNetGrant_business.getList()).filter(existsBean -> existsBean.getDataId().equals(beans.getDataId())).count() == 0).map(beans -> beans.getDataId()).distinct().toList();
+        List<Integer> unCheckList_business = Stream.of(businessTypeList).filter(beans -> beans.isCheck() == false && Stream.of(byNetGrant_business.getList()).filter(existsBean -> existsBean.getDataId().equals(beans.getDataId())).count() > 0).map(beans -> beans.getDataId()).distinct().toList();
 
         grantChange_business.setAddIds(checkList_business);
         grantChange_business.setDelIds(unCheckList_business);
@@ -267,21 +221,9 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
                 }
             }
         }
-//        if (byNetGrant_business.getList().size() <= 0) {
-//            if (checkList_business.size() <= 0) {// 当前选择的数量 == 0 进行提示选择
-//
-//                return;
-//            }
-//        } else {
-//            if (unCheckList_business.size() == byNetGrant_business.getList().size()) {// 删除的数量 == 网络获取的数量 进行提示选择
-//                showToast("请选择一种业务类别");
-//                return;
-//            }
-//        }
-
-        shopCompanyEntity.setWorkingLevel(GetConstDataUtils.getWorkingLevelList().indexOf(mAbility));
-        shopCompanyEntity.setWorkingYear(GetConstDataUtils.getWorkingYearList().indexOf(mYear));
-        shopCompanyEntity.setIsManufacturer(mCompanyType);
+        shopCompanyEntity.setWorking_level(1);
+        shopCompanyEntity.setWorking_year(1);
+        shopCompanyEntity.setIs_manufacturer(mCompanyType);
         orgUnitEntity.setOrgId(orgid);
         orgUnitEntity.setShopCompanyEntity(shopCompanyEntity);
 
@@ -299,7 +241,7 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
         tagSystemType.setAdapter(new TagAdapter<BaseDataEntity>(systemTypeList) {
             @Override
             public View getView(FlowLayout parent, int position, BaseDataEntity mrepairResult) {
-                TextView tv = (TextView) LayoutInflater.from(AuthQualifyFirstActivity.this).inflate(R.layout.layout_trouble_result_item, tagSystemType, false);
+                TextView tv = (TextView) LayoutInflater.from(AuthQualifyFirstActivity.this).inflate(R.layout.layout_trouble_result_item_b, tagSystemType, false);
                 tv.setText(mrepairResult.getDataName());
                 return tv;
             }
@@ -307,16 +249,16 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
             @Override
             public boolean setSelected(int position, BaseDataEntity baseDataEntity) {
                 Long coutn = Stream.of(byNetGrant_system.getList()).filter(bean -> bean.getDataId().equals(baseDataEntity.getDataId())).count();
-                return coutn > 0;
+                if (coutn > 0) {
+                    return true;
+                }
+                return false;
             }
         });
 
-        tagSystemType.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
-            @Override
-            public boolean onTagClick(View view, int position, FlowLayout parent) {
-                systemTypeList.get(position).setCheck(!systemTypeList.get(position).isCheck());
-                return true;
-            }
+        tagSystemType.setOnTagClickListener((view, position, parent) -> {
+            systemTypeList.get(position).setCheck(!systemTypeList.get(position).isCheck());
+            return true;
         });
 
     }
@@ -333,7 +275,7 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
         tagBusinessType.setAdapter(new TagAdapter<BaseDataEntity>(businessTypeList) {
             @Override
             public View getView(FlowLayout parent, int position, BaseDataEntity mrepairResult) {
-                TextView tv = (TextView) LayoutInflater.from(AuthQualifyFirstActivity.this).inflate(R.layout.layout_trouble_result_item, tagBusinessType, false);
+                TextView tv = (TextView) LayoutInflater.from(AuthQualifyFirstActivity.this).inflate(R.layout.layout_trouble_result_item_b, tagBusinessType, false);
                 tv.setText(mrepairResult.getDataName());
                 return tv;
             }
@@ -341,15 +283,15 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
             @Override
             public boolean setSelected(int position, BaseDataEntity baseDataEntity) {
                 Long coutn = Stream.of(byNetGrant_business.getList()).filter(bean -> bean.getDataId().equals(baseDataEntity.getDataId())).count();
-                return coutn > 0;
+                if (coutn > 0) {
+                    return true;
+                }
+                return false;
             }
         });
-        tagBusinessType.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
-            @Override
-            public boolean onTagClick(View view, int position, FlowLayout parent) {
-                businessTypeList.get(position).setCheck(!businessTypeList.get(position).isCheck());
-                return true;
-            }
+        tagBusinessType.setOnTagClickListener((view, position, parent) -> {
+            businessTypeList.get(position).setCheck(!businessTypeList.get(position).isCheck());
+            return true;
         });
     }
 
@@ -376,6 +318,7 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
         bundle.putLong("orgid", orgid);
         bundle.putInt("verifyStatus", verifyStatus);
         JumpItent.jump(AuthQualifyFirstActivity.this, AuthQualifySecondActivity.class, bundle);
+        finish();
     }
 
     @Override

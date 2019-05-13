@@ -26,6 +26,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
+import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
@@ -36,6 +37,7 @@ import com.yaf.base.entity.TechWorkerVerifyEntity;
 
 import net.eanfang.worker.R;
 import java.io.File;
+import java.text.ParseException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,6 +62,8 @@ public class RealNameAuthenticationActivity extends BaseActivityWithTakePhoto {
     private final int ID_CARD_SIDE = 102;
     //身份证手持
     private final int ID_CARD_HAND = 103;
+    @BindView(R.id.sfz_jj_tv)
+    TextView sfzJjTv;
     private TechWorkerVerifyEntity mTechWorkerVerifyEntity = new TechWorkerVerifyEntity();
     private int statusB;
 
@@ -101,6 +105,16 @@ public class RealNameAuthenticationActivity extends BaseActivityWithTakePhoto {
         }
         if (mTechWorkerVerifyEntity.getIdCardHand() != null) {
             ivIdCardInHand.setImageURI(com.eanfang.BuildConfig.OSS_SERVER + mTechWorkerVerifyEntity.getIdCardHand());
+        }
+        try {
+            if (mTechWorkerVerifyEntity.getIdCardNum() != null) {
+                idCardNum = mTechWorkerVerifyEntity.getIdCardNum();
+                if ((!mTechWorkerVerifyEntity.getIdCardNum().equals("暂无")) | (!mTechWorkerVerifyEntity.getIdCardNum().equals(""))) {
+                    sfzJjTv.setText("姓名：" + mTechWorkerVerifyEntity.getIdCardName() + "\n" + "性别：" + mTechWorkerVerifyEntity.getIdCardGender() + "\n" + "出生：" + GetDateUtils.strToDate(mTechWorkerVerifyEntity.getIdCardBirth()) + "\n" + "身份证号：" + mTechWorkerVerifyEntity.getIdCardNum());
+                }
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
     }
 
@@ -162,21 +176,12 @@ public class RealNameAuthenticationActivity extends BaseActivityWithTakePhoto {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == ID_CARD_FRONT && resultCode == Activity.RESULT_OK) {
             if (data != null) {
-                String imgKey = UuidUtil.getUUID() + "idc.png";
                 String contentType = data.getStringExtra(CameraActivity.KEY_CONTENT_TYPE);
                 String filePath = FileUtil.getSaveFile(getApplicationContext()).getAbsolutePath();
-                Log.d("recIDCard669", "onActivityResult: " + filePath);
-                mTechWorkerVerifyEntity.setIdCardFront(imgKey);
                 ivIdCardFront.setImageURI("file://" + filePath);
-                OSSUtils.initOSS(this).asyncPutImage(imgKey, filePath, new OSSCallBack(this, true) {
-                });
-                if (!TextUtils.isEmpty(contentType)) {
-                    if (CameraActivity.CONTENT_TYPE_ID_CARD_FRONT.equals(contentType)) {
-                        recIDCard(IDCardParams.ID_CARD_SIDE_FRONT, filePath);
-                    } else if (CameraActivity.CONTENT_TYPE_ID_CARD_BACK.equals(contentType)) {
-                        recIDCard(IDCardParams.ID_CARD_SIDE_BACK, filePath);
-                    }
-                }
+                Log.d("recIDCard669", "onActivityResult: " + filePath);
+                nem++;
+                recIDCard(IDCardParams.ID_CARD_SIDE_FRONT, filePath);
             }
         }
     }
@@ -225,7 +230,25 @@ public class RealNameAuthenticationActivity extends BaseActivityWithTakePhoto {
             public void onResult(IDCardResult result) {
                 if (result != null) {
                     Log.d("recIDCard66", result.toString());
-                    idCardNum = result.getIdNumber().toString();
+                    String imgKey = UuidUtil.getUUID() + "idCl.jpg";
+                    if ((result.getIdNumber() != null) && (!result.getIdNumber().toString().equals(""))) {
+                        Log.d("recIDCard66888", result.toString());
+                        idCardNum = result.getIdNumber().toString();
+                        mTechWorkerVerifyEntity.setIdCardFront(imgKey);
+                        mTechWorkerVerifyEntity.setIdCardName(result.getName().toString());
+                        mTechWorkerVerifyEntity.setIdCardGender(result.getGender().toString());
+                        mTechWorkerVerifyEntity.setIdCardBirth(result.getBirthday().toString());
+                        mTechWorkerVerifyEntity.setIdCardBirth(result.getBirthday().toString());
+                        try {
+                            sfzJjTv.setText("姓名：" + result.getName() + "\n" + "性别：" + result.getGender() + "\n" + "出生：" + GetDateUtils.strToDate(result.getBirthday().toString()) + "\n" + "身份证号：" + result.getIdNumber());
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                        OSSUtils.initOSS(RealNameAuthenticationActivity.this).asyncPutImage(imgKey, filePath, new OSSCallBack(RealNameAuthenticationActivity.this, true) {
+                        });
+                    } else {
+                        idCardNum = "";
+                    }
 
                 }
             }
@@ -267,7 +290,7 @@ public class RealNameAuthenticationActivity extends BaseActivityWithTakePhoto {
         OCR.getInstance(this).release();
         super.onDestroy();
     }
-
+    private static int nem = 0;
     public static class FileUtil {
         public static File getSaveFile(Context context) {
             File file = new File(context.getFilesDir(), "idc.png");

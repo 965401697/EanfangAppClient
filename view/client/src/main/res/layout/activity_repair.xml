@@ -6,450 +6,231 @@
     android:background="@color/color_contact_line_gray"
     android:orientation="vertical">
 
-    <include layout="@layout/header_eanfang" />
+    <include layout="@layout/header" />
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
+            android:layout_height="wrap_content"
+            android:background="@color/color_white"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_repair_personalinfo"
+                    android:textColor="@color/color_client_data_item_title"
+                    android:textSize="@dimen/textSize_15" />
+
+            </LinearLayout>
+
+            <View style="@style/style_common_line_gray" />
+
+            <include layout="@layout/layout_repair_personal_info_top" />
+
+            <LinearLayout
+                android:id="@+id/ll_noPersonalInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dimen_30"
+                android:paddingTop="@dimen/dimen_30"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="暂无，直接创建"
+                    android:textColor="@color/color_bottom"
+                    android:textSize="@dimen/textSize_15" />
+
+                <TextView
+                    android:id="@+id/tv_createPersonalInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_40"
+                    android:background="@drawable/shape_bg_sure"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/dimen_30"
+                    android:paddingLeft="@dimen/dimen_70"
+                    android:paddingRight="@dimen/dimen_70"
+                    android:paddingTop="@dimen/dimen_30"
+                    android:text="创建用户信息"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSize_15" />
+            </LinearLayout>
+
+            <View style="@style/style_common_line_gray" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_16"
+            android:background="@color/color_white"
             android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/color_white"
-                android:orientation="vertical"
-                android:visibility="visible">
+                android:orientation="horizontal"
+                android:padding="15dp">
 
-                <LinearLayout
-                    android:id="@+id/ll_user_desc"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="15dp">
+                    android:text="订单信息"
+                    android:textColor="@color/color_client_data_item_title"
+                    android:textSize="@dimen/textSize_15" />
 
-                    <TextView
-                        android:layout_width="351dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/text_repair_personalinfo"
-                        android:textColor="@color/color_client_data_item_title"
-                        android:textSize="@dimen/textSize_15" />
-
-                    <ImageView
-                        android:id="@+id/iv_arrow"
-                        android:layout_width="@dimen/dimen_32"
-                        android:layout_height="@dimen/dimen_32"
-                        android:layout_gravity="center_vertical"
-                        android:src="@mipmap/arrow_black_right" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/ll_user_info"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <View style="@style/style_common_line_gray" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="15dp">
-
-                        <TextView
-                            android:id="@+id/tv_repairCompanyName"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text=""
-                            android:textColor="@color/color_client_neworder"
-                            android:textSize="@dimen/textSize_13"
-                            android:visibility="visible" />
-
-                        <EditText
-                            android:id="@+id/et_repairCompanyName"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@null"
-                            android:hint="请输入公司名称"
-                            android:textColor="@color/color_client_neworder"
-                            android:textSize="@dimen/textSize_13"
-                            android:visibility="gone" />
-
-                    </LinearLayout>
-
-                    <View style="@style/style_common_line_gray" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="15dp">
-
-                        <TextView
-                            android:id="@+id/tv_repairUserName"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text=""
-                            android:textColor="@color/color_client_neworder"
-                            android:textSize="@dimen/textSize_13" />
-
-                    </LinearLayout>
-
-                    <View style="@style/style_common_line_gray" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="15dp">
-
-                        <TextView
-                            android:id="@+id/tv_repairUserPhone"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text=""
-                            android:textColor="@color/color_client_neworder"
-                            android:textSize="@dimen/textSize_13" />
-
-                    </LinearLayout>
-                </LinearLayout>
-
-                <View style="@style/style_common_line_gray" />
-
-                <LinearLayout
-                    android:id="@+id/ll_project_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_ll_selctor"
-                    android:orientation="horizontal"
-                    android:padding="15dp">
-
-                    <EditText
-                        android:id="@+id/et_project_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/dimen_30"
-                        android:layout_weight="1"
-                        android:background="@null"
-                        android:hint="请填写项目名称"
-                        android:textColor="@color/color_client_neworder"
-                        android:textSize="@dimen/textSize_13" />
-
-                    <ImageView
-                        android:id="@+id/iv_project_arrow"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:src="@mipmap/ic_worker_detail_area_down" />
-                </LinearLayout>
-
-                <View style="@style/style_common_line_gray" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="15dp">
-
-                    <TextView
-                        android:id="@+id/tv_address"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="请选择地址"
-                        android:textColor="@color/color_client_neworder"
-                        android:textSize="@dimen/textSize_13" />
-
-                    <TextView
-                        android:id="@+id/tv_selectAdress"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_ll_btn"
-                        android:drawableLeft="@mipmap/ic_location"
-                        android:drawablePadding="@dimen/dimen_10"
-                        android:padding="@dimen/dimen_10"
-                        android:text="@string/text_repair_selectlocation"
-                        android:textColor="@color/color_white"
-                        android:textSize="@dimen/textSize_12" />
-
-                </LinearLayout>
-
-                <View style="@style/style_common_line_gray" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_ll_selctor"
-                    android:orientation="horizontal">
-
-                    <EditText
-                        android:id="@+id/et_detail_address"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@null"
-                        android:hint="请填写详细地址"
-                        android:padding="15dp"
-                        android:textColor="@color/color_client_neworder"
-                        android:textSize="@dimen/textSize_13" />
-                </LinearLayout>
             </LinearLayout>
+
+            <View style="@style/style_common_line_gray" />
+
+            <LinearLayout
+                android:id="@+id/ll_projectName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_ll_selctor"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="项目名称"
+                    android:textColor="@color/color_bottom"
+                    android:textSize="@dimen/textSize_13" />
+
+                <TextView
+                    android:id="@+id/tv_project_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:drawableRight="@mipmap/ic_icon_right"
+                    android:gravity="right"
+                    android:hint="请填写项目名称"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_13" />
+            </LinearLayout>
+
+            <View style="@style/style_common_line_gray" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_16"
-                android:background="@color/color_white"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_30"
+                    android:text="@string/text_repair_arrivetime"
+                    android:textColor="@color/color_bottom"
+                    android:textSize="@dimen/textSize_13" />
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="@dimen/dimen_10"
+                    android:drawableRight="@mipmap/ic_icon_right"
+                    android:gravity="right"
+                    android:onClick="onArriveTimeOptionPicker"
+                    android:padding="@dimen/dimen_30"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_13" />
+
+            </LinearLayout>
+
+            <View style="@style/style_common_line_gray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_ll_selctor"
                 android:orientation="vertical">
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="15dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/text_repair_contactslinfo"
-                        android:textColor="@color/color_client_data_item_title"
-                        android:textSize="@dimen/textSize_15" />
-
-                </LinearLayout>
-
-                <View style="@style/style_common_line_gray" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <EditText
-                        android:id="@+id/et_contact"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@null"
-                        android:hint="请输入联系人姓名"
-                        android:padding="15dp"
-                        android:textColor="@color/color_client_neworder"
-                        android:textSize="@dimen/textSize_13" />
-
-                    <RadioGroup
-                        android:id="@+id/rg_sex"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginRight="@dimen/dimen_36"
-                        android:orientation="horizontal">
-
-                        <RadioButton
-                            android:id="@+id/rb_man"
-                            android:layout_width="@dimen/dimen_100"
-                            android:layout_height="@dimen/dimen_60"
-                            android:background="@drawable/select_client_repair_sex"
-                            android:button="@null"
-                            android:checked="true"
-                            android:gravity="center"
-                            android:text="先生"
-                            android:textColor="@drawable/select_client_repair_sex_text_back"
-                            android:textSize="12sp" />
-
-                        <RadioButton
-                            android:id="@+id/rb_woman"
-                            android:layout_width="@dimen/dimen_100"
-                            android:layout_height="@dimen/dimen_60"
-                            android:layout_marginLeft="20dp"
-                            android:background="@drawable/select_client_repair_sex"
-                            android:button="@null"
-                            android:gravity="center"
-                            android:text="女士"
-                            android:textColor="@drawable/select_client_repair_sex_text_back"
-                            android:textSize="12sp" />
-
-                    </RadioGroup>
-                </LinearLayout>
-
-                <View style="@style/style_common_line_gray" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <EditText
-                        android:id="@+id/et_phone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@null"
-                        android:hint="请输入联系人手机号"
-                        android:padding="15dp"
-                        android:textColor="@color/color_client_neworder"
-                        android:textSize="@dimen/textSize_13" />
-
-                </LinearLayout>
-
-                <View style="@style/style_common_line_gray" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_ll_selctor"
-                    android:orientation="horizontal">
-
-                    <EditText
-                        android:id="@+id/et_notice"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@null"
-                        android:hint="请填写备注信息"
-                        android:padding="15dp"
-                        android:textColor="@color/color_client_neworder"
-                        android:textSize="@dimen/textSize_13" />
-                </LinearLayout>
-
-                <View style="@style/style_common_line_gray" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/dimen_30"
-                        android:text="@string/text_repair_arrivetime"
-                        android:textColor="@color/color_client_neworder"
+                        android:text="备注信息"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/color_bottom"
                         android:textSize="@dimen/textSize_13" />
 
-                    <TextView
-                        android:id="@+id/tv_time"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawablePadding="@dimen/dimen_10"
-                        android:drawableRight="@mipmap/ic_worker_detail_area_down"
-                        android:onClick="onArriveTimeOptionPicker"
-                        android:padding="@dimen/dimen_30"
-                        android:text=" "
-                        android:textColor="@color/color_client_neworder"
-                        android:textSize="@dimen/textSize_13" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/dimen_16"
-                android:background="@color/color_white"
-                android:orientation="horizontal">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/dimen_30">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawableLeft="@mipmap/ic_repair_fault"
-                            android:drawablePadding="@dimen/dimen_20"
-                            android:text="故障明细"
-                            android:textColor="@color/color_client_neworder"
-                            android:textSize="@dimen/textSize_14" />
-
-                        <TextView
-                            android:id="@+id/tv_faultNum"
-                            android:layout_width="@dimen/dimen_36"
-                            android:layout_height="@dimen/dimen_36"
-                            android:layout_marginLeft="@dimen/dimen_30"
-                            android:background="@drawable/bg_repair_fault_num"
-                            android:gravity="center"
-                            android:textColor="@color/white"
-                            android:textSize="@dimen/textSize_10"
-                            android:visibility="gone" />
-                    </LinearLayout>
-
-
-                    <TextView
-                        android:id="@+id/btn_add_trouble"
+                    <ImageView
+                        android:id="@+id/iv_input_voice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:background="@drawable/bg_ll_btn"
-                        android:padding="@dimen/dimen_10"
-                        android:text="+   添加故障"
-                        android:textColor="#fff"
-                        android:textSize="@dimen/textSize_12" />
-
-
+                        android:layout_centerInParent="true"
+                        android:padding="@dimen/dimen_20"
+                        android:src="@mipmap/ic_client_voice_input" />
                 </RelativeLayout>
 
-
-            </LinearLayout>
-
-
-            <View style="@style/style_common_line_gray" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/color_white"
-                android:padding="@dimen/dimen_10">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_list"
+                <EditText
+                    android:id="@+id/et_notice"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:scrollbars="none" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_300"
-                android:background="@color/color_white">
-
-                <TextView
-                    android:id="@+id/tv_next"
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="@dimen/dimen_40"
-                    android:background="@mipmap/ic_next_background"
-                    android:gravity="center"
-                    android:text="@string/text_next"
-                    android:textColor="@color/color_white"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint="请填写备注信息"
+                    android:padding="15dp"
+                    android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_13" />
-            </RelativeLayout>
+            </LinearLayout>
 
 
         </LinearLayout>
 
-    </ScrollView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center|fill_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_next"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/dimen_40"
+            android:layout_marginLeft="@dimen/dimen_40"
+            android:layout_marginRight="@dimen/dimen_40"
+            android:background="@drawable/shape_bg_sure"
+            android:gravity="center"
+            android:paddingBottom="@dimen/dimen_30"
+            android:paddingTop="@dimen/dimen_30"
+            android:text="提交"
+            android:textColor="@color/color_white"
+            android:textSize="@dimen/textSize_13" />
+    </LinearLayout>
+
 
 </LinearLayout>

@@ -73,7 +73,9 @@
         android:supportsRtl="true"
         android:theme="@style/NewBaseTheme"
         tools:replace="android:name,android:theme,android:icon">
-
+        <activity android:name=".ui.activity.worksapce.contacts.BusinessCertificationActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.contacts.EnterpriseCertificationActivity" />
+        <activity android:name=".ui.activity.TechnicianDetailsActivity" />
         <!-- 多渠道打包 -->
         <meta-data
             android:name="com.tencent.tac.channel"
@@ -988,6 +990,14 @@
         <activity android:name=".ui.activity.worksapce.security.SecurityCommentListActivity" />
         <activity android:name=".ui.activity.worksapce.security.SecurityPersonalPublicListActivity" />
         <activity android:name=".ui.activity.worksapce.security.SecurityFoucsListActivity" />
+        <activity android:name=".ui.activity.worksapce.repair.TroubleListActivity" />
+        <activity android:name=".ui.activity.my.UserHomeActivity" />
+        <activity android:name=".ui.activity.im.FollowListActivity" />
+        <activity android:name=".ui.activity.im.PeerConnectionListActivity" />
+        <activity android:name=".ui.activity.worksapce.repair.RepairPersonInfoListActivity" />
+        <activity android:name=".ui.activity.worksapce.repair.RepairInfoEditActivity" />
+        <activity android:name=".ui.activity.worksapce.repair.RepairProjectListActivity" />
+        <activity android:name=".ui.activity.worksapce.repair.RepairAddProjectAcitivity" />
     </application>
 
 </manifest>

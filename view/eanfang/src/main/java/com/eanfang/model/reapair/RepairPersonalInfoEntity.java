@@ -1,6 +1,7 @@
 package com.eanfang.model.reapair;
 
-import com.baomidou.mybatisplus.annotations.TableName;
+
+import com.mybatisplus.annotations.TableName;
 
 import java.io.Serializable;
 import java.util.Date;

@@ -503,4 +503,9 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
         return isNetWork;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().unregisterReceiver(netBroadcastReceiver);
+    }
 }

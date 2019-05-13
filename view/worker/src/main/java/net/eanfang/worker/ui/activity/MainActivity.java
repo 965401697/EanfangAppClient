@@ -19,10 +19,12 @@ import androidx.fragment.app.FragmentTabHost;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.annimon.stream.Stream;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
+import com.eanfang.config.Constant;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -33,6 +35,7 @@ import com.eanfang.model.GroupDetailBean;
 import com.eanfang.model.NoticeEntity;
 import com.eanfang.model.bean.LoginBean;
 import com.eanfang.model.device.User;
+import com.eanfang.model.sys.BaseDataEntity;
 import com.eanfang.network.config.HttpConfig;
 import com.eanfang.sys.activity.LoginActivity;
 import com.eanfang.ui.base.BaseActivity;
@@ -43,6 +46,7 @@ import com.eanfang.util.JumpItent;
 import com.eanfang.util.LocationUtil;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.QueryEntry;
+import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UpdateAppManager;
@@ -70,10 +74,14 @@ import net.eanfang.worker.util.PrefUtils;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.manager.IUnReadMessageObserver;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
@@ -86,7 +94,7 @@ import static com.eanfang.config.EanfangConst.MEIZU_APPKEY_WORKER;
 import static com.eanfang.config.EanfangConst.XIAOMI_APPID_WORKER;
 import static com.eanfang.config.EanfangConst.XIAOMI_APPKEY_WORKER;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements IUnReadMessageObserver {
     private static final String TAG = MainActivity.class.getSimpleName();
     protected FragmentTabHost mTabHost;
     private LoginBean user;
@@ -182,7 +190,13 @@ public class MainActivity extends BaseActivity {
         PrefUtils.setBoolean(getApplicationContext(), PrefUtils.GUIDE, false);//新手引导是否展示
 
         getPushMessage(getIntent());
+        final Conversation.ConversationType[] conversationTypes = {
+                Conversation.ConversationType.PRIVATE,
+                Conversation.ConversationType.GROUP, Conversation.ConversationType.SYSTEM,
+                Conversation.ConversationType.PUBLIC_SERVICE, Conversation.ConversationType.APP_PUBLIC_SERVICE
+        };
 
+        RongIM.getInstance().addUnReadMessageCountChangedObserver(this, conversationTypes);
     }
 
 
@@ -312,6 +326,7 @@ public class MainActivity extends BaseActivity {
                     if (baseDataBean != null) {
                         EanfangApplication.get().set(BaseDataBean.class.getName(), baseDataBean);
                     }
+                    saveArea();
 //                    new Thread(() -> {
 //                        if (jsonObject != null && !jsonObject.isEmpty() && jsonObject.containsKey("data") && !jsonObject.get("data").equals(Constant.NO_UPDATE)) {
 ////                            BaseDataBean newDate = jsonObject.toJavaObject(BaseDataBean.class);
@@ -320,7 +335,46 @@ public class MainActivity extends BaseActivity {
 //                    }).start();
                 }));
     }
+    private void saveArea(){
+        //预加载国家区域
+//        String areaJson = SharePreferenceUtil.get().getString(Constant.COUNTRY_AREA_LIST, "");
+        String areaJson = EanfangApplication.get().get(Constant.COUNTRY_AREA_LIST, "");
+        if (StringUtils.isEmpty(areaJson)) {
+            BaseDataEntity entity = new BaseDataEntity();
+            List<BaseDataEntity> areaListBean = Config.get().getRegionList(1);
+            //获得全部 地区数据
+            List<BaseDataEntity> allAreaList = new ArrayList<>(Config.get().getRegionList());
+            for (int i = 0; i < areaListBean.size(); i++) {
+                BaseDataEntity provinceEntity = areaListBean.get(i);
+                //处理当前省下的所有市
+                List<BaseDataEntity> cityList = Stream.of(allAreaList).filter(bean -> bean.getParentId() != null
+                        && bean.getParentId().intValue() == provinceEntity.getDataId()).toList();
+                //查询出来后，移除，以增加效率
+                allAreaList.removeAll(cityList);
+                for (int j = 0; j < cityList.size(); j++) {
+                    BaseDataEntity cityEntity = cityList.get(j);
+                    //处理当前市下所有区县
+                    List<BaseDataEntity> countyList = Stream.of(allAreaList).filter(bean -> bean.getParentId() != null
+                            && bean.getParentId().intValue() == cityEntity.getDataId()).toList();
+                    //查询出来后，移除，以增加效率
+                    allAreaList.removeAll(countyList);
+                    cityEntity.setChildren(countyList);
+                }
+                provinceEntity.setChildren(cityList);
+            }
+            entity.setChildren(areaListBean);
+            EanfangApplication.get().sSaveArea = entity;
+            EanfangApplication.get().set(Constant.COUNTRY_AREA_LIST, JSON.toJSONString(entity));
+        /*    try {
+                SharePreferenceUtil.get().set(Constant.COUNTRY_AREA_LIST, JSON.toJSONString(entity));
 
+            } catch (IOException e) {
+                e.printStackTrace();
+            }*/
+        }else {
+            EanfangApplication.get().sSaveArea = JSONObject.toJavaObject(JSONObject.parseObject(areaJson), BaseDataEntity.class);
+        }
+    }
     /**
      * 请求静态常量
      */
@@ -397,6 +451,14 @@ public class MainActivity extends BaseActivity {
             }
         }, true);
 //        RongIM.getInstance().setMessageAttachedUserInfo(true);//有具体场景的
+    }
+
+    @Override
+    public void onCountChanged(int integer) {
+        mContactNum = integer;
+        int i = mContact + integer;
+        int nums = mTotalCount + integer;
+        doChange(i, nums);
     }
 
 
@@ -533,10 +595,10 @@ public class MainActivity extends BaseActivity {
         RongIM.getInstance().getTotalUnreadCount(new RongIMClient.ResultCallback<Integer>() {
             @Override
             public void onSuccess(Integer integer) {
-                mContactNum = integer;
-                int i = mContact + integer;
-                int nums = mTotalCount + integer;
-                doChange(i, nums);
+//                mContactNum = integer;
+//                int i = mContact + integer;
+//                int nums = mTotalCount + integer;
+//                doChange(i, nums);
             }
 
             @Override
@@ -605,7 +667,7 @@ public class MainActivity extends BaseActivity {
             mExitTime = System.currentTimeMillis();
 
             CleanMessageUtil.clearAllCache(EanfangApplication.get());
-//            SharePreferenceUtil.get().clear();
+            SharePreferenceUtil.get().clear();
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
             RongIM.getInstance().logout();
             MainActivity.this.finish();
@@ -736,8 +798,10 @@ public class MainActivity extends BaseActivity {
     @Subscribe
     public void onEventBottomRedIcon(AllMessageBean bean) {
         // 首页小红点的显示
-        if (bean.getRepair() > 0 || bean.getInstall() > 0 || bean.getDesign() > 0 || bean.getMaintain() > 0) {
-            mHome = bean.getRepair() + bean.getInstall() + bean.getDesign() + bean.getMaintain();
+        if (bean.getRepair() > 0 || bean.getInstall() > 0 || bean.getDesign() > 0 || bean.getQuote() > 0
+                || bean.getMaintain() > 0 || bean.getNoReadCount() > 0 || bean.getCommentNoRead() > 0) {
+            mHome = bean.getRepair() + bean.getInstall() + bean.getDesign() + bean.getQuote() +
+                    bean.getMaintain() + bean.getNoReadCount() + bean.getCommentNoRead();
         } else {
             mHome = 0;
         }

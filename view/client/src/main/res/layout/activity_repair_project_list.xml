@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="net.eanfang.client.ui.activity.worksapce.repair.RepairPersonInfoListActivity"
+    tools:ignore="MissingDefaultResource">
+
+    <include layout="@layout/header" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_projectList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbars="none" />
+
+    <TextView
+        android:id="@+id/tv_nodata"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="暂无项目"
+        android:visibility="gone" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dimen_50"
+        android:gravity="center"
+        android:text="没发现您的项目？请点击右上角，手动添加。"
+        android:textColor="@color/color_bottom"
+        android:textSize="@dimen/textSize_12" />
+</LinearLayout>

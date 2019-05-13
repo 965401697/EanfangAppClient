@@ -116,11 +116,17 @@
 
                                     <TextView
                                         android:id="@+id/tv_user_name"
-                                        android:layout_width="wrap_content"
+                                        android:layout_width="@dimen/dimen_200"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
                                         android:gravity="center_vertical"
                                         android:text="小明童鞋"
+                                        android:ellipsize="marquee"
+                                        android:focusable="true"
+                                        android:marqueeRepeatLimit="marquee_forever"
+                                        android:focusableInTouchMode="true"
+                                        android:scrollHorizontally="true"
+                                        android:singleLine="true"
                                         android:textColor="@color/color_white"
                                         android:textSize="@dimen/textSize_18" />
 
@@ -412,6 +418,7 @@
                     <RelativeLayout
                         android:id="@+id/rl_worker_verfity"
                         style="@style/my_item_style"
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
@@ -446,8 +453,121 @@
                     <View style="@style/style_common_line_my" />
 
                     <RelativeLayout
+                        android:id="@+id/rl_worker_verfity_b"
+                        style="@style/my_item_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="技师认证"
+                            android:textColor="@color/color_contact_companyname"
+                            android:textSize="@dimen/textSize_14" />
+
+                        <TextView
+                            android:id="@+id/tv_verfity_status_b"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/dimen_20"
+                            android:layout_toLeftOf="@+id/iv_worker_b"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/textSize_11" />
+
+                        <ImageView
+                            android:id="@+id/iv_worker_b"
+                            android:layout_width="@dimen/dimen_12"
+                            android:layout_height="@dimen/dimen_24"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:src="@mipmap/ic_icon_right" />
+                    </RelativeLayout>
+
+                    <View style="@style/style_common_line_my"                        android:visibility="gone"
+                        />
+
+                    <RelativeLayout
+                        android:id="@+id/rl_worker_verfity_c"
+                        style="@style/my_item_style"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="公司详情"
+                            android:textColor="@color/color_contact_companyname"
+                            android:textSize="@dimen/textSize_14" />
+
+                        <TextView
+                            android:id="@+id/tv_verfity_status_c"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/dimen_20"
+                            android:layout_toLeftOf="@+id/iv_worker_c"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/textSize_11" />
+
+                        <ImageView
+                            android:id="@+id/iv_worker_c"
+                            android:layout_width="@dimen/dimen_12"
+                            android:layout_height="@dimen/dimen_24"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:src="@mipmap/ic_icon_right" />
+                    </RelativeLayout>
+                    <View style="@style/style_common_line_my"                        android:visibility="gone"
+                        />
+
+                    <RelativeLayout
+                        android:id="@+id/rl_worker_verfity_d"
+                        style="@style/my_item_style"
+                        android:visibility="gone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="专家详情"
+                            android:textColor="@color/color_contact_companyname"
+                            android:textSize="@dimen/textSize_14" />
+
+                        <TextView
+                            android:id="@+id/tv_verfity_status_d"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/dimen_20"
+                            android:layout_toLeftOf="@+id/iv_worker_d"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/textSize_11" />
+
+                        <ImageView
+                            android:id="@+id/iv_worker_d"
+                            android:layout_width="@dimen/dimen_12"
+                            android:layout_height="@dimen/dimen_24"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:src="@mipmap/ic_icon_right" />
+                    </RelativeLayout>
+
+                    <View style="@style/style_common_line_my"                        android:visibility="gone"
+                        />
+
+                    <RelativeLayout
                         android:id="@+id/rl_expert_verfity"
                         style="@style/my_item_style"
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
@@ -479,6 +599,42 @@
                             android:src="@mipmap/ic_icon_right" />
                     </RelativeLayout>
 
+                    <View style="@style/style_common_line_my" />
+
+                    <RelativeLayout
+                        android:id="@+id/rl_expert_verfity_b"
+                        style="@style/my_item_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="专家认证"
+                            android:textColor="@color/color_client_neworder"
+                            android:textSize="@dimen/textSize_14" />
+
+                        <TextView
+                            android:id="@+id/tv_expert_verfity_status_b"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/dimen_20"
+                            android:layout_toLeftOf="@+id/iv_expert_b"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/textSize_11" />
+
+                        <ImageView
+                            android:id="@+id/iv_expert_b"
+                            android:layout_width="@dimen/dimen_12"
+                            android:layout_height="@dimen/dimen_24"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:src="@mipmap/ic_icon_right" />
+                    </RelativeLayout>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -494,8 +650,8 @@
                         style="@style/my_item_style"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
                         android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
                         android:onClick="noOpen">
 
                         <TextView
@@ -549,8 +705,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/dimen_28"
                     android:layout_marginTop="@dimen/dimen_20"
+                    android:layout_marginBottom="@dimen/dimen_28"
                     android:background="@drawable/bg_put_up_order_text_back"
                     android:orientation="vertical"
                     android:paddingLeft="@dimen/dimen_20"

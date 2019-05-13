@@ -10,6 +10,7 @@ import net.eanfang.client.R;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 
@@ -42,6 +43,7 @@ public abstract class TemplateItemListFragment extends BaseFragment implements S
 
         mSwipeRefreshLayout = findViewById(R.id.swipre_fresh);
         mSwipeRefreshLayout.setOnRefreshListener(this);
+        ((SimpleItemAnimator) mRecyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
 
         mTvNoData = findViewById(R.id.tv_no_datas);
         initAdapter();

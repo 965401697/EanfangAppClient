@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.camera.CameraApplication;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.sys.BaseDataEntity;
 import com.eanfang.network.Leaves;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -43,7 +44,14 @@ public class EanfangApplication extends CustomeApplication {
      * 是否自动更新过
      */
     public static boolean isUpdated = false;
-
+    /**
+     * 存储地域
+     */
+    public BaseDataEntity sSaveArea;
+    /**
+     * app类型
+     */
+    public static String AppType;
     private OkGo http;
 
 
@@ -135,6 +143,7 @@ public class EanfangApplication extends CustomeApplication {
         http = OkGo.getInstance().init(this)
                 //建议设置OkHttpClient，不设置将使用默认的
                 .setOkHttpClient(builder.build())
+
                 //全局统一缓存模式，默认不使用缓存，可以不传
                 .setCacheMode(CacheMode.NO_CACHE)
                 //全局统一缓存时间，默认永不过期，可以不传
@@ -146,7 +155,9 @@ public class EanfangApplication extends CustomeApplication {
         //全局公共参数
         EanfangHttp.setHttp(http);
 
-
+//        if (EanfangApplication.get().getUser() != null) {
+//            EanfangHttp.setToken(EanfangApplication.get().getUser().getToken());
+//        }
 //        try {
 //            String appType = (String) SharePreferenceUtil.get().get("app", "");
 //

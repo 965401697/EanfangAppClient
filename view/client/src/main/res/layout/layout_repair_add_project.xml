@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:ignore="MissingDefaultResource">
+
+    <include layout="@layout/header" />
+
+    <EditText
+        android:id="@+id/et_input_projectName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dimen_30"
+        android:layout_marginStart="@dimen/dimen_30"
+        android:layout_marginTop="@dimen/dimen_50"
+        android:background="@drawable/bg_camera_input_back"
+        android:hint="请输入项目名称..."
+        android:padding="@dimen/dimen_15"
+        android:textColor="@color/color_client_neworder"
+        android:textColorHint="@color/color_bottom"
+        android:textSize="@dimen/textSize_13" />
+
+    <TextView
+        android:id="@+id/tv_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/dimen_30"
+        android:layout_marginStart="@dimen/dimen_30"
+        android:layout_marginTop="@dimen/dimen_60"
+        android:background="@drawable/shape_bg_sure"
+        android:gravity="center"
+        android:paddingBottom="@dimen/dimen_30"
+        android:paddingTop="@dimen/dimen_30"
+        android:text="添加项目"
+        android:textColor="@color/color_white"
+        android:textSize="@dimen/textSize_13" />
+
+</LinearLayout>

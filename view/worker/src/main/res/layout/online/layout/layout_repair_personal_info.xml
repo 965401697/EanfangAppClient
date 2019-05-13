@@ -26,7 +26,7 @@
             android:textColor="@color/color_client_neworder"
             android:textSize="@dimen/textSize_13" />
 
-        <TextView
+       <!-- <TextView
             android:id="@+id/tv_delete"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -38,9 +38,9 @@
             android:paddingRight="@dimen/dimen_26"
             android:text="删除"
             android:textColor="#FF4848"
-            android:textSize="@dimen/textSize_13" />
+            android:textSize="@dimen/textSize_13" />-->
 
-        <TextView
+       <!-- <TextView
             android:id="@+id/tv_edit"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -52,7 +52,7 @@
             android:paddingRight="@dimen/dimen_18"
             android:text="编辑"
             android:textColor="@color/color_client_neworder"
-            android:textSize="@dimen/textSize_13" />
+            android:textSize="@dimen/textSize_13" />-->
     </RelativeLayout>
 
 </LinearLayout>

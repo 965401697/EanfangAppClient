@@ -3,6 +3,7 @@ package net.eanfang.client.ui.activity.worksapce;
 import android.os.Bundle;
 import android.view.View;
 
+import com.eanfang.model.reapair.RepairPersonalInfoEntity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.ViewFindUtils;
 import com.flyco.tablayout.SlidingTabLayout;
@@ -49,6 +50,10 @@ public class SelectWorkerActivity extends BaseActivity implements OnTabSelectLis
     private int mDoorFee;
 
     private Long mOwnerOrgId;
+    /**
+     * 个人信息
+     */
+    private RepairPersonalInfoEntity.ListBean repairPersonalInfoEntity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,11 +72,12 @@ public class SelectWorkerActivity extends BaseActivity implements OnTabSelectLis
         businessIds = getIntent().getStringArrayListExtra("businessIds");
         mDoorFee = getIntent().getIntExtra("doorFee", 0);
         mOwnerOrgId = getIntent().getLongExtra("mOwnerOrgId", 0);
+        repairPersonalInfoEntity = (RepairPersonalInfoEntity.ListBean) getIntent().getSerializableExtra("topInfo");
 
 
-        mFragments.add(AllWorkerFragment.getInstance(toRepairBean, businessIds, mDoorFee, mOwnerOrgId));
-        mFragments.add(CollectWorkerFragment.getInstance(toRepairBean, businessIds, mDoorFee, mOwnerOrgId));
-        mFragments.add(ServicedWorkerFragment.getInstance(toRepairBean, businessIds, mDoorFee, mOwnerOrgId));
+        mFragments.add(AllWorkerFragment.getInstance(toRepairBean, repairPersonalInfoEntity, businessIds, mDoorFee, mOwnerOrgId));
+        mFragments.add(CollectWorkerFragment.getInstance(toRepairBean, repairPersonalInfoEntity, businessIds, mDoorFee, mOwnerOrgId));
+        mFragments.add(ServicedWorkerFragment.getInstance(toRepairBean, repairPersonalInfoEntity, businessIds, mDoorFee, mOwnerOrgId));
         View decorView = getWindow().getDecorView();
         ViewPager vp = ViewFindUtils.find(decorView, R.id.vp_selectWork);
         mAdapter = new MyPagerAdapter(getSupportFragmentManager());

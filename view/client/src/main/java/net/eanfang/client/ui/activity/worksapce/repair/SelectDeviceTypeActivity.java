@@ -10,13 +10,16 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.config.Config;
+import com.eanfang.model.sys.BaseDataEntity;
 import com.eanfang.swipefresh.SwipyRefreshLayout;
 import com.eanfang.ui.base.BaseActivity;
-import com.eanfang.model.sys.BaseDataEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.online.DividerItemDecoration;
@@ -26,8 +29,6 @@ import net.eanfang.client.ui.adapter.repair.RepairDeviceTypeRightAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -52,7 +53,7 @@ public class SelectDeviceTypeActivity extends BaseActivity implements
     TextView tvNoInfo;
     @BindView(R.id.tv_go)
     TextView tvGo;
-    private int i =0;
+    private int i = 0;
     private List<BaseDataEntity> leftDataList = new ArrayList<>();
     private List<BaseDataEntity> rightDataList = new ArrayList<>();
 
@@ -64,6 +65,7 @@ public class SelectDeviceTypeActivity extends BaseActivity implements
     private Integer mLeftId = 0;
     private boolean mFlag = false;//搜索的adapter的点击事件 从集合取数据
     private GridLayoutManager gridLayoutManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,10 +85,10 @@ public class SelectDeviceTypeActivity extends BaseActivity implements
                 @Override
                 public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
                     i++;
-                    if (i%2==1){
-                        deviceTypeRightAdapter.getViewByPosition(rvDeviceTypeRight,position,R.id.check_true_t).setVisibility(View.VISIBLE);
-                    }else {
-                        deviceTypeRightAdapter.getViewByPosition(rvDeviceTypeRight,position,R.id.check_true_t).setVisibility(View.GONE);
+                    if (i % 2 == 1) {
+                        deviceTypeRightAdapter.getViewByPosition(rvDeviceTypeRight, position, R.id.check_true_t).setVisibility(View.VISIBLE);
+                    } else {
+                        deviceTypeRightAdapter.getViewByPosition(rvDeviceTypeRight, position, R.id.check_true_t).setVisibility(View.GONE);
                     }
                 }
             });
@@ -144,7 +146,6 @@ public class SelectDeviceTypeActivity extends BaseActivity implements
         rvDeviceTypeRight.setNestedScrollingEnabled(false);
 
 
-
         // 左边类型List
         leftDataList = Config.get().getBusinessList(1);
         // 右边List
@@ -184,7 +185,8 @@ public class SelectDeviceTypeActivity extends BaseActivity implements
                 deviceTypeLeftAdapter.notifyDataSetChanged();
                 mLeftId = leftDataList.get(i).getDataId();
                 rightDataList = doSelectRightList(mLeftId);
-                etSearch.setText("");//切换置空
+                //切换置空
+                etSearch.setText("");
                 getData();
             }
         });
@@ -215,7 +217,7 @@ public class SelectDeviceTypeActivity extends BaseActivity implements
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(SelectDeviceTypeActivity.this,FaultLibraryActivity.class);
+        Intent intent = new Intent(SelectDeviceTypeActivity.this, FaultLibraryActivity.class);
         intent.putExtra("GZK", 3);
         startActivity(intent);
     }
