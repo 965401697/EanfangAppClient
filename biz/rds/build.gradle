@@ -34,6 +34,7 @@ dependencies {
     annotationProcessor pkg.lombok
     implementation pkg.hutoolCore
 
+    implementation pkg.fastjson
     implementation pkg.gson
 
 

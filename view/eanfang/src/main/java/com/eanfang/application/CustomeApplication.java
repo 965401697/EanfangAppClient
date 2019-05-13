@@ -25,6 +25,10 @@ import java.io.IOException;
  * @desc 程序入口
  */
 
+/**
+ * 已过期 请尽快更换 com.eanfang.base.BaseApplication
+ */
+@Deprecated
 public abstract class CustomeApplication extends MultiDexApplication {
 
     static CustomeApplication mJCustomeApplication;

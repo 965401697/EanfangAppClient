@@ -9,7 +9,7 @@ import com.eanfang.BuildConfig;
  * @email houzhongzhou@yeah.net
  * @desc 阿里云oss
  */
-
+@Deprecated
 public interface OssApi {
     /**
      * oss 的sts生成器url

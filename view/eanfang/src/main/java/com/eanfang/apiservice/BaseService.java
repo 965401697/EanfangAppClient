@@ -10,7 +10,7 @@ import com.eanfang.BuildConfig;
  * @email houzhongzhou@yeah.net
  * @desc 基类
  */
-
+@Deprecated
 public interface BaseService {
     String BASE_URL = BuildConfig.API_HOST;
 

@@ -105,5 +105,6 @@ public class EanfangConst {
     public static final String MEIZU_APPKEY_CLIENT = "2762bc44bf064b21ad851a26e19083bf";
 
     // 讯飞ID
+    @Deprecated
     public static final String XUNFEI_APPID = "5b8cd9c3";
 }

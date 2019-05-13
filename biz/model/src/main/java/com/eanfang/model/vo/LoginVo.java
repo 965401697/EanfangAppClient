@@ -1,6 +1,5 @@
 package com.eanfang.model.vo;
 
-import androidx.databinding.BaseObservable;
 import androidx.databinding.ObservableBoolean;
 import androidx.databinding.ObservableField;
 
@@ -16,7 +15,7 @@ import lombok.experimental.Accessors;
  */
 @Getter()
 @Accessors(chain = true)
-public class LoginVo extends BaseObservable implements Serializable {
+public class LoginVo implements Serializable {
 
     private ObservableField<String> username = new ObservableField<>();
     private ObservableField<String> password = new ObservableField<>();

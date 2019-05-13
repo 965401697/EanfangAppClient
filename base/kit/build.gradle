@@ -32,6 +32,7 @@ dependencies {
 
     implementation pkg.rxjava2
     implementation pkg.rxandroid2
+    implementation pkg.rxpermissions2
 
     implementation pkg.disklrucache
     implementation pkg.hutoolCore

@@ -15,6 +15,9 @@ android {
         flavorDimensions "app"
         buildConfigField("String", "APP_TYPE", "\"client\"")
 
+        buildConfigField("String", "MOB_CLIENT_APPID", cfg.mobClientAppId)
+        buildConfigField("String", "MOB_CLIENT_APPKEY", cfg.mobClientAppKey)
+
         ndk {
             // 设置支持的SO库架构
             abiFilters 'armeabi'

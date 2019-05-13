@@ -6,6 +6,7 @@ import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 
 import cn.sharesdk.wechat.utils.WechatHandlerActivity;
 
+@Deprecated
 public class WXEntryActivity extends WechatHandlerActivity implements IWXAPIEventHandler {
 
 
