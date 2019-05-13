@@ -56,7 +56,7 @@ public abstract class TemplateItemListFragment extends BaseFragment implements S
 
     @Override
     protected void onLazyLoad() {
-        mPage = 1;
+         mPage = 1;
         getData();
     }
 
