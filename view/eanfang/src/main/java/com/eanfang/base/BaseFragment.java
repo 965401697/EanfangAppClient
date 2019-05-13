@@ -185,7 +185,7 @@ public abstract class BaseFragment extends RxFragment {
                                 }
                                 break;
                             }
-                            case BaseActionEvent.NOT_FIND: {
+                            case BaseActionEvent.NOT_FOUND: {
                                 if (notFoundBack) {
                                     loadService.showCallback(NotFoundCallback.class);
                                 }

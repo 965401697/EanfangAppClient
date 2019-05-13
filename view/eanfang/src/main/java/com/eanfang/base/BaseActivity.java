@@ -27,6 +27,7 @@ import com.eanfang.kit.loading.callback.TimeoutCallback;
 import com.eanfang.network.config.HttpConfig;
 import com.eanfang.network.event.BaseActionEvent;
 import com.eanfang.rds.base.IViewModelAction;
+import com.eanfang.sys.activity.LoginActivity;
 import com.kingja.loadsir.core.LoadService;
 import com.kingja.loadsir.core.LoadSir;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
@@ -229,13 +230,18 @@ public abstract class BaseActivity extends RxAppCompatActivity {
                                 }
                                 break;
                             }
+                            case BaseActionEvent.TOKEN_ERROR: {
+                                finish();
+                                startActivity(LoginActivity.class);
+                                break;
+                            }
                             case BaseActionEvent.PERMISSION_ERROR: {
                                 if (permissionBack) {
                                     loadService.showCallback(PermissionCallback.class);
                                 }
                                 break;
                             }
-                            case BaseActionEvent.NOT_FIND: {
+                            case BaseActionEvent.NOT_FOUND: {
                                 if (notFoundBack) {
                                     loadService.showCallback(NotFoundCallback.class);
                                 }

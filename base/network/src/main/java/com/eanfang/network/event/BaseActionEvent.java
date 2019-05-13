@@ -35,7 +35,7 @@ public class BaseActionEvent extends BaseEvent {
     //无权访问
     public static final int PERMISSION_ERROR = 407;
     //请求未找到
-    public static final int NOT_FIND = 404;
+    public static final int NOT_FOUND = 404;
     //请求超时
     public static final int TIME_OUT = 408;
     //请求太快了
