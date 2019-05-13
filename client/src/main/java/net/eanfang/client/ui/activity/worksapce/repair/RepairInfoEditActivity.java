@@ -249,8 +249,6 @@ public class RepairInfoEditActivity extends BaseActivity implements RadioGroup.O
             case R.id.ll_selectAddress:
                 JumpItent.jump(this, SelectAddressActivity.class, REPAIR_ADDRESS_CALLBACK_CODE);
                 break;
-            case R.id.tv_next:
-                break;
             default:
                 break;
         }
@@ -275,14 +273,15 @@ public class RepairInfoEditActivity extends BaseActivity implements RadioGroup.O
             rbHome.setChecked(true);
             rbCompany.setChecked(false);
             rbAdd.setChecked(false);
-        } else if ("公司".equals(repairPersonalInfoEntity.getSelectAddress())) {
+        } else if ("单位".equals(repairPersonalInfoEntity.getSelectAddress())) {
             rbHome.setChecked(false);
             rbCompany.setChecked(true);
             rbAdd.setChecked(false);
-        } else {
+        } else if (!StringUtils.isEmpty(repairPersonalInfoEntity.getSelectAddress())) {
             rbHome.setChecked(false);
             rbCompany.setChecked(false);
             rbAdd.setChecked(true);
+            rbAdd.setCompoundDrawables(null, null, null, null);
             rbAdd.setText(repairPersonalInfoEntity.getSelectAddress());
         }
     }

@@ -72,25 +72,25 @@
                 android:id="@+id/tv_home_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="[家]"
                 android:textColor="@color/colorPrimary"
                 android:textSize="@dimen/textSize_14" />
 
             <TextView
                 android:id="@+id/tv_home_address"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_12"
+                android:layout_weight="1"
                 android:textColor="@color/color_client_neworder"
                 android:textSize="@dimen/textSize_14" />
+
             <ImageView
                 android:id="@+id/iv_info_right"
-                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:src="@mipmap/ic_icon_right"/>
+                android:src="@mipmap/ic_icon_right"
+                android:visibility="gone" />
         </LinearLayout>
 
         <RelativeLayout
