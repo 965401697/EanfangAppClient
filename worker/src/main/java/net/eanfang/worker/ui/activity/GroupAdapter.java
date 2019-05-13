@@ -100,6 +100,7 @@ public class GroupAdapter extends BaseExpandableListAdapter {
         mTextViews.put(groupPosition, holder);
         if (isAuth) {
             holder.tv_cb.setEnabled(false);
+            holder.tv_cb.setClickable(false);
         } else {
             holder.tv_cb.setOnClickListener(v -> {
                 boolean isChecked = finalHolder.tv_cb.isChecked();
@@ -143,7 +144,7 @@ public class GroupAdapter extends BaseExpandableListAdapter {
             lv.setDivider(null);
         }
 
-        ChildAdapter secondAdapter = new ChildAdapter(context, mListData.get(groupPosition).getChildren(), groupPosition);
+        ChildAdapter secondAdapter = new ChildAdapter(context, mListData.get(groupPosition).getChildren(), groupPosition, isAuth);
         lv.setAdapter(secondAdapter);
         secondAdapter.setListener(mListener);
         return lv;

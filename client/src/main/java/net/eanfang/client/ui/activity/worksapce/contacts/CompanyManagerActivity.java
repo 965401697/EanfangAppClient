@@ -97,7 +97,7 @@ public class CompanyManagerActivity extends BaseActivity implements DissloveTeam
     private int status = 0;
 
     private String adminUserId = "";
-    private AuthCompanyBaseInfoBean byNetBean;
+    private AuthCompanyBaseInfoBean byNetBean = new AuthCompanyBaseInfoBean();
 
     /**
      * 解散团队

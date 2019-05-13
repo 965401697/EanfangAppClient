@@ -102,12 +102,6 @@ public class SkillAreaActivity extends BaseWorkerActivity implements AreaCheckCh
         elvArea.setAdapter(mAdapter);
         if (isLook) {
             mAdapter.isAuth = true;
-            elvArea.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-                @Override
-                public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
-                    return true;
-                }
-            });
         }
     }
 
@@ -140,6 +134,8 @@ public class SkillAreaActivity extends BaseWorkerActivity implements AreaCheckCh
             return resultList;
         }
         for (BaseDataEntity baseDataEntity : list) {
+            //设置所有的区域为不选
+            baseDataEntity.setCheck(false);
             if (selected.contains(baseDataEntity.getDataId())) {
                 baseDataEntity.setCheck(isChecked);
             }

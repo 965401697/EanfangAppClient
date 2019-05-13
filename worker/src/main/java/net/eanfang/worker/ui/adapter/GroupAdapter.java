@@ -119,7 +119,7 @@ public class GroupAdapter extends BaseExpandableListAdapter {
             lv = new CustomExpandableListView(context);
         }
 
-        ChildAdapter secondAdapter = new ChildAdapter(context, mListData.get(groupPosition).getChildren(), groupPosition);
+        ChildAdapter secondAdapter = new ChildAdapter(context, mListData.get(groupPosition).getChildren(), groupPosition, false);
         lv.setAdapter(secondAdapter);
         return lv;
     }

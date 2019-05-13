@@ -113,12 +113,6 @@ public class AuthQualifySecondActivity extends BaseActivity implements AreaCheck
             //  当状态为已认证状态时， 设置为不可点击不可点击
             mAdapter.isAuth = true;
             tvConfim.setText("确定");
-            elvArea.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-                @Override
-                public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
-                    return true;
-                }
-            });
         }
 
         tvConfim.setOnClickListener((v) -> {
@@ -156,6 +150,8 @@ public class AuthQualifySecondActivity extends BaseActivity implements AreaCheck
         }
 
         for (BaseDataEntity baseDataBean : list) {
+            //设置所有的区域为不选
+            baseDataBean.setCheck(false);
             if (selected.contains(baseDataBean.getDataId())) {
                 baseDataBean.setCheck(isChecked);
             }
