@@ -19,6 +19,7 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import androidx.annotation.DrawableRes;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import android.widget.ImageView;
@@ -28,7 +29,10 @@ import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
+import com.photopicker.com.util.BGAPhotoPickerUtil;
 /*
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.RequestListener;
@@ -74,21 +78,21 @@ public class BGAGlideImageLoader extends BGAImageLoader {
     @Override
     public void download(String path, final DownloadDelegate delegate) {
         final String finalPath = getPath(path);
-      /*  Glide.with(BGAPhotoPickerUtil.sApp).load(finalPath).asBitmap().into(new SimpleTarget<Bitmap>() {
+        Glide.with(BGAPhotoPickerUtil.sApp).asBitmap().load(finalPath).into(new SimpleTarget<Bitmap>() {
             @Override
-            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+            public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                 if (delegate != null) {
                     delegate.onSuccess(finalPath, resource);
                 }
             }
-
             @Override
-            public void onLoadFailed(Exception e, Drawable errorDrawable) {
+            public void onLoadFailed(@Nullable Drawable errorDrawable) {
+                super.onLoadFailed(errorDrawable);
                 if (delegate != null) {
                     delegate.onFailed(finalPath);
                 }
             }
-        });*/
+        });
     }
 
     @Override
