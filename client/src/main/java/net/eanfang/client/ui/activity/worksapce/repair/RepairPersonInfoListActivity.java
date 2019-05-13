@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -73,6 +74,10 @@ public class RepairPersonInfoListActivity extends BaseActivity {
         setRightTitleOnClickListener((v) -> {
             JumpItent.jump(this, RepairInfoEditActivity.class, REPAIR_ADDINFO_CALLBACK_CODE);
         });
+        setLeftBack((V) -> {
+            //默认返回第一条
+            doReturn(0);
+        });
         repairPersonalInfoAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             switch (view.getId()) {
                 // 设为默认
@@ -96,10 +101,7 @@ public class RepairPersonInfoListActivity extends BaseActivity {
         });
 
         repairPersonalInfoAdapter.setOnItemClickListener((adapter, view, position) -> {
-            Bundle bundleBack = new Bundle();
-            bundleBack.putSerializable("infoEntity", repairPersonalInfoAdapter.getData().get(position));
-            setResult(RESULT_OK, new Intent().putExtras(bundleBack));
-            finishSelf();
+            doReturn(position);
         });
 
     }
@@ -157,19 +159,40 @@ public class RepairPersonInfoListActivity extends BaseActivity {
                         rvPersonalInfo.setVisibility(View.VISIBLE);
                         tvNodata.setVisibility(View.GONE);
                         repairPersonalInfoEntities = bean.getList();
+                        repairPersonalInfoAdapter.getData().clear();
                         repairPersonalInfoAdapter.setNewData(repairPersonalInfoEntities);
-                        repairPersonalInfoAdapter.notifyDataSetChanged();
                     } else {
+                        repairPersonalInfoAdapter.getData().clear();
                         rvPersonalInfo.setVisibility(View.GONE);
                         tvNodata.setVisibility(View.VISIBLE);
                     }
                 }));
     }
 
+    public void doReturn(int position) {
+        Bundle bundleBack = new Bundle();
+        if (repairPersonalInfoAdapter.getData() != null && repairPersonalInfoAdapter.getData().size() > 0) {
+            bundleBack.putSerializable("infoEntity", repairPersonalInfoAdapter.getData().get(position));
+        }
+        setResult(RESULT_OK, new Intent().putExtras(bundleBack));
+        finishSelf();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
+            //默认返回第一条
+            doReturn(0);
+        }
+        return false;
+    }
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
+            //添加信息
             case REPAIR_ADDINFO_CALLBACK_CODE:
                 initData();
                 break;
