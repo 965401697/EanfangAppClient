@@ -32,6 +32,8 @@
         android:textColor="@color/color_client_neworder"
         android:textSize="13sp"
         android:text="全选"
+        android:visibility="gone"
+        android:clickable="false"
         android:layout_centerVertical="true"
         android:layout_marginRight="@dimen/dimen_34"
         android:button="@null"

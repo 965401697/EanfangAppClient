@@ -1,6 +1,5 @@
 package net.eanfang.worker.ui.activity.worksapce.contacts.verifyqualify;
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;

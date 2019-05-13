@@ -128,13 +128,12 @@ public class AuthQualifySecondActivity extends BaseActivity implements AreaCheck
 
         for (BaseDataEntity baseDataBean : list) {
             if (baseDataBean.isCheck() == isChecked) {
-                if (isChecked && selDataId.contains(baseDataBean.getDataId())) {
-                    continue;
+                if (isChecked && !selDataId.contains(baseDataBean.getDataId())){
+                    resultList.add(baseDataBean.getDataId());
                 }
-                if (!isChecked && !selDataId.contains(baseDataBean.getDataId())) {
-                    continue;
+                if (!isChecked && selDataId.contains(baseDataBean.getDataId())){
+                    resultList.add(baseDataBean.getDataId());
                 }
-                resultList.add(baseDataBean.getDataId());
             }
             List<Integer> resultList2 = getListData(baseDataBean.getChildren(), isChecked);
             resultList.addAll(resultList2);
@@ -224,9 +223,10 @@ public class AuthQualifySecondActivity extends BaseActivity implements AreaCheck
         if (holder != null) {
             if (areaSize == checkAreaSize) {
                 holder.tv_cb.setText("取消全选");
+                areaListBean.get(onPos).setCheck(true);
             } else {
                 holder.tv_cb.setText("全选");
-
+                areaListBean.get(onPos).setCheck(false);
             }
             holder.tv.setText(areaListBean.get(onPos).getDataName() + "(" + checkAreaSize + "/" + areaSize + ")");
         }

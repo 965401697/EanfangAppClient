@@ -109,7 +109,7 @@ public class ChildAdapter extends BaseExpandableListAdapter {
                 boolean isChecked = finalHolder.cb.isChecked();
                 if (entities.size() > 0) {
                     finalHolder.cb.setText(isChecked ? "取消全选" : "全选");
-                    finalHolder.cb.setVisibility(View.VISIBLE);
+                    finalHolder.cb.setVisibility(View.GONE);
                     finalHolder.cb_img.setVisibility(View.GONE);
                 } else {
                     finalHolder.cb.setVisibility(View.GONE);
@@ -131,7 +131,7 @@ public class ChildAdapter extends BaseExpandableListAdapter {
             holder.cb.setChecked(mDatas.get(groupPosition).isCheck());
             holder.img_area.setSelected(isExpanded);
             holder.cb.setText(mDatas.get(groupPosition).isCheck() ? "取消全选" : "全选");
-            holder.cb.setVisibility(View.VISIBLE);
+            holder.cb.setVisibility(View.GONE);
             holder.cb_img.setVisibility(View.GONE);
         } else {
             holder.img_area.setVisibility(View.INVISIBLE);
@@ -183,9 +183,11 @@ public class ChildAdapter extends BaseExpandableListAdapter {
                 }
                 if (checkSize == mDatas.get(groupPosition).getChildren().size()) {
                     mTextViews.get(mPosition * 1000 + groupPosition).cb.setText("取消全选");
+                    mDatas.get(groupPosition).setCheck(true);
                     notifyDataSetChanged();
                 } else {
                     mTextViews.get(mPosition * 1000 + groupPosition).cb.setText("全选");
+                    mDatas.get(groupPosition).setCheck(false);
                 }
                 mListener.onCheckAreaChange(mPosition, groupPosition, childPosition, isChecked);
             });

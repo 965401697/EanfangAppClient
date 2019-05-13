@@ -113,13 +113,12 @@ public class SkillAreaActivity extends BaseWorkerActivity implements AreaCheckCh
 
         for (BaseDataEntity baseDataentity : list) {
             if (baseDataentity.isCheck() == isChecked) {
-                if (isChecked && selDataId.contains(baseDataentity.getDataId())) {
-                    continue;
+                if (isChecked && !selDataId.contains(baseDataentity.getDataId())){
+                    resultList.add(baseDataentity.getDataId());
                 }
-                if (!isChecked && !selDataId.contains(baseDataentity.getDataId())) {
-                    continue;
+                if (!isChecked && selDataId.contains(baseDataentity.getDataId())){
+                    resultList.add(baseDataentity.getDataId());
                 }
-                resultList.add(baseDataentity.getDataId());
             }
             List<Integer> resultList2 = getListData(baseDataentity.getChildren(), isChecked);
             resultList.addAll(resultList2);
@@ -204,9 +203,10 @@ public class SkillAreaActivity extends BaseWorkerActivity implements AreaCheckCh
         if (holder != null) {
             if (areaSize == checkAreaSize) {
                 holder.tv_cb.setText("取消全选");
+                areaListBean.get(onPos).setCheck(true);
             } else {
                 holder.tv_cb.setText("全选");
-
+                areaListBean.get(onPos).setCheck(false);
             }
             holder.tv.setText(areaListBean.get(onPos).getDataName() + "(" + checkAreaSize + "/" + areaSize + ")");
         }

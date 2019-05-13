@@ -79,7 +79,9 @@ public class EnterpriseCertificationActivity extends BaseActivity {
     private void initData() {
         mOrgId = getIntent().getLongExtra("mOrgId", 0);
         mOrgName = getIntent().getStringExtra("orgName");
-        EanfangHttp.post(BUSINESS_MANAGEMENT).params("orgId", mOrgId).execute(new EanfangCallback<>(this, true, BusinessManagementData.DataBean.class, this::setData));
+        EanfangHttp.post(BUSINESS_MANAGEMENT)
+                .params("orgId", mOrgId)
+                .execute(new EanfangCallback<>(this, true, BusinessManagementData.DataBean.class, this::setData));
 
     }
 

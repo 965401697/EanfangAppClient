@@ -121,7 +121,7 @@ public class AuthCompanyFirstActivity extends BaseActivityWithTakePhoto {
             if (byNetBean.getOfficeAddress() != null) {
                 etDetailOfficeAddress.setText(byNetBean.getOfficeAddress());
             }
-            if (StringUtils.isEmpty(byNetBean.getAreaCode())) {
+            if (!StringUtils.isEmpty(byNetBean.getAreaCode())) {
                 tvOfficeAddress.setText(Config.get().getAddressByCode(byNetBean.getAreaCode()));
             }
             if (!StringUtils.isEmpty(byNetBean.getLogoPic())) {

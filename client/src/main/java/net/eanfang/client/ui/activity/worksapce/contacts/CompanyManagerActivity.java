@@ -110,9 +110,13 @@ public class CompanyManagerActivity extends BaseActivity implements DissloveTeam
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comapany_manager);
         ButterKnife.bind(this);
-        initView();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initView();
+    }
 
     private void initView() {
         setLeftBack();
