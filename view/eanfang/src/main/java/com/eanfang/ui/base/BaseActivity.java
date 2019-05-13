@@ -43,7 +43,7 @@ import java.util.ArrayList;
 /**
  * Created by jornl on 2018/1/19.
  */
-
+@Deprecated
 public class BaseActivity extends AppCompatActivity implements
         IBase, ActivityCompat.OnRequestPermissionsResultCallback {
 
@@ -54,10 +54,15 @@ public class BaseActivity extends AppCompatActivity implements
 
     private boolean hasTransaction = false;
     private boolean containsFirst = false;
+    /**
+     * 似乎只是在聊天的时候 销毁窗口用的 考虑写成接口形式
+     */
+    @Deprecated
     public final static ArrayList<Activity> transactionActivities = new ArrayList<Activity>();
 
 
     //Android6.0申请权限的回调方法
+    @Deprecated
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -85,6 +90,7 @@ public class BaseActivity extends AppCompatActivity implements
         }
     }
 
+    @Deprecated
     public void setPermissionsCallBack(PermissionUtils.PermissionsCallBack permissionsCallBack) {
         this.permissionsCallBack = permissionsCallBack;
     }
@@ -119,7 +125,7 @@ public class BaseActivity extends AppCompatActivity implements
 
     }
 
-
+    @Deprecated
     protected void setStatusBar() {
         StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimary));
     }
@@ -127,6 +133,7 @@ public class BaseActivity extends AppCompatActivity implements
     /**
      * 沉浸式状态栏
      */
+    @Deprecated
     private void initState() {
 //        if (Build.VERSION.SDK_INT >= 21) {
 //            View decorView = getWindow().getDecorView();
@@ -178,6 +185,10 @@ public class BaseActivity extends AppCompatActivity implements
         return res;
     }
 
+    /**
+     * 已过时 页面header 用 header_eanfang 替换
+     */
+    @Deprecated
     public void supprotToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("");
@@ -228,6 +239,7 @@ public class BaseActivity extends AppCompatActivity implements
         findViewById(R.id.iv_left).setVisibility(View.VISIBLE);
     }
 
+    @Deprecated
     public void setRightImageOnClickListener(View.OnClickListener listener) {
         findViewById(R.id.iv_right).setOnClickListener(listener);
     }
@@ -306,6 +318,7 @@ public class BaseActivity extends AppCompatActivity implements
 
     }
 
+    @Deprecated
     public LoginBean user() {
         Object obj = EanfangApplication.getApplication().getUser();
         if (obj instanceof LoginBean) {
@@ -338,11 +351,12 @@ public class BaseActivity extends AppCompatActivity implements
         onNavigationOnClicked();
     }
 
+    @Deprecated
     public void startAnimActivity(Intent intent) {
         startActivity(intent);
     }
 
-
+    @Deprecated
     class ExitListenerReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent i) {

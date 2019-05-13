@@ -1,10 +1,14 @@
 package com.eanfang.base;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,7 +33,6 @@ import com.eanfang.network.event.BaseActionEvent;
 import com.eanfang.rds.base.IViewModelAction;
 import com.eanfang.sys.activity.LoginActivity;
 import com.kingja.loadsir.core.LoadService;
-import com.kingja.loadsir.core.LoadSir;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import java.util.ArrayList;
@@ -57,11 +60,17 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     private boolean notFoundBack = false;
     private Dialog loadingDialog;
     private ImageView iv_left;
+    private TextView iv_right;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        //始终竖屏
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
+
+        BaseApplication.get().addActivity(this);
+
         initViewModelEvent();
     }
 
@@ -69,6 +78,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     protected void onStart() {
         super.onStart();
         setLeftBack(true);
+        setRightBack(false);
         initView();
         if (isClient()) {
             findViewById(R.id.titles_bar).setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryC));
@@ -79,11 +89,37 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        loadService = LoadSir.getDefault().register(this, this::onNetReload);
-        initLoadSir();
+    protected void onDestroy() {
+        super.onDestroy();
+        dismissLoading();
+        BaseApplication.get().closeActivity(this);
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
+
+    // ???
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            if (getCurrentFocus() != null && getCurrentFocus().getWindowToken() != null) {
+                InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                manager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            }
+        }
+        return super.onTouchEvent(event);
+    }
+
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+////        //loadService = LoadSir.getDefault().register(this, this::onNetReload);
+////        initLoadSir();
+//    }
+
+    //---------------------------------------------------init ----------------------------------------------------------------------------
 
     /**
      * 初始化loadSir默认打开页面
@@ -109,6 +145,32 @@ public abstract class BaseActivity extends RxAppCompatActivity {
      * @return ViewModel
      */
     protected abstract ViewModel initViewModel();
+
+
+    protected List<ViewModel> initViewModelList() {
+        return null;
+    }
+
+    /**
+     * 初始化view方法
+     */
+    protected abstract void initView();
+
+    private void initViewModelEvent() {
+        List<ViewModel> viewModelList = initViewModelList();
+        if (viewModelList != null && viewModelList.size() > 0) {
+            observeEvent(viewModelList);
+        } else {
+            ViewModel viewModel = initViewModel();
+            if (viewModel != null) {
+                List<ViewModel> modelList = new ArrayList<>();
+                modelList.add(viewModel);
+                observeEvent(modelList);
+            }
+        }
+    }
+
+    //------------------------------------------------------------header bar-----------------------------------------------------
 
     /**
      * 设置标题
@@ -167,28 +229,44 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         setLeftBack(visibility, null);
     }
 
-    protected List<ViewModel> initViewModelList() {
-        return null;
+    /**
+     * 设置返回按钮
+     *
+     * @param visibility visibility
+     * @param listener   listener
+     */
+    private void setRightBack(boolean visibility, View.OnClickListener listener) {
+        iv_right = findViewById(R.id.tv_right);
+        if (visibility) {
+            iv_right.setVisibility(View.VISIBLE);
+        } else {
+            iv_right.setVisibility(View.GONE);
+        }
+        if (listener != null) {
+            iv_right.setOnClickListener(listener);
+        } else {
+            iv_right.setOnClickListener(v -> finishWithResultOk());
+        }
     }
 
     /**
-     * 初始化view方法
+     * 设置返回按钮
+     *
+     * @param listener listener
      */
-    protected abstract void initView();
-
-    private void initViewModelEvent() {
-        List<ViewModel> viewModelList = initViewModelList();
-        if (viewModelList != null && viewModelList.size() > 0) {
-            observeEvent(viewModelList);
-        } else {
-            ViewModel viewModel = initViewModel();
-            if (viewModel != null) {
-                List<ViewModel> modelList = new ArrayList<>();
-                modelList.add(viewModel);
-                observeEvent(modelList);
-            }
-        }
+    public void setRightBack(View.OnClickListener listener) {
+        setLeftBack(true, listener);
     }
+
+    /**
+     * 设置返回按钮
+     *
+     * @param visibility 是否可见
+     */
+    public void setRightBack(boolean visibility) {
+        setLeftBack(visibility, null);
+    }
+
 
     private void observeEvent(List<ViewModel> viewModelList) {
         for (ViewModel viewModel : viewModelList) {
@@ -266,11 +344,6 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        dismissLoading();
-    }
 
     protected void startLoading() {
         startLoading(null);

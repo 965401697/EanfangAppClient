@@ -16,6 +16,9 @@ android {
         flavorDimensions "app"
         buildConfigField("String", "APP_TYPE", "\"worker\"")
 
+        buildConfigField("String", "MOB_WORKER_APPID", cfg.mobWorkerAppId)
+        buildConfigField("String", "MOB_WORKER_APPKEY", cfg.mobWorkerAppKey)
+
 
         ndk {
             // 设置支持的SO库架构

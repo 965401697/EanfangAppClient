@@ -35,6 +35,11 @@ import static com.eanfang.config.EanfangConst.XUNFEI_APPID;
  * Created at 2017/3/2
  * @desc 做SDK初始化工作
  */
+
+/**
+ * 该类已过期，请尽快移步  com.eanfang.base.BaseApplication
+ */
+@Deprecated
 public class EanfangApplication extends CustomeApplication {
 
     public static final String TAG = EanfangApplication.class.getSimpleName();

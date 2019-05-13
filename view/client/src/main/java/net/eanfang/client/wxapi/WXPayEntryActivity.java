@@ -20,7 +20,6 @@ import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 
-
 import net.eanfang.client.ui.activity.pay.NewPayActivity;
 
 
@@ -28,6 +27,7 @@ import net.eanfang.client.ui.activity.pay.NewPayActivity;
  * Created by mac on 16/12/8.
  * 微信支付
  */
+@Deprecated
 public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandler {
 
     private IWXAPI iwxapi;
@@ -35,8 +35,8 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        iwxapi=SDKManager.getWXPay().createWXAPI(this, EanfangConst.WX_APPID_CLIENT);
-        iwxapi.handleIntent(getIntent(),this);
+        iwxapi = SDKManager.getWXPay().createWXAPI(this, EanfangConst.WX_APPID_CLIENT);
+        iwxapi.handleIntent(getIntent(), this);
 
     }
 

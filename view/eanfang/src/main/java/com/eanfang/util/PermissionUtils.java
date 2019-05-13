@@ -3,15 +3,19 @@ package com.eanfang.util;
 import android.Manifest;
 import android.content.pm.PackageManager;
 
+import androidx.core.app.ActivityCompat;
+
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
-
-import androidx.core.app.ActivityCompat;
 
 /**
  * Created by jornl on 2018/1/19.
  */
 
+/**
+ * 已过时 请使用  RxPerm
+ */
+@Deprecated
 public class PermissionUtils {
 
     private static PermissionUtils permissionUtils = new PermissionUtils();
@@ -159,7 +163,7 @@ public class PermissionUtils {
 
     }
 
-
+    @Deprecated
     public interface PermissionsCallBack {
         /**
          * 获取权限 返回值

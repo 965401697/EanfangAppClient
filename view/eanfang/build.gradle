@@ -18,6 +18,8 @@ android {
         buildConfigField("String", "OSS_BUCKET", cfg.ossBucket)
         buildConfigField("String", "OSS_ENDPOINT", cfg.ossEndpoint)
 
+        buildConfigField("String", "IFLYTEK_APP_ID", cfg.iflytekAppId)
+
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
     }
 
@@ -115,7 +117,7 @@ dependencies {
     //rx
     api pkg.rxjava2
     api pkg.rxandroid2
-    api pkg.rxpermissions
+
     api pkg.rxlifecycle
     api pkg.rxlifecycleAndroid
     api pkg.rxlifecycleComponents

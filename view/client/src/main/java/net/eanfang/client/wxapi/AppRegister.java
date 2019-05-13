@@ -13,6 +13,7 @@ import android.content.Intent;
 /**
  * Created by mac on 17/1/4.
  */
+@Deprecated
 public class AppRegister extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {

@@ -11,6 +11,10 @@ import com.okgo.request.PostRequest;
  * Created by jornl on 2017/8/30.
  */
 
+/**
+ * 该工具已废弃 请尽快移步 rds
+ */
+@Deprecated
 public class EanfangHttp {
     private static OkGo http;
 

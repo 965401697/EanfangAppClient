@@ -66,6 +66,15 @@ ext {
             workerBetaBugly  : "\"fecc678a04\"",
             workerProBugly   : "\"a6bae9f6ee\"",
 
+            //讯飞
+            iflytekAppId     : "5b8cd9c3",
+
+            //Mob
+            mobClientAppId   : "22bb8de378eab",
+            mobClientAppKey  : "f93cc21381c6f51702be823efde3e402",
+            mobWorkerAppId   : "299cfb8d27500",
+            mobWorkerAppKey  : "91afc15795a7f3dc04b5cab818c097c9",
+
             //xinge config
             xgClientAccessId : "2100270001",
             xgClientAccessKey: "ADCL916N8D7M",
@@ -76,7 +85,6 @@ ext {
             xgWorkerAccessKey: "A72E1ECQX57G",
             xgWorkerAmapKey  : "db2be5c0ebed1c47388afd3c361bbfe3",
             xgWorkerHwAppid  : "100379649",
-
             // client config
 
     ]
@@ -125,7 +133,7 @@ ext {
             //rx
             rxjava2              : "io.reactivex.rxjava2:rxjava:2.2.3",
             rxandroid2           : "io.reactivex.rxjava2:rxandroid:2.1.0",
-            rxpermissions        : "com.tbruyelle.rxpermissions:rxpermissions:0.9.2",
+            rxpermissions2        : "com.tbruyelle.rxpermissions2:rxpermissions:0.9.5",
             rxlifecycle          : 'com.trello.rxlifecycle2:rxlifecycle:2.2.1',
             rxlifecycleAndroid   : 'com.trello.rxlifecycle2:rxlifecycle-android:2.2.1',
             rxlifecycleComponents: 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.1',
