@@ -4,13 +4,15 @@ import com.alibaba.sdk.android.oss.common.auth.OSSFederationCredentialProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSFederationToken;
 import com.eanfang.network.RetrofitManagement;
 import com.eanfang.network.config.HttpConfig;
+import com.zchu.rxcache.RxCache;
+import com.zchu.rxcache.data.CacheResult;
+import com.zchu.rxcache.stategy.CacheStrategy;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * Created by Administrator on 2015/12/9 0009.
- * 重载OSSFederationCredentialProvider生成自己的获取STS的功能
+ * 使用 Retrofit请求token 并设置缓存 1小时失效
  */
 public class STSGetter extends OSSFederationCredentialProvider {
     private OSSBean ossBean;
@@ -19,6 +21,9 @@ public class STSGetter extends OSSFederationCredentialProvider {
         RetrofitManagement.getInstance().getService(IOssApi.class, HttpConfig.get().getApiUrl()).getToken()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                //优先使用缓存 1小时过期
+                .compose(RxCache.getDefault().transformObservable("IOssApi:getToken", OSSBean.class, CacheStrategy.firstCacheTimeout(1000 * 60 * 60)))
+                .map(new CacheResult.MapFunc<>())
                 .subscribe((bean) -> ossBean = bean.getData());
     }
 

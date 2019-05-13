@@ -14,6 +14,7 @@ allprojects {
     repositories {
         google()
         jcenter()
+        maven { url 'https://dl.bintray.com/zchu/maven/' }
     }
     configurations {
         all {
@@ -78,7 +79,7 @@ ext {
 
             // client config
 
-    ] 
+    ]
     pkg = [
             constraintlayout     : "androidx.constraintlayout:constraintlayout:1.1.3",
             legacySupportV4      : "androidx.legacy:legacy-support-v4:1.0.0",
@@ -86,7 +87,6 @@ ext {
             multidex             : "androidx.multidex:multidex:2.0.1",
             okhttp3              : "com.facebook.fresco:imagepipeline-okhttp3:0.12.0",
             retrofit2            : "com.squareup.retrofit2:retrofit:2.5.0",
-//            retrofit2Fastjson    : "org.ligboy.retrofit2:converter-fastjson-android:2.1.0",
             adapterRxjava2       : "com.squareup.retrofit2:adapter-rxjava2:2.4.0",
             interceptor3         : "com.squareup.okhttp3:logging-interceptor:3.12.0",
             extensions           : "androidx.lifecycle:lifecycle-extensions:2.0.0",
@@ -103,7 +103,6 @@ ext {
             materialratingbar    : "me.zhanghai.android.materialratingbar:library:1.0.2",
             flowlayout           : "com.zhy:flowlayout-lib:1.0.3",
             zxing                : "com.google.zxing:core:3.3.2",
-
             databindingCompiler  : "androidx.databinding:databinding-compiler:3.4.0",
             databindingRuntime   : 'androidx.databinding:databinding-runtime:3.4.0',
 
@@ -120,7 +119,8 @@ ext {
             mPAndroidChart       : "com.github.PhilJay:MPAndroidChart:v3.0.3",
             jiaozivideoplayer    : "cn.jzvd:jiaozivideoplayer:6.3.1",
             prolificinteractive  : "com.prolificinteractive:material-calendarview:1.4.3",
-            pictureselector      :"com.github.LuckSiege.PictureSelector:picture_library:v2.2.3",
+            pictureselector      : "com.github.LuckSiege.PictureSelector:picture_library:v2.2.3",
+            loadsir              : "com.kingja.loadsir:loadsir:1.3.6",
 
             //rx
             rxjava2              : "io.reactivex.rxjava2:rxjava:2.2.3",
@@ -129,6 +129,7 @@ ext {
             rxlifecycle          : 'com.trello.rxlifecycle2:rxlifecycle:2.2.1',
             rxlifecycleAndroid   : 'com.trello.rxlifecycle2:rxlifecycle-android:2.2.1',
             rxlifecycleComponents: 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.1',
+            rxcache              : 'com.zchu:rxcache:2.3.5',
 
             //tencent
             bugly                : "com.tencent.bugly:crashreport:2.6.6.1",
@@ -155,6 +156,7 @@ ext {
             update               : "com.qianwen:update-app:3.5.2",
             pinyin4j             : "com.belerweb:pinyin4j:2.5.1",
             monitor              : "leavesc.hello:Monitor:1.0.3",
+            gson                 : 'com.google.code.gson:gson:2.8.5'
 
     ]
 }

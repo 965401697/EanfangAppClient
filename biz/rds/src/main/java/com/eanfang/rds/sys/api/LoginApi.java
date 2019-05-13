@@ -32,7 +32,7 @@ public interface LoginApi {
      * @param phone phone
      * @return
      */
-    @GET("/yaf_sys/sys/sendverify")
+    @GET("/yaf_sys/account/sendverify")
     Observable<BaseResponseBody<String>> verifyCode(@Query("mobile") String phone);
 
     /**

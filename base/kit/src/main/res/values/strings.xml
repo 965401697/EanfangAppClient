@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">kit</string>
+
+    <!--无数据提示-->
+    <string name="fine_no_data">哎呀,暂时还没有数据呢</string>
+
+    <!--无数据提示-->
+    <string name="not_found">访问资源找不到了（404）</string>
+
+    <!--报错提示-->
+    <string name="something_is_wrong">服务器好像出了一点小问题</string>
+    <!--请求超时提示-->
+    <string name="timeout">网络好像不太稳定</string>
+    <!--无权限提示-->
+    <string name="no_permission">没权限访问此功能</string>
+
+    <string name="click_me_to_retry">点击刷新一下试试</string>
+    <string name="loading">加载中…</string>
+
 </resources>

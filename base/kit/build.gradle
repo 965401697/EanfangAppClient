@@ -28,6 +28,8 @@ dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
     implementation pkg.legacySupportV4
 
+    implementation project(':base:network')
+
     implementation pkg.rxjava2
     implementation pkg.rxandroid2
 
@@ -35,6 +37,7 @@ dependencies {
     implementation pkg.hutoolCore
     implementation pkg.fastjson
 
+    api pkg.loadsir
     api pkg.pictureselector
     api pkg.badgeview
     api pkg.prolificinteractive
@@ -51,7 +54,7 @@ dependencies {
     annotationProcessor pkg.lombok
     implementation pkg.luban
     api pkg.stream
-    implementation project(':base:network')
+
     api pkg.bugly
     api pkg.wechat
     api pkg.xinge

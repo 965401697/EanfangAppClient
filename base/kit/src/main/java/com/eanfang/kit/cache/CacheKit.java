@@ -13,10 +13,12 @@ import java.io.File;
 import java.util.List;
 import java.util.Objects;
 
+import cn.hutool.core.date.DateUtil;
+
 public class CacheKit extends LruCache<String, Object> {
     private static DisCacheKit disCacheKit;
     private static CacheKit cacheKit;
-    private static Class clazz;
+    private Class clazz;
 
     private CacheKit(int maxSize) {
         super(maxSize);
@@ -33,7 +35,7 @@ public class CacheKit extends LruCache<String, Object> {
         if (cacheKit == null) {
             synchronized (CacheKit.class) {
                 if (cacheKit == null) {
-                    cacheKit = new CacheKit(1024);
+                    cacheKit = new CacheKit(100);
                     disCacheKit = DisCacheKit.get(getAppVersion(context), getDiskCacheDir(context));
                 }
             }
@@ -42,28 +44,40 @@ public class CacheKit extends LruCache<String, Object> {
     }
 
     public String getStr(String key) {
-        CacheKit.clazz = String.class;
+        checkDue(key);
+        this.clazz = String.class;
         return (String) super.get(key);
     }
 
+
     public Integer getInt(String key) {
-        CacheKit.clazz = Integer.TYPE;
+        checkDue(key);
+        this.clazz = Integer.TYPE;
         return (Integer) super.get(key);
     }
 
+    public Long getLong(String key) {
+        checkDue(key);
+        this.clazz = Long.TYPE;
+        return (Long) super.get(key);
+    }
+
     public Boolean getBool(String key, boolean def) {
-        CacheKit.clazz = Boolean.TYPE;
+        checkDue(key);
+        this.clazz = Boolean.TYPE;
         Boolean result = (Boolean) super.get(key);
         return result != null ? result : def;
     }
 
     public <T> T get(String key, Class<T> clazz) {
-        CacheKit.clazz = clazz;
+        checkDue(key);
+        this.clazz = clazz;
         return (T) super.get(key);
     }
 
     public <T> List<T> getArr(String key, Class<T> clazz) {
-        CacheKit.clazz = clazz;
+        checkDue(key);
+        this.clazz = clazz;
         return (List<T>) super.get(key);
     }
 
@@ -84,6 +98,27 @@ public class CacheKit extends LruCache<String, Object> {
         return super.put(key, value);
     }
 
+    /**
+     * 可以设置一个过期时间
+     *
+     * @param key   key
+     * @param value value
+     * @param due   due过期时间 秒单位
+     * @return
+     */
+    @Nullable
+    public Object put(@NonNull String key, @NonNull Object value, Integer due) {
+        if (due != null) {
+            String timeKey = key + "_seconds";
+            disCacheKit.put(timeKey, DateUtil.currentSeconds() + due);
+            super.put(timeKey, DateUtil.currentSeconds() + due);
+        }
+
+        disCacheKit.put(key, value);
+        return super.put(key, value);
+    }
+
+
     @Nullable
     @Override
     public Object remove(@NonNull String key) {
@@ -100,13 +135,29 @@ public class CacheKit extends LruCache<String, Object> {
     @Override
     protected Object create(@NonNull String key) {
         super.create(key);
-        Object obj = disCacheKit.get(key, CacheKit.clazz);
+        Object obj = disCacheKit.get(key, this.clazz);
         if (obj != null) {
             return obj;
         }
-        return disCacheKit.getArr(key, CacheKit.clazz);
+        return disCacheKit.getArr(key, this.clazz);
     }
 
+    /**
+     * 检查是否过期，如果过期了 就清除
+     *
+     * @param key key
+     */
+    private void checkDue(String key) {
+        DateUtil.currentSeconds();
+        String timeKey = key + "_seconds";
+        this.clazz = Long.TYPE;
+        Long dueTime = (Long) super.get(timeKey);
+        //超时 清除
+        if (dueTime != null && dueTime < DateUtil.currentSeconds()) {
+            remove(key);
+            remove(timeKey);
+        }
+    }
 
     /**
      * 获取缓存路径
@@ -114,7 +165,7 @@ public class CacheKit extends LruCache<String, Object> {
      * @param context context
      * @return File
      */
-    private static File getDiskCacheDir(Context context) {
+    public static File getDiskCacheDir(Context context) {
         String cachePath;
         if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
                 || !Environment.isExternalStorageRemovable()) {

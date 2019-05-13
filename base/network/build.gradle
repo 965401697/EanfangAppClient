@@ -46,4 +46,5 @@ dependencies {
     api pkg.rxandroid2
     api pkg.extensions
     api pkg.adapterRxjava2
+    api pkg.rxcache
 }

@@ -1,6 +1,5 @@
 package com.eanfang.sys.viewmodel;
 
-import android.os.CountDownTimer;
 import android.text.Selection;
 import android.text.Spannable;
 import android.text.method.HideReturnsTransformationMethod;
@@ -19,12 +18,16 @@ import com.eanfang.rds.base.BaseViewModel;
 import com.eanfang.rds.sys.ds.LoginDs;
 import com.eanfang.rds.sys.repo.LoginRepo;
 
+import java.util.concurrent.TimeUnit;
+
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.lang.Validator;
 import cn.hutool.core.util.StrUtil;
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import lombok.Getter;
 import lombok.Setter;
@@ -124,25 +127,54 @@ public class LoginViewModel extends BaseViewModel {
         }
         verifyCode(loginVo.getUsername().get());
         verifyBinding.tvYanzheng.setEnabled(false);
-        timer.start();
+
+        Observable.interval(0, 1, TimeUnit.SECONDS)
+                .take(60)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(count -> 60 - count)
+                .subscribe(new Observer<Long>() {
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Long aLong) {
+                        verifyBinding.tvYanzheng.setText(aLong + "秒");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        verifyBinding.tvYanzheng.setText("获取验证码");
+                        verifyBinding.tvYanzheng.setEnabled(true);
+                    }
+                });
+//        timer.start();
     }
 
 
     //验证码倒计时
-    @Getter
-    protected CountDownTimer timer = new CountDownTimer(60000, 1000) {
-
-        @Override
-        public void onTick(long millisUntilFinished) {
-            verifyBinding.tvYanzheng.setText(millisUntilFinished / 1000 + "秒");
-        }
-
-        @Override
-        public void onFinish() {
-            verifyBinding.tvYanzheng.setEnabled(true);
-            verifyBinding.tvYanzheng.setText("获取验证码");
-        }
-    };
+//    @Getter
+//    protected CountDownTimer timer = new CountDownTimer(60000, 1000) {
+//
+//        @Override
+//        public void onTick(long millisUntilFinished) {
+//            verifyBinding.tvYanzheng.setText(millisUntilFinished / 1000 + "秒");
+//        }
+//
+//        @Override
+//        public void onFinish() {
+//            verifyBinding.tvYanzheng.setEnabled(true);
+//            verifyBinding.tvYanzheng.setText("获取验证码");
+//        }
+//    };
 
     /**
      * 阅读协议

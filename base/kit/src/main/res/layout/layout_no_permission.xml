@@ -1,22 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.eanfang.ui.activity.NoPermissionActivity">
-
-    <include
-        android:id="@+id/ll_header"
-        layout="@layout/header_eanfang" />
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/image_view"
         android:layout_width="@dimen/dimen_330"
         android:layout_height="@dimen/dimen_440"
-        android:layout_below="@+id/ll_header"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/dimen_104"
+        android:layout_marginTop="@dimen/dimen_204"
         android:src="@mipmap/ic_no_permission" />
 
     <TextView
@@ -28,22 +21,21 @@
         android:layout_marginLeft="@dimen/dimen_162"
         android:layout_marginTop="@dimen/dimen_20"
         android:layout_marginRight="@dimen/dimen_162"
-        android:text="@string/no_permission"
         android:textColor="@color/color_bottom"
         android:textSize="@dimen/textSize_16" />
 
-    <TextView
-        android:id="@+id/tv_know"
-        android:layout_width="@dimen/dimen_348"
-        android:layout_height="@dimen/dimen_88"
-        android:layout_above="@+id/ll_footer"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/dimen_60"
-        android:background="@drawable/shape_color_primary_bg"
-        android:gravity="center"
-        android:text="我知道了"
-        android:textColor="@color/white"
-        android:textSize="@dimen/textSize_13" />
+    <!--<TextView-->
+        <!--android:id="@+id/tv_know"-->
+        <!--android:layout_width="@dimen/dimen_348"-->
+        <!--android:layout_height="@dimen/dimen_88"-->
+        <!--android:layout_above="@+id/ll_footer"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginBottom="@dimen/dimen_60"-->
+        <!--android:background="@drawable/shape_color_primary_bg"-->
+        <!--android:gravity="center"-->
+        <!--android:text="我知道了"-->
+        <!--android:textColor="@color/white"-->
+        <!--android:textSize="@dimen/textSize_13" />-->
 
     <LinearLayout
         android:id="@+id/ll_footer"
@@ -58,7 +50,7 @@
             android:layout_width="@dimen/dimen_80"
             android:layout_height="@dimen/dimen_70"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/dimen_140"
+            android:layout_marginStart="@dimen/dimen_140"
             android:src="@drawable/client_logo" />
 
         <TextView
@@ -66,9 +58,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/dimen_20"
+            android:layout_marginStart="@dimen/dimen_20"
             android:text="修监控，装监控，就找易安防"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/colorPrimaryC"
             android:textSize="@dimen/textSize_13" />
 
 

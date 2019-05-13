@@ -5,6 +5,10 @@ import com.eanfang.network.callback.RequestCallback;
 import com.eanfang.network.callback.RequestMultiplyCallback;
 import com.eanfang.network.config.HttpConfig;
 import com.eanfang.network.model.BaseResponseBody;
+import com.google.gson.reflect.TypeToken;
+import com.zchu.rxcache.RxCache;
+import com.zchu.rxcache.data.CacheResult;
+import com.zchu.rxcache.stategy.CacheStrategy;
 
 import java.util.concurrent.TimeUnit;
 
@@ -26,6 +30,7 @@ public abstract class BaseRemoteDataSource {
 
     private BaseViewModel baseViewModel;
 
+
     public BaseRemoteDataSource(BaseViewModel baseViewModel) {
         this.compositeDisposable = new CompositeDisposable();
         this.baseViewModel = baseViewModel;
@@ -40,27 +45,34 @@ public abstract class BaseRemoteDataSource {
     }
 
     private <T> ObservableTransformer<BaseResponseBody<T>, Object> applySchedulers() {
-        return RetrofitManagement.getInstance().applySchedulers();
+        return RetrofitManagement.getInstance().applySchedulers(baseViewModel.getActionLiveData());
     }
 
     protected <T> void execute(Observable observable, RequestCallback<T> callback) {
-        execute(observable, new BaseSubscriber<>(callback), true);
+        execute(observable, new BaseSubscriber<>(callback), true, null);
+    }
+
+    protected <T> void execute(Observable observable, RequestCallback<T> callback, CacheModel cacheModel) {
+        execute(observable, new BaseSubscriber<>(callback), true, cacheModel);
     }
 
     protected <T> void execute(Observable observable, RequestMultiplyCallback<T> callback) {
-        execute(observable, new BaseSubscriber<>(callback), true);
+        execute(observable, new BaseSubscriber<>(callback), true, null);
     }
 
     public void executeWithoutDismiss(Observable observable, Observer observer) {
-        execute(observable, observer, false);
+        execute(observable, observer, false, null);
     }
 
-    private void execute(Observable observable, Observer observer, boolean isDismiss) {
+    private <T> void execute(Observable observable, Observer observer, boolean isDismiss, CacheModel cacheModel) {
         Disposable disposable = (Disposable) observable
                 .throttleFirst(500, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
+                .compose(RxCache.getDefault().<BaseResponseBody<T>>transformObservable(cacheModel != null ? cacheModel.getKey() : "", new TypeToken<T>() {
+                }.getType(), cacheModel != null ? cacheModel.getCacheStrategy() : CacheStrategy.firstRemote()))//默认优先使用网络
+                .map(new CacheResult.MapFunc<BaseResponseBody<T>>())
                 .compose(applySchedulers())
                 .compose(isDismiss ? loadingTransformer() : loadingTransformerWithoutDismiss())
                 .subscribeWith(observer);
@@ -95,6 +107,14 @@ public abstract class BaseRemoteDataSource {
                 .unsubscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(disposable -> startLoading())
+                .doFinally(this::dismissLoading);
+    }
+
+    private <T> ObservableTransformer<T, T> loadSirTransformer() {
+        return observable -> observable
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .unsubscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
                 .doFinally(this::dismissLoading);
     }
 

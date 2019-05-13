@@ -32,6 +32,10 @@ dependencies {
 
     implementation pkg.lombok
     annotationProcessor pkg.lombok
+    implementation pkg.hutoolCore
+
+    implementation pkg.gson
+
 
     api project(':base:network')
     api project(':base:kit')

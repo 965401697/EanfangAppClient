@@ -14,7 +14,7 @@ import java.util.Map;
  * framework's implementation. See the framework SDK documentation for a class
  * overview.
  */
-public class LruCache<K, V> {
+class LruCache<K, V> {
     private final LinkedHashMap<K, V> map;
 
     /**

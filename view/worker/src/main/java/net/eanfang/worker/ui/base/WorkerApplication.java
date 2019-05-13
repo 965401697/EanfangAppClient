@@ -7,6 +7,7 @@ import android.util.Log;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.kit.cache.CacheKit;
+import com.eanfang.kit.loading.LoadKit;
 import com.eanfang.network.config.HttpConfig;
 import com.mob.MobSDK;
 
@@ -71,7 +72,15 @@ public class WorkerApplication extends EanfangApplication {
             };
             RongIM.getInstance().setReadReceiptConversationTypeList(types);
 
-            HttpConfig.init(com.eanfang.BuildConfig.API_HOST, BuildConfig.APP_TYPE, com.eanfang.BuildConfig.OSS_ENDPOINT, com.eanfang.BuildConfig.OSS_BUCKET);
+            HttpConfig.init(com.eanfang.BuildConfig.API_HOST,
+                    BuildConfig.APP_TYPE,
+                    com.eanfang.BuildConfig.OSS_ENDPOINT,
+                    com.eanfang.BuildConfig.OSS_BUCKET,
+                    CacheKit.getDiskCacheDir(this).getPath(),
+                    BuildConfig.DEBUG,
+                    BuildConfig.VERSION_CODE
+            );
+            LoadKit.initLoadSir();
             CacheKit.init(this).put("APP_TYPE", BuildConfig.APP_TYPE);
             EanfangHttp.setWorker();
             if (EanfangApplication.get().getUser() != null) {

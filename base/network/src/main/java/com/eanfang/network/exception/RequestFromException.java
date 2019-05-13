@@ -7,9 +7,10 @@ import com.eanfang.network.exception.base.BaseException;
  * @author jornl
  * @date 2019-04-17 18:11:04
  */
-public class TokenInvalidException extends BaseException {
+public class RequestFromException extends BaseException {
 
-    public TokenInvalidException() {
-        super(HttpCode.CODE_TOKEN_INVALID, "登录失效，请重新登录");
+    public RequestFromException() {
+        super(HttpCode.CODE_TOKEN_INVALID, "请求来源错误，请退出后重试");
     }
+
 }

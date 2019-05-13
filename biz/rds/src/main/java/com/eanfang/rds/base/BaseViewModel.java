@@ -16,7 +16,7 @@ public class BaseViewModel extends ViewModel implements IViewModelAction {
     private MutableLiveData<BaseActionEvent> actionLiveData;
     protected LifecycleOwner lifecycleOwner;
 
-    public BaseViewModel() {
+    protected BaseViewModel() {
         actionLiveData = new MutableLiveData<>();
     }
 
