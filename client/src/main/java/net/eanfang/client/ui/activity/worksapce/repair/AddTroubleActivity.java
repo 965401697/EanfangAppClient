@@ -18,6 +18,7 @@ import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.delegate.BGASortableDelegate;
+import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.MultiClickListener;
@@ -281,7 +282,11 @@ public class AddTroubleActivity extends BaseClientActivity {
         tvAdd.setOnClickListener(new MultiClickListener(AddTroubleActivity.this, this::isAgainAdd, this::onSubmitClient));
 
         setLeftBack((v) -> {
-            doTranValue();
+            if (beanList != null && beanList.size() > 0) {
+                doTranValue();
+            } else {
+                giveUp();
+            }
         });
     }
 
@@ -648,8 +653,19 @@ public class AddTroubleActivity extends BaseClientActivity {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             if (beanList != null && beanList.size() > 0) {
                 doTranValue();
+            } else {
+                giveUp();
             }
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    /**
+     * 放弃报修
+     */
+    private void giveUp() {
+        new TrueFalseDialog(this, "系统提示", "是否放弃报修？", () -> {
+            finish();
+        }).showDialog();
     }
 }

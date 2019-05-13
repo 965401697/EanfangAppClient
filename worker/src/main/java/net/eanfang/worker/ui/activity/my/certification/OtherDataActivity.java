@@ -188,7 +188,7 @@ public class OtherDataActivity extends BaseWorkerActivity {
             OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
                 @Override
                 public void onOssSuccess() {
-                    runOnUiThread(() -> EanfangHttp.post(UserApi.GET_TECH_WORKER_ADD_V2).upJson(JSONObject.toJSONString(mTechWorkerVerifyEntity)).execute(new EanfangCallback<JSONObject>(OtherDataActivity.this, true, JSONObject.class, (bean) -> {
+                    runOnUiThread(() -> EanfangHttp.post(UserApi.GET_TECH_WORKER_ADD_V4).upJson(JSONObject.toJSONString(mTechWorkerVerifyEntity)).execute(new EanfangCallback<JSONObject>(OtherDataActivity.this, true, JSONObject.class, (bean) -> {
                         Intent intent = new Intent(OtherDataActivity.this, SubmitSuccessfullyJsActivity.class);
                         intent.putExtra("order", 3);
                         startAnimActivity(intent);
@@ -198,7 +198,7 @@ public class OtherDataActivity extends BaseWorkerActivity {
             });
             return;
         } else {
-            EanfangHttp.post(UserApi.GET_TECH_WORKER_ADD_V2).upJson(JSONObject.toJSONString(mTechWorkerVerifyEntity)).execute(new EanfangCallback<JSONObject>(OtherDataActivity.this, true, JSONObject.class, (bean) -> {
+            EanfangHttp.post(UserApi.GET_TECH_WORKER_ADD_V4).upJson(JSONObject.toJSONString(mTechWorkerVerifyEntity)).execute(new EanfangCallback<JSONObject>(OtherDataActivity.this, true, JSONObject.class, (bean) -> {
                 Intent intent = new Intent(this, SubmitSuccessfullyJsActivity.class);
                 intent.putExtra("order", 3);
                 startAnimActivity(intent);

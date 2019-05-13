@@ -181,20 +181,16 @@ public class BusinessCertificationActivity extends BaseActivity {
         initAccessToken();
         EanfangHttp.get(UserApi.GET_COMPANY_ORG_INFO + mOrgId).execute(new EanfangCallback<AuthCompanyBaseInfoBean>(this, true, AuthCompanyBaseInfoBean.class, (beans) -> {
             infoBean = beans;
-            switch (bizCertify) {
-                case 0:
+            status = beans.getStatus();
+            switch (status) {
+                case 1:
+                case 2:
                     setRightTitle("只读");
                     setData(beans);
                     setView();
                     break;
                 default:
-                    if ((infoBean.getStatus() == 1) | (infoBean.getStatus() == 2)) {
-                        setRightTitle("只读");
-                        setData(beans);
-                        setView();
-                    } else {
-                        setData(beans);
-                    }
+                    setData(beans);
             }
         }));
     }

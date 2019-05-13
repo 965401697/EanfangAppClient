@@ -91,7 +91,7 @@ public class RealNameAuthenticationActivity extends BaseActivityWithTakePhoto {
                 Log.d("ss56", "initData: " + bean.toString());
                 mTechWorkerVerifyEntity = (TechWorkerVerifyEntity) JSONObject.toJavaObject(bean, TechWorkerVerifyEntity.class);
                 Log.d("ss566", "initData: " + mTechWorkerVerifyEntity.toString());
-                if (mTechWorkerVerifyEntity != null && (mTechWorkerVerifyEntity.getStatus() != 0)) {
+                if (mTechWorkerVerifyEntity != null) {
                     fillData();
                 }
             }
@@ -143,6 +143,9 @@ public class RealNameAuthenticationActivity extends BaseActivityWithTakePhoto {
         mTechWorkerVerifyEntity.setAccId(EanfangApplication.get().getAccId());
 
         EanfangHttp.post(UserApi.GET_TECH_WORKER_ADD_V3).upJson(JSONObject.toJSONString(mTechWorkerVerifyEntity)).execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
+            EanfangApplication.get().getUser().getAccount().setNickName(mTechWorkerVerifyEntity.getIdCardName());
+            EanfangApplication.get().getUser().getAccount().setIdCard(idCardNum);
+            EanfangApplication.get().getUser().getAccount().setGender(mTechWorkerVerifyEntity.getIdCardGender().equals("女") ? 0 : 1);
             Intent intent = new Intent(this, SubmitSuccessfullyJsActivity.class);
             intent.putExtra("bean", mTechWorkerVerifyEntity);
             intent.putExtra("statusB", statusB);

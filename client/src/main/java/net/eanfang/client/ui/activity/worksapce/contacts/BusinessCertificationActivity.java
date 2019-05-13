@@ -148,7 +148,8 @@ public class BusinessCertificationActivity extends BaseActivity {
             Log.d("REQUEST_CODE_BUSINESS_LICENSE6:", UserApi.GET_ORGUNIT_SHOP_INSERT + "\n" + json + "\n" + bean.toJSONString());
             showToast("保存成功");
             ContactsFragment.isRefresh = true;
-            finish();
+            initInt();
+
         }));
     }
 
@@ -241,7 +242,12 @@ public class BusinessCertificationActivity extends BaseActivity {
         clRqLrv.setText(beans.getWords_result().get成立日期().getWords());
         jzRqLrv.setText(beans.getWords_result().get有效期().getWords());
     }
-
+    private void initInt() {
+        EanfangHttp.get(UserApi.JS_RZ_TJ_INFO+mOrgId).execute(new EanfangCallback<String>(this, true, String.class, (bean) -> {
+            Log.d("56483666", "bean: " + bean);
+            finish();
+        }));
+    }
     @OnClick(R.id.iv_uploadlogo)
     public void onClick() {
         if (!checkTokenStatus()) {
