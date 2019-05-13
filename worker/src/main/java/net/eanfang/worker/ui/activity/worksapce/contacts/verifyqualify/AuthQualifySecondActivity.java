@@ -74,10 +74,10 @@ public class AuthQualifySecondActivity extends BaseActivity implements AreaCheck
         orgid = getIntent().getLongExtra("orgid", 0);
         verifyStatus = getIntent().getIntExtra("verifyStatus", 0);
         isLook = getIntent().getBooleanExtra("isLook", false);
-
         if (isLook) {
             llTitle.setVisibility(View.GONE);
             tvConfim.setVisibility(View.GONE);
+
         }
 
     }

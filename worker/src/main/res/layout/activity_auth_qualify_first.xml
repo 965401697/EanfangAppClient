@@ -273,6 +273,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/color_white"
+                        android:id="@+id/yw_lb_tv"
                         android:padding="@dimen/dimen_30"
                         android:text="选择业务类别"
                         android:textColor="@color/color_client_neworder"
@@ -304,6 +305,7 @@
                         android:layout_height="wrap_content"
                         android:background="@color/color_white"
                         android:padding="@dimen/dimen_30"
+                        android:id="@+id/xt_lb_tv"
                         android:text="选择系统类别"
                         android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_14" />
@@ -323,7 +325,18 @@
                 </LinearLayout>
             </LinearLayout>
 
-
+            <TextView
+                android:id="@+id/tv_area"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:background="@color/color_white"
+                android:drawableRight="@mipmap/ic_icon_right"
+                android:padding="@dimen/dimen_30"
+                android:visibility="gone"
+                android:text="服务区域"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_15" />
             <TextView
                 android:id="@+id/tv_confim"
                 android:layout_width="@dimen/dimen_600"

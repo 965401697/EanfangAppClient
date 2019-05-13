@@ -1,10 +1,10 @@
 package net.eanfang.worker.ui.activity.worksapce.contacts.verifyqualify;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -40,6 +40,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @author guanluocang
@@ -79,6 +80,12 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
     RadioGroup rgCompanyType;
     @BindView(R.id.jc_ll)
     LinearLayout jcLl;
+    @BindView(R.id.yw_lb_tv)
+    TextView ywLbTv;
+    @BindView(R.id.xt_lb_tv)
+    TextView xtLbTv;
+    @BindView(R.id.tv_area)
+    TextView tvArea;
 
     private Long orgid;
     private int verifyStatus;
@@ -129,10 +136,21 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
             setTitle("服务详情(只读)");
             jcLl.setVisibility(View.GONE);
             tvConfim.setVisibility(View.GONE);
-
+            tvArea.setVisibility(View.VISIBLE);
+            ywLbTv.setText("业务类别");
+            xtLbTv.setText("系统类别");
         } else {
             initListener();
         }
+    }
+
+    @OnClick(R.id.tv_area)
+    public void onViewClicked() {
+        Bundle bundle = new Bundle();
+        bundle.putLong("orgid", orgid);
+        bundle.putInt("verifyStatus", verifyStatus);
+        bundle.putBoolean("isLook", true);
+        JumpItent.jump(AuthQualifyFirstActivity.this, AuthQualifySecondActivity.class, bundle);
     }
 
     private void initData() {

@@ -338,15 +338,13 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
             for (int i = 0; i < areaListBean.size(); i++) {
                 BaseDataEntity provinceEntity = areaListBean.get(i);
                 //处理当前省下的所有市
-                List<BaseDataEntity> cityList = Stream.of(allAreaList).filter(bean -> bean.getParentId() != null
-                        && bean.getParentId().intValue() == provinceEntity.getDataId()).toList();
+                List<BaseDataEntity> cityList = Stream.of(allAreaList).filter(bean -> bean.getParentId() != null && bean.getParentId().intValue() == provinceEntity.getDataId()).toList();
                 //查询出来后，移除，以增加效率
                 allAreaList.removeAll(cityList);
                 for (int j = 0; j < cityList.size(); j++) {
                     BaseDataEntity cityEntity = cityList.get(j);
                     //处理当前市下所有区县
-                    List<BaseDataEntity> countyList = Stream.of(allAreaList).filter(bean -> bean.getParentId() != null
-                            && bean.getParentId().intValue() == cityEntity.getDataId()).toList();
+                    List<BaseDataEntity> countyList = Stream.of(allAreaList).filter(bean -> bean.getParentId() != null && bean.getParentId().intValue() == cityEntity.getDataId()).toList();
                     //查询出来后，移除，以增加效率
                     allAreaList.removeAll(countyList);
                     cityEntity.setChildren(countyList);

@@ -135,11 +135,7 @@ public class CompanyManagerActivity extends BaseActivity implements DissloveTeam
          *  2已认证
          *  3认证失败，请重新认证
          * */
-        if ("1".equals(isAuth)) {
-            rlIsAuth.setVisibility(View.VISIBLE);
-        } else {
-            rlIsAuth.setVisibility(View.GONE);
-        }
+
         if ("2".equals(isAuth)) {
             tvAgainAuth.setVisibility(View.VISIBLE);
         } else {

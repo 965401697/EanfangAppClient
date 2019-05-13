@@ -15,7 +15,6 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.BusinessManagementData;
 import com.eanfang.ui.base.BaseActivity;
-import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
 
 import net.eanfang.worker.R;
@@ -106,16 +105,16 @@ public class EnterpriseCertificationActivity extends BaseActivity {
                 startActivity(intent);
                 break;
             case R.id.fw_rz_wq_tv:
-                Bundle bundle_prefect = new Bundle();
-                bundle_prefect.putLong("orgid", mOrgId);
-                bundle_prefect.putLong("status", status);
                 if (!PermKit.get().getWorkerCompanyVerifyPerm()) {
                     return;
                 } else {
                     if (bizCertify == 1) {
                         showToast("请先进行工商认证");
                     } else {
-                        JumpItent.jump(this, AuthQualifyFirstActivity.class, bundle_prefect);
+                        Intent intenta = new Intent(this, AuthQualifyFirstActivity.class);
+                        intenta.putExtra("orgid", mOrgId);
+                        intenta.putExtra("status", status);
+                        startActivity(intenta);
                     }
                 }
                 break;

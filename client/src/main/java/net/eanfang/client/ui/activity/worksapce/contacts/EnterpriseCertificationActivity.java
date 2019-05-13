@@ -16,6 +16,7 @@ import com.eanfang.model.BusinessManagementData;
 import com.eanfang.ui.base.BaseActivity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.fragment.ContactsFragment;
 import net.eanfang.client.ui.widget.WQLeftRightClickTextView;
 
 import butterknife.BindView;
@@ -58,6 +59,7 @@ public class EnterpriseCertificationActivity extends BaseActivity {
         spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#FF3F3F")), 4, spannableString.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
         gsRzWqTv.setText(spannableString);
         initData();
+        ContactsFragment.isRefresh = true;
     }
 
     private void initData() {
