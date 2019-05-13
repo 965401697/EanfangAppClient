@@ -16,7 +16,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="46dp"
+            android:gravity="center_vertical"
             android:background="@color/white"
             android:orientation="horizontal"
             android:paddingLeft="@dimen/dimen_36"
@@ -38,7 +39,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_weight="1"
                 android:background="@null"
-                android:gravity="right"
+                android:gravity="right|center_vertical"
                 android:hint="请输入"
                 android:maxLength="11"
                 android:textColor="@color/color_bottom"
@@ -48,7 +49,8 @@
         <View style="@style/style_common_line_gray" />
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="46dp"
+            android:gravity="center_vertical"
             android:background="@color/white"
             android:orientation="horizontal"
             android:paddingLeft="@dimen/dimen_36"
@@ -70,7 +72,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_weight="1"
                 android:background="@null"
-                android:gravity="right"
+                android:gravity="right|center_vertical"
                 android:hint="请输入"
                 android:inputType="number"
                 android:maxLength="11"
@@ -82,7 +84,8 @@
         <LinearLayout
             android:id="@+id/ll_education"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="46dp"
+            android:gravity="center_vertical"
             android:background="@color/white"
             android:orientation="horizontal"
             android:paddingLeft="@dimen/dimen_36"
@@ -106,7 +109,7 @@
                 android:background="@null"
                 android:drawableRight="@mipmap/arrow_down"
                 android:drawablePadding="@dimen/dimen_14"
-                android:gravity="right"
+                android:gravity="right|center_vertical"
                 android:text=""
                 android:textColor="@color/color_bottom"
                 android:textSize="@dimen/textSize_13" />
@@ -115,7 +118,8 @@
         <View style="@style/style_common_line_gray" />
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="46dp"
+            android:gravity="center_vertical"
             android:background="@color/white"
             android:orientation="horizontal"
             android:paddingLeft="@dimen/dimen_36"
@@ -137,7 +141,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_weight="1"
                 android:background="@null"
-                android:gravity="right"
+                android:gravity="right|center_vertical"
                 android:hint="请输入"
                 android:maxLength="11"
                 android:textColor="@color/color_bottom"
@@ -146,15 +150,11 @@
 
         <View style="@style/style_common_line_gray" />
 
-
-
-
-
-
         <LinearLayout
             android:id="@+id/ll_date"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="46dp"
+            android:gravity="center_vertical"
             android:background="@color/white"
             android:orientation="horizontal"
             android:paddingLeft="@dimen/dimen_36"
@@ -177,7 +177,7 @@
                 android:layout_weight="1"
                 android:drawableEnd="@mipmap/rliv"
                 android:drawablePadding="@dimen/dimen_14"
-                android:gravity="right"
+                android:gravity="right|center_vertical"
                 android:textColor="@color/color_bottom"
                 android:textSize="@dimen/textSize_13" />
         </LinearLayout>
@@ -185,7 +185,8 @@
         <View style="@style/style_common_line_gray" />
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="46dp"
+            android:gravity="center_vertical"
             android:background="@color/white"
             android:orientation="horizontal"
             android:paddingLeft="@dimen/dimen_36"
@@ -207,7 +208,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_weight="1"
                 android:background="@null"
-                android:gravity="right"
+                android:gravity="right|center_vertical"
                 android:hint="请输入"
                 android:textColor="@color/color_bottom"
                 android:textSize="@dimen/textSize_13" />
@@ -223,8 +224,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
                 android:padding="@dimen/dimen_30"
-                android:text="证书照片"
+                android:text="证书"
                 android:textColor="@color/color_client_neworder"
                 android:textSize="@dimen/textSize_15" />
 

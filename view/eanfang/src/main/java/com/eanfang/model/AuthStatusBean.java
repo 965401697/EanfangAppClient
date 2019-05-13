@@ -21,6 +21,17 @@ public class AuthStatusBean implements Serializable {
 
     private int apt;
     private int honor;
+    //0实名1未实名
+    private int realVerify;
+
+    public int getRealVerify() {
+        return realVerify;
+    }
+
+    public void setRealVerify(int realVerify) {
+        this.realVerify = realVerify;
+    }
+
     private int exp;
     private int base;
     private int verify;

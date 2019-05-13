@@ -59,14 +59,17 @@ public class BusinessManagementData {
     }
 
     public static class DataBean {
+
         @Override
         public String toString() {
             return "DataBean{" +
                     "logoPic='" + logoPic + '\'' +
                     ", name='" + name + '\'' +
+                    ", intro='" + intro + '\'' +
                     ", orgId='" + orgId + '\'' +
                     ", status=" + status +
                     ", unitType=" + unitType +
+                    ", bizCertify=" + bizCertify +
                     '}';
         }
 
@@ -83,7 +86,15 @@ public class BusinessManagementData {
         private String intro;
         private String orgId;
         private int status;
-        private int unitType;
+        private int unitType;   private int bizCertify;
+
+        public int getBizCertify() {
+            return bizCertify;
+        }
+
+        public void setBizCertify(int bizCertify) {
+            this.bizCertify = bizCertify;
+        }
 
         public String getIntro() {
             return intro;

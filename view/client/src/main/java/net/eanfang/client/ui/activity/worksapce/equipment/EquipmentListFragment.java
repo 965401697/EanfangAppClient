@@ -41,29 +41,6 @@ public class EquipmentListFragment extends TemplateItemListFragment {
 
     }
 
-    /**
-     * 下拉刷新
-     */
-    @Override
-    public void onRefresh() {
-        refreshs();
-    }
-
-    public void refreshs() {
-        //下拉永远第一页
-        mPage = 1;
-        getData();
-    }
-
-    /**
-     * 加载更多
-     */
-    @Override
-    public void onLoadMoreRequested() {
-        mPage++;
-        getData();
-    }
-
     @Override
     protected void initAdapter() {
         mAdapter = new EquipmentListAdapter(R.layout.item_equipment_list);
@@ -92,11 +69,10 @@ public class EquipmentListFragment extends TemplateItemListFragment {
 
             }
         });
-        getData();
     }
 
     @Override
-    public void getData() {
+    protected void getData() {
         if (mQueryEntry == null) {
             mQueryEntry = new QueryEntry();
         }
@@ -154,6 +130,25 @@ public class EquipmentListFragment extends TemplateItemListFragment {
                         mSwipeRefreshLayout.setRefreshing(false);
                     }
                 });
+    }
+
+    /**
+     * 下拉刷新
+     */
+    @Override
+    public void onRefresh() {
+        mQueryEntry = null;
+        mPage = 1;
+        getData();
+    }
+
+    /**
+     * 加载更多
+     */
+    @Override
+    public void onLoadMoreRequested() {
+        mPage++;
+        getData();
     }
 
 }

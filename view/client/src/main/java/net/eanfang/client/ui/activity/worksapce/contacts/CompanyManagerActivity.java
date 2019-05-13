@@ -97,7 +97,7 @@ public class CompanyManagerActivity extends BaseActivity implements DissloveTeam
     private int status = 0;
 
     private String adminUserId = "";
-    private AuthCompanyBaseInfoBean byNetBean;
+    private AuthCompanyBaseInfoBean byNetBean = new AuthCompanyBaseInfoBean();
 
     /**
      * 解散团队
@@ -135,11 +135,7 @@ public class CompanyManagerActivity extends BaseActivity implements DissloveTeam
          *  2已认证
          *  3认证失败，请重新认证
          * */
-        if ("1".equals(isAuth)) {
-            rlIsAuth.setVisibility(View.VISIBLE);
-        } else {
-            rlIsAuth.setVisibility(View.GONE);
-        }
+
         if ("2".equals(isAuth)) {
             tvAgainAuth.setVisibility(View.VISIBLE);
         } else {

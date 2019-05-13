@@ -16,7 +16,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="46dp"
+            android:gravity="center_vertical"
             android:background="@color/white"
             android:orientation="horizontal"
             android:paddingBottom="@dimen/dimen_20"
@@ -38,7 +39,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_weight="1"
                 android:background="@null"
-                android:gravity="right"
+                android:gravity="right|center_vertical"
                 android:hint="请输入"
                 android:maxLength="11"
                 android:textColor="@color/color_bottom"
@@ -49,7 +50,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="46dp"
+            android:gravity="center_vertical"
             android:background="@color/white"
             android:orientation="horizontal"
             android:paddingBottom="@dimen/dimen_20"
@@ -71,7 +73,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_weight="1"
                 android:background="@null"
-                android:gravity="right"
+                android:gravity="right|center_vertical"
                 android:hint="请输入"
                 android:maxLength="11"
                 android:textColor="@color/color_bottom"
@@ -83,7 +85,8 @@
         <LinearLayout
             android:id="@+id/ll_date"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="46dp"
+            android:gravity="center_vertical"
             android:background="@color/white"
             android:orientation="horizontal"
             android:paddingBottom="@dimen/dimen_20"
@@ -106,7 +109,7 @@
                 android:layout_weight="1"
                 android:drawableEnd="@mipmap/rliv"
                 android:drawablePadding="@dimen/dimen_10"
-                android:gravity="right"
+                android:gravity="right|center_vertical"
                 android:textColor="@color/color_bottom"
                 android:textSize="@dimen/textSize_13" />
         </LinearLayout>
@@ -126,6 +129,7 @@
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dimen_30"
                 android:text="证书"
+                android:layout_marginLeft="3dp"
                 android:textColor="@color/color_client_neworder"
                 android:textSize="@dimen/textSize_15" />
 

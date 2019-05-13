@@ -74,6 +74,7 @@ public class CompanyManagerBActivity extends BaseActivity implements DissloveTea
     private Boolean flag = false;
     private Long mOrgId;
     private int status = 0;
+    private int bizCertify = 0;
     private String mOrgName = "";
 
     /**
@@ -87,7 +88,6 @@ public class CompanyManagerBActivity extends BaseActivity implements DissloveTea
         setContentView(R.layout.activity_company_manager_b);
         ButterKnife.bind(this);
         initView();
-        initData();
     }
 
     private void initView() {
@@ -99,6 +99,7 @@ public class CompanyManagerBActivity extends BaseActivity implements DissloveTea
         } else {
             setRightTitle("");
         }
+        initData();
     }
 
     private void doDisslove() {
@@ -117,6 +118,7 @@ public class CompanyManagerBActivity extends BaseActivity implements DissloveTea
                 Intent intent = new Intent(this, EnterpriseCertificationActivity.class);
                 intent.putExtra("mOrgId", mOrgId);
                 intent.putExtra("status", status);
+                intent.putExtra("bizCertify", bizCertify);
                 intent.putExtra("orgName", mOrgName);
                 startActivity(intent);
                 finish();
@@ -199,6 +201,7 @@ public class CompanyManagerBActivity extends BaseActivity implements DissloveTea
 
         }
         status = data.getStatus();
+        bizCertify = data.getBizCertify();
         switch (status) {
             case 1:
                 tvAuthStatus.setText("认证中");
@@ -231,6 +234,12 @@ public class CompanyManagerBActivity extends BaseActivity implements DissloveTea
                 flag = false;
             }
         }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        initView();
     }
 
     @Override
