@@ -93,6 +93,9 @@ public class RepairProjectListActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (data == null) {
+            return;
+        }
         switch (requestCode) {
             case REQUEST_ADD_PROJECT_NAME:
                 Intent intent = new Intent();
