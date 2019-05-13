@@ -8,7 +8,6 @@ import androidx.multidex.MultiDexApplication;
 
 import com.camera.CameraApplication;
 import com.eanfang.BuildConfig;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.kit.cache.CacheKit;
 import com.eanfang.model.bean.LoginBean;
@@ -92,7 +91,7 @@ public class BaseApplication extends MultiDexApplication {
 
         // 初始化讯飞
         // 注意： appid 必须和下载的SDK保持一致，否则会出现10407错误
-        RecognitionManager.getSingleton().init(EanfangApplication.getApplication().getApplicationContext(), BuildConfig.IFLYTEK_APP_ID);
+        RecognitionManager.getSingleton().init(BaseApplication.get().getApplicationContext(), BuildConfig.IFLYTEK_APP_ID);
         // 初始化BGA 图片选择
         BGAImage.setImageLoader(new BGAGlideImageLoader());
     }
@@ -172,7 +171,7 @@ public class BaseApplication extends MultiDexApplication {
      */
     public void addActivity(final Activity activity) {
         if (null == activityStack) {
-            activityStack = new Stack<Activity>();
+            activityStack = new Stack<>();
         }
         activityStack.add(activity);
     }
@@ -284,7 +283,7 @@ public class BaseApplication extends MultiDexApplication {
      *
      * @return LoginBean
      */
-    private LoginBean getLoginBean() {
+    public LoginBean getLoginBean() {
         return CacheKit.get().get(LoginBean.class.getName(), LoginBean.class);
     }
 
@@ -294,7 +293,7 @@ public class BaseApplication extends MultiDexApplication {
      * @return getDefaultUser
      */
     public UserEntity getUser() {
-        return getAccount().getDefaultUser();
+        return V.v(() -> getAccount().getDefaultUser());
     }
 
     /**
@@ -303,7 +302,7 @@ public class BaseApplication extends MultiDexApplication {
      * @return getUserId
      */
     public Long getUserId() {
-        return getUser().getUserId();
+        return V.v(() -> getUser().getUserId());
     }
 
     /**
@@ -312,7 +311,7 @@ public class BaseApplication extends MultiDexApplication {
      * @return getCompanyId
      */
     public Long getCompanyId() {
-        return getUser().getCompanyId();
+        return V.v(() -> getUser().getCompanyId());
     }
 
     /**
@@ -321,7 +320,7 @@ public class BaseApplication extends MultiDexApplication {
      * @return getTopCompanyId
      */
     public Long getTopCompanyId() {
-        return getUser().getTopCompanyId();
+        return V.v(() -> getUser().getTopCompanyId());
     }
 
     /**
@@ -339,7 +338,7 @@ public class BaseApplication extends MultiDexApplication {
      * @return getAccId
      */
     public Long getAccId() {
-        return getAccount().getAccId();
+        return V.v(() -> getAccount().getAccId());
     }
 
     /**
@@ -348,6 +347,6 @@ public class BaseApplication extends MultiDexApplication {
      * @return AccountEntity
      */
     public AccountEntity getAccount() {
-        return getLoginBean().getAccount();
+        return V.v(() -> getLoginBean().getAccount());
     }
 }

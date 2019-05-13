@@ -30,7 +30,7 @@ public class VerifyFragment extends BaseFragment {
         return new VerifyFragment().setLoginViewModel(loginViewModel);
     }
 
-//    演示loadSir用法 解开注释即可查看到效果。
+    //    演示loadSir用法 解开注释即可查看到效果。
 //    @Override
 //    protected void initLoadSir() {
 //        super.initLoadSir();

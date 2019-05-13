@@ -33,6 +33,7 @@ import com.eanfang.network.event.BaseActionEvent;
 import com.eanfang.rds.base.IViewModelAction;
 import com.eanfang.sys.activity.LoginActivity;
 import com.kingja.loadsir.core.LoadService;
+import com.kingja.loadsir.core.LoadSir;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import java.util.ArrayList;
@@ -67,7 +68,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
 
-        BaseApplication.get().addActivity(this);
+        // BaseApplication.get().addActivity(this);
 
         initViewModelEvent();
     }
@@ -75,8 +76,11 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        loadService = LoadSir.getDefault().register(this, this::onNetReload);
+
         setLeftBack(true);
         setRightBack(false);
+        initLoadSir();
         initView();
         if (isClient()) {
             findViewById(R.id.titles_bar).setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryC));
@@ -90,7 +94,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         dismissLoading();
-        BaseApplication.get().closeActivity(this);
+        // BaseApplication.get().closeActivity(this);
     }
 
     @Override

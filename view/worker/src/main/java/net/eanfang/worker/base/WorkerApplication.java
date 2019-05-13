@@ -2,7 +2,6 @@ package net.eanfang.worker.base;
 
 import android.util.Log;
 
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.base.BaseApplication;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.kit.cache.CacheKit;
@@ -57,9 +56,9 @@ public class WorkerApplication extends BaseApplication {
         );
 
         EanfangHttp.setWorker();
-        if (EanfangApplication.get().getUser() != null) {
-            EanfangHttp.setToken(EanfangApplication.get().getUser().getToken());
-            HttpConfig.get().setToken(EanfangApplication.get().getUser().getToken());
+        if (BaseApplication.get().getUser() != null) {
+            EanfangHttp.setToken(BaseApplication.get().getLoginBean().getToken());
+            HttpConfig.get().setToken(BaseApplication.get().getLoginBean().getToken());
         }
     }
 

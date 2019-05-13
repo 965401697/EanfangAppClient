@@ -59,7 +59,6 @@ public class EanfangApplication extends CustomeApplication {
     public static String AppType;
     private OkGo http;
 
-
     public static EanfangApplication getApplication() {
         return mEanfangApplication;
     }

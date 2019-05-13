@@ -3,7 +3,6 @@ package net.eanfang.client.base;
 import android.app.Activity;
 import android.util.Log;
 
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.base.BaseApplication;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangHttp;
@@ -36,7 +35,7 @@ import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
  */
 public class ClientApplication extends BaseApplication {
     @Getter
-    private IWXAPI api;
+    private static IWXAPI wxApi;
 
     @Override
     public void onCreate() {
@@ -45,8 +44,8 @@ public class ClientApplication extends BaseApplication {
         initRongIM();
         initWxPay();
         initHttp();
-
     }
+
 
     @Override
     protected void initConfig() {
@@ -70,9 +69,9 @@ public class ClientApplication extends BaseApplication {
         );
 
         EanfangHttp.setClient();
-        if (EanfangApplication.get().getUser() != null) {
-            EanfangHttp.setToken(EanfangApplication.get().getUser().getToken());
-            HttpConfig.get().setToken(EanfangApplication.get().getUser().getToken());
+        if (BaseApplication.get().getUser() != null) {
+            EanfangHttp.setToken(BaseApplication.get().getLoginBean().getToken());
+            HttpConfig.get().setToken(BaseApplication.get().getLoginBean().getToken());
         }
     }
 
@@ -82,10 +81,8 @@ public class ClientApplication extends BaseApplication {
     @Deprecated
     private void initWxPay() {
         //初始化微信支付
-
-        api = WXAPIFactory.createWXAPI(this, EanfangConst.WX_APPID_CLIENT);
-
-        api.registerApp(EanfangConst.WX_APPID_CLIENT);
+        wxApi = WXAPIFactory.createWXAPI(this, EanfangConst.WX_APPID_CLIENT);
+        wxApi.registerApp(EanfangConst.WX_APPID_CLIENT);
     }
 
     /**
@@ -143,4 +140,5 @@ public class ClientApplication extends BaseApplication {
         });
 
     }
+
 }
