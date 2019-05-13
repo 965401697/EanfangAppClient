@@ -11,6 +11,10 @@ import android.text.style.StyleSpan;
 import android.view.View;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
+import com.eanfang.apiservice.UserApi;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseActivity;
 import com.yaf.base.entity.TechWorkerVerifyEntity;
 
@@ -52,7 +56,7 @@ public class SubmitSuccessfullyJsActivity extends BaseActivity {
     private void initView() {
         setLeftBack();
         setTitle("提交成功");
-        SpannableString spannableString = new SpannableString("实名认证→服务认证→资质能力→其他信息");
+        SpannableString spannableString = new SpannableString("实名认证➝服务认证➝资质能力➝其他信息");
         spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#333333")), 0, 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#A5CAFC")), 4, 5, Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
         spannableString.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), 4, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
@@ -75,6 +79,7 @@ public class SubmitSuccessfullyJsActivity extends BaseActivity {
             case 1:
                 authenticationTv.setText("去服务认证");
                 tsTv.setText("尊敬的用户，您的认证资料我们已收到\n您可以继续进行服务认证。");
+                initNet();
                 break;
             case 2:
                 authenticationTv.setText("去完善保障信息");
@@ -88,6 +93,12 @@ public class SubmitSuccessfullyJsActivity extends BaseActivity {
                 break;
             default:
         }
+    }
+
+    private void initNet() {
+        EanfangHttp.post(UserApi.JS_TJ_RZ).execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
+
+        }));
     }
 
     @OnClick({R.id.authentication_tv, R.id.call_tv})

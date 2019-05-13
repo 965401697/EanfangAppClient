@@ -128,6 +128,10 @@ public interface UserApi {
      * 新增安防公司
      */
     String GET_ORGUNIT_SHOP_ADD = BuildConfig.API_HOST + "/yaf_sys/orgunit/shop/add";
+//    /**
+//     * 填写企业资料 客户端
+//     */
+//    String GET_ORGUNIT_ENT_INSERT = BuildConfig.API_HOST + "/yaf_sys/orgunit/ent/insert";
     /**
      * 填写企业资料 技师端
      */
@@ -598,6 +602,14 @@ public interface UserApi {
      * 技师技能认证修改资质证书
      */
     String TECH_WORKER_UPDATA_QUALIFY = BuildConfig.API_HOST + "/yaf_shop/qualificationcertificate/update";
+    /**
+     * 技师提交认证状态为待认证
+     */
+    String JS_TJ_RZ = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/sendverify";
+    /**
+     * 专家提交认证状态为待认证
+     */
+    String ZJ_TJ_RZ = BuildConfig.API_HOST + "/yaf_sys/expertscertification/changeVerify";
     /**
      * 上传专家技能认证资质证书
      */

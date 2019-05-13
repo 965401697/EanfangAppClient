@@ -12,6 +12,7 @@ import android.text.method.ScrollingMovementMethod;
 import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -133,7 +134,11 @@ public class CompanyManagerBActivity extends BaseActivity implements DissloveTea
             case R.id.gg_iv:
                 break;
             case R.id.gs_xq_iv:
-                startActivity(new Intent(this, AuthCompanyFirstBActivity.class).putExtra("orgName", mOrgName).putExtra("orgid", mOrgId));
+                if (status == 1 | status == 2) {
+                    startActivity(new Intent(this, CompanyPagesActivity.class).putExtra("mOrgId", mOrgId).putExtra("status", status));
+                } else {
+                    startActivity(new Intent(this, AuthCompanyFirstBActivity.class).putExtra("orgName", mOrgName).putExtra("orgid", mOrgId));
+                }
                 finish();
                 break;
             default:
@@ -145,7 +150,7 @@ public class CompanyManagerBActivity extends BaseActivity implements DissloveTea
         if (flag) {
             gsXqTv.setEllipsize(TextUtils.TruncateAt.END);
             gsXqTv.setLines(3);
-            showMoreTv.setText("更多");
+            showMoreTv.setText("[更多]");
         } else {
             gsXqTv.setMovementMethod(ScrollingMovementMethod.getInstance());
             gsXqTv.setEllipsize(null);
@@ -170,10 +175,28 @@ public class CompanyManagerBActivity extends BaseActivity implements DissloveTea
             spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#006BFF")), 0, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             gsXqTv.setText(spannableString);
         } else {
-            SpannableString spannableString = new SpannableString("公司简介: "+data.getIntro());
+            SpannableString spannableString = new SpannableString("公司简介: " + data.getIntro());
             spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#006BFF")), 0, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#333333")), 5, spannableString.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
             gsXqTv.setText(spannableString);
+            Log.d("gsXqTv.getLineCount()", "setData: " + gsXqTv.getLineCount());
+            gsXqTv.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @Override
+                public void onGlobalLayout() {
+                    Log.d("getLineCount: ", "行数" + gsXqTv.getLineCount());
+                    if (gsXqTv.getLineCount() < 4) {
+                        showMoreTv.setVisibility(View.GONE);
+                        flag = true;
+                    } else {
+                        showMoreTv.setVisibility(View.VISIBLE);
+                        flag = false;
+                        gsXqTv.setEllipsize(TextUtils.TruncateAt.END);
+                        gsXqTv.setLines(3);
+                    }
+                    gsXqTv.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                }
+            });
+
         }
         status = data.getStatus();
         switch (status) {
@@ -204,6 +227,7 @@ public class CompanyManagerBActivity extends BaseActivity implements DissloveTea
                 showMoreTv.setVisibility(View.GONE);
                 flag = true;
             } else {
+                showMoreTv.setVisibility(View.VISIBLE);
                 flag = false;
             }
         }

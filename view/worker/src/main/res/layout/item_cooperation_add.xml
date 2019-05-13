@@ -9,6 +9,7 @@
     android:checked="false"
     android:gravity="center"
     android:text=" "
+    android:textSize="12sp"
     android:textColor="@drawable/select_trouble_repair_result_b">
 
 </CheckBox>

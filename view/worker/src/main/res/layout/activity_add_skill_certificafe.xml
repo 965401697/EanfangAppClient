@@ -42,7 +42,7 @@
                 android:hint="请输入"
                 android:maxLength="11"
                 android:textColor="@color/color_bottom"
-                android:textSize="@dimen/textSize_13" />
+                android:textSize="@dimen/textSize_14" />
         </LinearLayout>
         <View style="@style/style_common_line_gray" />
 
@@ -75,7 +75,7 @@
                 android:hint="请输入"
                 android:maxLength="11"
                 android:textColor="@color/color_bottom"
-                android:textSize="@dimen/textSize_13" />
+                android:textSize="@dimen/textSize_14" />
         </LinearLayout>
         <View style="@style/style_common_line_gray" />
 
@@ -107,7 +107,7 @@
                 android:hint="请输入"
                 android:maxLength="11"
                 android:textColor="@color/color_bottom"
-                android:textSize="@dimen/textSize_13" />
+                android:textSize="@dimen/textSize_14" />
         </LinearLayout>
 
         <View style="@style/style_common_line_gray" />
@@ -142,7 +142,7 @@
                 android:hint="请输入"
                 android:maxLength="11"
                 android:textColor="@color/color_bottom"
-                android:textSize="@dimen/textSize_13" />
+                android:textSize="@dimen/textSize_14" />
         </LinearLayout>
 
 
@@ -177,7 +177,7 @@
                 android:drawablePadding="@dimen/dimen_14"
                 android:gravity="right"
                 android:textColor="@color/color_bottom"
-                android:textSize="@dimen/textSize_13" />
+                android:textSize="@dimen/textSize_14" />
         </LinearLayout>
 
         <View style="@style/style_common_line_gray" />

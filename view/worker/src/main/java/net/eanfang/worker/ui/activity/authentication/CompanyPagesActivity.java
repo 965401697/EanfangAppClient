@@ -70,11 +70,6 @@ public class CompanyPagesActivity extends BaseActivity {
     private void initData() {
         mOrgId = getIntent().getLongExtra("mOrgId", 0);
         EanfangHttp.post(COMPANY_SECURITY_HOMEPAGE).params("orgId", mOrgId).execute(new EanfangCallback<>(this, true, CompanyPagesData.class, this::setData));
-
-//        Intent intentc = new Intent(this, CompanyPagesActivity.class);
-//        intentc.putExtra("mOrgId", mOrgId);
-//        intentc.putExtra("status", status);
-//        startActivity(intentc);
     }
 
     private void setData(CompanyPagesData data) {

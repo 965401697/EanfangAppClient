@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scaleType="fitXY"
+        android:background="#FA9C4B"
         android:src="@mipmap/qyrz_wsxx_cl" />
 
     <net.eanfang.client.ui.widget.WQLeftRightClickTextView

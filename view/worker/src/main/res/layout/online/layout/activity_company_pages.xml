@@ -19,7 +19,7 @@
         android:layout_margin="@dimen/dimen_20"
         android:elevation="@dimen/dimen_100"
         app:cardBackgroundColor="@color/color_white"
-        app:cardCornerRadius="@dimen/dimen_16">
+        app:cardCornerRadius="15dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -28,8 +28,8 @@
 
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/gs_log_sdv"
-                android:layout_width="@dimen/dimen_100"
-                android:layout_height="@dimen/dimen_100"
+                android:layout_width="53dp"
+                android:layout_height="53dp"
                 android:layout_marginRight="@dimen/dimen_20"
                 app:placeholderImage="@mipmap/ic_launcher"
                 app:roundAsCircle="true" />
@@ -41,7 +41,7 @@
                 android:layout_marginTop="@dimen/dimen_10"
                 android:layout_toRightOf="@id/gs_log_sdv"
                 android:text="北京市法安视科技有限公司"
-                android:textColor="#ff333333"
+                android:textColor="#333333"
                 android:textSize="16sp" />
 
             <ImageView
@@ -64,7 +64,7 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:text="未认证"
-                android:textColor="@color/color_contact_auth_text"
+                android:textColor="#5D6881"
                 android:textSize="@dimen/textSize_12"
                 android:visibility="visible" />
 
@@ -75,7 +75,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="@dimen/dimen_30"
                 android:layout_marginRight="10dp"
-                android:src="@mipmap/ic_icon_right" />
+                android:src="@mipmap/ic_icon_right"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/gs_xq_tv"
@@ -84,9 +85,10 @@
                 android:layout_below="@id/gs_log_sdv"
                 android:layout_marginTop="@dimen/dimen_20"
                 android:ellipsize="end"
-                android:maxLines="3"
                 android:text="公司简介"
-                android:textSize="12sp" />
+                android:layout_marginBottom="@dimen/dimen_40"
+                android:textColor="#333333"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/show_more_tv"
@@ -119,7 +121,9 @@
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>
-
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_20" />
     <com.customview.SuperTextView
         android:id="@+id/gs_gm_tv"
         android:layout_width="match_parent"
@@ -128,6 +132,10 @@
         android:padding="@dimen/dimen_10"
         app:sCenterViewGravity="center"
         app:sLeftTextString="公司规模"
+        app:sLeftTextSize="14sp"
+        app:sRightTextSize="14sp"
+        app:sLeftTextColor="#333333"
+        app:sRightTextColor="#333333"
         app:sRightTextString="" />
 
     <Space
@@ -142,6 +150,10 @@
         android:padding="@dimen/dimen_10"
         app:sCenterViewGravity="center"
         app:sLeftTextString="行业类型"
+        app:sLeftTextSize="14sp"
+        app:sRightTextSize="14sp"
+        app:sLeftTextColor="#333333"
+        app:sRightTextColor="#333333"
         app:sRightTextString="默认-二级目录" />
 
     <Space
@@ -155,6 +167,10 @@
         android:background="@color/white"
         android:padding="@dimen/dimen_10"
         app:sCenterViewGravity="center"
+        app:sLeftTextSize="14sp"
+        app:sRightTextSize="14sp"
+        app:sLeftTextColor="#333333"
+        app:sRightTextColor="#333333"
         app:sLeftTextString="办公地址"
         app:sRightTextString="默认-办公地址" />
 
@@ -165,10 +181,14 @@
     <com.customview.SuperTextView
         android:id="@+id/xx_dz_tv"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/app_qy_zy_item_size"
+        android:layout_height="wrap_content"
         android:background="@color/white"
         android:padding="@dimen/dimen_10"
-        app:sCenterViewGravity="center"
+        app:sRightViewMarginLeft="@dimen/dimen_160"
+        app:sLeftTextSize="14sp"
+        app:sRightTextSize="14sp"
+        app:sLeftTextColor="#333333"
+        app:sRightTextColor="#333333"
         app:sLeftTextString="详细地址"
         app:sRightTextString="默认-详细地址" />
 
@@ -182,6 +202,10 @@
         android:layout_height="@dimen/app_qy_zy_item_size"
         android:background="@color/white"
         android:padding="@dimen/dimen_10"
+        app:sLeftTextSize="14sp"
+        app:sRightTextSize="14sp"
+        app:sLeftTextColor="#333333"
+        app:sRightTextColor="#333333"
         app:sCenterViewGravity="center"
         app:sLeftTextString="电子邮箱"
         app:sRightTextString="默认-电子邮箱" />
@@ -195,6 +219,10 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_qy_zy_item_size"
         android:background="@color/white"
+        app:sLeftTextSize="14sp"
+        app:sRightTextSize="14sp"
+        app:sLeftTextColor="#333333"
+        app:sRightTextColor="#333333"
         android:padding="@dimen/dimen_10"
         app:sCenterViewGravity="center"
         app:sLeftTextString="单位电话"

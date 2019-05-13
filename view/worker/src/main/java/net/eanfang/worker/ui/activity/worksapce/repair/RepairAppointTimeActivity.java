@@ -93,7 +93,7 @@ public class RepairAppointTimeActivity extends BaseActivity implements SelectTim
 //                .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<JSONObject>(RepairAppointTimeActivity.this, true, JSONObject.class, (bean) -> {
 
-                    Log.d("电话回访，电话预约上门时间a",RepairApi.POST_FLOW_SCREENING+"\n"+"orderId: "+orderId+"\n"+"solve: "+solve+"\n"+"bookTime: "+bookTime+"\n"+bean.toString());
+                    Log.d("电话回访，电话预约上门时间a",RepairApi.POST_FLOW_SCREENING+"\n"+"orderId: "+orderId+"\n"+"solve: "+solve+"\n"+"bookTime: "+bookTime+"\n");
                     showToast("预约成功");
                     setResult(RESULT_OK);
                     finishSelf();

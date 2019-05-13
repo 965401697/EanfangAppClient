@@ -55,6 +55,7 @@ public class SecurityFoucsListAdapter extends BaseQuickAdapter<SecurityFoucsList
         } else {
             helper.setVisible(R.id.iv_certifi, false);
         }
+
         /**
          * 创建安防圈 不显示关注人
          * */

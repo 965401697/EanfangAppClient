@@ -1,12 +1,10 @@
 package net.eanfang.worker.ui.activity.my.certification;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
@@ -71,7 +69,6 @@ public class CertificationInfoActivity extends BaseWorkerActivity {
     }
 
     private void getData() {
-
         // 获取技师信息
         EanfangHttp.get(UserApi.GET_WORKER_INFO)
                 .execute(new EanfangCallback<WorkerInfoBean>(CertificationInfoActivity.this, true, WorkerInfoBean.class, (bean) -> {

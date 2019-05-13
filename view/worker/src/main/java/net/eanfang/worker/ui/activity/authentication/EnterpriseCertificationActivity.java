@@ -95,7 +95,6 @@ public class EnterpriseCertificationActivity extends BaseActivity {
                     return;
                 } else {
                     JumpItent.jump(this, AuthQualifyFirstActivity.class, bundle_prefect);
-
                 }
                 break;
             case R.id.zz_ry_wq_tv:
