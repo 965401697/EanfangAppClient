@@ -59,8 +59,6 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     //是否启用未找到回调页
     private boolean notFoundBack = false;
     private Dialog loadingDialog;
-    private ImageView iv_left;
-    private TextView iv_right;
 
 
     @Override
@@ -198,7 +196,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
      * @param listener   listener
      */
     private void setLeftBack(boolean visibility, View.OnClickListener listener) {
-        iv_left = findViewById(R.id.iv_left);
+        ImageView iv_left = findViewById(R.id.iv_left);
         if (visibility) {
             iv_left.setVisibility(View.VISIBLE);
         } else {
@@ -236,7 +234,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
      * @param listener   listener
      */
     private void setRightBack(boolean visibility, View.OnClickListener listener) {
-        iv_right = findViewById(R.id.tv_right);
+        TextView iv_right = findViewById(R.id.tv_right);
         if (visibility) {
             iv_right.setVisibility(View.VISIBLE);
         } else {
