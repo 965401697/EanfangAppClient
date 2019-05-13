@@ -343,7 +343,6 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         if (!StringUtils.isEmpty(securityDetailBean.getSpcImg())) {
             snplPic.setVisibility(View.VISIBLE);
             String[] pics = securityDetailBean.getSpcImg().split(",");
-
             picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
 
             snplPic.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO, REQUEST_CODE_CHOOSE_PHOTO_two));
@@ -643,6 +642,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         if (resultCode == Activity.RESULT_OK && data != null) {
             if (mIsPubUid) {
                 isFoucus = data.getBooleanExtra(UserHomeActivity.RESULT_FOLLOW_STATE, true);
+                isFoucsEdit = isFoucus;
                 tvIsFocus.setText(isFoucus ? "取消关注" : "关注");
             }
         }

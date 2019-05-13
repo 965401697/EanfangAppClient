@@ -52,7 +52,7 @@
                     android:layout_marginRight="@dimen/dimen_20"
                     android:background="@drawable/bg_gradual_change_ellipse_b"
                     android:gravity="center"
-                    android:padding="@dimen/dimen_6"
+                    android:padding="@dimen/dimen_8"
                     android:text="  + 添加  "
                     android:textColor="@color/white"
                     android:textSize="14sp" />
@@ -60,28 +60,35 @@
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_2" />
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_a"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone">
 
-            </android.support.v7.widget.RecyclerView>
+            </androidx.recyclerview.widget.RecyclerView>
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_2" />
-
-            <TextView
-                android:id="@+id/footer_sz_tv"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:gravity="center"
-                android:padding="@dimen/dimen_20"
-                android:text="查看所有∨ "
-                android:textColor="#999999"
-                android:textSize="16sp" />
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/footer_sz_tv"
+                    android:layout_width="wrap_content"
+                    android:drawableRight="@mipmap/sjt_x_iv"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:drawablePadding="@dimen/dimen_16"
+                    android:padding="@dimen/dimen_20"
+                    android:text="查看所有"
+                    android:textColor="#999999"
+                    android:textSize="12sp" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -119,7 +126,7 @@
                     android:layout_marginRight="@dimen/dimen_20"
                     android:background="@drawable/bg_gradual_change_ellipse_b"
                     android:gravity="center"
-                    android:padding="@dimen/dimen_6"
+                    android:padding="@dimen/dimen_8"
                     android:text="  + 添加  "
                     android:textColor="@color/white"
                     android:textSize="14sp" />
@@ -127,28 +134,35 @@
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_2" />
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_b"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone">
 
-            </android.support.v7.widget.RecyclerView>
+            </androidx.recyclerview.widget.RecyclerView>
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_2" />
-
-            <TextView
-                android:id="@+id/footer_gj_tv"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:gravity="center"
-                android:padding="@dimen/dimen_20"
-                android:text="查看所有∨"
-                android:textColor="#999999"
-                android:textSize="16sp" />
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/footer_gj_tv"
+                    android:layout_width="wrap_content"
+                    android:drawableRight="@mipmap/sjt_x_iv"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:padding="@dimen/dimen_20"
+                    android:text="查看所有"
+                    android:drawablePadding="@dimen/dimen_16"
+                    android:textColor="#999999"
+                    android:textSize="12sp" />
+            </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

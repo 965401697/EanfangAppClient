@@ -53,28 +53,37 @@
                     android:textSize="14sp" />
             </LinearLayout>
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_a"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone">
 
-            </android.support.v7.widget.RecyclerView>
+            </androidx.recyclerview.widget.RecyclerView>
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_2" />
 
-            <TextView
-                android:id="@+id/footer_zz_tv"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:gravity="center"
-                android:padding="@dimen/dimen_20"
-                android:text="查看所有∨"
-                android:textColor="#999999"
-                android:textSize="16sp" />
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/footer_zz_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:drawableRight="@mipmap/sjt_x_iv"
+                    android:drawablePadding="@dimen/dimen_16"
+                    android:gravity="center"
+                    android:padding="@dimen/dimen_20"
+                    android:text="查看所有"
+                    android:textColor="#999999"
+                    android:textSize="13sp" />
+            </LinearLayout>
 
 
             <LinearLayout
@@ -113,28 +122,35 @@
                     android:textSize="14sp" />
             </LinearLayout>
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_b"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone">
 
-            </android.support.v7.widget.RecyclerView>
+            </androidx.recyclerview.widget.RecyclerView>
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_2" />
-
-            <TextView
-                android:id="@+id/footer_ry_tv"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:gravity="center"
-                android:padding="@dimen/dimen_20"
-                android:text="查看所有∨"
-                android:textColor="#999999"
-                android:textSize="16sp" />
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/footer_ry_tv"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:drawableRight="@mipmap/sjt_x_iv"
+                    android:drawablePadding="@dimen/dimen_16"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:padding="@dimen/dimen_20"
+                    android:text="查看所有"
+                    android:textColor="#999999"
+                    android:textSize="13sp" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -172,28 +188,35 @@
                     android:textSize="14sp" />
             </LinearLayout>
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_c"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone">
 
-            </android.support.v7.widget.RecyclerView>
+            </androidx.recyclerview.widget.RecyclerView>
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_2" />
-
-            <TextView
-                android:id="@+id/footer_jy_tv"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:gravity="center"
-                android:padding="@dimen/dimen_20"
-                android:text="查看所有∨"
-                android:textColor="#999999"
-                android:textSize="16sp" />
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/footer_jy_tv"
+                    android:layout_width="wrap_content"
+                    android:drawableRight="@mipmap/sjt_x_iv"
+                    android:drawablePadding="@dimen/dimen_16"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:padding="@dimen/dimen_20"
+                    android:text="查看所有"
+                    android:textColor="#999999"
+                    android:textSize="13sp" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -231,28 +254,35 @@
                     android:textSize="14sp" />
             </LinearLayout>
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_d"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone">
 
-            </android.support.v7.widget.RecyclerView>
+            </androidx.recyclerview.widget.RecyclerView>
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_2" />
-
-            <TextView
-                android:id="@+id/footer_gz_tv"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:gravity="center"
-                android:padding="@dimen/dimen_20"
-                android:text="查看所有∨"
-                android:textColor="#999999"
-                android:textSize="16sp" />
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/footer_gz_tv"
+                    android:layout_width="wrap_content"
+                    android:drawableRight="@mipmap/sjt_x_iv"
+                    android:drawablePadding="@dimen/dimen_16"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:padding="@dimen/dimen_20"
+                    android:text="查看所有"
+                    android:textColor="#999999"
+                    android:textSize="13sp" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -290,29 +320,36 @@
                     android:textSize="14sp" />
             </LinearLayout>
 
-            <android.support.v7.widget.RecyclerView
+            <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_e"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:visibility="gone">
 
-            </android.support.v7.widget.RecyclerView>
+            </androidx.recyclerview.widget.RecyclerView>
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_2" />
-
-            <TextView
-                android:id="@+id/footer_nl_tv"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:gravity="center"
-                android:padding="@dimen/dimen_20"
-                android:text="查看所有∨"
-                android:textColor="#999999"
-                android:textSize="16sp" />
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/footer_nl_tv"
+                    android:layout_width="wrap_content"
+                    android:drawableRight="@mipmap/sjt_x_iv"
+                    android:drawablePadding="@dimen/dimen_16"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:padding="@dimen/dimen_20"
+                    android:text="查看所有"
+                    android:textColor="#999999"
+                    android:textSize="13sp" />
+            </LinearLayout>
 
 
         </LinearLayout>

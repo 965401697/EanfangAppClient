@@ -390,6 +390,13 @@ public class RepairActivity extends BaseClientActivity {
     }
 
     public void doSetPersonalInfo(RepairPersonalInfoEntity.ListBean bean) {
+        if (bean == null) {
+            llPersonalInfoTop.setVisibility(View.GONE);
+            llNoPersonalInfo.setVisibility(View.VISIBLE);
+            return;
+        }
+        llPersonalInfoTop.setVisibility(View.VISIBLE);
+        llNoPersonalInfo.setVisibility(View.GONE);
         //姓名
         tvName.setText(bean.getName());
         // 性别0女1男
@@ -397,7 +404,9 @@ public class RepairActivity extends BaseClientActivity {
         // 电话
         tvPhone.setText(bean.getPhone());
         // 单位
-        tvHomeType.setText("[" + bean.getSelectAddress() + "]");
+        if (!StringUtils.isEmpty(bean.getSelectAddress())) {
+            tvHomeType.setText("[" + bean.getSelectAddress() + "]");
+        }
         tvHomeAddress.setText(bean.getConmpanyName());
         // 地址
         tvAddress.setText(bean.getAddress());

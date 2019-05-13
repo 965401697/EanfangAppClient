@@ -2,10 +2,11 @@ package net.eanfang.worker.ui.activity.my.certification;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
+
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.widget.TextView;
 
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
@@ -14,10 +15,10 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.QualifyCertificafeListBean;
 import com.eanfang.model.WorkerVerifySkillBean;
+import com.eanfang.model.sys.BaseDataEntity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
-import com.eanfang.model.sys.BaseDataEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
@@ -78,12 +79,12 @@ public class SkillInfoDetailActivity extends BaseWorkerActivity {
                     // 系统类别
                     for (BaseDataEntity checkedS : SystemBusinessList) {
                         for (BaseDataEntity s : systemTypeList) {
-                            if (s.getDataType() == 1 && (s.getDataId().equals(checkedS.getDataId()))) {
+                            if (s.getDataType() == 1 && (s.getDataId() == checkedS.getDataId())) {
                                 s.setCheck(true);
                                 break;
                             } else {
                                 for (BaseDataEntity checkedB : businessTypeList) {
-                                    if (checkedB.getDataId().equals(checkedS.getDataId())) {
+                                    if (checkedB.getDataId() == checkedS.getDataId()) {
                                         checkedB.setCheck(true);
                                         break;
                                     }
@@ -97,12 +98,12 @@ public class SkillInfoDetailActivity extends BaseWorkerActivity {
     private void initViews() {
 
         tvLimit.setText(GetConstDataUtils.getWorkingYearList().get(mWorkerVerifySkillBean.getWorkerVerify().getWorkingYear()));
+        if (mWorkerVerifySkillBean.getWorkerVerify() != null && mWorkerVerifySkillBean.getWorkerVerify().getWorkingLevel() != null) {
+            tvAbility.setText(GetConstDataUtils.getWorkingLevelList().get(mWorkerVerifySkillBean.getWorkerVerify().getWorkingLevel()));
+        }
 
-        tvAbility.setText(GetConstDataUtils.getWorkingLevelList().get(mWorkerVerifySkillBean.getWorkerVerify().getWorkingLevel()));
-
-
-        recyclerViewBusiness.setLayoutManager(new GridLayoutManager(this, 3));
-        recyclerViewOs.setLayoutManager(new GridLayoutManager(this, 3));
+        recyclerViewBusiness.setLayoutManager(new GridLayoutManager(this, 4));
+        recyclerViewOs.setLayoutManager(new GridLayoutManager(this, 4));
 
         businessCooperationAddAdapter = new SkillTypeAdapter(R.layout.item_cooperation_add, 1);
         osCooperationAddAdapter = new SkillTypeAdapter(R.layout.item_cooperation_add, 1);
@@ -120,7 +121,7 @@ public class SkillInfoDetailActivity extends BaseWorkerActivity {
 
     @OnClick(R.id.tv_area)
     public void onViewClicked() {
-        startActivity(new Intent(SkillInfoDetailActivity.this, SkillAreaActivity.class).putExtra("isLook",true));
+        startActivity(new Intent(SkillInfoDetailActivity.this, SkillAreaActivity.class).putExtra("isLook", true));
     }
 
     private void getData() {
@@ -133,9 +134,7 @@ public class SkillInfoDetailActivity extends BaseWorkerActivity {
                 .execute(new EanfangCallback<QualifyCertificafeListBean>(this, true, QualifyCertificafeListBean.class) {
                     @Override
                     public void onSuccess(QualifyCertificafeListBean bean) {
-
                         initViews();
-
                         if (bean.getList().size() > 0) {
                             adapter.setNewData(bean.getList());
                         }

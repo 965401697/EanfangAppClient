@@ -80,8 +80,8 @@ public class GroupAdapter extends BaseExpandableListAdapter {
         if (convertView == null) {
             holder = new FirstHolder();
             convertView = mInflate.inflate(R.layout.item_expand_lv_first, parent, false);
-            holder.tv = convertView.findViewById(R.id.tv);
-            holder.cb = convertView.findViewById(R.id.cb);
+            holder.tv = ((TextView) convertView.findViewById(R.id.tv));
+            holder.cb = ((CheckBox) convertView.findViewById(R.id.cb));
             convertView.setTag(holder);
         } else {
             holder = (FirstHolder) convertView.getTag();
@@ -119,7 +119,7 @@ public class GroupAdapter extends BaseExpandableListAdapter {
             lv = new CustomExpandableListView(context);
         }
 
-        ChildAdapter secondAdapter = new ChildAdapter(context, mListData.get(groupPosition).getChildren(), groupPosition);
+        ChildAdapter secondAdapter = new ChildAdapter(context, mListData.get(groupPosition).getChildren(), groupPosition, false);
         lv.setAdapter(secondAdapter);
         return lv;
     }

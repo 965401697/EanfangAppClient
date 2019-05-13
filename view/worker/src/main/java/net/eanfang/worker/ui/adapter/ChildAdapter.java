@@ -6,13 +6,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
+
 
 import com.eanfang.model.sys.BaseDataEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.interfaces.AreaCheckChangeListener;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -24,16 +29,21 @@ import java.util.List;
  */
 
 public class ChildAdapter extends BaseExpandableListAdapter {
+    private final boolean mIsAuth;
     private Context mContext;
     private List<BaseDataEntity> mDatas;
     int mPosition;
     private LayoutInflater mInflate;
+    private AreaCheckChangeListener mListener;
+    private Map<Integer, ViewHolder> mTextViews;
 
-    public ChildAdapter(Context mContext, List<BaseDataEntity> mDatas, int mPosition) {
+    public ChildAdapter(Context mContext, List<BaseDataEntity> mDatas, int mPosition, boolean isAuth) {
         this.mContext = mContext;
         this.mDatas = mDatas;
         this.mPosition = mPosition;
         this.mInflate = LayoutInflater.from(mContext);
+        this.mIsAuth = isAuth;
+        mTextViews = new HashMap<>();
     }
 
     @Override
@@ -80,32 +90,65 @@ public class ChildAdapter extends BaseExpandableListAdapter {
         ViewHolder holder = null;
         if (convertView == null) {
             holder = new ViewHolder();
-            convertView = mInflate.inflate(R.layout.item_expand_lv_third, parent, false);
-            holder.tv = convertView.findViewById(R.id.tv);
-            holder.cb = convertView.findViewById(R.id.cb);
+            convertView = mInflate.inflate(R.layout.item_expand_lv_second, parent, false);
+            holder.tv = ((TextView) convertView.findViewById(R.id.tv));
+            holder.cb = ((CheckBox) convertView.findViewById(R.id.cb));
+            holder.cb_img = ((CheckBox) convertView.findViewById(R.id.cb_img));
+            holder.img_area = ((ImageView) convertView.findViewById(R.id.img_area));
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
+        mTextViews.put(mPosition * 1000 + groupPosition, holder);
+        List<BaseDataEntity> entities = mDatas.get(groupPosition).getChildren();
         ViewHolder finalHolder = holder;
-        holder.cb.setOnClickListener(v -> {
-            boolean isChecked = finalHolder.cb.isChecked();
-            mDatas.get(groupPosition).setCheck(isChecked);
-            for (int i = 0; i < mDatas.get(groupPosition).getChildren().size(); i++) {
-                BaseDataEntity thirdModel = mDatas.get(groupPosition).getChildren().get(i);
-                thirdModel.setCheck(isChecked);
-            }
-            notifyDataSetChanged();
-        });
-        holder.cb.setChecked(mDatas.get(groupPosition).isCheck());
-
+        if (mIsAuth) {
+            holder.cb.setEnabled(false);
+            holder.cb.setClickable(false);
+        } else {
+            holder.cb.setOnClickListener(v -> {
+                boolean isChecked = finalHolder.cb.isChecked();
+                if (entities.size() > 0) {
+                    finalHolder.cb.setText(isChecked ? "取消全选" : "全选");
+                    finalHolder.cb.setVisibility(View.VISIBLE);
+                    finalHolder.cb_img.setVisibility(View.GONE);
+                } else {
+                    finalHolder.cb.setVisibility(View.GONE);
+                    finalHolder.cb_img.setVisibility(View.VISIBLE);
+                    finalHolder.cb_img.setChecked(isChecked);
+                }
+                mDatas.get(groupPosition).setCheck(isChecked);
+                for (int i = 0; i < entities.size(); i++) {
+                    BaseDataEntity thirdModel = entities.get(i);
+                    thirdModel.setCheck(isChecked);
+                }
+                mListener.onCheckAreaChange(mPosition, groupPosition, -1, isChecked);
+                notifyDataSetChanged();
+            });
+        }
         holder.tv.setText(mDatas.get(groupPosition).getDataName());
+        if (entities.size() > 0) {
+            holder.img_area.setVisibility(View.VISIBLE);
+            holder.cb.setChecked(mDatas.get(groupPosition).isCheck());
+            holder.img_area.setSelected(isExpanded);
+            holder.cb.setText(mDatas.get(groupPosition).isCheck() ? "取消全选" : "全选");
+            holder.cb.setVisibility(View.VISIBLE);
+            holder.cb_img.setVisibility(View.GONE);
+        } else {
+            holder.img_area.setVisibility(View.INVISIBLE);
+            holder.cb_img.setVisibility(View.VISIBLE);
+            holder.cb.setVisibility(View.GONE);
+            holder.cb_img.setChecked(mDatas.get(groupPosition).isCheck());
+        }
         return convertView;
     }
 
     class ViewHolder {
         TextView tv;
         CheckBox cb;
+        CheckBox cb_img;
+        ImageView img_area;
+
     }
 
     /**
@@ -118,18 +161,36 @@ public class ChildAdapter extends BaseExpandableListAdapter {
             view = LayoutInflater.from(mContext).inflate(
                     R.layout.item_expand_lv_third, null);
             holder = new ChildHolder();
-            holder.tv = view.findViewById(R.id.tv);
-            holder.cb = view.findViewById(R.id.cb);
+            holder.tv = ((TextView) view.findViewById(R.id.tv));
+            holder.cb = ((CheckBox) view.findViewById(R.id.cb));
             view.setTag(holder);
         } else {
             holder = (ChildHolder) view.getTag();
         }
         holder.tv.setText(mDatas.get(groupPosition).getChildren().get(childPosition).getDataName());
         final ChildHolder thirdHolder = holder;
-        thirdHolder.cb.setOnClickListener(v -> {
-            boolean isChecked = thirdHolder.cb.isChecked();
-            mDatas.get(groupPosition).getChildren().get(childPosition).setCheck(isChecked);
-        });
+        if (mIsAuth) {
+            thirdHolder.cb.setEnabled(false);
+            thirdHolder.cb.setClickable(false);
+        } else {
+            thirdHolder.cb.setOnClickListener(v -> {
+                boolean isChecked = thirdHolder.cb.isChecked();
+                mDatas.get(groupPosition).getChildren().get(childPosition).setCheck(isChecked);
+                int checkSize = 0;
+                for (BaseDataEntity entity : mDatas.get(groupPosition).getChildren()) {
+                    if (entity.isCheck()) {
+                        checkSize++;
+                    }
+                }
+                if (checkSize == mDatas.get(groupPosition).getChildren().size()) {
+                    mTextViews.get(mPosition * 1000 + groupPosition).cb.setText("取消全选");
+                    notifyDataSetChanged();
+                } else {
+                    mTextViews.get(mPosition * 1000 + groupPosition).cb.setText("全选");
+                }
+                mListener.onCheckAreaChange(mPosition, groupPosition, childPosition, isChecked);
+            });
+        }
         thirdHolder.cb.setChecked(mDatas.get(groupPosition).getChildren().get(childPosition).isCheck());
         return view;
     }
@@ -139,6 +200,9 @@ public class ChildAdapter extends BaseExpandableListAdapter {
         CheckBox cb;
     }
 
+    public void setListener(AreaCheckChangeListener listener) {
+        this.mListener = listener;
+    }
 
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {

@@ -653,6 +653,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         if (resultCode == Activity.RESULT_OK && data != null) {
             if (mIsPubUid) {
                 isFoucus = data.getBooleanExtra(UserHomeActivity.RESULT_FOLLOW_STATE, true);
+                isFoucsEdit = isFoucus;
                 tvIsFocus.setText(isFoucus ? "取消关注" : "关注");
             }
         }

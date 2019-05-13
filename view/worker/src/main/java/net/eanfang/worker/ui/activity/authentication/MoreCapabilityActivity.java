@@ -1,11 +1,13 @@
 package net.eanfang.worker.ui.activity.authentication;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.http.EanfangCallback;
@@ -128,15 +130,23 @@ public class MoreCapabilityActivity extends BaseActivity {
             default:
         }
     }
+
     private void showRvView(boolean isV, RecyclerView recyclerView, TextView ryTv) {
         if (!isV) {
             recyclerView.setVisibility(View.VISIBLE);
-            ryTv.setText("收起∧");
+            Drawable drawable = getResources().getDrawable(R.mipmap.sjt_s_iv);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            ryTv.setCompoundDrawables(null, null, drawable, null);
+            ryTv.setText("收起");
         } else {
             recyclerView.setVisibility(View.GONE);
-            ryTv.setText("查看所有∨");
+            Drawable drawable = getResources().getDrawable(R.mipmap.sjt_x_iv);
+            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+            ryTv.setCompoundDrawables(null, null, drawable, null);
+            ryTv.setText("查看所有");
         }
     }
+
     @Override
     protected void onRestart() {
         super.onRestart();

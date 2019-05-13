@@ -1,10 +1,10 @@
 package net.eanfang.worker.ui.activity.techniciancertification;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -19,6 +19,7 @@ import com.baidu.ocr.sdk.model.IDCardResult;
 import com.baidu.ocr.ui.camera.CameraActivity;
 import com.baidu.ocr.ui.camera.CameraNativeHelper;
 import com.baidu.ocr.ui.camera.CameraView;
+import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
@@ -36,6 +37,7 @@ import com.jph.takephoto.model.TResult;
 import com.yaf.base.entity.TechWorkerVerifyEntity;
 
 import net.eanfang.worker.R;
+
 import java.io.File;
 import java.text.ParseException;
 
@@ -87,7 +89,7 @@ public class RealNameAuthenticationActivity extends BaseActivityWithTakePhoto {
         EanfangHttp.post(UserApi.ZS_SFZ).params("userId", EanfangApplication.get().getUserId()).execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
             if (bean != null) {
                 Log.d("ss56", "initData: " + bean.toString());
-                mTechWorkerVerifyEntity = JSONObject.toJavaObject(bean, TechWorkerVerifyEntity.class);
+                mTechWorkerVerifyEntity = (TechWorkerVerifyEntity) JSONObject.toJavaObject(bean, TechWorkerVerifyEntity.class);
                 Log.d("ss566", "initData: " + mTechWorkerVerifyEntity.toString());
                 if (mTechWorkerVerifyEntity != null) {
                     fillData();
@@ -98,13 +100,13 @@ public class RealNameAuthenticationActivity extends BaseActivityWithTakePhoto {
 
     private void fillData() {
         if (mTechWorkerVerifyEntity.getIdCardFront() != null) {
-            ivIdCardFront.setImageURI(com.eanfang.BuildConfig.OSS_SERVER + mTechWorkerVerifyEntity.getIdCardFront());
+            ivIdCardFront.setImageURI(BuildConfig.OSS_SERVER + mTechWorkerVerifyEntity.getIdCardFront());
         }
         if (mTechWorkerVerifyEntity.getIdCardSide() != null) {
-            ivIdCardBack.setImageURI(com.eanfang.BuildConfig.OSS_SERVER + mTechWorkerVerifyEntity.getIdCardSide());
+            ivIdCardBack.setImageURI(BuildConfig.OSS_SERVER + mTechWorkerVerifyEntity.getIdCardSide());
         }
         if (mTechWorkerVerifyEntity.getIdCardHand() != null) {
-            ivIdCardInHand.setImageURI(com.eanfang.BuildConfig.OSS_SERVER + mTechWorkerVerifyEntity.getIdCardHand());
+            ivIdCardInHand.setImageURI(BuildConfig.OSS_SERVER + mTechWorkerVerifyEntity.getIdCardHand());
         }
         try {
             if (mTechWorkerVerifyEntity.getIdCardNum() != null) {
@@ -121,6 +123,8 @@ public class RealNameAuthenticationActivity extends BaseActivityWithTakePhoto {
     private String idCardNum = "";
 
     private void doSave() {
+        Log.d("recIDCard6688866", "doSave: " + idCardNum);
+
         if (StringUtils.isEmpty(idCardNum)) {
             showToast("请添加正确的身份证正面照");
             return;
@@ -139,6 +143,9 @@ public class RealNameAuthenticationActivity extends BaseActivityWithTakePhoto {
         mTechWorkerVerifyEntity.setAccId(EanfangApplication.get().getAccId());
 
         EanfangHttp.post(UserApi.GET_TECH_WORKER_ADD_V3).upJson(JSONObject.toJSONString(mTechWorkerVerifyEntity)).execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
+            EanfangApplication.get().getUser().getAccount().setNickName(mTechWorkerVerifyEntity.getIdCardName());
+            EanfangApplication.get().getUser().getAccount().setIdCard(idCardNum);
+            EanfangApplication.get().getUser().getAccount().setGender(mTechWorkerVerifyEntity.getIdCardGender().equals("女") ? 0 : 1);
             Intent intent = new Intent(this, SubmitSuccessfullyJsActivity.class);
             intent.putExtra("bean", mTechWorkerVerifyEntity);
             intent.putExtra("statusB", statusB);
@@ -160,15 +167,18 @@ public class RealNameAuthenticationActivity extends BaseActivityWithTakePhoto {
             case ID_CARD_SIDE:
                 mTechWorkerVerifyEntity.setIdCardSide(imgKey);
                 ivIdCardBack.setImageURI("file://" + image.getOriginalPath());
+                OSSUtils.initOSS(this).asyncPutImage(imgKey, image.getOriginalPath(), new OSSCallBack(this, true) {
+                });
                 break;
             case ID_CARD_HAND:
                 mTechWorkerVerifyEntity.setIdCardHand(imgKey);
                 ivIdCardInHand.setImageURI("file://" + image.getOriginalPath());
+                OSSUtils.initOSS(this).asyncPutImage(imgKey, image.getOriginalPath(), new OSSCallBack(this, true) {
+                });
                 break;
             default:
         }
-        OSSUtils.initOSS(this).asyncPutImage(imgKey, image.getOriginalPath(), new OSSCallBack(this, true) {
-        });
+
     }
 
     @Override
@@ -226,6 +236,7 @@ public class RealNameAuthenticationActivity extends BaseActivityWithTakePhoto {
         param.setDetectDirection(true);
         param.setImageQuality(20);
         OCR.getInstance(this).recognizeIDCard(param, new OnResultListener<IDCardResult>() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onResult(IDCardResult result) {
                 if (result != null) {
@@ -249,7 +260,6 @@ public class RealNameAuthenticationActivity extends BaseActivityWithTakePhoto {
                     } else {
                         idCardNum = "";
                     }
-
                 }
             }
 
@@ -290,10 +300,12 @@ public class RealNameAuthenticationActivity extends BaseActivityWithTakePhoto {
         OCR.getInstance(this).release();
         super.onDestroy();
     }
+
     private static int nem = 0;
+
     public static class FileUtil {
         public static File getSaveFile(Context context) {
-            File file = new File(context.getFilesDir(), "idc.png");
+            File file = new File(context.getFilesDir(), nem + "idCl.jpg");
             return file;
         }
     }

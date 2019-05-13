@@ -53,7 +53,6 @@ public class Config {
         if (constBean == null) {
             synchronized (Config.class) {
                 if (constBean == null) {
-                    Log.d("config","=========================="+EanfangApplication.get().get(ConstAllBean.class.getName(), ConstAllBean.class));
                     constBean = (ConstAllBean) EanfangApplication.get().get(ConstAllBean.class.getName(), ConstAllBean.class);
                 }
             }

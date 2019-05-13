@@ -404,7 +404,7 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
     public void setHeaders() {
         if (EanfangApplication.get().getUser() != null) {
             EanfangHttp.setToken(EanfangApplication.get().getUser().getToken());
-            HttpConfig.get().setToken(EanfangApplication.get().getUser().getToken());
+//            HttpConfig.get().setToken(EanfangApplication.get().getUser().getToken());
         }
         EanfangHttp.setWorker();
     }

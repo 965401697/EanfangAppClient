@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CalendarView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -68,7 +69,7 @@ public class BusinessCertificationActivity extends BaseActivity {
     @BindView(R.id.zc_zj_lrv)
     LtReView zcZjLrv;
     @BindView(R.id.cl_rq_lrv)
-    LtReView clRqLrv;
+    TextView clRqLrv;
     @BindView(R.id.jz_rq_lrv)
     LtReView jzRqLrv;
     private AlertDialog.Builder alertDialog;
@@ -79,6 +80,7 @@ public class BusinessCertificationActivity extends BaseActivity {
     private int order = 1;
     private AuthCompanyBaseInfoBean infoBean = new AuthCompanyBaseInfoBean();
     private Date date;
+    private int bizCertify = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,7 +123,7 @@ public class BusinessCertificationActivity extends BaseActivity {
             showToast("请输入注册资金");
             return;
         } else if (StringUtils.isEmpty(clRqLrv.getText().toString().trim())) {
-            showToast("请输入成立日期");
+            showToast("请选择成立日期");
             return;
         } else if (StringUtils.isEmpty(jzRqLrv.getText().toString().trim())) {
             showToast("营业截至日期");
@@ -147,7 +149,8 @@ public class BusinessCertificationActivity extends BaseActivity {
             Log.d("REQUEST_CODE_BUSINESS_LICENSE6:", UserApi.GET_ORGUNIT_SHOP_INSERT + "\n" + json + "\n" + bean.toJSONString());
             showToast("保存成功");
             ContactsFragment.isRefresh = true;
-            finish();
+            initInt();
+
         }));
     }
 
@@ -167,18 +170,25 @@ public class BusinessCertificationActivity extends BaseActivity {
     private void initData() {
         mOrgId = getIntent().getLongExtra("mOrgId", 0);
         status = getIntent().getIntExtra("status", 0);
+        bizCertify = getIntent().getIntExtra("bizCertify", 0);
         clRqLrv.setOnClickListener(view -> setRq());
         initAccessToken();
         EanfangHttp.get(UserApi.GET_COMPANY_ORG_INFO + mOrgId).execute(new EanfangCallback<AuthCompanyBaseInfoBean>(this, true, AuthCompanyBaseInfoBean.class, (beans) -> {
             infoBean = beans;
-            switch (infoBean.getStatus()) {
+            switch (bizCertify) {
                 case 0:
-                    setData(beans);
-                    break;
-                default:
                     setRightTitle("只读");
                     setData(beans);
                     setView();
+                    break;
+                default:
+                    if ((infoBean.getStatus() == 1) | (infoBean.getStatus() == 2)) {
+                        setRightTitle("只读");
+                        setData(beans);
+                        setView();
+                    } else {
+                        setData(beans);
+                    }
             }
         }));
     }
@@ -191,6 +201,7 @@ public class BusinessCertificationActivity extends BaseActivity {
         frDbLrv.setEnabled(false);
         zcZjLrv.setEnabled(false);
         clRqLrv.setEnabled(false);
+        clRqLrv.setClickable(false);
         jzRqLrv.setEnabled(false);
         setRightTitleOnClickListener(null);
     }
@@ -232,7 +243,12 @@ public class BusinessCertificationActivity extends BaseActivity {
         clRqLrv.setText(beans.getWords_result().get成立日期().getWords());
         jzRqLrv.setText(beans.getWords_result().get有效期().getWords());
     }
-
+    private void initInt() {
+        EanfangHttp.get(UserApi.JS_RZ_TJ_INFO+mOrgId).execute(new EanfangCallback<String>(this, true, String.class, (bean) -> {
+            Log.d("56483666", "bean: " + bean);
+            finish();
+        }));
+    }
     @OnClick(R.id.iv_uploadlogo)
     public void onClick() {
         if (!checkTokenStatus()) {

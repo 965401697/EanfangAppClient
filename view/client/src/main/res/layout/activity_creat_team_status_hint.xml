@@ -9,9 +9,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
         android:orientation="vertical">
 
-        <include layout="@layout/header_eanfang" />
+        <include layout="@layout/header" />
 
         <ImageView
             android:layout_width="@dimen/dimen_254"
@@ -35,10 +36,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="@dimen/dimen_40"
+            android:gravity="center_horizontal"
             android:layout_marginRight="@dimen/dimen_40"
             android:layout_marginTop="@dimen/dimen_102"
-            android:text="您创建的公司信息已提交成功，
-完善资料可以带来更多商机！"
+            android:text="您创建的公司信息已提交成功，\n完善资料可以带来更多商机！"
             android:textSize="@dimen/textSize_15" />
 
         <TextView

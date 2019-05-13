@@ -3,15 +3,15 @@ package net.eanfang.client.ui.fragment;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.eanfang.ui.base.BaseFragment;
-
-import net.eanfang.client.R;
-
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SimpleItemAnimator;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.eanfang.ui.base.BaseFragment;
+
+import net.eanfang.client.R;
 
 
 /**
@@ -70,7 +70,8 @@ public abstract class TemplateItemListFragment extends BaseFragment implements S
     }
 
     public void refresh() {
-        mPage = 1;//下拉永远第一页
+        //下拉永远第一页
+        mPage = 1;
         getData();
     }
 

@@ -3,8 +3,10 @@ package net.eanfang.worker.ui.activity.worksapce.oa.workreport;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -98,6 +100,7 @@ public class WorkReportDetailActivity extends BaseWorkerActivity {
                     Bundle bundle = new Bundle();
 
                     bundle.putString("id", String.valueOf(mBean.getId()));
+                    if(mBean.getCreateOrg()!=null)
                     bundle.putString("orderNum", mBean.getCreateOrg().getOrgName());
                     if (mBean.getWorkReportDetails() != null && !TextUtils.isEmpty(mBean.getWorkReportDetails().get(0).getPictures())) {
                         bundle.putString("picUrl", mBean.getWorkReportDetails().get(0).getPictures().split(",")[0]);
@@ -166,10 +169,11 @@ public class WorkReportDetailActivity extends BaseWorkerActivity {
                 .tag(this)
                 .params("id", mId)
                 .execute(new EanfangCallback<WorkReportInfoBean>(this, true, WorkReportInfoBean.class, (bean) -> {
+                            if (bean == null) {
+                                return;
+                            }
                             mBean = bean;
-
                             setTitle(bean.getCreateUser().getAccountEntity().getRealName() + "的" + GetConstDataUtils.getWorkReportTypeList().get(bean.getType()));
-
                             completeList = new ArrayList<>();
                             findList = new ArrayList<>();
                             planList = new ArrayList<>();
