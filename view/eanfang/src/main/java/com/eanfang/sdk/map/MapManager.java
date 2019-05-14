@@ -1,4 +1,4 @@
-package com.eanfang.map;
+package com.eanfang.sdk.map;
 
 import android.app.Activity;
 import android.graphics.BitmapFactory;

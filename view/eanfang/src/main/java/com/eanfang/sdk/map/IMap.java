@@ -1,4 +1,4 @@
-package com.eanfang.map;
+package com.eanfang.sdk.map;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -6,7 +6,6 @@ import android.os.Bundle;
 import com.amap.api.maps.CameraUpdate;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.LatLng;
-import com.amap.api.services.geocoder.GeocodeSearch;
 import com.amap.api.services.geocoder.RegeocodeQuery;
 
 public interface IMap {
