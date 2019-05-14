@@ -39,9 +39,10 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login_eanfang);
         binding.setApp(getApp());
+        super.onCreate(savedInstanceState);
+
         setTitle("登录");
     }
 

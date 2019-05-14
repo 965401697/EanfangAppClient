@@ -8,9 +8,14 @@ import java.util.Date;
 
 /**
  * @author wen
- *         Created at 2017/3/11
+ * Created at 2017/3/11
  * @desc Eventbus数据封装
  */
+
+/**
+ * 已废弃  请替换 BaseActionEvent
+ */
+@Deprecated
 public class BaseEvent {
 
     private int eventId;

@@ -15,8 +15,9 @@ import com.eanfang.R;
 
 /**
  * @author hou
- *         对话框基础类
+ * 对话框基础类
  */
+@Deprecated
 public abstract class BaseDialog extends Dialog {
 
     protected Activity context = null;
@@ -61,8 +62,8 @@ public abstract class BaseDialog extends Dialog {
 
     }
 
-    public void jumpInDialog(Activity activity, Class<?> cls,String title, String type) {
-        Intent intent = new Intent(activity,cls);
+    public void jumpInDialog(Activity activity, Class<?> cls, String title, String type) {
+        Intent intent = new Intent(activity, cls);
         intent.putExtra("title", title);
         intent.putExtra("type", type);
         activity.startActivity(intent);

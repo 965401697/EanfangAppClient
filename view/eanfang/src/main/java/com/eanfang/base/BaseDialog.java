@@ -1,22 +1,19 @@
 package com.eanfang.base;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.view.MotionEvent;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModel;
 
 import com.eanfang.R;
@@ -32,19 +29,20 @@ import com.eanfang.rds.base.IViewModelAction;
 import com.eanfang.sys.activity.LoginActivity;
 import com.kingja.loadsir.core.LoadService;
 import com.kingja.loadsir.core.LoadSir;
-import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+import com.trello.rxlifecycle2.components.support.RxDialogFragment;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import lombok.Getter;
 
 
 /**
  * @author jornl
  * @date 2019-04-17 18:11:04
  */
-public abstract class BaseActivity extends RxAppCompatActivity {
+public abstract class BaseDialog extends RxDialogFragment {
+
+    protected View mRootView = null;
+    protected FragmentActivity mActivity;
 
     protected LoadService loadService;
     //是否启用服务器错误回调页
@@ -60,44 +58,38 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     private Dialog loadingDialog;
 
 
+    @Nullable
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        //始终竖屏
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        super.onCreate(savedInstanceState);
-        // BaseApplication.get().addActivity(this);
-        initViewModelEvent();
-        initView();
-        initStyle();
-
-
-        loadService = LoadSir.getDefault().register(this, this::onNetReload);
-        initLoadSir();
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mRootView = initView(inflater, container);
+        loadService = LoadSir.getDefault().register(mRootView, this::onNetReload);
+        return loadService.getLoadLayout();
     }
 
     @Override
-    protected void onDestroy() {
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initViewModelEvent();
+        setLeftBack(true);
+        setRightBack(false);
+        mActivity = getActivity();
+        initLoadSir();
+        initStyle();
+    }
+
+    @Override
+    public void onDestroy() {
         super.onDestroy();
         dismissLoading();
         // BaseApplication.get().closeActivity(this);
     }
 
-    @Override
-    public void onBackPressed() {
-        finish();
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            if (getCurrentFocus() != null && getCurrentFocus().getWindowToken() != null) {
-                InputMethodManager manager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                manager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-            }
+    protected <T extends View> T findViewById(int id) {
+        if (mRootView == null) {
+            return null;
         }
-        return super.onTouchEvent(event);
+        return (T) mRootView.findViewById(id);
     }
-
 
     //---------------------------------------------------init ----------------------------------------------------------------------------
 
@@ -119,11 +111,10 @@ public abstract class BaseActivity extends RxAppCompatActivity {
      */
     protected void initStyle() {
         if (isClient()) {
-            findViewById(R.id.titles_bar).setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryC));
+            findViewById(R.id.titles_bar).setBackgroundColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryC));
         } else {
-            findViewById(R.id.titles_bar).setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryW));
+            findViewById(R.id.titles_bar).setBackgroundColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryW));
         }
-
     }
 
     /**
@@ -141,10 +132,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     /**
      * 初始化view方法
      */
-    protected void initView() {
-        setLeftBack(true);
-        setRightBack(false);
-    }
+    protected abstract View initView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container);
 
     private void initViewModelEvent() {
         List<ViewModel> viewModelList = initViewModelList();
@@ -167,7 +155,6 @@ public abstract class BaseActivity extends RxAppCompatActivity {
      *
      * @param id 文本id
      */
-    @Override
     public void setTitle(int id) {
         ((TextView) findViewById(R.id.tv_title)).setText(id);
     }
@@ -197,7 +184,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         if (listener != null) {
             iv_left.setOnClickListener(listener);
         } else {
-            iv_left.setOnClickListener(v -> finishWithResultOk());
+            iv_left.setOnClickListener(v -> dismiss());
         }
     }
 
@@ -235,7 +222,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         if (listener != null) {
             iv_right.setOnClickListener(listener);
         } else {
-            iv_right.setOnClickListener(v -> finishWithResultOk());
+            iv_right.setOnClickListener(v -> dismiss());
         }
     }
 
@@ -245,7 +232,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
      * @param listener listener
      */
     public void setRightBack(View.OnClickListener listener) {
-        setLeftBack(true, listener);
+        setRightBack(true, listener);
     }
 
     /**
@@ -254,7 +241,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
      * @param visibility 是否可见
      */
     public void setRightBack(boolean visibility) {
-        setLeftBack(visibility, null);
+        setRightBack(visibility, null);
     }
 
 
@@ -280,12 +267,11 @@ public abstract class BaseActivity extends RxAppCompatActivity {
                                 break;
                             }
                             case BaseActionEvent.FINISH: {
-                                finish();
+                                dismiss();
                                 break;
                             }
                             case BaseActionEvent.FINISH_WITH_RESULT_OK: {
-                                setResult(RESULT_OK);
-                                finish();
+                                dismiss();
                                 break;
                             }
                             case BaseActionEvent.SUCCESS: {
@@ -299,7 +285,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
                                 break;
                             }
                             case BaseActionEvent.TOKEN_ERROR: {
-                                finish();
+                                dismiss();
                                 startActivity(LoginActivity.class);
                                 break;
                             }
@@ -341,7 +327,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
 
     protected void startLoading(String message) {
         if (loadingDialog == null) {
-            loadingDialog = LoadKit.dialog(this, message);
+            loadingDialog = LoadKit.dialog(mActivity, message);
             loadingDialog.setCancelable(false);
             loadingDialog.setCanceledOnTouchOutside(false);
         }
@@ -355,24 +341,15 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     }
 
     protected void showToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
-
-    protected void finishWithResultOk() {
-        setResult(RESULT_OK);
-        finish();
-    }
-
-    protected BaseActivity getContext() {
-        return BaseActivity.this;
+        Toast.makeText(mActivity, message, Toast.LENGTH_SHORT).show();
     }
 
     protected void startActivity(Class cl) {
-        startActivity(new Intent(this, cl));
+        startActivity(new Intent(mActivity, cl));
     }
 
     public void startActivityForResult(Class cl, int requestCode) {
-        startActivityForResult(new Intent(this, cl), requestCode);
+        startActivityForResult(new Intent(mActivity, cl), requestCode);
     }
 
 //    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -387,38 +364,5 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     protected boolean isClient() {
         return getApp() == 0;
     }
-
-
-    /**
-     * viewpager Adapter
-     */
-    protected class MyPagerAdapter extends FragmentPagerAdapter {
-        @Getter
-        private String[] titles;
-        @Getter
-        private ArrayList<Fragment> fragments;
-
-        public MyPagerAdapter(FragmentManager fm, String[] mTitles) {
-            super(fm);
-            fragments = new ArrayList<>();
-            this.titles = mTitles;
-        }
-
-        @Override
-        public int getCount() {
-            return fragments.size();
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return titles[position];
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return fragments.get(position);
-        }
-    }
-
 
 }

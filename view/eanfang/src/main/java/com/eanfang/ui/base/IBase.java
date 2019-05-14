@@ -8,6 +8,7 @@ package com.eanfang.ui.base;
  * @desc activity扩展接口
  * @date 2017/3/2
  */
+@Deprecated
 public interface IBase {
     void finishSelf();
 

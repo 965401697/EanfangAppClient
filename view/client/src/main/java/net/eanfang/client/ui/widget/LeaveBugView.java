@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.RepairApi;
@@ -26,8 +29,6 @@ import net.eanfang.client.ui.adapter.LeaveBugAdapter;
 
 import java.util.List;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -38,7 +39,7 @@ import butterknife.ButterKnife;
  * @email houzhongzhou@yeah.net
  * @desc 遗留故障
  */
-
+@Deprecated
 public class LeaveBugView extends BaseDialog {
     @BindView(R.id.iv_left)
     ImageView ivLeft;

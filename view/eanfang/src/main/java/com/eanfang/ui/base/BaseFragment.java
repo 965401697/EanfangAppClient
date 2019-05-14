@@ -8,6 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.eanfang.R;
 import com.eanfang.listener.NetBroadcastReceiver;
 import com.eanfang.util.ToastUtil;
@@ -16,8 +19,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import butterknife.ButterKnife;
 
 
@@ -26,7 +27,7 @@ import butterknife.ButterKnife;
  *
  * @http://blog.csdn.net/q649381130/article/details/51534479
  */
-
+@Deprecated
 public abstract class BaseFragment extends Fragment implements IBase {
     /**
      * 贴附的activity

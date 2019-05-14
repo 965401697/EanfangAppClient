@@ -24,6 +24,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
+
 import com.eanfang.R;
 import com.eanfang.application.CustomeApplication;
 import com.eanfang.kit.imagechoose.IImageChooseCallBack;
@@ -47,9 +50,6 @@ import java.io.File;
 import java.util.Date;
 import java.util.List;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.core.app.ActivityCompat;
-
 /**
  * BaseAppCompatFragmentActivity
  *
@@ -57,7 +57,7 @@ import androidx.core.app.ActivityCompat;
  * Created at 2016/1/1 11:33
  * @desc activity基类
  */
-
+@Deprecated
 public abstract class BaseActivityWithTakePhoto extends com.eanfang.takephoto.TakePhotoActivity implements
         IBase, ActivityCompat.OnRequestPermissionsResultCallback {
 
@@ -122,6 +122,7 @@ public abstract class BaseActivityWithTakePhoto extends com.eanfang.takephoto.Ta
         iv_left = findViewById(R.id.iv_left);
         iv_left.setOnClickListener(v -> finish());
     }
+
     /**
      * 返回监听
      *
@@ -340,10 +341,11 @@ public abstract class BaseActivityWithTakePhoto extends com.eanfang.takephoto.Ta
         }
     }
 
-    public void takePhoto(Activity activity,int resultCode,OnImageChooseCallBack onImageChooseCallBack){
+    public void takePhoto(Activity activity, int resultCode, OnImageChooseCallBack onImageChooseCallBack) {
         setOnImageChooseCallBack(onImageChooseCallBack);
         initDialogs(activity);
     }
+
     private void initDialogs(Context context) {
         if (!((Activity) context).isFinishing()) {
             builder = new AlertDialog.Builder(this)
@@ -367,6 +369,7 @@ public abstract class BaseActivityWithTakePhoto extends com.eanfang.takephoto.Ta
             builder.create().show();
         }
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

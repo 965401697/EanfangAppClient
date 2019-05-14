@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.DialogFragment;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
@@ -86,7 +87,11 @@ public class SettingActivity extends BaseClientActivity {
             JumpItent.jump(this, ChangePhoneActivity.class);
         });
         //关于我们
-        ll_about_us.setOnClickListener(v -> new AboutUsView(this, true).show());
+        ll_about_us.setOnClickListener(v -> {
+            AboutUsView view = AboutUsView.getInstance();
+            view.setStyle(DialogFragment.STYLE_NORMAL, R.style.Dialog_FullScreen);
+            view.show(getSupportFragmentManager(), "about");
+        });
         ll_cache.setOnClickListener((v) -> {
             ToastUtil.get().showToast(this, "缓存已成功清除");
             CleanMessageUtil.clearAllCache(EanfangApplication.get());
