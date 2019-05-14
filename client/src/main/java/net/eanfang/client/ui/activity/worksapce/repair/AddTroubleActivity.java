@@ -487,6 +487,11 @@ public class AddTroubleActivity extends BaseClientActivity {
                     @Override
                     public void onDeviceType() {
                         //设备类别
+                        etDeviceLocationNum.setFocusable(true);
+                        etDeviceLocation.setFocusable(true);
+                        llDeviceBrand.setClickable(true);
+                        etDeviceLocation.setText("");
+                        etDeviceLocationNum.setText("");
                         JumpItent.jump(AddTroubleActivity.this, SelectDeviceTypeActivity.class, REQUEST_FAULTDEVICEINFO);
                         repairSelectDevicesDialog.dismiss();
                     }

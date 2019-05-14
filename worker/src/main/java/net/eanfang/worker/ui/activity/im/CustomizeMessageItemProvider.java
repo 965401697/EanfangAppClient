@@ -46,6 +46,7 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
         TextView orderNum;
         TextView creatTime;
         TextView workerName;
+        TextView mTime;
         SimpleDraweeView simpleDraweeView;
         LinearLayout ll_custom;
     }
@@ -83,6 +84,8 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
             holder.creatTime.setText("类型：" + GetConstDataUtils.getWorkReportTypeList().get(Integer.parseInt(customizeMessage.getCreatTime())));
             holder.workerName.setText("发布人：" + customizeMessage.getWorkerName());
             holder.status.setText(Integer.parseInt(customizeMessage.getStatus()) == 1 ? "已读" : "未读");
+            holder.mTime.setText(customizeMessage.getCreatReleaseTime());
+            holder.mTime.setVisibility(View.VISIBLE);
         } else if (customizeMessage.getShareType().equals("4")) {
             holder.title.setText("布置任务");
             holder.orderNum.setText("公司：" + customizeMessage.getOrderNum());
@@ -220,6 +223,7 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
         holder.workerName = (TextView) view.findViewById(R.id.tv_person_name);
         holder.simpleDraweeView = (SimpleDraweeView) view.findViewById(R.id.iv_upload);
         holder.ll_custom = (LinearLayout) view.findViewById(R.id.ll_custom);
+        holder.mTime = view.findViewById(R.id.tv_time);
         view.setTag(holder);
         return view;
     }

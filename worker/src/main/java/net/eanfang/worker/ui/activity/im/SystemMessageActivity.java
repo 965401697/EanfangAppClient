@@ -41,7 +41,7 @@ public class SystemMessageActivity extends BaseWorkerActivity {
     TextView tvAccept;
     @BindView(R.id.ll_item)
     RelativeLayout llItem;
-    @BindView(R.id.ll_action)
+    @BindView(R.id.ll_item)
     LinearLayout llAction;
     private UserInfo userInfo;
 
@@ -116,6 +116,9 @@ public class SystemMessageActivity extends BaseWorkerActivity {
                     return;
                 }
                 RongIM.getInstance().startConversation(SystemMessageActivity.this, Conversation.ConversationType.PRIVATE, userInfo.getUserId(), userInfo.getName());
+                break;
+            case R.id.iv_icon:
+
                 break;
             default:
                 break;

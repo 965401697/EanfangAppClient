@@ -401,6 +401,7 @@ public class SelectIMContactActivity extends BaseClientActivity {
             customizeMessage.setOrderId(bundle.getString("id"));
             customizeMessage.setStatus(bundle.getString("status"));
             customizeMessage.setShareType(bundle.getString("shareType"));
+            customizeMessage.setCreatReleaseTime(bundle.getString("creatReleaseTime"));
             if (isInteger(id)) {
                 conversationType = Conversation.ConversationType.PRIVATE;
             } else {
