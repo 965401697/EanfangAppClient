@@ -20,7 +20,6 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
-import com.eanfang.config.Constant;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -174,7 +173,6 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
             EanfangApplication.isUpdated = true;
         }
     }
-
 
     private void initFragment() {
         mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);

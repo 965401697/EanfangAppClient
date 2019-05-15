@@ -23,12 +23,12 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.kit.ali.oss.OssKit;
 import com.eanfang.listener.MultiClickListener;
 import com.eanfang.model.SelectAddressItem;
 import com.eanfang.model.bean.LoginBean;
 import com.eanfang.model.sys.AccountEntity;
 import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GetDateUtils;
@@ -265,24 +265,27 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto implements Bas
         switch (resultCode) {
             case HEAD_PHOTO:
                 ivUpload.setImageURI("file://" + result.getImage().getOriginalPath());
-                callback = new OSSCallBack(this, true) {
-                    @Override
-                    public void onOssSuccess() {
-                        runOnUiThread(() -> {
-                            LoginBean entity = EanfangApplication.getApplication().getUser();
-                            entity.getAccount().setAvatar(imgKey);
-                            path = entity.getAccount().getAvatar();
-                            setHeaderShow(true);
-                        });
-
-                    }
-                };
+//                callback = new OSSCallBack(this, true) {
+//                    @Override
+//                    public void onOssSuccess() {
+//                        runOnUiThread(() -> {
+//                            LoginBean entity = EanfangApplication.getApplication().getUser();
+//                            entity.getAccount().setAvatar(imgKey);
+//                            path = entity.getAccount().getAvatar();
+//                            setHeaderShow(true);
+//                        });
+//
+//                    }
+//                };
                 break;
             default:
                 break;
         }
-        OSSUtils.initOSS(this).asyncPutImage(imgKey, result.getImage().getOriginalPath(), callback);
+        // OSSUtils.initOSS(this).asyncPutImage(imgKey, result.getImage().getOriginalPath(), callback);
 
+        OssKit.get(this).asyncPutImage(imgKey, result.getImage().getOriginalPath(), (isSuccess) -> {
+            showToast("--------" + isSuccess);
+        });
 
     }
 
@@ -449,19 +452,28 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto implements Bas
     public void onSuccess(List<LocalMedia> list) {
         OSSCallBack callback = null;
         String imgKey = "account/" + UuidUtil.getUUID() + ".png";
-                ivUpload.setImageURI("file://" + list.get(0).getCompressPath());
-                callback = new OSSCallBack(this, true) {
-                    @Override
-                    public void onOssSuccess() {
-                        runOnUiThread(() -> {
-                            LoginBean entity = EanfangApplication.getApplication().getUser();
-                            entity.getAccount().setAvatar(imgKey);
-                            path = entity.getAccount().getAvatar();
-                            setHeaderShow(true);
-                        });
+        ivUpload.setImageURI("file://" + list.get(0).getCompressPath());
 
-                    }
-                };
-        OSSUtils.initOSS(this).asyncPutImage(imgKey,list.get(0).getCompressPath(), callback);
+
+        OssKit.get(this).asyncPutImage(imgKey, list.get(0).getCompressPath(), (isSuccess) -> {
+            LoginBean entity = EanfangApplication.getApplication().getUser();
+            entity.getAccount().setAvatar(imgKey);
+            path = entity.getAccount().getAvatar();
+            setHeaderShow(true);
+        });
+
+//        callback = new OSSCallBack(this, true) {
+//            @Override
+//            public void onOssSuccess() {
+//                runOnUiThread(() -> {
+//                    LoginBean entity = EanfangApplication.getApplication().getUser();
+//                    entity.getAccount().setAvatar(imgKey);
+//                    path = entity.getAccount().getAvatar();
+//                    setHeaderShow(true);
+//                });
+//
+//            }
+//        };
+//        OSSUtils.initOSS(this).asyncPutImage(imgKey, list.get(0).getCompressPath(), callback);
     }
 }

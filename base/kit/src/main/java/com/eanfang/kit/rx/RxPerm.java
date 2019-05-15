@@ -3,7 +3,7 @@ package com.eanfang.kit.rx;
 import android.Manifest;
 import android.app.Activity;
 
-import com.annimon.stream.function.Supplier;
+import com.annimon.stream.function.Consumer;
 import com.eanfang.network.holder.ToastHolder;
 import com.tbruyelle.rxpermissions2.Permission;
 import com.tbruyelle.rxpermissions2.RxPermissions;
@@ -45,16 +45,17 @@ public class RxPerm {
      *
      * @param success 成功回调
      */
-    public void locationPerm(Supplier success) {
+    public void locationPerm(Consumer<Boolean> success) {
         locationPerm()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(permission -> {
                     if (permission.granted) {
-                        success.get();
+                        success.accept(true);
                         return;
                     }
                     if (permission.shouldShowRequestPermissionRationale) {
                         ToastHolder.showToast("获取定位权限失败，请手动开启");
+                        success.accept(false);
                         return;
                     }
                 });
@@ -77,16 +78,17 @@ public class RxPerm {
      *
      * @param success 成功回调
      */
-    public void cameraPerm(Supplier success) {
+    public void cameraPerm(Consumer<Boolean> success) {
         cameraPerm()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(permission -> {
                     if (permission.granted) {
-                        success.get();
+                        success.accept(true);
                         return;
                     }
                     if (permission.shouldShowRequestPermissionRationale) {
                         ToastHolder.showToast("获取相机权限失败，请手动开启");
+                        success.accept(false);
                         return;
                     }
                 });
@@ -109,16 +111,17 @@ public class RxPerm {
      *
      * @param success 成功回调
      */
-    public void voicePerm(Supplier success) {
+    public void voicePerm(Consumer<Boolean> success) {
         cameraPerm()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(permission -> {
                     if (permission.granted) {
-                        success.get();
+                        success.accept(true);
                         return;
                     }
                     if (permission.shouldShowRequestPermissionRationale) {
                         ToastHolder.showToast("获取录音权限失败，请手动开启");
+                        success.accept(false);
                         return;
                     }
                 });
@@ -141,16 +144,17 @@ public class RxPerm {
      *
      * @param success 成功回调
      */
-    public void storagePerm(Supplier success) {
+    public void storagePerm(Consumer<Boolean> success) {
         cameraPerm()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(permission -> {
                     if (permission.granted) {
-                        success.get();
+                        success.accept(true);
                         return;
                     }
                     if (permission.shouldShowRequestPermissionRationale) {
                         ToastHolder.showToast("获取存储权限失败，请手动开启");
+                        success.accept(false);
                         return;
                     }
                 });
@@ -172,16 +176,17 @@ public class RxPerm {
      *
      * @param success 成功回调
      */
-    public void contactsPerm(Supplier success) {
+    public void contactsPerm(Consumer<Boolean> success) {
         cameraPerm()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(permission -> {
                     if (permission.granted) {
-                        success.get();
+                        success.accept(true);
                         return;
                     }
                     if (permission.shouldShowRequestPermissionRationale) {
                         ToastHolder.showToast("获取通讯录权限失败，请手动开启");
+                        success.accept(false);
                         return;
                     }
                 });
