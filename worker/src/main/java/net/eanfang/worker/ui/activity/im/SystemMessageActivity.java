@@ -41,7 +41,7 @@ public class SystemMessageActivity extends BaseWorkerActivity {
     TextView tvAccept;
     @BindView(R.id.ll_item)
     RelativeLayout llItem;
-    @BindView(R.id.ll_item)
+    @BindView(R.id.ll_action)
     LinearLayout llAction;
     private UserInfo userInfo;
 

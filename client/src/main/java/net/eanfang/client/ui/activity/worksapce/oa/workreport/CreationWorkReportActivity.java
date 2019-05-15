@@ -1044,6 +1044,7 @@ public class CreationWorkReportActivity extends BaseClientActivity {
                         b.putString("workerName", EanfangApplication.get().getUser().getAccount().getRealName());
                         b.putString("status", "0");
                         b.putString("shareType", "3");
+                        b.putString("creatReleaseTime",bean.getCreateTime());
 
                         new SendContactUtils(b, handler, groupList, DialogUtil.createLoadingDialog(CreationWorkReportActivity.this), "工作汇报").send();
 
