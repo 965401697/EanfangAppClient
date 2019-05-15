@@ -73,10 +73,10 @@ public class SecurityListAdapter extends BaseQuickAdapter<SecurityListBean.ListB
         if (item.getType() == 1) {
             mContent = "我提了一个问题，邀请你来回答" + atName;
             helper.setText(R.id.tv_question_content, item.getSpcContent());
-            helper.setVisible(R.id.ll_question, true);
+            helper.getView(R.id.ll_question).setVisibility(View.VISIBLE);
         } else {
             mContent = item.getSpcContent() + atName;
-            helper.setVisible(R.id.ll_question, false);
+            helper.getView(R.id.ll_question).setVisibility(View.GONE);
         }
         CharSequence convertMetionString = mRangeManager.getFormatCharSequence(mContent);
         mentionTextView.setText(convertMetionString);
@@ -90,17 +90,17 @@ public class SecurityListAdapter extends BaseQuickAdapter<SecurityListBean.ListB
          * 是否是好友 2 好友 1 不是好友
          * */
         if (item.getFriend() == 2) {
-            helper.setVisible(R.id.tv_friend, true);
+            helper.getView(R.id.tv_friend).setVisibility(View.VISIBLE);
         } else {
-            helper.setVisible(R.id.tv_friend, false);
+            helper.getView(R.id.tv_friend).setVisibility(View.GONE);
         }
         /**
          * 是否认证
          * */
         if (item.getVerifyStatus() == 1) {
-            helper.setVisible(R.id.iv_certifi, true);
+            helper.getView(R.id.iv_certifi).setVisibility(View.VISIBLE);
         } else {
-            helper.setVisible(R.id.iv_certifi, false);
+            helper.getView(R.id.iv_certifi).setVisibility(View.GONE);
         }
         /**
          * 0 是关注 1 是未关注
@@ -137,16 +137,16 @@ public class SecurityListAdapter extends BaseQuickAdapter<SecurityListBean.ListB
          *視頻缩略图
          * */
         if (!StringUtils.isEmpty(item.getSpcVideo())) {
-            helper.setVisible(R.id.rl_video, true);
+            helper.getView(R.id.rl_video).setVisibility(View.VISIBLE);
             ivShowVideo.setImageURI((Uri.parse(BuildConfig.OSS_SERVER + V.v(() -> item.getSpcVideo() + ".jpg"))));
         } else {
-            helper.setVisible(R.id.rl_video, false);
+            helper.getView(R.id.rl_video).setVisibility(View.GONE);
         }
 
         if (item.getReadStatus() == 0 && mIsUnRead) {
-            helper.setVisible(R.id.tv_unread, true);
+            helper.getView(R.id.tv_unread).setVisibility(View.VISIBLE);
         } else {
-            helper.setVisible(R.id.tv_unread, false);
+            helper.getView(R.id.tv_unread).setVisibility(View.GONE);
         }
 
         helper.addOnClickListener(R.id.rl_video);
