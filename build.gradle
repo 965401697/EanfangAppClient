@@ -152,7 +152,7 @@ ext {
             wechat               : "com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.3.1",
 
             //aliyun
-            aliyunOss            : "com.aliyun.dpa:oss-android-sdk:2.4.4",
+            aliyunOss            : "com.aliyun.dpa:oss-android-sdk:2.9.2",
 
             //amap
 

@@ -1,4 +1,4 @@
 include 'view:client', 'view:eanfang', 'view:worker'
 include 'biz:model', 'biz:rds'
-include 'base:network', 'base:kit'
-include 'lib:IMLib', 'lib:IMKit', 'lib:zxing','lib:ocr_ui'
+include 'base:network', 'base:kit', 'base:widget'
+include 'lib:IMLib', 'lib:IMKit', 'lib:zxing', 'lib:ocr_ui'
