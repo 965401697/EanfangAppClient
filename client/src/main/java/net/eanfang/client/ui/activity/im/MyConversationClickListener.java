@@ -1,10 +1,14 @@
 package net.eanfang.client.ui.activity.im;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.EanfangConst;
+
+import net.eanfang.client.ui.activity.my.UserHomeActivity;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
@@ -30,10 +34,10 @@ public class MyConversationClickListener implements RongIM.ConversationClickList
     public boolean onUserPortraitClick(Context context, Conversation.ConversationType conversationType, UserInfo user, String targetId) {
 
         if (conversationType.equals(Conversation.ConversationType.PRIVATE) || conversationType.equals(Conversation.ConversationType.GROUP)) {
-            Intent intent = new Intent(context, IMPresonInfoActivity.class);
-            intent.putExtra(EanfangConst.RONG_YUN_ID, user.getUserId());
-            context.startActivity(intent);
-
+//            Intent intent = new Intent(context, IMPresonInfoActivity.class);
+//            intent.putExtra(EanfangConst.RONG_YUN_ID, user.getUserId());
+//            context.startActivity(intent);
+            UserHomeActivity.startActivityForAccId((Activity) context, user.getUserId());
         }
 
         return true;

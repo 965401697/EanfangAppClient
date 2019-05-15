@@ -614,6 +614,8 @@ public class AddTroubleActivity extends BaseClientActivity {
             tvDeviceBrand.setText(data.getStringExtra("deviceBrandName"));
             etDeviceLocationNum.setFocusable(true);
             etDeviceLocationNum.setFocusableInTouchMode(true);
+            etDeviceLocationNum.requestFocus();
+            etDeviceLocationNum.findFocus();
             //将光标定位
             etDeviceLocation.setFocusable(true);
             etDeviceLocation.setFocusableInTouchMode(true);
