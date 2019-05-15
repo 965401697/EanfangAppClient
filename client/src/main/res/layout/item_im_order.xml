@@ -36,6 +36,7 @@
                 android:id="@+id/tv_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_5"
                 android:textColor="@color/color_client_neworder"
                 android:textSize="@dimen/textSize_11"
                 android:visibility="invisible" />
