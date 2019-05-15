@@ -6,6 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.alibaba.fastjson.JSONObject;
+import com.annimon.stream.Stream;
+import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
@@ -23,7 +25,10 @@ import net.eanfang.worker.ui.activity.im.SelectIMContactActivity;
 import net.eanfang.worker.ui.activity.worksapce.online.FaultExplainActivity;
 import net.eanfang.worker.ui.activity.worksapce.security.SecurityDetailActivity;
 import net.eanfang.worker.ui.adapter.security.SecurityListAdapter;
+import net.eanfang.worker.util.ImagePerviewUtil;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 
 public class SecurityFoucsFragment extends TemplateItemListFragment {
@@ -34,6 +39,8 @@ public class SecurityFoucsFragment extends TemplateItemListFragment {
     private SecurityListAdapter securityListAdapter;
     public static final int REFRESH_ITEM = 1010;
     private SecurityListBean.ListBean securityDetailBean;
+    private ArrayList<String> picList = new ArrayList<>();
+    private String[] pics = null;
 
     public static SecurityFoucsFragment getInstance(String title) {
         SecurityFoucsFragment sf = new SecurityFoucsFragment();
@@ -70,10 +77,15 @@ public class SecurityFoucsFragment extends TemplateItemListFragment {
                 case R.id.ll_comments:
                     doJump(position, true);
                     break;
-                case R.id.iv_share:
+                case R.id.ll_share:
                     doShare(securityListAdapter.getData().get(position));
                     break;
                 case R.id.ll_pic:
+                    picList.clear();
+                    pics = securityListAdapter.getData().get(position).getSpcImg().split(",");
+                    picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> BuildConfig.OSS_SERVER + (url).toString()).toList());
+                    ImagePerviewUtil.perviewImage(getActivity(), picList);
+                    break;
                 case R.id.ll_question:
                 case R.id.rl_video:
                     doJump(position, false);

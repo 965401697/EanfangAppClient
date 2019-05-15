@@ -13,8 +13,10 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
+import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
@@ -57,10 +59,12 @@ import net.eanfang.client.ui.activity.worksapce.security.SecurityListActivity;
 import net.eanfang.client.ui.activity.worksapce.security.SecurityPersonalActivity;
 import net.eanfang.client.ui.adapter.HomeDataAdapter;
 import net.eanfang.client.ui.adapter.security.SecurityListAdapter;
+import net.eanfang.client.util.ImagePerviewUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import q.rorbin.badgeview.QBadgeView;
@@ -119,6 +123,8 @@ public class HomeFragment extends BaseFragment {
     private TextView mTvSecurityNewMessage;
     private RelativeLayout rlSecurityNewMessage;
     private int mSecurityNum;
+    private ArrayList<String> picList = new ArrayList<>();
+    private String[] pics = null;
 
     @Override
     protected int setLayoutResouceId() {
@@ -488,10 +494,15 @@ public class HomeFragment extends BaseFragment {
                 case R.id.ll_comments:
                     doJump(position, true);
                     break;
+                case R.id.ll_pic:
+                    picList.clear();
+                    pics = securityListAdapter.getData().get(position).getSpcImg().split(",");
+                    picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> BuildConfig.OSS_SERVER +(url).toString()).toList());
+                    ImagePerviewUtil.perviewImage(getActivity(), picList);
+                    break;
                 case R.id.tv_isFocus:
                 case R.id.ll_like:
-                case R.id.ll_pic:
-                case R.id.iv_share:
+                case R.id.ll_share:
                 case R.id.ll_question:
                 case R.id.rl_video:
                     doJump(position, false);
