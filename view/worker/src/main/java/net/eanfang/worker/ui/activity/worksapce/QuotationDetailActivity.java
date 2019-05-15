@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.annimon.stream.Stream;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
-import com.eanfang.model.QuotationBean;
+import com.eanfang.biz.model.QuotationBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PickerSelectUtil;

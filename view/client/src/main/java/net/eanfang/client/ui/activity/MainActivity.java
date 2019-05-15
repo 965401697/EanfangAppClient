@@ -19,16 +19,16 @@ import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
+import com.eanfang.biz.model.AllMessageBean;
+import com.eanfang.biz.model.GroupDetailBean;
+import com.eanfang.biz.model.bean.BaseDataBean;
+import com.eanfang.biz.model.bean.ConstAllBean;
+import com.eanfang.biz.model.bean.LoginBean;
+import com.eanfang.biz.model.device.User;
 import com.eanfang.config.Config;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.AllMessageBean;
-import com.eanfang.model.BaseDataBean;
-import com.eanfang.model.ConstAllBean;
-import com.eanfang.model.GroupDetailBean;
-import com.eanfang.model.bean.LoginBean;
-import com.eanfang.model.device.User;
 import com.eanfang.util.BadgeUtil;
 import com.eanfang.util.CleanMessageUtil;
 import com.eanfang.util.JumpItent;
@@ -77,6 +77,10 @@ import static com.eanfang.config.EanfangConst.MEIZU_APPKEY_CLIENT;
 import static com.eanfang.config.EanfangConst.XIAOMI_APPID_CLIENT;
 import static com.eanfang.config.EanfangConst.XIAOMI_APPKEY_CLIENT;
 
+/**
+ * {@link net.eanfang.client.main.activity.MainActivity}
+ */
+@Deprecated
 public class MainActivity extends BaseClientActivity implements IUnReadMessageObserver {
     private static final String TAG = MainActivity.class.getSimpleName();
     protected FragmentTabHost mTabHost;
@@ -175,7 +179,7 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
     }
 
     private void initFragment() {
-        mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
+        mTabHost = findViewById(android.R.id.tabhost);
         mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
         mTabHost.getTabWidget().setDividerDrawable(R.color.transparent);
         View indicator = getLayoutInflater().inflate(R.layout.indicator_main_home, null);
@@ -231,29 +235,6 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
         return super.onKeyDown(keyCode, event);
     }
 
-    /**
-     * 请求基础数据
-     */
-  /*  private void getBaseData() {
-        String url;
-        BaseDataBean dataBean = Config.get().getBaseDataBean();
-        if (dataBean == null || StringUtils.isEmpty(dataBean.getMD5())) {
-            url = NewApiService.GET_BASE_DATA_CACHE + "0";
-        } else {
-            url = NewApiService.GET_BASE_DATA_CACHE + dataBean.getMD5();
-        }
-        EanfangHttp.get(url)
-                .tag(this)
-                .execute(new EanfangCallback<JSONObject>(this, false, JSONObject.class, (jsonObject) -> {
-                    new Thread(() -> {
-                        if (jsonObject != null && !jsonObject.isEmpty() && jsonObject.containsKey("data") && !jsonObject.get("data").equals(Constant.NO_UPDATE)) {
-//                            BaseDataBean newDate = jsonObject.toJavaObject(BaseDataBean.class);
-                            EanfangApplication.get().set(BaseDataBean.class.getName(), jsonObject.toJSONString());
-                            Config.get().cleanBaseDataBean();
-                        }
-                    }).start();
-                }));
-    }*/
     private void getBaseData() {
         String url;
         BaseDataBean dataBean = Config.get().getBaseDataBean();
@@ -268,12 +249,6 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
                     if (baseDataBean != null) {
                         EanfangApplication.get().set(BaseDataBean.class.getName(), baseDataBean);
                     }
-//                    new Thread(() -> {
-//                        if (jsonObject != null && !jsonObject.isEmpty() && jsonObject.containsKey("data") && !jsonObject.get("data").equals(Constant.NO_UPDATE)) {
-////                            BaseDataBean newDate = jsonObject.toJavaObject(BaseDataBean.class);
-//                            EanfangApplication.get().set(BaseDataBean.class.getName(), jsonObject.toJavaObject(BaseDataBean.class));
-//                        }
-//                    }).start();
                 }));
     }
 
@@ -294,12 +269,6 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
                     if (constAllBean != null) {
                         EanfangApplication.get().set(ConstAllBean.class.getName(), constAllBean);
                     }
-                    /*  new Thread(() -> {
-                        if (jsonObject != null && !jsonObject.isEmpty() && jsonObject.containsKey("data") && !jsonObject.get("data").equals(Constant.NO_UPDATE)) {
-//                            ConstAllBean newDate = JSONObject.parseObject(str, ConstAllBean.class);
-//                            Config.get().cleanConstBean();
-                        }
-                    }).start();*/
                 }));
     }
 
@@ -338,6 +307,10 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
     /**
      * 获取融云的token
      */
+    /**
+     * {@link net.eanfang.client.main.activity.MainActivity}
+     */
+    @Deprecated
     private void getRongYToken() {
         EanfangHttp.post(UserApi.POST_RONGY_TOKEN)
                 .params("userId", EanfangApplication.get().getAccId())
@@ -359,21 +332,18 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
      */
     private void privoderMy() {
         //提供融云的自己头像和昵称
-        RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
-            @Override
-            public UserInfo getUserInfo(String s) {
-
-                UserInfo userInfo = new UserInfo(String.valueOf(EanfangApplication.get().getAccId()), EanfangApplication.getApplication().getUser().getAccount().getNickName(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + EanfangApplication.getApplication().getUser().getAccount().getAvatar()));
-
-                Log.e("zzw", "userInfo=" + userInfo.toString());
-
-
-                return userInfo;
-            }
+        RongIM.setUserInfoProvider(s -> {
+            UserInfo userInfo = new UserInfo(String.valueOf(EanfangApplication.get().getAccId()), EanfangApplication.getApplication().getUser().getAccount().getNickName(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + EanfangApplication.getApplication().getUser().getAccount().getAvatar()));
+            Log.e("zzw", "userInfo=" + userInfo.toString());
+            return userInfo;
         }, true);
 //        RongIM.getInstance().setMessageAttachedUserInfo(true);//有具体场景的
     }
 
+    /**
+     * {@link com.eanfang.rong.MyReceiveMessageListener}
+     */
+    @Deprecated
     private class MyReceiveMessageListener implements RongIMClient.OnReceiveMessageListener {
 
         /**

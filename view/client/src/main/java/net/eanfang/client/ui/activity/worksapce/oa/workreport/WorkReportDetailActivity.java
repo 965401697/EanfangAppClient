@@ -14,7 +14,7 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.WorkReportInfoBean;
+import com.eanfang.biz.model.WorkReportInfoBean;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
 import com.facebook.drawee.view.SimpleDraweeView;

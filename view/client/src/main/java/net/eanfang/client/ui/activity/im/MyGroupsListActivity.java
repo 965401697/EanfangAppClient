@@ -9,8 +9,8 @@ import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.GroupsBean;
-import com.eanfang.model.TemplateBean;
+import com.eanfang.biz.model.GroupsBean;
+import com.eanfang.biz.model.TemplateBean;
 import com.eanfang.util.Cn2Spell;
 import com.eanfang.witget.SideBar;
 

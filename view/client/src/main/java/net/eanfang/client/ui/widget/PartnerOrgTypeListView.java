@@ -9,7 +9,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.PartnerBean;
+import com.eanfang.biz.model.PartnerBean;
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.CallUtils;
 

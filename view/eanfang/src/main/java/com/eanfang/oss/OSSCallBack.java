@@ -11,7 +11,7 @@ import com.alibaba.sdk.android.oss.callback.OSSCompletedCallback;
 import com.alibaba.sdk.android.oss.callback.OSSProgressCallback;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
 import com.alibaba.sdk.android.oss.model.PutObjectResult;
-import com.eanfang.kit.loading.LoadKit;
+import com.eanfang.base.kit.loading.LoadKit;
 import com.eanfang.util.ConnectivityChangeUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
@@ -19,7 +19,7 @@ import com.eanfang.util.ToastUtil;
 /**
  * Created by jornl on 2017/9/13.
  */
-
+@Deprecated
 public abstract class OSSCallBack implements OSSProgressCallback<PutObjectRequest>, OSSCompletedCallback<PutObjectRequest, PutObjectResult> {
 
     private Activity activity;

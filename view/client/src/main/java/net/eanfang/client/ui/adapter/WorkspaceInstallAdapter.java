@@ -7,7 +7,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
-import com.eanfang.model.WorkspaceInstallBean;
+import com.eanfang.biz.model.WorkspaceInstallBean;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.V;
 

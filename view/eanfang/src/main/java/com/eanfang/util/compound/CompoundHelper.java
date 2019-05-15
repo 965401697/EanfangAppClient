@@ -15,7 +15,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.eanfang.BuildConfig;
-import com.eanfang.model.GroupDetailBean;
+import com.eanfang.biz.model.GroupDetailBean;
 
 import java.io.File;
 import java.io.FileNotFoundException;

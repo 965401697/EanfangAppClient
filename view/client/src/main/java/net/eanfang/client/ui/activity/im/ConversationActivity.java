@@ -12,7 +12,7 @@ import com.eanfang.apiservice.UserApi;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.GroupDetailBean;
+import com.eanfang.biz.model.GroupDetailBean;
 import com.eanfang.takevideo.TakeVdideoMode;
 import com.eanfang.util.ToastUtil;
 

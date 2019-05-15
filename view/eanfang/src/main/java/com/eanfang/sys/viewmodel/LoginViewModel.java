@@ -11,12 +11,12 @@ import androidx.lifecycle.MutableLiveData;
 import com.eanfang.R;
 import com.eanfang.databinding.FragmentPasswordEanfangBinding;
 import com.eanfang.databinding.FragmentVerifyEanfangBinding;
-import com.eanfang.kit.rx.RxDialog;
-import com.eanfang.model.bean.LoginBean;
-import com.eanfang.model.vo.LoginVo;
-import com.eanfang.rds.base.BaseViewModel;
-import com.eanfang.rds.sys.ds.LoginDs;
-import com.eanfang.rds.sys.repo.LoginRepo;
+import com.eanfang.base.kit.rx.RxDialog;
+import com.eanfang.biz.model.bean.LoginBean;
+import com.eanfang.biz.model.vo.LoginVo;
+import com.eanfang.biz.rds.base.BaseViewModel;
+import com.eanfang.biz.rds.sys.ds.impl.LoginDs;
+import com.eanfang.biz.rds.sys.repo.LoginRepo;
 
 import java.util.concurrent.TimeUnit;
 

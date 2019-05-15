@@ -11,7 +11,7 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.TemplateBean;
+import com.eanfang.biz.model.TemplateBean;
 import com.eanfang.sys.activity.LoginActivity;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.util.CleanMessageUtil;

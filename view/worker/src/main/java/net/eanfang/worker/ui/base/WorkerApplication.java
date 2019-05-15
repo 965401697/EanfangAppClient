@@ -6,9 +6,9 @@ import android.util.Log;
 
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.kit.cache.CacheKit;
-import com.eanfang.kit.loading.LoadKit;
-import com.eanfang.network.config.HttpConfig;
+import com.eanfang.base.kit.cache.CacheKit;
+import com.eanfang.base.kit.loading.LoadKit;
+import com.eanfang.base.network.config.HttpConfig;
 import com.mob.MobSDK;
 
 import net.eanfang.worker.BuildConfig;

@@ -13,7 +13,7 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.datastatistics.HomeDatastisticeBean;
+import com.eanfang.biz.model.datastatistics.HomeDatastisticeBean;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;

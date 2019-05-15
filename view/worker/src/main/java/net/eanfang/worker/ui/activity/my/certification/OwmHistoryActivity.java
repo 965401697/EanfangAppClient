@@ -13,7 +13,7 @@ import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.EducationListBean;
+import com.eanfang.biz.model.EducationListBean;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 import com.yaf.base.entity.EducationExperienceEntity;

@@ -9,7 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
-import com.eanfang.model.GroupDetailBean;
+import com.eanfang.biz.model.GroupDetailBean;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;

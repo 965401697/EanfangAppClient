@@ -3,7 +3,7 @@ package net.eanfang.worker.ui.adapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.config.Config;
-import com.eanfang.model.SignListBean;
+import com.eanfang.biz.model.SignListBean;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;

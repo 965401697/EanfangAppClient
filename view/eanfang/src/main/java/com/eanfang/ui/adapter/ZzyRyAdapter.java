@@ -7,7 +7,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.R;
-import com.eanfang.model.SecurityCompanyDetailsBean;
+import com.eanfang.biz.model.SecurityCompanyDetailsBean;
 import com.eanfang.util.V;
 import com.facebook.drawee.view.SimpleDraweeView;
 

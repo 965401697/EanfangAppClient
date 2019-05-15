@@ -5,6 +5,7 @@ import com.alibaba.sdk.android.oss.model.CompleteMultipartUploadResult;
 /**
  * Created by Administrator on 2015/12/8 0008.
  */
+@Deprecated
 public class PauseableUploadResult extends CompleteMultipartUploadResult {
 
     public PauseableUploadResult(CompleteMultipartUploadResult completeResult) {

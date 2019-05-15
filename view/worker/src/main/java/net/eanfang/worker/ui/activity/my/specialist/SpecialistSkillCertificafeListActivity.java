@@ -12,7 +12,7 @@ import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.QualifyCertificafeListBean;
+import com.eanfang.biz.model.QualifyCertificafeListBean;
 import com.eanfang.util.JsonUtils;
 import com.yaf.base.entity.QualificationCertificateEntity;
 

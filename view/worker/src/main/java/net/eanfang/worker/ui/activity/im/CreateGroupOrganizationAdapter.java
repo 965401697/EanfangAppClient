@@ -8,7 +8,7 @@ import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.model.TemplateBean;
+import com.eanfang.biz.model.TemplateBean;
 
 import net.eanfang.worker.R;
 

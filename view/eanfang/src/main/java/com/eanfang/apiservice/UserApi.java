@@ -197,7 +197,8 @@ public interface UserApi {
     /**
      * 填写技师信息 实名认证
      */
-    String GET_TECH_WORKER_ADD_V4 = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/safetyInfo";/**
+    String GET_TECH_WORKER_ADD_V4 = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/safetyInfo";
+    /**
      * 填写技师信息 实名认证
      */
     String GET_TECH_WORKER_ADD_V2 = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/insertV2";
@@ -468,6 +469,7 @@ public interface UserApi {
      * /**
      * 群组详情
      */
+    @Deprecated
     String POST_GROUP_DETAIL_RY = BuildConfig.API_HOST + "/yaf_im/sysgroup/detail/ry";
     /**
      * /**
@@ -507,11 +509,13 @@ public interface UserApi {
     /**
      * 根据账户id 查找用户
      */
+    @Deprecated
     String POST_USER_INFO = BuildConfig.API_HOST + "/yaf_sys/account/info/";
     /**
      * 技师认证页 实名认证和技师认证状态
      */
-    String POST_WORKER_AUTH_STATUS_B = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/verifyStatusV2";   /**
+    String POST_WORKER_AUTH_STATUS_B = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/verifyStatusV2";
+    /**
      * 技师认证，资料完善状态查询
      */
     String POST_WORKER_AUTH_STATUS = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/verifyStatus";

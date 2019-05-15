@@ -8,7 +8,7 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.ExternalListBean;
+import com.eanfang.biz.model.ExternalListBean;
 import com.eanfang.ui.base.BaseActivity;
 
 import net.eanfang.client.R;

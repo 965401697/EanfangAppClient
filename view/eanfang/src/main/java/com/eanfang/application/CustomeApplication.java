@@ -8,8 +8,8 @@ import androidx.collection.ArrayMap;
 import androidx.multidex.MultiDexApplication;
 
 import com.camera.util.LogUtil;
-import com.eanfang.kit.cache.CacheKit;
-import com.eanfang.model.bean.LoginBean;
+import com.eanfang.base.kit.cache.CacheKit;
+import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.ui.base.IBase;
 import com.eanfang.util.J_MessageVerify;
 import com.eanfang.util.V;

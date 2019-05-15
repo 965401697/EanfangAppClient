@@ -1,5 +1,6 @@
 package com.eanfang.base;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -20,15 +21,15 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.ViewModel;
 
 import com.eanfang.R;
-import com.eanfang.kit.loading.LoadKit;
-import com.eanfang.kit.loading.callback.EmptyCallback;
-import com.eanfang.kit.loading.callback.ErrorCallback;
-import com.eanfang.kit.loading.callback.NotFoundCallback;
-import com.eanfang.kit.loading.callback.PermissionCallback;
-import com.eanfang.kit.loading.callback.TimeoutCallback;
-import com.eanfang.network.config.HttpConfig;
-import com.eanfang.network.event.BaseActionEvent;
-import com.eanfang.rds.base.IViewModelAction;
+import com.eanfang.base.kit.loading.LoadKit;
+import com.eanfang.base.kit.loading.callback.EmptyCallback;
+import com.eanfang.base.kit.loading.callback.ErrorCallback;
+import com.eanfang.base.kit.loading.callback.NotFoundCallback;
+import com.eanfang.base.kit.loading.callback.PermissionCallback;
+import com.eanfang.base.kit.loading.callback.TimeoutCallback;
+import com.eanfang.base.network.config.HttpConfig;
+import com.eanfang.base.network.event.BaseActionEvent;
+import com.eanfang.biz.rds.base.IViewModelAction;
 import com.eanfang.sys.activity.LoginActivity;
 import com.kingja.loadsir.core.LoadService;
 import com.kingja.loadsir.core.LoadSir;
@@ -59,7 +60,14 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     private boolean notFoundBack = false;
     private Dialog loadingDialog;
 
+    @Deprecated
+    public final static ArrayList<Activity> transactionActivities = new ArrayList<>();
 
+    /**
+     * 重写方法时，请先进行 dataBinding初始化 之后再调用 supper
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         //始终竖屏

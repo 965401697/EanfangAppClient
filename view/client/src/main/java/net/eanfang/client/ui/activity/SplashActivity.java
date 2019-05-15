@@ -13,9 +13,9 @@ import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.kit.SDKManager;
-import com.eanfang.model.bean.LoginBean;
-import com.eanfang.network.config.HttpConfig;
+import com.eanfang.base.kit.SDKManager;
+import com.eanfang.biz.model.bean.LoginBean;
+import com.eanfang.base.network.config.HttpConfig;
 import com.eanfang.util.GuideUtil;
 import com.eanfang.util.StringUtils;
 

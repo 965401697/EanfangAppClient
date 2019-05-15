@@ -4,8 +4,8 @@ import android.util.Log;
 
 import com.camera.CameraApplication;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.sys.BaseDataEntity;
-import com.eanfang.network.Leaves;
+import com.eanfang.biz.model.entity.BaseDataEntity;
+import com.eanfang.base.network.Leaves;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.backends.pipeline.PipelineDraweeControllerBuilderSupplier;

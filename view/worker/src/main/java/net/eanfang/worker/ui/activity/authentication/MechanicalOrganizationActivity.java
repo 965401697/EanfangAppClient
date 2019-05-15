@@ -11,8 +11,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.AllZzJxTjListBean;
-import com.eanfang.model.JxSbZzNlListBean;
+import com.eanfang.biz.model.AllZzJxTjListBean;
+import com.eanfang.biz.model.JxSbZzNlListBean;
 import com.eanfang.ui.base.BaseActivity;
 
 import net.eanfang.worker.R;

@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModel;
 
 import com.eanfang.base.BaseDialog;
-import com.eanfang.kit.utils.ApkUtils;
+import com.eanfang.base.kit.utils.ApkUtils;
 import com.eanfang.util.UpdateAppManager;
 
 import net.eanfang.client.BuildConfig;

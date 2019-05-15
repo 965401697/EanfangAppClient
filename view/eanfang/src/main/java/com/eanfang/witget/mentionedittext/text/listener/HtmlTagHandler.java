@@ -8,7 +8,7 @@ import android.text.style.ClickableSpan;
 import android.util.Log;
 import android.view.View;
 
-import com.eanfang.model.security.SecurityCommonBean;
+import com.eanfang.biz.model.security.SecurityCommonBean;
 
 import org.xml.sax.XMLReader;
 

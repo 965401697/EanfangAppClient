@@ -12,7 +12,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.eanfang.config.EanfangConst;
-import com.eanfang.kit.SDKManager;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.ui.base.BaseActivity;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;

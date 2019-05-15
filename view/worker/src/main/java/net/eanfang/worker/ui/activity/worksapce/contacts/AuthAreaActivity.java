@@ -12,12 +12,12 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.GrantChange;
-import com.eanfang.model.Message;
-import com.eanfang.model.SystypeBean;
+import com.eanfang.biz.model.GrantChange;
+import com.eanfang.biz.model.Message;
+import com.eanfang.biz.model.SystypeBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
-import com.eanfang.model.sys.BaseDataEntity;
+import com.eanfang.biz.model.entity.BaseDataEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.GroupAdapter;

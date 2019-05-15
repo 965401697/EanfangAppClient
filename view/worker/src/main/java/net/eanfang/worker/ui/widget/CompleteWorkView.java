@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
-import com.eanfang.model.WorkAddReportBean;
+import com.eanfang.biz.model.WorkAddReportBean;
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;

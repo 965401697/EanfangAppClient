@@ -3,7 +3,7 @@ package net.eanfang.worker.ui.adapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.customview.SuperTextView;
-import com.eanfang.model.SgZzNlBean;
+import com.eanfang.biz.model.SgZzNlBean;
 
 import net.eanfang.worker.R;
 

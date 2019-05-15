@@ -9,7 +9,10 @@ import com.alibaba.sdk.android.oss.OSSClient;
 import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
 import com.eanfang.BuildConfig;
 
-
+/**
+ * {@link com.eanfang.base.kit.ali.oss.OssKit}
+ */
+@Deprecated
 public class OSSUtils {
     private static volatile OssService instance = null;
 

@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.eanfang.model.PartnerBean;
+import com.eanfang.biz.model.PartnerBean;
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.CallUtils;
 

@@ -7,11 +7,10 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.DesignOrderListBean;
+import com.eanfang.biz.model.DesignOrderListBean;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
-import com.yaf.base.entity.RepairOrderEntity;
 
 import net.eanfang.client.ui.activity.worksapce.DesignOrderListActivity;
 import net.eanfang.client.ui.adapter.DesignOrderAdapter;

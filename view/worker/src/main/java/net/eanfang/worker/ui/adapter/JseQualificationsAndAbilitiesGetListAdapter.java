@@ -4,7 +4,7 @@ import android.widget.CheckBox;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.model.JsCapabilityTagListBean;
+import com.eanfang.biz.model.JsCapabilityTagListBean;
 
 import net.eanfang.worker.R;
 

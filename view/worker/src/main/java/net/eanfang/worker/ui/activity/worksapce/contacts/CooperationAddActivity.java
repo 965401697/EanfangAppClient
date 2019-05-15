@@ -18,7 +18,7 @@ import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.CooperationSearchBean;
+import com.eanfang.biz.model.CooperationSearchBean;
 import com.eanfang.ui.fragment.SelectTimeDialogFragment;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
@@ -26,7 +26,7 @@ import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.CooperationEntity;
-import com.eanfang.model.sys.BaseDataEntity;
+import com.eanfang.biz.model.entity.BaseDataEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.CooperationAddAdapter;

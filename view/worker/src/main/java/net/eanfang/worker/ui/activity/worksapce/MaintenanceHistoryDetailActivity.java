@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.MainHistoryDetailBean;
+import com.eanfang.biz.model.MainHistoryDetailBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GetConstDataUtils;
 

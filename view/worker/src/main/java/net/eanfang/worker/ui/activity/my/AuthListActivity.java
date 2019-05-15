@@ -12,9 +12,9 @@ import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.AuthStatusBean;
-import com.eanfang.model.Message;
-import com.eanfang.model.WorkerInfoBean;
+import com.eanfang.biz.model.AuthStatusBean;
+import com.eanfang.biz.model.Message;
+import com.eanfang.biz.model.WorkerInfoBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
 

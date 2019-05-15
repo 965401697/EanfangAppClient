@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.config.Config;
-import com.eanfang.model.PartnerBean;
+import com.eanfang.biz.model.PartnerBean;
 import com.eanfang.util.GetConstDataUtils;
 
 import net.eanfang.client.R;

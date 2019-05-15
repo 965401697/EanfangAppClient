@@ -4,16 +4,14 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-import android.util.Log;
-import android.view.View;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.JsCapabilityTagListBean;
-import com.eanfang.model.PostAllTagListBean;
+import com.eanfang.biz.model.JsCapabilityTagListBean;
+import com.eanfang.biz.model.PostAllTagListBean;
 import com.eanfang.ui.base.BaseActivity;
 
 import net.eanfang.worker.R;

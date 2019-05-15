@@ -14,10 +14,10 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.ExpertVerifySkillBean;
-import com.eanfang.model.GrantChange;
+import com.eanfang.biz.model.ExpertVerifySkillBean;
+import com.eanfang.biz.model.GrantChange;
 import com.yaf.base.entity.ExpertsCertificationEntity;
-import com.eanfang.model.sys.BaseDataEntity;
+import com.eanfang.biz.model.entity.BaseDataEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.my.AddBrandActivity;

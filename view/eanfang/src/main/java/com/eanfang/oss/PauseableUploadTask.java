@@ -33,6 +33,7 @@ import java.util.List;
  * SDK中有ResumableUpload，同样也是使用MultiPart上传来实现的，ResumableUpload不支持暂停，
  * 但是可以在程序重启、网络出错等情况下使用同样的参数调用来实现断点续传，因为在该接口内部将正在执行的上传信息保存在了文件系统中。
  */
+@Deprecated
 public class PauseableUploadTask {
     private OSS oss;
     private PauseableUploadRequest request;

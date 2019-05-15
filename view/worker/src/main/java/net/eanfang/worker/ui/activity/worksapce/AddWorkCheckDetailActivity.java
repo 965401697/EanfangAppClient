@@ -11,7 +11,7 @@ import com.annimon.stream.Stream;
 import com.eanfang.config.Config;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.listener.MultiClickListener;
-import com.eanfang.model.WorkAddCheckBean;
+import com.eanfang.biz.model.WorkAddCheckBean;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.util.PhotoUtils;

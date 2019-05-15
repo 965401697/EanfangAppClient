@@ -16,13 +16,13 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.FriendListBean;
+import com.eanfang.biz.model.FriendListBean;
 import com.eanfang.util.Cn2Spell;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.V;
 import com.eanfang.witget.SideBar;
-import com.eanfang.model.sys.AccountEntity;
+import com.eanfang.biz.model.entity.AccountEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;

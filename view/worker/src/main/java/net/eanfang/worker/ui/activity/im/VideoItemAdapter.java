@@ -6,7 +6,7 @@ import android.widget.CheckBox;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.model.VideoBean;
+import com.eanfang.biz.model.VideoBean;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;

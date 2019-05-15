@@ -16,7 +16,7 @@ import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.TechnicianDetailsBean;
+import com.eanfang.biz.model.TechnicianDetailsBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
 import com.facebook.drawee.view.SimpleDraweeView;

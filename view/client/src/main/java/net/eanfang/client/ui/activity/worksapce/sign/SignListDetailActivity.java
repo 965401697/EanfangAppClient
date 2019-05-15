@@ -19,7 +19,7 @@ import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
 import com.eanfang.config.Config;
 import com.eanfang.delegate.BGASortableDelegate;
-import com.eanfang.model.SignListBean;
+import com.eanfang.biz.model.SignListBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.NumberUtil;
 import com.eanfang.util.StringUtils;

@@ -1,14 +1,13 @@
 package com.eanfang.config;
 
 import android.os.Environment;
-import android.util.Log;
 
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
 import com.eanfang.application.EanfangApplication;
-import com.eanfang.model.BaseDataBean;
-import com.eanfang.model.ConstAllBean;
-import com.eanfang.model.sys.BaseDataEntity;
+import com.eanfang.biz.model.bean.BaseDataBean;
+import com.eanfang.biz.model.bean.ConstAllBean;
+import com.eanfang.biz.model.entity.BaseDataEntity;
 import com.eanfang.util.StringUtils;
 
 import java.util.ArrayList;

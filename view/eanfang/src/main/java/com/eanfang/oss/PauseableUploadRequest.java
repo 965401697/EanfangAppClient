@@ -7,6 +7,7 @@ import com.alibaba.sdk.android.oss.model.OSSRequest;
  * Created by OSS on 2015/12/8 0008.
  * 断点上传任务的请求
  */
+@Deprecated
 public class PauseableUploadRequest extends OSSRequest {
     private String bucket;
     private String object;

@@ -29,8 +29,8 @@ import androidx.core.app.ActivityCompat;
 
 import com.eanfang.R;
 import com.eanfang.application.CustomeApplication;
-import com.eanfang.kit.imagechoose.IImageChooseCallBack;
-import com.eanfang.kit.imagechoose.ImageChooseManager;
+import com.eanfang.base.kit.imagechoose.IImageChooseCallBack;
+import com.eanfang.base.kit.imagechoose.ImageChooseManager;
 import com.eanfang.util.ETimeUtils;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.ToastUtil;

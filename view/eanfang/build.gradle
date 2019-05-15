@@ -123,11 +123,12 @@ dependencies {
     api pkg.rxlifecycleAndroid
     api pkg.rxlifecycleComponents
 
+    api pkg.hutoolCore
+    api pkg.fastjson
 
     //tools
-    implementation pkg.hutoolCore
     implementation pkg.luban
-    api pkg.fastjson
+
     implementation pkg.update
     implementation pkg.pinyin4j
 

@@ -8,7 +8,7 @@ import android.provider.MediaStore;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.eanfang.model.VideoBean;
+import com.eanfang.biz.model.VideoBean;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.client.R;

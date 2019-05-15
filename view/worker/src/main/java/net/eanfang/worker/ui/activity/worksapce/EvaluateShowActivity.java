@@ -7,7 +7,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
-import com.eanfang.model.EvaluateBean;
+import com.eanfang.biz.model.EvaluateBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.V;
 import com.facebook.drawee.view.SimpleDraweeView;

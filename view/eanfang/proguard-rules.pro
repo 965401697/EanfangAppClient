@@ -19,7 +19,7 @@
 #避免混淆Android基本组件
 #---------------------------------1.实体类---------------------------------
 
--keep class com.eanfang.model.** { *; }
+-keep class com.eanfang.biz.model.** { *; }
 -keep class com.yaf.base.entity.** { *; }
 #-------------------------------------------------------------------------
 
@@ -108,7 +108,7 @@
 #fastJson
 -dontwarn com.alibaba.fastjson.**
 -keep class com.alibaba.fastjson.**{*; }
--keep class com.eanfang.model.*{*;}
+-keep class com.eanfang.biz.model.*{*;}
 -keep class com.yaf.base.entity.*{*;}
 -keepattributes Exceptions,InnerClasses,Signature,Deprecated,SourceFile,LineNumberTable,LocalVariable*Table,Synthetic,EnclosingMethod
 

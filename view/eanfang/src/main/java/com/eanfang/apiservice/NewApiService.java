@@ -28,6 +28,7 @@ public interface NewApiService {
     /**
      * 获取基础数据 缓存
      */
+    @Deprecated
     String GET_BASE_DATA_CACHE = BuildConfig.API_HOST + "/yaf_sys/basedata/listallcache/";
     /**
      * 基础数据 树
@@ -40,6 +41,7 @@ public interface NewApiService {
     /**
      * 获取静态常量 缓存
      */
+    @Deprecated
     String GET_CONST_CACHE = BuildConfig.API_HOST + "/yaf_sys/const/listallcache/";
 
     /**
@@ -736,8 +738,8 @@ public interface NewApiService {
     String REPAIR_PERSONAL_INFO_DELETE = BASE_URL + "/yaf_sys/receive/delete";
     /**
      * 设置默认用户信息
-     * */
-    String REPAIR_PERSONAL_INFO_DEFAULT = BASE_URL +"/yaf_sys/receive/setDefault";
+     */
+    String REPAIR_PERSONAL_INFO_DEFAULT = BASE_URL + "/yaf_sys/receive/setDefault";
 
     /**
      * 报修增加个人信息

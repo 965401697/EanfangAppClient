@@ -34,7 +34,7 @@ public class VerifyFragment extends BaseFragment {
 //    @Override
 //    protected void initLoadSir() {
 //        super.initLoadSir();
-//        emptyBack = true;
+//        emptyBack = true;/
 //        errorBack = true;
 //        loginViewModel.getActionLiveData().setValue(new BaseActionEvent(BaseActionEvent.EMPTY_DATA));
 //    }

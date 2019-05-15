@@ -8,13 +8,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
-import com.eanfang.config.FastjsonConfig;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.bean.LoginBean;
-import com.eanfang.network.config.HttpConfig;
+import com.eanfang.biz.model.bean.LoginBean;
+import com.eanfang.base.network.config.HttpConfig;
 import com.eanfang.sys.activity.LoginActivity;
-import com.eanfang.model.sys.OrgUnitEntity;
+import com.eanfang.biz.model.entity.OrgUnitEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;

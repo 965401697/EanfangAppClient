@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.eanfang.R;
-import com.eanfang.kit.loading.LoadKit;
+import com.eanfang.base.kit.loading.LoadKit;
 
 
 /**

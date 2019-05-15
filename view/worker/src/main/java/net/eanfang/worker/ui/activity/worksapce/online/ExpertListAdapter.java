@@ -6,14 +6,10 @@ import android.text.TextUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.eanfang.model.ExpertListBean;
+import com.eanfang.biz.model.ExpertListBean;
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.yaf.base.entity.CommonFaultListBeanEntity;
-import com.yaf.base.entity.ExpertsCertificationEntity;
 
 import net.eanfang.worker.R;
-
-import java.util.List;
 
 /**
  * Created by Our on 2019/1/23.

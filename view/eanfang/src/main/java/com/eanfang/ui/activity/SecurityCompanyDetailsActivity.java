@@ -20,7 +20,7 @@ import com.eanfang.R2;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.SecurityCompanyDetailsBean;
+import com.eanfang.biz.model.SecurityCompanyDetailsBean;
 import com.eanfang.ui.adapter.SecurityAdapter;
 import com.eanfang.ui.adapter.SlidingTabAdapter;
 import com.eanfang.ui.base.BaseActivity;

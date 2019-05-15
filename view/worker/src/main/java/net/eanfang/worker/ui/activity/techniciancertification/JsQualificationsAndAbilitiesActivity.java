@@ -5,7 +5,7 @@ import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-import android.util.Log;
+
 import android.view.View;
 import android.widget.TextView;
 
@@ -13,11 +13,11 @@ import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.EducationListBean;
-import com.eanfang.model.HonorCerticificateListBean;
-import com.eanfang.model.JobListBean;
-import com.eanfang.model.JsCapabilityTagBean;
-import com.eanfang.model.QualifyCertificafeListBean;
+import com.eanfang.biz.model.EducationListBean;
+import com.eanfang.biz.model.HonorCerticificateListBean;
+import com.eanfang.biz.model.JobListBean;
+import com.eanfang.biz.model.JsCapabilityTagBean;
+import com.eanfang.biz.model.QualifyCertificafeListBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
@@ -37,7 +37,6 @@ import net.eanfang.worker.ui.adapter.JsbQualificationsAndAbilitiesAdapter;
 import net.eanfang.worker.ui.adapter.JscQualificationsAndAbilitiesAdapter;
 import net.eanfang.worker.ui.adapter.JsdQualificationsAndAbilitiesAdapter;
 import net.eanfang.worker.ui.adapter.JseQualificationsAndAbilitiesAdapter;
-import net.eanfang.worker.ui.adapter.JseQualificationsAndAbilitiesGetListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.eanfang.model.NoticeEntity;
+import com.eanfang.biz.model.NoticeEntity;
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.GetDateUtils;
 

@@ -16,8 +16,8 @@ import com.baozi.treerecyclerview.item.TreeItem;
 import com.baozi.treerecyclerview.item.TreeItemGroup;
 import com.eanfang.R;
 import com.eanfang.application.EanfangApplication;
-import com.eanfang.kit.cache.CacheKit;
-import com.eanfang.model.SectionBean;
+import com.eanfang.base.kit.cache.CacheKit;
+import com.eanfang.biz.model.SectionBean;
 import com.eanfang.ui.activity.SelectPresonActivity;
 
 import java.util.ArrayList;

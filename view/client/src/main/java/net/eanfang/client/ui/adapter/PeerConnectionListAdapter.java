@@ -2,8 +2,8 @@ package net.eanfang.client.ui.adapter;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.BuildConfig;
-import com.eanfang.model.PeerConnectionDataBean;
-import com.eanfang.model.sys.OrgEntity;
+import com.eanfang.biz.model.PeerConnectionDataBean;
+import com.eanfang.biz.model.entity.OrgEntity;
 
 import net.eanfang.client.ui.adapter.viewholder.PeerConnectionListViewHolder;
 

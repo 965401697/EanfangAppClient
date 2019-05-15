@@ -13,7 +13,7 @@
 
         <variable
             name="loginVo"
-            type="com.eanfang.model.vo.LoginVo" />
+            type="com.eanfang.biz.model.vo.LoginVo" />
     </data>
 
     <RelativeLayout

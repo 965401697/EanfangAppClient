@@ -12,8 +12,8 @@ import com.baozi.treerecyclerview.item.TreeItem;
 import com.baozi.treerecyclerview.item.TreeItemGroup;
 import com.eanfang.BuildConfig;
 import com.eanfang.R;
-import com.eanfang.kit.cache.CacheKit;
-import com.eanfang.model.TemplateBean;
+import com.eanfang.base.kit.cache.CacheKit;
+import com.eanfang.biz.model.TemplateBean;
 
 /**
  * Created by O u r on 2018/5/31.

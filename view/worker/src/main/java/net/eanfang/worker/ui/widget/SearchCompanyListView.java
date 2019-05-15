@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.WorkCompanyListBean;
+import com.eanfang.biz.model.WorkCompanyListBean;
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;

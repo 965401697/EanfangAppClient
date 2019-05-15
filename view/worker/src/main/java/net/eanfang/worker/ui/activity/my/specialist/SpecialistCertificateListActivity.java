@@ -14,7 +14,7 @@ import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.HonorCerticificateListBean;
+import com.eanfang.biz.model.HonorCerticificateListBean;
 import com.eanfang.util.JsonUtils;
 import com.yaf.base.entity.HonorCertificateEntity;
 
