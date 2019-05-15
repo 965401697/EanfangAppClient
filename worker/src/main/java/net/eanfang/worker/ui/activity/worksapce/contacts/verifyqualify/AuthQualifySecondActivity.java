@@ -86,6 +86,7 @@ public class AuthQualifySecondActivity extends BaseActivity implements AreaCheck
         //获取国家区域
         if (EanfangApplication.get().sSaveArea == null) {
             showToast("加载服务区域失败！");
+            tvConfim.setClickable(false);
             return;
         }
         BaseDataEntity entity = EanfangApplication.get().sSaveArea;

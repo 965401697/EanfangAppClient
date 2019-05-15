@@ -76,7 +76,7 @@ android {
             //正式bugly
             buildConfigField("String", "BUGLY_WORKER", "\"a6bae9f6ee\"")
             // 不显示Log
-            buildConfigField("boolean", "LOG_DEBUG", "true")
+            buildConfigField("boolean", "LOG_DEBUG", "false")
             //Zipalign优化
             zipAlignEnabled true
             //混淆

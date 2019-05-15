@@ -79,6 +79,7 @@ public class SkillAreaActivity extends BaseWorkerActivity implements AreaCheckCh
         //获取国家区域
         if (EanfangApplication.get().sSaveArea == null) {
             showToast("加载服务区域失败！");
+            tvGo.setClickable(false);
             return;
         }
         areaListBean = EanfangApplication.get().sSaveArea.getChildren();
