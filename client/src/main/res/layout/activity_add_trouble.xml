@@ -172,6 +172,7 @@
                         android:layout_height="wrap_content"
                         android:text="故障位置"
                         android:textColor="@color/color_bottom"
+                        android:textCursorDrawable="@color/colorPrimary"
                         android:textSize="@dimen/textSize_13" />
 
                     <EditText
@@ -213,6 +214,7 @@
                         android:gravity="right"
                         android:hint="请输入位置编号"
                         android:textColor="@color/color_client_neworder"
+                        android:textCursorDrawable="@color/colorPrimary"
                         android:textSize="@dimen/textSize_13" />
                 </LinearLayout>
 
