@@ -217,7 +217,7 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
 
                 mExitTime = System.currentTimeMillis();
             } else {
-                RongIM.getInstance().logout();//退出融云
+                RongIM.getInstance().disconnect();//退出融云
                 Intent intent = new Intent(getPackageName() + ".ExitListenerReceiver");
                 sendBroadcast(intent);
                 EanfangApplication.get().closeAll();
@@ -474,7 +474,7 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
                 }
             }
             Log.i("zzw", "--------------------isDelect=" + isDelect);
-            return isDelect;
+             return isDelect;
         }
 
     }
@@ -688,5 +688,10 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
         return mStatus;
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RongIM.getInstance().disconnect();
+    }
 }
 

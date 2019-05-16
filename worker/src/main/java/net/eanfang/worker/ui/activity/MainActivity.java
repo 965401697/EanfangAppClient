@@ -264,7 +264,7 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
 
                 mExitTime = System.currentTimeMillis();
             } else {
-                RongIM.getInstance().logout();//退出融云
+                RongIM.getInstance().disconnect();//退出融云
                 Intent intent = new Intent(getPackageName() + ".ExitListenerReceiver");
                 sendBroadcast(intent);
 
@@ -327,7 +327,7 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
                 }));
     }
 
-    private void saveArea(){
+    private void saveArea() {
         //预加载国家区域
         String areaJson = SharePreferenceUtil.get().getString(Constant.COUNTRY_AREA_LIST, "");
         if (StringUtils.isEmpty(areaJson)) {
@@ -358,7 +358,7 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }else {
+        } else {
             EanfangApplication.get().sSaveArea = JSONObject.toJavaObject(JSONObject.parseObject(areaJson), BaseDataEntity.class);
         }
     }
@@ -814,6 +814,12 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
 
     public String onNoConatac() {
         return mStatus;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RongIM.getInstance().disconnect();
     }
 }
 
