@@ -11,6 +11,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.annimon.stream.Stream;
+import com.customview.CircleImageView;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
@@ -18,13 +19,13 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.AllMessageBean;
+import com.eanfang.model.sys.OrgEntity;
 import com.eanfang.ui.activity.kpbs.KPBSActivity;
 import com.eanfang.ui.base.BaseFragment;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.StringUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
-import com.eanfang.model.sys.OrgEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.CameraActivity;
@@ -51,6 +52,7 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import q.rorbin.badgeview.QBadgeView;
 
 import static com.eanfang.util.V.v;
@@ -64,12 +66,13 @@ import static com.eanfang.util.V.v;
  */
 public class WorkspaceFragment extends BaseFragment {
 
+    @BindView(R.id.iv_user_header)
+    CircleImageView ivUserHeader;
     /**
      * 箭头
      */
     private ImageView mIvDownIcon;
     private TextView tvCompanyName;
-    private SimpleDraweeView iv_company_logo;
 
     /**
      * 消息气泡
@@ -113,10 +116,9 @@ public class WorkspaceFragment extends BaseFragment {
 
     @Override
     protected void initView() {
+        headViewSize(ivUserHeader, (int) getResources().getDimension(R.dimen.dimen_52));
         tvCompanyName = findViewById(R.id.tv_company_name);
         mIvDownIcon = findViewById(R.id.iv_down_icon);
-
-        iv_company_logo = findViewById(R.id.iv_company_logo);
         setLogpic();
         //切换公司
         findViewById(R.id.ll_switch_company).setOnClickListener(v -> {
@@ -173,9 +175,9 @@ public class WorkspaceFragment extends BaseFragment {
                             tvCompanyName.setText(name);
                         }
                         if (url != null) {
-                            iv_company_logo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + url));
+                            GlideUtil.intoImageView(getActivity(),Uri.parse(BuildConfig.OSS_SERVER + url),ivUserHeader);
                         } else {
-                            iv_company_logo.setImageURI("");
+                            GlideUtil.intoImageView(getActivity(),"",ivUserHeader);
                         }
                         selectCompanyPop.dismiss();
                         doHttpOrderNums();
@@ -199,7 +201,7 @@ public class WorkspaceFragment extends BaseFragment {
                 && bean.getOrgUnitEntity().getOrgId().equals(defaultOrgid)).map(be -> v(() -> be.getOrgUnitEntity().getLogoPic())).toList();
         String imgUrl = v(() -> defaultPic.get(0));
         if (!StringUtils.isEmpty(imgUrl)) {
-            iv_company_logo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + imgUrl));
+            GlideUtil.intoImageView(getActivity(),Uri.parse(BuildConfig.OSS_SERVER + imgUrl),ivUserHeader);
         }
 
     }

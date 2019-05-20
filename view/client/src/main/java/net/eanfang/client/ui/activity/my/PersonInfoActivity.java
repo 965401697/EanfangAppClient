@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.customview.CircleImageView;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
@@ -32,6 +33,7 @@ import com.eanfang.oss.OSSCallBack;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.StringUtils;
@@ -85,7 +87,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto implements Bas
     @BindView(R.id.iv_left)
     ImageView ivLeft;
     @BindView(R.id.iv_user_header)
-    SimpleDraweeView ivUpload;
+    CircleImageView ivUpload;
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.tv_nickname)
@@ -137,6 +139,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto implements Bas
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_person_info);
         ButterKnife.bind(this);
+        headViewSize(ivUpload,(int) getResources().getDimension(com.eanfang.R.dimen.dimen_80));
         initPermission();
         initView();
         initData();
@@ -217,7 +220,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto implements Bas
         if (!StringUtils.isEmpty(accountEntity.getAvatar())) {
             isUploadHead = true;
             path = accountEntity.getAvatar();
-            ivUpload.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + accountEntity.getAvatar()));
+            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + accountEntity.getAvatar()),ivUpload);
             setHeaderShow(true);
         } else {
             setHeaderShow(false);
@@ -264,7 +267,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto implements Bas
         String imgKey = "account/" + UuidUtil.getUUID() + ".png";
         switch (resultCode) {
             case HEAD_PHOTO:
-                ivUpload.setImageURI("file://" + result.getImage().getOriginalPath());
+//                ivUpload.setImageURI("file://" + result.getImage().getOriginalPath());
 //                callback = new OSSCallBack(this, true) {
 //                    @Override
 //                    public void onOssSuccess() {
@@ -450,30 +453,13 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto implements Bas
 
     @Override
     public void onSuccess(List<LocalMedia> list) {
-        OSSCallBack callback = null;
         String imgKey = "account/" + UuidUtil.getUUID() + ".png";
-        ivUpload.setImageURI("file://" + list.get(0).getCompressPath());
-
-
-        OssKit.get(this).asyncPutImage(imgKey, list.get(0).getCompressPath(), (isSuccess) -> {
+        GlideUtil.intoImageView(this,"file://" + list.get(0).getCutPath(),ivUpload);
+        OssKit.get(this).asyncPutImage(imgKey, list.get(0).getCutPath(), (isSuccess) -> {
             LoginBean entity = EanfangApplication.getApplication().getUser();
             entity.getAccount().setAvatar(imgKey);
             path = entity.getAccount().getAvatar();
             setHeaderShow(true);
         });
-
-//        callback = new OSSCallBack(this, true) {
-//            @Override
-//            public void onOssSuccess() {
-//                runOnUiThread(() -> {
-//                    LoginBean entity = EanfangApplication.getApplication().getUser();
-//                    entity.getAccount().setAvatar(imgKey);
-//                    path = entity.getAccount().getAvatar();
-//                    setHeaderShow(true);
-//                });
-//
-//            }
-//        };
-//        OSSUtils.initOSS(this).asyncPutImage(imgKey, list.get(0).getCompressPath(), callback);
     }
 }

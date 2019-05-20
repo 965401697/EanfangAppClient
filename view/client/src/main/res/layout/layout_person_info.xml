@@ -48,20 +48,13 @@
                     android:textSize="14sp"
                     android:visibility="gone" />
 
-                <com.facebook.drawee.view.SimpleDraweeView
-                    android:id="@+id/iv_user_header"
-                    android:layout_width="@dimen/dimen_80"
-                    android:layout_height="@dimen/dimen_80"
-                    android:layout_marginRight="@dimen/dimen_24"
-                    android:visibility="gone"
-                    fresco:placeholderImage="@mipmap/ic_header"
-                    fresco:roundAsCircle="true" />
-
+                <include layout="@layout/layout_headview" />
 
                 <ImageView
                     android:layout_width="@dimen/dimen_14"
                     android:layout_height="@dimen/dimen_26"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dimen_24"
                     android:layout_marginRight="@dimen/dimen_34"
                     android:src="@mipmap/arrow_right" />
 
@@ -340,8 +333,8 @@
                     android:textSize="@dimen/textSize_14" />
 
                 <Button
-                    style="?android:attr/borderlessButtonStyle"
                     android:id="@+id/btn_man"
+                    style="?android:attr/borderlessButtonStyle"
                     android:layout_width="@dimen/dimen_120"
                     android:layout_height="@dimen/dimen_60"
                     android:layout_gravity="center_vertical"
@@ -353,16 +346,16 @@
                     android:textSize="12sp" />
 
                 <Button
-                    style="?android:attr/borderlessButtonStyle"
                     android:id="@+id/btn_woman"
+                    style="?android:attr/borderlessButtonStyle"
                     android:layout_width="@dimen/dimen_120"
                     android:layout_height="@dimen/dimen_60"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/dimen_30"
-                    android:textColor="@drawable/selector_text_color_person_info_sex"
                     android:background="@drawable/bg_button_person_info_sex_selector"
                     android:gravity="center"
                     android:text="女"
+                    android:textColor="@drawable/selector_text_color_person_info_sex"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -388,21 +381,21 @@
                 android:background="#ffffff"
                 android:gravity="start"
                 android:hint="请输入..."
-                android:paddingLeft="@dimen/dimen_36"
                 android:inputType="text"
+                android:paddingLeft="@dimen/dimen_36"
                 android:textColor="@color/font_color"
                 android:textSize="13sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
+                android:layout_weight="1"
                 android:background="#F5F3F3"
-                android:orientation="vertical"
-                android:layout_weight="1">
+                android:orientation="vertical">
 
                 <Button
-                    style="?android:attr/borderlessButtonStyle"
                     android:id="@+id/tv_save"
+                    style="?android:attr/borderlessButtonStyle"
                     android:layout_width="@dimen/dimen_600"
                     android:layout_height="@dimen/dimen_88"
                     android:layout_gravity="center_horizontal"

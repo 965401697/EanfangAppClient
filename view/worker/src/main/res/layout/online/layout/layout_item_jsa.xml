@@ -10,8 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_2"
         android:background="@color/content_bg" />
-
-    <com.facebook.drawee.view.SimpleDraweeView
+    <ImageView
         android:id="@+id/iv_pic"
         android:layout_width="@dimen/dimen_168"
         android:layout_height="@dimen/dimen_168"
@@ -22,7 +21,7 @@
         android:layout_marginBottom="@dimen/dimen_50"
         android:focusable="false"
         android:scaleType="centerCrop"
-        fresco:placeholderImage="@mipmap/ic_nodata" />
+        android:src="@mipmap/ic_nodata" />
 
     <TextView
         android:id="@+id/tv_school_name"

@@ -119,7 +119,7 @@ public class JsQualificationsAndAbilitiesActivity extends BaseActivity {
     private void initRecyclerViewA() {
         recyclerViewA.setLayoutManager(new LinearLayoutManager(this));
         recyclerViewA.setNestedScrollingEnabled(false);
-        qualifyListAdapterA = new JsaQualificationsAndAbilitiesAdapter(true);
+        qualifyListAdapterA = new JsaQualificationsAndAbilitiesAdapter(this,true);
         qualifyListAdapterA.bindToRecyclerView(recyclerViewA);
         qualifyListAdapterA.setOnItemClickListener((adapter, view, position) -> startActivityForResult(new Intent(this, AddSkillCertificafeActivity.class).putExtra("bean", (QualificationCertificateEntity) adapter.getData().get(position)), ADD_EDUCATION_CODE));
         initDataA();

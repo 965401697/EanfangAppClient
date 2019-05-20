@@ -20,22 +20,23 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp">
-
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/iv_company_logo"
-                android:layout_width="26dp"
-                android:layout_height="26dp"
+            <LinearLayout
+                android:id="@+id/ll_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                fresco:roundAsCircle="true" />
+                android:layout_marginLeft="10dp">
+
+                <include layout="@layout/layout_headview" />
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/ll_switch_company"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_toRightOf="@id/iv_company_logo"
+                android:layout_toRightOf="@id/ll_header"
                 android:gravity="center">
 
                 <TextView

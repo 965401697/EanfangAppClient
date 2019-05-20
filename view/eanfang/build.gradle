@@ -142,5 +142,4 @@ dependencies {
     api pkg.mipush
     api pkg.xgmz
     api pkg.wechat
-
 }
