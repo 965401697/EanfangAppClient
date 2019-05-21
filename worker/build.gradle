@@ -203,4 +203,6 @@ dependencies {
     implementation project(':IMLib')
     implementation project(':eanfang')
     implementation project(':ocr_ui')
+//    compile 'com.meizu.flyme.internet:push-internal:3.6.+@aar'
+//    api 'com.huawei.android.hms:push:2.6.1.301'
 }

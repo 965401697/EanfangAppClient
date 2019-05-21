@@ -509,4 +509,10 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
         return false;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().unregisterReceiver(netBroadcastReceiver);
+    }
+
 }

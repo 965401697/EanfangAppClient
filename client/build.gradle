@@ -191,6 +191,8 @@ dependencies {
     implementation project(':zxing')
     implementation project(':IMKit')
     implementation project(':IMLib')
-    compile project(path: ':ocr_ui')
+    implementation project(path: ':ocr_ui')
+    compile 'com.meizu.flyme.internet:push-internal:3.6.+@aar'
+//    api 'com.huawei.android.hms:push:2.6.1.301'
     //    implementation project(':Sight')
 }

@@ -4,9 +4,9 @@
 buildscript {
     repositories {
 //        maven { url "https://plugins.gradle.org/m2/" }
+        google()
         jcenter()
         mavenCentral()
-        google()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.1'
@@ -25,12 +25,17 @@ plugins {
 
 allprojects {
     repositories {
+        google()
         /*google()新增*/
         jcenter()
         /*mavenCentral()新增*/
         /*maven {url 'https://dl.bintray.com/jetbrains/anko'}新增*/
         maven { url "https://jitpack.io" }
-        google()
+        /**
+         * 融云 华为消息推送
+         * */
+        maven { url 'http://developer.huawei.com/repo/' }
+
     }
 }
 subprojects {

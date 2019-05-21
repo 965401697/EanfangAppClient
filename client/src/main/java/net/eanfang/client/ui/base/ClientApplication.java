@@ -22,8 +22,15 @@ import java.io.IOException;
 
 import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.utils.SystemUtils;
 import io.rong.imlib.RongIMClient;
+import io.rong.push.RongPushClient;
+import io.rong.push.pushconfig.PushConfig;
 
+import static com.eanfang.config.EanfangConst.MEIZU_APPID_CLIENT;
+import static com.eanfang.config.EanfangConst.MEIZU_APPKEY_CLIENT;
+import static com.eanfang.config.EanfangConst.XIAOMI_APPID_CLIENT;
+import static com.eanfang.config.EanfangConst.XIAOMI_APPKEY_CLIENT;
 import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
 
 /**
@@ -37,6 +44,11 @@ public class ClientApplication extends EanfangApplication {
     public void onCreate() {
         super.onCreate();
         if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext()))) {
+            PushConfig config = new PushConfig.Builder()
+                    .enableMiPush(XIAOMI_APPID_CLIENT, XIAOMI_APPKEY_CLIENT)
+                    .enableMeiZuPush(MEIZU_APPID_CLIENT, MEIZU_APPKEY_CLIENT)
+                    .build();
+            RongPushClient.setPushConfig(config);
             RongIM.init(this);
 
 //            RongIM.registerMessageType(SightMessage.class);
@@ -57,11 +69,11 @@ public class ClientApplication extends EanfangApplication {
             api.registerApp(EanfangConst.WX_APPID_CLIENT);
 
             try {
-                SharePreferenceUtil.get().set(BuildConfig.TYPE_APP,BuildConfig.TYPE);
+                SharePreferenceUtil.get().set(BuildConfig.TYPE_APP, BuildConfig.TYPE);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            MobSDK.init(this,"22bb8de378eab","f93cc21381c6f51702be823efde3e402");
+            MobSDK.init(this, "22bb8de378eab", "f93cc21381c6f51702be823efde3e402");
         }
 
 
