@@ -117,9 +117,6 @@ public class CompanyManagerBActivity extends BaseActivity implements DissloveTea
             case R.id.tv_des:
                 Intent intent = new Intent(this, EnterpriseCertificationActivity.class);
                 intent.putExtra("mOrgId", mOrgId);
-                intent.putExtra("status", status);
-                intent.putExtra("bizCertify", bizCertify);
-                intent.putExtra("orgName", mOrgName);
                 startActivity(intent);
                 finish();
                 break;

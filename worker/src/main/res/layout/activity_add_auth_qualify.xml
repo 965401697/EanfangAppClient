@@ -28,6 +28,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="证书名称"
+                android:drawableLeft="@mipmap/ic_must_input"
+                android:drawablePadding="@dimen/dimen_4"
                 android:textColor="@color/color_client_neworder"
                 android:textSize="@dimen/textSize_14" />
 
@@ -61,6 +63,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="证书编号"
+                android:drawableLeft="@mipmap/ic_must_input"
+                android:drawablePadding="@dimen/dimen_4"
                 android:textColor="@color/color_client_neworder"
                 android:textSize="@dimen/textSize_14" />
 
@@ -95,6 +99,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="颁发机构"
+                android:drawableLeft="@mipmap/ic_must_input"
+                android:drawablePadding="@dimen/dimen_4"
                 android:textColor="@color/color_client_neworder"
                 android:textSize="@dimen/textSize_14" />
 
@@ -130,6 +136,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="资质等级"
+                android:drawableLeft="@mipmap/ic_must_input"
+                android:drawablePadding="@dimen/dimen_4"
                 android:textColor="@color/color_client_neworder"
                 android:textSize="@dimen/textSize_14" />
 
@@ -165,6 +173,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="有效期起"
+                android:drawableLeft="@mipmap/ic_must_input"
+                android:drawablePadding="@dimen/dimen_4"
                 android:textColor="@color/color_client_neworder"
                 android:textSize="@dimen/textSize_14" />
 
@@ -198,6 +208,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="有效期止"
+                android:drawableLeft="@mipmap/ic_must_input"
+                android:drawablePadding="@dimen/dimen_4"
                 android:textColor="@color/color_client_neworder"
                 android:textSize="@dimen/textSize_14" />
 
@@ -229,6 +241,8 @@
                 android:layout_height="wrap_content"
                 android:padding="@dimen/dimen_30"
                 android:text="证书"
+                android:drawableLeft="@mipmap/ic_must_input"
+                android:drawablePadding="@dimen/dimen_4"
                 android:textColor="@color/color_client_neworder"
                 android:textSize="@dimen/textSize_15" />
 

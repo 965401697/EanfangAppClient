@@ -55,14 +55,21 @@ public class SkillTypeActivity extends BaseWorkerActivity {
     private SkillTypeAdapter osCooperationAddAdapter;
 
 
-    // 获取系统类别
+    /**
+     * 获取系统类别
+     */
     List<BaseDataEntity> systemTypeList = Config.get().getBusinessList(1);
-    // 业务类型
+    /**
+     * 业务类型
+     */
     List<BaseDataEntity> businessTypeList = Config.get().getServiceList(1);
-
-    // 系统类别
+    /**
+     * 系统类别
+     */
     private GrantChange grantChange_system = new GrantChange();
-    // 业务类别
+    /**
+     * 业务类别
+     */
     private GrantChange grantChange_business = new GrantChange();
 
     private TechWorkerVerifyEntity workerInfoBean;
@@ -125,8 +132,7 @@ public class SkillTypeActivity extends BaseWorkerActivity {
     }
 
     private void commitData() {
-
-        HashMap hashMapData = new HashMap();
+        HashMap<String, Object> hashMapData = new HashMap<>(3);
         hashMapData.put("techWorkerVerify", workerInfoBean);
         hashMapData.put("workerSysGrantChange", grantChange_system);
         hashMapData.put("workerBizGrantChange", grantChange_business);
@@ -155,7 +161,7 @@ public class SkillTypeActivity extends BaseWorkerActivity {
 
     private void getSkillInfo() {
 
-        EanfangHttp.post(UserApi.TECH_WORKER_DETAIL).params("accId", String.valueOf(EanfangApplication.getApplication().getAccId())).execute(new EanfangCallback<WorkerVerifySkillBean>(this, true, WorkerVerifySkillBean.class, bean -> {
+        EanfangHttp.post(UserApi.TECH_WORKER_DETAIL_V2).params("accId", String.valueOf(EanfangApplication.getApplication().getAccId())).execute(new EanfangCallback<WorkerVerifySkillBean>(this, true, WorkerVerifySkillBean.class, bean -> {
             if (bean != null) {
                 List<BaseDataEntity> SystemBusinessList = bean.getBaseData2userList();
                 // 系统类别
@@ -169,7 +175,7 @@ public class SkillTypeActivity extends BaseWorkerActivity {
                         }
                     } else {
                         for (BaseDataEntity checkedB : businessTypeList) {
-                            if (checkedB.getDataId() == checkedS.getDataId()) {
+                            if (checkedB.getDataId().equals(checkedS.getDataId())) {
                                 checkedB.setCheck(true);
                                 break;
                             }

@@ -79,7 +79,6 @@ public class BusinessCertificationActivity extends BaseActivity {
     private int order = 1;
     private AuthCompanyBaseInfoBean infoBean = new AuthCompanyBaseInfoBean();
     private Date date;
-    private int bizCertify = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,25 +168,16 @@ public class BusinessCertificationActivity extends BaseActivity {
     private void initData() {
         mOrgId = getIntent().getLongExtra("mOrgId", 0);
         status = getIntent().getIntExtra("status", 0);
-        bizCertify = getIntent().getIntExtra("bizCertify", 0);
         clRqLrv.setOnClickListener(view -> setRq());
         initAccessToken();
         EanfangHttp.get(UserApi.GET_COMPANY_ORG_INFO + mOrgId).execute(new EanfangCallback<AuthCompanyBaseInfoBean>(this, true, AuthCompanyBaseInfoBean.class, (beans) -> {
             infoBean = beans;
-            switch (bizCertify) {
-                case 0:
-                    setRightTitle("只读");
-                    setData(beans);
-                    setView();
-                    break;
-                default:
-                    if ((infoBean.getStatus() == 1) | (infoBean.getStatus() == 2)) {
-                        setRightTitle("只读");
-                        setData(beans);
-                        setView();
-                    } else {
-                        setData(beans);
-                    }
+            if ((infoBean.getStatus() == 1) || (infoBean.getStatus() == 2)) {
+                setRightTitle("只读");
+                setData(beans);
+                setView();
+            } else {
+                setData(beans);
             }
         }));
     }
@@ -242,12 +232,14 @@ public class BusinessCertificationActivity extends BaseActivity {
         clRqLrv.setText(beans.getWords_result().get成立日期().getWords());
         jzRqLrv.setText(beans.getWords_result().get有效期().getWords());
     }
+
     private void initInt() {
-        EanfangHttp.get(UserApi.JS_RZ_TJ_INFO+mOrgId).execute(new EanfangCallback<String>(this, true, String.class, (bean) -> {
+        EanfangHttp.get(UserApi.JS_RZ_TJ_INFO + mOrgId).execute(new EanfangCallback<String>(this, true, String.class, (bean) -> {
             Log.d("56483666", "bean: " + bean);
             finish();
         }));
     }
+
     @OnClick(R.id.iv_uploadlogo)
     public void onClick() {
         if (!checkTokenStatus()) {

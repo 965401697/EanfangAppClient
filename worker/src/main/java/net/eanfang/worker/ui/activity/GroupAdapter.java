@@ -124,10 +124,7 @@ public class GroupAdapter extends BaseExpandableListAdapter {
         holder.img_area.setSelected(isExpanded);
         holder.tv_cb.setChecked(mListData.get(groupPosition).isCheck());
         holder.tv.setText(mListData.get(groupPosition).getDataName());
-//        if (mListData.get(groupPosition) != null) {
-            mListener.onCheckAreaChange(groupPosition, -1, -1, mListData.get(groupPosition).isCheck());
-//        }
-//        holder.tv.setText(mListData.get(groupPosition).getDataName() + "(" + mListData.get(groupPosition).getCheckChildren() + "/" + mListData.get(groupPosition).getChildrenSize() + ")");
+        mListener.onCheckAreaChange(groupPosition, -1, -1, mListData.get(groupPosition).isCheck());
 
         return convertView;
     }

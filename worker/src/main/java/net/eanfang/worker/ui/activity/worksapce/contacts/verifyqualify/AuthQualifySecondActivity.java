@@ -23,6 +23,7 @@ import net.eanfang.worker.ui.activity.GroupAdapter;
 import net.eanfang.worker.ui.activity.authentication.SubmitSuccessfullyQyActivity;
 import net.eanfang.worker.ui.interfaces.AreaCheckChangeListener;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -50,8 +51,6 @@ public class AuthQualifySecondActivity extends BaseActivity implements AreaCheck
     private GroupAdapter mAdapter;
     private Long orgid;
     private int verifyStatus;
-    private List<Integer> checkListId;
-    private List<Integer> unCheckListId;
     private SystypeBean byNetGrant;
     private GrantChange grantChange = new GrantChange();
     private HashSet<Integer> selDataId;
@@ -77,9 +76,7 @@ public class AuthQualifySecondActivity extends BaseActivity implements AreaCheck
         if (isLook) {
             llTitle.setVisibility(View.GONE);
             tvConfim.setVisibility(View.GONE);
-
         }
-
     }
 
     private void initData() {
@@ -91,7 +88,7 @@ public class AuthQualifySecondActivity extends BaseActivity implements AreaCheck
         }
         BaseDataEntity entity = EanfangApplication.get().sSaveArea;
         areaListBean = entity.getChildren();
-        EanfangHttp.get(UserApi.GET_COMPANY_ORG_SYS_INFO + orgid + "/AREA")
+        EanfangHttp.get(UserApi.GET_COMPANY_ORG_AREA_INFO + orgid + "/AREA")
                 .execute(new EanfangCallback<SystypeBean>(this, true, SystypeBean.class, (bean) -> {
                     byNetGrant = bean;
                     fillData();
@@ -129,10 +126,12 @@ public class AuthQualifySecondActivity extends BaseActivity implements AreaCheck
 
         for (BaseDataEntity baseDataBean : list) {
             if (baseDataBean.isCheck() == isChecked) {
-                if (isChecked && !selDataId.contains(baseDataBean.getDataId())){
+                if (isChecked && !selDataId.contains(baseDataBean.getDataId())) {
+                    selDataId.add(baseDataBean.getDataId());
                     resultList.add(baseDataBean.getDataId());
                 }
-                if (!isChecked && selDataId.contains(baseDataBean.getDataId())){
+                if (!isChecked && selDataId.contains(baseDataBean.getDataId())) {
+                    selDataId.remove(baseDataBean.getDataId());
                     resultList.add(baseDataBean.getDataId());
                 }
             }
@@ -164,16 +163,16 @@ public class AuthQualifySecondActivity extends BaseActivity implements AreaCheck
     }
 
     private void commit() {
-        checkListId = getListData(areaListBean, true);
-        unCheckListId = getListData(areaListBean, false);
-        grantChange.setAddIds(checkListId);
-        grantChange.setDelIds(unCheckListId);
+        getListData(areaListBean, true);
+        getListData(areaListBean, false);
 
-        if ((checkListId.size() == 0) && (unCheckListId.size() == 0) && (byNetGrant.getList().size() <= 0)) {
+        grantChange.setAddIds(new ArrayList<>(selDataId));
+        grantChange.setDelIds(null);
+
+        if (selDataId.size() == 0) {
             showToast("请至少选择一个服务区域");
         } else {
-
-            EanfangHttp.post(UserApi.GET_ORGUNIT_SHOP_ADD_AREA + orgid).upJson(JSONObject.toJSONString(grantChange))
+            EanfangHttp.post(UserApi.GET_ORGUNIT_SHOP_ADD_AREA_V2 + orgid).upJson(JSONObject.toJSONString(grantChange))
                     .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
 //                            showToast("认证资料提交成功");
                         commitVerfiy();

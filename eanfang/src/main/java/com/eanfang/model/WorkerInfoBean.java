@@ -52,6 +52,15 @@ public class WorkerInfoBean implements Serializable {
     private int workingLevel;
     private int workingYear;
     private String avatarPhoto;
+    private String idCardNum;
+    /**
+     * 性别
+     */
+    private String idCardGender;
+    /**
+     * 姓名
+     */
+    private String idCardName;
 
     public Long getAccId() {
         return accId;
@@ -123,6 +132,18 @@ public class WorkerInfoBean implements Serializable {
 
     public String getAvatarPhoto() {
         return avatarPhoto == null ? "" : avatarPhoto;
+    }
+
+    public String getIdCardNum() {
+        return idCardNum == null ? "" : idCardNum;
+    }
+
+    public String getIdCardGender() {
+        return idCardGender;
+    }
+
+    public String getIdCardName() {
+        return idCardName;
     }
 }
 

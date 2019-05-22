@@ -820,6 +820,8 @@
             android:screenOrientation="portrait" /> <!-- 其他资料的验证 -->
         <activity
             android:name=".ui.activity.my.certification.OtherDataActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.worksapce.contacts.baseinfo.AuthCompanyFirstActivity"
@@ -829,6 +831,8 @@
             android:screenOrientation="portrait" /> <!-- 荣誉证书 -->
         <activity
             android:name=".ui.activity.my.certification.CertificateListActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" /> <!-- 官方消息 -->
         <activity
             android:name=".ui.activity.worksapce.notice.OfficialListActivity"
@@ -842,15 +846,23 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden" /> <!-- 技师个人经历 -->
         <activity
             android:name=".ui.activity.my.certification.OwmHistoryActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" /> <!-- 技师添加教育经历 -->
         <activity
             android:name=".ui.activity.my.certification.AddEducationHistoryActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" /> <!-- 技师工作经历 -->
         <activity
             android:name=".ui.activity.my.certification.WorkHistoryActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" /> <!-- 技师添加工作经历 -->
         <activity
             android:name=".ui.activity.my.certification.AddWorkActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" /> <!-- 技师绑定system ，type -->
         <activity
             android:name=".ui.activity.my.certification.SkillTypeActivity"
@@ -860,9 +872,13 @@
             android:screenOrientation="portrait" /> <!-- 技师技能认证 -->
         <activity
             android:name=".ui.activity.my.certification.SkillCertificafeListActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" /> <!-- 技师添加技能证书 -->
         <activity
             android:name=".ui.activity.my.certification.AddSkillCertificafeActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" /> <!-- 工作汇报列表 -->
         <activity
             android:name=".ui.activity.worksapce.oa.workreport.WorkReportListActivity"
@@ -977,7 +993,9 @@
         <activity android:name=".ui.activity.my.specialist.SpecialistCertificationActivity" />
         <activity android:name=".ui.activity.my.specialist.SpecialistIdentityCardCertification" />
         <activity android:name=".ui.activity.my.specialist.SpecialistCertificateListActivity" />
-        <activity android:name=".ui.activity.my.specialist.SpecialistAddCertificationActivity" />
+        <activity android:name=".ui.activity.my.specialist.SpecialistAddCertificationActivity"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden"
+            android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".ui.activity.my.specialist.SpecialistOwmHistoryActivity" />
         <activity android:name=".ui.activity.my.specialist.SpecialistWorkHistoryActivity" />
         <activity android:name=".ui.activity.my.specialist.SpecialistAddWorkActivity" />

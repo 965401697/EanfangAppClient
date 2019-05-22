@@ -37,7 +37,6 @@
             android:button="@null"
             android:focusable="false"
             android:text="全选"
-            android:visibility="gone"
             android:clickable="false"
             android:textColor="@color/color_client_neworder"
             android:textSize="13sp" />

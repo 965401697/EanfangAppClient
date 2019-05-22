@@ -29,6 +29,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="专业或培训内容"
+                android:drawableLeft="@mipmap/ic_must_input"
+                android:drawablePadding="@dimen/dimen_4"
                 android:textColor="@color/color_client_neworder"
                 android:textSize="@dimen/textSize_14" />
 
