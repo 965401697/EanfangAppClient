@@ -751,4 +751,8 @@ public interface NewApiService {
      * 报修增加个人信息修改
      */
     String REPAIR_PRESONAL_INFO_UPDATAE = BASE_URL + "/yaf_sys/receive/update";
+    /**
+     * 通讯录好友表
+     */
+    String ACCOUNT_POST = BASE_URL + YAF_SYS + "/accountmail/insertAccountMail";
 }
