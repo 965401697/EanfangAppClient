@@ -292,7 +292,18 @@ public class SecurityHotFragment extends TemplateItemListFragment {
      * 刷新点赞 关注状态
      */
     public void refreshItemStatus(Intent intentData) {
-        if (securityDetailBean != null && intentData != null) {
+        /**
+         * 是否删除
+         * */
+        if (intentData.getBooleanExtra("isDelete", false)) {
+            securityListAdapter.getData().remove(securityDetailBean);
+            securityListAdapter.notifyDataSetChanged();
+            if (securityListAdapter.getData() != null && securityListAdapter.getData().size() > 0) {
+                mTvNoData.setVisibility(View.GONE);
+            } else {
+                mTvNoData.setVisibility(View.VISIBLE);
+            }
+        } else if (securityDetailBean != null && intentData != null) {
             SecurityListBean.ListBean mSecurityDetailBean = (SecurityListBean.ListBean) intentData.getSerializableExtra("itemStatus");
             /**
              * 是否点赞

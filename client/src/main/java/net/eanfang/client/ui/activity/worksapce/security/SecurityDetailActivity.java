@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.method.LinkMovementMethod;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -19,12 +20,14 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.delegate.BGASortableDelegate;
+import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.security.SecurityCommentBean;
@@ -38,6 +41,7 @@ import com.eanfang.util.ETimeUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
+import com.eanfang.witget.DefaultPopWindow;
 import com.eanfang.witget.mentionedittext.edit.util.FormatRangeManager;
 import com.eanfang.witget.mentionedittext.text.MentionTextView;
 import com.eanfang.witget.mentionedittext.text.listener.Parser;
@@ -163,6 +167,11 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
      * 跳转用户首页的是否是发布内容的人
      */
     private boolean mIsPubUid;
+    /**
+     * 删除安防圈
+     */
+    private View mPopWindowContent;
+    private TextView mTvDelete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -176,6 +185,10 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
 
     private void initView() {
         setTitle("安防圈");
+        setRightImageResId(R.drawable.icon_right_more);
+        mPopWindowContent = LayoutInflater.from(this).inflate(R.layout.layout_pop_security_delete, null);
+        mTvDelete = mPopWindowContent.findViewById(R.id.tv_delete);
+        mTvDelete.setText("删除");
         securityCommentAdapter = new SecurityCommentAdapter();
         rvComments.setLayoutManager(new LinearLayoutManager(this));
         securityCommentAdapter.bindToRecyclerView(rvComments);
@@ -235,6 +248,18 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
             public boolean onTouch(View view, MotionEvent motionEvent) {
                 return false;
             }
+        });
+        DefaultPopWindow popWindow = new DefaultPopWindow(mPopWindowContent);
+        popWindow.setOnDismissListener(() -> popWindow.backgroundAlpha(SecurityDetailActivity.this, 1.0f));
+        mTvDelete.setOnClickListener(v -> {
+            new TrueFalseDialog(this, "系统提示", "是否删除?", () -> {
+                doDelete();
+            }).showDialog();
+            popWindow.dismiss();
+        });
+        setRightImageOnClickListener(v -> {
+            popWindow.showAsDropDown(findViewById(R.id.iv_right));
+            popWindow.backgroundAlpha(SecurityDetailActivity.this, 0.5f);
         });
     }
 
@@ -335,10 +360,13 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
             tvIsFocus.setText("关注");
             isFoucus = false;
         }
-        if (securityDetailBean.getPublisherUserId().equals(EanfangApplication.get().getUserId())) {
-
+        if (securityDetailBean.getPublisherAccId().equals(EanfangApplication.get().getAccId())) {
+            tvIsFocus.setVisibility(View.GONE);
+            setRightImageVisible();
+            setRightImageResId(R.drawable.icon_right_more);
         } else {
-
+            tvIsFocus.setVisibility(View.VISIBLE);
+            setRightImageGone();
         }
         /**
          * 0 点赞 1 未点赞
@@ -537,6 +565,20 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
                         mItenSecurityDetailBean.setLikesCount(mLikeCount + 1);
                     }
                     isLikeEdit = true;
+                }));
+    }
+
+    /**
+     * 删除安防圈
+     */
+    private void doDelete() {
+        EanfangHttp.post(NewApiService.SERCURITY_DELETE)
+                .params("spcId", mId)
+                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
+                    Intent intent = new Intent();
+                    intent.putExtra("isDelete", true);
+                    setResult(RESULT_OK, intent);
+                    finishSelf();
                 }));
     }
 

@@ -447,6 +447,12 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
 
             securityDetailBean.setReadCount(mSecurityDetailBean.getReadCount());
             securityDetailBean.setReadStatus(mSecurityDetailBean.getReadStatus());
+            /**
+             * 是否删除
+             * */
+            if (intentData.getBooleanExtra("isDelete", false)) {
+                securityListAdapter.getData().remove(securityDetailBean);
+            }
             securityListAdapter.notifyDataSetChanged();
             if (securityListAdapter.getData() != null && securityListAdapter.getData().size() > 0) {
                 tvNoDatas.setVisibility(View.GONE);

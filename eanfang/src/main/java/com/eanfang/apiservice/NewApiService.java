@@ -725,6 +725,10 @@ public interface NewApiService {
      * 安防圈我关注的人
      */
     String SERCURITY_FOUCS_LIST = BASE_URL + "/yaf_spc/spcircle/followerManList";
+    /**
+     * 安防圈删除
+     */
+    String SERCURITY_DELETE = BASE_URL + "/yaf_spc/spcircle/contentDelete";
 
     /**
      * 报修获取用户信息列表
@@ -736,8 +740,8 @@ public interface NewApiService {
     String REPAIR_PERSONAL_INFO_DELETE = BASE_URL + "/yaf_sys/receive/delete";
     /**
      * 设置默认用户信息
-     * */
-    String REPAIR_PERSONAL_INFO_DEFAULT = BASE_URL +"/yaf_sys/receive/setDefault";
+     */
+    String REPAIR_PERSONAL_INFO_DEFAULT = BASE_URL + "/yaf_sys/receive/setDefault";
 
     /**
      * 报修增加个人信息
