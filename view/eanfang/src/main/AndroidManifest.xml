@@ -148,6 +148,17 @@
         <activity
             android:name=".sdk.equipment.DeviceBrandActivity"
             android:screenOrientation="portrait" />
+        <!-- 创建群组的组织选择器 -->
+        <activity
+            android:name=".sdk.typechoose.people.CreateGroupOrganizationActivity"
+            android:screenOrientation="portrait" />
+        <!-- 群组列表 -->
+        <activity
+            android:name=".sdk.typechoose.group.MyGroupsListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".sdk.typechoose.group.SelectOAGroupActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

@@ -180,7 +180,7 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
         }
         getEquipmentUnread();//首次
 
-        WorkerApplication.getApplication().setmForwardListener(new WorkerApplication.ForwardListener() {
+       WorkerApplication.getApplication().setmForwardListener(new WorkerApplication.ForwardListener() {
             @Override
             public void onForwardListener() {
                 getEquipmentUnread();
@@ -337,9 +337,8 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
     }
     private void saveArea(){
         //预加载国家区域
-//        String areaJson = SharePreferenceUtil.get().getString(Constant.COUNTRY_AREA_LIST, "");
-        String areaJson = EanfangApplication.get().get(Constant.COUNTRY_AREA_LIST, "");
-        if (StringUtils.isEmpty(areaJson)) {
+        BaseDataEntity areaJson = (BaseDataEntity) EanfangApplication.get().get(Constant.COUNTRY_AREA_LIST,BaseDataEntity.class);
+        if (areaJson==null) {
             BaseDataEntity entity = new BaseDataEntity();
             List<BaseDataEntity> areaListBean = Config.get().getRegionList(1);
             //获得全部 地区数据
@@ -364,15 +363,9 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
             }
             entity.setChildren(areaListBean);
             EanfangApplication.get().sSaveArea = entity;
-            EanfangApplication.get().set(Constant.COUNTRY_AREA_LIST, JSON.toJSONString(entity));
-        /*    try {
-                SharePreferenceUtil.get().set(Constant.COUNTRY_AREA_LIST, JSON.toJSONString(entity));
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }*/
+            EanfangApplication.get().set(Constant.COUNTRY_AREA_LIST, entity);
         }else {
-            EanfangApplication.get().sSaveArea = JSONObject.toJavaObject(JSONObject.parseObject(areaJson), BaseDataEntity.class);
+            EanfangApplication.get().sSaveArea = areaJson;
         }
     }
     /**

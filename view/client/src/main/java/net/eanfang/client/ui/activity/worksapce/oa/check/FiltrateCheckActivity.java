@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.eanfang.model.TemplateBean;
 import com.eanfang.ui.base.BaseActivity;
-import com.eanfang.ui.fragment.SelectTimeDialogFragment;
+import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
 

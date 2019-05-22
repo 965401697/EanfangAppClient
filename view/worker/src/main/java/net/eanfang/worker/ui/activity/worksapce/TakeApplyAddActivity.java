@@ -18,7 +18,7 @@ import com.eanfang.model.TakeApplyAddBean;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.base.BaseActivity;
-import com.eanfang.ui.fragment.SelectTimeDialogFragment;
+import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PhotoUtils;

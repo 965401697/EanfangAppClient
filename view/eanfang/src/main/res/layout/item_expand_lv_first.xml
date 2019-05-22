@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen_96"
+    android:paddingLeft="@dimen/dimen_34"
+    android:background="#F7F7F7"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/img_area"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:src="@drawable/icon_area_more_city_selector"/>
+
+    <TextView
+        android:id="@+id/tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:text="beijing"
+        android:layout_toRightOf="@id/img_area"
+        android:layout_marginLeft="@dimen/dimen_22"
+        android:layout_centerVertical="true"
+        android:textColor="@color/color_client_neworder"/>
+
+    <CheckBox
+        android:id="@+id/tv_cb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/color_client_neworder"
+        android:textSize="13sp"
+        android:text="全选"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/dimen_34"
+        android:button="@null"
+        android:focusable="false" />
+</RelativeLayout>

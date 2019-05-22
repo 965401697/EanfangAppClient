@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen_128"
+    android:background="@color/white">
+
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/iv_user_header"
+        android:layout_width="@dimen/dimen_80"
+        android:layout_height="@dimen/dimen_80"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dimen_36"
+        android:layout_marginRight="@dimen/dimen_24"
+        fresco:placeholderImage="@mipmap/ic_header"
+        fresco:roundAsCircle="true" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/dimen_38"
+        android:layout_toRightOf="@+id/iv_user_header" />
+
+    <CheckBox
+        android:id="@+id/cb_check"
+        android:layout_width="@dimen/dimen_42"
+        android:layout_height="@dimen/dimen_42"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="@dimen/dimen_36"
+        android:background="@drawable/selector_single_checked_worker"
+        android:button="@null"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false" />
+
+
+</RelativeLayout>

@@ -68,6 +68,7 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void initStyle() {
+        super.initStyle();
         if (isClient()) {
             binding.slidingtablayout.setTextSelectColor(ContextCompat.getColor(this, R.color.color_main_client));
             binding.slidingtablayout.setIndicatorColor(ContextCompat.getColor(this, R.color.color_main_client));

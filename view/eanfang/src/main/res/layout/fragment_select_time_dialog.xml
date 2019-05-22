@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.eanfang.ui.fragment.SelectTimeDialogFragment">
+    tools:context="com.eanfang.sdk.selecttime.SelectTimeDialogFragment">
 
     <com.prolificinteractive.materialcalendarview.MaterialCalendarView
         android:id="@+id/calendarView"

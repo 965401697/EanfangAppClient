@@ -21,7 +21,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.GroupDetailBean;
 import com.eanfang.model.TemplateBean;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
-import com.eanfang.ui.fragment.SelectTimeDialogFragment;
+import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
 import com.eanfang.util.DialogUtil;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.StringUtils;

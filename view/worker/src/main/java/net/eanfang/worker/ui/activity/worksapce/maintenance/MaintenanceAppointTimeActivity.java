@@ -14,7 +14,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.ui.base.BaseEvent;
-import com.eanfang.ui.fragment.SelectTimeDialogFragment;
+import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.StringUtils;
 

@@ -105,7 +105,7 @@ public class BaseActivity extends AppCompatActivity implements
 
 //        setStatusBar();
 
-        CustomeApplication.get().push(this);
+//        CustomeApplication.get().push(this);
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
@@ -286,7 +286,7 @@ public class BaseActivity extends AppCompatActivity implements
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
-        CustomeApplication.get().pull(this);
+//        CustomeApplication.get().pull(this);
         this.unregisterReceiver(exitre);
     }
 

@@ -19,7 +19,7 @@ import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.CooperationSearchBean;
-import com.eanfang.ui.fragment.SelectTimeDialogFragment;
+import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.StringUtils;

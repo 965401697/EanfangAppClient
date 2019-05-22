@@ -34,7 +34,7 @@ import com.eanfang.takevideo.TakeVdideoMode;
 import com.eanfang.takevideo.TakeVideoActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.ui.base.voice.RecognitionManager;
-import com.eanfang.ui.fragment.SelectTimeDialogFragment;
+import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
 import com.eanfang.util.DialogUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermissionUtils;
