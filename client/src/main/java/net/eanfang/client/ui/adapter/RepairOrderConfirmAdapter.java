@@ -32,7 +32,7 @@ public class RepairOrderConfirmAdapter extends BaseQuickAdapter<RepairBugEntity,
         //String bugOne = Config.get().getBusinessNameByCode(item.getBusinessThreeCode(), 1);
         // String bugTwo = Config.get().getBusinessNameByCode(item.getBusinessThreeCode(), 2);
         String bugThree = Config.get().getBusinessNameByCode(item.getBusinessThreeCode(), 3);
-        helper.setText(R.id.tv_name, (helper.getLayoutPosition() + 1) + "." + item.getSketch())
+        helper.setText(R.id.tv_name, "故障"+(helper.getLayoutPosition() + 1) + "." + item.getSketch())
 //                .setText(R.id.tv_model, "品牌型号:" + Config.get().getModelNameByCode(item.getModelCode(), 1))
                 .setText(R.id.tv_model, bugThree)
                 .setText(R.id.tv_location, item.getBugPosition() != null ? item.getBugPosition() : "")

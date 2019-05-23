@@ -23,7 +23,17 @@ import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
+import io.rong.push.RongPushClient;
+import io.rong.push.pushconfig.PushConfig;
 
+import static com.eanfang.config.EanfangConst.MEIZU_APPID_CLIENT;
+import static com.eanfang.config.EanfangConst.MEIZU_APPID_WORKER;
+import static com.eanfang.config.EanfangConst.MEIZU_APPKEY_CLIENT;
+import static com.eanfang.config.EanfangConst.MEIZU_APPKEY_WORKER;
+import static com.eanfang.config.EanfangConst.XIAOMI_APPID_CLIENT;
+import static com.eanfang.config.EanfangConst.XIAOMI_APPID_WORKER;
+import static com.eanfang.config.EanfangConst.XIAOMI_APPKEY_CLIENT;
+import static com.eanfang.config.EanfangConst.XIAOMI_APPKEY_WORKER;
 import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
 
 /**
@@ -51,6 +61,11 @@ public class WorkerApplication extends EanfangApplication {
         super.onCreate();
         mWorkerApplication = this;
         if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext()))) {
+            PushConfig config = new PushConfig.Builder()
+                    .enableMiPush(XIAOMI_APPID_WORKER, XIAOMI_APPKEY_WORKER)
+                    .enableMeiZuPush(MEIZU_APPID_WORKER, MEIZU_APPKEY_WORKER)
+                    .build();
+            RongPushClient.setPushConfig(config);
             RongIM.init(this);
 
 
@@ -76,7 +91,7 @@ public class WorkerApplication extends EanfangApplication {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            MobSDK.init(this,"299cfb8d27500","91afc15795a7f3dc04b5cab818c097c9");
+            MobSDK.init(this, "299cfb8d27500", "91afc15795a7f3dc04b5cab818c097c9");
         }
 
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {

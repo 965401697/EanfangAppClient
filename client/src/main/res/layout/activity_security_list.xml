@@ -27,11 +27,11 @@
                 tl:tl_divider_color="@color/color_service_deiveder"
                 tl:tl_divider_padding="13dp"
                 tl:tl_divider_width="@dimen/dimen_2"
-                tl:tl_indicator_color="@color/client"
+                tl:tl_indicator_color="@color/colorPrimary"
                 tl:tl_indicator_height="1.5dp"
                 tl:tl_tab_padding="@dimen/dimen_1"
                 tl:tl_tab_space_equal="true"
-                tl:tl_textSelectColor="@color/client"
+                tl:tl_textSelectColor="@color/colorPrimary"
                 tl:tl_textUnselectColor="@color/color_client_neworder"
                 tl:tl_textsize="@dimen/textSize_15"
                 tl:tl_underline_color="@color/color_service_deiveder"
@@ -55,5 +55,5 @@
         android:layout_marginBottom="@dimen/dimen_30"
         android:layout_marginRight="@dimen/dimen_40"
         android:scaleType="fitXY"
-        android:src="@mipmap/ic_worker_security_create" />
+        android:src="@mipmap/ic_client_security_create" />
 </RelativeLayout>

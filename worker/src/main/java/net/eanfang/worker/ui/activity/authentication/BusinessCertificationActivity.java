@@ -8,7 +8,10 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.View;
+import android.widget.CalendarView;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
@@ -27,15 +30,19 @@ import com.eanfang.model.ZdBusinessCertification;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.RecognizeService;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.fragment.ContactsFragment;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -64,7 +71,7 @@ public class BusinessCertificationActivity extends BaseActivity {
     @BindView(R.id.zc_zj_lrv)
     LtReView zcZjLrv;
     @BindView(R.id.cl_rq_lrv)
-    LtReView clRqLrv;
+    TextView clRqLrv;
     @BindView(R.id.jz_rq_lrv)
     LtReView jzRqLrv;
     private AlertDialog.Builder alertDialog;
@@ -72,8 +79,10 @@ public class BusinessCertificationActivity extends BaseActivity {
     private static final int REQUEST_CODE_BUSINESS_LICENSE = 123;
     private Long mOrgId;
     private int status = 0;
+    private int bizCertify = 0;
     private int order = 1;
     private AuthCompanyBaseInfoBean infoBean = new AuthCompanyBaseInfoBean();
+    private Date date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,13 +99,14 @@ public class BusinessCertificationActivity extends BaseActivity {
         setRightTitle("提交");
         alertDialog = new AlertDialog.Builder(this);
         setRightTitleOnClickListener(view -> {
-            showToast("点击右键");
             getData();
         });
     }
 
     public void getData() {
-        if ("".equals(infoBean.getLicensePic()) || infoBean.getLicensePic() == null) {
+        if (dwMcLrv.getText().toString().trim().equals("无") & frDbLrv.getText().toString().trim().equals("无")) {
+            showToast("请上传正确的营业执照");
+        } else if ("".equals(infoBean.getLicensePic()) || infoBean.getLicensePic() == null) {
             showToast("请点击加号,上传营业执照");
             return;
         } else if (StringUtils.isEmpty(dwMcLrv.getText().toString().trim())) {
@@ -115,7 +125,7 @@ public class BusinessCertificationActivity extends BaseActivity {
             showToast("请输入注册资金");
             return;
         } else if (StringUtils.isEmpty(clRqLrv.getText().toString().trim())) {
-            showToast("请输入成立日期");
+            showToast("请选择成立日期");
             return;
         } else if (StringUtils.isEmpty(jzRqLrv.getText().toString().trim())) {
             showToast("营业截至日期");
@@ -135,47 +145,55 @@ public class BusinessCertificationActivity extends BaseActivity {
         }
     }
 
-
     @SuppressLint("LongLogTag")
     private void commit(String json) {
         EanfangHttp.post(UserApi.GET_ORGUNIT_SHOP_INSERT).upJson(json).execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
-                    Log.d("REQUEST_CODE_BUSINESS_LICENSE6:", UserApi.GET_ORGUNIT_SHOP_INSERT + "\n" + json + "\n" + bean.toJSONString());
-                    showToast("保存成功");
-                    Intent intent = new Intent(this, SubmitSuccessfullyQyActivity.class);
-                    intent.putExtra("mOrgId", mOrgId);
-                    intent.putExtra("status", status);
-                    intent.putExtra("order", order);
-                    startActivity(intent);
-                    finishSelf();
-                }));
+            Log.d("REQUEST_CODE_BUSINESS_LICENSE6:", UserApi.GET_ORGUNIT_SHOP_INSERT + "\n" + json + "\n" + bean.toJSONString());
+            showToast("保存成功");
+            Intent intent = new Intent(this, SubmitSuccessfullyQyActivity.class);
+            intent.putExtra("mOrgId", mOrgId);
+            intent.putExtra("status", status);
+            intent.putExtra("order", order);
+            startActivity(intent);
+            ContactsFragment.isRefresh = true;
+            finish();
+        }));
     }
 
+    private void setRq() {
+        View view = getLayoutInflater().inflate(R.layout.activity_dialog_date, null);
+        CalendarView datePicker = (CalendarView) view.findViewById(R.id.calendarView);
+        datePicker.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
+            date = new GregorianCalendar(year, month, dayOfMonth).getTime();
+            clRqLrv.setText(GetDateUtils.dateToDateString(date));
+        });
+        new AlertDialog.Builder(this).setView(view).setCancelable(false).setPositiveButton("确定", (dialogInterface, i) -> {
+            dialogInterface.dismiss();
+        }).show();
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
     private void initData() {
         mOrgId = getIntent().getLongExtra("mOrgId", 0);
         status = getIntent().getIntExtra("status", 0);
+        bizCertify = getIntent().getIntExtra("bizCertify", 0);
+        clRqLrv.setOnClickListener(view -> setRq());
         initAccessToken();
         EanfangHttp.get(UserApi.GET_COMPANY_ORG_INFO + mOrgId).execute(new EanfangCallback<AuthCompanyBaseInfoBean>(this, true, AuthCompanyBaseInfoBean.class, (beans) -> {
             infoBean = beans;
+            status = beans.getStatus();
             switch (status) {
-                case 0:
-                    setData(beans);
-                    break;
                 case 1:
-                    setData(beans);
-                    break;
                 case 2:
                     setRightTitle("只读");
                     setData(beans);
                     setView();
                     break;
-                case 3:
-                    setData(beans);
-                    break;
                 default:
+                    setData(beans);
             }
         }));
     }
-
 
     private void setView() {
         ivUploadlogo.setEnabled(false);
@@ -185,27 +203,28 @@ public class BusinessCertificationActivity extends BaseActivity {
         frDbLrv.setEnabled(false);
         zcZjLrv.setEnabled(false);
         clRqLrv.setEnabled(false);
+        clRqLrv.setClickable(false);
         jzRqLrv.setEnabled(false);
         setRightTitleOnClickListener(null);
     }
 
     private void setData(AuthCompanyBaseInfoBean beans) {
-
-        if (infoBean.getLicensePic()!=null) {
+        if (infoBean.getLicensePic() != null) {
             OkHttpClient okHttpClient = new OkHttpClient();
             Request request = new Request.Builder().url(BuildConfig.OSS_SERVER + infoBean.getLicensePic()).build();
-            okHttpClient.newCall(request).enqueue(new Callback() {
-                                                      @Override
-                                                      public void onFailure(Call call, IOException e) {
-                                                      }
+            okHttpClient.newCall(request).enqueue(
+                    new Callback() {
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+                        }
 
-                                                      @Override
-                                                      public void onResponse(Call call, Response response) {
-                                                          InputStream inputStream = response.body().byteStream();
-                                                          Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                                                          runOnUiThread(() -> ivUploadlogo.setImageBitmap(bitmap));
-                                                      }
-                                                  }
+                        @Override
+                        public void onResponse(Call call, Response response) {
+                            InputStream inputStream = response.body().byteStream();
+                            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                            runOnUiThread(() -> ivUploadlogo.setImageBitmap(bitmap));
+                        }
+                    }
             );
         }
         dwMcLrv.setText(beans.getName());
@@ -269,11 +288,9 @@ public class BusinessCertificationActivity extends BaseActivity {
         return hasGotToken;
     }
 
-    @SuppressLint("LongLogTag")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        // 识别成功回调，营业执照识别
         if (requestCode == REQUEST_CODE_BUSINESS_LICENSE && resultCode == Activity.RESULT_OK) {
             RecognizeService.recBusinessLicense(this, new File(getApplication().getFilesDir(), "pic.jpg").getAbsolutePath(),
                     result -> {
@@ -288,9 +305,7 @@ public class BusinessCertificationActivity extends BaseActivity {
                         });
                         ivUploadlogo.setImageBitmap(bitmap);
                         infoBean.setLicensePic(imgKey);
-                        //alertText("", result);
                         ZdBusinessCertification myclass = JSONObject.parseObject(result, ZdBusinessCertification.class);
-                        Log.d("REQUEST_CODE_BUSINESS_LICENSE:  ", fileString + "  onResult: " + result + "\n" + myclass.getWords_result().get地址().getWords());
                         setData(myclass);
                     });
         }

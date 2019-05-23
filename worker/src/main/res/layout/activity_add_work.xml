@@ -22,7 +22,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="46dp"
+                android:gravity="center_vertical"
                 android:background="@color/white"
                 android:orientation="horizontal"
                 android:paddingBottom="@dimen/dimen_20"
@@ -33,7 +34,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="公司名称"
+                    android:text="任职机构"
+                    android:drawableLeft="@mipmap/ic_must_input"
+                    android:drawablePadding="@dimen/dimen_4"
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_14" />
 
@@ -44,7 +47,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:gravity="right"
+                    android:gravity="right|center_vertical"
                     android:hint="请输入"
                     android:maxLength="11"
                     android:textColor="@color/color_bottom"
@@ -55,7 +58,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="46dp"
+                android:gravity="center_vertical"
                 android:background="@color/white"
                 android:orientation="horizontal"
                 android:paddingBottom="@dimen/dimen_20"
@@ -66,7 +70,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="职位"
+                    android:text="岗位名称"
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_14" />
 
@@ -77,7 +81,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:gravity="right"
+                    android:gravity="right|center_vertical"
                     android:hint="请输入"
                     android:maxLength="11"
                     android:textColor="@color/color_bottom"
@@ -88,7 +92,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="46dp"
+                android:gravity="center_vertical"
                 android:background="@color/white"
                 android:orientation="horizontal"
                 android:paddingBottom="@dimen/dimen_20"
@@ -110,7 +115,7 @@
                     android:layout_marginLeft="20dp"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:gravity="right"
+                    android:gravity="right|center_vertical"
                     android:hint="请输入"
                     android:maxLength="11"
                     android:textColor="@color/color_bottom"
@@ -122,7 +127,8 @@
             <LinearLayout
                 android:id="@+id/ll_date"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="46dp"
+                android:gravity="center_vertical"
                 android:background="@color/white"
                 android:orientation="horizontal"
                 android:paddingBottom="@dimen/dimen_20"
@@ -143,8 +149,8 @@
                     android:layout_height="match_parent"
                     android:layout_marginLeft="20dp"
                     android:layout_weight="1"
-                    android:drawableEnd="@mipmap/date_template"
-                    android:gravity="right"
+                    android:drawableEnd="@mipmap/rliv"
+                    android:gravity="right|center_vertical"
                     android:textColor="@color/color_bottom"
                     android:textSize="@dimen/textSize_13" />
             </LinearLayout>
@@ -153,7 +159,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="46dp"
+                android:gravity="center_vertical"
                 android:layout_marginTop="@dimen/dimen_16"
                 android:background="@color/color_white"
                 android:focusable="true"
@@ -239,15 +246,15 @@
         android:id="@+id/tv_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
         android:layout_margin="@dimen/dimen_40"
-        android:background="@drawable/bg_btn_trouble_detail_add_trouble"
+        android:background="@drawable/bg_new_cc"
         android:gravity="center"
-        android:padding="@dimen/dimen_30"
+        android:padding="@dimen/dimen_20"
         android:visibility="gone"
-        android:text="删除"
-        android:textColor="@color/color_white"
-        android:textSize="@dimen/textSize_14"
-        />
+        android:text="删除此条"
+        android:textColor="#FF3F3F"
+        android:textSize="@dimen/textSize_14" />
 
 </LinearLayout>

@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.method.LinkMovementMethod;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -24,6 +25,7 @@ import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.delegate.BGASortableDelegate;
+import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.security.SecurityCommentBean;
@@ -37,6 +39,7 @@ import com.eanfang.util.ETimeUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
+import com.eanfang.witget.DefaultPopWindow;
 import com.eanfang.witget.mentionedittext.edit.util.FormatRangeManager;
 import com.eanfang.witget.mentionedittext.text.MentionTextView;
 import com.eanfang.witget.mentionedittext.text.listener.Parser;
@@ -45,6 +48,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.im.SelectIMContactActivity;
 import net.eanfang.worker.ui.activity.my.UserHomeActivity;
 import net.eanfang.worker.ui.adapter.security.SecurityCommentAdapter;
 import net.eanfang.worker.ui.widget.DividerItemDecoration;
@@ -163,6 +167,11 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
      * 修改item状态
      */
     private SecurityListBean.ListBean mItenSecurityDetailBean;
+    /**
+     * 删除安防圈
+     */
+    private View mPopWindowContent;
+    private TextView mTvDelete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -176,6 +185,9 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
 
     private void initView() {
         setTitle("安防圈");
+        mPopWindowContent = LayoutInflater.from(this).inflate(R.layout.layout_pop_security_delete, null);
+        mTvDelete = mPopWindowContent.findViewById(R.id.tv_delete);
+        mTvDelete.setText("删除");
         securityCommentAdapter = new SecurityCommentAdapter();
         rvComments.setLayoutManager(new LinearLayoutManager(this));
         securityCommentAdapter.bindToRecyclerView(rvComments);
@@ -229,6 +241,18 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
             intent.putExtra("isCommentEdit", isCommentEdit);
             setResult(RESULT_OK, intent);
             finishSelf();
+        });
+        DefaultPopWindow popWindow = new DefaultPopWindow(mPopWindowContent);
+        popWindow.setOnDismissListener(() -> popWindow.backgroundAlpha(SecurityDetailActivity.this, 1.0f));
+        mTvDelete.setOnClickListener(v -> {
+            new TrueFalseDialog(this, "系统提示", "是否删除?", () -> {
+                doDelete();
+            }).showDialog();
+            popWindow.dismiss();
+        });
+        setRightImageOnClickListener(v -> {
+            popWindow.showAsDropDown(findViewById(R.id.iv_right));
+            popWindow.backgroundAlpha(SecurityDetailActivity.this, 0.5f);
         });
     }
 
@@ -300,8 +324,11 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         tvTime.setText(ETimeUtils.getTimeFormatText(securityDetailBean.getCreateTime()));
         if (securityDetailBean.getPublisherAccId().equals(EanfangApplication.get().getAccId())) {
             tvIsFocus.setVisibility(View.GONE);
+            setRightImageVisible();
+            setRightImageResId(R.drawable.icon_right_more);
         } else {
             tvIsFocus.setVisibility(View.VISIBLE);
+            setRightImageGone();
         }
         /**
          * 是否是好友 2 好友 1 不是好友
@@ -438,9 +465,26 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
     }
 
     /**
-     * 分享
+     * 分享 分享到好友
      */
     private void doShare() {
+        //分享聊天
+        if (securityDetailBean != null) {
+            Intent intent = new Intent(SecurityDetailActivity.this, SelectIMContactActivity.class);
+            Bundle bundle = new Bundle();
+
+            bundle.putString("id", String.valueOf(securityDetailBean.getSpcId()));
+            bundle.putString("orderNum", securityDetailBean.getPublisherOrg().getOrgName());
+            if (!StringUtils.isEmpty(securityDetailBean.getSpcImg())) {
+                bundle.putString("picUrl", securityDetailBean.getSpcImg().split(",")[0]);
+            }
+            bundle.putString("creatTime", securityDetailBean.getSpcContent());
+            bundle.putString("workerName", securityDetailBean.getAccountEntity().getRealName());
+            bundle.putString("status", String.valueOf(securityDetailBean.getFollowsStatus()));
+            bundle.putString("shareType", "8");
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }
     }
 
     /**
@@ -523,6 +567,21 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         etInput.setFocusable(true);
         etInput.setFocusableInTouchMode(true);
         StringUtils.showKeyboard(SecurityDetailActivity.this, etInput);
+    }
+
+
+    /**
+     * 删除安防圈
+     */
+    private void doDelete() {
+        EanfangHttp.post(NewApiService.SERCURITY_DELETE)
+                .params("spcId", mId)
+                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
+                    Intent intent = new Intent();
+                    intent.putExtra("isDelete", true);
+                    setResult(RESULT_OK, intent);
+                    finishSelf();
+                }));
     }
 
     /**
@@ -623,6 +682,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         if (resultCode == Activity.RESULT_OK && data != null) {
             if (mIsPubUid) {
                 isFoucus = data.getBooleanExtra(UserHomeActivity.RESULT_FOLLOW_STATE, true);
+                isFoucsEdit = isFoucus;
                 tvIsFocus.setText(isFoucus ? "取消关注" : "关注");
             }
         }

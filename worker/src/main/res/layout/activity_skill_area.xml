@@ -9,11 +9,12 @@
 
 
     <include layout="@layout/header" />
-
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
 
@@ -37,7 +38,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/dimen_38"
-                    android:text="技能能力"
+                    android:text="业务信息"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/textSize_13" />
 
@@ -129,7 +130,8 @@
                 <ExpandableListView
                     android:id="@+id/elv_area"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:groupIndicator="@null" />
 
         </LinearLayout>
 
@@ -139,15 +141,15 @@
 
     <TextView
         android:id="@+id/tv_go"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/dimen_600"
+        android:layout_height="@dimen/dimen_88"
         android:layout_alignParentBottom="true"
-        android:layout_margin="@dimen/dimen_20"
-        android:background="@drawable/bg_btn_trouble_detail_add_trouble"
+        android:layout_margin="@dimen/dimen_40"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/bg_button_gradation_blue"
         android:gravity="center"
-        android:padding="@dimen/dimen_30"
         android:text="提交认证"
         android:textColor="@color/color_white"
         android:textSize="@dimen/textSize_13" />
-
+    </RelativeLayout>
 </LinearLayout>

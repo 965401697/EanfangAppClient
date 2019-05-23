@@ -56,7 +56,7 @@ public abstract class TemplateItemListFragment extends BaseFragment implements S
 
     @Override
     protected void onLazyLoad() {
-        mPage = 1;
+         mPage = 1;
         getData();
     }
 
@@ -69,7 +69,8 @@ public abstract class TemplateItemListFragment extends BaseFragment implements S
     }
 
     public void refresh() {
-        mPage = 1;//下拉永远第一页
+        //下拉永远第一页
+        mPage = 1;
         getData();
     }
 

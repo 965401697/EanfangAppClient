@@ -1,5 +1,6 @@
 package net.eanfang.client.ui.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -31,6 +32,7 @@ import com.eanfang.model.LoginBean;
 import com.eanfang.model.device.User;
 import com.eanfang.util.BadgeUtil;
 import com.eanfang.util.CleanMessageUtil;
+import com.eanfang.util.ContactUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.SharePreferenceUtil;
@@ -60,6 +62,7 @@ import net.eanfang.client.util.PrefUtils;
 
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 import butterknife.ButterKnife;
@@ -217,7 +220,7 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
 
                 mExitTime = System.currentTimeMillis();
             } else {
-                RongIM.getInstance().logout();//退出融云
+                RongIM.getInstance().disconnect();//退出融云
                 Intent intent = new Intent(getPackageName() + ".ExitListenerReceiver");
                 sendBroadcast(intent);
                 EanfangApplication.get().closeAll();
@@ -474,7 +477,7 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
                 }
             }
             Log.i("zzw", "--------------------isDelect=" + isDelect);
-            return isDelect;
+             return isDelect;
         }
 
     }
@@ -688,5 +691,19 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
         return mStatus;
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RongIM.getInstance().disconnect();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        int index = Arrays.asList(permissions).indexOf(Manifest.permission.READ_CONTACTS);
+        if (grantResults[index] == 0) {
+            ContactUtil.postAccount(MainActivity.this);
+        }
+    }
 }
 

@@ -2,22 +2,27 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
         <include layout="@layout/header" />
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_120" />
+
         <ImageView
-            android:layout_width="@dimen/dimen_254"
-            android:layout_height="@dimen/dimen_254"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/dimen_74"
-            android:src="@mipmap/ic_coopercation_success" />
+            android:layout_margin="@dimen/dimen_20"
+            android:src="@mipmap/tj_cg" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -25,15 +30,18 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/dimen_26"
             android:text="提交成功！"
-            android:textColor="#4DD456"
-            android:textSize="@dimen/textSize_18" />
+            android:textColor="#333333"
+            android:textSize="@dimen/textSize_20" />
 
         <TextView
             android:id="@+id/tv_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/dimen_102"
+            android:layout_marginTop="@dimen/dimen_60"
+            android:gravity="center"
+            android:textColor="#999999"
+            android:lineSpacingMultiplier="1.3"
             android:text="企业客户享有更多的功能"
             android:textSize="@dimen/textSize_15" />
 
@@ -42,34 +50,64 @@
             android:layout_width="@dimen/dimen_348"
             android:layout_height="@dimen/dimen_88"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="68dp"
-            android:background="@drawable/bg_btn_trouble_detail_add_trouble"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/bg_gradual_change_ellipse"
             android:gravity="center"
+            android:textSize="13sp"
             android:text="前往创建团队"
             android:textColor="@color/white" />
 
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/dimen_60">
+
+            <ImageView
+                android:id="@+id/logo_iv"
+                android:layout_width="@dimen/dimen_1"
+                android:layout_height="@dimen/dimen_100"
+                android:src="@mipmap/worker_logo"
+                android:visibility="invisible" />
+
+            <TextView
+                android:id="@+id/yw_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_20"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:layout_toRightOf="@id/logo_iv"
+                android:text="如有疑问，请联系客服处理，"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/yw_b_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/yw_tv"
+                android:layout_marginLeft="@dimen/dimen_20"
+                android:layout_toRightOf="@id/logo_iv"
+                android:text="客服热线: "
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/call_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/yw_tv"
+                android:layout_marginLeft="@dimen/dimen_20"
+                android:layout_toRightOf="@id/yw_b_tv"
+                android:autoLink="all"
+                android:text="400-890-9280"
+                android:textColor="#4988F5"
+                android:textSize="14sp" />
+        </RelativeLayout>
     </LinearLayout>
-
-
-    <TextView
-        android:id="@+id/tv_desc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/tv_service"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center_horizontal"
-        android:text="注意：认证成功后不能取消，信息变动需要重新认证，"
-        android:textSize="@dimen/textSize_13" />
-
-    <TextView
-        android:id="@+id/tv_service"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/dimen_38"
-        android:text="如有疑问，请联系客服处理，客服热线：400-890-9280"
-        android:textSize="@dimen/textSize_13" />
 
 
 </RelativeLayout>

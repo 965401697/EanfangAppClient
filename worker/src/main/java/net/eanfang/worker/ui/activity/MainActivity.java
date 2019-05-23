@@ -1,5 +1,6 @@
 package net.eanfang.worker.ui.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.annimon.stream.Stream;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
@@ -36,6 +38,7 @@ import com.eanfang.model.device.User;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.BadgeUtil;
 import com.eanfang.util.CleanMessageUtil;
+import com.eanfang.util.ContactUtil;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.LocationUtil;
@@ -48,6 +51,7 @@ import com.eanfang.util.UpdateAppManager;
 import com.picker.common.util.ScreenUtils;
 import com.tencent.android.tpush.XGPushConfig;
 import com.yaf.base.entity.WorkerEntity;
+import com.yaf.sys.entity.BaseDataEntity;
 
 import net.eanfang.worker.BuildConfig;
 import net.eanfang.worker.R;
@@ -69,7 +73,11 @@ import net.eanfang.worker.util.PrefUtils;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
@@ -259,7 +267,7 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
 
                 mExitTime = System.currentTimeMillis();
             } else {
-                RongIM.getInstance().logout();//退出融云
+                RongIM.getInstance().disconnect();//退出融云
                 Intent intent = new Intent(getPackageName() + ".ExitListenerReceiver");
                 sendBroadcast(intent);
 
@@ -317,8 +325,45 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
 //                            BaseDataBean newDate = jsonObject.toJavaObject(BaseDataBean.class);
                             EanfangApplication.get().set(BaseDataBean.class.getName(), jsonObject.toJSONString());
                         }
+                        saveArea();
                     }).start();
                 }));
+    }
+
+    private void saveArea() {
+        //预加载国家区域
+        String areaJson = SharePreferenceUtil.get().getString(Constant.COUNTRY_AREA_LIST, "");
+        if (StringUtils.isEmpty(areaJson)) {
+            BaseDataEntity entity = new BaseDataEntity();
+            List<BaseDataEntity> areaListBean = Config.get().getRegionList(1);
+            //获得全部 地区数据
+            List<BaseDataEntity> allAreaList = new ArrayList<>(Config.get().getRegionList());
+            for (int i = 0; i < areaListBean.size(); i++) {
+                BaseDataEntity provinceEntity = areaListBean.get(i);
+                //处理当前省下的所有市
+                List<BaseDataEntity> cityList = Stream.of(allAreaList).filter(bean -> bean.getParentId() != null && bean.getParentId().intValue() == provinceEntity.getDataId()).toList();
+                //查询出来后，移除，以增加效率
+                allAreaList.removeAll(cityList);
+                for (int j = 0; j < cityList.size(); j++) {
+                    BaseDataEntity cityEntity = cityList.get(j);
+                    //处理当前市下所有区县
+                    List<BaseDataEntity> countyList = Stream.of(allAreaList).filter(bean -> bean.getParentId() != null && bean.getParentId().intValue() == cityEntity.getDataId()).toList();
+                    //查询出来后，移除，以增加效率
+                    allAreaList.removeAll(countyList);
+                    cityEntity.setChildren(countyList);
+                }
+                provinceEntity.setChildren(cityList);
+            }
+            entity.setChildren(areaListBean);
+            EanfangApplication.get().sSaveArea = entity;
+            try {
+                SharePreferenceUtil.get().set(Constant.COUNTRY_AREA_LIST, JSON.toJSONString(entity));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            EanfangApplication.get().sSaveArea = JSONObject.toJavaObject(JSONObject.parseObject(areaJson), BaseDataEntity.class);
+        }
     }
 
     /**
@@ -356,13 +401,13 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
      */
     private void getRongYToken() {
         EanfangHttp.post(UserApi.POST_RONGY_TOKEN).params("userId", EanfangApplication.get().getAccId()).execute(new EanfangCallback<String>(MainActivity.this, false, String.class, (str) -> {
-                    if (!TextUtils.isEmpty(str)) {
-                        JSONObject json = JSONObject.parseObject(str);
-                        String token = json.getString("token");
-                        EanfangApplication.get().set(EanfangConst.RONG_YUN_TOKEN, token);
-                        WorkerApplication.connect(token);
-                    }
-                }));
+            if (!TextUtils.isEmpty(str)) {
+                JSONObject json = JSONObject.parseObject(str);
+                String token = json.getString("token");
+                EanfangApplication.get().set(EanfangConst.RONG_YUN_TOKEN, token);
+                WorkerApplication.connect(token);
+            }
+        }));
     }
 
     /**
@@ -772,6 +817,21 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
 
     public String onNoConatac() {
         return mStatus;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RongIM.getInstance().disconnect();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        int index = Arrays.asList(permissions).indexOf(Manifest.permission.READ_CONTACTS);
+        if (grantResults[index] == 0) {
+            ContactUtil.postAccount(MainActivity.this);
+        }
     }
 }
 

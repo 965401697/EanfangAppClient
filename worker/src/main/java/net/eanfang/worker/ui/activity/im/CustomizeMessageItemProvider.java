@@ -25,6 +25,7 @@ import net.eanfang.worker.ui.activity.worksapce.TroubleDetalilListActivity;
 import net.eanfang.worker.ui.activity.worksapce.oa.check.DealWithFirstActivity;
 import net.eanfang.worker.ui.activity.worksapce.oa.task.TaskDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.oa.workreport.WorkReportDetailActivity;
+import net.eanfang.worker.ui.activity.worksapce.security.SecurityDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.worktalk.WorkTalkDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.worktransfer.WorkTransferDetailActivity;
 
@@ -45,6 +46,7 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
         TextView orderNum;
         TextView creatTime;
         TextView workerName;
+        TextView mTime;
         SimpleDraweeView simpleDraweeView;
         LinearLayout ll_custom;
     }
@@ -82,6 +84,8 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
             holder.creatTime.setText("类型：" + GetConstDataUtils.getWorkReportTypeList().get(Integer.parseInt(customizeMessage.getCreatTime())));
             holder.workerName.setText("发布人：" + customizeMessage.getWorkerName());
             holder.status.setText(Integer.parseInt(customizeMessage.getStatus()) == 1 ? "已读" : "未读");
+            holder.mTime.setText(customizeMessage.getCreatReleaseTime());
+            holder.mTime.setVisibility(View.VISIBLE);
         } else if (customizeMessage.getShareType().equals("4")) {
             holder.title.setText("布置任务");
             holder.orderNum.setText("公司：" + customizeMessage.getOrderNum());
@@ -120,6 +124,13 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
             holder.workerName.setText(customizeMessage.getWorkerName());
             holder.status.setText(Integer.parseInt(customizeMessage.getStatus()) == 1 ? "已读" : "未读");
 
+        } else if (customizeMessage.getShareType().equals("8")) {
+            holder.title.setText("安防圈");
+            holder.orderNum.setText("公司：" + customizeMessage.getOrderNum());
+            holder.simpleDraweeView.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + customizeMessage.getPicUrl()));
+            holder.creatTime.setText("标题：" + customizeMessage.getCreatTime());
+            holder.workerName.setText("发布人：" + customizeMessage.getWorkerName());
+            holder.status.setVisibility(View.INVISIBLE);
         }
 
 
@@ -159,6 +170,8 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
             return new SpannableString("交接班(快去查看吧!)");
         } else if (customizeMessage.getShareType().equals("7")) {
             return new SpannableString("面谈员工(快去查看吧!)");
+        } else if (customizeMessage.getShareType().equals("8")) {
+            return new SpannableString("安防圈(快去查看吧!)");
         }
         return null;
     }
@@ -194,6 +207,8 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
             view.getContext().startActivity(new Intent((Activity) view.getContext(), WorkTransferDetailActivity.class).putExtra("itemId", customizeMessage.getOrderId()));
         } else if (customizeMessage.getShareType().equals("7")) {
             view.getContext().startActivity(new Intent((Activity) view.getContext(), WorkTalkDetailActivity.class).putExtra("itemId", customizeMessage.getOrderId()));
+        } else if (customizeMessage.getShareType().equals("8")) {
+            view.getContext().startActivity(new Intent((Activity) view.getContext(), SecurityDetailActivity.class).putExtra("spcId", Long.parseLong(customizeMessage.getOrderId())));
         }
     }
 
@@ -208,6 +223,7 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
         holder.workerName = (TextView) view.findViewById(R.id.tv_person_name);
         holder.simpleDraweeView = (SimpleDraweeView) view.findViewById(R.id.iv_upload);
         holder.ll_custom = (LinearLayout) view.findViewById(R.id.ll_custom);
+        holder.mTime = view.findViewById(R.id.tv_time);
         view.setTag(holder);
         return view;
     }

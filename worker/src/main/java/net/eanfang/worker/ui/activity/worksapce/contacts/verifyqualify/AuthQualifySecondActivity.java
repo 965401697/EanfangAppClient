@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.config.Config;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.GrantChange;
@@ -21,6 +21,7 @@ import com.yaf.sys.entity.BaseDataEntity;
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.GroupAdapter;
 import net.eanfang.worker.ui.activity.authentication.SubmitSuccessfullyQyActivity;
+import net.eanfang.worker.ui.interfaces.AreaCheckChangeListener;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -37,21 +38,19 @@ import butterknife.ButterKnife;
  */
 
 
-public class AuthQualifySecondActivity extends BaseActivity {
+public class AuthQualifySecondActivity extends BaseActivity implements AreaCheckChangeListener {
 
     @BindView(R.id.elv_area)
     ExpandableListView elvArea;
     @BindView(R.id.tv_confim)
     TextView tvConfim;
 
-    List<BaseDataEntity> areaListBean = Config.get().getRegionList(1);
+    List<BaseDataEntity> areaListBean;
     @BindView(R.id.ll_title)
     LinearLayout llTitle;
     private GroupAdapter mAdapter;
     private Long orgid;
     private int verifyStatus;
-    private List<Integer> checkListId;
-    private List<Integer> unCheckListId;
     private SystypeBean byNetGrant;
     private GrantChange grantChange = new GrantChange();
     private HashSet<Integer> selDataId;
@@ -64,7 +63,6 @@ public class AuthQualifySecondActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth_qualify_second);
         ButterKnife.bind(this);
-        doLoadArea();
         initView();
         initData();
     }
@@ -75,39 +73,22 @@ public class AuthQualifySecondActivity extends BaseActivity {
         orgid = getIntent().getLongExtra("orgid", 0);
         verifyStatus = getIntent().getIntExtra("verifyStatus", 0);
         isLook = getIntent().getBooleanExtra("isLook", false);
-
         if (isLook) {
             llTitle.setVisibility(View.GONE);
             tvConfim.setVisibility(View.GONE);
         }
-
-    }
-
-    private void doLoadArea() {
-        new Thread(() -> {
-            //获得全部 地区数据
-            List<BaseDataEntity> allAreaList = new ArrayList<>(Config.get().getRegionList());
-            for (int i = 0; i < areaListBean.size(); i++) {
-                BaseDataEntity provinceEntity = areaListBean.get(i);
-                //处理当前省下的所有市
-                List<BaseDataEntity> cityList = Stream.of(allAreaList).filter(bean -> bean.getParentId() != null && bean.getParentId().intValue() == provinceEntity.getDataId()).toList();
-                //查询出来后，移除，以增加效率
-                allAreaList.removeAll(cityList);
-                for (int j = 0; j < cityList.size(); j++) {
-                    BaseDataEntity cityEntity = cityList.get(j);
-                    //处理当前市下所有区县
-                    List<BaseDataEntity> countyList = Stream.of(allAreaList).filter(bean -> bean.getParentId() != null && bean.getParentId().intValue() == cityEntity.getDataId()).toList();
-                    //查询出来后，移除，以增加效率
-                    allAreaList.removeAll(countyList);
-                    cityList.get(j).setChildren(countyList);
-                }
-                areaListBean.get(i).setChildren(cityList);
-            }
-        }).start();
     }
 
     private void initData() {
-        EanfangHttp.get(UserApi.GET_COMPANY_ORG_SYS_INFO + orgid + "/AREA")
+        //获取国家区域
+        if (EanfangApplication.get().sSaveArea == null) {
+            showToast("加载服务区域失败！");
+            tvConfim.setClickable(false);
+            return;
+        }
+        BaseDataEntity entity = EanfangApplication.get().sSaveArea;
+        areaListBean = entity.getChildren();
+        EanfangHttp.get(UserApi.GET_COMPANY_ORG_AREA_INFO + orgid + "/AREA")
                 .execute(new EanfangCallback<SystypeBean>(this, true, SystypeBean.class, (bean) -> {
                     byNetGrant = bean;
                     fillData();
@@ -124,17 +105,12 @@ public class AuthQualifySecondActivity extends BaseActivity {
 
     private void initAdapter(List<BaseDataEntity> areaListBean) {
         mAdapter = new GroupAdapter(this, areaListBean);
+        mAdapter.setListener(this);
         elvArea.setAdapter(mAdapter);
         if ((verifyStatus != 0 && verifyStatus != 3 || isLook)) {
             //  当状态为已认证状态时， 设置为不可点击不可点击
             mAdapter.isAuth = true;
             tvConfim.setText("确定");
-            elvArea.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-                @Override
-                public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
-                    return true;
-                }
-            });
         }
 
         tvConfim.setOnClickListener((v) -> {
@@ -150,13 +126,14 @@ public class AuthQualifySecondActivity extends BaseActivity {
 
         for (BaseDataEntity baseDataBean : list) {
             if (baseDataBean.isCheck() == isChecked) {
-                if (isChecked && selDataId.contains(baseDataBean.getDataId())) {
-                    continue;
+                if (isChecked && !selDataId.contains(baseDataBean.getDataId())) {
+                    selDataId.add(baseDataBean.getDataId());
+                    resultList.add(baseDataBean.getDataId());
                 }
-                if (!isChecked && !selDataId.contains(baseDataBean.getDataId())) {
-                    continue;
+                if (!isChecked && selDataId.contains(baseDataBean.getDataId())) {
+                    selDataId.remove(baseDataBean.getDataId());
+                    resultList.add(baseDataBean.getDataId());
                 }
-                resultList.add(baseDataBean.getDataId());
             }
             List<Integer> resultList2 = getListData(baseDataBean.getChildren(), isChecked);
             resultList.addAll(resultList2);
@@ -172,6 +149,8 @@ public class AuthQualifySecondActivity extends BaseActivity {
         }
 
         for (BaseDataEntity baseDataBean : list) {
+            //设置所有的区域为不选
+            baseDataBean.setCheck(false);
             if (selected.contains(baseDataBean.getDataId())) {
                 baseDataBean.setCheck(isChecked);
             }
@@ -184,27 +163,21 @@ public class AuthQualifySecondActivity extends BaseActivity {
     }
 
     private void commit() {
-        checkListId = getListData(areaListBean, true);
-        unCheckListId = getListData(areaListBean, false);
-        grantChange.setAddIds(checkListId);
-        grantChange.setDelIds(unCheckListId);
+        getListData(areaListBean, true);
+        getListData(areaListBean, false);
 
-        if ((checkListId.size() == 0) && (unCheckListId.size() == 0) && (byNetGrant.getList().size() <= 0)) {
+        grantChange.setAddIds(new ArrayList<>(selDataId));
+        grantChange.setDelIds(null);
+
+        if (selDataId.size() == 0) {
             showToast("请至少选择一个服务区域");
         } else {
-            for (int i = 0; i < areaListBean.size(); i++) {
-                if (areaListBean.get(i).isCheck()) {
-
-                    EanfangHttp.post(UserApi.GET_ORGUNIT_SHOP_ADD_AREA + orgid)
-                            .upJson(JSONObject.toJSONString(grantChange))
-                            .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
+            EanfangHttp.post(UserApi.GET_ORGUNIT_SHOP_ADD_AREA_V2 + orgid).upJson(JSONObject.toJSONString(grantChange))
+                    .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
 //                            showToast("认证资料提交成功");
-                                commitVerfiy();
-                            }));
-                    break;
-                }
+                        commitVerfiy();
+                    }));
 
-            }
         }
 
     }
@@ -219,5 +192,43 @@ public class AuthQualifySecondActivity extends BaseActivity {
         intent.putExtra("order", order);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void onCheckAreaChange(int onPos, int secPos, int thirdPos, boolean isCheck) {
+        if (thirdPos != -1) {
+            areaListBean.get(onPos).getChildren().get(secPos).getChildren().get(thirdPos).setCheck(isCheck);
+        } else if (secPos != -1) {
+            areaListBean.get(onPos).getChildren().get(secPos).setCheck(isCheck);
+        } else {
+            areaListBean.get(onPos).setCheck(isCheck);
+        }
+        int checkAreaSize = 0;
+        int areaSize = 0;
+        for (BaseDataEntity entity2 : areaListBean.get(onPos).getChildren()) {
+            if (entity2.getChildren().size() == 0) {
+                if (entity2.isCheck()) {
+                    checkAreaSize += 1;
+                }
+            } else {
+                for (BaseDataEntity entity3 : entity2.getChildren()) {
+                    if (entity3.isCheck()) {
+                        checkAreaSize += 1;
+                    }
+                }
+            }
+            areaSize += entity2.getChildren().size() == 0 ? 1 : entity2.getChildren().size();
+        }
+        GroupAdapter.FirstHolder holder = mAdapter.getChangeTextView(onPos);
+        if (holder != null) {
+            if (areaSize == checkAreaSize) {
+                holder.tv_cb.setText("取消全选");
+                areaListBean.get(onPos).setCheck(true);
+            } else {
+                holder.tv_cb.setText("全选");
+                areaListBean.get(onPos).setCheck(false);
+            }
+            holder.tv.setText(areaListBean.get(onPos).getDataName() + "(" + checkAreaSize + "/" + areaSize + ")");
+        }
     }
 }

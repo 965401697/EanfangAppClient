@@ -9,7 +9,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
@@ -21,12 +23,18 @@ import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
+import com.eanfang.util.StringUtils;
 import com.photopicker.com.util.BGASpaceItemDecoration;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.im.SelectIMContactActivity;
 import net.eanfang.client.ui.activity.worksapce.online.FaultExplainActivity;
 import net.eanfang.client.ui.adapter.security.SecurityFoucsListAdapter;
 import net.eanfang.client.ui.adapter.security.SecurityListAdapter;
+import net.eanfang.client.util.ImagePerviewUtil;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -71,6 +79,8 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
 
     private SecurityListBean.ListBean securityDetailBean;
     private int mPosition;
+    private ArrayList<String> picList = new ArrayList<>();
+    private String[] pics = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,11 +139,17 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
                 case R.id.ll_comments:
                     doJump(position, true);
                     break;
+                case R.id.ll_share:
+                    doShare(securityListAdapter.getData().get(position));
+                    break;
+                case R.id.ll_pic:
+                    picList.clear();
+                    pics = securityListAdapter.getData().get(position).getSpcImg().split(",");
+                    picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> BuildConfig.OSS_SERVER + (url).toString()).toList());
+                    ImagePerviewUtil.perviewImage(SecurityPersonalPublicListActivity.this, picList);
+                    break;
                 case R.id.tv_isFocus:
                 case R.id.ll_like:
-
-                case R.id.ll_pic:
-                case R.id.iv_share:
                 case R.id.ll_question:
                 case R.id.rl_video:
                     doJump(position, false);
@@ -225,6 +241,28 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
                 }));
     }
 
+    /**
+     * 分享 分享到好友
+     */
+    private void doShare(SecurityListBean.ListBean listBean) {
+        //分享聊天
+        if (listBean != null) {
+            Intent intent = new Intent(SecurityPersonalPublicListActivity.this, SelectIMContactActivity.class);
+            Bundle bundle = new Bundle();
+
+            bundle.putString("id", String.valueOf(listBean.getSpcId()));
+            bundle.putString("orderNum", listBean.getPublisherOrg().getOrgName());
+            if (!StringUtils.isEmpty(listBean.getSpcImg())) {
+                bundle.putString("picUrl", listBean.getSpcImg().split(",")[0]);
+            }
+            bundle.putString("creatTime", listBean.getSpcContent());
+            bundle.putString("workerName", listBean.getAccountEntity().getRealName());
+            bundle.putString("status", String.valueOf(listBean.getFollowsStatus()));
+            bundle.putString("shareType", "8");
+            intent.putExtras(bundle);
+            startActivity(intent);
+        }
+    }
 
     private void initData() {
         if (queryEntry == null) {
@@ -409,6 +447,12 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
 
             securityDetailBean.setReadCount(mSecurityDetailBean.getReadCount());
             securityDetailBean.setReadStatus(mSecurityDetailBean.getReadStatus());
+            /**
+             * 是否删除
+             * */
+            if (intentData.getBooleanExtra("isDelete", false)) {
+                securityListAdapter.getData().remove(securityDetailBean);
+            }
             securityListAdapter.notifyDataSetChanged();
             if (securityListAdapter.getData() != null && securityListAdapter.getData().size() > 0) {
                 tvNoDatas.setVisibility(View.GONE);

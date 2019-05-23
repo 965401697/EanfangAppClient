@@ -104,40 +104,49 @@ public class AddCertificationActivity extends BaseActivityWithTakePhoto implemen
         snplMomentAccident.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_CERTIFICATE, REQUEST_CODE_PHOTO_CERTIFICATE));
         snplMomentAccident.setData(picList_certificate);
         doSelectYearMonthDay();
-        setRightTitle("保存");
+        setRightTitleOnClickListener(view -> setData());
         if (bean != null) {
+            setTitle("荣誉");
+            setRightTitle("编辑");
+            setZhiDu(false);
             fillData();
-            setTitle("编辑荣誉");
-            tvSave.setVisibility(View.VISIBLE);
+            setRightTitleOnClickListener(view -> {
+                        setRightTitle("保存");
+                        setZhiDu(true);
+                        setRightTitleOnClickListener(view1 -> setData());
+                    }
+
+            );
         } else {
-            setTitle("添加荣誉");
+            setRightTitle("保存");
+            setTitle("荣誉");
             tvSave.setVisibility(View.GONE);
         }
-        setRightTitleOnClickListener(view -> setData());
     }
 
-    /**
-     * 只进行查看操作不看编辑
-     */
-    private void doUnWrite() {
-        tvSave.setVisibility(View.GONE);
-        etName.setEnabled(false);
-        etOrg.setEnabled(false);
-        llDate.setEnabled(false);
-        snplMomentAccident.setEditable(false);
+    private void setZhiDu(boolean isZd) {
+        tvSave.setVisibility(isZd ? View.VISIBLE : View.GONE);
+        etOrg.setEnabled(isZd);
+        etName.setEnabled(isZd);
+        llDate.setEnabled(isZd);
+        snplMomentAccident.setPlusEnable(isZd || StringUtils.isEmpty(bean.getHonorPics()));
+        snplMomentAccident.setEditable(isZd || StringUtils.isEmpty(bean.getHonorPics()));
+        snplMomentAccident.setItemClickble(isZd);
     }
 
     private void fillData() {
         ArrayList<String> picList = new ArrayList<>();
-        if (bean.getHonorPics() != null) {
+        if (bean.getHonorPics() != null && bean.getHonorPics().length() > 0) {
             String[] pics = bean.getHonorPics().split(",");
-            for (int i = 0; i < pics.length; i++) {
-                picList.add(BuildConfig.OSS_SERVER + pics[i]);
+            for (String pic1 : pics) {
+                picList.add(BuildConfig.OSS_SERVER + pic1);
             }
         }
         etName.setText(bean.getHonorName());
         etOrg.setText(bean.getAwardOrg());
-        tvTime.setText(DateUtils.formatDate(bean.getAwardTime(), "yyyy-MM-dd"));
+        if (bean.getAwardTime() != null) {
+            tvTime.setText(DateUtils.formatDate(bean.getAwardTime(), "yyyy-MM-dd"));
+        }
         snplMomentAccident.setData(picList);
         etName.setText(bean.getHonorName());
 
@@ -171,13 +180,13 @@ public class AddCertificationActivity extends BaseActivityWithTakePhoto implemen
             // 技师认证
         }
         EanfangHttp.post(url + "/" + bean.getId()).execute(new EanfangCallback<org.json.JSONObject>(this, true, org.json.JSONObject.class) {
-                    @Override
-                    public void onSuccess(org.json.JSONObject bean) {
-                        Toast.makeText(AddCertificationActivity.this, "删除成功", Toast.LENGTH_LONG).show();
-                        finish();
-                    }
+            @Override
+            public void onSuccess(org.json.JSONObject bean) {
+                Toast.makeText(AddCertificationActivity.this, "删除成功", Toast.LENGTH_LONG).show();
+                finish();
+            }
 
-                });
+        });
     }
 
     private void setData() {
@@ -207,6 +216,7 @@ public class AddCertificationActivity extends BaseActivityWithTakePhoto implemen
         entity.setHonorName(etName.getText().toString().trim());
         entity.setAwardOrg(etOrg.getText().toString().trim());
         entity.setAwardTime(DateUtils.parseDate(tvTime.getText().toString().trim(), "yyyy-MM-dd"));
+        pic = PhotoUtils.getPhotoUrl("", snplMomentAccident, uploadMap, false);
         entity.setHonorPics(pic);
         entity.setIntro("");
         entity.setType(0);
@@ -230,23 +240,6 @@ public class AddCertificationActivity extends BaseActivityWithTakePhoto implemen
             ToastUtil.get().showToast(this, "请输入荣誉名称");
             return true;
         }
-
-        if (TextUtils.isEmpty(etOrg.getText().toString())) {
-            ToastUtil.get().showToast(this, "请输入颁发机构名称");
-            return true;
-        }
-
-        if (TextUtils.isEmpty(tvTime.getText().toString())) {
-            ToastUtil.get().showToast(this, "请选择颁发时间");
-            return true;
-        }
-
-        pic = PhotoUtils.getPhotoUrl("", snplMomentAccident, uploadMap, false);
-        if (StringUtils.isEmpty(pic)) {
-            showToast("请添加荣誉证书照片");
-            return true;
-        }
-
 
         return false;
     }

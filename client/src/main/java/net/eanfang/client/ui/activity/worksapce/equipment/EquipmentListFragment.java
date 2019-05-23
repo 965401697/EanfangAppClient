@@ -1,5 +1,6 @@
 package net.eanfang.client.ui.activity.worksapce.equipment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
 
@@ -26,33 +27,18 @@ public class EquipmentListFragment extends TemplateItemListFragment {
     private EquipmentListAdapter mAdapter;
     private String mType;
 
-    public static EquipmentListFragment getInstance(String type) {
+    /**
+     * 是否报修
+     */
+    private Boolean isRepair = false;
+    private QueryEntry mQueryEntry;
+
+    public static EquipmentListFragment getInstance(String type, Boolean mIsRepair) {
         EquipmentListFragment f = new EquipmentListFragment();
         f.mType = type;
+        f.isRepair = mIsRepair;
         return f;
 
-    }
-
-    /**
-     * 下拉刷新
-     */
-    @Override
-    public void onRefresh() {
-        refresh();
-    }
-
-    public void refresh() {
-        mPage = 1;//下拉永远第一页
-        getData();
-    }
-
-    /**
-     * 加载更多
-     */
-    @Override
-    public void onLoadMoreRequested() {
-        mPage++;
-        getData();
     }
 
     @Override
@@ -66,22 +52,35 @@ public class EquipmentListFragment extends TemplateItemListFragment {
                 if (!PermKit.get().getDeviceArchiveDetailPerm()) {
                     return;
                 }
-                Intent intent = new Intent(getActivity(), EquipmentDetailActivity.class);
-                intent.putExtra("id", String.valueOf(mAdapter.getData().get(position).getId()));
-                startActivity(intent);
+                /**
+                 * 报修直接返回 or 查看设备详情
+                 * */
+                if (isRepair) {
+                    Intent intent = new Intent();
+                    intent.putExtra("custDeviceEntity", mAdapter.getData().get(position));
+                    getActivity().setResult(Activity.RESULT_OK, intent);
+                    getActivity().finish();
+
+                } else {
+                    Intent intent = new Intent(getActivity(), EquipmentDetailActivity.class);
+                    intent.putExtra("id", String.valueOf(mAdapter.getData().get(position).getId()));
+                    startActivity(intent);
+                }
+
             }
         });
-        getData();
     }
 
     @Override
-    public void getData() {
-        QueryEntry queryEntry = new QueryEntry();
-        queryEntry.setSize(10);
-        queryEntry.setPage(mPage);
-        queryEntry.getLike().put("businessThreeCode", mType + "%");
+    protected void getData() {
+        if (mQueryEntry == null) {
+            mQueryEntry = new QueryEntry();
+        }
+        mQueryEntry.setSize(10);
+        mQueryEntry.setPage(mPage);
+        mQueryEntry.getLike().put("businessThreeCode", mType + "%");
         EanfangHttp.post(NewApiService.DEVICE_LIST_CLIENT)
-                .upJson(JsonUtils.obj2String(queryEntry))
+                .upJson(JsonUtils.obj2String(mQueryEntry))
                 .execute(new EanfangCallback<EquipmentBean>(getActivity(), true, EquipmentBean.class) {
                     @Override
                     public void onSuccess(EquipmentBean bean) {
@@ -93,6 +92,8 @@ public class EquipmentListFragment extends TemplateItemListFragment {
                             mAdapter.loadMoreComplete();
                             if (bean.getList().size() < 10) {
                                 mAdapter.loadMoreEnd();
+                                //释放对象
+                                mQueryEntry = null;
                             }
 
                             if (bean.getList().size() > 0) {
@@ -129,6 +130,25 @@ public class EquipmentListFragment extends TemplateItemListFragment {
                         mSwipeRefreshLayout.setRefreshing(false);
                     }
                 });
+    }
+
+    /**
+     * 下拉刷新
+     */
+    @Override
+    public void onRefresh() {
+        mQueryEntry = null;
+        mPage = 1;
+        getData();
+    }
+
+    /**
+     * 加载更多
+     */
+    @Override
+    public void onLoadMoreRequested() {
+        mPage++;
+        getData();
     }
 
 }

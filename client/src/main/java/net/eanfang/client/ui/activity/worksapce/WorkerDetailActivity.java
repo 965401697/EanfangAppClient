@@ -28,6 +28,7 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.reapair.RepairPersonalInfoEntity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
@@ -39,7 +40,7 @@ import com.yaf.base.entity.RepairOrderEntity;
 import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.worksapce.repair.RepairActivity;
+import net.eanfang.client.ui.activity.worksapce.repair.AddTroubleActivity;
 import net.eanfang.client.ui.adapter.WorkDetailHonorAdapter;
 import net.eanfang.client.ui.adapter.WorkDetailQualificationAdapter;
 import net.eanfang.client.ui.adapter.WorkerDetailAdapter;
@@ -198,6 +199,10 @@ public class WorkerDetailActivity extends BaseClientActivity {
      * 资质证书
      */
     private WorkDetailQualificationAdapter workDetailQualificationAdapter;
+    /**
+     * 个人信息
+     */
+    private RepairPersonalInfoEntity.ListBean repairPersonalInfoEntity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -228,6 +233,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
         toRepairBean = v(() -> (RepairOrderEntity) getIntent().getSerializableExtra("toRepairBean"));
         companyUserId = v(() -> getIntent().getStringExtra("companyUserId"));
         workerId = v(() -> getIntent().getStringExtra("workerId"));
+        repairPersonalInfoEntity = v(() -> (RepairPersonalInfoEntity.ListBean) getIntent().getSerializableExtra("topInfo"));
 
         // 客户端扫描二维码获取数据
         mQRWorkerEntity = (WorkerEntity) getIntent().getSerializableExtra("workEntriy");
@@ -304,18 +310,23 @@ public class WorkerDetailActivity extends BaseClientActivity {
             Intent intent;
             // 直接进入报修页面
             if (isComeIn) {
-                intent = new Intent(WorkerDetailActivity.this, RepairActivity.class);
+                intent = new Intent(WorkerDetailActivity.this, AddTroubleActivity.class);
                 intent.putExtra("qrcode", "scaning");
                 intent.putExtra("repairbean", mScanRepairBean);
-            } else {
-                intent = new Intent(WorkerDetailActivity.this, OrderConfirmActivity.class);
-                intent.putExtra("bean", toRepairBean);
                 intent.putExtra("headUrl", headUrl);
                 intent.putExtra("workName", workerName);
                 intent.putExtra("companyName", comapnyName);
+            } else {
+                intent = new Intent(WorkerDetailActivity.this, OrderConfirmActivity.class);
+                intent.putExtra("topInfo", repairPersonalInfoEntity);
+                intent.putExtra("bean", toRepairBean);
                 intent.putExtra("doorFee", getIntent().getIntExtra("doorFee", 0));
+                intent.putExtra("headUrl", headUrl);
+                intent.putExtra("workName", workerName);
+                intent.putExtra("companyName", comapnyName);
             }
             startActivity(intent);
+            finishSelf();
 
         });
         // 区域

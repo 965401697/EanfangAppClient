@@ -14,8 +14,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:fillViewport="true"
-        >
+        android:fillViewport="true">
+
         <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -54,10 +54,26 @@
                     android:textColor="#ff333333"
                     android:textSize="16sp" />
 
+                <TextView
+                    android:id="@+id/rz_tv_b"
+                    android:layout_width="wrap_content"
+                    android:background="@drawable/bg_gradual_change_yz"
+                    android:layout_height="wrap_content"
+                    android:text="易安防专家认证"
+                   android:paddingLeft="@dimen/dimen_20"
+                    android:paddingRight="@dimen/dimen_20"
+                    android:paddingTop="@dimen/dimen_12"
+                    android:paddingBottom="@dimen/dimen_12"
+                    android:textSize="10sp"
+                    android:textColor="@color/white"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:layout_marginTop="@dimen/dimen_4"
+                    android:layout_toRightOf="@id/gs_name_tv" />
 
                 <com.customview.SuperTextView
                     android:id="@+id/rz_tv"
-                    android:layout_width="@dimen/dimen_300"
+                    android:visibility="gone"
+                    android:layout_width="@dimen/dimen_280"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_20"
                     android:layout_marginTop="@dimen/dimen_10"
@@ -189,6 +205,8 @@
                 android:gravity="right"
                 android:padding="@dimen/dimen_10"
                 app:sCenterBottomLines="1"
+                app:sLeftTextSize="13sp"
+                app:sLeftTextColor="#666666"
                 app:sCenterTextGravity="right"
                 app:sLeftTextString="清楚解释故障原因及处理"
                 app:sRightTextColor="@color/colorX"
@@ -201,6 +219,8 @@
                 android:background="@color/white"
                 android:gravity="right"
                 android:padding="@dimen/dimen_10"
+                app:sLeftTextSize="13sp"
+                app:sLeftTextColor="#666666"
                 app:sCenterBottomLines="1"
                 app:sCenterTextGravity="right"
                 app:sLeftTextString="服务态度"
@@ -215,6 +235,8 @@
                 android:gravity="right"
                 android:padding="@dimen/dimen_10"
                 app:sCenterBottomLines="1"
+                app:sLeftTextSize="13sp"
+                app:sLeftTextColor="#666666"
                 app:sCenterTextGravity="right"
                 app:sLeftTextString="作业规范"
                 app:sRightTextColor="@color/colorX"
@@ -227,6 +249,8 @@
                 android:background="@color/white"
                 android:gravity="right"
                 android:padding="@dimen/dimen_10"
+                app:sLeftTextSize="13sp"
+                app:sLeftTextColor="#666666"
                 app:sCenterBottomLines="1"
                 app:sCenterTextGravity="right"
                 app:sLeftTextString="技术水平"
@@ -241,6 +265,8 @@
                 android:gravity="right"
                 android:padding="@dimen/dimen_10"
                 app:sCenterBottomLines="1"
+                app:sLeftTextSize="13sp"
+                app:sLeftTextColor="#666666"
                 app:sCenterTextGravity="right"
                 app:sLeftTextString="响应时间"
                 app:sRightTextColor="@color/colorX"

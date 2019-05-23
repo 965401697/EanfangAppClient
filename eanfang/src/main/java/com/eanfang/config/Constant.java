@@ -297,6 +297,11 @@ public interface Constant {
 
     String EXPERT = "exptVerifyType";
 
+    /**
+     * 国家区域集合
+     */
+    String COUNTRY_AREA_LIST = "countryAreaList";
+
     //业务通知
     int NOTICE_BUSINESS = 1;
 

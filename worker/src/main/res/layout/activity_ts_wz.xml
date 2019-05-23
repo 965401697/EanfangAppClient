@@ -14,18 +14,17 @@
         android:orientation="vertical">
 
         <ImageView
-            android:layout_width="150dp"
-            android:src="@mipmap/w_fz"
-            android:layout_height="150dp" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/w_fz" />
 
         <ImageView
-            android:layout_width="@dimen/dimen_40"
-            android:layout_marginTop="@dimen/dimen_20"
             android:id="@+id/gb_iv"
-            android:visibility="gone"
+            android:layout_width="@dimen/dimen_40"
+            android:layout_height="@dimen/dimen_40"
+            android:layout_marginTop="@dimen/dimen_20"
             android:src="@mipmap/gb_iv"
-            android:background="@color/multiple_image_select_buttonText"
-            android:layout_height="@dimen/dimen_40" />
+            android:visibility="gone" />
 
     </LinearLayout>
 

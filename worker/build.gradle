@@ -8,8 +8,8 @@ android {
         applicationId "net.eanfang.worker"
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 19041901
-        versionName "2.3.39_beta"
+        versionCode 19051401
+        versionName "2.3.41_beta"
         multiDexEnabled true
 //        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -31,7 +31,6 @@ android {
                 AMAP_KEY     : "db2be5c0ebed1c47388afd3c361bbfe3",
                 HW_APPID     : "100379649",
                 PACKAGE_NAME : "net.eanfang.worker"
-
         ]
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
 
@@ -77,7 +76,7 @@ android {
             //正式bugly
             buildConfigField("String", "BUGLY_WORKER", "\"a6bae9f6ee\"")
             // 不显示Log
-            buildConfigField("boolean", "LOG_DEBUG", "true")
+            buildConfigField("boolean", "LOG_DEBUG", "false")
             //Zipalign优化
             zipAlignEnabled true
             //混淆
@@ -204,4 +203,6 @@ dependencies {
     implementation project(':IMLib')
     implementation project(':eanfang')
     implementation project(':ocr_ui')
+//    compile 'com.meizu.flyme.internet:push-internal:3.6.+@aar'
+//    api 'com.huawei.android.hms:push:2.6.1.301'
 }

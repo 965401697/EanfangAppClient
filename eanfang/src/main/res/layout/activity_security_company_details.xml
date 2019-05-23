@@ -50,7 +50,7 @@
                     android:layout_marginTop="@dimen/dimen_10"
                     android:layout_toLeftOf="@id/gs_xq_iv"
                     android:layout_toRightOf="@id/gs_log_sdv"
-                    android:text="北京市法安视科技有限公司"
+                    android:text="公司"
                     android:textColor="#ff333333"
                     android:textSize="16sp" />
 
@@ -79,13 +79,13 @@
 
                 <TextView
                     android:id="@+id/bfz_tv"
-                    android:layout_width="@dimen/dimen_160"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/gs_xq_iv"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="10dp"
                     android:gravity="center"
-                    android:text="100%" />
+                    android:text="好评率：100%" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/bq_rv"
@@ -107,6 +107,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white"
+                android:gravity="center"
                 android:orientation="horizontal"
                 android:padding="@dimen/dimen_10">
 
@@ -114,47 +115,58 @@
                     android:id="@+id/sj_dd_iv"
                     android:layout_width="@dimen/app_two_pic_text"
                     android:layout_height="@dimen/app_two_pic_text"
-                    android:layout_weight="1"
                     android:gravity="center"
                     app:pic="@mipmap/sjdd_iv"
                     app:text_a="设计订单"
-                    app:text_b="66"
+                    app:text_b=""
                     app:text_size_a="@dimen/app_two_a_text_size"
                     app:text_size_b="@dimen/app_two_b_text_size" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
 
                 <com.customview.TwoTextPicText
                     android:id="@+id/wx_dd_iv"
                     android:layout_width="@dimen/app_two_pic_text"
                     android:layout_height="@dimen/app_two_pic_text"
-                    android:layout_weight="1"
                     android:gravity="center"
                     app:pic="@mipmap/wxdd_iv"
                     app:text_a="维修订单"
-                    app:text_b="66"
+                    app:text_b=""
                     app:text_size_a="@dimen/app_two_a_text_size"
                     app:text_size_b="@dimen/app_two_b_text_size" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
 
                 <com.customview.TwoTextPicText
                     android:id="@+id/sg_dd_iv"
                     android:layout_width="@dimen/app_two_pic_text"
                     android:layout_height="@dimen/app_two_pic_text"
-                    android:layout_weight="1"
                     android:gravity="center"
                     app:pic="@mipmap/sgdd_iv"
                     app:text_a="施工订单"
-                    app:text_b="66"
+                    app:text_b=""
                     app:text_size_a="@dimen/app_two_a_text_size"
                     app:text_size_b="@dimen/app_two_b_text_size" />
+
+                <Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
 
                 <com.customview.TwoTextPicText
                     android:id="@+id/pl_iv"
                     android:layout_width="@dimen/app_two_pic_text"
                     android:layout_height="@dimen/app_two_pic_text"
-                    android:layout_weight="1"
                     android:gravity="center"
                     app:pic="@mipmap/pl_iv"
                     app:text_a="评论"
-                    app:text_b="66"
+                    app:text_b=""
                     app:text_size_a="@dimen/app_two_a_text_size"
                     app:text_size_b="@dimen/app_two_b_text_size" />
             </LinearLayout>
@@ -180,7 +192,6 @@
                 android:paddingLeft="@dimen/dimen_20"
                 android:paddingRight="@dimen/dimen_20"
                 android:paddingBottom="@dimen/dimen_20"
-                android:text="文案详情，文案详情，文案详情，文案详情，文案详情，"
                 android:textSize="14sp" />
 
             <Space
@@ -199,15 +210,10 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/kh_al_rv"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/dimen_20"
-                android:paddingRight="@dimen/dimen_20">
+                android:layout_height="wrap_content" />
 
-            </android.support.v7.widget.RecyclerView>
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_10" />
+
 
 
             <com.flyco.tablayout.SlidingTabLayout
@@ -215,13 +221,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="#006AFE"
-                app:tl_indicator_color="@color/gray"
+                app:tl_indicator_color="@color/white"
                 app:tl_tab_space_equal="true"
-                app:tl_underline_color="#006AFE"
-                app:tl_underline_height="2dp"
                 app:tl_textAllCaps="true"
                 app:tl_textBold="BOTH"
-                app:tl_textsize="14sp" />
+                app:tl_textsize="14sp"
+                app:tl_underline_color="#006AFE"
+                app:tl_underline_height="1dp" />
 
             <com.customview.ViewPagerForScrollView
                 android:id="@+id/vp_service"

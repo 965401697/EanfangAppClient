@@ -30,6 +30,7 @@ import com.jph.takephoto.model.TResult;
 import com.yaf.sys.entity.OrgUnitEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.fragment.ContactsFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,7 +39,7 @@ import butterknife.ButterKnife;
  * Created by guanluocang
  * 2018年10月12日 10:48:52
  *
- * @desc 公司认证 第一步
+ * @desc 新公司认证
  */
 public class AuthCompanyFirstActivity extends BaseActivityWithTakePhoto {
 
@@ -120,7 +121,7 @@ public class AuthCompanyFirstActivity extends BaseActivityWithTakePhoto {
             if (byNetBean.getOfficeAddress() != null) {
                 etDetailOfficeAddress.setText(byNetBean.getOfficeAddress());
             }
-            if (StringUtils.isEmpty(byNetBean.getAreaCode())) {
+            if (!StringUtils.isEmpty(byNetBean.getAreaCode())) {
                 tvOfficeAddress.setText(Config.get().getAddressByCode(byNetBean.getAreaCode()));
             }
             if (!StringUtils.isEmpty(byNetBean.getLogoPic())) {
@@ -247,9 +248,12 @@ public class AuthCompanyFirstActivity extends BaseActivityWithTakePhoto {
                 .upJson(json)
                 .execute(new EanfangCallback<OrgUnitEntity>(this, true, OrgUnitEntity.class, (bean) -> {
                     //保存成功后，提交认证
-                    byNetBean = new AuthCompanyBaseInfoBean();
-                    byNetBean.setOrgId(bean.getOrgId());
-                    doJumpSecond();
+//                    byNetBean = new AuthCompanyBaseInfoBean();
+//                    byNetBean.setOrgId(bean.getOrgId());
+//                    doJumpSecond();
+                    ContactsFragment.isRefresh = true;
+                    showToast("提交成功");
+                    finish();
                 }));
     }
 

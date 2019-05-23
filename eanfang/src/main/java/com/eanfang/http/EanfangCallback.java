@@ -153,7 +153,7 @@ public class EanfangCallback<T> extends StringCallback {
             //指定date类型自动格式化
             JSON.DEFFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm";
             resultJson = JsonUtils.str2JSON(response.body());
-            Log.d("wq_wl_cs", "onSuccess: "+"\n"+response.body());
+            Log.d("wq_wl_cs", "onSuccess: " + "\n" + response.body());
             Integer code = -100;
             String message = null;
             JSONObject resultObject = null;
@@ -229,6 +229,7 @@ public class EanfangCallback<T> extends StringCallback {
                     Intent intent = new Intent(EanfangApplication.getApplication(), NoPermissionActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     EanfangApplication.getApplication().startActivity(intent);
+                    activity.finish();
                     break;
                 default:
                     onFail(code, message, null);

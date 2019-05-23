@@ -6,7 +6,6 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
@@ -59,7 +58,7 @@ public class CertificationInfoActivity extends BaseWorkerActivity {
     BGASortableNinePhotoLayout snplMomentAccident;
     @BindView(R.id.snpl_moment_crim)
     BGASortableNinePhotoLayout snplMomentCrim;
-
+    private static final String DEFAULT_CARD_GENDER = "女";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +70,6 @@ public class CertificationInfoActivity extends BaseWorkerActivity {
     }
 
     private void getData() {
-
         // 获取技师信息
         EanfangHttp.get(UserApi.GET_WORKER_INFO)
                 .execute(new EanfangCallback<WorkerInfoBean>(CertificationInfoActivity.this, true, WorkerInfoBean.class, (bean) -> {
@@ -82,7 +80,7 @@ public class CertificationInfoActivity extends BaseWorkerActivity {
 
     private void initViews(WorkerInfoBean bean) {
         ivHeader.setImageURI(com.eanfang.BuildConfig.OSS_SERVER + bean.getAvatarPhoto());
-        String contactName = EanfangApplication.get().getUser().getAccount().getRealName();
+        String contactName = bean.getIdCardName();
         String mobile = EanfangApplication.get().getUser().getAccount().getMobile();
 
         if (!StringUtils.isEmpty(contactName)) {
@@ -93,12 +91,12 @@ public class CertificationInfoActivity extends BaseWorkerActivity {
         }
         etCardId.setFocusable(false);
         //Log.i("zhangyanran",EanfangApplication.get().getUser().getAccount().getIdCard()+"-----------"+EanfangApplication.get().getUser().getAccount().getRealName());
-        etCardId.setText(EanfangApplication.get().getUser().getAccount().getIdCard());
-        //0女1男
-        if (EanfangApplication.get().getUser().getAccount().getGender() == 0) {
-            rbWoman.setChecked(true);
+        etCardId.setText(bean.getIdCardNum());
+        Log.d("66566", "initViews: "+EanfangApplication.get().getUser().getAccount().getGender());
+        if (DEFAULT_CARD_GENDER.equals(bean.getIdCardGender())) {
+            rbWoman.setSelected(true);
         } else {
-            rbMan.setChecked(true);
+            rbMan.setSelected(true);
         }
         rbWoman.setClickable(false);
         rbMan.setClickable(false);

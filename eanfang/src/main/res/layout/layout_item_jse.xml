@@ -18,6 +18,7 @@
         android:lines="1"
         android:marqueeRepeatLimit="marquee_forever"
         android:focusable="true"
+        android:textColor="#666666"
         android:focusableInTouchMode="true"
         android:gravity="center"
         android:text="任职机构" />

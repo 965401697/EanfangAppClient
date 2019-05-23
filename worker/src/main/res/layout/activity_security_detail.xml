@@ -123,8 +123,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen_18"
-                    android:ellipsize="end"
-                    android:maxLines="3"
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_15" />
 

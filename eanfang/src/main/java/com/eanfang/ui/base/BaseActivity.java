@@ -219,6 +219,14 @@ public class BaseActivity extends AppCompatActivity implements
         ((TextView) findViewById(R.id.tv_right)).setVisibility(View.VISIBLE);
     }
 
+    public void setRightImageGone() {
+        ((ImageView) findViewById(R.id.iv_right)).setVisibility(View.GONE);
+    }
+
+    public void setRightImageVisible() {
+        ((ImageView) findViewById(R.id.iv_right)).setVisibility(View.VISIBLE);
+    }
+
     public void setLeftGone() {
         ((ImageView) findViewById(R.id.iv_left)).setVisibility(View.GONE);
     }

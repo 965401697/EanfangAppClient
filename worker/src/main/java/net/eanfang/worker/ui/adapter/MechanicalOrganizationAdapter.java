@@ -3,16 +3,16 @@ package net.eanfang.worker.ui.adapter;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.widget.EditText;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.customview.LeftRightTextEditText;
 import com.eanfang.model.JxSbZzNlListBean;
 
 import net.eanfang.worker.R;
 
 /**
- * @author guanluocang
+ * @author wq
  * @data 2018/10/23
  * @description adapter
  */
@@ -20,18 +20,18 @@ import net.eanfang.worker.R;
 public class MechanicalOrganizationAdapter extends BaseQuickAdapter<JxSbZzNlListBean.ListBean, BaseViewHolder> {
 
     public MechanicalOrganizationAdapter() {
-        super(R.layout.layout_item_mechanical_organization);
+        super(R.layout.layout_item_mechanical_organization_b);
     }
 
     @Override
     protected void convert(BaseViewHolder helper, JxSbZzNlListBean.ListBean item) {
-        LeftRightTextEditText leftRightTextEditText = helper.getView(R.id.lr_tv);
+        EditText leftRightTextEditText = helper.getView(R.id.lr_tv);
         leftRightTextEditText.setTag(R.id.lr_tv, item.getDataId());
         if (!"0".equals(item.getCompany2baseDataEntity().getRemark())) {
             leftRightTextEditText.setText(item.getCompany2baseDataEntity().getRemark());
         }
-        leftRightTextEditText.setLeftText(item.getDataName());
-        leftRightTextEditText.setRightText(item.getCompany2baseDataEntity().getUnits());
+        helper.setText(R.id.le_tv,item.getDataName());
+        helper.setText(R.id.rt_tv,item.getCompany2baseDataEntity().getUnits());
         leftRightTextEditText.setSelection(leftRightTextEditText.getText().toString().trim().length());
         leftRightTextEditText.addTextChangedListener(new TextWatcher() {
             @Override

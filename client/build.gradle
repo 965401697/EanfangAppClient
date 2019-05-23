@@ -9,8 +9,8 @@ android {
         applicationId "net.eanfang.client"
         minSdkVersion 17
         targetSdkVersion 26
-        versionCode 19041901
-        versionName "2.3.39_beta"
+        versionCode 19051401
+        versionName "2.3.41_beta"
         //testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         // gradle 3.0.0 以上需要有这个
@@ -191,5 +191,8 @@ dependencies {
     implementation project(':zxing')
     implementation project(':IMKit')
     implementation project(':IMLib')
+    implementation project(path: ':ocr_ui')
+//    compile 'com.meizu.flyme.internet:push-internal:3.6.+@aar'
+//    api 'com.huawei.android.hms:push:2.6.1.301'
     //    implementation project(':Sight')
 }

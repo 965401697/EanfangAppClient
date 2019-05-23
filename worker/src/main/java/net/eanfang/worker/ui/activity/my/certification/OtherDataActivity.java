@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
@@ -59,7 +60,7 @@ public class OtherDataActivity extends BaseWorkerActivity {
     @BindView(R.id.et_urgent_phone)
     EditText etUrgentPhone;
     @BindView(R.id.ts_lr_tv)
-    WQLeftRightClickTextView tsLrTv;
+    TextView tsLrTv;
     @BindView(R.id.yx_et)
     EditText yxEt;
     private ArrayList<String> picList_accident = new ArrayList<>();
@@ -104,7 +105,7 @@ public class OtherDataActivity extends BaseWorkerActivity {
         }
         etUrgentPhone.setText(mTechWorkerVerifyEntity.getContactPhone());
 
-        if (!mTechWorkerVerifyEntity.getCrimePic().equals("")) {
+        if (!StringUtils.isEmpty(mTechWorkerVerifyEntity.getCrimePic())) {
             String[] crimePic = mTechWorkerVerifyEntity.getCrimePic().split(",");
             if (crimePic.length > 0) {
                 for (byte i = 0; i < crimePic.length; i++) {
@@ -114,7 +115,7 @@ public class OtherDataActivity extends BaseWorkerActivity {
             }
         }
 
-        if (!mTechWorkerVerifyEntity.getAccidentPics().equals("")) {
+        if (!StringUtils.isEmpty(mTechWorkerVerifyEntity.getAccidentPics())) {
             String[] accidentPics = mTechWorkerVerifyEntity.getAccidentPics().split(",");
             if (accidentPics.length > 0) {
                 for (byte i = 0; i < accidentPics.length; i++) {
@@ -188,7 +189,7 @@ public class OtherDataActivity extends BaseWorkerActivity {
             OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
                 @Override
                 public void onOssSuccess() {
-                    runOnUiThread(() -> EanfangHttp.post(UserApi.GET_TECH_WORKER_ADD_V2).upJson(JSONObject.toJSONString(mTechWorkerVerifyEntity)).execute(new EanfangCallback<JSONObject>(OtherDataActivity.this, true, JSONObject.class, (bean) -> {
+                    runOnUiThread(() -> EanfangHttp.post(UserApi.GET_TECH_WORKER_ADD_V4).upJson(JSONObject.toJSONString(mTechWorkerVerifyEntity)).execute(new EanfangCallback<JSONObject>(OtherDataActivity.this, true, JSONObject.class, (bean) -> {
                         Intent intent = new Intent(OtherDataActivity.this, SubmitSuccessfullyJsActivity.class);
                         intent.putExtra("order", 3);
                         startAnimActivity(intent);
@@ -198,7 +199,7 @@ public class OtherDataActivity extends BaseWorkerActivity {
             });
             return;
         } else {
-            EanfangHttp.post(UserApi.GET_TECH_WORKER_ADD_V2).upJson(JSONObject.toJSONString(mTechWorkerVerifyEntity)).execute(new EanfangCallback<JSONObject>(OtherDataActivity.this, true, JSONObject.class, (bean) -> {
+            EanfangHttp.post(UserApi.GET_TECH_WORKER_ADD_V4).upJson(JSONObject.toJSONString(mTechWorkerVerifyEntity)).execute(new EanfangCallback<JSONObject>(OtherDataActivity.this, true, JSONObject.class, (bean) -> {
                 Intent intent = new Intent(this, SubmitSuccessfullyJsActivity.class);
                 intent.putExtra("order", 3);
                 startAnimActivity(intent);

@@ -9,11 +9,14 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_2"
         android:background="@color/content_bg" />
-
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
     <TextView
         android:id="@+id/a_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#333333"
         android:padding="@dimen/dimen_10"
         android:layout_marginLeft="@dimen/dimen_28"
         android:text="任职机构：" />
@@ -26,6 +29,7 @@
         android:layout_marginBottom="@dimen/dimen_10"
         android:layout_centerVertical="true"
         android:padding="@dimen/dimen_10"
+        android:textColor="#333333"
         android:layout_marginLeft="@dimen/dimen_28"
         android:text="岗位：" />
 
@@ -34,8 +38,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="@dimen/dimen_10"
+        android:textColor="#333333"
         android:layout_alignBottom="@+id/iv_pic"
         android:layout_marginLeft="@dimen/dimen_28"
         android:text="起止时间：" />
-
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
 </LinearLayout>

@@ -33,7 +33,7 @@
                     android:layout_marginLeft="@dimen/dimen_36"
                     android:layout_weight="1"
                     android:drawableLeft="@mipmap/ic_must_input"
-                    android:drawablePadding="@dimen/dimen_10"
+                    android:drawablePadding="@dimen/dimen_4"
                     android:text="@string/text_personal_head"
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_14" />
@@ -80,7 +80,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/dimen_36"
                     android:drawableLeft="@mipmap/ic_must_input"
-                    android:drawablePadding="@dimen/dimen_10"
+                    android:drawablePadding="@dimen/dimen_4"
                     android:text="昵称"
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_14" />
@@ -149,7 +149,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/dimen_36"
                     android:drawableLeft="@mipmap/ic_must_input"
-                    android:drawablePadding="@dimen/dimen_10"
+                    android:drawablePadding="@dimen/dimen_4"
                     android:text="当前城市"
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_14" />
@@ -380,6 +380,7 @@
                 android:text="个人简介"
                 android:textColor="@color/color_client_neworder"
                 android:textSize="14sp" />
+            <View style="@style/style_common_line_gray" />
 
             <EditText
                 android:id="@+id/et_personal_note"
@@ -387,6 +388,7 @@
                 android:layout_height="@dimen/dimen_146"
                 android:background="@color/white"
                 android:gravity="start"
+                android:paddingTop="@dimen/dp_10"
                 android:hint="请输入..."
                 android:paddingLeft="@dimen/dimen_36"
                 android:inputType="text"
