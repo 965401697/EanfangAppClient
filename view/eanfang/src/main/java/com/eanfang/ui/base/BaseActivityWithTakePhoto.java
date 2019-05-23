@@ -21,12 +21,14 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 
+import com.customview.CircleImageView;
 import com.eanfang.R;
 import com.eanfang.application.CustomeApplication;
 import com.eanfang.base.kit.imagechoose.IImageChooseCallBack;
@@ -381,7 +383,6 @@ public abstract class BaseActivityWithTakePhoto extends com.eanfang.takephoto.Ta
                 .setOpenCamera(openCamera)
                 .setSelectionMode(PictureConfig.SINGLE)
                 .setCrop(true)
-                .setCompress(true)
                 .create()
                 .photoChoose(BaseActivityWithTakePhoto.this, new IImageChooseCallBack() {
                     @Override
@@ -408,4 +409,11 @@ public abstract class BaseActivityWithTakePhoto extends com.eanfang.takephoto.Ta
     public OnImageChooseCallBack getOnImageChooseCallBack() {
         return OnImageChooseCallBack;
     }
+
+    public void headViewSize(CircleImageView circleImageView, int size){
+        LinearLayout.LayoutParams layoutParams= (LinearLayout.LayoutParams) circleImageView.getLayoutParams();
+        layoutParams.width= size;
+        layoutParams.height=size;
+    }
+
 }

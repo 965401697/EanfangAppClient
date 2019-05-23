@@ -73,14 +73,13 @@
                                 android:layout_centerVertical="true"
                                 android:gravity="center"
                                 android:orientation="vertical">
-
-                                <com.facebook.drawee.view.SimpleDraweeView
-                                    android:id="@+id/iv_user_header"
-                                    android:layout_width="@dimen/dimen_155"
-                                    android:layout_height="@dimen/dimen_155"
-                                    android:layout_marginTop="-2dp"
-                                    fresco:placeholderImage="@mipmap/ic_header"
-                                    fresco:roundAsCircle="true" />
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:layout_marginTop="-2dp">
+                            <include layout="@layout/layout_headview"/>
+                                </LinearLayout>
                             </LinearLayout>
 
 
@@ -130,14 +129,16 @@
                                         android:textColor="@color/color_white"
                                         android:textSize="@dimen/textSize_18" />
 
-                                    <com.facebook.drawee.view.SimpleDraweeView
+                                    <ImageView
                                         android:id="@+id/iv_personalQRCode"
                                         android:layout_width="@dimen/dimen_40"
                                         android:layout_height="@dimen/dimen_40"
                                         android:layout_gravity="center_vertical"
                                         android:layout_marginLeft="@dimen/dimen_10"
                                         android:padding="@dimen/dimen_7"
-                                        fresco:placeholderImage="@mipmap/ic_personal_qrcode" />
+                                        android:src="@mipmap/ic_personal_qrcode"
+                                        />
+
                                 </LinearLayout>
 
                                 <LinearLayout

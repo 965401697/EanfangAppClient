@@ -3,13 +3,16 @@ package net.eanfang.client.ui.fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.customview.CircleImageView;
 import com.eanfang.BuildConfig;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.ui.activity.QrCodeShowActivity;
 import com.eanfang.ui.base.BaseFragment;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
 import com.eanfang.witget.PersonalQRCodeDialog;
@@ -22,6 +25,8 @@ import net.eanfang.client.ui.activity.my.PersonInfoActivity;
 import net.eanfang.client.ui.activity.my.SettingActivity;
 import net.eanfang.client.ui.widget.InviteView;
 
+import butterknife.BindView;
+
 /**
  * Created by MrHou
  *
@@ -31,8 +36,9 @@ import net.eanfang.client.ui.widget.InviteView;
  */
 
 public class MyFragment extends BaseFragment {
+    @BindView(R.id.iv_user_header)
+    CircleImageView ivUserHeader;
     private TextView tv_user_name;
-    private SimpleDraweeView iv_header;
     private SimpleDraweeView mIvPersonalQRCode;
     // Dialog
     private PersonalQRCodeDialog personalQRCodeDialog;
@@ -49,8 +55,8 @@ public class MyFragment extends BaseFragment {
 
     @Override
     protected void initView() {
+        headViewSize(ivUserHeader,(int) getResources().getDimension(com.eanfang.R.dimen.dimen_155));
         tv_user_name = findViewById(R.id.tv_user_name);
-        iv_header = findViewById(R.id.iv_user_header);
         mIvPersonalQRCode = findViewById(R.id.iv_personalQRCode);
         findViewById(R.id.iv_user_header).setOnClickListener((v) -> {
             PersonInfoActivity.jumpToActivity(getActivity());
@@ -92,14 +98,13 @@ public class MyFragment extends BaseFragment {
     }
 
     public void initDatas() {
-
         LoginBean user = EanfangApplication.getApplication().getUser();
         if (!StringUtils.isEmpty(user.getAccount().getNickName())) {
             tv_user_name.setText(user.getAccount().getNickName());
         }
 
         if (!StringUtils.isEmpty(user.getAccount().getAvatar())) {
-            iv_header.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + user.getAccount().getAvatar()));
+            GlideUtil.intoImageView(getActivity(),Uri.parse(BuildConfig.OSS_SERVER + user.getAccount().getAvatar()),ivUserHeader);
         }
 
     }

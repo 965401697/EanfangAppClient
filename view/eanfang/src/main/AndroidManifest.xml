@@ -114,6 +114,51 @@
         <activity android:name=".ui.activity.QrCodeShowActivity" />
         <activity android:name=".ui.activity.SearchPersonByOrgannizationActivity" />
         <activity android:name=".util.FileDisplayActivity"></activity>
+
+        <!-- 设备类别 -->
+        <activity
+            android:name=".sdk.equipment.SelectDeviceTypeActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+        <!-- 故障库 -->
+        <activity
+            android:name=".sdk.equipment.FaultLibraryActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+        <!-- 设备参数 -->
+        <activity
+            android:name=".sdk.equipment.EquipmentParameterActivity"
+            android:screenOrientation="portrait" />
+        <!-- 设备详情 -->
+        <activity
+            android:name=".sdk.equipment.EquipmentDetailActivity"
+            android:screenOrientation="portrait" />
+        <!-- 设备列表 -->
+        <activity
+            android:name=".sdk.equipment.EquipmentListActivity"
+            android:screenOrientation="portrait" />
+        <!-- 设备变更列表 -->
+        <activity
+            android:name=".sdk.equipment.EquipmentChangeListActivity"
+            android:screenOrientation="portrait" />
+        <!-- 设备变更详情 -->
+        <activity
+            android:name=".sdk.equipment.EquipmentChangeDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".sdk.equipment.DeviceBrandActivity"
+            android:screenOrientation="portrait" />
+        <!-- 创建群组的组织选择器 -->
+        <activity
+            android:name=".sdk.typechoose.people.CreateGroupOrganizationActivity"
+            android:screenOrientation="portrait" />
+        <!-- 群组列表 -->
+        <activity
+            android:name=".sdk.typechoose.group.MyGroupsListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".sdk.typechoose.group.SelectOAGroupActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

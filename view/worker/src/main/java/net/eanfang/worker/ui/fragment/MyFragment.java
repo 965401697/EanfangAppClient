@@ -3,12 +3,15 @@ package net.eanfang.worker.ui.fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.customview.CircleImageView;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
@@ -16,13 +19,14 @@ import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.bean.LoginBean;
+import com.eanfang.model.SpecialistAuthStatusBean;
+import com.eanfang.model.bean.LoginBean;
 import com.eanfang.ui.activity.QrCodeShowActivity;
 import com.eanfang.ui.base.BaseFragment;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
-import com.eanfang.witget.PersonalQRCodeDialog;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.ToastUtil;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.my.EvaluateActivity;
@@ -30,8 +34,14 @@ import net.eanfang.worker.ui.activity.my.PersonInfoActivity;
 import net.eanfang.worker.ui.activity.my.SettingActivity;
 import net.eanfang.worker.ui.activity.my.certification.NewAuthListActivity;
 import net.eanfang.worker.ui.activity.my.specialist.SpecialistAuthListActivity;
+import net.eanfang.worker.ui.activity.my.specialist.SpecialistSkillInfoDetailActivity;
+import net.eanfang.worker.ui.activity.my.specialist.SpecialistSkillTypeActivity;
+import net.eanfang.worker.ui.activity.techniciancertification.TechnicianCertificationActivity;
 import net.eanfang.worker.ui.widget.InviteView;
 import net.eanfang.worker.util.PrefUtils;
+
+import butterknife.BindView;
+import butterknife.OnClick;
 
 
 /**
@@ -43,17 +53,33 @@ import net.eanfang.worker.util.PrefUtils;
  */
 
 public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChangeListener {
-    private TextView tv_user_name, tvVerfiy, tvExpertVerfiy;
-    private RelativeLayout rlWorkerVerfity, rlExpertVerfity;
-
-    private SimpleDraweeView iv_header;
+    @BindView(R.id.iv_user_header)
+    CircleImageView ivHeader;
     // 二维码头像
-    private SimpleDraweeView mIvPersonalQRCode;
-    // Dialog
-    private PersonalQRCodeDialog personalQRCodeDialog;
-    private RadioButton rbWorking, rbFree, rbStop;
-    private RadioGroup rbWorkStatus;
-
+    @BindView(R.id.iv_personalQRCode)
+    ImageView ivPersonalQRCode;
+    @BindView(R.id.tv_user_name)
+    TextView tvUserName;
+    @BindView(R.id.rb_free)
+    RadioButton rbFree;
+    @BindView(R.id.rb_stop)
+    RadioButton rbStop;
+    @BindView(R.id.rb_working)
+    RadioButton rbWorking;
+    @BindView(R.id.rg_workStauts)
+    RadioGroup rgWorkStauts;
+    @BindView(R.id.rl_worker_verfity)
+    RelativeLayout rlWorkerVerfity;
+    @BindView(R.id.tv_verfity_status)
+    TextView tvVerfityStatus;
+    @BindView(R.id.tv_expert_verfity_status)
+    TextView tvExpertVerfityStatus;
+    @BindView(R.id.rl_expert_verfity)
+    RelativeLayout rlExpertVerfity;
+    private int verify = -1;
+    private SpecialistAuthStatusBean mAuthStatusBean;
+    private int e=0;
+    private int t=0;
     @Override
     protected int setLayoutResouceId() {
         return R.layout.fragment_config;
@@ -64,98 +90,56 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
         getWorkInfo();
     }
 
-
     private void getWorkInfo() {
         // 获取认证状态
         EanfangHttp.post(UserApi.POST_WORKER_EXPERT_AUTH_STATUS)
                 .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class, (bean) -> {
-                    int e = (int) bean.get("expert");//专家
-                    int t = (int) bean.get("techWorker");//技师
+                     e = (int) bean.get("expert");//专家
+                     t = (int) bean.get("techWorker");//技师
                     setOnClick(e, t);
                 }));
+        // 获取认证状态
+        EanfangHttp.post(UserApi.GET_EXPERT_CERTIFICATION_STATUS).params("accId", EanfangApplication.getApplication().getAccId()).execute(new EanfangCallback<SpecialistAuthStatusBean>(getActivity(), true, SpecialistAuthStatusBean.class, (bean) -> {
+            verify = bean.verify;
+//                    if (verify == 2) {
+//                        setRightTitle("重新认证");
+//                    }
+            mAuthStatusBean = bean;
+        }));
     }
 
     private void setOnClick(int e, int t) {
         if (t == 0) {
-            tvVerfiy.setText("技师未认证，待认证");
+            tvVerfityStatus.setText("技师未认证，待认证");
         } else if (t == 1) {
-            tvVerfiy.setText("认证中");
+            tvVerfityStatus.setText("认证中");
         } else if (t == 2) {
-            tvVerfiy.setText("已认证");
+            tvVerfityStatus.setText("已认证");
         } else if (t == 3) {
 
-            tvVerfiy.setText("认证失败，请重新认证");
+            tvVerfityStatus.setText("认证失败，请重新认证");
         }
         //status 0草稿1认证中2认证通过3认证拒绝
         if (e == 0) {
-            tvExpertVerfiy.setText("专家未认证，待认证");
+            tvExpertVerfityStatus.setText("专家未认证，待认证");
         } else if (e == 1) {
-            tvExpertVerfiy.setText("认证中");
+            tvExpertVerfityStatus.setText("认证中");
         } else if (e == 2) {
-            tvExpertVerfiy.setText("已认证");
+            tvExpertVerfityStatus.setText("已认证");
         } else if (e == 3) {
-            tvExpertVerfiy.setText("认证失败，请重新认证");
+            tvExpertVerfityStatus.setText("认证失败，请重新认证");
         }
-
-
-        rlWorkerVerfity.setOnClickListener((v) -> {
-            doWorkAuth();
-        });
-
-        rlExpertVerfity.setOnClickListener((v) -> {
-            JumpItent.jump(getActivity(), SpecialistAuthListActivity.class);
-        });
 
     }
 
     @Override
     protected void initView() {
-        rlWorkerVerfity = findViewById(R.id.rl_worker_verfity);
-        tvVerfiy = findViewById(R.id.tv_verfity_status);
-        tvExpertVerfiy = findViewById(R.id.tv_expert_verfity_status);
-        tv_user_name = findViewById(R.id.tv_user_name);
-        iv_header = findViewById(R.id.iv_user_header);
-        mIvPersonalQRCode = findViewById(R.id.iv_personalQRCode);
-        rlExpertVerfity = findViewById(R.id.rl_expert_verfity);
-        rbFree = findViewById(R.id.rb_free);
-        rbStop = findViewById(R.id.rb_stop);
-        rbWorking = findViewById(R.id.rb_working);
-        rbWorking = findViewById(R.id.rb_working);
-        rbWorkStatus = findViewById(R.id.rg_workStauts);
-        findViewById(R.id.iv_user_header).setOnClickListener((v) -> {
-            PersonInfoActivity.jumpToActivity(getActivity());
-        });
-
-        //评价
-        findViewById(R.id.rl_evaluate).setOnClickListener((v) -> {
-            startActivity(new Intent(getActivity(), EvaluateActivity.class));
-        });
-        //邀请
-        findViewById(R.id.rl_ivite).setOnClickListener((v) -> {
-            InviteView inviteView = new InviteView(getActivity(), true);
-            inviteView.show();
-        });
-        //设置
-        findViewById(R.id.iv_setting).setOnClickListener((v) -> {
-            startActivity(new Intent(getActivity(), SettingActivity.class));
-        });
-
-        rbWorkStatus.setOnCheckedChangeListener(this);
+        headViewSize(ivHeader,(int) getResources().getDimension(com.eanfang.R.dimen.dimen_155));
+        rgWorkStauts.setOnCheckedChangeListener(this);
     }
 
     @Override
     protected void setListener() {
-        // 二维码头像
-        mIvPersonalQRCode.setOnClickListener((v) -> {
-            Bundle bundle = new Bundle();
-            bundle.putString("qrcodeTitle", EanfangApplication.get().getUser().getAccount().getRealName());
-            bundle.putString("qrcodeAddress", EanfangApplication.get().getUser().getAccount().getQrCode());
-            bundle.putString("qrcodeMessage", "personal");
-            JumpItent.jump(getActivity(), QrCodeShowActivity.class, bundle);
-//            personalQRCodeDialog = new PersonalQRCodeDialog(getActivity(), EanfangApplication.get().getUser().getAccount().getQrCode());
-//            personalQRCodeDialog.show();
-        });
-
     }
 
     /**
@@ -179,11 +163,11 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
     public void initDatas() {
         LoginBean user = EanfangApplication.getApplication().getUser();
         if (!StringUtils.isEmpty(user.getAccount().getNickName())) {
-            tv_user_name.setText(user.getAccount().getNickName());
+            tvUserName.setText(user.getAccount().getNickName());
         }
 
         if (!StringUtils.isEmpty(user.getAccount().getAvatar())) {
-            iv_header.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + user.getAccount().getAvatar()));
+            GlideUtil.intoImageView(getActivity(), Uri.parse(BuildConfig.OSS_SERVER + user.getAccount().getAvatar()), ivHeader);
         }
         /**
          * 获取技师工作状态
@@ -250,4 +234,77 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
         setWorkStatus(Config.get().getConstBean().getData().getShopConstant().get(Constant.WORK_STATUS).indexOf(status));
         PrefUtils.setString("status", status);
     }
+
+    @OnClick({R.id.iv_setting, R.id.iv_user_header, R.id.rl_worker_verfity, R.id.rl_expert_verfity, R.id.rl_ivite, R.id.iv_personalQRCode,
+            R.id.rl_evaluate,R.id.rl_worker_verfity_b,R.id.rl_expert_verfity_b})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.iv_setting:
+                //设置
+                startActivity(new Intent(getActivity(), SettingActivity.class));
+                break;
+            case R.id.iv_user_header:
+                PersonInfoActivity.jumpToActivity(getActivity());
+                break;
+            case R.id.rl_worker_verfity:
+                doWorkAuth();
+                break;
+            case R.id.rl_expert_verfity:
+                JumpItent.jump(getActivity(), SpecialistAuthListActivity.class);
+                break;
+            case R.id.rl_ivite:
+                //邀请
+                InviteView inviteView = new InviteView(getActivity(), true);
+                inviteView.show();
+                break;
+            case R.id.iv_personalQRCode:
+                Bundle bundle = new Bundle();
+                bundle.putString("qrcodeTitle", EanfangApplication.get().getUser().getAccount().getRealName());
+                bundle.putString("qrcodeAddress", EanfangApplication.get().getUser().getAccount().getQrCode());
+                bundle.putString("qrcodeMessage", "personal");
+                JumpItent.jump(getActivity(), QrCodeShowActivity.class, bundle);
+                break;
+            case R.id.rl_evaluate:
+                //评价
+                startActivity(new Intent(getActivity(), EvaluateActivity.class));
+                break;
+            case R.id.rl_worker_verfity_b:
+                doWorkAuthB();
+                break;
+                case R.id.rl_expert_verfity_b:
+                doExpertB();
+                break;
+        }
+    }
+
+    private void doExpertB() {
+        if (t == 2) {
+            if (e == 1 || e == 2) {
+                //如果是认证中  和 认证完成 跳到详情界面 不可修改
+                JumpItent.jump(getActivity(), SpecialistSkillInfoDetailActivity.class);
+            } else {
+                if (mAuthStatusBean == null) {
+                    //多次访问状态的接口 造成mAuthStatusBean == null
+                    ToastUtil.get().showToast(getActivity(), "请稍后操作");
+                    return;
+                }
+                startActivity(new Intent(getActivity(), SpecialistSkillTypeActivity.class).putExtra("status", mAuthStatusBean.qual));
+            }
+        } else {
+            ToastUtil.get().showToast(getActivity(), "请先进行技师认证");
+        }
+    }
+
+
+    // 判断是否认证
+    private void doWorkAuthB() {
+        // 技师未认证，提示完善个人资料
+        String realName = EanfangApplication.get().getUser().getAccount().getRealName();
+        if (StringUtils.isEmpty(realName) || "待提供".equals(realName)) {
+            showToast("请先完善个人资料");
+        } else {
+            JumpItent.jump(getActivity(), TechnicianCertificationActivity.class);
+        }
+    }
+
 }

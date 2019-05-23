@@ -2,6 +2,7 @@ package com.eanfang.util;
 
 
 import android.content.Context;
+import android.util.Log;
 
 import com.annimon.stream.function.Consumer;
 

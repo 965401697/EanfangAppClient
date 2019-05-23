@@ -6,11 +6,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.customview.CircleImageView;
 import com.eanfang.R;
 import com.eanfang.listener.NetBroadcastReceiver;
 import com.eanfang.util.ToastUtil;
@@ -249,5 +251,10 @@ public abstract class BaseFragment extends Fragment implements IBase {
         return true;
     }
 
+    public void headViewSize(CircleImageView circleImageView, int size) {
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) circleImageView.getLayoutParams();
+        layoutParams.width = size;
+        layoutParams.height = size;
+    }
 
 }

@@ -26,6 +26,12 @@ import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
 
 public class WorkerApplication extends BaseApplication {
 
+
+    private static WorkerApplication mWorkerApplication;
+
+    public static WorkerApplication getApplication() {
+        return mWorkerApplication;
+    }
     @Override
     public void onCreate() {
         super.onCreate();

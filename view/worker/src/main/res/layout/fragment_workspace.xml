@@ -14,30 +14,27 @@
         android:background="@color/colorPrimary"
         android:orientation="vertical">
 
-        <!--     <TextView
-                 android:id="@+id/tv_homeTitle"
-                 android:layout_width="match_parent"
-                 android:layout_height="@dimen/dimen_40" />-->
-
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp">
+            android:layout_height="50dp">w
 
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/iv_company_logo"
-                android:layout_width="26dp"
-                android:layout_height="26dp"
+            <LinearLayout
+                android:id="@+id/ll_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="10dp"
-                fresco:roundAsCircle="true" />
+                android:layout_marginLeft="10dp">
+
+                <include layout="@layout/layout_headview" />
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/ll_switch_company"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_toRightOf="@id/iv_company_logo"
+                android:layout_toRightOf="@id/ll_header"
                 android:gravity="center">
 
                 <TextView
@@ -83,13 +80,14 @@
 
             <!--<include layout="@layout/layout_progress_ctrl" />-->
 
-            <include layout="@layout/layout_project_ctrl"
-                android:visibility="gone"/>
+            <include
+                layout="@layout/layout_project_ctrl"
+                android:visibility="gone" />
 
             <View
                 style="@style/style_common_line_gray"
-                android:visibility="gone"
-                android:layout_marginTop="@dimen/dimen_34" />
+                android:layout_marginTop="@dimen/dimen_34"
+                android:visibility="gone" />
 
             <include layout="@layout/layout_team_work" />
 

@@ -16,28 +16,32 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.customview.CircleImageView;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.kit.SDKManager;
+import com.eanfang.kit.ali.alioss.OSSCallBack;
+import com.eanfang.kit.ali.oss.OssKit;
 import com.eanfang.listener.MultiClickListener;
-import com.eanfang.biz.model.Message;
-import com.eanfang.biz.model.SelectAddressItem;
-import com.eanfang.biz.model.bean.LoginBean;
-import com.eanfang.biz.model.entity.AccountEntity;
-import com.eanfang.oss.OSSCallBack;
+import com.eanfang.model.Message;
+import com.eanfang.model.SelectAddressItem;
+import com.eanfang.model.bean.LoginBean;
+import com.eanfang.model.sys.AccountEntity;
+
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.jph.takephoto.model.TResult;
 import com.luck.picture.lib.entity.LocalMedia;
 
@@ -90,7 +94,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto implements Bas
     @BindView(R.id.et_realname)
     EditText etRealname;
     @BindView(R.id.iv_user_header)
-    SimpleDraweeView ivUpload;
+    CircleImageView ivUpload;
     @BindView(R.id.tv_area)
     TextView tvArea;
     @BindView(R.id.et_address)
@@ -137,6 +141,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto implements Bas
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_person_info);
         ButterKnife.bind(this);
+        headViewSize(ivUpload,(int) getResources().getDimension(com.eanfang.R.dimen.dimen_80));
         initPermission();
         initView();
         initData();
@@ -213,7 +218,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto implements Bas
         if (!StringUtils.isEmpty(accountEntity.getAvatar())) {
             isUploadHead = true;
             path = accountEntity.getAvatar();
-            ivUpload.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + accountEntity.getAvatar()));
+            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + accountEntity.getAvatar()),ivUpload);
             setHeaderShow(true);
         } else {
             setHeaderShow(false);
@@ -257,11 +262,11 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto implements Bas
     @Override
     public void takeSuccess(TResult result, int resultCode) {
         super.takeSuccess(result, resultCode);
-        OSSCallBack callback = null;
+     /*   OSSCallBack callback = null;
         String imgKey = "account/" + UuidUtil.getUUID() + ".png";
         switch (resultCode) {
             case HEAD_PHOTO:
-                ivUpload.setImageURI("file://" + result.getImage().getOriginalPath());
+                GlideUtil.intoImageView(PersonInfoActivity.this,"file://" + result.getImage().getOriginalPath(),ivUpload);
                 callback = new OSSCallBack(this, true) {
                     @Override
                     public void onOssSuccess() {
@@ -279,7 +284,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto implements Bas
             default:
                 break;
         }
-        OSSUtils.initOSS(this).asyncPutImage(imgKey, result.getImage().getOriginalPath(), callback);
+        OSSUtils.initOSS(this).asyncPutImage(imgKey, result.getImage().getOriginalPath(), callback);*/
     }
 
     /**
@@ -459,19 +464,12 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto implements Bas
     @Override
     public void onSuccess(List<LocalMedia> list) {
         String imgKey = "account/" + UuidUtil.getUUID() + ".png";
-        ivUpload.setImageURI("file://" + list.get(0).getCompressPath());
-        OSSCallBack   callback = new OSSCallBack(PersonInfoActivity.this, true) {
-            @Override
-            public void onOssSuccess() {
-                runOnUiThread(() -> {
-                    isUploadHead = true;
-                    LoginBean entity = EanfangApplication.getApplication().getUser();
-                    entity.getAccount().setAvatar(imgKey);
-                    path = entity.getAccount().getAvatar();
-                    setHeaderShow(true);
-                });
-            }
-        };
-        OSSUtils.initOSS(this).asyncPutImage(imgKey, list.get(0).getCompressPath(), callback);
+        GlideUtil.intoImageView(PersonInfoActivity.this,"file://" + list.get(0).getCutPath(),ivUpload);
+        OssKit.get(this).asyncPutImage(imgKey, list.get(0).getCutPath(), (isSuccess) -> {
+            LoginBean entity = EanfangApplication.getApplication().getUser();
+            entity.getAccount().setAvatar(imgKey);
+            path = entity.getAccount().getAvatar();
+            setHeaderShow(true);
+        });
     }
 }

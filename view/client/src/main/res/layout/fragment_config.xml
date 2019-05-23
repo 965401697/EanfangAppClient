@@ -168,13 +168,12 @@
                             android:gravity="center"
                             android:orientation="vertical">
 
-                            <com.facebook.drawee.view.SimpleDraweeView
-                                android:id="@+id/iv_user_header"
-                                android:layout_width="@dimen/dimen_155"
-                                android:layout_height="@dimen/dimen_155"
-                                android:layout_marginTop="-2dp"
-                                fresco:placeholderImage="@mipmap/ic_header"
-                                fresco:roundAsCircle="true" />
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="-2dp">
+                                <include layout="@layout/layout_headview" />
+                            </LinearLayout>
                         </LinearLayout>
 
                         <TextView
@@ -707,10 +706,10 @@
                 <RelativeLayout
                     android:id="@+id/rl_ivite_b"
                     android:layout_width="match_parent"
-                    android:visibility="gone"
                     android:layout_height="wrap_content"
                     android:background="@drawable/bg_ll_selctor"
-                    android:padding="10dp">
+                    android:padding="10dp"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/imageView14_b"
