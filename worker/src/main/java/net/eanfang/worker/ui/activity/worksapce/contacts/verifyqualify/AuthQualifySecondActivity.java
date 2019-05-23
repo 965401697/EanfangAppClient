@@ -11,11 +11,15 @@ import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
+import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.GrantChange;
 import com.eanfang.model.SystypeBean;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.SharePreferenceUtil;
+import com.eanfang.util.StringUtils;
+import com.eanfang.util.ThreadPoolManager;
 import com.yaf.sys.entity.BaseDataEntity;
 
 import net.eanfang.worker.R;
@@ -64,7 +68,7 @@ public class AuthQualifySecondActivity extends BaseActivity implements AreaCheck
         setContentView(R.layout.activity_auth_qualify_second);
         ButterKnife.bind(this);
         initView();
-        initData();
+        initAreaData();
     }
 
     private void initView() {
@@ -79,15 +83,31 @@ public class AuthQualifySecondActivity extends BaseActivity implements AreaCheck
         }
     }
 
-    private void initData() {
+
+    private void initAreaData() {
         //获取国家区域
         if (EanfangApplication.get().sSaveArea == null) {
-            showToast("加载服务区域失败！");
-            tvConfim.setClickable(false);
-            return;
+            String areaJson = SharePreferenceUtil.get().getString(Constant.COUNTRY_AREA_LIST, "");
+            if (StringUtils.isEmpty(areaJson)) {
+                showToast("加载服务区域失败！");
+                tvConfim.setClickable(false);
+            } else {
+                loadingDialog.show();
+                ThreadPoolManager manager = ThreadPoolManager.newInstance();
+                manager.addExecuteTask(() -> {
+                    EanfangApplication.get().sSaveArea = JSONObject.toJavaObject(JSONObject.parseObject(areaJson), BaseDataEntity.class);
+                    runOnUiThread(this::initData);
+                });
+            }
+        } else {
+            initData();
         }
-        BaseDataEntity entity = EanfangApplication.get().sSaveArea;
-        areaListBean = entity.getChildren();
+
+    }
+
+    private void initData() {
+        loadingDialog.dismiss();
+        areaListBean = EanfangApplication.get().sSaveArea.getChildren();
         EanfangHttp.get(UserApi.GET_COMPANY_ORG_AREA_INFO + orgid + "/AREA")
                 .execute(new EanfangCallback<SystypeBean>(this, true, SystypeBean.class, (bean) -> {
                     byNetGrant = bean;

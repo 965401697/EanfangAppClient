@@ -8,10 +8,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.customview.SuperTextView;
+import com.eanfang.config.Config;
+import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.CompanyPagesData;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
@@ -73,7 +76,11 @@ public class CompanyPagesActivity extends BaseActivity {
     }
 
     private void setData(CompanyPagesData data) {
-        bgDzTv.setRightString(data.getAreaCode() + "");
+        if (!StringUtils.isEmpty(data.getAreaCode())) {
+            bgDzTv.setRightString(Config.get().getAddressByCode(data.getAreaCode()));
+        } else {
+            bgDzTv.setRightString("");
+        }
         xxDzTv.setRightString(data.getOfficeAddress() + "");
         dzYxTv.setRightString(data.geteMail() + "");
         dwDhTv.setRightString(data.getTelPhone() + "");
@@ -113,20 +120,10 @@ public class CompanyPagesActivity extends BaseActivity {
                 break;
             default:
         }
-        switch (data.getUnitType()) {
-            case 0:
-                hyLxTv.setRightString("平台总公司");
-                break;
-            case 1:
-                hyLxTv.setRightString("城市平台公司");
-                break;
-            case 2:
-                hyLxTv.setRightString("企事业单位");
-                break;
-            case 3:
-                hyLxTv.setRightString("安防公司");
-                break;
-            default:
+        if (!StringUtils.isEmpty(data.getTradeTypeCode())) {
+            hyLxTv.setRightString(Config.get().getBaseNameByCode(Constant.INDUSTRY, data.getTradeTypeCode(), 2));
+        } else {
+            hyLxTv.setRightString("");
         }
         if (data.getIntro() == null) {
             gsXqTv.setVisibility(View.GONE);

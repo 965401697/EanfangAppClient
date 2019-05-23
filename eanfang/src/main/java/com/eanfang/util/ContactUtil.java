@@ -47,8 +47,6 @@ public class ContactUtil {
                 });
             }
         });
-        threadPoolManager.shutdown();
-
     }
 
     /**
