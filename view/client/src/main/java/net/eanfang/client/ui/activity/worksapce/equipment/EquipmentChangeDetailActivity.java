@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
+//已提取
 public class EquipmentChangeDetailActivity extends BaseClientActivity {
 
     @BindView(R.id.tv_position)

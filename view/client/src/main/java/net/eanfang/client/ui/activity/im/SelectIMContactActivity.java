@@ -18,7 +18,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.GroupCreatBean;
@@ -33,6 +32,7 @@ import com.eanfang.util.compound.CompoundHelper;
 import com.eanfang.model.sys.OrgEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
 import org.greenrobot.eventbus.EventBus;
@@ -201,8 +201,8 @@ public class SelectIMContactActivity extends BaseClientActivity {
 ////                Intent intent = new Intent(SelectIMContactActivity.this, SelectOrganizationActivity.class);
 //                Intent intent = new Intent(SelectIMContactActivity.this, CreateGroupOrganizationActivity.class);
 //                intent.putExtra("isFrom", "ADD_GROUP_MEMBER");
-//                intent.putExtra("companyId", String.valueOf(EanfangApplication.getApplication().getCompanyId()));
-//                intent.putExtra("companyName", EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
+//                intent.putExtra("companyId", String.valueOf(ClientApplication.get().getCompanyId()));
+//                intent.putExtra("companyName", ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
 //                Bundle bundle = new Bundle();
 //                bundle.putSerializable("list", (Serializable) mHeaderIconAdapter.getData());
 //                intent.putExtras(bundle);
@@ -236,7 +236,7 @@ public class SelectIMContactActivity extends BaseClientActivity {
         });
 
         //区分个人和公司 个人不现实公司
-        if (EanfangApplication.get().getCompanyId() != 0) {
+        if (ClientApplication.get().getCompanyId() != 0) {
             getData();
         } else {
             findViewById(R.id.rl_organization).setVisibility(View.GONE);
@@ -301,7 +301,7 @@ public class SelectIMContactActivity extends BaseClientActivity {
 //        List<TemplateBean.Preson> presons = new ArrayList<>();
 //
 //        for (TemplateBean.Preson p : presonList) {
-//            if (!p.getId().equals(String.valueOf(EanfangApplication.get().getAccId()))) {
+//            if (!p.getId().equals(String.valueOf(ClientApplication.get().getAccId()))) {
 //                presons.add(p);
 //            }
 //        }
@@ -447,7 +447,7 @@ public class SelectIMContactActivity extends BaseClientActivity {
         }
 
 
-        userIconList.add(EanfangApplication.get().getUser().getAccount().getAvatar());//添加自己的头像
+        userIconList.add(ClientApplication.get().getLoginBean().getAccount().getAvatar());//添加自己的头像
         //合成头像
 
         CompoundHelper.getInstance().sendBitmap(this, handler, userIconList);//生成图片
@@ -468,7 +468,7 @@ public class SelectIMContactActivity extends BaseClientActivity {
                 stringBuffer.append("," + newPresonList.get(i).getName());
             }
         }
-        groupName = EanfangApplication.get().getUser().getAccount().getNickName() + "," + stringBuffer.toString();
+        groupName = ClientApplication.get().getLoginBean().getAccount().getNickName() + "," + stringBuffer.toString();
     }
 
     /**
@@ -488,7 +488,7 @@ public class SelectIMContactActivity extends BaseClientActivity {
             }
             //把自己的id 加进去
             JSONObject jsonObject3 = new JSONObject();
-            jsonObject3.put("accId", EanfangApplication.get().getAccId());
+            jsonObject3.put("accId", ClientApplication.get().getAccId());
             array.put(jsonObject3);
 
             jsonObject1.put("groupName", groupName);
@@ -519,7 +519,7 @@ public class SelectIMContactActivity extends BaseClientActivity {
                                 Group groupInfo = new Group(bean.getRcloudGroupId(), bean.getGroupName(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + imgKey));
                                 RongIM.getInstance().refreshGroupInfoCache(groupInfo);
 
-                                EanfangApplication.get().set(bean.getRcloudGroupId(), bean.getGroupId());
+                                ClientApplication.get().set(bean.getRcloudGroupId(), bean.getGroupId());
                                 RongIM.getInstance().startGroupChat(SelectIMContactActivity.this, bean.getRcloudGroupId(), bean.getGroupName());
                                 dialog.dismiss();
                                 SelectIMContactActivity.this.finish();
@@ -581,7 +581,7 @@ public class SelectIMContactActivity extends BaseClientActivity {
             return;
         }
 
-//        mUserIconList.add(EanfangApplication.get().getUser().getAccount().getAvatar());
+//        mUserIconList.add(ClientApplication.get().getLoginBean().getAccount().getAvatar());
         if (isCompound) {
             CompoundHelper.getInstance().sendBitmap(this, mHandler, mUserIconList);//生成图片
         }

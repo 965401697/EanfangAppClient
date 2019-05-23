@@ -18,7 +18,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.security.SecurityListBean;
@@ -32,6 +31,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.photopicker.com.util.BGASpaceItemDecoration;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.im.SelectIMContactActivity;
 import net.eanfang.worker.ui.activity.worksapce.online.FaultExplainActivity;
 import net.eanfang.worker.ui.adapter.security.SecurityListAdapter;
@@ -88,8 +88,8 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
     private SecurityListAdapter securityListAdapter;
 
 
-    private QBadgeView qBadgeViewComment = new QBadgeView(EanfangApplication.get().getApplicationContext());
-    private QBadgeView qBadgeViewAbout = new QBadgeView(EanfangApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewComment = new QBadgeView(WorkerApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewAbout = new QBadgeView(WorkerApplication.get().getApplicationContext());
 
     /**
      * 点击头像进入查看他人个人中心
@@ -131,7 +131,7 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
             llSecuritypersonal.setVisibility(View.VISIBLE);
             tvSecuirtypersonal.setText("我的动态");
         }
-        securityListAdapter = new SecurityListAdapter(EanfangApplication.get().getApplicationContext(), false);
+        securityListAdapter = new SecurityListAdapter(WorkerApplication.get().getApplicationContext(), false);
         securityListAdapter.bindToRecyclerView(rvSecurity);
 
         rvSecurity.setLayoutManager(new LinearLayoutManager(this));
@@ -252,8 +252,8 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
             queryEntry1.getEquals().put("publisherUserId", mUserId + "");
             url = NewApiService.SERCURITY_PERSONAL_OTHER_TOP;
         } else {
-            queryEntry1.getEquals().put("publisherAccId", EanfangApplication.get().getAccId() + "");
-            queryEntry1.getEquals().put("publisherUserId", EanfangApplication.get().getUserId() + "");
+            queryEntry1.getEquals().put("publisherAccId", WorkerApplication.get().getAccId() + "");
+            queryEntry1.getEquals().put("publisherUserId", WorkerApplication.get().getUserId() + "");
             url = NewApiService.SERCURITY_PERSONAL_TOP;
         }
         EanfangHttp.post(url)
@@ -289,7 +289,7 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
             queryEntry2.getEquals().put("publisherAccId", mAccId + "");
             url = NewApiService.SERCURITY_PERSONAL_OTHER;
         } else {
-            queryEntry2.getEquals().put("publisherAccId", EanfangApplication.get().getAccId() + "");
+            queryEntry2.getEquals().put("publisherAccId", WorkerApplication.get().getAccId() + "");
             url = NewApiService.SERCURITY_PERSONAL;
         }
 

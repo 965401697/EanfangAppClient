@@ -17,7 +17,6 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -38,6 +37,7 @@ import com.eanfang.model.sys.AccountEntity;
 import com.eanfang.model.sys.UserEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -112,7 +112,7 @@ public class PerfectingPersonalDataActivity extends BaseActivityWithTakePhoto {
         mStatus = getIntent().getIntExtra("status", -1);
         statusB = getIntent().getIntExtra("statusB", -1);
         llHeaders.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(this, HEADER_PIC)));
-        EanfangHttp.get(UserApi.GET_USER_INFO).params("userId", EanfangApplication.get().getUserId()).tag(this).execute(new EanfangCallback<LoginBean>(this, true, LoginBean.class, (bean) -> {
+        EanfangHttp.get(UserApi.GET_USER_INFO).params("userId", WorkerApplication.get().getUserId()).tag(this).execute(new EanfangCallback<LoginBean>(this, true, LoginBean.class, (bean) -> {
             runOnUiThread(() -> {
                 accountEntity = bean.getAccount();
                 fillData();
@@ -129,7 +129,7 @@ public class PerfectingPersonalDataActivity extends BaseActivityWithTakePhoto {
     @SuppressLint("NewApi")
     private void fillData() {
         ivHeader.setImageURI(BuildConfig.OSS_SERVER + accountEntity.getAvatar());
-        String contactName = EanfangApplication.get().getUser().getAccount().getRealName();
+        String contactName = WorkerApplication.get().getLoginBean().getAccount().getRealName();
         if ((!StringUtils.isEmpty(contactName)) & (!contactName.contains("易安防")) & (!contactName.contains("匿名用户"))) {
             tvContactName.setText(contactName);
         }
@@ -156,9 +156,9 @@ public class PerfectingPersonalDataActivity extends BaseActivityWithTakePhoto {
             date = accountEntity.getBirthday();
             srEt.setText(new SimpleDateFormat("yyyy年MM月dd日").format(date));
         }
-        etCardId.setText(EanfangApplication.get().getUser().getAccount().getIdCard());
+        etCardId.setText(WorkerApplication.get().getLoginBean().getAccount().getIdCard());
         //0女1男
-        if (EanfangApplication.get().getUser().getAccount().getGender() == 0) {
+        if (WorkerApplication.get().getLoginBean().getAccount().getGender() == 0) {
             rbWoman.setChecked(true);
         } else {
             rbMan.setChecked(true);
@@ -263,23 +263,23 @@ public class PerfectingPersonalDataActivity extends BaseActivityWithTakePhoto {
         accountEntity.setRealName(tvContactNames);
         accountEntity.setAddress(dqDzEtS);
         accountEntity.setNickName(ncE);
-        accountEntity.setAccId(EanfangApplication.get().getAccId());
+        accountEntity.setAccId(WorkerApplication.get().getAccId());
         accountEntity.setRealName(tvContactName.getText().toString().trim());
         accountEntity.setIdCard(cardId);
         accountEntity.setGender(rbMan.isChecked() ? 1 : 0);
         accountEntity.setPersonalNote(info);
         UserEntity userEntity = new UserEntity();
-        userEntity.setUserId(EanfangApplication.get().getUserId());
+        userEntity.setUserId(WorkerApplication.get().getUserId());
         accountEntity.setDefaultUser(userEntity);
-        accountEntity.setAccId(EanfangApplication.get().getAccId());
+        accountEntity.setAccId(WorkerApplication.get().getAccId());
         LoginBean loginBean = new LoginBean();
         loginBean.setAccount(accountEntity);
         EanfangHttp.post(UserApi.BC_GR_ZL).upJson(JSONObject.toJSONString(accountEntity)).execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
-            LoginBean user = EanfangApplication.get().getUser();
+            LoginBean user = WorkerApplication.get().getLoginBean();
             AccountEntity accountEntity1 = user.getAccount();
             accountEntity1.setNickName(ncE);
             user.setAccount(accountEntity1);
-            EanfangApplication.get().set(LoginBean.class.getName(), user);
+            WorkerApplication.get().set(LoginBean.class.getName(), user);
             Intent intent = new Intent(this, RealNameAuthenticationActivity.class);
             intent.putExtra("statusB", statusB);
             startActivity(intent);

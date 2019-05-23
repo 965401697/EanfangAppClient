@@ -16,15 +16,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
-import com.customview.CircleImageView;
+import com.eanfang.widget.customview.CircleImageView;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.kit.SDKManager;
-import com.eanfang.kit.ali.alioss.OSSCallBack;
 import com.eanfang.kit.ali.oss.OssKit;
 import com.eanfang.listener.MultiClickListener;
 import com.eanfang.model.Message;
@@ -32,7 +29,6 @@ import com.eanfang.model.SelectAddressItem;
 import com.eanfang.model.bean.LoginBean;
 import com.eanfang.model.sys.AccountEntity;
 
-import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GetDateUtils;
@@ -46,6 +42,7 @@ import com.jph.takephoto.model.TResult;
 import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.techniciancertification.TechnicianCertificationActivity;
 import net.eanfang.worker.ui.activity.worksapce.StateChangeActivity;
 
@@ -272,7 +269,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto implements Bas
                     public void onOssSuccess() {
                         runOnUiThread(() -> {
                             isUploadHead = true;
-                            LoginBean entity = EanfangApplication.getApplication().getUser();
+                            LoginBean entity = WorkerApplication.get().getUser();
                             entity.getAccount().setAvatar(imgKey);
                             path = entity.getAccount().getAvatar();
                             setHeaderShow(true);
@@ -357,17 +354,17 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto implements Bas
                 .execute(new EanfangCallback(this, true, JSONObject.class, (bean) -> {
                     runOnUiThread(() -> {
                         showToast("成功");
-                        LoginBean user = EanfangApplication.get().getUser();
+                        LoginBean user = WorkerApplication.get().getLoginBean();
                         user.setAccount(mAccountEntity);
 
-                        EanfangApplication.get().set(LoginBean.class.getName(), user);
+                        WorkerApplication.get().set(LoginBean.class.getName(), user);
 
                         UserInfo userInfo;
                         if (!StringUtils.isEmpty(path)) {
                             //刷新个人融云的信息
-                            userInfo = new UserInfo(String.valueOf(EanfangApplication.getApplication().getAccId()), tvNickname.getText().toString().trim(), Uri.parse(BuildConfig.OSS_SERVER + path));
+                            userInfo = new UserInfo(String.valueOf(WorkerApplication.get().getAccId()), tvNickname.getText().toString().trim(), Uri.parse(BuildConfig.OSS_SERVER + path));
                         } else {
-                            userInfo = new UserInfo(String.valueOf(EanfangApplication.getApplication().getAccId()), tvNickname.getText().toString().trim(), Uri.parse(BuildConfig.OSS_SERVER + loginBean.getAccount().getAvatar()));
+                            userInfo = new UserInfo(String.valueOf(WorkerApplication.get().getAccId()), tvNickname.getText().toString().trim(), Uri.parse(BuildConfig.OSS_SERVER + loginBean.getAccount().getAvatar()));
                         }
                         RongIM.getInstance().refreshUserInfoCache(userInfo);
                         Bundle bundle = new Bundle();
@@ -466,7 +463,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto implements Bas
         String imgKey = "account/" + UuidUtil.getUUID() + ".png";
         GlideUtil.intoImageView(PersonInfoActivity.this,"file://" + list.get(0).getCutPath(),ivUpload);
         OssKit.get(this).asyncPutImage(imgKey, list.get(0).getCutPath(), (isSuccess) -> {
-            LoginBean entity = EanfangApplication.getApplication().getUser();
+            LoginBean entity = WorkerApplication.get().getLoginBean();
             entity.getAccount().setAvatar(imgKey);
             path = entity.getAccount().getAvatar();
             setHeaderShow(true);

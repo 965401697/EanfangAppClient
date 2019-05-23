@@ -17,6 +17,7 @@ import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -66,7 +67,7 @@ public class CreatSectionActivity extends BaseClientActivity {
         JSONObject object = new JSONObject();
 
 //        if (TextUtils.isEmpty(tvSectionName.getText().toString().trim())) {
-//            parentOrgId = String.valueOf(EanfangApplication.get().getCompanyId());
+//            parentOrgId = String.valueOf(ClientApplication.get().getCompanyId());
 //        }
 
         if (TextUtils.isEmpty(etNewName.getText().toString().trim())) {
@@ -74,11 +75,11 @@ public class CreatSectionActivity extends BaseClientActivity {
             return;
         }
         try {
-            object.put("topCompanyId", EanfangApplication.get().getTopCompanyId());
+            object.put("topCompanyId", ClientApplication.get().getTopCompanyId());
             if (!TextUtils.isEmpty(tvSectionName.getText().toString().trim()) && TextUtils.isEmpty(topCompanyId)) {
                 object.put("parentOrgId", parentOrgId);
             } else {
-                object.put("parentOrgId", EanfangApplication.get().getCompanyId());
+                object.put("parentOrgId", ClientApplication.get().getCompanyId());
             }
             object.put("orgName", etNewName.getText().toString().trim());
         } catch (JSONException e) {

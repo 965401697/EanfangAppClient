@@ -29,6 +29,7 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.scancode.ScanCodeActivity;
 import net.eanfang.worker.ui.adapter.FriendsAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
@@ -123,7 +124,7 @@ public class AddFriendActivity extends BaseWorkerActivity {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 FriendListBean friendListBean = (FriendListBean) adapter.getData().get(position);
 
-                if (friendListBean.getAccId().equals(String.valueOf(EanfangApplication.get().getAccId()))) {
+                if (friendListBean.getAccId().equals(String.valueOf(WorkerApplication.get().getAccId()))) {
                     ToastUtil.get().showToast(AddFriendActivity.this, "亲，自己不能加自己为好友");
                     return;
                 }
@@ -205,7 +206,7 @@ public class AddFriendActivity extends BaseWorkerActivity {
 
 
                                     EanfangHttp.post(UserApi.POST_ADD_FRIEND_PUSH)
-                                            .params("senderId", EanfangApplication.get().getAccId())
+                                            .params("senderId", WorkerApplication.get().getAccId())
                                             .params("targetIds", friendListBean.getAccId())
                                             .execute(new EanfangCallback<JSONObject>(AddFriendActivity.this, true, JSONObject.class, (json) -> {
                                                 AddFriendActivity.this.finish();

@@ -30,7 +30,7 @@ import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
 /**
  * Created by O u r on 2018/5/7.
  */
-
+@Deprecated
 public class ClientApplication extends EanfangApplication {
     private static IWXAPI api;
 
@@ -68,9 +68,9 @@ public class ClientApplication extends EanfangApplication {
             LoadKit.initLoadSir();
             CacheKit.init(this).put("APP_TYPE", BuildConfig.APP_TYPE);
             EanfangHttp.setClient();
-            if (EanfangApplication.get().getUser() != null) {
-                EanfangHttp.setToken(EanfangApplication.get().getUser().getToken());
-                HttpConfig.get().setToken(EanfangApplication.get().getUser().getToken());
+            if (ClientApplication.get().getUser() != null) {
+                EanfangHttp.setToken(ClientApplication.get().getUser().getToken());
+                HttpConfig.get().setToken(ClientApplication.get().getUser().getToken());
             }
 
             MobSDK.init(this, "22bb8de378eab", "f93cc21381c6f51702be823efde3e402");
@@ -102,12 +102,12 @@ public class ClientApplication extends EanfangApplication {
                 Log.d("zzw", "融云登录onTokenIncorrect");
 
 //                EanfangHttp.post(UserApi.POST_RONGY_TOKEN)
-//                        .params("userId", EanfangApplication.get().getAccId())
+//                        .params("userId", ClientApplication.get().getAccId())
 //                        .execute(new EanfangCallback<String>(activity, false, String.class, (str) -> {
 //                            if (!TextUtils.isEmpty(str)) {
 //                                JSONObject json = JSONObject.parseObject(str);
 //                                String t = json.getString("token");
-//                                EanfangApplication.get().set(EanfangConst.RONG_YUN_TOKEN, t);
+//                                ClientApplication.get().set(EanfangConst.RONG_YUN_TOKEN, t);
 //                                ClientApplication.connect(t, activity);
 //                            }
 //                        }));

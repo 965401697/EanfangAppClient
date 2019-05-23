@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -30,6 +29,7 @@ import com.picker.common.util.DateUtils;
 import com.yaf.base.entity.HonorCertificateEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -159,7 +159,7 @@ public class SpecialistAddCertificationActivity extends BaseActivityWithTakePhot
         }
 
         HonorCertificateEntity entity = new HonorCertificateEntity();
-        entity.setAccId(EanfangApplication.get().getAccId());
+        entity.setAccId(WorkerApplication.get().getAccId());
         url = "";
         if (bean != null) {
             entity.setId(bean.getId());

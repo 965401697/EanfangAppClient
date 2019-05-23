@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WorkTalkListBean;
@@ -15,6 +14,7 @@ import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.worktalk.WorkTalkDetailActivity;
 import net.eanfang.worker.ui.adapter.WorkTalkAdapter;
 import net.eanfang.worker.ui.fragment.TemplateItemListFragment;
@@ -68,7 +68,7 @@ public class WorkTalkListFragment extends TemplateItemListFragment {
         if (mQueryEntry == null) {
             mQueryEntry = new QueryEntry();
         }
-        mUserId = EanfangApplication.get().getUser().getAccount().getDefaultUser().getUserId();
+        mUserId = WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getUserId();
         // 我创建的
         if (mType == 1) {
             mQueryEntry.getEquals().put("ownerUserId", mUserId + "");

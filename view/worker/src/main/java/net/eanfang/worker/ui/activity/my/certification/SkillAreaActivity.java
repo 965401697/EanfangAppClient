@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.GrantChange;
@@ -18,6 +17,7 @@ import com.eanfang.model.SystypeBean;
 import com.eanfang.model.sys.BaseDataEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.GroupAdapter;
 import net.eanfang.worker.ui.activity.techniciancertification.SubmitSuccessfullyJsActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
@@ -44,7 +44,7 @@ public class SkillAreaActivity extends BaseWorkerActivity implements AreaCheckCh
     @BindView(R.id.tv_go)
     TextView tvGo;
     private GroupAdapter mAdapter;
-    private Long userid = EanfangApplication.getApplication().getUser().getAccount().getNullUser();
+    private Long userid = WorkerApplication.get().getLoginBean().getAccount().getNullUser();
     private List<Integer> checkListId;
     private List<Integer> unCheckListId;
     private SystypeBean byNetGrant;
@@ -77,11 +77,11 @@ public class SkillAreaActivity extends BaseWorkerActivity implements AreaCheckCh
 
     private void initData() {
         //获取国家区域
-        if (EanfangApplication.get().sSaveArea == null) {
+        if (WorkerApplication.getApplication().sSaveArea == null) {
             showToast("加载服务区域失败！");
             return;
         }
-        areaListBean = EanfangApplication.get().sSaveArea.getChildren();
+        areaListBean = WorkerApplication.getApplication().sSaveArea.getChildren();
         EanfangHttp.get(UserApi.GET_TECH_WORKER_SYS + userid + "/AREA").execute(new EanfangCallback<SystypeBean>(this, true, SystypeBean.class, (bean) -> {
             byNetGrant = bean;
             fillData();

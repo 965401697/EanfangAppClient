@@ -26,6 +26,7 @@ import com.eanfang.util.CleanMessageUtil;
 import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -93,7 +94,7 @@ public class UpdatePasswordActivity extends BaseActivity {
     private void initView() {
         setLeftBack();
         setTitle("修改密码");
-        tvPhone.setText(EanfangApplication.getApplication().getUser().getAccount().getMobile());
+        tvPhone.setText(ClientApplication.get().getLoginBean().getAccount().getMobile());
         mDisslove = getIntent().getBooleanExtra("disslove", false);
     }
 
@@ -163,7 +164,7 @@ public class UpdatePasswordActivity extends BaseActivity {
         EanfangHttp.get(UserApi.APP_LOGOUT)
                 .execute(new EanfangCallback<com.alibaba.fastjson.JSONObject>(this, true, com.alibaba.fastjson.JSONObject.class, (bean) -> {
                     RongIM.getInstance().logout();//退出融云
-                    CleanMessageUtil.clearAllCache(EanfangApplication.get());
+                    CleanMessageUtil.clearAllCache(ClientApplication.get());
 //                    SharePreferenceUtil.get().clear();
                     startActivity(new Intent(UpdatePasswordActivity.this, LoginActivity.class));
                     finishSelf();

@@ -12,6 +12,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.RepairFailureEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class LeaveBugAdapter extends BaseQuickAdapter<RepairFailureEntity, BaseV
 
     @Override
     protected void convert(BaseViewHolder helper, RepairFailureEntity item) {
-        if (EanfangApplication.getApplication().getCompanyId() == 0) {
+        if (WorkerApplication.get().getCompanyId() == 0) {
             helper.setText(R.id.tv_company, item.getOwnerUserEntity().getAccountEntity().getRealName());
         } else {
             helper.setText(R.id.tv_company, item.getOwnerOrgEntity().getOrgName());

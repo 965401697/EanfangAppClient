@@ -19,6 +19,7 @@ import com.eanfang.util.JsonUtils;
 import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 
 import org.greenrobot.eventbus.EventBus;
 

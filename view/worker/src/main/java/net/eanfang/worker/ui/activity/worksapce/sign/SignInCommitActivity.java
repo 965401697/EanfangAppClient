@@ -22,6 +22,7 @@ import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -79,7 +80,7 @@ public class SignInCommitActivity extends BaseActivity {
         tvTime.setText(signinBean.getSignTime());
         tvAddress.setText(signinBean.getDetailPlace());
         tvName.setText(signinBean.getVisitorName());
-        tvCompany.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
+        tvCompany.setText(WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
         tvCommit.setOnClickListener(v -> oss());
     }
 

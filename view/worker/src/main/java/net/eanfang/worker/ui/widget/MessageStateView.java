@@ -11,6 +11,7 @@ import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.witget.SwitchButton;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.util.PrefUtils;
 
 import butterknife.BindView;
@@ -58,7 +59,7 @@ public class MessageStateView extends BaseDialog {
                 SDKManager.getXGPush(mContext).unregisterPush();
             } else {
                 Log.e("GG", "打开推送");
-                SDKManager.getXGPush(mContext).registerPush(EanfangApplication.get().getUser().getAccount().getMobile());
+                SDKManager.getXGPush(mContext).registerPush(WorkerApplication.get().getLoginBean().getAccount().getMobile());
             }
         });
 

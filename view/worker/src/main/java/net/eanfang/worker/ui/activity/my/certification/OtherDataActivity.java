@@ -25,6 +25,7 @@ import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 import com.yaf.base.entity.TechWorkerVerifyEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.techniciancertification.SubmitSuccessfullyJsActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 import net.eanfang.worker.ui.widget.WQLeftRightClickTextView;

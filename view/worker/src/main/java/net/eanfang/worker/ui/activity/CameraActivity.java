@@ -45,6 +45,7 @@ import com.eanfang.util.V;
 import com.eanfang.witget.CustomRadioGroup;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import java.io.FileNotFoundException;
@@ -184,7 +185,7 @@ public class CameraActivity extends BaseWorkerActivity implements AMapLocationLi
 
 
         //创建者
-        creatUser = V.v(() -> EanfangApplication.get().getUser().getAccount().getRealName());
+        creatUser = V.v(() -> WorkerApplication.get().getLoginBean().getAccount().getRealName());
         if (StringUtils.isEmpty(creatUser)) {
             creatUser = "--";
         }

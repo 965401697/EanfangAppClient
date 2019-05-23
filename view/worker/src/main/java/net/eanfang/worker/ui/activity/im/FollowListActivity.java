@@ -9,7 +9,6 @@ import android.util.Log;
 import android.widget.Button;
 
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.FollowDataBean;
@@ -17,6 +16,7 @@ import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.my.UserHomeActivity;
 import net.eanfang.worker.ui.adapter.FollowListAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
@@ -116,7 +116,7 @@ public class FollowListActivity extends BaseWorkerActivity {
     private void initDate() {
         QueryEntry entry = new QueryEntry();
         entry.getEquals().put("followAccId",
-                String.valueOf(EanfangApplication.get().getAccId()));
+                String.valueOf(WorkerApplication.get().getAccId()));
         entry.setSize(50);
         entry.setPage(mCurrPage);
 

@@ -12,7 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.customview.CircleImageView;
+import com.eanfang.widget.customview.CircleImageView;
 import com.eanfang.R;
 import com.eanfang.listener.NetBroadcastReceiver;
 import com.eanfang.util.ToastUtil;

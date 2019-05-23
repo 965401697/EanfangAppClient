@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -18,6 +17,7 @@ import com.eanfang.util.CleanMessageUtil;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -86,11 +86,11 @@ public class AdministratorSetActivity extends BaseWorkerActivity {
             return;
         }
 
-        if (Long.parseLong(bean.getId()) == EanfangApplication.get().getAccId()) {
+        if (Long.parseLong(bean.getId()) == WorkerApplication.get().get().getAccId()) {
             ToastUtil.get().showToast(AdministratorSetActivity.this, "自己不能转让自己");
             return;
         }
-        String companyName = EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName();
+        String companyName = WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgName();
         new TrueFalseDialog(AdministratorSetActivity.this, "转让管理员提示", "您确定将  " + companyName + "  管理员身份转让给  " + name + "  ?", () -> {
             EanfangHttp.get(NewApiService.SET_TRANS_ADMIN)
                     .params("mobile", molibe)
@@ -112,7 +112,7 @@ public class AdministratorSetActivity extends BaseWorkerActivity {
     private void logout() {
 
         signout();
-        CleanMessageUtil.clearAllCache(EanfangApplication.get());
+        CleanMessageUtil.clearAllCache(WorkerApplication.get());
         ToastUtil.get().showToast(AdministratorSetActivity.this, "退出登录成功");
 //        SharePreferenceUtil.get().clear();
         startActivity(new Intent(AdministratorSetActivity.this, LoginActivity.class));

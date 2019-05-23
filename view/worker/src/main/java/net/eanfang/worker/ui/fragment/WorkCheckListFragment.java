@@ -5,7 +5,6 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -15,6 +14,7 @@ import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.oa.check.DealWithFirstActivity;
 import net.eanfang.worker.ui.adapter.WorkCheckListAdapter;
 
@@ -90,11 +90,11 @@ public class WorkCheckListFragment extends TemplateItemListFragment {
 //            mQueryEntry.getEquals().put(Constant.STATUS, status);
 //        }
         if (Constant.COMPANY_DATA_CODE == mType) {// 全部 本公司的
-            mQueryEntry.getEquals().put(Constant.CREATE_COMPANY_ID, EanfangApplication.getApplication().getCompanyId() + "");
+            mQueryEntry.getEquals().put(Constant.CREATE_COMPANY_ID, WorkerApplication.get().getCompanyId() + "");
         } else if (Constant.CREATE_DATA_CODE == mType) {// 我创建的
-            mQueryEntry.getEquals().put(Constant.CREATE_USER_ID, EanfangApplication.getApplication().getUserId() + "");
+            mQueryEntry.getEquals().put(Constant.CREATE_USER_ID, WorkerApplication.get().getUserId() + "");
         } else if (Constant.ASSIGNEE_DATA_CODE == mType) {// 我负责的
-            mQueryEntry.getEquals().put(Constant.ASSIGNEE_USER_ID, EanfangApplication.getApplication().getUserId() + "");
+            mQueryEntry.getEquals().put(Constant.ASSIGNEE_USER_ID,WorkerApplication.get().getUserId() + "");
         }
         mQueryEntry.setPage(mPage);
         mQueryEntry.setSize(10);

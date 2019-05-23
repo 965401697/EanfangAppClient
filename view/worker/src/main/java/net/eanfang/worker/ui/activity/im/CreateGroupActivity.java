@@ -33,6 +33,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.jph.takephoto.model.TResult;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.oa.workreport.OAPersonAdaptet;
 
 import org.json.JSONArray;
@@ -222,8 +223,8 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
         /**
          * 添加自己的头像
          * */
-        if (!userIconList.contains(EanfangApplication.get().getUser().getAccount().getAvatar())) {
-            userIconList.add(EanfangApplication.get().getUser().getAccount().getAvatar());
+        if (!userIconList.contains(WorkerApplication.get().getLoginBean().getAccount().getAvatar())) {
+            userIconList.add(WorkerApplication.get().getLoginBean().getAccount().getAvatar());
         }
 
         //防止创建群组的人员一个头像图片都没有 造成的空指针崩溃
@@ -251,7 +252,7 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
                 stringBuffer.append("," + oaPersonAdaptet.getData().get(i).getName());
             }
         }
-        groupName = EanfangApplication.get().getUser().getAccount().getNickName() + "," + stringBuffer.toString();
+        groupName = WorkerApplication.get().getLoginBean().getAccount().getNickName() + "," + stringBuffer.toString();
     }
 
     /**
@@ -282,12 +283,12 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
         {
             list.add(p.getId());
         }
-        if (!list.contains(String.valueOf(EanfangApplication.get().
+        if (!list.contains(String.valueOf(WorkerApplication.get().
 
                 getAccId())))
 
         {
-            list.add(String.valueOf(EanfangApplication.get().getAccId()));
+            list.add(String.valueOf(WorkerApplication.get().getAccId()));
         }
 
         JSONObject jsonObject = new JSONObject();
@@ -323,7 +324,7 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
             Group groupInfo = new Group(bean.getRcloudGroupId(), bean.getGroupName(), Uri.parse(BuildConfig.OSS_SERVER + imgKey));
             RongIM.getInstance().refreshGroupInfoCache(groupInfo);
 
-            EanfangApplication.get().set(bean.getRcloudGroupId(), bean.getGroupId());
+            WorkerApplication.get().set(bean.getRcloudGroupId(), bean.getGroupId());
             RongIM.getInstance().startGroupChat(CreateGroupActivity.this, bean.getRcloudGroupId(), bean.getGroupName());
             NewSelectIMContactActivity.transactionActivities.remove(this);
             CreateGroupActivity.this.finish();

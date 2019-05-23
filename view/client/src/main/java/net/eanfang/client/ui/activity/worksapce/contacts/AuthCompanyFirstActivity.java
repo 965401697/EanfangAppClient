@@ -212,7 +212,7 @@ public class AuthCompanyFirstActivity extends BaseActivityWithTakePhoto {
 //        if (infoBean.getAdminUserId() != null) {
 //            infoBean.setAdminUserId(byNetBean.getAdminUserId());
 //        } else {
-//            infoBean.setAdminUserId(EanfangApplication.getApplication().getUserId());
+//            infoBean.setAdminUserId(ClientApplication.get().getUserId());
 //        }
 
         String json = JSONObject.toJSONString(infoBean);

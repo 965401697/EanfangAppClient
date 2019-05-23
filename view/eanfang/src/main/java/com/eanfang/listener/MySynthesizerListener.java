@@ -5,7 +5,7 @@ import android.media.AudioManager;
 import android.os.Bundle;
 
 import com.camera.util.LogUtil;
-import com.eanfang.application.EanfangApplication;
+import com.eanfang.base.BaseApplication;
 import com.iflytek.cloud.SpeechError;
 import com.iflytek.cloud.SynthesizerListener;
 
@@ -21,7 +21,7 @@ public class MySynthesizerListener implements SynthesizerListener {
 
     public MySynthesizerListener() {
         //把音乐音量强制设置为最大音量
-        mAudioManager = (AudioManager) EanfangApplication.get().getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
+        mAudioManager = (AudioManager) BaseApplication.get().getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
         mVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC); // 获取当前音乐音量
     }
 

@@ -13,13 +13,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.model.TemplateBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.V;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.im.CreateGroupActivity;
 import net.eanfang.client.ui.activity.im.CreateGroupOrganizationActivity;
 import net.eanfang.client.ui.activity.im.NewSelectIMContactActivity;
@@ -109,8 +109,8 @@ public class OAPersonAdaptet extends RecyclerView.Adapter<OAPersonAdaptet.ViewHo
 
                         Intent intent = new Intent(mContext, CreateGroupOrganizationActivity.class);
                         intent.putExtra("isFrom", "OA");
-                        intent.putExtra("companyId", String.valueOf(EanfangApplication.getApplication().getCompanyId()));
-                        intent.putExtra("companyName", EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
+                        intent.putExtra("companyId", String.valueOf(ClientApplication.get().getCompanyId()));
+                        intent.putExtra("companyName", ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("list", (Serializable) mData);
                         intent.putExtras(bundle);

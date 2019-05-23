@@ -14,7 +14,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.TemplateBean;
@@ -28,6 +27,7 @@ import com.yaf.base.entity.WorkInspectDetailEntity;
 import com.yaf.base.entity.WorkInspectEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.im.SelectIMContactActivity;
 import net.eanfang.client.ui.activity.worksapce.maintenance.MaintenanceTeamAdapter;
 import net.eanfang.client.util.ImagePerviewUtil;
@@ -195,13 +195,13 @@ public class DealWithFirstActivity extends BaseActivity {
                             tvName.setText("接收人" + bean.getAssigneeUser().getAccountEntity().getRealName());
                             tvWeek.setText(GetDateUtils.dateToWeek(bean.getCreateTime()));
                             // 是否显示认领
-                            if (bean.getAssigneeUserId().equals(EanfangApplication.get().getUserId()) && mOrderStatus == 0) {
+                            if (bean.getAssigneeUserId().equals(ClientApplication.get().getUserId()) && mOrderStatus == 0) {
                                 tvSub.setVisibility(View.VISIBLE);
                             } else {
                                 tvSub.setVisibility(View.GONE);
                             }
                             // 是否显示驳回 通过
-                            if (bean.getCreateUserId().equals(EanfangApplication.get().getUserId()) && mOrderStatus == 1) {
+                            if (bean.getCreateUserId().equals(ClientApplication.get().getUserId()) && mOrderStatus == 1) {
                                 llDealwith.setVisibility(View.VISIBLE);
                             } else {
                                 llDealwith.setVisibility(View.GONE);

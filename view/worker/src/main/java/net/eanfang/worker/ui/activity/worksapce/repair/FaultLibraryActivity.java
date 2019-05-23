@@ -39,6 +39,7 @@ import static com.eanfang.config.EanfangConst.TOP_REFRESH;
  * @author Guanluocang
  * @date on 2018/6/8  16:37
  * @decision 故障库
+ * 已提取故障库相关内容
  */
 public class FaultLibraryActivity extends BaseActivity implements SwipyRefreshLayout.OnRefreshListener, View.OnClickListener {
     private static final int RESULT_DATACODE = 2000;

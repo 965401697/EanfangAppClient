@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.GroupCreatBean;
@@ -25,6 +24,7 @@ import com.jph.takephoto.model.TImage;
 import com.jph.takephoto.model.TResult;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -77,7 +77,7 @@ public class GroupCreatActivity extends BaseActivityWithTakePhoto {
         setLeftBack();
 
         ArrayList<String> userIconList = getIntent().getStringArrayListExtra("userIconList");
-        userIconList.add(EanfangApplication.get().getUser().getAccount().getAvatar());//添加自己的头像
+        userIconList.add(ClientApplication.get().getLoginBean().getAccount().getAvatar());//添加自己的头像
         //合成头像
 
         CompoundHelper.getInstance().sendBitmap(this, handler, userIconList);//生成图片
@@ -99,7 +99,7 @@ public class GroupCreatActivity extends BaseActivityWithTakePhoto {
         }
 
         ArrayList<String> list = getIntent().getStringArrayListExtra("userIdList");
-        list.add(String.valueOf(EanfangApplication.get().getAccId()));
+        list.add(String.valueOf(ClientApplication.get().getAccId()));
         JSONObject jsonObject = new JSONObject();
         JSONObject jsonObject1 = new JSONObject();
 
@@ -136,7 +136,7 @@ public class GroupCreatActivity extends BaseActivityWithTakePhoto {
                             Group groupInfo = new Group(bean.getRcloudGroupId(), bean.getGroupName(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + imgKey));
                             RongIM.getInstance().refreshGroupInfoCache(groupInfo);
 
-                            EanfangApplication.get().set(bean.getRcloudGroupId(), bean.getGroupId());
+                            ClientApplication.get().set(bean.getRcloudGroupId(), bean.getGroupId());
                             RongIM.getInstance().startGroupChat(GroupCreatActivity.this, bean.getRcloudGroupId(), bean.getGroupName());
                             GroupCreatActivity.this.finish();
                         }));

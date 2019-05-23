@@ -30,6 +30,7 @@ import com.yaf.base.entity.OpenShopLogEntity;
 import com.eanfang.model.sys.UserEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.im.CreateGroupOrganizationActivity;
 import net.eanfang.client.ui.activity.worksapce.oa.SelectOAGroupActivity;
 import net.eanfang.client.ui.adapter.SendPersonAdapter;
@@ -139,8 +140,8 @@ public class OpenShopLogWriteActivity extends BaseClientActivity implements Sele
     }
 
     private void initViews() {
-        etCompanyName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
-        etSectionName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getDepartmentEntity().getOrgName());
+        etCompanyName.setText(ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
+        etSectionName.setText(ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getDepartmentEntity().getOrgName());
 
         GridLayoutManager layoutManage = new GridLayoutManager(this, 5);
         rvTeam.setLayoutManager(layoutManage);
@@ -245,9 +246,9 @@ public class OpenShopLogWriteActivity extends BaseClientActivity implements Sele
                 //                startActivity(new Intent(DefendLogWriteActivity.this, SelectOAPresonActivity.class));
                 Intent in = new Intent(this, CreateGroupOrganizationActivity.class);
                 in.putExtra("isFrom", "OA");
-                in.putExtra("companyId", String.valueOf(EanfangApplication.getApplication().getCompanyId()));
-                in.putExtra("companyOrgCode", EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgCode());
-                in.putExtra("companyName", EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
+                in.putExtra("companyId", String.valueOf(ClientApplication.get().getCompanyId()));
+                in.putExtra("companyOrgCode", ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgCode());
+                in.putExtra("companyName", ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
                 Bundle b = new Bundle();
                 b.putSerializable("list", (Serializable) sendPersonAdapter.getData());
                 in.putExtras(b);
@@ -350,16 +351,16 @@ public class OpenShopLogWriteActivity extends BaseClientActivity implements Sele
                 return;
             }
 
-            object.put("ownerUserId", EanfangApplication.getApplication().getUserId());
-            object.put("ownerCompanyId", EanfangApplication.getApplication().getCompanyId());
-            object.put("ownerTopCompanyId", EanfangApplication.getApplication().getTopCompanyId());
-            object.put("ownerOrgCode", EanfangApplication.getApplication().getOrgCode());
+            object.put("ownerUserId", ClientApplication.get().getUserId());
+            object.put("ownerCompanyId", ClientApplication.get().getCompanyId());
+            object.put("ownerTopCompanyId", ClientApplication.get().getTopCompanyId());
+            object.put("ownerOrgCode", ClientApplication.get().getOrgCode());
 
             if (newPresonList.size() == 0) {
                 //工作协同默认值
-                object.put("assigneeUserId", EanfangApplication.get().getUserId());
-                object.put("assigneeOrgCode", EanfangApplication.get().getOrgCode());
-                object.put("assigneePhone", EanfangApplication.get().getUser().getAccount().getMobile());
+                object.put("assigneeUserId", ClientApplication.get().getUserId());
+                object.put("assigneeOrgCode", ClientApplication.get().getOrgCode());
+                object.put("assigneePhone", ClientApplication.get().getLoginBean().getAccount().getMobile());
             } else {
                 //工作协同默认值
                 object.put("assigneeUserId", newPresonList.get(0).getUserId());
@@ -367,8 +368,8 @@ public class OpenShopLogWriteActivity extends BaseClientActivity implements Sele
                 object.put("assigneePhone", newPresonList.get(0).getMobile());
             }
 
-            object.put("assigneeCompanyId", (EanfangApplication.getApplication().getCompanyId()));
-            object.put("assigneeTopCompanyId", EanfangApplication.getApplication().getTopCompanyId());
+            object.put("assigneeCompanyId", (ClientApplication.get().getCompanyId()));
+            object.put("assigneeTopCompanyId", ClientApplication.get().getTopCompanyId());
 //            object.put("assigneeUserId", assigneeUserId);
 //            object.put("assigneeCompanyId", assigneeCompanyId);
 //            object.put("assigneeTopCompanyId", assigneeTopCompanyId);
@@ -463,8 +464,8 @@ public class OpenShopLogWriteActivity extends BaseClientActivity implements Sele
 
         EanfangHttp.get(NewApiService.GET_COLLEAGUE)
                 .tag(this)
-                .params("id", EanfangApplication.getApplication().getUserId())
-                .params("companyId", EanfangApplication.getApplication().getCompanyId())
+                .params("id", ClientApplication.get().getUserId())
+                .params("companyId", ClientApplication.get().getCompanyId())
                 .execute(new EanfangCallback<UserEntity>(OpenShopLogWriteActivity.this, true, UserEntity.class, true, (list) -> {
                     userlist = list;
                     userNameList.addAll(Stream.of(userlist).map((user) -> user.getAccountEntity().getRealName()).toList());
@@ -520,7 +521,7 @@ public class OpenShopLogWriteActivity extends BaseClientActivity implements Sele
 //                        if (bean.getOrgCode() != null && !TextUtils.isEmpty(bean.getOrgCode())) {
 //                            assigneeOrgCode = bean.getOrgCode();
 //                        } else {
-//                            assigneeOrgCode = EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgCode();
+//                            assigneeOrgCode = ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgCode();
 //                        }
             } else {
 

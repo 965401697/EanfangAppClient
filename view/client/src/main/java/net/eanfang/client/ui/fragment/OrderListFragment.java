@@ -7,7 +7,6 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.RepairApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -22,6 +21,7 @@ import com.eanfang.util.QueryEntry;
 import com.yaf.base.entity.RepairOrderEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.pay.NewPayActivity;
 import net.eanfang.client.ui.activity.worksapce.EvaluateWorkerActivity;
 import net.eanfang.client.ui.activity.worksapce.OrderDetailActivity;
@@ -70,7 +70,7 @@ public class OrderListFragment extends BaseFragment implements
     private RepairedManageOrderAdapter adapter;
     private String status;
 
-    private Long mUseId = EanfangApplication.get().getUserId();
+    private Long mUseId = ClientApplication.get().getUserId();
 
     public static OrderListFragment getInstance(String title) {
         OrderListFragment sf = new OrderListFragment();
@@ -182,7 +182,7 @@ public class OrderListFragment extends BaseFragment implements
 
                     case R.id.tv_do_first:
                         //  完工报告
-//                        if (!item.getOwnerUserId().equals(EanfangApplication.get().getUserId())) {
+//                        if (!item.getOwnerUserId().equals(ClientApplication.get().getUserId())) {
 //                            showToast("当前订单负责人可以操作");
 //                            return;
 //                        }
@@ -192,7 +192,7 @@ public class OrderListFragment extends BaseFragment implements
                         break;
                     case R.id.tv_do_second:
                         // 评价技师
-                        if (!item.getOwnerUserId().equals(EanfangApplication.get().getUserId())) {
+                        if (!item.getOwnerUserId().equals(ClientApplication.get().getUserId())) {
                             showToast("当前订单负责人可以操作");
                             return;
                         }

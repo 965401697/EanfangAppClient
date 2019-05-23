@@ -17,7 +17,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
@@ -32,6 +31,7 @@ import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
@@ -118,7 +118,7 @@ public class InstallActivity extends BaseClientActivity {
     }
 
     private void initData() {
-        LoginBean user = EanfangApplication.getApplication().getUser();
+        LoginBean user = ClientApplication.get().getLoginBean();
         String name = "";
         if (StringUtils.isEmpty(user.getAccount().getDefaultUser().getCompanyEntity().getOrgName())) {
             name = user.getAccount().getRealName();

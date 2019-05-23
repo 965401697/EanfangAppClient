@@ -96,9 +96,9 @@ public class OfferAndPayOrderActivity extends BaseActivity {
 //
 //        QueryEntry queryEntry = new QueryEntry();
 //        if ("1".equals(type)) {
-//            queryEntry.getEquals().put("createUserId", EanfangApplication.getApplication().getUserId() + "");
+//            queryEntry.getEquals().put("createUserId", WorkerApplication.get().getUserId() + "");
 //        } else if ("2".equals(type)) {
-//            queryEntry.getEquals().put("assigneeCompanyId", EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyId() + "");
+//            queryEntry.getEquals().put("assigneeCompanyId", WorkerApplication.get().getUser().getAccount().getDefaultUser().getCompanyId() + "");
 //        }
 //        queryEntry.getEquals().put("status", status + "");
 //

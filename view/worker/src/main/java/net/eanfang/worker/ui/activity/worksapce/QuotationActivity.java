@@ -34,6 +34,7 @@ import com.eanfang.util.StringUtils;
 import com.eanfang.model.sys.UserEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.adapter.QuotationDetailAdapter;
 import net.eanfang.worker.ui.adapter.QuotationPartsAdapter;
 import net.eanfang.worker.ui.adapter.QuotationServiceAdapter;
@@ -129,8 +130,8 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
     private void getData() {
 
         EanfangHttp.get(NewApiService.GET_COLLEAGUE)
-                .params("id", EanfangApplication.getApplication().getUserId())
-                .params("companyId", EanfangApplication.getApplication().getCompanyId())
+                .params("id", WorkerApplication.get().getUserId())
+                .params("companyId", WorkerApplication.get().getCompanyId())
                 .execute(new EanfangCallback<UserEntity>(QuotationActivity.this, true, UserEntity.class, true, (list) -> {
                     userlist = list;
                     userNameList.addAll(Stream.of(userlist).map((user) -> user.getAccountEntity().getRealName()).toList());

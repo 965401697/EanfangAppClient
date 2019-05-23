@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -29,6 +28,7 @@ import com.picker.common.util.DateUtils;
 import com.yaf.base.entity.QualificationCertificateEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -112,7 +112,7 @@ public class SpecialistAddSkillCertificafeActivity extends BaseActivityWithTakeP
         }
 
         QualificationCertificateEntity entity = new QualificationCertificateEntity();
-        entity.setAccId(EanfangApplication.get().getAccId());
+        entity.setAccId(WorkerApplication.get().getAccId());
         if (bean != null) {
             entity.setId(bean.getId());
             url = UserApi.TECH_WORKER_UPDATA_QUALIFY;
@@ -121,7 +121,7 @@ public class SpecialistAddSkillCertificafeActivity extends BaseActivityWithTakeP
         }
         entity.setCertificateName(etCertificateName.getText().toString().trim());
         entity.setAwardOrg(etOrg.getText().toString().trim());
-        entity.setAccId(EanfangApplication.get().getAccId());
+        entity.setAccId(WorkerApplication.get().getAccId());
         entity.setBeginTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[0], "yyyy-MM-dd"));
         entity.setEndTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[1], "yyyy-MM-dd"));
         entity.setCertificateLevel(etLevel.getText().toString().trim());

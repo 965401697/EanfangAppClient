@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
@@ -36,6 +35,7 @@ import com.jph.takephoto.model.TImage;
 import com.jph.takephoto.model.TResult;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.adapter.GroupsDetailAdapter;
 
 import org.json.JSONException;
@@ -115,7 +115,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
         setTitle("群组信息");
         setLeftBack();
         groupId = getIntent().getStringExtra(EanfangConst.RONG_YUN_ID);
-        id = EanfangApplication.get().get(groupId, 0);
+        id = ClientApplication.get().get(groupId, 0);
         title = getIntent().getStringExtra("title");
         BaseActivity.transactionActivities.add(this);
         initData();
@@ -147,7 +147,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
 
                     mList = (ArrayList<GroupDetailBean.ListBean>) bean.getList();
 
-                    if (String.valueOf(EanfangApplication.getApplication().getAccId()).equals(bean.getGroup().getCreateUser())) {
+                    if (String.valueOf(ClientApplication.get().getAccId()).equals(bean.getGroup().getCreateUser())) {
                         isOwner = true;
                         groupQuit.setText("解散并退出");
                         group_transfer.setVisibility(View.VISIBLE);
@@ -406,7 +406,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                         //我是群主
                         EanfangHttp.post(UserApi.POST_GROUP_DELETE)
                                 .params("groupId", id)
-                                .params("ids", EanfangApplication.getApplication().getAccId())
+                                .params("ids", ClientApplication.get().getAccId())
                                 .params("groupName", title)
                                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (json) -> {
                                     ToastUtil.get().showToast(GroupDetailActivity.this, "销毁成功");
@@ -423,7 +423,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                     } else {
                         EanfangHttp.post(UserApi.POST_GROUP_QUIT)
                                 .params("groupId", id)
-                                .params("ids", EanfangApplication.getApplication().getAccId())
+                                .params("ids", ClientApplication.get().getAccId())
                                 .params("groupName", title)
                                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (json) -> {
                                     ToastUtil.get().showToast(GroupDetailActivity.this, "退出成功");
@@ -446,7 +446,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
     private void quitGroup() {
         EanfangHttp.post(UserApi.POST_GROUP_QUIT)
                 .params("groupId", id)
-                .params("ids", EanfangApplication.get().getAccId())
+                .params("ids", ClientApplication.get().getAccId())
 //                .params("ids", userIdList.toString())
                 .params("groupName", title)
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (json) -> {

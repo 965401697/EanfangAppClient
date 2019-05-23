@@ -13,7 +13,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
+/**
+ * 已提取相关内容
+ */
 public class EquipmentParameterActivity extends BaseWorkerActivity {
 
 

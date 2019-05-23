@@ -3,12 +3,10 @@ package net.eanfang.client.ui.fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.customview.CircleImageView;
+import com.eanfang.widget.customview.CircleImageView;
 import com.eanfang.BuildConfig;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.model.bean.LoginBean;
 import com.eanfang.ui.activity.QrCodeShowActivity;
 import com.eanfang.ui.base.BaseFragment;
@@ -19,6 +17,7 @@ import com.eanfang.witget.PersonalQRCodeDialog;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.my.CollectActivity;
 import net.eanfang.client.ui.activity.my.EvaluateActivity;
 import net.eanfang.client.ui.activity.my.PersonInfoActivity;
@@ -81,11 +80,11 @@ public class MyFragment extends BaseFragment {
     protected void setListener() {
         mIvPersonalQRCode.setOnClickListener((v) -> {
             Bundle bundle = new Bundle();
-            bundle.putString("qrcodeTitle", EanfangApplication.get().getUser().getAccount().getRealName());
-            bundle.putString("qrcodeAddress", EanfangApplication.get().getUser().getAccount().getQrCode());
+            bundle.putString("qrcodeTitle", ClientApplication.get().getLoginBean().getAccount().getRealName());
+            bundle.putString("qrcodeAddress", ClientApplication.get().getLoginBean().getAccount().getQrCode());
             bundle.putString("qrcodeMessage", "personal");
             JumpItent.jump(getActivity(), QrCodeShowActivity.class, bundle);
-//            personalQRCodeDialog = new PersonalQRCodeDialog(getActivity(), EanfangApplication.get().getUser().getAccount().getQrCode());
+//            personalQRCodeDialog = new PersonalQRCodeDialog(getActivity(), ClientApplication.get().getLoginBean().getAccount().getQrCode());
 //            personalQRCodeDialog.show();
         });
     }
@@ -98,7 +97,7 @@ public class MyFragment extends BaseFragment {
     }
 
     public void initDatas() {
-        LoginBean user = EanfangApplication.getApplication().getUser();
+        LoginBean user = ClientApplication.get().getLoginBean();
         if (!StringUtils.isEmpty(user.getAccount().getNickName())) {
             tv_user_name.setText(user.getAccount().getNickName());
         }

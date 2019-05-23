@@ -20,6 +20,9 @@ import net.eanfang.worker.ui.base.BaseWorkerActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * 已提取相关内容
+ */
 public class EquipmentChangeDetailActivity extends BaseWorkerActivity {
 
     @BindView(R.id.tv_position)

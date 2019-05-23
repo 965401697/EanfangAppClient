@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.EducationListBean;
@@ -28,6 +27,7 @@ import com.yaf.base.entity.JobExperienceEntity;
 import com.yaf.base.entity.QualificationCertificateEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.my.certification.AddCertificationActivity;
 import net.eanfang.worker.ui.activity.my.certification.AddEducationHistoryActivity;
 import net.eanfang.worker.ui.activity.my.certification.AddSkillCertificafeActivity;
@@ -84,7 +84,7 @@ public class JsQualificationsAndAbilitiesActivity extends BaseActivity {
     private JsdQualificationsAndAbilitiesAdapter qualifyListAdapterD;
     private JseQualificationsAndAbilitiesAdapter qualifyListAdapterE;
     List<AptitudeCertificateEntity> list = new ArrayList<>();
-    private Long userId = EanfangApplication.getApplication().getUser().getAccount().getNullUser();
+    private Long userId = WorkerApplication.get().getLoginBean().getAccount().getNullUser();
     private final int ADD_CERTIFICATION_CODE = 101;
     private final int ADD_EDUCATION_CODE = 101;
     private final int ADD_WORK_CODE = 101;
@@ -107,7 +107,7 @@ public class JsQualificationsAndAbilitiesActivity extends BaseActivity {
         setLeftBack();
         setTitle("资质与能力");
         queryEntry = new QueryEntry();
-        queryEntry.getEquals().put("accId", String.valueOf(EanfangApplication.get().getAccId()));
+        queryEntry.getEquals().put("accId", String.valueOf(WorkerApplication.get().getAccId()));
         queryEntry.getEquals().put("type", "0");
         initRecyclerViewA();
         initRecyclerViewB();

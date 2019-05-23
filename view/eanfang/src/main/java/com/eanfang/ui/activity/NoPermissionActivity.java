@@ -15,7 +15,7 @@ public class NoPermissionActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.layout_no_permission);
+        setContentView(R.layout.activity_no_permission);
         setTitle("无权访问");
         setLeftBack();
 

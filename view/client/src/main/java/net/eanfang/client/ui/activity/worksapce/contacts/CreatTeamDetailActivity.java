@@ -17,6 +17,7 @@ import com.eanfang.sys.activity.LoginActivity;
 import com.eanfang.model.sys.OrgUnitEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.ui.fragment.ContactsFragment;
 
@@ -72,11 +73,11 @@ public class CreatTeamDetailActivity extends BaseClientActivity {
 
                     mOrgid = companyid;
 
-                    EanfangApplication.get().remove(LoginBean.class.getName());
-                    EanfangApplication.get().set(LoginBean.class.getName(), bean);
+                    ClientApplication.get().remove(LoginBean.class.getName());
+                    ClientApplication.get().set(LoginBean.class.getName(), bean);
 
-                    EanfangHttp.setToken(EanfangApplication.get().getUser().getToken());
-                    HttpConfig.get().setToken(EanfangApplication.get().getUser().getToken());
+                    EanfangHttp.setToken(ClientApplication.get().getLoginBean().getToken());
+                    HttpConfig.get().setToken(ClientApplication.get().getLoginBean().getToken());
                     EanfangHttp.setClient();
                     updateData();
                 }));
@@ -89,7 +90,7 @@ public class CreatTeamDetailActivity extends BaseClientActivity {
                     public void onSuccess(Object bean) {
                         super.onSuccess(bean);
                         LoginBean loginBean = (LoginBean) bean;
-                        EanfangApplication.get().set(LoginBean.class.getName(),loginBean);
+                        ClientApplication.get().set(LoginBean.class.getName(),loginBean);
 
 
                         startActivity(new Intent(CreatTeamDetailActivity.this, CreatTeamStatusHintActivity.class).

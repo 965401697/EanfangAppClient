@@ -4,12 +4,9 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-import android.util.Log;
-import android.view.View;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.JsCapabilityTagListBean;
@@ -17,6 +14,7 @@ import com.eanfang.model.PostAllTagListBean;
 import com.eanfang.ui.base.BaseActivity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.adapter.JseQualificationsAndAbilitiesGetListAdapter;
 
 import java.util.ArrayList;
@@ -33,7 +31,7 @@ public class JsCapabilityTagActivity extends BaseActivity {
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     private JseQualificationsAndAbilitiesGetListAdapter jseQualificationsAndAbilitiesGetListAdapter;
-    private Long userId = EanfangApplication.getApplication().getUser().getAccount().getNullUser();
+    private Long userId = WorkerApplication.get().getLoginBean().getAccount().getNullUser();
     private List<JsCapabilityTagListBean.ListBean> listBean;
     private List<Integer> addIds = new ArrayList();
     private List<Integer> delIds = new ArrayList();
@@ -71,7 +69,7 @@ public class JsCapabilityTagActivity extends BaseActivity {
         PostAllTagListBean postAllTagListBean = new PostAllTagListBean();
         PostAllTagListBean.TechWorkerVerifyBean techWorkerVerifyBean = new PostAllTagListBean.TechWorkerVerifyBean();
         PostAllTagListBean.WorkerTagGrantChangeBean workerTagGrantChangeBean = new PostAllTagListBean.WorkerTagGrantChangeBean();
-        techWorkerVerifyBean.setAccId(EanfangApplication.get().getAccId());
+        techWorkerVerifyBean.setAccId(WorkerApplication.get().getAccId());
         techWorkerVerifyBean.setUserId(userId);
         postAllTagListBean.setTechWorkerVerify(techWorkerVerifyBean);
         for (JsCapabilityTagListBean.ListBean bean : listBean) {

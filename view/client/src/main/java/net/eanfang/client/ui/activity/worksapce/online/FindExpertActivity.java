@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -20,6 +19,7 @@ import com.yaf.base.entity.ExpertsCertificationEntity;
 import com.eanfang.model.sys.BaseDataEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.my.AddBrandActivity;
 import net.eanfang.client.ui.activity.my.SkillTypeAdapter;
 import net.eanfang.client.ui.activity.my.SpecialistBrandAdapter;
@@ -151,13 +151,13 @@ public class FindExpertActivity extends BaseClientActivity implements View.OnCli
         grantChange_brand.setAddIds(mCheckedBrandIds);
         grantChange_brand.setDelIds(mDeldBrandIds);
         expertsCertificationEntity = new ExpertsCertificationEntity();
-        expertsCertificationEntity.setAccId(EanfangApplication.get().getAccId());
+        expertsCertificationEntity.setAccId(ClientApplication.get().getAccId());
     }
 
     private void getSkillInfo() {
 
         EanfangHttp.post(UserApi.EXPERT_DETAIL_VERIFY)
-                .params("accId", String.valueOf(EanfangApplication.getApplication().getAccId()))
+                .params("accId", String.valueOf(ClientApplication.get().getAccId()))
                 .execute(new EanfangCallback<ExpertVerifySkillBean>(this, true, ExpertVerifySkillBean.class, (ExpertVerifySkillBean bean) -> {
                     if (bean != null) {
                         List<BaseDataEntity> SystemBusinessList = bean.getBaseData2userList();

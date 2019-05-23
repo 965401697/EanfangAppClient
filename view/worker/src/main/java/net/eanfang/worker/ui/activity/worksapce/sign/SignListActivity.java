@@ -20,6 +20,7 @@ import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.adapter.SignListAdapter;
 import net.eanfang.worker.ui.adapter.SignSecondAdapter;
 import net.eanfang.worker.util.WrapContentLinearLayoutManager;
@@ -119,9 +120,9 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
     private void initData() {
         mQueryEntry.setPage(page);
         mQueryEntry.setSize(10);
-        mQueryEntry.getEquals().put("createCompanyId", EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getCompanyId() + "");
+        mQueryEntry.getEquals().put("createCompanyId", WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getCompanyId() + "");
         if (!mQueryEntry.getEquals().containsKey("createUserId") && !mQueryEntry.getEquals().containsKey("createOrgCode")) {
-            mQueryEntry.getEquals().put("createUserId", EanfangApplication.getApplication().getUserId() + "");
+            mQueryEntry.getEquals().put("createUserId", WorkerApplication.get().getUserId() + "");
         }
         EanfangHttp.post(UserApi.SIGN_LIST)
                 .upJson(JsonUtils.obj2String(mQueryEntry))

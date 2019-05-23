@@ -5,7 +5,6 @@ import android.view.View;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WorkspaceInstallBean;
@@ -17,6 +16,7 @@ import com.eanfang.util.QueryEntry;
 import com.yaf.base.entity.RepairOrderEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.worksapce.install.InstallOrderDetailActivity;
 import net.eanfang.client.ui.adapter.WorkspaceInstallAdapter;
 
@@ -94,9 +94,9 @@ public class WorkInstallListFragment extends TemplateItemListFragment {
 
         QueryEntry queryEntry = new QueryEntry();
         if ("0".equals(mType)) {
-            queryEntry.getEquals().put("ownerCompanyId", EanfangApplication.getApplication().getCompanyId() + "");
+            queryEntry.getEquals().put("ownerCompanyId", ClientApplication.get().getCompanyId() + "");
         } else if ("1".equals(mType)) {
-            queryEntry.getEquals().put("createUserId", EanfangApplication.getApplication().getUserId() + "");
+            queryEntry.getEquals().put("createUserId", ClientApplication.get().getUserId() + "");
         }
         if (!mTitle.equals("全部")) {
             queryEntry.getEquals().put("status", status);

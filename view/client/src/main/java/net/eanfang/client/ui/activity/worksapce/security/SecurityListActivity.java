@@ -9,12 +9,12 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
 import com.flyco.tablayout.SlidingTabLayout;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.fragment.SecurityFoucsFragment;
 import net.eanfang.client.ui.fragment.SecurityHotFragment;
 
@@ -48,7 +48,7 @@ public class SecurityListActivity extends BaseActivity {
     private final int FILTRATE_TYPE_CODE = 101;
 
     private int mSecurityNum;
-    private QBadgeView qBadgeViewMaintain = new QBadgeView(EanfangApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewMaintain = new QBadgeView(ClientApplication.get().getApplicationContext());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

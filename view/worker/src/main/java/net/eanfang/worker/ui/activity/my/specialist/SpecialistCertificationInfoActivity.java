@@ -7,14 +7,15 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.model.sys.AccountEntity;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.ExpertsCertificationEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import butterknife.BindView;
@@ -69,8 +70,9 @@ public class SpecialistCertificationInfoActivity extends BaseWorkerActivity {
 
     private void initViews(ExpertsCertificationEntity bean) {
         ivHeader.setImageURI(com.eanfang.BuildConfig.OSS_SERVER + bean.getAvatarPhoto());
-        String contactName = EanfangApplication.get().getUser().getAccount().getRealName();
-        String mobile = EanfangApplication.get().getUser().getAccount().getMobile();
+        AccountEntity accountEntity=WorkerApplication.get().getLoginBean().getAccount();
+        String contactName =accountEntity .getRealName();
+        String mobile = accountEntity.getMobile();
 
         if (!StringUtils.isEmpty(contactName)) {
             tvContactName.setText(contactName);
@@ -78,10 +80,11 @@ public class SpecialistCertificationInfoActivity extends BaseWorkerActivity {
         if (!StringUtils.isEmpty(mobile)) {
             tvContactPhone.setText(mobile);
         }
+        AccountEntity accountEntity1=WorkerApplication.get().getAccount();
         etCardId.setFocusable(false);
-        etCardId.setText(EanfangApplication.get().getUser().getAccount().getIdCard());
+        etCardId.setText(accountEntity.getIdCard());
         //0女1男
-        if (EanfangApplication.get().getUser().getAccount().getGender() == 0) {
+        if (accountEntity1.getGender() == 0) {
             rbWoman.setChecked(true);
         } else {
             rbMan.setChecked(true);

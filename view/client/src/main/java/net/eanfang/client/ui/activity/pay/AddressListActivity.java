@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -17,6 +16,7 @@ import com.yaf.base.entity.InvoiceEntity;
 import com.yaf.base.entity.ReceiveAddressEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -160,7 +160,7 @@ public class AddressListActivity extends BaseClientActivity implements SwipeRefr
         QueryEntry queryEntry = new QueryEntry();
         queryEntry.setSize(10);
         queryEntry.setPage(mPage);
-        queryEntry.getEquals().put("userId", String.valueOf(EanfangApplication.get().getUserId()));
+        queryEntry.getEquals().put("userId", String.valueOf(ClientApplication.get().getUserId()));
 
         EanfangHttp.post(NewApiService.GET_ADDRESS_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))

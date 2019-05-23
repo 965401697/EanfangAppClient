@@ -17,6 +17,7 @@ import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -48,9 +49,9 @@ public class MessageNotificationActivity extends BaseActivity {
     @BindView(R.id.ll_msg_list)
     LinearLayout llMsgList;
 
-    private QBadgeView qBadgeViewSys = new QBadgeView(EanfangApplication.get().getApplicationContext());
-    private QBadgeView qBadgeViewBiz = new QBadgeView(EanfangApplication.get().getApplicationContext());
-    private QBadgeView qBadgeViewCam = new QBadgeView(EanfangApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewSys = new QBadgeView(WorkerApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewBiz = new QBadgeView(WorkerApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewCam = new QBadgeView(WorkerApplication.get().getApplicationContext());
 
     // 消息数量
     private int mMessageCount = 0;

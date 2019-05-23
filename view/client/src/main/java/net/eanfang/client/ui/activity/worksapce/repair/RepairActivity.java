@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.annimon.stream.Stream;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.RepairApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
@@ -34,6 +33,7 @@ import com.yaf.base.entity.RepairBugEntity;
 import com.yaf.base.entity.RepairOrderEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.worksapce.OrderConfirmActivity;
 import net.eanfang.client.ui.activity.worksapce.SelectWorkerActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
@@ -148,7 +148,7 @@ public class RepairActivity extends BaseClientActivity {
         beanList = (List<RepairBugEntity>) getIntent().getSerializableExtra("troubleList");
         ivInfoRight.setVisibility(View.VISIBLE);
         //个人客户 单位名称自己输入
-        user = EanfangApplication.getApplication().getUser();
+        user = ClientApplication.get().getLoginBean();
         llProjectName.setVisibility(user.getAccount().getDefaultUser().getCompanyId() <= 0 ? View.GONE : View.VISIBLE);
 //        repairPersonalInfoEntity = (RepairPersonalInfoEntity.ListBean) getIntent().getSerializableExtra("infoEntity");
     }
@@ -171,7 +171,7 @@ public class RepairActivity extends BaseClientActivity {
      */
     private void doChekInfo() {
         QueryEntry queryEntry = new QueryEntry();
-        queryEntry.getEquals().put("accId", EanfangApplication.get().getAccId() + "");
+        queryEntry.getEquals().put("accId", ClientApplication.get().getAccId() + "");
         EanfangHttp.post(NewApiService.REPAIR_PERSONAL_INFO_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<RepairPersonalInfoEntity>(this, true, RepairPersonalInfoEntity.class, bean -> {
@@ -220,10 +220,10 @@ public class RepairActivity extends BaseClientActivity {
         bean.setRepairContactPhone(repairPersonalInfoEntity.getPhone());
         bean.setRepairContacts(repairPersonalInfoEntity.getName());
         bean.setArriveTimeLimit(GetConstDataUtils.getArriveList().indexOf(tvTime.getText().toString().trim()));
-        bean.setOwnerUserId(EanfangApplication.getApplication().getUserId());
-        bean.setOwnerCompanyId(EanfangApplication.getApplication().getCompanyId());
-        bean.setOwnerTopCompanyId(EanfangApplication.getApplication().getTopCompanyId());
-        bean.setOwnerOrgCode(EanfangApplication.getApplication().getOrgCode());
+        bean.setOwnerUserId(ClientApplication.get().getUserId());
+        bean.setOwnerCompanyId(ClientApplication.get().getCompanyId());
+        bean.setOwnerTopCompanyId(ClientApplication.get().getTopCompanyId());
+        bean.setOwnerOrgCode(ClientApplication.get().getOrgCode());
         bean.setSex(repairPersonalInfoEntity.getGender());
         bean.setRepairWay(0);
         return bean;
@@ -249,10 +249,10 @@ public class RepairActivity extends BaseClientActivity {
         repairOrderEntity.setRepairContactPhone(repairPersonalInfoEntity.getPhone());
         repairOrderEntity.setRepairContacts(repairPersonalInfoEntity.getName());
         repairOrderEntity.setArriveTimeLimit(GetConstDataUtils.getArriveList().indexOf(tvTime.getText().toString().trim()));
-        repairOrderEntity.setOwnerUserId(EanfangApplication.getApplication().getUserId());
-        repairOrderEntity.setOwnerCompanyId(EanfangApplication.getApplication().getCompanyId());
-        repairOrderEntity.setOwnerTopCompanyId(EanfangApplication.getApplication().getTopCompanyId());
-        repairOrderEntity.setOwnerOrgCode(EanfangApplication.getApplication().getOrgCode());
+        repairOrderEntity.setOwnerUserId(ClientApplication.get().getUserId());
+        repairOrderEntity.setOwnerCompanyId(ClientApplication.get().getCompanyId());
+        repairOrderEntity.setOwnerTopCompanyId(ClientApplication.get().getTopCompanyId());
+        repairOrderEntity.setOwnerOrgCode(ClientApplication.get().getOrgCode());
         repairOrderEntity.setSex(repairPersonalInfoEntity.getGender());
         repairOrderEntity.setRepairWay(0);
         return repairOrderEntity;

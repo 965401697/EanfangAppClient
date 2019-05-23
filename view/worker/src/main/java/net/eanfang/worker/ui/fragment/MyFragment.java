@@ -11,10 +11,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
-import com.customview.CircleImageView;
+import com.eanfang.widget.customview.CircleImageView;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
@@ -29,6 +28,7 @@ import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.my.EvaluateActivity;
 import net.eanfang.worker.ui.activity.my.PersonInfoActivity;
 import net.eanfang.worker.ui.activity.my.SettingActivity;
@@ -99,7 +99,7 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
                     setOnClick(e, t);
                 }));
         // 获取认证状态
-        EanfangHttp.post(UserApi.GET_EXPERT_CERTIFICATION_STATUS).params("accId", EanfangApplication.getApplication().getAccId()).execute(new EanfangCallback<SpecialistAuthStatusBean>(getActivity(), true, SpecialistAuthStatusBean.class, (bean) -> {
+        EanfangHttp.post(UserApi.GET_EXPERT_CERTIFICATION_STATUS).params("accId",WorkerApplication.get().getAccId()).execute(new EanfangCallback<SpecialistAuthStatusBean>(getActivity(), true, SpecialistAuthStatusBean.class, (bean) -> {
             verify = bean.verify;
 //                    if (verify == 2) {
 //                        setRightTitle("重新认证");
@@ -147,7 +147,7 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
      */
     private void setWorkStatus(int status) {
         EanfangHttp.post(UserApi.GET_WORKER_CHANGE)
-                .params("accId", EanfangApplication.getApplication().getAccId())
+                .params("accId", WorkerApplication.get().getAccId())
                 .params("status", status)
                 .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class, (bean) -> {
                 }));
@@ -161,7 +161,7 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
     }
 
     public void initDatas() {
-        LoginBean user = EanfangApplication.getApplication().getUser();
+        LoginBean user = WorkerApplication.get().getLoginBean();
         if (!StringUtils.isEmpty(user.getAccount().getNickName())) {
             tvUserName.setText(user.getAccount().getNickName());
         }
@@ -192,7 +192,7 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
     private void doWorkAuth() {
         // 技师未认证，提示完善个人资料
 
-        String realName = EanfangApplication.get().getUser().getAccount().getRealName();
+        String realName = WorkerApplication.get().getLoginBean().getAccount().getRealName();
         if (StringUtils.isEmpty(realName) || "待提供".equals(realName)) {
             showToast("请先完善个人资料");
         } else {
@@ -204,7 +204,7 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
     private void doExpertWorkAuth() {
         // 技师未认证，提示完善个人资料
 
-        String realName = EanfangApplication.get().getUser().getAccount().getRealName();
+        String realName =  WorkerApplication.get().getLoginBean().getAccount().getRealName();
         if (StringUtils.isEmpty(realName) || "待提供".equals(realName)) {
             showToast("请先完善个人资料");
         } else {
@@ -259,8 +259,8 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
                 break;
             case R.id.iv_personalQRCode:
                 Bundle bundle = new Bundle();
-                bundle.putString("qrcodeTitle", EanfangApplication.get().getUser().getAccount().getRealName());
-                bundle.putString("qrcodeAddress", EanfangApplication.get().getUser().getAccount().getQrCode());
+                bundle.putString("qrcodeTitle",  WorkerApplication.get().getLoginBean().getAccount().getRealName());
+                bundle.putString("qrcodeAddress",  WorkerApplication.get().getLoginBean().getAccount().getQrCode());
                 bundle.putString("qrcodeMessage", "personal");
                 JumpItent.jump(getActivity(), QrCodeShowActivity.class, bundle);
                 break;
@@ -299,7 +299,7 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
     // 判断是否认证
     private void doWorkAuthB() {
         // 技师未认证，提示完善个人资料
-        String realName = EanfangApplication.get().getUser().getAccount().getRealName();
+        String realName =  WorkerApplication.get().getLoginBean().getAccount().getRealName();
         if (StringUtils.isEmpty(realName) || "待提供".equals(realName)) {
             showToast("请先完善个人资料");
         } else {

@@ -9,12 +9,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
 import org.json.JSONObject;
@@ -104,7 +104,7 @@ public class SystemMessageActivity extends BaseClientActivity {
             case R.id.btn_reject:
                 //同意被添加好友
                 EanfangHttp.post(UserApi.POST_REJECT_FRIEND)
-                        .params("senderId", EanfangApplication.get().getAccId())
+                        .params("senderId", ClientApplication.get().getAccId())
                         .params("targetIds", userInfo.getUserId())
                         .execute(new EanfangCallback<JSONObject>(SystemMessageActivity.this, true, JSONObject.class, (bean) -> {
                             RongIM.getInstance().removeConversation(Conversation.ConversationType.SYSTEM, userInfo.getUserId(), null);

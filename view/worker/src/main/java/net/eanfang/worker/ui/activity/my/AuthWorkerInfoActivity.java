@@ -17,7 +17,6 @@ import com.alibaba.fastjson.JSONPObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -36,6 +35,7 @@ import com.jph.takephoto.model.TImage;
 import com.jph.takephoto.model.TResult;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -218,7 +218,7 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
      */
     public void doUndoVerify() {
         new TrueFalseDialog(this, "系统提示", "是否撤销认证并保存信息", () -> {
-            EanfangHttp.post(NewApiService.WORKER_AUTH_REVOKE + EanfangApplication.getApplication().getAccId())
+            EanfangHttp.post(NewApiService.WORKER_AUTH_REVOKE + WorkerApplication.get().getAccId())
                     .execute(new EanfangCallback<JSONPObject>(this, true, JSONPObject.class, bean -> {
                         setData();
                     }));
@@ -239,8 +239,8 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
     }
 
     private void fillData() {
-        String contactName = EanfangApplication.get().getUser().getAccount().getRealName();
-        String mobile = EanfangApplication.get().getUser().getAccount().getMobile();
+        String contactName = WorkerApplication.get().getLoginBean().getAccount().getRealName();
+        String mobile = WorkerApplication.get().getLoginBean().getAccount().getMobile();
         if (!StringUtils.isEmpty(contactName)) {
             tvContactName.setText(contactName);
         }
@@ -327,7 +327,7 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
         workerInfoBean.setWorkingLevel(GetConstDataUtils.getWorkingLevelList().indexOf(tvWorkingLevel.getText().toString().trim()));
         workerInfoBean.setWorkingYear(GetConstDataUtils.getWorkingYearList().indexOf(tvWorkingYear.getText().toString().trim()));
         workerInfoBean.setAccId(workerInfoBean.getAccId());
-        workerInfoBean.setUserId(EanfangApplication.getApplication().getUser().getAccount().getNullUser());
+        workerInfoBean.setUserId(WorkerApplication.get().getLoginBean().getAccount().getNullUser());
         workerInfoBean.setId(workerInfoBean.getId());
 
         workerInfoBean.setStatus(0);

@@ -9,7 +9,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.AllMessageBean;
@@ -17,6 +16,7 @@ import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -48,9 +48,9 @@ public class MessageNotificationActivity extends BaseActivity {
     @BindView(R.id.ll_msg_list)
     LinearLayout llMsgList;
 
-    private QBadgeView qBadgeViewSys = new QBadgeView(EanfangApplication.get().getApplicationContext());
-    private QBadgeView qBadgeViewBiz = new QBadgeView(EanfangApplication.get().getApplicationContext());
-    private QBadgeView qBadgeViewCam = new QBadgeView(EanfangApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewSys = new QBadgeView(ClientApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewBiz = new QBadgeView(ClientApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewCam = new QBadgeView(ClientApplication.get().getApplicationContext());
 
     // 消息数量
     private int mMessageCount = 0;

@@ -18,6 +18,7 @@ import com.eanfang.util.QueryEntry;
 import com.yaf.base.entity.CooperationEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.contacts.CooperationRelationDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.contacts.CooperationSearchClientActivity;
 import net.eanfang.worker.ui.adapter.CooperationRelationAdapter;
@@ -118,7 +119,7 @@ public class PartnerActivity extends BaseWorkerActivity implements SwipeRefreshL
         queryEntry.setSize(5);
         queryEntry.setPage(mPage);
 
-        queryEntry.getEquals().put("ownerOrgId", String.valueOf(EanfangApplication.getApplication().getCompanyId()));
+        queryEntry.getEquals().put("ownerOrgId", String.valueOf(WorkerApplication.get().getCompanyId()));
 
         EanfangHttp.post(NewApiService.GET_COOPERATION_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))

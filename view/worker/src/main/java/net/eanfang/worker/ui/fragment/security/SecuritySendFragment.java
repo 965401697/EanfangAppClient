@@ -15,6 +15,7 @@ import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
 
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.security.SecurityDetailActivity;
 import net.eanfang.worker.ui.adapter.security.SecurityCommentListAdapter;
 import net.eanfang.worker.ui.fragment.TemplateItemListFragment;
@@ -72,7 +73,7 @@ public class SecuritySendFragment extends TemplateItemListFragment {
         mQueryEntry.setPage(mPage);
         mQueryEntry.setSize(10);
         //我发出的评论
-        mQueryEntry.getEquals().put("commentsAnswerAccId", EanfangApplication.get().getAccId()+ "");
+        mQueryEntry.getEquals().put("commentsAnswerAccId", WorkerApplication.get().getAccId()+ "");
         EanfangHttp.post(NewApiService.SERCURITY_COMMENT_LIST)
                 .upJson(JsonUtils.obj2String(mQueryEntry))
                 .execute(new EanfangCallback<SecurityCommentListBean>(getActivity(), true, SecurityCommentListBean.class) {

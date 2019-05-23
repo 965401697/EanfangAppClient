@@ -7,7 +7,6 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.RepairApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.CollectionWorkerListBean;
@@ -16,6 +15,7 @@ import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.adapter.CollectionWorkerListAdapter;
 
 import java.util.ArrayList;
@@ -83,7 +83,7 @@ public class CollectionWorkerFragment extends BaseFragment implements SwipeRefre
 
     private void getData() {
         QueryEntry queryEntry = new QueryEntry();
-        queryEntry.getEquals().put("ownerId", EanfangApplication.getApplication().getUserId() + "");
+        queryEntry.getEquals().put("ownerId", ClientApplication.get().getUserId() + "");
         queryEntry.setSize(10);
         queryEntry.setPage(page);
         EanfangHttp.post(RepairApi.GET_COLLECT_List)

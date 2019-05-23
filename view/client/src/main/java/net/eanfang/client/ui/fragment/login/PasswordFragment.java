@@ -18,8 +18,6 @@ import androidx.appcompat.widget.AppCompatCheckBox;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
-import com.eanfang.config.FastjsonConfig;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.bean.LoginBean;
@@ -27,6 +25,7 @@ import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.MainActivity;
 import net.eanfang.client.ui.activity.worksapce.GuideActivity;
 import net.eanfang.client.util.PrefUtils;
@@ -178,7 +177,7 @@ public class PasswordFragment extends BaseFragment {
                 .upJson(object.toJSONString())
                 .execute(new EanfangCallback<LoginBean>(getActivity(), true, LoginBean.class, (bean) -> {
                     isUpdataPassword = bean.getAccount().isSimplePwd();
-                    EanfangApplication.get().set(LoginBean.class.getName(), bean);
+                    ClientApplication.get().set(LoginBean.class.getName(), bean);
                     EanfangHttp.setToken(bean.getToken());
                     goMain();
                 }));

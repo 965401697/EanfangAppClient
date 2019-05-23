@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.JsonUtils;
@@ -18,11 +17,15 @@ import com.eanfang.util.QueryEntry;
 import com.yaf.base.entity.CustDeviceChangeLogEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * 已提取相关内容
+ */
 public class EquipmentChangeListActivity extends BaseWorkerActivity implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
 
 
@@ -106,7 +109,7 @@ public class EquipmentChangeListActivity extends BaseWorkerActivity implements S
         queryEntry.setSize(10);
         queryEntry.setPage(mPage);
         queryEntry.getEquals().put("deviceNo", deviceNo);
-        queryEntry.getEquals().put("assigneeCompanyId", String.valueOf(EanfangApplication.get().getCompanyId()));
+        queryEntry.getEquals().put("assigneeCompanyId", String.valueOf(WorkerApplication.get().getCompanyId()));
         EanfangHttp.post(NewApiService.DEVICE_CHANGE_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<CustDeviceChangeLogEntity>(this, true, CustDeviceChangeLogEntity.class, true, (list) -> {

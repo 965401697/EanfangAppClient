@@ -31,6 +31,7 @@ import com.yaf.base.entity.AskQuestionsEntity;
 import com.yaf.base.entity.CustDeviceEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.repair.DeviceBrandActivity;
 import net.eanfang.worker.ui.activity.worksapce.repair.FaultLibraryActivity;
 import net.eanfang.worker.ui.activity.worksapce.repair.SelectDeviceTypeActivity;
@@ -185,10 +186,10 @@ public class FreeAskActivity extends BaseWorkerActivity {
 //            return false;
 //        }
         AskQuestionsEntity askQuestionsEntity = new AskQuestionsEntity();
-        askQuestionsEntity.setQuestionUserId(EanfangApplication.get().getUserId());
-        if (EanfangApplication.get().getCompanyId() != 0) {
-            askQuestionsEntity.setQuestionCompanyId(EanfangApplication.get().getCompanyId());
-            askQuestionsEntity.setQuestionTopCompanyId(EanfangApplication.get().getTopCompanyId());
+        askQuestionsEntity.setQuestionUserId(WorkerApplication.get().getUserId());
+        if (WorkerApplication.get().getCompanyId() != 0) {
+            askQuestionsEntity.setQuestionCompanyId(WorkerApplication.get().getCompanyId());
+            askQuestionsEntity.setQuestionTopCompanyId(WorkerApplication.get().getTopCompanyId());
         }
 
         askQuestionsEntity.setQuestionCreateDate(new Date());

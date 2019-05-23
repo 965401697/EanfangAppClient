@@ -10,8 +10,8 @@ import androidx.lifecycle.ViewModel;
 import androidx.viewpager.widget.ViewPager;
 
 import com.eanfang.R;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.base.BaseActivity;
+import com.eanfang.base.BaseApplication;
 import com.eanfang.databinding.ActivityLoginEanfangBinding;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.bean.LoginBean;
@@ -80,7 +80,7 @@ public class LoginActivity extends BaseActivity {
 
     //登录成功的回调
     private void handlerLogin(LoginBean loginBean) {
-        EanfangApplication.get().set(LoginBean.class.getName(), loginBean);
+        BaseApplication.get().set(LoginBean.class.getName(), loginBean);
         //老版的 兼容考虑
         EanfangHttp.setToken(loginBean.getToken());
         HttpConfig.get().setToken(loginBean.getToken());

@@ -27,7 +27,7 @@ import androidx.core.app.ActivityCompat;
 
 import com.eanfang.R;
 import com.eanfang.application.CustomeApplication;
-import com.eanfang.application.EanfangApplication;
+import com.eanfang.base.BaseApplication;
 import com.eanfang.model.bean.LoginBean;
 import com.eanfang.util.DialogUtil;
 import com.eanfang.util.PermissionUtils;
@@ -320,7 +320,7 @@ public class BaseActivity extends AppCompatActivity implements
 
     @Deprecated
     public LoginBean user() {
-        Object obj = EanfangApplication.getApplication().getUser();
+        Object obj = BaseApplication.get().getUser();
         if (obj instanceof LoginBean) {
             return (LoginBean) obj;
         }

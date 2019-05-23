@@ -6,7 +6,6 @@ import android.view.View;
 import androidx.recyclerview.widget.DividerItemDecoration;
 
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.security.SecurityCommentListBean;
@@ -14,6 +13,7 @@ import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
 
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.security.SecurityDetailActivity;
 import net.eanfang.worker.ui.adapter.security.SecurityCommentListAdapter;
 import net.eanfang.worker.ui.fragment.TemplateItemListFragment;
@@ -71,7 +71,7 @@ public class SecurityReceiveFragment extends TemplateItemListFragment {
         mQueryEntry.setPage(mPage);
         mQueryEntry.setSize(10);
         //我发出的评论
-        mQueryEntry.getEquals().put("asAccId", EanfangApplication.get().getAccId() + "");
+        mQueryEntry.getEquals().put("asAccId", WorkerApplication.get().getAccId() + "");
         EanfangHttp.post(NewApiService.SERCURITY_COMMENT_LIST)
                 .upJson(JsonUtils.obj2String(mQueryEntry))
                 .execute(new EanfangCallback<SecurityCommentListBean>(getActivity(), true, SecurityCommentListBean.class) {

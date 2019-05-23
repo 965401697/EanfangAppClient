@@ -18,6 +18,7 @@ import com.eanfang.util.CleanMessageUtil;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -86,11 +87,11 @@ public class AdministratorSetActivity extends BaseClientActivity {
             return;
         }
 
-        if (Long.parseLong(bean.getId()) == EanfangApplication.get().getAccId()) {
+        if (Long.parseLong(bean.getId()) == ClientApplication.get().getAccId()) {
             ToastUtil.get().showToast(AdministratorSetActivity.this, "自己不能转让自己");
             return;
         }
-        String companyName = EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName();
+        String companyName = ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgName();
         new TrueFalseDialog(AdministratorSetActivity.this, "转让管理员提示", "您确定将  " + companyName + "  管理员身份转让给  " + name + "  ?", () -> {
             EanfangHttp.get(NewApiService.SET_TRANS_ADMIN)
                     .params("mobile", molibe)
@@ -112,7 +113,7 @@ public class AdministratorSetActivity extends BaseClientActivity {
     private void logout() {
 
         signout();
-        CleanMessageUtil.clearAllCache(EanfangApplication.get());
+        CleanMessageUtil.clearAllCache(ClientApplication.get());
         ToastUtil.get().showToast(AdministratorSetActivity.this, "退出登录成功");
 //        SharePreferenceUtil.get().clear();
         startActivity(new Intent(AdministratorSetActivity.this, LoginActivity.class));

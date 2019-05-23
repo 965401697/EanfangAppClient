@@ -21,7 +21,6 @@ import com.alibaba.fastjson.JSONPObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -33,6 +32,7 @@ import com.eanfang.util.ToastUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.worksapce.setting.UpdatePasswordActivity;
 import net.eanfang.client.ui.fragment.ContactsFragment;
 import net.eanfang.client.ui.widget.DissloveTeamDialog;
@@ -121,7 +121,7 @@ public class CompanyManagerActivity extends BaseActivity implements DissloveTeam
         mOrgName = getIntent().getStringExtra("orgName");
         isAuth = getIntent().getStringExtra("isAuth");
         adminUserId = getIntent().getStringExtra("adminUserId");
-        if (String.valueOf(EanfangApplication.get().getUserId()).equals(adminUserId)) {
+        if (String.valueOf(ClientApplication.get().getUserId()).equals(adminUserId)) {
             setRightTitle("解散团队");
         } else {
             setRightTitle("");
@@ -269,7 +269,7 @@ public class CompanyManagerActivity extends BaseActivity implements DissloveTeam
                 break;
             // 管理员转让
             case R.id.rl_admin_set:
-                if (String.valueOf(EanfangApplication.get().getUserId()).equals(adminUserId)) {
+                if (String.valueOf(ClientApplication.get().getUserId()).equals(adminUserId)) {
                     JumpItent.jump(CompanyManagerActivity.this, AdministratorSetActivity.class);
                 } else {
                     ToastUtil.get().showToast(this, "您不是当前公司的管理员");

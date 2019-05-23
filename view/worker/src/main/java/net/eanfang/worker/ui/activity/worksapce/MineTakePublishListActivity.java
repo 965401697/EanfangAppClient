@@ -96,9 +96,9 @@ public class MineTakePublishListActivity extends BaseActivity {
 //
 //        QueryEntry queryEntry = new QueryEntry();
 //        if (Constant.CREATE_DATA_CODE == (dataType)) {
-//            queryEntry.getEquals().put("assigneeUserId", EanfangApplication.getApplication().getUserId() + "");
+//            queryEntry.getEquals().put("assigneeUserId", WorkerApplication.get().getUserId() + "");
 //        } else if (Constant.ASSIGNEE_DATA_CODE == (dataType)) {
-//            queryEntry.getEquals().put("assigneeCompanyId", EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyId() + "");
+//            queryEntry.getEquals().put("assigneeCompanyId", WorkerApplication.get().getUser().getAccount().getDefaultUser().getCompanyId() + "");
 //        }
 //        queryEntry.getEquals().put("status", status + "");
 //

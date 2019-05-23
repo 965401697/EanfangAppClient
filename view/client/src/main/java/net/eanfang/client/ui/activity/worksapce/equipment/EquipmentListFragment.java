@@ -18,6 +18,7 @@ import net.eanfang.client.ui.fragment.TemplateItemListFragment;
 
 /**
  * Created by O u r on 2018/6/27.
+ * //已提取
  */
 
 public class EquipmentListFragment extends TemplateItemListFragment {

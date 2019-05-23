@@ -8,8 +8,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PermissionUtils;
@@ -17,6 +15,7 @@ import com.eanfang.util.PickerSelectUtil;
 import com.yaf.base.entity.LogDetailsEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
 import butterknife.BindView;
@@ -134,7 +133,7 @@ public class DefendLogItemWriteAndDetailActivity extends BaseClientActivity impl
                 }
 
                 bean.setSlipNum(etDefendCode.getText().toString().trim());
-                bean.setCreateUserId(EanfangApplication.getApplication().getUserId());
+                bean.setCreateUserId(ClientApplication.get().getUserId());
                 bean.setLogType(mPosition);
                 bean.setAlarmNum(Integer.parseInt(etDefendNext.getText().toString()));
                 Intent intent = new Intent();

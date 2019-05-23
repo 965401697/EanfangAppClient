@@ -35,6 +35,7 @@ import butterknife.ButterKnife;
  * @author Guanluocang
  * @date on 2018/6/8  16:49
  * @decision 选择设备类别
+ * 已提取设备类别相关内容
  */
 public class SelectDeviceTypeActivity extends BaseActivity implements
         SwipyRefreshLayout.OnRefreshListener, View.OnClickListener {

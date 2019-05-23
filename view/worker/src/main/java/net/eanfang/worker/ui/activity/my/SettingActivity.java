@@ -11,7 +11,6 @@ import androidx.appcompat.app.AlertDialog;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.kit.cache.CacheKit;
@@ -25,6 +24,7 @@ import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushManager;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.setting.ChangePhoneActivity;
 import net.eanfang.worker.ui.activity.worksapce.setting.UpdatePasswordActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
@@ -67,7 +67,7 @@ public class SettingActivity extends BaseWorkerActivity {
         setContentView(R.layout.activity_setting);
         ButterKnife.bind(this);
         try {
-            tv_cache.setText(CleanMessageUtil.getTotalCacheSize(EanfangApplication.get()));
+            tv_cache.setText(CleanMessageUtil.getTotalCacheSize(WorkerApplication.get()));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -88,9 +88,9 @@ public class SettingActivity extends BaseWorkerActivity {
         ll_about_us.setOnClickListener(v -> new AboutUsView(this, true).show());
         ll_cache.setOnClickListener((v) -> {
             ToastUtil.get().showToast(this, "缓存已成功清除");
-            CleanMessageUtil.clearAllCache(EanfangApplication.get());
+            CleanMessageUtil.clearAllCache(WorkerApplication.get());
             try {
-                tv_cache.setText(CleanMessageUtil.getTotalCacheSize(EanfangApplication.get()));
+                tv_cache.setText(CleanMessageUtil.getTotalCacheSize(WorkerApplication.get()));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -127,7 +127,7 @@ public class SettingActivity extends BaseWorkerActivity {
     private void signout() {
         EanfangHttp.get(UserApi.APP_LOGOUT)
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
-                    XGPushManager.delAccount(SettingActivity.this, EanfangApplication.get().getUser().getAccount().getMobile(), new XGIOperateCallback() {
+                    XGPushManager.delAccount(SettingActivity.this, WorkerApplication.get().getLoginBean().getAccount().getMobile(), new XGIOperateCallback() {
                         @Override
                         public void onSuccess(Object o, int i) {
                             Log.e("GG", "信鸽退出Success");
@@ -140,7 +140,7 @@ public class SettingActivity extends BaseWorkerActivity {
                     });
                     RongIM.getInstance().logout();//退出融云
                     PermKit.permList.clear();//清空权限
-                    CleanMessageUtil.clearAllCache(EanfangApplication.get());
+                    CleanMessageUtil.clearAllCache(WorkerApplication.get());
 //                    SharePreferenceUtil.get().clear();
                     finishSelf();
                     startActivity(new Intent(SettingActivity.this, LoginActivity.class));

@@ -5,7 +5,6 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.OpenShopLogBean;
@@ -17,6 +16,7 @@ import com.eanfang.util.QueryEntry;
 import com.yaf.base.entity.OpenShopLogEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.fragment.TemplateItemListFragment;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -76,10 +76,10 @@ public class OpenShopLogFragment extends TemplateItemListFragment {
                 //刷新数据
 
 //                if (getmTitle().equals("未读日志")) {
-//                    if (String.valueOf(bean.getAccId()).equals(String.valueOf(EanfangApplication.get().getAccId())))
+//                    if (String.valueOf(bean.getAccId()).equals(String.valueOf(ClientApplication.get().getAccId())))
 //                        adapter.remove(position);
 //                } else if (getmTitle().equals("全部日志")) {
-//                    if (String.valueOf(bean.getAccId()).equals(String.valueOf(EanfangApplication.get().getAccId()))) {
+//                    if (String.valueOf(bean.getAccId()).equals(String.valueOf(ClientApplication.get().getAccId()))) {
 //                        ((OpenShopLogEntity) adapter.getData().get(position)).setStatus(1);
 //                        adapter.notifyItemChanged(position);
 //                    }
@@ -107,10 +107,10 @@ public class OpenShopLogFragment extends TemplateItemListFragment {
                     JumpItent.jump(getActivity(), OpenShopLogDetailActivity.class, bundle, DETAIL_TASK_REQUSET_COOD);
 
 //                    if (getmTitle().equals("未读日志")) {
-//                        if (String.valueOf(bean.getAccId()).equals(String.valueOf(EanfangApplication.get().getAccId())))
+//                        if (String.valueOf(bean.getAccId()).equals(String.valueOf(ClientApplication.get().getAccId())))
 //                            adapter.remove(position);
 //                    } else if (getmTitle().equals("全部日志")) {
-//                        if (String.valueOf(bean.getAccId()).equals(String.valueOf(EanfangApplication.get().getAccId()))) {
+//                        if (String.valueOf(bean.getAccId()).equals(String.valueOf(ClientApplication.get().getAccId()))) {
 //                            ((OpenShopLogEntity) adapter.getData().get(position)).setStatus(1);
 //                            adapter.notifyItemChanged(position);
 //                        }
@@ -144,9 +144,9 @@ public class OpenShopLogFragment extends TemplateItemListFragment {
         }
 
         if (mType == 1) {
-            mQueryEntry.getEquals().put("ownerUserId", EanfangApplication.getApplication().getUserId() + "");
+            mQueryEntry.getEquals().put("ownerUserId", ClientApplication.get().getUserId() + "");
         } else if (mType == 2) {
-            mQueryEntry.getEquals().put("assigneeUserId", EanfangApplication.getApplication().getUserId() + "");
+            mQueryEntry.getEquals().put("assigneeUserId", ClientApplication.get().getUserId() + "");
         }
 
 //        if (getmTitle().equals("未读日志")) {

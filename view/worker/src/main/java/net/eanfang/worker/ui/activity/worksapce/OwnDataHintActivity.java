@@ -15,6 +15,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.contacts.CreatTeamActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
@@ -76,7 +77,7 @@ public class OwnDataHintActivity extends BaseWorkerActivity {
 
         callTv.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
 
-        EanfangHttp.post(UserApi.ZJ_TJ_RZ).params("accId", EanfangApplication.get().getAccId()).execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
+        EanfangHttp.post(UserApi.ZJ_TJ_RZ).params("accId", WorkerApplication.get().getAccId()).execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
 
         }));
 

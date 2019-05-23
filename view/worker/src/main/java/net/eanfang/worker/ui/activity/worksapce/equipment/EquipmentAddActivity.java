@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -23,6 +22,7 @@ import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import butterknife.BindView;
@@ -192,7 +192,7 @@ public class EquipmentAddActivity extends BaseWorkerActivity implements SwipeRef
         QueryEntry queryEntry = new QueryEntry();
 
         queryEntry.getEquals().put("businessThreeCode", (String) mBundle.get("businessOneCode"));
-        queryEntry.getEquals().put("ownerCompanyId", String.valueOf(EanfangApplication.get().getCompanyId()));
+        queryEntry.getEquals().put("ownerCompanyId", String.valueOf(WorkerApplication.get().getCompanyId()));
         queryEntry.getLike().put("locationNumber", locationNum);
 
         EanfangHttp.post(NewApiService.DEVICE_LIST_ADD)

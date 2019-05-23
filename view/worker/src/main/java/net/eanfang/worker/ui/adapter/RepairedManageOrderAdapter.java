@@ -6,7 +6,6 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.NumberUtil;
@@ -17,6 +16,7 @@ import com.yaf.base.entity.WorkerOrderOerationEntity;
 import com.yaf.base.entity.RepairOrderEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 
 
 /**
@@ -42,7 +42,7 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
         //创建订单操作类( 0:待支付，1:待回电，2:待上门，3:待完工，4:待确认，5:订单完成)
         int status = item.getStatus();
         boolean custom = item.getAssigneeUserId() != null && item.getAssigneeUserId().
-                equals(EanfangApplication.get().getUserId());
+                equals(WorkerApplication.get().getUserId());
         WorkerOrderOerationEntity orderOerationEntity = new WorkerOrderOerationEntity(status, custom);
 
         // 订单是否 已读 未读 1：新订单 0 已读

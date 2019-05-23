@@ -90,7 +90,7 @@ public class PersonOfferAndPayOrderActivity extends BaseClientActivity {
 //        int status = GetConstDataUtils.getQuoteStatus().indexOf(currentFragment.getmTitle());
 //
 //        QueryEntry queryEntry = new QueryEntry();
-//        queryEntry.getEquals().put("assigneeUserId", EanfangApplication.getApplication().getUserId() + "");
+//        queryEntry.getEquals().put("assigneeUserId", ClientApplication.get().getUserId() + "");
 //        queryEntry.getEquals().put("status", status + "");
 //
 //        queryEntry.setPage(page);

@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.reapair.RepairPersonalInfoEntity;
@@ -21,6 +20,7 @@ import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.adapter.repair.RepairPersonalInfoAdapter;
 
 import org.json.JSONObject;
@@ -152,7 +152,7 @@ public class RepairPersonInfoListActivity extends BaseActivity {
 
     private void initData() {
         QueryEntry queryEntry = new QueryEntry();
-        queryEntry.getEquals().put("accId", EanfangApplication.get().getAccId() + "");
+        queryEntry.getEquals().put("accId", ClientApplication.get().getAccId() + "");
         EanfangHttp.post(NewApiService.REPAIR_PERSONAL_INFO_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<RepairPersonalInfoEntity>(this, true, RepairPersonalInfoEntity.class, bean -> {

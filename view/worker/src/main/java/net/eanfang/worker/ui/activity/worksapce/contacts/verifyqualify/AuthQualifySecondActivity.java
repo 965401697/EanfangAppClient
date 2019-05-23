@@ -19,6 +19,7 @@ import com.eanfang.model.sys.BaseDataEntity;
 import com.eanfang.ui.base.BaseActivity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.GroupAdapter;
 import net.eanfang.worker.ui.activity.authentication.SubmitSuccessfullyQyActivity;
 import net.eanfang.worker.ui.interfaces.AreaCheckChangeListener;
@@ -84,11 +85,11 @@ public class AuthQualifySecondActivity extends BaseActivity implements AreaCheck
 
     private void initData() {
         //获取国家区域
-        if (EanfangApplication.get().sSaveArea == null) {
+        if (WorkerApplication.getApplication().sSaveArea == null) {
             showToast("加载服务区域失败！");
             return;
         }
-        BaseDataEntity entity = EanfangApplication.get().sSaveArea;
+        BaseDataEntity entity = WorkerApplication.getApplication().sSaveArea;
         areaListBean = entity.getChildren();
         EanfangHttp.get(UserApi.GET_COMPANY_ORG_SYS_INFO + orgid + "/AREA")
                 .execute(new EanfangCallback<SystypeBean>(this, true, SystypeBean.class, (bean) -> {

@@ -35,6 +35,7 @@ import com.eanfang.model.sys.BaseDataEntity;
 import com.eanfang.model.sys.OrgUnitEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.worker.ui.fragment.ContactsFragment;
 
@@ -158,7 +159,7 @@ public class AuthCompanySecondActivity extends BaseActivityWithTakePhoto {
         infoBean.setUnitType(3);
         infoBean.setIntro(etDesc.getText().toString().trim());
 //        if (infoBean.getAdminUserId() == null) { todo 李旭让去掉
-//            infoBean.setAdminUserId(EanfangApplication.getApplication().getUserId());
+//            infoBean.setAdminUserId(WorkerApplication.get().getUserId());
 //        } else {
 //            infoBean.setAdminUserId(infoBean.getAdminUserId());
 //        }

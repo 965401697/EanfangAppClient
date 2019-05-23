@@ -21,6 +21,7 @@ import com.eanfang.util.compound.CompoundHelper;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
 import org.json.JSONArray;
@@ -80,7 +81,7 @@ public class AddGroupActivity extends BaseClientActivity {
 
 
         EanfangHttp.post(UserApi.POST_GET_GROUP)
-                .params("accId", EanfangApplication.get().getAccId())
+                .params("accId", ClientApplication.get().getAccId())
                 .execute(new EanfangCallback<GroupsBean>(this, true, GroupsBean.class, true, (list) -> {
                     if (list.size() > 0) {
                         for (GroupsBean bean : list) {
@@ -122,7 +123,7 @@ public class AddGroupActivity extends BaseClientActivity {
                         mUserIconList.add(b.getAccountEntity().getAvatar());
                     }
 
-                    mUserIconList.add(EanfangApplication.get().getUser().getAccount().getAvatar());
+                    mUserIconList.add(ClientApplication.get().getLoginBean().getAccount().getAvatar());
 
                     CompoundHelper.getInstance().sendBitmap(this, handler, mUserIconList);//生成图片
                     mTitle = bean.getGroup().getGroupName();
@@ -156,7 +157,7 @@ public class AddGroupActivity extends BaseClientActivity {
 
         object = new JSONObject();
         try {
-            object.put("accId", EanfangApplication.get().getAccId());
+            object.put("accId", ClientApplication.get().getAccId());
             object.put("groupId", mGroupId);
         } catch (JSONException e) {
             e.printStackTrace();

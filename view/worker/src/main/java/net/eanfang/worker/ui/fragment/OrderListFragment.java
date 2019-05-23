@@ -11,7 +11,6 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.RepairApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.RepairedOrderBean;
@@ -27,6 +26,7 @@ import com.eanfang.util.V;
 import com.yaf.base.entity.RepairOrderEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.EvaluateClientActivity;
 import net.eanfang.worker.ui.activity.worksapce.repair.finishwork.FillRepairInfoActivity;
 import net.eanfang.worker.ui.activity.worksapce.OrderDetailActivity;
@@ -57,7 +57,7 @@ public class OrderListFragment extends BaseFragment implements
     private String status = null;
     private int currentPosition;
 
-    private Long mUseId = EanfangApplication.get().getUserId();
+    private Long mUseId = WorkerApplication.get().getUserId();
 
     public static OrderListFragment getInstance(String title) {
         OrderListFragment sf = new OrderListFragment();
@@ -211,7 +211,7 @@ public class OrderListFragment extends BaseFragment implements
                         new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), false).show();
                         break;
                     case R.id.tv_do_second:
-//                        if (!item.getAssigneeUserId().equals(EanfangApplication.get().getUserId())) {
+//                        if (!item.getAssigneeUserId().equals(WorkerApplication.get().getUserId())) {
 //                            showToast("当前订单负责人可以操作");
 //                            return;
 //                        }

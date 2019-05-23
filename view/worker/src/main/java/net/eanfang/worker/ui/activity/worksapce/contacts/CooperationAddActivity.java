@@ -29,6 +29,7 @@ import com.yaf.base.entity.CooperationEntity;
 import com.eanfang.model.sys.BaseDataEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.adapter.CooperationAddAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
@@ -162,8 +163,8 @@ public class CooperationAddActivity extends BaseWorkerActivity implements Select
                 CooperationEntity bean = new CooperationEntity();
                 bean.setAssigneeOrgId(Long.parseLong(mBean.getCompanyEntity().getOrgId()));
                 bean.setAssigneeTopCompanyId(Long.parseLong(mBean.getOrgEntity().getTopCompanyId()));
-                bean.setOwnerTopCompanyId(EanfangApplication.get().getTopCompanyId());
-                bean.setOwnerOrgId(EanfangApplication.get().getCompanyId());
+                bean.setOwnerTopCompanyId(WorkerApplication.get().getTopCompanyId());
+                bean.setOwnerOrgId(WorkerApplication.get().getCompanyId());
                 bean.setBusinessOneCode(Config.get().getBaseCodeByName(osCheckBox.getText().toString().trim(), 1, Constant.SYS_TYPE).get(0));
                 bean.setBeginTime(GetDateUtils.getYeanDate(tvStartTime.getText().toString().trim()));
                 bean.setEndTime(GetDateUtils.getYeanDate(tvEndTime.getText().toString().trim()));

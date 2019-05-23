@@ -6,7 +6,6 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.device.MaintenanceOrderListBean;
@@ -20,6 +19,7 @@ import com.eanfang.util.V;
 import com.yaf.base.entity.ShopMaintenanceOrderEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.SignInActivity;
 import net.eanfang.worker.ui.fragment.TemplateItemListFragment;
 
@@ -36,7 +36,7 @@ public class MaintenanceListFragment extends TemplateItemListFragment {
     private MaintenanceListAdapter mAdapter;
     private int currentPosition;
 
-    private Long mUseId = EanfangApplication.get().getUserId();
+    private Long mUseId = WorkerApplication.get().getUserId();
 
     public static MaintenanceListFragment getInstance(int status, String title) {
         MaintenanceListFragment sf = new MaintenanceListFragment();
@@ -82,11 +82,11 @@ public class MaintenanceListFragment extends TemplateItemListFragment {
         queryEntry.setSize(10);
         queryEntry.setPage(mPage);
         if (mStatus == 1) {
-            queryEntry.getEquals().put("assigneeUserId", String.valueOf(EanfangApplication.getApplication().getUserId()));
+            queryEntry.getEquals().put("assigneeUserId", String.valueOf(WorkerApplication.get().getUserId()));
         } else if (mStatus == 2) {
-            queryEntry.getEquals().put("assigneeOrgCode", EanfangApplication.get().getOrgCode());
+            queryEntry.getEquals().put("assigneeOrgCode", WorkerApplication.get().getOrgCode());
         } else if (mStatus == 3) {
-            queryEntry.getEquals().put("assigneeCompanyId", String.valueOf(EanfangApplication.get().getCompanyId()));
+            queryEntry.getEquals().put("assigneeCompanyId", String.valueOf(WorkerApplication.get().getCompanyId()));
         }
 
         int status = GetConstDataUtils.getMaintainStatusList().indexOf(mTitle);

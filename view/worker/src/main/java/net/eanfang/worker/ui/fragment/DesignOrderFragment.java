@@ -6,7 +6,6 @@ import android.view.View;
 import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.DesignOrderListBean;
@@ -16,6 +15,7 @@ import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.design.DesignOrderDetailActivity;
 import net.eanfang.worker.ui.adapter.DesignOrderAdapter;
 
@@ -81,7 +81,7 @@ public class DesignOrderFragment extends TemplateItemListFragment {
         int status = GetConstDataUtils.getDesignStatus().indexOf(getmTitle());
 
         QueryEntry queryEntry = new QueryEntry();
-        queryEntry.getEquals().put("assigneeUserId", EanfangApplication.getApplication().getUserId() + "");
+        queryEntry.getEquals().put("assigneeUserId", WorkerApplication.get().getUserId() + "");
 
         queryEntry.getEquals().put("status", status + "");
 

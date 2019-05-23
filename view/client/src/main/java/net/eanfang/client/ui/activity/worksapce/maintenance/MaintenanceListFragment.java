@@ -6,7 +6,6 @@ import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.device.MaintenanceOrderListBean;
@@ -20,6 +19,7 @@ import com.eanfang.util.V;
 import com.yaf.base.entity.ShopMaintenanceOrderEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.fragment.TemplateItemListFragment;
 
 import org.greenrobot.eventbus.EventBus;
@@ -36,7 +36,7 @@ public class MaintenanceListFragment extends TemplateItemListFragment {
     private MaintenanceListAdapter mAdapter;
     private int currentPosition;
 
-    private Long mUseId = EanfangApplication.get().getUserId();
+    private Long mUseId = ClientApplication.get().getUserId();
     private ShopMaintenanceOrderEntity shopMaintenanceOrderEntity;
 
     public static MaintenanceListFragment getInstance(int status, String title) {
@@ -82,11 +82,11 @@ public class MaintenanceListFragment extends TemplateItemListFragment {
         queryEntry.setSize(10);
         queryEntry.setPage(mPage);
         if (mStatus == 1) {
-            queryEntry.getEquals().put("ownerUserId", String.valueOf(EanfangApplication.getApplication().getUserId()));
+            queryEntry.getEquals().put("ownerUserId", String.valueOf(ClientApplication.get().getUserId()));
         } else if (mStatus == 2) {
-            queryEntry.getEquals().put("ownerOrgCode", EanfangApplication.get().getOrgCode());
+            queryEntry.getEquals().put("ownerOrgCode", ClientApplication.get().getOrgCode());
         } else if (mStatus == 3) {
-            queryEntry.getEquals().put("ownerCompanyId", String.valueOf(EanfangApplication.get().getCompanyId()));
+            queryEntry.getEquals().put("ownerCompanyId", String.valueOf(ClientApplication.get().getCompanyId()));
         }
 
         int status = GetConstDataUtils.getMaintainStatusList().indexOf(mTitle);

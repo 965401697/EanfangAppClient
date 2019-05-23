@@ -30,6 +30,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 已提取相关内容
+ */
 public class EquipmentDetailActivity extends BaseWorkerActivity {
 
     @BindView(R.id.tv_equipment_classfiy)

@@ -18,7 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.BusinessManagementData;
@@ -27,6 +26,7 @@ import com.eanfang.util.JumpItent;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.contacts.baseinfo.AuthCompanyFirstBActivity;
 import net.eanfang.worker.ui.activity.worksapce.setting.UpdatePasswordActivity;
 import net.eanfang.worker.ui.fragment.ContactsFragment;
@@ -93,7 +93,7 @@ public class CompanyManagerBActivity extends BaseActivity implements DissloveTea
     private void initView() {
         setLeftBack();
         setTitle("企业管理");
-        if (String.valueOf(EanfangApplication.get().getUserId()).equals(getIntent().getStringExtra("adminUserId"))) {
+        if (String.valueOf(WorkerApplication.get().getUserId()).equals(getIntent().getStringExtra("adminUserId"))) {
             setRightTitle("解散团队");
             setRightTitleOnClickListener(v -> doDisslove());
         } else {

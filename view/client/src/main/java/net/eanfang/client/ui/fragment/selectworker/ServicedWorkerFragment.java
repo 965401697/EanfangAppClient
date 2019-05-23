@@ -155,7 +155,7 @@ public class ServicedWorkerFragment extends BaseFragment implements SwipeRefresh
         if (mOwnerOrgId != 0) {
 //            queryEntry.getEquals().put("companyId", mOwnerOrgId + "");
         }
-//        queryEntry.getEquals().put("userId", EanfangApplication.getApplication().getUserId() + "");
+//        queryEntry.getEquals().put("userId", ClientApplication.get().getUserId() + "");
         EanfangHttp.post(RepairApi.GET_REPAIR_SEARCH)
                 .upJson(JsonUtils.obj2String(mQueryEntry))
                 .execute(new EanfangCallback<WorkerEntity>(getActivity(), true, WorkerEntity.class, true, new EanfangCallback.ISuccessArray<WorkerEntity>() {

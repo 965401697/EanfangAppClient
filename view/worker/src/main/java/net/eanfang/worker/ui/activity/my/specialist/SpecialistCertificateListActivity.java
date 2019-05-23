@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.HonorCerticificateListBean;
@@ -19,6 +18,7 @@ import com.eanfang.util.JsonUtils;
 import com.yaf.base.entity.HonorCertificateEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.my.certification.CertificateListAdapter;
 import net.eanfang.worker.ui.activity.worksapce.OwnDataHintActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
@@ -88,7 +88,7 @@ public class SpecialistCertificateListActivity extends BaseWorkerActivity {
 
 
         JSONObject object = new JSONObject();
-        object.put("accId", String.valueOf(EanfangApplication.get().getAccId()));
+        object.put("accId", String.valueOf(WorkerApplication.get().getAccId()));
         object.put("type", "1");
 
         EanfangHttp.post(UserApi.GET_TECH_WORKER_ADD_CERTIFICATE_LIST)

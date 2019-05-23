@@ -18,7 +18,6 @@ import com.alibaba.fastjson.JSON;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
@@ -46,6 +45,7 @@ import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.client.ui.activity.worksapce.oa.OAPersonAdaptet;
 import net.eanfang.client.ui.base.BaseClientActivity;
@@ -165,8 +165,8 @@ public class TaskAssignmentCreationActivity extends BaseClientActivity {
     }
 
     private void initViews() {
-        tvCompanyName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
-        tvSectionName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getDepartmentEntity().getOrgName());
+        tvCompanyName.setText(ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
+        tvSectionName.setText(ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getDepartmentEntity().getOrgName());
 
         rvTeamWork.setLayoutManager(new GridLayoutManager(this, 5));
         oaAddPersonAdaptet = new OAPersonAdaptet(this, new ArrayList<TemplateBean.Preson>(), 1);
@@ -447,8 +447,8 @@ public class TaskAssignmentCreationActivity extends BaseClientActivity {
 
         if (whoList.size() == 0) {
             //工作协同默认值
-            workTaskBean.setAssigneeUserId(EanfangApplication.get().getUserId());
-            workTaskBean.setAssigneeOrgCode(EanfangApplication.get().getOrgCode());
+            workTaskBean.setAssigneeUserId(ClientApplication.get().getUserId());
+            workTaskBean.setAssigneeOrgCode(ClientApplication.get().getOrgCode());
         } else {
             //工作协同默认值
             workTaskBean.setAssigneeUserId(Long.parseLong(whoList.get(0).getUserId()));
@@ -509,7 +509,7 @@ public class TaskAssignmentCreationActivity extends BaseClientActivity {
                             bundle.putString("picUrl", bean.getWorkTaskDetails().get(0).getPictures().split(",")[0]);
                         }
                         b.putString("creatTime", etTaskName.getText().toString().trim());
-                        b.putString("workerName", EanfangApplication.get().getUser().getAccount().getRealName());
+                        b.putString("workerName", ClientApplication.get().getLoginBean().getAccount().getRealName());
                         b.putString("status", "0");
                         b.putString("shareType", "4");
 

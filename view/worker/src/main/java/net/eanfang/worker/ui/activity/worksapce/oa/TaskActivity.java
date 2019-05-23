@@ -32,6 +32,7 @@ import com.eanfang.util.ToastUtil;
 import com.eanfang.model.sys.UserEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.AddWorkTaskDeitailActivity;
 import net.eanfang.worker.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.worker.ui.adapter.AddTaskDetailAdapter;
@@ -144,9 +145,9 @@ public class TaskActivity extends BaseWorkerActivity implements View.OnClickList
                 }
             }
         });
-
-        etCompanyName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
-        etDepartmentName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getDepartmentEntity().getOrgName());
+        UserEntity userEntity=WorkerApplication.get().getLoginBean().getAccount().getDefaultUser();
+        etCompanyName.setText(userEntity.getCompanyEntity().getOrgName());
+        etDepartmentName.setText(userEntity.getDepartmentEntity().getOrgName());
 
 
         GridLayoutManager layoutManage = new GridLayoutManager(this, 5);
@@ -224,8 +225,8 @@ public class TaskActivity extends BaseWorkerActivity implements View.OnClickList
 
         EanfangHttp.get(NewApiService.GET_COLLEAGUE)
                 .tag(this)
-                .params("id", EanfangApplication.getApplication().getUserId())
-                .params("companyId", EanfangApplication.getApplication().getCompanyId())
+                .params("id", WorkerApplication.get().getUserId())
+                .params("companyId", WorkerApplication.get().getCompanyId())
                 .execute(new EanfangCallback<UserEntity>(TaskActivity.this, true, UserEntity.class, true, (list) -> {
                     userlist = list;
 
@@ -272,7 +273,7 @@ public class TaskActivity extends BaseWorkerActivity implements View.OnClickList
                 if (bean.getOrgCode() != null && !TextUtils.isEmpty(bean.getOrgCode())) {
                     assigneeOrgCode = bean.getOrgCode();
                 } else {
-                    assigneeOrgCode = EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgCode();
+                    assigneeOrgCode = WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgCode();
                 }
             } else {
 
@@ -344,8 +345,8 @@ public class TaskActivity extends BaseWorkerActivity implements View.OnClickList
 
         if (newPresonList.size() == 0) {
             //工作协同默认值
-            workTaskBean.setAssigneeUserId(EanfangApplication.get().getUserId());
-            workTaskBean.setAssigneeOrgCode(EanfangApplication.get().getOrgCode());
+            workTaskBean.setAssigneeUserId(WorkerApplication.get().getUserId());
+            workTaskBean.setAssigneeOrgCode(WorkerApplication.get().getOrgCode());
         } else {
             //工作协同默认值
             workTaskBean.setAssigneeUserId(Long.parseLong(newPresonList.get(0).getUserId()));
@@ -404,7 +405,7 @@ public class TaskActivity extends BaseWorkerActivity implements View.OnClickList
                             bundle.putString("picUrl", bean.getWorkTaskDetails().get(0).getPictures().split(",")[0]);
                         }
                         b.putString("creatTime", etTaskName.getText().toString().trim());
-                        b.putString("workerName", EanfangApplication.get().getUser().getAccount().getRealName());
+                        b.putString("workerName", WorkerApplication.get().getLoginBean().getAccount().getRealName());
                         b.putString("status", "0");
                         b.putString("shareType", "4");
 

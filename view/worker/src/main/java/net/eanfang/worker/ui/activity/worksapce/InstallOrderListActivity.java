@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -20,6 +19,7 @@ import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.adapter.WorkspaceInstallAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 import net.eanfang.worker.ui.widget.InstallCtrlItemView;
@@ -100,9 +100,9 @@ public class InstallOrderListActivity extends BaseWorkerActivity implements Swip
     private void getData() {
         QueryEntry queryEntry = new QueryEntry();
         if (mType == 0) {
-            queryEntry.getEquals().put(Constant.ASSIGNEE_USER_ID, EanfangApplication.getApplication().getUserId() + "");
+            queryEntry.getEquals().put(Constant.ASSIGNEE_USER_ID, WorkerApplication.get().getUserId() + "");
         } else if (mType == 1) {
-            queryEntry.getEquals().put(Constant.ASSIGNEE_COMPANY_ID, EanfangApplication.getApplication().getCompanyId() + "");
+            queryEntry.getEquals().put(Constant.ASSIGNEE_COMPANY_ID, WorkerApplication.get().getCompanyId() + "");
         }
 
         queryEntry.setPage(mPage);

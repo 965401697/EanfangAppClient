@@ -85,7 +85,7 @@ public class FaultLibraryActivity extends BaseActivity implements SwipyRefreshLa
 
         swiprefresh.setOnRefreshListener(this);
 
-        faultLibraryAdapter = new FaultLibraryAdapter(R.layout.layout_fault_list_item);
+        faultLibraryAdapter = new FaultLibraryAdapter(this,R.layout.layout_fault_list_item);
         faultLibraryAdapter.setNewData(mFaultListBeanList);
         faultLibraryAdapter.bindToRecyclerView(rvFaultList);
 

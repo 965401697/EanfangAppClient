@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.eanfang.apiservice.RepairApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.config.EanfangConst;
@@ -42,6 +41,7 @@ import com.yaf.base.entity.CustDeviceEntity;
 import com.yaf.base.entity.RepairBugEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.worksapce.equipment.EquipmentListActivity;
 import net.eanfang.client.ui.activity.worksapce.scancode.ScanCodeActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
@@ -248,7 +248,7 @@ public class AddTroubleActivity extends BaseClientActivity {
             beanList = (List<RepairBugEntity>) getIntent().getSerializableExtra("beanList");
         }
         //个人客户 不显示设备库选择
-        if (EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyId() == null) {
+        if (ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyId() == null) {
         }
         snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this));
     }
@@ -379,14 +379,14 @@ public class AddTroubleActivity extends BaseClientActivity {
         if (beanList != null && beanList.size() > 0) {
             for (int i = 0; i < beanList.size(); i++) {
                 CooperationEntity cooperationEntity = new CooperationEntity();
-                cooperationEntity.setAssigneeOrgId(EanfangApplication.getApplication().getCompanyId());
+                cooperationEntity.setAssigneeOrgId(ClientApplication.get().getCompanyId());
                 cooperationEntity.setBusType(0);
                 cooperationEntity.setBusinessOneCode(Config.get().getBaseCodeByLevel(beanList.get(i).getBusinessThreeCode(), 1));
                 cooperationEntities.add(cooperationEntity);
             }
         }
         CooperationEntity cooperationEntity_now = new CooperationEntity();
-        cooperationEntity_now.setAssigneeOrgId(EanfangApplication.getApplication().getCompanyId());
+        cooperationEntity_now.setAssigneeOrgId(ClientApplication.get().getCompanyId());
         cooperationEntity_now.setBusType(0);
         cooperationEntity_now.setBusinessOneCode(Config.get().getBaseCodeByLevel(repairBugEntity.getBusinessThreeCode(), 1));
         cooperationEntities.add(cooperationEntity_now);

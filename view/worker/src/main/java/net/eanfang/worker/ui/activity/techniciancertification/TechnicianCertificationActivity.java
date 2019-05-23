@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import com.alibaba.fastjson.JSONPObject;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -22,6 +21,7 @@ import com.eanfang.util.JumpItent;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.my.certification.CertificationInfoActivity;
 import net.eanfang.worker.ui.activity.my.certification.OtherDataActivity;
 import net.eanfang.worker.ui.activity.my.certification.SkillInfoDetailActivity;
@@ -79,7 +79,7 @@ public class TechnicianCertificationActivity extends BaseActivity {
                 showToast("认证信息还没有提交，不能撤销");
                 return;
             }
-            new TrueFalseDialog(TechnicianCertificationActivity.this, "系统提示", "是否撤销认证并保存信息", () -> EanfangHttp.post(NewApiService.WORKER_AUTH_REVOKE + EanfangApplication.getApplication().getAccId()).execute(new EanfangCallback<JSONPObject>(TechnicianCertificationActivity.this, true, JSONPObject.class, bean -> {
+            new TrueFalseDialog(TechnicianCertificationActivity.this, "系统提示", "是否撤销认证并保存信息", () -> EanfangHttp.post(NewApiService.WORKER_AUTH_REVOKE + WorkerApplication.get().getAccId()).execute(new EanfangCallback<JSONPObject>(TechnicianCertificationActivity.this, true, JSONPObject.class, bean -> {
                 verify = 0;
                 realVerify = 1;
                 setRightTitle("");
@@ -96,7 +96,7 @@ public class TechnicianCertificationActivity extends BaseActivity {
     }
 
     private void initData() {
-        EanfangHttp.post(UserApi.POST_WORKER_AUTH_STATUS_B).params("accId", EanfangApplication.getApplication().getAccId()).execute(new EanfangCallback<AuthStatusBean>(this, true, AuthStatusBean.class, (bean) -> {
+        EanfangHttp.post(UserApi.POST_WORKER_AUTH_STATUS_B).params("accId", WorkerApplication.get().getAccId()).execute(new EanfangCallback<AuthStatusBean>(this, true, AuthStatusBean.class, (bean) -> {
             verify = bean.getVerify();
             realVerify = bean.getRealVerify();
             if (verify == 2) {

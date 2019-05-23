@@ -13,7 +13,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
@@ -30,6 +29,7 @@ import com.yaf.base.entity.RepairBugEntity;
 import com.yaf.base.entity.RepairOrderEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.pay.NewPayActivity;
 import net.eanfang.client.ui.activity.worksapce.EvaluateWorkerActivity;
 import net.eanfang.client.ui.activity.worksapce.TroubleDetalilListActivity;
@@ -83,7 +83,7 @@ public class OrderDetailFragment extends BaseFragment {
     private TextView tv_bottomLeft;
 
     // userid
-    private Long mUserId = EanfangApplication.get().getUserId();
+    private Long mUserId = ClientApplication.get().getUserId();
     private Long mItemId;
     private int mIsPhoneSolve;
     // 订单状态

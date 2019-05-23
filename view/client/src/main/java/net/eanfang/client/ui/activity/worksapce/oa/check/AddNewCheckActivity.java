@@ -17,7 +17,6 @@ import com.alibaba.fastjson.JSON;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.dialog.TrueFalseDialog;
@@ -48,6 +47,7 @@ import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 import com.yaf.base.entity.WorkInspectEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.client.ui.activity.worksapce.oa.OAPersonAdaptet;
 import net.eanfang.client.ui.activity.worksapce.repair.SelectDeviceTypeActivity;
@@ -229,8 +229,8 @@ public class AddNewCheckActivity extends BaseActivity implements SelectTimeDialo
     }
 
     private void initData() {
-        tvCompanyName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
-        tvSectionName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getDepartmentEntity().getOrgName());
+        tvCompanyName.setText(ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
+        tvSectionName.setText(ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getDepartmentEntity().getOrgName());
     }
 
     @OnClick({R.id.ll_update_time, R.id.tv_add_task, R.id.tv_sub, R.id.iv_title_voice, R.id.ll_select_device,
@@ -408,15 +408,15 @@ public class AddNewCheckActivity extends BaseActivity implements SelectTimeDialo
 
         if (whoList.size() == 0) {
             //工作协同默认值
-            workAddCheckBean.setAssigneeUserId(EanfangApplication.get().getUserId());
-            workAddCheckBean.setAssigneeOrgCode(EanfangApplication.get().getOrgCode());
+            workAddCheckBean.setAssigneeUserId(ClientApplication.get().getUserId());
+            workAddCheckBean.setAssigneeOrgCode(ClientApplication.get().getOrgCode());
         } else {
             //工作协同默认值
             workAddCheckBean.setAssigneeUserId(Long.parseLong(whoList.get(0).getUserId()));
             workAddCheckBean.setAssigneeOrgCode(whoList.get(0).getOrgCode());
         }
 
-        workAddCheckBean.setCompanyName(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
+        workAddCheckBean.setCompanyName(ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
         workAddCheckBean.setTitle(task_title);
         workAddCheckBean.setChangeDeadlineTime(task_time);
 
@@ -471,7 +471,7 @@ public class AddNewCheckActivity extends BaseActivity implements SelectTimeDialo
                             bundle.putString("picUrl", bean.getWorkInspectDetails().get(0).getPictures().split(",")[0]);
                         }
                         b.putString("creatTime", etTaskName.getText().toString().trim());
-                        b.putString("workerName", EanfangApplication.get().getUser().getAccount().getRealName());
+                        b.putString("workerName", ClientApplication.get().getLoginBean().getAccount().getRealName());
                         b.putString("status", "0");
                         b.putString("shareType", "5");
 

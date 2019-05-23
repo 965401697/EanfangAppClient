@@ -27,6 +27,7 @@ import com.eanfang.witget.takavideo.ToastUtils;
 import com.picker.common.util.ScreenUtils;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.adapter.SwitchCompanyListAdapter;
 
 import java.util.ArrayList;
@@ -73,7 +74,7 @@ public class CompanyListView extends PopupWindow {
      * Get the list of Companies
      */
     private void getCompanyAllList() {
-        List<OrgEntity> orgEntityList = new ArrayList<>(EanfangApplication.getApplication().getUser().getAccount().getBelongCompanys());
+        List<OrgEntity> orgEntityList = new ArrayList<>(WorkerApplication.get().getLoginBean().getAccount().getBelongCompanys());
 //        排除默认公司 只取安防公司
         orgEntityList = Stream.of(orgEntityList).filter(bean -> bean.getOrgId() != 0 && bean.getOrgUnitEntity() != null && bean.getOrgUnitEntity().getUnitType() == 3).toList();
     }
@@ -84,7 +85,7 @@ public class CompanyListView extends PopupWindow {
         revCompanyList.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if (EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgId().equals(beanList.get(position).getOrgId())) {
+                if (WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgId().equals(beanList.get(position).getOrgId())) {
                     ToastUtils.s(mContext, "无需切换公司");
                     dismiss();
                     return;
@@ -104,10 +105,10 @@ public class CompanyListView extends PopupWindow {
                 .execute(new EanfangCallback<LoginBean>(mContext, false, LoginBean.class, (bean) -> {
                     if (bean != null) {
                         PermKit.permList.clear();
-                        EanfangApplication.get().remove(LoginBean.class.getName());
-                        EanfangApplication.get().set(LoginBean.class.getName(),bean);
+                        WorkerApplication.get().remove(LoginBean.class.getName());
+                        WorkerApplication.get().set(LoginBean.class.getName(),bean);
                         EanfangHttp.setToken(bean.getToken());
-                        HttpConfig.get().setToken(EanfangApplication.get().getUser().getToken());
+                        HttpConfig.get().setToken(WorkerApplication.get().getLoginBean().getToken());
                         EanfangHttp.setWorker();
                         String companyName = null;
                         dismiss();

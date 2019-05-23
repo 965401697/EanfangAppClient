@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
@@ -25,6 +24,7 @@ import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 import com.yaf.base.entity.ZjZgBean;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.my.certification.QualificationAdapter;
 import net.eanfang.worker.ui.activity.my.certification.SkillTypeAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
@@ -93,7 +93,7 @@ public class SpecialistSkillInfoDetailActivity extends BaseWorkerActivity {
     private void getSkillInfo() {
 
         EanfangHttp.post(UserApi.EXPERT_DETAIL_VERIFY)
-                .params("accId", String.valueOf(EanfangApplication.getApplication().getAccId()))
+                .params("accId", String.valueOf(WorkerApplication.get().getAccId()))
                 .execute(new EanfangCallback<ExpertVerifySkillBean>(this, true, ExpertVerifySkillBean.class, bean -> {
 
                     mExpertVerifySkillBean = bean;

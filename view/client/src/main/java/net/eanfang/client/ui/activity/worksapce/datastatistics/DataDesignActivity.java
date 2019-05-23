@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -33,6 +32,7 @@ import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.eanfang.model.sys.BaseDataEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.adapter.datastatistics.DataStatisticsDesignAdapter;
 import net.eanfang.client.ui.adapter.datastatistics.DataStatisticsDesignCompanyAdapter;
 import net.eanfang.client.ui.widget.DataStatisticsCompanyListView;
@@ -157,8 +157,8 @@ public class DataDesignActivity extends BaseActivity implements RadioGroup.OnChe
     private void initView() {
         setTitle("设计数据统计");
         setLeftBack();
-        mMyOrgId = EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgId();
-        mOrgName = EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName();
+        mMyOrgId = ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgId();
+        mOrgName = ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgName();
         mOrgId = mMyOrgId;
         /**
          * 设置pieChart图表的描述

@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.JsonUtils;
@@ -15,6 +14,7 @@ import com.eanfang.util.QueryEntry;
 import com.yaf.base.entity.CooperationEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.worksapce.contacts.CooperationRelationDetailActivity;
 import net.eanfang.client.ui.adapter.CooperationRelationAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
@@ -108,7 +108,7 @@ public class PartnerActivity extends BaseClientActivity implements SwipeRefreshL
         queryEntry.setSize(5);
         queryEntry.setPage(mPage);
 
-        queryEntry.getEquals().put("assigneeOrgId", String.valueOf(EanfangApplication.getApplication().getCompanyId()));
+        queryEntry.getEquals().put("assigneeOrgId", String.valueOf(ClientApplication.get().getCompanyId()));
 
         EanfangHttp.post(NewApiService.GET_COOPERATION_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))

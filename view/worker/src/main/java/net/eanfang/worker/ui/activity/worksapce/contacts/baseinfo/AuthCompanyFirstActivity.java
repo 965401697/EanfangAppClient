@@ -158,7 +158,7 @@ public class AuthCompanyFirstActivity extends BaseActivityWithTakePhoto {
             infoBean.setAreaCode(Config.get().getAreaCodeByName(itemcity, itemzone));
         }
 //        if (infoBean.getAdminUserId() == null) {
-//            infoBean.setAdminUserId(EanfangApplication.getApplication().getUserId());
+//            infoBean.setAdminUserId(WorkerApplication.get().getUserId());
 //        }
 
         String json = JSONObject.toJSONString(infoBean);

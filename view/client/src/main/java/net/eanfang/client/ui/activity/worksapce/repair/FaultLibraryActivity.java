@@ -40,6 +40,7 @@ import static com.eanfang.config.EanfangConst.TOP_REFRESH;
  * @author Guanluocang
  * @date on 2018/5/28  11:37
  * @decision 故障库
+ * 已提取故障库相关内容
  */
 public class FaultLibraryActivity extends BaseActivity implements SwipyRefreshLayout.OnRefreshListener, View.OnClickListener {
 
@@ -108,7 +109,7 @@ public class FaultLibraryActivity extends BaseActivity implements SwipyRefreshLa
 
         swiprefresh.setOnRefreshListener(this);
 
-        faultLibraryAdapter = new FaultLibraryAdapter(R.layout.layout_fault_list_item);
+        faultLibraryAdapter = new FaultLibraryAdapter(this,R.layout.layout_fault_list_item);
         faultLibraryAdapter.setNewData(mFaultListBeanList);
         faultLibraryAdapter.bindToRecyclerView(rvFaultList);
 

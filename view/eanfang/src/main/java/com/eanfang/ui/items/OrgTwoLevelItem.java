@@ -15,7 +15,7 @@ import com.baozi.treerecyclerview.factory.ItemHelperFactory;
 import com.baozi.treerecyclerview.item.TreeItem;
 import com.baozi.treerecyclerview.item.TreeItemGroup;
 import com.eanfang.R;
-import com.eanfang.application.EanfangApplication;
+import com.eanfang.base.BaseApplication;
 import com.eanfang.kit.cache.CacheKit;
 import com.eanfang.model.SectionBean;
 import com.eanfang.ui.activity.SelectPresonActivity;
@@ -97,7 +97,7 @@ public class OrgTwoLevelItem extends TreeItemGroup<SectionBean> {
                         return;
                     }
 
-                    Intent intent = new Intent(EanfangApplication.getApplication(), SelectPresonActivity.class);
+                    Intent intent = new Intent(BaseApplication.get(), SelectPresonActivity.class);
                     intent.putExtra("flag", 2);
                     if (data.getFlag() == 1) {
                         intent.putExtra("isRadio", "isRadio");

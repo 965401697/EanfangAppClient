@@ -11,7 +11,6 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.GroupDetailBean;
@@ -22,6 +21,7 @@ import com.eanfang.util.UuidUtil;
 import com.eanfang.util.compound.CompoundHelper;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import org.json.JSONException;
@@ -105,7 +105,7 @@ public class SubtractFriendsActivity extends BaseWorkerActivity {
 
         mList = new ArrayList<>();
         for (GroupDetailBean.ListBean bean : mFriendListBeanArrayList) {
-            if (!bean.getAccId().equals(String.valueOf(EanfangApplication.get().getAccId()))) {
+            if (!bean.getAccId().equals(String.valueOf(WorkerApplication.get().getAccId()))) {
                 mList.add(bean);//自己不能删除自己
             }
         }
@@ -140,7 +140,7 @@ public class SubtractFriendsActivity extends BaseWorkerActivity {
             list.add(bean.getAccountEntity().getAvatar());
         }
 
-//        list.add(EanfangApplication.get().getUser().getAccount().getAvatar());
+//        list.add(WorkerApplication.get().getLoginBean().getAccount().getAvatar());
         if(isCompound) {
             CompoundHelper.getInstance().sendBitmap(this, handler, list);//生成图片
         }
@@ -149,7 +149,7 @@ public class SubtractFriendsActivity extends BaseWorkerActivity {
                 .params("groupId", mGroupId)
                 .params("ids", buffer.toString())
                 .params("groupName", mTitle)
-                .params("senderId", EanfangApplication.get().getAccId())
+                .params("senderId", WorkerApplication.get().getAccId())
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (json) -> {
                     ToastUtil.get().showToast(SubtractFriendsActivity.this, "移除成功");
                     if(!isCompound){

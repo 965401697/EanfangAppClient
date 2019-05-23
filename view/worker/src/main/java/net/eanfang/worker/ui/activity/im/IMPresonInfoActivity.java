@@ -19,6 +19,7 @@ import com.eanfang.util.ToastUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import org.json.JSONException;
@@ -73,7 +74,7 @@ public class IMPresonInfoActivity extends BaseWorkerActivity {
                     UserInfo userInfo = new UserInfo(bean.getAccId(), bean.getNickName(), Uri.parse(BuildConfig.OSS_SERVER + bean.getAvatar()));
                     RongIM.getInstance().refreshUserInfoCache(userInfo);
 
-                    if (mUser.getAccId().equals(String.valueOf(EanfangApplication.get().getAccId()))) {
+                    if (mUser.getAccId().equals(String.valueOf(WorkerApplication.get().getAccId()))) {
                         tvClear.setVisibility(View.VISIBLE);
                         b = true;//如果是自己点击自己的头像
                     } else {
@@ -145,7 +146,7 @@ public class IMPresonInfoActivity extends BaseWorkerActivity {
 
         EanfangHttp.post(UserApi.POST_CHECK_FRIEND)
                 .params("accId", mUser.getAccId())
-                .params("inviteeAccId", EanfangApplication.get().getAccId())
+                .params("inviteeAccId", WorkerApplication.get().getAccId())
                 .execute(new EanfangCallback<String>(this, true, String.class, (s) -> {
                     try {
                         JSONObject jsonObject = new JSONObject(s);
@@ -184,7 +185,7 @@ public class IMPresonInfoActivity extends BaseWorkerActivity {
 
 
                                     EanfangHttp.post(UserApi.POST_ADD_FRIEND_PUSH)
-                                            .params("senderId", EanfangApplication.get().getAccId())
+                                            .params("senderId", WorkerApplication.get().getAccId())
                                             .params("targetIds", mUser.getAccId())
                                             .execute(new EanfangCallback<JSONObject>(IMPresonInfoActivity.this, true, JSONObject.class, (json) -> {
                                                 IMPresonInfoActivity.this.finish();

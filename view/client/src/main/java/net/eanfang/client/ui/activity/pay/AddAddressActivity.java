@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
@@ -23,6 +22,7 @@ import com.eanfang.util.StringUtils;
 import com.yaf.base.entity.ReceiveAddressEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
 import butterknife.BindView;
@@ -121,7 +121,7 @@ public class AddAddressActivity extends BaseClientActivity {
         }
 
         ReceiveAddressEntity receiveAddressEntity = new ReceiveAddressEntity();
-        receiveAddressEntity.setUserId(EanfangApplication.get().getUserId());
+        receiveAddressEntity.setUserId(ClientApplication.get().getUserId());
         receiveAddressEntity.setName(etName.getText().toString().trim());
         receiveAddressEntity.setPhone(etMobilePhone.getText().toString().trim());
         receiveAddressEntity.setProvince(province);
@@ -149,7 +149,7 @@ public class AddAddressActivity extends BaseClientActivity {
             return;
         }
 
-        addressEntity.setUserId(EanfangApplication.get().getUserId());
+        addressEntity.setUserId(ClientApplication.get().getUserId());
         addressEntity.setName(etName.getText().toString().trim());
         addressEntity.setPhone(etMobilePhone.getText().toString().trim());
         if (!TextUtils.isEmpty(province)) {

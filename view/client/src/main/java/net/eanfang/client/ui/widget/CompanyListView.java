@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.bean.LoginBean;
@@ -23,6 +22,7 @@ import com.eanfang.util.PermKit;
 import com.picker.common.util.ScreenUtils;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.adapter.SwitchCompanyListAdapter;
 
 import java.util.List;
@@ -92,10 +92,10 @@ public class CompanyListView extends PopupWindow {
                 .execute(new EanfangCallback<LoginBean>(mContext, false, LoginBean.class, (bean) -> {
                     if (bean != null) {
                         PermKit.permList.clear();
-                        EanfangApplication.get().remove(LoginBean.class.getName());
-                        EanfangApplication.get().set(LoginBean.class.getName(), bean);
-                        EanfangHttp.setToken(EanfangApplication.get().getUser().getToken());
-                        HttpConfig.get().setToken(EanfangApplication.get().getUser().getToken());
+                        ClientApplication.get().remove(LoginBean.class.getName());
+                        ClientApplication.get().set(LoginBean.class.getName(), bean);
+                        EanfangHttp.setToken(ClientApplication.get().getLoginBean().getToken());
+                        HttpConfig.get().setToken(ClientApplication.get().getLoginBean().getToken());
                         EanfangHttp.setClient();
                         String companyName = null;
                         dismiss();

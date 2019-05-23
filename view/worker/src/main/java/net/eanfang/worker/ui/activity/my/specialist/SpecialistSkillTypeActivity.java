@@ -32,6 +32,7 @@ import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 import com.yaf.base.entity.ExpertsCertificationEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.my.certification.SkillTypeAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
@@ -200,7 +201,7 @@ public class SpecialistSkillTypeActivity extends BaseWorkerActivity {
         grantChange_brand.setDelIds(mDeldBrandIds);
         expertsCertificationEntity = new ExpertsCertificationEntity();
         expertsCertificationEntity.setApproveType(GetConstDataUtils.getExpertTypeList().indexOf(mAbility));
-        expertsCertificationEntity.setAccId(EanfangApplication.get().getAccId());
+        expertsCertificationEntity.setAccId(WorkerApplication.get().getAccId());
         if (llFactory.getVisibility() == View.VISIBLE) {
             expertsCertificationEntity.setBrandName(etFactoryName.getText().toString().trim());
             expertsCertificationEntity.setImpowerUrl(impowerUrl);
@@ -236,7 +237,7 @@ public class SpecialistSkillTypeActivity extends BaseWorkerActivity {
     }
 
     private void getSkillInfo() {
-        EanfangHttp.post(UserApi.EXPERT_DETAIL_VERIFY).params("accId", String.valueOf(EanfangApplication.getApplication().getAccId())).execute(new EanfangCallback<ExpertVerifySkillBean>(this, true, ExpertVerifySkillBean.class, bean -> {
+        EanfangHttp.post(UserApi.EXPERT_DETAIL_VERIFY).params("accId", String.valueOf(WorkerApplication.get().getAccId())).execute(new EanfangCallback<ExpertVerifySkillBean>(this, true, ExpertVerifySkillBean.class, bean -> {
             if (bean != null) {
                 List<BaseDataEntity> SystemBusinessList = bean.getBaseData2userList();
                 // 系统类别

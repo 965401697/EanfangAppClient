@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.JsonUtils;
@@ -19,6 +18,7 @@ import com.eanfang.util.ToastUtil;
 import com.yaf.base.entity.CooperationEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import butterknife.BindView;
@@ -120,7 +120,7 @@ public class EquipmentCooperationCompanyActivity extends BaseWorkerActivity impl
         queryEntry.getEquals().put("status", "1");
         queryEntry.setPage(mPage);
 
-        queryEntry.getEquals().put("ownerOrgId", String.valueOf(EanfangApplication.getApplication().getCompanyId()));
+        queryEntry.getEquals().put("ownerOrgId", String.valueOf(WorkerApplication.get().getCompanyId()));
 
         EanfangHttp.post(NewApiService.GET_SELECT_COOPERATION_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))

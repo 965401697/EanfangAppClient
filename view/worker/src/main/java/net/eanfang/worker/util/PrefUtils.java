@@ -2,8 +2,7 @@ package net.eanfang.worker.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-
-import com.eanfang.application.EanfangApplication;
+import net.eanfang.worker.base.WorkerApplication;
 
 /**
  * Created by houzhongzhou on 2016/11/14.
@@ -18,7 +17,7 @@ public class PrefUtils {
     public static final String RECEIVE_MSG_SWITCH_CHECK = "receive_msg_switch_check";
 
     public static Context getContext() {
-        return EanfangApplication.getApplication().getApplicationContext();
+        return WorkerApplication.getApplication().getApplicationContext();
     }
 
 

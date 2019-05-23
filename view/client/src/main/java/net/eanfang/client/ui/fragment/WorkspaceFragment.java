@@ -11,14 +11,14 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.annimon.stream.Stream;
-import com.customview.CircleImageView;
+import com.eanfang.widget.customview.CircleImageView;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.AllMessageBean;
+import com.eanfang.model.sys.AccountEntity;
 import com.eanfang.model.sys.OrgEntity;
 import com.eanfang.ui.activity.kpbs.KPBSActivity;
 import com.eanfang.ui.base.BaseFragment;
@@ -28,6 +28,7 @@ import com.eanfang.util.PermKit;
 import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.CameraActivity;
 import net.eanfang.client.ui.activity.worksapce.CustomerServiceActivity;
 import net.eanfang.client.ui.activity.worksapce.FaultRecordListActivity;
@@ -77,9 +78,9 @@ public class WorkspaceFragment extends BaseFragment {
     /**
      * 消息气泡
      */
-    private QBadgeView qBadgeViewReport = new QBadgeView(EanfangApplication.get().getApplicationContext());
-    private QBadgeView qBadgeViewTask = new QBadgeView(EanfangApplication.get().getApplicationContext());
-    private QBadgeView qBadgeViewInspect = new QBadgeView(EanfangApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewReport = new QBadgeView(ClientApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewTask = new QBadgeView(ClientApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewInspect = new QBadgeView(ClientApplication.get().getApplicationContext());
     private int mReport = 0;
     private int mTask = 0;
     private int mInspect = 0;
@@ -105,7 +106,7 @@ public class WorkspaceFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         doHttpOrderNums();
-        String companyName = EanfangApplication.getApplication().getUser()
+        String companyName = ClientApplication.get().getLoginBean()
                 .getAccount().getDefaultUser().getCompanyEntity().getOrgName();
         if ("个人".equals(companyName)) {
             tvCompanyName.setText(companyName + "(点击切换公司)");
@@ -155,7 +156,7 @@ public class WorkspaceFragment extends BaseFragment {
     private void doChangeCompany() {
 
         EanfangHttp.post(NewApiService.GET_COMPANY_ALL_LIST)
-                .params("accId", EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getAccId() + "")
+                .params("accId", ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getAccId() + "")
                 // 公司类型（单位类型0平台总公司1城市平台公司2企事业单位3安防公司）
                 .params("orgType", "2")
                 .execute(new EanfangCallback<OrgEntity>(getActivity(), false, OrgEntity.class, true, bean -> {
@@ -194,8 +195,9 @@ public class WorkspaceFragment extends BaseFragment {
     }
 
     private void setLogpic() {
-        List<OrgEntity> orgUnitEntityList = new ArrayList<>(EanfangApplication.getApplication().getUser().getAccount().getBelongCompanys());
-        Long defaultOrgid = EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgId();
+        AccountEntity accountEntity=ClientApplication.get().getLoginBean().getAccount();
+        List<OrgEntity> orgUnitEntityList = new ArrayList<>(accountEntity.getBelongCompanys());
+        Long defaultOrgid = accountEntity.getDefaultUser().getCompanyEntity().getOrgId();
         List<String> defaultPic = Stream.of(orgUnitEntityList).filter(bean -> bean.getOrgUnitEntity() != null
                 && bean.getOrgUnitEntity().getLogoPic() != null
                 && bean.getOrgUnitEntity().getOrgId().equals(defaultOrgid)).map(be -> v(() -> be.getOrgUnitEntity().getLogoPic())).toList();
@@ -237,7 +239,7 @@ public class WorkspaceFragment extends BaseFragment {
         findViewById(R.id.tv_work_price).setOnClickListener((v) -> {
             if (PermKit.get().getQuoteListPrem()) {
                 // 当前登陆人公司是否认证
-                if (EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getVerifyStatus() == 2) {
+                if (ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getVerifyStatus() == 2) {
                     startActivity(new Intent(getActivity(), OfferAndPayOrderActivity.class));
                 } else {
                     startActivity(new Intent(getActivity(), PersonOfferAndPayOrderActivity.class));

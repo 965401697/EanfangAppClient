@@ -15,6 +15,7 @@ import com.eanfang.util.JumpItent;
 import com.flyco.tablayout.SlidingTabLayout;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.fragment.SecurityFoucsFragment;
 import net.eanfang.worker.ui.fragment.SecurityHotFragment;
 
@@ -48,7 +49,7 @@ public class SecurityListActivity extends BaseActivity {
     private final int FILTRATE_TYPE_CODE = 101;
 
     private int mSecurityNum;
-    private QBadgeView qBadgeViewMaintain = new QBadgeView(EanfangApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewMaintain = new QBadgeView(WorkerApplication.get().getApplicationContext());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

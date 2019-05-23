@@ -11,7 +11,6 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.delegate.BGASortableDelegate;
@@ -30,6 +29,7 @@ import com.yaf.base.entity.AskQuestionsEntity;
 import com.yaf.base.entity.CustDeviceEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.worksapce.repair.DeviceBrandActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.FaultLibraryActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.SelectDeviceTypeActivity;
@@ -183,10 +183,10 @@ public class FreeAskActivity extends BaseClientActivity {
 //            return false;
 //        }
         AskQuestionsEntity askQuestionsEntity = new AskQuestionsEntity();
-        askQuestionsEntity.setQuestionUserId(EanfangApplication.get().getUserId());
-        if (EanfangApplication.get().getCompanyId() != 0) {
-            askQuestionsEntity.setQuestionCompanyId(EanfangApplication.get().getCompanyId());
-            askQuestionsEntity.setQuestionTopCompanyId(EanfangApplication.get().getTopCompanyId());
+        askQuestionsEntity.setQuestionUserId(ClientApplication.get().getUserId());
+        if (ClientApplication.get().getCompanyId() != 0) {
+            askQuestionsEntity.setQuestionCompanyId(ClientApplication.get().getCompanyId());
+            askQuestionsEntity.setQuestionTopCompanyId(ClientApplication.get().getTopCompanyId());
         }
 
         askQuestionsEntity.setQuestionCreateDate(new Date());

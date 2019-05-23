@@ -14,7 +14,6 @@ import com.alibaba.fastjson.JSON;
 import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
@@ -31,6 +30,7 @@ import com.eanfang.util.ToastUtil;
 import com.eanfang.model.sys.UserEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.worksapce.AddReportCompleteActivity;
 import net.eanfang.client.ui.activity.worksapce.AddReportFindActivity;
 import net.eanfang.client.ui.activity.worksapce.AddReportPlanActivity;
@@ -165,7 +165,7 @@ public class ReportActivity extends BaseClientActivity implements View.OnClickLi
         llReportType.setOnClickListener(this);
         tvSend.setOnClickListener(this);
         tvSendGroup.setOnClickListener(this);
-//        etCompanyName.setText(EanfangApplication.get().getUser().getCompanyName());
+//        etCompanyName.setText(ClientApplication.get().getLoginBean().getCompanyName());
 
         addReportDetialAdapter = new AddReportDetailAdapter(R.layout.item_question_detail, beanList);
         reportCompleteList.addItemDecoration(new DividerItemDecoration(this,
@@ -209,8 +209,8 @@ public class ReportActivity extends BaseClientActivity implements View.OnClickLi
             }
         });
 
-        etCompanyName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
-        etDepartmentName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getDepartmentEntity().getOrgName());
+        etCompanyName.setText(ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
+        etDepartmentName.setText(ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getDepartmentEntity().getOrgName());
 
 
         GridLayoutManager layoutManage = new GridLayoutManager(this, 5);
@@ -328,8 +328,8 @@ public class ReportActivity extends BaseClientActivity implements View.OnClickLi
 
         if (newPresonList.size() == 0) {
             //工作协同默认值
-            bean.setAssigneeUserId(EanfangApplication.get().getUserId());
-            bean.setAssigneeOrgCode(EanfangApplication.get().getOrgCode());
+            bean.setAssigneeUserId(ClientApplication.get().getUserId());
+            bean.setAssigneeOrgCode(ClientApplication.get().getOrgCode());
         } else {
             //工作协同默认值
             bean.setAssigneeUserId(Long.parseLong(newPresonList.get(0).getUserId()));
@@ -392,7 +392,7 @@ public class ReportActivity extends BaseClientActivity implements View.OnClickLi
                             bundle.putString("picUrl", bean.getWorkReportDetails().get(0).getPictures().split(",")[0]);
                         }
                         b.putString("creatTime", String.valueOf(GetConstDataUtils.getWorkReportTypeList().indexOf(etTaskName.getText().toString().trim())));
-                        b.putString("workerName", EanfangApplication.get().getUser().getAccount().getRealName());
+                        b.putString("workerName", ClientApplication.get().getLoginBean().getAccount().getRealName());
                         b.putString("status", "0");
                         b.putString("shareType", "3");
 
@@ -410,8 +410,8 @@ public class ReportActivity extends BaseClientActivity implements View.OnClickLi
 
         EanfangHttp.get(NewApiService.GET_COLLEAGUE)
                 .tag(this)
-                .params("id", EanfangApplication.getApplication().getUserId())
-                .params("companyId", EanfangApplication.getApplication().getCompanyId())
+                .params("id", ClientApplication.get().getUserId())
+                .params("companyId", ClientApplication.get().getCompanyId())
                 .execute(new EanfangCallback<UserEntity>(ReportActivity.this, true, UserEntity.class, true, (list) -> {
                     userlist = list;
                     userNameList.addAll(Stream.of(userlist).map((user) -> user.getAccountEntity().getRealName()).toList());
@@ -451,7 +451,7 @@ public class ReportActivity extends BaseClientActivity implements View.OnClickLi
                 if (bean.getOrgCode() != null && !TextUtils.isEmpty(bean.getOrgCode())) {
                     assigneeOrgCode = bean.getOrgCode();
                 } else {
-                    assigneeOrgCode = EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgCode();
+                    assigneeOrgCode = ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgCode();
                 }
             } else {
 

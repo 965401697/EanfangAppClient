@@ -27,7 +27,7 @@ import java.io.Serializable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
+//已提取
 public class EquipmentDetailActivity extends BaseClientActivity {
 
     @BindView(R.id.tv_equipment_classfiy)

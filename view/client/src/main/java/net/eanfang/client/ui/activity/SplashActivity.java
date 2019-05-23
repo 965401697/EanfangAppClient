@@ -10,7 +10,6 @@ import androidx.annotation.Nullable;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.kit.SDKManager;
@@ -21,6 +20,7 @@ import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.worksapce.GuideActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.util.PrefUtils;
@@ -70,13 +70,13 @@ public class SplashActivity extends BaseClientActivity implements GuideUtil.OnCa
             firstUse();
         } else {
             //不是第一次
-            LoginBean user = EanfangApplication.getApplication().getUser();
+            LoginBean user = ClientApplication.get().getLoginBean();
             //token失效
             if (user == null || StringUtils.isEmpty(user.getToken())) {
                 goLogin();
             } else {
                 EanfangHttp.setToken(user.getToken());
-                HttpConfig.get().setToken(EanfangApplication.get().getUser().getToken());
+                HttpConfig.get().setToken(ClientApplication.get().getLoginBean().getToken());
                 if (isConnected()) {
                     loginByToken();
                 } else {
@@ -112,7 +112,7 @@ public class SplashActivity extends BaseClientActivity implements GuideUtil.OnCa
                     @Override
                     public void onSuccess(LoginBean bean) {
                         if (bean != null && !StringUtils.isEmpty(bean.getToken())) {
-                            EanfangApplication.get().set(LoginBean.class.getName(), bean);
+                            ClientApplication.get().set(LoginBean.class.getName(), bean);
                             goMain();
                         } else {
                             goLogin();

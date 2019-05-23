@@ -36,6 +36,7 @@ import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 import com.yaf.base.entity.WorkInspectEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.oa.workreport.OAPersonAdaptet;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 

@@ -19,7 +19,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
+//已提取
 public class EquipmentListActivity extends BaseClientActivity {
 
 

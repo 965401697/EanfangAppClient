@@ -6,7 +6,6 @@ import android.view.View;
 import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.PayOrderListBean;
@@ -17,6 +16,7 @@ import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.PayOrderDetailActivity;
 import net.eanfang.worker.ui.adapter.PayOrderListAdapter;
 
@@ -87,9 +87,9 @@ public class OfferAndPayListFragment1 extends TemplateItemListFragment {
 
         QueryEntry queryEntry = new QueryEntry();
         if ("1".equals(mType)) {
-            queryEntry.getEquals().put("createUserId", EanfangApplication.getApplication().getUserId() + "");
+            queryEntry.getEquals().put("createUserId", WorkerApplication.get().getUserId() + "");
         } else if ("2".equals(mType)) {
-            queryEntry.getEquals().put("assigneeUserId", EanfangApplication.getApplication().getUserId() + "");
+            queryEntry.getEquals().put("assigneeUserId", WorkerApplication.get().getUserId() + "");
         }
         queryEntry.getEquals().put("status", status + "");
 

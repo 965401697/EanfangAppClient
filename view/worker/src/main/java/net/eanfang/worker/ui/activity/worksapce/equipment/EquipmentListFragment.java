@@ -6,7 +6,6 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.EquipmentBean;
@@ -15,10 +14,12 @@ import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.fragment.TemplateItemListFragment;
 
 /**
  * Created by O u r on 2018/6/27.
+ * 已提取相关内容
  */
 
 public class EquipmentListFragment extends TemplateItemListFragment {
@@ -54,7 +55,7 @@ public class EquipmentListFragment extends TemplateItemListFragment {
                 Intent intent = new Intent(getActivity(), EquipmentDetailActivity.class);
                 intent.putExtra("id", String.valueOf(mAdapter.getData().get(position).getId()));
 //                intent.putExtra("ownerCompanyId", mOwnerCompanyId);
-                intent.putExtra("assigneeCompanyId", String.valueOf(EanfangApplication.get().getCompanyId()));
+                intent.putExtra("assigneeCompanyId", String.valueOf(WorkerApplication.get().getCompanyId()));
                 intent.putExtra("businessOneCode", mType);
                 startActivity(intent);
 
@@ -68,7 +69,7 @@ public class EquipmentListFragment extends TemplateItemListFragment {
         QueryEntry queryEntry = new QueryEntry();
         queryEntry.setSize(10);
         queryEntry.setPage(mPage);
-        queryEntry.getEquals().put("assigneeCompanyId", String.valueOf(EanfangApplication.get().getCompanyId()));
+        queryEntry.getEquals().put("assigneeCompanyId", String.valueOf(WorkerApplication.get().getCompanyId()));
         if (!TextUtils.isEmpty(((EquipmentListActivity) getActivity()).mOwnerCompanyId)) {
             queryEntry.getEquals().put("ownerCompanyId", ((EquipmentListActivity) getActivity()).mOwnerCompanyId);
         }

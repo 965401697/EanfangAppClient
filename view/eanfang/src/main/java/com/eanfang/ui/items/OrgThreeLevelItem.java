@@ -9,7 +9,7 @@ import androidx.core.content.ContextCompat;
 import com.baozi.treerecyclerview.base.ViewHolder;
 import com.baozi.treerecyclerview.item.TreeItem;
 import com.eanfang.R;
-import com.eanfang.application.EanfangApplication;
+import com.eanfang.base.BaseApplication;
 import com.eanfang.kit.cache.CacheKit;
 import com.eanfang.model.SectionBean;
 import com.eanfang.ui.activity.SelectPresonActivity;
@@ -72,7 +72,7 @@ public class OrgThreeLevelItem extends TreeItem<SectionBean.ChildrenBean> {
             holder.getView(R.id.ll_staff).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(EanfangApplication.getApplication(), SelectPresonActivity.class);
+                    Intent intent = new Intent(BaseApplication.get(), SelectPresonActivity.class);
                     intent.putExtra("flag", 3);
 
                     if (data.getFlag() == 1) {

@@ -10,7 +10,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.PayOrderListBean;
@@ -22,6 +21,7 @@ import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.PayOrderDetailActivity;
 import net.eanfang.worker.ui.adapter.PayOrderListAdapter;
 import net.eanfang.worker.ui.interfaces.OnDataReceivedListener;
@@ -163,9 +163,9 @@ public class OfferAndPayListFragment extends BaseFragment implements
 
         QueryEntry queryEntry = new QueryEntry();
         if ("1".equals(mType)) {
-            queryEntry.getEquals().put("createUserId", EanfangApplication.getApplication().getUserId() + "");
+            queryEntry.getEquals().put("createUserId", WorkerApplication.get().getUserId() + "");
         } else if ("2".equals(mType)) {
-            queryEntry.getEquals().put("assigneeCompanyId", EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyId() + "");
+            queryEntry.getEquals().put("assigneeCompanyId", WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyId() + "");
         }
         queryEntry.getEquals().put("status", status + "");
 

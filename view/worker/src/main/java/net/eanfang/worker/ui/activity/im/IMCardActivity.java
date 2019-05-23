@@ -19,6 +19,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.picker.common.util.DateUtils;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import org.json.JSONObject;
@@ -76,7 +77,7 @@ public class IMCardActivity extends BaseWorkerActivity {
         }
         tvArea.setText("所在区域：" + Config.get().getAddressByCode(mUser.getAreaCode()));
 
-        if (mUser.getAccId().equals(String.valueOf(EanfangApplication.get().getAccId()))) {
+        if (mUser.getAccId().equals(String.valueOf(WorkerApplication.get().getAccId()))) {
             tvDelete.setVisibility(View.GONE);
         }
     }
@@ -103,7 +104,7 @@ public class IMCardActivity extends BaseWorkerActivity {
                 .execute(new EanfangCallback<JSONObject>(IMCardActivity.this, true, JSONObject.class, (bean) -> {
 
                     EanfangHttp.post(UserApi.POST_DELETE_FRIEND_PUSH)
-                            .params("senderId", EanfangApplication.get().getAccId())
+                            .params("senderId", WorkerApplication.get().getAccId())
                             .params("targetIds", mUser.getAccId())
                             .execute(new EanfangCallback<JSONObject>(IMCardActivity.this, true, JSONObject.class, (json) -> {
                                 ToastUtil.get().showToast(IMCardActivity.this, "删除成功");

@@ -9,13 +9,13 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -89,7 +89,7 @@ public class DissloveTeamDialog extends BaseDialog {
         }
         EanfangHttp.post(NewApiService.DISSLOVE_COMPANY)
                 //公司ID
-                .params("id", EanfangApplication.getApplication().getUser()
+                .params("id", ClientApplication.get().getLoginBean()
                         .getAccount().getDefaultUser().getCompanyEntity().getCompanyId())
                 //密码
                 .params("passwd", password)

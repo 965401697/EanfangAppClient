@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
@@ -27,6 +26,7 @@ import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.widget.CommonView;
 
 import butterknife.BindView;
@@ -195,7 +195,7 @@ public class RepairInfoEditActivity extends BaseActivity implements RadioGroup.O
     }
 
     private RepairPersonalInfoEntity.ListBean fillBean() {
-        repairPersonalInfoEntity.setAccId(EanfangApplication.get().getAccId());
+        repairPersonalInfoEntity.setAccId(ClientApplication.get().getAccId());
         repairPersonalInfoEntity.setName(etName.getText().toString().trim());
         repairPersonalInfoEntity.setPhone(etPhone.getText().toString().trim());
         repairPersonalInfoEntity.setLatitude(latitude);

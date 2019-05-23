@@ -11,13 +11,13 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.FriendListBean;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.adapter.AddStaffAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
@@ -87,7 +87,7 @@ public class AddStaffActivity extends BaseWorkerActivity {
             return;
         }
 
-        if (mAddStaffAdapter.getData().get(0).getAccId().equals(String.valueOf(EanfangApplication.getApplication().getAccId()))) {
+        if (mAddStaffAdapter.getData().get(0).getAccId().equals(String.valueOf(WorkerApplication.get().getAccId()))) {
             ToastUtil.get().showToast(AddStaffActivity.this, "自己不能添加自己");
             return;
         }

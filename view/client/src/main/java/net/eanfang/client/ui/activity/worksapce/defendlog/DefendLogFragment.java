@@ -5,7 +5,6 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.DefendLogBean;
@@ -17,6 +16,7 @@ import com.eanfang.util.QueryEntry;
 import com.yaf.base.entity.ProtectionLogEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.fragment.TemplateItemListFragment;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -72,9 +72,9 @@ public class DefendLogFragment extends TemplateItemListFragment {
                 bundle.putString("id", String.valueOf(((ProtectionLogEntity) adapter.getData().get(position)).getId()));
                 JumpItent.jump(getActivity(), DefendLogDetailActivity.class, bundle, DETAIL_TASK_REQUSET_COOD);
                 //刷新数据
-//                if (getmTitle().equals("未读日志") && String.valueOf(EanfangApplication.get().getAccId()).equals(String.valueOf(bean.getAccId()))) {
+//                if (getmTitle().equals("未读日志") && String.valueOf(ClientApplication.get().getAccId()).equals(String.valueOf(bean.getAccId()))) {
 //                    adapter.remove(position);
-//                } else if (((ProtectionLogEntity) adapter.getData().get(position)).getStatus() == 0 && String.valueOf(EanfangApplication.get().getAccId()).equals(String.valueOf(bean.getAccId()))) {
+//                } else if (((ProtectionLogEntity) adapter.getData().get(position)).getStatus() == 0 && String.valueOf(ClientApplication.get().getAccId()).equals(String.valueOf(bean.getAccId()))) {
 //                    ((ProtectionLogEntity) adapter.getData().get(position)).setStatus(1);
 //                    adapter.notifyItemChanged(position);
 //                }
@@ -100,9 +100,9 @@ public class DefendLogFragment extends TemplateItemListFragment {
                     JumpItent.jump(getActivity(), DefendLogDetailActivity.class, bundle, DETAIL_TASK_REQUSET_COOD);
 
                     //刷新数据
-//                    if (getmTitle().equals("未读日志") && String.valueOf(EanfangApplication.get().getAccId()).equals(String.valueOf(bean.getAccId()))) {
+//                    if (getmTitle().equals("未读日志") && String.valueOf(ClientApplication.get().getAccId()).equals(String.valueOf(bean.getAccId()))) {
 //                        adapter.remove(position);
-//                    } else if (((ProtectionLogEntity) adapter.getData().get(position)).getStatus() == 0 && String.valueOf(EanfangApplication.get().getAccId()).equals(String.valueOf(bean.getAccId()))) {
+//                    } else if (((ProtectionLogEntity) adapter.getData().get(position)).getStatus() == 0 && String.valueOf(ClientApplication.get().getAccId()).equals(String.valueOf(bean.getAccId()))) {
 //                        ((ProtectionLogEntity) adapter.getData().get(position)).setStatus(1);
 //                        adapter.notifyItemChanged(position);
 //                    }
@@ -142,10 +142,10 @@ public class DefendLogFragment extends TemplateItemListFragment {
         }
 
         if (mType == 1) {
-            mQueryEntry.getEquals().put("ownerUserId", EanfangApplication.getApplication().getUserId() + "");
+            mQueryEntry.getEquals().put("ownerUserId", ClientApplication.get().getUserId() + "");
         } else if (mType == 2) {
 //            queryEntry.getEquals().put("assigneeUserId",  "980695066010497026");
-            mQueryEntry.getEquals().put("assigneeUserId", EanfangApplication.getApplication().getUserId() + "");
+            mQueryEntry.getEquals().put("assigneeUserId", ClientApplication.get().getUserId() + "");
         }
 //        if (getmTitle().equals("未读日志")) {
 //            queryEntry.getEquals().put(Constant.STATUS, "0");

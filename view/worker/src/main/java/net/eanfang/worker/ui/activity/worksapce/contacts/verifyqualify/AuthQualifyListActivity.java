@@ -21,6 +21,7 @@ import com.eanfang.util.QueryEntry;
 import com.yaf.base.entity.AptitudeCertificateEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.worker.ui.adapter.QualifyListAdapter;
 import net.eanfang.worker.ui.fragment.ContactsFragment;

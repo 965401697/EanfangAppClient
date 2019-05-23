@@ -20,6 +20,7 @@ import com.eanfang.model.FriendListBean;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.adapter.AddStaffAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
@@ -91,7 +92,7 @@ public class AddStaffActivity extends BaseClientActivity {
             return;
         }
 
-        if (mAddStaffAdapter.getData().get(0).getAccId().equals(String.valueOf(EanfangApplication.getApplication().getAccId()))) {
+        if (mAddStaffAdapter.getData().get(0).getAccId().equals(String.valueOf(ClientApplication.get().getAccId()))) {
             ToastUtil.get().showToast(AddStaffActivity.this, "自己不能添加自己");
             return;
         }

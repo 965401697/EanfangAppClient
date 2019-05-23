@@ -34,6 +34,7 @@ import com.yaf.base.entity.CustDeviceEntity;
 import com.yaf.base.entity.RepairFailureEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.equipment.EquipmentAddActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
@@ -154,7 +155,7 @@ public class AddTroubleActivity extends BaseWorkerActivity {
         snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this));
 
         //个人客户 不显示设备库选择
-        if (EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyId() == null) {
+        if (WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyId() == null) {
 //            llDeviceName.setVisibility(View.GONE);
         }
     }

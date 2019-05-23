@@ -20,6 +20,7 @@ import com.yaf.base.entity.CooperationEntity;
 import com.eanfang.model.sys.BaseDataEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import java.util.ArrayList;
@@ -27,7 +28,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
+/**
+ * 已提取相关内容
+ */
 public class EquipmentListActivity extends BaseWorkerActivity {
 
 
@@ -145,7 +148,7 @@ public class EquipmentListActivity extends BaseWorkerActivity {
         queryEntry.getEquals().put("status", "1");
         queryEntry.setPage(1);
 
-        queryEntry.getEquals().put("ownerOrgId", String.valueOf(EanfangApplication.getApplication().getCompanyId()));
+        queryEntry.getEquals().put("ownerOrgId", String.valueOf(WorkerApplication.get().getCompanyId()));
 
         EanfangHttp.post(NewApiService.GET_SELECT_COOPERATION_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))

@@ -9,7 +9,6 @@ import android.view.View;
 import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.QualifyCertificafeListBean;
@@ -17,6 +16,7 @@ import com.eanfang.util.JsonUtils;
 import com.yaf.base.entity.QualificationCertificateEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.my.certification.QualificationAdapter;
 import net.eanfang.worker.ui.activity.worksapce.OwnDataHintActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
@@ -72,7 +72,7 @@ public class SpecialistSkillCertificafeListActivity extends BaseWorkerActivity {
 
     private void getData() {
         JSONObject object = new JSONObject();
-        object.put("accId", String.valueOf(EanfangApplication.get().getAccId()));
+        object.put("accId", String.valueOf(WorkerApplication.get().getAccId()));
         object.put("type", "1");
         EanfangHttp.post(UserApi.TECH_WORKER_LIST_QUALIFY)
                 .upJson(JsonUtils.obj2String(object))

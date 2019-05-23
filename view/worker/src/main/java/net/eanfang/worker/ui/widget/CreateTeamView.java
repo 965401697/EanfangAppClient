@@ -21,6 +21,7 @@ import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.model.sys.OrgUnitEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -95,10 +96,10 @@ public class CreateTeamView extends BaseDialog {
         EanfangHttp.get(NewApiService.SWITCH_COMPANY_ALL_LIST)
                 .params("companyId", companyid)
                 .execute(new EanfangCallback<LoginBean>(mContext, true, LoginBean.class, (bean) -> {
-                    EanfangApplication.get().remove(LoginBean.class.getName());
-                    EanfangApplication.get().set(LoginBean.class.getName(), bean);
+                    WorkerApplication.get().remove(LoginBean.class.getName());
+                    WorkerApplication.get().set(LoginBean.class.getName(), bean);
                     EanfangHttp.setToken(bean.getToken());
-                    HttpConfig.get().setToken(EanfangApplication.get().getUser().getToken());
+                    HttpConfig.get().setToken(WorkerApplication.get().getLoginBean().getToken());
                 }));
     }
 
@@ -109,7 +110,7 @@ public class CreateTeamView extends BaseDialog {
                     public void onSuccess(Object bean) {
                         super.onSuccess(bean);
                         LoginBean loginBean = (LoginBean) bean;
-                        EanfangApplication.get().set(LoginBean.class.getName(),loginBean);
+                        WorkerApplication.get().set(LoginBean.class.getName(),loginBean);
                     }
 
                     @Override

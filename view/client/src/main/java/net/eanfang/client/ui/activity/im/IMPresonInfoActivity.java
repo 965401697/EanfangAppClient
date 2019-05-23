@@ -18,6 +18,7 @@ import com.eanfang.util.ToastUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
 import org.json.JSONException;
@@ -74,7 +75,7 @@ public class IMPresonInfoActivity extends BaseClientActivity {
                     RongIM.getInstance().refreshUserInfoCache(userInfo);
 
 
-                    if (mUser.getAccId().equals(String.valueOf(EanfangApplication.get().getAccId()))) {
+                    if (mUser.getAccId().equals(String.valueOf(ClientApplication.get().getAccId()))) {
                         tvClear.setVisibility(View.VISIBLE);
                         b = true;//如果是自己点击自己的头像
                     } else {
@@ -121,7 +122,7 @@ public class IMPresonInfoActivity extends BaseClientActivity {
 
         EanfangHttp.post(UserApi.POST_CHECK_FRIEND)
                 .params("accId", mUser.getAccId())
-                .params("inviteeAccId", EanfangApplication.get().getAccId())
+                .params("inviteeAccId", ClientApplication.get().getAccId())
                 .execute(new EanfangCallback<String>(this, true, String.class, (s) -> {
                     try {
                         JSONObject jsonObject = new JSONObject(s);
@@ -160,7 +161,7 @@ public class IMPresonInfoActivity extends BaseClientActivity {
 
 
                                     EanfangHttp.post(UserApi.POST_ADD_FRIEND_PUSH)
-                                            .params("senderId", EanfangApplication.get().getAccId())
+                                            .params("senderId", ClientApplication.get().getAccId())
                                             .params("targetIds", mUser.getAccId())
                                             .execute(new EanfangCallback<JSONObject>(IMPresonInfoActivity.this, true, JSONObject.class, (json) -> {
                                                 IMPresonInfoActivity.this.finish();

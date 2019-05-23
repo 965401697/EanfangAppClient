@@ -21,7 +21,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.daimajia.numberprogressbar.DaiMaJiaNumberProgressBar;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -37,6 +36,7 @@ import com.yaf.base.entity.RepairOrderEntity;
 import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.worksapce.repair.RepairActivity;
 import net.eanfang.client.ui.adapter.WorkDetailHonorAdapter;
 import net.eanfang.client.ui.adapter.WorkDetailQualificationAdapter;
@@ -290,7 +290,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
                 mScanRepairBean.setAssigneeUserId(detailsBean.getCompanyUserId());
                 mScanRepairBean.setAssigneeTopCompanyId(detailsBean.getCompanyEntity().getTopCompanyId());
                 mScanRepairBean.setAssigneeCompanyId(detailsBean.getCompanyEntity().getCompanyId());
-                if (EanfangApplication.getApplication().getCompanyId() == 0) {
+                if (ClientApplication.get().getCompanyId() == 0) {
                     mScanRepairBean.setStatus(0);
                 } else {
                     mScanRepairBean.setStatus(1);
@@ -300,7 +300,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
                 toRepairBean.setAssigneeUserId(detailsBean.getCompanyUserId());
                 toRepairBean.setAssigneeTopCompanyId(detailsBean.getCompanyEntity().getTopCompanyId());
                 toRepairBean.setAssigneeCompanyId(detailsBean.getCompanyEntity().getCompanyId());
-                if (EanfangApplication.getApplication().getCompanyId() == 0) {
+                if (ClientApplication.get().getCompanyId() == 0) {
                     toRepairBean.setStatus(0);
                 } else {
                     toRepairBean.setStatus(1);
@@ -407,7 +407,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
     private void isCollected() {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("assigneeId", companyUserId);
-        jsonObject.put("ownerId", EanfangApplication.getApplication().getUserId());
+        jsonObject.put("ownerId", ClientApplication.get().getUserId());
         jsonObject.put("type", 0);
 
         EanfangHttp.post(RepairApi.GET_COLLECT_EXISTS)
@@ -431,13 +431,13 @@ public class WorkerDetailActivity extends BaseClientActivity {
     private void collected() {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("assigneeId", companyUserId);
-        jsonObject.put("ownerId", EanfangApplication.getApplication().getUserId());
+        jsonObject.put("ownerId", ClientApplication.get().getUserId());
         jsonObject.put("type", 0);
         if (!StringUtils.isEmpty(detailsBean.getCompanyEntity().getCompanyId().toString())) {
-            jsonObject.put("owner_company_id", EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyId());
+            jsonObject.put("owner_company_id", ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyId());
         }
         if (!StringUtils.isEmpty(detailsBean.getCompanyEntity().getCompanyId().toString())) {
-            jsonObject.put("owner_top_company_id", EanfangApplication.get().getUser().getAccount().getDefaultUser().getTopCompanyId());
+            jsonObject.put("owner_top_company_id", ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getTopCompanyId());
         }
         if (!StringUtils.isEmpty(detailsBean.getCompanyEntity().getCompanyId().toString())) {
             jsonObject.put("assignee_top_company_id", detailsBean.getCompanyEntity().getTopCompanyId());
@@ -461,7 +461,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
     private void cancelCollected() {
         QueryEntry queryEntry = new QueryEntry();
         queryEntry.getEquals().put("assigneeId", companyUserId + "");
-        queryEntry.getEquals().put("ownerId", EanfangApplication.getApplication().getUserId() + "");
+        queryEntry.getEquals().put("ownerId", ClientApplication.get().getUserId() + "");
         queryEntry.getEquals().put("type", "0");
         EanfangHttp.post(RepairApi.GET_COLLECT_CANCEL)
                 .upJson(JsonUtils.obj2String(queryEntry))

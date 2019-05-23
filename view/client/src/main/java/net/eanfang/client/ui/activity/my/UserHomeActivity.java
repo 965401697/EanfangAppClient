@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.UserHomePageBean;
@@ -29,6 +28,7 @@ import com.eanfang.witget.DefaultPopWindow;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.worksapce.online.ExpertOnlineActivity;
 import net.eanfang.client.ui.activity.worksapce.security.SecurityPersonalActivity;
 import net.eanfang.client.ui.adapter.UserHomeAdapter;
@@ -151,8 +151,8 @@ public class UserHomeActivity extends BaseClientActivity {
         ButterKnife.bind(this);
         String accId = getIntent().getStringExtra(EXTRA_ACCID);
         Long userId = getIntent().getLongExtra(EXTRA_UID, 0);
-        mIsSelf = (accId != null && accId.equals(String.valueOf(EanfangApplication.get().getAccId())))
-                || userId.equals(EanfangApplication.get().getUserId());
+        mIsSelf = (accId != null && accId.equals(String.valueOf(ClientApplication.get().getAccId())))
+                || userId.equals(ClientApplication.get().getUserId());
         initData(accId, String.valueOf(userId));
         initView();
     }
@@ -365,7 +365,7 @@ public class UserHomeActivity extends BaseClientActivity {
     private void pushFriendStatus(boolean doDelete) {
         if (!mIsSelf) {
             EanfangHttp.post(doDelete ? UserApi.POST_DELETE_FRIEND_PUSH : UserApi.POST_ADD_FRIEND_PUSH)
-                    .params("senderId", EanfangApplication.get().getAccId())
+                    .params("senderId", ClientApplication.get().getAccId())
                     .params("targetIds", mUserInfo.getUserId())
                     .execute(new EanfangCallback<org.json.JSONObject>(this, true, org.json.JSONObject.class, (json) -> {
                         ToastUtil.get().showToast(this, doDelete ? "删除成功" : "发送成功");

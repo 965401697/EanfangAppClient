@@ -6,7 +6,6 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.GroupsBean;
@@ -15,6 +14,7 @@ import com.eanfang.util.Cn2Spell;
 import com.eanfang.witget.SideBar;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.adapter.GroupsAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
@@ -68,7 +68,7 @@ public class MyGroupsListActivity extends BaseClientActivity {
 
     private void initData() {
         EanfangHttp.post(UserApi.POST_GET_GROUP)
-                .params("accId", EanfangApplication.get().getAccId())
+                .params("accId", ClientApplication.get().getAccId())
                 .execute(new EanfangCallback<GroupsBean>(this, true, GroupsBean.class, true, (list) -> {
                     if (list.size() > 0) {
 
@@ -80,12 +80,12 @@ public class MyGroupsListActivity extends BaseClientActivity {
                                 if (!Cn2Spell.getPinYin(bean.getGroupName()).substring(0, 1).toUpperCase().matches("[A-Z]")) { // 如果不在A-Z中则默认为“#”
                                     bean.setFirstLetter("#");
                                 }
-                                EanfangApplication.get().set(bean.getRcloudGroupId(), bean.getGroupId());
+                                ClientApplication.get().set(bean.getRcloudGroupId(), bean.getGroupId());
                             } else {
                                 //为空赋值默认值
                                 bean.setPinyin("");
                                 bean.setFirstLetter("#");
-                                EanfangApplication.get().set(bean.getRcloudGroupId(), bean.getGroupId());
+                                ClientApplication.get().set(bean.getRcloudGroupId(), bean.getGroupId());
                             }
                         }
 

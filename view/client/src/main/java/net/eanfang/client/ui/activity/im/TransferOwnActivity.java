@@ -6,13 +6,13 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.GroupDetailBean;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.adapter.TransferOwnAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
@@ -73,7 +73,7 @@ public class TransferOwnActivity extends BaseClientActivity {
                         for (int i = 0; i < list.size(); i++) {
 
 
-                            if (!(String.valueOf(EanfangApplication.getApplication().getAccId()).equals(list.get(i).getAccountEntity().getAccId()))) {
+                            if (!(String.valueOf(ClientApplication.get().getAccId()).equals(list.get(i).getAccountEntity().getAccId()))) {
                                 friendListBeanArrayList.add(list.get(i));
                             }
                         }

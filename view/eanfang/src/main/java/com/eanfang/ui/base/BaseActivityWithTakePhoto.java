@@ -28,9 +28,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 
-import com.customview.CircleImageView;
+import com.eanfang.widget.customview.CircleImageView;
 import com.eanfang.R;
-import com.eanfang.application.CustomeApplication;
 import com.eanfang.kit.imagechoose.IImageChooseCallBack;
 import com.eanfang.kit.imagechoose.ImageChooseManager;
 import com.eanfang.util.ETimeUtils;
@@ -102,7 +101,7 @@ public abstract class BaseActivityWithTakePhoto extends com.eanfang.takephoto.Ta
         // Config.get().onCreate(savedInstanceState);
         super.onCreate(savedInstanceState);
 //        initState();
-        CustomeApplication.get().push(this);
+//        CustomeApplication.get().push(this);
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
@@ -197,7 +196,7 @@ public abstract class BaseActivityWithTakePhoto extends com.eanfang.takephoto.Ta
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
-        CustomeApplication.get().pull(this);
+//        CustomeApplication.get().pull(this);
     }
 
 

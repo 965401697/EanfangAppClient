@@ -16,11 +16,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
-import com.customview.CircleImageView;
+import com.eanfang.widget.customview.CircleImageView;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -38,11 +37,11 @@ import com.eanfang.util.JsonUtils;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.jph.takephoto.model.TResult;
 import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.worksapce.OwnDataHintActivity;
 
 import java.util.Calendar;
@@ -272,7 +271,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto implements Bas
 //                    @Override
 //                    public void onOssSuccess() {
 //                        runOnUiThread(() -> {
-//                            LoginBean entity = EanfangApplication.getApplication().getUser();
+//                            LoginBean entity = ClientApplication.get().getLoginBean();
 //                            entity.getAccount().setAvatar(imgKey);
 //                            path = entity.getAccount().getAvatar();
 //                            setHeaderShow(true);
@@ -360,21 +359,21 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto implements Bas
                 .execute(new EanfangCallback(this, true, JSONObject.class, (bean) -> {
                     runOnUiThread(() -> {
                         showToast("修改成功");
-                        LoginBean user = EanfangApplication.get().getUser();
+                        LoginBean user = ClientApplication.get().getLoginBean();
                         if (!StringUtils.isEmpty(path)) {
                             user.getAccount().setAvatar(path);
                         }
                         if (!StringUtils.isEmpty(tvNickname.getText().toString().trim())) {
                             user.getAccount().setNickName(tvNickname.getText().toString().trim());
                         }
-                        EanfangApplication.get().set(LoginBean.class.getName(), user);
+                        ClientApplication.get().set(LoginBean.class.getName(), user);
 
                         UserInfo userInfo;
                         if (!StringUtils.isEmpty(path)) {
                             //刷新个人融云的信息
-                            userInfo = new UserInfo(String.valueOf(EanfangApplication.getApplication().getAccId()), tvNickname.getText().toString().trim(), Uri.parse(BuildConfig.OSS_SERVER + path));
+                            userInfo = new UserInfo(String.valueOf(ClientApplication.get().getAccId()), tvNickname.getText().toString().trim(), Uri.parse(BuildConfig.OSS_SERVER + path));
                         } else {
-                            userInfo = new UserInfo(String.valueOf(EanfangApplication.getApplication().getAccId()), tvNickname.getText().toString().trim(), Uri.parse(BuildConfig.OSS_SERVER + loginBean.getAccount().getAvatar()));
+                            userInfo = new UserInfo(String.valueOf(ClientApplication.get().getAccId()), tvNickname.getText().toString().trim(), Uri.parse(BuildConfig.OSS_SERVER + loginBean.getAccount().getAvatar()));
                         }
                         RongIM.getInstance().refreshUserInfoCache(userInfo);
 
@@ -456,7 +455,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto implements Bas
         String imgKey = "account/" + UuidUtil.getUUID() + ".png";
         GlideUtil.intoImageView(this,"file://" + list.get(0).getCutPath(),ivUpload);
         OssKit.get(this).asyncPutImage(imgKey, list.get(0).getCutPath(), (isSuccess) -> {
-            LoginBean entity = EanfangApplication.getApplication().getUser();
+            LoginBean entity = ClientApplication.get().getLoginBean();
             entity.getAccount().setAvatar(imgKey);
             path = entity.getAccount().getAvatar();
             setHeaderShow(true);

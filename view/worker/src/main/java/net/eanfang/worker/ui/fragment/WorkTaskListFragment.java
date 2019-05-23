@@ -6,7 +6,6 @@ import android.view.View;
 import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WorkTaskListBean;
@@ -15,6 +14,7 @@ import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.oa.task.TaskDetailActivity;
 import net.eanfang.worker.ui.adapter.WorkTaskListAdapter;
 
@@ -101,11 +101,11 @@ public class WorkTaskListFragment extends TemplateItemListFragment {
         }
 
         if ("0".equals(mType)) {
-            mQueryEntry.getEquals().put("createCompanyId", EanfangApplication.getApplication().getCompanyId() + "");
+            mQueryEntry.getEquals().put("createCompanyId", WorkerApplication.get().getCompanyId() + "");
         } else if ("1".equals(mType)) {
-            mQueryEntry.getEquals().put("createUserId", EanfangApplication.getApplication().getUserId() + "");
+            mQueryEntry.getEquals().put("createUserId", WorkerApplication.get().getUserId() + "");
         } else if ("2".equals(mType)) {
-            mQueryEntry.getEquals().put("assigneeUserId", EanfangApplication.getApplication().getUserId() + "");
+            mQueryEntry.getEquals().put("assigneeUserId", WorkerApplication.get().getUserId() + "");
         }
 //        if (!mTitle.equals("全部")) {
 //            mQueryEntry.getEquals().put("status", status);

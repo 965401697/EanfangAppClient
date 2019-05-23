@@ -14,7 +14,6 @@ import com.alibaba.fastjson.JSON;
 import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.Message;
@@ -27,6 +26,7 @@ import com.eanfang.util.ToastUtil;
 import com.eanfang.model.sys.UserEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.worksapce.AddWorkTaskDeitailActivity;
 import net.eanfang.client.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.client.ui.adapter.AddTaskDetailAdapter;
@@ -145,8 +145,8 @@ public class TaskActivity extends BaseClientActivity implements View.OnClickList
             }
         });
 
-        etCompanyName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
-        etDepartmentName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getDepartmentEntity().getOrgName());
+        etCompanyName.setText(ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
+        etDepartmentName.setText(ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getDepartmentEntity().getOrgName());
 
         GridLayoutManager layoutManage = new GridLayoutManager(this, 5);
         rvTeam.setLayoutManager(layoutManage);
@@ -225,8 +225,8 @@ public class TaskActivity extends BaseClientActivity implements View.OnClickList
 
         EanfangHttp.get(NewApiService.GET_COLLEAGUE)
                 .tag(this)
-                .params("id", EanfangApplication.getApplication().getUserId())
-                .params("companyId", EanfangApplication.getApplication().getCompanyId())
+                .params("id", ClientApplication.get().getUserId())
+                .params("companyId", ClientApplication.get().getCompanyId())
                 .execute(new EanfangCallback<UserEntity>(TaskActivity.this, true, UserEntity.class, true, (list) -> {
                     userlist = list;
 
@@ -270,7 +270,7 @@ public class TaskActivity extends BaseClientActivity implements View.OnClickList
                 if (bean.getOrgCode() != null && !TextUtils.isEmpty(bean.getOrgCode())) {
                     assigneeOrgCode = bean.getOrgCode();
                 } else {
-                    assigneeOrgCode = EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgCode();
+                    assigneeOrgCode = ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgCode();
                 }
             } else {
 
@@ -340,8 +340,8 @@ public class TaskActivity extends BaseClientActivity implements View.OnClickList
         }
         if (newPresonList.size() == 0) {
             //工作协同默认值
-            workTaskBean.setAssigneeUserId(EanfangApplication.get().getUserId());
-            workTaskBean.setAssigneeOrgCode(EanfangApplication.get().getOrgCode());
+            workTaskBean.setAssigneeUserId(ClientApplication.get().getUserId());
+            workTaskBean.setAssigneeOrgCode(ClientApplication.get().getOrgCode());
         } else {
             //工作协同默认值
             workTaskBean.setAssigneeUserId(Long.parseLong(newPresonList.get(0).getUserId()));
@@ -406,7 +406,7 @@ public class TaskActivity extends BaseClientActivity implements View.OnClickList
                             bundle.putString("picUrl", bean.getWorkTaskDetails().get(0).getPictures().split(",")[0]);
                         }
                         b.putString("creatTime", etTaskName.getText().toString().trim());
-                        b.putString("workerName", EanfangApplication.get().getUser().getAccount().getRealName());
+                        b.putString("workerName", ClientApplication.get().getLoginBean().getAccount().getRealName());
                         b.putString("status", "0");
                         b.putString("shareType", "4");
 

@@ -26,6 +26,7 @@ import com.eanfang.util.StringUtils;
 import com.photopicker.com.util.BGASpaceItemDecoration;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.im.SelectIMContactActivity;
 import net.eanfang.worker.ui.activity.worksapce.online.FaultExplainActivity;
 import net.eanfang.worker.ui.adapter.security.SecurityFoucsListAdapter;
@@ -114,9 +115,9 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
          * 点赞不需要已读未读
          * */
         if (mLike.equals(mType)) {
-            securityListAdapter = new SecurityListAdapter(EanfangApplication.get().getApplicationContext(), false);
+            securityListAdapter = new SecurityListAdapter(WorkerApplication.get().getApplicationContext(), false);
         } else {
-            securityListAdapter = new SecurityListAdapter(EanfangApplication.get().getApplicationContext(), true);
+            securityListAdapter = new SecurityListAdapter(WorkerApplication.get().getApplicationContext(), true);
         }
         securityListAdapter.bindToRecyclerView(rvSecurity);
         securityListAdapter.setOnLoadMoreListener(this, rvSecurity);
@@ -164,7 +165,7 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
      * 关注人的列表
      */
     public void initFoucsAdapter() {
-        securityFoucsListAdapter = new SecurityFoucsListAdapter(EanfangApplication.getApplication().getApplicationContext(), isCreate);
+        securityFoucsListAdapter = new SecurityFoucsListAdapter(WorkerApplication.get().getApplicationContext(), isCreate);
         securityFoucsListAdapter.bindToRecyclerView(rvSecurity);
         securityFoucsListAdapter.setOnLoadMoreListener(this, rvSecurity);
         securityFoucsListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
@@ -191,15 +192,15 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
 
     private void doUnFoucs(SecurityFoucsListBean.ListBean listBean, int position) {
         SecurityFoucsBean securityFoucsBean = new SecurityFoucsBean();
-        securityFoucsBean.setFollowUserId(EanfangApplication.get().getUserId());
-        securityFoucsBean.setFollowCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyId());
-        securityFoucsBean.setFollowTopCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getTopCompanyId());
+        securityFoucsBean.setFollowUserId(WorkerApplication.get().getUserId());
+        securityFoucsBean.setFollowCompanyId(WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyId());
+        securityFoucsBean.setFollowTopCompanyId(WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getTopCompanyId());
 
         securityFoucsBean.setAsUserId(listBean.getAskSpCircleEntity().getPublisherUserId());
         securityFoucsBean.setAsCompanyId(listBean.getAskSpCircleEntity().getPublisherCompanyId());
         securityFoucsBean.setAsTopCompanyId(listBean.getAskSpCircleEntity().getPublisherTopCompanyId());
         securityFoucsBean.setAsAccId(listBean.getUserEntity().getAccountEntity().getAccId());
-        securityFoucsBean.setFollowAccId(EanfangApplication.get().getAccId());
+        securityFoucsBean.setFollowAccId(WorkerApplication.get().getAccId());
         /**
          * 状态：0 关注 1 未关注
          * */
@@ -257,10 +258,10 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
         String mUrl = null;
         if (mLike.equals(mType)) {
             mUrl = NewApiService.SERCURITY_LIKE_LIST;
-            queryEntry.getEquals().put("likeAccId", EanfangApplication.get().getAccId() + "");
+            queryEntry.getEquals().put("likeAccId", WorkerApplication.get().getAccId() + "");
         } else if (mAbout.equals(mType)) {
             mUrl = NewApiService.SERCURITY_ABOUT_LIST;
-            queryEntry.getLike().put("atUserId", EanfangApplication.get().getUserId() + "");
+            queryEntry.getLike().put("atUserId", WorkerApplication.get().getUserId() + "");
         }
         EanfangHttp.post(mUrl)
                 .upJson(JsonUtils.obj2String(queryEntry))
@@ -325,7 +326,7 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
 
         String mUrl = null;
         mUrl = NewApiService.SERCURITY_FOUCS_LIST;
-        queryEntry.getEquals().put("followAccId", EanfangApplication.get().getAccId() + "");
+        queryEntry.getEquals().put("followAccId", WorkerApplication.get().getAccId() + "");
         EanfangHttp.post(mUrl)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<SecurityFoucsListBean>(SecurityPersonalPublicListActivity.this, true, SecurityFoucsListBean.class) {

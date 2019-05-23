@@ -124,7 +124,7 @@
     <Space
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_20" />
-    <com.customview.SuperTextView
+    <com.eanfang.widget.customview.SuperTextView
         android:id="@+id/gs_gm_tv"
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_qy_zy_item_size"
@@ -142,7 +142,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_2" />
 
-    <com.customview.SuperTextView
+    <com.eanfang.widget.customview.SuperTextView
         android:id="@+id/hy_lx_tv"
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_qy_zy_item_size"
@@ -160,7 +160,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_30" />
 
-    <com.customview.SuperTextView
+    <com.eanfang.widget.customview.SuperTextView
         android:id="@+id/bg_dz_tv"
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_qy_zy_item_size"
@@ -178,7 +178,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_2" />
 
-    <com.customview.SuperTextView
+    <com.eanfang.widget.customview.SuperTextView
         android:id="@+id/xx_dz_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -196,7 +196,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_2" />
 
-    <com.customview.SuperTextView
+    <com.eanfang.widget.customview.SuperTextView
         android:id="@+id/dz_yx_tv"
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_qy_zy_item_size"
@@ -214,7 +214,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_2" />
 
-    <com.customview.SuperTextView
+    <com.eanfang.widget.customview.SuperTextView
         android:id="@+id/dw_dh_tv"
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_qy_zy_item_size"

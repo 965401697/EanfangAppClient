@@ -11,6 +11,7 @@ import net.eanfang.worker.R;
  * @author guanluocang
  * @data 2018/10/15
  * @description
+ * 已提取
  */
 
 public class DeviceBrandAdapter extends BaseQuickAdapter<String, BaseViewHolder> {

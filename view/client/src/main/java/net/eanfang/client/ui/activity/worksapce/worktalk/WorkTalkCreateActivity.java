@@ -17,13 +17,13 @@ import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.GroupDetailBean;
 import com.eanfang.model.TemplateBean;
 import com.eanfang.model.WorkTalkDetailBean;
 import com.eanfang.model.WorkTransferDetailBean;
+import com.eanfang.model.sys.UserEntity;
 import com.eanfang.ui.activity.SelectOAPresonActivity;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.ui.base.BaseActivity;
@@ -33,6 +33,7 @@ import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.im.CreateGroupOrganizationActivity;
 import net.eanfang.client.ui.activity.worksapce.oa.SelectOAGroupActivity;
 import net.eanfang.client.ui.adapter.SendPersonAdapter;
@@ -190,10 +191,11 @@ public class WorkTalkCreateActivity extends BaseActivity {
             }
         });
         setTitle("面谈员工");
-        mUserId = EanfangApplication.get().getUser().getAccount().getDefaultUser().getUserId();
-        mCompanyId = EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgId();
-        mTopCompanyId = EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getTopCompanyId();
-        tv_company_name.setText(EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
+        UserEntity userEntity=ClientApplication.get().getLoginBean().getAccount().getDefaultUser();
+        mUserId = userEntity.getUserId();
+        mCompanyId = userEntity.getCompanyEntity().getOrgId();
+        mTopCompanyId = userEntity.getCompanyEntity().getTopCompanyId();
+        tv_company_name.setText(userEntity.getCompanyEntity().getOrgName());
 
         GridLayoutManager layoutManage = new GridLayoutManager(this, 5);
         rvTeam.setLayoutManager(layoutManage);
@@ -253,9 +255,9 @@ public class WorkTalkCreateActivity extends BaseActivity {
 
                 Intent intent = new Intent(this, CreateGroupOrganizationActivity.class);
                 intent.putExtra("isFrom", "OA");
-                intent.putExtra("companyId", String.valueOf(EanfangApplication.getApplication().getCompanyId()));
-                intent.putExtra("companyOrgCode", EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgCode());
-                intent.putExtra("companyName", EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
+                intent.putExtra("companyId", String.valueOf(ClientApplication.get().getCompanyId()));
+                intent.putExtra("companyOrgCode", ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgCode());
+                intent.putExtra("companyName", ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
                 Bundle b = new Bundle();
                 b.putSerializable("list", (Serializable) sendPersonAdapter.getData());
                 intent.putExtras(b);
@@ -311,12 +313,12 @@ public class WorkTalkCreateActivity extends BaseActivity {
                     b.putString("orderNum", bean.getOrderNum());
 
                     b.putString("creatTime", bean.getCreateTime());
-                    if (newPresonList.size() > 0 && !newPresonList.get(0).getUserId().equals(EanfangApplication.get().getUserId())) {
+                    if (newPresonList.size() > 0 && !newPresonList.get(0).getUserId().equals(ClientApplication.get().getUserId())) {
 
                         b.putString("workerName", "接收人：" + newPresonList.get(0).getName());
                     } else {
 
-                        b.putString("workerName", "创建人：" + EanfangApplication.get().getUser().getAccount().getRealName());
+                        b.putString("workerName", "创建人：" + ClientApplication.get().getLoginBean().getAccount().getRealName());
                     }
                     b.putString("status", "0");
                     b.putString("shareType", "7");
@@ -410,7 +412,7 @@ public class WorkTalkCreateActivity extends BaseActivity {
 //                        if (bean.getOrgCode() != null && !TextUtils.isEmpty(bean.getOrgCode())) {
 //                            assigneeOrgCode = bean.getOrgCode();
 //                        } else {
-//                            assigneeOrgCode = EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgCode();
+//                            assigneeOrgCode = ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgCode();
 //                        }
                 } else {
 
@@ -467,16 +469,16 @@ public class WorkTalkCreateActivity extends BaseActivity {
 
             if (newPresonList.size() == 0) {
                 //工作协同默认值
-                workTalkDetailBean.setAssigneeUserId(String.valueOf(EanfangApplication.get().getUserId()));
-                workTalkDetailBean.setAssigneeOrgCode(EanfangApplication.get().getOrgCode());
-                workTalkDetailBean.setAssigneeCompanyId(String.valueOf(EanfangApplication.getApplication().getCompanyId()));
-                workTalkDetailBean.setAssigneeTopCompanyId(String.valueOf(EanfangApplication.getApplication().getTopCompanyId()));
+                workTalkDetailBean.setAssigneeUserId(String.valueOf(ClientApplication.get().getUserId()));
+                workTalkDetailBean.setAssigneeOrgCode(ClientApplication.get().getOrgCode());
+                workTalkDetailBean.setAssigneeCompanyId(String.valueOf(ClientApplication.get().getCompanyId()));
+                workTalkDetailBean.setAssigneeTopCompanyId(String.valueOf(ClientApplication.get().getTopCompanyId()));
             } else {
                 //工作协同默认值
                 workTalkDetailBean.setAssigneeUserId(newPresonList.get(0).getUserId());
                 workTalkDetailBean.setAssigneeOrgCode(newPresonList.get(0).getOrgCode());
-                workTalkDetailBean.setAssigneeCompanyId(String.valueOf(EanfangApplication.getApplication().getCompanyId()));
-                workTalkDetailBean.setAssigneeTopCompanyId(String.valueOf(EanfangApplication.getApplication().getTopCompanyId()));
+                workTalkDetailBean.setAssigneeCompanyId(String.valueOf(ClientApplication.get().getCompanyId()));
+                workTalkDetailBean.setAssigneeTopCompanyId(String.valueOf(ClientApplication.get().getTopCompanyId()));
             }
 
             if (!StringUtils.isEmpty(etWrokTalkOne.getText().toString().trim())) {

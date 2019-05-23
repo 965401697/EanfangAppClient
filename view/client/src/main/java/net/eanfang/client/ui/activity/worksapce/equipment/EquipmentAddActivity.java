@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -20,6 +19,7 @@ import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -137,7 +137,7 @@ public class EquipmentAddActivity extends BaseClientActivity implements SwipeRef
         queryEntry.setSize(10);
         queryEntry.setPage(mPage);
         queryEntry.getEquals().put("businessThreeCode", (String) mBundle.get("businessOneCode"));
-        queryEntry.getEquals().put("ownerCompanyId", String.valueOf(EanfangApplication.get().getCompanyId()));
+        queryEntry.getEquals().put("ownerCompanyId", String.valueOf(ClientApplication.get().getCompanyId()));
 
         EanfangHttp.post(NewApiService.DEVICE_LIST_ADD)
                 .upJson(JsonUtils.obj2String(queryEntry))
@@ -194,7 +194,7 @@ public class EquipmentAddActivity extends BaseClientActivity implements SwipeRef
         QueryEntry queryEntry = new QueryEntry();
 
         queryEntry.getEquals().put("businessThreeCode", (String) mBundle.get("businessOneCode"));
-        queryEntry.getEquals().put("ownerCompanyId", String.valueOf(EanfangApplication.get().getCompanyId()));
+        queryEntry.getEquals().put("ownerCompanyId", String.valueOf(ClientApplication.get().getCompanyId()));
         queryEntry.getLike().put("locationNumber", locationNum);
 
         EanfangHttp.post(NewApiService.DEVICE_LIST_ADD)

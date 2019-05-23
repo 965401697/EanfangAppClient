@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.CustomeApplication;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -16,6 +15,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.journeyapps.barcodescanner.CaptureActivity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 
 public class LoginConfirmActivity extends BaseActivity {
 
@@ -74,7 +74,7 @@ public class LoginConfirmActivity extends BaseActivity {
                 break;
         }
         // 获取当前头像
-        ivSimpleView.setImageURI(Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + EanfangApplication.get().getUser().getAccount().getAvatar()));
+        ivSimpleView.setImageURI(Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + ClientApplication.get().getLoginBean().getAccount().getAvatar()));
     }
 
     private void initListener() {
@@ -106,7 +106,7 @@ public class LoginConfirmActivity extends BaseActivity {
     public void doLogin(String uuid) {
         EanfangHttp.post(NewApiService.QR_LOGIN)
                 .params("uuid", uuid)
-                .params("accountId", CustomeApplication.get().getAccId())
+                .params("accountId", ClientApplication.get().getAccId())
                 .execute(new EanfangCallback<JSONObject>(LoginConfirmActivity.this, true, JSONObject.class, (bean) -> {
                     showToast("登录成功");
                     EanfangApplication.get().closeActivity(CaptureActivity.class.getName());

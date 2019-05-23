@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.HonorCerticificateListBean;
@@ -20,6 +19,7 @@ import com.eanfang.util.QueryEntry;
 import com.yaf.base.entity.HonorCertificateEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.OwnDataHintActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
@@ -105,7 +105,7 @@ public class CertificateListActivity extends BaseWorkerActivity {
             queryEntry.getEquals().put("orgId", orgid + "");
             url = UserApi.COMPANY_CERTIFICATE_LIST;// 安防公司
         } else {
-            queryEntry.getEquals().put("accId", String.valueOf(EanfangApplication.get().getAccId()));
+            queryEntry.getEquals().put("accId", String.valueOf(WorkerApplication.get().getAccId()));
             url = UserApi.GET_TECH_WORKER_ADD_CERTIFICATE_LIST;// 技师认证
         }
         EanfangHttp.post(url)

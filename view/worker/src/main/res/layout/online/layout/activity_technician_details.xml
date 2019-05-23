@@ -90,7 +90,7 @@
                     android:text="好评率：100%" />
 
 
-                <com.customview.SuperTextView
+                <com.eanfang.widget.customview.SuperTextView
                     android:id="@+id/bq_stv"
                     android:layout_width="60dp"
                     android:layout_height="26dp"
@@ -122,7 +122,7 @@
                 android:orientation="horizontal"
                 android:padding="@dimen/dimen_10">
 
-                <com.customview.TwoTextPicText
+                <com.eanfang.widget.customview.TwoTextPicText
                     android:id="@+id/sj_dd_iv"
                     android:layout_width="@dimen/app_two_pic_text"
                     android:layout_height="@dimen/app_two_pic_text"
@@ -134,7 +134,7 @@
                     app:text_size_a="@dimen/app_two_a_text_size"
                     app:text_size_b="@dimen/app_two_b_text_size" />
 
-                <com.customview.TwoTextPicText
+                <com.eanfang.widget.customview.TwoTextPicText
                     android:id="@+id/wx_dd_iv"
                     android:layout_width="@dimen/app_two_pic_text"
                     android:layout_height="@dimen/app_two_pic_text"
@@ -146,7 +146,7 @@
                     app:text_size_a="@dimen/app_two_a_text_size"
                     app:text_size_b="@dimen/app_two_b_text_size" />
 
-                <com.customview.TwoTextPicText
+                <com.eanfang.widget.customview.TwoTextPicText
                     android:id="@+id/sg_dd_iv"
                     android:layout_width="@dimen/app_two_pic_text"
                     android:layout_height="@dimen/app_two_pic_text"
@@ -158,7 +158,7 @@
                     app:text_size_a="@dimen/app_two_a_text_size"
                     app:text_size_b="@dimen/app_two_b_text_size" />
 
-                <com.customview.TwoTextPicText
+                <com.eanfang.widget.customview.TwoTextPicText
                     android:id="@+id/pl_iv"
                     android:layout_width="@dimen/app_two_pic_text"
                     android:layout_height="@dimen/app_two_pic_text"
@@ -257,7 +257,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_2" />
 
-            <com.customview.SuperTextView
+            <com.eanfang.widget.customview.SuperTextView
                 android:id="@+id/yx_a_stv"
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
@@ -270,7 +270,7 @@
                 app:sRightTextColor="@color/colorX"
                 app:sRightTextString="★★★★★" />
 
-            <com.customview.SuperTextView
+            <com.eanfang.widget.customview.SuperTextView
                 android:id="@+id/yx_b_stv"
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
@@ -283,7 +283,7 @@
                 app:sRightTextColor="@color/colorX"
                 app:sRightTextString="★★★★★" />
 
-            <com.customview.SuperTextView
+            <com.eanfang.widget.customview.SuperTextView
                 android:id="@+id/yx_c_stv"
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
@@ -296,7 +296,7 @@
                 app:sRightTextColor="@color/colorX"
                 app:sRightTextString="★★★★★" />
 
-            <com.customview.SuperTextView
+            <com.eanfang.widget.customview.SuperTextView
                 android:id="@+id/yx_d_stv"
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
@@ -309,7 +309,7 @@
                 app:sRightTextColor="@color/colorX"
                 app:sRightTextString="★★★★★" />
 
-            <com.customview.SuperTextView
+            <com.eanfang.widget.customview.SuperTextView
                 android:id="@+id/yx_e_stv"
                 android:layout_width="match_parent"
                 android:layout_height="36dp"

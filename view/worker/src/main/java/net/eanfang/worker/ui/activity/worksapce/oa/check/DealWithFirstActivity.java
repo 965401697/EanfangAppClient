@@ -30,6 +30,7 @@ import com.yaf.base.entity.WorkInspectDetailEntity;
 import com.yaf.base.entity.WorkInspectEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.im.SelectIMContactActivity;
 import net.eanfang.worker.ui.activity.worksapce.maintenance.MaintenanceTeamAdapter;
 import net.eanfang.worker.util.ImagePerviewUtil;
@@ -197,13 +198,13 @@ public class DealWithFirstActivity extends BaseActivity {
                             tvWeek.setText(GetDateUtils.dateToWeek(bean.getCreateTime()));
 
                             // 是否显示认领
-                            if (bean.getAssigneeUserId().equals(EanfangApplication.get().getUserId()) && mOrderStatus == 0) {
+                            if (bean.getAssigneeUserId().equals(WorkerApplication.get().getUserId()) && mOrderStatus == 0) {
                                 tvSub.setVisibility(View.VISIBLE);
                             } else {
                                 tvSub.setVisibility(View.GONE);
                             }
                             // 是否显示驳回 通过
-                            if (bean.getCreateUserId().equals(EanfangApplication.get().getUserId()) && mOrderStatus == 1) {
+                            if (bean.getCreateUserId().equals(WorkerApplication.get().getUserId()) && mOrderStatus == 1) {
                                 llDealwith.setVisibility(View.VISIBLE);
                             } else {
                                 llDealwith.setVisibility(View.GONE);

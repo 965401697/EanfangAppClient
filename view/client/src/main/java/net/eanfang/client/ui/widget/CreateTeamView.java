@@ -11,7 +11,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
-import com.eanfang.config.FastjsonConfig;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.bean.LoginBean;
@@ -21,6 +20,7 @@ import com.eanfang.sys.activity.LoginActivity;
 import com.eanfang.ui.base.BaseDialog;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -94,11 +94,11 @@ public class CreateTeamView extends BaseDialog {
         EanfangHttp.get(NewApiService.SWITCH_COMPANY_ALL_LIST)
                 .params("companyId", companyid)
                 .execute(new EanfangCallback<LoginBean>(mContext, true, LoginBean.class, (bean) -> {
-                    EanfangApplication.get().remove(LoginBean.class.getName());
-                    EanfangApplication.get().set(LoginBean.class.getName(), bean);
+                    ClientApplication.get().remove(LoginBean.class.getName());
+                    ClientApplication.get().set(LoginBean.class.getName(), bean);
 
-                    EanfangHttp.setToken(EanfangApplication.get().getUser().getToken());
-                    HttpConfig.get().setToken(EanfangApplication.get().getUser().getToken());
+                    EanfangHttp.setToken(ClientApplication.get().getLoginBean().getToken());
+                    HttpConfig.get().setToken(ClientApplication.get().getLoginBean().getToken());
                     EanfangHttp.setClient();
                     dismiss();
                 }));
@@ -111,7 +111,7 @@ public class CreateTeamView extends BaseDialog {
                     public void onSuccess(Object bean) {
                         super.onSuccess(bean);
                         LoginBean loginBean = (LoginBean) bean;
-                        EanfangApplication.get().set(LoginBean.class.getName(), loginBean);
+                        ClientApplication.get().set(LoginBean.class.getName(), loginBean);
 
                     }
 

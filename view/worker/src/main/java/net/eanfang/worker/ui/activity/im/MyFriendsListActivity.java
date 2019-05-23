@@ -11,7 +11,6 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.FriendListBean;
@@ -20,6 +19,7 @@ import com.eanfang.util.ToastUtil;
 import com.eanfang.witget.SideBar;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.adapter.FriendsAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
@@ -61,7 +61,7 @@ public class MyFriendsListActivity extends BaseWorkerActivity {
     private void initData() {
 
         EanfangHttp.post(UserApi.POST_FRIENDS_LIST)
-                .params("accId", EanfangApplication.get().getAccId())
+                .params("accId", WorkerApplication.get().getAccId())
                 .execute(new EanfangCallback<FriendListBean>(this, true, FriendListBean.class, true, (list) -> {
                     if (list.size() > 0) {
 
@@ -155,7 +155,7 @@ public class MyFriendsListActivity extends BaseWorkerActivity {
 
 
                                     EanfangHttp.post(UserApi.POST_DELETE_FRIEND_PUSH)
-                                            .params("senderId", EanfangApplication.get().getAccId())
+                                            .params("senderId", WorkerApplication.get().getAccId())
                                             .params("targetIds", userId)
                                             .execute(new EanfangCallback<JSONObject>(MyFriendsListActivity.this, true, JSONObject.class, (json) -> {
                                                 MyFriendsListActivity.this.finish();

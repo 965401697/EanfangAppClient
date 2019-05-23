@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -25,6 +24,7 @@ import com.eanfang.util.StringUtils;
 import com.yaf.base.entity.TechWorkerVerifyEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import org.json.JSONObject;
@@ -121,7 +121,7 @@ public class SkillTypeActivity extends BaseWorkerActivity {
         grantChange_business.setDelIds(businessCooperationAddAdapter.getUnbCheckedId());
         workerInfoBean = new TechWorkerVerifyEntity();
         workerInfoBean.setWorkingYear(GetConstDataUtils.getWorkingYearList().indexOf(mYear));
-        workerInfoBean.setAccId(EanfangApplication.get().getAccId());
+        workerInfoBean.setAccId(WorkerApplication.get().getAccId());
         commitData();
     }
 
@@ -156,7 +156,7 @@ public class SkillTypeActivity extends BaseWorkerActivity {
 
     private void getSkillInfo() {
 
-        EanfangHttp.post(UserApi.TECH_WORKER_DETAIL).params("accId", String.valueOf(EanfangApplication.getApplication().getAccId())).execute(new EanfangCallback<WorkerVerifySkillBean>(this, true, WorkerVerifySkillBean.class, bean -> {
+        EanfangHttp.post(UserApi.TECH_WORKER_DETAIL).params("accId", String.valueOf(WorkerApplication.get().getAccId())).execute(new EanfangCallback<WorkerVerifySkillBean>(this, true, WorkerVerifySkillBean.class, bean -> {
             if (bean != null) {
                 List<BaseDataEntity> SystemBusinessList = bean.getBaseData2userList();
                 // 系统类别

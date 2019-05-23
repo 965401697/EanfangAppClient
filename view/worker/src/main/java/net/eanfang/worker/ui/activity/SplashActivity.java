@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
+import com.eanfang.base.BaseApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.kit.SDKManager;
@@ -24,6 +25,7 @@ import com.eanfang.util.ToastUtil;
 
 import net.eanfang.worker.BuildConfig;
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.GuideActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 import net.eanfang.worker.util.PrefUtils;
@@ -74,13 +76,13 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
             firstUse();
         } else {
             //不是第一次
-            LoginBean user = EanfangApplication.getApplication().getUser();
+            LoginBean user = WorkerApplication.getApplication().getLoginBean();
             //token失效
             if (user == null || StringUtils.isEmpty(user.getToken())) {
                 goLogin();
             } else {
                 EanfangHttp.setToken(user.getToken());
-                HttpConfig.get().setToken(EanfangApplication.get().getUser().getToken());
+                HttpConfig.get().setToken(WorkerApplication.get().getLoginBean().getToken());
 
                 if (isConnected()) {
                     loginByToken();
@@ -120,7 +122,7 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
                     @Override
                     public void onSuccess(LoginBean bean) {
                         if (bean != null && !StringUtils.isEmpty(bean.getToken())) {
-                            EanfangApplication.get().set(LoginBean.class.getName(), bean);
+                            WorkerApplication.get().set(LoginBean.class.getName(), bean);
                             goMain();
                         } else {
                             goLogin();
@@ -164,7 +166,7 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
     public void onEvent(Integer integer) {
         isFirst = true;
         ToastUtil.get().showToast(this, "登录失效，请重新登录！");
-        CleanMessageUtil.clearAllCache(EanfangApplication.get());
+        CleanMessageUtil.clearAllCache(WorkerApplication.get());
 //        SharePreferenceUtil.get().clear();
         startActivity(new Intent(this, LoginActivity.class));
         finishSelf();

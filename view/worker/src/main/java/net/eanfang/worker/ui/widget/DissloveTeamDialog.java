@@ -16,6 +16,7 @@ import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -89,7 +90,7 @@ public class DissloveTeamDialog extends BaseDialog {
         }
         EanfangHttp.post(NewApiService.DISSLOVE_COMPANY)
                 //公司ID
-                .params("id", EanfangApplication.getApplication().getUser()
+                .params("id", WorkerApplication.get().getLoginBean()
                         .getAccount().getDefaultUser().getCompanyEntity().getCompanyId())
                 //密码
                 .params("passwd", password)

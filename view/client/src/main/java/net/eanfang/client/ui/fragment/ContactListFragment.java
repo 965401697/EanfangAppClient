@@ -20,7 +20,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -35,6 +34,7 @@ import com.eanfang.util.StringUtils;
 import com.facebook.common.internal.Sets;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.MainActivity;
 import net.eanfang.client.ui.activity.im.GroupDetailActivity;
 import net.eanfang.client.ui.activity.im.IMPresonInfoActivity;
@@ -75,7 +75,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
     private List<String> invalidList = new ArrayList<>();//无效的会话id
     private Set<String> conversationsId = Sets.newHashSet();
 
-    private QBadgeView qBadgeViewAllMsg = new QBadgeView(EanfangApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewAllMsg = new QBadgeView(ClientApplication.get().getApplicationContext());
 
     private View view;
     private MyConversationListFragment myConversationListFragment;
@@ -162,7 +162,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
         myConversationListFragment.setUri(uri);  //设置 ConverssationListFragment 的显示属性
 
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.rong_content, myConversationListFragment);
+        FragmentTransaction add = transaction.add(R.id.rong_content, myConversationListFragment);
         transaction.commit();
 
         setGroupInfo();//对比数据
@@ -330,7 +330,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
      */
     private void setGroupInfo() {
         EanfangHttp.post(UserApi.POST_GET_GROUP)
-                .params("accId", EanfangApplication.get().getAccId())
+                .params("accId",ClientApplication.get().getAccId())
                 .execute(new EanfangCallback<GroupsBean>(getActivity(), false, GroupsBean.class, true, (list) -> {
 
                     for (GroupsBean b : list) {
@@ -339,7 +339,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
 
                         RongIM.getInstance().refreshGroupInfoCache(group);
 
-                        EanfangApplication.get().set(b.getRcloudGroupId(), b.getGroupId());
+                        ClientApplication.get().set(b.getRcloudGroupId(), b.getGroupId());
 
                     }
 

@@ -22,6 +22,7 @@ import com.jph.takephoto.model.TResult;
 import com.yaf.base.entity.ExpertsCertificationEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.OwnDataHintActivity;
 
 import butterknife.BindView;

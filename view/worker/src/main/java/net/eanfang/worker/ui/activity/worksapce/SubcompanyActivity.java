@@ -14,6 +14,7 @@ import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.model.sys.OrgEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.adapter.ConstactsAdapter;
 
 import java.util.List;
@@ -52,7 +53,7 @@ public class SubcompanyActivity extends BaseActivity {
 
     private void initData() {
         EanfangHttp.get(UserApi.GET_BRANCH_OFFICE_LIST)
-                .params("companyId", EanfangApplication.get().getCompanyId())
+                .params("companyId", WorkerApplication.get().getCompanyId())
                 .execute(new EanfangCallback<OrgEntity>(this, true, OrgEntity.class, true, (list) -> {
                     initAdapter(list);
                 }));

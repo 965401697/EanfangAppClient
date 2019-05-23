@@ -21,7 +21,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -36,6 +35,7 @@ import com.eanfang.util.StringUtils;
 import com.facebook.common.internal.Sets;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.MainActivity;
 import net.eanfang.worker.ui.activity.im.GroupDetailActivity;
 import net.eanfang.worker.ui.activity.im.IMPresonInfoActivity;
@@ -75,7 +75,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
     private boolean isFrist = true;
     private List<String> invalidList = new ArrayList<>();//无效的会话id
     private Set<String> conversationsId = Sets.newHashSet();
-    private QBadgeView qBadgeViewSys = new QBadgeView(EanfangApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewSys = new QBadgeView(WorkerApplication.get().getApplicationContext());
 
   /*  // 消息数量
     private int mMessageCount = 0;
@@ -356,7 +356,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
      */
     private void setGroupInfo() {
         EanfangHttp.post(UserApi.POST_GET_GROUP)
-                .params("accId", EanfangApplication.get().getAccId())
+                .params("accId", WorkerApplication.get().getAccId())
                 .execute(new EanfangCallback<GroupsBean>(getActivity(), false, GroupsBean.class, true, (list) -> {
 
                     for (GroupsBean b : list) {
@@ -365,7 +365,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
 
                         RongIM.getInstance().refreshGroupInfoCache(group);
 
-                        EanfangApplication.get().set(b.getRcloudGroupId(), b.getGroupId());
+                        WorkerApplication.get().set(b.getRcloudGroupId(), b.getGroupId());
 
                     }
 

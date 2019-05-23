@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.model.GroupDetailBean;
 import com.eanfang.util.Cn2Spell;
@@ -15,6 +14,7 @@ import com.eanfang.util.ToastUtil;
 import com.eanfang.witget.SideBar;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import java.util.ArrayList;
@@ -89,7 +89,7 @@ public class GroupMoreMemberActivity extends BaseWorkerActivity {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 GroupDetailBean.ListBean.AccountEntityBean bean = (GroupDetailBean.ListBean.AccountEntityBean) adapter.getData().get(position);
-                if (!bean.getAccId().equals(String.valueOf(EanfangApplication.get().getAccId()))) {
+                if (!bean.getAccId().equals(String.valueOf(WorkerApplication.get().getAccId()))) {
                     Intent intent = new Intent(GroupMoreMemberActivity.this, IMPresonInfoActivity.class);
                     intent.putExtra(EanfangConst.RONG_YUN_ID, bean.getAccId());
                     startActivity(intent);

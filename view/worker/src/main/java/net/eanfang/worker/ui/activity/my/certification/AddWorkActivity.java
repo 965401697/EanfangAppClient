@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -30,6 +29,7 @@ import com.picker.common.util.DateUtils;
 import com.yaf.base.entity.JobExperienceEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -140,7 +140,7 @@ public class AddWorkActivity extends BaseActivityWithTakePhoto {
         }
 
         JobExperienceEntity entity = new JobExperienceEntity();
-        entity.setAccId(EanfangApplication.get().getAccId());
+        entity.setAccId(WorkerApplication.get().getAccId());
         if (bean != null) {
             entity.setId(bean.getId());
             url = UserApi.GET_TECH_WORKER_WORK_UPDATE;

@@ -10,7 +10,6 @@ import com.alibaba.fastjson.JSONPObject;
 import com.annimon.stream.Stream;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
@@ -21,6 +20,7 @@ import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.model.sys.BaseDataEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.GroupAdapter;
 import net.eanfang.worker.ui.widget.CommitVerfiyView;
 
@@ -47,7 +47,7 @@ public class AuthWorkerAreaActivity extends BaseActivity {
     @BindView(R.id.tv_confim)
     TextView tvConfim;
     private GroupAdapter mAdapter;
-    private Long userid = EanfangApplication.getApplication().getUser().getAccount().getNullUser();
+    private Long userid = WorkerApplication.get().getLoginBean().getAccount().getNullUser();
     private List<Integer> checkListId;
     private List<Integer> unCheckListId;
     private SystypeBean byNetGrant;
@@ -172,7 +172,7 @@ public class AuthWorkerAreaActivity extends BaseActivity {
      */
     public void doUndoVerify() {
         new TrueFalseDialog(this, "系统提示", "是否撤销认证并保存信息", () -> {
-            EanfangHttp.post(NewApiService.WORKER_AUTH_REVOKE + EanfangApplication.getApplication().getAccId())
+            EanfangHttp.post(NewApiService.WORKER_AUTH_REVOKE + WorkerApplication.get().getAccId())
                     .execute(new EanfangCallback<JSONPObject>(this, true, JSONPObject.class, bean -> {
                         commit();
                     }));

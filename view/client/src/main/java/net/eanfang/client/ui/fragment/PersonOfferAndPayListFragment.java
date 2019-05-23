@@ -5,7 +5,6 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -17,6 +16,7 @@ import com.eanfang.util.QueryEntry;
 import com.yaf.base.entity.PayLogEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.pay.NewPayActivity;
 import net.eanfang.client.ui.activity.worksapce.PayOrderDetailActivity;
 import net.eanfang.client.ui.adapter.PayOrderListAdapter;
@@ -123,7 +123,7 @@ public class PersonOfferAndPayListFragment extends TemplateItemListFragment {
         int status = GetConstDataUtils.getQuoteStatus().indexOf(getmTitle());
 
         QueryEntry queryEntry = new QueryEntry();
-        queryEntry.getEquals().put("assigneeUserId", EanfangApplication.getApplication().getUserId() + "");
+        queryEntry.getEquals().put("assigneeUserId", ClientApplication.get().getUserId() + "");
         queryEntry.getEquals().put("status", status + "");
         queryEntry.setPage(mPage);
         queryEntry.setSize(5);

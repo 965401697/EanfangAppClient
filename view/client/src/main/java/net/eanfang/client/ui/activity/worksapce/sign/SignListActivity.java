@@ -9,7 +9,6 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.SignListBean;
@@ -20,6 +19,7 @@ import com.eanfang.util.QueryEntry;
 import com.photopicker.com.util.BGASpaceItemDecoration;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.adapter.SignListAdapter;
 
 import java.util.ArrayList;
@@ -106,9 +106,9 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
     private void initData() {
         mQueryEntry.setPage(page);
         mQueryEntry.setSize(10);
-        mQueryEntry.getEquals().put("createCompanyId", EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getCompanyId() + "");
+        mQueryEntry.getEquals().put("createCompanyId", ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getCompanyId() + "");
         if (!mQueryEntry.getEquals().containsKey("createUserId") && !mQueryEntry.getEquals().containsKey("createOrgCode")) {
-            mQueryEntry.getEquals().put("createUserId", EanfangApplication.getApplication().getUserId() + "");
+            mQueryEntry.getEquals().put("createUserId", ClientApplication.get().getUserId() + "");
         }
         EanfangHttp.post(UserApi.SIGN_LIST)
                 .upJson(JsonUtils.obj2String(mQueryEntry))

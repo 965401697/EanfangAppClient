@@ -23,6 +23,7 @@ import com.eanfang.util.JumpItent;
 import com.eanfang.util.PickerSelectUtil;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.AddMaintenanceDetailActivity;
 import net.eanfang.worker.ui.adapter.MaintenanceDetailAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;

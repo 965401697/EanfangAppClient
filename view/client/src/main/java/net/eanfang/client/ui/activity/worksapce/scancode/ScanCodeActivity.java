@@ -8,7 +8,6 @@ import android.view.KeyEvent;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.CustomeApplication;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -24,6 +23,7 @@ import com.journeyapps.barcodescanner.DefaultDecoderFactory;
 import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.im.AddFriendActivity;
 import net.eanfang.client.ui.activity.worksapce.equipment.EquipmentDetailActivity;
 
@@ -225,7 +225,7 @@ public class ScanCodeActivity extends BaseActivity {
         EanfangHttp.post(NewApiService.QR_CODE)
                 .params("uuid", uuid)
                 .params("requestFrom", requestFrom)
-                .params("accountId", CustomeApplication.get().getAccId())
+                .params("accountId", ClientApplication.get().getAccId())
                 .execute(new EanfangCallback<JSONObject>(ScanCodeActivity.this, true, JSONObject.class) {
                     @Override
                     public void onSuccess(JSONObject bean) {

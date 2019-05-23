@@ -21,7 +21,6 @@ import com.baidu.ocr.ui.camera.CameraNativeHelper;
 import com.baidu.ocr.ui.camera.CameraView;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.oss.OSSCallBack;
@@ -37,6 +36,7 @@ import com.jph.takephoto.model.TResult;
 import com.yaf.base.entity.TechWorkerVerifyEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 
 import java.io.File;
 import java.text.ParseException;
@@ -86,7 +86,7 @@ public class RealNameAuthenticationActivity extends BaseActivityWithTakePhoto {
     }
 
     private void initData() {
-        EanfangHttp.post(UserApi.ZS_SFZ).params("userId", EanfangApplication.get().getUserId()).execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
+        EanfangHttp.post(UserApi.ZS_SFZ).params("userId", WorkerApplication.get().getUserId()).execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
             if (bean != null) {
                 Log.d("ss56", "initData: " + bean.toString());
                 mTechWorkerVerifyEntity = (TechWorkerVerifyEntity) JSONObject.toJavaObject(bean, TechWorkerVerifyEntity.class);
@@ -139,13 +139,13 @@ public class RealNameAuthenticationActivity extends BaseActivityWithTakePhoto {
         }
 
         mTechWorkerVerifyEntity.setIdCardNum(idCardNum);
-        mTechWorkerVerifyEntity.setUserId(EanfangApplication.get().getUserId());
-        mTechWorkerVerifyEntity.setAccId(EanfangApplication.get().getAccId());
+        mTechWorkerVerifyEntity.setUserId(WorkerApplication.get().getUserId());
+        mTechWorkerVerifyEntity.setAccId(WorkerApplication.get().getAccId());
 
         EanfangHttp.post(UserApi.GET_TECH_WORKER_ADD_V3).upJson(JSONObject.toJSONString(mTechWorkerVerifyEntity)).execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
-            EanfangApplication.get().getUser().getAccount().setNickName(mTechWorkerVerifyEntity.getIdCardName());
-            EanfangApplication.get().getUser().getAccount().setIdCard(idCardNum);
-            EanfangApplication.get().getUser().getAccount().setGender(mTechWorkerVerifyEntity.getIdCardGender().equals("女") ? 0 : 1);
+            WorkerApplication.get().getLoginBean().getAccount().setNickName(mTechWorkerVerifyEntity.getIdCardName());
+            WorkerApplication.get().getLoginBean().getAccount().setIdCard(idCardNum);
+            WorkerApplication.get().getLoginBean().getAccount().setGender(mTechWorkerVerifyEntity.getIdCardGender().equals("女") ? 0 : 1);
             Intent intent = new Intent(this, SubmitSuccessfullyJsActivity.class);
             intent.putExtra("bean", mTechWorkerVerifyEntity);
             intent.putExtra("statusB", statusB);

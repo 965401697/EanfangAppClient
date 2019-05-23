@@ -5,7 +5,6 @@ import android.view.View;
 import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -16,6 +15,7 @@ import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.adapter.PublishTakeListAdapter;
 import net.eanfang.worker.ui.widget.TaskPublishDetailView;
 
@@ -209,9 +209,9 @@ public class MineTakePublishListFragment extends TemplateItemListFragment {
 
         QueryEntry queryEntry = new QueryEntry();
         if (Constant.CREATE_DATA_CODE == (mType)) {
-            queryEntry.getEquals().put(Constant.ASSIGNEE_USER_ID, EanfangApplication.getApplication().getUserId() + "");
+            queryEntry.getEquals().put(Constant.ASSIGNEE_USER_ID, WorkerApplication.get().getUserId() + "");
         } else if (Constant.ASSIGNEE_DATA_CODE == (mType)) {
-            queryEntry.getEquals().put("assigneeCompanyId", EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyId() + "");
+            queryEntry.getEquals().put("assigneeCompanyId", WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyId() + "");
         }
         queryEntry.getEquals().put("status", status + "");
 

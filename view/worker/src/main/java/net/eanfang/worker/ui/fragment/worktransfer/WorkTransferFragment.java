@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WorkTransferListBean;
@@ -16,6 +15,7 @@ import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.worktransfer.WorkTransferDetailActivity;
 import net.eanfang.worker.ui.adapter.worktransfer.WorkTransferAdapter;
 import net.eanfang.worker.ui.fragment.TemplateItemListFragment;
@@ -147,7 +147,7 @@ public class WorkTransferFragment extends TemplateItemListFragment {
         workTalkAdapter.bindToRecyclerView(mRecyclerView);
         workTalkAdapter.setOnLoadMoreListener(this, mRecyclerView);
 
-        mUserId = EanfangApplication.get().getUser().getAccount().getDefaultUser().getUserId();
+        mUserId = WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getUserId();
     }
 
 

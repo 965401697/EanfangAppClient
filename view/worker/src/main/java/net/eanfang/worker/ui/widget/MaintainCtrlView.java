@@ -11,6 +11,7 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.ui.base.BaseDialog;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.MaintenanceActivity;
 import net.eanfang.worker.ui.activity.worksapce.PersonMaintainHistoryActivity;
 
@@ -55,20 +56,20 @@ public class MaintainCtrlView extends BaseDialog {
         tvTitle.setText("维保管控");
         llMineAssignment.setOnClickListener((v) -> {
             Intent intent = new Intent(mContext, PersonMaintainHistoryActivity.class);
-            intent.putExtra("id", EanfangApplication.getApplication().getUserId());
+            intent.putExtra("id", WorkerApplication.get().getUserId());
             intent.putExtra("type", 0);
             mContext.startActivity(intent);
 
-//            new PersonMaintainHistoryView(mContext, true, EanfangApplication.getApplication().getUserId(), 0).show();
+//            new PersonMaintainHistoryView(mContext, true, WorkerApplication.get().getUserId(), 0).show();
         });
         llMineCompany.setOnClickListener((v) -> {
 
             Intent intent = new Intent(mContext, PersonMaintainHistoryActivity.class);
-            intent.putExtra("id", EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyId());
+            intent.putExtra("id", WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyId());
             intent.putExtra("type", 1);
             mContext.startActivity(intent);
 
-//            new PersonMaintainHistoryView(mContext, true, EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyId(), 1).show();
+//            new PersonMaintainHistoryView(mContext, true, WorkerApplication.get().getUser().getAccount().getDefaultUser().getCompanyId(), 1).show();
         });
 
         ivAdd.setOnClickListener((v) -> {

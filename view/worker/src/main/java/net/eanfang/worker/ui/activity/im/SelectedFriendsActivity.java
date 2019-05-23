@@ -12,7 +12,6 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.FriendListBean;
@@ -25,6 +24,7 @@ import com.eanfang.util.UuidUtil;
 import com.eanfang.util.compound.CompoundHelper;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.adapter.FriendsAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
@@ -162,7 +162,7 @@ public class SelectedFriendsActivity extends BaseWorkerActivity {
             //查找没有在群组的好友
             EanfangHttp.post(UserApi.POST_GROUP_NOJOIN)
                     .params("groupId", mGroupId)
-                    .params("accId", EanfangApplication.get().getAccId())
+                    .params("accId", WorkerApplication.get().getAccId())
                     .execute(new EanfangCallback<FriendListBean>(this, true, FriendListBean.class, true, (list) -> {
                         if (list.size() > 0) {
                             mFriendsAdapter.setNewData(list);
@@ -170,7 +170,7 @@ public class SelectedFriendsActivity extends BaseWorkerActivity {
                     }));
         } else {
             EanfangHttp.post(UserApi.POST_FRIENDS_LIST)
-                    .params("accId", EanfangApplication.get().getAccId())
+                    .params("accId", WorkerApplication.get().getAccId())
                     .execute(new EanfangCallback<FriendListBean>(this, true, FriendListBean.class, true, (list) -> {
                         if (list.size() > 0) {
                             mFriendsAdapter.setNewData(list);
@@ -193,7 +193,7 @@ public class SelectedFriendsActivity extends BaseWorkerActivity {
         for (GroupDetailBean.ListBean bean : mFriendListBeanArrayList) {
             mUserIconList.add(bean.getAccountEntity().getAvatar());
         }
-        mUserIconList.add(EanfangApplication.get().getUser().getAccount().getAvatar());
+        mUserIconList.add(WorkerApplication.get().getLoginBean().getAccount().getAvatar());
         CompoundHelper.getInstance().sendBitmap(this, handler, mUserIconList);//生成图片
 
 

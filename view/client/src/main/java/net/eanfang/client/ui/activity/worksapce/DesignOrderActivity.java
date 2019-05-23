@@ -7,11 +7,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.util.PermKit;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
 import butterknife.BindView;
@@ -49,7 +48,7 @@ public class DesignOrderActivity extends BaseClientActivity {
             jumpInDialog(this, DesignOrderListActivity.class, "我的设计单", "1");
         });
         //如果是个人 隐藏公司
-        if (EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyId() == 0) {
+        if (ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyId() == 0) {
             llMineCompany.setVisibility(View.GONE);
         }
         llMineCompany.setOnClickListener((v) -> {

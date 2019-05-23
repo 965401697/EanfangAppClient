@@ -9,7 +9,6 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.oss.OSSCallBack;
@@ -24,6 +23,7 @@ import com.jph.takephoto.model.TResult;
 import com.yaf.base.entity.ExpertsCertificationEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -86,8 +86,8 @@ public class SpecialistCertificationActivity extends BaseActivityWithTakePhoto {
 
     private void fillData() {
         ivHeader.setImageURI(com.eanfang.BuildConfig.OSS_SERVER + mExpertsCertificationEntity.getAvatarPhoto());
-        String contactName = EanfangApplication.get().getUser().getAccount().getRealName();
-        String mobile = EanfangApplication.get().getUser().getAccount().getMobile();
+        String contactName = WorkerApplication.get().getLoginBean().getAccount().getRealName();
+        String mobile =WorkerApplication.get().getLoginBean().getAccount().getMobile();
 
         if (!StringUtils.isEmpty(contactName)) {
             tvContactName.setText(contactName);
@@ -95,9 +95,9 @@ public class SpecialistCertificationActivity extends BaseActivityWithTakePhoto {
         if (!StringUtils.isEmpty(mobile)) {
             tvContactPhone.setText(mobile);
         }
-        etCardId.setText(EanfangApplication.get().getUser().getAccount().getIdCard());
+        etCardId.setText(WorkerApplication.get().getLoginBean().getAccount().getIdCard());
         //0女1男
-        if (EanfangApplication.get().getUser().getAccount().getGender() == 0) {
+        if (WorkerApplication.get().getLoginBean().getAccount().getGender() == 0) {
             rbWoman.setChecked(true);
         } else {
             rbMan.setChecked(true);
@@ -106,8 +106,8 @@ public class SpecialistCertificationActivity extends BaseActivityWithTakePhoto {
     }
 
     private void initViews() {
-        String contactName = EanfangApplication.get().getUser().getAccount().getRealName();
-        String mobile = EanfangApplication.get().getUser().getAccount().getMobile();
+        String contactName = WorkerApplication.get().getLoginBean().getAccount().getRealName();
+        String mobile = WorkerApplication.get().getLoginBean().getAccount().getMobile();
         if (!StringUtils.isEmpty(contactName)) {
             tvContactName.setText(contactName);
         }
@@ -173,7 +173,7 @@ public class SpecialistCertificationActivity extends BaseActivityWithTakePhoto {
         }
 
 
-        mExpertsCertificationEntity.setAccId(EanfangApplication.get().getAccId());
+        mExpertsCertificationEntity.setAccId(WorkerApplication.get().getAccId());
         mExpertsCertificationEntity.setExpertName(tvContactName.getText().toString().trim());
         mExpertsCertificationEntity.setPhonenumber(tvContactPhone.getText().toString().trim());
         mExpertsCertificationEntity.setIdCard(cardId);

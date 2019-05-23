@@ -28,6 +28,7 @@ import com.yaf.base.entity.RepairOrderEntity;
 import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.pay.NewPayActivity;
 import net.eanfang.client.ui.activity.worksapce.SelectWorkerActivity;
 import net.eanfang.client.ui.activity.worksapce.StateChangeActivity;
@@ -154,7 +155,7 @@ public class CollectWorkerFragment extends BaseFragment implements SwipeRefreshL
         if (mOwnerOrgId != 0) {
             mQueryEntry.getEquals().put("companyId", mOwnerOrgId + "");
         }
-        mQueryEntry.getEquals().put("userId", EanfangApplication.getApplication().getUserId() + "");
+        mQueryEntry.getEquals().put("userId", ClientApplication.get().getUserId() + "");
         EanfangHttp.post(RepairApi.GET_REPAIR_SEARCH)
                 .upJson(JsonUtils.obj2String(mQueryEntry))
                 .execute(new EanfangCallback<WorkerEntity>(getActivity(), true, WorkerEntity.class, true, new EanfangCallback.ISuccessArray<WorkerEntity>() {

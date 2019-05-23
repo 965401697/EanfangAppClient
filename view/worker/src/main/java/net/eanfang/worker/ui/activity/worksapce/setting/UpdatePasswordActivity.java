@@ -15,7 +15,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.MultiClickListener;
@@ -25,6 +24,7 @@ import com.eanfang.util.CleanMessageUtil;
 import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 
 import org.json.JSONObject;
 
@@ -92,7 +92,7 @@ public class UpdatePasswordActivity extends BaseActivity {
     private void initView() {
         setLeftBack();
         setTitle("修改密码");
-        tvPhone.setText(EanfangApplication.getApplication().getUser().getAccount().getMobile());
+        tvPhone.setText(WorkerApplication.get().getLoginBean().getAccount().getMobile());
         mDisslove = getIntent().getBooleanExtra("disslove", false);
     }
 
@@ -157,7 +157,7 @@ public class UpdatePasswordActivity extends BaseActivity {
         EanfangHttp.get(UserApi.APP_LOGOUT)
                 .execute(new EanfangCallback<com.alibaba.fastjson.JSONObject>(this, true, com.alibaba.fastjson.JSONObject.class, (bean) -> {
                     RongIM.getInstance().logout();//退出融云
-                    CleanMessageUtil.clearAllCache(EanfangApplication.get());
+                    CleanMessageUtil.clearAllCache(WorkerApplication.get());
 //                    SharePreferenceUtil.get().clear();
                     startActivity(new Intent(UpdatePasswordActivity.this, LoginActivity.class));
                     finishSelf();

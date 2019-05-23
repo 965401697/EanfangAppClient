@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.StrictMode;
 import android.util.Log;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.multidex.MultiDexApplication;
 
 import com.camera.CameraApplication;
@@ -14,6 +15,7 @@ import com.eanfang.model.bean.LoginBean;
 import com.eanfang.model.sys.AccountEntity;
 import com.eanfang.model.sys.UserEntity;
 import com.eanfang.network.Leaves;
+import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.V;
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -101,7 +103,7 @@ public class BaseApplication extends MultiDexApplication {
      * OkGo的网络方法已过期 请尽快移步 rds
      */
     @Deprecated
-    private void initOkGo() {
+    public void initOkGo() {
         //创建OkHttp
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor("OkGo");
@@ -197,6 +199,22 @@ public class BaseApplication extends MultiDexApplication {
      * @param activity activity
      */
     public void closeActivity(final Class<Activity> activity) {
+        if (null == activityStack) {
+            activityStack = new Stack<>();
+        }
+        for (Activity act : activityStack) {
+            if (act.getClass().getName().equals(activity.getName())) {
+                closeActivity(act);
+            }
+        }
+    }
+
+    /**
+     * 通过类关闭activity
+     *
+     * @param activity activity
+     */
+    public void closeActivitys(final Class<AppCompatActivity> activity) {
         if (null == activityStack) {
             activityStack = new Stack<>();
         }

@@ -30,6 +30,7 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.yaf.base.entity.PayLogEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.FaPiaoActivity;
 import net.eanfang.worker.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;

@@ -83,9 +83,9 @@ public class WorkerApplication extends EanfangApplication {
             LoadKit.initLoadSir();
             CacheKit.init(this).put("APP_TYPE", BuildConfig.APP_TYPE);
             EanfangHttp.setWorker();
-            if (EanfangApplication.get().getUser() != null) {
-                EanfangHttp.setToken(EanfangApplication.get().getUser().getToken());
-                HttpConfig.get().setToken(EanfangApplication.get().getUser().getToken());
+            if (WorkerApplication.get().getUser() != null) {
+                EanfangHttp.setToken(WorkerApplication.get().getUser().getToken());
+                HttpConfig.get().setToken(WorkerApplication.get().getUser().getToken());
             }
 
             MobSDK.init(this, "299cfb8d27500", "91afc15795a7f3dc04b5cab818c097c9");

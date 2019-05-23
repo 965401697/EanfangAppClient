@@ -56,13 +56,13 @@ import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.worker.BuildConfig;
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.im.ConversationActivity;
 import net.eanfang.worker.ui.activity.worksapce.SetPasswordActivity;
 import net.eanfang.worker.ui.activity.worksapce.WorkDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.notice.MessageListActivity;
 import net.eanfang.worker.ui.activity.worksapce.notice.OfficialListActivity;
 import net.eanfang.worker.ui.activity.worksapce.notice.SystemNoticeActivity;
-import net.eanfang.worker.ui.base.WorkerApplication;
 import net.eanfang.worker.ui.fragment.ContactListFragment;
 import net.eanfang.worker.ui.fragment.ContactsFragment;
 import net.eanfang.worker.ui.fragment.HomeFragment;
@@ -74,7 +74,6 @@ import net.eanfang.worker.util.PrefUtils;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -104,9 +103,9 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
     /**
      * 底部消息数量
      */
-    private QBadgeView qBadgeViewHome = new QBadgeView(EanfangApplication.get().getApplicationContext());
-    private QBadgeView qBadgeViewContact = new QBadgeView(EanfangApplication.get().getApplicationContext());
-    private QBadgeView qBadgeViewWork = new QBadgeView(EanfangApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewHome = new QBadgeView(WorkerApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewContact = new QBadgeView(WorkerApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewWork = new QBadgeView(WorkerApplication.get().getApplicationContext());
     private int mHome = 0;
     private int mContact = 0;
     private int mWork = 0;
@@ -133,7 +132,7 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        user = EanfangApplication.get().getUser();
+        user = WorkerApplication.get().getLoginBean();
 //        XGPushClickedResult message = XGPushManager.onActivityStarted(this);
 //        if (message != null) {
 //            // 获取自定义key-value String customContent = message.getCustomContent();
@@ -150,11 +149,11 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
         initUpdate();
 
         //融云登录
-        if (TextUtils.isEmpty(EanfangApplication.get().get(EanfangConst.RONG_YUN_TOKEN, ""))) {
+        if (TextUtils.isEmpty(WorkerApplication.get().get(EanfangConst.RONG_YUN_TOKEN, ""))) {
             getRongYToken();
         } else {
             //如果有融云token 就直接登录
-            WorkerApplication.connect(EanfangApplication.get().get(EanfangConst.RONG_YUN_TOKEN, ""));
+            WorkerApplication.connect(WorkerApplication.get().get(EanfangConst.RONG_YUN_TOKEN, ""));
         }
 
         //阻止底部 菜单拦被软键盘顶起
@@ -171,21 +170,23 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
         RongIM.setConnectionStatusListener(new MyConnectionStatusListener());
 
         //判断是否完善资料
-//        if (TextUtils.isEmpty(EanfangApplication.getApplication().getUser().getAccount().getRealName()) || "待提供".equals(EanfangApplication.getApplication().getUser().getAccount().getRealName())) {
+//        if (TextUtils.isEmpty(WorkerApplication.get().getUser().getAccount().getRealName()) || "待提供".equals(WorkerApplication.get().getUser().getAccount().getRealName())) {
 //            startAnimActivity(new Intent(this, LoginHintActivity.class));
 //        }
         // 判断是否有密码
-        if (EanfangApplication.getApplication().getUser().getAccount().isSimplePwd() == true) {
+        if (WorkerApplication.get().getLoginBean().getAccount().isSimplePwd() == true) {
             startAnimActivity(new Intent(this, SetPasswordActivity.class));
         }
         getEquipmentUnread();//首次
 
+/*
        WorkerApplication.getApplication().setmForwardListener(new WorkerApplication.ForwardListener() {
             @Override
             public void onForwardListener() {
                 getEquipmentUnread();
             }
         });
+*/
 
         PrefUtils.setBoolean(getApplicationContext(), PrefUtils.GUIDE, false);//新手引导是否展示
 
@@ -206,7 +207,7 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
     private void submitLocation() {
         new Thread(() -> {
             LocationUtil.location(this, (location) -> {
-                LoginBean user = EanfangApplication.getApplication().getUser();
+                LoginBean user = WorkerApplication.get().getLoginBean();
                 if (user == null || StringUtils.isEmpty(user.getToken())) {
                     return;
                 }
@@ -273,9 +274,9 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
                 RongIM.getInstance().logout();//退出融云
                 Intent intent = new Intent(getPackageName() + ".ExitListenerReceiver");
                 sendBroadcast(intent);
-
-                EanfangApplication.get().closeAll();
-                EanfangApplication.isUpdated = false;
+                //先注释
+//                WorkerApplication.get().closeAll();
+                WorkerApplication.isUpdated = false;
                 //android.os.Process.killProcess(android.os.Process.myPid());
 //                System.exit(0);//正常退出App
             }
@@ -324,21 +325,22 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
                 .tag(this)
                 .execute(new EanfangCallback<BaseDataBean>(this, false, BaseDataBean.class, (baseDataBean) -> {
                     if (baseDataBean != null) {
-                        EanfangApplication.get().set(BaseDataBean.class.getName(), baseDataBean);
+                        WorkerApplication.get().set(BaseDataBean.class.getName(), baseDataBean);
                     }
                     saveArea();
 //                    new Thread(() -> {
 //                        if (jsonObject != null && !jsonObject.isEmpty() && jsonObject.containsKey("data") && !jsonObject.get("data").equals(Constant.NO_UPDATE)) {
 ////                            BaseDataBean newDate = jsonObject.toJavaObject(BaseDataBean.class);
-//                            EanfangApplication.get().set(BaseDataBean.class.getName(), jsonObject.toJavaObject(BaseDataBean.class));
+//                            WorkerApplication.get().set(BaseDataBean.class.getName(), jsonObject.toJavaObject(BaseDataBean.class));
 //                        }
 //                    }).start();
                 }));
     }
-    private void saveArea(){
+
+    private void saveArea() {
         //预加载国家区域
-        BaseDataEntity areaJson = (BaseDataEntity) EanfangApplication.get().get(Constant.COUNTRY_AREA_LIST,BaseDataEntity.class);
-        if (areaJson==null) {
+        BaseDataEntity areaJson = (BaseDataEntity) WorkerApplication.get().get(Constant.COUNTRY_AREA_LIST, BaseDataEntity.class);
+        if (areaJson == null) {
             BaseDataEntity entity = new BaseDataEntity();
             List<BaseDataEntity> areaListBean = Config.get().getRegionList(1);
             //获得全部 地区数据
@@ -362,12 +364,13 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
                 provinceEntity.setChildren(cityList);
             }
             entity.setChildren(areaListBean);
-            EanfangApplication.get().sSaveArea = entity;
-            EanfangApplication.get().set(Constant.COUNTRY_AREA_LIST, entity);
-        }else {
-            EanfangApplication.get().sSaveArea = areaJson;
+            WorkerApplication.getApplication().sSaveArea = entity;
+            WorkerApplication.get().set(Constant.COUNTRY_AREA_LIST, entity);
+        } else {
+            WorkerApplication.getApplication().sSaveArea = areaJson;
         }
     }
+
     /**
      * 请求静态常量
      */
@@ -383,7 +386,7 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
                 .tag(this)
                 .execute(new EanfangCallback<ConstAllBean>(this, false, ConstAllBean.class, (constAllBean) -> {
                     if (constAllBean != null) {
-                        EanfangApplication.get().set(ConstAllBean.class.getName(), constAllBean);
+                        WorkerApplication.get().set(ConstAllBean.class.getName(), constAllBean);
                     }
 //                    new Thread(() -> {
 //                        if (jsonObject != null && !jsonObject.isEmpty() && jsonObject.containsKey("data") && !jsonObject.get("data").equals(Constant.NO_UPDATE)) {
@@ -395,9 +398,9 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
     }
 
     public void setHeaders() {
-        if (EanfangApplication.get().getUser() != null) {
-            EanfangHttp.setToken(EanfangApplication.get().getUser().getToken());
-//            HttpConfig.get().setToken(EanfangApplication.get().getUser().getToken());
+        if (WorkerApplication.get().getUser() != null) {
+            EanfangHttp.setToken(WorkerApplication.get().getLoginBean().getToken());
+//            HttpConfig.get().setToken(WorkerApplication.get().getUser().getToken());
         }
         EanfangHttp.setWorker();
     }
@@ -407,12 +410,12 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
      */
     private void getRongYToken() {
         EanfangHttp.post(UserApi.POST_RONGY_TOKEN)
-                .params("userId", EanfangApplication.get().getAccId())
+                .params("userId", WorkerApplication.get().getAccId())
                 .execute(new EanfangCallback<String>(MainActivity.this, false, String.class, (str) -> {
                     if (!TextUtils.isEmpty(str)) {
                         JSONObject json = JSONObject.parseObject(str);
                         String token = json.getString("token");
-                        EanfangApplication.get().set(EanfangConst.RONG_YUN_TOKEN, token);
+                        WorkerApplication.get().set(EanfangConst.RONG_YUN_TOKEN, token);
                         WorkerApplication.connect(token);
                     }
                 }));
@@ -435,7 +438,9 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
             @Override
             public UserInfo getUserInfo(String s) {
 
-                UserInfo userInfo = new UserInfo(String.valueOf(EanfangApplication.get().getAccId()), EanfangApplication.getApplication().getUser().getAccount().getNickName(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + EanfangApplication.getApplication().getUser().getAccount().getAvatar()));
+                UserInfo userInfo = new UserInfo(String.valueOf(WorkerApplication.get().getAccId()),
+                        WorkerApplication.get().getLoginBean().getAccount().getNickName(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER +
+                        WorkerApplication.get().getLoginBean().getAccount().getAvatar()));
 
                 Log.e("zzw", "userInfo=" + userInfo.toString());
 
@@ -659,7 +664,7 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
 
             mExitTime = System.currentTimeMillis();
 
-            CleanMessageUtil.clearAllCache(EanfangApplication.get());
+            CleanMessageUtil.clearAllCache(WorkerApplication.get());
             SharePreferenceUtil.get().clear();
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
             RongIM.getInstance().logout();
@@ -676,7 +681,7 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
 
     private void getEquipmentUnread() {
         QueryEntry queryEntry = new QueryEntry();
-        queryEntry.getEquals().put("reciveAccId", String.valueOf(EanfangApplication.get().getAccId()));
+        queryEntry.getEquals().put("reciveAccId", String.valueOf(WorkerApplication.get().getAccId()));
         queryEntry.getEquals().put("noticeType", "62");
         queryEntry.getEquals().put("status", "0");
 

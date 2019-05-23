@@ -2,9 +2,10 @@ package com.eanfang.ui.adapter;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.customview.SuperTextView;
+
 import com.eanfang.R;
 import com.eanfang.model.SecurityCompanyDetailsBean;
+import com.eanfang.widget.customview.SuperTextView;
 
 
 /**

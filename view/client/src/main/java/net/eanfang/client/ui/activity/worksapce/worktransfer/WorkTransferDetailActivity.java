@@ -11,7 +11,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.WorkTransferDetailBean;
@@ -22,6 +21,7 @@ import com.eanfang.util.JumpItent;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.adapter.worktransfer.WorkTransferDetailAttentionAdapter;
 import net.eanfang.client.ui.adapter.worktransfer.WorkTransferDetailFinishWorkAdapter;
 import net.eanfang.client.ui.adapter.worktransfer.WorkTransferDetailFollowThingAdapter;
@@ -206,7 +206,7 @@ public class WorkTransferDetailActivity extends BaseActivity {
         workTransferDetailFinishWorkAdapter.setNewData(mFinishWorkList);
 
 
-        if (bean.getAssigneeUserEntity().getUserId().equals(String.valueOf(EanfangApplication.get().getUserId()))) {
+        if (bean.getAssigneeUserEntity().getUserId().equals(String.valueOf(ClientApplication.get().getUserId()))) {
             if (mStatus == 0) {
                 rlConfirm.setVisibility(View.VISIBLE);
             } else {

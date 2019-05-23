@@ -4,7 +4,6 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.DesignOrderListBean;
@@ -13,6 +12,7 @@ import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 import com.yaf.base.entity.RepairOrderEntity;
 
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.worksapce.DesignOrderListActivity;
 import net.eanfang.client.ui.adapter.DesignOrderAdapter;
 import net.eanfang.client.ui.widget.LookDesignOrderInfoView;
@@ -75,9 +75,9 @@ public class DesignOrderListFragment extends TemplateItemListFragment {
         }
         QueryEntry queryEntry = new QueryEntry();
         if ("0".equals(mType)) {
-            queryEntry.getEquals().put("createCompanyId", EanfangApplication.getApplication().getCompanyId() + "");
+            queryEntry.getEquals().put("createCompanyId", ClientApplication.get().getCompanyId() + "");
         } else if ("1".equals(mType)) {
-            queryEntry.getEquals().put("createUserId", EanfangApplication.getApplication().getUserId() + "");
+            queryEntry.getEquals().put("createUserId", ClientApplication.get().getUserId() + "");
         }
         if (!mTitle.equals("全部")) {
             queryEntry.getEquals().put("status", status);

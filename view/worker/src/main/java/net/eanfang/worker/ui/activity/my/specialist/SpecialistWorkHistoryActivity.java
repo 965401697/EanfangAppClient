@@ -18,6 +18,7 @@ import com.eanfang.util.JsonUtils;
 import com.yaf.base.entity.JobExperienceEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.my.certification.AddWorkActivity;
 import net.eanfang.worker.ui.activity.my.certification.WorkListAdapter;
 import net.eanfang.worker.ui.activity.worksapce.OwnDataHintActivity;
@@ -78,7 +79,7 @@ public class SpecialistWorkHistoryActivity extends BaseWorkerActivity {
 
     private void getData() {
         JSONObject object=new JSONObject();
-        object .put("accId", String.valueOf(EanfangApplication.get().getAccId()));
+        object .put("accId", String.valueOf(WorkerApplication.get().getAccId()));
         object .put("type", "1");
         EanfangHttp.post(UserApi.GET_TECH_WORKER_WORK_LIST)
                 .upJson(JsonUtils.obj2String(object))

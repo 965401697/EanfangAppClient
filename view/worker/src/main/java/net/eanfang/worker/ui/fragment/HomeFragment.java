@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -41,6 +40,7 @@ import com.flyco.tablayout.SlidingTabLayout;
 import com.photopicker.com.util.BGASpaceItemDecoration;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.CameraActivity;
 import net.eanfang.worker.ui.activity.worksapce.InstallOrderParentActivity;
 import net.eanfang.worker.ui.activity.worksapce.MineTaskPublishListSendParentActivity;
@@ -97,11 +97,11 @@ public class HomeFragment extends BaseFragment {
     /**
      * 图标数量
      */
-    private QBadgeView qBadgeViewRepair = new QBadgeView(EanfangApplication.get().getApplicationContext());
-    private QBadgeView qBadgeViewDesign = new QBadgeView(EanfangApplication.get().getApplicationContext());
-    private QBadgeView qBadgeViewMaintain = new QBadgeView(EanfangApplication.get().getApplicationContext());
-    private QBadgeView qBadgeViewQuota = new QBadgeView(EanfangApplication.get().getApplicationContext());
-    private QBadgeView qBadgeViewInstall = new QBadgeView(EanfangApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewRepair = new QBadgeView(WorkerApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewDesign = new QBadgeView(WorkerApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewMaintain = new QBadgeView(WorkerApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewQuota = new QBadgeView(WorkerApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewInstall = new QBadgeView(WorkerApplication.get().getApplicationContext());
     private int mRepair = 0;
     private int mDesign = 0;
     private int mInstall = 0;
@@ -259,7 +259,7 @@ public class HomeFragment extends BaseFragment {
      * 安防圈
      */
     private void initSecurity() {
-        securityListAdapter = new SecurityListAdapter(EanfangApplication.get().getApplicationContext(), false);
+        securityListAdapter = new SecurityListAdapter(WorkerApplication.get().getApplicationContext(), false);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         rvSecurity.setLayoutManager(layoutManager);
         rvSecurity.setNestedScrollingEnabled(false);
@@ -292,7 +292,7 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        String orgName = v(() -> (EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName()));
+        String orgName = v(() -> (WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgName()));
         if (("个人").equals(orgName)) {
             tvHomeTitle.setText("易安防");
         } else {
@@ -493,9 +493,9 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void jumpWebview() {
-        boolean isHave = EanfangApplication.getApplication().getUser().getPerms().contains("top:statistics:count");
+        boolean isHave = WorkerApplication.get().getLoginBean().getPerms().contains("top:statistics:count");
         if (isHave == true) {
-            String token = EanfangApplication.getApplication().getUser().getToken();
+            String token = WorkerApplication.get().getLoginBean().getToken();
             startActivity(new Intent(getActivity(), WebActivity.class)
                     .putExtra("url", "http:/worker.eanfang.net:8099/#/totalPhone?token=" + token)
                     .putExtra("title", "数据统计"));

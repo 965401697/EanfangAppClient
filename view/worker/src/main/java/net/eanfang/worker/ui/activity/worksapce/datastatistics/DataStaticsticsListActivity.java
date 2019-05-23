@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.datastatistics.HomeDatastisticeBean;
@@ -19,6 +18,7 @@ import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.adapter.HomeDataAdapter;
 
 import java.util.ArrayList;
@@ -78,7 +78,7 @@ public class DataStaticsticsListActivity extends BaseActivity {
      */
     private void doHttpDatastatistics() {
         QueryEntry queryEntry = new QueryEntry();
-        queryEntry.getEquals().put("companyId", EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgId() + "");
+        queryEntry.getEquals().put("companyId", WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgId() + "");
         EanfangHttp.post(NewApiService.HOME_DATASTASTISTICS)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<HomeDatastisticeBean>(DataStaticsticsListActivity.this, false, HomeDatastisticeBean.class, bean -> {

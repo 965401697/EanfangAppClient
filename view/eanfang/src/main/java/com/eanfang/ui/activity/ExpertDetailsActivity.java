@@ -2,18 +2,17 @@ package com.eanfang.ui.activity;
 
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.util.Log;
+
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
-import com.customview.SuperTextView;
+import com.eanfang.widget.customview.SuperTextView;
 import com.eanfang.R;
 import com.eanfang.R2;
 import com.eanfang.apiservice.UserApi;

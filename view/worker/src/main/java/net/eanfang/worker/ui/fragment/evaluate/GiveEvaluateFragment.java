@@ -8,7 +8,6 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.EvaluateBean;
@@ -18,6 +17,7 @@ import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.EvaluateShowActivity;
 import net.eanfang.worker.ui.adapter.EvaluateAdapter;
 
@@ -61,7 +61,7 @@ public class GiveEvaluateFragment extends BaseFragment implements
     protected void onLazyLoad() {
         super.onLazyLoad();
         QueryEntry queryEntry = new QueryEntry();
-        queryEntry.getEquals().put("createUserId", EanfangApplication.getApplication().getUserId() + "");
+        queryEntry.getEquals().put("createUserId", WorkerApplication.get().getUserId() + "");
         queryEntry.setPage(page);
         queryEntry.setSize(10);
         EanfangHttp.post(UserApi.GET_CILENT_EVALUATE_LIST)

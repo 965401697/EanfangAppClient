@@ -1,8 +1,7 @@
 package com.eanfang.util;
 
 import android.content.Intent;
-
-import com.eanfang.application.EanfangApplication;
+import com.eanfang.base.BaseApplication;
 import com.eanfang.ui.activity.NoPermissionActivity;
 
 import java.util.Set;
@@ -17,10 +16,10 @@ public class PermKit {
 
     private static PermKit permKit = new PermKit();
 
-    public static Set<String> permList = EanfangApplication.get().getUser().getPerms();
+    public static Set<String> permList = BaseApplication.get().getLoginBean().getPerms();
 
     private void permList() {
-        permList = EanfangApplication.get().getUser().getPerms();
+        permList = BaseApplication.get().getLoginBean().getPerms();
     }
 
 
@@ -56,16 +55,16 @@ public class PermKit {
         }
 
         if (!isPerm) {
-            Intent intent = new Intent(EanfangApplication.getApplication(), NoPermissionActivity.class);
+            Intent intent = new Intent(BaseApplication.get(), NoPermissionActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             //如果是技师端  并且
 
             try {
                 String appType = (String) SharePreferenceUtil.get().get("app", "");
 
-                if (appType.equals("worker") && EanfangApplication.get().getUser().getAccount().getAccountExtInfo() == null) {
+                if (appType.equals("worker") && BaseApplication.get().getLoginBean().getAccount().getAccountExtInfo() == null) {
                     intent.putExtra("info", "请先进行技师认证。");
-                } else if (EanfangApplication.get().getCompanyId() != null && EanfangApplication.get().getCompanyId() != 0) {
+                } else if (BaseApplication.get().getCompanyId() != null && BaseApplication.get().getCompanyId() != 0) {
                     intent.putExtra("info", "暂无权限访问，联系企业管理员添加权限。");
                 } else {
                     intent.putExtra("info", "暂无权限访问，请创建或加入企业后再试。");
@@ -75,7 +74,7 @@ public class PermKit {
             }
 
 
-            EanfangApplication.getApplication().startActivity(intent);
+            BaseApplication.get().startActivity(intent);
         }
         return isPerm;
     }
@@ -86,7 +85,7 @@ public class PermKit {
 
     public boolean getIsOwn() {
         //是个人
-        return EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyId() <= 0;
+        return BaseApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyId() <= 0;
     }
 
     /**

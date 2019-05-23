@@ -6,7 +6,6 @@ import android.view.View;
 import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -18,6 +17,7 @@ import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.TaskPublishApplyListActivity;
 import net.eanfang.worker.ui.adapter.PublishTaskListAdapter;
 import net.eanfang.worker.ui.widget.TaskPubApplyListDetailView;
@@ -245,9 +245,9 @@ public class MineTaskPublishListFragment extends TemplateItemListFragment {
 
         QueryEntry queryEntry = new QueryEntry();
         if (Constant.CREATE_DATA_CODE == (mType)) {
-            queryEntry.getEquals().put("createUserId", EanfangApplication.getApplication().getUserId() + "");
+            queryEntry.getEquals().put("createUserId", WorkerApplication.get().getUserId() + "");
         } else if (Constant.ASSIGNEE_DATA_CODE == (mType)) {
-            queryEntry.getEquals().put("createCompanyId", EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyId() + "");
+            queryEntry.getEquals().put("createCompanyId", WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyId() + "");
         }
         if (getmTitle().equals("全部")) {
 

@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.security.SecurityLikeBean;
@@ -20,6 +19,7 @@ import com.eanfang.util.StringUtils;
 import com.photopicker.com.util.BGASpaceItemDecoration;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.im.SelectIMContactActivity;
 import net.eanfang.worker.ui.activity.worksapce.online.FaultExplainActivity;
 import net.eanfang.worker.ui.activity.worksapce.security.SecurityDetailActivity;
@@ -55,7 +55,7 @@ public class SecurityFoucsFragment extends TemplateItemListFragment {
 
     @Override
     protected void initAdapter() {
-        securityListAdapter = new SecurityListAdapter(EanfangApplication.get().getApplicationContext(), false);
+        securityListAdapter = new SecurityListAdapter(WorkerApplication.get().getApplicationContext(), false);
         RecyclerView.RecycledViewPool pool = mRecyclerView.getRecycledViewPool();
         pool.setMaxRecycledViews(0, 10);
         mRecyclerView.setRecycledViewPool(pool);
@@ -123,9 +123,9 @@ public class SecurityFoucsFragment extends TemplateItemListFragment {
             listBean.setLikesCount(listBean.getLikesCount() + 1);
             securityLikeBean.setLikeStatus("0");
         }
-        securityLikeBean.setLikeUserId(EanfangApplication.get().getUserId());
-        securityLikeBean.setLikeCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyId());
-        securityLikeBean.setLikeTopCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getTopCompanyId());
+        securityLikeBean.setLikeUserId(WorkerApplication.get().getUserId());
+        securityLikeBean.setLikeCompanyId(WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyId());
+        securityLikeBean.setLikeTopCompanyId(WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getTopCompanyId());
         EanfangHttp.post(NewApiService.SERCURITY_LIKE)
                 .upJson(JSONObject.toJSONString(securityLikeBean))
                 .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class, bean -> {
@@ -165,7 +165,7 @@ public class SecurityFoucsFragment extends TemplateItemListFragment {
         }
         mQueryEntry.setPage(mPage);
         mQueryEntry.setSize(10);
-        mQueryEntry.getEquals().put("followAccId", EanfangApplication.get().getAccId() + "");
+        mQueryEntry.getEquals().put("followAccId", WorkerApplication.get().getAccId() + "");
         EanfangHttp.post(NewApiService.SERCURITY_FOUCS)
                 .upJson(JsonUtils.obj2String(mQueryEntry))
                 .execute(new EanfangCallback<SecurityListBean>(getActivity(), true, SecurityListBean.class) {

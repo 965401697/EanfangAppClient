@@ -9,7 +9,6 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.oss.OSSCallBack;
@@ -25,6 +24,7 @@ import com.yaf.base.entity.TechWorkerVerifyEntity;
 import com.eanfang.model.sys.AccountEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -85,9 +85,10 @@ public class CertificationActivity extends BaseActivityWithTakePhoto {
     }
 
     private void fillData() {
+        AccountEntity accountEntity=WorkerApplication.get().getLoginBean().getAccount();
         ivHeader.setImageURI(com.eanfang.BuildConfig.OSS_SERVER + mTechWorkerVerifyEntity.getAvatarPhoto());
-        String contactName = EanfangApplication.get().getUser().getAccount().getRealName();
-        String mobile = EanfangApplication.get().getUser().getAccount().getMobile();
+        String contactName = accountEntity.getRealName();
+        String mobile = accountEntity.getMobile();
 
         if (!StringUtils.isEmpty(contactName)) {
             tvContactName.setText(contactName);
@@ -95,9 +96,9 @@ public class CertificationActivity extends BaseActivityWithTakePhoto {
         if (!StringUtils.isEmpty(mobile)) {
             tvContactPhone.setText(mobile);
         }
-        etCardId.setText(EanfangApplication.get().getUser().getAccount().getIdCard());
+        etCardId.setText(WorkerApplication.get().getLoginBean().getAccount().getIdCard());
         //0女1男
-        if (EanfangApplication.get().getUser().getAccount().getGender() == 0) {
+        if (WorkerApplication.get().getLoginBean().getAccount().getGender() == 0) {
             rbWoman.setChecked(true);
         } else {
             rbMan.setChecked(true);
@@ -106,8 +107,9 @@ public class CertificationActivity extends BaseActivityWithTakePhoto {
     }
 
     private void initViews() {
-        String contactName = EanfangApplication.get().getUser().getAccount().getRealName();
-        String mobile = EanfangApplication.get().getUser().getAccount().getMobile();
+        AccountEntity accountEntity=WorkerApplication.get().getLoginBean().getAccount();
+        String contactName = accountEntity.getRealName();
+        String mobile = accountEntity.getMobile();
         if (!StringUtils.isEmpty(contactName)) {
             tvContactName.setText(contactName);
         }
@@ -173,7 +175,7 @@ public class CertificationActivity extends BaseActivityWithTakePhoto {
         }
 
 
-        mTechWorkerVerifyEntity.setAccId(EanfangApplication.get().getAccId());
+        mTechWorkerVerifyEntity.setAccId(WorkerApplication.get().getAccId());
         AccountEntity accountEntity = new AccountEntity();
         accountEntity.setRealName(tvContactName.getText().toString().trim());
         accountEntity.setMobile(tvContactPhone.getText().toString().trim());

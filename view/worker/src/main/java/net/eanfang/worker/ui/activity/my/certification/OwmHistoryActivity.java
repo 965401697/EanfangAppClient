@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.EducationListBean;
@@ -19,6 +18,7 @@ import com.eanfang.util.QueryEntry;
 import com.yaf.base.entity.EducationExperienceEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import butterknife.BindView;
@@ -82,7 +82,7 @@ public class OwmHistoryActivity extends BaseWorkerActivity {
     private void getData() {
         QueryEntry queryEntry = new QueryEntry();
 
-        queryEntry.getEquals().put("accId", String.valueOf(EanfangApplication.get().getAccId()));
+        queryEntry.getEquals().put("accId", String.valueOf(WorkerApplication.get().getAccId()));
         queryEntry.getEquals().put("type", "0");
         EanfangHttp.post(UserApi.GET_TECH_WORKER_EDUCATION_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))

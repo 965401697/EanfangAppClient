@@ -5,13 +5,13 @@ import android.net.Uri;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.RepairFailureEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 
 import java.util.List;
 
@@ -31,7 +31,7 @@ public class LeaveBugAdapter extends BaseQuickAdapter<RepairFailureEntity, BaseV
 
     @Override
     protected void convert(BaseViewHolder helper, RepairFailureEntity item) {
-        if (EanfangApplication.getApplication().getCompanyId() == 0) {
+        if (ClientApplication.get().getCompanyId() == 0) {
             helper.setText(R.id.tv_company, item.getAssigneeUserEntity().getAccountEntity().getRealName());
         } else {
             helper.setText(R.id.tv_company, item.getAssigneeOrgEntity().getOrgName());

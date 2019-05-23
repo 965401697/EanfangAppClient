@@ -15,6 +15,7 @@ import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.adapter.OrderAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
@@ -49,7 +50,7 @@ public class ModifyOrderActivity extends BaseWorkerActivity {
 
     private void initData() {
         QueryEntry queryEntry = new QueryEntry();
-        queryEntry.getEquals().put("assigneeUserId", EanfangApplication.getApplication().getUserId() + "");
+        queryEntry.getEquals().put("assigneeUserId", WorkerApplication.get().getUserId() + "");
         queryEntry.getNotEquals().put("status", "6");
         EanfangHttp.post(RepairApi.GET_REPAIR_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))

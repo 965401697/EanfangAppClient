@@ -40,15 +40,9 @@ dependencies {
 
     api pkg.loadsir
     api pkg.pictureselector
-    api pkg.badgeview
-    api pkg.prolificinteractive
-    api pkg.flycoRoundView
-    api pkg.flycoTabLayout
-    api pkg.materialratingbar
-    api pkg.mPAndroidChart
-    api pkg.timelineview
-    implementation pkg.update
-    api pkg.flowlayout
+
+
+
     api pkg.aliyunOss
     api pkg.eventbus
     implementation pkg.lombok

@@ -40,6 +40,7 @@ import com.jph.takephoto.model.TResult;
 import com.eanfang.model.sys.BaseDataEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 
 import java.util.List;
 
@@ -161,7 +162,7 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
 
         btnComplete.setOnClickListener((v) -> {
             // 完善资料
-            if (EanfangApplication.getApplication().getAccId().equals(byNetBean.getAccId())) {
+            if (WorkerApplication.get().getAccId().equals(byNetBean.getAccId())) {
                 if (isEdit) {
                     doUndoVerify();
                 } else {
@@ -262,7 +263,7 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
             infoBean.setAreaCode(byNetBean.getAreaCode());
         }
         if (byNetBean.getAdminUserId().equals("")) {
-            infoBean.setAdminUserId(EanfangApplication.getApplication().getUserId());
+            infoBean.setAdminUserId(WorkerApplication.get().getUserId());
         } else {
             infoBean.setAdminUserId(byNetBean.getAdminUserId());
         }

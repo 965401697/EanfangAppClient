@@ -19,6 +19,7 @@ import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.adapter.TakeTaskAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
@@ -109,8 +110,8 @@ public class TakeTaskListActivity extends BaseWorkerActivity implements SwipeRef
 
     private void getData() {
         QueryEntry queryEntry = new QueryEntry();
-        queryEntry.getEquals().put("createCompanyId", EanfangApplication.getApplication().getCompanyId() + "");
-        queryEntry.getEquals().put("assigneeCompanyId", EanfangApplication.getApplication().getCompanyId() + "");
+        queryEntry.getEquals().put("createCompanyId", WorkerApplication.get().getCompanyId() + "");
+        queryEntry.getEquals().put("assigneeCompanyId", WorkerApplication.get().getCompanyId() + "");
         queryEntry.setPage(mPage);
         queryEntry.setSize(10);
 

@@ -38,6 +38,7 @@ import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -132,7 +133,7 @@ public class TaskPublishActivity extends BaseActivity implements SelectTimeDialo
 
 
     private void initData() {
-        LoginBean user = EanfangApplication.getApplication().getUser();
+        LoginBean user = WorkerApplication.get().getLoginBean();
         String name = "";
         if (StringUtils.isEmpty(user.getAccount().getDefaultUser().getCompanyEntity().getOrgName())) {
             name = user.getAccount().getRealName();

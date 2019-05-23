@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -21,6 +20,7 @@ import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import java.util.List;
@@ -67,7 +67,7 @@ public class SkillInfoDetailActivity extends BaseWorkerActivity {
     private void getSkillInfo() {
 
         EanfangHttp.post(UserApi.TECH_WORKER_DETAIL)
-                .params("accId", String.valueOf(EanfangApplication.getApplication().getAccId()))
+                .params("accId", String.valueOf(WorkerApplication.get().getAccId()))
                 .execute(new EanfangCallback<WorkerVerifySkillBean>(this, true, WorkerVerifySkillBean.class, bean -> {
 
                     mWorkerVerifySkillBean = bean;
@@ -127,7 +127,7 @@ public class SkillInfoDetailActivity extends BaseWorkerActivity {
     private void getData() {
         QueryEntry queryEntry = new QueryEntry();
 
-        queryEntry.getEquals().put("accId", String.valueOf(EanfangApplication.get().getAccId()));
+        queryEntry.getEquals().put("accId", String.valueOf(WorkerApplication.get().getAccId()));
         queryEntry.getEquals().put("type", "0");
         EanfangHttp.post(UserApi.TECH_WORKER_LIST_QUALIFY)
                 .upJson(JsonUtils.obj2String(queryEntry))

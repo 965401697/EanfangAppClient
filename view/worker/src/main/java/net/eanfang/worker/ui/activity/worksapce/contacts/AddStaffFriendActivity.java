@@ -9,7 +9,6 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.FriendListBean;
@@ -18,6 +17,7 @@ import com.eanfang.util.ToastUtil;
 import com.eanfang.witget.SideBar;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import java.util.Collections;
@@ -84,7 +84,7 @@ public class AddStaffFriendActivity extends BaseWorkerActivity {
     private void initData() {
 
         EanfangHttp.post(UserApi.POST_FRIENDS_LIST)
-                .params("accId", EanfangApplication.get().getAccId())
+                .params("accId", WorkerApplication.get().getAccId())
                 .execute(new EanfangCallback<FriendListBean>(this, true, FriendListBean.class, true, (list) -> {
                     if (list.size() > 0) {
 

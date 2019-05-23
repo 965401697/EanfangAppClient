@@ -24,5 +24,13 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation pkg.appcompat
-
+    api pkg.badgeview
+    api pkg.flycoRoundView
+    api pkg.flycoTabLayout
+    api pkg.materialratingbar
+    api pkg.mPAndroidChart
+    api pkg.timelineview
+    api pkg.flowlayout
+    api pkg.prolificinteractive
+    implementation pkg.update
 }

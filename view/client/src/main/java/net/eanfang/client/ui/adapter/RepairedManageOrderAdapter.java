@@ -8,7 +8,6 @@ import com.annimon.stream.Optional;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.NumberUtil;
@@ -19,6 +18,7 @@ import com.yaf.base.entity.ClientOrderOerationEntity;
 import com.yaf.base.entity.RepairOrderEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 
 
 /**
@@ -44,7 +44,7 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
         //创建订单操作类( 0:待支付，1:待回电，2:待上门，3:待完工，4:待确认，5:订单完成)
         int status = item.getStatus();
         boolean custom = item.getOwnerUserId() != null && item.getOwnerUserId().
-                equals(EanfangApplication.get().getUserId());
+                equals(ClientApplication.get().getUserId());
         ClientOrderOerationEntity orderOerationEntity = new ClientOrderOerationEntity(status, custom);
 
         // 订单是否 已读 未读 1：新订单 0 已读

@@ -6,11 +6,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.ui.base.BaseDialog;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.worksapce.DesignActivity;
 import net.eanfang.client.ui.activity.worksapce.DesignOrderListActivity;
 
@@ -60,7 +59,7 @@ public class DesignCtrlView extends BaseDialog {
             jumpInDialog(mContext, DesignOrderListActivity.class, "我的设计单", "1");
         });
         //如果是个人 隐藏公司
-        if (EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyId() != null) {
+        if (ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyId() != null) {
             llMineCompany.setVisibility(View.GONE);
         }
         llMineCompany.setOnClickListener((v) -> {

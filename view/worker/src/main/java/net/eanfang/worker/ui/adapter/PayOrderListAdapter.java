@@ -9,6 +9,7 @@ import com.eanfang.model.PayOrderListBean;
 import com.eanfang.util.GetConstDataUtils;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 
 
 /**
@@ -36,10 +37,10 @@ public class PayOrderListAdapter extends BaseQuickAdapter<PayOrderListBean.ListB
                 .setText(R.id.tv_count_money, "¥" + item.getTotalCost() / 100)
                 .setText(R.id.tv_worker_name, "技师:" + item.getOfferer().getAccountEntity().getRealName());
         helper.setText(R.id.tv_state, GetConstDataUtils.getQuoteStatus().get(item.getStatus()));
-        if (item.getCreateUserId().equals(EanfangApplication.getApplication().getUserId())) {
+        if (item.getCreateUserId().equals(WorkerApplication.get().getUserId())) {
             helper.setText(R.id.tv_do_first, "联系接收人");
             helper.setVisible(R.id.tv_do_first, true);
-        } else if (item.getAssigneeUserId().equals(EanfangApplication.getApplication().getUserId())) {
+        } else if (item.getAssigneeUserId().equals(WorkerApplication.get().getUserId())) {
             helper.setText(R.id.tv_do_first, "联系报价人");
             helper.setVisible(R.id.tv_do_first, true);
             if (item.getStatus() == 0) {

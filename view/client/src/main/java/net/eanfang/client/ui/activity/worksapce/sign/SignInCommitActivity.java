@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -22,6 +21,7 @@ import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -80,7 +80,7 @@ public class SignInCommitActivity extends BaseActivity {
         tvTime.setText(signinBean.getSignTime());
         tvAddress.setText(signinBean.getDetailPlace());
         tvName.setText(signinBean.getVisitorName());
-        tvCompany.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
+        tvCompany.setText(ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
         tvCommit.setOnClickListener(v -> oss());
     }
 

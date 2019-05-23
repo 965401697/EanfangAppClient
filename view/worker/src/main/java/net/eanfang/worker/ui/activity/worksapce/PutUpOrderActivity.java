@@ -28,6 +28,7 @@ import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.repair.finishwork.FillRepairInfoActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
@@ -179,7 +180,7 @@ public class PutUpOrderActivity extends BaseWorkerActivity {
     private BughandleConfirmEntity fillBean() {
         transferLogEntity.setCause(mOrderReason);
         transferLogEntity.setOrderId(orderId);
-        transferLogEntity.setOriginalUserId(EanfangApplication.getApplication().getUserId());
+        transferLogEntity.setOriginalUserId(WorkerApplication.get().getUserId());
         transferLogEntity.setRemark(etRemarks.getText().toString().trim());
         transferLogEntity.setOrderType(0);
         bughandleConfirmEntity.setTransferLogEntity(transferLogEntity);

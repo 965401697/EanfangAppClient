@@ -11,7 +11,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONPObject;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -21,6 +20,7 @@ import com.eanfang.util.JumpItent;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 import net.eanfang.worker.ui.widget.CommitVerfiyView;
@@ -72,7 +72,7 @@ public class SpecialistAuthListActivity extends BaseWorkerActivity {
                     return;
                 }
                 new TrueFalseDialog(SpecialistAuthListActivity.this, "系统提示", "是否撤销认证并保存信息", () -> {
-                    EanfangHttp.post(NewApiService.EXPERT_AUTH_REVOKE + EanfangApplication.getApplication().getAccId())
+                    EanfangHttp.post(NewApiService.EXPERT_AUTH_REVOKE + WorkerApplication.get().getAccId())
                             .execute(new EanfangCallback<JSONPObject>(SpecialistAuthListActivity.this, true, JSONPObject.class, bean -> {
                                 tvConfim.setVisibility(View.VISIBLE);
                                 verify = 0;//撤销认证  状态没有时时的刷新 减少请求 本地改变状态
@@ -99,7 +99,7 @@ public class SpecialistAuthListActivity extends BaseWorkerActivity {
     private void initData() {
         // 获取认证状态
         EanfangHttp.post(UserApi.GET_EXPERT_CERTIFICATION_STATUS)
-                .params("accId", EanfangApplication.getApplication().getAccId())
+                .params("accId", WorkerApplication.get().getAccId())
                 .execute(new EanfangCallback<SpecialistAuthStatusBean>(this, true, SpecialistAuthStatusBean.class, (bean) -> {
                     verify = bean.verify;
                     //只有认证完成了 才显示重新认证

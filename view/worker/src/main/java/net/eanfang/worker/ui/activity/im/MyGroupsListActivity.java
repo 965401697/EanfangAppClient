@@ -18,6 +18,7 @@ import com.eanfang.witget.SideBar;
 
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.adapter.GroupsAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
@@ -69,7 +70,7 @@ public class MyGroupsListActivity extends BaseWorkerActivity {
 
     private void initData() {
         EanfangHttp.post(UserApi.POST_GET_GROUP)
-                .params("accId", EanfangApplication.get().getAccId())
+                .params("accId", WorkerApplication.get().getAccId())
                 .execute(new EanfangCallback<GroupsBean>(this, true, GroupsBean.class, true, (list) -> {
                     if (list.size() > 0) {
 
@@ -81,12 +82,12 @@ public class MyGroupsListActivity extends BaseWorkerActivity {
                                 if (!Cn2Spell.getPinYin(bean.getGroupName()).substring(0, 1).toUpperCase().matches("[A-Z]")) { // 如果不在A-Z中则默认为“#”
                                     bean.setFirstLetter("#");
                                 }
-                                EanfangApplication.get().set(bean.getRcloudGroupId(), bean.getGroupId());
+                                WorkerApplication.get().set(bean.getRcloudGroupId(), bean.getGroupId());
                             } else {
                                 //为空赋值默认值
                                 bean.setPinyin("");
                                 bean.setFirstLetter("#");
-                                EanfangApplication.get().set(bean.getRcloudGroupId(), bean.getGroupId());
+                                WorkerApplication.get().set(bean.getRcloudGroupId(), bean.getGroupId());
                             }
                         }
 

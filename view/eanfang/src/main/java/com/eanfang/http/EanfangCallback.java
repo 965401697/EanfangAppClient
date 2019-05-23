@@ -11,7 +11,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
-import com.eanfang.application.EanfangApplication;
+import com.eanfang.base.BaseApplication;
 import com.eanfang.config.ErrorCodeConst;
 import com.eanfang.kit.loading.LoadKit;
 import com.eanfang.ui.activity.NoPermissionActivity;
@@ -229,9 +229,9 @@ public class EanfangCallback<T> extends StringCallback {
                     break;
                 // 无权限
                 case ErrorCodeConst.PERMISSION_DENIED:
-                    Intent intent = new Intent(EanfangApplication.getApplication(), NoPermissionActivity.class);
+                    Intent intent = new Intent(BaseApplication.get(), NoPermissionActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    EanfangApplication.getApplication().startActivity(intent);
+                    BaseApplication.get().startActivity(intent);
                     activity.finish();
                     break;
                 default:

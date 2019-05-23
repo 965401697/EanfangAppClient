@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
@@ -19,6 +18,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.picker.common.util.DateUtils;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
 import org.json.JSONObject;
@@ -80,7 +80,7 @@ public class IMCardActivity extends BaseClientActivity {
             tvBirthday.setVisibility(View.GONE);
         }
         tvArea.setText("所在区域：" + Config.get().getAddressByCode(mUser.getAreaCode()));
-        if (mUser.getAccId().equals(String.valueOf(EanfangApplication.get().getAccId()))) {
+        if (mUser.getAccId().equals(String.valueOf(ClientApplication.get().getAccId()))) {
             tvDelete.setVisibility(View.GONE);
         }
     }
@@ -107,7 +107,7 @@ public class IMCardActivity extends BaseClientActivity {
                 .execute(new EanfangCallback<JSONObject>(IMCardActivity.this, true, org.json.JSONObject.class, (bean) -> {
 
                     EanfangHttp.post(UserApi.POST_DELETE_FRIEND_PUSH)
-                            .params("senderId", EanfangApplication.get().getAccId())
+                            .params("senderId", ClientApplication.get().getAccId())
                             .params("targetIds", mUser.getAccId())
                             .execute(new EanfangCallback<JSONObject>(IMCardActivity.this, true, JSONObject.class, (json) -> {
                                 ToastUtil.get().showToast(IMCardActivity.this, "删除成功");

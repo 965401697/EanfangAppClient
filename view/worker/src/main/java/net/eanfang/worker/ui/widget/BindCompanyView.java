@@ -22,6 +22,7 @@ import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PickerSelectUtil;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.PartnerActivity;
 
 import java.util.ArrayList;
@@ -110,7 +111,7 @@ public class BindCompanyView extends BaseDialog {
         beanList.setBusinessOneCode(Config.get().getBusinessCodeByName(tvBusinessType.getText().toString().trim(), 1));
         beanList.setBeginTime(tvStartTime.getText().toString().trim());
         beanList.setEndTime(tvEndTime.getText().toString().trim());
-        beanList.setOwnerOrgId(EanfangApplication.getApplication().getCompanyId());
+        beanList.setOwnerOrgId(WorkerApplication.get().getCompanyId());
         List<BindCompanyBean> list = new ArrayList<>();
         list.add(beanList);
         String json = JSONArray.toJSONString(list);

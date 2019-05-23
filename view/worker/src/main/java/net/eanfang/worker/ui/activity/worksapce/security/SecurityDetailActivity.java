@@ -46,6 +46,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.im.SelectIMContactActivity;
 import net.eanfang.worker.ui.activity.my.UserHomeActivity;
 import net.eanfang.worker.ui.adapter.security.SecurityCommentAdapter;
@@ -200,7 +201,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
 
     private void initListener() {
         securityCommentAdapter.setOnItemLongClickListener((adapter, view, position) -> {
-            if (!EanfangApplication.get().getUserId().equals(Long.valueOf(securityCommentAdapter.getData().get(position).getCommentsAnswerId()))) {
+            if (!WorkerApplication.get().getUserId().equals(Long.valueOf(securityCommentAdapter.getData().get(position).getCommentsAnswerId()))) {
                 showToast("只可删除自己评论");
                 return false;
             }
@@ -300,7 +301,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         tvContent.setText(convertMetionString);
 
         tvTime.setText(ETimeUtils.getTimeFormatText(securityDetailBean.getCreateTime()));
-        if (securityDetailBean.getPublisherAccId().equals(EanfangApplication.get().getAccId())) {
+        if (securityDetailBean.getPublisherAccId().equals(WorkerApplication.get().getAccId())) {
             tvIsFocus.setVisibility(View.GONE);
         } else {
             tvIsFocus.setVisibility(View.VISIBLE);
@@ -409,15 +410,15 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
      */
     private void doUnFoucus(SecurityDetailBean.SpcListBean listBean) {
         SecurityFoucsBean securityFoucsBean = new SecurityFoucsBean();
-        securityFoucsBean.setFollowUserId(EanfangApplication.get().getUserId());
-        securityFoucsBean.setFollowCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyId());
-        securityFoucsBean.setFollowTopCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getTopCompanyId());
+        securityFoucsBean.setFollowUserId(WorkerApplication.get().getUserId());
+        securityFoucsBean.setFollowCompanyId(WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyId());
+        securityFoucsBean.setFollowTopCompanyId(WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getTopCompanyId());
 
         securityFoucsBean.setAsUserId(listBean.getPublisherUserId());
         securityFoucsBean.setAsCompanyId(listBean.getPublisherCompanyId());
         securityFoucsBean.setAsTopCompanyId(listBean.getPublisherTopCompanyId());
         securityFoucsBean.setAsAccId(listBean.getPublisherUser().getAccId());
-        securityFoucsBean.setFollowAccId(EanfangApplication.get().getAccId());
+        securityFoucsBean.setFollowAccId(WorkerApplication.get().getAccId());
         /**
          * 状态：0 关注 1 未关注
          * */
@@ -476,10 +477,10 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         securityCommentBean.setStatus("0");
         securityCommentBean.setCommentsContent(mComments);
         securityCommentBean.setAsId(mId);
-        securityCommentBean.setCommentsAnswerId(EanfangApplication.get().getUserId());
-        securityCommentBean.setCommentsAnswerAccId(EanfangApplication.get().getUser().getAccount().getAccId());
-        securityCommentBean.setCommentsCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyId());
-        securityCommentBean.setCommentsTopCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getTopCompanyId());
+        securityCommentBean.setCommentsAnswerId(WorkerApplication.get().getUserId());
+        securityCommentBean.setCommentsAnswerAccId(WorkerApplication.get().getLoginBean().getAccount().getAccId());
+        securityCommentBean.setCommentsCompanyId(WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyId());
+        securityCommentBean.setCommentsTopCompanyId(WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getTopCompanyId());
         EanfangHttp.post(NewApiService.SERCURITY_COMMENT)
                 .upJson(JSONObject.toJSONString(securityCommentBean))
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
@@ -507,9 +508,9 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         } else {
             securityLikeBean.setLikeStatus("0");
         }
-        securityLikeBean.setLikeUserId(EanfangApplication.get().getUserId());
-        securityLikeBean.setLikeCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyId());
-        securityLikeBean.setLikeTopCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getTopCompanyId());
+        securityLikeBean.setLikeUserId(WorkerApplication.get().getUserId());
+        securityLikeBean.setLikeCompanyId(WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyId());
+        securityLikeBean.setLikeTopCompanyId(WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getTopCompanyId());
         EanfangHttp.post(NewApiService.SERCURITY_LIKE)
                 .upJson(JSONObject.toJSONString(securityLikeBean))
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {

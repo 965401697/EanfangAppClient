@@ -24,6 +24,7 @@ import com.journeyapps.barcodescanner.DefaultDecoderFactory;
 import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.im.AddFriendActivity;
 import net.eanfang.worker.ui.activity.worksapce.equipment.EquipmentDetailActivity;
 
@@ -215,7 +216,7 @@ public class ScanCodeActivity extends BaseActivity {
         EanfangHttp.post(NewApiService.QR_CODE)
                 .params("uuid", uuid)
                 .params("requestFrom", requestFrom)
-                .params("accountId", CustomeApplication.get().getAccId())
+                .params("accountId", WorkerApplication.get().getAccId())
                 .execute(new EanfangCallback<JSONObject>(ScanCodeActivity.this, true, JSONObject.class) {
                     @Override
                     public void onSuccess(JSONObject bean) {

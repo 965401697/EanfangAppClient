@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONPObject;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -17,6 +16,7 @@ import com.eanfang.util.PermKit;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.my.certification.CertificateListActivity;
 import net.eanfang.worker.ui.activity.worksapce.contacts.baseinfo.AuthCompanyDataActivity;
 import net.eanfang.worker.ui.activity.worksapce.contacts.baseinfo.AuthCompanyFirstActivity;
@@ -77,7 +77,7 @@ public class CompanyManagerActivity extends BaseActivity implements DissloveTeam
         isAuth = getIntent().getStringExtra("isAuth");
         adminUserId = getIntent().getStringExtra("adminUserId");
 
-        if (String.valueOf(EanfangApplication.get().getUserId()).equals(adminUserId)){
+        if (String.valueOf(WorkerApplication.get().getUserId()).equals(adminUserId)){
             setRightTitle("解散团队");
         }else {
             setRightTitle("");
@@ -155,7 +155,7 @@ public class CompanyManagerActivity extends BaseActivity implements DissloveTeam
 
                 break;
             case R.id.rl_admin_set:
-                if (String.valueOf(EanfangApplication.get().getUserId()).equals(adminUserId)) {
+                if (String.valueOf(WorkerApplication.get().getUserId()).equals(adminUserId)) {
                     JumpItent.jump(CompanyManagerActivity.this, AdministratorSetActivity.class);
                 } else {
                     ToastUtil.get().showToast(this, "您不是当前公司的管理员");

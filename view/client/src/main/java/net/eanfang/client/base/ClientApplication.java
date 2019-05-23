@@ -36,7 +36,10 @@ import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
 public class ClientApplication extends BaseApplication {
     @Getter
     private static IWXAPI wxApi;
-
+    /**
+     * 是否自动更新过
+     */
+    public static boolean isUpdated = false;
     @Override
     public void onCreate() {
         super.onCreate();

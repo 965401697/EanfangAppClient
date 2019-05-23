@@ -4,7 +4,6 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.model.WorkspaceInstallBean;
@@ -12,6 +11,7 @@ import com.eanfang.util.ToastUtil;
 import com.eanfang.util.V;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 
 /**
  * 工作台-我要报装adapter
@@ -41,7 +41,7 @@ public class WorkspaceInstallAdapter extends BaseQuickAdapter<WorkspaceInstallBe
                 .setText(R.id.tv_count_money, Config.get().getConstBean().getData().getDesignOrderConstant().get(Constant.BUDGET_LIMIT_TYPE).get(V.v(() -> item.getBudget())))
                 .setText(R.id.tv_business, "业务：" + Config.get().getBusinessNameByCode(V.v(() -> item.getBusinessOneCode()), 1));
         if (item.getStatus() == 2) {
-            if (item.getCreateUserId().equals(EanfangApplication.getApplication().getUserId())) {
+            if (item.getCreateUserId().equals(ClientApplication.get().getUserId())) {
                 helper.getView(R.id.tv_finish).setVisibility(View.VISIBLE);
             } else {
                 ToastUtil.get().showToast(mContext, "只有创建人可操作");

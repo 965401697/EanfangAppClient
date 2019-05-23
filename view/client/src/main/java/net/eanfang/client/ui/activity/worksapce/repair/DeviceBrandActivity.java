@@ -30,6 +30,7 @@ import butterknife.ButterKnife;
  * @author guanluocang
  * @data 2018/10/15
  * @description 选择设备品牌
+ * 已提取设备品牌相关内容
  */
 
 public class DeviceBrandActivity extends BaseActivity {

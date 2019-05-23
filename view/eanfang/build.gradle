@@ -79,6 +79,7 @@ dependencies {
     api project(':biz:model')
 
     api project(':base:kit')
+    api project(':base:widget')
 
     implementation pkg.constraintlayout
     implementation pkg.legacySupportV4

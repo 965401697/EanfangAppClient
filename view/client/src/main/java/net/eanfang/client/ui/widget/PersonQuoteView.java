@@ -82,7 +82,7 @@
 ////            @Override
 ////            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
 ////                String confirm = mDataList.get(position).getConfirm();
-////                User user = EanfangApplication.getApplication().getUser();
+////                User user = ClientApplication.get().getLoginBean();
 ////                if ("0".equals(confirm)) {
 ////                    switch (view.getId()) {
 ////                        case R.id.tv_do_first:
