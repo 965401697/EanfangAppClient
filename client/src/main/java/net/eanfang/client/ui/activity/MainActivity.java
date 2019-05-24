@@ -165,7 +165,7 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
                 Conversation.ConversationType.GROUP, Conversation.ConversationType.SYSTEM,
                 Conversation.ConversationType.PUBLIC_SERVICE, Conversation.ConversationType.APP_PUBLIC_SERVICE
         };
-
+        ContactUtil.postAccount(MainActivity.this);
         RongIM.getInstance().addUnReadMessageCountChangedObserver(this, conversationTypes);
     }
 
