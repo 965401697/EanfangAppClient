@@ -6,7 +6,7 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.model.SignListBean;
+import com.eanfang.biz.model.SignListBean;
 
 import net.eanfang.worker.R;
 

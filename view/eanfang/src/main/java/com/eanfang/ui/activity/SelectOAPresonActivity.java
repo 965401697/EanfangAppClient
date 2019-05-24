@@ -19,15 +19,15 @@ import com.eanfang.R2;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.OrganizationBean;
-import com.eanfang.model.SectionBean;
-import com.eanfang.model.TemplateBean;
+import com.eanfang.biz.model.OrganizationBean;
+import com.eanfang.biz.model.SectionBean;
+import com.eanfang.biz.model.TemplateBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.ui.items.OrgSelectGroupMultipleItem;
 import com.eanfang.ui.items.OrgSelectGroupSingleItem;
 import com.eanfang.ui.items.OrgSelectItem;
 import com.eanfang.util.ToastUtil;
-import com.eanfang.model.sys.UserEntity;
+import com.eanfang.biz.model.entity.UserEntity;
 
 import org.greenrobot.eventbus.EventBus;
 

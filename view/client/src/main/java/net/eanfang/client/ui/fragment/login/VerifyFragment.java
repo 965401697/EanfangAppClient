@@ -12,14 +12,14 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatCheckBox;
 
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.bean.LoginBean;
+import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.R;
-import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.MainActivity;
 import net.eanfang.client.ui.activity.worksapce.GuideActivity;
 import net.eanfang.client.util.PrefUtils;
@@ -175,7 +175,7 @@ public class VerifyFragment extends BaseFragment {
                 .params("verifycode", pwd)
                 .execute(new EanfangCallback<LoginBean>(getActivity(), true, LoginBean.class, (bean) -> {
                     isUpdataPassword = bean.getAccount().isSimplePwd();
-                    ClientApplication.get().set(LoginBean.class.getName(), bean);
+                    EanfangApplication.get().set(LoginBean.class.getName(), bean);
                     EanfangHttp.setToken(bean.getToken());
                     getActivity().runOnUiThread(() -> {
                         goMain();

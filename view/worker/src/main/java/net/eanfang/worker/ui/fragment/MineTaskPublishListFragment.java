@@ -9,7 +9,7 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.MineTaskListBean;
+import com.eanfang.biz.model.MineTaskListBean;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;

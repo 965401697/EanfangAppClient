@@ -13,10 +13,10 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.OrgUnitListBean;
+import com.eanfang.biz.model.OrgUnitListBean;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
-import com.eanfang.model.sys.OrgUnitEntity;
+import com.eanfang.biz.model.entity.OrgUnitEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;

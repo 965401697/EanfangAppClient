@@ -11,7 +11,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.QualifyCertificafeListBean;
+import com.eanfang.biz.model.QualifyCertificafeListBean;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 import com.yaf.base.entity.QualificationCertificateEntity;

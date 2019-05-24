@@ -25,7 +25,7 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.R;
 import com.eanfang.R2;
 import com.eanfang.config.Constant;
-import com.eanfang.model.SelectAddressItem;
+import com.eanfang.biz.model.SelectAddressItem;
 import com.eanfang.ui.adapter.SelectAddressAdapter;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.LocationUtil;

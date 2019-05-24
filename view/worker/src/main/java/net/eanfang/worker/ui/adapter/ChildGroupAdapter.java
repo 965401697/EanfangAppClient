@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
-import com.eanfang.model.sys.OrgEntity;
+import com.eanfang.biz.model.entity.OrgEntity;
 
 import net.eanfang.worker.R;
 

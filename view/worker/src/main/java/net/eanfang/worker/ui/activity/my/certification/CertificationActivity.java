@@ -21,7 +21,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.jph.takephoto.model.TImage;
 import com.jph.takephoto.model.TResult;
 import com.yaf.base.entity.TechWorkerVerifyEntity;
-import com.eanfang.model.sys.AccountEntity;
+import com.eanfang.biz.model.entity.AccountEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;

@@ -6,7 +6,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
-import com.eanfang.model.WorkspaceInstallBean;
+import com.eanfang.biz.model.WorkspaceInstallBean;
 import com.eanfang.util.GetConstDataUtils;
 
 import net.eanfang.worker.R;

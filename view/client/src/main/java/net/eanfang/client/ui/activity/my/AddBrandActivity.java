@@ -10,7 +10,7 @@ import android.widget.EditText;
 
 import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.eanfang.model.sys.BaseDataEntity;
+import com.eanfang.biz.model.entity.BaseDataEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;

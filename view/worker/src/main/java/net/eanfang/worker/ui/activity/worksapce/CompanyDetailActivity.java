@@ -12,8 +12,8 @@
 //
 //import com.alibaba.fastjson.JSONObject;
 //import com.chad.library.adapter.base.BaseQuickAdapter;
-//import com.eanfang.model.CompanyDetailBean;
-//import com.eanfang.model.InstallOrderConfirmBean;
+//import com.eanfang.biz.model.CompanyDetailBean;
+//import com.eanfang.biz.model.InstallOrderConfirmBean;
 //import com.eanfang.util.StringUtils;
 //import com.facebook.drawee.view.SimpleDraweeView;
 //

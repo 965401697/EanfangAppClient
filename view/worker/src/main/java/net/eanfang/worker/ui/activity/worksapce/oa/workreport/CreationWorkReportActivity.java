@@ -26,13 +26,12 @@ import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.GroupDetailBean;
-import com.eanfang.model.Message;
-import com.eanfang.model.TemplateBean;
-import com.eanfang.model.WorkAddReportBean;
-import com.eanfang.model.WorkReportInfoBean;
-import com.eanfang.model.device.User;
-import com.eanfang.model.sys.AccountEntity;
+import com.eanfang.biz.model.GroupDetailBean;
+import com.eanfang.biz.model.Message;
+import com.eanfang.biz.model.TemplateBean;
+import com.eanfang.biz.model.WorkAddReportBean;
+import com.eanfang.biz.model.WorkReportInfoBean;
+import com.eanfang.biz.model.device.User;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.takevideo.PlayVideoActivity;
@@ -53,7 +52,6 @@ import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 import net.eanfang.worker.util.SendContactUtils;
@@ -954,8 +952,8 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
 
         if (whoList.size() == 0) {
             //工作协同默认值
-            bean.setAssigneeUserId(WorkerApplication.get().getUserId());
-            bean.setAssigneeOrgCode(WorkerApplication.get().getOrgCode());
+            bean.setAssigneeUserId(EanfangApplication.get().getUserId());
+            bean.setAssigneeOrgCode(EanfangApplication.get().getOrgCode());
         } else {
             //工作协同默认值
             bean.setAssigneeUserId(Long.parseLong(whoList.get(0).getUserId()));
@@ -1024,14 +1022,14 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
                         }
 
                         Bundle b = new Bundle();
-                        AccountEntity accountEntity=WorkerApplication.get().getLoginBean().getAccount();
+
                         b.putString("id", String.valueOf(bean.getId()));
-                        b.putString("orderNum", accountEntity.getDefaultUser().getDepartmentEntity().getOrgName());
+                        b.putString("orderNum", EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getDepartmentEntity().getOrgName());
                         if (bean.getWorkReportDetails() != null && bean.getWorkReportDetails().size() > 0 && !TextUtils.isEmpty(bean.getWorkReportDetails().get(0).getPictures())) {
                             bundle.putString("picUrl", bean.getWorkReportDetails().get(0).getPictures().split(",")[0]);
                         }
                         b.putString("creatTime", String.valueOf(GetConstDataUtils.getWorkReportTypeList().indexOf(etTaskName.getText().toString().trim())));
-                        b.putString("workerName", accountEntity.getRealName());
+                        b.putString("workerName", EanfangApplication.get().getUser().getAccount().getRealName());
                         b.putString("status", "0");
                         b.putString("shareType", "3");
 

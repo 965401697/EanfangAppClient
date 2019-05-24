@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.eanfang.ui.base.BaseActivity;
-import com.eanfang.model.sys.OrgEntity;
+import com.eanfang.biz.model.entity.OrgEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.ConstactsAdapter;

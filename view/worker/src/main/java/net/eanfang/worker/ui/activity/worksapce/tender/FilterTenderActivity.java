@@ -14,7 +14,7 @@ import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
-import com.eanfang.model.sys.BaseDataEntity;
+import com.eanfang.biz.model.entity.BaseDataEntity;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;

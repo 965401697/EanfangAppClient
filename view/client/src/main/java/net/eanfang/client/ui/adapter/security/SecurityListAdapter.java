@@ -9,7 +9,7 @@ import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.eanfang.model.security.SecurityListBean;
+import com.eanfang.biz.model.security.SecurityListBean;
 import com.eanfang.util.ETimeUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;

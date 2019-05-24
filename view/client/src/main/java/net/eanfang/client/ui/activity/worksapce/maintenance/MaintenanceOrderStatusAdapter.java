@@ -6,7 +6,7 @@ import android.widget.LinearLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.model.OrderProgressBean;
+import com.eanfang.biz.model.OrderProgressBean;
 import com.github.vipulasri.timelineview.TimelineView;
 
 import net.eanfang.client.R;

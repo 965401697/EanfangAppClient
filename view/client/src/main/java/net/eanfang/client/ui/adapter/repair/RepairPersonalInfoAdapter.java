@@ -4,7 +4,7 @@ import android.widget.CheckBox;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.model.reapair.RepairPersonalInfoEntity;
+import com.eanfang.biz.model.reapair.RepairPersonalInfoEntity;
 import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.R;

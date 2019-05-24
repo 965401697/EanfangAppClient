@@ -15,7 +15,7 @@ import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.WorkTaskInfoBean;
+import com.eanfang.biz.model.WorkTaskInfoBean;
 import com.eanfang.util.GetDateUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 

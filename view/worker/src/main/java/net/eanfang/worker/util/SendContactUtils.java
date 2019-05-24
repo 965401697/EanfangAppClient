@@ -6,7 +6,7 @@ import android.os.Handler;
 import android.text.TextUtils;
 
 import com.camera.util.ToastUtil;
-import com.eanfang.model.TemplateBean;
+import com.eanfang.biz.model.TemplateBean;
 
 import net.eanfang.worker.ui.activity.im.CustomizeMessage;
 

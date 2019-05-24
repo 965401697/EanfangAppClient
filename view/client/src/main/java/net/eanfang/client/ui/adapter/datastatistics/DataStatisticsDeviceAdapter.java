@@ -8,7 +8,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
-import com.eanfang.model.datastatistics.DataStatisticsBean;
+import com.eanfang.biz.model.datastatistics.DataStatisticsBean;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;

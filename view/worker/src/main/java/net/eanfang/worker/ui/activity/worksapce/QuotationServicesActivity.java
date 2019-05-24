@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.eanfang.model.QuotationBean;
+import com.eanfang.biz.model.QuotationBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.StringUtils;
 

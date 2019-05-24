@@ -11,8 +11,8 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.eanfang.model.SectionBean;
-import com.eanfang.model.TemplateBean;
+import com.eanfang.biz.model.SectionBean;
+import com.eanfang.biz.model.TemplateBean;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;

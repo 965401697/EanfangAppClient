@@ -16,7 +16,7 @@ import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.EvaluateWorkerBean;
+import com.eanfang.biz.model.EvaluateWorkerBean;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;

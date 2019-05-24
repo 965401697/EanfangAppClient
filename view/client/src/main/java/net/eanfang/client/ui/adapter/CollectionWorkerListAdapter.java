@@ -6,7 +6,7 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.eanfang.model.CollectionWorkerListBean;
+import com.eanfang.biz.model.CollectionWorkerListBean;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;

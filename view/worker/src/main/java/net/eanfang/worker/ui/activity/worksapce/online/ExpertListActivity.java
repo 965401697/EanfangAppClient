@@ -15,10 +15,10 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.ExpertListBean;
+import com.eanfang.biz.model.ExpertListBean;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
-import com.eanfang.model.sys.BaseDataEntity;
+import com.eanfang.biz.model.entity.BaseDataEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;

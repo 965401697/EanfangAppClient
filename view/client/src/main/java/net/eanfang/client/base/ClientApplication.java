@@ -1,19 +1,23 @@
 package net.eanfang.client.base;
 
-import android.app.Activity;
+import android.net.Uri;
 import android.util.Log;
 
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.base.BaseApplication;
+import com.eanfang.base.kit.cache.CacheKit;
+import com.eanfang.base.kit.loading.LoadKit;
+import com.eanfang.base.network.config.HttpConfig;
+import com.eanfang.biz.model.entity.AccountEntity;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.kit.cache.CacheKit;
-import com.eanfang.kit.loading.LoadKit;
-import com.eanfang.network.config.HttpConfig;
+import com.eanfang.kit.ToolsKit;
 import com.mob.MobSDK;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import net.eanfang.client.BuildConfig;
+import net.eanfang.client.ui.activity.MainActivity;
 import net.eanfang.client.ui.activity.im.CustomizeMessage;
 import net.eanfang.client.ui.activity.im.CustomizeMessageItemProvider;
 import net.eanfang.client.ui.activity.im.CustomizeVideoMessage;
@@ -24,6 +28,8 @@ import net.eanfang.client.ui.activity.im.SampleExtensionModule;
 import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.UserInfo;
 import lombok.Getter;
 
 import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
@@ -102,7 +108,9 @@ public class ClientApplication extends BaseApplication {
 
             RongIM.registerMessageType(CustomizeVideoMessage.class);
             RongIM.registerMessageTemplate(new CustomizeVideoMessageItemProvider());
+
         }
+
     }
 
     /**
@@ -110,7 +118,7 @@ public class ClientApplication extends BaseApplication {
      *
      * @param token token
      */
-    public static void connect(String token, Activity activity) {
+    private void connect(String token) {
 //        Log.e("zzw2", "connect = " + token);
         RongIM.connect(token, !BuildConfig.DEBUG ? null : new RongIMClient.ConnectCallback() {
 

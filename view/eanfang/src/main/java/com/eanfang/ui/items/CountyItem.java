@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 import com.baozi.treerecyclerview.base.ViewHolder;
 import com.baozi.treerecyclerview.item.TreeItem;
 import com.eanfang.R;
-import com.eanfang.model.sys.BaseDataEntity;
+import com.eanfang.biz.model.entity.BaseDataEntity;
 
 /**
  * Created by O u r on 2018/7/27.

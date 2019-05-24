@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.eanfang.model.VideoBean;
+import com.eanfang.biz.model.VideoBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.ToastUtil;
 

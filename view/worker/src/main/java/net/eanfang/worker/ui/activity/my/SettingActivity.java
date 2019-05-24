@@ -13,7 +13,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.kit.cache.CacheKit;
+import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.sys.activity.LoginActivity;
 import com.eanfang.util.CleanMessageUtil;
 import com.eanfang.util.JumpItent;

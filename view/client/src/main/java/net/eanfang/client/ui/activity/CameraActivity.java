@@ -30,9 +30,10 @@ import com.amap.api.services.weather.WeatherSearchQuery;
 import com.camera.util.BitmapUtil;
 import com.camera.util.ImageUtil;
 import com.camera.view.TakePhotoActivity;
-import com.eanfang.kit.cache.CacheKit;
-import com.eanfang.model.CameraBean;
-import com.eanfang.model.SelectAddressItem;
+import com.eanfang.application.EanfangApplication;
+import com.eanfang.base.kit.cache.CacheKit;
+import com.eanfang.biz.model.CameraBean;
+import com.eanfang.biz.model.SelectAddressItem;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.ConnectivityChangeUtil;
@@ -42,7 +43,6 @@ import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
 
 import net.eanfang.client.R;
-import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
 import java.io.FileNotFoundException;
@@ -181,7 +181,7 @@ public class CameraActivity extends BaseClientActivity implements AMapLocationLi
         project_type = selectProjectType;
 
         //创建者
-        creatUser = V.v(() -> ClientApplication.get().getLoginBean().getAccount().getRealName());
+        creatUser = V.v(() -> EanfangApplication.get().getUser().getAccount().getRealName());
         if (StringUtils.isEmpty(creatUser)) {
             creatUser = "--";
         }

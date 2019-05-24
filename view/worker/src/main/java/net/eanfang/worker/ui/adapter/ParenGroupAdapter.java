@@ -11,7 +11,7 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.eanfang.model.sys.OrgEntity;
+import com.eanfang.biz.model.entity.OrgEntity;
 
 import net.eanfang.worker.R;
 

@@ -13,7 +13,7 @@ import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.WorkTransferDetailBean;
+import com.eanfang.biz.model.WorkTransferDetailBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;

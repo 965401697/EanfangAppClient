@@ -14,8 +14,8 @@ import com.eanfang.apiservice.UserApi;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.AuthCompanyBaseInfoBean;
-import com.eanfang.model.SelectAddressItem;
+import com.eanfang.biz.model.AuthCompanyBaseInfoBean;
+import com.eanfang.biz.model.SelectAddressItem;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.activity.SelectAddressActivity;
@@ -27,7 +27,7 @@ import com.eanfang.util.UuidUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.jph.takephoto.model.TImage;
 import com.jph.takephoto.model.TResult;
-import com.eanfang.model.sys.OrgUnitEntity;
+import com.eanfang.biz.model.entity.OrgUnitEntity;
 
 import net.eanfang.worker.R;
 

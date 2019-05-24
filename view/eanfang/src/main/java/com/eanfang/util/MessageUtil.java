@@ -1,6 +1,6 @@
 package com.eanfang.util;
 
-import com.eanfang.model.Message;
+import com.eanfang.biz.model.Message;
 
 /**
  * Created by jornl on 2018/1/17.

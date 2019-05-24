@@ -7,13 +7,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.WorkspaceInstallBean;
+import com.eanfang.biz.model.WorkspaceInstallBean;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
-import com.yaf.base.entity.RepairOrderEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;

@@ -5,7 +5,7 @@ import android.text.TextUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.config.Config;
-import com.eanfang.model.sys.OrgUnitEntity;
+import com.eanfang.biz.model.entity.OrgUnitEntity;
 
 import net.eanfang.client.R;
 

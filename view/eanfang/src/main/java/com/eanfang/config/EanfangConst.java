@@ -1,7 +1,10 @@
 package com.eanfang.config;
 
-public class EanfangConst {
+public interface EanfangConst {
 
+    interface STR {
+        String RONG_YUN_TOKEN = "rong_yun_token";
+    }
 
     /**
      * 工作任务 状态 未读
@@ -58,7 +61,9 @@ public class EanfangConst {
 
     /**
      * 融云的token
+     * {@link STR}
      */
+    @Deprecated
     public static final String RONG_YUN_TOKEN = "rong_yun_token";
     /**
      * 融云的群组id

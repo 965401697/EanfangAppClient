@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
-import com.eanfang.model.Message;
+import com.eanfang.biz.model.Message;
 import com.eanfang.util.CallUtils;
 
 import net.eanfang.client.R;

@@ -15,9 +15,9 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.bean.LoginBean;
-import com.eanfang.model.sys.OrgEntity;
-import com.eanfang.network.config.HttpConfig;
+import com.eanfang.biz.model.bean.LoginBean;
+import com.eanfang.biz.model.entity.OrgEntity;
+import com.eanfang.base.network.config.HttpConfig;
 import com.eanfang.util.PermKit;
 import com.picker.common.util.ScreenUtils;
 

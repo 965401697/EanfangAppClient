@@ -5,7 +5,7 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.eanfang.model.GroupDetailBean;
+import com.eanfang.biz.model.GroupDetailBean;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;

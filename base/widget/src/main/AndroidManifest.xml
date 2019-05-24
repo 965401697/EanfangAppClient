@@ -1,2 +1,2 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.eanfang.widget" />
+    package="com.eanfang.base.widget" />

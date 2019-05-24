@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.config.Config;
-import com.eanfang.model.WorkAddCheckBean;
+import com.eanfang.biz.model.WorkAddCheckBean;
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;

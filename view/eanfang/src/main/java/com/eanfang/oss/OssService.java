@@ -30,6 +30,7 @@ import java.util.concurrent.atomic.AtomicReference;
  * Created by oss on 2015/12/7 0007.
  * 支持普通上传，普通下载和断点上传
  */
+@Deprecated
 public class OssService {
 
     //private MultiPartUploadManager multiPartUploadManager;

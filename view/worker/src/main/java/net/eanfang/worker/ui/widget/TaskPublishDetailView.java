@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.config.Config;
-import com.eanfang.model.MineTaskListBean;
+import com.eanfang.biz.model.MineTaskListBean;
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.StringUtils;

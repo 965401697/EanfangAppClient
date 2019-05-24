@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.delegate.BGASortableDelegate;
-import com.eanfang.model.TemplateBean;
-import com.eanfang.model.WorkAddReportBean;
+import com.eanfang.biz.model.TemplateBean;
+import com.eanfang.biz.model.WorkAddReportBean;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.takevideo.PlayVideoActivity;

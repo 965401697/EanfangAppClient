@@ -2,8 +2,8 @@ package net.eanfang.client.ui.adapter;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.model.sys.OrgEntity;
-import com.eanfang.model.sys.UserEntity;
+import com.eanfang.biz.model.entity.OrgEntity;
+import com.eanfang.biz.model.entity.UserEntity;
 
 import net.eanfang.client.R;
 

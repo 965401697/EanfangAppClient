@@ -12,7 +12,7 @@ import com.eanfang.config.Config;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.device.User;
+import com.eanfang.biz.model.device.User;
 import com.eanfang.util.ToastUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.picker.common.util.DateUtils;

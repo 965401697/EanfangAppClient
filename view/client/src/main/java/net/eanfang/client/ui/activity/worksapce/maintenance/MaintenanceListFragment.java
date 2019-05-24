@@ -8,7 +8,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.device.MaintenanceOrderListBean;
+import com.eanfang.biz.model.device.MaintenanceOrderListBean;
 import com.eanfang.ui.base.BaseEvent;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;

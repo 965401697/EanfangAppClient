@@ -4,11 +4,11 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.BuildConfig;
-import com.eanfang.model.FollowDataBean;
+import com.eanfang.biz.model.FollowDataBean;
 import com.yaf.base.entity.WorkerEntity;
-import com.eanfang.model.sys.AccountEntity;
-import com.eanfang.model.sys.OrgEntity;
-import com.eanfang.model.sys.UserEntity;
+import com.eanfang.biz.model.entity.AccountEntity;
+import com.eanfang.biz.model.entity.OrgEntity;
+import com.eanfang.biz.model.entity.UserEntity;
 
 import net.eanfang.client.ui.adapter.viewholder.FollowListViewHolder;
 

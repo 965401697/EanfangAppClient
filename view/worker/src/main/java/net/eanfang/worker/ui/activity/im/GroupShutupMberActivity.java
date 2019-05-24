@@ -10,7 +10,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.GroupDetailBean;
+import com.eanfang.biz.model.GroupDetailBean;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.worker.R;

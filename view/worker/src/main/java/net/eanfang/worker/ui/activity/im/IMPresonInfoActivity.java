@@ -14,7 +14,7 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.device.User;
+import com.eanfang.biz.model.device.User;
 import com.eanfang.util.ToastUtil;
 import com.facebook.drawee.view.SimpleDraweeView;
 

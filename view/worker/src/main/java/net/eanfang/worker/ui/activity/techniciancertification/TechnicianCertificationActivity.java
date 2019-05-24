@@ -15,7 +15,7 @@ import com.eanfang.apiservice.UserApi;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.AuthStatusBean;
+import com.eanfang.biz.model.AuthStatusBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.ToastUtil;

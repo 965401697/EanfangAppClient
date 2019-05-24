@@ -27,8 +27,8 @@ import androidx.core.app.ActivityCompat;
 
 import com.eanfang.R;
 import com.eanfang.application.CustomeApplication;
-import com.eanfang.base.BaseApplication;
-import com.eanfang.model.bean.LoginBean;
+import com.eanfang.application.EanfangApplication;
+import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.util.DialogUtil;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.ToastUtil;
@@ -58,7 +58,7 @@ public class BaseActivity extends AppCompatActivity implements
      * 似乎只是在聊天的时候 销毁窗口用的 考虑写成接口形式
      */
     @Deprecated
-    public final static ArrayList<Activity> transactionActivities = new ArrayList<Activity>();
+    public final static ArrayList<Activity> transactionActivities = new ArrayList<>();
 
 
     //Android6.0申请权限的回调方法
@@ -320,7 +320,7 @@ public class BaseActivity extends AppCompatActivity implements
 
     @Deprecated
     public LoginBean user() {
-        Object obj = BaseApplication.get().getUser();
+        Object obj = EanfangApplication.getApplication().getUser();
         if (obj instanceof LoginBean) {
             return (LoginBean) obj;
         }

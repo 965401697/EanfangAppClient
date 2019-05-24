@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.reapair.RepairPersonalInfoEntity;
+import com.eanfang.biz.model.reapair.RepairPersonalInfoEntity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;

@@ -1,7 +1,6 @@
 package net.eanfang.worker.ui.activity.my.certification;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,9 +14,9 @@ import com.eanfang.apiservice.UserApi;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.GrantChange;
-import com.eanfang.model.WorkerVerifySkillBean;
-import com.eanfang.model.sys.BaseDataEntity;
+import com.eanfang.biz.model.GrantChange;
+import com.eanfang.biz.model.WorkerVerifySkillBean;
+import com.eanfang.biz.model.entity.BaseDataEntity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;

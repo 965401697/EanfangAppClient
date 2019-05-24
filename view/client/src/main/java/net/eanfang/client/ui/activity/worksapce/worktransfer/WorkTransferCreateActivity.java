@@ -15,12 +15,12 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.GroupDetailBean;
-import com.eanfang.model.TemplateBean;
-import com.eanfang.model.WorkTransferDetailBean;
-import com.eanfang.model.sys.UserEntity;
+import com.eanfang.biz.model.GroupDetailBean;
+import com.eanfang.biz.model.TemplateBean;
+import com.eanfang.biz.model.WorkTransferDetailBean;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.DialogUtil;
@@ -30,7 +30,6 @@ import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.client.R;
-import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.im.CreateGroupOrganizationActivity;
 import net.eanfang.client.ui.activity.worksapce.oa.SelectOAGroupActivity;
 import net.eanfang.client.ui.adapter.SendPersonAdapter;
@@ -211,14 +210,13 @@ public class WorkTransferCreateActivity extends BaseActivity {
     private void initView() {
         setLeftBack();
         setTitle("交接班");
-        UserEntity userEntity=ClientApplication.get().getLoginBean().getAccount().getDefaultUser();
-        mUserId = userEntity.getUserId();
-        mCompanyId = userEntity.getCompanyEntity().getOrgId();
-        mTopCompanyId = userEntity.getCompanyEntity().getTopCompanyId();
-        mDepartmentId = userEntity.getCompanyEntity().getOrgCode();
-        tvCompanyName.setText(userEntity.getCompanyEntity().getOrgName());
-        if (userEntity.getDepartmentEntity() != null) {
-            tvDepartmentName.setText(userEntity.getDepartmentEntity().getOrgName());
+        mUserId = EanfangApplication.get().getUser().getAccount().getDefaultUser().getUserId();
+        mCompanyId = EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgId();
+        mTopCompanyId = EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getTopCompanyId();
+        mDepartmentId = EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgCode();
+        tvCompanyName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
+        if (EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getDepartmentEntity() != null) {
+            tvDepartmentName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getDepartmentEntity().getOrgName());
         }
 
         workTransferDetailFinishWorkAdapter = new WorkTransferDetailFinishWorkAdapter(true);
@@ -327,9 +325,9 @@ public class WorkTransferCreateActivity extends BaseActivity {
 
                 Intent intent = new Intent(WorkTransferCreateActivity.this, CreateGroupOrganizationActivity.class);
                 intent.putExtra("isFrom", "OA");
-                intent.putExtra("companyId", String.valueOf(ClientApplication.get().getCompanyId()));
-                intent.putExtra("companyOrgCode", ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgCode());
-                intent.putExtra("companyName", ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
+                intent.putExtra("companyId", String.valueOf(EanfangApplication.getApplication().getCompanyId()));
+                intent.putExtra("companyOrgCode", EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgCode());
+                intent.putExtra("companyName", EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
                 Bundle b = new Bundle();
                 b.putSerializable("list", (Serializable) sendPersonAdapter.getData());
                 intent.putExtras(b);
@@ -525,7 +523,7 @@ public class WorkTransferCreateActivity extends BaseActivity {
 //                        if (bean.getOrgCode() != null && !TextUtils.isEmpty(bean.getOrgCode())) {
 //                            assigneeOrgCode = bean.getOrgCode();
 //                        } else {
-//                            assigneeOrgCode = ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgCode();
+//                            assigneeOrgCode = EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgCode();
 //                        }
             } else {
 
@@ -580,12 +578,12 @@ public class WorkTransferCreateActivity extends BaseActivity {
                     b.putString("orderNum", bean.getOrderNum());
 
                     b.putString("creatTime", bean.getCreateTime());
-                    if (newPresonList.size() > 0 && !newPresonList.get(0).getUserId().equals(ClientApplication.get().getUserId())) {
+                    if (newPresonList.size() > 0 && !newPresonList.get(0).getUserId().equals(EanfangApplication.get().getUserId())) {
 
                         b.putString("workerName", "接收人：" + newPresonList.get(0).getName());
                     } else {
 
-                        b.putString("workerName", "创建人：" + ClientApplication.get().getLoginBean().getAccount().getRealName());
+                        b.putString("workerName", "创建人：" + EanfangApplication.get().getUser().getAccount().getRealName());
                     }
                     b.putString("status", "0");
                     b.putString("shareType", "6");
@@ -706,16 +704,16 @@ public class WorkTransferCreateActivity extends BaseActivity {
 
             if (newPresonList.size() == 0) {
                 //工作协同默认值
-                workTransferDetailBean.setAssigneeUserId(String.valueOf(ClientApplication.get().getUserId()));
-                workTransferDetailBean.setAssigneeOrgCode(ClientApplication.get().getOrgCode());
-                workTransferDetailBean.setAssigneeCompanyId(String.valueOf(ClientApplication.get().getCompanyId()));
-                workTransferDetailBean.setAssigneeTopCompanyId(String.valueOf(ClientApplication.get().getTopCompanyId()));
+                workTransferDetailBean.setAssigneeUserId(String.valueOf(EanfangApplication.get().getUserId()));
+                workTransferDetailBean.setAssigneeOrgCode(EanfangApplication.get().getOrgCode());
+                workTransferDetailBean.setAssigneeCompanyId(String.valueOf(EanfangApplication.getApplication().getCompanyId()));
+                workTransferDetailBean.setAssigneeTopCompanyId(String.valueOf(EanfangApplication.getApplication().getTopCompanyId()));
             } else {
                 //工作协同默认值
                 workTransferDetailBean.setAssigneeUserId(newPresonList.get(0).getUserId());
                 workTransferDetailBean.setAssigneeOrgCode(newPresonList.get(0).getOrgCode());
-                workTransferDetailBean.setAssigneeCompanyId(String.valueOf(ClientApplication.get().getCompanyId()));
-                workTransferDetailBean.setAssigneeTopCompanyId(String.valueOf(ClientApplication.get().getTopCompanyId()));
+                workTransferDetailBean.setAssigneeCompanyId(String.valueOf(EanfangApplication.getApplication().getCompanyId()));
+                workTransferDetailBean.setAssigneeTopCompanyId(String.valueOf(EanfangApplication.getApplication().getTopCompanyId()));
             }
 //            }
             if (mClassID == 100) {

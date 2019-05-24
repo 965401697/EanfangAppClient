@@ -13,7 +13,7 @@ import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.base.BaseApplication;
 import com.eanfang.config.ErrorCodeConst;
-import com.eanfang.kit.loading.LoadKit;
+import com.eanfang.base.kit.loading.LoadKit;
 import com.eanfang.ui.activity.NoPermissionActivity;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;

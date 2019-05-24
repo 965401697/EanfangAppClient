@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.eanfang.model.TemplateBean;
+import com.eanfang.biz.model.TemplateBean;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.worker.R;

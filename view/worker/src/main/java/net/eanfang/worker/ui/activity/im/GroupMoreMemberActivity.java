@@ -8,7 +8,7 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.config.EanfangConst;
-import com.eanfang.model.GroupDetailBean;
+import com.eanfang.biz.model.GroupDetailBean;
 import com.eanfang.util.Cn2Spell;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.witget.SideBar;

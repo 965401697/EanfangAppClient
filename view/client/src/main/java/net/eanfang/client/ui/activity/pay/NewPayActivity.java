@@ -28,7 +28,7 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.WXPayBean;
+import com.eanfang.biz.model.WXPayBean;
 import com.eanfang.util.MessageUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;

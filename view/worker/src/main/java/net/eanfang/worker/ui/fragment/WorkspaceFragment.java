@@ -12,16 +12,16 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.annimon.stream.Stream;
-import com.eanfang.widget.customview.CircleImageView;
+import com.customview.CircleImageView;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.AllMessageBean;
-import com.eanfang.model.bean.LoginBean;
-import com.eanfang.model.sys.AccountEntity;
-import com.eanfang.model.sys.OrgEntity;
+import com.eanfang.biz.model.AllMessageBean;
+import com.eanfang.biz.model.bean.LoginBean;
+import com.eanfang.biz.model.entity.OrgEntity;
 import com.eanfang.ui.activity.kpbs.KPBSActivity;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.GlideUtil;
@@ -30,7 +30,6 @@ import com.eanfang.util.PermKit;
 import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.CameraActivity;
 import net.eanfang.worker.ui.activity.MainActivity;
 import net.eanfang.worker.ui.activity.worksapce.CustomerServiceActivity;
@@ -93,9 +92,9 @@ public class WorkspaceFragment extends BaseFragment {
     /**
      * 消息气泡
      */
-    private QBadgeView qBadgeViewReport = new QBadgeView(WorkerApplication.get().getApplicationContext());
-    private QBadgeView qBadgeViewTask = new QBadgeView(WorkerApplication.get().getApplicationContext());
-    private QBadgeView qBadgeViewInspect = new QBadgeView(WorkerApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewReport = new QBadgeView(EanfangApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewTask = new QBadgeView(EanfangApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewInspect = new QBadgeView(EanfangApplication.get().getApplicationContext());
     private int mReport = 0;
     private int mTask = 0;
     private int mInspect = 0;
@@ -121,7 +120,7 @@ public class WorkspaceFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         doHttpOrderNums();
-        String companyName = WorkerApplication.get().getLoginBean()
+        String companyName = EanfangApplication.getApplication().getUser()
                 .getAccount().getDefaultUser().getCompanyEntity().getOrgName();
         if ("个人".equals(companyName)) {
             tvCompanyName.setText(companyName + "(点击切换公司)");
@@ -172,7 +171,7 @@ public class WorkspaceFragment extends BaseFragment {
     // 获取当前定位
     private void getLocation() {
         LocationUtil.location((MainActivity) getActivity(), (location) -> {
-            LoginBean user = WorkerApplication.get().getLoginBean();
+            LoginBean user = EanfangApplication.getApplication().getUser();
             if (user == null || StringUtils.isEmpty(user.getToken())) {
                 return;
             }
@@ -185,9 +184,8 @@ public class WorkspaceFragment extends BaseFragment {
     }
 
     private void setLogpic() {
-        AccountEntity accountEntity=WorkerApplication.get().getLoginBean().getAccount();
-        List<OrgEntity> orgUnitEntityList = new ArrayList<>(accountEntity.getBelongCompanys());
-        Long defaultOrgid = accountEntity.getDefaultUser().getCompanyEntity().getOrgId();
+        List<OrgEntity> orgUnitEntityList = new ArrayList<>(EanfangApplication.getApplication().getUser().getAccount().getBelongCompanys());
+        Long defaultOrgid = EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgId();
         List<String> defaultPic = Stream.of(orgUnitEntityList).filter(bean -> bean.getOrgUnitEntity() != null
                 && bean.getOrgUnitEntity().getLogoPic() != null
                 && bean.getOrgUnitEntity().getOrgId().equals(defaultOrgid)).map(be -> v(() -> be.getOrgUnitEntity().getLogoPic())).toList();
@@ -224,7 +222,7 @@ public class WorkspaceFragment extends BaseFragment {
     private void doChangeCompany() {
 
         EanfangHttp.post(NewApiService.GET_COMPANY_ALL_LIST)
-                .params("accId", WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getAccId() + "")
+                .params("accId", EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getAccId() + "")
                 // 公司类型（单位类型0平台总公司1城市平台公司2企事业单位3安防公司）
                 .params("orgType", "3")
                 .execute(new EanfangCallback<OrgEntity>(getActivity(), false, OrgEntity.class, true, bean -> {

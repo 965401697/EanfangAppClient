@@ -1,11 +1,10 @@
 package net.eanfang.worker.ui.adapter.repair;
 
 import android.net.Uri;
-import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.model.FaultListBean;
+import com.eanfang.biz.model.FaultListBean;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 

@@ -12,7 +12,7 @@ import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.listener.MultiClickListener;
-import com.eanfang.model.MaintenanceBean;
+import com.eanfang.biz.model.MaintenanceBean;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.util.GetConstDataUtils;

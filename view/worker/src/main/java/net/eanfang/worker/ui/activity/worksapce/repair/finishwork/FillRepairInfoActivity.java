@@ -28,7 +28,7 @@ import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.MultiClickListener;
-import com.eanfang.model.TemplateBean;
+import com.eanfang.biz.model.TemplateBean;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.takevideo.TakeVdideoMode;

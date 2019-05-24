@@ -4,10 +4,10 @@ import android.os.Environment;
 
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
-import com.eanfang.base.BaseApplication;
-import com.eanfang.model.BaseDataBean;
-import com.eanfang.model.ConstAllBean;
-import com.eanfang.model.sys.BaseDataEntity;
+import com.eanfang.application.EanfangApplication;
+import com.eanfang.biz.model.bean.BaseDataBean;
+import com.eanfang.biz.model.bean.ConstAllBean;
+import com.eanfang.biz.model.entity.BaseDataEntity;
 import com.eanfang.util.StringUtils;
 
 import java.util.ArrayList;
@@ -52,7 +52,7 @@ public class Config {
         if (constBean == null) {
             synchronized (Config.class) {
                 if (constBean == null) {
-                    constBean = (ConstAllBean) BaseApplication.get().get(ConstAllBean.class.getName(), ConstAllBean.class);
+                    constBean = (ConstAllBean) EanfangApplication.get().get(ConstAllBean.class.getName(), ConstAllBean.class);
                 }
             }
         }
@@ -67,7 +67,7 @@ public class Config {
         if (baseDataBean == null) {
             synchronized (Config.class) {
                 if (baseDataBean == null) {
-                    baseDataBean = (BaseDataBean) BaseApplication.get().get(BaseDataBean.class.getName(), BaseDataBean.class);
+                    baseDataBean = (BaseDataBean) EanfangApplication.get().get(BaseDataBean.class.getName(), BaseDataBean.class);
                 }
             }
         }

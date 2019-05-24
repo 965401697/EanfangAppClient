@@ -11,9 +11,9 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.eanfang.model.PuPiaoBean;
-import com.eanfang.model.SelectAddressItem;
-import com.eanfang.model.ZhuanPiaoBean;
+import com.eanfang.biz.model.PuPiaoBean;
+import com.eanfang.biz.model.SelectAddressItem;
+import com.eanfang.biz.model.ZhuanPiaoBean;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.util.StringUtils;
 

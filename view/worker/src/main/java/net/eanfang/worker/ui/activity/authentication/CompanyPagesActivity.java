@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.eanfang.widget.customview.SuperTextView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.CompanyPagesData;
+import com.eanfang.biz.model.CompanyPagesData;
 import com.eanfang.ui.base.BaseActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 

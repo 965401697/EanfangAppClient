@@ -1,7 +1,7 @@
 package com.yaf.base.entity;
 
-import com.eanfang.model.sys.OrgEntity;
-import com.eanfang.model.sys.UserEntity;
+import com.eanfang.biz.model.entity.OrgEntity;
+import com.eanfang.biz.model.entity.UserEntity;
 
 import java.io.Serializable;
 import java.util.List;

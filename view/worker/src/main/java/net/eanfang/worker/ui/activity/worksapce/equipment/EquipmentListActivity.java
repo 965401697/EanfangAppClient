@@ -17,7 +17,7 @@ import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.yaf.base.entity.CooperationEntity;
-import com.eanfang.model.sys.BaseDataEntity;
+import com.eanfang.biz.model.entity.BaseDataEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;

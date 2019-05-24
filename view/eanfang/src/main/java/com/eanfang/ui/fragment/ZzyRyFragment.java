@@ -5,7 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.eanfang.R;
-import com.eanfang.model.SecurityCompanyDetailsBean;
+import com.eanfang.biz.model.SecurityCompanyDetailsBean;
 import com.eanfang.ui.adapter.ZzyRyAdapter;
 import com.eanfang.ui.adapter.ZzyRyBAdapter;
 import com.eanfang.ui.base.BaseFragment;

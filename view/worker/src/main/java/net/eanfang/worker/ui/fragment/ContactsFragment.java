@@ -17,22 +17,21 @@ import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
-
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.bean.LoginBean;
-import com.eanfang.model.OrganizationBean;
-import com.eanfang.network.config.HttpConfig;
+import com.eanfang.biz.model.bean.LoginBean;
+import com.eanfang.biz.model.OrganizationBean;
+import com.eanfang.base.network.config.HttpConfig;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.witget.recycleview.FullyLinearLayoutManager;
-import com.eanfang.model.sys.OrgEntity;
+import com.eanfang.biz.model.entity.OrgEntity;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.im.MorePopWindow;
 import net.eanfang.worker.ui.activity.im.MyFriendsListActivity;
 import net.eanfang.worker.ui.activity.im.MyGroupsListActivity;
@@ -143,7 +142,7 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
             rl_create_team.setVisibility(View.GONE);
             rev_list.setVisibility(View.VISIBLE);
 
-            Long companyId = WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgId();
+            Long companyId = EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgId();
             // 获取默认公司 进行排序和添加到第一个item
             List<OrgEntity> firstList = Stream.of(mDatas).filter((bean) -> bean.getCompanyId().equals(companyId)).toList();
             if (firstList.size() > 0 && firstList != null) {
@@ -247,7 +246,7 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
 
         parentAdapter.setOnItemChildClickListener((adapter, view, position) -> {
 
-            if (!String.valueOf(((OrgEntity) adapter.getData().get(position)).getCompanyId()).equals(String.valueOf(WorkerApplication.get().getCompanyId()))) {
+            if (!String.valueOf(((OrgEntity) adapter.getData().get(position)).getCompanyId()).equals(String.valueOf(EanfangApplication.get().getCompanyId()))) {
                 ToastUtil.get().showToast(getActivity(), "请到工作台切换当前被点击的公司");
                 return;
             }
@@ -369,10 +368,10 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
                 .execute(new EanfangCallback<LoginBean>(getActivity(), false, LoginBean.class, (bean) -> {
                     if (bean != null) {
                         PermKit.permList.clear();
-                        WorkerApplication.get().remove(LoginBean.class.getName());
-                        WorkerApplication.get().set(LoginBean.class.getName(),bean);
-                        EanfangHttp.setToken(WorkerApplication.get().getLoginBean().getToken());
-                        HttpConfig.get().setToken(WorkerApplication.get().getLoginBean().getToken());
+                        EanfangApplication.get().remove(LoginBean.class.getName());
+                        EanfangApplication.get().set(LoginBean.class.getName(),bean);
+                        EanfangHttp.setToken(EanfangApplication.get().getUser().getToken());
+                        HttpConfig.get().setToken(EanfangApplication.get().getUser().getToken());
                         EanfangHttp.setClient();
                     }
                 }));

@@ -18,7 +18,7 @@ import com.eanfang.R2;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.ExpertDetailsBean;
+import com.eanfang.biz.model.ExpertDetailsBean;
 import com.eanfang.ui.adapter.ExpertDetailsAdapter;
 import com.eanfang.ui.base.BaseActivity;
 import com.facebook.drawee.view.SimpleDraweeView;

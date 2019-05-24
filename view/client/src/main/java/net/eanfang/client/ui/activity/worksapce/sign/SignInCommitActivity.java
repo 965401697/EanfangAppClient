@@ -11,7 +11,7 @@ import com.eanfang.apiservice.UserApi;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.SigninBean;
+import com.eanfang.biz.model.SigninBean;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.base.BaseActivity;

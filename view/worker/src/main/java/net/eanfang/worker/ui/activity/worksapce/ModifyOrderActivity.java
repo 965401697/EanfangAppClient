@@ -10,7 +10,7 @@ import com.eanfang.apiservice.RepairApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.RepairedOrderBean;
+import com.eanfang.biz.model.RepairedOrderBean;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 

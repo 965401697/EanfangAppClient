@@ -8,7 +8,7 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.WorkCheckListBean;
+import com.eanfang.biz.model.WorkCheckListBean;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;

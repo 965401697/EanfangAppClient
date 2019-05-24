@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
-import com.eanfang.model.TemplateBean;
+import com.eanfang.biz.model.TemplateBean;
 
 import net.eanfang.client.ui.activity.im.CustomizeMessage;
 

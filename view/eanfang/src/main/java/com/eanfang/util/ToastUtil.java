@@ -3,7 +3,7 @@ package com.eanfang.util;
 import android.content.Context;
 import android.widget.Toast;
 
-import com.eanfang.network.holder.ToastHolder;
+import com.eanfang.base.network.holder.ToastHolder;
 
 
 /**

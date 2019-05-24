@@ -3,7 +3,7 @@ package com.eanfang.ui.adapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.R;
-import com.eanfang.model.SelectAddressItem;
+import com.eanfang.biz.model.SelectAddressItem;
 
 import java.util.List;
 

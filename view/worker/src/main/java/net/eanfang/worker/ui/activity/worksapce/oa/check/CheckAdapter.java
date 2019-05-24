@@ -10,16 +10,15 @@ import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.config.Config;
-import com.eanfang.model.WorkAddCheckBean;
-import com.eanfang.model.WorkAddReportBean;
-import com.eanfang.model.WorkTaskInfoBean;
+import com.eanfang.biz.model.WorkAddCheckBean;
+import com.eanfang.biz.model.WorkAddReportBean;
+import com.eanfang.biz.model.WorkTaskInfoBean;
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.worksapce.oa.task.TaskAssignmentCreationActivity;
 import net.eanfang.worker.util.ImagePerviewUtil;
 
 import java.util.ArrayList;

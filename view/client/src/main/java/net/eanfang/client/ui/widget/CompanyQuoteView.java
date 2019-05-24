@@ -13,7 +13,7 @@
 //import BaseDialog;
 //import com.eanfang.http.EanfangCallback;
 //import com.eanfang.http.EanfangHttp;
-//import com.eanfang.model.PayOrderListBean;
+//import com.eanfang.biz.model.PayOrderListBean;
 //import com.eanfang.util.CallUtils;
 //
 //import net.eanfang.client.R;

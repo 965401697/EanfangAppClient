@@ -18,7 +18,7 @@ import com.eanfang.apiservice.RepairApi;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.TemplateBean;
+import com.eanfang.biz.model.TemplateBean;
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;

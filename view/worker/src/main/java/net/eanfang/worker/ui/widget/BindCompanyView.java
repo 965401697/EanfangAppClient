@@ -16,7 +16,7 @@ import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.BindCompanyBean;
+import com.eanfang.biz.model.BindCompanyBean;
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PickerSelectUtil;

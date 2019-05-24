@@ -1,38 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ll_mainLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:focusable="true"
-    android:focusableInTouchMode="true"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!--<include layout="@layout/main_header" />-->
+    <data>
 
-    <FrameLayout
-        android:id="@+id/realtabcontent"
+    </data>
+
+    <LinearLayout
+        android:id="@+id/ll_mainLayout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/color_bottom_back_line" />
-
-    <androidx.fragment.app.FragmentTabHost
-        android:id="@android:id/tabhost"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/color_bottom_back">
+        <!--<include layout="@layout/main_header" />-->
 
         <FrameLayout
-            android:id="@android:id/tabcontent"
-            android:layout_width="0dip"
-            android:layout_height="0dip"
-            android:layout_weight="0" />
-    </androidx.fragment.app.FragmentTabHost>
+            android:id="@+id/realtabcontent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
-</LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/color_bottom_back_line" />
+
+        <!--android:id="@android:id/tabhost"-->
+        <androidx.fragment.app.FragmentTabHost
+            android:id="@+id/tabhost"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_bottom_back">
+
+            <!--  android:id="@android:id/tabhost" -->
+            <FrameLayout
+                android:id="@+id/tabcontent"
+                android:layout_width="0dip"
+                android:layout_height="0dip"
+                android:layout_weight="0" />
+        </androidx.fragment.app.FragmentTabHost>
+
+    </LinearLayout>
+</layout>
 
 

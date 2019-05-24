@@ -2,7 +2,7 @@ package net.eanfang.worker.ui.adapter.worktransfer;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.model.WorkTransferDetailBean;
+import com.eanfang.biz.model.WorkTransferDetailBean;
 
 import net.eanfang.worker.R;
 

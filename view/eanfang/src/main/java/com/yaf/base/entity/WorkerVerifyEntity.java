@@ -1,6 +1,6 @@
 package com.yaf.base.entity;
 
-import com.eanfang.model.sys.AccountEntity;
+import com.eanfang.biz.model.entity.AccountEntity;
 
 import java.io.Serializable;
 import java.util.List;

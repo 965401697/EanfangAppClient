@@ -18,7 +18,7 @@ import com.eanfang.config.EanfangConst;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.GroupDetailBean;
+import com.eanfang.biz.model.GroupDetailBean;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.activity.QrCodeShowActivity;

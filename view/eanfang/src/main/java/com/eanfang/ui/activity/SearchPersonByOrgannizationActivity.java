@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.eanfang.R;
 import com.eanfang.R2;
-import com.eanfang.model.TemplateBean;
+import com.eanfang.biz.model.TemplateBean;
 import com.eanfang.ui.adapter.SearchPersonByOrgannizationAdapter;
 import com.eanfang.ui.base.BaseActivity;
 

@@ -3,7 +3,7 @@ package net.eanfang.client.ui.activity.worksapce;
 import android.os.Bundle;
 import android.view.View;
 
-import com.eanfang.model.reapair.RepairPersonalInfoEntity;
+import com.eanfang.biz.model.reapair.RepairPersonalInfoEntity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.ViewFindUtils;
 import com.flyco.tablayout.SlidingTabLayout;

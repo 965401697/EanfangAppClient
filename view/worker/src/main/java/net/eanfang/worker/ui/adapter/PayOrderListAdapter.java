@@ -5,7 +5,7 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.application.EanfangApplication;
-import com.eanfang.model.PayOrderListBean;
+import com.eanfang.biz.model.PayOrderListBean;
 import com.eanfang.util.GetConstDataUtils;
 
 import net.eanfang.worker.R;

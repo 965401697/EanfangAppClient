@@ -2,11 +2,11 @@ package net.eanfang.client.ui.adapter.security;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.model.security.SecurityCommentListBean;
+import com.eanfang.application.EanfangApplication;
+import com.eanfang.biz.model.security.SecurityCommentListBean;
 import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.R;
-import net.eanfang.client.base.ClientApplication;
 
 
 /**
@@ -25,7 +25,7 @@ public class SecurityCommentListAdapter extends BaseQuickAdapter<SecurityComment
 
     @Override
     protected void convert(BaseViewHolder helper, SecurityCommentListBean.ListBean item) {
-        if (item.getAccountEntity().getAccId().equals(ClientApplication.get().getAccId())) {
+        if (item.getAccountEntity().getAccId().equals(EanfangApplication.get().getAccId())) {
             helper.setText(R.id.tv_comment, "我：" + item.getCommentsEntity().getCommentsContent());
         } else {
             helper.setText(R.id.tv_comment, item.getAccountEntity().getRealName() + "：" + item.getCommentsEntity().getCommentsContent());

@@ -13,7 +13,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.R;
 import com.eanfang.R2;
-import com.eanfang.model.TemplateBean;
+import com.eanfang.biz.model.TemplateBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.ToastUtil;
 

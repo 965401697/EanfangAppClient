@@ -16,6 +16,7 @@ import okhttp3.Response;
  * Created by Administrator on 2015/12/9 0009.
  * 重载OSSFederationCredentialProvider生成自己的获取STS的功能
  */
+@Deprecated
 public class STSGetter extends OSSFederationCredentialProvider {
 
 
