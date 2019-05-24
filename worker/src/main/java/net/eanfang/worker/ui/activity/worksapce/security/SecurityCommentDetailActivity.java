@@ -2,14 +2,13 @@ package net.eanfang.worker.ui.activity.worksapce.security;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -17,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
@@ -26,16 +26,17 @@ import com.eanfang.model.security.SecurityCommentBean;
 import com.eanfang.model.security.SecurityCommentDetailBean;
 import com.eanfang.model.security.SecurityDetailBean;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.JsonUtils;
+import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.adapter.security.SecurityCommentAdapter;
+import net.eanfang.worker.ui.adapter.SignListAdapter;
 import net.eanfang.worker.ui.adapter.security.SecurityCommentSecondAdapter;
 import net.eanfang.worker.ui.widget.DividerItemDecoration;
 import net.eanfang.worker.ui.widget.GeneralSDialog;
-
 
 import org.json.JSONObject;
 
@@ -46,13 +47,17 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.eanfang.config.EanfangConst.BOTTOM_REFRESH;
+import static com.eanfang.config.EanfangConst.TOP_REFRESH;
+
 /**
  * @author guanluocang
  * @data 2019/5/22
  * @description 安防圈评论详情
  */
 
-public class SecurityCommentDetailActivity extends BaseActivity {
+public class SecurityCommentDetailActivity extends BaseActivity implements
+        SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
 
     @BindView(R.id.iv_seucrity_header)
     SimpleDraweeView ivSeucrityHeader;
@@ -76,11 +81,13 @@ public class SecurityCommentDetailActivity extends BaseActivity {
     EditText etInput;
     @BindView(R.id.tv_send)
     TextView tvSend;
+    @BindView(R.id.swipe_fresh)
+    SwipeRefreshLayout swipeFresh;
     private int mCommentId;
     private Long mAsId;
     private SecurityDetailBean.ListBean mCommentBean;
     private SecurityCommentSecondAdapter securityCommentAdapter;
-    private List<SecurityCommentDetailBean.CommentsEntityListBean> commentList = new ArrayList<>();
+    private List<SecurityCommentDetailBean.ListBean> commentList = new ArrayList<>();
     /**
      * 点击哪个评论进行回复
      */
@@ -90,6 +97,9 @@ public class SecurityCommentDetailActivity extends BaseActivity {
      * 当前页面是否进行 评论删除操作
      */
     private boolean isEdit = false;
+
+    private QueryEntry mQueryEntry;
+    private int page = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,7 +117,9 @@ public class SecurityCommentDetailActivity extends BaseActivity {
         rvComments.setLayoutManager(new LinearLayoutManager(this));
         securityCommentAdapter.bindToRecyclerView(rvComments);
         rvComments.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        rvComments.setNestedScrollingEnabled(false);
+        swipeFresh.setOnRefreshListener(this);
+        securityCommentAdapter.setOnLoadMoreListener(this, rvComments);
+        securityCommentAdapter.disableLoadMoreIfNotFullPage();
         mCommentId = getIntent().getIntExtra("mCommentId", 0);
         mAsId = getIntent().getLongExtra("mAsId", 0);
         mCommentBean = (SecurityDetailBean.ListBean) getIntent().getSerializableExtra("mComment");
@@ -200,19 +212,57 @@ public class SecurityCommentDetailActivity extends BaseActivity {
     }
 
     private void doGetCommentList() {
+        if (mQueryEntry == null) {
+            mQueryEntry = new QueryEntry();
+        }
+        mQueryEntry.setPage(page);
+        mQueryEntry.setSize(10);
+        mQueryEntry.getEquals().put("id", mCommentId + "");
         EanfangHttp.post(NewApiService.SERCURITY_COMMENT_DETAIL)
-                .params("id", mCommentId)
-                .execute(new EanfangCallback<SecurityCommentDetailBean>(this, true, SecurityCommentDetailBean.class, bean -> {
-                    if (commentList != null && commentList.size() > 0) {
-                        commentList.clear();
+                .upJson(JsonUtils.obj2String(mQueryEntry))
+                .execute(new EanfangCallback<SecurityCommentDetailBean>(this, true, SecurityCommentDetailBean.class) {
+                    @Override
+                    public void onSuccess(SecurityCommentDetailBean bean) {
+                        if (page == 1) {
+                            if (commentList != null && commentList.size() > 0) {
+                                commentList.clear();
+                            }
+                            if (bean.getList() != null && bean.getList().size() > 0) {
+                                tvCommentCount.setText(bean.getList().size() + "");
+                            }
+                            commentList = bean.getList();
+                            securityCommentAdapter.getData().clear();
+                            securityCommentAdapter.setNewData(commentList);
+                            rvComments.scrollToPosition(0);
+
+                            swipeFresh.setRefreshing(false);
+                            securityCommentAdapter.loadMoreComplete();
+                            if (bean.getList() != null && bean.getList().size() < 10) {
+                                securityCommentAdapter.loadMoreEnd();
+                                //释放对象
+                                mQueryEntry = null;
+                            }
+
+                        } else {
+                            securityCommentAdapter.addData(bean.getList());
+                            securityCommentAdapter.loadMoreComplete();
+                            if (bean.getList().size() < 10) {
+                                securityCommentAdapter.loadMoreEnd();
+                            }
+                        }
                     }
-                    if (bean.getCommentsEntityList() != null && bean.getCommentsEntityList().size() > 0) {
-                        tvCommentCount.setText(bean.getCommentsEntityList().size() + "");
+
+                    @Override
+                    public void onNoData(String message) {
+                        swipeFresh.setRefreshing(false);
+                        securityCommentAdapter.loadMoreEnd();
                     }
-                    commentList = bean.getCommentsEntityList();
-                    securityCommentAdapter.getData().clear();
-                    securityCommentAdapter.setNewData(commentList);
-                }));
+
+                    @Override
+                    public void onCommitAgain() {
+                        swipeFresh.setRefreshing(false);
+                    }
+                });
     }
 
     /**
@@ -266,7 +316,7 @@ public class SecurityCommentDetailActivity extends BaseActivity {
         }
         EanfangHttp.post(NewApiService.SERCURITY_COMMENT)
                 .upJson(com.alibaba.fastjson.JSONObject.toJSONString(securityCommentBean))
-                .execute(new EanfangCallback<org.json.JSONObject>(this, true, JSONObject.class, bean -> {
+                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
                     mParentCommentId = 0;
                     isEdit = true;
                     doGetCommentList();
@@ -279,6 +329,26 @@ public class SecurityCommentDetailActivity extends BaseActivity {
         Intent intent = new Intent();
         intent.putExtra("isEdit", true);
         setResult(RESULT_OK, intent);
+    }
+
+    /**
+     * 下拉刷新
+     */
+    @Override
+    public void onRefresh() {
+        mQueryEntry = null;
+        page = 1;
+        doGetCommentList();
+    }
+
+
+    /**
+     * 加载更多
+     */
+    @Override
+    public void onLoadMoreRequested() {
+        page++;
+        doGetCommentList();
     }
 
     @Override

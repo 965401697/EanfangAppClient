@@ -17,13 +17,13 @@ import net.eanfang.client.R;
  * @data 2019/5/22
  * @description 安防圈评论详情列表
  */
-public class SecurityCommentSecondAdapter extends BaseQuickAdapter<SecurityCommentDetailBean.CommentsEntityListBean, BaseViewHolder> {
+public class SecurityCommentSecondAdapter extends BaseQuickAdapter<SecurityCommentDetailBean.ListBean, BaseViewHolder> {
     public SecurityCommentSecondAdapter() {
         super(R.layout.layout_security_second_comment);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, SecurityCommentDetailBean.CommentsEntityListBean item) {
+    protected void convert(BaseViewHolder helper, SecurityCommentDetailBean.ListBean item) {
         // 头像
         SimpleDraweeView ivHeader = helper.getView(R.id.iv_seucrity_header);
         ivHeader.setImageURI((Uri.parse(BuildConfig.OSS_SERVER + V.v(() -> item.getCommentUser().getAccountEntity().getAvatar()))));

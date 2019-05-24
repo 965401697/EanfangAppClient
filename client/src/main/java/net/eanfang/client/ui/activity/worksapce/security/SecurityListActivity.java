@@ -40,7 +40,7 @@ public class SecurityListActivity extends BaseActivity {
     ViewPager vpSecurityList;
 
     private ArrayList<Fragment> mFragments = new ArrayList<>();
-    private String[] mTitles = { "热门","关注"};
+    private String[] mTitles = {"热门", "关注"};
     private MyPagerAdapter mAdapter;
 
     private final int REQUEST_LIST = 1021;
@@ -117,16 +117,16 @@ public class SecurityListActivity extends BaseActivity {
         int currentTab = tlSecurityList.getCurrentTab();
         if (resultCode == RESULT_OK && requestCode == FILTRATE_TYPE_CODE) {
             if (currentTab == 0) {
-                ((SecurityFoucsFragment) mFragments.get(currentTab)).refreshStatus();
-            } else {
                 ((SecurityHotFragment) mFragments.get(currentTab)).refreshStatus();
+            } else {
+                ((SecurityFoucsFragment) mFragments.get(currentTab)).refreshStatus();
             }
 
         } else if (resultCode == RESULT_OK && requestCode == REFRESH_ITEM) {
             if (currentTab == 0) {
-                ((SecurityFoucsFragment) mFragments.get(currentTab)).refreshItemStatus(data);
-            } else {
                 ((SecurityHotFragment) mFragments.get(currentTab)).refreshItemStatus(data);
+            } else {
+                ((SecurityFoucsFragment) mFragments.get(currentTab)).refreshItemStatus(data);
             }
         } else if (resultCode == RESULT_OK && requestCode == REQUEST_LIST) {
             // list 回来更新数量

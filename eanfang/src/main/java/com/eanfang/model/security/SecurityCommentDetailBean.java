@@ -21,31 +21,14 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SecurityCommentDetailBean implements Serializable {
-
-    private String asAccId;
-    private String asCompanyId;
-    private int asId;
-    private String asTopCompanyId;
-    private String asUserId;
-    private String commentsAnswerAccId;
-    private String commentsAnswerId;
-    private String commentsCompanyId;
-    private String commentsContent;
-    private String commentsTopCompanyId;
-    private String createTime;
-    private int friend;
-    private int id;
-    private int readStatus;
-    private int status;
-    private int type;
-    private int verifyStatus;
-    private List<CommentsEntityListBean> commentsEntityList;
+    private List<ListBean> list;
 
     @Getter
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class CommentsEntityListBean implements Serializable {
+    public static class ListBean implements Serializable {
+
         private String asAccId;
         private String asCompanyId;
         private int asId;
@@ -61,20 +44,19 @@ public class SecurityCommentDetailBean implements Serializable {
         private String createTime;
         private int friend;
         private int id;
+        private ParentCommentsEntityBean parentCommentsEntity;
         private int parentCommentsId;
         private int readStatus;
         private int status;
         private int topCommentsId;
         private int type;
         private int verifyStatus;
-        private ParentCommentsBean parentCommentsEntity;
 
         @Getter
         @Setter
         @NoArgsConstructor
         @AllArgsConstructor
         public static class CommentOrgBean implements Serializable {
-
             private String companyId;
             private int countStaff;
             private int level;
@@ -106,20 +88,42 @@ public class SecurityCommentDetailBean implements Serializable {
         @Setter
         @NoArgsConstructor
         @AllArgsConstructor
-        public static class ParentCommentsBean implements Serializable {
+        public static class ParentCommentsEntityBean implements Serializable {
+
+            private String asAccId;
+            private String asCompanyId;
+            private int asId;
+            private String asTopCompanyId;
+            private String asUserId;
+            private CommentUserTwoBean commentUser;
+            private String commentsAnswerAccId;
+            private String commentsAnswerId;
+            private String commentsCompanyId;
             private String commentsContent;
-            private CommentUserBean commentUser;
+            private String commentsTopCompanyId;
+            private String createTime;
+            private int friend;
             private int id;
+            private int parentCommentsId;
+            private int readStatus;
+            private int status;
+            private int topCommentsId;
+            private int type;
+            private int verifyStatus;
 
             @Getter
             @Setter
             @NoArgsConstructor
             @AllArgsConstructor
-            public static class CommentUserBean implements Serializable {
+            public static class CommentUserTwoBean implements Serializable {
+                private String accId;
                 private AccountEntity accountEntity;
+                private boolean companyAdmin;
+                private boolean superAdmin;
+                private boolean sysAdmin;
+                private String topCompanyId;
+                private String userId;
             }
-
-
         }
     }
 }
