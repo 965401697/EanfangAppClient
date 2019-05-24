@@ -696,6 +696,10 @@ public interface NewApiService {
      */
     String SERCURITY_COMMENT = BASE_URL + "/yaf_spc/spcircle/comment";
     /**
+     * 安防圈评论详情
+     */
+    String SERCURITY_COMMENT_DETAIL = BASE_URL + "/yaf_spc/spcircle/commentDetail";
+    /**
      * 安防圈删除评论
      */
     String SERCURITY_COMMENT_DELETE = BASE_URL + "/yaf_spc/spcircle/deleteComment";

@@ -19,6 +19,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:layout_weight="1"
             android:orientation="horizontal">
 
@@ -37,7 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen_5"
-                android:textColor="@color/color_client_neworder"
+                android:textColor="@color/color_bottom"
                 android:textSize="@dimen/textSize_11"
                 android:visibility="invisible" />
         </LinearLayout>

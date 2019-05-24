@@ -27,5 +27,7 @@ public class SecurityCommentBean implements Serializable {
     private Long commentsCompanyId;
     private Long commentsTopCompanyId;
     private Long commentsAnswerAccId;
+    private Integer topCommentsId;
+    private Integer parentCommentsId;
 
 }

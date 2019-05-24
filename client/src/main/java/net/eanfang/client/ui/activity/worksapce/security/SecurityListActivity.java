@@ -40,7 +40,7 @@ public class SecurityListActivity extends BaseActivity {
     ViewPager vpSecurityList;
 
     private ArrayList<Fragment> mFragments = new ArrayList<>();
-    private String[] mTitles = {"关注", "热门"};
+    private String[] mTitles = { "热门","关注"};
     private MyPagerAdapter mAdapter;
 
     private final int REQUEST_LIST = 1021;
@@ -62,8 +62,8 @@ public class SecurityListActivity extends BaseActivity {
         setLeftBack();
         setRightTitle("我的");
         setRightImageResId(R.mipmap.ic_security_right);
-        mFragments.add(SecurityFoucsFragment.getInstance("关注"));
         mFragments.add(SecurityHotFragment.getInstance("热门"));
+        mFragments.add(SecurityFoucsFragment.getInstance("关注"));
         mSecurityNum = getIntent().getIntExtra("mSecurityNum", 0);
 
         mAdapter = new MyPagerAdapter(getSupportFragmentManager());

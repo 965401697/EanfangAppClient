@@ -73,6 +73,8 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
 
     private static final int REQUEST_CODE_CHOOSE_PHOTO = 1;
 
+    private static final int REQUEST_CODE_COMMENT_DETAIL = 100;
+
     private static final int REQUEST_CODE_CHOOSE_PHOTO_two = 1;
     @BindView(R.id.iv_seucrity_header)
     SimpleDraweeView ivSeucrityHeader;
@@ -209,6 +211,13 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
     }
 
     private void initListener() {
+        securityCommentAdapter.setOnItemClickListener((adapter, view, position) -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt("mCommentId", securityCommentAdapter.getData().get(position).getId());
+            bundle.putLong("mAsId", securityCommentAdapter.getData().get(position).getAsId());
+            bundle.putSerializable("mComment", securityCommentAdapter.getData().get(position));
+            JumpItent.jump(this, SecurityCommentDetailActivity.class, bundle, REQUEST_CODE_COMMENT_DETAIL);
+        });
         securityCommentAdapter.setOnItemLongClickListener((adapter, view, position) -> {
             if (!EanfangApplication.get().getUserId().equals(Long.valueOf(securityCommentAdapter.getData().get(position).getCommentsAnswerId()))) {
                 showToast("只可删除自己评论");
@@ -505,6 +514,8 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         securityCommentBean.setCommentsAnswerAccId(EanfangApplication.get().getUser().getAccount().getAccId());
         securityCommentBean.setCommentsCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyId());
         securityCommentBean.setCommentsTopCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getTopCompanyId());
+        securityCommentBean.setTopCommentsId(null);
+        securityCommentBean.setParentCommentsId(null);
         EanfangHttp.post(NewApiService.SERCURITY_COMMENT)
                 .upJson(JSONObject.toJSONString(securityCommentBean))
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
@@ -684,6 +695,10 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
                 isFoucus = data.getBooleanExtra(UserHomeActivity.RESULT_FOLLOW_STATE, true);
                 isFoucsEdit = isFoucus;
                 tvIsFocus.setText(isFoucus ? "取消关注" : "关注");
+            }
+            boolean isEdit = data.getBooleanExtra("isEdit", true);
+            if (isEdit) {
+                getComments();
             }
         }
     }

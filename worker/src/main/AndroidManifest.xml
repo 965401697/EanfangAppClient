@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="net.eanfang.worker">
+
     <!-- //地图包、搜索包需要的基础权限 -->
     <!-- 允许程序打开网络套接字 -->
     <uses-permission android:name="android.permission.INTERNET" /> <!-- 允许程序设置内置sd卡的写权限 -->
@@ -50,26 +51,29 @@
     <uses-permission android:name="android.permission.FLASHLIGHT" /> <!-- 华为桌面消息图标权限 -->
     <uses-permission android:name="com.huawei.android.launcher.permission.CHANGE_BADGE" />
     <!-- MeiZu 配置开始 < -->
-    <!-- 兼容 flyme5.0 以下版本，魅族内部集成 pushSDK 必填，不然无法收到 消息-->
+    <!-- 兼容 flyme5.0 以下版本，魅族内部集成 pushSDK 必填，不然无法收到 消息 -->
     <uses-permission android:name="com.meizu.flyme.push.permission.RECEIVE" />
+
     <permission
         android:name="net.eanfang.worker.push.permission.MESSAGE"
         android:protectionLevel="signature" />
+
     <uses-permission android:name="net.eanfang.worker.push.permission.MESSAGE" />
-    <!-- 兼容 flyme3.0 配置权限-->
+    <!-- 兼容 flyme3.0 配置权限 -->
     <uses-permission android:name="com.meizu.c2dm.permission.RECEIVE" />
     <!-- MeiZu 配置结束 < -->
     <!-- 小米 配置开始 < -->
     <permission
         android:name="net.eanfang.worker.permission.MIPUSH_RECEIVE"
         android:protectionLevel="signature" />
+
     <uses-permission android:name="net.eanfang.worker.permission.MIPUSH_RECEIVE" />
     <!-- 小米 配置结束 < -->
     <!-- 华为配置开始 -->
-    <!--如果是安卓8.0，应用编译配置的targetSdkVersion>=26，请务必添加以下权限 -->
+    <!-- 如果是安卓8.0，应用编译配置的targetSdkVersion>=26，请务必添加以下权限 -->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
-    <!-- 华为配置结束-->
 
+    <!-- 华为配置结束 -->
     <application
         android:name=".ui.base.WorkerApplication"
         android:allowBackup="true"
@@ -79,7 +83,7 @@
         android:supportsRtl="true"
         android:theme="@style/NewBaseTheme"
         tools:replace="android:name">
-        <activity android:name=".ui.activity.worksapce.contacts.baseinfo.AuthCompanyFirstBActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.contacts.baseinfo.AuthCompanyFirstBActivity" />
         <activity android:name=".ui.activity.techniciancertification.JsCapabilityTagActivity" />
         <activity android:name=".ui.activity.techniciancertification.JsQualificationsAndAbilitiesActivity" />
         <activity android:name=".ui.activity.techniciancertification.SubmitSuccessfullyJsActivity" />
@@ -109,6 +113,7 @@
         <meta-data
             android:name="com.huawei.hms.client.appid"
             android:value="100379649" />
+
         <service android:name="com.amap.api.location.APSService" />
 
         <receiver
@@ -1028,17 +1033,18 @@
         <activity android:name=".ui.activity.worksapce.security.SecurityPersonalActivity" />
         <activity android:name=".ui.activity.worksapce.security.SecurityCommentListActivity" />
         <activity android:name=".ui.activity.worksapce.security.SecurityPersonalPublicListActivity" />
-        <activity android:name=".ui.activity.my.UserHomeActivity"/>
-        <activity android:name=".ui.activity.im.FollowListActivity"/>
-        <activity android:name=".ui.activity.im.PeerConnectionListActivity"/>
+        <activity android:name=".ui.activity.my.UserHomeActivity" />
+        <activity android:name=".ui.activity.im.FollowListActivity" />
+        <activity android:name=".ui.activity.im.PeerConnectionListActivity" />
         <!-- MeiZu 配置开始 < -->
         <receiver android:name="io.rong.push.platform.meizu.MeiZuReceiver">
             <intent-filter>
+
                 <!-- 接收 push 消息 -->
                 <action android:name="com.meizu.flyme.push.intent.MESSAGE" />
                 <!-- 接收 register 消息 -->
                 <action android:name="com.meizu.flyme.push.intent.REGISTER.FEEDBACK" />
-                <!-- 接收 unregister 消息-->
+                <!-- 接收 unregister 消息 -->
                 <action android:name="com.meizu.flyme.push.intent.UNREGISTER.FEEDBACK" />
                 <!-- 兼容低版本 Flyme3 推送服务配置 -->
                 <action android:name="com.meizu.c2dm.intent.REGISTRATION" />
@@ -1059,19 +1065,20 @@
         <service
             android:name="com.xiaomi.mipush.sdk.MessageHandleService"
             android:enabled="true" />
-        <!--注：此service必须在2.2.5版本以后（包括2.2.5版本）加入-->
+        <!-- 注：此service必须在2.2.5版本以后（包括2.2.5版本）加入 -->
         <service
             android:name="com.xiaomi.push.service.XMJobService"
             android:enabled="true"
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE" />
-        <!--注：此service必须在3.0.1版本以后（包括3.0.1版本）加入-->
+        <!-- 注：此service必须在3.0.1版本以后（包括3.0.1版本）加入 -->
 
         <receiver
             android:name="com.xiaomi.push.service.receivers.NetworkStatusReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
@@ -1097,7 +1104,7 @@
         </receiver>
         <!-- 小米 配置结束 < -->
         <!-- 华为 配置开始 < -->
-        <!-- BridgeActivity定义了HMS-SDK中一些跳转所需要的透明页面-->
+        <!-- BridgeActivity定义了HMS-SDK中一些跳转所需要的透明页面 -->
         <activity
             android:name="com.huawei.hms.activity.BridgeActivity"
             android:configChanges="orientation|locale|screenSize|layoutDirection|fontScale"
@@ -1109,7 +1116,7 @@
                 android:name="hwc-theme"
                 android:value="androidhwext:style/Theme.Emui.Translucent" />
         </activity>
-        <!-- 解决华为移动服务升级问题的透明界面（必须声明）-->
+        <!-- 解决华为移动服务升级问题的透明界面（必须声明） -->
         <activity
             android:name="com.huawei.android.hms.agent.common.HMSAgentActivity"
             android:configChanges="orientation|locale|screenSize|layoutDirection|fontScale"
@@ -1126,10 +1133,11 @@
             android:name="com.huawei.hms.update.provider.UpdateProvider"
             android:authorities="net.eanfang.worker.hms.update.provider"
             android:exported="false"
-            android:grantUriPermissions="true"></provider>
+            android:grantUriPermissions="true" />
         <!-- 第三方相关 :接收Push消息（注册、Push消息、Push连接状态）广播 -->
         <receiver android:name="io.rong.push.platform.hms.HMSReceiver">
             <intent-filter>
+
                 <!-- 必须,用于接收token -->
                 <action android:name="com.huawei.android.push.intent.REGISTRATION" />
                 <!-- 必须，用于接收消息 -->
@@ -1142,11 +1150,15 @@
         </receiver>
         <receiver android:name="com.huawei.hms.support.api.push.PushEventReceiver">
             <intent-filter>
+
                 <!-- 接收通道发来的通知栏消息，兼容老版本Push -->
                 <action android:name="com.huawei.intent.action.PUSH" />
             </intent-filter>
         </receiver>
         <!-- 华为 配置结束 < -->
+        <activity
+            android:name=".ui.activity.worksapce.security.SecurityCommentDetailActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
     </application>
 
 </manifest>

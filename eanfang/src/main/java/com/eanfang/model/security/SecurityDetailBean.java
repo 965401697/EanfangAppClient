@@ -25,7 +25,6 @@ import lombok.Setter;
 @Setter
 public class SecurityDetailBean implements Serializable {
 
-
     private List<ListBean> list;
     private SpcListBean spcList;
 
@@ -35,23 +34,43 @@ public class SecurityDetailBean implements Serializable {
     @Setter
     public static class ListBean implements Serializable {
 
+        private String asAccId;
         private String asCompanyId;
         private int asId;
         private String asTopCompanyId;
         private String asUserId;
-        private CommentUserBean commentUser;
         private CommentOrgBean commentOrg;
+        private CommentUserBean commentUser;
+        private String commentsAnswerAccId;
         private String commentsAnswerId;
         private String commentsCompanyId;
         private String commentsContent;
-        private String commentsImg;
         private String commentsTopCompanyId;
         private String createTime;
         private int friend;
         private int id;
+        private int readStatus;
+        private int replyCount;
         private int status;
         private int type;
         private int verifyStatus;
+        private List<CommentsEntityListBean> commentsEntityList;
+
+        @AllArgsConstructor
+        @NoArgsConstructor
+        @Getter
+        @Setter
+        public static class CommentOrgBean implements Serializable {
+
+            private String companyId;
+            private int countStaff;
+            private int level;
+            private String orgCode;
+            private String orgId;
+            private String orgName;
+            private OrgUnitEntity orgUnitEntity;
+            private String topCompanyId;
+        }
 
         @AllArgsConstructor
         @NoArgsConstructor
@@ -73,18 +92,44 @@ public class SecurityDetailBean implements Serializable {
         @NoArgsConstructor
         @Getter
         @Setter
-        public static class CommentOrgBean implements Serializable {
+        public static class CommentsEntityListBean implements Serializable {
 
-            private String companyId;
-            private int countStaff;
-            private int level;
-            private String orgCode;
-            private String orgId;
-            private String orgName;
-            private OrgUnitEntity orgUnitEntity;
-            private String topCompanyId;
+            private String asAccId;
+            private String asCompanyId;
+            private int asId;
+            private String asTopCompanyId;
+            private String asUserId;
+            private CommentTwoUserBean commentUser;
+            private String commentsAnswerAccId;
+            private String commentsAnswerId;
+            private String commentsCompanyId;
+            private String commentsContent;
+            private String commentsTopCompanyId;
+            private String createTime;
+            private int friend;
+            private int id;
+            private int parentCommentsId;
+            private int readStatus;
+            private int status;
+            private int topCommentsId;
+            private int type;
+            private int verifyStatus;
 
+            @AllArgsConstructor
+            @NoArgsConstructor
+            @Getter
+            @Setter
+            public static class CommentTwoUserBean implements Serializable {
+                private String accId;
+                private AccountEntity accountEntity;
+                private boolean companyAdmin;
+                private boolean superAdmin;
+                private boolean sysAdmin;
+                private String topCompanyId;
+                private String userId;
+            }
         }
+
     }
 
     @AllArgsConstructor

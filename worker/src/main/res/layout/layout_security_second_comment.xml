@@ -68,6 +68,7 @@
 
                 </RelativeLayout>
 
+
                 <TextView
                     android:id="@+id/tv_company"
                     android:layout_width="wrap_content"
@@ -127,19 +128,12 @@
                             android:paddingRight="@dimen/dimen_20"
                             android:text="删除"
                             android:textColor="@color/color_client_neworder"
-                            android:textSize="@dimen/textSize_15"
+                            android:textSize="@dimen/textSize_13"
                             android:visibility="gone" />
                     </RelativeLayout>
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/ll_other_comment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/dimen_30"
-                    android:background="@drawable/bg_security_detail_other_comment"
-                    android:orientation="vertical" />
             </LinearLayout>
 
         </LinearLayout>
