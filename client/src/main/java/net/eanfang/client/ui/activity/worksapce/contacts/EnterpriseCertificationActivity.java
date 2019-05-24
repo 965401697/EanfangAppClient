@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONPObject;
+import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.BusinessManagementData;
@@ -40,8 +42,11 @@ public class EnterpriseCertificationActivity extends BaseActivity {
     WQLeftRightClickTextView gsRzWqTv;
     private Long mOrgId;
     private int status = 0;
-    private String mOrgName = "";
     private int bizCertify = 0;
+    /**
+     * 已认证状态
+     */
+    private static final int STATE_AUTHENTICATED = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +59,13 @@ public class EnterpriseCertificationActivity extends BaseActivity {
     private void initView() {
         setLeftBack();
         setTitle("企业认证");
+        setRightGone();
+        setRightTitle("重新认证");
+        setRightTitleOnClickListener(v -> {
+            EanfangHttp.post(NewApiService.COMPANY_ENTERPRISE_AUTH_REVOKE + mOrgId).execute(new EanfangCallback<JSONPObject>(this, true, JSONPObject.class, bean -> {
+                initData();
+            }));
+        });
         SpannableString spannableString = new SpannableString("工商认证（必填）");
         spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#333333")), 0, 4, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#FF3F3F")), 4, spannableString.length(), Spanned.SPAN_EXCLUSIVE_INCLUSIVE);
@@ -64,21 +76,26 @@ public class EnterpriseCertificationActivity extends BaseActivity {
 
     private void initData() {
         mOrgId = getIntent().getLongExtra("mOrgId", 0);
-        status = getIntent().getIntExtra("status", 0);
-        mOrgName = getIntent().getStringExtra("orgName");
-
         EanfangHttp.post(BUSINESS_MANAGEMENT).params("orgId", mOrgId).execute(new EanfangCallback<>(this, true, BusinessManagementData.DataBean.class, this::setData));
 
     }
+
     private void setData(BusinessManagementData.DataBean data) {
         bizCertify = data.getBizCertify();
         status = data.getStatus();
+        if (status == STATE_AUTHENTICATED) {
+            setRightVisible();
+        } else {
+            setRightGone();
+        }
     }
+
     @Override
     protected void onRestart() {
         super.onRestart();
         initData();
     }
+
     @OnClick({R.id.gs_rz_wq_tv})
     public void onClick(View view) {
         switch (view.getId()) {

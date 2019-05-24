@@ -72,6 +72,7 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BGAOnIte
     private boolean mEditable;
 
     private int mItemWidth;
+    private boolean mCanClick = true;
 
     public BGASortableNinePhotoLayout(Context context) {
         this(context, null);
@@ -369,22 +370,32 @@ public class BGASortableNinePhotoLayout extends RecyclerView implements BGAOnIte
 
     @Override
     public void onItemChildClick(ViewGroup parent, View childView, int position) {
-        if (mDelegate != null) {
+        if (mDelegate != null && mCanClick) {
             mDelegate.onClickDeleteNinePhotoItem(this, childView, position, mPhotoAdapter.getItem(position), (ArrayList<String>) mPhotoAdapter.getData());
         }
     }
 
     @Override
     public void onRVItemClick(ViewGroup parent, View itemView, int position) {
-        if (mPhotoAdapter.isPlusItem(position)) {
-            if (mDelegate != null) {
-                mDelegate.onClickAddNinePhotoItem(this, itemView, position, (ArrayList<String>) mPhotoAdapter.getData());
-            }
-        } else {
-            if (mDelegate != null && ViewCompat.getScaleX(itemView) <= 1.0f) {
-                mDelegate.onClickNinePhotoItem(this, itemView, position, mPhotoAdapter.getItem(position), (ArrayList<String>) mPhotoAdapter.getData());
+        if (mCanClick) {
+            if (mPhotoAdapter.isPlusItem(position)) {
+                if (mDelegate != null) {
+                    mDelegate.onClickAddNinePhotoItem(this, itemView, position, (ArrayList<String>) mPhotoAdapter.getData());
+                }
+            } else {
+                if (mDelegate != null && ViewCompat.getScaleX(itemView) <= 1.0f) {
+                    mDelegate.onClickNinePhotoItem(this, itemView, position, mPhotoAdapter.getItem(position), (ArrayList<String>) mPhotoAdapter.getData());
+                }
             }
         }
+    }
+
+    /**
+     * 设置item是否可点击
+     * @param canClick true 可点击
+     */
+    public void setItemClickble(boolean canClick){
+        this.mCanClick = canClick;
     }
 
     /**

@@ -19,7 +19,7 @@ public class CompanyPagesData {
     private String areaCode;
 
     public String geteMail() {
-        return eMail;
+        return eMail == null ? "" : eMail;
     }
 
     public void seteMail(String eMail) {
@@ -55,7 +55,7 @@ public class CompanyPagesData {
     }
 
     public String getLogoPic() {
-        return logoPic;
+        return logoPic == null ? "" : logoPic;
     }
 
     public void setLogoPic(String logoPic) {
@@ -63,7 +63,7 @@ public class CompanyPagesData {
     }
 
     public String getName() {
-        return name;
+        return name == null ? "" : name;
     }
 
     public void setName(String name) {
@@ -71,7 +71,7 @@ public class CompanyPagesData {
     }
 
     public String getOfficeAddress() {
-        return officeAddress;
+        return officeAddress == null ? "" : officeAddress;
     }
 
     public void setOfficeAddress(String officeAddress) {
@@ -103,7 +103,7 @@ public class CompanyPagesData {
     }
 
     public String getTelPhone() {
-        return telPhone;
+        return telPhone == null ? "" : telPhone;
     }
 
     public void setTelPhone(String telPhone) {

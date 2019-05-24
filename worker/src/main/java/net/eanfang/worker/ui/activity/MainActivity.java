@@ -1,5 +1,6 @@
 package net.eanfang.worker.ui.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
@@ -37,6 +38,7 @@ import com.eanfang.model.device.User;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.BadgeUtil;
 import com.eanfang.util.CleanMessageUtil;
+import com.eanfang.util.ContactUtil;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.LocationUtil;
@@ -73,6 +75,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -193,7 +196,7 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
                 Conversation.ConversationType.GROUP, Conversation.ConversationType.SYSTEM,
                 Conversation.ConversationType.PUBLIC_SERVICE, Conversation.ConversationType.APP_PUBLIC_SERVICE
         };
-
+        ContactUtil.postAccount(MainActivity.this);
         RongIM.getInstance().addUnReadMessageCountChangedObserver(this, conversationTypes);
     }
 
@@ -820,6 +823,15 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
     protected void onDestroy() {
         super.onDestroy();
         RongIM.getInstance().disconnect();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        int index = Arrays.asList(permissions).indexOf(Manifest.permission.READ_CONTACTS);
+        if (grantResults[index] == 0) {
+            ContactUtil.postAccount(MainActivity.this);
+        }
     }
 }
 

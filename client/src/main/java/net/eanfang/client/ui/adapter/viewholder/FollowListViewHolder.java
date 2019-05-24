@@ -19,7 +19,7 @@ import net.eanfang.client.R;
 public class FollowListViewHolder extends BaseViewHolder {
     public TextView mTvFollowItemName;
     public TextView mTvFollowItemCompany;
-    public TextView mTv_Follow_Item_FriendStatus;
+    public TextView mTvFollowItemFriendStatus;
     public ImageView mImgFollowItemAuth;
     public Button mBtnFollowItemAddOrCancel;
     public SimpleDraweeView mIvFollowItemHeader;
@@ -28,7 +28,7 @@ public class FollowListViewHolder extends BaseViewHolder {
         super(view);
         mTvFollowItemName = view.findViewById(R.id.tv_follow_item_name);
         mTvFollowItemCompany = view.findViewById(R.id.tv_follow_item_company);
-        mTv_Follow_Item_FriendStatus = view.findViewById(R.id.tv_follow_item_friendStatus);
+        mTvFollowItemFriendStatus = view.findViewById(R.id.tv_follow_item_friendStatus);
         mImgFollowItemAuth = view.findViewById(R.id.img_follow_item_auth);
         mBtnFollowItemAddOrCancel = view.findViewById(R.id.btn_follow_item_addOrCancel);
         mIvFollowItemHeader = view.findViewById(R.id.iv_follow_item_header);

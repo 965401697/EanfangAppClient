@@ -11,11 +11,15 @@ import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
+import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.GrantChange;
 import com.eanfang.model.SystypeBean;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.SharePreferenceUtil;
+import com.eanfang.util.StringUtils;
+import com.eanfang.util.ThreadPoolManager;
 import com.yaf.sys.entity.BaseDataEntity;
 
 import net.eanfang.worker.R;
@@ -23,6 +27,7 @@ import net.eanfang.worker.ui.activity.GroupAdapter;
 import net.eanfang.worker.ui.activity.authentication.SubmitSuccessfullyQyActivity;
 import net.eanfang.worker.ui.interfaces.AreaCheckChangeListener;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -50,8 +55,6 @@ public class AuthQualifySecondActivity extends BaseActivity implements AreaCheck
     private GroupAdapter mAdapter;
     private Long orgid;
     private int verifyStatus;
-    private List<Integer> checkListId;
-    private List<Integer> unCheckListId;
     private SystypeBean byNetGrant;
     private GrantChange grantChange = new GrantChange();
     private HashSet<Integer> selDataId;
@@ -65,7 +68,7 @@ public class AuthQualifySecondActivity extends BaseActivity implements AreaCheck
         setContentView(R.layout.activity_auth_qualify_second);
         ButterKnife.bind(this);
         initView();
-        initData();
+        initAreaData();
     }
 
     private void initView() {
@@ -77,21 +80,35 @@ public class AuthQualifySecondActivity extends BaseActivity implements AreaCheck
         if (isLook) {
             llTitle.setVisibility(View.GONE);
             tvConfim.setVisibility(View.GONE);
+        }
+    }
 
+
+    private void initAreaData() {
+        //获取国家区域
+        if (EanfangApplication.get().sSaveArea == null) {
+            String areaJson = SharePreferenceUtil.get().getString(Constant.COUNTRY_AREA_LIST, "");
+            if (StringUtils.isEmpty(areaJson)) {
+                showToast("加载服务区域失败！");
+                tvConfim.setClickable(false);
+            } else {
+                loadingDialog.show();
+                ThreadPoolManager manager = ThreadPoolManager.newInstance();
+                manager.addExecuteTask(() -> {
+                    EanfangApplication.get().sSaveArea = JSONObject.toJavaObject(JSONObject.parseObject(areaJson), BaseDataEntity.class);
+                    runOnUiThread(this::initData);
+                });
+            }
+        } else {
+            initData();
         }
 
     }
 
     private void initData() {
-        //获取国家区域
-        if (EanfangApplication.get().sSaveArea == null) {
-            showToast("加载服务区域失败！");
-            tvConfim.setClickable(false);
-            return;
-        }
-        BaseDataEntity entity = EanfangApplication.get().sSaveArea;
-        areaListBean = entity.getChildren();
-        EanfangHttp.get(UserApi.GET_COMPANY_ORG_SYS_INFO + orgid + "/AREA")
+        loadingDialog.dismiss();
+        areaListBean = EanfangApplication.get().sSaveArea.getChildren();
+        EanfangHttp.get(UserApi.GET_COMPANY_ORG_AREA_INFO + orgid + "/AREA")
                 .execute(new EanfangCallback<SystypeBean>(this, true, SystypeBean.class, (bean) -> {
                     byNetGrant = bean;
                     fillData();
@@ -129,10 +146,12 @@ public class AuthQualifySecondActivity extends BaseActivity implements AreaCheck
 
         for (BaseDataEntity baseDataBean : list) {
             if (baseDataBean.isCheck() == isChecked) {
-                if (isChecked && !selDataId.contains(baseDataBean.getDataId())){
+                if (isChecked && !selDataId.contains(baseDataBean.getDataId())) {
+                    selDataId.add(baseDataBean.getDataId());
                     resultList.add(baseDataBean.getDataId());
                 }
-                if (!isChecked && selDataId.contains(baseDataBean.getDataId())){
+                if (!isChecked && selDataId.contains(baseDataBean.getDataId())) {
+                    selDataId.remove(baseDataBean.getDataId());
                     resultList.add(baseDataBean.getDataId());
                 }
             }
@@ -164,16 +183,16 @@ public class AuthQualifySecondActivity extends BaseActivity implements AreaCheck
     }
 
     private void commit() {
-        checkListId = getListData(areaListBean, true);
-        unCheckListId = getListData(areaListBean, false);
-        grantChange.setAddIds(checkListId);
-        grantChange.setDelIds(unCheckListId);
+        getListData(areaListBean, true);
+        getListData(areaListBean, false);
 
-        if ((checkListId.size() == 0) && (unCheckListId.size() == 0) && (byNetGrant.getList().size() <= 0)) {
+        grantChange.setAddIds(new ArrayList<>(selDataId));
+        grantChange.setDelIds(null);
+
+        if (selDataId.size() == 0) {
             showToast("请至少选择一个服务区域");
         } else {
-
-            EanfangHttp.post(UserApi.GET_ORGUNIT_SHOP_ADD_AREA + orgid).upJson(JSONObject.toJSONString(grantChange))
+            EanfangHttp.post(UserApi.GET_ORGUNIT_SHOP_ADD_AREA_V2 + orgid).upJson(JSONObject.toJSONString(grantChange))
                     .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
 //                            showToast("认证资料提交成功");
                         commitVerfiy();

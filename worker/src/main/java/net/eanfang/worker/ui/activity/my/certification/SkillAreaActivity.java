@@ -11,10 +11,14 @@ import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
+import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.GrantChange;
 import com.eanfang.model.SystypeBean;
+import com.eanfang.util.SharePreferenceUtil;
+import com.eanfang.util.StringUtils;
+import com.eanfang.util.ThreadPoolManager;
 import com.yaf.sys.entity.BaseDataEntity;
 
 import net.eanfang.worker.R;
@@ -23,6 +27,7 @@ import net.eanfang.worker.ui.activity.techniciancertification.SubmitSuccessfully
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 import net.eanfang.worker.ui.interfaces.AreaCheckChangeListener;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -45,8 +50,6 @@ public class SkillAreaActivity extends BaseWorkerActivity implements AreaCheckCh
     TextView tvGo;
     private GroupAdapter mAdapter;
     private Long userid = EanfangApplication.getApplication().getUser().getAccount().getNullUser();
-    private List<Integer> checkListId;
-    private List<Integer> unCheckListId;
     private SystypeBean byNetGrant;
     private GrantChange grantChange = new GrantChange();
     private HashSet<Integer> selDataId;
@@ -61,7 +64,7 @@ public class SkillAreaActivity extends BaseWorkerActivity implements AreaCheckCh
         ButterKnife.bind(this);
         startTransaction(true);
         initView();
-        initData();
+        initAreaData();
     }
 
     private void initView() {
@@ -75,15 +78,31 @@ public class SkillAreaActivity extends BaseWorkerActivity implements AreaCheckCh
         }
     }
 
-    private void initData() {
+    private void initAreaData() {
         //获取国家区域
         if (EanfangApplication.get().sSaveArea == null) {
-            showToast("加载服务区域失败！");
-            tvGo.setClickable(false);
-            return;
+            String areaJson = SharePreferenceUtil.get().getString(Constant.COUNTRY_AREA_LIST, "");
+            if (StringUtils.isEmpty(areaJson)) {
+                showToast("加载服务区域失败！");
+                tvGo.setClickable(false);
+            } else {
+                loadingDialog.show();
+                ThreadPoolManager manager = ThreadPoolManager.newInstance();
+                manager.addExecuteTask(() -> {
+                    EanfangApplication.get().sSaveArea = JSONObject.toJavaObject(JSONObject.parseObject(areaJson), BaseDataEntity.class);
+                    runOnUiThread(this::initData);
+                });
+            }
+        } else {
+            initData();
         }
+
+    }
+
+    private void initData() {
+        loadingDialog.dismiss();
         areaListBean = EanfangApplication.get().sSaveArea.getChildren();
-        EanfangHttp.get(UserApi.GET_TECH_WORKER_SYS + userid + "/AREA").execute(new EanfangCallback<SystypeBean>(this, true, SystypeBean.class, (bean) -> {
+        EanfangHttp.get(UserApi.GET_TECH_WORKER_AREA + userid + "/AREA").execute(new EanfangCallback<SystypeBean>(this, true, SystypeBean.class, (bean) -> {
             byNetGrant = bean;
             fillData();
         }));
@@ -114,10 +133,12 @@ public class SkillAreaActivity extends BaseWorkerActivity implements AreaCheckCh
 
         for (BaseDataEntity baseDataentity : list) {
             if (baseDataentity.isCheck() == isChecked) {
-                if (isChecked && !selDataId.contains(baseDataentity.getDataId())){
+                if (isChecked && !selDataId.contains(baseDataentity.getDataId())) {
+                    selDataId.add(baseDataentity.getDataId());
                     resultList.add(baseDataentity.getDataId());
                 }
-                if (!isChecked && selDataId.contains(baseDataentity.getDataId())){
+                if (!isChecked && selDataId.contains(baseDataentity.getDataId())) {
+                    selDataId.remove(baseDataentity.getDataId());
                     resultList.add(baseDataentity.getDataId());
                 }
             }
@@ -147,12 +168,12 @@ public class SkillAreaActivity extends BaseWorkerActivity implements AreaCheckCh
 
 
     private void commit() {
-        checkListId = getListData(areaListBean, true);
-        unCheckListId = getListData(areaListBean, false);
+        getListData(areaListBean, true);
+        getListData(areaListBean, false);
 
-        grantChange.setAddIds(checkListId);
-        grantChange.setDelIds(unCheckListId);
-        if ((checkListId.size() == 0) && (byNetGrant.getList().size() == 0)) {
+        grantChange.setAddIds(new ArrayList<>(selDataId));
+        grantChange.setDelIds(null);
+        if (selDataId.size() == 0) {
             showToast("请至少选择一个服务区域");
         } else {
             setData();
@@ -161,7 +182,7 @@ public class SkillAreaActivity extends BaseWorkerActivity implements AreaCheckCh
     }
 
     private void setData() {
-        EanfangHttp.post(UserApi.POST_TECH_WORKER_AREA).upJson(JSONObject.toJSONString(grantChange)).execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
+        EanfangHttp.post(UserApi.POST_TECH_WORKER_AREA_V3).upJson(JSONObject.toJSONString(grantChange)).execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
             Intent intent = new Intent(this, SubmitSuccessfullyJsActivity.class);
             intent.putExtra("status", mStatus);
             intent.putExtra("order", 2);

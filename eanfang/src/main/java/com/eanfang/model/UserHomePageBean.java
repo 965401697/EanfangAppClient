@@ -107,10 +107,11 @@ public class UserHomePageBean implements Serializable {
          * 性别 0：女  1：男
          */
         private int gender;
+
         /**
          * 简介
          */
-        private String intro;
+        private String personalNote;
         /**
          * 用户昵称
          */
@@ -177,12 +178,12 @@ public class UserHomePageBean implements Serializable {
             this.gender = gender;
         }
 
-        public String getIntro() {
-            return intro;
+        public String getPersonalNote() {
+            return personalNote;
         }
 
-        public void setIntro(String intro) {
-            this.intro = intro;
+        public void setPersonalNote(String personalNote) {
+            this.personalNote = personalNote;
         }
 
         public String getNickName() {
@@ -219,7 +220,7 @@ public class UserHomePageBean implements Serializable {
                     ", birthMonthDay='" + birthMonthDay + '\'' +
                     ", birthday='" + birthday + '\'' +
                     ", gender=" + gender +
-                    ", intro='" + intro + '\'' +
+                    ", personalNote='" + personalNote + '\'' +
                     ", nickName='" + nickName + '\'' +
                     ", realName='" + realName + '\'' +
                     ", simplePwd=" + simplePwd +
