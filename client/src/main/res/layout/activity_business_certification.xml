@@ -66,6 +66,7 @@
             android:textColor="#333333"
             android:textSize="@dimen/app_sp_gs_rz_item_size"
             app:isShowDownLine="false"
+            android:digits="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
             app:leftText="纳税人识别号"
             app:leftTextSize="@dimen/app_sp_gs_rz_item_b_size" />
 

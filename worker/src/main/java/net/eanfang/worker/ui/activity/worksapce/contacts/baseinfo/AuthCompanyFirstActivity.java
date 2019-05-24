@@ -154,6 +154,7 @@ public class AuthCompanyFirstActivity extends BaseActivityWithTakePhoto {
         infoBean.setLegalName(etLegalPersion.getText().toString().trim());
         infoBean.setTelPhone(etPhone.getText().toString().trim());
         infoBean.setOfficeAddress(etDetailOfficeAddress.getText().toString().trim());
+        infoBean.setBizCertify(1);
         if (!StringUtils.isEmpty(itemcity) && !StringUtils.isEmpty(itemzone)) {
             infoBean.setAreaCode(Config.get().getAreaCodeByName(itemcity, itemzone));
         }

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -12,10 +13,13 @@ import android.support.v4.content.ContextCompat;
 
 import com.alibaba.fastjson.JSON;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.AccountMailBean;
 import com.okgo.callback.StringCallback;
 import com.okgo.model.Response;
+
+import org.json.JSONObject;
 
 /**
  * @author liangkailun
@@ -29,22 +33,19 @@ public class ContactUtil {
     /**
      * 上传联系人列表到服务器
      */
-    public static void postAccount(Context context) {
+    public static void postAccount(Activity context) {
         ThreadPoolManager threadPoolManager = ThreadPoolManager.newInstance();
         threadPoolManager.addExecuteTask(() -> {
             long saveTime = SharePreferenceUtil.get().getLong(ADDRESS_LIST, 0);
             if (System.currentTimeMillis() - saveTime > POST_TIME) {
                 EanfangHttp.post(NewApiService.ACCOUNT_POST)
-                        .upJson(JSON.toJSONString(getAllContacts(context))).execute(new StringCallback() {
-                    @Override
-                    public void onSuccess(Response<String> response) {
-                        try {
-                            SharePreferenceUtil.get().set(ADDRESS_LIST, System.currentTimeMillis());
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        .upJson(JSON.toJSONString(getAllContacts(context))).execute(new EanfangCallback(context,false,JSONObject.class, bean -> {
+                    try {
+                        SharePreferenceUtil.get().set(ADDRESS_LIST, System.currentTimeMillis());
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                });
+                }));
             }
         });
     }

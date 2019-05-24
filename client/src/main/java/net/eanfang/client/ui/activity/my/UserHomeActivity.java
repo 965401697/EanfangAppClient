@@ -183,6 +183,13 @@ public class UserHomeActivity extends BaseClientActivity {
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width, height);
             mImgCircle.setLayoutParams(params);
         });
+        setViewClick();
+    }
+
+    /**
+     * 设置view点击
+     */
+    private void setViewClick(){
         DefaultPopWindow popWindow = new DefaultPopWindow(mPopWindowContent);
         popWindow.setOnDismissListener(() -> popWindow.backgroundAlpha(UserHomeActivity.this, 1.0f));
         mTvAddAndCancelFriend.setOnClickListener(v -> {
@@ -223,37 +230,26 @@ public class UserHomeActivity extends BaseClientActivity {
             }
         });
 
-        mLlUserHomeConcern.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mCompanyInfoBean != null) {
-                    changeFollowStatus(mCompanyInfoBean.getAccId(), mCompanyInfoBean.getUserId(), mCompanyInfoBean.getCompanyId(),
-                            mCompanyInfoBean.getTopCompanyId(), mIsFollowed);
-                } else {
-                    showToast("用户信息有误！");
-                }
+        mLlUserHomeConcern.setOnClickListener(v -> {
+            if (mCompanyInfoBean != null) {
+                changeFollowStatus(mCompanyInfoBean.getAccId(), mCompanyInfoBean.getUserId(), mCompanyInfoBean.getCompanyId(),
+                        mCompanyInfoBean.getTopCompanyId(), mIsFollowed);
+            } else {
+                showToast("用户信息有误！");
             }
         });
 
-        mImgAnswer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(UserHomeActivity.this, ExpertOnlineActivity.class));
-            }
-        });
+        mImgAnswer.setOnClickListener(v -> startActivity(new Intent(UserHomeActivity.this, ExpertOnlineActivity.class)));
 
-        mImgCircle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mCompanyInfoBean != null) {
-                    Bundle bundle = new Bundle();
-                    bundle.putBoolean("isLookOther", !mIsSelf);
-                    bundle.putLong("mAccId", Long.parseLong(mCompanyInfoBean.getAccId()));
-                    bundle.putLong("mUserId", Long.parseLong(mCompanyInfoBean.getUserId()));
-                    JumpItent.jump(UserHomeActivity.this, SecurityPersonalActivity.class, bundle);
-                } else {
-                    showToast("用户信息有误！");
-                }
+        mImgCircle.setOnClickListener(v -> {
+            if (mCompanyInfoBean != null) {
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("isLookOther", !mIsSelf);
+                bundle.putLong("mAccId", Long.parseLong(mCompanyInfoBean.getAccId()));
+                bundle.putLong("mUserId", Long.parseLong(mCompanyInfoBean.getUserId()));
+                JumpItent.jump(UserHomeActivity.this, SecurityPersonalActivity.class, bundle);
+            } else {
+                showToast("用户信息有误！");
             }
         });
     }
@@ -306,11 +302,9 @@ public class UserHomeActivity extends BaseClientActivity {
                         } else {
                             mTvPositionLocation.setVisibility(View.INVISIBLE);
                         }
-                        String intro = accountBean.getIntro();
+                        String intro = accountBean.getPersonalNote();
                         if (!StringUtils.isEmpty(intro)) {
-                            mTvIntro.setText(accountBean.getIntro().length() > 18
-                                    ? accountBean.getIntro().substring(0, 16) + "..." :
-                                    accountBean.getIntro());
+                            mTvIntro.setText(intro.length() > 18 ? intro.substring(0, 16) + "..." : intro);
                         } else {
                             mTvIntro.setText(getString(R.string.text_user_home_intro_default));
                         }
