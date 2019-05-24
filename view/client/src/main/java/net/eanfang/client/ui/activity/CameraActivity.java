@@ -43,6 +43,7 @@ import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
 import java.io.FileNotFoundException;
@@ -181,7 +182,7 @@ public class CameraActivity extends BaseClientActivity implements AMapLocationLi
         project_type = selectProjectType;
 
         //创建者
-        creatUser = V.v(() -> EanfangApplication.get().getUser().getAccount().getRealName());
+        creatUser = V.v(() -> ClientApplication.get().getLoginBean().getAccount().getRealName());
         if (StringUtils.isEmpty(creatUser)) {
             creatUser = "--";
         }
