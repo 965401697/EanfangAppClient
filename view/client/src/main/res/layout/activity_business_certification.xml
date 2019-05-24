@@ -40,7 +40,7 @@
         android:paddingRight="@dimen/dp_10"
         android:showDividers="middle">
 
-        <com.eanfang.widget.customview.LtReView
+        <com.eanfang.base.widget.customview.LtReView
             android:id="@+id/dw_mc_lrv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
             app:leftTextSize="@dimen/app_sp_gs_rz_item_b_size" />
 
 
-        <com.eanfang.widget.customview.LtReView
+        <com.eanfang.base.widget.customview.LtReView
             android:id="@+id/nsh_lrv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -70,7 +70,7 @@
             app:leftTextSize="@dimen/app_sp_gs_rz_item_b_size" />
 
 
-        <com.eanfang.widget.customview.LtReView
+        <com.eanfang.base.widget.customview.LtReView
             android:id="@+id/zc_dz_lrv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -85,7 +85,7 @@
             app:leftTextSize="@dimen/app_sp_gs_rz_item_b_size" />
 
 
-        <com.eanfang.widget.customview.LtReView
+        <com.eanfang.base.widget.customview.LtReView
             android:id="@+id/fr_db_lrv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -100,7 +100,7 @@
             app:leftTextSize="@dimen/app_sp_gs_rz_item_b_size" />
 
 
-        <com.eanfang.widget.customview.LtReView
+        <com.eanfang.base.widget.customview.LtReView
             android:id="@+id/zc_zj_lrv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -121,7 +121,7 @@
             android:layout_gravity="center_horizontal"
             android:orientation="horizontal">
 
-            <com.eanfang.widget.customview.LtReView
+            <com.eanfang.base.widget.customview.LtReView
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -155,7 +155,7 @@
                 android:textSize="@dimen/app_sp_gs_rz_item_size" />
         </LinearLayout>
 
-        <com.eanfang.widget.customview.LtReView
+        <com.eanfang.base.widget.customview.LtReView
             android:id="@+id/jz_rq_lrv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

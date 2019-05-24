@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.RelativeLayout;
-
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.witget.SwitchButton;

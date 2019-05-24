@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.R;
-import com.eanfang.model.TemplateBean;
+import com.eanfang.biz.model.TemplateBean;
 
 
 import java.util.ArrayList;

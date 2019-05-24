@@ -11,15 +11,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
-import com.eanfang.widget.customview.CircleImageView;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.biz.model.SpecialistAuthStatusBean;
+import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.SpecialistAuthStatusBean;
-import com.eanfang.model.bean.LoginBean;
 import com.eanfang.ui.activity.QrCodeShowActivity;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.GlideUtil;

@@ -16,18 +16,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
-import com.eanfang.widget.customview.CircleImageView;
+import com.eanfang.base.kit.ali.oss.OssKit;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.biz.model.Message;
+import com.eanfang.biz.model.SelectAddressItem;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.kit.ali.oss.OssKit;
 import com.eanfang.listener.MultiClickListener;
-import com.eanfang.model.Message;
-import com.eanfang.model.SelectAddressItem;
-import com.eanfang.model.bean.LoginBean;
-import com.eanfang.model.sys.AccountEntity;
+import com.eanfang.biz.model.bean.LoginBean;
+import com.eanfang.biz.model.entity.AccountEntity;
 
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;

@@ -3,6 +3,7 @@ package net.eanfang.worker.base;
 import android.util.Log;
 
 import com.eanfang.base.BaseApplication;
+import com.eanfang.biz.model.entity.BaseDataEntity;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.base.kit.loading.LoadKit;
@@ -25,17 +26,24 @@ import io.rong.imlib.model.Conversation;
 import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
 
 public class WorkerApplication extends BaseApplication {
-
-
+    /**
+     * 是否自动更新过
+     */
+    public static boolean isUpdated = false;
+    /**
+     * 存储地域
+     */
+    public BaseDataEntity sSaveArea;
     private static WorkerApplication mWorkerApplication;
 
     public static WorkerApplication getApplication() {
         return mWorkerApplication;
     }
+
     @Override
     public void onCreate() {
         super.onCreate();
-
+        mWorkerApplication = this;
         initRongIM();
         initHttp();
     }

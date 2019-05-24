@@ -10,8 +10,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.eanfang.widget.customview.SuperTextView;
-import com.eanfang.widget.customview.TwoTextPicText;
+import com.eanfang.base.widget.customview.SuperTextView;
+import com.eanfang.base.widget.customview.TwoTextPicText;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.http.EanfangCallback;

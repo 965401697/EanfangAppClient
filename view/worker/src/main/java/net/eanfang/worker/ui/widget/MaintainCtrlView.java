@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.ui.base.BaseDialog;
 
 import net.eanfang.worker.R;

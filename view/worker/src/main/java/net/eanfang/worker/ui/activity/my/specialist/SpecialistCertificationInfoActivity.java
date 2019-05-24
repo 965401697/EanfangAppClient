@@ -9,7 +9,7 @@ import android.widget.TextView;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.sys.AccountEntity;
+import com.eanfang.biz.model.entity.AccountEntity;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.ExpertsCertificationEntity;

@@ -5,12 +5,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.RelativeLayout;
 
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.witget.SwitchButton;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.util.PrefUtils;
 
 import butterknife.BindView;
@@ -58,7 +58,7 @@ public class MessageStateView extends BaseDialog {
                 SDKManager.getXGPush(mContext).unregisterPush();
             } else {
                 Log.e("GG", "打开推送");
-                SDKManager.getXGPush(mContext).registerPush(EanfangApplication.get().getUser().getAccount().getMobile());
+                SDKManager.getXGPush(mContext).registerPush(ClientApplication.get().getLoginBean().getAccount().getMobile());
             }
         });
 

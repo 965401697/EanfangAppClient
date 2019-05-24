@@ -13,7 +13,7 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.eanfang.widget.customview.TwoTextPicText;
+import com.eanfang.base.widget.customview.TwoTextPicText;
 import com.eanfang.BuildConfig;
 import com.eanfang.R;
 import com.eanfang.R2;

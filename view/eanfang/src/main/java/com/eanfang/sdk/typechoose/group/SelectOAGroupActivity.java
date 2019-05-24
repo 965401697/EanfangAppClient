@@ -12,10 +12,10 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.R;
 import com.eanfang.R2;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.biz.model.entity.AccountEntity;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.TemplateBean;
-import com.eanfang.model.sys.AccountEntity;
+import com.eanfang.biz.model.TemplateBean;
 import com.eanfang.ui.base.BaseActivity;
 
 import java.util.ArrayList;

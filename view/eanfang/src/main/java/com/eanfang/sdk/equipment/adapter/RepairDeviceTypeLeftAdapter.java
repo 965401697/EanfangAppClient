@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.core.content.ContextCompat;
 
 import com.eanfang.R;
-import com.eanfang.model.sys.BaseDataEntity;
+import com.eanfang.biz.model.entity.BaseDataEntity;
 import com.eanfang.util.ViewHolder;
 
 

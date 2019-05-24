@@ -20,6 +20,7 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
+import com.eanfang.biz.model.entity.UserEntity;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.GroupDetailBean;
@@ -34,6 +35,7 @@ import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.im.CreateGroupOrganizationActivity;
 import net.eanfang.worker.ui.activity.worksapce.oa.SelectOAGroupActivity;
 import net.eanfang.worker.ui.adapter.SendPersonAdapter;
@@ -210,13 +212,14 @@ public class WorkTransferCreateActivity extends BaseActivity {
     private void initView() {
         setLeftBack();
         setTitle("交接班");
-        mUserId = EanfangApplication.get().getUser().getAccount().getDefaultUser().getUserId();
-        mCompanyId = EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgId();
-        mTopCompanyId = EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getTopCompanyId();
-        mDepartmentId = EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgCode();
-        tvCompanyName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
-        if (EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getDepartmentEntity() != null) {
-            tvDepartmentName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getDepartmentEntity().getOrgName());
+        UserEntity userEntity= WorkerApplication.get().getLoginBean().getAccount().getDefaultUser();
+        mUserId = userEntity.getUserId();
+        mCompanyId = userEntity.getCompanyEntity().getOrgId();
+        mTopCompanyId = userEntity.getCompanyEntity().getTopCompanyId();
+        mDepartmentId = userEntity.getCompanyEntity().getOrgCode();
+        tvCompanyName.setText(userEntity.getCompanyEntity().getOrgName());
+        if (userEntity.getDepartmentEntity() != null) {
+            tvDepartmentName.setText(userEntity.getDepartmentEntity().getOrgName());
         }
 
         workTransferDetailFinishWorkAdapter = new WorkTransferDetailFinishWorkAdapter(true);
@@ -325,9 +328,9 @@ public class WorkTransferCreateActivity extends BaseActivity {
 
                 Intent intent = new Intent(WorkTransferCreateActivity.this, CreateGroupOrganizationActivity.class);
                 intent.putExtra("isFrom", "OA");
-                intent.putExtra("companyId", String.valueOf(EanfangApplication.getApplication().getCompanyId()));
-                intent.putExtra("companyOrgCode", EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgCode());
-                intent.putExtra("companyName", EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
+                intent.putExtra("companyId", String.valueOf(WorkerApplication.get().getCompanyId()));
+                intent.putExtra("companyOrgCode", WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgCode());
+                intent.putExtra("companyName", WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
                 Bundle b = new Bundle();
                 b.putSerializable("list", (Serializable) sendPersonAdapter.getData());
                 intent.putExtras(b);
@@ -581,12 +584,12 @@ public class WorkTransferCreateActivity extends BaseActivity {
                     b.putString("orderNum", bean.getOrderNum());
 
                     b.putString("creatTime", bean.getCreateTime());
-                    if (newPresonList.size() > 0 && !newPresonList.get(0).getUserId().equals(EanfangApplication.get().getUserId())) {
+                    if (newPresonList.size() > 0 && !newPresonList.get(0).getUserId().equals(WorkerApplication.get().getUserId())) {
 
                         b.putString("workerName", "接收人：" + newPresonList.get(0).getName());
                     } else {
 
-                        b.putString("workerName", "创建人：" + EanfangApplication.get().getUser().getAccount().getRealName());
+                        b.putString("workerName", "创建人：" + WorkerApplication.get().getLoginBean().getAccount().getRealName());
                     }
                     b.putString("status", "0");
                     b.putString("shareType", "6");
@@ -705,16 +708,16 @@ public class WorkTransferCreateActivity extends BaseActivity {
 
             if (newPresonList.size() == 0) {
                 //工作协同默认值
-                workTransferDetailBean.setAssigneeUserId(String.valueOf(EanfangApplication.get().getUserId()));
-                workTransferDetailBean.setAssigneeOrgCode(EanfangApplication.get().getOrgCode());
-                workTransferDetailBean.setAssigneeCompanyId(String.valueOf(EanfangApplication.getApplication().getCompanyId()));
-                workTransferDetailBean.setAssigneeTopCompanyId(String.valueOf(EanfangApplication.getApplication().getTopCompanyId()));
+                workTransferDetailBean.setAssigneeUserId(String.valueOf(WorkerApplication.get().getUserId()));
+                workTransferDetailBean.setAssigneeOrgCode(WorkerApplication.get().getOrgCode());
+                workTransferDetailBean.setAssigneeCompanyId(String.valueOf(WorkerApplication.get().getCompanyId()));
+                workTransferDetailBean.setAssigneeTopCompanyId(String.valueOf(WorkerApplication.get().getTopCompanyId()));
             } else {
                 //工作协同默认值
                 workTransferDetailBean.setAssigneeUserId(newPresonList.get(0).getUserId());
                 workTransferDetailBean.setAssigneeOrgCode(newPresonList.get(0).getOrgCode());
-                workTransferDetailBean.setAssigneeCompanyId(String.valueOf(EanfangApplication.getApplication().getCompanyId()));
-                workTransferDetailBean.setAssigneeTopCompanyId(String.valueOf(EanfangApplication.getApplication().getTopCompanyId()));
+                workTransferDetailBean.setAssigneeCompanyId(String.valueOf(WorkerApplication.get().getCompanyId()));
+                workTransferDetailBean.setAssigneeTopCompanyId(String.valueOf(WorkerApplication.get().getTopCompanyId()));
             }
 //            }
             if (mClassID == 100) {

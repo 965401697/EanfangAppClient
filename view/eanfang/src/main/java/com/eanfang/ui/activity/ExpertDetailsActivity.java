@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
-import com.eanfang.widget.customview.SuperTextView;
+import com.eanfang.base.widget.customview.SuperTextView;
 import com.eanfang.R;
 import com.eanfang.R2;
 import com.eanfang.apiservice.UserApi;

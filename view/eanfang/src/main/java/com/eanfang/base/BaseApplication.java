@@ -101,7 +101,7 @@ public class BaseApplication extends MultiDexApplication {
      * OkGo的网络方法已过期 请尽快移步 rds
      */
     @Deprecated
-    private void initOkGo() {
+    public void initOkGo() {
         //创建OkHttp
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor("OkGo");

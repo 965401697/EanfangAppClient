@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:id="@+id/ll_header"
     android:gravity="center">
-    <com.eanfang.widget.customview.CircleImageView
+    <com.eanfang.base.widget.customview.CircleImageView
         android:id="@+id/iv_user_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

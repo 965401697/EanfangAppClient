@@ -18,7 +18,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.biz.model.AllMessageBean;
 import com.eanfang.biz.model.GroupDetailBean;
 import com.eanfang.biz.model.bean.BaseDataBean;
@@ -42,6 +41,7 @@ import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.im.ConversationActivity;
 import net.eanfang.client.ui.activity.worksapce.SetPasswordActivity;
 import net.eanfang.client.ui.activity.worksapce.WorkerDetailActivity;
@@ -49,7 +49,6 @@ import net.eanfang.client.ui.activity.worksapce.notice.MessageListActivity;
 import net.eanfang.client.ui.activity.worksapce.notice.OfficialListActivity;
 import net.eanfang.client.ui.activity.worksapce.notice.SystemNoticeActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
-import net.eanfang.client.ui.base.ClientApplication;
 import net.eanfang.client.ui.fragment.ContactListFragment;
 import net.eanfang.client.ui.fragment.ContactsFragment;
 import net.eanfang.client.ui.fragment.HomeFragment;
@@ -92,9 +91,9 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
     /**
      * 底部消息数量
      */
-    private QBadgeView qBadgeViewHome = new QBadgeView(EanfangApplication.get().getApplicationContext());
-    private QBadgeView qBadgeViewContact = new QBadgeView(EanfangApplication.get().getApplicationContext());
-    private QBadgeView qBadgeViewWork = new QBadgeView(EanfangApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewHome = new QBadgeView(ClientApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewContact = new QBadgeView(ClientApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewWork = new QBadgeView(ClientApplication.get().getApplicationContext());
     private int mHome = 0;
     private int mContact = 0;
     private int mWork = 0;
@@ -124,15 +123,15 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
 //        initState();
 
         ButterKnife.bind(this);
-        user = EanfangApplication.get().getUser();
+        user = ClientApplication.get().getLoginBean();
         setHeaders();
 
         //融云登录
-        if (TextUtils.isEmpty(EanfangApplication.get().get(EanfangConst.RONG_YUN_TOKEN, ""))) {
+        if (TextUtils.isEmpty(ClientApplication.get().get(EanfangConst.RONG_YUN_TOKEN, ""))) {
             getRongYToken();
         } else {
             //如果有融云token 就直接登录
-            ClientApplication.connect(EanfangApplication.get().get(EanfangConst.RONG_YUN_TOKEN, ""), this);
+            ClientApplication.connect(ClientApplication.get().get(EanfangConst.RONG_YUN_TOKEN, ""));
         }
 
         initFragment();
@@ -151,11 +150,11 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
         RongIM.setOnReceiveMessageListener(new MyReceiveMessageListener());
         RongIM.setConnectionStatusListener(new MyConnectionStatusListener());
         //判断是否完善资料
-//        if (TextUtils.isEmpty(EanfangApplication.getApplication().getUser().getAccount().getRealName()) || "待提供".equals(EanfangApplication.getApplication().getUser().getAccount().getRealName())) {
+//        if (TextUtils.isEmpty(ClientApplication.get().getUser().getAccount().getRealName()) || "待提供".equals(ClientApplication.get().getUser().getAccount().getRealName())) {
 //            startAnimActivity(new Intent(this, LoginHintActivity.class));
 //        }
         // 判断是否有密码
-        if (EanfangApplication.getApplication().getUser().getAccount().isSimplePwd() == true) {
+        if (ClientApplication.get().getLoginBean().getAccount().isSimplePwd() == true) {
             startAnimActivity(new Intent(this, SetPasswordActivity.class));
         }
         PrefUtils.setBoolean(getApplicationContext(), PrefUtils.GUIDE, false);//新手引导是否展示
@@ -171,15 +170,15 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
     }
 
     private void initUpdate() {
-        if (!EanfangApplication.isUpdated) {
+        if (!ClientApplication.isUpdated) {
             //app更新
             UpdateAppManager.update(this, BuildConfig.APP_TYPE, false);
-            EanfangApplication.isUpdated = true;
+            ClientApplication.isUpdated = true;
         }
     }
 
     private void initFragment() {
-        mTabHost = findViewById(android.R.id.tabhost);
+        mTabHost = findViewById(R.id.tabhost);
         mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
         mTabHost.getTabWidget().setDividerDrawable(R.color.transparent);
         View indicator = getLayoutInflater().inflate(R.layout.indicator_main_home, null);
@@ -223,8 +222,9 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
                 RongIM.getInstance().logout();//退出融云
                 Intent intent = new Intent(getPackageName() + ".ExitListenerReceiver");
                 sendBroadcast(intent);
-                EanfangApplication.get().closeAll();
-                EanfangApplication.isUpdated = false;
+                //先注释
+//                EanfangApplication.get().closeAll();
+                ClientApplication.isUpdated = false;
 //                android.os.Process.killProcess(android.os.Process.myPid());
 
 //                System.exit(0);//正常退出App
@@ -247,7 +247,7 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
                 .tag(this)
                 .execute(new EanfangCallback<BaseDataBean>(this, false, BaseDataBean.class, (baseDataBean) -> {
                     if (baseDataBean != null) {
-                        EanfangApplication.get().set(BaseDataBean.class.getName(), baseDataBean);
+                        ClientApplication.get().set(BaseDataBean.class.getName(), baseDataBean);
                     }
                 }));
     }
@@ -267,7 +267,7 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
                 .tag(this)
                 .execute(new EanfangCallback<ConstAllBean>(this, false, ConstAllBean.class, (constAllBean) -> {
                     if (constAllBean != null) {
-                        EanfangApplication.get().set(ConstAllBean.class.getName(), constAllBean);
+                        ClientApplication.get().set(ConstAllBean.class.getName(), constAllBean);
                     }
                 }));
     }
@@ -298,8 +298,8 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
     }
 
     public void setHeaders() {
-        if (EanfangApplication.get().getUser() != null) {
-            EanfangHttp.setToken(EanfangApplication.get().getUser().getToken());
+        if (ClientApplication.get().getLoginBean() != null) {
+            EanfangHttp.setToken(ClientApplication.get().getLoginBean().getToken());
         }
         EanfangHttp.setClient();
     }
@@ -313,13 +313,13 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
     @Deprecated
     private void getRongYToken() {
         EanfangHttp.post(UserApi.POST_RONGY_TOKEN)
-                .params("userId", EanfangApplication.get().getAccId())
+                .params("userId", ClientApplication.get().getAccId())
                 .execute(new EanfangCallback<String>(MainActivity.this, false, String.class, (str) -> {
                     if (!TextUtils.isEmpty(str)) {
                         JSONObject json = JSONObject.parseObject(str);
                         String token = json.getString("token");
-                        EanfangApplication.get().set(EanfangConst.RONG_YUN_TOKEN, token);
-                        ClientApplication.connect(token, MainActivity.this);
+                        ClientApplication.get().set(EanfangConst.RONG_YUN_TOKEN, token);
+                        ClientApplication.connect(token);
                     }
                 }));
 
@@ -333,7 +333,8 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
     private void privoderMy() {
         //提供融云的自己头像和昵称
         RongIM.setUserInfoProvider(s -> {
-            UserInfo userInfo = new UserInfo(String.valueOf(EanfangApplication.get().getAccId()), EanfangApplication.getApplication().getUser().getAccount().getNickName(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + EanfangApplication.getApplication().getUser().getAccount().getAvatar()));
+            UserInfo userInfo = new UserInfo(String.valueOf(ClientApplication.get().getAccId()), ClientApplication.get().getLoginBean().getAccount().getNickName(),
+                    Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + ClientApplication.get().getLoginBean().getAccount().getAvatar()));
             Log.e("zzw", "userInfo=" + userInfo.toString());
             return userInfo;
         }, true);
@@ -559,7 +560,7 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
 
             mExitTime = System.currentTimeMillis();
 
-            CleanMessageUtil.clearAllCache(EanfangApplication.get());
+            CleanMessageUtil.clearAllCache(ClientApplication.get());
             SharePreferenceUtil.get().clear();
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
 //            RongIM.getInstance().logout();

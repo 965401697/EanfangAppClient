@@ -11,8 +11,6 @@ import android.view.WindowManager;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentTabHost;
 import androidx.lifecycle.ViewModel;
-
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.base.BaseActivity;
 import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.base.kit.rx.RxPerm;
@@ -36,6 +34,7 @@ import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.databinding.ActivityMainBinding;
 import net.eanfang.client.main.viewmodel.MainViewModel;
 import net.eanfang.client.ui.activity.worksapce.SetPasswordActivity;
@@ -43,7 +42,6 @@ import net.eanfang.client.ui.activity.worksapce.WorkerDetailActivity;
 import net.eanfang.client.ui.activity.worksapce.notice.MessageListActivity;
 import net.eanfang.client.ui.activity.worksapce.notice.OfficialListActivity;
 import net.eanfang.client.ui.activity.worksapce.notice.SystemNoticeActivity;
-import net.eanfang.client.ui.base.ClientApplication;
 import net.eanfang.client.ui.fragment.ContactListFragment;
 import net.eanfang.client.ui.fragment.ContactsFragment;
 import net.eanfang.client.ui.fragment.HomeFragment;
@@ -81,9 +79,9 @@ public class MainActivity extends BaseActivity {
     /**
      * 底部消息数量
      */
-    private QBadgeView qBadgeViewHome = new QBadgeView(EanfangApplication.get().getApplicationContext());
-    private QBadgeView qBadgeViewContact = new QBadgeView(EanfangApplication.get().getApplicationContext());
-    private QBadgeView qBadgeViewWork = new QBadgeView(EanfangApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewHome = new QBadgeView(ClientApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewContact = new QBadgeView(ClientApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewWork = new QBadgeView(ClientApplication.get().getApplicationContext());
     private int mHome = 0;
     private int mContact = 0;
     private int mWork = 0;
@@ -143,7 +141,7 @@ public class MainActivity extends BaseActivity {
         initFragment();
 
         // 判断是否有密码
-        if (EanfangApplication.get().getUser().getAccount().isSimplePwd()) {
+        if (ClientApplication.get().getLoginBean().getAccount().isSimplePwd()) {
             startActivity(SetPasswordActivity.class);
         }
 //        PrefUtils.setBoolean(getApplicationContext(), PrefUtils.GUIDE, false);//新手引导是否展示
@@ -163,7 +161,8 @@ public class MainActivity extends BaseActivity {
                 Intent intent = new Intent(getPackageName() + ".ExitListenerReceiver");
                 sendBroadcast(intent);
 //                BaseApplication.get().closeAllActivity();
-                EanfangApplication.get().closeAll();
+                //先注释
+//                EanfangApplication.get().closeAll();
 //                EanfangApplication.isUpdated = false;
 //                android.os.Process.killProcess(android.os.Process.myPid());
 //                System.exit(0);//正常退出App
@@ -258,21 +257,21 @@ public class MainActivity extends BaseActivity {
      */
     private void handlerValue(Object object) {
         if (object instanceof RongTokenBean) {
-            EanfangApplication.get().set(EanfangConst.STR.RONG_YUN_TOKEN, ((RongTokenBean) object).getToken());
-            ClientApplication.connect(((RongTokenBean) object).getToken(), this);
+            ClientApplication.get().set(EanfangConst.STR.RONG_YUN_TOKEN, ((RongTokenBean) object).getToken());
+            ClientApplication.connect(((RongTokenBean) object).getToken());
             return;
         }
         if (object instanceof BaseDataBean) {
             BaseDataKit.get().put((BaseDataBean) object);
             //兼容老版本
-            EanfangApplication.get().set(BaseDataBean.class.getName(), object);
+            ClientApplication.get().set(BaseDataBean.class.getName(), object);
             return;
         }
 
         if (object instanceof ConstAllBean) {
             ConstDataKit.get().put((ConstAllBean) object);
             //兼容老版本
-            EanfangApplication.get().set(ConstAllBean.class.getName(), object);
+            ClientApplication.get().set(ConstAllBean.class.getName(), object);
             return;
         }
     }
@@ -325,7 +324,7 @@ public class MainActivity extends BaseActivity {
         XGPushConfig.setMzPushAppId(MainActivity.this, MEIZU_APPID_CLIENT);
         XGPushConfig.setMzPushAppKey(MainActivity.this, MEIZU_APPKEY_CLIENT);
 //        ReceiverInit.getInstance().inits(MainActivity.this, BaseApplication.get().getAccount().getMobile());
-        ReceiverInit.getInstance().inits(MainActivity.this, EanfangApplication.get().getUser().getAccount().getMobile());
+        ReceiverInit.getInstance().inits(MainActivity.this, ClientApplication.get().getLoginBean().getAccount().getMobile());
     }
 
     private void initData() {
@@ -336,11 +335,11 @@ public class MainActivity extends BaseActivity {
 
     private void initRongIM() {
         //融云登录
-        if (StrUtil.isEmpty(EanfangApplication.get().get(EanfangConst.STR.RONG_YUN_TOKEN, StrUtil.EMPTY))) {
-            mainViewModel.getRongToken(EanfangApplication.get().getUserId());
+        if (StrUtil.isEmpty(ClientApplication.get().get(EanfangConst.STR.RONG_YUN_TOKEN, StrUtil.EMPTY))) {
+            mainViewModel.getRongToken(ClientApplication.get().getUserId());
         } else {
             //如果有融云token 就直接登录
-            ClientApplication.connect(EanfangApplication.get().get(EanfangConst.STR.RONG_YUN_TOKEN, StrUtil.EMPTY), this);
+            ClientApplication.connect(ClientApplication.get().get(EanfangConst.STR.RONG_YUN_TOKEN, StrUtil.EMPTY));
         }
 
         RongIM.setOnReceiveMessageListener(new MyReceiveMessageListener(this, hashMap, transactionActivities,
@@ -382,8 +381,8 @@ public class MainActivity extends BaseActivity {
 
         // 向融云提供自己的头像和昵称  兼容老版本
         RongIM.setUserInfoProvider(s -> {
-            String id = EanfangApplication.get().getAccId().toString();
-            AccountEntity account = EanfangApplication.get().getUser().getAccount();
+            String id = ClientApplication.get().getAccId().toString();
+            AccountEntity account = ClientApplication.get().getLoginBean().getAccount();
             String nickName = account.getNickName();
             Uri avatar = ToolsKit.getOssUri(account.getAvatar());
             return new UserInfo(id, nickName, avatar);
@@ -431,8 +430,8 @@ public class MainActivity extends BaseActivity {
      */
     @Deprecated
     public void setHeaders() {
-        if (EanfangApplication.get().getUser() != null) {
-            EanfangHttp.setToken(EanfangApplication.get().getUser().getToken());
+        if (ClientApplication.get().getLoginBean() != null) {
+            EanfangHttp.setToken(ClientApplication.get().getLoginBean().getToken());
         }
         EanfangHttp.setClient();
     }

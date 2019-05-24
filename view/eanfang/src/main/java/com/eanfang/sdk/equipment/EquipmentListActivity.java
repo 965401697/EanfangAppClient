@@ -11,7 +11,7 @@ import com.eanfang.R;
 import com.eanfang.R2;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.config.Config;
-import com.eanfang.model.sys.BaseDataEntity;
+import com.eanfang.biz.model.entity.BaseDataEntity;
 import com.flyco.tablayout.SlidingTabLayout;
 
 import java.util.ArrayList;

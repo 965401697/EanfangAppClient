@@ -9,7 +9,6 @@ import androidx.viewpager.widget.ViewPager;
 import android.view.View;
 
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;

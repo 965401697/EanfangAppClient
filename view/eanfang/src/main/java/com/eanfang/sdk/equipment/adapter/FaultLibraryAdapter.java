@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.R;
-import com.eanfang.model.FaultListBean;
+import com.eanfang.biz.model.FaultListBean;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.StringUtils;
 import com.facebook.drawee.view.SimpleDraweeView;

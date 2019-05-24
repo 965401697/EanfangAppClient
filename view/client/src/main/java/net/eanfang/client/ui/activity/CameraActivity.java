@@ -30,7 +30,6 @@ import com.amap.api.services.weather.WeatherSearchQuery;
 import com.camera.util.BitmapUtil;
 import com.camera.util.ImageUtil;
 import com.camera.view.TakePhotoActivity;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.biz.model.CameraBean;
 import com.eanfang.biz.model.SelectAddressItem;

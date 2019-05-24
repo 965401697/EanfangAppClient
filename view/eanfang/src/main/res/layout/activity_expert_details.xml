@@ -70,7 +70,7 @@
                     android:layout_marginTop="@dimen/dimen_4"
                     android:layout_toRightOf="@id/gs_name_tv" />
 
-                <com.eanfang.widget.customview.SuperTextView
+                <com.eanfang.base.widget.customview.SuperTextView
                     android:id="@+id/rz_tv"
                     android:visibility="gone"
                     android:layout_width="@dimen/dimen_280"
@@ -124,7 +124,7 @@
                     android:text="100%" />
 
 
-                <com.eanfang.widget.customview.SuperTextView
+                <com.eanfang.base.widget.customview.SuperTextView
                     android:id="@+id/bq_stv"
                     android:layout_width="60dp"
                     android:layout_height="26dp"
@@ -197,7 +197,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_2" />
 
-            <com.eanfang.widget.customview.SuperTextView
+            <com.eanfang.base.widget.customview.SuperTextView
                 android:id="@+id/yx_a_stv"
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
@@ -212,7 +212,7 @@
                 app:sRightTextColor="@color/colorX"
                 app:sRightTextString="★★★★★" />
 
-            <com.eanfang.widget.customview.SuperTextView
+            <com.eanfang.base.widget.customview.SuperTextView
                 android:id="@+id/yx_b_stv"
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
@@ -227,7 +227,7 @@
                 app:sRightTextColor="@color/colorX"
                 app:sRightTextString="★★★★★" />
 
-            <com.eanfang.widget.customview.SuperTextView
+            <com.eanfang.base.widget.customview.SuperTextView
                 android:id="@+id/yx_c_stv"
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
@@ -242,7 +242,7 @@
                 app:sRightTextColor="@color/colorX"
                 app:sRightTextString="★★★★★" />
 
-            <com.eanfang.widget.customview.SuperTextView
+            <com.eanfang.base.widget.customview.SuperTextView
                 android:id="@+id/yx_d_stv"
                 android:layout_width="match_parent"
                 android:layout_height="36dp"
@@ -257,7 +257,7 @@
                 app:sRightTextColor="@color/colorX"
                 app:sRightTextString="★★★★★" />
 
-            <com.eanfang.widget.customview.SuperTextView
+            <com.eanfang.base.widget.customview.SuperTextView
                 android:id="@+id/yx_e_stv"
                 android:layout_width="match_parent"
                 android:layout_height="36dp"

@@ -111,7 +111,7 @@
                 android:orientation="horizontal"
                 android:padding="@dimen/dimen_10">
 
-                <com.eanfang.widget.customview.TwoTextPicText
+                <com.eanfang.base.widget.customview.TwoTextPicText
                     android:id="@+id/sj_dd_iv"
                     android:layout_width="@dimen/app_two_pic_text"
                     android:layout_height="@dimen/app_two_pic_text"
@@ -127,7 +127,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
-                <com.eanfang.widget.customview.TwoTextPicText
+                <com.eanfang.base.widget.customview.TwoTextPicText
                     android:id="@+id/wx_dd_iv"
                     android:layout_width="@dimen/app_two_pic_text"
                     android:layout_height="@dimen/app_two_pic_text"
@@ -143,7 +143,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
-                <com.eanfang.widget.customview.TwoTextPicText
+                <com.eanfang.base.widget.customview.TwoTextPicText
                     android:id="@+id/sg_dd_iv"
                     android:layout_width="@dimen/app_two_pic_text"
                     android:layout_height="@dimen/app_two_pic_text"
@@ -159,7 +159,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
 
-                <com.eanfang.widget.customview.TwoTextPicText
+                <com.eanfang.base.widget.customview.TwoTextPicText
                     android:id="@+id/pl_iv"
                     android:layout_width="@dimen/app_two_pic_text"
                     android:layout_height="@dimen/app_two_pic_text"
@@ -229,7 +229,7 @@
                 app:tl_underline_color="#006AFE"
                 app:tl_underline_height="1dp" />
 
-            <com.eanfang.widget.customview.ViewPagerForScrollView
+            <com.eanfang.base.widget.customview.ViewPagerForScrollView
                 android:id="@+id/vp_service"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

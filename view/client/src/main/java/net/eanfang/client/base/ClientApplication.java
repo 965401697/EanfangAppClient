@@ -118,7 +118,7 @@ public class ClientApplication extends BaseApplication {
      *
      * @param token token
      */
-    private void connect(String token) {
+    public static void connect(String token) {
 //        Log.e("zzw2", "connect = " + token);
         RongIM.connect(token, !BuildConfig.DEBUG ? null : new RongIMClient.ConnectCallback() {
 
