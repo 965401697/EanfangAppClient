@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.WorkerInfoBean;
@@ -18,6 +17,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import java.util.ArrayList;
@@ -80,8 +80,8 @@ public class CertificationInfoActivity extends BaseWorkerActivity {
 
     private void initViews(WorkerInfoBean bean) {
         ivHeader.setImageURI(com.eanfang.BuildConfig.OSS_SERVER + bean.getAvatarPhoto());
-        String contactName = EanfangApplication.get().getUser().getAccount().getRealName();
-        String mobile = EanfangApplication.get().getUser().getAccount().getMobile();
+        String contactName = WorkerApplication.get().getLoginBean().getAccount().getRealName();
+        String mobile = WorkerApplication.get().getLoginBean().getAccount().getMobile();
 
         if (!StringUtils.isEmpty(contactName)) {
             tvContactName.setText(contactName);
@@ -91,10 +91,10 @@ public class CertificationInfoActivity extends BaseWorkerActivity {
         }
         etCardId.setFocusable(false);
         //Log.i("zhangyanran",EanfangApplication.get().getUser().getAccount().getIdCard()+"-----------"+EanfangApplication.get().getUser().getAccount().getRealName());
-        etCardId.setText(EanfangApplication.get().getUser().getAccount().getIdCard());
-        Log.d("66566", "initViews: "+EanfangApplication.get().getUser().getAccount().getGender());
+        etCardId.setText(WorkerApplication.get().getLoginBean().getAccount().getIdCard());
+        Log.d("66566", "initViews: "+WorkerApplication.get().getLoginBean().getAccount().getGender());
         //0女1男
-        if (EanfangApplication.get().getUser().getAccount().getGender() == 0) {
+        if (WorkerApplication.get().getLoginBean().getAccount().getGender() == 0) {
             rbWoman.setSelected(true);
         } else {
             rbMan.setSelected(true);

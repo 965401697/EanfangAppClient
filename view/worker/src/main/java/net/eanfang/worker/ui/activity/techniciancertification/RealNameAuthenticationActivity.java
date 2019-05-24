@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -27,6 +28,7 @@ import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
@@ -51,11 +53,11 @@ import butterknife.OnClick;
 public class RealNameAuthenticationActivity extends BaseActivityWithTakePhoto {
 
     @BindView(R.id.iv_idCard_front)
-    SimpleDraweeView ivIdCardFront;
+    ImageView ivIdCardFront;
     @BindView(R.id.iv_idCard_back)
-    SimpleDraweeView ivIdCardBack;
+    ImageView ivIdCardBack;
     @BindView(R.id.iv_idCard_inHand)
-    SimpleDraweeView ivIdCardInHand;
+    ImageView ivIdCardInHand;
     @BindView(R.id.tv_save)
     TextView tvSave;
     //身份证正面
@@ -100,13 +102,13 @@ public class RealNameAuthenticationActivity extends BaseActivityWithTakePhoto {
 
     private void fillData() {
         if (mTechWorkerVerifyEntity.getIdCardFront() != null) {
-            ivIdCardFront.setImageURI(BuildConfig.OSS_SERVER + mTechWorkerVerifyEntity.getIdCardFront());
+            GlideUtil.intoImageView(this,BuildConfig.OSS_SERVER + mTechWorkerVerifyEntity.getIdCardFront(),ivIdCardFront);
         }
         if (mTechWorkerVerifyEntity.getIdCardSide() != null) {
-            ivIdCardBack.setImageURI(BuildConfig.OSS_SERVER + mTechWorkerVerifyEntity.getIdCardSide());
+            GlideUtil.intoImageView(this,BuildConfig.OSS_SERVER + mTechWorkerVerifyEntity.getIdCardSide(),ivIdCardBack);
         }
         if (mTechWorkerVerifyEntity.getIdCardHand() != null) {
-            ivIdCardInHand.setImageURI(BuildConfig.OSS_SERVER + mTechWorkerVerifyEntity.getIdCardHand());
+            GlideUtil.intoImageView(this,BuildConfig.OSS_SERVER + mTechWorkerVerifyEntity.getIdCardHand(),ivIdCardInHand);
         }
         try {
             if (mTechWorkerVerifyEntity.getIdCardNum() != null) {
@@ -166,13 +168,13 @@ public class RealNameAuthenticationActivity extends BaseActivityWithTakePhoto {
         switch (resultCode) {
             case ID_CARD_SIDE:
                 mTechWorkerVerifyEntity.setIdCardSide(imgKey);
-                ivIdCardBack.setImageURI("file://" + image.getOriginalPath());
+                GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),ivIdCardBack);
                 OSSUtils.initOSS(this).asyncPutImage(imgKey, image.getOriginalPath(), new OSSCallBack(this, true) {
                 });
                 break;
             case ID_CARD_HAND:
                 mTechWorkerVerifyEntity.setIdCardHand(imgKey);
-                ivIdCardInHand.setImageURI("file://" + image.getOriginalPath());
+                GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),ivIdCardInHand);
                 OSSUtils.initOSS(this).asyncPutImage(imgKey, image.getOriginalPath(), new OSSCallBack(this, true) {
                 });
                 break;
@@ -188,7 +190,7 @@ public class RealNameAuthenticationActivity extends BaseActivityWithTakePhoto {
             if (data != null) {
                 String contentType = data.getStringExtra(CameraActivity.KEY_CONTENT_TYPE);
                 String filePath = FileUtil.getSaveFile(getApplicationContext()).getAbsolutePath();
-                ivIdCardFront.setImageURI("file://" + filePath);
+                GlideUtil.intoImageView(this,"file://" + filePath,ivIdCardFront);
                 Log.d("recIDCard669", "onActivityResult: " + filePath);
                 nem++;
                 recIDCard(IDCardParams.ID_CARD_SIDE_FRONT, filePath);

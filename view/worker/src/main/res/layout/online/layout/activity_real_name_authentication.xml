@@ -22,15 +22,15 @@
             android:orientation="vertical">
 
 
-            <com.facebook.drawee.view.SimpleDraweeView
+            <ImageView
                 android:id="@+id/iv_idCard_front"
                 android:layout_width="@dimen/dimen_400"
                 android:layout_height="@dimen/dimen_180"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/dimen_40"
                 android:layout_marginBottom="@dimen/dimen_40"
-                android:src="@mipmap/worker_logo"
-                fresco:placeholderImage="@mipmap/sfzzmiv" />
+                android:src="@mipmap/sfzzmiv"
+                android:scaleType="centerCrop"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -41,14 +41,15 @@
                 android:textSize="@dimen/textSize_14" />
 
 
-            <com.facebook.drawee.view.SimpleDraweeView
+            <ImageView
                 android:id="@+id/iv_idCard_back"
                 android:layout_width="@dimen/dimen_400"
                 android:layout_height="@dimen/dimen_180"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/dimen_40"
                 android:layout_marginBottom="@dimen/dimen_40"
-                fresco:placeholderImage="@mipmap/sfzfmiv" />
+                android:scaleType="centerCrop"
+                android:src="@mipmap/sfzfmiv" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -59,14 +60,15 @@
                 android:textSize="@dimen/textSize_14" />
 
 
-            <com.facebook.drawee.view.SimpleDraweeView
+            <ImageView
                 android:id="@+id/iv_idCard_inHand"
                 android:layout_width="@dimen/dimen_400"
                 android:layout_height="@dimen/dimen_180"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/dimen_40"
                 android:layout_marginBottom="@dimen/dimen_40"
-                fresco:placeholderImage="@mipmap/shouhciiv" />
+                android:scaleType="centerCrop"
+                android:src="@mipmap/shouhciiv" />
 
             <TextView
                 android:layout_width="wrap_content"

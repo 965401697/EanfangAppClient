@@ -21,6 +21,7 @@ import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.NumberUtil;
 import com.eanfang.util.PermKit;
@@ -55,7 +56,7 @@ public class OrderDetailFragment extends BaseFragment {
     private TextView tv_contract_phone;
     private TextView tv_address;
     private RecyclerView rv_list;
-    private com.facebook.drawee.view.SimpleDraweeView iv_pic;
+    private ImageView iv_pic;
     private TextView tv_worker_name;
     private TextView tv_worker_company;
     private ImageView iv_phone;
@@ -247,7 +248,7 @@ public class OrderDetailFragment extends BaseFragment {
 
                     //技师端
                     if (bean.getOwnerUser() != null) {
-                        iv_pic.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(bean.getOwnerUser().getAccountEntity().getAvatar()));
+                        GlideUtil.intoImageView(getActivity(),BuildConfig.OSS_SERVER + Uri.parse(bean.getOwnerUser().getAccountEntity().getAvatar()),iv_pic);
                         tv_worker_name.setText(bean.getRepairContacts());
                         if (bean.getOwnerOrg() != null) {
                             if (bean.getOwnerOrg().getBelongCompany().getOrgName() != null) {
