@@ -196,7 +196,7 @@ public class BaseApplication extends MultiDexApplication {
      *
      * @param activity activity
      */
-    public void closeActivity(final Class<Activity> activity) {
+    public void closeActivity(final Class<? extends Activity> activity) {
         if (null == activityStack) {
             activityStack = new Stack<>();
         }

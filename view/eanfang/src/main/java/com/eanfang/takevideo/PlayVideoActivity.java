@@ -4,7 +4,7 @@ import android.os.Bundle;
 
 import com.eanfang.R;
 import com.eanfang.R2;
-import com.eanfang.application.CustomeApplication;
+import com.eanfang.base.BaseApplication;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.base.BaseActivity;
@@ -129,7 +129,7 @@ public class PlayVideoActivity extends BaseActivity {
                 @Override
                 public void onOssSuccess() {
 //                    showToast("上传视频成功");
-                    CustomeApplication.get().closeActivity(TakeVideoActivity.class.getName());
+                    BaseApplication.get().closeActivity(TakeVideoActivity.class);
                     TakeVdideoMode takeVdideoMode = new TakeVdideoMode();
                     runOnUiThread(() -> {
                         takeVdideoMode.setMImagePath(mVideoPath);

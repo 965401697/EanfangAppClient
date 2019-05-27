@@ -2,7 +2,6 @@ package net.eanfang.client.ui.adapter.security;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.biz.model.security.SecurityCommentListBean;
 import com.eanfang.util.StringUtils;
 

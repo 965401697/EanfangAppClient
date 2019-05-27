@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.MaintenanceBean;
@@ -162,7 +161,7 @@ public class MaintenanceActivity extends BaseWorkerActivity {
                     message.setTip("确定");
                     bundle.putSerializable("message", message);
                     JumpItent.jump(MaintenanceActivity.this, StateChangeActivity.class, bundle);
-                    EanfangApplication.get().closeActivity(MaintenanceActivity.class.getName());
+                    WorkerApplication.get().closeActivity(MaintenanceActivity.class);
                 }));
     }
 }

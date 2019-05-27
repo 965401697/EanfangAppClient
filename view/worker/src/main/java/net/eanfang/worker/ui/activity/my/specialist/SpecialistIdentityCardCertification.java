@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.oss.OSSCallBack;
@@ -119,8 +118,8 @@ public class SpecialistIdentityCardCertification extends BaseActivityWithTakePho
     }
 
     private void closeActivity() {
-        EanfangApplication.get().closeActivity(SpecialistCertificationActivity.class.getName());
-        EanfangApplication.get().closeActivity(SpecialistIdentityCardCertification.class.getName());
+        WorkerApplication.get().closeActivity(SpecialistCertificationActivity.class);
+        WorkerApplication.get().closeActivity(SpecialistIdentityCardCertification.class);
         finishSelf();
     }
 

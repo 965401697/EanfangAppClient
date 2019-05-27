@@ -16,7 +16,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.BaseService;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -94,7 +93,7 @@ public class PayActivity extends BaseWorkerActivity {
                         if (TextUtils.equals(resultStatus, "9000")) {
                             // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
                             ToastUtil.get().showToast(getApplicationContext(), "支付成功");
-                            EanfangApplication.get().closeActivity(PayActivity.class.getName());
+                            WorkerApplication.get().closeActivity(PayActivity.class);
                             Bundle bundle = new Bundle();
                             bundle.putSerializable("message", MessageUtil.paySuccess());
                             JumpItent.jump(PayActivity.this, StateChangeActivity.class, bundle);

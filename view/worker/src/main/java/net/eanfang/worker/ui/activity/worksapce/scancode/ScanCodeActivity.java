@@ -8,7 +8,6 @@ import android.view.KeyEvent;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.CustomeApplication;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;

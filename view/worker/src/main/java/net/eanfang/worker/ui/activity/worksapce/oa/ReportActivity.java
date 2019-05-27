@@ -19,7 +19,6 @@ import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
@@ -37,6 +36,7 @@ import com.eanfang.util.ToastUtil;
 import com.eanfang.biz.model.entity.UserEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.AddReportCompleteActivity;
 import net.eanfang.worker.ui.activity.worksapce.AddReportFindActivity;
 import net.eanfang.worker.ui.activity.worksapce.AddReportPlanActivity;
@@ -162,12 +162,12 @@ public class ReportActivity extends BaseWorkerActivity implements View.OnClickLi
                 giveUp();
             }
         });
-        if (EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName() != null) {
-            etCompanyName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
+        if (WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgName() != null) {
+            etCompanyName.setText(WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
         } else {
-            etCompanyName.setText(EanfangApplication.getApplication().getUser().getAccount().getRealName());
+            etCompanyName.setText(WorkerApplication.get().getLoginBean().getAccount().getRealName());
         }
-        etDepartmentName.setText(EanfangApplication.getApplication().getUser().getAccount().getDefaultUser().getDepartmentEntity().getOrgName());
+        etDepartmentName.setText(WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getDepartmentEntity().getOrgName());
 
         btnAddComplete.setOnClickListener(this);
         btnAddFind.setOnClickListener(this);
@@ -329,8 +329,8 @@ public class ReportActivity extends BaseWorkerActivity implements View.OnClickLi
         bean.setType(GetConstDataUtils.getWorkReportTypeList().indexOf(task_title));
         if (newPresonList.size() == 0) {
             //工作协同默认值
-            bean.setAssigneeUserId(EanfangApplication.get().getUserId());
-            bean.setAssigneeOrgCode(EanfangApplication.get().getOrgCode());
+            bean.setAssigneeUserId(WorkerApplication.get().getUserId());
+            bean.setAssigneeOrgCode(WorkerApplication.get().getOrgCode());
         } else {
             //工作协同默认值
             bean.setAssigneeUserId(Long.parseLong(newPresonList.get(0).getUserId()));
@@ -390,7 +390,7 @@ public class ReportActivity extends BaseWorkerActivity implements View.OnClickLi
                             bundle.putString("picUrl", bean.getWorkReportDetails().get(0).getPictures().split(",")[0]);
                         }
                         b.putString("creatTime", String.valueOf(GetConstDataUtils.getWorkReportTypeList().indexOf(etTaskName.getText().toString().trim())));
-                        b.putString("workerName", EanfangApplication.get().getUser().getAccount().getRealName());
+                        b.putString("workerName", WorkerApplication.get().getLoginBean().getAccount().getRealName());
                         b.putString("status", "0");
                         b.putString("shareType", "3");
 
@@ -409,8 +409,8 @@ public class ReportActivity extends BaseWorkerActivity implements View.OnClickLi
 
         EanfangHttp.get(NewApiService.GET_COLLEAGUE)
                 .tag(this)
-                .params("id", EanfangApplication.getApplication().getUserId())
-                .params("companyId", EanfangApplication.getApplication().getCompanyId())
+                .params("id", WorkerApplication.getApplication().getUserId())
+                .params("companyId", WorkerApplication.getApplication().getCompanyId())
                 .execute(new EanfangCallback<UserEntity>(ReportActivity.this, true, UserEntity.class, true, (list) -> {
                     userlist = list;
                     userNameList.addAll(Stream.of(userlist).map((user) -> user.getAccountEntity().getRealName()).toList());
@@ -449,7 +449,7 @@ public class ReportActivity extends BaseWorkerActivity implements View.OnClickLi
                 if (bean.getOrgCode() != null && !TextUtils.isEmpty(bean.getOrgCode())) {
                     assigneeOrgCode = bean.getOrgCode();
                 } else {
-                    assigneeOrgCode = EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgCode();
+                    assigneeOrgCode = WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgCode();
                 }
             } else {
 

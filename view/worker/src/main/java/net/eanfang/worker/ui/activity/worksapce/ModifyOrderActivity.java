@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.eanfang.apiservice.RepairApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.RepairedOrderBean;

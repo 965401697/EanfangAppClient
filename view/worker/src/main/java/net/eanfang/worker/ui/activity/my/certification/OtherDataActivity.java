@@ -12,7 +12,6 @@ import android.widget.EditText;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -228,8 +227,8 @@ public class OtherDataActivity extends BaseWorkerActivity {
     }
 
     private void closeActivity() {
-        EanfangApplication.get().closeActivity(CertificationActivity.class.getName());
-        EanfangApplication.get().closeActivity(IdentityCardCertification.class.getName());
+        WorkerApplication.get().closeActivity(CertificationActivity.class);
+        WorkerApplication.get().closeActivity(IdentityCardCertification.class);
         finishSelf();
     }
 

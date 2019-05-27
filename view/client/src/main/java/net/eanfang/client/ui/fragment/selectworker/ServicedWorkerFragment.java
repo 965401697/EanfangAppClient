@@ -13,7 +13,6 @@ import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.RepairApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
@@ -28,6 +27,7 @@ import com.yaf.base.entity.RepairOrderEntity;
 import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.pay.NewPayActivity;
 import net.eanfang.client.ui.activity.worksapce.SelectWorkerActivity;
 import net.eanfang.client.ui.activity.worksapce.StateChangeActivity;
@@ -274,9 +274,9 @@ public class ServicedWorkerFragment extends BaseFragment implements SwipeRefresh
     }
 
     private void closeActivity() {
-        EanfangApplication.get().closeActivity(RepairTypeActivity.class.getName());
-        EanfangApplication.get().closeActivity(RepairActivity.class.getName());
-        EanfangApplication.get().closeActivity(SelectWorkerActivity.class.getName());
+        ClientApplication.get().closeActivity(RepairTypeActivity.class);
+        ClientApplication.get().closeActivity(RepairActivity.class);
+        ClientApplication.get().closeActivity(SelectWorkerActivity.class);
         finishSelf();
     }
 

@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.AptitudeCertificateBean;
@@ -145,8 +144,8 @@ public class AuthQualifyListActivity extends BaseActivity {
         message.setTip("确定");
         bundle.putSerializable("message", message);
         JumpItent.jump(AuthQualifyListActivity.this, StateChangeActivity.class, bundle);
-        EanfangApplication.get().closeActivity(AuthQualifyFirstActivity.class.getName());
-        EanfangApplication.get().closeActivity(AuthQualifySecondActivity.class.getName());
+        WorkerApplication.get().closeActivity(AuthQualifyFirstActivity.class);
+        WorkerApplication.get().closeActivity(AuthQualifySecondActivity.class);
         EventBus.getDefault().post("workerIsAuthing");
         ContactsFragment.isRefresh = true;//从认领企业过来 完成认证刷新公司
         finishSelf();

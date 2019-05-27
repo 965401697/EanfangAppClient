@@ -12,7 +12,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
@@ -245,6 +244,6 @@ public class AuthCompanySecondActivity extends BaseActivityWithTakePhoto {
         bundle.putLong("orgid", orgid);
         JumpItent.jump(AuthCompanySecondActivity.this, StateChangeActivity.class, bundle);
         finishSelf();
-        EanfangApplication.get().closeActivity(AuthCompanyFirstActivity.class.getName());
+        WorkerApplication.get().closeActivity(AuthCompanyFirstActivity.class);
     }
 }

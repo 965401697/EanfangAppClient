@@ -18,7 +18,6 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Constant;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
@@ -32,6 +31,7 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.yaf.base.entity.PayLogEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.worksapce.FaPiaoActivity;
 import net.eanfang.client.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
@@ -99,7 +99,7 @@ public class PayActivity extends BaseClientActivity {
                         if (TextUtils.equals(resultStatus, "9000")) {
                             // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
                             ToastUtil.get().showToast(getApplicationContext(), "支付成功");
-                            EanfangApplication.get().closeActivity(PayActivity.class.getName());
+                            ClientApplication.get().closeActivity(PayActivity.class);
                             Intent intent = new Intent(PayActivity.this, StateChangeActivity.class);
                             Bundle bundle = new Bundle();
                             bundle.putSerializable("message", MessageUtil.paySuccess());
@@ -169,7 +169,7 @@ public class PayActivity extends BaseClientActivity {
         });
 
         btnToPayLatter.setOnClickListener(v -> {
-            EanfangApplication.get().closeActivity(PayActivity.class.getName());
+            ClientApplication.get().closeActivity(PayActivity.class);
 //            Intent intent = new Intent(PayActivity.this, StateChangeActivity.class);
 //            Bundle bundle = new Bundle();
 //            bundle.putSerializable("message", MessageUtil.payLatter());

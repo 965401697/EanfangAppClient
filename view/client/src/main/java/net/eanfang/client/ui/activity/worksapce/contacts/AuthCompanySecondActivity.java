@@ -14,7 +14,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
@@ -36,6 +35,7 @@ import com.eanfang.biz.model.entity.BaseDataEntity;
 import com.eanfang.biz.model.entity.OrgUnitEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.client.ui.fragment.ContactsFragment;
 
@@ -287,6 +287,6 @@ public class AuthCompanySecondActivity extends BaseActivityWithTakePhoto {
         startActivity(intent);
         EventBus.getDefault().post("customerIsAuthing");
         finishSelf();
-        EanfangApplication.get().closeActivity(AuthCompanyFirstActivity.class.getName());
+        ClientApplication.get().closeActivity(AuthCompanyFirstActivity.class);
     }
 }

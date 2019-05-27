@@ -22,7 +22,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.config.EanfangConst;
@@ -226,10 +225,10 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
 
     private void initUpdate() {
 
-        if (!EanfangApplication.isUpdated) {
+        if (!WorkerApplication.isUpdated) {
             //app更新
             UpdateAppManager.update(this, BuildConfig.APP_TYPE, false);
-            EanfangApplication.isUpdated = true;
+            WorkerApplication.isUpdated = true;
         }
     }
 

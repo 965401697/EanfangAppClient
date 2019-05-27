@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseActivity;
@@ -109,7 +108,7 @@ public class MaintenanceAppointTimeActivity extends BaseActivity implements Sele
            Log.d("电话回访，电话预约上门时间b", finalUrl +"\n"+JsonUtils.obj2String(object)+"\n"+bean.toString());
 
                     finishSelf();
-                    EanfangApplication.get().closeActivity(MaintenanceAppointTimeActivity.class.getName());
+                    WorkerApplication.get().closeActivity(MaintenanceAppointTimeActivity.class);
                 }));
 
     }

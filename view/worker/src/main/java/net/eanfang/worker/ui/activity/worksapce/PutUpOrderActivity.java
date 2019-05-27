@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GetConstDataUtils;
@@ -194,10 +193,10 @@ public class PutUpOrderActivity extends BaseWorkerActivity {
                 .upJson(json)
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
                     runOnUiThread(() -> {
-                        EanfangApplication.get().closeActivity(FillRepairInfoActivity.class.getName());
+                        WorkerApplication.get().closeActivity(FillRepairInfoActivity.class);
                         showToast("转单申请已经提交");
                         finishSelf();
-                        EanfangApplication.get().closeActivity(FillRepairInfoActivity.class.getName());
+                        WorkerApplication.get().closeActivity(FillRepairInfoActivity.class);
                     });
                 }));
     }

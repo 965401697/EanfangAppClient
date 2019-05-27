@@ -14,7 +14,6 @@ import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.RepairApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
@@ -296,9 +295,9 @@ public class AllWorkerFragment extends BaseFragment implements SwipeRefreshLayou
     }
 
     private void closeActivity() {
-        EanfangApplication.get().closeActivity(RepairTypeActivity.class.getName());
-        EanfangApplication.get().closeActivity(RepairActivity.class.getName());
-        EanfangApplication.get().closeActivity(SelectWorkerActivity.class.getName());
+        ClientApplication.get().closeActivity(RepairTypeActivity.class);
+        ClientApplication.get().closeActivity(RepairActivity.class);
+        ClientApplication.get().closeActivity(SelectWorkerActivity.class);
         finishSelf();
     }
 

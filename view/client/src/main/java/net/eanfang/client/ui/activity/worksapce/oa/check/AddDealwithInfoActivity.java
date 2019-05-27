@@ -11,7 +11,6 @@ import android.widget.RelativeLayout;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -34,6 +33,7 @@ import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 import com.yaf.base.entity.WorkInspectEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.worksapce.oa.OAPersonAdaptet;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
@@ -220,7 +220,7 @@ public class AddDealwithInfoActivity extends BaseClientActivity {
     }
 
     public void closeBeforeActivity() {
-        EanfangApplication.get().closeActivity(DealWithFirstActivity.class.getName());
+        ClientApplication.get().closeActivity(DealWithFirstActivity.class);
         EventBus.getDefault().post("addDealWithInfoSuccess");
         finishSelf();
     }

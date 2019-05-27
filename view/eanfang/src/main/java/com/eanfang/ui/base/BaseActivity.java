@@ -103,7 +103,7 @@ public class BaseActivity extends AppCompatActivity implements
 //        initState();
 
 //        setStatusBar();
-
+        BaseApplication.get().addActivity(this);
 //        CustomeApplication.get().push(this);
         if (android.os.Build.VERSION.SDK_INT > 9) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -286,6 +286,7 @@ public class BaseActivity extends AppCompatActivity implements
             EventBus.getDefault().unregister(this);
         }
 //        CustomeApplication.get().pull(this);
+        BaseApplication.get().closeActivity(this);
         this.unregisterReceiver(exitre);
     }
 

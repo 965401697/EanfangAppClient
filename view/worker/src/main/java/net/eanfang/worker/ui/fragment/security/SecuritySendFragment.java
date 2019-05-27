@@ -5,9 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.recyclerview.widget.DividerItemDecoration;
-
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.security.SecurityCommentListBean;

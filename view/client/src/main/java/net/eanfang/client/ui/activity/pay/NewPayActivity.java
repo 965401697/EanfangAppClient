@@ -24,7 +24,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alipay.sdk.app.PayTask;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -37,10 +36,10 @@ import com.yaf.base.entity.InvoiceEntity;
 import com.yaf.base.entity.PayLogEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.worksapce.OrderConfirmActivity;
 import net.eanfang.client.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
-import net.eanfang.client.ui.base.ClientApplication;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -260,7 +259,7 @@ public class NewPayActivity extends BaseClientActivity implements View.OnClickLi
                 break;
 
             case R.id.tv_outline_pay:
-                EanfangApplication.get().closeActivity(OrderConfirmActivity.class.getName());
+                ClientApplication.get().closeActivity(OrderConfirmActivity.class);
                 Intent intent = new Intent(NewPayActivity.this, StateChangeActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("message", MessageUtil.payLatter());
@@ -325,7 +324,7 @@ public class NewPayActivity extends BaseClientActivity implements View.OnClickLi
                     @Override
                     public void onSuccess(JSONObject bean) {
                         super.onSuccess(bean);
-                        EanfangApplication.get().closeActivity(NewPayActivity.class.getName());
+                        ClientApplication.get().closeActivity(NewPayActivity.class);
                         Intent intent = new Intent(NewPayActivity.this, StateChangeActivity.class);
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("message", MessageUtil.paySuccess());
@@ -461,7 +460,7 @@ public class NewPayActivity extends BaseClientActivity implements View.OnClickLi
 
         if (!cbInvoice.isChecked()) {
             if (mPayType == 1) {//支付宝支付 优惠券支付
-                EanfangApplication.get().closeActivity(NewPayActivity.class.getName());
+                ClientApplication.get().closeActivity(NewPayActivity.class);
                 Intent intent = new Intent(NewPayActivity.this, StateChangeActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("message", MessageUtil.paySuccess());
@@ -480,7 +479,7 @@ public class NewPayActivity extends BaseClientActivity implements View.OnClickLi
                     @Override
                     public void onSuccess(Object bean) {
                         if (mPayType == 1) {       //支付宝支付 优惠券支付
-                            EanfangApplication.get().closeActivity(NewPayActivity.class.getName());
+                            ClientApplication.get().closeActivity(NewPayActivity.class);
                             Intent intent = new Intent(NewPayActivity.this, StateChangeActivity.class);
                             Bundle bundle = new Bundle();
                             bundle.putSerializable("message", MessageUtil.paySuccess());

@@ -3,7 +3,6 @@ package net.eanfang.client.base;
 import android.net.Uri;
 import android.util.Log;
 
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.base.BaseApplication;
 import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.base.kit.loading.LoadKit;

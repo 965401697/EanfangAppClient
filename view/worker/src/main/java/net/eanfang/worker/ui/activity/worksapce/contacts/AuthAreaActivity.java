@@ -8,7 +8,6 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -221,9 +220,9 @@ public class AuthAreaActivity extends BaseActivity {
     }
 
     private void closeActivity() {
-        EanfangApplication.get().closeActivity(AuthCompanyDataActivity.class.getName());
-        EanfangApplication.get().closeActivity(AuthQualifyFirstActivity.class.getName());
-        EanfangApplication.get().closeActivity(AuthQualifySecondActivity.class.getName());
+        WorkerApplication.get().closeActivity(AuthCompanyDataActivity.class);
+        WorkerApplication.get().closeActivity(AuthQualifyFirstActivity.class);
+        WorkerApplication.get().closeActivity(AuthQualifySecondActivity.class);
     }
 
     public void doJumpConfirm() {

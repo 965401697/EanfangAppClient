@@ -20,7 +20,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.dialog.TrueFalseDialog;
@@ -38,6 +37,7 @@ import com.yaf.base.entity.RepairBugEntity;
 import com.yaf.base.entity.RepairOrderEntity;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.pay.NewPayActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.AddTroubleActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.FaultDetailActivity;
@@ -302,12 +302,12 @@ public class OrderConfirmActivity extends BaseClientActivity {
     }
 
     private void closeActivity() {
-        EanfangApplication.get().closeActivity(RepairTypeActivity.class.getName());
-        EanfangApplication.get().closeActivity(AddTroubleActivity.class.getName());
-        EanfangApplication.get().closeActivity(TroubleListActivity.class.getName());
-        EanfangApplication.get().closeActivity(RepairActivity.class.getName());
-        EanfangApplication.get().closeActivity(SelectWorkerActivity.class.getName());
-        EanfangApplication.get().closeActivity(WorkerDetailActivity.class.getName());
+        ClientApplication.get().closeActivity(RepairTypeActivity.class);
+        ClientApplication.get().closeActivity(AddTroubleActivity.class);
+        ClientApplication.get().closeActivity(TroubleListActivity.class);
+        ClientApplication.get().closeActivity(RepairActivity.class);
+        ClientApplication.get().closeActivity(SelectWorkerActivity.class);
+        ClientApplication.get().closeActivity(WorkerDetailActivity.class);
         finishSelf();
     }
 
