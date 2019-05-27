@@ -17,7 +17,9 @@ package com.photopicker.com.imageloader;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.support.annotation.DrawableRes;
 import android.widget.ImageView;
 
@@ -27,6 +29,7 @@ import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
+import com.eanfang.R;
 import com.photopicker.com.util.BGAPhotoPickerUtil;
 
 
@@ -41,7 +44,7 @@ public class BGAGlideImageLoader extends BGAImageLoader {
     public void display(final ImageView imageView, String path, @DrawableRes int loadingResId, @DrawableRes int failResId, int width, int height, final DisplayDelegate delegate) {
         final String finalPath = getPath(path);
         Activity activity = getActivity(imageView);
-        Glide.with(activity).load(finalPath).placeholder(loadingResId).error(failResId).override(width, height).dontAnimate().listener(new RequestListener<String, GlideDrawable>() {
+        Glide.with(activity).load(finalPath).error(failResId).override(width, height).dontAnimate().listener(new RequestListener<String, GlideDrawable>() {
             @Override
             public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
                 return false;

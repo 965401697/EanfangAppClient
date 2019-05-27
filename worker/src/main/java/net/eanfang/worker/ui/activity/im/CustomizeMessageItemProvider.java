@@ -76,7 +76,7 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
             } else {
                 holder.workerName.setText("维修历史：");
             }
-            holder.status.setVisibility(View.INVISIBLE);
+            holder.status.setVisibility(View.GONE);
         } else if (customizeMessage.getShareType().equals("3")) {
             holder.title.setText("工作汇报");
             holder.orderNum.setText("部门：" + customizeMessage.getOrderNum());
@@ -99,7 +99,7 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
             holder.simpleDraweeView.setVisibility(View.GONE);
             holder.creatTime.setText("整改期限：" + customizeMessage.getCreatTime());
             holder.workerName.setText("检查时间：" + customizeMessage.getWorkerName());
-            holder.status.setVisibility(View.INVISIBLE);
+            holder.status.setVisibility(View.GONE);
         } else if (customizeMessage.getShareType().equals("6")) {
 
             holder.title.setText("交接班");
@@ -112,7 +112,7 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
             } else if (Integer.parseInt(customizeMessage.getStatus()) == 1) {
                 holder.status.setText("完成交接");
             } else {
-                holder.status.setVisibility(View.INVISIBLE);
+                holder.status.setVisibility(View.GONE);
             }
 
         } else if (customizeMessage.getShareType().equals("7")) {
@@ -130,7 +130,7 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
             holder.simpleDraweeView.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + customizeMessage.getPicUrl()));
             holder.creatTime.setText("标题：" + customizeMessage.getCreatTime());
             holder.workerName.setText("发布人：" + customizeMessage.getWorkerName());
-            holder.status.setVisibility(View.INVISIBLE);
+            holder.status.setVisibility(View.GONE);
         }
 
 
