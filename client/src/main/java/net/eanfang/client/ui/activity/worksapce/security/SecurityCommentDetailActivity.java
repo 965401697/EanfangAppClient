@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -80,7 +81,7 @@ public class SecurityCommentDetailActivity extends BaseActivity implements
     SwipeRefreshLayout swipeFresh;
     private int mCommentId;
     private Long mAsId;
-    private SecurityDetailBean.ListBean mCommentBean;
+    private SecurityDetailBean.PageUtilBean.ListBean mCommentBean;
     private SecurityCommentSecondAdapter securityCommentAdapter;
     private List<SecurityCommentDetailBean.ListBean> commentList = new ArrayList<>();
     /**
@@ -118,7 +119,7 @@ public class SecurityCommentDetailActivity extends BaseActivity implements
         securityCommentAdapter.disableLoadMoreIfNotFullPage();
         mCommentId = getIntent().getIntExtra("mCommentId", 0);
         mAsId = getIntent().getLongExtra("mAsId", 0);
-        mCommentBean = (SecurityDetailBean.ListBean) getIntent().getSerializableExtra("mComment");
+        mCommentBean = (SecurityDetailBean.PageUtilBean.ListBean) getIntent().getSerializableExtra("mComment");
     }
 
     private void initData() {
@@ -150,6 +151,7 @@ public class SecurityCommentDetailActivity extends BaseActivity implements
             ivCertifi.setVisibility(View.GONE);
         }
         doGetCommentList();
+        showKeyboard();
     }
 
     private void initListener() {
@@ -216,7 +218,7 @@ public class SecurityCommentDetailActivity extends BaseActivity implements
         mQueryEntry.getEquals().put("id", mCommentId + "");
         EanfangHttp.post(NewApiService.SERCURITY_COMMENT_DETAIL)
                 .upJson(JsonUtils.obj2String(mQueryEntry))
-                .execute(new EanfangCallback<SecurityCommentDetailBean>(this, true, SecurityCommentDetailBean.class){
+                .execute(new EanfangCallback<SecurityCommentDetailBean>(this, true, SecurityCommentDetailBean.class) {
                     @Override
                     public void onSuccess(SecurityCommentDetailBean bean) {
                         if (page == 1) {
@@ -225,6 +227,8 @@ public class SecurityCommentDetailActivity extends BaseActivity implements
                             }
                             if (bean.getList() != null && bean.getList().size() > 0) {
                                 tvCommentCount.setText(bean.getList().size() + "");
+                            } else {
+                                tvCommentCount.setText("0");
                             }
                             commentList = bean.getList();
                             securityCommentAdapter.getData().clear();
@@ -283,6 +287,49 @@ public class SecurityCommentDetailActivity extends BaseActivity implements
             inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
+    /**
+     * 点击其他地方时，将软键盘隐藏
+     *
+     * @param ev
+     * @return
+     */
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if (isShouldHideInput(v, ev, tvSend)) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+
+    public boolean isShouldHideInput(View v, MotionEvent event, TextView tvSend) {
+        if (v != null && (v instanceof EditText)) {
+            int[] leftTop = {0, 0};
+            int[] sendLeftTop = {0, 0};
+            //获取输入框当前的location位置
+            v.getLocationInWindow(leftTop);
+            tvSend.getLocationInWindow(sendLeftTop);
+            int left = leftTop[0], top = leftTop[1], bottom = top + v.getHeight(), right = left + v.getWidth();
+            int sendLeft = sendLeftTop[0], sendTop = sendLeftTop[1], sendBottom = sendTop + tvSend.getHeight(), sendRight = sendLeft + tvSend.getWidth();
+            if (event.getX() > left && event.getX() < right
+                    && event.getY() > top && event.getY() < bottom) {
+                // 点击的是输入框区域，保留点击EditText的事件
+                return false;
+            } else if (event.getX() > sendLeft && event.getX() < sendRight
+                    && event.getY() > sendTop && event.getY() < sendBottom) {
+                // 点击的是发送按钮区域，保留点击事件
+                return false;
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
 
     @OnClick(R.id.tv_send)
     public void onViewClicked() {
@@ -326,6 +373,7 @@ public class SecurityCommentDetailActivity extends BaseActivity implements
         intent.putExtra("isEdit", true);
         setResult(RESULT_OK, intent);
     }
+
     /**
      * 下拉刷新
      */
@@ -345,9 +393,11 @@ public class SecurityCommentDetailActivity extends BaseActivity implements
         page++;
         doGetCommentList();
     }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0 && isEdit) {
+            hideKeyboard();
             doFinish();
         }
         finishSelf();

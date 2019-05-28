@@ -25,81 +25,30 @@ import lombok.Setter;
 @Setter
 public class SecurityDetailBean implements Serializable {
 
-    private List<ListBean> list;
+    private PageUtilBean pageUtil;
     private SpcListBean spcList;
 
     @AllArgsConstructor
     @NoArgsConstructor
     @Getter
     @Setter
-    public static class ListBean implements Serializable {
+    public static class PageUtilBean implements Serializable {
 
-        private String asAccId;
-        private String asCompanyId;
-        private int asId;
-        private String asTopCompanyId;
-        private String asUserId;
-        private CommentOrgBean commentOrg;
-        private CommentUserBean commentUser;
-        private String commentsAnswerAccId;
-        private String commentsAnswerId;
-        private String commentsCompanyId;
-        private String commentsContent;
-        private String commentsTopCompanyId;
-        private String createTime;
-        private int friend;
-        private int id;
-        private int readStatus;
-        private int replyCount;
-        private int status;
-        private int type;
-        private int verifyStatus;
-        private List<CommentsEntityListBean> commentsEntityList;
+        private List<ListBean> list;
 
         @AllArgsConstructor
         @NoArgsConstructor
         @Getter
         @Setter
-        public static class CommentOrgBean implements Serializable {
-
-            private String companyId;
-            private int countStaff;
-            private int level;
-            private String orgCode;
-            private String orgId;
-            private String orgName;
-            private OrgUnitEntity orgUnitEntity;
-            private String topCompanyId;
-        }
-
-        @AllArgsConstructor
-        @NoArgsConstructor
-        @Getter
-        @Setter
-        public static class CommentUserBean implements Serializable {
-
-            private String accId;
-            private AccountEntity accountEntity;
-            private boolean companyAdmin;
-            private boolean superAdmin;
-            private boolean sysAdmin;
-            private String topCompanyId;
-            private String userId;
-
-        }
-
-        @AllArgsConstructor
-        @NoArgsConstructor
-        @Getter
-        @Setter
-        public static class CommentsEntityListBean implements Serializable {
+        public static class ListBean implements Serializable {
 
             private String asAccId;
             private String asCompanyId;
             private int asId;
             private String asTopCompanyId;
             private String asUserId;
-            private CommentTwoUserBean commentUser;
+            private CommentOrgBean commentOrg;
+            private CommentUserBean commentUser;
             private String commentsAnswerAccId;
             private String commentsAnswerId;
             private String commentsCompanyId;
@@ -108,18 +57,36 @@ public class SecurityDetailBean implements Serializable {
             private String createTime;
             private int friend;
             private int id;
-            private int parentCommentsId;
             private int readStatus;
+            private int replyCount;
             private int status;
-            private int topCommentsId;
             private int type;
             private int verifyStatus;
+            private List<CommentsEntityListBean> commentsEntityList;
 
             @AllArgsConstructor
             @NoArgsConstructor
             @Getter
             @Setter
-            public static class CommentTwoUserBean implements Serializable {
+            public static class CommentOrgBean implements Serializable {
+
+                private String companyId;
+                private int countStaff;
+                private int level;
+                private String orgCode;
+                private String orgId;
+                private String orgName;
+                private OrgUnitEntity orgUnitEntity;
+                private String topCompanyId;
+
+            }
+
+            @AllArgsConstructor
+            @NoArgsConstructor
+            @Getter
+            @Setter
+            public static class CommentUserBean implements Serializable {
+
                 private String accId;
                 private AccountEntity accountEntity;
                 private boolean companyAdmin;
@@ -127,9 +94,53 @@ public class SecurityDetailBean implements Serializable {
                 private boolean sysAdmin;
                 private String topCompanyId;
                 private String userId;
+
+            }
+
+            @AllArgsConstructor
+            @NoArgsConstructor
+            @Getter
+            @Setter
+            public static class CommentsEntityListBean implements Serializable {
+
+                private String asAccId;
+                private String asCompanyId;
+                private int asId;
+                private String asTopCompanyId;
+                private String asUserId;
+                private CommentUserTwoBean commentUser;
+                private String commentsAnswerAccId;
+                private String commentsAnswerId;
+                private String commentsCompanyId;
+                private String commentsContent;
+                private String commentsTopCompanyId;
+                private String createTime;
+                private int friend;
+                private int id;
+                private int parentCommentsId;
+                private int readStatus;
+                private int status;
+                private int topCommentsId;
+                private int type;
+                private int verifyStatus;
+
+                @AllArgsConstructor
+                @NoArgsConstructor
+                @Getter
+                @Setter
+                public static class CommentUserTwoBean implements Serializable {
+
+                    private String accId;
+                    private AccountEntity accountEntity;
+                    private boolean companyAdmin;
+                    private boolean superAdmin;
+                    private boolean sysAdmin;
+                    private String topCompanyId;
+                    private String userId;
+
+                }
             }
         }
-
     }
 
     @AllArgsConstructor
@@ -214,4 +225,6 @@ public class SecurityDetailBean implements Serializable {
             private int verifyStatus;
         }
     }
+
+
 }

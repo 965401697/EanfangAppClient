@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
@@ -38,7 +40,9 @@ import com.eanfang.model.security.SecurityListBean;
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.ETimeUtils;
+import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
+import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
 import com.eanfang.witget.DefaultPopWindow;
@@ -69,7 +73,8 @@ import butterknife.OnClick;
  * @description 安防圈详情
  */
 
-public class SecurityDetailActivity extends BaseActivity implements Parser.OnParseAtClickListener {
+public class SecurityDetailActivity extends BaseActivity implements Parser.OnParseAtClickListener,
+        SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
 
 
     private static final int REQUEST_CODE_CHOOSE_PHOTO = 1;
@@ -127,13 +132,15 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
     RelativeLayout rlVideo;
     @BindView(R.id.tv_content)
     MentionTextView tvContent;
+    @BindView(R.id.swipe_fresh)
+    SwipeRefreshLayout swipeFresh;
 
     private SecurityDetailBean.SpcListBean securityDetailBean;
     private ArrayList<String> picList = new ArrayList<>();
     private Long mId;
 
     private SecurityCommentAdapter securityCommentAdapter;
-    private List<SecurityDetailBean.ListBean> commentList = new ArrayList<>();
+    private List<SecurityDetailBean.PageUtilBean.ListBean> commentList = new ArrayList<>();
 
     /**
      * 点赞状态
@@ -175,6 +182,9 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
     private View mPopWindowContent;
     private TextView mTvDelete;
 
+    private QueryEntry mQueryEntry;
+    private int page = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -195,7 +205,9 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         rvComments.setLayoutManager(new LinearLayoutManager(this));
         securityCommentAdapter.bindToRecyclerView(rvComments);
         rvComments.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        rvComments.setNestedScrollingEnabled(false);
+        swipeFresh.setOnRefreshListener(this);
+        securityCommentAdapter.setOnLoadMoreListener(this, rvComments);
+        securityCommentAdapter.disableLoadMoreIfNotFullPage();
         isClickCommont = getIntent().getBooleanExtra("isCommon", false);
         mId = getIntent().getLongExtra("spcId", 0);
         mItenSecurityDetailBean = new SecurityListBean.ListBean();
@@ -235,7 +247,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         });
 
         securityCommentAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            SecurityDetailBean.ListBean listBean = (SecurityDetailBean.ListBean) adapter.getData().get(position);
+            SecurityDetailBean.PageUtilBean.ListBean listBean = (SecurityDetailBean.PageUtilBean.ListBean) adapter.getData().get(position);
             if (listBean != null && listBean.getCommentUser() != null
                     && listBean.getCommentUser().getAccId() != null) {
                 mIsPubUid = listBean.getCommentUser().getAccId().
@@ -290,28 +302,64 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
      */
 
     private void getComments() {
+        if (mQueryEntry == null) {
+            mQueryEntry = new QueryEntry();
+        }
+        mQueryEntry.setPage(page);
+        mQueryEntry.setSize(10);
+        mQueryEntry.getEquals().put("id", mId + "");
         EanfangHttp.post(NewApiService.SERCURITY_DETAIL)
-                .params("id", mId)
-                .execute(new EanfangCallback<SecurityDetailBean>(this, true, SecurityDetailBean.class, bean -> {
-                    commentList = bean.getList();
-                    securityCommentAdapter.setNewData(commentList);
-                    securityDetailBean = bean.getSpcList();
+                .upJson(JsonUtils.obj2String(mQueryEntry))
+                .execute(new EanfangCallback<SecurityDetailBean>(this, true, SecurityDetailBean.class) {
+                    @Override
+                    public void onSuccess(SecurityDetailBean bean) {
+                        if (page == 1) {
+                            commentList = bean.getPageUtil().getList();
+                            securityCommentAdapter.setNewData(commentList);
+                            securityDetailBean = bean.getSpcList();
 
-                    /**
-                     * 阅读数  评价数
-                     * */
-                    if (bean.getSpcList() != null) {
-                        tvReadCount.setText(bean.getSpcList().getReadCount() + "");
-                        tvCommentCount.setText(bean.getSpcList().getCommentCount() + "");
+                            /**
+                             * 阅读数  评价数
+                             * */
+                            if (bean.getSpcList() != null) {
+                                tvReadCount.setText(bean.getSpcList().getReadCount() + "");
+                                tvCommentCount.setText(bean.getSpcList().getCommentCount() + "");
+                            }
+                            if (isClickCommont && isFirstCome) {
+                                ShowKeyboard();
+                            } else {
+                                hideKeyboard();
+                            }
+                            rvComments.scrollToPosition(0);
+                            swipeFresh.setRefreshing(false);
+                            securityCommentAdapter.loadMoreComplete();
+                            if (bean.getPageUtil().getList() != null && bean.getPageUtil().getList().size() < 10) {
+                                securityCommentAdapter.loadMoreEnd();
+                                //释放对象
+                                mQueryEntry = null;
+                            }
+                            mItenSecurityDetailBean.setCommentCount(bean.getSpcList().getCommentCount());
+                            setData(securityDetailBean);
+                        } else {
+                            securityCommentAdapter.addData(bean.getPageUtil().getList());
+                            securityCommentAdapter.loadMoreComplete();
+                            if (bean.getPageUtil().getList().size() < 10) {
+                                securityCommentAdapter.loadMoreEnd();
+                            }
+                        }
                     }
-                    if (isClickCommont && isFirstCome) {
-                        ShowKeyboard();
-                    } else {
-                        hideKeyboard();
+
+                    @Override
+                    public void onNoData(String message) {
+                        swipeFresh.setRefreshing(false);
+                        securityCommentAdapter.loadMoreEnd();
                     }
-                    mItenSecurityDetailBean.setCommentCount(bean.getSpcList().getCommentCount());
-                    setData(securityDetailBean);
-                }));
+
+                    @Override
+                    public void onCommitAgain() {
+                        swipeFresh.setRefreshing(false);
+                    }
+                });
     }
 
     public void setData(SecurityDetailBean.SpcListBean securityDetailBean) {
@@ -697,6 +745,26 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
     @Override
     public void onAtClik(Long mUserId) {
         UserHomeActivity.startActivityForUid(this, mUserId);
+    }
+
+    /**
+     * 下拉刷新
+     */
+    @Override
+    public void onRefresh() {
+        mQueryEntry = null;
+        page = 1;
+        getComments();
+    }
+
+
+    /**
+     * 加载更多
+     */
+    @Override
+    public void onLoadMoreRequested() {
+        page++;
+        getComments();
     }
 
     @Override

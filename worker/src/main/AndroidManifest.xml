@@ -1175,8 +1175,7 @@
         </receiver>
         <!-- 华为 配置结束 < -->
         <activity
-            android:name=".ui.activity.worksapce.security.SecurityCommentDetailActivity"
-            android:windowSoftInputMode="stateAlwaysHidden" />
+            android:name=".ui.activity.worksapce.security.SecurityCommentDetailActivity"  />
     </application>
 
 </manifest>

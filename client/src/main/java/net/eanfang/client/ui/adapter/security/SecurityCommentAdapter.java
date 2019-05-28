@@ -23,13 +23,13 @@ import net.eanfang.client.R;
  * @description 安防圈评论
  */
 
-public class SecurityCommentAdapter extends BaseQuickAdapter<SecurityDetailBean.ListBean, BaseViewHolder> {
+public class SecurityCommentAdapter extends BaseQuickAdapter<SecurityDetailBean.PageUtilBean.ListBean, BaseViewHolder> {
     public SecurityCommentAdapter() {
         super(R.layout.layout_item_security_comment);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, SecurityDetailBean.ListBean item) {
+    protected void convert(BaseViewHolder helper, SecurityDetailBean.PageUtilBean.ListBean item) {
 
         LinearLayout mOtherComments = helper.getView(R.id.ll_other_comment);
         // 头像
