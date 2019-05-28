@@ -14,6 +14,7 @@ import com.camera.util.LogUtil;
 import com.eanfang.config.FastjsonConfig;
 import com.eanfang.model.LoginBean;
 import com.eanfang.ui.base.IBase;
+import com.eanfang.util.PermKit;
 import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
@@ -73,6 +74,9 @@ public abstract class CustomeApplication extends MultiDexApplication {
         synchronized (this) {
             try {
                 SharePreferenceUtil.get().set(key, value);
+                if (LoginBean.class.getName().equals(key)){
+                    PermKit.get().permList();
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }

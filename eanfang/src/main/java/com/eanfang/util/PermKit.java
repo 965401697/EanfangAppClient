@@ -19,7 +19,7 @@ public class PermKit {
 
     public static List<String> permList = EanfangApplication.get().getUser().getPerms();
 
-    private void permList() {
+    public void permList() {
         permList = EanfangApplication.get().getUser().getPerms();
     }
 
