@@ -3,6 +3,7 @@ package net.eanfang.worker.ui.fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -55,7 +56,7 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
 
     private SimpleDraweeView iv_header;
     // 二维码头像
-    private SimpleDraweeView mIvPersonalQRCode;
+    private ImageView mIvPersonalQRCode;
     // Dialog
     private PersonalQRCodeDialog personalQRCodeDialog;
     private RadioButton rbWorking, rbFree, rbStop;

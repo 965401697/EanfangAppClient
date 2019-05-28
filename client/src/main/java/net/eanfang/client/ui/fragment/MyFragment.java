@@ -3,6 +3,7 @@ package net.eanfang.client.ui.fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
@@ -34,7 +35,7 @@ import net.eanfang.client.ui.widget.InviteView;
 public class MyFragment extends BaseFragment {
     private TextView tv_user_name;
     private SimpleDraweeView iv_header;
-    private SimpleDraweeView mIvPersonalQRCode;
+    private ImageView mIvPersonalQRCode;
     // Dialog
     private PersonalQRCodeDialog personalQRCodeDialog;
 

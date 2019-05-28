@@ -171,9 +171,7 @@ public class VerifyFragment extends BaseFragment {
                     isUpdataPassword = bean.getAccount().isSimplePwd();
                     EanfangApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
                     EanfangHttp.setToken(bean.getToken());
-                    getActivity().runOnUiThread(() -> {
-                        goMain();
-                    });
+                    goMain();
                 }));
 
     }
