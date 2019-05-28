@@ -690,7 +690,7 @@ public interface NewApiService {
     /**
      * 安防圈详情
      */
-    String SERCURITY_DETAIL = BASE_URL + "/yaf_spc/spcircle/detail";
+    String SERCURITY_DETAIL = BASE_URL + "/yaf_spc/spcircle/details";
     /**
      * 安防圈评论
      */
