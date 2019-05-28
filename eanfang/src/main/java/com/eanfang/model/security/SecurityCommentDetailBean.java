@@ -51,7 +51,7 @@ public class SecurityCommentDetailBean implements Serializable {
         private int topCommentsId;
         private int type;
         private int verifyStatus;
-
+        private int replyCount;
         @Getter
         @Setter
         @NoArgsConstructor

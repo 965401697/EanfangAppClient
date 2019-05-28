@@ -583,6 +583,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
                     isFirstCome = false;
                     isCommentEdit = true;
                     hideKeyboard();
+                    page = 1;
                     getComments();
                 }));
 

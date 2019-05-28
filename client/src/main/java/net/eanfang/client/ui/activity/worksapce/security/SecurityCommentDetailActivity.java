@@ -205,6 +205,7 @@ public class SecurityCommentDetailActivity extends BaseActivity implements
                     showToast("删除成功");
                     isEdit = true;
                     generalDialog.dismiss();
+                    page = 1;
                     doGetCommentList();
                 }));
     }
@@ -226,7 +227,7 @@ public class SecurityCommentDetailActivity extends BaseActivity implements
                                 commentList.clear();
                             }
                             if (bean.getList() != null && bean.getList().size() > 0) {
-                                tvCommentCount.setText(bean.getList().size() + "");
+                                tvCommentCount.setText(bean.getList().get(0).getReplyCount() + "");
                             } else {
                                 tvCommentCount.setText("0");
                             }
@@ -287,6 +288,7 @@ public class SecurityCommentDetailActivity extends BaseActivity implements
             inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
+
     /**
      * 点击其他地方时，将软键盘隐藏
      *
@@ -362,6 +364,7 @@ public class SecurityCommentDetailActivity extends BaseActivity implements
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
                     mParentCommentId = 0;
                     isEdit = true;
+                    page = 1;
                     doGetCommentList();
                     hideKeyboard();
                 }));
