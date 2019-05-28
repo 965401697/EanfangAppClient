@@ -13,6 +13,7 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
@@ -26,6 +27,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.AllMessageBean;
 import com.eanfang.model.NoticeEntity;
 import com.eanfang.model.datastatistics.HomeDatastisticeBean;
+import com.eanfang.model.security.SecurityLikeBean;
 import com.eanfang.model.security.SecurityListBean;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.GetDateUtils;
@@ -497,11 +499,13 @@ public class HomeFragment extends BaseFragment {
                 case R.id.ll_pic:
                     picList.clear();
                     pics = securityListAdapter.getData().get(position).getSpcImg().split(",");
-                    picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> BuildConfig.OSS_SERVER +(url).toString()).toList());
+                    picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> BuildConfig.OSS_SERVER + (url).toString()).toList());
                     ImagePerviewUtil.perviewImage(getActivity(), picList);
                     break;
-                case R.id.tv_isFocus:
                 case R.id.ll_like:
+                    doLike(position, securityListAdapter.getData().get(position));
+                    break;
+                case R.id.tv_isFocus:
                 case R.id.ll_share:
                 case R.id.ll_question:
                 case R.id.rl_video:
@@ -511,6 +515,37 @@ public class HomeFragment extends BaseFragment {
                     break;
             }
         });
+    }
+
+    /**
+     * 进行点赞
+     */
+    private void doLike(int position, SecurityListBean.ListBean listBean) {
+        SecurityLikeBean securityLikeBean = new SecurityLikeBean();
+        securityLikeBean.setAsId(listBean.getSpcId());
+        securityLikeBean.setType("0");
+        /**
+         *状态：0 点赞 1 未点赞
+         * */
+        if (listBean.getLikeStatus() == 0) {
+            listBean.setLikeStatus(1);
+            listBean.setLikesCount(listBean.getLikesCount() - 1);
+            securityLikeBean.setLikeStatus("1");
+        } else {
+            listBean.setLikeStatus(0);
+            listBean.setLikesCount(listBean.getLikesCount() + 1);
+            securityLikeBean.setLikeStatus("0");
+        }
+        securityLikeBean.setLikeUserId(EanfangApplication.get().getUserId());
+        securityLikeBean.setLikeCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyId());
+        securityLikeBean.setLikeTopCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getTopCompanyId());
+        EanfangHttp.post(NewApiService.SERCURITY_LIKE)
+                .upJson(JSONObject.toJSONString(securityLikeBean))
+                .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class, bean -> {
+                    getActivity().runOnUiThread(() -> {
+                        securityListAdapter.notifyItemChanged(position);
+                    });
+                }));
     }
 
     public void doJump(int position, boolean isCommon) {
