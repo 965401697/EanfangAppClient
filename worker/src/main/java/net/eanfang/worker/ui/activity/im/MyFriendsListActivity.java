@@ -1,16 +1,15 @@
 package net.eanfang.worker.ui.activity.im;
 
+import android.app.Activity;
 import android.content.DialogInterface;
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
@@ -35,7 +34,6 @@ import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
-import io.rong.imlib.model.UserInfo;
 
 public class MyFriendsListActivity extends BaseWorkerActivity {
 
@@ -48,6 +46,10 @@ public class MyFriendsListActivity extends BaseWorkerActivity {
     private int flag = 0;
     @BindView(R.id.side_bar)
     SideBar sideBar;
+    /**
+     * 当前item位置
+     */
+    private int mClickPosition = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +100,7 @@ public class MyFriendsListActivity extends BaseWorkerActivity {
         mFriendsAdapter = new FriendsAdapter(R.layout.item_friend_list, flag);
         mFriendsAdapter.bindToRecyclerView(recyclerView);
         mFriendsAdapter.setOnItemClickListener((adapter, view, position) -> {
+            mClickPosition = position;
             FriendListBean bean = (FriendListBean) adapter.getData().get(position);
             if (bean != null) {
                 //跳转用户首页
@@ -184,5 +187,17 @@ public class MyFriendsListActivity extends BaseWorkerActivity {
                     }
                 }).create();
         dialog.show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK && data != null) {
+            boolean isFriend = data.getBooleanExtra(UserHomeActivity.RESULT_FRIEND_STATE, true);
+            if (!isFriend) {
+                mFriendsAdapter.remove(mClickPosition);
+                mFriendsAdapter.notifyDataSetChanged();
+            }
+        }
     }
 }
