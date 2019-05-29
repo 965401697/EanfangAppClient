@@ -767,6 +767,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
             }
             boolean isEdit = data.getBooleanExtra("isEdit", true);
             if (isEdit) {
+                isCommentEdit = true;
                 getComments();
             }
         }
