@@ -231,7 +231,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
             JumpItent.jump(this, SecurityCommentDetailActivity.class, bundle, REQUEST_CODE_COMMENT_DETAIL);
         });
         securityCommentAdapter.setOnItemLongClickListener((adapter, view, position) -> {
-            if (!EanfangApplication.get().getUserId().equals(Long.valueOf(securityCommentAdapter.getData().get(position).getCommentsAnswerId()))) {
+            if (!EanfangApplication.get().getAccId().equals(Long.valueOf(securityCommentAdapter.getData().get(position).getCommentsAnswerAccId()))) {
                 showToast("只可删除自己评论");
                 return false;
             }
@@ -286,6 +286,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
                     showToast("删除成功");
                     generalDialog.dismiss();
+                    page = 1;
                     getComments();
                 }));
     }
@@ -570,7 +571,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
                     isFirstCome = false;
                     isCommentEdit = true;
                     hideKeyboard();
-                    page =1;
+                    page = 1;
                     getComments();
 
                 }));
@@ -768,6 +769,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
             boolean isEdit = data.getBooleanExtra("isEdit", true);
             if (isEdit) {
                 isCommentEdit = true;
+                page = 1;
                 getComments();
             }
         }
