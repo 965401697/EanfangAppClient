@@ -825,9 +825,9 @@
             android:screenOrientation="portrait" /> <!-- 其他资料的验证 -->
         <activity
             android:name=".ui.activity.my.certification.OtherDataActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity
             android:name=".ui.activity.worksapce.contacts.baseinfo.AuthCompanyFirstActivity"
             android:screenOrientation="portrait" />
@@ -836,9 +836,9 @@
             android:screenOrientation="portrait" /> <!-- 荣誉证书 -->
         <activity
             android:name=".ui.activity.my.certification.CertificateListActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait" /> <!-- 官方消息 -->
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" /> <!-- 官方消息 -->
         <activity
             android:name=".ui.activity.worksapce.notice.OfficialListActivity"
             android:screenOrientation="portrait" /> <!-- 官方消息详情 -->
@@ -851,24 +851,24 @@
             android:windowSoftInputMode="adjustUnspecified|stateHidden" /> <!-- 技师个人经历 -->
         <activity
             android:name=".ui.activity.my.certification.OwmHistoryActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait" /> <!-- 技师添加教育经历 -->
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" /> <!-- 技师添加教育经历 -->
         <activity
             android:name=".ui.activity.my.certification.AddEducationHistoryActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait" /> <!-- 技师工作经历 -->
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" /> <!-- 技师工作经历 -->
         <activity
             android:name=".ui.activity.my.certification.WorkHistoryActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait" /> <!-- 技师添加工作经历 -->
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" /> <!-- 技师添加工作经历 -->
         <activity
             android:name=".ui.activity.my.certification.AddWorkActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait" /> <!-- 技师绑定system ，type -->
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" /> <!-- 技师绑定system ，type -->
         <activity
             android:name=".ui.activity.my.certification.SkillTypeActivity"
             android:screenOrientation="portrait" /> <!-- 技师区域绑定 -->
@@ -877,14 +877,14 @@
             android:screenOrientation="portrait" /> <!-- 技师技能认证 -->
         <activity
             android:name=".ui.activity.my.certification.SkillCertificafeListActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait" /> <!-- 技师添加技能证书 -->
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" /> <!-- 技师添加技能证书 -->
         <activity
             android:name=".ui.activity.my.certification.AddSkillCertificafeActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
             android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait" /> <!-- 工作汇报列表 -->
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" /> <!-- 工作汇报列表 -->
         <activity
             android:name=".ui.activity.worksapce.oa.workreport.WorkReportListActivity"
             android:screenOrientation="portrait" /> <!-- 工作汇报刷选 -->
@@ -998,9 +998,10 @@
         <activity android:name=".ui.activity.my.specialist.SpecialistCertificationActivity" />
         <activity android:name=".ui.activity.my.specialist.SpecialistIdentityCardCertification" />
         <activity android:name=".ui.activity.my.specialist.SpecialistCertificateListActivity" />
-        <activity android:name=".ui.activity.my.specialist.SpecialistAddCertificationActivity"
-            android:windowSoftInputMode="adjustUnspecified|stateHidden"
-            android:configChanges="orientation|keyboardHidden"/>
+        <activity
+            android:name=".ui.activity.my.specialist.SpecialistAddCertificationActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:windowSoftInputMode="adjustUnspecified|stateHidden" />
         <activity android:name=".ui.activity.my.specialist.SpecialistOwmHistoryActivity" />
         <activity android:name=".ui.activity.my.specialist.SpecialistWorkHistoryActivity" />
         <activity android:name=".ui.activity.my.specialist.SpecialistAddWorkActivity" />
@@ -1175,7 +1176,8 @@
         </receiver>
         <!-- 华为 配置结束 < -->
         <activity
-            android:name=".ui.activity.worksapce.security.SecurityCommentDetailActivity"  />
+            android:name=".ui.activity.worksapce.security.SecurityCommentDetailActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
     </application>
 
 </manifest>

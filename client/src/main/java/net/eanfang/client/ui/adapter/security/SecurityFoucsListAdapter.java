@@ -50,10 +50,12 @@ public class SecurityFoucsListAdapter extends BaseQuickAdapter<SecurityFoucsList
         /**
          * 是否认证
          * */
-        if (item.getWorkerEntity().getVerifyStatus() == 1) {
-            helper.setVisible(R.id.iv_certifi, true);
-        } else {
-            helper.setVisible(R.id.iv_certifi, false);
+        if (item.getWorkerEntity() != null) {
+            if (item.getWorkerEntity() != null && item.getWorkerEntity().getVerifyStatus() != null && item.getWorkerEntity().getVerifyStatus() == 1) {
+                helper.setVisible(R.id.iv_certifi, true);
+            } else {
+                helper.setVisible(R.id.iv_certifi, false);
+            }
         }
 
         /**

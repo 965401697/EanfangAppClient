@@ -282,7 +282,7 @@ public class SecurityCommentDetailActivity extends BaseActivity implements
     private void hideKeyboard() {
         //清空输入
         etInput.setText("");
-        View view = getWindow().getDecorView();
+        View view = this.getCurrentFocus();
         if (view != null) {
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
