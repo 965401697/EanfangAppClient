@@ -251,7 +251,7 @@ public class StringUtils {
                 InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.showSoftInput(editText, InputMethodManager.SHOW_FORCED);
             }
-        }, 200);
+        }, 500);
     }
 
     public static StringBuffer getSecurityId(String mContent) {

@@ -185,6 +185,11 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
     private QueryEntry mQueryEntry;
     private int page = 1;
 
+    /**
+     * 是否回复
+     * */
+    private boolean isReply = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -326,7 +331,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
                                 tvReadCount.setText(bean.getSpcList().getReadCount() + "");
                                 tvCommentCount.setText(bean.getSpcList().getCommentCount() + "");
                             }
-                            if (isClickCommont && isFirstCome ) {
+                            if (isClickCommont && isFirstCome &&!isReply) {
                                 ShowKeyboard();
                             } else {
                                 hideKeyboard();
@@ -583,7 +588,6 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
                     isFirstCome = false;
                     isCommentEdit = true;
-                    hideKeyboard();
                     page = 1;
                     getComments();
                 }));
@@ -650,9 +654,9 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         //显示布局
         llEditComments.setVisibility(View.VISIBLE);
         llBottom.setVisibility(View.GONE);
-        etInput.requestFocus();
         etInput.setFocusable(true);
         etInput.setFocusableInTouchMode(true);
+        etInput.requestFocus();
         StringUtils.showKeyboard(SecurityDetailActivity.this, etInput);
     }
 
@@ -666,8 +670,8 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         //清空输入
         etInput.setText("");
         View view = this.getCurrentFocus();
-        if (view != null) {
-            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (inputMethodManager != null && view != null) {
             inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
@@ -780,6 +784,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
             }
             boolean isEdit = data.getBooleanExtra("isEdit", true);
             if (isEdit) {
+                isReply = true;
                 isCommentEdit = true;
                 page = 1;
                 getComments();
