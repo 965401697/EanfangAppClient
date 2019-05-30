@@ -1,7 +1,8 @@
 package net.eanfang.client.ui.activity.im;
 
+import android.app.Activity;
 import android.content.DialogInterface;
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,7 +11,6 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
@@ -35,7 +35,6 @@ import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
-import io.rong.imlib.model.UserInfo;
 
 public class MyFriendsListActivity extends BaseClientActivity {
 
@@ -48,6 +47,10 @@ public class MyFriendsListActivity extends BaseClientActivity {
      * 显示不显示checkbox的标志位
      */
     private int flag = 0;
+    /**
+     * 当前item位置
+     */
+    private int mClickPosition = 0;
 
 
     @Override
@@ -101,6 +104,7 @@ public class MyFriendsListActivity extends BaseClientActivity {
         mFriendsAdapter = new FriendsAdapter(R.layout.item_friend_list, flag);
         mFriendsAdapter.bindToRecyclerView(recyclerView);
         mFriendsAdapter.setOnItemClickListener((adapter, view, position) -> {
+            mClickPosition = position;
             FriendListBean bean = (FriendListBean) adapter.getData().get(position);
             if (bean != null) {
                 //跳转用户主页
@@ -187,5 +191,17 @@ public class MyFriendsListActivity extends BaseClientActivity {
                     }
                 }).create();
         dialog.show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK && data != null) {
+            boolean isFriend = data.getBooleanExtra(UserHomeActivity.RESULT_FRIEND_STATE, true);
+            if (!isFriend) {
+                mFriendsAdapter.remove(mClickPosition);
+                mFriendsAdapter.notifyDataSetChanged();
+            }
+        }
     }
 }
