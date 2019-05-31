@@ -47,7 +47,7 @@
                             android:layout_alignParentLeft="true"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="@dimen/dimen_38"
-                            app:placeholderImage="@drawable/nar_logo_company_default"
+                            android:src="@drawable/nar_logo_company_default"
                             />
 
                         <TextView

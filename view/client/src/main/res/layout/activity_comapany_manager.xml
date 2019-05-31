@@ -56,13 +56,13 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/dimen_20">
 
-                    <com.facebook.drawee.view.SimpleDraweeView
+                    <ImageView
                         android:id="@+id/gs_log_sdv"
                         android:layout_width="@dimen/dimen_100"
                         android:layout_height="@dimen/dimen_100"
                         android:layout_marginRight="@dimen/dimen_20"
-                        app:placeholderImage="@drawable/client_logo"
-                        app:roundAsCircle="true" />
+                        android:src="@drawable/client_logo"
+                        />
 
                     <TextView
                         android:id="@+id/gs_name_tv"

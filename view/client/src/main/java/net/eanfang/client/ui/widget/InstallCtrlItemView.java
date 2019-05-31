@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -17,7 +18,7 @@ import com.eanfang.biz.model.WorkspaceInstallDetailBean;
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 
 import net.eanfang.client.R;
 
@@ -52,7 +53,7 @@ public class InstallCtrlItemView extends BaseDialog {
     @BindView(R.id.tv_desc)
     TextView tvDesc;
     @BindView(R.id.iv_pic)
-    SimpleDraweeView ivPic;
+    CircleImageView ivPic;
     @BindView(R.id.tv_worker_name)
     TextView tvWorkerName;
     @BindView(R.id.tv_worker_company)
@@ -119,7 +120,7 @@ public class InstallCtrlItemView extends BaseDialog {
             tvContractPhone.setTag(bean.getAssignessUser().getAccountEntity().getMobile());
             ivPhone.setOnClickListener(v -> CallUtils.call(mContext, tvContractPhone.getTag().toString()));
             tvWorkerCompany.setText(bean.getCompanyEntity().getName());
-            ivPic.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bean.getCompanyEntity().getLogoPic()));
+            GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + bean.getCompanyEntity().getLogoPic()),ivPic);
         }
 
     }

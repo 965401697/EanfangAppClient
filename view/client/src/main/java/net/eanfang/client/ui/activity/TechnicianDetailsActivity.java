@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.base.widget.customview.SuperTextView;
 import com.eanfang.base.widget.customview.TwoTextPicText;
 import com.eanfang.BuildConfig;
@@ -18,8 +19,8 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.TechnicianDetailsBean;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.repair.RepairTypeActivity;
@@ -40,7 +41,7 @@ import butterknife.OnClick;
 public class TechnicianDetailsActivity extends BaseActivity {
 
     @BindView(R.id.gs_log_sdv)
-    SimpleDraweeView gsLogSdv;
+    CircleImageView gsLogSdv;
     @BindView(R.id.gs_xq_iv)
     ImageView gsXqIv;
     @BindView(R.id.gs_name_tv)
@@ -116,7 +117,7 @@ public class TechnicianDetailsActivity extends BaseActivity {
 
     @SuppressLint("SetTextI18n")
     private void setData() {
-        gsLogSdv.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(technicianDetailsBean.getAccount().getAvatar()));
+        GlideUtil.intoImageView(this,BuildConfig.OSS_SERVER + Uri.parse(technicianDetailsBean.getAccount().getAvatar()),gsLogSdv);
         gsNameTv.setText(technicianDetailsBean.getAccount().getRealName());
         if (technicianDetailsBean.getEvaluate().getTrainStatus() == 1) {
             bqStv.setVisibility(View.VISIBLE);

@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -23,10 +24,10 @@ import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.DialogUtil;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UuidUtil;
 import com.eanfang.util.compound.CompoundHelper;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.jph.takephoto.model.TResult;
 
 import net.eanfang.client.R;
@@ -52,7 +53,7 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
 
     private final int HEAD_PHOTO = 100;
     @BindView(R.id.iv_group_pic)
-    SimpleDraweeView ivGroupPic;
+    CircleImageView ivGroupPic;
     @BindView(R.id.tv_group_name)
     public EditText etGroupName;
     @BindView(R.id.tv_num)
@@ -135,7 +136,7 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
         }
 
         if (!TextUtils.isEmpty(locationUrl)) {
-            ivGroupPic.setImageURI(locationUrl);
+            GlideUtil.intoImageView(this,locationUrl,ivGroupPic);
         }
 
         tvNum.setText(presonList.size() + "人");
@@ -171,7 +172,7 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
         imgKey = "im/group/CUSTOM_" + UuidUtil.getUUID() + ".png";
         switch (resultCode) {
             case HEAD_PHOTO:
-                ivGroupPic.setImageURI("file://" + result.getImage().getOriginalPath());
+                GlideUtil.intoImageView(this,"file://" + result.getImage().getOriginalPath(),ivGroupPic);
                 locationUrl = "file://" + result.getImage().getOriginalPath();
                 callback = new OSSCallBack(this, true) {
                     @Override

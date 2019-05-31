@@ -28,7 +28,7 @@
             android:layout_marginTop="@dimen/dimen_44"
             android:text="2018-05-1" />
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/iv_upload"
             android:layout_width="@dimen/dimen_180"
             android:layout_height="@dimen/dimen_170"

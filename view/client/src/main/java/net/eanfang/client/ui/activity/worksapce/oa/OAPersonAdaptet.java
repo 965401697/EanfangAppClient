@@ -12,9 +12,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.biz.model.TemplateBean;
 import com.eanfang.ui.base.BaseActivity;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
@@ -117,9 +118,9 @@ public class OAPersonAdaptet
             TemplateBean.Preson preson = mData.get(position);
             holder.name.setText(preson.getName());
             if (preson.getProtraivat().startsWith("http")) {
-                holder.userHeader.setImageURI(preson.getProtraivat());
+                GlideUtil.intoImageView(mContext,preson.getProtraivat(),holder.userHeader);
             } else {
-                holder.userHeader.setImageURI(BuildConfig.OSS_SERVER + preson.getProtraivat());
+                GlideUtil.intoImageView(mContext,BuildConfig.OSS_SERVER +preson.getProtraivat(),holder.userHeader);
             }
             holder.userHeader.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -149,7 +150,7 @@ public class OAPersonAdaptet
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView name;
-        private SimpleDraweeView userHeader;
+        private CircleImageView userHeader;
         private ImageView ivSub;
         private RelativeLayout rlInfo;
 

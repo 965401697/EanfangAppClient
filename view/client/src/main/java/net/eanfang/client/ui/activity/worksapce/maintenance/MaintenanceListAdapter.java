@@ -7,9 +7,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.ShopMaintenanceOrderEntity;
 
 import net.eanfang.client.R;
@@ -92,9 +92,9 @@ public class MaintenanceListAdapter extends BaseQuickAdapter<ShopMaintenanceOrde
 //        将业务类型的图片显示到列表
         String imgUrl = V.v(() -> item.getExamDeviceEntityList().get(0).getPicture().split(",")[0]);
         if (!StringUtils.isEmpty(imgUrl) && imgUrl.length() > 10) {
-            ((SimpleDraweeView) helper.getView(R.id.iv_upload)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + imgUrl));
+            GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + imgUrl),helper.getView(R.id.iv_upload));
         } else {
-            ((SimpleDraweeView) helper.getView(R.id.iv_upload)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER));
+            GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER ),helper.getView(R.id.iv_upload));
         }
 
         helper.addOnClickListener(R.id.tv_do_first);

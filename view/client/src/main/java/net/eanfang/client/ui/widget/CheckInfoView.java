@@ -11,8 +11,8 @@ import com.eanfang.BuildConfig;
 import com.eanfang.config.Config;
 import com.eanfang.biz.model.WorkAddCheckBean;
 import com.eanfang.ui.base.BaseDialog;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.StringUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
 
@@ -45,11 +45,11 @@ public class CheckInfoView extends BaseDialog {
     @BindView(R.id.et_input_check_content)
     TextView etInputCheckContent;
     @BindView(R.id.iv_pic1)
-    SimpleDraweeView ivPic1;
+    ImageView ivPic1;
     @BindView(R.id.iv_pic2)
-    SimpleDraweeView ivPic2;
+    ImageView ivPic2;
     @BindView(R.id.iv_pic3)
-    SimpleDraweeView ivPic3;
+    ImageView ivPic3;
     private Activity mContext;
     private WorkAddCheckBean.WorkInspectDetailsBean bean;
 
@@ -79,20 +79,20 @@ public class CheckInfoView extends BaseDialog {
             String[] urls = bean.getPictures().split(",");
 
             if (urls.length>=1) {
-                ivPic1.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[0]));
+                GlideUtil.intoImageView(mContext,BuildConfig.OSS_SERVER + Uri.parse(urls[0]),ivPic1);
                 ivPic1.setVisibility(View.VISIBLE);
             } else {
                 ivPic1.setVisibility(View.GONE);
             }
 
             if (urls.length>=2) {
-                ivPic2.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[1]));
+                GlideUtil.intoImageView(mContext,BuildConfig.OSS_SERVER + Uri.parse(urls[1]),ivPic2);
                 ivPic2.setVisibility(View.VISIBLE);
             } else {
                 ivPic2.setVisibility(View.GONE);
             }
             if (urls.length>=3) {
-                ivPic3.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[2]));
+                GlideUtil.intoImageView(mContext,BuildConfig.OSS_SERVER + Uri.parse(urls[2]),ivPic3);
                 ivPic3.setVisibility(View.VISIBLE);
             } else {
                 ivPic3.setVisibility(View.GONE);

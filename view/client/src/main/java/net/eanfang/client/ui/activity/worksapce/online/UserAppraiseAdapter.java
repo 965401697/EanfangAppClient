@@ -5,7 +5,7 @@ import android.net.Uri;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 
 import net.eanfang.client.R;
 
@@ -21,8 +21,7 @@ public class UserAppraiseAdapter extends BaseQuickAdapter<AnswerExpertMoreDetail
 
     @Override
     protected void convert(BaseViewHolder helper,AnswerExpertMoreDetailsBean.EvaluateListBean item) {
-        ((SimpleDraweeView) helper.getView(R.id.iv_user_header)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER +item.getCreateAccount().getAvatar()));
-
+        GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER +item.getCreateAccount().getAvatar()),helper.getView(R.id.iv_user_header));
         helper.setText(R.id.tv_user_name, item.getCreateAccount().getNickName());
         helper.setText(R.id.tv_user_appraise, item.getDescribe());
         if (item.getFavorableRate()==1){

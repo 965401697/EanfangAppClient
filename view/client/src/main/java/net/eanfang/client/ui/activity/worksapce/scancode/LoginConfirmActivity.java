@@ -3,6 +3,7 @@ package net.eanfang.client.ui.activity.worksapce.scancode;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -10,7 +11,7 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseActivity;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 import com.journeyapps.barcodescanner.CaptureActivity;
 
 import net.eanfang.client.R;
@@ -18,7 +19,7 @@ import net.eanfang.client.base.ClientApplication;
 
 public class LoginConfirmActivity extends BaseActivity {
 
-    private SimpleDraweeView ivSimpleView;
+    private ImageView ivSimpleView;
     private TextView tvWhich;
     private TextView tvConfirmLogin;
     private TextView tvCancelLogin;
@@ -44,7 +45,6 @@ public class LoginConfirmActivity extends BaseActivity {
         tvWhich = findViewById(R.id.tv_which);
         tvConfirmLogin = findViewById(R.id.tv_confirmLogin);
         tvCancelLogin = findViewById(R.id.tv_cancelLogin);
-        ivSimpleView = findViewById(R.id.iv_simpleView);
         mWhich = getIntent().getStringExtra("which");
         mUuid = getIntent().getStringExtra("uuid");
     }
@@ -73,7 +73,7 @@ public class LoginConfirmActivity extends BaseActivity {
                 break;
         }
         // 获取当前头像
-        ivSimpleView.setImageURI(Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + ClientApplication.get().getLoginBean().getAccount().getAvatar()));
+        GlideUtil.intoImageView(this,Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + ClientApplication.get().getLoginBean().getAccount().getAvatar()),ivSimpleView);
     }
 
     private void initListener() {

@@ -100,7 +100,7 @@ dependencies {
     implementation pkg.lombok
     annotationProcessor pkg.lombok
     api pkg.eventbus
-    api pkg.fresco
+//    api pkg.fresco
     api pkg.stream
     api pkg.aliyunOss
     api pkg.material

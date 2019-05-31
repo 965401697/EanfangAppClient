@@ -7,9 +7,6 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.entity.BaseDataEntity;
 import com.eanfang.base.network.Leaves;
 import com.eanfang.ui.base.voice.RecognitionManager;
-import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.backends.pipeline.PipelineDraweeControllerBuilderSupplier;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.facebook.imagepipeline.backends.okhttp3.OkHttpImagePipelineConfigFactory;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.okgo.OkGo;
@@ -107,10 +104,8 @@ public class EanfangApplication extends CustomeApplication {
         /**fresco加载图片*/
         OkHttpClient mOkHttpClient = new OkHttpClient();
         ImagePipelineConfig frescoConfig = OkHttpImagePipelineConfigFactory.newBuilder(this, mOkHttpClient).build();
-        Fresco.initialize(this, frescoConfig);
+//        Fresco.initialize(this, frescoConfig);
 
-//        Fresco.initialize(this, FrecsoImagePipelineUtil.getImagePipelineConfig(getApplicationContext()));
-        SimpleDraweeView.initialize(new PipelineDraweeControllerBuilderSupplier(this));
 //        SharePreferenceUtil.get().init(mEanfangApplication);
 
     }

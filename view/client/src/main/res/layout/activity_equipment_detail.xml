@@ -356,7 +356,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent">
 
-                        <com.facebook.drawee.view.SimpleDraweeView
+                        <ImageView
                             android:id="@+id/iv_pic_one"
                             android:layout_width="@dimen/dimen_198"
                             android:layout_height="@dimen/dimen_198"
@@ -364,7 +364,7 @@
                             android:layout_weight="1"
                             android:src="@mipmap/ic_nodata" />
 
-                        <com.facebook.drawee.view.SimpleDraweeView
+                        <ImageView
                             android:id="@+id/iv_pic_two"
                             android:layout_width="@dimen/dimen_198"
                             android:layout_height="@dimen/dimen_198"
@@ -372,7 +372,7 @@
                             android:layout_weight="1"
                             android:src="@mipmap/ic_nodata" />
 
-                        <com.facebook.drawee.view.SimpleDraweeView
+                        <ImageView
                             android:id="@+id/iv_pic_three"
                             android:layout_width="@dimen/dimen_198"
                             android:layout_height="@dimen/dimen_198"
@@ -380,7 +380,7 @@
                             android:layout_weight="1"
                             android:src="@mipmap/ic_nodata" />
 
-                        <com.facebook.drawee.view.SimpleDraweeView
+                        <ImageView
                             android:id="@+id/iv_pic_four"
                             android:layout_width="@dimen/dimen_198"
                             android:layout_height="@dimen/dimen_198"
@@ -388,7 +388,7 @@
                             android:layout_weight="1"
                             android:src="@mipmap/ic_nodata" />
 
-                        <com.facebook.drawee.view.SimpleDraweeView
+                        <ImageView
                             android:id="@+id/iv_pic_five"
                             android:layout_width="@dimen/dimen_198"
                             android:layout_height="@dimen/dimen_198"
@@ -844,7 +844,7 @@
                         android:layout_marginBottom="@dimen/dimen_28">
 
 
-                        <com.facebook.drawee.view.SimpleDraweeView
+                        <ImageView
                             android:id="@+id/iv_locale_one"
                             android:layout_width="@dimen/dimen_198"
                             android:layout_height="@dimen/dimen_198"
@@ -852,7 +852,7 @@
                             android:layout_weight="1"
                             android:src="@mipmap/ic_nodata" />
 
-                        <com.facebook.drawee.view.SimpleDraweeView
+                        <ImageView
                             android:id="@+id/iv_locale_two"
                             android:layout_width="@dimen/dimen_198"
                             android:layout_height="@dimen/dimen_198"
@@ -860,7 +860,7 @@
                             android:layout_weight="1"
                             android:src="@mipmap/ic_nodata" />
 
-                        <com.facebook.drawee.view.SimpleDraweeView
+                        <ImageView
                             android:id="@+id/iv_loacle_three"
                             android:layout_width="@dimen/dimen_198"
                             android:layout_height="@dimen/dimen_198"
@@ -869,7 +869,7 @@
                             android:layout_weight="1"
                             android:src="@mipmap/ic_nodata" />
 
-                        <com.facebook.drawee.view.SimpleDraweeView
+                        <ImageView
                             android:id="@+id/iv_locale_four"
                             android:layout_width="@dimen/dimen_198"
                             android:layout_height="@dimen/dimen_198"
@@ -877,7 +877,7 @@
                             android:layout_weight="1"
                             android:src="@mipmap/ic_nodata" />
 
-                        <com.facebook.drawee.view.SimpleDraweeView
+                        <ImageView
                             android:id="@+id/iv_loacle_five"
                             android:layout_width="@dimen/dimen_198"
                             android:layout_height="@dimen/dimen_198"

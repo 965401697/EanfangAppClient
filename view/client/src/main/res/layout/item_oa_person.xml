@@ -11,13 +11,12 @@
         android:layout_height="@dimen/dimen_100"
         android:layout_marginTop="@dimen/dimen_20">
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <com.eanfang.base.widget.customview.CircleImageView
             android:id="@+id/iv_user_header"
             android:layout_width="@dimen/dimen_70"
             android:layout_height="@dimen/dimen_70"
             android:layout_centerHorizontal="true"
-            android:src="@mipmap/ic_header"
-            fresco:roundAsCircle="true" />
+            android:src="@mipmap/ic_header" />
 
         <ImageView
             android:id="@+id/iv_sub"

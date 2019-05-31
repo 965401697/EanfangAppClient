@@ -5,8 +5,9 @@ import android.net.Uri;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.biz.model.CollectionCompanyListBean;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.StringUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
+
 
 import net.eanfang.client.R;
 
@@ -25,9 +26,8 @@ public class CollectionCompanyListAdapter extends BaseQuickAdapter<CollectionCom
 
     @Override
     protected void convert(BaseViewHolder helper, CollectionCompanyListBean.AllBean item) {
-        SimpleDraweeView iv_header = helper.getView(R.id.iv_header);
         if (!StringUtils.isEmpty(item.getLogopic())) {
-            iv_header.setImageURI(Uri.parse(item.getLogopic()));
+            GlideUtil.intoImageView(mContext,Uri.parse(item.getLogopic()),helper.getView(R.id.iv_header));
         }
         helper.setText(R.id.tv_name, item.getCompanyname());
         if (!StringUtils.isEmpty(item.getPraise())) {

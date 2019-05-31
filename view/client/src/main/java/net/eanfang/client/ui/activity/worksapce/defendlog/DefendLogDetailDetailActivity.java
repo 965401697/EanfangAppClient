@@ -7,10 +7,11 @@ import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GetDateUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 import com.yaf.base.entity.LogDetailsEntity;
 import com.yaf.base.entity.ProtectionLogEntity;
 
@@ -34,7 +35,7 @@ public class DefendLogDetailDetailActivity extends BaseClientActivity {
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     @BindView(R.id.iv_report_header)
-    SimpleDraweeView ivReportHeader;
+    CircleImageView ivReportHeader;
     @BindView(R.id.tv_report_name)
     TextView tvReportName;
     @BindView(R.id.tv_year)
@@ -104,7 +105,7 @@ public class DefendLogDetailDetailActivity extends BaseClientActivity {
 
 
                     if (bean.getOwnerUser() != null && bean.getOwnerUser().getAccountEntity() != null) {
-                        ivReportHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bean.getOwnerUser().getAccountEntity().getAvatar()));
+                        GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + bean.getOwnerUser().getAccountEntity().getAvatar()),ivReportHeader);
                         tvCompanyPhone.setText(bean.getOwnerUser().getAccountEntity().getMobile());
                         tvReportName.setText(bean.getOwnerUser().getAccountEntity().getRealName());
                     }

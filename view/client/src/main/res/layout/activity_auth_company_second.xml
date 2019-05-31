@@ -251,7 +251,7 @@
 
                 <View style="@style/style_common_line_gray" />
 
-                <com.facebook.drawee.view.SimpleDraweeView
+                <ImageView
                     android:id="@+id/iv_upload"
                     android:layout_width="@dimen/dimen_200"
                     android:layout_height="@dimen/dimen_200"

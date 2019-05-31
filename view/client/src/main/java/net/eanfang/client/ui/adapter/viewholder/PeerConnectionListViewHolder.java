@@ -5,7 +5,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.base.widget.customview.CircleImageView;
 
 import net.eanfang.client.R;
 
@@ -19,7 +19,7 @@ public class PeerConnectionListViewHolder extends BaseViewHolder {
     public TextView mTvConnectionItemName;
     public TextView mTvConnectionItemCompany;
     public Button mBtnConnectionItemAddOrCancel;
-    public SimpleDraweeView mIvConnectionItemHeader;
+    public CircleImageView mIvConnectionItemHeader;
 
     public PeerConnectionListViewHolder(View view) {
         super(view);

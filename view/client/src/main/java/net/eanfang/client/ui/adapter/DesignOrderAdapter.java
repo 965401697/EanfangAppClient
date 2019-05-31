@@ -4,10 +4,10 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.config.Config;
 import com.eanfang.biz.model.DesignOrderListBean;
 import com.eanfang.util.GetConstDataUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
 
@@ -46,7 +46,7 @@ public class DesignOrderAdapter extends BaseQuickAdapter<DesignOrderListBean.Lis
         helper.setText(R.id.tv_create_time, "下单：" + item.getCreateTime());
         helper.setText(R.id.tv_business_one, "业务：" + Config.get().getBusinessNameByCode(item.getBusinessOneCode(), 1));
         helper.setText(R.id.tv_plan_limit, "工期：" + GetConstDataUtils.getPredictList().get(item.getPredictTime()));
-        SimpleDraweeView head_pic = helper.getView(R.id.img_head);
+//        CircleImageView head_pic = helper.getView(R.id.img_head);
 //        if (!StringUtils.isEmpty(item.getPic1())) {
 //            head_pic.setImageURI(Uri.parse(item.getPic1()));
 //        }

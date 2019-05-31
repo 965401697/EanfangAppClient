@@ -16,8 +16,8 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.AuthCompanyBaseInfoBean;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.StringUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
 
@@ -36,10 +36,10 @@ public class AuthCompanyDataActivity extends BaseActivityWithTakePhoto {
 
     //营业执照
     @BindView(R.id.iv_upload)
-    SimpleDraweeView ivUpload;
+    ImageView ivUpload;
     // 公司logo
     @BindView(R.id.iv_uploadlogo)
-    SimpleDraweeView ivUpload2;
+    ImageView ivUpload2;
     @BindView(R.id.et_company)
     EditText etCompany;
     @BindView(R.id.ed_company_number)
@@ -128,10 +128,10 @@ public class AuthCompanyDataActivity extends BaseActivityWithTakePhoto {
                 tvOfficeAddress.setText(Config.get().getAddressByCode(byNetBean.getAreaCode()));
             }
             if (!StringUtils.isEmpty(byNetBean.getLogoPic())) {
-                ivUpload2.setImageURI(BuildConfig.OSS_SERVER + byNetBean.getLogoPic());
+                GlideUtil.intoImageView(this,BuildConfig.OSS_SERVER + byNetBean.getLogoPic(),ivUpload2);
             }
             if (!StringUtils.isEmpty(byNetBean.getLicensePic())) {
-                ivUpload.setImageURI(BuildConfig.OSS_SERVER + byNetBean.getLicensePic());
+                GlideUtil.intoImageView(this,BuildConfig.OSS_SERVER + byNetBean.getLicensePic(),ivUpload);
             }
         }
         //如果不是 状态0草稿  或者3认证拒绝  隐藏提交按钮

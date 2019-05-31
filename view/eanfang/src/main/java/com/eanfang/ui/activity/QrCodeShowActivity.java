@@ -5,17 +5,19 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.eanfang.BuildConfig;
 import com.eanfang.R;
 import com.eanfang.R2;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.CopyTvUtil;
 import com.eanfang.util.FileUtils;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.StringUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.ChecksumException;
 import com.google.zxing.FormatException;
@@ -50,7 +52,7 @@ public class QrCodeShowActivity extends BaseActivity {
     @BindView(R2.id.tv_qrcode_title)
     TextView tvQrcodeTitle;
     @BindView(R2.id.iv_qrcode)
-    SimpleDraweeView ivQrcode;
+    ImageView ivQrcode;
     @BindView(R2.id.tv_qrcode_message)
     TextView tvQrcodeMessage;
     @BindView(R2.id.lj_tv)
@@ -101,7 +103,7 @@ public class QrCodeShowActivity extends BaseActivity {
         }
         if (!StringUtils.isEmpty(mQrcodeAddress)) {
             Log.d("QrCodeShowActivity_yh", "initView: " + Uri.parse(BuildConfig.OSS_SERVER + mQrcodeAddress));
-            ivQrcode.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + mQrcodeAddress));
+            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + mQrcodeAddress),ivQrcode);
             initData();
         }
         rlSaveQrcode.setOnClickListener((v) -> doSaveQRCode());

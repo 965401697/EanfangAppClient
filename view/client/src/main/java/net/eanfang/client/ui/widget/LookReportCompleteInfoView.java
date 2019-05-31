@@ -2,6 +2,7 @@ package net.eanfang.client.ui.widget;
 
 import android.app.Activity;
 import android.content.Context;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -14,9 +15,9 @@ import com.eanfang.BuildConfig;
 import com.eanfang.biz.model.WorkReportInfoBean;
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.ui.base.BaseDialog;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
 import net.eanfang.client.util.ImagePerviewUtil;
@@ -47,11 +48,11 @@ public class LookReportCompleteInfoView extends BaseDialog {
     @BindView(R.id.tv_look_complete_handle)
     TextView tvLookCompleteHandle;
     @BindView(R.id.iv_pic1)
-    SimpleDraweeView ivPic1;
+    ImageView ivPic1;
     @BindView(R.id.iv_pic2)
-    SimpleDraweeView ivPic2;
+    ImageView ivPic2;
     @BindView(R.id.iv_pic3)
-    SimpleDraweeView ivPic3;
+    ImageView ivPic3;
     @BindView(R.id.iv_left)
     ImageView ivLeft;
     @BindView(R.id.tv_title)
@@ -59,7 +60,7 @@ public class LookReportCompleteInfoView extends BaseDialog {
 
     // 照片和短视频
     @BindView(R.id.iv_takevideo)
-    SimpleDraweeView ivTakevideo;
+    ImageView ivTakevideo;
     @BindView(R.id.rl_thumbnail)
     RelativeLayout rlThumbnail;
 
@@ -100,9 +101,7 @@ public class LookReportCompleteInfoView extends BaseDialog {
             String[] urls = detailsBean.getPictures().split(",");
 
             if (urls.length >= 1) {
-
-
-                ivPic1.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[0]));
+                GlideUtil.intoImageView(mContext,BuildConfig.OSS_SERVER + Uri.parse(urls[0]),ivPic1);
                 ivPic1.setVisibility(View.VISIBLE);
 
                 ivPic1.setOnClickListener(new View.OnClickListener() {
@@ -118,7 +117,7 @@ public class LookReportCompleteInfoView extends BaseDialog {
             }
 
             if (urls.length >= 2) {
-                ivPic2.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[1]));
+                GlideUtil.intoImageView(mContext,BuildConfig.OSS_SERVER + Uri.parse(urls[1]),ivPic2);
                 ivPic2.setVisibility(View.VISIBLE);
                 ivPic2.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -132,7 +131,7 @@ public class LookReportCompleteInfoView extends BaseDialog {
                 ivPic2.setVisibility(View.GONE);
             }
             if (urls.length >= 3) {
-                ivPic3.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[2]));
+                GlideUtil.intoImageView(mContext,BuildConfig.OSS_SERVER + Uri.parse(urls[2]),ivPic3);
                 ivPic3.setVisibility(View.VISIBLE);
                 ivPic3.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -150,7 +149,7 @@ public class LookReportCompleteInfoView extends BaseDialog {
 
         if (!StringUtils.isEmpty(detailsBean.getMp4_path())) {
             rlThumbnail.setVisibility(View.VISIBLE);
-            ivTakevideo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + detailsBean.getMp4_path() + ".jpg"));
+            GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + detailsBean.getMp4_path() + ".jpg"),ivTakevideo);
         }
     }
 

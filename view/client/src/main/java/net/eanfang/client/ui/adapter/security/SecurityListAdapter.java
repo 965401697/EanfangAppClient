@@ -9,8 +9,10 @@ import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.biz.model.security.SecurityListBean;
 import com.eanfang.util.ETimeUtils;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
 import com.eanfang.witget.SecurityCircleImageLayout;
@@ -18,7 +20,6 @@ import com.eanfang.witget.mentionedittext.edit.util.FormatRangeManager;
 import com.eanfang.witget.mentionedittext.text.MentionTextView;
 import com.eanfang.witget.mentionedittext.text.listener.Parser;
 import com.eanfang.witget.mentionedittext.util.SecurityItemUtil;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
 
@@ -48,9 +49,9 @@ public class SecurityListAdapter extends BaseQuickAdapter<SecurityListBean.ListB
 
     @Override
     protected void convert(BaseViewHolder helper, SecurityListBean.ListBean item) {
-        SimpleDraweeView ivHeader = helper.getView(R.id.iv_seucrity_header);
+        CircleImageView ivHeader = helper.getView(R.id.iv_seucrity_header);
         SecurityCircleImageLayout securityImageLayout = helper.getView(R.id.securityImageLayout);
-        SimpleDraweeView ivShowVideo = helper.getView(R.id.iv_show_video);
+        CircleImageView ivShowVideo = helper.getView(R.id.iv_show_video);
         MentionTextView mentionTextView = helper.getView(R.id.tv_content);
         mentionTextView.setMovementMethod(new LinkMovementMethod());
         mentionTextView.setParserConverter(mTagParser);
@@ -60,7 +61,7 @@ public class SecurityListAdapter extends BaseQuickAdapter<SecurityListBean.ListB
         // 发布人
         helper.setText(R.id.tv_name, V.v(() -> item.getAccountEntity().getRealName()));
         // 头像
-        ivHeader.setImageURI((Uri.parse(BuildConfig.OSS_SERVER + V.v(() -> item.getAccountEntity().getAvatar()))));
+        GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + V.v(() -> item.getAccountEntity().getAvatar())),ivHeader);
         // 公司名称
         helper.setText(R.id.tv_company, item.getPublisherOrg().getOrgName());
         // 艾特人
@@ -138,7 +139,7 @@ public class SecurityListAdapter extends BaseQuickAdapter<SecurityListBean.ListB
          * */
         if (!StringUtils.isEmpty(item.getSpcVideo())) {
             helper.getView(R.id.rl_video).setVisibility(View.VISIBLE);
-            ivShowVideo.setImageURI((Uri.parse(BuildConfig.OSS_SERVER + V.v(() -> item.getSpcVideo() + ".jpg"))));
+            GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + V.v(() -> item.getSpcVideo() + ".jpg")),ivShowVideo);
         } else {
             helper.getView(R.id.rl_video).setVisibility(View.GONE);
         }

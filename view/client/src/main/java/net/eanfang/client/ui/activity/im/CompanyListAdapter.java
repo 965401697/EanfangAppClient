@@ -4,8 +4,8 @@ import android.text.TextUtils;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.eanfang.biz.model.entity.OrgEntity;
+import com.eanfang.util.GlideUtil;
 
 import net.eanfang.client.R;
 
@@ -22,9 +22,9 @@ public class CompanyListAdapter extends BaseQuickAdapter<OrgEntity, BaseViewHold
     @Override
     protected void convert(BaseViewHolder helper, OrgEntity item) {
         if (item.getOrgUnitEntity() != null && !TextUtils.isEmpty(item.getOrgUnitEntity().getLogoPic())) {
-            ((SimpleDraweeView) helper.getView(R.id.iv_company)).setImageURI(com.eanfang.BuildConfig.OSS_SERVER + item.getOrgUnitEntity().getLogoPic());
+            GlideUtil.intoImageView(mContext,com.eanfang.BuildConfig.OSS_SERVER + item.getOrgUnitEntity().getLogoPic(), helper.getView(R.id.iv_company));
         } else {
-            ((SimpleDraweeView) helper.getView(R.id.iv_company)).setImageResource(R.mipmap.ic_nodata);
+            GlideUtil.intoImageView(mContext,R.mipmap.ic_nodata, helper.getView(R.id.iv_company));
         }
         if (item.getOrgType() == 1) {
             helper.setVisible(R.id.iv_filiale_company,true);

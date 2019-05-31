@@ -6,9 +6,10 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.eanfang.BuildConfig;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 
 import java.util.List;
 
@@ -41,18 +42,22 @@ public class SecurityCircleImageLayout extends ViewGroup {
 
     private int mItemWidth;
     private int mItemHeight;
+    private Context context;
 
 
     public SecurityCircleImageLayout(Context context) {
         this(context, null);
+        this.context=context;
     }
 
     public SecurityCircleImageLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
+        this.context=context;
     }
 
     public SecurityCircleImageLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        this.context=context;
         mSpacing = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_SPACING,
                 context.getResources().getDisplayMetrics());
     }
@@ -182,8 +187,8 @@ public class SecurityCircleImageLayout extends ViewGroup {
             mItemAspectRatio = 1;
         }
         for (int i = 0; i < imageUrls.size(); i++) {
-            SimpleDraweeView imageView = new SimpleDraweeView(getContext());
-            imageView.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + imageUrls.get(i)));
+            ImageView imageView = new ImageView(getContext());
+            GlideUtil.intoImageView(context,Uri.parse(BuildConfig.OSS_SERVER + imageUrls.get(i)),imageView);
             addView(imageView);
         }
     }

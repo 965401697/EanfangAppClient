@@ -76,7 +76,7 @@
         android:paddingLeft="@dimen/dimen_38"
         android:paddingRight="@dimen/dimen_22">
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/iv_upload"
             android:layout_width="@dimen/dimen_180"
             android:layout_height="@dimen/dimen_170"

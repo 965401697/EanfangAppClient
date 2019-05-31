@@ -8,7 +8,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.biz.model.PayOrderListBean;
 import com.eanfang.util.GetConstDataUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
@@ -46,10 +46,9 @@ public class PayOrderListAdapter extends BaseQuickAdapter<PayOrderListBean.ListB
 
                 .setText(R.id.tv_worker_name, "技师:" + item.getOfferer().getAccountEntity().getRealName());
         helper.setText(R.id.tv_state, GetConstDataUtils.getQuoteStatus().get(item.getStatus()));
-        SimpleDraweeView draweeView = helper.getView(R.id.iv_upload);
         if (item.getFailureEntity() != null) {
             String[] urls = item.getFailureEntity().getPictures().split(",");
-            draweeView.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[0]));
+            GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + urls[0]),helper.getView(R.id.iv_upload));
         }
         if (ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getVerifyStatus() == 2) {
             helper.setText(R.id.tv_do_first, "联系技师");

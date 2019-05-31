@@ -9,8 +9,9 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.biz.model.GroupDetailBean;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 
 import net.eanfang.client.R;
 
@@ -19,46 +20,6 @@ import java.util.ArrayList;
 /**
  * Created by O u r on 2018/4/18.
  */
-
-//public class GroupsDetailAdapter extends BaseQuickAdapter<GroupDetailBean.ListBean, BaseViewHolder> {
-//
-//    private ArrayList<GroupDetailBean.ListBean> mList;
-//    private boolean mIsOwn;//是不是群主
-//
-//    public GroupsDetailAdapter(int layoutResId, ArrayList<GroupDetailBean.ListBean> list, boolean isOwn) {
-//        super(layoutResId);
-//        this.mList = list;
-//        this.mIsOwn = isOwn;
-//    }
-//
-//    @Override
-//    protected void convert(BaseViewHolder helper, GroupDetailBean.ListBean item) {
-//        if (item.getAccountEntity() != null) {
-//            ((SimpleDraweeView) helper.getView(R.id.iv_icon)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getAccountEntity().getAvatar()));
-//        }
-//        if (getData().size() - 1 == helper.getAdapterPosition()) {
-//
-//            if (!mIsOwn) {
-//                ((SimpleDraweeView) helper.getView(R.id.iv_icon)).setVisibility(View.GONE);
-//                return;
-//            } else {
-//                ((SimpleDraweeView) helper.getView(R.id.iv_icon)).setImageResource(R.mipmap.ic_btn_deleteperson);
-//                helper.setText(R.id.tv_name, "");
-//            }
-//        } else if (getData().size() - 2 == helper.getAdapterPosition()) {
-//
-//            ((SimpleDraweeView) helper.getView(R.id.iv_icon)).setImageResource(R.mipmap.ic_btn_addperson);
-//            helper.setText(R.id.tv_name, "");
-//
-//        } else {
-//            if (item.getAccountEntity() != null)
-//                helper.setText(R.id.tv_name, item.getAccountEntity().getNickName());
-//        }
-//
-//    }
-//
-//}
-
 public class GroupsDetailAdapter extends BaseAdapter {
 
     private ArrayList<GroupDetailBean.ListBean> mList;
@@ -102,7 +63,7 @@ public class GroupsDetailAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
         if (mList.get(position).getAccountEntity() != null) {
-            holder.iv_icon.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + mList.get(position).getAccountEntity().getAvatar()));
+            GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + mList.get(position).getAccountEntity().getAvatar()),holder.iv_icon);
         }
 
         if (mList.size() - 1 == position && mIsOwn) {
@@ -140,7 +101,7 @@ public class GroupsDetailAdapter extends BaseAdapter {
 }
 
 class ViewHolder {
-    SimpleDraweeView iv_icon;
+    CircleImageView iv_icon;
     TextView tv_name;
 }
 

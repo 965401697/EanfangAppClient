@@ -13,6 +13,7 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.base.widget.customview.TwoTextPicText;
 import com.eanfang.BuildConfig;
 import com.eanfang.R;
@@ -27,8 +28,8 @@ import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.ui.fragment.FwXxFragment;
 import com.eanfang.ui.fragment.GdNlFragment;
 import com.eanfang.ui.fragment.ZzyRyFragment;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.ViewFindUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.flyco.tablayout.SlidingTabLayout;
 
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class SecurityCompanyDetailsActivity extends BaseActivity {
 
 
     @BindView(R2.id.gs_log_sdv)
-    SimpleDraweeView gsLogSdv;
+    CircleImageView gsLogSdv;
     @BindView(R2.id.gs_xq_iv)
     ImageView gsXqIv;
     @BindView(R2.id.gs_name_tv)
@@ -105,7 +106,7 @@ public class SecurityCompanyDetailsActivity extends BaseActivity {
     }
 
     private void setData() {
-        gsLogSdv.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(securityBean.getOrgUnit().getLogoPic()));
+        GlideUtil.intoImageView(this,BuildConfig.OSS_SERVER + Uri.parse(securityBean.getOrgUnit().getLogoPic()),gsLogSdv);
         gsNameTv.setText(securityBean.getOrgUnit().getName());
         xyzSTv.setText(securityBean.getOrderCounts().getPublicPraise() + "");
         bfzTv.setText("好评率：" + securityBean.getOrderCounts().getGoodRate() + "%");

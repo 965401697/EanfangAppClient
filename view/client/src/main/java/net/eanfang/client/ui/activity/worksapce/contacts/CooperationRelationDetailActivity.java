@@ -9,15 +9,16 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONArray;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.CooperationEntity;
 
 import net.eanfang.client.R;
@@ -32,13 +33,13 @@ import butterknife.OnClick;
 public class CooperationRelationDetailActivity extends BaseClientActivity {
 
     @BindView(R.id.iv_company_logo)
-    SimpleDraweeView ivCompanyLogo;
+    CircleImageView ivCompanyLogo;
     @BindView(R.id.tv_company_name)
     TextView tvCompanyName;
     @BindView(R.id.tv_address)
     TextView tvAddress;
     @BindView(R.id.iv_user_header)
-    SimpleDraweeView ivUserHeader;
+    CircleImageView ivUserHeader;
     @BindView(R.id.tv_name)
     TextView tvName;
     @BindView(R.id.tv_phone)
@@ -110,13 +111,13 @@ public class CooperationRelationDetailActivity extends BaseClientActivity {
         if (list.size() > 0) {
 
             companyName = list.get(0).getAssigneeOrg().getOrgName();
-            ivCompanyLogo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + list.get(0).getAssigneeOrg().getOrgUnitEntity().getLogoPic()));
+            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + list.get(0).getAssigneeOrg().getOrgUnitEntity().getLogoPic()),ivCompanyLogo);
             tvCompanyName.setText(companyName);
             if (!TextUtils.isEmpty(list.get(0).getAssigneeOrg().getOrgUnitEntity().getAreaCode())) {
                 tvAddress.setText(Config.get().getAddressByCode(list.get(0).getAssigneeOrg().getOrgUnitEntity().getAreaCode()) + list.get(0).getAssigneeOrg().getOrgUnitEntity().getOfficeAddress());
             }
 
-            ivUserHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + list.get(0).getCreateUserEntity().getAccountEntity().getAvatar()));
+            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + list.get(0).getCreateUserEntity().getAccountEntity().getAvatar()),ivUserHeader);
             tvName.setText(list.get(0).getCreateUserEntity().getAccountEntity().getRealName());
             tvPhone.setText(list.get(0).getCreateUserEntity().getAccountEntity().getMobile());
 

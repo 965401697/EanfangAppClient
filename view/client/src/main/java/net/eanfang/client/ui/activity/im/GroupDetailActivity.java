@@ -8,12 +8,14 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
@@ -24,13 +26,13 @@ import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.activity.QrCodeShowActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UuidUtil;
 import com.eanfang.witget.MyGridView;
 import com.eanfang.witget.SwitchButton;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.jph.takephoto.model.TImage;
 import com.jph.takephoto.model.TResult;
 
@@ -59,7 +61,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
     @BindView(R.id.group_member_size)
     TextView groupMemberSize;
     @BindView(R.id.group_qr)
-    SimpleDraweeView groupQR;
+    ImageView groupQR;
     @BindView(R.id.group_name)
     TextView groupName;
     @BindView(R.id.group_quit)
@@ -67,7 +69,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
     @BindView(R.id.group_member_size_item)
     RelativeLayout groupMemberSizeItem;
     @BindView(R.id.group_header)
-    SimpleDraweeView groupHeader;
+    CircleImageView groupHeader;
     @BindView(R.id.ll_group_qr)
     LinearLayout llGroupQR;
     @BindView(R.id.ll_shut_up)
@@ -216,7 +218,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
 
                     if (bean.getGroup() != null) {
                         groupName.setText(bean.getGroup().getGroupName());
-                        groupHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bean.getGroup().getHeadPortrait()));
+                        GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + bean.getGroup().getHeadPortrait()),groupHeader);
                         if (!TextUtils.isEmpty(bean.getGroup().getNotice())) {
                             group_notice.setText(bean.getGroup().getNotice());
                         }
@@ -612,7 +614,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
 
         headPortrait = "im/select/CUSTOM_" + UuidUtil.getUUID() + ".png";
 
-        groupHeader.setImageURI("file://" + image.getOriginalPath());
+        GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),groupHeader);
 
         OSSUtils.initOSS(this).asyncPutImage(headPortrait, image.getOriginalPath(), new OSSCallBack(this, true) {
             @Override

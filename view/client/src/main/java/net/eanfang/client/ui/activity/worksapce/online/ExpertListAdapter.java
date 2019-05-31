@@ -7,7 +7,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.biz.model.ExpertListBean;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 
 import net.eanfang.client.R;
 
@@ -24,7 +24,7 @@ public class ExpertListAdapter extends BaseQuickAdapter<ExpertListBean.ListBean,
 
     @Override
     protected void convert(BaseViewHolder helper, ExpertListBean.ListBean item) {
-        ((SimpleDraweeView) helper.getView(R.id.iv_expert_header)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER +item.getAvatarPhoto()));
+        GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER +item.getAvatarPhoto()),helper.getView(R.id.iv_expert_header));
         helper.setText(R.id.tv_expert, item.getExpertName());
         helper.setText(R.id.tv_good, "好评率:  "+item.getFavorableRate()*100+"%");
         if (!TextUtils.isEmpty(item.getSystemType())){

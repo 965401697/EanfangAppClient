@@ -4,8 +4,8 @@ import android.net.Uri;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.eanfang.biz.model.entity.OrgEntity;
+import com.eanfang.util.GlideUtil;
 
 import net.eanfang.client.R;
 
@@ -25,10 +25,9 @@ public class ConstactsAdapter extends BaseQuickAdapter<OrgEntity, BaseViewHolder
 
     @Override
     protected void convert(BaseViewHolder helper, OrgEntity item) {
-        SimpleDraweeView simpleDraweeView = helper.getView(R.id.iv_company_logo);
         if (item.getOrgName() != null) {
             helper.setText(R.id.tv_company_name, item.getOrgName());
-            simpleDraweeView.setImageURI(Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + item.getOrgUnitEntity().getLogoPic()));
+            GlideUtil.intoImageView(mContext,Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + item.getOrgUnitEntity().getLogoPic()),helper.getView(R.id.iv_company_logo));
         } else {
             helper.setVisible(R.id.rel_company, false);
         }

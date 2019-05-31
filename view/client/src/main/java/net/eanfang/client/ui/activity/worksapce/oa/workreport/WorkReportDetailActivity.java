@@ -11,13 +11,15 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.WorkReportInfoBean;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
+
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.im.SelectIMContactActivity;
@@ -37,7 +39,7 @@ import butterknife.ButterKnife;
 public class WorkReportDetailActivity extends BaseClientActivity {
 
     @BindView(R.id.iv_header)
-    SimpleDraweeView ivHeader;
+    CircleImageView ivHeader;
     @BindView(R.id.tv_company)
     TextView tvCompany;
     @BindView(R.id.tv_section)
@@ -173,7 +175,7 @@ public class WorkReportDetailActivity extends BaseClientActivity {
                             findList = new ArrayList<>();
                             planList = new ArrayList<>();
                             //头像
-                            ivHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bean.getCreateUser().getAccountEntity().getAvatar()));
+                            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + bean.getCreateUser().getAccountEntity().getAvatar()),ivHeader);
                             tvCompany.setText(bean.getCreateCompany().getOrgName());
                             tvSection.setText(bean.getCreateOrg().getOrgName());
                             tvType.setText(GetConstDataUtils.getWorkReportTypeList().get(bean.getType()));

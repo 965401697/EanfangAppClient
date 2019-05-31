@@ -2,10 +2,11 @@ package net.eanfang.client.ui.activity.worksapce.online;
 
 import android.net.Uri;
 
+import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 import com.yaf.base.entity.AskQuestionsListBean;
 
 import net.eanfang.client.R;
@@ -28,7 +29,7 @@ public class CommentFaultSearchAdapter extends BaseQuickAdapter<AskQuestionsList
             //名字
             helper.setText(R.id.tv_expert_name, item.getExpertsCertification().getExpertName());
             //头像
-            ((SimpleDraweeView) helper.getView(R.id.iv_expert_header)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getExpertsCertification().getAvatarPhoto()));
+            GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + item.getExpertsCertification().getAvatarPhoto()),helper.getView(R.id.iv_expert_header));
             //好评
             helper.setText(R.id.tv_desc, "防盗报警专家  好评率： " + item.getExpertsCertification().getFavorableRate() * 100 + "%");
         } else {

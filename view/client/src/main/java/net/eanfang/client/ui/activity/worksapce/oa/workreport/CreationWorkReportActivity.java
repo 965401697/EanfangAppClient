@@ -9,6 +9,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -35,13 +36,13 @@ import com.eanfang.takevideo.TakeVideoActivity;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.DialogUtil;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
@@ -99,7 +100,7 @@ public class CreationWorkReportActivity extends BaseClientActivity {
     @BindView(R.id.snpl_photos_work)
     BGASortableNinePhotoLayout snplPhotosWork;
     @BindView(R.id.iv_takevideo_work)
-    SimpleDraweeView ivTakevideoWork;
+    ImageView ivTakevideoWork;
     @BindView(R.id.rl_thumbnail_work)
     RelativeLayout rlThumbnailWork;
     @BindView(R.id.tv_complete_work)
@@ -155,7 +156,7 @@ public class CreationWorkReportActivity extends BaseClientActivity {
     @BindView(R.id.snpl_photos_question)
     BGASortableNinePhotoLayout snplPhotosQuestion;
     @BindView(R.id.iv_takevideo_question)
-    SimpleDraweeView ivTakevideoQuestion;
+    ImageView ivTakevideoQuestion;
     @BindView(R.id.rl_thumbnail_question)
     RelativeLayout rlThumbnailQuestion;
     @BindView(R.id.ll_find_question)
@@ -195,7 +196,7 @@ public class CreationWorkReportActivity extends BaseClientActivity {
     //    @BindView(R.id.tv_addViedeo_plan)
 //    TextView tvAddViedeoPlan;
     @BindView(R.id.iv_takevideo_plan)
-    SimpleDraweeView ivTakevideoPlan;
+    ImageView ivTakevideoPlan;
     @BindView(R.id.rl_thumbnail_plan)
     RelativeLayout rlThumbnailPlan;
     @BindView(R.id.ll_report_plan)
@@ -1059,7 +1060,7 @@ public class CreationWorkReportActivity extends BaseClientActivity {
     }
 
 
-    private void vidio(TakeVdideoMode takeVdideoMode, String key, String path, SimpleDraweeView view, RelativeLayout relativeLayout) {
+    private void vidio(TakeVdideoMode takeVdideoMode, String key, String path, ImageView view, RelativeLayout relativeLayout) {
 
         path = takeVdideoMode.getMImagePath();
         key = takeVdideoMode.getMKey();
@@ -1077,7 +1078,7 @@ public class CreationWorkReportActivity extends BaseClientActivity {
             if (view.getVisibility() == View.INVISIBLE) {
                 view.setVisibility(View.VISIBLE);
             }
-            view.setImageBitmap(PhotoUtils.getVideoThumbnail(path, 100, 100, MINI_KIND));
+            GlideUtil.intoImageView(this,PhotoUtils.getVideoThumbnail(path, 100, 100, MINI_KIND),view);
         }
         relativeLayout.setVisibility(View.VISIBLE);
     }

@@ -23,7 +23,7 @@
         android:layout_marginLeft="@dimen/dimen_36"
         android:layout_toRightOf="@+id/cb_checked"
         android:src="@mipmap/ic_header"
-        fresco:roundAsCircle="true" />
+         />
 
 
     <TextView

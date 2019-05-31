@@ -32,7 +32,6 @@ import com.eanfang.biz.model.device.User;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
-import com.facebook.common.internal.Sets;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
@@ -47,6 +46,7 @@ import net.eanfang.worker.ui.activity.worksapce.notice.MessageNotificationActivi
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -74,7 +74,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
 
     private boolean isFrist = true;
     private List<String> invalidList = new ArrayList<>();//无效的会话id
-    private Set<String> conversationsId = Sets.newHashSet();
+    private Set<String> conversationsId = new HashSet<>();
     private QBadgeView qBadgeViewSys = new QBadgeView(WorkerApplication.get().getApplicationContext());
 
   /*  // 消息数量

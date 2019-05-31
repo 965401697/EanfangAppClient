@@ -32,7 +32,7 @@
                 android:layout_marginLeft="@dimen/dimen_36"
                 android:layout_marginTop="@dimen/dimen_194"
                 android:src="@mipmap/ic_header"
-                fresco:roundAsCircle="true" />
+                 />
 
 
         </RelativeLayout>

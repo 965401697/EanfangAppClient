@@ -30,7 +30,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/dimen_36"
                     android:src="@mipmap/ic_header"
-                    fresco:roundAsCircle="true" />
+                     />
 
                 <TextView
                     android:id="@+id/tv_report_name"

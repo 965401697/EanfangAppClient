@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -20,11 +21,11 @@ import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.jph.takephoto.model.TImage;
 import com.jph.takephoto.model.TResult;
 import com.eanfang.biz.model.entity.OrgUnitEntity;
@@ -56,7 +57,7 @@ public class AuthCompanyFirstActivity extends BaseActivityWithTakePhoto {
     @BindView(R.id.et_detail_office_address)
     EditText etDetailOfficeAddress;
     @BindView(R.id.iv_uploadlogo)
-    SimpleDraweeView ivUploadlogo;
+    CircleImageView ivUploadlogo;
     @BindView(R.id.et_desc)
     EditText etDesc;
     @BindView(R.id.btn_complete)
@@ -125,7 +126,7 @@ public class AuthCompanyFirstActivity extends BaseActivityWithTakePhoto {
                 tvOfficeAddress.setText(Config.get().getAddressByCode(byNetBean.getAreaCode()));
             }
             if (!StringUtils.isEmpty(byNetBean.getLogoPic())) {
-                ivUploadlogo.setImageURI(BuildConfig.OSS_SERVER + byNetBean.getLogoPic());
+                GlideUtil.intoImageView(this,BuildConfig.OSS_SERVER + byNetBean.getLogoPic(),ivUploadlogo);
                 infoBean.setLogoPic(byNetBean.getLogoPic());
             }
         }
@@ -236,7 +237,7 @@ public class AuthCompanyFirstActivity extends BaseActivityWithTakePhoto {
 
         if (resultCode == ADPIC_CALLBACK_CODE) {
             infoBean.setLogoPic(imgKey);
-            ivUploadlogo.setImageURI("file://" + image.getOriginalPath());
+            GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),ivUploadlogo);
         }
         OSSUtils.initOSS(this).asyncPutImage(imgKey, image.getOriginalPath(), new OSSCallBack(this, true) {
         });

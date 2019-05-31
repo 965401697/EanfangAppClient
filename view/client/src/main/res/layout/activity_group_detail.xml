@@ -88,14 +88,13 @@
                     android:textSize="@dimen/textSize_14" />
 
 
-                <com.facebook.drawee.view.SimpleDraweeView
+                <com.eanfang.base.widget.customview.CircleImageView
                     android:id="@+id/group_header"
                     android:layout_width="@dimen/dimen_80"
                     android:layout_height="@dimen/dimen_80"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="@dimen/dimen_24"
-                    android:src="@mipmap/ic_header"
-                    fresco:roundAsCircle="true" />
+                    android:src="@mipmap/ic_header" />
 
                 <ImageView
                     android:layout_width="@dimen/dimen_14"
@@ -186,7 +185,7 @@
                     android:textSize="@dimen/textSize_14" />
 
 
-                <com.facebook.drawee.view.SimpleDraweeView
+                <ImageView
                     android:id="@+id/group_qr"
                     android:layout_width="35dp"
                     android:layout_height="35dp"

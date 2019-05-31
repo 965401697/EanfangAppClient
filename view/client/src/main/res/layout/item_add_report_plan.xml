@@ -268,12 +268,11 @@
                         android:visibility="gone">
 
 
-                        <com.facebook.drawee.view.SimpleDraweeView
+                        <ImageView
                             android:id="@+id/iv_takevideo_plan"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:src="@mipmap/ic_launcher"
-                            app:placeholderImage="@mipmap/ic_launcher" />
+                            android:src="@mipmap/ic_launcher" />
 
 
                         <ImageView

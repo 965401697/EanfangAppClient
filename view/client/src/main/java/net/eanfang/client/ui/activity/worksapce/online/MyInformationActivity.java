@@ -7,9 +7,10 @@ import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 import com.flyco.tablayout.SlidingTabLayout;
 
 import net.eanfang.client.R;
@@ -40,7 +41,7 @@ public class MyInformationActivity extends BaseClientActivity {
     @BindView(R.id.vp_task_list)
     ViewPager vpTaskList;
     @BindView(R.id.iv_company_logo)
-    SimpleDraweeView ivCompanyLogo;
+    CircleImageView ivCompanyLogo;
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private String[] mTitles = {"点赞记录", "历史记录"};
     private MyPagerAdapter mPagerAdapter;
@@ -70,8 +71,8 @@ public class MyInformationActivity extends BaseClientActivity {
                                  userGood.setText(bean.getLikeCount() + "");
                                  userFen.setText(bean.getFollowee() + "");
                                  userLook.setText(bean.getFollowers() + "");
-                                 ivCompanyLogo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bean.getAccount().getAvatar()));
-
+                                 GlideUtil.intoImageView(MyInformationActivity.this,Uri.parse(BuildConfig.OSS_SERVER +
+                                         bean.getAccount().getAvatar()),ivCompanyLogo);
                                  //mAdapter.getData().clear();
                                  //mAdapter.setNewData(bean.getList());
                                  // mSwipeRefreshLayout.setRefreshing(false);

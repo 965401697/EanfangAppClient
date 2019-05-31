@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.base.widget.customview.SuperTextView;
 import com.eanfang.R;
 import com.eanfang.R2;
@@ -21,7 +22,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.ExpertDetailsBean;
 import com.eanfang.ui.adapter.ExpertDetailsAdapter;
 import com.eanfang.ui.base.BaseActivity;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,7 +36,7 @@ import butterknife.ButterKnife;
 public class ExpertDetailsActivity extends BaseActivity {
 
     @BindView(R2.id.gs_log_sdv)
-    SimpleDraweeView gsLogSdv;
+    CircleImageView gsLogSdv;
     @BindView(R2.id.gs_xq_iv)
     ImageView gsXqIv;
     @BindView(R2.id.gs_name_tv)
@@ -121,7 +122,7 @@ public class ExpertDetailsActivity extends BaseActivity {
 
     @SuppressLint("SetTextI18n")
     private void setData() {
-        gsLogSdv.setImageURI(com.eanfang.BuildConfig.OSS_SERVER + Uri.parse(expertDetailsBean.getAccount().getAvatar()));
+        GlideUtil.intoImageView(this,com.eanfang.BuildConfig.OSS_SERVER + Uri.parse(expertDetailsBean.getAccount().getAvatar()),gsLogSdv);
         gsNameTv.setText(expertDetailsBean.getAccount().getRealName());
         if (expertDetailsBean.getExpert().getStatus() == 2) {
             rzTv.setVisibility(View.VISIBLE);

@@ -15,7 +15,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/dimen_30"
         android:src="@mipmap/ic_header"
-        fresco:roundAsCircle="true" />
+         />
 
     <TextView
         android:id="@+id/tv_name"

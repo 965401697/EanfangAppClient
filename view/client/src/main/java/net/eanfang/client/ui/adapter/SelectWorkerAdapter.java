@@ -7,8 +7,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.StringUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.client.R;
@@ -29,9 +29,8 @@ public class SelectWorkerAdapter extends BaseQuickAdapter<WorkerEntity, BaseView
     @Override
     protected void convert(BaseViewHolder helper, WorkerEntity item) {
         // 头像
-        SimpleDraweeView iv_header = helper.getView(R.id.iv_header);
         if (!StringUtils.isEmpty(item.getVerifyEntity().getAvatarPhoto())) {
-            iv_header.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getVerifyEntity().getAvatarPhoto()));
+            GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + item.getVerifyEntity().getAvatarPhoto()),helper.getView(R.id.iv_header));
         }
         // 公司名称
         helper.setText(R.id.tv_companyName, item.getCompanyEntity().getOrgName());

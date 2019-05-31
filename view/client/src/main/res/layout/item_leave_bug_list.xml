@@ -37,7 +37,7 @@
         android:layout_marginTop="1dp"
         android:background="@color/white">
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/sdv_pic"
             android:layout_width="80dp"
             android:layout_height="80dp"

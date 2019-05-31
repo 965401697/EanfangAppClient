@@ -8,13 +8,14 @@ import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.config.Config;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.device.User;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.ToastUtil;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.picker.common.util.DateUtils;
 
 import net.eanfang.client.R;
@@ -37,7 +38,7 @@ import io.rong.imlib.model.Conversation;
 public class IMCardActivity extends BaseClientActivity {
 
     @BindView(R.id.iv_header)
-    SimpleDraweeView ivHeader;
+    CircleImageView ivHeader;
     @BindView(R.id.tv_nike_name)
     TextView tvNikeName;
     @BindView(R.id.tv_name)
@@ -64,8 +65,7 @@ public class IMCardActivity extends BaseClientActivity {
     }
 
     private void initView() {
-
-        ivHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + mUser.getAvatar()));
+        GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + mUser.getAvatar()),ivHeader);
         tvNikeName.setText(mUser.getNickName());
         if (mUser.getGender() == 1) {
             ivSex.setImageDrawable(getResources().getDrawable(R.mipmap.ic_man));

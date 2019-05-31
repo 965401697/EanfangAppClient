@@ -9,6 +9,7 @@ import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
@@ -25,12 +26,12 @@ import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.takevideo.TakeVdideoMode;
 import com.eanfang.takevideo.TakeVideoActivity;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.witget.TakeVideoPopWindow;
 import com.eanfang.witget.mentionedittext.edit.MentionEditText;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
@@ -66,7 +67,7 @@ public class SecurityCreateActivity extends BaseActivity {
     @BindView(R.id.et_content)
     MentionEditText etContent;
     @BindView(R.id.iv_show_video)
-    SimpleDraweeView ivShowVideo;
+    ImageView ivShowVideo;
     @BindView(R.id.rl_video)
     RelativeLayout rlVideo;
 
@@ -293,7 +294,7 @@ public class SecurityCreateActivity extends BaseActivity {
                 if (ivShowVideo.getVisibility() == View.INVISIBLE) {
                     ivShowVideo.setVisibility(View.VISIBLE);
                 }
-                ivShowVideo.setImageBitmap(PhotoUtils.getVideoThumbnail(mVieoPath, 100, 100, MINI_KIND));
+                GlideUtil.intoImageView(this,PhotoUtils.getVideoThumbnail(mVieoPath, 100, 100, MINI_KIND),ivShowVideo);
             }
         }
     }

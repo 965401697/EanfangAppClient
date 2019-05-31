@@ -4,7 +4,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.R;
 import com.eanfang.biz.model.ExpertDetailsBean;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 
 /**
  * @Date: 2018/12/21 15:53
@@ -19,7 +19,7 @@ public class ExpertDetailsAdapter extends BaseQuickAdapter<ExpertDetailsBean.Eva
 
     @Override
     protected void convert(BaseViewHolder helper, ExpertDetailsBean.EvaluateBean item) {
-        ((SimpleDraweeView) helper.getView(R.id.gs_log_sdv)).setImageURI(com.eanfang.BuildConfig.OSS_SERVER +item.getCreateAccount().getAvatar() );
+        GlideUtil.intoImageView(mContext,com.eanfang.BuildConfig.OSS_SERVER +item.getCreateAccount().getAvatar(),helper.getView(R.id.gs_log_sdv));
         helper.setText(R.id.name_tv, item.getCreateAccount().getRealName()+"");
         String myString = "";
         switch (item.getFavorableRate()) {

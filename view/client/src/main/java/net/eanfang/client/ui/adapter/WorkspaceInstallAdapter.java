@@ -54,6 +54,5 @@ public class WorkspaceInstallAdapter extends BaseQuickAdapter<WorkspaceInstallBe
         helper.addOnClickListener(R.id.tv_look);
         helper.addOnClickListener(R.id.tv_finish);
         //将业务类型的图片显示到列表
-//        ((SimpleDraweeView) helper.getView(R.id.iv_upload)).setImageURI(item.getPic1());
     }
 }

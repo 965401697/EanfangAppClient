@@ -21,4 +21,7 @@ public class GlideUtil {
     public static  void intoImageView(Context context, Bitmap path, ImageView imageView){
         Glide.with(context).load(path).into(imageView);
     }
+    public static  void intoImageView(Context context, int path, ImageView imageView){
+        Glide.with(context).load(path).into(imageView);
+    }
 }

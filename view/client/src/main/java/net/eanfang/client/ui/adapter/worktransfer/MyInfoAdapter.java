@@ -6,7 +6,7 @@ import com.eanfang.BuildConfig;
 import com.eanfang.config.Config;
 import com.eanfang.biz.model.MainHistoryBean;
 import com.eanfang.util.GetConstDataUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 
 import net.eanfang.client.R;
 
@@ -17,7 +17,6 @@ import net.eanfang.client.R;
  */
 
 public class MyInfoAdapter extends BaseQuickAdapter<MainHistoryBean.ListBean, BaseViewHolder> {
-    private SimpleDraweeView sdv_pic;
 
     public MyInfoAdapter() {
         super(R.layout.item_main_list);
@@ -30,10 +29,9 @@ public class MyInfoAdapter extends BaseQuickAdapter<MainHistoryBean.ListBean, Ba
         helper.setText(R.id.tv_time, item.getCreateTime());
         helper.setText(R.id.tv_business, Config.get().getBusinessNameByCode(item.getMaintainDetail().getBusinessThreeCode(), 1));
         helper.addOnClickListener(R.id.tv_select);
-        sdv_pic = helper.getView(R.id.sdv_pic);
         if (item.getMaintainDetail().getPictures() != null) {
             String[] urls = item.getMaintainDetail().getPictures().split(",");
-            sdv_pic.setImageURI(BuildConfig.OSS_SERVER + urls[0]);
+            GlideUtil.intoImageView(mContext,BuildConfig.OSS_SERVER + urls[0],helper.getView(R.id.sdv_pic));
         }
     }
 }

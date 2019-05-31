@@ -21,11 +21,11 @@ import com.eanfang.takevideo.TakeVideoActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
@@ -76,7 +76,7 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
     @BindView(R.id.tv_addViedeo)
     TextView tvAddViedeo;
     @BindView(R.id.iv_takevideo)
-    SimpleDraweeView ivTakevideo;
+    ImageView ivTakevideo;
     @BindView(R.id.rl_thumbnail)
     RelativeLayout rlThumbnail;
 
@@ -369,7 +369,7 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
             snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this));
             if (!StringUtils.isEmpty(changeGoodDetail.getMp4_path())) {
                 rlThumbnail.setVisibility(View.VISIBLE);
-                ivTakevideo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + changeGoodDetail.getMp4_path() + ".jpg"));
+                GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + changeGoodDetail.getMp4_path() + ".jpg"),ivTakevideo);
                 mVieoPath = BuildConfig.OSS_SERVER + changeGoodDetail.getMp4_path() + ".mp4";
             }
         }
@@ -395,7 +395,7 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
             snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this));
             if (!StringUtils.isEmpty(finishDetail.getMp4_path())) {
                 rlThumbnail.setVisibility(View.VISIBLE);
-                ivTakevideo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + finishDetail.getMp4_path() + ".jpg"));
+                GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + finishDetail.getMp4_path() + ".jpg"),ivTakevideo);
                 mVieoPath = BuildConfig.OSS_SERVER + finishDetail.getMp4_path() + ".mp4";
             }
         }
@@ -421,7 +421,7 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
             snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this));
             if (!StringUtils.isEmpty(unFinishDetail.getMp4_path())) {
                 rlThumbnail.setVisibility(View.VISIBLE);
-                ivTakevideo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + unFinishDetail.getMp4_path() + ".jpg"));
+                GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + unFinishDetail.getMp4_path() + ".jpg"),ivTakevideo);
                 mVieoPath = BuildConfig.OSS_SERVER + unFinishDetail.getMp4_path() + ".mp4";
             }
         }
@@ -447,7 +447,7 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
             snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this));
             if (!StringUtils.isEmpty(followThingDetail.getMp4_path())) {
                 rlThumbnail.setVisibility(View.VISIBLE);
-                ivTakevideo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + followThingDetail.getMp4_path() + ".jpg"));
+                GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + followThingDetail.getMp4_path() + ".jpg"),ivTakevideo);
                 mVieoPath = BuildConfig.OSS_SERVER + followThingDetail.getMp4_path() + ".mp4";
             }
         }
@@ -473,7 +473,7 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
             snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this));
             if (!StringUtils.isEmpty(attentionDetail.getMp4_path())) {
                 rlThumbnail.setVisibility(View.VISIBLE);
-                ivTakevideo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + attentionDetail.getMp4_path() + ".jpg"));
+                GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + attentionDetail.getMp4_path() + ".jpg"),ivTakevideo);
                 mVieoPath = BuildConfig.OSS_SERVER + attentionDetail.getMp4_path() + ".mp4";
             }
         }
@@ -505,7 +505,7 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
             mVieoPath = takeVdideoMode.getMImagePath();
             mUploadKey = takeVdideoMode.getMKey();
             if (!StringUtils.isEmpty(mVieoPath)) {
-                ivTakevideo.setImageBitmap(PhotoUtils.getVideoThumbnail(mVieoPath, 100, 100, MINI_KIND));
+                GlideUtil.intoImageView(this,PhotoUtils.getVideoThumbnail(mVieoPath, 100, 100, MINI_KIND),ivTakevideo);
             }
             tvAddViedeo.setText("重新拍摄");
         }

@@ -6,9 +6,10 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.config.Config;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
-import com.facebook.drawee.view.SimpleDraweeView;
+
 import com.yaf.base.entity.BughandleDetailEntity;
 
 import net.eanfang.client.R;
@@ -57,7 +58,7 @@ public class TroubleDetailAdapter extends BaseQuickAdapter<BughandleDetailEntity
         //将业务类型的图片显示到列表
         String imgUrl = V.v(() -> item.getFailureEntity().getPictures().split(",")[0]);
         if (!StringUtils.isEmpty(imgUrl) && imgUrl.length() > 10) {
-            ((SimpleDraweeView) helper.getView(R.id.iv_faultImg)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + imgUrl));
+            GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + imgUrl),helper.getView(R.id.iv_faultImg));
         }
 
     }

@@ -26,10 +26,10 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.AuthCompanyBaseInfoBean;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.ToastUtil;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
@@ -59,7 +59,7 @@ public class CompanyManagerActivity extends BaseActivity implements DissloveTeam
     @BindView(R.id.tv_againAuth)
     TextView tvAgainAuth;
     @BindView(R.id.gs_log_sdv)
-    SimpleDraweeView gsLogSdv;
+    ImageView gsLogSdv;
     @BindView(R.id.gs_name_tv)
     TextView gsNameTv;
     @BindView(R.id.iv_verify)
@@ -156,7 +156,7 @@ public class CompanyManagerActivity extends BaseActivity implements DissloveTeam
         Log.d("BUSINESS_MANAGEMENT", "setData: " + byNetBean.toString());
         gsNameTv.setText(byNetBean.getName());
         if (byNetBean.getLogoPic() != null) {
-            gsLogSdv.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(byNetBean.getLogoPic()));
+            GlideUtil.intoImageView(this,BuildConfig.OSS_SERVER + Uri.parse(byNetBean.getLogoPic()),gsLogSdv);
         }
         if (byNetBean.getIntro() == null) {
             SpannableString spannableString = new SpannableString("公司简介: ");

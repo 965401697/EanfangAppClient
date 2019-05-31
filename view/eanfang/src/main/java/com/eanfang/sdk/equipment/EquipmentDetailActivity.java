@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
@@ -15,7 +16,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GetDateUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 import com.yaf.base.entity.CustDeviceEntity;
 
 
@@ -44,15 +45,15 @@ public class EquipmentDetailActivity extends BaseActivity {
     @BindView(R2.id.tv_equipment_price)
     TextView tvEquipmentPrice;
     @BindView(R2.id.iv_pic_one)
-    SimpleDraweeView ivPicOne;
+    ImageView ivPicOne;
     @BindView(R2.id.iv_pic_two)
-    SimpleDraweeView ivPicTwo;
+    ImageView ivPicTwo;
     @BindView(R2.id.iv_pic_three)
-    SimpleDraweeView ivPicThree;
+    ImageView ivPicThree;
     @BindView(R2.id.iv_pic_four)
-    SimpleDraweeView ivPicFour;
+    ImageView ivPicFour;
     @BindView(R2.id.iv_pic_five)
-    SimpleDraweeView ivPicFive;
+    ImageView ivPicFive;
     @BindView(R2.id.tv_position)
     TextView tvPosition;
     @BindView(R2.id.tv_position_num)
@@ -74,15 +75,15 @@ public class EquipmentDetailActivity extends BaseActivity {
     @BindView(R2.id.tv_service_person)
     TextView tvServicePerson;
     @BindView(R2.id.iv_locale_one)
-    SimpleDraweeView ivLocaleOne;
+    ImageView ivLocaleOne;
     @BindView(R2.id.iv_locale_two)
-    SimpleDraweeView ivLocaleTwo;
+    ImageView ivLocaleTwo;
     @BindView(R2.id.iv_loacle_three)
-    SimpleDraweeView ivLoacleThree;
+    ImageView ivLoacleThree;
     @BindView(R2.id.iv_locale_four)
-    SimpleDraweeView ivLocaleFour;
+    ImageView ivLocaleFour;
     @BindView(R2.id.iv_loacle_five)
-    SimpleDraweeView ivLoacleFive;
+    ImageView ivLoacleFive;
     @BindView(R2.id.tv_notice)
     TextView tvNotice;
 
@@ -129,19 +130,19 @@ public class EquipmentDetailActivity extends BaseActivity {
 
         String[] picture = bean.getPicture().split(",");
         if (picture != null && picture.length >= 1) {
-            ivPicOne.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + picture[0]));
+            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + picture[0]),ivPicOne);
         }
         if (picture != null && picture.length >= 2) {
-            ivPicTwo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + picture[1]));
+            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + picture[1]),ivPicTwo);
         }
         if (picture != null && picture.length >= 3) {
-            ivPicThree.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + picture[2]));
+            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + picture[2]),ivPicThree);
         }
         if (picture != null && picture.length >= 4) {
-            ivPicFour.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + picture[3]));
+            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + picture[3]),ivPicFour);
         }
         if (picture != null && picture.length >= 5) {
-            ivPicFive.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + picture[4]));
+            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + picture[4]),ivPicFive);
         }
 
         tvNotice.setText(bean.getDeviceInfo());
@@ -189,20 +190,20 @@ public class EquipmentDetailActivity extends BaseActivity {
         tvServicePerson.setText(bean.getRepairUser());
         String[] locationPictures = bean.getLocationPictures().split(",");
         if (locationPictures != null && locationPictures.length >= 1) {
-            ivLocaleOne.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + locationPictures[0]));
+            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + locationPictures[0]),ivLocaleOne);
         }
         if (locationPictures != null && locationPictures.length >= 2) {
-            ivLocaleTwo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + locationPictures[1]));
+            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + locationPictures[1]),ivLocaleTwo);
         }
         if (locationPictures != null && locationPictures.length >= 3) {
-            ivLoacleThree.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + locationPictures[2]));
+            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + locationPictures[2]),ivLoacleThree);
         }
 
         if (picture != null && locationPictures.length >= 4) {
-            ivLocaleFour.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + locationPictures[3]));
+            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + locationPictures[3]),ivLocaleFour);
         }
         if (picture != null && locationPictures.length >= 5) {
-            ivLoacleFive.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + locationPictures[4]));
+            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + locationPictures[4]),ivLoacleFive);
         }
 
     }

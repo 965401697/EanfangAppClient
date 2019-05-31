@@ -13,7 +13,7 @@
         android:layout_marginLeft="@dimen/dimen_36"
         android:layout_marginTop="@dimen/dimen_24"
         android:src="@mipmap/ic_header"
-        fresco:roundAsCircle="true" />
+         />
 
     <TextView
         android:id="@+id/tv_name_phone"

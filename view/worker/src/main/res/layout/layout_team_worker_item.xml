@@ -20,7 +20,7 @@
                 android:id="@+id/iv_header"
                 android:layout_width="@dimen/dimen_70"
                 android:layout_height="@dimen/dimen_70"
-                app:placeholderImage="@mipmap/ic_nodata"
+                android:src="@mipmap/ic_nodata"
                 />
 
             <ImageView

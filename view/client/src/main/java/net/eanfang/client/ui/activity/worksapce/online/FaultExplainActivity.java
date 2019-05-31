@@ -11,11 +11,12 @@ import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.StringUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 import com.yaf.base.entity.AnswerListWithQuestionBean;
 
@@ -40,7 +41,7 @@ public class FaultExplainActivity extends BaseClientActivity {
 
     private static final int REQUEST_CODE_CHOOSE_PHOTO_two = 1;
     @BindView(R.id.iv_user_header)
-    SimpleDraweeView ivUserHeader;
+    CircleImageView ivUserHeader;
     @BindView(R.id.tv_user_name)
     TextView tvUserName;
     @BindView(R.id.tv_time)
@@ -208,7 +209,8 @@ public class FaultExplainActivity extends BaseClientActivity {
                         questionUserId = bean.getQuestion().getQuestionUserId();
                         questionCompanyId = bean.getQuestion().getQuestionCompanyId();
                         questionTopCompanyId = bean.getQuestion().getQuestionTopCompanyId();
-                        ivUserHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bean.getQuestion().getAccountEntity().getAvatar()));
+                        GlideUtil.intoImageView(FaultExplainActivity.this,Uri.parse(BuildConfig.OSS_SERVER
+                                + bean.getQuestion().getAccountEntity().getAvatar()),ivUserHeader);
                         tvUserName.setText(bean.getQuestion().getAccountEntity().getNickName());
                         //时间
                         format1 = format(bean.getQuestion().getQuestionCreateDateLong());

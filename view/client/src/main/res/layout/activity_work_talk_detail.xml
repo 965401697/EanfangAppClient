@@ -31,14 +31,14 @@
                     android:layout_height="@dimen/dimen_198"
                     android:background="@color/white">
 
-                    <com.facebook.drawee.view.SimpleDraweeView
+                    <com.eanfang.base.widget.customview.CircleImageView
                         android:id="@+id/iv_report_header"
                         android:layout_width="@dimen/dimen_70"
                         android:layout_height="@dimen/dimen_70"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/dimen_36"
                         android:src="@mipmap/ic_header"
-                        fresco:roundAsCircle="true" />
+                        />
 
                     <TextView
                         android:id="@+id/tv_talker_name"

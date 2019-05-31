@@ -9,8 +9,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.R;
 import com.eanfang.biz.model.GroupsBean;
-import com.facebook.drawee.view.SimpleDraweeView;
-
+import com.eanfang.util.GlideUtil;
 
 
 /**
@@ -29,7 +28,7 @@ public class GroupsAdapter extends BaseQuickAdapter<GroupsBean, BaseViewHolder> 
 
     @Override
     protected void convert(BaseViewHolder helper, GroupsBean item) {
-        ((SimpleDraweeView) helper.getView(R.id.iv_friend_header)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getHeadPortrait()));
+        GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + item.getHeadPortrait()),helper.getView(R.id.iv_friend_header));
         helper.setText(R.id.tv_friend_name, item.getGroupName());
 
         if (isVisible) {

@@ -5,7 +5,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.R;
 import com.eanfang.biz.model.TemplateBean;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 
 /**
  * @Date: 2018/12/21 15:53
@@ -21,7 +21,7 @@ public class SearchPersonByOrgannizationAdapter extends BaseQuickAdapter<Templat
 
     @Override
     protected void convert(BaseViewHolder helper, TemplateBean.Preson item) {
-        ((SimpleDraweeView) helper.getView(R.id.iv_user_header)).setImageURI(BuildConfig.OSS_SERVER + item.getProtraivat());
+        GlideUtil.intoImageView(mContext,BuildConfig.OSS_SERVER + item.getProtraivat(),helper.getView(R.id.iv_user_header));
         helper.setText(R.id.tv_name, item.getName());
         helper.setText(R.id.tv_section, item.getOrgName());
 

@@ -8,7 +8,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 import com.yaf.base.entity.ShopMaintenanceExamDeviceEntity;
 
 import net.eanfang.client.R;
@@ -33,9 +33,9 @@ public class MaintenanceOrderDetailEmphasisDeviceAdapter extends BaseQuickAdapte
     protected void convert(BaseViewHolder helper, ShopMaintenanceExamDeviceEntity item) {
         helper.setText(R.id.tv_os_name, Config.get().getBaseNameByCode(Constant.SYS_TYPE, item.getBusinessThreeCode(), 3));
         if (!TextUtils.isEmpty(item.getPicture())) {
-            ((SimpleDraweeView) helper.getView(R.id.iv_upload)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getPicture().split(",")[0]));
+            GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + item.getPicture().split(",")[0]),helper.getView(R.id.iv_upload));
         } else {
-            ((SimpleDraweeView) helper.getView(R.id.iv_upload)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER));
+            GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER ),helper.getView(R.id.iv_upload));
         }
         helper.setText(R.id.tv_location_num, "位置编号    " + item.getLocationNumber());
         helper.setText(R.id.tv_position_location, "安装位置    " + item.getLocation());

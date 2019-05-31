@@ -7,7 +7,7 @@ import android.util.Log;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 import com.yaf.base.entity.CommonFaultListBeanEntity;
 
 import net.eanfang.client.R;
@@ -25,20 +25,20 @@ public class CommonFaultAdapter extends BaseQuickAdapter<CommonFaultListBeanEnti
     @Override
     protected void convert(BaseViewHolder helper, CommonFaultListBeanEntity.SimilarQuestionListBean.ListBean item) {
         if (!TextUtils.isEmpty(item.getQuestionSketch())) {
-            helper.setText(R.id.tv_fault_title,item.getQuestionSketch());
+            helper.setText(R.id.tv_fault_title, item.getQuestionSketch());
         } else {
-            helper.setText(R.id.tv_fault_title,"数据出错");
+            helper.setText(R.id.tv_fault_title, "数据出错");
         }
         if (!TextUtils.isEmpty(item.getQuestionContent())) {
-            helper.setText(R.id.tv_fault_desc,item.getQuestionContent());
+            helper.setText(R.id.tv_fault_desc, item.getQuestionContent());
         } else {
-            helper.setText(R.id.tv_fault_desc,"数据出错");
+            helper.setText(R.id.tv_fault_desc, "数据出错");
         }
         if (!TextUtils.isEmpty(item.getQuestionPics())) {                                  //Uri.parse(BuildConfig.OSS_SERVER + item.getAvatarPhoto()
-            ((SimpleDraweeView) helper.getView(R.id.iv_fault_desc)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER +  item.getQuestionPics().split(",")[0]));
-            Log.i("Tpian",item.getQuestionPics().split(",")[0]);
+            GlideUtil.intoImageView(mContext, Uri.parse(BuildConfig.OSS_SERVER + item.getQuestionPics().split(",")[0]), helper.getView(R.id.iv_fault_desc));
+            Log.i("Tpian", item.getQuestionPics().split(",")[0]);
         } else {
-            ((SimpleDraweeView) helper.getView(R.id.iv_fault_desc)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + "online/b033bd249b694c97bcfaa814c97c30cb.png"));
+            GlideUtil.intoImageView(mContext, Uri.parse(BuildConfig.OSS_SERVER + "online/b033bd249b694c97bcfaa814c97c30cb.png"), helper.getView(R.id.iv_fault_desc));
         }
 
 

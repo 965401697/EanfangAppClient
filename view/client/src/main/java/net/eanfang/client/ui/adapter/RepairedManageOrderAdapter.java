@@ -10,10 +10,10 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.NumberUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.ClientOrderOerationEntity;
 import com.yaf.base.entity.RepairOrderEntity;
 
@@ -115,9 +115,9 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
         //将业务类型的图片显示到列表
         String imgUrl = V.v(() -> item.getFailureEntity().getPictures().split(",")[0]);
         if (!StringUtils.isEmpty(imgUrl) && imgUrl.length() > LESS_URL_LENGTH) {
-            ((SimpleDraweeView) helper.getView(R.id.iv_upload)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + imgUrl));
+            GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + imgUrl),helper.getView(R.id.iv_upload));
         } else {
-            ((SimpleDraweeView) helper.getView(R.id.iv_upload)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + ""));
+            GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + ""),helper.getView(R.id.iv_upload));
         }
         helper.addOnClickListener(R.id.tv_do_first);
         helper.addOnClickListener(R.id.tv_do_second);

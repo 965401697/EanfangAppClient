@@ -16,6 +16,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -23,8 +24,8 @@ import com.eanfang.biz.model.RoleBean;
 import com.eanfang.biz.model.TemplateBean;
 import com.eanfang.biz.model.device.User;
 import com.eanfang.ui.activity.SelectOAPresonActivity;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.ToastUtil;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
@@ -43,7 +44,7 @@ import butterknife.OnClick;
 public class PermissionManagerActivity extends BaseClientActivity {
 
     @BindView(R.id.iv_user_header)
-    SimpleDraweeView ivUserHeader;
+    CircleImageView ivUserHeader;
     @BindView(R.id.tv_name_phone)
     TextView tvNamePhone;
     @BindView(R.id.tv_address)
@@ -154,8 +155,7 @@ public class PermissionManagerActivity extends BaseClientActivity {
             EanfangHttp.get(UserApi.POST_USER_INFO + mBean.getId())
                     .execute(new EanfangCallback<User>(this, true, User.class, (b) -> {
 
-
-                        ivUserHeader.setImageURI(BuildConfig.OSS_SERVER + b.getAvatar());
+                        GlideUtil.intoImageView(PermissionManagerActivity.this,BuildConfig.OSS_SERVER + b.getAvatar(),ivUserHeader);
                         tvNamePhone.setText(b.getRealName() + "(" + b.getMobile() + ")");
                         if (!TextUtils.isEmpty(b.getAreaCode())) {
                             tvAddress.setText(Config.get().getAddressByCode(b.getAreaCode()) + b.getAddress());

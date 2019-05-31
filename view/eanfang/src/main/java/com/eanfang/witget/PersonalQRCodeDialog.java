@@ -6,10 +6,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.R;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
+
 
 /**
  * @author Guanluocang
@@ -36,8 +38,8 @@ public class PersonalQRCodeDialog extends Dialog {
     }
 
     private void initView(View view, String path) {
-        SimpleDraweeView mIvPersonalQRCode = view.findViewById(R.id.iv_personalQRCode);
+        ImageView mIvPersonalQRCode = view.findViewById(R.id.iv_personalQRCode);
         // 个人二维码
-        mIvPersonalQRCode.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + path));
+        GlideUtil.intoImageView(context,Uri.parse(BuildConfig.OSS_SERVER + path),mIvPersonalQRCode);
     }
 }

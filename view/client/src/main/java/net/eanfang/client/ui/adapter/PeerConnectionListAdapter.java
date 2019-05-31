@@ -4,6 +4,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.BuildConfig;
 import com.eanfang.biz.model.PeerConnectionDataBean;
 import com.eanfang.biz.model.entity.OrgEntity;
+import com.eanfang.util.GlideUtil;
 
 import net.eanfang.client.ui.adapter.viewholder.PeerConnectionListViewHolder;
 
@@ -26,8 +27,8 @@ public class PeerConnectionListAdapter extends BaseQuickAdapter<PeerConnectionDa
             return;
         }
         helper.mTvConnectionItemName.setText(item.getRealName());
-        helper.mIvConnectionItemHeader.setImageURI(BuildConfig.OSS_SERVER
-                + item.getAvatar());
+        GlideUtil.intoImageView(mContext,BuildConfig.OSS_SERVER
+                + item.getAvatar(),helper.mIvConnectionItemHeader);
         //公司
         OrgEntity orgEntity = item.getOrgEntity();
         if (orgEntity != null) {
