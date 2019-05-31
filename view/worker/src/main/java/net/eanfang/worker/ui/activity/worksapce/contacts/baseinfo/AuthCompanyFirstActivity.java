@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,11 +21,11 @@ import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.jph.takephoto.model.TImage;
 import com.jph.takephoto.model.TResult;
 import com.eanfang.biz.model.entity.OrgUnitEntity;
@@ -68,7 +69,7 @@ public class AuthCompanyFirstActivity extends BaseActivityWithTakePhoto {
     @BindView(R.id.et_detail_office_address)
     EditText etDetailOfficeAddress;
     @BindView(R.id.iv_upload)
-    SimpleDraweeView ivUpload;
+    ImageView ivUpload;
     @BindView(R.id.btn_complete)
     Button btnComplete;
 
@@ -206,7 +207,7 @@ public class AuthCompanyFirstActivity extends BaseActivityWithTakePhoto {
                 tvOfficeAddress.setText(Config.get().getAddressByCode(infoBean.getAreaCode()));
             }
             if (!StringUtils.isEmpty(infoBean.getLicensePic())) {
-                ivUpload.setImageURI(BuildConfig.OSS_SERVER + infoBean.getLicensePic());
+                GlideUtil.intoImageView(this,BuildConfig.OSS_SERVER + infoBean.getLicensePic(),ivUpload);
                 infoBean.setLicensePic(infoBean.getLicensePic());
             }
         }
@@ -230,7 +231,7 @@ public class AuthCompanyFirstActivity extends BaseActivityWithTakePhoto {
 
         if (resultCode == LICENSE_CALLBACK_CODE) {
             infoBean.setLicensePic(imgKey);
-            ivUpload.setImageURI("file://" + image.getOriginalPath());
+            GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),ivUpload);
         }
         OSSUtils.initOSS(this).asyncPutImage(imgKey, image.getOriginalPath(), new OSSCallBack(this, true) {
         });

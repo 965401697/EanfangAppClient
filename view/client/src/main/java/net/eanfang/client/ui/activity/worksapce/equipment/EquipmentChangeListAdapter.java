@@ -6,7 +6,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.util.GetDateUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 import com.yaf.base.entity.CustDeviceChangeLogEntity;
 
 import net.eanfang.client.R;
@@ -25,8 +25,7 @@ public class EquipmentChangeListAdapter extends BaseQuickAdapter<CustDeviceChang
     @Override
     protected void convert(BaseViewHolder helper, CustDeviceChangeLogEntity item) {
 
-
-        ((SimpleDraweeView) helper.getView(R.id.iv_equipment_pic)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getLocationPictures().split(",")[0]));
+        GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + item.getLocationPictures().split(",")[0]), helper.getView(R.id.iv_equipment_pic));
 
         helper.setText(R.id.tv_company_person_name, item.getRepairCompany() + "        " + item.getRepairUser());
 

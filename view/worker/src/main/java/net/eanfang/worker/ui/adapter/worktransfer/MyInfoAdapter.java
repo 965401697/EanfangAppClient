@@ -1,13 +1,14 @@
 package net.eanfang.worker.ui.adapter.worktransfer;
 
+import android.widget.ImageView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.config.Config;
 import com.eanfang.biz.model.MainHistoryBean;
 import com.eanfang.util.GetConstDataUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
-
+import com.eanfang.util.GlideUtil;
 import net.eanfang.worker.R;
 
 
@@ -17,7 +18,7 @@ import net.eanfang.worker.R;
  */
 
 public class MyInfoAdapter extends BaseQuickAdapter<MainHistoryBean.ListBean, BaseViewHolder> {
-    private SimpleDraweeView sdv_pic;
+    private ImageView sdv_pic;
 
     public MyInfoAdapter() {
         super(R.layout.item_main_list);
@@ -33,7 +34,7 @@ public class MyInfoAdapter extends BaseQuickAdapter<MainHistoryBean.ListBean, Ba
         sdv_pic = helper.getView(R.id.sdv_pic);
         if (item.getMaintainDetail().getPictures() != null) {
             String[] urls = item.getMaintainDetail().getPictures().split(",");
-            sdv_pic.setImageURI(BuildConfig.OSS_SERVER + urls[0]);
+            GlideUtil.intoImageView(mContext,BuildConfig.OSS_SERVER + urls[0],sdv_pic);
         }
     }
 }

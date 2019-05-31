@@ -1,13 +1,14 @@
 package net.eanfang.client.ui.adapter;
 
 import android.net.Uri;
+import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.config.Config;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.StringUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.RepairBugEntity;
 
 import net.eanfang.client.R;
@@ -39,10 +40,10 @@ public class RepairOrderConfirmAdapter extends BaseQuickAdapter<RepairBugEntity,
                 .setText(R.id.tv_deviceStatus, "")
                 .setText(R.id.tv_devicesHistory, "")
                 .setText(R.id.tv_desc, item.getBugDescription() != null ? item.getBugDescription() : "");
-        SimpleDraweeView draweeView = helper.getView(R.id.iv_pic);
+        ImageView draweeView = helper.getView(R.id.iv_pic);
         if (!StringUtils.isEmpty(item.getPictures())) {
 //            Log.e("fresco", item.getPictures());
-            draweeView.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(item.getPictures().split(",")[0]));
+            GlideUtil.intoImageView(mContext,BuildConfig.OSS_SERVER + Uri.parse(item.getPictures().split(",")[0]),draweeView);
             helper.addOnClickListener(R.id.ll_item);
         }
         helper.addOnClickListener(R.id.iv_pic);

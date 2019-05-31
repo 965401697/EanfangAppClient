@@ -1,10 +1,12 @@
 package net.eanfang.worker.ui.adapter;
 
+import android.net.Uri;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.biz.model.TemplateBean;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 
 import net.eanfang.worker.R;
 
@@ -20,9 +22,9 @@ public class SendPersonAdapter extends BaseQuickAdapter<TemplateBean.Preson, Bas
     @Override
     protected void convert(BaseViewHolder helper, TemplateBean.Preson item) {
         if (item.getProtraivat().contains("http")) {
-            ((SimpleDraweeView) helper.getView(R.id.iv_user_header)).setImageURI(item.getProtraivat());
+            GlideUtil.intoImageView(mContext, item.getProtraivat(),helper.getView(R.id.iv_user_header));
         } else {
-            ((SimpleDraweeView) helper.getView(R.id.iv_user_header)).setImageURI(BuildConfig.OSS_SERVER + item.getProtraivat());
+            GlideUtil.intoImageView(mContext,BuildConfig.OSS_SERVER + item.getProtraivat(),helper.getView(R.id.iv_user_header));
         }
         helper.setText(R.id.tv_name, item.getName());
     }

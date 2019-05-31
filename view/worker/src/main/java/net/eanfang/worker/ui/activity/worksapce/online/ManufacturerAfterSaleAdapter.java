@@ -5,8 +5,9 @@ import android.net.Uri;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.facebook.drawee.view.SimpleDraweeView;
+
 import com.eanfang.biz.model.entity.BaseDataEntity;
+import com.eanfang.util.GlideUtil;
 
 import net.eanfang.worker.R;
 
@@ -23,7 +24,7 @@ public class ManufacturerAfterSaleAdapter extends BaseQuickAdapter<BaseDataEntit
 
     @Override
     protected void convert(BaseViewHolder helper, BaseDataEntity item) {
-        ((SimpleDraweeView) helper.getView(R.id.im_manufacturer_pic)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getRemarkInfo()));
+        GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + item.getRemarkInfo()),helper.getView(R.id.im_manufacturer_pic));
         //helper.setText(R.id.name_T,item.getDataName());
 
     }

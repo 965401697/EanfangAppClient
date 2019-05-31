@@ -34,7 +34,7 @@
             android:layout_height="@dimen/dimen_170"
             android:layout_below="@+id/tv_date"
             android:layout_marginLeft="@dimen/dimen_36"
-            fresco:placeholderImage="@mipmap/ic_nodata" />
+            android:src="@mipmap/ic_nodata" />
 
 
         <ImageView

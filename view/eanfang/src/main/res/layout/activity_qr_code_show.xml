@@ -47,13 +47,13 @@
                 android:orientation="vertical"
                 android:paddingTop="@dimen/dimen_30">
 
-                <com.facebook.drawee.view.SimpleDraweeView
+                <ImageView
                     android:id="@+id/iv_qrcode"
                     android:layout_width="@dimen/dimen_400"
                     android:layout_height="@dimen/dimen_400"
                     android:layout_centerInParent="true"
                     android:layout_gravity="center_horizontal"
-                    app:placeholderImage="@drawable/bga_pp_ic_holder_dark" />
+                    android:src="@drawable/bga_pp_ic_holder_dark" />
 
                 <TextView
                     android:id="@+id/lj_tv"

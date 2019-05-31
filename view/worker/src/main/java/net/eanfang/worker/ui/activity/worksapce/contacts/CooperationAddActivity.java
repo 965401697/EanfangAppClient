@@ -13,6 +13,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.biz.model.CooperationSearchBean;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
@@ -21,9 +22,9 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.CooperationEntity;
 import com.eanfang.biz.model.entity.BaseDataEntity;
 
@@ -45,13 +46,13 @@ import butterknife.OnClick;
 public class CooperationAddActivity extends BaseWorkerActivity implements SelectTimeDialogFragment.SelectTimeListener {
 
     @BindView(R.id.iv_company_logo)
-    SimpleDraweeView ivCompanyLogo;
+    CircleImageView ivCompanyLogo;
     @BindView(R.id.tv_company_name)
     TextView tvCompanyName;
     @BindView(R.id.tv_address)
     TextView tvAddress;
     @BindView(R.id.iv_user_header)
-    SimpleDraweeView ivUserHeader;
+    CircleImageView ivUserHeader;
     @BindView(R.id.tv_name)
     TextView tvName;
     @BindView(R.id.tv_phone)
@@ -94,16 +95,14 @@ public class CooperationAddActivity extends BaseWorkerActivity implements Select
     }
 
     private void initViews() {
-
-        ivCompanyLogo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + mBean.getCompanyEntity().getLogoPic()));
+        GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + mBean.getCompanyEntity().getLogoPic()),ivCompanyLogo);
         tvCompanyName.setText(TextUtils.isEmpty(mBean.getCompanyEntity().getName()) ? "" : mBean.getCompanyEntity().getName());
         if (!TextUtils.isEmpty(mBean.getCompanyEntity().getAreaCode())) {
             tvAddress.setText(Config.get().getAddressByCode(mBean.getCompanyEntity().getAreaCode()) + mBean.getCompanyEntity().getOfficeAddress());
         } else {
             tvAddress.setText("");
         }
-
-        ivUserHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + mBean.getAccountEntity().getAvatar()));
+        GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + mBean.getAccountEntity().getAvatar()),ivUserHeader);
         tvName.setText(TextUtils.isEmpty(mBean.getAccountEntity().getRealName()) ? "" : mBean.getAccountEntity().getRealName());
         tvPhone.setText(TextUtils.isEmpty(mBean.getAccountEntity().getMobile()) ? "" : mBean.getAccountEntity().getMobile());
 

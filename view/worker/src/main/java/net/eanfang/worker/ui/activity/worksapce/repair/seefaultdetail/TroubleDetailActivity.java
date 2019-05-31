@@ -1,6 +1,7 @@
 package net.eanfang.worker.ui.activity.worksapce.repair.seefaultdetail;
 
 import android.content.Intent;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.core.content.ContextCompat;
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -25,9 +27,9 @@ import com.eanfang.biz.model.TemplateBean;
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
@@ -90,7 +92,7 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
     @BindView(R.id.snpl_moment_add_photos)
     BGASortableNinePhotoLayout snplMomentAddPhotos;
     @BindView(R.id.iv_thumbnail_moment)
-    SimpleDraweeView ivThumbnailMoment;
+    ImageView ivThumbnailMoment;
     @BindView(R.id.rl_thumbnail_moment)
     RelativeLayout rlThumbnailMoment;
 
@@ -100,7 +102,7 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
     @BindView(R.id.snpl_monitor_add_photos)
     BGASortableNinePhotoLayout snplMonitorAddPhotos;
     @BindView(R.id.iv_thumbnail_monitor)
-    SimpleDraweeView ivThumbnailMonitor;
+    ImageView ivThumbnailMonitor;
     @BindView(R.id.rl_thumbnail_monitor)
     RelativeLayout rlThumbnailMonitor;
 
@@ -110,7 +112,7 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
     @BindView(R.id.snpl_tools_package_add_photos)
     BGASortableNinePhotoLayout snplToolsPackageAddPhotos;
     @BindView(R.id.iv_thumbnail_tools_package)
-    SimpleDraweeView ivThumbnailToolsPackage;
+    ImageView ivThumbnailToolsPackage;
     @BindView(R.id.rl_thumbnail_tools_package)
     RelativeLayout rlThumbnailToolsPackage;
     /**
@@ -124,7 +126,7 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
      * 转单
      */
     @BindView(R.id.iv_header)
-    SimpleDraweeView ivHeader;
+    ImageView ivHeader;
     @BindView(R.id.tv_order_num)
     TextView tvOrderNum;
     @BindView(R.id.tv_order_time)
@@ -314,7 +316,7 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
          * */
         if (!StringUtils.isEmpty(bughandleConfirmEntity.getFront_mp4_path())) {
             rlThumbnailMoment.setVisibility(View.VISIBLE);
-            ivThumbnailMoment.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bughandleConfirmEntity.getFront_mp4_path() + ".jpg"));
+            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + bughandleConfirmEntity.getFront_mp4_path() + ".jpg"),ivThumbnailMoment);
             if (!StringUtils.isValid(bughandleConfirmEntity.getFrontPictures())) {
                 snplMomentAddPhotos.setVisibility(View.GONE);
             }
@@ -335,7 +337,7 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
             if (!StringUtils.isValid(bughandleConfirmEntity.getReverseSidePictures())) {
                 snplMonitorAddPhotos.setVisibility(View.GONE);
             }
-            ivThumbnailMonitor.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bughandleConfirmEntity.getReverse_side_mp4_path() + ".jpg"));
+            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + bughandleConfirmEntity.getReverse_side_mp4_path() + ".jpg"),ivThumbnailMonitor);
         } else {
             rlThumbnailMonitor.setVisibility(View.GONE);
         }
@@ -350,7 +352,7 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
          * */
         if (!StringUtils.isEmpty(bughandleConfirmEntity.getEquipment_cabinet_mp4_path())) {
             rlThumbnailToolsPackage.setVisibility(View.VISIBLE);
-            ivThumbnailToolsPackage.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bughandleConfirmEntity.getEquipment_cabinet_mp4_path() + ".jpg"));
+            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + bughandleConfirmEntity.getEquipment_cabinet_mp4_path() + ".jpg"),ivThumbnailToolsPackage);
             if (!StringUtils.isValid(bughandleConfirmEntity.getEquipmentCabinetPictures())) {
                 snplToolsPackageAddPhotos.setVisibility(View.GONE);
             }
@@ -436,7 +438,7 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
         }
         llHang.setVisibility(View.VISIBLE);
         tvNoHistory.setVisibility(View.GONE);
-        ivHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + transferLogEntity.getOriginalUserEntity().getAccountEntity().getAvatar()));
+        GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + transferLogEntity.getOriginalUserEntity().getAccountEntity().getAvatar()),ivHeader);
         tvOrderNum.setText(transferLogEntity.getOrderNum() + "");
         tvOrderTime.setText(GetDateUtils.dateToDateTimeString(transferLogEntity.getCreateTime()));
         tvOrderReason.setText(GetConstDataUtils.getTransferCauseList().get(transferLogEntity.getCause()));

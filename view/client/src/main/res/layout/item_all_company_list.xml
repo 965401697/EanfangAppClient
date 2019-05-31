@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/iv_company"
             android:layout_width="@dimen/dimen_60"
             android:layout_height="@dimen/dimen_60"
@@ -18,7 +18,7 @@
             android:layout_marginLeft="@dimen/dimen_90"
             android:layout_marginTop="@dimen/dimen_20"
             android:layout_marginBottom="@dimen/dimen_20"
-            fresco:placeholderImage="@mipmap/ic_nodata" />
+            android:src="@mipmap/ic_nodata" />
 
         <TextView
             android:id="@+id/tv_company_name"

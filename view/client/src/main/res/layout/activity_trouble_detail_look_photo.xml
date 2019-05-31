@@ -76,7 +76,7 @@
                             android:visibility="gone">
 
 
-                            <com.facebook.drawee.view.SimpleDraweeView
+                            <ImageView
                                 android:id="@+id/iv_thumbnail_moment"
                                 android:layout_width="@dimen/dimen_150"
                                 android:layout_height="@dimen/dimen_150"
@@ -151,7 +151,7 @@
                             android:visibility="gone">
 
 
-                            <com.facebook.drawee.view.SimpleDraweeView
+                            <ImageView
                                 android:id="@+id/iv_thumbnail_monitor"
                                 android:layout_width="@dimen/dimen_150"
                                 android:layout_height="@dimen/dimen_150"
@@ -225,7 +225,7 @@
                             android:visibility="gone">
 
 
-                            <com.facebook.drawee.view.SimpleDraweeView
+                            <ImageView
                                 android:id="@+id/iv_thumbnail_tools_package"
                                 android:layout_width="@dimen/dimen_150"
                                 android:layout_height="@dimen/dimen_150"
@@ -299,7 +299,7 @@
                             android:visibility="gone">
 
 
-                            <com.facebook.drawee.view.SimpleDraweeView
+                            <ImageView
                                 android:id="@+id/iv_thumbnail_after"
                                 android:layout_width="@dimen/dimen_150"
                                 android:layout_height="@dimen/dimen_150"
@@ -373,7 +373,7 @@
                             android:visibility="gone">
 
 
-                            <com.facebook.drawee.view.SimpleDraweeView
+                            <ImageView
                                 android:id="@+id/iv_thumbnail_machine"
                                 android:layout_width="@dimen/dimen_150"
                                 android:layout_height="@dimen/dimen_150"
@@ -447,7 +447,7 @@
                             android:visibility="gone">
 
 
-                            <com.facebook.drawee.view.SimpleDraweeView
+                            <ImageView
                                 android:id="@+id/iv_thumbnail_failure"
                                 android:layout_width="@dimen/dimen_150"
                                 android:layout_height="@dimen/dimen_150"

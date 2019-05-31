@@ -87,7 +87,7 @@ public class SelectOAGroupActivity extends BaseClientActivity {
     }
 
     private void initViews() {
-        selectOAGroupAdapter = new SelectOAGroupAdapter(R.layout.item_select_oa_group);
+        selectOAGroupAdapter = new SelectOAGroupAdapter(this,R.layout.item_select_oa_group);
         selectOAGroupAdapter.bindToRecyclerView(recyclerView);
         selectOAGroupAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override

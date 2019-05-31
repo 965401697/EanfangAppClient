@@ -18,14 +18,15 @@ import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.UserHomePageBean;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.witget.DefaultPopWindow;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
@@ -60,7 +61,7 @@ public class UserHomeActivity extends BaseWorkerActivity {
     @BindView(R.id.iv_right)
     ImageView mIvRight;
     @BindView(R.id.img_user_header)
-    SimpleDraweeView mImgUserHeader;
+    CircleImageView mImgUserHeader;
     @BindView(R.id.tv_nickname)
     TextView mTvNickname;
     @BindView(R.id.tv_userInfo)
@@ -282,7 +283,7 @@ public class UserHomeActivity extends BaseWorkerActivity {
                     if (accountBean != null) {
                         mUserInfo = new UserInfo(accountBean.getAccId(),
                                 accountBean.getNickName(), Uri.parse(BuildConfig.OSS_SERVER + accountBean.getAvatar()));
-                        mImgUserHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + accountBean.getAvatar()));
+                        GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + accountBean.getAvatar()),mImgUserHeader);
                         mTvNickname.setText(accountBean.getNickName());
                         mTvNickname.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
                         if (!StringUtils.isEmpty(accountBean.getRealName())) {

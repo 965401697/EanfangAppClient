@@ -10,13 +10,15 @@ import android.text.SpannableString;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.takevideo.PlayVideoActivity;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 
 import io.rong.imkit.model.ProviderTag;
 import io.rong.imkit.model.UIMessage;
@@ -30,15 +32,13 @@ public class CustomizeVideoMessageItemProvider extends IContainerItemProvider.Me
 
     class ViewHolder {
         RelativeLayout rlPlay;
-        SimpleDraweeView ivVedio;
+        ImageView ivVedio;
     }
 
     @Override
     public void bindView(View view, int i, CustomizeVideoMessage customizeVedioMessage, UIMessage uiMessage) {
         ViewHolder holder = (ViewHolder) view.getTag();
-
-        holder.ivVedio.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + customizeVedioMessage.getImgUrl()));
-
+        GlideUtil.intoImageView(ClientApplication.get().getApplicationContext(),Uri.parse(BuildConfig.OSS_SERVER + customizeVedioMessage.getImgUrl()),holder.ivVedio);
     }
 
     @Override

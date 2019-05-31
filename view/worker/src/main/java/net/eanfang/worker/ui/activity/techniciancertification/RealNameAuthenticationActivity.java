@@ -32,7 +32,6 @@ import com.eanfang.util.GlideUtil;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.jph.takephoto.model.TImage;
 import com.jph.takephoto.model.TResult;
 import com.yaf.base.entity.TechWorkerVerifyEntity;

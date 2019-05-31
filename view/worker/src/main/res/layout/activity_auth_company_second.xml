@@ -200,12 +200,12 @@
 
                 <View style="@style/style_common_line_gray" />
 
-                <com.facebook.drawee.view.SimpleDraweeView
+                <ImageView
                     android:id="@+id/iv_upload2"
                     android:layout_width="@dimen/dimen_200"
                     android:layout_height="@dimen/dimen_200"
                     android:layout_margin="@dimen/dimen_30"
-                    fresco:placeholderImage="@mipmap/bga_pp_ic_plus" />
+                    android:src="@mipmap/bga_pp_ic_plus" />
 
             </LinearLayout>
 

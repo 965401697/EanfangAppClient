@@ -25,15 +25,15 @@
                 android:background="@color/white"
                 android:paddingBottom="@dimen/dimen_20">
 
-                <com.facebook.drawee.view.SimpleDraweeView
+                <com.eanfang.base.widget.customview.CircleImageView
                     android:id="@+id/iv_header"
                     android:layout_width="@dimen/dimen_100"
                     android:layout_height="@dimen/dimen_100"
                     android:layout_marginLeft="@dimen/dimen_36"
                     android:layout_marginTop="@dimen/dimen_40"
                     android:layout_toRightOf="@+id/cb_checked"
-                    fresco:placeholderImage="@mipmap/ic_header"
-                    fresco:roundAsCircle="true" />
+                    android:src="@mipmap/ic_header"
+                     />
 
                 <TextView
                     android:id="@+id/tv_company"
@@ -260,28 +260,28 @@
                         android:layout_height="60dp"
                         android:orientation="horizontal">
 
-                        <com.facebook.drawee.view.SimpleDraweeView
+                        <ImageView
                             android:id="@+id/iv_pic1"
                             android:layout_width="60dp"
                             android:layout_height="match_parent"
                             android:layout_margin="5dp"
-                            fresco:placeholderImage="@mipmap/no_img" />
+                            android:src="@mipmap/no_img" />
 
-                        <com.facebook.drawee.view.SimpleDraweeView
+                        <ImageView
                             android:id="@+id/iv_pic2"
                             android:layout_width="60dp"
                             android:layout_height="match_parent"
                             android:layout_margin="5dp"
                             android:visibility="gone"
-                            fresco:placeholderImage="@mipmap/no_img" />
+                            android:src="@mipmap/no_img" />
 
-                        <com.facebook.drawee.view.SimpleDraweeView
+                        <ImageView
                             android:id="@+id/iv_pic3"
                             android:layout_width="60dp"
                             android:layout_height="match_parent"
                             android:layout_margin="10dp"
                             android:visibility="gone"
-                            fresco:placeholderImage="@mipmap/no_img" />
+                            android:src="@mipmap/no_img" />
                     </LinearLayout>
 
                     <TextView
@@ -298,7 +298,7 @@
                         android:layout_marginTop="@dimen/dimen_20"
                         android:visibility="visible">
 
-                        <com.facebook.drawee.view.SimpleDraweeView
+                        <ImageView
                             android:id="@+id/iv_takevideo_work"
                             android:layout_width="@dimen/dimen_120"
                             android:layout_height="@dimen/dimen_120" />

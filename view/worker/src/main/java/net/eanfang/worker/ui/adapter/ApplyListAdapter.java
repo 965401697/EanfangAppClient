@@ -1,14 +1,15 @@
 package net.eanfang.worker.ui.adapter;
 
 import android.net.Uri;
+import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.biz.model.ApplyTaskListBean;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.StringUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
 
@@ -36,10 +37,10 @@ public class ApplyListAdapter extends BaseQuickAdapter<ApplyTaskListBean.ListBea
         helper.setText(R.id.tv_apply_phone, item.getApplyConstactsPhone());
         helper.setText(R.id.tv_count_money, item.getProjectQuote() + "");
 
-        SimpleDraweeView sdv_pic = helper.getView(R.id.sdv_pic);
+        ImageView sdv_pic = helper.getView(R.id.sdv_pic);
         if (!StringUtils.isEmpty(item.getPictures())) {
             String[] urls = item.getPictures().split(",");
-            sdv_pic.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[0]));
+            GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + urls[0]),sdv_pic);
         }
         switch (item.getStatus()) {
             case 0:

@@ -7,12 +7,12 @@
     android:orientation="horizontal"
     android:padding="10dp">
 
-    <com.facebook.drawee.view.SimpleDraweeView
+    <ImageView
         android:id="@+id/iv_header"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_gravity="center_vertical"
-        fresco:placeholderImage="@mipmap/camera" />
+        android:src="@mipmap/camera" />
 
     <LinearLayout
         android:layout_width="match_parent"

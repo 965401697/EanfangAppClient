@@ -470,7 +470,7 @@
                         android:visibility="gone">
 
 
-                        <com.facebook.drawee.view.SimpleDraweeView
+                        <ImageView
                             android:id="@+id/iv_takevideo"
                             android:layout_width="@dimen/dimen_150"
                             android:layout_height="@dimen/dimen_150"

@@ -27,13 +27,13 @@
                 android:background="@color/white"
                 android:padding="@dimen/dimen_20">
 
-                <com.facebook.drawee.view.SimpleDraweeView
+                <com.eanfang.base.widget.customview.CircleImageView
                     android:id="@+id/gs_log_sdv"
                     android:layout_width="@dimen/dimen_100"
                     android:layout_height="@dimen/dimen_100"
                     android:layout_marginRight="@dimen/dimen_20"
-                    app:placeholderImage="@mipmap/ic_launcher"
-                    app:roundAsCircle="true" />
+                    android:src="@mipmap/ic_launcher"
+                    />
 
                 <ImageView
                     android:id="@+id/gs_xq_iv"

@@ -1,5 +1,6 @@
 package net.eanfang.client.ui.adapter;
 
+import android.content.Context;
 import android.net.Uri;
 import android.view.View;
 import android.widget.ImageView;
@@ -7,8 +8,9 @@ import android.widget.LinearLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.biz.model.entity.OrgEntity;
+import com.eanfang.util.GlideUtil;
 
 import net.eanfang.client.R;
 
@@ -19,10 +21,11 @@ import net.eanfang.client.R;
  */
 
 public class ParentAdapter extends BaseQuickAdapter<OrgEntity, BaseViewHolder> {
+    private Context context;
 
-    public ParentAdapter() {
+    public ParentAdapter(Context context) {
         super(R.layout.item_group_adapter);
-
+        this.context = context;
     }
 
     @Override
@@ -32,7 +35,7 @@ public class ParentAdapter extends BaseQuickAdapter<OrgEntity, BaseViewHolder> {
         // 认证图标
         ImageView ivVerify = helper.getView(R.id.iv_verify);
         // 公司头像
-        SimpleDraweeView ivCompanyHead = helper.getView(R.id.iv_company_logo);
+        CircleImageView ivCompanyHead = helper.getView(R.id.iv_company_logo);
 
         LinearLayout ll_show = helper.getView(R.id.ll_show);
         helper.addOnClickListener(R.id.ll_org);
@@ -47,9 +50,9 @@ public class ParentAdapter extends BaseQuickAdapter<OrgEntity, BaseViewHolder> {
 
 
         if (item.getOrgUnitEntity() != null && item.getOrgUnitEntity().getLogoPic() != null) {
-            ivCompanyHead.setImageURI(Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + item.getOrgUnitEntity().getLogoPic()));
+            GlideUtil.intoImageView(context, Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + item.getOrgUnitEntity().getLogoPic()), ivCompanyHead);
         } else {
-            ivCompanyHead.setImageURI(Uri.parse(""));
+            GlideUtil.intoImageView(context, Uri.parse(""), ivCompanyHead);
         }
         if (item.getVerifyStatus() == 0) {
             helper.setText(R.id.tv_auth_status, "未认证");

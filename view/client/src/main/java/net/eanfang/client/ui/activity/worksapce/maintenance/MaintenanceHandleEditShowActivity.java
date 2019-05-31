@@ -6,12 +6,13 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 import com.yaf.base.entity.ShopMaintenanceExamDeviceEntity;
 
 import net.eanfang.client.R;
@@ -26,7 +27,7 @@ public class MaintenanceHandleEditShowActivity extends BaseClientActivity {
     @BindView(R.id.tv_os_name)
     TextView tvOsName;
     @BindView(R.id.iv_upload)
-    SimpleDraweeView ivUpload;
+    ImageView ivUpload;
     @BindView(R.id.tv_location_num)
     TextView tvLocationNum;
     @BindView(R.id.tv_position_location)
@@ -64,7 +65,7 @@ public class MaintenanceHandleEditShowActivity extends BaseClientActivity {
     private void initViews() {
         tvOsName.setText(Config.get().getBaseNameByCode(Constant.SYS_TYPE, examDeviceEntity.getBusinessThreeCode(), 3));
         if (!TextUtils.isEmpty(examDeviceEntity.getPicture())) {
-            ivUpload.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + examDeviceEntity.getPicture().split(",")[0]));
+            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + examDeviceEntity.getPicture().split(",")[0]),ivUpload);
         }
         tvLocationNum.setText("位置编号    " + examDeviceEntity.getLocationNumber());
         tvPositionLocation.setText("安装位置    " + examDeviceEntity.getLocation());

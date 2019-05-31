@@ -48,13 +48,13 @@
         android:layout_marginTop="@dimen/dimen_8"
         android:orientation="horizontal">
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/iv_upload"
             android:layout_width="45dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/dimen_20"
             android:visibility="visible"
-            fresco:placeholderImage="@mipmap/ic_nodata" />
+            android:src="@mipmap/ic_nodata" />
 
         <LinearLayout
             android:layout_width="match_parent"

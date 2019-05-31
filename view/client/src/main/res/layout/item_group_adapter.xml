@@ -11,15 +11,15 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_100">
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <com.eanfang.base.widget.customview.CircleImageView
             android:id="@+id/iv_company_logo"
             android:layout_width="@dimen/dimen_70"
             android:layout_height="@dimen/dimen_70"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dimen_36"
-            fresco:placeholderImage="@drawable/contend_ic_thenameofthecompany_default"
-            fresco:roundAsCircle="true" />
+            android:src="@drawable/contend_ic_thenameofthecompany_default"
+            />
 
         <RelativeLayout
             android:layout_width="wrap_content"

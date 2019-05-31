@@ -20,7 +20,7 @@
         android:textSize="@dimen/textSize_16" />
 
 
-    <com.facebook.drawee.view.SimpleDraweeView
+    <ImageView
         android:id="@+id/iv_pic"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_260"
@@ -28,7 +28,7 @@
         android:layout_marginTop="@dimen/dimen_20"
         android:focusable="false"
         android:scaleType="fitXY"
-        fresco:placeholderImage="@mipmap/ic_nodata" />
+        android:src="@mipmap/ic_nodata" />
 
 
     <TextView

@@ -13,13 +13,14 @@ import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.V;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.ShopMaintenanceOrderEntity;
 
 import net.eanfang.worker.R;
@@ -37,7 +38,7 @@ import butterknife.OnClick;
 public class MaintenanceOrderDetailFragment extends BaseFragment {
 
     @BindView(R.id.iv_report_header)
-    SimpleDraweeView ivReportHeader;
+    CircleImageView ivReportHeader;
     @BindView(R.id.tv_name)
     TextView tvName;
     @BindView(R.id.tv_company_name)
@@ -146,7 +147,7 @@ public class MaintenanceOrderDetailFragment extends BaseFragment {
     }
 
     private void initViews() {
-        ivReportHeader.setImageURI(BuildConfig.OSS_SERVER + orderEntity.getOwnerUserEntity().getAccountEntity().getAvatar());
+        GlideUtil.intoImageView(getActivity(),BuildConfig.OSS_SERVER + orderEntity.getOwnerUserEntity().getAccountEntity().getAvatar(),ivReportHeader);
         if (orderEntity.getOwnerUserEntity().getAccountEntity().getGender() != null) {
             tvName.setText(orderEntity.getOwnerUserEntity().getAccountEntity().getRealName() + "(" + (orderEntity.getOwnerUserEntity().getAccountEntity().getGender() == 1 ? "男" : "女") + ")");
         } else {

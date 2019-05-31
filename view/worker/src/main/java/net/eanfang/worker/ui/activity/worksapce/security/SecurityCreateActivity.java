@@ -9,6 +9,7 @@ import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
@@ -30,7 +31,6 @@ import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.witget.TakeVideoPopWindow;
 import com.eanfang.witget.mentionedittext.edit.MentionEditText;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
@@ -66,7 +66,7 @@ public class SecurityCreateActivity extends BaseActivity {
     @BindView(R.id.et_content)
     MentionEditText etContent;
     @BindView(R.id.iv_show_video)
-    SimpleDraweeView ivShowVideo;
+    ImageView ivShowVideo;
     @BindView(R.id.rl_video)
     RelativeLayout rlVideo;
 

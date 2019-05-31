@@ -13,7 +13,7 @@
         android:layout_height="@dimen/dimen_20" />
 
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/dimen_20"
@@ -26,13 +26,13 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/dimen_20">
 
-            <com.facebook.drawee.view.SimpleDraweeView
+            <com.eanfang.base.widget.customview.CircleImageView
                 android:id="@+id/gs_log_sdv"
                 android:layout_width="53dp"
                 android:layout_height="53dp"
                 android:layout_marginRight="@dimen/dimen_20"
-                app:placeholderImage="@mipmap/ic_launcher"
-                app:roundAsCircle="true" />
+                android:src="@mipmap/ic_launcher"
+                 />
 
             <TextView
                 android:id="@+id/gs_name_tv"
@@ -120,7 +120,7 @@
                 android:visibility="gone" />
         </RelativeLayout>
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
     <Space
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_20" />

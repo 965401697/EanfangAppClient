@@ -3,8 +3,10 @@ package net.eanfang.worker.ui.activity.worksapce.oa.task;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -13,11 +15,13 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.WorkTaskInfoBean;
 import com.eanfang.util.GetDateUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
+
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.im.SelectIMContactActivity;
@@ -29,7 +33,7 @@ import butterknife.ButterKnife;
 public class TaskDetailActivity extends BaseWorkerActivity {
 
     @BindView(R.id.iv_header)
-    SimpleDraweeView ivHeader;
+    CircleImageView ivHeader;
     @BindView(R.id.tv_company)
     TextView tvCompany;
     @BindView(R.id.tv_section)
@@ -99,7 +103,7 @@ public class TaskDetailActivity extends BaseWorkerActivity {
                 .execute(new EanfangCallback<WorkTaskInfoBean>(this, true, WorkTaskInfoBean.class, (bean) -> {
                             mBean = bean;
                             //头像
-                            ivHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bean.getCreateUser().getAccountEntity().getAvatar()));
+                            GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + bean.getCreateUser().getAccountEntity().getAvatar()), ivHeader);
                             tvCompany.setText(bean.getCreateCompany().getOrgName());
                             tvSection.setText(bean.getCreateOrg().getOrgName());
                             tvDate.setText(bean.getCreateTime());

@@ -5,7 +5,7 @@ import android.net.Uri;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 
 import net.eanfang.worker.R;
 
@@ -21,7 +21,7 @@ public class ReplyListAdapter extends BaseQuickAdapter<MyReplyListBean.ReplyList
 
     @Override
     protected void convert(BaseViewHolder helper, MyReplyListBean.ReplyListBean item) {
-        ((SimpleDraweeView) helper.getView(R.id.iv_user_header)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER +item.getReplyUser().getAvatar()));
+        GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER +item.getReplyUser().getAvatar()), helper.getView(R.id.iv_user_header));
         helper.setText(R.id.tv_user_name, item.getReplyUser().getNickName());
         helper.setText(R.id.tv_user_appraise, item.getReplyContent());
         helper.setVisible(R.id.tv_appraise_status,false);

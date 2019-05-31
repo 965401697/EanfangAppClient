@@ -6,10 +6,11 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.biz.model.WorkReportListBean;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.StringUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
 
@@ -59,12 +60,12 @@ public class WorkReportListAdapter extends BaseQuickAdapter<WorkReportListBean.L
 //        } else {
 //            helper.getView(R.id.tv_read_ns).setVisibility(View.INVISIBLE);
 //        }
-        SimpleDraweeView head_pic = helper.getView(R.id.img_head);
+        CircleImageView head_pic = helper.getView(R.id.img_head);
         if (!StringUtils.isEmpty(item.getWorkReportDetail().getPictures())) {
             String[] urls = item.getWorkReportDetail().getPictures().split(",");
-            head_pic.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[0]));
+            GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + urls[0]),head_pic);
         } else {
-            head_pic.setImageURI(Uri.parse(BuildConfig.OSS_SERVER));//默认值
+            GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER ),head_pic);//默认值
         }
 
     }

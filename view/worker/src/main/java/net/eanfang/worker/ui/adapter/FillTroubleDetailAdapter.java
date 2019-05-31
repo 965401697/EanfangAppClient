@@ -1,13 +1,14 @@
 package net.eanfang.worker.ui.adapter;
 
 import android.net.Uri;
+import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.config.Config;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.StringUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.BughandleDetailEntity;
 
 import net.eanfang.worker.R;
@@ -45,10 +46,10 @@ public class FillTroubleDetailAdapter extends BaseQuickAdapter<BughandleDetailEn
             helper.setVisible(R.id.tv_waitFinish, false);
             helper.setVisible(R.id.tv_finish, true);
         }
-        SimpleDraweeView draweeView = helper.getView(R.id.iv_pic);
+        ImageView draweeView = helper.getView(R.id.iv_pic);
         if (!StringUtils.isEmpty(item.getFailureEntity().getPictures())) {
             String[] urls = item.getFailureEntity().getPictures().split(",");
-            draweeView.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[0]));
+            GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + urls[0]),draweeView);
             helper.addOnClickListener(R.id.ll_item);
         } else {
             draweeView.setImageResource(R.mipmap.ic_nodata);

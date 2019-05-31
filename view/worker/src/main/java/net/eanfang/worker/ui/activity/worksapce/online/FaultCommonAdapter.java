@@ -5,7 +5,7 @@ import android.net.Uri;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 import com.yaf.base.entity.AnswerListWithQuestionBean;
 
 import net.eanfang.worker.R;
@@ -32,7 +32,7 @@ public class FaultCommonAdapter extends BaseQuickAdapter<AnswerListWithQuestionB
     @Override
     protected void convert(BaseViewHolder helper, AnswerListWithQuestionBean.CommonAnswersBean item) {
         //头像
-        ((SimpleDraweeView) helper.getView(R.id.iv_expert_header)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER +item.getAccountEntity().getAvatar()));
+        GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER +item.getAccountEntity().getAvatar()),helper.getView(R.id.iv_expert_header));
         //名字
         helper.setText(R.id.tv_expert_name,item.getAccountEntity().getNickName());
         //时间

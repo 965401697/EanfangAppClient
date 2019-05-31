@@ -3,14 +3,15 @@ package net.eanfang.worker.ui.activity.worksapce;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.biz.model.EvaluateBean;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.V;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
 
@@ -34,7 +35,7 @@ public class EvaluateShowActivity extends BaseActivity {
     @BindView(R.id.rb_star3)
     MaterialRatingBar rbStar3;
     @BindView(R.id.sdv_workerHead)
-    SimpleDraweeView sdvWorkerHead;
+    ImageView sdvWorkerHead;
     @BindView(R.id.tv_wonderful)
     TextView tvWonderful;
     @BindView(R.id.ll_client)
@@ -74,11 +75,11 @@ public class EvaluateShowActivity extends BaseActivity {
         if (mStatus.equals("giv")) {// 给客户的评价
             llClient.setVisibility(View.VISIBLE);
             llWorker.setVisibility(View.GONE);
-            sdvWorkerHead.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + V.v(() -> revBean.getOwnerUser().getAccountEntity().getAvatar())));
+            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + V.v(() -> revBean.getOwnerUser().getAccountEntity().getAvatar())),sdvWorkerHead);
         } else {// 收到的评价
             llClient.setVisibility(View.GONE);
             llWorker.setVisibility(View.VISIBLE);
-            sdvWorkerHead.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + V.v(() -> revBean.getCreateUser().getAccountEntity().getAvatar())));
+            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + V.v(() -> revBean.getCreateUser().getAccountEntity().getAvatar())),sdvWorkerHead);
         }
 
         rbStar1.setNumStars(revBean.getItem1());

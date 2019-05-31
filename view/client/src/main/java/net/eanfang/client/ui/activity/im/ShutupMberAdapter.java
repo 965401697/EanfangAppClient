@@ -1,13 +1,15 @@
 package net.eanfang.client.ui.activity.im;
 
+import android.content.Context;
 import android.net.Uri;
 import android.widget.RadioButton;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.biz.model.GroupDetailBean;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 
 import net.eanfang.client.R;
 
@@ -16,8 +18,11 @@ import net.eanfang.client.R;
  */
 
 public class ShutupMberAdapter extends BaseQuickAdapter<GroupDetailBean.ListBean, BaseViewHolder> {
-    public ShutupMberAdapter(int layoutResId) {
+    private Context context;
+
+    public ShutupMberAdapter(Context context, int layoutResId) {
         super(layoutResId);
+        this.context = context;
     }
 
     @Override
@@ -28,8 +33,7 @@ public class ShutupMberAdapter extends BaseQuickAdapter<GroupDetailBean.ListBean
         } else {
             ((RadioButton) helper.getView(R.id.rb_checked)).setChecked(true);
         }
-
-        ((SimpleDraweeView) helper.getView(R.id.iv_friend_header)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getAccountEntity().getAvatar()));
+        GlideUtil.intoImageView(context, Uri.parse(BuildConfig.OSS_SERVER + item.getAccountEntity().getAvatar()), helper.getView(R.id.iv_friend_header));
         helper.setText(R.id.tv_friend_name, item.getAccountEntity().getNickName());
         helper.addOnClickListener(R.id.rb_checked);
     }

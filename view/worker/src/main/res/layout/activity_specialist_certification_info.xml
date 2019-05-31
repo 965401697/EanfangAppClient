@@ -48,13 +48,12 @@
                     android:gravity="center|right"
                     android:orientation="horizontal">
 
-                    <com.facebook.drawee.view.SimpleDraweeView
+                    <com.eanfang.base.widget.customview.CircleImageView
                         android:id="@+id/iv_header"
                         android:layout_width="@dimen/dimen_80"
                         android:layout_height="@dimen/dimen_80"
                         android:layout_marginRight="@dimen/dimen_24"
-                        app:roundAsCircle="true"
-                        fresco:placeholderImage="@mipmap/ic_nodata" />
+                        android:src="@mipmap/ic_nodata" />
 
                     <ImageView
                         android:layout_width="@dimen/dimen_30"
@@ -278,15 +277,15 @@
                         android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_14" />
 
-                    <com.facebook.drawee.view.SimpleDraweeView
+                    <ImageView
                         android:id="@+id/iv_idCard_front"
                         android:layout_width="@dimen/dimen_400"
                         android:layout_height="@dimen/dimen_180"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginBottom="@dimen/dimen_40"
                         android:layout_marginTop="@dimen/dimen_40"
-                        app:placeholderImageScaleType="centerCrop"
-                        fresco:placeholderImage="@mipmap/ic_nodata" />
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/ic_nodata" />
 
 
                 </LinearLayout>
@@ -309,15 +308,15 @@
                         android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_14" />
 
-                    <com.facebook.drawee.view.SimpleDraweeView
+                    <ImageView
                         android:id="@+id/iv_idCard_back"
                         android:layout_width="@dimen/dimen_400"
                         android:layout_height="@dimen/dimen_180"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginBottom="@dimen/dimen_40"
                         android:layout_marginTop="@dimen/dimen_40"
-                        app:placeholderImageScaleType="centerCrop"
-                        fresco:placeholderImage="@mipmap/ic_nodata" />
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/ic_nodata" />
 
                 </LinearLayout>
 
@@ -337,7 +336,7 @@
                         android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_14" />
 
-                    <com.facebook.drawee.view.SimpleDraweeView
+                    <ImageView
                         android:id="@+id/iv_idCard_inHand"
                         android:layout_width="@dimen/dimen_400"
                         android:layout_height="@dimen/dimen_180"
@@ -345,8 +344,7 @@
                         android:layout_marginBottom="@dimen/dimen_40"
                         android:layout_marginTop="@dimen/dimen_40"
                         android:scaleType="fitXY"
-                        app:placeholderImageScaleType="centerCrop"
-                        fresco:placeholderImage="@mipmap/ic_nodata" />
+                        android:src="@mipmap/ic_nodata" />
 
 
                 </LinearLayout>

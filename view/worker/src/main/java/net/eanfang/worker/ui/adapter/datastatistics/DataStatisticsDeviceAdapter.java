@@ -9,10 +9,11 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.biz.model.datastatistics.DataStatisticsBean;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 
 import net.eanfang.worker.R;
 
@@ -31,7 +32,7 @@ public class DataStatisticsDeviceAdapter extends BaseQuickAdapter<DataStatistics
 
     @Override
     protected void convert(BaseViewHolder helper, DataStatisticsBean.DeviceBean item) {
-        SimpleDraweeView imageView = helper.getView(R.id.iv_pic);
+        CircleImageView imageView = helper.getView(R.id.iv_pic);
         TextView textView = helper.getView(R.id.tv_title);
         RecyclerView rv_classTwo = helper.getView(R.id.rv_device_class_two);
         GridLayoutManager linearLayoutManager = new GridLayoutManager(mContext, 3);
@@ -43,6 +44,6 @@ public class DataStatisticsDeviceAdapter extends BaseQuickAdapter<DataStatistics
 
         textView.setText(Config.get().getBusinessNameByCode(item.getBussinessCode(), 1));
         dataStatisticsReapirAdapter.setNewData(item.getBussinessTwoCodeList());
-        imageView.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + Constant.DEVICE_PIC_FONT + item.getBussinessCode() + ".png"));
+        GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + Constant.DEVICE_PIC_FONT + item.getBussinessCode() + ".png"),imageView);
     }
 }

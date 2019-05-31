@@ -83,7 +83,7 @@ public class GroupMoreMemberActivity extends BaseClientActivity {
 
     private void initViews() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mMoreMemberAdapter = new MoreMemberAdapter(R.layout.item_more_member);
+        mMoreMemberAdapter = new MoreMemberAdapter(this,R.layout.item_more_member);
         mMoreMemberAdapter.bindToRecyclerView(recyclerView);
         mMoreMemberAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override

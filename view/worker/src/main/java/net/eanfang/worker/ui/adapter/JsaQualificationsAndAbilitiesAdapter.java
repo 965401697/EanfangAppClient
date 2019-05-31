@@ -10,7 +10,6 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.V;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.picker.common.util.DateUtils;
 import com.yaf.base.entity.QualificationCertificateEntity;
 

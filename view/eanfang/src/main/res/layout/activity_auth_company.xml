@@ -35,11 +35,11 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <com.facebook.drawee.view.SimpleDraweeView
+                    <ImageView
                         android:id="@+id/iv_upload"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        fresco:placeholderImage="@mipmap/bga_pp_ic_camera" />
+                         /><!--android:src="@mipmap/bga_pp_ic_camera"-->
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -55,11 +55,11 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <com.facebook.drawee.view.SimpleDraweeView
+                    <ImageView
                         android:id="@+id/iv_upload2"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        fresco:placeholderImage="@mipmap/bga_pp_ic_camera" />
+                        />
 
                     <TextView
                         android:layout_width="wrap_content"

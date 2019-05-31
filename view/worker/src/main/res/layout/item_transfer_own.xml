@@ -25,16 +25,15 @@
             android:layout_centerVertical="true"
             android:visibility="visible" />
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/iv_friend_header"
             android:layout_width="@dimen/dimen_80"
             android:layout_height="@dimen/dimen_80"
             android:layout_gravity="center"
             android:layout_centerVertical="true"
-            fresco:roundAsCircle="true"
             android:layout_toRightOf="@+id/rb_checked"
             android:layout_marginLeft="@dimen/dimen_36"
-            fresco:placeholderImage="@mipmap/ic_header" />
+            android:src="@mipmap/ic_header" />
 
 
         <TextView

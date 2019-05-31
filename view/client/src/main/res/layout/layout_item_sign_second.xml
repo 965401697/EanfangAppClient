@@ -8,13 +8,13 @@
     android:paddingLeft="@dimen/dimen_30"
     android:paddingTop="@dimen/dimen_40">
 
-    <com.facebook.drawee.view.SimpleDraweeView
+    <ImageView
         android:id="@+id/iv_header"
         android:layout_width="@dimen/dimen_90"
         android:layout_height="@dimen/dimen_90"
         android:layout_gravity="center_vertical"
         android:layout_marginRight="@dimen/dimen_24"
-        app:placeholderImage="@mipmap/ic_nodata" />
+        android:src="@mipmap/ic_nodata" />
 
     <LinearLayout
         android:layout_width="match_parent"

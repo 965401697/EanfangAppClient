@@ -94,7 +94,7 @@
                     android:layout_height="@dimen/dimen_80"
                     android:layout_gravity="center_vertical"
                     android:layout_marginRight="@dimen/dimen_24"
-                    fresco:placeholderImage="@mipmap/ic_header"
+                    android:src="@mipmap/ic_header"
                     fresco:roundAsCircle="true" />
 
                 <ImageView
@@ -192,7 +192,7 @@
                     android:layout_height="35dp"
                     android:layout_gravity="center"
                     android:layout_marginRight="@dimen/dimen_24"
-                    fresco:placeholderImage="@mipmap/ic_group_code" />
+                    android:src="@mipmap/ic_group_code" />
 
 
                 <ImageView

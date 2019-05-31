@@ -22,7 +22,7 @@
             android:padding="@dimen/dimen_38"
             android:visibility="gone">
 
-            <com.facebook.drawee.view.SimpleDraweeView
+            <ImageView
                 android:id="@+id/sdv_workerHead"
                 android:layout_width="@dimen/dimen_120"
                 android:layout_height="@dimen/dimen_120"

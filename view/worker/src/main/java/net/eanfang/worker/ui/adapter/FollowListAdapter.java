@@ -6,6 +6,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.BuildConfig;
 import com.eanfang.biz.model.FollowDataBean;
 import com.eanfang.biz.model.entity.AccountEntity;
+import com.eanfang.util.GlideUtil;
 import com.yaf.base.entity.WorkerEntity;
 import com.eanfang.biz.model.entity.OrgEntity;
 import com.eanfang.biz.model.entity.UserEntity;
@@ -35,8 +36,8 @@ public class FollowListAdapter extends BaseQuickAdapter<FollowDataBean.FollowLis
             AccountEntity accountEntityBean = userEntity.getAccountEntity();
             //设置姓名、头像
             helper.mTvFollowItemName.setText(accountEntityBean.getRealName());
-            helper.mIvFollowItemHeader.setImageURI(BuildConfig.OSS_SERVER
-                    + accountEntityBean.getAvatar());
+            GlideUtil.intoImageView(mContext,BuildConfig.OSS_SERVER
+                    + accountEntityBean.getAvatar(),helper.mIvFollowItemHeader);
         }
 
         WorkerEntity workerEntity = item.getWorkerEntity();

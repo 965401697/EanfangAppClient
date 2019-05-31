@@ -81,14 +81,14 @@
                                 android:textColor="@color/color_white"
                                 android:textSize="@dimen/textSize_20" />
 
-                            <com.facebook.drawee.view.SimpleDraweeView
+                            <ImageView
                                 android:id="@+id/iv_personalQRCode"
                                 android:layout_width="@dimen/dimen_70"
                                 android:layout_height="@dimen/dimen_70"
                                 android:layout_gravity="center_vertical"
                                 android:layout_marginLeft="@dimen/dimen_10"
                                 android:padding="@dimen/dimen_7"
-                                fresco:placeholderImage="@mipmap/ic_personal_qrcode" />
+                                android:src="@mipmap/ic_personal_qrcode" />
 
                         </LinearLayout>
 

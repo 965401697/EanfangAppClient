@@ -46,7 +46,7 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/iv_faultImg"
             android:layout_width="@dimen/dimen_180"
             android:layout_height="@dimen/dimen_180"

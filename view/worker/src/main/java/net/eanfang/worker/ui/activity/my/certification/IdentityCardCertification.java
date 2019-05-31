@@ -3,15 +3,16 @@ package net.eanfang.worker.ui.activity.my.certification;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.jph.takephoto.model.TImage;
 import com.jph.takephoto.model.TResult;
 import com.yaf.base.entity.TechWorkerVerifyEntity;
@@ -30,13 +31,13 @@ public class IdentityCardCertification extends BaseActivityWithTakePhoto {
     private final int ID_CARD_HAND = 103;
 
     @BindView(R.id.iv_idCard_front)
-    SimpleDraweeView ivIdCardFront;
+    ImageView ivIdCardFront;
 
     @BindView(R.id.iv_idCard_back)
-    SimpleDraweeView ivIdCardBack;
+    ImageView ivIdCardBack;
 
     @BindView(R.id.iv_idCard_inHand)
-    SimpleDraweeView ivIdCardInHand;
+    ImageView ivIdCardInHand;
 
     @BindView(R.id.tv_save)
     TextView tvSave;
@@ -72,9 +73,9 @@ public class IdentityCardCertification extends BaseActivityWithTakePhoto {
 
 
     private void fillData() {
-        ivIdCardFront.setImageURI(com.eanfang.BuildConfig.OSS_SERVER + mTechWorkerVerifyEntity.getIdCardFront());
-        ivIdCardBack.setImageURI(com.eanfang.BuildConfig.OSS_SERVER + mTechWorkerVerifyEntity.getIdCardSide());
-        ivIdCardInHand.setImageURI(com.eanfang.BuildConfig.OSS_SERVER + mTechWorkerVerifyEntity.getIdCardHand());
+        GlideUtil.intoImageView(this,com.eanfang.BuildConfig.OSS_SERVER + mTechWorkerVerifyEntity.getIdCardFront(),ivIdCardFront);
+        GlideUtil.intoImageView(this,com.eanfang.BuildConfig.OSS_SERVER + mTechWorkerVerifyEntity.getIdCardSide(),ivIdCardBack);
+        GlideUtil.intoImageView(this,com.eanfang.BuildConfig.OSS_SERVER + mTechWorkerVerifyEntity.getIdCardHand(),ivIdCardInHand);
     }
 
     /**
@@ -112,17 +113,17 @@ public class IdentityCardCertification extends BaseActivityWithTakePhoto {
             // 身份证正面
             case ID_CARD_FRONT:
                 mTechWorkerVerifyEntity.setIdCardFront(imgKey);
-                ivIdCardFront.setImageURI("file://" + image.getOriginalPath());
+                GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),ivIdCardFront);
                 break;
             // 反面
             case ID_CARD_SIDE:
                 mTechWorkerVerifyEntity.setIdCardSide(imgKey);
-                ivIdCardBack.setImageURI("file://" + image.getOriginalPath());
+                GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),ivIdCardBack);
                 break;
             // 手持
             case ID_CARD_HAND:
                 mTechWorkerVerifyEntity.setIdCardHand(imgKey);
-                ivIdCardInHand.setImageURI("file://" + image.getOriginalPath());
+                GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),ivIdCardInHand);
                 break;
         }
         OSSUtils.initOSS(this).asyncPutImage(imgKey, image.getOriginalPath(), new OSSCallBack(this, true) {

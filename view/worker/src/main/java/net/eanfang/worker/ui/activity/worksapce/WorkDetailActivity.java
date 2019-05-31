@@ -23,15 +23,16 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.daimajia.numberprogressbar.DaiMaJiaNumberProgressBar;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.witget.ArcProgressView;
 import com.eanfang.witget.CustomRadioGroup;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.RepairOrderEntity;
 import com.yaf.base.entity.WorkerEntity;
 
@@ -59,7 +60,7 @@ public class WorkDetailActivity extends BaseActivity {
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.iv_header)
-    SimpleDraweeView ivHeader;
+    CircleImageView ivHeader;
     @BindView(R.id.tv_realname)
     TextView tvRealname;
     @BindView(R.id.tv_company_name)
@@ -322,7 +323,7 @@ public class WorkDetailActivity extends BaseActivity {
             return;
         }
         if (bean.getAccountEntity() != null) {
-            ivHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bean.getVerifyEntity().getAvatarPhoto()));
+            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + bean.getVerifyEntity().getAvatarPhoto()),ivHeader);
             headUrl = bean.getAccountEntity().getAvatar();
             workerName = bean.getAccountEntity().getRealName();
             comapnyName = bean.getCompanyEntity().getOrgName();

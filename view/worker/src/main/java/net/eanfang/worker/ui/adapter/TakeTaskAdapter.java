@@ -1,12 +1,14 @@
 package net.eanfang.worker.ui.adapter;
 
+import android.widget.ImageView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.config.Config;
 import com.eanfang.biz.model.MineTaskListBean;
 import com.eanfang.util.GetConstDataUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 
 import net.eanfang.worker.R;
 
@@ -33,11 +35,11 @@ public class TakeTaskAdapter extends BaseQuickAdapter<MineTaskListBean.ListBean,
         helper.setVisible(R.id.tv_ignore, false);
         helper.setText(R.id.tv_select, "查看详情");
 
-        SimpleDraweeView sdv_pic = helper.getView(R.id.sdv_pic);
+        ImageView sdv_pic = helper.getView(R.id.sdv_pic);
         if (item.getPictures() != null) {
             String[] urls = item.getPictures().split(",");
             if (urls[0].length() != 0) {
-                sdv_pic.setImageURI(BuildConfig.OSS_SERVER + urls[0]);
+                GlideUtil.intoImageView(mContext,BuildConfig.OSS_SERVER + urls[0],sdv_pic);
             }
 
         }

@@ -1,5 +1,6 @@
 package net.eanfang.client.ui.activity.im;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.CheckBox;
 
@@ -7,7 +8,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.biz.model.GroupDetailBean;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 
 import net.eanfang.client.R;
 
@@ -16,15 +17,15 @@ import net.eanfang.client.R;
  */
 
 public class GroupFriendsAdapter extends BaseQuickAdapter<GroupDetailBean.ListBean, BaseViewHolder> {
+    private Context context;
 
-    public GroupFriendsAdapter(int layoutResId) {
+    public GroupFriendsAdapter(Context context, int layoutResId) {
         super(layoutResId);
+        this.context = context;
     }
 
     @Override
     protected void convert(BaseViewHolder helper, GroupDetailBean.ListBean item) {
-
-
         helper.getView(R.id.cb_checked).setVisibility(View.VISIBLE);
         helper.getView(R.id.tv_letter).setVisibility(View.GONE);
 
@@ -33,8 +34,7 @@ public class GroupFriendsAdapter extends BaseQuickAdapter<GroupDetailBean.ListBe
         } else {
             ((CheckBox) helper.getView(R.id.cb_checked)).setChecked(true);
         }
-
-        ((SimpleDraweeView) helper.getView(R.id.iv_friend_header)).setImageURI(BuildConfig.OSS_SERVER + item.getAccountEntity().getAvatar());
+        GlideUtil.intoImageView(context, BuildConfig.OSS_SERVER + item.getAccountEntity().getAvatar(), helper.getView(R.id.iv_friend_header));
         helper.setText(R.id.tv_friend_name, item.getAccountEntity().getNickName());
         helper.addOnClickListener(R.id.cb_checked);
     }

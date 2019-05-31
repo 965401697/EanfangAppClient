@@ -13,7 +13,7 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/dimen_36"
         android:layout_marginRight="@dimen/dimen_24"
-        fresco:placeholderImage="@mipmap/ic_header"
+        android:src="@mipmap/ic_header"
         fresco:roundAsCircle="true" />
 
     <TextView

@@ -256,7 +256,7 @@
                     android:layout_width="@dimen/dimen_200"
                     android:layout_height="@dimen/dimen_200"
                     android:layout_margin="@dimen/dimen_40"
-                    fresco:placeholderImage="@mipmap/bga_pp_ic_plus" />
+                    android:src="@mipmap/bga_pp_ic_plus" />
 
 
             </LinearLayout>

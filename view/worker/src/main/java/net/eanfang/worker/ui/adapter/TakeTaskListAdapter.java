@@ -3,7 +3,7 @@ package net.eanfang.worker.ui.adapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.biz.model.TakeTaskListBean;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 
 import net.eanfang.worker.R;
 
@@ -69,8 +69,7 @@ public class TakeTaskListAdapter extends BaseQuickAdapter<TakeTaskListBean.AllBe
         helper.setText(R.id.tv_business_type, item.getServicename());
         helper.setText(R.id.tv_project_address, item.getItemdetaillocation());
         helper.setText(R.id.tv_count_money, item.getBudget());
-        ((SimpleDraweeView) helper.getView(R.id.iv_upload)).setImageURI(item.getPic1());
-
+        GlideUtil.intoImageView(mContext,item.getPic1(),helper.getView(R.id.iv_upload));
 
         helper.addOnClickListener(R.id.tv_do_first);
         helper.addOnClickListener(R.id.tv_do_second);

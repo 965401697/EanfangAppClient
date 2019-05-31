@@ -6,8 +6,8 @@ import android.text.TextUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.V;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.picker.common.util.DateUtils;
 import com.yaf.base.entity.EducationExperienceEntity;
 
@@ -46,9 +46,9 @@ public class EducationListAdapter extends BaseQuickAdapter<EducationExperienceEn
         if (item.getCertificatePics() != null) {
             String[] urls = V.v(() -> item.getCertificatePics().split(","));
             //将业务类型的图片显示到列表
-            ((SimpleDraweeView) helper.getView(R.id.iv_certificate_pic)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[0]));
+            GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + urls[0]),helper.getView(R.id.iv_certificate_pic));
         } else {
-            ((SimpleDraweeView) helper.getView(R.id.iv_certificate_pic)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER));
+            GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER),helper.getView(R.id.iv_certificate_pic));
         }
 
         helper.addOnClickListener(R.id.tv_delete);

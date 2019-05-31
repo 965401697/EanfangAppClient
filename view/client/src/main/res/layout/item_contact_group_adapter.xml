@@ -18,7 +18,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dimen_36"
-            fresco:placeholderImage="@drawable/contend_ic_thenameofthecompany_default"
+            android:src="@drawable/contend_ic_thenameofthecompany_default"
             fresco:roundAsCircle="true" />
 
         <RelativeLayout

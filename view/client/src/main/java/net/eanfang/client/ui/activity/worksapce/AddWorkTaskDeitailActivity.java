@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -21,13 +22,13 @@ import com.eanfang.takevideo.TakeVideoActivity;
 import com.eanfang.ui.activity.SelectOAPresonActivity;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
@@ -104,7 +105,7 @@ public class AddWorkTaskDeitailActivity extends BaseClientActivity {
     @BindView(R.id.tv_addViedeo)
     TextView tvAddViedeo;
     @BindView(R.id.iv_takevideo)
-    SimpleDraweeView ivTakevideo;
+    ImageView ivTakevideo;
     @BindView(R.id.rl_thumbnail)
     RelativeLayout rlThumbnail;
 
@@ -345,7 +346,8 @@ public class AddWorkTaskDeitailActivity extends BaseClientActivity {
             mVieoPath = takeVdideoMode.getMImagePath();
             mUploadKey = takeVdideoMode.getMKey();
             if (!StringUtils.isEmpty(mVieoPath)) {
-                ivTakevideo.setImageBitmap(PhotoUtils.getVideoThumbnail(mVieoPath, 100, 100, MINI_KIND));
+                GlideUtil.intoImageView(this,PhotoUtils.getVideoThumbnail(mVieoPath, 100, 100, MINI_KIND),ivTakevideo);
+
             }
             tvAddViedeo.setText("重新拍摄");
         }

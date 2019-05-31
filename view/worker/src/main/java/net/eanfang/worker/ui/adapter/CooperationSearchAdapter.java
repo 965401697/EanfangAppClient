@@ -7,7 +7,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.config.Config;
 import com.eanfang.biz.model.CooperationSearchBean;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 
 import net.eanfang.worker.R;
 
@@ -24,7 +24,7 @@ public class CooperationSearchAdapter extends BaseQuickAdapter<CooperationSearch
     @Override
     protected void convert(BaseViewHolder helper, CooperationSearchBean.ListBean item) {
 
-        ((SimpleDraweeView) helper.getView(R.id.iv_company_logo)).setImageURI(BuildConfig.OSS_SERVER + item.getCompanyEntity().getLogoPic());
+        GlideUtil.intoImageView(mContext,BuildConfig.OSS_SERVER + item.getCompanyEntity().getLogoPic(),helper.getView(R.id.iv_company_logo));
         helper.setText(R.id.tv_company_name, item.getCompanyEntity().getName());
         helper.setText(R.id.tv_company_user, Config.get().getAddressByCode(item.getAccountEntity().getRealName() + " " + item.getAccountEntity().getMobile()));
         if (item.isChecked()) {

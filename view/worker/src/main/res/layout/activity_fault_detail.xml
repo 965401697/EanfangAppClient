@@ -364,7 +364,7 @@
                         android:layout_marginLeft="@dimen/dimen_20">
 
 
-                        <com.facebook.drawee.view.SimpleDraweeView
+                        <ImageView
                             android:id="@+id/iv_thumbnail"
                             android:layout_width="@dimen/dimen_150"
                             android:layout_height="@dimen/dimen_150"

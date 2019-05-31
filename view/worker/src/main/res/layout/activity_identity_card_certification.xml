@@ -161,14 +161,14 @@
                             android:textColor="@color/color_client_neworder"
                             android:textSize="@dimen/textSize_14" />
 
-                        <com.facebook.drawee.view.SimpleDraweeView
+                        <ImageView
                             android:id="@+id/iv_idCard_front"
                             android:layout_width="@dimen/dimen_400"
                             android:layout_height="@dimen/dimen_180"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginBottom="@dimen/dimen_40"
                             android:layout_marginTop="@dimen/dimen_40"
-                            fresco:placeholderImage="@mipmap/bga_re_ic_plus" />
+                            android:src="@mipmap/bga_re_ic_plus" />
 
 
                     </LinearLayout>
@@ -191,14 +191,14 @@
                             android:textColor="@color/color_client_neworder"
                             android:textSize="@dimen/textSize_14" />
 
-                        <com.facebook.drawee.view.SimpleDraweeView
+                        <ImageView
                             android:id="@+id/iv_idCard_back"
                             android:layout_width="@dimen/dimen_400"
                             android:layout_height="@dimen/dimen_180"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginBottom="@dimen/dimen_40"
                             android:layout_marginTop="@dimen/dimen_40"
-                            fresco:placeholderImage="@mipmap/bga_re_ic_plus" />
+                            android:src="@mipmap/bga_re_ic_plus" />
 
                     </LinearLayout>
 
@@ -218,14 +218,14 @@
                             android:textColor="@color/color_client_neworder"
                             android:textSize="@dimen/textSize_14" />
 
-                        <com.facebook.drawee.view.SimpleDraweeView
+                        <ImageView
                             android:id="@+id/iv_idCard_inHand"
                             android:layout_width="@dimen/dimen_400"
                             android:layout_height="@dimen/dimen_180"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginBottom="@dimen/dimen_40"
                             android:layout_marginTop="@dimen/dimen_40"
-                            fresco:placeholderImage="@mipmap/bga_re_ic_plus" />
+                            android:src="@mipmap/bga_re_ic_plus" />
 
                     </LinearLayout>
 

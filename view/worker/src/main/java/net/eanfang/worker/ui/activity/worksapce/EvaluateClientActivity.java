@@ -17,7 +17,7 @@ import com.eanfang.apiservice.RepairApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.EvaluateWorkerBean;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
@@ -54,7 +54,7 @@ public class EvaluateClientActivity extends BaseWorkerActivity implements RadioG
     private Long orderId, ownerId;
 
     @BindView(R.id.sdv_workerHead)
-    SimpleDraweeView sdvWorkerHead;
+    ImageView sdvWorkerHead;
 
     @BindView(R.id.rb_wonderful)
     RadioButton rbWonderful;
@@ -90,7 +90,7 @@ public class EvaluateClientActivity extends BaseWorkerActivity implements RadioG
         ordernum = intent.getStringExtra("ordernum");
         orderId = intent.getLongExtra("orderId", 0);
         ownerId = intent.getLongExtra("ownerId", 0);
-        sdvWorkerHead.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + Uri.parse(getIntent().getStringExtra("avatar"))));
+        GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + Uri.parse(getIntent().getStringExtra("avatar"))),sdvWorkerHead);
     }
 
     private void initView() {

@@ -13,9 +13,9 @@ import com.eanfang.biz.model.WorkTaskBean;
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
 
@@ -54,16 +54,16 @@ public class TaskInfoView extends BaseDialog implements View.OnClickListener {
     @BindView(R.id.et_worker)
     TextView etWorker;
     @BindView(R.id.iv_pic1)
-    SimpleDraweeView ivPic1;
+    ImageView ivPic1;
     @BindView(R.id.iv_pic2)
-    SimpleDraweeView ivPic2;
+    ImageView ivPic2;
     @BindView(R.id.iv_pic3)
-    SimpleDraweeView ivPic3;
+    ImageView ivPic3;
     private Activity mContext;
     private WorkTaskBean.WorkTaskDetailsBean detailBean;
     // 照片和短视频
     @BindView(R.id.iv_takevideo)
-    SimpleDraweeView ivTakevideo;
+    ImageView ivTakevideo;
     @BindView(R.id.rl_thumbnail)
     RelativeLayout rlThumbnail;
 
@@ -101,20 +101,20 @@ public class TaskInfoView extends BaseDialog implements View.OnClickListener {
             String[] urls = detailBean.getPictures().split(",");
 
             if (urls.length >= 1) {
-                ivPic1.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[0]));
+                GlideUtil.intoImageView(mContext,BuildConfig.OSS_SERVER + Uri.parse(urls[0]),ivPic1);
                 ivPic1.setVisibility(View.VISIBLE);
             } else {
                 ivPic1.setVisibility(View.GONE);
             }
 
             if (urls.length >= 2) {
-                ivPic2.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[1]));
+                GlideUtil.intoImageView(mContext,BuildConfig.OSS_SERVER + Uri.parse(urls[1]),ivPic2);
                 ivPic2.setVisibility(View.VISIBLE);
             } else {
                 ivPic2.setVisibility(View.GONE);
             }
             if (urls.length >= 3) {
-                ivPic3.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[2]));
+                GlideUtil.intoImageView(mContext,BuildConfig.OSS_SERVER + Uri.parse(urls[2]),ivPic3);
                 ivPic3.setVisibility(View.VISIBLE);
             } else {
                 ivPic3.setVisibility(View.GONE);
@@ -122,7 +122,7 @@ public class TaskInfoView extends BaseDialog implements View.OnClickListener {
         }
         if (!StringUtils.isEmpty(detailBean.getMp4_path())) {
             rlThumbnail.setVisibility(View.VISIBLE);
-            ivTakevideo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + detailBean.getMp4_path() + ".jpg"));
+            GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + detailBean.getMp4_path() + ".jpg"),ivTakevideo);
         }
 
     }

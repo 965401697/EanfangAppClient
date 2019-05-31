@@ -7,9 +7,8 @@ import android.util.Log;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 import com.yaf.base.entity.CommonFaultListBeanEntity;
-import com.yaf.base.entity.ExpertsCertificationEntity;
 
 import net.eanfang.worker.R;
 
@@ -26,10 +25,10 @@ public class MyExpertListAdapter extends BaseQuickAdapter<CommonFaultListBeanEnt
     @Override
     protected void convert(BaseViewHolder helper, CommonFaultListBeanEntity.ExpertsListBean item) {
         if (!TextUtils.isEmpty(item.getAvatarPhoto())) {
-            ((SimpleDraweeView) helper.getView(R.id.iv_expert_header)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getAvatarPhoto()));
+            GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + item.getAvatarPhoto()),helper.getView(R.id.iv_expert_header));
             Log.i("Tpian",item.getAvatarPhoto());
         } else {
-            ((SimpleDraweeView) helper.getView(R.id.iv_expert_header)).setImageURI(Uri.parse(""));
+            GlideUtil.intoImageView(mContext,Uri.parse(""),helper.getView(R.id.iv_expert_header));
         }
         helper.setText(R.id.tv_expert, item.getExpertName());
 

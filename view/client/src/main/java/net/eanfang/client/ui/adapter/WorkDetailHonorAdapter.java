@@ -1,9 +1,11 @@
 package net.eanfang.client.ui.adapter;
 
+import android.content.Context;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 import com.yaf.base.entity.HonorCertificateEntity;
 
 import net.eanfang.client.R;
@@ -15,8 +17,10 @@ import net.eanfang.client.R;
  */
 
 public class WorkDetailHonorAdapter extends BaseQuickAdapter<HonorCertificateEntity, BaseViewHolder> {
-    public WorkDetailHonorAdapter() {
+    private Context context;
+    public WorkDetailHonorAdapter(Context context) {
         super(R.layout.layout_worker_detail_honor);
+        this.context=context;
     }
 
     @Override
@@ -25,11 +29,11 @@ public class WorkDetailHonorAdapter extends BaseQuickAdapter<HonorCertificateEnt
         if (info.length > 0) {
             //多条
             for (int i = 0; i < info.length; i++) {
-                ((SimpleDraweeView) helper.getView(R.id.iv_pic)).setImageURI(BuildConfig.OSS_SERVER + info[i]);
+                GlideUtil.intoImageView(context,BuildConfig.OSS_SERVER + info[i],helper.getView(R.id.iv_pic));
             }
         } else {
             //一条
-            ((SimpleDraweeView) helper.getView(R.id.iv_pic)).setImageURI(BuildConfig.OSS_SERVER + info[0]);
+            GlideUtil.intoImageView(context,BuildConfig.OSS_SERVER + info[0],helper.getView(R.id.iv_pic));
         }
     }
 }

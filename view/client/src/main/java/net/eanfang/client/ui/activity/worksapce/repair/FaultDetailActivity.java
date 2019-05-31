@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -15,9 +16,9 @@ import com.eanfang.config.Constant;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 import com.yaf.base.entity.RepairBugEntity;
 
@@ -70,7 +71,7 @@ public class FaultDetailActivity extends BaseActivity {
     TextView tvFaultDescripte;
     // 短视频
     @BindView(R.id.iv_thumbnail)
-    SimpleDraweeView ivThumbnail;
+    ImageView ivThumbnail;
     @BindView(R.id.rl_thumbnail)
     RelativeLayout rlThumbnail;
 
@@ -119,7 +120,7 @@ public class FaultDetailActivity extends BaseActivity {
 
         if (!StringUtils.isEmpty(repairBugEntity.getMp4_path())) {
             rlThumbnail.setVisibility(View.VISIBLE);
-            ivThumbnail.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + repairBugEntity.getMp4_path() + ".jpg"));
+            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + repairBugEntity.getMp4_path() + ".jpg"),ivThumbnail);
         } else {
             rlThumbnail.setVisibility(View.GONE);
         }

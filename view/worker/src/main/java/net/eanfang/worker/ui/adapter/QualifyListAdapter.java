@@ -5,8 +5,8 @@ import android.net.Uri;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.V;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.picker.common.util.DateUtils;
 import com.yaf.base.entity.AptitudeCertificateEntity;
 
@@ -34,9 +34,9 @@ public class QualifyListAdapter extends BaseQuickAdapter<AptitudeCertificateEnti
         if (item.getCertificatePics() != null) {
             String[] urls = V.v(() -> item.getCertificatePics().split(","));
             //将业务类型的图片显示到列表
-            ((SimpleDraweeView) helper.getView(R.id.iv_pic)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[0]));
+            GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + urls[0]),helper.getView(R.id.iv_pic));
         } else {
-            ((SimpleDraweeView) helper.getView(R.id.iv_pic)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER));
+            GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER ),helper.getView(R.id.iv_pic));
         }
     }
 }

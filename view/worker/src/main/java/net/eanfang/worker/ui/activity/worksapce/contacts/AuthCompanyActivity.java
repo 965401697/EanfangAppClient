@@ -28,12 +28,12 @@ import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.jph.takephoto.model.TImage;
 import com.jph.takephoto.model.TResult;
 import com.eanfang.biz.model.entity.BaseDataEntity;
@@ -68,9 +68,9 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
      */
     private final int ADDRESS_CALLBACK_CODE = 100;
     @BindView(R.id.iv_upload)
-    SimpleDraweeView ivUpload;
+    ImageView ivUpload;
     @BindView(R.id.iv_upload2)
-    SimpleDraweeView ivUpload2;
+    ImageView ivUpload2;
     @BindView(R.id.et_company)
     EditText etCompany;
     @BindView(R.id.ed_company_number)
@@ -326,11 +326,11 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
                 tvOfficeAddress.setText(Config.get().getAddressByCode(byNetBean.getAreaCode()));
             }
             if (!StringUtils.isEmpty(byNetBean.getLogoPic())) {
-                ivUpload2.setImageURI(BuildConfig.OSS_SERVER + byNetBean.getLogoPic());
+                GlideUtil.intoImageView(this,BuildConfig.OSS_SERVER + byNetBean.getLogoPic(),ivUpload2);
                 infoBean.setLogoPic(byNetBean.getLogoPic());
             }
             if (!StringUtils.isEmpty(byNetBean.getLicensePic())) {
-                ivUpload.setImageURI(BuildConfig.OSS_SERVER + byNetBean.getLicensePic());
+                GlideUtil.intoImageView(this,BuildConfig.OSS_SERVER + byNetBean.getLicensePic(),ivUpload);
                 infoBean.setLicensePic(byNetBean.getLicensePic());
             }
         }
@@ -396,10 +396,10 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
 
         if (resultCode == LICENSE_CALLBACK_CODE) {
             infoBean.setLicensePic(imgKey);
-            ivUpload.setImageURI("file://" + image.getOriginalPath());
+            GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),ivUpload);
         } else if (resultCode == ADPIC_CALLBACK_CODE) {
             infoBean.setLogoPic(imgKey);
-            ivUpload2.setImageURI("file://" + image.getOriginalPath());
+            GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),ivUpload2);
         }
         OSSUtils.initOSS(this).asyncPutImage(imgKey, image.getOriginalPath(), new OSSCallBack(this, true) {
         });

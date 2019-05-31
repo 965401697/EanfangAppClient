@@ -1,13 +1,15 @@
 package net.eanfang.worker.ui.adapter.security;
 
+import android.content.Context;
 import android.net.Uri;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.biz.model.security.SecurityDetailBean;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.V;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
 
@@ -18,16 +20,19 @@ import net.eanfang.worker.R;
  */
 
 public class SecurityCommentAdapter extends BaseQuickAdapter<SecurityDetailBean.ListBean, BaseViewHolder> {
-    public SecurityCommentAdapter() {
+    private Context context;
+    public SecurityCommentAdapter(Context context) {
         super(R.layout.layout_item_security_comment);
+        this.context=context;
     }
 
     @Override
     protected void convert(BaseViewHolder helper, SecurityDetailBean.ListBean item) {
 
         // 头像
-        SimpleDraweeView ivHeader = helper.getView(R.id.iv_seucrity_header);
-        ivHeader.setImageURI((Uri.parse(BuildConfig.OSS_SERVER + V.v(() -> item.getCommentUser().getAccountEntity().getAvatar()))));
+        CircleImageView ivHeader = helper.getView(R.id.iv_seucrity_header);
+        GlideUtil.intoImageView(context,Uri.parse(BuildConfig.OSS_SERVER + V.v(() -> item.getCommentUser().getAccountEntity().getAvatar())),ivHeader);
+
         // 评论人
         helper.setText(R.id.tv_name, V.v(() -> item.getCommentUser().getAccountEntity().getRealName()));
         // 公司名称

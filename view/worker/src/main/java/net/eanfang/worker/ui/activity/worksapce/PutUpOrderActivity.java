@@ -8,6 +8,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,8 +19,8 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.StringUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.BughandleConfirmEntity;
 import com.yaf.base.entity.TransferLogEntity;
 import com.zhy.view.flowlayout.FlowLayout;
@@ -58,7 +59,7 @@ public class PutUpOrderActivity extends BaseWorkerActivity {
     @BindView(R.id.tv_put_up_apply)
     TextView tvPutUpApply;
     @BindView(R.id.iv_header)
-    SimpleDraweeView ivHeader;
+    ImageView ivHeader;
     @BindView(R.id.tv_order_num)
     TextView tvOrderNum;
     @BindView(R.id.tv_order_time)
@@ -250,7 +251,7 @@ public class PutUpOrderActivity extends BaseWorkerActivity {
         }
         llHang.setVisibility(View.VISIBLE);
         tvNoHistory.setVisibility(View.GONE);
-        ivHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + transferLogEntity.getOriginalUserEntity().getAccountEntity().getAvatar()));
+        GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + transferLogEntity.getOriginalUserEntity().getAccountEntity().getAvatar()),ivHeader);
         tvOrderNum.setText(transferLogEntity.getOrderNum() + "");
         tvOrderTime.setText(GetDateUtils.dateToDateTimeString(transferLogEntity.getCreateTime()));
         tvOrderReason.setText(GetConstDataUtils.getTransferCauseList().get(transferLogEntity.getCause()));

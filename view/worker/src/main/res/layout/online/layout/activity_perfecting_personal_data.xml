@@ -41,13 +41,12 @@
                 android:gravity="center|right"
                 android:orientation="horizontal">
 
-                <com.facebook.drawee.view.SimpleDraweeView
+                <com.eanfang.base.widget.customview.CircleImageView
                     android:id="@+id/iv_header"
                     android:layout_width="@dimen/dimen_80"
                     android:layout_height="@dimen/dimen_80"
                     android:layout_marginRight="@dimen/dimen_24"
-                    app:roundAsCircle="true"
-                    fresco:placeholderImage="@mipmap/ic_nodata" />
+                    android:src="@mipmap/ic_nodata" />
 
                 <ImageView
                     android:layout_width="@dimen/dimen_30"

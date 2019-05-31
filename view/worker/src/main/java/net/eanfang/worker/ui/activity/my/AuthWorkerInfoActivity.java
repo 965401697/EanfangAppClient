@@ -17,6 +17,7 @@ import com.alibaba.fastjson.JSONPObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -25,12 +26,12 @@ import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.jph.takephoto.model.TImage;
 import com.jph.takephoto.model.TResult;
 
@@ -93,7 +94,7 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
     @BindView(R.id.tv_payType)
     TextView tvPayType;
     @BindView(R.id.iv_header)
-    SimpleDraweeView ivHeader;
+    CircleImageView ivHeader;
     // 紧急联系电话
     @BindView(R.id.et_urgent_phone)
     EditText etUrgentPhone;
@@ -268,7 +269,7 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
             }
 
             if (!StringUtils.isEmpty(workerInfoBean.getAvatarPhoto())) {
-                ivHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + workerInfoBean.getAvatarPhoto()));
+                GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + workerInfoBean.getAvatarPhoto()),ivHeader);
             }
             if (!StringUtils.isEmpty(workerInfoBean.getIntro())) {
                 etIntro.setText(workerInfoBean.getIntro());
@@ -383,7 +384,7 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
         switch (resultCode) {
             case HEADER_PIC:
                 workerInfoBean.setAvatarPhoto(imgKey);
-                ivHeader.setImageURI("file://" + image.getOriginalPath());
+                GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),ivHeader);
                 break;
             default:
                 break;

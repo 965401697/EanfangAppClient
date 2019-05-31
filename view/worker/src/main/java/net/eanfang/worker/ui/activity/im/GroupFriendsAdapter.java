@@ -7,7 +7,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.biz.model.GroupDetailBean;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 
 import net.eanfang.worker.R;
 
@@ -33,8 +33,7 @@ public class GroupFriendsAdapter extends BaseQuickAdapter<GroupDetailBean.ListBe
         } else {
             ((CheckBox) helper.getView(R.id.cb_checked)).setChecked(true);
         }
-
-        ((SimpleDraweeView) helper.getView(R.id.iv_friend_header)).setImageURI(BuildConfig.OSS_SERVER + item.getAccountEntity().getAvatar());
+        GlideUtil.intoImageView(mContext,BuildConfig.OSS_SERVER + item.getAccountEntity().getAvatar(),helper.getView(R.id.iv_friend_header));
         helper.setText(R.id.tv_friend_name, item.getAccountEntity().getNickName());
         helper.addOnClickListener(R.id.cb_checked);
     }

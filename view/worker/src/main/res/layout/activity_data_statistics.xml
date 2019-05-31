@@ -41,15 +41,15 @@
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
-                        <com.facebook.drawee.view.SimpleDraweeView
+                        <com.eanfang.base.widget.customview.CircleImageView
                             android:id="@+id/iv_company_logo"
                             android:layout_width="26dp"
                             android:layout_height="26dp"
                             android:layout_alignParentLeft="true"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="@dimen/dimen_38"
-                            app:placeholderImage="@drawable/nar_logo_company_default"
-                            fresco:roundAsCircle="true" />
+                            android:src="@drawable/nar_logo_company_default"
+                             />
 
                         <TextView
                             android:id="@+id/tv_companyName"

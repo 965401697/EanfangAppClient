@@ -3,6 +3,7 @@ package net.eanfang.worker.ui.activity.my;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
@@ -11,11 +12,11 @@ import com.eanfang.biz.model.WorkerInfoBean;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.jph.takephoto.model.TImage;
 import com.jph.takephoto.model.TResult;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
@@ -54,13 +55,13 @@ public class AuthPhotoActivity extends BaseActivityWithTakePhoto {
     private final int ID_CARD_HAND = 103;
 
     @BindView(R.id.iv_idCard_front)
-    SimpleDraweeView ivIdCardFront;
+    ImageView ivIdCardFront;
 
     @BindView(R.id.iv_idCard_back)
-    SimpleDraweeView ivIdCardBack;
+    ImageView ivIdCardBack;
 
     @BindView(R.id.iv_idCard_inHand)
-    SimpleDraweeView ivIdCardInHand;
+    ImageView ivIdCardInHand;
 
     @BindView(R.id.tv_save)
     TextView tvSave;
@@ -122,13 +123,13 @@ public class AuthPhotoActivity extends BaseActivityWithTakePhoto {
         snplMomentCrim.setData(picList_crim);
 
         if (!StringUtils.isEmpty(workerInfoBean.getIdCardFront())) {
-            ivIdCardFront.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + workerInfoBean.getIdCardFront()));
+            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + workerInfoBean.getIdCardFront()),ivIdCardFront);
         }
         if (!StringUtils.isEmpty(workerInfoBean.getIdCardSide())) {
-            ivIdCardBack.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + workerInfoBean.getIdCardSide()));
+            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + workerInfoBean.getIdCardSide()),ivIdCardBack);
         }
         if (!StringUtils.isEmpty(workerInfoBean.getIdCardHand())) {
-            ivIdCardInHand.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + workerInfoBean.getIdCardHand()));
+            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + workerInfoBean.getIdCardHand()),ivIdCardInHand);
         }
     }
 
@@ -226,17 +227,17 @@ public class AuthPhotoActivity extends BaseActivityWithTakePhoto {
             // 身份证正面
             case ID_CARD_FRONT:
                 workerInfoBean.setIdCardFront(imgKey);
-                ivIdCardFront.setImageURI("file://" + image.getOriginalPath());
+                GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),ivIdCardFront);
                 break;
             // 反面
             case ID_CARD_SIDE:
                 workerInfoBean.setIdCardSide(imgKey);
-                ivIdCardBack.setImageURI("file://" + image.getOriginalPath());
+                GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),ivIdCardBack);
                 break;
             // 手持
             case ID_CARD_HAND:
                 workerInfoBean.setIdCardHand(imgKey);
-                ivIdCardInHand.setImageURI("file://" + image.getOriginalPath());
+                GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),ivIdCardInHand);
                 break;
         }
         OSSUtils.initOSS(this).asyncPutImage(imgKey, image.getOriginalPath(), new OSSCallBack(this, true) {

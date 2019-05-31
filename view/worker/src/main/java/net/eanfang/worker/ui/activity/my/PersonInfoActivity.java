@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.ali.oss.OssKit;
 import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.BuildConfig;
@@ -255,7 +256,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto implements Bas
         mLlSaveAndAuth.setVisibility(auth ?View.GONE : View.VISIBLE);
         mTvToWorkerAuth.setVisibility(auth ?View.GONE : View.VISIBLE);
     }
-
+    //takeSucces已被替换
     @Override
     public void takeSuccess(TResult result, int resultCode) {
         super.takeSuccess(result, resultCode);
@@ -462,7 +463,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto implements Bas
     public void onSuccess(List<LocalMedia> list) {
         String imgKey = "account/" + UuidUtil.getUUID() + ".png";
         GlideUtil.intoImageView(PersonInfoActivity.this,"file://" + list.get(0).getCutPath(),ivUpload);
-        OssKit.get(this).asyncPutImage(imgKey, list.get(0).getCutPath(), (isSuccess) -> {
+        SDKManager.ossKit(this).asyncPutImage(imgKey, list.get(0).getCutPath(), (isSuccess) -> {
             LoginBean entity = WorkerApplication.get().getLoginBean();
             entity.getAccount().setAvatar(imgKey);
             path = entity.getAccount().getAvatar();

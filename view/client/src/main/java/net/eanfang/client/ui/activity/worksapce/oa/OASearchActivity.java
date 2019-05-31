@@ -61,7 +61,7 @@ public class OASearchActivity extends BaseClientActivity {
         mTemplateBeanList = (List<TemplateBean>) bundle.getSerializable("list");
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        oaSearchAdapter = new OASearchAdapter();
+        oaSearchAdapter = new OASearchAdapter(this);
         oaSearchAdapter.bindToRecyclerView(recyclerView);
         oaSearchAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override

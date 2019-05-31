@@ -58,8 +58,6 @@ public class EquipmentChangeListActivity extends BaseClientActivity implements S
     private void initView() {
         mSwipeRefreshLayout.setOnRefreshListener(this);
         rvList.setLayoutManager(new LinearLayoutManager(this));
-
-
         mAdapter = new EquipmentChangeListAdapter(R.layout.item_equipment_change_list);
         mAdapter.bindToRecyclerView(rvList);
         mAdapter.setOnLoadMoreListener(this);

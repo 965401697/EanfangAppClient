@@ -3,6 +3,7 @@ package net.eanfang.client.ui.fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -15,7 +16,6 @@ import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
 import com.eanfang.witget.PersonalQRCodeDialog;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
@@ -39,7 +39,7 @@ public class MyFragment extends BaseFragment {
     @BindView(R.id.iv_user_header)
     CircleImageView ivUserHeader;
     private TextView tv_user_name;
-    private SimpleDraweeView mIvPersonalQRCode;
+    private ImageView mIvPersonalQRCode;
     // Dialog
     private PersonalQRCodeDialog personalQRCodeDialog;
 

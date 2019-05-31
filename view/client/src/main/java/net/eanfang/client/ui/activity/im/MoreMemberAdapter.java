@@ -1,12 +1,13 @@
 package net.eanfang.client.ui.activity.im;
 
+import android.content.Context;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.biz.model.GroupDetailBean;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 
 import net.eanfang.client.R;
 
@@ -19,17 +20,15 @@ import net.eanfang.client.R;
  */
 public class MoreMemberAdapter extends BaseQuickAdapter<GroupDetailBean.ListBean.AccountEntityBean, BaseViewHolder> {
 
-
-    public MoreMemberAdapter(int layoutResId) {
+    private Context context;
+    public MoreMemberAdapter(Context context,int layoutResId) {
         super(layoutResId);
+        this.context=context;
     }
 
     @Override
     protected void convert(BaseViewHolder helper, GroupDetailBean.ListBean.AccountEntityBean item) {
-
-
-        ((SimpleDraweeView) helper.getView(R.id.iv_friend_header)).setImageURI(BuildConfig.OSS_SERVER + item.getAvatar());
-
+        GlideUtil.intoImageView(context,BuildConfig.OSS_SERVER + item.getAvatar(),helper.getView(R.id.iv_friend_header));
         //根据position获取首字母作为目录catalog
         String catalog = item.getFirstLetter();
 

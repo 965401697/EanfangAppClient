@@ -26,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_128">
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <com.eanfang.base.widget.customview.CircleImageView
             android:id="@+id/iv_friend_header"
             android:layout_width="@dimen/dimen_80"
             android:layout_height="@dimen/dimen_80"
@@ -34,8 +34,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="@dimen/dimen_36"
             android:layout_toRightOf="@+id/cb_checked"
-            fresco:placeholderImage="@mipmap/ic_header"
-            fresco:roundAsCircle="true" />
+            android:src="@mipmap/ic_header" />
 
 
         <TextView

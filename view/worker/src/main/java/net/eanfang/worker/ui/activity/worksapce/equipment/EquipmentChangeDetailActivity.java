@@ -4,6 +4,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
@@ -11,7 +13,7 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GetDateUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 import com.yaf.base.entity.CustDeviceChangeLogEntity;
 
 import net.eanfang.worker.R;
@@ -46,11 +48,11 @@ public class EquipmentChangeDetailActivity extends BaseWorkerActivity {
     @BindView(R.id.tv_service_person)
     TextView tvServicePerson;
     @BindView(R.id.iv_locale_one)
-    SimpleDraweeView ivLocaleOne;
+    ImageView ivLocaleOne;
     @BindView(R.id.iv_locale_two)
-    SimpleDraweeView ivLocaleTwo;
+    ImageView ivLocaleTwo;
     @BindView(R.id.iv_loacle_three)
-    SimpleDraweeView ivLoacleThree;
+    ImageView ivLoacleThree;
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
 
@@ -129,11 +131,11 @@ public class EquipmentChangeDetailActivity extends BaseWorkerActivity {
         tvServicePerson.setText(bean.getRepairUser());
         String[] pictures = bean.getLocationPictures().split(",");
         if (pictures != null && pictures.length >= 1) {
-            ivLocaleOne.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + pictures[0]));
+            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + pictures[0]),ivLocaleOne);
         } else if (pictures != null && pictures.length >= 2) {
-            ivLocaleTwo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + pictures[1]));
+            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + pictures[1]),ivLocaleTwo);
         } else if (pictures != null && pictures.length >= 3) {
-            ivLoacleThree.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + pictures[2]));
+            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + pictures[2]),ivLoacleThree);
         }
 
         if (bean.getParams() != null && bean.getParams().size() > 0) {

@@ -9,7 +9,7 @@
         android:id="@+id/header"
         layout="@layout/header_eanfang" />
 
-    <com.facebook.drawee.view.SimpleDraweeView
+    <ImageView
         android:id="@+id/iv_icon"
         android:layout_width="100dp"
         android:layout_height="100dp"
@@ -17,7 +17,7 @@
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        fresco:placeholderImage="@mipmap/ic_header" />
+        android:src="@mipmap/ic_header" />
 
     <TextView
         android:id="@+id/tv_name"

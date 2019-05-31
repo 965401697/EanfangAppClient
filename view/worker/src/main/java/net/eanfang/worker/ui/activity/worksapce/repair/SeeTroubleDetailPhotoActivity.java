@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.annimon.stream.Stream;
@@ -11,9 +12,9 @@ import com.eanfang.BuildConfig;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
@@ -54,7 +55,7 @@ public class SeeTroubleDetailPhotoActivity extends BaseActivity {
     @BindView(R.id.snpl_moment_add_photos)
     BGASortableNinePhotoLayout snplMomentAddPhotos;
     @BindView(R.id.iv_thumbnail_moment)
-    SimpleDraweeView ivThumbnailMoment;
+    ImageView ivThumbnailMoment;
     @BindView(R.id.rl_thumbnail_moment)
     RelativeLayout rlThumbnailMoment;
     /**
@@ -63,7 +64,7 @@ public class SeeTroubleDetailPhotoActivity extends BaseActivity {
     @BindView(R.id.snpl_monitor_add_photos)
     BGASortableNinePhotoLayout snplMonitorAddPhotos;
     @BindView(R.id.iv_thumbnail_monitor)
-    SimpleDraweeView ivThumbnailMonitor;
+    ImageView ivThumbnailMonitor;
     @BindView(R.id.rl_thumbnail_monitor)
     RelativeLayout rlThumbnailMonitor;
     /**
@@ -72,7 +73,7 @@ public class SeeTroubleDetailPhotoActivity extends BaseActivity {
     @BindView(R.id.snpl_tools_package_add_photos)
     BGASortableNinePhotoLayout snplToolsPackageAddPhotos;
     @BindView(R.id.iv_thumbnail_tools_package)
-    SimpleDraweeView ivThumbnailToolsPackage;
+    ImageView ivThumbnailToolsPackage;
     @BindView(R.id.rl_thumbnail_tools_package)
     RelativeLayout rlThumbnailToolsPackage;
     /**
@@ -81,7 +82,7 @@ public class SeeTroubleDetailPhotoActivity extends BaseActivity {
     @BindView(R.id.snpl_after_processing_locale)
     BGASortableNinePhotoLayout snplAfterProcessingLocale;
     @BindView(R.id.iv_thumbnail_after)
-    SimpleDraweeView ivThumbnailAfter;
+    ImageView ivThumbnailAfter;
     @BindView(R.id.rl_thumbnail_after)
     RelativeLayout rlThumbnailAfter;
     /**
@@ -90,7 +91,7 @@ public class SeeTroubleDetailPhotoActivity extends BaseActivity {
     @BindView(R.id.snpl_machine_fit_back)
     BGASortableNinePhotoLayout snplMachineFitBack;
     @BindView(R.id.iv_thumbnail_machine)
-    SimpleDraweeView ivThumbnailMachine;
+    ImageView ivThumbnailMachine;
     @BindView(R.id.rl_thumbnail_machine)
     RelativeLayout rlThumbnailMachine;
     /**
@@ -99,7 +100,7 @@ public class SeeTroubleDetailPhotoActivity extends BaseActivity {
     @BindView(R.id.snpl_failure_recover_phenomena)
     BGASortableNinePhotoLayout snplFailureRecoverPhenomena;
     @BindView(R.id.iv_thumbnail_failure)
-    SimpleDraweeView ivThumbnailFailure;
+    ImageView ivThumbnailFailure;
     @BindView(R.id.rl_thumbnail_failure)
     RelativeLayout rlThumbnailFailure;
     /**
@@ -162,42 +163,42 @@ public class SeeTroubleDetailPhotoActivity extends BaseActivity {
          */
         if (!StringUtils.isEmpty(bughandleDetailEntity.getPresentation_mp4_path())) {
             rlThumbnailMoment.setVisibility(View.VISIBLE);
-            ivThumbnailMoment.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bughandleDetailEntity.getPresentation_mp4_path() + ".jpg"));
+            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + bughandleDetailEntity.getPresentation_mp4_path() + ".jpg"),ivThumbnailMoment);
         }
         /**
          * 工具及蓝布 （3张）
          */
         if (!StringUtils.isEmpty(bughandleDetailEntity.getTool_mp4_path())) {
             rlThumbnailMonitor.setVisibility(View.VISIBLE);
-            ivThumbnailMonitor.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bughandleDetailEntity.getTool_mp4_path() + ".jpg"));
+            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + bughandleDetailEntity.getTool_mp4_path() + ".jpg"),ivThumbnailMonitor);
         }
         /**
          * 故障点照片 （3张）
          */
         if (!StringUtils.isEmpty(bughandleDetailEntity.getPoint_mp4_path())) {
             rlThumbnailToolsPackage.setVisibility(View.VISIBLE);
-            ivThumbnailToolsPackage.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bughandleDetailEntity.getPoint_mp4_path() + ".jpg"));
+            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + bughandleDetailEntity.getPoint_mp4_path() + ".jpg"),ivThumbnailToolsPackage);
         }
         /**
          * 处理后现场 （3张）
          */
         if (!StringUtils.isEmpty(bughandleDetailEntity.getAfter_handle_mp4_path())) {
             rlThumbnailAfter.setVisibility(View.VISIBLE);
-            ivThumbnailAfter.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bughandleDetailEntity.getAfter_handle_mp4_path() + ".jpg"));
+            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + bughandleDetailEntity.getAfter_handle_mp4_path() + ".jpg"),ivThumbnailAfter);
         }
         /**
          * 设备回装 （3张）
          */
         if (!StringUtils.isEmpty(bughandleDetailEntity.getDevice_return_install_mp4_path())) {
             rlThumbnailMachine.setVisibility(View.VISIBLE);
-            ivThumbnailMachine.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bughandleDetailEntity.getDevice_return_install_mp4_path() + ".jpg"));
+            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + bughandleDetailEntity.getDevice_return_install_mp4_path() + ".jpg"),ivThumbnailMachine);
         }
         /**
          * 故障恢复后表象 （3张）
          */
         if (!StringUtils.isEmpty(bughandleDetailEntity.getRestore_mp4_path())) {
             rlThumbnailFailure.setVisibility(View.VISIBLE);
-            ivThumbnailFailure.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bughandleDetailEntity.getRestore_mp4_path() + ".jpg"));
+            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + bughandleDetailEntity.getRestore_mp4_path() + ".jpg"),ivThumbnailFailure);
         }
     }
 

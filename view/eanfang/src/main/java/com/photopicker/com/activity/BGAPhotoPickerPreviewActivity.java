@@ -271,11 +271,16 @@ public class BGAPhotoPickerPreviewActivity extends BGAPPToolbarActivity implemen
     public void onViewTap(View view, float x, float y) {
         if (System.currentTimeMillis() - mLastShowHiddenTime > 500) {
             mLastShowHiddenTime = System.currentTimeMillis();
-            if (mIsHidden) {
-                showTitleBarAndChooseBar();
-            } else {
-                hiddenToolBarAndChooseBar();
-            }
+//            if (mIsHidden) {
+//                showTitleBarAndChooseBar();
+//            } else {
+//                hiddenToolBarAndChooseBar();
+//            }
+            Intent intent = new Intent();
+            intent.putStringArrayListExtra(EXTRA_SELECTED_IMAGES, mSelectedImages);
+            intent.putExtra(EXTRA_IS_FROM_TAKE_PHOTO, mIsFromTakePhoto);
+            setResult(RESULT_CANCELED, intent);
+            finish();
         }
     }
 

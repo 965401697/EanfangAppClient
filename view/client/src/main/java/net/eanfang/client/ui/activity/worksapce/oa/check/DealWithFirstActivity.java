@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -14,15 +15,16 @@ import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.TemplateBean;
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.WorkInspectDetailEntity;
 import com.yaf.base.entity.WorkInspectEntity;
 
@@ -50,7 +52,7 @@ import butterknife.OnClick;
  */
 public class DealWithFirstActivity extends BaseActivity {
     @BindView(R.id.iv_header)
-    SimpleDraweeView ivHeader;
+    CircleImageView ivHeader;
     @BindView(R.id.tv_company)
     TextView tvCompany;
     @BindView(R.id.tv_name)
@@ -78,15 +80,15 @@ public class DealWithFirstActivity extends BaseActivity {
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     @BindView(R.id.iv_pic1)
-    SimpleDraweeView ivPic1;
+    ImageView ivPic1;
     @BindView(R.id.iv_pic2)
-    SimpleDraweeView ivPic2;
+    ImageView ivPic2;
     @BindView(R.id.iv_pic3)
-    SimpleDraweeView ivPic3;
+    ImageView ivPic3;
     @BindView(R.id.ll_pic)
     LinearLayout llPic;
     @BindView(R.id.iv_takevideo_work)
-    SimpleDraweeView ivTakevideoWork;
+    ImageView ivTakevideoWork;
     @BindView(R.id.rl_thumbnail)
     RelativeLayout rlThumbnail;
     @BindView(R.id.tv_person)
@@ -187,7 +189,7 @@ public class DealWithFirstActivity extends BaseActivity {
                 .execute(new EanfangCallback<WorkInspectEntity>(this, true, WorkInspectEntity.class, (bean) -> {
                             mBean = bean;
                             //头像
-                            ivHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bean.getAssigneeUser().getAccountEntity().getAvatar()));
+                    GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + bean.getAssigneeUser().getAccountEntity().getAvatar()),ivHeader);
                             tvCompany.setText(bean.getCompanyName());
                             tvDate.setText(bean.getCreateTime());
                             tvTime.setText(bean.getChangeDeadlineTime());
@@ -305,7 +307,7 @@ public class DealWithFirstActivity extends BaseActivity {
      * MP4
      */
     public void setMp4(String mp4Path) {
-        ivTakevideoWork.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + mp4Path + ".jpg"));
+        GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + mp4Path + ".jpg"),ivTakevideoWork);
         ivTakevideoWork.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -324,7 +326,7 @@ public class DealWithFirstActivity extends BaseActivity {
         String[] urls = photoPath.split(",");
         ArrayList<String> picList = new ArrayList<String>();
         if (urls.length >= 1) {
-            ivPic1.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[0]));
+            GlideUtil.intoImageView(this,BuildConfig.OSS_SERVER + Uri.parse(urls[0]),ivPic1);
             ivPic1.setVisibility(View.VISIBLE);
             ivPic1.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -339,7 +341,7 @@ public class DealWithFirstActivity extends BaseActivity {
         }
 
         if (urls.length >= 2) {
-            ivPic2.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[1]));
+            GlideUtil.intoImageView(this,BuildConfig.OSS_SERVER + Uri.parse(urls[1]),ivPic2);
             ivPic2.setVisibility(View.VISIBLE);
             ivPic2.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -353,7 +355,7 @@ public class DealWithFirstActivity extends BaseActivity {
             ivPic2.setVisibility(View.GONE);
         }
         if (urls.length >= 3) {
-            ivPic3.setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[2]));
+            GlideUtil.intoImageView(this,BuildConfig.OSS_SERVER + Uri.parse(urls[2]),ivPic3);
             ivPic3.setVisibility(View.VISIBLE);
             ivPic3.setOnClickListener(new View.OnClickListener() {
                 @Override

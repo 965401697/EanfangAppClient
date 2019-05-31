@@ -25,8 +25,8 @@ public class PutUpSelectWorkerAdapter extends BaseQuickAdapter<WorkerEntity, Bas
     protected void convert(BaseViewHolder helper, WorkerEntity item) {
 //        if (!StringUtils.isEmpty(item.getHeadpic())){
 //            Uri uri = Uri.parse(item.getHeadpic());
-//            SimpleDraweeView simpleDraweeView = helper.getView(R.id.iv_header);
-//            simpleDraweeView.setImageURI(uri);
+//            ImageView imagev = helper.getView(R.id.iv_header);
+//            imagev.setImageURI(uri);
 //        }
 
         float starNum = (float) 5.0;

@@ -60,7 +60,7 @@ public class GroupShutupMberActivity extends BaseClientActivity {
 
     private void initViews() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mShutupMberAdapter = new ShutupMberAdapter(R.layout.item_transfer_own);//标志位 就是为了显示checkbox
+        mShutupMberAdapter = new ShutupMberAdapter(this,R.layout.item_transfer_own);//标志位 就是为了显示checkbox
         mShutupMberAdapter.bindToRecyclerView(mRecyclerView);
 
         mShutupMberAdapter.setNewData(mFriendListBeanArrayList);

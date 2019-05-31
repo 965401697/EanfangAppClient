@@ -1,9 +1,11 @@
 package net.eanfang.worker.ui.activity.worksapce.online;
 
+import android.widget.ImageView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.eanfang.biz.model.entity.BaseDataEntity;
+import com.eanfang.util.GlideUtil;
 
 import net.eanfang.worker.R;
 
@@ -24,7 +26,7 @@ public class SystemTypeAdapter extends BaseQuickAdapter<BaseDataEntity, BaseView
 
     @Override
     protected void convert(BaseViewHolder helper, BaseDataEntity item) {
-        ((SimpleDraweeView) helper.getView(R.id.im_sys_pic)).setImageResource(mPicArray[helper.getAdapterPosition()]);
+        ((ImageView) helper.getView(R.id.im_sys_pic)).setImageResource(mPicArray[helper.getAdapterPosition()]);
         helper.setText(R.id.tv_sys_name, item.getDataName());
     }
 }

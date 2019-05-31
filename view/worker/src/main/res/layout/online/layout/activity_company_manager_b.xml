@@ -54,13 +54,12 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/dimen_20">
 
-                    <com.facebook.drawee.view.SimpleDraweeView
+                    <com.eanfang.base.widget.customview.CircleImageView
                         android:id="@+id/gs_log_sdv"
                         android:layout_width="@dimen/dimen_100"
                         android:layout_height="@dimen/dimen_100"
                         android:layout_marginRight="@dimen/dimen_20"
-                        app:placeholderImage="@drawable/worker_logo"
-                        app:roundAsCircle="true" />
+                        android:src="@drawable/worker_logo"/>
 
                     <TextView
                         android:id="@+id/gs_name_tv"

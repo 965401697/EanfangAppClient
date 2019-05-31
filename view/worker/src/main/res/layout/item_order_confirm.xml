@@ -43,11 +43,11 @@
             android:orientation="horizontal"
             android:padding="10dp">
 
-            <com.facebook.drawee.view.SimpleDraweeView
+            <ImageView
                 android:id="@+id/iv_pic"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                fresco:placeholderImage="@mipmap/ic_nodata" />
+                android:src="@mipmap/ic_nodata" />
 
             <LinearLayout
                 android:layout_width="wrap_content"

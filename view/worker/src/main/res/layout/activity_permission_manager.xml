@@ -18,15 +18,15 @@
         android:background="@color/white"
         android:visibility="gone">
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <com.eanfang.base.widget.customview.CircleImageView
             android:id="@+id/iv_user_header"
             android:layout_width="@dimen/dimen_80"
             android:layout_height="@dimen/dimen_80"
             android:layout_marginBottom="@dimen/dimen_24"
             android:layout_marginLeft="@dimen/dimen_36"
             android:layout_marginTop="@dimen/dimen_24"
-            fresco:placeholderImage="@mipmap/ic_header"
-            fresco:roundAsCircle="true" />
+            android:src="@mipmap/ic_header"
+             />
 
         <TextView
             android:id="@+id/tv_name_phone"

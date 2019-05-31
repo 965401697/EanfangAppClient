@@ -1,13 +1,14 @@
 package net.eanfang.worker.ui.adapter;
 
 import android.net.Uri;
+import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 import com.yaf.base.entity.RepairFailureEntity;
 
 import net.eanfang.worker.R;
@@ -42,11 +43,11 @@ public class LeaveBugAdapter extends BaseQuickAdapter<RepairFailureEntity, BaseV
         helper.setText(R.id.tv_instrument, item.getDeviceName());
         helper.setText(R.id.tv_equipmentposition, item.getBugPosition());
         helper.setText(R.id.tv_description, item.getBugDescription());
-        SimpleDraweeView simpleDraweeView = helper.getView(R.id.sdv_pic);
+        ImageView imageView = helper.getView(R.id.sdv_pic);
         //将业务类型的图片显示到列表
         if (item.getPictures() != null) {
             String[] urls = item.getPictures().split(",");
-            simpleDraweeView.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[0]));
+            GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + urls[0]),imageView);
         }
 
         helper.addOnClickListener(R.id.tv_select);

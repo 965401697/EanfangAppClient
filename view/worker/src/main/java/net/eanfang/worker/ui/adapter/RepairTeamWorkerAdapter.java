@@ -4,7 +4,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.biz.model.TemplateBean;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 
 import net.eanfang.worker.R;
 
@@ -22,6 +22,6 @@ public class RepairTeamWorkerAdapter extends BaseQuickAdapter<TemplateBean.Preso
     @Override
     protected void convert(BaseViewHolder helper, TemplateBean.Preson item) {
         helper.setText(R.id.tv_team_worker, item.getName());
-        ((SimpleDraweeView) helper.getView(R.id.iv_header)).setImageURI(BuildConfig.OSS_SERVER + item.getProtraivat());
+        GlideUtil.intoImageView(mContext,BuildConfig.OSS_SERVER + item.getProtraivat(),helper.getView(R.id.iv_header));
     }
 }

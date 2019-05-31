@@ -6,7 +6,7 @@ import android.text.TextUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 import com.yaf.base.entity.AnswerListWithQuestionBean;
 
 import net.eanfang.worker.R;
@@ -37,7 +37,7 @@ public class FaultExplainAdapter extends BaseQuickAdapter<AnswerListWithQuestion
     @Override
     protected void convert(BaseViewHolder helper, AnswerListWithQuestionBean.ExpertAnswersBean item) {
         //头像
-        ((SimpleDraweeView) helper.getView(R.id.iv_expert_header)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getExpertsCertificationEntity().getAvatarPhoto()));
+        GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + item.getExpertsCertificationEntity().getAvatarPhoto()),helper.getView(R.id.iv_expert_header));
         //名字
         helper.setText(R.id.tv_expert_name, item.getExpertsCertificationEntity().getApproveUserName());
         //品牌专家

@@ -101,7 +101,7 @@
                     android:layout_height="@dimen/dimen_94"
                     android:background="@color/colorPrimary" />
 
-                <com.facebook.drawee.view.SimpleDraweeView
+                <com.eanfang.base.widget.customview.CircleImageView
                     android:id="@+id/img_user_header"
                     android:layout_width="@dimen/dimen_182"
                     android:layout_height="@dimen/dimen_182"
@@ -109,8 +109,8 @@
                     android:background="@drawable/bg_user_home_circle_head"
                     android:padding="@dimen/dimen_10"
                     android:scaleType="centerCrop"
-                    fresco:placeholderImage="@mipmap/ic_header_userinfo"
-                    fresco:roundAsCircle="true" />
+                    android:src="@mipmap/ic_header_userinfo"
+                    />
 
             </RelativeLayout>
 

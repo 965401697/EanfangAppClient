@@ -9,9 +9,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
@@ -30,7 +31,7 @@ import io.rong.imlib.model.UserInfo;
 public class SystemMessageActivity extends BaseWorkerActivity {
 
     @BindView(R.id.iv_icon)
-    SimpleDraweeView ivIocn;
+    CircleImageView ivIocn;
     @BindView(R.id.tv_name)
     TextView tvName;
     @BindView(R.id.tv_msg)
@@ -61,7 +62,7 @@ public class SystemMessageActivity extends BaseWorkerActivity {
         tvName.setText(userInfo.getName());
         tvMsg.setText("想添加您为好友");
         if (userInfo.getPortraitUri() != null) {
-            ivIocn.setImageURI(Uri.parse(userInfo.getPortraitUri().toString()));
+            GlideUtil.intoImageView(this,Uri.parse(userInfo.getPortraitUri().toString()),ivIocn);
         }
 
         int unreadCount = RongIM.getInstance().getUnreadCount(Conversation.ConversationType.SYSTEM, userInfo.getUserId());

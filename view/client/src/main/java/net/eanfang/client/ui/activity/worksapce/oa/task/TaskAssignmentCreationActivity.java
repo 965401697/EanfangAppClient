@@ -34,12 +34,12 @@ import com.eanfang.takevideo.TakeVdideoMode;
 import com.eanfang.takevideo.TakeVideoActivity;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.DialogUtil;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
@@ -95,7 +95,7 @@ public class TaskAssignmentCreationActivity extends BaseClientActivity {
     @BindView(R.id.rv_team_work)
     RecyclerView rvTeamWork;
     @BindView(R.id.iv_takevideo_work)
-    SimpleDraweeView ivTakevideoWork;
+    ImageView ivTakevideoWork;
     @BindView(R.id.rl_thumbnail_work)
     RelativeLayout rlThumbnailWork;
     @BindView(R.id.snpl_photos_work)
@@ -558,8 +558,7 @@ public class TaskAssignmentCreationActivity extends BaseClientActivity {
                 if (ivTakevideoWork.getVisibility() == View.INVISIBLE) {
                     ivTakevideoWork.setVisibility(View.VISIBLE);
                 }
-
-                ivTakevideoWork.setImageBitmap(PhotoUtils.getVideoThumbnail(mVieoPath, 100, 100, MINI_KIND));
+                GlideUtil.intoImageView(this,PhotoUtils.getVideoThumbnail(mVieoPath, 100, 100, MINI_KIND),ivTakevideoWork);
             }
 
         }

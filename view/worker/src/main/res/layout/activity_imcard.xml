@@ -24,14 +24,14 @@
                 android:scaleType="fitXY"
                 android:src="@mipmap/im_card_bg" />
 
-            <com.facebook.drawee.view.SimpleDraweeView
+            <com.eanfang.base.widget.customview.CircleImageView
                 android:id="@+id/iv_header"
                 android:layout_width="@dimen/dimen_166"
                 android:layout_height="@dimen/dimen_166"
                 android:layout_centerHorizontal="true"
                 android:layout_marginLeft="@dimen/dimen_36"
                 android:layout_marginTop="@dimen/dimen_194"
-                fresco:placeholderImage="@mipmap/ic_header"
+                android:src="@mipmap/ic_header"
                 fresco:roundAsCircle="true" />
 
 

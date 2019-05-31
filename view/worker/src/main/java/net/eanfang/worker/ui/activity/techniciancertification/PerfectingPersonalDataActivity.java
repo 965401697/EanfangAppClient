@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -27,10 +28,10 @@ import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.jph.takephoto.model.TImage;
 import com.jph.takephoto.model.TResult;
 import com.eanfang.biz.model.entity.AccountEntity;
@@ -70,7 +71,7 @@ public class PerfectingPersonalDataActivity extends BaseActivityWithTakePhoto {
     EditText tvContactName;
 
     @BindView(R.id.iv_header)
-    SimpleDraweeView ivHeader;
+    CircleImageView ivHeader;
     @BindView(R.id.et_card_id)
     EditText etCardId;
     @BindView(R.id.rb_man)
@@ -128,7 +129,7 @@ public class PerfectingPersonalDataActivity extends BaseActivityWithTakePhoto {
 
     @SuppressLint("NewApi")
     private void fillData() {
-        ivHeader.setImageURI(BuildConfig.OSS_SERVER + accountEntity.getAvatar());
+        GlideUtil.intoImageView(this,BuildConfig.OSS_SERVER + accountEntity.getAvatar(),ivHeader);
         String contactName = WorkerApplication.get().getLoginBean().getAccount().getRealName();
         if ((!StringUtils.isEmpty(contactName)) & (!contactName.contains("易安防")) & (!contactName.contains("匿名用户"))) {
             tvContactName.setText(contactName);
@@ -196,7 +197,7 @@ public class PerfectingPersonalDataActivity extends BaseActivityWithTakePhoto {
         switch (resultCode) {
             case HEADER_PIC:
                 accountEntity.setAvatar(imgKey);
-                ivHeader.setImageURI("file://" + image.getOriginalPath());
+                GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),ivHeader);
                 break;
             default:
                 break;

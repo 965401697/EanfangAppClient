@@ -12,12 +12,12 @@
         android:layout_marginTop="@dimen/dimen_30"
         android:layout_height="@dimen/dimen_80">
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/iv_user_header"
             android:layout_width="@dimen/dimen_70"
             android:layout_height="@dimen/dimen_70"
             android:layout_gravity="center_horizontal"
-            fresco:placeholderImage="@mipmap/im_add"
+            android:src="@mipmap/im_add"
             />
 
         <ImageView

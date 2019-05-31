@@ -15,14 +15,13 @@
         android:layout_height="wrap_content">
 
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <com.eanfang.base.widget.customview.CircleImageView
             android:id="@+id/iv_icon"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_marginRight="@dimen/dimen_30"
-            fresco:roundAsCircle="true"
-            fresco:placeholderImage="@mipmap/ic_header" />
+            android:src="@mipmap/ic_header" />
 
         <TextView
             android:id="@+id/tv_name"

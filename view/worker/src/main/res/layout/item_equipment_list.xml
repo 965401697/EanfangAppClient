@@ -47,7 +47,7 @@
         android:background="@color/white">
 
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/iv_equipment_pic"
             android:layout_width="@dimen/dimen_198"
             android:layout_height="@dimen/dimen_198"
@@ -55,7 +55,7 @@
             android:layout_marginLeft="@dimen/dimen_38"
             android:focusable="false"
             android:scaleType="centerCrop"
-            fresco:placeholderImage="@mipmap/ic_nodata" />
+            android:src="@mipmap/ic_nodata" />
 
         <LinearLayout
             android:id="@+id/ll_decs"

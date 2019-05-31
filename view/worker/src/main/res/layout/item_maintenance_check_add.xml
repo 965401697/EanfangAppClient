@@ -28,13 +28,13 @@
             android:layout_marginTop="@dimen/dimen_44"
             android:text="2018-05-1" />
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/iv_upload"
             android:layout_width="@dimen/dimen_180"
             android:layout_height="@dimen/dimen_170"
             android:layout_below="@+id/tv_date"
             android:layout_marginLeft="@dimen/dimen_36"
-            fresco:placeholderImage="@mipmap/ic_nodata" />
+            android:src="@mipmap/ic_nodata" />
 
 
         <ImageView

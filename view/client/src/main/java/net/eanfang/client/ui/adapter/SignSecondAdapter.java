@@ -1,10 +1,11 @@
 package net.eanfang.client.ui.adapter;
 
+import android.widget.ImageView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.config.Config;
 import com.eanfang.biz.model.SignListBean;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
 
@@ -22,7 +23,7 @@ public class SignSecondAdapter extends BaseQuickAdapter<SignListBean.ListBean, B
 
     @Override
     protected void convert(BaseViewHolder helper, SignListBean.ListBean item) {
-        SimpleDraweeView iv_header = helper.getView(R.id.iv_header);
+        ImageView iv_header = helper.getView(R.id.iv_header);
 
         // status 0 签到 1  签退
         if (item.getStatus() == 0) {

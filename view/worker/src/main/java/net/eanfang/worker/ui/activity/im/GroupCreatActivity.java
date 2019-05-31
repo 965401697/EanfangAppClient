@@ -7,6 +7,7 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.http.EanfangCallback;
@@ -15,11 +16,11 @@ import com.eanfang.biz.model.GroupCreatBean;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UuidUtil;
 import com.eanfang.util.compound.CompoundHelper;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.jph.takephoto.model.TImage;
 import com.jph.takephoto.model.TResult;
 
@@ -45,7 +46,7 @@ public class GroupCreatActivity extends BaseActivityWithTakePhoto {
     @BindView(R.id.btn_created)
     Button btnCreated;
     @BindView(R.id.iv_icon)
-    SimpleDraweeView ivIcon;
+    ImageView ivIcon;
     private final int HEADER_PIC = 107;
     private String imgKey;
     private String path;
@@ -57,8 +58,7 @@ public class GroupCreatActivity extends BaseActivityWithTakePhoto {
             path = (String) msg.obj;
 
             if (!TextUtils.isEmpty(path)) {
-                ivIcon.setImageURI("file://" + path);
-
+                GlideUtil.intoImageView(GroupCreatActivity.this, "file://" + path, ivIcon);
                 imgKey = "im/group/" + UuidUtil.getUUID() + ".png";
 
             }
@@ -165,9 +165,7 @@ public class GroupCreatActivity extends BaseActivityWithTakePhoto {
         }
         TImage image = result.getImage();
         imgKey = "im/group/" + UuidUtil.getUUID() + ".png";
-
-        ivIcon.setImageURI("file://" + image.getOriginalPath());
-
+        GlideUtil.intoImageView(this, "file://" + image.getOriginalPath(), ivIcon);
         OSSUtils.initOSS(this).asyncPutImage(imgKey, image.getOriginalPath(), new OSSCallBack(this, true) {
         });
 

@@ -10,6 +10,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -17,8 +18,8 @@ import com.eanfang.biz.model.FriendListBean;
 import com.eanfang.biz.model.OrganizationBean;
 import com.eanfang.biz.model.SectionBean;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.ToastUtil;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.eanfang.biz.model.entity.AccountEntity;
 import com.eanfang.biz.model.entity.UserEntity;
 
@@ -36,7 +37,7 @@ import butterknife.OnClick;
 public class AddStaffNextActivity extends BaseWorkerActivity {
 
     @BindView(R.id.iv_user_header)
-    SimpleDraweeView ivUserHeader;
+    CircleImageView ivUserHeader;
     @BindView(R.id.tv_name_phone)
     TextView tvNamePhone;
     @BindView(R.id.tv_address)
@@ -64,8 +65,7 @@ public class AddStaffNextActivity extends BaseWorkerActivity {
         setTitle("添加员工");
         setLeftBack();
         friendBean = (FriendListBean) getIntent().getSerializableExtra("bean");
-
-        ivUserHeader.setImageURI(BuildConfig.OSS_SERVER + friendBean.getAvatar());
+        GlideUtil.intoImageView(this,BuildConfig.OSS_SERVER + friendBean.getAvatar(),ivUserHeader);
         tvNamePhone.setText(friendBean.getNickName() + "(" + friendBean.getMobile() + ")");
         if (!TextUtils.isEmpty(friendBean.getAreaCode())) {
             tvAddress.setText(Config.get().getAddressByCode(friendBean.getAreaCode()) + friendBean.getAddress());

@@ -6,7 +6,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 import com.yaf.base.entity.NoticePushEntity;
 
 import net.eanfang.worker.R;
@@ -32,6 +32,6 @@ public class OfficialAdapter extends BaseQuickAdapter<NoticePushEntity, BaseView
         }
         helper.setText(R.id.tv_title, item.getNoticeTitle());
         helper.setText(R.id.tv_desc, item.getNoticeDescribe());
-        ((SimpleDraweeView) helper.getView(R.id.iv_pic)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getPicture()));
+        GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + item.getPicture()),helper.getView(R.id.iv_pic));
     }
 }

@@ -99,7 +99,7 @@ public class SubtractFriendsActivity extends BaseClientActivity {
 
     private void initViews() {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mGroupFriendsAdapter = new GroupFriendsAdapter(R.layout.item_friend_list);//标志位 就是为了显示checkbox
+        mGroupFriendsAdapter = new GroupFriendsAdapter(this,R.layout.item_friend_list);//标志位 就是为了显示checkbox
         mGroupFriendsAdapter.bindToRecyclerView(recyclerView);
         mList = new ArrayList<>();
         for (GroupDetailBean.ListBean bean : mFriendListBeanArrayList) {

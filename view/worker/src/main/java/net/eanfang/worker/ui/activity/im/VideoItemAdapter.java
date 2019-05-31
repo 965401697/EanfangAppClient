@@ -7,7 +7,7 @@ import android.widget.CheckBox;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.biz.model.VideoBean;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 
 import net.eanfang.worker.R;
 
@@ -22,9 +22,7 @@ public class VideoItemAdapter extends BaseQuickAdapter<VideoBean, BaseViewHolder
 
     @Override
     protected void convert(BaseViewHolder helper, VideoBean item) {
-
-        ((SimpleDraweeView) helper.getView(R.id.iv_video)).setImageURI(Uri.parse("file://" + item.getPath()));
-
+        GlideUtil.intoImageView(mContext,Uri.parse("file://" + item.getPath()),helper.getView(R.id.iv_video));
         if (item.getFlag() == 0) {
             helper.getView(R.id.rl_obscuration).setVisibility(View.INVISIBLE);
             ((CheckBox) helper.getView(R.id.cb_checked)).setChecked(false);

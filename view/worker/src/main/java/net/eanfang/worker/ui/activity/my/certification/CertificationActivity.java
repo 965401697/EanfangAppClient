@@ -9,15 +9,16 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.jph.takephoto.model.TImage;
 import com.jph.takephoto.model.TResult;
 import com.yaf.base.entity.TechWorkerVerifyEntity;
@@ -42,7 +43,7 @@ public class CertificationActivity extends BaseActivityWithTakePhoto {
     @BindView(R.id.tv_contact_phone)
     TextView tvContactPhone;
     @BindView(R.id.iv_header)
-    SimpleDraweeView ivHeader;
+    CircleImageView ivHeader;
     @BindView(R.id.et_card_id)
     EditText etCardId;
     @BindView(R.id.rb_man)
@@ -86,7 +87,7 @@ public class CertificationActivity extends BaseActivityWithTakePhoto {
 
     private void fillData() {
         AccountEntity accountEntity=WorkerApplication.get().getLoginBean().getAccount();
-        ivHeader.setImageURI(com.eanfang.BuildConfig.OSS_SERVER + mTechWorkerVerifyEntity.getAvatarPhoto());
+        GlideUtil.intoImageView(this,com.eanfang.BuildConfig.OSS_SERVER + mTechWorkerVerifyEntity.getAvatarPhoto(),ivHeader);
         String contactName = accountEntity.getRealName();
         String mobile = accountEntity.getMobile();
 
@@ -142,7 +143,7 @@ public class CertificationActivity extends BaseActivityWithTakePhoto {
         switch (resultCode) {
             case HEADER_PIC:
                 mTechWorkerVerifyEntity.setAvatarPhoto(imgKey);
-                ivHeader.setImageURI("file://" + image.getOriginalPath());
+                GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),ivHeader);
                 break;
             default:
                 break;

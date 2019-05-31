@@ -6,7 +6,7 @@ import com.eanfang.BuildConfig;
 import com.eanfang.config.Config;
 import com.eanfang.biz.model.MineTaskListBean;
 import com.eanfang.util.GetConstDataUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 
 import net.eanfang.worker.R;
 
@@ -83,9 +83,9 @@ public class PublishTaskListAdapter extends BaseQuickAdapter<MineTaskListBean.Li
 
         if (item.getPictures() != null) {
             String[] urls = item.getPictures().split(",");
-            ((SimpleDraweeView) helper.getView(R.id.iv_upload)).setImageURI(BuildConfig.OSS_SERVER + urls[0]);
+            GlideUtil.intoImageView(mContext,BuildConfig.OSS_SERVER + urls[0],helper.getView(R.id.iv_upload));
         } else {
-            ((SimpleDraweeView) helper.getView(R.id.iv_upload)).setImageURI(BuildConfig.OSS_SERVER);
+            GlideUtil.intoImageView(mContext,BuildConfig.OSS_SERVER ,helper.getView(R.id.iv_upload));
         }
 
 

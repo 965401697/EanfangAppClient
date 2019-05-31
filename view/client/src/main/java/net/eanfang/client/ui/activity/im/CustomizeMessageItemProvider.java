@@ -11,16 +11,18 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.config.Constant;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.PermKit;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.worksapce.OrderDetailActivity;
 import net.eanfang.client.ui.activity.worksapce.TroubleDetalilListActivity;
 import net.eanfang.client.ui.activity.worksapce.defendlog.DefendLogDetailActivity;
@@ -48,7 +50,7 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
         TextView orderNum;
         TextView creatTime;
         TextView workerName;
-        SimpleDraweeView simpleDraweeView;
+        ImageView simpleDraweeView;
         LinearLayout ll_custom;
     }
 
@@ -59,14 +61,14 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
         if (customizeMessage.getShareType().equals("1")) {
             holder.title.setText("报修订单");
             holder.orderNum.setText("单号：" + customizeMessage.getOrderNum());
-            holder.simpleDraweeView.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + customizeMessage.getPicUrl()));
+            GlideUtil.intoImageView(ClientApplication.get().getApplicationContext(),Uri.parse(BuildConfig.OSS_SERVER + customizeMessage.getPicUrl()),holder.simpleDraweeView);
             holder.creatTime.setText("下单时间：" + customizeMessage.getCreatTime());
             holder.workerName.setText("负责人：" + customizeMessage.getWorkerName());
             holder.status.setText(GetConstDataUtils.getRepairStatus().get(Integer.parseInt(customizeMessage.getStatus())));
         } else if (customizeMessage.getShareType().equals("2")) {
             holder.title.setText("故障处理");
             holder.orderNum.setText("设备名称：" + customizeMessage.getOrderNum());
-            holder.simpleDraweeView.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + customizeMessage.getPicUrl()));
+            GlideUtil.intoImageView(ClientApplication.get().getApplicationContext(),Uri.parse(BuildConfig.OSS_SERVER + customizeMessage.getPicUrl()),holder.simpleDraweeView);
             holder.creatTime.setText("设备位置：" + customizeMessage.getCreatTime());
             if (!TextUtils.isEmpty(customizeMessage.getWorkerName())) {
                 holder.workerName.setText("维修历史：" + customizeMessage.getWorkerName());
@@ -77,14 +79,14 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
         } else if (customizeMessage.getShareType().equals("3")) {
             holder.title.setText("工作汇报");
             holder.orderNum.setText("部门：" + customizeMessage.getOrderNum());
-            holder.simpleDraweeView.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + customizeMessage.getPicUrl()));
+            GlideUtil.intoImageView(ClientApplication.get().getApplicationContext(),Uri.parse(BuildConfig.OSS_SERVER + customizeMessage.getPicUrl()),holder.simpleDraweeView);
             holder.creatTime.setText("类型：" + GetConstDataUtils.getWorkReportTypeList().get(Integer.parseInt(customizeMessage.getCreatTime())));
             holder.workerName.setText("发布人：" + customizeMessage.getWorkerName());
             holder.status.setText(Integer.parseInt(customizeMessage.getStatus()) == 1 ? "已读" : "未读");
         } else if (customizeMessage.getShareType().equals("4")) {
             holder.title.setText("布置任务");
             holder.orderNum.setText("公司：" + customizeMessage.getOrderNum());
-            holder.simpleDraweeView.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + customizeMessage.getPicUrl()));
+            GlideUtil.intoImageView(ClientApplication.get().getApplicationContext(),Uri.parse(BuildConfig.OSS_SERVER + customizeMessage.getPicUrl()),holder.simpleDraweeView);
             holder.creatTime.setText("标题：" + customizeMessage.getCreatTime());
             holder.workerName.setText("发布人：" + customizeMessage.getWorkerName());
             holder.status.setText(Integer.parseInt(customizeMessage.getStatus()) == 1 ? "已读" : "未读");

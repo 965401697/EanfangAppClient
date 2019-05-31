@@ -8,14 +8,14 @@
     android:orientation="vertical">
 
 
-    <com.facebook.drawee.view.SimpleDraweeView
+    <com.eanfang.base.widget.customview.CircleImageView
         android:id="@+id/iv_user_header"
         android:layout_width="@dimen/dimen_70"
         android:layout_height="@dimen/dimen_70"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/dimen_30"
-        fresco:placeholderImage="@mipmap/ic_header"
-        fresco:roundAsCircle="true" />
+        android:src="@mipmap/ic_header"
+         />
 
     <TextView
         android:id="@+id/tv_name"

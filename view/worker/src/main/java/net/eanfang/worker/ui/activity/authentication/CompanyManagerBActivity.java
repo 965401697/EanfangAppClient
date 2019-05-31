@@ -18,12 +18,13 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.BusinessManagementData;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
@@ -60,7 +61,7 @@ public class CompanyManagerBActivity extends BaseActivity implements DissloveTea
     @BindView(R.id.gg_iv)
     ImageView ggIv;
     @BindView(R.id.gs_log_sdv)
-    SimpleDraweeView gsLogSdv;
+    CircleImageView gsLogSdv;
     @BindView(R.id.gs_name_tv)
     TextView gsNameTv;
     @BindView(R.id.iv_verify)
@@ -171,7 +172,7 @@ public class CompanyManagerBActivity extends BaseActivity implements DissloveTea
     private void setData(BusinessManagementData.DataBean data) {
         Log.d("BUSINESS_MANAGEMENT", "setData: " + data.toString());
         gsNameTv.setText(data.getName());
-        gsLogSdv.setImageURI(com.eanfang.BuildConfig.OSS_SERVER + Uri.parse(data.getLogoPic()));
+        GlideUtil.intoImageView(this,com.eanfang.BuildConfig.OSS_SERVER + Uri.parse(data.getLogoPic()),gsLogSdv);
         if (data.getIntro() == null) {
             SpannableString spannableString = new SpannableString("公司简介: ");
             spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#006BFF")), 0, 5, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);

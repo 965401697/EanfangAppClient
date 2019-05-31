@@ -6,7 +6,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.biz.model.TemplateBean;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 
 import net.eanfang.worker.R;
 
@@ -28,11 +28,11 @@ public class OASearchAdapter extends BaseQuickAdapter<TemplateBean.Preson, BaseV
             ((CheckBox) helper.getView(R.id.cb_checked)).setChecked(false);
         }
 
-        ((SimpleDraweeView) helper.getView(R.id.iv_friend_header)).setImageURI(BuildConfig.OSS_SERVER + item.getProtraivat());
+        GlideUtil.intoImageView(mContext,BuildConfig.OSS_SERVER + item.getProtraivat(),helper.getView(R.id.iv_friend_header));
         if (item.getProtraivat().contains("http")) {
-            ((SimpleDraweeView) helper.getView(R.id.iv_friend_header)).setImageURI(item.getProtraivat());
+            GlideUtil.intoImageView(mContext,item.getProtraivat(),helper.getView(R.id.iv_friend_header));
         } else {
-            ((SimpleDraweeView) helper.getView(R.id.iv_friend_header)).setImageURI(BuildConfig.OSS_SERVER + item.getProtraivat());
+            GlideUtil.intoImageView(mContext,BuildConfig.OSS_SERVER + item.getProtraivat(),helper.getView(R.id.iv_friend_header));
         }
         helper.setText(R.id.tv_friend_name, item.getName());
         helper.addOnClickListener(R.id.cb_checked);

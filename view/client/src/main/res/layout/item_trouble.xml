@@ -61,11 +61,11 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <com.facebook.drawee.view.SimpleDraweeView
+            <ImageView
                 android:id="@+id/iv_faultImg"
                 android:layout_width="@dimen/dimen_180"
                 android:layout_height="@dimen/dimen_180"
-                app:placeholderImage="@mipmap/ic_nodata" />
+                android:src="@mipmap/ic_nodata" />
 
             <LinearLayout
                 android:layout_width="wrap_content"

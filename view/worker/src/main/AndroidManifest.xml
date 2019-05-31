@@ -1166,6 +1166,7 @@
             </intent-filter>
         </receiver>
 
+        <activity android:name=".ui.MapTestActivity" />
         <activity
             android:name=".ui.activity.worksapce.online.FindExpertActivity"
             android:launchMode="singleTask" />
@@ -1176,9 +1177,9 @@
         <activity android:name=".ui.activity.worksapce.security.SecurityCommentListActivity" />
         <activity android:name=".ui.activity.worksapce.security.SecurityPersonalPublicListActivity" />
         <activity android:name=".ui.activity.worksapce.security.SecurityFoucsListActivity" />
-        <activity android:name=".ui.activity.my.UserHomeActivity"/>
-        <activity android:name=".ui.activity.im.FollowListActivity"/>
-        <activity android:name=".ui.activity.im.PeerConnectionListActivity"/>
+        <activity android:name=".ui.activity.my.UserHomeActivity" />
+        <activity android:name=".ui.activity.im.FollowListActivity" />
+        <activity android:name=".ui.activity.im.PeerConnectionListActivity" />
     </application>
 
 </manifest>

@@ -9,12 +9,13 @@ import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.device.User;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.ToastUtil;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
@@ -35,7 +36,7 @@ import io.rong.imlib.model.UserInfo;
 public class IMPresonInfoActivity extends BaseClientActivity {
 
     @BindView(R.id.iv_header)
-    SimpleDraweeView ivHeader;
+    CircleImageView ivHeader;
     @BindView(R.id.tv_name)
     TextView tvName;
     @BindView(R.id.tv_phone)
@@ -66,7 +67,7 @@ public class IMPresonInfoActivity extends BaseClientActivity {
         EanfangHttp.get(UserApi.POST_USER_INFO + mUserId)
                 .execute(new EanfangCallback<User>(IMPresonInfoActivity.this, false, User.class, (bean) -> {
                     mUser = bean;
-                    ivHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bean.getAvatar()));
+                    GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + bean.getAvatar()),ivHeader);
                     tvName.setText(bean.getNickName());
                     tvPhone.setText(bean.getMobile());
                     setTitle(bean.getNickName());

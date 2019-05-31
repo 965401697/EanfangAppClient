@@ -7,7 +7,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.biz.model.FriendListBean;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 
 import net.eanfang.worker.R;
 
@@ -26,7 +26,7 @@ public class AddStaffAdapter extends BaseQuickAdapter<FriendListBean, BaseViewHo
     @Override
     protected void convert(BaseViewHolder helper, FriendListBean item) {
         if (!TextUtils.isEmpty(item.getAvatar()) && item.getAvatar().length() > 0) {
-            ((SimpleDraweeView) helper.getView(R.id.iv_friend_header)).setImageURI(BuildConfig.OSS_SERVER + item.getAvatar());
+            GlideUtil.intoImageView(mContext,BuildConfig.OSS_SERVER + item.getAvatar(),helper.getView(R.id.iv_friend_header));
             helper.setVisible(R.id.iv_friend_title, false);
             helper.getView(R.id.iv_friend_header).setVisibility(View.VISIBLE);
         } else {

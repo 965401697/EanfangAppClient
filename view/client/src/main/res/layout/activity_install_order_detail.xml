@@ -260,7 +260,7 @@
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     app:roundAsCircle="true"
-                    fresco:placeholderImage="@mipmap/header" />
+                    android:src="@mipmap/ic_header" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"

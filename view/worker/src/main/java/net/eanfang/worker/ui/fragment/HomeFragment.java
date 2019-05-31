@@ -41,6 +41,7 @@ import com.photopicker.com.util.BGASpaceItemDecoration;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
+import net.eanfang.worker.ui.MapTestActivity;
 import net.eanfang.worker.ui.activity.CameraActivity;
 import net.eanfang.worker.ui.activity.worksapce.InstallOrderParentActivity;
 import net.eanfang.worker.ui.activity.worksapce.MineTaskPublishListSendParentActivity;

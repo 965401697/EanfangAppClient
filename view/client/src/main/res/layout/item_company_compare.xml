@@ -186,11 +186,11 @@
             android:background="@color/white"
             android:orientation="vertical">
 
-            <com.facebook.drawee.view.SimpleDraweeView
+            <ImageView
                 android:id="@+id/iv_license"
                 android:layout_width="150dp"
                 android:layout_height="130dp"
-                fresco:placeholderImage="@mipmap/ic_launcher" />
+                android:src="@mipmap/ic_launcher" />
         </LinearLayout>
 
         <View
@@ -204,11 +204,11 @@
             android:background="@color/white"
             android:orientation="vertical">
 
-            <com.facebook.drawee.view.SimpleDraweeView
+            <ImageView
                 android:id="@+id/iv_honor"
                 android:layout_width="150dp"
                 android:layout_height="130dp"
-                fresco:placeholderImage="@mipmap/ic_launcher" />
+                android:src="@mipmap/ic_launcher" />
         </LinearLayout>
 
         <View

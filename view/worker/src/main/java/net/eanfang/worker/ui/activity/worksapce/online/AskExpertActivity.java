@@ -15,9 +15,10 @@ import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
@@ -31,7 +32,7 @@ import io.rong.imlib.model.Conversation;
 public class AskExpertActivity extends BaseWorkerActivity {
 
     @BindView(R.id.iv_expert_header)
-    SimpleDraweeView ivExpertHeader;
+    CircleImageView ivExpertHeader;
     @BindView(R.id.tv_expert_name)
     TextView tvExpertName;
     @BindView(R.id.tv_line_status)
@@ -108,7 +109,7 @@ public class AskExpertActivity extends BaseWorkerActivity {
                 .execute(new EanfangCallback<AnswerExpertMoreDetailsBean>(this, true, AnswerExpertMoreDetailsBean.class) {
                     @Override
                     public void onSuccess(AnswerExpertMoreDetailsBean bean) {
-                        ivExpertHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bean.getExpert().getAvatarPhoto()));
+                        GlideUtil.intoImageView(AskExpertActivity.this,Uri.parse(BuildConfig.OSS_SERVER + bean.getExpert().getAvatarPhoto()),ivExpertHeader);
                         if (!TextUtils.isEmpty(bean.getExpert().getCertificateName())){
                             tvLevel.setText(bean.getExpert().getCertificateName());
                         }else {

@@ -37,14 +37,14 @@
         android:layout_marginTop="1dp"
         android:background="@color/white">
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:id="@+id/sdv_pic"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
             android:layout_marginLeft="15dp"
-            fresco:placeholderImage="@mipmap/ic_camera" />
+            android:src="@mipmap/ic_camera" />
 
         <LinearLayout
             android:layout_width="wrap_content"

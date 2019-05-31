@@ -2,6 +2,7 @@ package net.eanfang.worker.ui.activity.worksapce.contacts.baseinfo;
 
 import android.os.Bundle;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -16,8 +17,8 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.AuthCompanyBaseInfoBean;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.StringUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
 
@@ -35,9 +36,9 @@ import butterknife.ButterKnife;
 public class AuthCompanyDataActivity extends BaseActivityWithTakePhoto {
 
     @BindView(R.id.iv_upload)
-    SimpleDraweeView ivUpload;
+    ImageView ivUpload;
     @BindView(R.id.iv_upload2)
-    SimpleDraweeView ivUpload2;
+    ImageView ivUpload2;
     @BindView(R.id.et_company)
     EditText etCompany;
     @BindView(R.id.ed_company_number)
@@ -148,11 +149,12 @@ public class AuthCompanyDataActivity extends BaseActivityWithTakePhoto {
                 tvOfficeAddress.setText(Config.get().getAddressByCode(byNetBean.getAreaCode()));
             }
             if (!StringUtils.isEmpty(byNetBean.getLogoPic())) {
-                ivUpload2.setImageURI(BuildConfig.OSS_SERVER + byNetBean.getLogoPic());
+                GlideUtil.intoImageView(this,BuildConfig.OSS_SERVER + byNetBean.getLogoPic(),ivUpload2);
                 byNetBean.setLogoPic(byNetBean.getLogoPic());
             }
             if (!StringUtils.isEmpty(byNetBean.getLicensePic())) {
-                ivUpload.setImageURI(BuildConfig.OSS_SERVER + byNetBean.getLicensePic());
+                GlideUtil.intoImageView(this,BuildConfig.OSS_SERVER + byNetBean.getLicensePic(),ivUpload);
+
                 byNetBean.setLicensePic(byNetBean.getLicensePic());
             }
             if (!StringUtils.isEmpty(byNetBean.getName())) {

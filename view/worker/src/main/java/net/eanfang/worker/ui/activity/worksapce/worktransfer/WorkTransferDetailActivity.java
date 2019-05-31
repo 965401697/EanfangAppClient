@@ -14,14 +14,15 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.WorkTransferDetailBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
@@ -44,7 +45,7 @@ import butterknife.ButterKnife;
 public class WorkTransferDetailActivity extends BaseActivity {
 
     @BindView(R.id.iv_report_header)
-    SimpleDraweeView ivReportHeader;
+    CircleImageView ivReportHeader;
     @BindView(R.id.tv_talker_name)
     TextView tvTalkerName;
     @BindView(R.id.tv_department)
@@ -173,7 +174,7 @@ public class WorkTransferDetailActivity extends BaseActivity {
     }
 
     private void initContent(WorkTransferDetailBean bean) {
-        ivReportHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bean.getOwnerUserEntity().getAccountEntity().getAvatar()));
+        GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + bean.getOwnerUserEntity().getAccountEntity().getAvatar()),ivReportHeader);
         // 创建人
         tvTalkerName.setText(bean.getOwnerUserEntity().getAccountEntity().getRealName() + "(汇报人)");
         // 部门

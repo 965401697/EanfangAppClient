@@ -12,6 +12,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -39,12 +40,12 @@ import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
 import com.eanfang.util.DialogUtil;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
@@ -129,7 +130,7 @@ public class AddNewCheckActivity extends BaseActivity implements SelectTimeDialo
     @BindView(R.id.rv_check)
     RecyclerView rvCheck;
     @BindView(R.id.iv_takevideo_check)
-    SimpleDraweeView ivTakevideoCheck;
+    ImageView ivTakevideoCheck;
     @BindView(R.id.rl_thumbnail_check)
     RelativeLayout rlThumbnailCheck;
 
@@ -652,8 +653,7 @@ public class AddNewCheckActivity extends BaseActivity implements SelectTimeDialo
                 if (ivTakevideoCheck.getVisibility() == View.INVISIBLE) {
                     ivTakevideoCheck.setVisibility(View.VISIBLE);
                 }
-
-                ivTakevideoCheck.setImageBitmap(PhotoUtils.getVideoThumbnail(mVieoPath, 100, 100, MINI_KIND));
+                GlideUtil.intoImageView(this,PhotoUtils.getVideoThumbnail(mVieoPath, 100, 100, MINI_KIND),ivTakevideoCheck);
             }
 
         }

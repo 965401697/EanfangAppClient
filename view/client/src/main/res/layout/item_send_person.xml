@@ -14,7 +14,7 @@
         android:layout_height="@dimen/dimen_70"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/dimen_30"
-        fresco:placeholderImage="@mipmap/ic_header"
+        android:src="@mipmap/ic_header"
         fresco:roundAsCircle="true" />
 
     <TextView

@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.base.widget.customview.CircleImageView;
 
 import net.eanfang.worker.R;
 
@@ -21,7 +21,7 @@ public class FollowListViewHolder extends BaseViewHolder {
     public TextView mTv_Follow_Item_FriendStatus;
     public ImageView mImgFollowItemAuth;
     public Button mBtnFollowItemAddOrCancel;
-    public SimpleDraweeView mIvFollowItemHeader;
+    public CircleImageView mIvFollowItemHeader;
 
     public FollowListViewHolder(View view) {
         super(view);

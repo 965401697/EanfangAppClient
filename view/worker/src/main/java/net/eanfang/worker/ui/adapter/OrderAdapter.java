@@ -6,8 +6,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.V;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.RepairOrderEntity;
 
 import net.eanfang.worker.R;
@@ -50,7 +50,7 @@ public class OrderAdapter extends BaseQuickAdapter<RepairOrderEntity, BaseViewHo
         if (item.getFailureEntity()!=null) {
             String[] urls = V.v(()->item.getFailureEntity().getPictures().split(","));
             //将业务类型的图片显示到列表
-            ((SimpleDraweeView) helper.getView(R.id.sdv_pic)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[0]));
+            GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + urls[0]),helper.getView(R.id.sdv_pic));
         }
 
 

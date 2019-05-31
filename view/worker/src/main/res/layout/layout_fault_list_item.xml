@@ -7,11 +7,11 @@
     android:orientation="horizontal"
     android:padding="@dimen/dimen_30">
 
-    <com.facebook.drawee.view.SimpleDraweeView
+    <ImageView
         android:id="@+id/iv_faultPic"
         android:layout_width="@dimen/dimen_200"
         android:layout_height="@dimen/dimen_200"
-        app:placeholderImage="@mipmap/ic_nodata" />
+        android:src="@mipmap/ic_nodata" />
 
     <TextView
         android:id="@+id/tv_faultDes"

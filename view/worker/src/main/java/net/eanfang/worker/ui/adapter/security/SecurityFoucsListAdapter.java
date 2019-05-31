@@ -6,9 +6,10 @@ import android.net.Uri;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.biz.model.security.SecurityFoucsListBean;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.V;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
 
@@ -31,11 +32,11 @@ public class SecurityFoucsListAdapter extends BaseQuickAdapter<SecurityFoucsList
 
     @Override
     protected void convert(BaseViewHolder helper, SecurityFoucsListBean.ListBean item) {
-        SimpleDraweeView ivHeader = helper.getView(R.id.iv_header);
+        CircleImageView ivHeader = helper.getView(R.id.iv_header);
         // 发布人
         helper.setText(R.id.tv_name, V.v(() -> item.getUserEntity().getAccountEntity().getRealName()));
         // 头像
-        ivHeader.setImageURI((Uri.parse(BuildConfig.OSS_SERVER + V.v(() -> item.getUserEntity().getAccountEntity().getAvatar()))));
+        GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + V.v(() -> item.getUserEntity().getAccountEntity().getAvatar())),ivHeader);
         // 公司名称
         helper.setText(R.id.tv_company, V.v(() -> item.getOrgEntity().getOrgName()));
         /**

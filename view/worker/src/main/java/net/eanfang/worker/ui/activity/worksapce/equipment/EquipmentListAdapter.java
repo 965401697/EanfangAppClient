@@ -6,7 +6,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.util.GetDateUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 import com.yaf.base.entity.CustDeviceEntity;
 
 import net.eanfang.worker.R;
@@ -25,9 +25,7 @@ public class EquipmentListAdapter extends BaseQuickAdapter<CustDeviceEntity, Bas
 
     @Override
     protected void convert(BaseViewHolder helper, CustDeviceEntity item) {
-
-        ((SimpleDraweeView) helper.getView(R.id.iv_equipment_pic)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getPicture().split(",")[0]));
-
+        GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + item.getPicture().split(",")[0]),helper.getView(R.id.iv_equipment_pic));
         helper.setText(R.id.tv_equipment_name, (helper.getAdapterPosition() + 1) + "：" + item.getDeviceName());
 
 //        状态(0出厂,1仓储运输，2正常运行，3故障待修复，4备用，5禁用，6报废)

@@ -171,7 +171,7 @@
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"
-                    fresco:placeholderImage="@mipmap/ic_nodata" />
+                    android:src="@mipmap/ic_nodata" />
 
                 <com.facebook.drawee.view.SimpleDraweeView
                     android:id="@+id/iv_pic2"
@@ -179,7 +179,7 @@
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"
                     android:visibility="gone"
-                    fresco:placeholderImage="@mipmap/ic_nodata" />
+                    android:src="@mipmap/ic_nodata" />
 
                 <com.facebook.drawee.view.SimpleDraweeView
                     android:id="@+id/iv_pic3"
@@ -187,7 +187,7 @@
                     android:layout_height="match_parent"
                     android:layout_margin="10dp"
                     android:visibility="gone"
-                    fresco:placeholderImage="@mipmap/ic_nodata" />
+                    android:src="@mipmap/ic_nodata" />
 
             </LinearLayout>
         </LinearLayout>

@@ -2,16 +2,18 @@ package net.eanfang.worker.ui.activity.my.specialist;
 
 import android.os.Bundle;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.entity.AccountEntity;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.StringUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.ExpertsCertificationEntity;
 
 import net.eanfang.worker.R;
@@ -25,7 +27,7 @@ import butterknife.ButterKnife;
 public class SpecialistCertificationInfoActivity extends BaseWorkerActivity {
 
     @BindView(R.id.iv_header)
-    SimpleDraweeView ivHeader;
+    CircleImageView ivHeader;
     @BindView(R.id.tv_contact_name)
     TextView tvContactName;
     @BindView(R.id.tv_contact_phone)
@@ -41,11 +43,11 @@ public class SpecialistCertificationInfoActivity extends BaseWorkerActivity {
     @BindView(R.id.et_intro)
     EditText etIntro;
     @BindView(R.id.iv_idCard_front)
-    SimpleDraweeView ivIdCardFront;
+    ImageView ivIdCardFront;
     @BindView(R.id.iv_idCard_back)
-    SimpleDraweeView ivIdCardBack;
+    ImageView ivIdCardBack;
     @BindView(R.id.iv_idCard_inHand)
-    SimpleDraweeView ivIdCardInHand;
+    ImageView ivIdCardInHand;
 
 
     @Override
@@ -69,7 +71,7 @@ public class SpecialistCertificationInfoActivity extends BaseWorkerActivity {
     }
 
     private void initViews(ExpertsCertificationEntity bean) {
-        ivHeader.setImageURI(com.eanfang.BuildConfig.OSS_SERVER + bean.getAvatarPhoto());
+        GlideUtil.intoImageView(this,com.eanfang.BuildConfig.OSS_SERVER + bean.getAvatarPhoto(),ivHeader);
         AccountEntity accountEntity=WorkerApplication.get().getLoginBean().getAccount();
         String contactName =accountEntity .getRealName();
         String mobile = accountEntity.getMobile();
@@ -92,8 +94,7 @@ public class SpecialistCertificationInfoActivity extends BaseWorkerActivity {
         rbWoman.setClickable(false);
         rbMan.setClickable(false);
         etIntro.setText(bean.getIntro());
-        ivIdCardFront.setImageURI(com.eanfang.BuildConfig.OSS_SERVER + bean.getIdCardFront());
-        ivIdCardBack.setImageURI(com.eanfang.BuildConfig.OSS_SERVER + bean.getIdCardSide());
-        ivIdCardInHand.setImageURI(com.eanfang.BuildConfig.OSS_SERVER + bean.getIdCardHand());
-    }
+        GlideUtil.intoImageView(this,com.eanfang.BuildConfig.OSS_SERVER + bean.getIdCardFront(),ivIdCardFront);
+        GlideUtil.intoImageView(this,com.eanfang.BuildConfig.OSS_SERVER + bean.getIdCardSide(),ivIdCardBack);
+        GlideUtil.intoImageView(this,com.eanfang.BuildConfig.OSS_SERVER + bean.getIdCardHand(),ivIdCardInHand); }
 }

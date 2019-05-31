@@ -255,12 +255,11 @@
                 android:padding="10dp"
                 android:visibility="gone">
 
-                <com.facebook.drawee.view.SimpleDraweeView
+                <com.eanfang.base.widget.customview.CircleImageView
                     android:id="@+id/iv_pic"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    app:roundAsCircle="true"
-                    fresco:placeholderImage="@mipmap/header" />
+                    android:src="@mipmap/ic_header" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"

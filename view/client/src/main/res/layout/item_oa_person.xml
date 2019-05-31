@@ -16,7 +16,7 @@
             android:layout_width="@dimen/dimen_70"
             android:layout_height="@dimen/dimen_70"
             android:layout_centerHorizontal="true"
-            fresco:placeholderImage="@mipmap/ic_header"
+            android:src="@mipmap/ic_header"
             fresco:roundAsCircle="true" />
 
         <ImageView

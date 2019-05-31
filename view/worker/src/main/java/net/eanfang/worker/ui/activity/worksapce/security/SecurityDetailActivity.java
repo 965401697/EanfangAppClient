@@ -23,6 +23,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -34,6 +35,7 @@ import com.eanfang.biz.model.security.SecurityListBean;
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.ETimeUtils;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
@@ -41,7 +43,6 @@ import com.eanfang.witget.mentionedittext.edit.util.FormatRangeManager;
 import com.eanfang.witget.mentionedittext.text.MentionTextView;
 import com.eanfang.witget.mentionedittext.text.listener.Parser;
 import com.eanfang.witget.mentionedittext.util.SecurityItemUtil;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.worker.R;
@@ -73,7 +74,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
 
     private static final int REQUEST_CODE_CHOOSE_PHOTO_two = 1;
     @BindView(R.id.iv_seucrity_header)
-    SimpleDraweeView ivSeucrityHeader;
+    CircleImageView ivSeucrityHeader;
     @BindView(R.id.tv_name)
     TextView tvName;
     @BindView(R.id.tv_company)
@@ -117,7 +118,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
     @BindView(R.id.tv_comment_count)
     TextView tvCommentCount;
     @BindView(R.id.iv_show_video)
-    SimpleDraweeView ivShowVideo;
+    ImageView ivShowVideo;
     @BindView(R.id.rl_video)
     RelativeLayout rlVideo;
     @BindView(R.id.tv_content)
@@ -178,7 +179,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
 
     private void initView() {
         setTitle("安防圈");
-        securityCommentAdapter = new SecurityCommentAdapter();
+        securityCommentAdapter = new SecurityCommentAdapter(this);
         rvComments.setLayoutManager(new LinearLayoutManager(this));
         securityCommentAdapter.bindToRecyclerView(rvComments);
         rvComments.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
@@ -285,7 +286,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         // 发布人
         tvName.setText(V.v(() -> securityDetailBean.getAccountEntity().getRealName()));
         // 头像
-        ivSeucrityHeader.setImageURI((Uri.parse(BuildConfig.OSS_SERVER + V.v(() -> securityDetailBean.getAccountEntity().getAvatar()))));
+        GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + V.v(() -> securityDetailBean.getAccountEntity().getAvatar())),ivSeucrityHeader);
         // 公司名称
         tvCompany.setText(securityDetailBean.getPublisherOrg().getOrgName());
         //发布的内容
@@ -353,7 +354,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         }
         if (!StringUtils.isEmpty(securityDetailBean.getSpcVideo())) {
             rlVideo.setVisibility(View.VISIBLE);
-            ivShowVideo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + securityDetailBean.getSpcVideo() + ".jpg"));
+            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + securityDetailBean.getSpcVideo() + ".jpg"),ivShowVideo);
         } else {
             rlVideo.setVisibility(View.GONE);
         }

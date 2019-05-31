@@ -15,9 +15,9 @@ import com.eanfang.biz.model.TemplateBean;
 import com.eanfang.biz.model.WorkAddReportBean;
 import com.eanfang.biz.model.WorkReportInfoBean;
 import com.eanfang.takevideo.PlayVideoActivity;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.maintenance.MaintenanceTeamAdapter;
@@ -137,7 +137,7 @@ public class WorKReportDetailAdapter extends BaseMultiItemQuickAdapter<WorkRepor
             } else {
                 helper.setText(R.id.tv_vodio, "小视频：");
                 helper.getView(R.id.rl_thumbnail).setVisibility(View.VISIBLE);
-                ((SimpleDraweeView) helper.getView(R.id.iv_takevideo_work)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getMp4_path() + ".jpg"));
+                GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + item.getMp4_path() + ".jpg"),helper.getView(R.id.iv_takevideo_work) );
                 helper.getView(R.id.iv_takevideo_work).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -165,7 +165,7 @@ public class WorKReportDetailAdapter extends BaseMultiItemQuickAdapter<WorkRepor
             }
 
             if (urls.length >= 1) {
-                ((SimpleDraweeView) helper.getView(R.id.iv_pic1)).setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[0]));
+                GlideUtil.intoImageView(mContext,BuildConfig.OSS_SERVER + Uri.parse(urls[0]),helper.getView(R.id.iv_pic1));
                 helper.getView(R.id.iv_pic1).setVisibility(View.VISIBLE);
                 helper.getView(R.id.iv_pic1).setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -177,7 +177,7 @@ public class WorKReportDetailAdapter extends BaseMultiItemQuickAdapter<WorkRepor
                 helper.getView(R.id.iv_pic1).setVisibility(View.GONE);
             }
             if (urls.length >= 2) {
-                ((SimpleDraweeView) helper.getView(R.id.iv_pic2)).setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[1]));
+                GlideUtil.intoImageView(mContext,BuildConfig.OSS_SERVER + Uri.parse(urls[1]),helper.getView(R.id.iv_pic2));
                 helper.getView(R.id.iv_pic2).setVisibility(View.VISIBLE);
                 helper.getView(R.id.iv_pic2).setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -189,7 +189,7 @@ public class WorKReportDetailAdapter extends BaseMultiItemQuickAdapter<WorkRepor
                 helper.getView(R.id.iv_pic2).setVisibility(View.GONE);
             }
             if (urls.length >= 3) {
-                ((SimpleDraweeView) helper.getView(R.id.iv_pic3)).setImageURI(BuildConfig.OSS_SERVER + Uri.parse(urls[2]));
+                GlideUtil.intoImageView(mContext,BuildConfig.OSS_SERVER + Uri.parse(urls[2]),helper.getView(R.id.iv_pic3));
                 helper.getView(R.id.iv_pic3).setVisibility(View.VISIBLE);
                 helper.getView(R.id.iv_pic3).setOnClickListener(new View.OnClickListener() {
                     @Override

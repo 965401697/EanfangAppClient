@@ -3,13 +3,14 @@ package net.eanfang.client.ui.adapter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.config.Config;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.StringUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.RepairBugEntity;
 
 import net.eanfang.client.R;
@@ -63,10 +64,10 @@ public class OrderConfirmAdapter extends BaseQuickAdapter<RepairBugEntity, BaseV
         //位置编号
         helper.setText(R.id.tv_deviceNumber, item.getLocationNumber());
 
-        SimpleDraweeView draweeView = helper.getView(R.id.iv_pic);
+        ImageView draweeView = helper.getView(R.id.iv_pic);
         if (!StringUtils.isEmpty(item.getPictures())) {
             String[] urls = item.getPictures().split(",");
-            draweeView.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[0]));
+            GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + urls[0]),draweeView);
             helper.addOnClickListener(R.id.ll_item);
         }
         helper.addOnClickListener(R.id.iv_pic);

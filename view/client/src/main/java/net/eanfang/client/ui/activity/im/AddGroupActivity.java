@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.eanfang.apiservice.UserApi;
@@ -14,10 +15,10 @@ import com.eanfang.biz.model.GroupDetailBean;
 import com.eanfang.biz.model.GroupsBean;
 import com.eanfang.oss.OSSCallBack;
 import com.eanfang.oss.OSSUtils;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UuidUtil;
 import com.eanfang.util.compound.CompoundHelper;
-import com.facebook.drawee.view.SimpleDraweeView;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
@@ -42,7 +43,7 @@ import io.rong.imlib.model.Group;
 public class AddGroupActivity extends BaseClientActivity {
 
     @BindView(R.id.iv_icon)
-    SimpleDraweeView ivIcon;
+    ImageView ivIcon;
     @BindView(R.id.tv_name)
     TextView tvName;
     @BindView(R.id.tv_mber)
@@ -127,7 +128,7 @@ public class AddGroupActivity extends BaseClientActivity {
                     CompoundHelper.getInstance().sendBitmap(this, handler, mUserIconList);//生成图片
                     mTitle = bean.getGroup().getGroupName();
                     mRYGroupId = bean.getGroup().getRcloudGroupId();
-                    ivIcon.setImageURI(Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + bean.getGroup().getHeadPortrait()));
+                    GlideUtil.intoImageView(this,Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + bean.getGroup().getHeadPortrait()),ivIcon);
                     tvName.setText(bean.getGroup().getGroupName());
                     tvMber.setText("成员" + bean.getList().size() + "人");
                 }));

@@ -1,11 +1,14 @@
 package com.eanfang.base.kit;
 
+import android.app.Activity;
 import android.content.Context;
 
 import com.eanfang.base.kit.ali.alioss.IOSSStorage;
 import com.eanfang.base.kit.ali.alioss.OSSStorage;
 import com.eanfang.base.kit.ali.alipay.ALiPayManager;
 import com.eanfang.base.kit.ali.alipay.IALiPay;
+import com.eanfang.base.kit.ali.oss.IOssService;
+import com.eanfang.base.kit.ali.oss.OssKit;
 import com.eanfang.base.kit.tencent.bugly.BuglyManager;
 import com.eanfang.base.kit.tencent.bugly.IBugly;
 import com.eanfang.base.kit.tencent.wechatsdk.IWXPay;
@@ -24,7 +27,6 @@ public class SDKManager {
     private static IWXPay WXPay;
     private static IXGPush XGPUSH;
     private static IALiPay ALPAY;
-//    private static IOSSStorage OSSSTORAGE;
 
     public static IBugly getBugly() {
         if (BUGLY == null) {
@@ -56,10 +58,8 @@ public class SDKManager {
 
     /**
      * oss令牌需要实时获取
-     *
-     * @return IOSSStorage
      */
-    public static IOSSStorage getIOSS() {
-        return new OSSStorage();
+    public static IOssService ossKit(Activity activity) {
+        return OssKit.get(activity);
     }
 }

@@ -7,12 +7,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.base.widget.customview.SuperTextView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.CompanyPagesData;
 import com.eanfang.ui.base.BaseActivity;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 
 import net.eanfang.worker.R;
 
@@ -39,7 +40,7 @@ public class CompanyPagesActivity extends BaseActivity {
     @BindView(R.id.dw_dh_tv)
     SuperTextView dwDhTv;
     @BindView(R.id.gs_log_sdv)
-    SimpleDraweeView gsLogSdv;
+    CircleImageView gsLogSdv;
     @BindView(R.id.gs_name_tv)
     TextView gsNameTv;
     @BindView(R.id.iv_verify)
@@ -78,7 +79,7 @@ public class CompanyPagesActivity extends BaseActivity {
         dzYxTv.setRightString(data.geteMail() + "");
         dwDhTv.setRightString(data.getTelPhone() + "");
         gsNameTv.setText(data.getName() + "");
-        gsLogSdv.setImageURI(com.eanfang.BuildConfig.OSS_SERVER + Uri.parse(data.getLogoPic()));
+        GlideUtil.intoImageView(this,com.eanfang.BuildConfig.OSS_SERVER + Uri.parse(data.getLogoPic()),gsLogSdv);
         status = data.getStatus();
         switch (status) {
             case 1:

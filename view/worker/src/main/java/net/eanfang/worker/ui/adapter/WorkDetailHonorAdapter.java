@@ -3,7 +3,7 @@ package net.eanfang.worker.ui.adapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 import com.yaf.base.entity.HonorCertificateEntity;
 
 import net.eanfang.worker.R;
@@ -26,11 +26,11 @@ public class WorkDetailHonorAdapter extends BaseQuickAdapter<HonorCertificateEnt
         if (info.length > 0) {
             //多条
             for (int i = 0; i < info.length; i++) {
-                ((SimpleDraweeView) helper.getView(R.id.iv_pic)).setImageURI(BuildConfig.OSS_SERVER + info[i]);
+                GlideUtil.intoImageView(mContext,BuildConfig.OSS_SERVER + info[i],helper.getView(R.id.iv_pic));
             }
         } else {
             //一条
-            ((SimpleDraweeView) helper.getView(R.id.iv_pic)).setImageURI(BuildConfig.OSS_SERVER + info[0]);
+            GlideUtil.intoImageView(mContext,BuildConfig.OSS_SERVER + info[0],helper.getView(R.id.iv_pic));
         }
     }
 }

@@ -16,11 +16,12 @@ import android.widget.Toast;
 import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.StringUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.worker.R;
@@ -38,7 +39,7 @@ public class ExpertAnswerActivity extends BaseWorkerActivity {
 
     private static final int REQUEST_CODE_CHOOSE_PHOTO_two = 1;
     @BindView(R.id.iv_expert_header)
-    SimpleDraweeView ivExpertHeader;
+    CircleImageView ivExpertHeader;
     @BindView(R.id.tv_expert_name)
     TextView tvExpertName;
     @BindView(R.id.tv_major)
@@ -150,12 +151,12 @@ public class ExpertAnswerActivity extends BaseWorkerActivity {
                     @Override
                     public void onSuccess(MyReplyListBean bean) {
                         if (bean.getAnswerInfo().getAnswerUserType() == 4 || bean.getAnswerInfo().getAnswerUserType() == 5) {
-                            ivExpertHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bean.getAnswerInfo().getExpertsCertificationEntity().getAvatarPhoto()));
+                            GlideUtil.intoImageView(ExpertAnswerActivity.this,Uri.parse(BuildConfig.OSS_SERVER + bean.getAnswerInfo().getExpertsCertificationEntity().getAvatarPhoto()),ivExpertHeader);
                             tvExpertName.setText(bean.getAnswerInfo().getExpertsCertificationEntity().getApproveUserName());
                             tvMajor.setText(bean.getAnswerInfo().getExpertsCertificationEntity().getCompany());
                         } else if (bean.getAnswerInfo().getAnswerUserType() == 0 || bean.getAnswerInfo().getAnswerUserType() == 2) {
                             setTitle("用户回复");
-                            ivExpertHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bean.getAnswerInfo().getAccountEntity().getAvatar()));
+                            GlideUtil.intoImageView(ExpertAnswerActivity.this,Uri.parse(BuildConfig.OSS_SERVER + bean.getAnswerInfo().getAccountEntity().getAvatar()),ivExpertHeader);
                             tvExpertName.setText(bean.getAnswerInfo().getAccountEntity().getNickName());
                             tvMajor.setVisibility(View.GONE);
                         }

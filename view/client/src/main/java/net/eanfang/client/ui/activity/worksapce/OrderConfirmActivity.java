@@ -20,6 +20,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.dialog.TrueFalseDialog;
@@ -29,9 +30,9 @@ import com.eanfang.listener.MultiClickListener;
 import com.eanfang.biz.model.Message;
 import com.eanfang.biz.model.reapair.RepairPersonalInfoEntity;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.V;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.yaf.base.entity.PayLogEntity;
 import com.yaf.base.entity.RepairBugEntity;
 import com.yaf.base.entity.RepairOrderEntity;
@@ -71,7 +72,7 @@ public class OrderConfirmActivity extends BaseClientActivity {
     @BindView(R.id.sv)
     NestedScrollView scrollView;
     @BindView(R.id.iv_header)
-    SimpleDraweeView ivHeader;
+    CircleImageView ivHeader;
     @BindView(R.id.tv_realname)
     TextView tvRealname;
     @BindView(R.id.tv_company_name)
@@ -164,7 +165,7 @@ public class OrderConfirmActivity extends BaseClientActivity {
         tvProjectName.setText(repairOrderEntity.getProjectName());
         // 备注信息
         tvProjectInfo.setText(repairOrderEntity.getRemarkInfo());
-        ivHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + headUrl));
+        GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + headUrl),ivHeader);
         tvRealname.setText(workerName);
         tvCompanyName.setText(comapnyName);
 

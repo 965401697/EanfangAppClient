@@ -15,7 +15,7 @@
 //import com.eanfang.biz.model.CompanyDetailBean;
 //import com.eanfang.biz.model.InstallOrderConfirmBean;
 //import com.eanfang.util.StringUtils;
-//import com.facebook.drawee.view.SimpleDraweeView;
+
 //
 //import net.eanfang.worker_logo.R;
 //import net.eanfang.worker_logo.ui.adapter.CompanyDetailAdapter;

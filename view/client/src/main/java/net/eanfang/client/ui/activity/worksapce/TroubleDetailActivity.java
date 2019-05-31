@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -23,9 +24,9 @@ import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 import com.yaf.base.entity.BughandleConfirmEntity;
 import com.yaf.base.entity.BughandleDetailEntity;
@@ -90,7 +91,7 @@ public class TroubleDetailActivity extends BaseClientActivity {
      */
     private BGASortableNinePhotoLayout snpl_moment_add_photos;
     @BindView(R.id.iv_thumbnail_moment)
-    SimpleDraweeView ivThumbnailMoment;
+    ImageView ivThumbnailMoment;
     @BindView(R.id.rl_thumbnail_moment)
     RelativeLayout rlThumbnailMoment;
     /**
@@ -98,7 +99,7 @@ public class TroubleDetailActivity extends BaseClientActivity {
      */
     private BGASortableNinePhotoLayout snpl_monitor_add_photos;
     @BindView(R.id.iv_thumbnail_monitor)
-    SimpleDraweeView ivThumbnailMonitor;
+    ImageView ivThumbnailMonitor;
     @BindView(R.id.rl_thumbnail_monitor)
     RelativeLayout rlThumbnailMonitor;
     /**
@@ -106,7 +107,7 @@ public class TroubleDetailActivity extends BaseClientActivity {
      */
     private BGASortableNinePhotoLayout snpl_tools_package_add_photos;
     @BindView(R.id.iv_thumbnail_tools_package)
-    SimpleDraweeView ivThumbnailToolsPackage;
+    ImageView ivThumbnailToolsPackage;
     @BindView(R.id.rl_thumbnail_tools_package)
     RelativeLayout rlThumbnailToolsPackage;
     /**
@@ -117,7 +118,7 @@ public class TroubleDetailActivity extends BaseClientActivity {
      * 转单
      */
     @BindView(R.id.iv_header)
-    SimpleDraweeView ivHeader;
+    ImageView ivHeader;
     @BindView(R.id.tv_order_num)
     TextView tvOrderNum;
     @BindView(R.id.tv_order_time)
@@ -324,7 +325,7 @@ public class TroubleDetailActivity extends BaseClientActivity {
          * */
         if (!StringUtils.isEmpty(bughandleConfirmEntity.getFront_mp4_path())) {
             rlThumbnailMoment.setVisibility(View.VISIBLE);
-            ivThumbnailMoment.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bughandleConfirmEntity.getFront_mp4_path() + ".jpg"));
+            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + bughandleConfirmEntity.getFront_mp4_path() + ".jpg"),ivThumbnailMoment);
             if (!StringUtils.isValid(bughandleConfirmEntity.getFrontPictures())) {
                 snpl_moment_add_photos.setVisibility(View.GONE);
             }
@@ -345,7 +346,7 @@ public class TroubleDetailActivity extends BaseClientActivity {
             if (!StringUtils.isValid(bughandleConfirmEntity.getReverseSidePictures())) {
                 snpl_monitor_add_photos.setVisibility(View.GONE);
             }
-            ivThumbnailMonitor.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bughandleConfirmEntity.getReverse_side_mp4_path() + ".jpg"));
+            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + bughandleConfirmEntity.getReverse_side_mp4_path() + ".jpg"),ivThumbnailMonitor);
         } else {
             rlThumbnailMonitor.setVisibility(View.GONE);
         }
@@ -360,7 +361,7 @@ public class TroubleDetailActivity extends BaseClientActivity {
          * */
         if (!StringUtils.isEmpty(bughandleConfirmEntity.getEquipment_cabinet_mp4_path())) {
             rlThumbnailToolsPackage.setVisibility(View.VISIBLE);
-            ivThumbnailToolsPackage.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bughandleConfirmEntity.getEquipment_cabinet_mp4_path() + ".jpg"));
+            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + bughandleConfirmEntity.getEquipment_cabinet_mp4_path() + ".jpg"),ivThumbnailToolsPackage);
             if (!StringUtils.isValid(bughandleConfirmEntity.getEquipmentCabinetPictures())) {
                 snpl_tools_package_add_photos.setVisibility(View.GONE);
             }
@@ -448,7 +449,7 @@ public class TroubleDetailActivity extends BaseClientActivity {
         }
         llHang.setVisibility(View.VISIBLE);
         tvNoHistory.setVisibility(View.GONE);
-        ivHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + transferLogEntity.getOriginalUserEntity().getAccountEntity().getAvatar()));
+        GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + transferLogEntity.getOriginalUserEntity().getAccountEntity().getAvatar()),ivHeader);
         tvOrderNum.setText(transferLogEntity.getOrderNum() + "");
         tvOrderTime.setText(GetDateUtils.dateToDateTimeString(transferLogEntity.getCreateTime()));
         tvOrderReason.setText(GetConstDataUtils.getTransferCauseList().get(transferLogEntity.getCause()));

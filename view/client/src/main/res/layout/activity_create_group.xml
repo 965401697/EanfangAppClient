@@ -30,7 +30,7 @@
             android:layout_width="@dimen/dimen_80"
             android:layout_height="@dimen/dimen_80"
             android:layout_marginRight="@dimen/dimen_24"
-            fresco:placeholderImage="@mipmap/ic_header"
+            android:src="@mipmap/ic_header"
             fresco:roundAsCircle="true" />
 
 

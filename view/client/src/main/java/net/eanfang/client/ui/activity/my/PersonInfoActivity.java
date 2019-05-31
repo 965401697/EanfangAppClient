@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
@@ -138,7 +139,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto implements Bas
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_person_info);
         ButterKnife.bind(this);
-        headViewSize(ivUpload,(int) getResources().getDimension(com.eanfang.R.dimen.dimen_80));
+        headViewSize(ivUpload, (int) getResources().getDimension(com.eanfang.R.dimen.dimen_80));
         initPermission();
         initView();
         initData();
@@ -219,7 +220,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto implements Bas
         if (!StringUtils.isEmpty(accountEntity.getAvatar())) {
             isUploadHead = true;
             path = accountEntity.getAvatar();
-            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + accountEntity.getAvatar()),ivUpload);
+            GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + accountEntity.getAvatar()), ivUpload);
             setHeaderShow(true);
         } else {
             setHeaderShow(false);
@@ -259,6 +260,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto implements Bas
 
     }
 
+    //takeSucces已被替换
     @Override
     public void takeSuccess(TResult result, int resultCode) {
         super.takeSuccess(result, resultCode);
@@ -453,8 +455,8 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto implements Bas
     @Override
     public void onSuccess(List<LocalMedia> list) {
         String imgKey = "account/" + UuidUtil.getUUID() + ".png";
-        GlideUtil.intoImageView(this,"file://" + list.get(0).getCutPath(),ivUpload);
-        OssKit.get(this).asyncPutImage(imgKey, list.get(0).getCutPath(), (isSuccess) -> {
+        GlideUtil.intoImageView(this, "file://" + list.get(0).getCutPath(), ivUpload);
+        SDKManager.ossKit(this).asyncPutImage(imgKey, list.get(0).getCutPath(), (isSuccess) -> {
             LoginBean entity = ClientApplication.get().getLoginBean();
             entity.getAccount().setAvatar(imgKey);
             path = entity.getAccount().getAvatar();

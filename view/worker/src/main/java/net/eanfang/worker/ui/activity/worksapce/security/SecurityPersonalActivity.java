@@ -18,16 +18,17 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.security.SecurityListBean;
 import com.eanfang.biz.model.security.SecurityPersonalTopBean;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.photopicker.com.util.BGASpaceItemDecoration;
 
 import net.eanfang.worker.R;
@@ -50,7 +51,7 @@ import q.rorbin.badgeview.QBadgeView;
 public class SecurityPersonalActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
 
     @BindView(R.id.iv_head)
-    SimpleDraweeView ivHead;
+    CircleImageView ivHead;
     @BindView(R.id.tv_name)
     TextView tvName;
     @BindView(R.id.iv_certifi)
@@ -259,7 +260,7 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
         EanfangHttp.post(url)
                 .upJson(JsonUtils.obj2String(queryEntry1))
                 .execute(new EanfangCallback<SecurityPersonalTopBean>(SecurityPersonalActivity.this, true, SecurityPersonalTopBean.class, bean -> {
-                    ivHead.setImageURI((Uri.parse(BuildConfig.OSS_SERVER + bean.getUserEntity().getAccountEntity().getAvatar())));
+                    GlideUtil.intoImageView(SecurityPersonalActivity.this,Uri.parse(BuildConfig.OSS_SERVER + bean.getUserEntity().getAccountEntity().getAvatar()),ivHead);
                     tvName.setText(bean.getUserEntity().getAccountEntity().getRealName());
                     //粉丝数
                     tvFansCount.setText(bean.getAsFollowerCount() + "");

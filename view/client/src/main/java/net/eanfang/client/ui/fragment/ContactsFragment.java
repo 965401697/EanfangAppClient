@@ -240,7 +240,7 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
         rev_list.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
 
 
-        parentAdapter = new ParentAdapter();
+        parentAdapter = new ParentAdapter(getActivity());
         parentAdapter.bindToRecyclerView(rev_list);
         parentAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override

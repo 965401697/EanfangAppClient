@@ -64,13 +64,13 @@
         android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <com.eanfang.base.widget.customview.CircleImageView
             android:id="@+id/img_head"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
-            fresco:placeholderImage="@mipmap/ic_header" />
+            android:src="@mipmap/ic_header" />
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -29,11 +29,11 @@ import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.jph.takephoto.model.TImage;
 import com.jph.takephoto.model.TResult;
 
@@ -81,7 +81,7 @@ public class AuthCompanyFirstBActivity extends BaseActivityWithTakePhoto {
     @BindView(R.id.ll_type)
     RelativeLayout llType;
     @BindView(R.id.iv_upload2)
-    SimpleDraweeView ivUpload2;
+    ImageView ivUpload2;
     @BindView(R.id.et_desc)
     EditText etDesc;
     @BindView(R.id.tv_title_b)
@@ -253,7 +253,7 @@ public class AuthCompanyFirstBActivity extends BaseActivityWithTakePhoto {
                 etDesc.setText(infoBean.getIntro());
             }
             if (!StringUtils.isEmpty(infoBean.getLogoPic())) {
-                ivUpload2.setImageURI(BuildConfig.OSS_SERVER + infoBean.getLogoPic());
+                GlideUtil.intoImageView(this,BuildConfig.OSS_SERVER + infoBean.getLogoPic(),ivUpload2);
                 infoBean.setLogoPic(infoBean.getLogoPic());
             }
         }
@@ -283,7 +283,7 @@ public class AuthCompanyFirstBActivity extends BaseActivityWithTakePhoto {
         String imgKey = "org/" + UuidUtil.getUUID() + ".png";
         if (resultCode == ADPIC_CALLBACK_CODE) {
             infoBean.setLogoPic(imgKey);
-            ivUpload2.setImageURI("file://" + image.getOriginalPath());
+            GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),ivUpload2);
         }
         OSSUtils.initOSS(this).asyncPutImage(imgKey, image.getOriginalPath(), new OSSCallBack(this, true) {
         });

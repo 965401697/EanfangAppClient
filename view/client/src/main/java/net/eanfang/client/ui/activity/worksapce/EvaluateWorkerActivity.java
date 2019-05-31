@@ -13,10 +13,11 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.EvaluateWorkerBean;
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.eanfang.util.GlideUtil;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
@@ -52,7 +53,7 @@ public class EvaluateWorkerActivity extends BaseClientActivity implements RadioG
     TextView tvSelect;
 
     @BindView(R.id.sdv_workerHead)
-    SimpleDraweeView sdvWorkerHead;
+    ImageView sdvWorkerHead;
 
     @BindView(R.id.rb_wonderful)
     RadioButton rbWonderful;
@@ -92,8 +93,8 @@ public class EvaluateWorkerActivity extends BaseClientActivity implements RadioG
         ordernum = intent.getStringExtra("ordernum");
         orderId = intent.getLongExtra("orderId", 0);
         assigneeUserId = intent.getLongExtra("workerUid", 0);
+        GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + Uri.parse(getIntent().getStringExtra("avatar"))),sdvWorkerHead);
 
-        sdvWorkerHead.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + Uri.parse(getIntent().getStringExtra("avatar"))));
     }
 
     private void initView() {
