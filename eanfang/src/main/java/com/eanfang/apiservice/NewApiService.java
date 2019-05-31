@@ -751,6 +751,7 @@ public interface NewApiService {
      * 报修增加个人信息
      */
     String REPAIR_PRESONAL_INFO_ADD = BASE_URL + "/yaf_sys/receive/create";
+
     /**
      * 报修增加个人信息修改
      */
@@ -759,4 +760,27 @@ public interface NewApiService {
      * 通讯录好友表
      */
     String ACCOUNT_POST = BASE_URL + YAF_SYS + "/accountmail/insertAccountMail";
+    /**
+     * 所有获取赏金的人
+     */
+    String ALL_GET_REWARD_PERSON = BASE_URL + YAF_SYS + "/withdrawalsrecord/withdrawalSuccessList";
+
+    /**
+     * 当前用户已邀请成功人数、已提现成功赏金、失效赏金、可提现赏金余额（accid）
+     */
+    String ALL_GET_REWARD_PERSON2 = BASE_URL + YAF_SYS + "/earnreward/invitationNum";
+
+    /**
+     * 查询奖励明细已获得和已失效类型列表
+     */
+    String CATEGORY_LIST = BASE_URL + YAF_SYS + "/earnreward/selectCategoryList";
+    /**
+     * 查询奖励明细已提现类型列
+     */
+    String WITHDRAWALS_CATEGORY_LIST = BASE_URL + YAF_SYS + "/withdrawalsrecord/selectWithdrawalsCategoryList";
+    /**
+     * 新增用户推荐信息
+     */
+    String INSERT_WITHDRAWALS_RECORD = BASE_URL + YAF_SYS + "/withdrawalsrecord/insertWithdrawalsRecord";
+
 }

@@ -20,6 +20,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.LoginBean;
 import com.eanfang.model.SpecialistAuthStatusBean;
 import com.eanfang.ui.activity.ExpertDetailsActivity;
+import com.eanfang.ui.activity.InviteFriendActivity;
 import com.eanfang.ui.activity.QrCodeShowActivity;
 import com.eanfang.ui.activity.SecurityCompanyDetailsActivity;
 import com.eanfang.ui.base.BaseFragment;
@@ -192,6 +193,10 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
         });
 
         rbWorkStatus.setOnCheckedChangeListener(this);
+        //邀请活动入口
+        findViewById(R.id.img_invite).setOnClickListener(v -> {
+            startActivity(new Intent(getActivity(), InviteFriendActivity.class));
+        });
     }
 
     @Override

@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.eanfang.BuildConfig;
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.model.LoginBean;
+import com.eanfang.ui.activity.InviteFriendActivity;
 import com.eanfang.ui.activity.QrCodeShowActivity;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JumpItent;
@@ -22,7 +23,7 @@ import net.eanfang.client.ui.activity.my.CollectActivity;
 import net.eanfang.client.ui.activity.my.EvaluateActivity;
 import net.eanfang.client.ui.activity.my.PersonInfoActivity;
 import net.eanfang.client.ui.activity.my.SettingActivity;
-import net.eanfang.client.ui.widget.InviteView;
+import com.eanfang.witget.InviteView;
 
 /**
  * Created by MrHou
@@ -74,6 +75,12 @@ public class MyFragment extends BaseFragment {
         findViewById(R.id.iv_setting).setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), SettingActivity.class));
         });
+
+        //邀请抢红包
+        findViewById(R.id.img_invite).setOnClickListener((v) -> {
+            startActivity(new Intent(getActivity(), InviteFriendActivity.class));
+        });
+
     }
 
     @Override

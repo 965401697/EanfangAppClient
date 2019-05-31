@@ -177,7 +177,14 @@
                 </RelativeLayout>
 
             </LinearLayout>
-
+            <ImageView
+                android:id="@+id/img_invite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_22"
+                android:layout_marginRight="@dimen/dimen_32"
+                android:src="@drawable/img_invitation_entrance"
+                android:scaleType="fitXY"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

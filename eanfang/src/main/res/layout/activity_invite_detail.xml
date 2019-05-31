@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/header"
+        layout="@layout/header" />
+
+    <com.flyco.tablayout.SlidingTabLayout
+        android:id="@+id/tab_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_92"
+        android:background="@color/white"
+        app:tl_indicator_color="@color/colorPrimary"
+        app:tl_underline_color="@color/color_bottom"
+        app:tl_divider_color="@color/admin"
+        app:tl_indicator_height="@dimen/dimen_4"
+        app:tl_indicator_width_equal_title="true"
+        app:tl_textSelectColor="@color/colorPrimary"
+        app:tl_textUnselectColor="@color/roll_title"
+        app:tl_textsize="15sp"
+        app:tl_tab_space_equal="true"
+        app:layout_constraintTop_toBottomOf="@id/header"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_2"
+        android:background="@color/color_invite_detail_line"
+        app:layout_constraintBottom_toBottomOf="@id/tab_title" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_invite_detail"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintTop_toBottomOf="@id/tab_title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+</android.support.constraint.ConstraintLayout>

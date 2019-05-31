@@ -984,15 +984,14 @@
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:exported="true"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.VIEW" />-->
 
-                <category android:name="android.intent.category.DEFAULT" />
+                <!--<category android:name="android.intent.category.DEFAULT" />-->
 
-                <data android:scheme="wx5e7969853addd542" />
-            </intent-filter>
+                <!--<data android:scheme="wx5e7969853addd542" />-->
+            <!--</intent-filter>-->
         </activity>
         <activity android:name=".ui.activity.my.specialist.SpecialistAuthListActivity" />
         <activity android:name=".ui.activity.my.specialist.SpecialistCertificationActivity" />

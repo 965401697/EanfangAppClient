@@ -75,6 +75,7 @@
     <color name="color_service_tel">#4A83F5</color>
 
     <color name="color_service_deiveder">#CDCDCD</color>
+    <color name="color_invite_detail_line">#DCDCDc</color>
     <color name="color_data_line">#CBCBCB</color>
     <color name="color_data_number">#FF9037</color>
     <color name="color_data_bottom">#000033</color>
@@ -104,5 +105,15 @@
     <color name="color_home_titile">#141E34</color>
     <color name="rc_plugins_bg">#F8F8F8</color>
     <color name="color_security_unread">#FF4520</color>
+    <color name="color_cash_our_text_background">#E5E5E5</color>
+    <color name="color_cash_our_text_bg_line">#FCFCFC</color>
+    <color name="color_btn_to_invite">#FF3B2C</color>
+    <color name="color_btn_to_invite_notice">#6B17E8</color>
+    <color name="color_invite_lose_money">#B3A2A1</color>
+    <color name="color_invite_scroll_text">#FFF5D4</color>
+    <color name="color_invite_share_text">#323232</color>
+    <color name="color_invite_share_line">#DFDFDF</color>
+    <color name="color_invite_share_cancel">#FF3657</color>
+
 
 </resources>
