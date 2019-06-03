@@ -196,6 +196,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.worksapce.repair.AddTroubleActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.worksapce.oa.ReportActivity"
@@ -1029,7 +1030,8 @@
         <activity android:name=".ui.activity.worksapce.online.ManufacturerAfterSaleActivity" />
         <activity android:name=".ui.activity.worksapce.online.ExpertListActivity" />
         <activity android:name=".ui.activity.worksapce.online.AskExpertActivity" />
-        <activity android:name=".ui.activity.worksapce.online.FreeAskActivity" />
+        <activity android:name=".ui.activity.worksapce.online.FreeAskActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
         <activity android:name=".ui.activity.worksapce.online.CommonFaultListActivity" />
         <activity android:name=".ui.activity.worksapce.online.FaultExplainActivity" />
         <activity android:name=".ui.activity.worksapce.online.IAnswerActivity" />

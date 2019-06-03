@@ -206,6 +206,7 @@
             android:windowSoftInputMode="adjustResize|adjustPan" /> <!-- 添加故障 -->
         <activity
             android:name=".ui.activity.worksapce.repair.AddTroubleActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             android:screenOrientation="portrait" /> <!-- 设备点检 新建检查 -->
         <!-- 新建工作汇报 -->
         <activity
@@ -844,7 +845,8 @@
         <activity android:name=".ui.activity.worksapce.online.SystemTypeActivity" />
         <activity android:name=".ui.activity.worksapce.online.ManufacturerAfterSaleActivity" />
         <activity android:name=".ui.activity.worksapce.online.ExpertListActivity" />
-        <activity android:name=".ui.activity.worksapce.online.FreeAskActivity" />
+        <activity android:name=".ui.activity.worksapce.online.FreeAskActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
         <activity android:name=".ui.activity.worksapce.online.CommonFaultListActivity" />
         <activity android:name=".ui.activity.worksapce.online.IAnswerActivity" />
         <activity android:name=".ui.activity.worksapce.online.ExpertAnswerActivity" />
