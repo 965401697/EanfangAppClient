@@ -97,7 +97,6 @@ public class FaultExplainActivity extends BaseWorkerActivity {
         intent = getIntent();
         setTitle("故障解答");
         setLeftBack();
-        getData();
         initViews();
 
     }
@@ -231,36 +230,30 @@ public class FaultExplainActivity extends BaseWorkerActivity {
                         //专家回答
                         answers = bean.getExpertAnswers();
                         commonanswers = bean.getCommonAnswers();
-                        if (bean.getExpertAnswers() != null && bean.getCommonAnswers() != null) {
-                            if (bean.getExpertAnswers().size() <= 0 && bean.getCommonAnswers().size() <= 0) {
-                                recyclerViewAnswer.setVisibility(View.GONE);
-                                recyclerAnswerCommon.setVisibility(View.GONE);
-                                tvNoDatas.setVisibility(View.VISIBLE);
-                                tvNoDatasCommon.setVisibility(View.VISIBLE);
-                            } else if (bean.getExpertAnswers().size() > 0 && bean.getCommonAnswers().size() <= 0) {
-                                tvNoDatasCommon.setVisibility(View.VISIBLE);
-                                recyclerAnswerCommon.setVisibility(View.GONE);
+                        boolean answersShow = false;
+                        boolean commonAnswersShow = false;
+                        if (answers != null && commonanswers != null) {
+                            if (answers.size() > 0 && commonanswers.size() <= 0) {
+                                answersShow = true;
                                 mFaultExplainAdapter.setNewData(answers);
-                            } else if (bean.getExpertAnswers().size() <= 0 && bean.getCommonAnswers().size() > 0) {
-                                tvNoDatas.setVisibility(View.VISIBLE);
-                                recyclerViewAnswer.setVisibility(View.GONE);
+                            } else if (answers.size() <= 0 && commonanswers.size() > 0) {
+                                commonAnswersShow = true;
                                 mFaultCommonAdapter.setNewData(commonanswers);
                             } else {
+                                answersShow = true;
+                                commonAnswersShow = true;
                                 mFaultExplainAdapter.setNewData(answers);
                                 mFaultCommonAdapter.setNewData(commonanswers);
                             }
-                        } else {
-                            recyclerViewAnswer.setVisibility(View.GONE);
-                            recyclerAnswerCommon.setVisibility(View.GONE);
-                            tvNoDatas.setVisibility(View.VISIBLE);
-                            tvNoDatasCommon.setVisibility(View.VISIBLE);
                         }
+                        setUIShow(answersShow, commonAnswersShow);
                         mFaultExplainAdapter.notifyDataSetChanged();
                         mFaultCommonAdapter.notifyDataSetChanged();
                     }
 
                     @Override
                     public void onNoData(String message) {
+                        setUIShow(false, false);
                     }
 
                     @Override
@@ -271,6 +264,17 @@ public class FaultExplainActivity extends BaseWorkerActivity {
 
     }
 
+    /**
+     * UI展示更新
+     * @param answersShow 专家列表展示
+     * @param commonAnswersShow 用户回复
+     */
+    private void setUIShow(boolean answersShow, boolean commonAnswersShow){
+        recyclerViewAnswer.setVisibility(answersShow ? View.VISIBLE : View.GONE);
+        recyclerAnswerCommon.setVisibility(commonAnswersShow ? View.VISIBLE : View.GONE);
+        tvNoDatas.setVisibility(answersShow ? View.GONE : View.VISIBLE);
+        tvNoDatasCommon.setVisibility(commonAnswersShow ? View.GONE : View.VISIBLE);
+    }
 
     //时间转化
     public static String format(long millis) {
