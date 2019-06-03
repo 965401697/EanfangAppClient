@@ -34,6 +34,7 @@ import com.eanfang.model.security.SecurityCommentBean;
 import com.eanfang.model.security.SecurityDetailBean;
 import com.eanfang.model.security.SecurityFoucsBean;
 import com.eanfang.model.security.SecurityLikeBean;
+import com.eanfang.model.security.SecurityLikeStatusBean;
 import com.eanfang.model.security.SecurityListBean;
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.ui.base.BaseActivity;
@@ -602,20 +603,20 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         securityLikeBean.setLikeTopCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getTopCompanyId());
         EanfangHttp.post(NewApiService.SERCURITY_LIKE)
                 .upJson(JSONObject.toJSONString(securityLikeBean))
-                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
+                .execute(new EanfangCallback<SecurityLikeStatusBean>(this, true, SecurityLikeStatusBean.class, bean -> {
                     /**
                      * 0 点赞 1 未点赞
                      * */
-                    if (mLikeStatus == 0) {
+                    if (bean.getLikeStatus() == 1) {
                         mLikeStatus = 1;
                         ivLike.setImageResource(R.mipmap.ic_worker_security_like_unpressed);
-                        mItenSecurityDetailBean.setLikeStatus(1);
-                        mItenSecurityDetailBean.setLikesCount(mLikeCount - 1);
-                    } else {
+                        mItenSecurityDetailBean.setLikeStatus(bean.getLikeStatus());
+                        mItenSecurityDetailBean.setLikesCount(bean.getLikesCount());
+                    } else if (bean.getLikeStatus() == 0) {
                         ivLike.setImageResource(R.mipmap.ic_worker_security_like_pressed);
                         mLikeStatus = 0;
-                        mItenSecurityDetailBean.setLikeStatus(0);
-                        mItenSecurityDetailBean.setLikesCount(mLikeCount + 1);
+                        mItenSecurityDetailBean.setLikeStatus(bean.getLikeStatus());
+                        mItenSecurityDetailBean.setLikesCount(bean.getLikesCount());
                     }
                     isLikeEdit = true;
                 }));

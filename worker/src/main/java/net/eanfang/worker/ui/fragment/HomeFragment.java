@@ -28,6 +28,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.AllMessageBean;
 import com.eanfang.model.NoticeEntity;
 import com.eanfang.model.security.SecurityLikeBean;
+import com.eanfang.model.security.SecurityLikeStatusBean;
 import com.eanfang.model.security.SecurityListBean;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.GetDateUtils;
@@ -491,11 +492,11 @@ public class HomeFragment extends BaseFragment {
          * */
         if (listBean.getLikeStatus() == 0) {
             listBean.setLikeStatus(1);
-            listBean.setLikesCount(listBean.getLikesCount() - 1);
+            listBean.setLikesCount(listBean.getLikesCount());
             securityLikeBean.setLikeStatus("1");
         } else {
             listBean.setLikeStatus(0);
-            listBean.setLikesCount(listBean.getLikesCount() + 1);
+            listBean.setLikesCount(listBean.getLikesCount());
             securityLikeBean.setLikeStatus("0");
         }
         securityLikeBean.setLikeUserId(EanfangApplication.get().getUserId());
@@ -503,8 +504,10 @@ public class HomeFragment extends BaseFragment {
         securityLikeBean.setLikeTopCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getTopCompanyId());
         EanfangHttp.post(NewApiService.SERCURITY_LIKE)
                 .upJson(JSONObject.toJSONString(securityLikeBean))
-                .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class, bean -> {
+                .execute(new EanfangCallback<SecurityLikeStatusBean>(getActivity(), true, SecurityLikeStatusBean.class, bean -> {
                     getActivity().runOnUiThread(() -> {
+                        securityListAdapter.getData().get(position).setLikeStatus(bean.getLikeStatus());
+                        securityListAdapter.getData().get(position).setLikesCount(bean.getLikesCount());
                         securityListAdapter.notifyItemChanged(position);
                     });
                 }));
