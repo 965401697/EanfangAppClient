@@ -109,10 +109,10 @@ public class WorkReportListBean implements Serializable {
         private String createUserId;
         private String firstLookTime;
         private Long id;
+        // 是否已读 未读
         private int status;
         private int type;
         private WorkReportDetailBean workReportDetail;
-        // 是否已读 未读
         private int newOrder;
 
         public String getAssigneeOrgCode() {
