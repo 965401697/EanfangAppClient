@@ -751,7 +751,6 @@ public interface NewApiService {
      * 报修增加个人信息
      */
     String REPAIR_PRESONAL_INFO_ADD = BASE_URL + "/yaf_sys/receive/create";
-
     /**
      * 报修增加个人信息修改
      */

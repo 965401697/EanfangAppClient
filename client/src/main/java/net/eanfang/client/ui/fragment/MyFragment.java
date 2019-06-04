@@ -23,7 +23,7 @@ import net.eanfang.client.ui.activity.my.CollectActivity;
 import net.eanfang.client.ui.activity.my.EvaluateActivity;
 import net.eanfang.client.ui.activity.my.PersonInfoActivity;
 import net.eanfang.client.ui.activity.my.SettingActivity;
-import com.eanfang.witget.InviteView;
+import net.eanfang.client.ui.widget.InviteView;
 
 /**
  * Created by MrHou
