@@ -290,6 +290,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
                 .params("id", mCommentId)
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
                     showToast("删除成功");
+                    isCommentEdit = true;
                     generalDialog.dismiss();
                     page = 1;
                     getComments();

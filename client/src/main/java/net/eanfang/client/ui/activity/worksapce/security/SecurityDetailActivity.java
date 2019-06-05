@@ -188,7 +188,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
 
     /**
      * 是否回复
-     * */
+     */
     private boolean isReply = false;
 
     @Override
@@ -298,6 +298,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
                 .params("id", mCommentId)
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
                     showToast("删除成功");
+                    isCommentEdit = true;
                     generalDialog.dismiss();
                     page = 1;
                     getComments();
@@ -332,7 +333,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
                                 tvReadCount.setText(bean.getSpcList().getReadCount() + "");
                                 tvCommentCount.setText(bean.getSpcList().getCommentCount() + "");
                             }
-                            if (isClickCommont && isFirstCome &&!isReply) {
+                            if (isClickCommont && isFirstCome && !isReply) {
                                 ShowKeyboard();
                             } else {
                                 hideKeyboard();
