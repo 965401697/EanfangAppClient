@@ -283,6 +283,7 @@ public class UserHomeActivity extends BaseClientActivity {
                     if (accountBean != null) {
                         mUserInfo = new UserInfo(accountBean.getAccId(),
                                 accountBean.getNickName(), Uri.parse(BuildConfig.OSS_SERVER + accountBean.getAvatar()));
+                        RongIM.getInstance().refreshUserInfoCache(mUserInfo);
                         mImgUserHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + accountBean.getAvatar()));
                         mTvNickname.setText(accountBean.getNickName());
                         mTvNickname.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
