@@ -679,11 +679,9 @@ public class SelectIMContactActivity extends BaseWorkerActivity {
                         pirvateChat = new ArrayList<>(conversations.size());
                         for (Conversation s : conversations) {
                             //如果名字为空的话 就不现实这天记录
-                            if (!TextUtils.isEmpty(s.getConversationTitle())) {
+                            if (!TextUtils.isEmpty(s.getTargetId())) {
                                 TemplateBean.Preson preson = new TemplateBean.Preson();
-                                preson.setProtraivat(s.getPortraitUrl());
                                 preson.setId(s.getTargetId());
-                                preson.setName(s.getConversationTitle());
                                 pirvateChat.add(preson);
                             }
                         }

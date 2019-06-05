@@ -132,7 +132,7 @@ public class CompoundHelper {
 
         for (String b : list) {
             String imgUrl = null;
-            if (b.startsWith("http")) {
+            if (b != null && b.startsWith("http")) {
                 imgUrl = b;
             } else {
                 imgUrl = BuildConfig.OSS_SERVER + b;
