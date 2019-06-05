@@ -32,7 +32,7 @@ import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
-
+@Deprecated
 public class IMPresonInfoActivity extends BaseWorkerActivity {
 
     @BindView(R.id.iv_header)

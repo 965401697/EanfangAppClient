@@ -6,12 +6,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
 import com.alibaba.fastjson.JSONObject;
+import com.annimon.stream.Stream;
+import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.security.SecurityFoucsBean;
 import com.eanfang.biz.model.security.SecurityLikeBean;
 import com.eanfang.biz.model.security.SecurityListBean;
+import com.eanfang.model.security.SecurityLikeStatusBean;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
@@ -25,7 +29,10 @@ import net.eanfang.client.ui.activity.im.SelectIMContactActivity;
 import net.eanfang.client.ui.activity.worksapce.online.FaultExplainActivity;
 import net.eanfang.client.ui.activity.worksapce.security.SecurityDetailActivity;
 import net.eanfang.client.ui.adapter.security.SecurityListAdapter;
+import net.eanfang.client.util.ImagePerviewUtil;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 
 public class SecurityHotFragment extends TemplateItemListFragment {
@@ -36,6 +43,8 @@ public class SecurityHotFragment extends TemplateItemListFragment {
     public static final int REFRESH_ITEM = 1010;
     private SecurityListBean.ListBean securityDetailBean;
     private int mPosition;
+    private ArrayList<String> picList = new ArrayList<>();
+    private String[] pics = null;
 
 
     public static SecurityHotFragment getInstance(String title) {
@@ -64,10 +73,15 @@ public class SecurityHotFragment extends TemplateItemListFragment {
                     doJump(position, true);
                     break;
 
-                case R.id.iv_share:
+                case R.id.ll_share:
                     doShare(securityListAdapter.getData().get(position));
                     break;
                 case R.id.ll_pic:
+                    picList.clear();
+                    pics = securityListAdapter.getData().get(position).getSpcImg().split(",");
+                    picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> BuildConfig.OSS_SERVER + (url).toString()).toList());
+                    ImagePerviewUtil.perviewImage(getActivity(), picList);
+                    break;
                 case R.id.ll_question:
                 case R.id.rl_video:
                     doJump(position, false);
@@ -125,11 +139,11 @@ public class SecurityHotFragment extends TemplateItemListFragment {
          * */
         if (listBean.getLikeStatus() == 0) {
             listBean.setLikeStatus(1);
-            listBean.setLikesCount(listBean.getLikesCount() - 1);
+            listBean.setLikesCount(listBean.getLikesCount());
             securityLikeBean.setLikeStatus("1");
         } else {
             listBean.setLikeStatus(0);
-            listBean.setLikesCount(listBean.getLikesCount() + 1);
+            listBean.setLikesCount(listBean.getLikesCount());
             securityLikeBean.setLikeStatus("0");
         }
         securityLikeBean.setLikeUserId(ClientApplication.get().getUserId());
@@ -137,8 +151,10 @@ public class SecurityHotFragment extends TemplateItemListFragment {
         securityLikeBean.setLikeTopCompanyId(ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getTopCompanyId());
         EanfangHttp.post(NewApiService.SERCURITY_LIKE)
                 .upJson(JSONObject.toJSONString(securityLikeBean))
-                .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class, bean -> {
+                .execute(new EanfangCallback<SecurityLikeStatusBean>(getActivity(), true, SecurityLikeStatusBean.class, bean -> {
                     getActivity().runOnUiThread(() -> {
+                        securityListAdapter.getData().get(position).setLikeStatus(bean.getLikeStatus());
+                        securityListAdapter.getData().get(position).setLikesCount(bean.getLikesCount());
                         securityListAdapter.notifyItemChanged(position);
                     });
                 }));
@@ -150,15 +166,15 @@ public class SecurityHotFragment extends TemplateItemListFragment {
      */
     private void doFoucus(SecurityListBean.ListBean listBean) {
         SecurityFoucsBean securityFoucsBean = new SecurityFoucsBean();
-        securityFoucsBean.setFollowUserId(ClientApplication.get().getUserId());
-        securityFoucsBean.setFollowCompanyId(ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyId());
-        securityFoucsBean.setFollowTopCompanyId(ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getTopCompanyId());
+        securityFoucsBean.setFollowUserId(EanfangApplication.get().getUserId());
+        securityFoucsBean.setFollowCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyId());
+        securityFoucsBean.setFollowTopCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getTopCompanyId());
 
         securityFoucsBean.setAsUserId(listBean.getPublisherUserId());
         securityFoucsBean.setAsCompanyId(listBean.getPublisherCompanyId());
         securityFoucsBean.setAsTopCompanyId(listBean.getPublisherTopCompanyId());
         securityFoucsBean.setAsAccId(listBean.getPublisherUser().getAccId());
-        securityFoucsBean.setFollowAccId(ClientApplication.get().getAccId());
+        securityFoucsBean.setFollowAccId(EanfangApplication.get().getAccId());
         /**
          * 状态：0 关注 1 未关注
          * */
@@ -283,7 +299,18 @@ public class SecurityHotFragment extends TemplateItemListFragment {
      * 刷新点赞 关注状态
      */
     public void refreshItemStatus(Intent intentData) {
-        if (securityDetailBean != null && intentData != null) {
+        /**
+         * 是否删除
+         * */
+        if (intentData.getBooleanExtra("isDelete", false)) {
+            securityListAdapter.getData().remove(securityDetailBean);
+            securityListAdapter.notifyDataSetChanged();
+            if (securityListAdapter.getData() != null && securityListAdapter.getData().size() > 0) {
+                mTvNoData.setVisibility(View.GONE);
+            } else {
+                mTvNoData.setVisibility(View.VISIBLE);
+            }
+        } else if (securityDetailBean != null && intentData != null) {
             SecurityListBean.ListBean mSecurityDetailBean = (SecurityListBean.ListBean) intentData.getSerializableExtra("itemStatus");
             /**
              * 是否点赞

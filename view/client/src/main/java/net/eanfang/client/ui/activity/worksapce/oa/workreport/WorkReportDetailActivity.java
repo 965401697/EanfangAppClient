@@ -105,6 +105,7 @@ public class WorkReportDetailActivity extends BaseClientActivity {
                         bundle.putString("picUrl", mBean.getWorkReportDetails().get(0).getPictures().split(",")[0]);
                     }
                     bundle.putString("creatTime", String.valueOf(mBean.getType()));
+                    bundle.putString("creatReleaseTime", mBean.getCreateTime());
                     bundle.putString("workerName", mBean.getCreateUser().getAccountEntity().getRealName());
                     bundle.putString("status", String.valueOf(mBean.getStatus()));
                     bundle.putString("shareType", "3");

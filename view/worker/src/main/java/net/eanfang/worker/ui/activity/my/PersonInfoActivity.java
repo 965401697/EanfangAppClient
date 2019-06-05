@@ -270,7 +270,7 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto implements Bas
                     public void onOssSuccess() {
                         runOnUiThread(() -> {
                             isUploadHead = true;
-                            LoginBean entity = WorkerApplication.get().getUser();
+                            LoginBean entity = WorkerApplication.get().getLoginBean();
                             entity.getAccount().setAvatar(imgKey);
                             path = entity.getAccount().getAvatar();
                             setHeaderShow(true);

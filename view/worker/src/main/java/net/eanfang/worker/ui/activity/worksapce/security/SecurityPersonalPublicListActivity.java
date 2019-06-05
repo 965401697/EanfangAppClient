@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.alibaba.fastjson.JSONObject;
+import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -30,6 +32,10 @@ import net.eanfang.worker.ui.activity.im.SelectIMContactActivity;
 import net.eanfang.worker.ui.activity.worksapce.online.FaultExplainActivity;
 import net.eanfang.worker.ui.adapter.security.SecurityFoucsListAdapter;
 import net.eanfang.worker.ui.adapter.security.SecurityListAdapter;
+import net.eanfang.worker.util.ImagePerviewUtil;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -71,6 +77,8 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
     private boolean isCreate = false;
     private SecurityListBean.ListBean securityDetailBean;
     private int mPosition;
+    private ArrayList<String> picList = new ArrayList<>();
+    private String[] pics = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,9 +122,9 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
          * 点赞不需要已读未读
          * */
         if (mLike.equals(mType)) {
-            securityListAdapter = new SecurityListAdapter(WorkerApplication.get().getApplicationContext(), false);
+            securityListAdapter = new SecurityListAdapter( false);
         } else {
-            securityListAdapter = new SecurityListAdapter(WorkerApplication.get().getApplicationContext(), true);
+            securityListAdapter = new SecurityListAdapter(true);
         }
         securityListAdapter.bindToRecyclerView(rvSecurity);
         securityListAdapter.setOnLoadMoreListener(this, rvSecurity);
@@ -128,12 +136,17 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
                 case R.id.ll_comments:
                     doJump(position, true);
                     break;
-                case R.id.iv_share:
+                case R.id.ll_share:
                     doShare(securityListAdapter.getData().get(position));
+                    break;
+                case R.id.ll_pic:
+                    picList.clear();
+                    pics = securityListAdapter.getData().get(position).getSpcImg().split(",");
+                    picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> BuildConfig.OSS_SERVER + (url).toString()).toList());
+                    ImagePerviewUtil.perviewImage(SecurityPersonalPublicListActivity.this, picList);
                     break;
                 case R.id.tv_isFocus:
                 case R.id.ll_like:
-                case R.id.ll_pic:
                 case R.id.ll_question:
                 case R.id.rl_video:
                     doJump(position, false);
@@ -164,7 +177,7 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
      * 关注人的列表
      */
     public void initFoucsAdapter() {
-        securityFoucsListAdapter = new SecurityFoucsListAdapter(WorkerApplication.get().getApplicationContext(), isCreate);
+        securityFoucsListAdapter = new SecurityFoucsListAdapter( isCreate);
         securityFoucsListAdapter.bindToRecyclerView(rvSecurity);
         securityFoucsListAdapter.setOnLoadMoreListener(this, rvSecurity);
         securityFoucsListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
@@ -429,6 +442,12 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
             }
             securityDetailBean.setReadCount(mSecurityDetailBean.getReadCount());
             securityDetailBean.setReadStatus(mSecurityDetailBean.getReadStatus());
+            /**
+             * 是否删除
+             * */
+            if (intentData.getBooleanExtra("isDelete", false)) {
+                securityListAdapter.getData().remove(securityDetailBean);
+            }
             securityListAdapter.notifyDataSetChanged();
             if (securityListAdapter.getData() != null && securityListAdapter.getData().size() > 0) {
                 tvNoDatas.setVisibility(View.GONE);

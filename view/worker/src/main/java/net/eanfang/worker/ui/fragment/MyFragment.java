@@ -71,11 +71,19 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
     @BindView(R.id.rl_worker_verfity)
     RelativeLayout rlWorkerVerfity;
     @BindView(R.id.tv_verfity_status)
-    TextView tvVerfityStatus;
+    TextView tvVerfiy;
     @BindView(R.id.tv_expert_verfity_status)
-    TextView tvExpertVerfityStatus;
+    TextView tvExpertVerfiy;
     @BindView(R.id.rl_expert_verfity)
     RelativeLayout rlExpertVerfity;
+    @BindView(R.id.tv_verfity_status_b)
+    TextView tvVerfiyb;
+    @BindView(R.id.tv_expert_verfity_status_b)
+    TextView tvExpertVerfiyb;
+    @BindView(R.id.rl_worker_verfity_b)
+    RelativeLayout rlWorkerVerfityB;
+    @BindView(R.id.rl_expert_verfity_b)
+    RelativeLayout rlExpertVerfityB;
     private int verify = -1;
     private SpecialistAuthStatusBean mAuthStatusBean;
     private int e=0;
@@ -110,25 +118,61 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
 
     private void setOnClick(int e, int t) {
         if (t == 0) {
-            tvVerfityStatus.setText("技师未认证，待认证");
+            tvVerfiy.setText("技师未认证，待认证");
+            tvVerfiyb.setText("技师未认证，待认证");
         } else if (t == 1) {
-            tvVerfityStatus.setText("认证中");
+            tvVerfiy.setText("认证中");
+            tvVerfiyb.setText("认证中");
         } else if (t == 2) {
-            tvVerfityStatus.setText("已认证");
+            tvVerfiy.setText("已认证");
+            tvVerfiyb.setText("已认证");
         } else if (t == 3) {
 
-            tvVerfityStatus.setText("认证失败，请重新认证");
+            tvVerfiy.setText("认证失败，请重新认证");
+            tvVerfiyb.setText("认证失败，请重新认证");
         }
         //status 0草稿1认证中2认证通过3认证拒绝
         if (e == 0) {
-            tvExpertVerfityStatus.setText("专家未认证，待认证");
+            tvExpertVerfiy.setText("专家未认证，待认证");
+            tvExpertVerfiyb.setText("专家未认证，待认证");
         } else if (e == 1) {
-            tvExpertVerfityStatus.setText("认证中");
+            tvExpertVerfiy.setText("认证中");
+            tvExpertVerfiyb.setText("认证中");
         } else if (e == 2) {
-            tvExpertVerfityStatus.setText("已认证");
+            tvExpertVerfiy.setText("已认证");
+            tvExpertVerfiyb.setText("已认证");
         } else if (e == 3) {
-            tvExpertVerfityStatus.setText("认证失败，请重新认证");
+            tvExpertVerfiy.setText("认证失败，请重新认证");
+            tvExpertVerfiyb.setText("认证失败，请重新认证");
         }
+        rlWorkerVerfity.setOnClickListener((v) -> {
+            doWorkAuth();
+        });
+        rlWorkerVerfityB.setOnClickListener((v) -> {
+            doWorkAuthB();
+        });
+
+        rlExpertVerfity.setOnClickListener((v) -> {
+            JumpItent.jump(getActivity(), SpecialistAuthListActivity.class);
+        });
+        rlExpertVerfityB.setOnClickListener((v) -> {
+
+            if (t == 2) {
+                if (e == 1 || e == 2) {
+                    //如果是认证中  和 认证完成 跳到详情界面 不可修改
+                    JumpItent.jump(getActivity(), SpecialistSkillInfoDetailActivity.class);
+                } else {
+                    if (mAuthStatusBean == null) {
+                        //多次访问状态的接口 造成mAuthStatusBean == null
+                        ToastUtil.get().showToast(getActivity(), "请稍后操作");
+                        return;
+                    }
+                    startActivity(new Intent(getActivity(), SpecialistSkillTypeActivity.class).putExtra("status", mAuthStatusBean.qual));
+                }
+            } else {
+                ToastUtil.get().showToast(getActivity(), "请先进行技师认证");
+            }
+        });
 
     }
 
@@ -140,6 +184,17 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
 
     @Override
     protected void setListener() {
+        // 二维码头像
+        ivPersonalQRCode.setOnClickListener((v) -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("qrcodeTitle", WorkerApplication.get().getLoginBean().getAccount().getRealName());
+            bundle.putString("qrcodeAddress", WorkerApplication.get().getLoginBean().getAccount().getQrCode());
+            bundle.putString("qrcodeMessage", "personal");
+            JumpItent.jump(getActivity(), QrCodeShowActivity.class, bundle);
+//            personalQRCodeDialog = new PersonalQRCodeDialog(getActivity(), WorkerApplication.get().getLoginBean().getAccount().getQrCode());
+//            personalQRCodeDialog.show();
+        });
+
     }
 
     /**

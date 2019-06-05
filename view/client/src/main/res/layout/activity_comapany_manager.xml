@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/color_contact_line_gray"
     android:orientation="vertical"
+    style="@style/NoStatusStyle"
     tools:context="net.eanfang.client.ui.activity.worksapce.contacts.CompanyManagerActivity">
 
     <include layout="@layout/header" />

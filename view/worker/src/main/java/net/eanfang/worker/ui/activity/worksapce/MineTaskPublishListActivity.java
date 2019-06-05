@@ -99,7 +99,7 @@ public class MineTaskPublishListActivity extends BaseActivity {
 //        if (Constant.CREATE_DATA_CODE == (dataType)) {
 //            queryEntry.getEquals().put("createUserId", WorkerApplication.get().getUserId() + "");
 //        } else if (Constant.ASSIGNEE_DATA_CODE == (dataType)) {
-//            queryEntry.getEquals().put("createCompanyId", WorkerApplication.get().getUser().getAccount().getDefaultUser().getCompanyId() + "");
+//            queryEntry.getEquals().put("createCompanyId", WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyId() + "");
 //        }
 //        queryEntry.getEquals().put("status", status + "");
 //

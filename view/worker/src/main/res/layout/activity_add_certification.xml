@@ -29,6 +29,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="荣誉"
+                android:drawableLeft="@mipmap/ic_must_input"
+                android:drawablePadding="@dimen/dimen_4"
                 android:textColor="@color/color_client_neworder"
                 android:textSize="@dimen/textSize_14" />
 

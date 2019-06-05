@@ -39,9 +39,13 @@ public class SkillInfoDetailActivity extends BaseWorkerActivity {
     @BindView(R.id.recycler_view_kind)
     RecyclerView recyclerViewOs;
 
-    // 获取系统类别
+    /**
+     * 获取系统类别
+     */
     List<BaseDataEntity> systemTypeList = Config.get().getBusinessList(1);
-    // 业务类型
+    /**
+     * 业务类型
+     */
     List<BaseDataEntity> businessTypeList = Config.get().getServiceList(1);
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
@@ -59,32 +63,27 @@ public class SkillInfoDetailActivity extends BaseWorkerActivity {
         ButterKnife.bind(this);
         setTitle("技能资质详情");
         setLeftBack();
-
         getSkillInfo();
 
     }
 
     private void getSkillInfo() {
 
-        EanfangHttp.post(UserApi.TECH_WORKER_DETAIL)
+        EanfangHttp.post(UserApi.TECH_WORKER_DETAIL_V2)
                 .params("accId", String.valueOf(WorkerApplication.get().getAccId()))
                 .execute(new EanfangCallback<WorkerVerifySkillBean>(this, true, WorkerVerifySkillBean.class, bean -> {
-
                     mWorkerVerifySkillBean = bean;
-
                     getData();
-
                     List<BaseDataEntity> SystemBusinessList = bean.getBaseData2userList();
-
                     // 系统类别
                     for (BaseDataEntity checkedS : SystemBusinessList) {
                         for (BaseDataEntity s : systemTypeList) {
-                            if (s.getDataType() == 1 && (s.getDataId() == checkedS.getDataId())) {
+                            if (s.getDataType() == 1 && (s.getDataId().equals(checkedS.getDataId()))) {
                                 s.setCheck(true);
                                 break;
                             } else {
                                 for (BaseDataEntity checkedB : businessTypeList) {
-                                    if (checkedB.getDataId() == checkedS.getDataId()) {
+                                    if (checkedB.getDataId().equals(checkedS.getDataId())) {
                                         checkedB.setCheck(true);
                                         break;
                                     }
@@ -138,17 +137,14 @@ public class SkillInfoDetailActivity extends BaseWorkerActivity {
                         if (bean.getList().size() > 0) {
                             adapter.setNewData(bean.getList());
                         }
-
                     }
 
                     @Override
                     public void onNoData(String message) {
-
                     }
 
                     @Override
                     public void onCommitAgain() {
-
                     }
                 });
     }

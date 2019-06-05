@@ -2,6 +2,8 @@ package com.eanfang.biz.model;
 
 import java.io.Serializable;
 
+import lombok.Setter;
+
 /**
  * Created by MrHou
  *
@@ -9,6 +11,7 @@ import java.io.Serializable;
  * @email houzhongzhou@yeah.net
  * @desc
  */
+@Setter
 public class WorkerInfoBean implements Serializable {
 
     /**
@@ -49,6 +52,15 @@ public class WorkerInfoBean implements Serializable {
     private int workingLevel;
     private int workingYear;
     private String avatarPhoto;
+    private String idCardNum;
+    /**
+     * 性别
+     */
+    private String idCardGender;
+    /**
+     * 姓名
+     */
+    private String idCardName;
 
     public Long getAccId() {
         return accId;
@@ -122,76 +134,16 @@ public class WorkerInfoBean implements Serializable {
         return avatarPhoto == null ? "" : avatarPhoto;
     }
 
-    public void setAccId(Long accId) {
-        this.accId = accId;
+    public String getIdCardNum() {
+        return idCardNum == null ? "" : idCardNum;
     }
 
-    public void setAccidentPics(String accidentPics) {
-        this.accidentPics = accidentPics;
+    public String getIdCardGender() {
+        return idCardGender;
     }
 
-    public void setContactName(String contactName) {
-        this.contactName = contactName;
-    }
-
-    public void setContactPhone(String contactPhone) {
-        this.contactPhone = contactPhone;
-    }
-
-    public void setCrimePic(String crimePic) {
-        this.crimePic = crimePic;
-    }
-
-    public void setHonorPics(String honorPics) {
-        this.honorPics = honorPics;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setIdCardFront(String idCardFront) {
-        this.idCardFront = idCardFront;
-    }
-
-    public void setIdCardHand(String idCardHand) {
-        this.idCardHand = idCardHand;
-    }
-
-    public void setIdCardSide(String idCardSide) {
-        this.idCardSide = idCardSide;
-    }
-
-    public void setIntro(String intro) {
-        this.intro = intro;
-    }
-
-    public void setPayAccount(String payAccount) {
-        this.payAccount = payAccount;
-    }
-
-    public void setPayType(int payType) {
-        this.payType = payType;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public void setWorkingLevel(int workingLevel) {
-        this.workingLevel = workingLevel;
-    }
-
-    public void setWorkingYear(int workingYear) {
-        this.workingYear = workingYear;
-    }
-
-    public void setAvatarPhoto(String avatarPhoto) {
-        this.avatarPhoto = avatarPhoto;
+    public String getIdCardName() {
+        return idCardName;
     }
 }
 

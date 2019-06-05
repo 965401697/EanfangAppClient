@@ -487,6 +487,11 @@ public class AddTroubleActivity extends BaseClientActivity {
                     @Override
                     public void onDeviceType() {
                         //设备类别
+                        etDeviceLocationNum.setFocusable(true);
+                        etDeviceLocation.setFocusable(true);
+                        llDeviceBrand.setClickable(true);
+                        etDeviceLocation.setText("");
+                        etDeviceLocationNum.setText("");
                         JumpItent.jump(AddTroubleActivity.this, SelectDeviceTypeActivity.class, REQUEST_FAULTDEVICEINFO);
                         repairSelectDevicesDialog.dismiss();
                     }
@@ -609,6 +614,8 @@ public class AddTroubleActivity extends BaseClientActivity {
             tvDeviceBrand.setText(data.getStringExtra("deviceBrandName"));
             etDeviceLocationNum.setFocusable(true);
             etDeviceLocationNum.setFocusableInTouchMode(true);
+            etDeviceLocationNum.requestFocus();
+            etDeviceLocationNum.findFocus();
             //将光标定位
             etDeviceLocation.setFocusable(true);
             etDeviceLocation.setFocusableInTouchMode(true);

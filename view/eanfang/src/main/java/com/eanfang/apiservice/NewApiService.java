@@ -28,7 +28,6 @@ public interface NewApiService {
     /**
      * 获取基础数据 缓存
      */
-    @Deprecated
     String GET_BASE_DATA_CACHE = BuildConfig.API_HOST + "/yaf_sys/basedata/listallcache/";
     /**
      * 基础数据 树
@@ -41,7 +40,6 @@ public interface NewApiService {
     /**
      * 获取静态常量 缓存
      */
-    @Deprecated
     String GET_CONST_CACHE = BuildConfig.API_HOST + "/yaf_sys/const/listallcache/";
 
     /**
@@ -692,11 +690,15 @@ public interface NewApiService {
     /**
      * 安防圈详情
      */
-    String SERCURITY_DETAIL = BASE_URL + "/yaf_spc/spcircle/detail";
+    String SERCURITY_DETAIL = BASE_URL + "/yaf_spc/spcircle/details";
     /**
      * 安防圈评论
      */
     String SERCURITY_COMMENT = BASE_URL + "/yaf_spc/spcircle/comment";
+    /**
+     * 安防圈评论详情
+     */
+    String SERCURITY_COMMENT_DETAIL = BASE_URL + "/yaf_spc/spcircle/commentDetail";
     /**
      * 安防圈删除评论
      */
@@ -727,6 +729,10 @@ public interface NewApiService {
      * 安防圈我关注的人
      */
     String SERCURITY_FOUCS_LIST = BASE_URL + "/yaf_spc/spcircle/followerManList";
+    /**
+     * 安防圈删除
+     */
+    String SERCURITY_DELETE = BASE_URL + "/yaf_spc/spcircle/contentDelete";
 
     /**
      * 报修获取用户信息列表
@@ -745,8 +751,36 @@ public interface NewApiService {
      * 报修增加个人信息
      */
     String REPAIR_PRESONAL_INFO_ADD = BASE_URL + "/yaf_sys/receive/create";
+
     /**
      * 报修增加个人信息修改
      */
     String REPAIR_PRESONAL_INFO_UPDATAE = BASE_URL + "/yaf_sys/receive/update";
+    /**
+     * 通讯录好友表
+     */
+    String ACCOUNT_POST = BASE_URL + YAF_SYS + "/accountmail/insertAccountMail";
+    /**
+     * 所有获取赏金的人
+     */
+    String ALL_GET_REWARD_PERSON = BASE_URL + YAF_SYS + "/withdrawalsrecord/withdrawalSuccessList";
+
+    /**
+     * 当前用户已邀请成功人数、已提现成功赏金、失效赏金、可提现赏金余额（accid）
+     */
+    String ALL_GET_REWARD_PERSON2 = BASE_URL + YAF_SYS + "/earnreward/invitationNum";
+
+    /**
+     * 查询奖励明细已获得和已失效类型列表
+     */
+    String CATEGORY_LIST = BASE_URL + YAF_SYS + "/earnreward/selectCategoryList";
+    /**
+     * 查询奖励明细已提现类型列
+     */
+    String WITHDRAWALS_CATEGORY_LIST = BASE_URL + YAF_SYS + "/withdrawalsrecord/selectWithdrawalsCategoryList";
+    /**
+     * 新增用户推荐信息
+     */
+    String INSERT_WITHDRAWALS_RECORD = BASE_URL + YAF_SYS + "/withdrawalsrecord/insertWithdrawalsRecord";
+
 }

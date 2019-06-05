@@ -67,7 +67,7 @@ public class MaintainCtrlView extends BaseDialog {
             intent.putExtra("type", 1);
             mContext.startActivity(intent);
 
-//            new PersonMaintainHistoryView(mContext, true, WorkerApplication.get().getUser().getAccount().getDefaultUser().getCompanyId(), 1).show();
+//            new PersonMaintainHistoryView(mContext, true, WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyId(), 1).show();
         });
 
         ivAdd.setOnClickListener((v) -> {

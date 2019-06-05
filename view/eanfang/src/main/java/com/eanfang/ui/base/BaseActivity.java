@@ -196,7 +196,12 @@ public class BaseActivity extends AppCompatActivity implements
         toolbar.setNavigationOnClickListener(v -> onNavigationOnClicked());
     }
 
-
+    public void setRightImageVisible() {
+        ((ImageView) findViewById(R.id.iv_right)).setVisibility(View.VISIBLE);
+    }
+    public void setRightImageGone() {
+        ((ImageView) findViewById(R.id.iv_right)).setVisibility(View.GONE);
+    }
     @Override
     public void setTitle(int id) {
         ((TextView) findViewById(R.id.tv_title)).setText(id);

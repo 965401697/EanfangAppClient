@@ -1,5 +1,6 @@
 package net.eanfang.worker.ui.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
@@ -39,6 +40,7 @@ import com.eanfang.sys.activity.LoginActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.BadgeUtil;
 import com.eanfang.util.CleanMessageUtil;
+import com.eanfang.util.ContactUtil;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.LocationUtil;
@@ -73,6 +75,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -168,7 +171,7 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
         RongIM.setConnectionStatusListener(new MyConnectionStatusListener());
 
         //判断是否完善资料
-//        if (TextUtils.isEmpty(WorkerApplication.get().getUser().getAccount().getRealName()) || "待提供".equals(WorkerApplication.get().getUser().getAccount().getRealName())) {
+//        if (TextUtils.isEmpty(WorkerApplication.get().getLoginBean().getAccount().getRealName()) || "待提供".equals(WorkerApplication.get().getLoginBean().getAccount().getRealName())) {
 //            startAnimActivity(new Intent(this, LoginHintActivity.class));
 //        }
         // 判断是否有密码
@@ -396,9 +399,9 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
     }
 
     public void setHeaders() {
-        if (WorkerApplication.get().getUser() != null) {
+        if (WorkerApplication.get().getLoginBean() != null) {
             EanfangHttp.setToken(WorkerApplication.get().getLoginBean().getToken());
-//            HttpConfig.get().setToken(WorkerApplication.get().getUser().getToken());
+//            HttpConfig.get().setToken(WorkerApplication.get().getLoginBean().getToken());
         }
         EanfangHttp.setWorker();
     }
@@ -849,6 +852,19 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
 
     public String onNoConatac() {
         return mStatus;
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RongIM.getInstance().disconnect();
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        int index = Arrays.asList(permissions).indexOf(Manifest.permission.READ_CONTACTS);
+        if (grantResults[index] == 0) {
+            ContactUtil.postAccount(MainActivity.this);
+        }
     }
 }
 

@@ -27,6 +27,7 @@ import net.eanfang.worker.ui.activity.worksapce.TroubleDetalilListActivity;
 import net.eanfang.worker.ui.activity.worksapce.oa.check.DealWithFirstActivity;
 import net.eanfang.worker.ui.activity.worksapce.oa.task.TaskDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.oa.workreport.WorkReportDetailActivity;
+import net.eanfang.worker.ui.activity.worksapce.security.SecurityDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.worktalk.WorkTalkDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.worktransfer.WorkTransferDetailActivity;
 
@@ -49,6 +50,7 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
         TextView workerName;
         ImageView ivUpload;
         LinearLayout ll_custom;
+        TextView mTime;
     }
 
     @Override
@@ -76,7 +78,7 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
             } else {
                 holder.workerName.setText("维修历史：");
             }
-            holder.status.setVisibility(View.INVISIBLE);
+            holder.status.setVisibility(View.GONE);
         } else if (customizeMessage.getShareType().equals("3")) {
             holder.title.setText("工作汇报");
             holder.orderNum.setText("部门：" + customizeMessage.getOrderNum());
@@ -84,6 +86,8 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
             holder.creatTime.setText("类型：" + GetConstDataUtils.getWorkReportTypeList().get(Integer.parseInt(customizeMessage.getCreatTime())));
             holder.workerName.setText("发布人：" + customizeMessage.getWorkerName());
             holder.status.setText(Integer.parseInt(customizeMessage.getStatus()) == 1 ? "已读" : "未读");
+            holder.mTime.setText(customizeMessage.getCreatReleaseTime());
+            holder.mTime.setVisibility(View.VISIBLE);
         } else if (customizeMessage.getShareType().equals("4")) {
             holder.title.setText("布置任务");
             holder.orderNum.setText("公司：" + customizeMessage.getOrderNum());
@@ -97,7 +101,7 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
             holder.ivUpload.setVisibility(View.GONE);
             holder.creatTime.setText("整改期限：" + customizeMessage.getCreatTime());
             holder.workerName.setText("检查时间：" + customizeMessage.getWorkerName());
-            holder.status.setVisibility(View.INVISIBLE);
+            holder.status.setVisibility(View.GONE);
         } else if (customizeMessage.getShareType().equals("6")) {
 
             holder.title.setText("交接班");
@@ -110,7 +114,7 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
             } else if (Integer.parseInt(customizeMessage.getStatus()) == 1) {
                 holder.status.setText("完成交接");
             } else {
-                holder.status.setVisibility(View.INVISIBLE);
+                holder.status.setVisibility(View.GONE);
             }
 
         } else if (customizeMessage.getShareType().equals("7")) {
@@ -122,6 +126,13 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
             holder.workerName.setText(customizeMessage.getWorkerName());
             holder.status.setText(Integer.parseInt(customizeMessage.getStatus()) == 1 ? "已读" : "未读");
 
+        } else if (customizeMessage.getShareType().equals("8")) {
+            holder.title.setText("安防圈");
+            holder.orderNum.setText("公司：" + customizeMessage.getOrderNum());
+            holder.ivUpload.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + customizeMessage.getPicUrl()));
+            holder.creatTime.setText("标题：" + customizeMessage.getCreatTime());
+            holder.workerName.setText("发布人：" + customizeMessage.getWorkerName());
+            holder.status.setVisibility(View.GONE);
         }
 
 
@@ -161,6 +172,8 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
             return new SpannableString("交接班(快去查看吧!)");
         } else if (customizeMessage.getShareType().equals("7")) {
             return new SpannableString("面谈员工(快去查看吧!)");
+        } else if (customizeMessage.getShareType().equals("8")) {
+            return new SpannableString("安防圈(快去查看吧!)");
         }
         return null;
     }
@@ -183,19 +196,21 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
             new TroubleDetalilListActivity((Activity) view.getContext(), true, Long.parseLong(customizeMessage.getOrderId()), Integer.parseInt(customizeMessage.getStatus()), true).show();
         } else if (customizeMessage.getShareType().equals("3")) {
 //            customizeMessage.setStatus("1");//点击标志位已读
-            view.getContext().startActivity(new Intent(view.getContext(), WorkReportDetailActivity.class).putExtra("id", Long.parseLong(customizeMessage.getOrderId())));
+            view.getContext().startActivity(new Intent((Activity) view.getContext(), WorkReportDetailActivity.class).putExtra("id", Long.parseLong(customizeMessage.getOrderId())));
 //            new WorkReportInfoView((Activity) view.getContext(), true, Long.parseLong(customizeMessage.getOrderId()), true).show();
         } else if (customizeMessage.getShareType().equals("4")) {
 //            new WorkTaskInfoView((Activity) view.getContext(), true, Long.parseLong(customizeMessage.getOrderId()), true).show();
-            view.getContext().startActivity(new Intent(view.getContext(), TaskDetailActivity.class).putExtra("id", Long.parseLong(customizeMessage.getOrderId())));
+            view.getContext().startActivity(new Intent((Activity) view.getContext(), TaskDetailActivity.class).putExtra("id", Long.parseLong(customizeMessage.getOrderId())));
         } else if (customizeMessage.getShareType().equals("5")) {
 //            new WorkCheckInfoView((Activity) view.getContext(), true, Long.parseLong(customizeMessage.getOrderId()), true).show();
-            view.getContext().startActivity(new Intent(view.getContext(), DealWithFirstActivity.class).putExtra("id", Long.parseLong(customizeMessage.getOrderId())));
+            view.getContext().startActivity(new Intent((Activity) view.getContext(), DealWithFirstActivity.class).putExtra("id", Long.parseLong(customizeMessage.getOrderId())));
 
         } else if (customizeMessage.getShareType().equals("6")) {
-            view.getContext().startActivity(new Intent(view.getContext(), WorkTransferDetailActivity.class).putExtra("itemId", customizeMessage.getOrderId()));
+            view.getContext().startActivity(new Intent((Activity) view.getContext(), WorkTransferDetailActivity.class).putExtra("itemId", customizeMessage.getOrderId()));
         } else if (customizeMessage.getShareType().equals("7")) {
-            view.getContext().startActivity(new Intent(view.getContext(), WorkTalkDetailActivity.class).putExtra("itemId", customizeMessage.getOrderId()));
+            view.getContext().startActivity(new Intent((Activity) view.getContext(), WorkTalkDetailActivity.class).putExtra("itemId", customizeMessage.getOrderId()));
+        } else if (customizeMessage.getShareType().equals("8")) {
+            view.getContext().startActivity(new Intent((Activity) view.getContext(), SecurityDetailActivity.class).putExtra("spcId", Long.parseLong(customizeMessage.getOrderId())));
         }
     }
 
@@ -203,13 +218,14 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
     public View newView(Context context, ViewGroup viewGroup) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_im_order, null);
         ViewHolder holder = new ViewHolder();
-        holder.title = view.findViewById(R.id.tv_title);
-        holder.status = view.findViewById(R.id.tv_state);
-        holder.orderNum = view.findViewById(R.id.tv_order_id);
-        holder.creatTime = view.findViewById(R.id.tv_create_time);
-        holder.workerName = view.findViewById(R.id.tv_person_name);
-        holder.ivUpload = view.findViewById(R.id.iv_upload);
-        holder.ll_custom = view.findViewById(R.id.ll_custom);
+        holder.title = (TextView) view.findViewById(R.id.tv_title);
+        holder.status = (TextView) view.findViewById(R.id.tv_state);
+        holder.orderNum = (TextView) view.findViewById(R.id.tv_order_id);
+        holder.creatTime = (TextView) view.findViewById(R.id.tv_create_time);
+        holder.workerName = (TextView) view.findViewById(R.id.tv_person_name);
+        holder.ivUpload =  view.findViewById(R.id.iv_upload);
+        holder.ll_custom = (LinearLayout) view.findViewById(R.id.ll_custom);
+        holder.mTime = view.findViewById(R.id.tv_time);
         view.setTag(holder);
         return view;
     }

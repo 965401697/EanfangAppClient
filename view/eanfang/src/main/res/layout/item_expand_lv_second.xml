@@ -25,8 +25,7 @@
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
         <CheckBox
             android:id="@+id/cb"
@@ -38,6 +37,7 @@
             android:button="@null"
             android:focusable="false"
             android:text="全选"
+            android:clickable="false"
             android:textColor="@color/color_client_neworder"
             android:textSize="13sp" />
 
@@ -51,7 +51,7 @@
             android:background="@drawable/icon_choose_area_checktor"
             android:button="@null"
             android:focusable="false"
-            android:visibility="gone"/>
+            android:visibility="gone" />
     </RelativeLayout>
 
     <ImageView

@@ -21,14 +21,14 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.config.EanfangConst;
+ ;
+import com.eanfang.biz.model.AllMessageBean;
+import com.eanfang.biz.model.GroupsBean;
+import com.eanfang.biz.model.bean.GroupDetailBean;
+import com.eanfang.biz.model.device.User;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.NetBroadcastReceiver;
-import com.eanfang.biz.model.AllMessageBean;
-import com.eanfang.biz.model.GroupDetailBean;
-import com.eanfang.biz.model.GroupsBean;
-import com.eanfang.biz.model.device.User;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
@@ -36,8 +36,6 @@ import com.eanfang.util.StringUtils;
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.MainActivity;
-import net.eanfang.worker.ui.activity.im.GroupDetailActivity;
-import net.eanfang.worker.ui.activity.im.IMPresonInfoActivity;
 import net.eanfang.worker.ui.activity.im.MorePopWindow;
 import net.eanfang.worker.ui.activity.im.MyConversationListFragment;
 import net.eanfang.worker.ui.activity.im.SystemMessageActivity;
@@ -58,7 +56,6 @@ import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Group;
 import io.rong.imlib.model.UserInfo;
 import q.rorbin.badgeview.QBadgeView;
-
 import static android.app.Activity.RESULT_CANCELED;
 import static com.okgo.utils.HttpUtils.runOnUiThread;
 
@@ -152,7 +149,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(0, 0, true)
                 .setBadgeTextSize(10, true);
-//        ((androidx.swiperefreshlayout.widget.SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setOnRefreshListener(this);
+//        ((android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setOnRefreshListener(this);
 
         myConversationListFragment = new MyConversationListFragment();
         //设置私聊会话，该会话聚合显示
@@ -212,16 +209,16 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
 
             @Override
             public boolean onConversationPortraitClick(Context context, Conversation.ConversationType conversationType, String s) {
-                if (conversationType.equals(Conversation.ConversationType.PRIVATE)) {
-                    Intent intent = new Intent(getActivity(), IMPresonInfoActivity.class);
-                    intent.putExtra(EanfangConst.RONG_YUN_ID, s);
-                    startActivity(intent);
-                } else if (conversationType.equals(Conversation.ConversationType.GROUP)) {
-                    Intent intent = new Intent(getActivity(), GroupDetailActivity.class);
-                    intent.putExtra(EanfangConst.RONG_YUN_ID, s);
-                    startActivity(intent);
-                }
-                return true;
+//                if (conversationType.equals(Conversation.ConversationType.PRIVATE)) {
+//                    Intent intent = new Intent(getActivity(), IMPresonInfoActivity.class);
+//                    intent.putExtra(EanfangConst.RONG_YUN_ID, s);
+//                    startActivity(intent);
+//                } else if (conversationType.equals(Conversation.ConversationType.GROUP)) {
+//                    Intent intent = new Intent(getActivity(), GroupDetailActivity.class);
+//                    intent.putExtra(EanfangConst.RONG_YUN_ID, s);
+//                    startActivity(intent);
+//                }
+                return false;
             }
 
             @Override
@@ -500,7 +497,10 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
      * @return true 有网, false 没有网络.
      */
     public boolean isNetConnect() {
-        return isNetWork;
+        if (isNetWork) {
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -508,4 +508,5 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
         super.onDestroy();
         getActivity().unregisterReceiver(netBroadcastReceiver);
     }
+
 }

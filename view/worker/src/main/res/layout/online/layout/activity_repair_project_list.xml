@@ -5,11 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="net.eanfang.client.ui.activity.worksapce.repair.RepairPersonInfoListActivity">
+   >
 
     <include layout="@layout/header" />
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_projectList"
         android:layout_width="match_parent"
         android:layout_height="0dp"

@@ -110,6 +110,8 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
     @BindView(R.id.ll_complete_work)
     LinearLayout llCompleteWork;
     @BindView(R.id.rv_send_who)
+
+
     RecyclerView rvSendWho;
     @BindView(R.id.rv_send_group)
     RecyclerView rvSendGroup;
@@ -391,10 +393,14 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
     }
 
     private boolean closeWorkWrite() {
-        return TextUtils.isEmpty(etInputContent.getText().toString().trim()) && TextUtils.isEmpty(etInputLegacy.getText().toString().trim()) && TextUtils.isEmpty(etInputReason.getText().toString().trim())
+        if (TextUtils.isEmpty(etInputContent.getText().toString().trim()) && TextUtils.isEmpty(etInputLegacy.getText().toString().trim()) && TextUtils.isEmpty(etInputReason.getText().toString().trim())
                 && TextUtils.isEmpty(etInputHandle.getText().toString().trim())
-                && oaPersonAdaptet.getData().size() == 0 && snplPhotosWork.getData().size() == 0 && TextUtils.isEmpty(mUploadKey);
+                && oaPersonAdaptet.getData().size() == 0 && snplPhotosWork.getData().size() == 0 && TextUtils.isEmpty(mUploadKey)) {
 
+            return true;
+        }
+
+        return false;
     }
 
     private void clearWorkData() {
@@ -527,10 +533,14 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
     }
 
     private boolean closeQuestionWrite() {
-        return TextUtils.isEmpty(etInputContentQuestion.getText().toString().trim()) && TextUtils.isEmpty(etInputHandleQuestion.getText().toString().trim())
+        if (TextUtils.isEmpty(etInputContentQuestion.getText().toString().trim()) && TextUtils.isEmpty(etInputHandleQuestion.getText().toString().trim())
 
-                && oaPersonQuestionAdaptet.getData().size() == 0 && snplPhotosQuestion.getData().size() == 0 && TextUtils.isEmpty(mQuestionUploadKey);
+                && oaPersonQuestionAdaptet.getData().size() == 0 && snplPhotosQuestion.getData().size() == 0 && TextUtils.isEmpty(mQuestionUploadKey)) {
 
+            return true;
+        }
+
+        return false;
     }
 
 
@@ -904,10 +914,14 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
 
 
     private boolean closePlanWrite() {
-        return TextUtils.isEmpty(etInputContentPlan.getText().toString().trim()) && TextUtils.isEmpty(etInputLegacyPlan.getText().toString().trim()) && TextUtils.isEmpty(etInputReasonPlan.getText().toString().trim())
+        if (TextUtils.isEmpty(etInputContentPlan.getText().toString().trim()) && TextUtils.isEmpty(etInputLegacyPlan.getText().toString().trim()) && TextUtils.isEmpty(etInputReasonPlan.getText().toString().trim())
 
-                && planAdaptet.getData().size() == 0 && snplPhotosPlan.getData().size() == 0 && TextUtils.isEmpty(mPlanVieoPath);
+                && planAdaptet.getData().size() == 0 && snplPhotosPlan.getData().size() == 0 && TextUtils.isEmpty(mPlanVieoPath)) {
 
+            return true;
+        }
+
+        return false;
     }
 
 
@@ -1033,6 +1047,7 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
                         b.putString("workerName", WorkerApplication.get().getLoginBean().getAccount().getRealName());
                         b.putString("status", "0");
                         b.putString("shareType", "3");
+                        b.putString("creatReleaseTime", bean.getCreateTime());
 
                         new SendContactUtils(b, handler, groupList, DialogUtil.createLoadingDialog(CreationWorkReportActivity.this), "工作汇报").send();
 
@@ -1078,7 +1093,7 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
             if (view.getVisibility() == View.INVISIBLE) {
                 view.setVisibility(View.VISIBLE);
             }
-            GlideUtil.intoImageView(this,PhotoUtils.getVideoThumbnail(path, 100, 100, MINI_KIND),view);
+            view.setImageBitmap(PhotoUtils.getVideoThumbnail(path, 100, 100, MINI_KIND));
         }
         relativeLayout.setVisibility(View.VISIBLE);
     }

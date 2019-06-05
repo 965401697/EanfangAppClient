@@ -1,7 +1,5 @@
 package net.eanfang.worker.ui.activity.worksapce.contacts.verifyqualify;
 
-
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,9 +7,6 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-
-import androidx.annotation.RequiresApi;
-
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.eanfang.apiservice.UserApi;
@@ -112,7 +107,6 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
     private int mCompanyType = 1;
 
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -155,7 +149,6 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
         JumpItent.jump(AuthQualifyFirstActivity.this, AuthQualifySecondActivity.class, bundle);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     private void initData() {
         EanfangHttp.get(UserApi.GET_COMPANY_ORG_INFO + orgid).execute(new EanfangCallback<AuthCompanyBaseInfoBean>(this, true, AuthCompanyBaseInfoBean.class, (beans) -> {
             initSystemData();
@@ -190,7 +183,6 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
 
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     private void initSystemData() {
         // 系统类别
         EanfangHttp.get(UserApi.GET_COMPANY_ORG_SYS_INFO + orgid + "/SYS_TYPE")
@@ -266,7 +258,6 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
         commitData();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     public void addSysResult() {
         for (int i = 0; i < systemTypeList.size(); i++) {
             for (int j = 0; j < byNetGrant_system.getList().size(); j++) {

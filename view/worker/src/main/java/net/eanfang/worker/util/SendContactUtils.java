@@ -4,16 +4,13 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
-
 import com.camera.util.ToastUtil;
 import com.eanfang.biz.model.TemplateBean;
 
 import net.eanfang.worker.ui.activity.im.CustomizeMessage;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
-
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
@@ -106,6 +103,7 @@ public class SendContactUtils {
             customizeMessage.setOrderId(bundle.getString("id"));
             customizeMessage.setStatus(bundle.getString("status"));
             customizeMessage.setShareType(bundle.getString("shareType"));
+            customizeMessage.setCreatReleaseTime(bundle.getString("creatReleaseTime"));
             if (isInteger(id)) {
                 conversationType = Conversation.ConversationType.PRIVATE;
             } else {

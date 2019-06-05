@@ -177,7 +177,7 @@ public class ReportActivity extends BaseWorkerActivity implements View.OnClickLi
         llReportType.setOnClickListener(this);
         tvSend.setOnClickListener(this);
         tvSendGroup.setOnClickListener(this);
-//        etCompanyName.setText(EanfangApplication.get().getUser().getCompanyName());
+//        etCompanyName.setText(WorkerApplication.get().getLoginBean().getCompanyName());
 
         addReportDetialAdapter = new AddReportDetailAdapter(R.layout.item_question_detail, beanList);
         reportCompleteList.addItemDecoration(new DividerItemDecoration(this,

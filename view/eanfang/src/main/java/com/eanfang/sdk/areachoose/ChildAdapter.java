@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.eanfang.R;
 import com.eanfang.biz.model.entity.BaseDataEntity;
-
+import com.eanfang.sdk.areachoose.AreaCheckChangeListener;
 
 import java.util.HashMap;
 import java.util.List;
@@ -106,15 +106,7 @@ public class ChildAdapter extends BaseExpandableListAdapter {
         } else {
             holder.cb.setOnClickListener(v -> {
                 boolean isChecked = finalHolder.cb.isChecked();
-                if (entities.size() > 0) {
-                    finalHolder.cb.setText(isChecked ? "取消全选" : "全选");
-                    finalHolder.cb.setVisibility(View.VISIBLE);
-                    finalHolder.cb_img.setVisibility(View.GONE);
-                } else {
-                    finalHolder.cb.setVisibility(View.GONE);
-                    finalHolder.cb_img.setVisibility(View.VISIBLE);
-                    finalHolder.cb_img.setChecked(isChecked);
-                }
+                finalHolder.cb.setText(isChecked ? "取消全选" : "全选");
                 mDatas.get(groupPosition).setCheck(isChecked);
                 for (int i = 0; i < entities.size(); i++) {
                     BaseDataEntity thirdModel = entities.get(i);
@@ -124,6 +116,8 @@ public class ChildAdapter extends BaseExpandableListAdapter {
                 notifyDataSetChanged();
             });
         }
+        holder.cb_img.setOnCheckedChangeListener((buttonView, isChecked) -> mListener.onCheckAreaChange(mPosition, groupPosition, -1, isChecked));
+
         holder.tv.setText(mDatas.get(groupPosition).getDataName());
         if (entities.size() > 0) {
             holder.img_area.setVisibility(View.VISIBLE);
@@ -182,9 +176,11 @@ public class ChildAdapter extends BaseExpandableListAdapter {
                 }
                 if (checkSize == mDatas.get(groupPosition).getChildren().size()) {
                     mTextViews.get(mPosition * 1000 + groupPosition).cb.setText("取消全选");
+                    mDatas.get(groupPosition).setCheck(true);
                     notifyDataSetChanged();
                 } else {
                     mTextViews.get(mPosition * 1000 + groupPosition).cb.setText("全选");
+                    mDatas.get(groupPosition).setCheck(false);
                 }
                 mListener.onCheckAreaChange(mPosition, groupPosition, childPosition, isChecked);
             });

@@ -33,13 +33,21 @@
 
                         <ImageView
                             android:id="@+id/iv_setting"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="@dimen/dimen_40"
+                            android:layout_height="@dimen/dimen_46"
                             android:layout_alignParentRight="true"
                             android:layout_centerVertical="true"
-                            android:layout_marginRight="16dp"
-                            android:padding="2dp"
+                            android:layout_marginRight="@dimen/dimen_32"
                             android:src="@mipmap/ic_worker_personal_setting" />
+
+                        <ImageView
+                            android:id="@+id/iv_personalQRCode"
+                            android:layout_width="@dimen/dimen_44"
+                            android:layout_height="@dimen/dimen_42"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/dimen_62"
+                            android:layout_toLeftOf="@id/iv_setting"
+                            android:src="@mipmap/ic_personal_qrcode" />
 
                         <TextView
                             android:id="@+id/tv_homeTitle"
@@ -106,40 +114,20 @@
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal">
 
-                                <LinearLayout
-                                    android:layout_width="wrap_content"
+                                <TextView
+                                    android:id="@+id/tv_user_name"
+                                    android:layout_width="@dimen/dimen_200"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
-                                    android:gravity="center_vertical"
-                                    android:orientation="horizontal">
-
-                                    <TextView
-                                        android:id="@+id/tv_user_name"
-                                        android:layout_width="@dimen/dimen_200"
-                                        android:layout_height="wrap_content"
-                                        android:layout_gravity="center"
-                                        android:gravity="center_vertical"
-                                        android:text="小明童鞋"
-                                        android:ellipsize="marquee"
-                                        android:focusable="true"
-                                        android:marqueeRepeatLimit="marquee_forever"
-                                        android:focusableInTouchMode="true"
-                                        android:scrollHorizontally="true"
-                                        android:singleLine="true"
-                                        android:textColor="@color/color_white"
-                                        android:textSize="@dimen/textSize_18" />
-
-                                    <ImageView
-                                        android:id="@+id/iv_personalQRCode"
-                                        android:layout_width="@dimen/dimen_40"
-                                        android:layout_height="@dimen/dimen_40"
-                                        android:layout_gravity="center_vertical"
-                                        android:layout_marginLeft="@dimen/dimen_10"
-                                        android:padding="@dimen/dimen_7"
-                                        android:src="@mipmap/ic_personal_qrcode"
-                                        />
-
-                                </LinearLayout>
+                                    android:ellipsize="marquee"
+                                    android:focusable="true"
+                                    android:focusableInTouchMode="true"
+                                    android:marqueeRepeatLimit="marquee_forever"
+                                    android:scrollHorizontally="true"
+                                    android:singleLine="true"
+                                    android:text="小明童鞋"
+                                    android:textColor="@color/color_white"
+                                    android:textSize="@dimen/textSize_18" />
 
                                 <LinearLayout
                                     android:layout_width="wrap_content"
@@ -329,7 +317,14 @@
                 </LinearLayout>
             </RelativeLayout>
 
-
+            <ImageView
+                android:id="@+id/img_invite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_22"
+                android:layout_marginRight="@dimen/dimen_32"
+                android:src="@drawable/img_invitation_entrance"
+                android:scaleType="fitXY"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -419,9 +414,9 @@
                     <RelativeLayout
                         android:id="@+id/rl_worker_verfity"
                         style="@style/my_item_style"
-                        android:visibility="gone"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:visibility="gone">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -487,15 +482,16 @@
                             android:src="@mipmap/ic_icon_right" />
                     </RelativeLayout>
 
-                    <View style="@style/style_common_line_my"                        android:visibility="gone"
-                        />
+                    <View
+                        style="@style/style_common_line_my"
+                        android:visibility="gone" />
 
                     <RelativeLayout
                         android:id="@+id/rl_worker_verfity_c"
                         style="@style/my_item_style"
-                        android:visibility="gone"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:visibility="gone">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -524,15 +520,17 @@
                             android:layout_centerVertical="true"
                             android:src="@mipmap/ic_icon_right" />
                     </RelativeLayout>
-                    <View style="@style/style_common_line_my"                        android:visibility="gone"
-                        />
+
+                    <View
+                        style="@style/style_common_line_my"
+                        android:visibility="gone" />
 
                     <RelativeLayout
                         android:id="@+id/rl_worker_verfity_d"
                         style="@style/my_item_style"
-                        android:visibility="gone"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:visibility="gone">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -562,15 +560,16 @@
                             android:src="@mipmap/ic_icon_right" />
                     </RelativeLayout>
 
-                    <View style="@style/style_common_line_my"                        android:visibility="gone"
-                        />
+                    <View
+                        style="@style/style_common_line_my"
+                        android:visibility="gone" />
 
                     <RelativeLayout
                         android:id="@+id/rl_expert_verfity"
                         style="@style/my_item_style"
-                        android:visibility="gone"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:visibility="gone">
 
                         <TextView
                             android:layout_width="wrap_content"

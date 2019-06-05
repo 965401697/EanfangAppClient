@@ -528,7 +528,7 @@ public class WorkTransferCreateActivity extends BaseActivity {
 //                        if (bean.getOrgCode() != null && !TextUtils.isEmpty(bean.getOrgCode())) {
 //                            assigneeOrgCode = bean.getOrgCode();
 //                        } else {
-//                            assigneeOrgCode = EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyEntity().getOrgCode();
+//                            assigneeOrgCode = WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgCode();
 //                        }
             } else {
 

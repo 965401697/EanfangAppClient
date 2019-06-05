@@ -50,6 +50,7 @@ public class TechnicianCertificationActivity extends BaseActivity {
     private int verify = -1;
     private int realVerify = -1;
     private AuthStatusBean mAuthStatusBean;
+    private static final int STATE_SUCCESS = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +100,7 @@ public class TechnicianCertificationActivity extends BaseActivity {
         EanfangHttp.post(UserApi.POST_WORKER_AUTH_STATUS_B).params("accId", WorkerApplication.get().getAccId()).execute(new EanfangCallback<AuthStatusBean>(this, true, AuthStatusBean.class, (bean) -> {
             verify = bean.getVerify();
             realVerify = bean.getRealVerify();
-            if (verify == 2) {
+            if (verify == STATE_SUCCESS) {
                 setRightTitle("重新认证");
             }
             mAuthStatusBean = bean;
@@ -111,7 +112,7 @@ public class TechnicianCertificationActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.sm_rz_wq_tv:
-                if (verify ==1|verify ==2) {
+                if (verify == 1 || verify == STATE_SUCCESS) {
                     JumpItent.jump(this, CertificationInfoActivity.class);
                 } else {
                     if (mAuthStatusBean == null) {
@@ -126,7 +127,7 @@ public class TechnicianCertificationActivity extends BaseActivity {
                     ToastUtil.get().showToast(this, "请先进行实名认证");
                     return;
                 }
-                if (verify == 1 || verify == 2) {
+                if (verify == 1 || verify == STATE_SUCCESS) {
                     JumpItent.jump(this, SkillInfoDetailActivity.class);
                 } else {
                     if (mAuthStatusBean == null) {

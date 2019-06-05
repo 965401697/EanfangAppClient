@@ -59,4 +59,6 @@
     <color name="color_home_security_message">#4587E2</color>
     <color name="color_text_default">#999999</color>
     <color name="color_item_line">#E8E8E8</color>
+    <color name="color_cash_our_text_background">#E5E5E5</color>
+    <color name="color_cash_our_text_bg_line">#FCFCFC</color>
 </resources>

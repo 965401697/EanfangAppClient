@@ -1,6 +1,7 @@
 package net.eanfang.worker.ui.activity.my.certification;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -55,14 +56,21 @@ public class SkillTypeActivity extends BaseWorkerActivity {
     private SkillTypeAdapter osCooperationAddAdapter;
 
 
-    // 获取系统类别
+    /**
+     * 获取系统类别
+     */
     List<BaseDataEntity> systemTypeList = Config.get().getBusinessList(1);
-    // 业务类型
+    /**
+     * 业务类型
+     */
     List<BaseDataEntity> businessTypeList = Config.get().getServiceList(1);
-
-    // 系统类别
+    /**
+     * 系统类别
+     */
     private GrantChange grantChange_system = new GrantChange();
-    // 业务类别
+    /**
+     * 业务类别
+     */
     private GrantChange grantChange_business = new GrantChange();
 
     private TechWorkerVerifyEntity workerInfoBean;
@@ -125,8 +133,7 @@ public class SkillTypeActivity extends BaseWorkerActivity {
     }
 
     private void commitData() {
-
-        HashMap hashMapData = new HashMap();
+        HashMap<String, Object> hashMapData = new HashMap<>(3);
         hashMapData.put("techWorkerVerify", workerInfoBean);
         hashMapData.put("workerSysGrantChange", grantChange_system);
         hashMapData.put("workerBizGrantChange", grantChange_business);
@@ -169,7 +176,7 @@ public class SkillTypeActivity extends BaseWorkerActivity {
                         }
                     } else {
                         for (BaseDataEntity checkedB : businessTypeList) {
-                            if (checkedB.getDataId() == checkedS.getDataId()) {
+                            if (checkedB.getDataId().equals(checkedS.getDataId())) {
                                 checkedB.setCheck(true);
                                 break;
                             }

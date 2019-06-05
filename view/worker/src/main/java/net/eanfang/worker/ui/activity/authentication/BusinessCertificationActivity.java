@@ -42,6 +42,7 @@ import net.eanfang.worker.ui.fragment.ContactsFragment;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -84,6 +85,16 @@ public class BusinessCertificationActivity extends BaseActivity {
     private int order = 1;
     private AuthCompanyBaseInfoBean infoBean = new AuthCompanyBaseInfoBean();
     private Date date;
+    /**
+     * 纳税识别号长度
+     */
+    private ArrayList<Integer> nshLength = new ArrayList<>();
+
+    {
+        nshLength.add(15);
+        nshLength.add(18);
+        nshLength.add(20);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,32 +116,27 @@ public class BusinessCertificationActivity extends BaseActivity {
     }
 
     public void getData() {
+        String nshString = nshLrv.getText().toString().trim();
         if (dwMcLrv.getText().toString().trim().equals("无") & frDbLrv.getText().toString().trim().equals("无")) {
             showToast("请上传正确的营业执照");
         } else if ("".equals(infoBean.getLicensePic()) || infoBean.getLicensePic() == null) {
             showToast("请点击加号,上传营业执照");
-            return;
         } else if (StringUtils.isEmpty(dwMcLrv.getText().toString().trim())) {
             showToast("请输入单位名称");
-            return;
-        } else if (StringUtils.isEmpty(nshLrv.getText().toString().trim())) {
+        } else if (StringUtils.isEmpty(nshString)) {
             showToast("纳税人识别号");
-            return;
         } else if (StringUtils.isEmpty(zcDzLrv.getText().toString().trim())) {
             showToast("请输入注册地址");
-            return;
         } else if (StringUtils.isEmpty(frDbLrv.getText().toString().trim())) {
             showToast("请输入法人代表");
-            return;
         } else if (StringUtils.isEmpty(zcZjLrv.getText().toString().trim())) {
             showToast("请输入注册资金");
-            return;
         } else if (StringUtils.isEmpty(clRqLrv.getText().toString().trim())) {
             showToast("请选择成立日期");
-            return;
         } else if (StringUtils.isEmpty(jzRqLrv.getText().toString().trim())) {
             showToast("营业截至日期");
-            return;
+        } else if (!nshLength.contains(nshString.length())) {
+            showToast("纳税人识别号有误");
         } else {
             infoBean.setName(dwMcLrv.getText().toString().trim());
             infoBean.setLicenseCode(nshLrv.getText().toString().trim());
@@ -140,6 +146,7 @@ public class BusinessCertificationActivity extends BaseActivity {
             infoBean.setEstablishDate(clRqLrv.getText().toString().trim());
             infoBean.setExpirationDate(jzRqLrv.getText().toString().trim());
             infoBean.setOrgId(mOrgId);
+            infoBean.setBizCertify(0);
             infoBean.setUnitType(3);
             String json = JSONObject.toJSONString(infoBean);
             commit(json);

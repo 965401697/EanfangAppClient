@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 
+
 import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.base.kit.cache.CacheKit;

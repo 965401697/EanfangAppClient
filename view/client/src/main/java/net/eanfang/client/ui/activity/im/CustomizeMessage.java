@@ -5,7 +5,7 @@ import android.os.Parcel;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.nio.charset.StandardCharsets;
+import java.io.UnsupportedEncodingException;
 
 import io.rong.common.ParcelUtils;
 import io.rong.imlib.MessageTag;
@@ -23,6 +23,7 @@ public class CustomizeMessage extends MessageContent {
     private String status;
     private String orderNum;
     private String creatTime;
+    private String creatReleaseTime;
     private String workerName;
     private String picUrl;
     private String shareType; // 1:报修订单 2：故障处理
@@ -46,6 +47,7 @@ public class CustomizeMessage extends MessageContent {
             jsonObj.put("status", this.getStatus());
             jsonObj.put("orderNum", this.getOrderNum());
             jsonObj.put("creatTime", this.getCreatTime());
+            jsonObj.put("creatReleaseTime", this.getCreatReleaseTime());
             jsonObj.put("workerName", this.getWorkerName());
             jsonObj.put("picUrl", this.getPicUrl());
             jsonObj.put("shareType", this.getShareType());
@@ -54,7 +56,12 @@ public class CustomizeMessage extends MessageContent {
             io.rong.common.RLog.e("TextMessage", "JSONException " + var4.getMessage());
         }
 
-        return jsonObj.toString().getBytes(StandardCharsets.UTF_8);
+        try {
+            return jsonObj.toString().getBytes("UTF-8");
+        } catch (UnsupportedEncodingException var3) {
+            var3.printStackTrace();
+            return null;
+        }
     }
 
 
@@ -65,7 +72,11 @@ public class CustomizeMessage extends MessageContent {
     public CustomizeMessage(byte[] data) {
         String jsonStr = null;
 
-        jsonStr = new String(data, StandardCharsets.UTF_8);
+        try {
+            jsonStr = new String(data, "UTF-8");
+        } catch (UnsupportedEncodingException var5) {
+            var5.printStackTrace();
+        }
         try {
             JSONObject jsonObj = new JSONObject(jsonStr);
             if (jsonObj.has("orderId")) {
@@ -89,6 +100,9 @@ public class CustomizeMessage extends MessageContent {
             if (jsonObj.has("shareType")) {
                 this.setShareType(jsonObj.optString("shareType"));
             }
+            if (jsonObj.has("creatReleaseTime")) {
+                this.setCreatReleaseTime(jsonObj.optString("creatReleaseTime"));
+            }
 
         } catch (JSONException var4) {
             io.rong.common.RLog.e("TextMessage", "JSONException " + var4.getMessage());
@@ -106,6 +120,7 @@ public class CustomizeMessage extends MessageContent {
         ParcelUtils.writeToParcel(dest, this.getStatus());
         ParcelUtils.writeToParcel(dest, this.getOrderNum());
         ParcelUtils.writeToParcel(dest, this.getCreatTime());
+        ParcelUtils.writeToParcel(dest, this.getCreatReleaseTime());
         ParcelUtils.writeToParcel(dest, this.getWorkerName());
         ParcelUtils.writeToParcel(dest, this.getPicUrl());
         ParcelUtils.writeToParcel(dest, this.getShareType());
@@ -118,10 +133,19 @@ public class CustomizeMessage extends MessageContent {
         this.setStatus(ParcelUtils.readFromParcel(in));
         this.setOrderNum(ParcelUtils.readFromParcel(in));
         this.setCreatTime(ParcelUtils.readFromParcel(in));
+        this.setCreatReleaseTime(ParcelUtils.readFromParcel(in));
         this.setWorkerName(ParcelUtils.readFromParcel(in));
         this.setPicUrl(ParcelUtils.readFromParcel(in));
         this.setShareType(ParcelUtils.readFromParcel(in));
 
+    }
+
+    public String getCreatReleaseTime() {
+        return creatReleaseTime;
+    }
+
+    public void setCreatReleaseTime(String creatReleaseTime) {
+        this.creatReleaseTime = creatReleaseTime;
     }
 
     public String getShareType() {

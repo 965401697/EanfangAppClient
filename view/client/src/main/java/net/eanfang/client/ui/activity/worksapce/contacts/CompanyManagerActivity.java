@@ -110,9 +110,13 @@ public class CompanyManagerActivity extends BaseActivity implements DissloveTeam
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comapany_manager);
         ButterKnife.bind(this);
-        initView();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initView();
+    }
 
     private void initView() {
         setLeftBack();
@@ -241,8 +245,6 @@ public class CompanyManagerActivity extends BaseActivity implements DissloveTeam
             case R.id.tv_des:
                 Intent intent = new Intent(this, EnterpriseCertificationActivity.class);
                 intent.putExtra("mOrgId", mOrgId);
-                intent.putExtra("status", status);
-                intent.putExtra("orgName", mOrgName);
                 startActivity(intent);
                 finish();
                 break;

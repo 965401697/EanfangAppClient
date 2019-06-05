@@ -8,10 +8,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
+
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -59,7 +61,7 @@ public class OtherDataActivity extends BaseWorkerActivity {
     @BindView(R.id.et_urgent_phone)
     EditText etUrgentPhone;
     @BindView(R.id.ts_lr_tv)
-    WQLeftRightClickTextView tsLrTv;
+    TextView tsLrTv;
     @BindView(R.id.yx_et)
     EditText yxEt;
     private ArrayList<String> picList_accident = new ArrayList<>();

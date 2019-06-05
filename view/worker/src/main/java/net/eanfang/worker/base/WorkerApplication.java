@@ -22,7 +22,13 @@ import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
+import io.rong.push.RongPushClient;
+import io.rong.push.pushconfig.PushConfig;
 
+import static com.eanfang.config.EanfangConst.MEIZU_APPID_WORKER;
+import static com.eanfang.config.EanfangConst.MEIZU_APPKEY_WORKER;
+import static com.eanfang.config.EanfangConst.XIAOMI_APPID_WORKER;
+import static com.eanfang.config.EanfangConst.XIAOMI_APPKEY_WORKER;
 import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
 
 public class WorkerApplication extends BaseApplication {
@@ -81,6 +87,11 @@ public class WorkerApplication extends BaseApplication {
      */
     private void initRongIM() {
         if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext()))) {
+            PushConfig config = new PushConfig.Builder()
+                    .enableMiPush(XIAOMI_APPID_WORKER, XIAOMI_APPKEY_WORKER)
+                    .enableMeiZuPush(MEIZU_APPID_WORKER, MEIZU_APPKEY_WORKER)
+                    .build();
+            RongPushClient.setPushConfig(config);
             RongIM.init(this);
             RongExtensionManager.getInstance().registerExtensionModule(new SampleExtensionModule());
             RongIM.setConversationClickListener(new MyConversationClickListener());

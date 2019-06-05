@@ -197,7 +197,7 @@ public class TakeApplyAddActivity extends BaseActivity implements SelectTimeDial
 
     private void submitSuccess() {
         showToast("接单成功");
-//        EanfangApplication.get().closeActivity(TakeTaskListActivity.class.getName(), TakeApplyAddActivity.class.getName());
+//        WorkerApplication.get().closeActivity(TakeTaskListActivity.class.getName(), TakeApplyAddActivity.class.getName());
         Bundle bundle = new Bundle();
         Message message = new Message();
         message.setMsgContent("任务接单。");

@@ -16,6 +16,7 @@ import com.eanfang.util.GlideUtil;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
+import net.eanfang.worker.ui.activity.my.UserHomeActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import org.json.JSONObject;
@@ -53,7 +54,7 @@ public class SystemMessageActivity extends BaseWorkerActivity {
         ButterKnife.bind(this);
         setTitle("系统消息");
         setLeftBack();
-        userInfo = getIntent().getParcelableExtra("sendUserInfo");
+        userInfo = (UserInfo) getIntent().getParcelableExtra("sendUserInfo");
 
         initViews();
     }
@@ -76,7 +77,7 @@ public class SystemMessageActivity extends BaseWorkerActivity {
     }
 
 
-    @OnClick({R.id.btn_accept, R.id.btn_reject, R.id.ll_item})
+    @OnClick({R.id.btn_accept, R.id.btn_reject, R.id.ll_item, R.id.iv_icon})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_accept:
@@ -118,6 +119,10 @@ public class SystemMessageActivity extends BaseWorkerActivity {
                 }
                 RongIM.getInstance().startConversation(SystemMessageActivity.this, Conversation.ConversationType.PRIVATE, userInfo.getUserId(), userInfo.getName());
                 break;
+            case R.id.iv_icon:
+                UserHomeActivity.startActivityForAccId(SystemMessageActivity.this, userInfo.getUserId());
+                break;
+
             default:
                 break;
         }

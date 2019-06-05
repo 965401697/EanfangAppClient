@@ -16,15 +16,6 @@
         android:layout_height="10dp" />
 
     <TextView
-        android:id="@+id/a_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dimen_28"
-        android:textColor="#333333"
-        android:padding="@dimen/dimen_10"
-        android:text="教育培训机构：" />
-
-    <TextView
         android:id="@+id/b_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -35,6 +26,15 @@
         android:layout_marginBottom="@dimen/dimen_10"
         android:padding="@dimen/dimen_10"
         android:text="专业或培训内容：" />
+
+    <TextView
+        android:id="@+id/a_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_28"
+        android:textColor="#333333"
+        android:padding="@dimen/dimen_10"
+        android:text="教育培训机构：" />
 
     <TextView
         android:id="@+id/c_tv"
