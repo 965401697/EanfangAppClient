@@ -40,7 +40,6 @@ import net.eanfang.worker.ui.activity.my.specialist.SpecialistSkillInfoDetailAct
 import net.eanfang.worker.ui.activity.my.specialist.SpecialistSkillTypeActivity;
 import net.eanfang.worker.ui.activity.techniciancertification.TechnicianCertificationActivity;
 import net.eanfang.worker.ui.widget.InviteView;
-import net.eanfang.worker.util.PrefUtils;
 
 
 /**
@@ -64,6 +63,7 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
     private RadioGroup rbWorkStatus;
     private int verify = -1;
     private SpecialistAuthStatusBean mAuthStatusBean;
+    private int workerStatus;
 
     @Override
     protected int setLayoutResouceId() {
@@ -156,6 +156,10 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
 
     @Override
     protected void initView() {
+        /**
+         * 获取技师工作状态
+         * */
+        workerStatus = EanfangApplication.get().getUser().getWorkerStatus();
         rlWorkerVerfity = findViewById(R.id.rl_worker_verfity);
         rlWorkerVerfityB = findViewById(R.id.rl_worker_verfity_b);
         findViewById(R.id.rl_worker_verfity_c).setOnClickListener(view -> startActivity(new Intent(getContext(), SecurityCompanyDetailsActivity.class)));
@@ -241,19 +245,16 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
         if (!StringUtils.isEmpty(user.getAccount().getAvatar())) {
             iv_header.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + user.getAccount().getAvatar()));
         }
-        /**
-         * 获取技师工作状态
-         * */
-        String mStatus = PrefUtils.getString("status", "");
-        if (mStatus.equals("空闲状态")) {
+
+        if (workerStatus == 0) {
             rbFree.setChecked(true);
             rbStop.setChecked(false);
             rbWorking.setChecked(false);
-        } else if (mStatus.equals("停止接单")) {
+        } else if (workerStatus == 2) {
             rbFree.setChecked(false);
             rbStop.setChecked(true);
             rbWorking.setChecked(false);
-        } else if (mStatus.equals("工作中")) {
+        } else if (workerStatus == 1) {
             rbFree.setChecked(false);
             rbStop.setChecked(false);
             rbWorking.setChecked(true);
@@ -300,12 +301,15 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
     public void onCheckedChanged(RadioGroup radioGroup, int i) {
         switch (radioGroup.getCheckedRadioButtonId()) {
             case R.id.rb_free:
+                workerStatus = 0;
                 doChangeWorkStatus("空闲状态");
                 break;
             case R.id.rb_stop:
+                workerStatus = 2;
                 doChangeWorkStatus("停止接单");
                 break;
             case R.id.rb_working:
+                workerStatus = 1;
                 doChangeWorkStatus("工作中");
                 break;
             default:
@@ -315,6 +319,5 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
 
     public void doChangeWorkStatus(String status) {
         setWorkStatus(Config.get().getConstBean().getData().getShopConstant().get(Constant.WORK_STATUS).indexOf(status));
-        PrefUtils.setString("status", status);
     }
 }

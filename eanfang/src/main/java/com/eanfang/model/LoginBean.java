@@ -29,7 +29,10 @@ public class LoginBean implements Serializable {
     private List<String> perms;
     private String token;
     private AccountEntity account;
-
+    /**
+     * 0空闲，1工作中，2停止接单
+     */
+    private int workerStatus;
 
     public List<String> getPerms() {
         if (perms == null) {
