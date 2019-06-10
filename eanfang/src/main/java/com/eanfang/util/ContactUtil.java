@@ -16,8 +16,6 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.AccountMailBean;
-import com.okgo.callback.StringCallback;
-import com.okgo.model.Response;
 
 import org.json.JSONObject;
 
@@ -39,7 +37,7 @@ public class ContactUtil {
             long saveTime = SharePreferenceUtil.get().getLong(ADDRESS_LIST, 0);
             if (System.currentTimeMillis() - saveTime > POST_TIME) {
                 EanfangHttp.post(NewApiService.ACCOUNT_POST)
-                        .upJson(JSON.toJSONString(getAllContacts(context))).execute(new EanfangCallback(context,false,JSONObject.class, bean -> {
+                        .upJson(JSON.toJSONString(getAllContacts(context))).execute(new EanfangCallback(context, false, JSONObject.class, bean -> {
                     try {
                         SharePreferenceUtil.get().set(ADDRESS_LIST, System.currentTimeMillis());
                     } catch (IOException e) {
@@ -66,40 +64,48 @@ public class ContactUtil {
         AccountMailBean.AccountEntityBean bean = new AccountMailBean.AccountEntityBean();
         ArrayList<AccountMailBean.AccountMailListBean.EntityListBean> contacts = new ArrayList();
         Cursor cursor = context.getContentResolver().query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
-        while (cursor.moveToNext()) {
-            //新建一个联系人实例
-            AccountMailBean.AccountMailListBean.EntityListBean temp = new AccountMailBean.AccountMailListBean.EntityListBean();
-            String contactId = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
-            String name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-            temp.setUserName(name);
-            //获取联系人所有电话号
-            Cursor phones = context.getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + contactId, null, null);
-            while (phones.moveToNext()) {
-                String phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                temp.setMobile(phoneNumber);
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                //新建一个联系人实例
+                AccountMailBean.AccountMailListBean.EntityListBean temp = new AccountMailBean.AccountMailListBean.EntityListBean();
+                String contactId = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+                String name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+                temp.setUserName(name);
+                //获取联系人所有电话号
+                Cursor phones = context.getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + contactId, null, null);
+                if (phones != null) {
+                    while (phones.moveToNext()) {
+                        String phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                        temp.setMobile(phoneNumber);
+                    }
+                    phones.close();
+                }
+                //获取联系人所有邮箱.
+                Cursor emails = context.getContentResolver().query(ContactsContract.CommonDataKinds.Email.CONTENT_URI, null, ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + contactId, null, null);
+                if (emails != null) {
+                    while (emails.moveToNext()) {
+                        String email = emails.getString(emails.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
+                        temp.setEmail(email);
+                    }
+                    emails.close();
+                }
+                //查询==地址==类型的数据操作.StructuredPostal.TYPE_WORK
+                Cursor address = context.getContentResolver().query(ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_URI,
+                        null,
+                        ContactsContract.CommonDataKinds.StructuredPostal.CONTACT_ID + " = " + contactId,
+                        null, null);
+                if (address != null) {
+                    while (address.moveToNext()) {
+                        String workAddress = address.getString(address.getColumnIndex(
+                                ContactsContract.CommonDataKinds.StructuredPostal.DATA));
+                        //添加地址的信息
+                        temp.setWorkUnit(workAddress);
+                    }
+                    address.close();
+                }
+                contacts.add(temp);
             }
-            phones.close();
-            //获取联系人所有邮箱.
-            Cursor emails = context.getContentResolver().query(ContactsContract.CommonDataKinds.Email.CONTENT_URI, null, ContactsContract.CommonDataKinds.Email.CONTACT_ID + " = " + contactId, null, null);
-            while (emails.moveToNext()) {
-                String email = emails.getString(emails.getColumnIndex(ContactsContract.CommonDataKinds.Email.DATA));
-                temp.setEmail(email);
-            }
-            emails.close();
-            //查询==地址==类型的数据操作.StructuredPostal.TYPE_WORK
-            Cursor address = context.getContentResolver().query(ContactsContract.CommonDataKinds.StructuredPostal.CONTENT_URI,
-                    null,
-                    ContactsContract.CommonDataKinds.StructuredPostal.CONTACT_ID + " = " + contactId,
-                    null, null);
-            while (address.moveToNext()) {
-                String workAddress = address.getString(address.getColumnIndex(
-                        ContactsContract.CommonDataKinds.StructuredPostal.DATA));
-                //添加地址的信息
-                temp.setWorkUnit(workAddress);
-            }
-            address.close();
-
-            contacts.add(temp);
+            cursor.close();
         }
         listBean.setEntityList(contacts);
         mailBean.setAccountEntity(bean);

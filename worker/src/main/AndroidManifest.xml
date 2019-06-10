@@ -587,6 +587,7 @@
             android:screenOrientation="portrait" /> <!-- 故障库 -->
         <activity
             android:name=".ui.activity.worksapce.repair.FaultLibraryActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"
             android:screenOrientation="portrait" /> <!-- 设备类别 -->
         <activity
             android:name=".ui.activity.worksapce.repair.SelectDeviceTypeActivity"
