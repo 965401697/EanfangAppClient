@@ -19,6 +19,7 @@
         tools:layout_editor_absoluteX="-163dp" />
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraint_all_invite"
         android:layout_width="@dimen/dimen_434"
         android:layout_height="@dimen/dimen_50"
         android:background="@drawable/shape_bg_btn_invite_friend_notice"
@@ -26,6 +27,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"
         app:layout_constraintVertical_bias="0.32">
 
         <ImageView

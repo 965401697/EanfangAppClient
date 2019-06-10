@@ -16,6 +16,7 @@
 package com.okgo.interceptor;
 
 
+import com.eanfang.BuildConfig;
 import com.okgo.utils.IOUtils;
 import com.okgo.utils.OkLogger;
 
@@ -99,7 +100,9 @@ public class HttpLoggingInterceptor implements Interceptor {
     }
 
     private void log(String message) {
-        logger.log(colorLevel, message);
+        if (BuildConfig.LOG_DEBUG) {
+            logger.log(colorLevel, message);
+        }
     }
 
     @Override
