@@ -100,6 +100,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_24"
+                android:gravity="center"
+                android:includeFontPadding="false"
                 android:text="12人"
                 android:textColor="@color/color_btn_to_invite"
                 android:textSize="24sp"
@@ -125,6 +127,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_24"
+                android:gravity="center"
+                android:includeFontPadding="false"
                 android:text="36元"
                 android:textColor="@color/color_btn_to_invite"
                 android:textSize="24sp"
@@ -150,6 +154,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_24"
+                android:gravity="center"
+                android:includeFontPadding="false"
                 android:text="3元"
                 android:textColor="@color/color_invite_lose_money"
                 android:textSize="24sp"
@@ -176,9 +182,11 @@
                 android:text="查看明细>>"
                 android:textColor="@color/color_btn_to_invite"
                 android:textSize="11sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="@id/tv_invite_getMoney_title"
                 app:layout_constraintRight_toRightOf="@id/tv_invite_getMoney_title"
-                app:layout_constraintTop_toBottomOf="@id/tv_invite_getMoney_title" />
+                app:layout_constraintTop_toBottomOf="@id/tv_invite_getMoney_title"
+                app:layout_constraintVertical_bias="0.3" />
         </android.support.constraint.ConstraintLayout>
 
         <Button

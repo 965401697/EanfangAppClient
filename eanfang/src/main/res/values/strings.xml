@@ -121,8 +121,8 @@
     <string name="text_worker_detail_see_more_type">查看所有标签</string>
 
     <string name="text_invite_all_reward_person">%1$s 已获得现金奖励%2$d 元</string>
-    <string name="text_invite_person">邀请用户  %1$s</string>
-    <string name="text_withdraw_person">提现用户  %1$s</string>
+    <string name="text_invite_person">邀请用户\t\t\t%1$s</string>
+    <string name="text_withdraw_person">提现用户\t\t\t%1$s</string>
     <string name="text_invite_money_enter">待入账：  %1$d元</string>
     <string name="text_invite_money_lose">已失效：  %1$d元</string>
     <string name="text_invite_money_withdraw">已提现：  %1$d元</string>

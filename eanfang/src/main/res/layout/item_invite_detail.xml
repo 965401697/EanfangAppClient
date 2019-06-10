@@ -27,12 +27,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/dimen_38"
-        android:paddingBottom="@dimen/dimen_22"
         android:text="2019"
         android:textColor="@color/color_bottom"
         android:textSize="14sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_item_invite_phone" />
+        app:layout_constraintTop_toBottomOf="@id/tv_item_invite_phone"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <TextView
         android:id="@+id/tv_item_invite_money"
