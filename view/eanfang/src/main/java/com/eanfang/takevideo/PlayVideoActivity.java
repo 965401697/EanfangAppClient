@@ -5,8 +5,7 @@ import android.os.Bundle;
 import com.eanfang.R;
 import com.eanfang.R2;
 import com.eanfang.base.BaseApplication;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.FileUtils;
 import com.eanfang.util.PhotoUtils;
@@ -110,12 +109,9 @@ public class PlayVideoActivity extends BaseActivity {
      */
     private void doCommitThumbnail() {
         if (!StringUtils.isEmpty(mThumbnailPath)) {
-            OSSUtils.initOSS(PlayVideoActivity.this).asyncPutImage(uploadKey + ".jpg", mThumbnailPath, new OSSCallBack(PlayVideoActivity.this, false) {
-                @Override
-                public void onOssSuccess() {
-//                    showToast("上传缩略图成功");
-                    doCommitVideo();
-                }
+            SDKManager.ossKit(this).asyncPutImage(uploadKey + ".jpg",mThumbnailPath,(isSuccess) -> {
+                // showToast("上传缩略图成功");
+                doCommitVideo();
             });
         }
     }
@@ -125,20 +121,17 @@ public class PlayVideoActivity extends BaseActivity {
      */
     private void doCommitVideo() {
         if (!StringUtils.isEmpty(mVideoPath)) {
-            OSSUtils.initOSS(PlayVideoActivity.this).asyncPutVideo(uploadKey + ".mp4", mVideoPath, new OSSCallBack(PlayVideoActivity.this, true) {
-                @Override
-                public void onOssSuccess() {
-//                    showToast("上传视频成功");
-                    BaseApplication.get().closeActivity(TakeVideoActivity.class);
-                    TakeVdideoMode takeVdideoMode = new TakeVdideoMode();
-                    runOnUiThread(() -> {
-                        takeVdideoMode.setMImagePath(mVideoPath);
-                        takeVdideoMode.setMKey(uploadKey);
-                        takeVdideoMode.setMType(mWorkType);
-                        EventBus.getDefault().post(takeVdideoMode);
-                        finishSelf();
-                    });
-                }
+            SDKManager.ossKit(this).asyncPutVideo(uploadKey + ".mp4", mVideoPath,(isSuccess) -> {
+                //                    showToast("上传视频成功");
+                BaseApplication.get().closeActivity(TakeVideoActivity.class);
+                TakeVdideoMode takeVdideoMode = new TakeVdideoMode();
+                runOnUiThread(() -> {
+                    takeVdideoMode.setMImagePath(mVideoPath);
+                    takeVdideoMode.setMKey(uploadKey);
+                    takeVdideoMode.setMType(mWorkType);
+                    EventBus.getDefault().post(takeVdideoMode);
+                    finishSelf();
+                });
             });
         }
     }

@@ -10,9 +10,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.delegate.BGASortableDelegate;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
+
 import com.eanfang.takevideo.TakeVdideoMode;
 import com.eanfang.takevideo.TakeVideoActivity;
 import com.eanfang.ui.base.BaseActivity;
@@ -321,15 +321,12 @@ public class AddTroubleAddPictureActivity extends BaseActivity {
          * 提交照片
          * */
         if (uploadMap.size() != 0) {
-            OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
-                @Override
-                public void onOssSuccess() {
-                    runOnUiThread(() -> {
-                        EventBus.getDefault().post(detailEntity);
-                        EventBus.getDefault().post(uploadMap);
-                        finishSelf();
-                    });
-                }
+            SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
+                runOnUiThread(() -> {
+                    EventBus.getDefault().post(detailEntity);
+                    EventBus.getDefault().post(uploadMap);
+                    finishSelf();
+                });
             });
             return;
         } else if (isLoad) {

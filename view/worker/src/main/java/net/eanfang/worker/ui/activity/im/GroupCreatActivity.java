@@ -10,11 +10,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.GroupCreatBean;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
+
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.PermissionUtils;
@@ -119,29 +119,20 @@ public class GroupCreatActivity extends BaseActivityWithTakePhoto {
             e.printStackTrace();
         }
         //头像上传成功后提交数据
-        OSSUtils.initOSS(GroupCreatActivity.this).asyncPutImage(imgKey, path, new OSSCallBack(GroupCreatActivity.this, false) {
+        SDKManager.ossKit(this).asyncPutImage(imgKey, path,(isSuccess) -> {
+            //创建群组
+            EanfangHttp.post(UserApi.POST_CREAT_GROUP)
+                    .upJson(jsonObject)
+                    .execute(new EanfangCallback<GroupCreatBean>(GroupCreatActivity.this, true, GroupCreatBean.class, (bean) -> {
+                        ToastUtil.get().showToast(GroupCreatActivity.this, "创建成功");
+                        Group groupInfo = new Group(bean.getRcloudGroupId(), bean.getGroupName(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + imgKey));
+                        RongIM.getInstance().refreshGroupInfoCache(groupInfo);
 
-            @Override
-            public void onOssSuccess() {
-                super.onOssSuccess();
-
-                //创建群组
-                EanfangHttp.post(UserApi.POST_CREAT_GROUP)
-                        .upJson(jsonObject)
-                        .execute(new EanfangCallback<GroupCreatBean>(GroupCreatActivity.this, true, GroupCreatBean.class, (bean) -> {
-                            ToastUtil.get().showToast(GroupCreatActivity.this, "创建成功");
-                            Group groupInfo = new Group(bean.getRcloudGroupId(), bean.getGroupName(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + imgKey));
-                            RongIM.getInstance().refreshGroupInfoCache(groupInfo);
-
-                            WorkerApplication.get().set(bean.getRcloudGroupId(), bean.getGroupId());
-                            RongIM.getInstance().startGroupChat(GroupCreatActivity.this, bean.getRcloudGroupId(), bean.getGroupName());
-                            GroupCreatActivity.this.finish();
-                        }));
-
-            }
+                        WorkerApplication.get().set(bean.getRcloudGroupId(), bean.getGroupId());
+                        RongIM.getInstance().startGroupChat(GroupCreatActivity.this, bean.getRcloudGroupId(), bean.getGroupName());
+                        GroupCreatActivity.this.finish();
+                    }));
         });
-
-
     }
 
     @OnClick(R.id.btn_created)
@@ -166,9 +157,7 @@ public class GroupCreatActivity extends BaseActivityWithTakePhoto {
         TImage image = result.getImage();
         imgKey = "im/group/" + UuidUtil.getUUID() + ".png";
         GlideUtil.intoImageView(this, "file://" + image.getOriginalPath(), ivIcon);
-        OSSUtils.initOSS(this).asyncPutImage(imgKey, image.getOriginalPath(), new OSSCallBack(this, true) {
-        });
-
+        SDKManager.ossKit(this).asyncPutImage(imgKey, image.getOriginalPath(),(isSuccess) -> {});
     }
 
 }

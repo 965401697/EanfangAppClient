@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.eanfang.R;
 import com.eanfang.R2;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
+import com.eanfang.base.BaseApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseActivity;
@@ -89,7 +89,7 @@ public class CashOurActivity extends BaseActivity {
     private void extractData() {
         JSONObject object = new JSONObject();
         try {
-            object.put("accId", EanfangApplication.get().getAccId());
+            object.put("accId", BaseApplication.get().getAccId());
             object.put("realName", mEtRealName.getText());
             object.put("payType", "0");
             object.put("accountNo", mEtCode.getText());

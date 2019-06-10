@@ -1,11 +1,11 @@
-package com.eanfang.base.kit.imagechoose;
+package com.eanfang.base.kit.picture;
 
 /**
  * created by wtt
  * at 2019/4/18
  * summary:
  */
-public class ImageChooseManager {
+public class PictureManager {
     private  static Builder builder;
     public static Builder Builder(){
         if(builder==null){

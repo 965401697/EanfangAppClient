@@ -7,10 +7,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.biz.model.WorkerInfoBean;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
+
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.PermissionUtils;
@@ -194,16 +194,13 @@ public class AuthPhotoActivity extends BaseActivityWithTakePhoto {
          * 提交照片
          * */
         if (uploadMap.size() != 0) {
-            OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
-                @Override
-                public void onOssSuccess() {
-                    runOnUiThread(() -> {
-                        Intent intent = new Intent();
-                        intent.putExtra("photos", workerInfoBean);
-                        setResult(RESULT_ADD_PHOTO, intent);
-                        finishSelf();
-                    });
-                }
+            SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
+                runOnUiThread(() -> {
+                    Intent intent = new Intent();
+                    intent.putExtra("photos", workerInfoBean);
+                    setResult(RESULT_ADD_PHOTO, intent);
+                    finishSelf();
+                });
             });
             return;
         } else if (isAdd) {
@@ -240,9 +237,7 @@ public class AuthPhotoActivity extends BaseActivityWithTakePhoto {
                 GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),ivIdCardInHand);
                 break;
         }
-        OSSUtils.initOSS(this).asyncPutImage(imgKey, image.getOriginalPath(), new OSSCallBack(this, true) {
-        });
-
+        SDKManager.ossKit(this).asyncPutImage(imgKey, image.getOriginalPath(),(isSuccess) -> {});
 //        ivIdCardFront.setEnabled(false);
 //        ivIdCardBack.setEnabled(false);
 //        ivIdCardInHand.setEnabled(false);

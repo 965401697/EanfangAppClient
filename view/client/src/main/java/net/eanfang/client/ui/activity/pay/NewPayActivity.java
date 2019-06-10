@@ -22,8 +22,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.alipay.sdk.app.PayTask;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.kit.ali.alipay.IALiPayCallBack;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -367,8 +368,8 @@ public class NewPayActivity extends BaseClientActivity implements View.OnClickLi
                         Log.e("info", sign);
                         //支付宝支付
                         String finalSign = sign;
-
-                        Runnable payRunnable = () -> {
+                        aliP(finalSign);
+                     /*   Runnable payRunnable = () -> {
                             PayTask alipay = new PayTask(NewPayActivity.this);
                             Map<String, String> result = alipay.payV2(finalSign, true);
                             Message msg = new Message();
@@ -378,9 +379,30 @@ public class NewPayActivity extends BaseClientActivity implements View.OnClickLi
                         };
                         // 必须异步调用
                         Thread payThread = new Thread(payRunnable);
-                        payThread.start();
+                        payThread.start();*/
                     }
                 });
+    }
+
+    private void aliP(String finalSign) {
+        SDKManager.getALipay().aLiPay(NewPayActivity.this, finalSign, true, new IALiPayCallBack() {
+            @Override
+            public void onSuccess() {
+                // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
+                ToastUtil.get().showToast(getApplicationContext(), "支付成功");
+            }
+
+            @Override
+            public void onFail(String msg) {
+                // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
+                ToastUtil.get().showToast(getApplicationContext(), "支付失败");
+            }
+
+            @Override
+            public void onCancel() {
+//                ToastUtil.get().showToast(getApplicationContext(), "支付取消");
+            }
+        });
     }
 
     /**

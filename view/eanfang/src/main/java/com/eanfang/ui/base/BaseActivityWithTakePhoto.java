@@ -29,9 +29,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 
 import com.eanfang.R;
-import com.eanfang.application.CustomeApplication;
-import com.eanfang.base.kit.imagechoose.IImageChooseCallBack;
-import com.eanfang.base.kit.imagechoose.ImageChooseManager;
+import com.eanfang.base.kit.picture.IPictureCallBack;
+import com.eanfang.base.kit.picture.PictureManager;
 import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.util.ETimeUtils;
 import com.eanfang.util.PermissionUtils;
@@ -375,16 +374,16 @@ public abstract class BaseActivityWithTakePhoto extends com.eanfang.takephoto.Ta
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        ImageChooseManager.Builder().create().onActivityResult(requestCode, resultCode, data);
+        PictureManager.Builder().create().onActivityResult(requestCode, resultCode, data);
     }
 
     private void imageChoose(boolean openCamera) {
-        ImageChooseManager.Builder()
+        PictureManager.Builder()
                 .setOpenCamera(openCamera)
                 .setSelectionMode(PictureConfig.SINGLE)
                 .setCrop(true)
                 .create()
-                .photoChoose(BaseActivityWithTakePhoto.this, new IImageChooseCallBack() {
+                .photoChoose(BaseActivityWithTakePhoto.this, new IPictureCallBack() {
                     @Override
                     public void onSuccess(List<LocalMedia> list) {
                         if (list != null && list.size() > 0) {

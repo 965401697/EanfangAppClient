@@ -1,6 +1,5 @@
 package com.eanfang.model;
-
-import com.eanfang.application.EanfangApplication;
+import com.eanfang.base.BaseApplication;
 
 import java.util.List;
 
@@ -40,6 +39,6 @@ public class AccountMailBean {
          * accId : 1234
          */
 
-        private String accId = String.valueOf(EanfangApplication.get().getAccId());
+        private String accId = String.valueOf(BaseApplication.get().getAccId());
     }
 }

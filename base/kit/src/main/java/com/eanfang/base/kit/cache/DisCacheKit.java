@@ -186,6 +186,13 @@ class DisCacheKit {
         }).subscribeOn(Schedulers.io())
                 .subscribe();
     }
+    public void delete(){
+        try {
+            getDisk().delete();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     private synchronized DiskLruCache getDisk() {
         if (!cacheDir.exists()) {

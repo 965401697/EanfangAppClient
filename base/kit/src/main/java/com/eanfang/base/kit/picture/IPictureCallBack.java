@@ -1,4 +1,4 @@
-package com.eanfang.base.kit.imagechoose;
+package com.eanfang.base.kit.picture;
 
 import com.luck.picture.lib.entity.LocalMedia;
 
@@ -9,6 +9,6 @@ import java.util.List;
  * at 2019/4/18
  * summary:
  */
-public interface IImageChooseCallBack {
+public interface IPictureCallBack {
     void onSuccess(List<LocalMedia> list);
 }

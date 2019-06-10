@@ -11,11 +11,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
+
 import com.eanfang.util.PhotoUtils;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
@@ -82,16 +82,13 @@ public class MyFreeAskActivity extends BaseWorkerActivity implements View.OnClic
     private void getData() {
 
         if (uploadMap.size() != 0) {
-            OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
-                @Override
-                public void onOssSuccess() {
-                    runOnUiThread(() -> {
-                        Intent intent = new Intent();
-                        intent.putExtra("resultTwo", urls);
-                        setResult( 101, intent);
-                        finish();
-                    });
-                }
+            SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
+                runOnUiThread(() -> {
+                    Intent intent = new Intent();
+                    intent.putExtra("resultTwo", urls);
+                    setResult( 101, intent);
+                    finish();
+                });
             });
         }else {
             Intent intentk = new Intent();

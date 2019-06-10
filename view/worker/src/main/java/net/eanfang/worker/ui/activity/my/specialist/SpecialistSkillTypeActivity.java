@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.config.Config;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
@@ -21,8 +22,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.ExpertVerifySkillBean;
 import com.eanfang.biz.model.GrantChange;
 import com.eanfang.biz.model.entity.BaseDataEntity;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
+
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
@@ -205,12 +205,8 @@ public class SpecialistSkillTypeActivity extends BaseWorkerActivity {
             expertsCertificationEntity.setBrandName(etFactoryName.getText().toString().trim());
             expertsCertificationEntity.setImpowerUrl(impowerUrl);
             if (uploadMap.size() != 0) {
-                OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
-                    @Override
-                    public void onOssSuccess() {
-                        super.onOssSuccess();
-                        commitData();
-                    }
+                SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
+                    commitData();
                 });
             } else {
                 commitData();

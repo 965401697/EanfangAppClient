@@ -22,7 +22,6 @@ import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.biz.model.security.SecurityLikeBean;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;

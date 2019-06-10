@@ -1,4 +1,4 @@
-package com.eanfang.base.kit.imagechoose;
+package com.eanfang.base.kit.picture;
 
 
 import com.eanfang.base.kit.R;
@@ -115,8 +115,8 @@ public class Builder {
         return this;
     }
 
-    public IImageChoose create(){
-        return  ImageChoose.getInstance(this);
+    public IPicture create(){
+        return  PictureSelect.getInstance(this);
     }
 
     public int getChooseMode() {

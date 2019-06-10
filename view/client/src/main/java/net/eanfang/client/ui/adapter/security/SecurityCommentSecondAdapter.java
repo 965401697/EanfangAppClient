@@ -5,12 +5,12 @@ import android.net.Uri;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.model.security.SecurityCommentDetailBean;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.V;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 
 /**
  * @author guanluocang
@@ -62,7 +62,7 @@ public class SecurityCommentSecondAdapter extends BaseQuickAdapter<SecurityComme
         /**
          * 是否删除
          * */
-        if (item.getCommentUser().getAccId().equals(EanfangApplication.get().getAccId().toString())) {
+        if (item.getCommentUser().getAccId().equals(ClientApplication.get().getAccId().toString())) {
             helper.setVisible(R.id.tv_deleteComment, true);
         } else {
             helper.setVisible(R.id.tv_deleteComment, false);

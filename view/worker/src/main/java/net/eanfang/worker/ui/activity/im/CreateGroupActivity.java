@@ -16,14 +16,14 @@ import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.GroupCreatBean;
 import com.eanfang.biz.model.TemplateBean;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
+
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.DialogUtil;
 import com.eanfang.util.GlideUtil;
@@ -79,13 +79,8 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
                 imgKey = "im/group/" + UuidUtil.getUUID() + ".png";
                 dialog.dismiss();
                 //头像上传成功后  提交数据
-                OSSUtils.initOSS(CreateGroupActivity.this).asyncPutImage(imgKey, path, new OSSCallBack(CreateGroupActivity.this, false) {
-
-                    @Override
-                    public void onOssSuccess() {
-                        super.onOssSuccess();
-                        submit();
-                    }
+                SDKManager.ossKit(CreateGroupActivity.this).asyncPutImage(imgKey, path, (isSuccess) -> {
+                    submit();
                 });
             }
         }
@@ -168,26 +163,17 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
     @Override
     public void takeSuccess(TResult result, int resultCode) {
         super.takeSuccess(result, resultCode);
-        OSSCallBack callback = null;
         imgKey = "im/group/CUSTOM_" + UuidUtil.getUUID() + ".png";
         locationUrl = "file://" + result.getImage().getOriginalPath();
         switch (resultCode) {
             case HEAD_PHOTO:
                 GlideUtil.intoImageView(this,"file://" + result.getImage().getOriginalPath(),ivGroupPic);
-                callback = new OSSCallBack(this, true) {
-                    @Override
-                    public void onOssSuccess() {
-
-
-                    }
-                };
                 break;
             default:
                 break;
         }
-        OSSUtils.initOSS(this).asyncPutImage(imgKey, result.getImage().getOriginalPath(), callback);
 
-
+        SDKManager.ossKit(this).asyncPutImage(imgKey, result.getImage().getOriginalPath(),(isSuccess) -> {});
     }
 
     @OnClick(R.id.ll_header)

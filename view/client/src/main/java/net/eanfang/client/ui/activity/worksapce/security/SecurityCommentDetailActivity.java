@@ -22,7 +22,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.biz.model.security.SecurityCommentBean;
 import com.eanfang.biz.model.security.SecurityDetailBean;
@@ -37,6 +36,7 @@ import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.adapter.security.SecurityCommentSecondAdapter;
 import net.eanfang.client.ui.widget.GeneralSDialog;
 
@@ -350,10 +350,10 @@ public class SecurityCommentDetailActivity extends BaseActivity implements
         securityCommentBean.setStatus("0");
         securityCommentBean.setCommentsContent(mComments);
         securityCommentBean.setAsId(mAsId);
-        securityCommentBean.setCommentsAnswerId(EanfangApplication.get().getUserId());
-        securityCommentBean.setCommentsAnswerAccId(EanfangApplication.get().getUser().getAccount().getAccId());
-        securityCommentBean.setCommentsCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyId());
-        securityCommentBean.setCommentsTopCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getTopCompanyId());
+        securityCommentBean.setCommentsAnswerId(ClientApplication.get().getUserId());
+        securityCommentBean.setCommentsAnswerAccId(ClientApplication.get().getLoginBean().getAccount().getAccId());
+        securityCommentBean.setCommentsCompanyId(ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyId());
+        securityCommentBean.setCommentsTopCompanyId(ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getTopCompanyId());
         securityCommentBean.setTopCommentsId(mCommentId);
         if (mParentCommentId != 0) {
             securityCommentBean.setParentCommentsId(mParentCommentId);

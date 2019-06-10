@@ -21,6 +21,7 @@ import com.alibaba.fastjson.JSON;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.biz.model.entity.UserEntity;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.dialog.TrueFalseDialog;
@@ -31,8 +32,7 @@ import com.eanfang.biz.model.Message;
 import com.eanfang.biz.model.TemplateBean;
 import com.eanfang.biz.model.WorkTaskBean;
 import com.eanfang.biz.model.WorkTaskInfoBean;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
+
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.takevideo.TakeVdideoMode;
 import com.eanfang.takevideo.TakeVideoActivity;
@@ -303,18 +303,13 @@ public class TaskAssignmentCreationActivity extends BaseWorkerActivity {
 
         if (mUploadMap.size() != 0) {
 
-
-            OSSUtils.initOSS(this).asyncPutImages(mUploadMap, new OSSCallBack(this, true) {
-                @Override
-                public void onOssSuccess() {
-                    runOnUiThread(() -> {
-                        if (isTrue) {
-                            initTaskData(taskDetailsBean);
-                            isTrue = false;
-                        }
-                    });
-                }
-
+            SDKManager.ossKit(this).asyncPutImages(mUploadMap,(isSuccess) -> {
+                runOnUiThread(() -> {
+                    if (isTrue) {
+                        initTaskData(taskDetailsBean);
+                        isTrue = false;
+                    }
+                });
             });
         } else {
             initTaskData(taskDetailsBean);

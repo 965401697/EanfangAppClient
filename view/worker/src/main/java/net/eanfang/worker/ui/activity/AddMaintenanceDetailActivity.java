@@ -8,13 +8,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.annimon.stream.Stream;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.listener.MultiClickListener;
 import com.eanfang.biz.model.MaintenanceBean;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
+
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.NumberUtil;
 import com.eanfang.util.PhotoUtils;
@@ -161,16 +161,13 @@ public class AddMaintenanceDetailActivity extends BaseWorkerActivity {
         bean.setPictures(urls);
 
         if (mPhotosSnpl.getData().size() != 0) {
-            OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
-                @Override
-                public void onOssSuccess() {
-                    runOnUiThread(() -> {
-                        Intent intent = new Intent();
-                        intent.putExtra("result", bean);
-                        setResult(10002, intent);
-                        finish();
-                    });
-                }
+            SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
+                runOnUiThread(() -> {
+                    Intent intent = new Intent();
+                    intent.putExtra("result", bean);
+                    setResult(10002, intent);
+                    finish();
+                });
             });
         } else {
             Intent intent = new Intent();

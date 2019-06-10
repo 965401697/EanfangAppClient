@@ -17,13 +17,13 @@ import com.alibaba.fastjson.JSONPObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.WorkerInfoBean;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
+
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
@@ -334,11 +334,8 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
         workerInfoBean.setStatus(0);
         String json = JSONObject.toJSONString(workerInfoBean);
         if (uploadMap.size() != 0) {
-            OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
-                @Override
-                public void onOssSuccess() {
-                    runOnUiThread(() -> submitSuccess(json));
-                }
+            SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
+                runOnUiThread(() -> submitSuccess(json));
             });
         } else {
             submitSuccess(json);
@@ -389,9 +386,7 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
             default:
                 break;
         }
-        OSSUtils.initOSS(this).asyncPutImage(imgKey, image.getOriginalPath(), new OSSCallBack(this, true) {
-        });
-
+        SDKManager.ossKit(this).asyncPutImage(imgKey, image.getOriginalPath(), (isSuccess) -> {});
     }
 
     @Override

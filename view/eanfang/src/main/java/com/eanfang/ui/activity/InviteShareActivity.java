@@ -11,7 +11,7 @@ import android.os.Bundle;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.R;
-import com.eanfang.application.EanfangApplication;
+import com.eanfang.base.BaseApplication;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
 import com.google.zxing.BinaryBitmap;
@@ -44,7 +44,7 @@ public class InviteShareActivity extends BaseActivity {
     private ClipData myClip;
     private String mCopyText;
 
-    String uri = BuildConfig.OSS_SERVER + EanfangApplication.get().getUser().getAccount().getQrCode();
+    String uri = BuildConfig.OSS_SERVER + BaseApplication.get().getLoginBean().getAccount().getQrCode();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +67,8 @@ public class InviteShareActivity extends BaseActivity {
         //跳转二维码页面
         findViewById(R.id.img_share_qr_code).setOnClickListener(v -> {
             Bundle bundle = new Bundle();
-            bundle.putString("qrcodeTitle", EanfangApplication.get().getUser().getAccount().getRealName());
-            bundle.putString("qrcodeAddress", EanfangApplication.get().getUser().getAccount().getQrCode());
+            bundle.putString("qrcodeTitle",  BaseApplication.get().getLoginBean().getAccount().getRealName());
+            bundle.putString("qrcodeAddress",  BaseApplication.get().getLoginBean().getAccount().getQrCode());
             bundle.putString("qrcodeMessage", "personal");
             JumpItent.jump(this, QrCodeShowActivity.class, bundle);
         });

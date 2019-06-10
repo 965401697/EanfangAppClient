@@ -11,10 +11,10 @@ import android.widget.TextView;
 
 import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.biz.model.WorkTransferDetailBean;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
+
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.takevideo.TakeVdideoMode;
 import com.eanfang.takevideo.TakeVideoActivity;
@@ -298,13 +298,10 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
             attentionDetail.setMp4_path(mUploadKey);
         }
         if (uploadMap.size() != 0) {
-            OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
-                @Override
-                public void onOssSuccess() {
-                    runOnUiThread(() -> {
-                        doFinish();
-                    });
-                }
+            SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
+                runOnUiThread(() -> {
+                    doFinish();
+                });
             });
         } else {
             doFinish();

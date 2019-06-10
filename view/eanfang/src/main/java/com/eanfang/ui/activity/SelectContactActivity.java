@@ -149,7 +149,7 @@ public class SelectContactActivity extends BaseActivity {
 //        }
 //
 //        //头像上传成功后  提交数据
-//        OSSUtils.initOSS(SelectContactActivity.this).asyncPutImage(imgKey, path, new OSSCallBack(SelectContactActivity.this, false) {
+//       (imgKey, path, new OSSCallBack(SelectContactActivity.this, false) {
 //
 //            @Override
 //            public void onOssSuccess() {

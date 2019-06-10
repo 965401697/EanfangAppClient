@@ -13,11 +13,11 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
+
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
 import com.eanfang.util.PhotoUtils;
@@ -175,25 +175,19 @@ public class SpecialistAddCertificationActivity extends BaseActivityWithTakePhot
         entity.setHonorPics(pic);
         entity.setIntro(etCertificate.getText().toString().trim());
         entity.setType(1);
+        SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
+            runOnUiThread(() -> {
 
-        OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
-            @Override
-            public void onOssSuccess() {
-                runOnUiThread(() -> {
-
-                    EanfangHttp.post(url)
-                            .upJson(JSONObject.toJSONString(entity))
-                            .execute(new EanfangCallback<JSONObject>(SpecialistAddCertificationActivity.this, true, JSONObject.class, (bean) -> {
-                                setResult(RESULT_OK);
-                                finish();
-                            }));
+                EanfangHttp.post(url)
+                        .upJson(JSONObject.toJSONString(entity))
+                        .execute(new EanfangCallback<JSONObject>(SpecialistAddCertificationActivity.this, true, JSONObject.class, (bean) -> {
+                            setResult(RESULT_OK);
+                            finish();
+                        }));
 
 
-                });
-            }
+            });
         });
-
-
     }
 
 

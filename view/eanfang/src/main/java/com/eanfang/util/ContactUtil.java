@@ -14,6 +14,7 @@ import androidx.core.content.ContextCompat;
 
 import com.alibaba.fastjson.JSON;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.base.BaseApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.AccountMailBean;
@@ -34,15 +35,11 @@ public class ContactUtil {
     public static void postAccount(Activity context) {
         ThreadPoolManager threadPoolManager = ThreadPoolManager.newInstance();
         threadPoolManager.addExecuteTask(() -> {
-            long saveTime = SharePreferenceUtil.get().getLong(ADDRESS_LIST, 0);
+            long saveTime = Long.valueOf(BaseApplication.get().get(ADDRESS_LIST, 0));
             if (System.currentTimeMillis() - saveTime > POST_TIME) {
                 EanfangHttp.post(NewApiService.ACCOUNT_POST)
                         .upJson(JSON.toJSONString(getAllContacts(context))).execute(new EanfangCallback(context,false,JSONObject.class, bean -> {
-                    try {
-                        SharePreferenceUtil.get().set(ADDRESS_LIST, System.currentTimeMillis());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    BaseApplication.get().set(ADDRESS_LIST, System.currentTimeMillis());
                 }));
             }
         });

@@ -13,11 +13,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.biz.model.TemplateBean;
 import com.eanfang.biz.model.WorkTaskBean;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
+
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.takevideo.TakeVdideoMode;
 import com.eanfang.takevideo.TakeVideoActivity;
@@ -297,14 +297,11 @@ public class AddWorkTaskDeitailActivity extends BaseWorkerActivity implements Vi
         bean.setPictures(ursStr);
 
         if (uploadMap.size() != 0) {
-            OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
-                @Override
-                public void onOssSuccess() {
-                    Intent intent = new Intent();
-                    intent.putExtra("result", bean);
-                    setResult(1, intent);
-                    finish();
-                }
+            SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
+                Intent intent = new Intent();
+                intent.putExtra("result", bean);
+                setResult(1, intent);
+                finish();
             });
         } else {
             Intent intent = new Intent();

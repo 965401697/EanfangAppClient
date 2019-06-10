@@ -273,6 +273,9 @@ public class BaseApplication extends MultiDexApplication {
     public void remove(String key) {
         CacheKit.get().remove(key);
     }
+    public void clear(){
+        CacheKit.get().clear();
+    };
 
     /**
      * 取缓存 LoginBean

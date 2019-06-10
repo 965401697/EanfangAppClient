@@ -21,6 +21,7 @@ import com.baidu.ocr.sdk.OnResultListener;
 import com.baidu.ocr.sdk.exception.OCRError;
 import com.baidu.ocr.sdk.model.AccessToken;
 import com.baidu.ocr.ui.camera.CameraActivity;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.widget.customview.LtReView;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
@@ -28,8 +29,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.AuthCompanyBaseInfoBean;
 import com.eanfang.biz.model.ZdBusinessCertification;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
+
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.RecognizeService;
@@ -297,11 +297,7 @@ public class BusinessCertificationActivity extends BaseActivity {
                         String fileString = new File(getApplication().getFilesDir(), "pic.jpg").getAbsolutePath();
                         Bitmap bitmap = BitmapFactory.decodeFile(fileString);
                         String imgKey = UuidUtil.getUUID() + ".jpg";
-                        OSSUtils.initOSS(this).asyncPutImage(imgKey, fileString, new OSSCallBack(this, true) {
-                            @Override
-                            public void onFinish() {
-                                super.onFinish();
-                            }
+                        SDKManager.ossKit(this).asyncPutImage(imgKey, fileString,(isSuccess) -> {
                         });
                         ivUploadlogo.setImageBitmap(bitmap);
                         infoBean.setLicensePic(imgKey);

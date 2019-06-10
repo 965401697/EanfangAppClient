@@ -1,4 +1,4 @@
-package com.eanfang.base.kit.imagechoose;
+package com.eanfang.base.kit.picture;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -21,7 +21,7 @@ import java.util.List;
  * at 2019/4/18
  * summary:
  */
-public class ImageChoose implements IImageChoose {
+public class PictureSelect implements IPicture {
 
     /**
      * 全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
@@ -109,12 +109,12 @@ public class ImageChoose implements IImageChoose {
      */
     private static int resultCode = PictureConfig.CHOOSE_REQUEST;
     private static int RESULT_OK = -1;
-    private  IImageChooseCallBack iImageChooseCallBack;
-    private static IImageChoose iImageChoose;
+    private IPictureCallBack iImageChooseCallBack;
+    private static IPicture iImageChoose;
 
-    public static IImageChoose getInstance(Builder builder) {
+    public static IPicture getInstance(Builder builder) {
         if (iImageChoose == null) {
-            iImageChoose = new ImageChoose();
+            iImageChoose = new PictureSelect();
         }
         setData(builder);
         return iImageChoose;
@@ -133,21 +133,21 @@ public class ImageChoose implements IImageChoose {
         openCamera=builder.isOpenCamera();
     }
 
-    public void setiImageChooseCallBack(IImageChooseCallBack iImageChooseCallBack) {
+    public void setiImageChooseCallBack(IPictureCallBack iImageChooseCallBack) {
         this.iImageChooseCallBack = iImageChooseCallBack;
     }
 
-    public IImageChooseCallBack getiImageChooseCallBack() {
+    public IPictureCallBack getiImageChooseCallBack() {
         return iImageChooseCallBack;
     }
 
-    private void imageChoose(Activity activity,IImageChooseCallBack iImageChooseCallBack){
+    private void imageChoose(Activity activity, IPictureCallBack iImageChooseCallBack){
         setiImageChooseCallBack(iImageChooseCallBack);
         PictureSelector pictureSelector=   PictureSelector.create(activity);
         imageChoose(pictureSelector);
     }
 
-    private void imageChoose(Fragment fragment, IImageChooseCallBack iImageChooseCallBack){
+    private void imageChoose(Fragment fragment, IPictureCallBack iImageChooseCallBack){
         setiImageChooseCallBack(iImageChooseCallBack);
         PictureSelector pictureSelector=   PictureSelector.create(fragment);
         imageChoose(pictureSelector);
@@ -181,12 +181,12 @@ public class ImageChoose implements IImageChoose {
     }
 
     @Override
-    public void photoChoose(Activity activity, IImageChooseCallBack iImageChooseCallBack) {
+    public void photoChoose(Activity activity, IPictureCallBack iImageChooseCallBack) {
         imageChoose(activity, iImageChooseCallBack);
     }
 
     @Override
-    public void photoChoose(Fragment fragment, IImageChooseCallBack iImageChooseCallBack) {
+    public void photoChoose(Fragment fragment, IPictureCallBack iImageChooseCallBack) {
         imageChoose(fragment, iImageChooseCallBack);
     }
 

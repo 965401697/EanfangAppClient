@@ -22,6 +22,7 @@ import com.alibaba.fastjson.JSON;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
@@ -32,8 +33,7 @@ import com.eanfang.biz.model.TemplateBean;
 import com.eanfang.biz.model.WorkAddReportBean;
 import com.eanfang.biz.model.WorkReportInfoBean;
 import com.eanfang.biz.model.device.User;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
+
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.takevideo.TakeVdideoMode;
 import com.eanfang.takevideo.TakeVideoActivity;
@@ -465,18 +465,13 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
 
         if (mUploadMap.size() != 0) {
 
-
-            OSSUtils.initOSS(this).asyncPutImages(mUploadMap, new OSSCallBack(this, true) {
-                @Override
-                public void onOssSuccess() {
-                    runOnUiThread(() -> {
-                        if (isTrue) {
-                            subWorkData(workBean);
-                            isTrue = false;
-                        }
-                    });
-                }
-
+            SDKManager.ossKit(this).asyncPutImages(mUploadMap,(isSuccess) -> {
+                runOnUiThread(() -> {
+                    if (isTrue) {
+                        subWorkData(workBean);
+                        isTrue = false;
+                    }
+                });
             });
         } else {
             subWorkData(workBean);
@@ -691,17 +686,13 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
         isTrue = true;//重置状态
 
         if (mUploadMap.size() != 0) {
-            OSSUtils.initOSS(this).asyncPutImages(mUploadMap, new OSSCallBack(this, true) {
-                @Override
-                public void onOssSuccess() {
-                    runOnUiThread(() -> {
-                        if (isTrue) {
-                            subQuestionData(questionBean);
-                            isTrue = false;
-                        }
-                    });
-
-                }
+            SDKManager.ossKit(this).asyncPutImages(mUploadMap,(isSuccess) -> {
+                runOnUiThread(() -> {
+                    if (isTrue) {
+                        subQuestionData(questionBean);
+                        isTrue = false;
+                    }
+                });
             });
         } else {
             subQuestionData(questionBean);
@@ -845,17 +836,13 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
         isTrue = true;//重置状态
 
         if (mUploadMap.size() != 0) {
-            OSSUtils.initOSS(this).asyncPutImages(mUploadMap, new OSSCallBack(this, true) {
-                @Override
-                public void onOssSuccess() {
-                    runOnUiThread(() -> {
-                        if (isTrue) {
-                            subPlanData(planBean);
-                            isTrue = false;
-                        }
-                    });
-
-                }
+            SDKManager.ossKit(this).asyncPutImages(mUploadMap,(isSuccess) -> {
+                runOnUiThread(() -> {
+                    if (isTrue) {
+                        subPlanData(planBean);
+                        isTrue = false;
+                    }
+                });
             });
         } else {
             subPlanData(planBean);

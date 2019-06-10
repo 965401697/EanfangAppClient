@@ -21,7 +21,6 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.biz.model.security.SecurityLikeBean;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
@@ -539,9 +538,9 @@ public class HomeFragment extends BaseFragment {
             listBean.setLikesCount(listBean.getLikesCount());
             securityLikeBean.setLikeStatus("0");
         }
-        securityLikeBean.setLikeUserId(EanfangApplication.get().getUserId());
-        securityLikeBean.setLikeCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyId());
-        securityLikeBean.setLikeTopCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getTopCompanyId());
+        securityLikeBean.setLikeUserId(ClientApplication.get().getUserId());
+        securityLikeBean.setLikeCompanyId(ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyId());
+        securityLikeBean.setLikeTopCompanyId(ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getTopCompanyId());
         EanfangHttp.post(NewApiService.SERCURITY_LIKE)
                 .upJson(JSONObject.toJSONString(securityLikeBean))
                 .execute(new EanfangCallback<SecurityLikeStatusBean>(getActivity(), true, SecurityLikeStatusBean.class, bean -> {

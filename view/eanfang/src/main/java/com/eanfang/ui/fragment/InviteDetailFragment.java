@@ -12,7 +12,7 @@ import com.alibaba.fastjson.JSON;
 import com.eanfang.R;
 import com.eanfang.R2;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
+import com.eanfang.base.BaseApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.InviteDetailBean;
@@ -93,7 +93,7 @@ public class InviteDetailFragment extends BaseFragment {
     private void initDate() {
         if (mState == 1) {
             QueryEntry queryEntry = new QueryEntry();
-            queryEntry.getEquals().put(PARAM_ACCID_KEY2, String.valueOf(EanfangApplication.get().getAccId()));
+            queryEntry.getEquals().put(PARAM_ACCID_KEY2, String.valueOf(BaseApplication.get().getAccId()));
             queryEntry.setPage(mCurrPage);
             EanfangHttp.post(NewApiService.WITHDRAWALS_CATEGORY_LIST)
                     .upJson(JSON.toJSONString(queryEntry))
@@ -113,7 +113,7 @@ public class InviteDetailFragment extends BaseFragment {
                     }));
         } else {
             QueryEntry queryEntry = new QueryEntry();
-            queryEntry.getEquals().put(PARAM_ACCID_KEY1, String.valueOf(EanfangApplication.get().getAccId()));
+            queryEntry.getEquals().put(PARAM_ACCID_KEY1, String.valueOf(BaseApplication.get().getAccId()));
             queryEntry.getEquals().put(PARAM_CATEGORY_KEY, String.valueOf(mState));
             queryEntry.setPage(mCurrPage);
             EanfangHttp.post(NewApiService.CATEGORY_LIST)

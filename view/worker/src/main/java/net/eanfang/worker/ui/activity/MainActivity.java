@@ -23,6 +23,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.config.EanfangConst;
@@ -46,12 +47,10 @@ import com.eanfang.util.JumpItent;
 import com.eanfang.util.LocationUtil;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.QueryEntry;
-import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UpdateAppManager;
 import com.picker.common.util.ScreenUtils;
-import com.tencent.android.tpush.XGPushConfig;
 import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.worker.BuildConfig;
@@ -293,20 +292,28 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
 
     private void registerXinGe() {
         // 打开第三方推送
-        XGPushConfig.enableOtherPush(MainActivity.this, true);
+        SDKManager.getXGPush(MainActivity.this).enableOtherPush(true);
+        //开启信鸽日志输出
+        SDKManager.getXGPush(MainActivity.this).enableDebug(true);
+        SDKManager.getXGPush(MainActivity.this).setHuaweiDebug(true);
+        SDKManager.getXGPush(MainActivity.this).setMiPush(XIAOMI_APPID_WORKER,XIAOMI_APPKEY_WORKER);
+        SDKManager.getXGPush(MainActivity.this).setMzPush(MEIZU_APPID_WORKER,MEIZU_APPKEY_WORKER);
+        SDKManager.getXGPush(MainActivity.this).registerPush(user.getAccount().getMobile());
+
+       /* XGPushConfig.enableOtherPush(MainActivity.this, true);
         //开启信鸽日志输出
         XGPushConfig.enableDebug(MainActivity.this, true);
         XGPushConfig.setHuaweiDebug(true);
-        /**
+        *//**
          * 小米
-         * */
+         * *//*
         XGPushConfig.setMiPushAppId(MainActivity.this, XIAOMI_APPID_WORKER);
         XGPushConfig.setMiPushAppKey(MainActivity.this, XIAOMI_APPKEY_WORKER);
-        /**
+        *//**
          * 魅族
-         * */
+         * *//*
         XGPushConfig.setMzPushAppId(MainActivity.this, MEIZU_APPID_WORKER);
-        XGPushConfig.setMzPushAppKey(MainActivity.this, MEIZU_APPKEY_WORKER);
+        XGPushConfig.setMzPushAppKey(MainActivity.this, MEIZU_APPKEY_WORKER);*/
 
         ReceiverInit.getInstance().inits(MainActivity.this, user.getAccount().getMobile());
     }
@@ -666,7 +673,7 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
             mExitTime = System.currentTimeMillis();
 
             CleanMessageUtil.clearAllCache(WorkerApplication.get());
-            SharePreferenceUtil.get().clear();
+            WorkerApplication.get().clear();
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
             RongIM.getInstance().logout();
             MainActivity.this.finish();

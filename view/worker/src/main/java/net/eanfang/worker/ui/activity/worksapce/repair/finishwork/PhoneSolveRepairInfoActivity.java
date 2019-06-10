@@ -20,14 +20,14 @@ import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.config.Config;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.MultiClickListener;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
+
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.LocationUtil;
@@ -321,14 +321,11 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
     //提交完工
     private void submit() {
         if (uploadMap.size() != 0) {
-            OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
-                @Override
-                public void onOssSuccess() {
-                    runOnUiThread(() -> {
-                        String requestJson = JSONObject.toJSONString(bughandleConfirmEntity);
-                        doHttp(requestJson);
-                    });
-                }
+            SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
+                runOnUiThread(() -> {
+                    String requestJson = JSONObject.toJSONString(bughandleConfirmEntity);
+                    doHttp(requestJson);
+                });
             });
             return;
         }

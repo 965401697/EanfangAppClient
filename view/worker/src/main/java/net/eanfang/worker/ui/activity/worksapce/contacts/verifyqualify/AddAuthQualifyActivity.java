@@ -14,11 +14,11 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
+
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
 import com.eanfang.util.PhotoUtils;
@@ -227,14 +227,11 @@ public class AddAuthQualifyActivity extends BaseActivityWithTakePhoto implements
         } else {
             url = UserApi.ADD_QUALIFY;
         }
-        OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
-            @Override
-            public void onOssSuccess() {
-                runOnUiThread(() -> EanfangHttp.post(url).upJson(JSONObject.toJSONString(bean)).execute(new EanfangCallback<JSONObject>(AddAuthQualifyActivity.this, true, JSONObject.class, bean1 -> {
-                    setResult(RESULT_OK);
-                    finishSelf();
-                })));
-            }
+        SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
+            runOnUiThread(() -> EanfangHttp.post(url).upJson(JSONObject.toJSONString(bean)).execute(new EanfangCallback<JSONObject>(AddAuthQualifyActivity.this, true, JSONObject.class, bean1 -> {
+                setResult(RESULT_OK);
+                finishSelf();
+            })));
         });
     }
 

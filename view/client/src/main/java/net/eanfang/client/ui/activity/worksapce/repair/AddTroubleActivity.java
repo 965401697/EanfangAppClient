@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.config.EanfangConst;
@@ -21,8 +22,7 @@ import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.MultiClickListener;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
+
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.takevideo.TakeVdideoMode;
 import com.eanfang.takevideo.TakeVideoActivity;
@@ -357,13 +357,10 @@ public class AddTroubleActivity extends BaseClientActivity {
             repairBugEntity.setModelName(etBrand.getText().toString().trim());
         }
         if (uploadMap.size() != 0) {
-            OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
-                @Override
-                public void onOssSuccess() {
-                    runOnUiThread(() -> {
-                        doVerify();
-                    });
-                }
+            SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
+                runOnUiThread(() -> {
+                    doVerify();
+                });
             });
         } else {
             doVerify();

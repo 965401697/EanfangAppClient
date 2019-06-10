@@ -11,13 +11,13 @@ import android.widget.RelativeLayout;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.AddWorkInspectDetailBean;
 import com.eanfang.biz.model.TemplateBean;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
+
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.takevideo.TakeVdideoMode;
 import com.eanfang.takevideo.TakeVideoActivity;
@@ -164,13 +164,10 @@ public class AddDealwithInfoActivity extends BaseClientActivity {
         addWorkInspectDetailBean.setMp4Path(mUploadKey);
 
         if (uploadMap.size() != 0) {
-            OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
-                @Override
-                public void onOssSuccess() {
-                    runOnUiThread(() -> {
-                        doHttp(JSON.toJSONString(addWorkInspectDetailBean));
-                    });
-                }
+            SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
+                runOnUiThread(() -> {
+                    doHttp(JSON.toJSONString(addWorkInspectDetailBean));
+                });
             });
         } else {
             doHttp(JSON.toJSONString(addWorkInspectDetailBean));

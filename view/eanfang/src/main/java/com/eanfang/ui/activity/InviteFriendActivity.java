@@ -16,7 +16,7 @@ import com.alibaba.fastjson.JSON;
 import com.eanfang.R;
 import com.eanfang.R2;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
+import com.eanfang.base.BaseApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.InviteHistoryBean;
@@ -121,7 +121,7 @@ public class InviteFriendActivity extends BaseActivity {
 
     private void initInviteDetail() {
         EanfangHttp.post(NewApiService.ALL_GET_REWARD_PERSON2)
-                .params("accId", EanfangApplication.get().getAccId())
+                .params("accId", BaseApplication.get().getAccId())
                 .execute(new EanfangCallback<InviteHistoryBean>(this, true, InviteHistoryBean.class, this::setInviteInfo));
     }
 

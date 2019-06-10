@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.base.kit.SDKManager;
-import com.eanfang.base.kit.ali.oss.OssKit;
+import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
@@ -31,7 +31,7 @@ import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.biz.model.entity.AccountEntity;
 
 import com.eanfang.ui.activity.SelectAddressActivity;
-import com.eanfang.ui.base.BaseActivityWithTakePhoto;
+import com.eanfang.ui.base.BasePictureActivity;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JsonUtils;
@@ -39,7 +39,6 @@ import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
-import com.jph.takephoto.model.TResult;
 import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.worker.R;
@@ -63,7 +62,7 @@ import io.rong.imlib.model.UserInfo;
  * Created by Administrator on 2017/3/15.
  */
 
-public class PersonInfoActivity extends BaseActivityWithTakePhoto implements BaseActivityWithTakePhoto.OnImageChooseCallBack {
+public class PersonInfoActivity extends BasePictureActivity implements IPictureCallBack {
 
     private final int SELECT_ADDRESS_REQUEST_CODE = 1;
     /**
@@ -255,34 +254,6 @@ public class PersonInfoActivity extends BaseActivityWithTakePhoto implements Bas
         boolean auth = accountEntity.getRealVerify() == 0;
         mLlSaveAndAuth.setVisibility(auth ?View.GONE : View.VISIBLE);
         mTvToWorkerAuth.setVisibility(auth ?View.GONE : View.VISIBLE);
-    }
-    //takeSucces已被替换
-    @Override
-    public void takeSuccess(TResult result, int resultCode) {
-        super.takeSuccess(result, resultCode);
-     /*   OSSCallBack callback = null;
-        String imgKey = "account/" + UuidUtil.getUUID() + ".png";
-        switch (resultCode) {
-            case HEAD_PHOTO:
-                GlideUtil.intoImageView(PersonInfoActivity.this,"file://" + result.getImage().getOriginalPath(),ivUpload);
-                callback = new OSSCallBack(this, true) {
-                    @Override
-                    public void onOssSuccess() {
-                        runOnUiThread(() -> {
-                            isUploadHead = true;
-                            LoginBean entity = WorkerApplication.get().getLoginBean();
-                            entity.getAccount().setAvatar(imgKey);
-                            path = entity.getAccount().getAvatar();
-                            setHeaderShow(true);
-                        });
-
-                    }
-                };
-                break;
-            default:
-                break;
-        }
-        OSSUtils.initOSS(this).asyncPutImage(imgKey, result.getImage().getOriginalPath(), callback);*/
     }
 
     /**

@@ -15,14 +15,14 @@ import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.GroupDetailBean;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
+
 import com.eanfang.ui.activity.QrCodeShowActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
@@ -645,16 +645,9 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
 
         headPortrait = "im/select/CUSTOM_" + UuidUtil.getUUID() + ".png";
         GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),groupHeader);
-
-        OSSUtils.initOSS(this).asyncPutImage(headPortrait, image.getOriginalPath(), new OSSCallBack(this, true) {
-            @Override
-            public void onOssSuccess() {
-                super.onOssSuccess();
-                updataGroupInfo(title, headPortrait, "", "");
-            }
+        SDKManager.ossKit(this).asyncPutImage(headPortrait, image.getOriginalPath(),(isSuccess) -> {
+            updataGroupInfo(title, headPortrait, "", "");
         });
-
-
     }
 
     @Override

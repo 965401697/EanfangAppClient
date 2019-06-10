@@ -18,6 +18,8 @@ import com.camera.util.LogUtil;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.kit.tencent.xingepush.IXGPushClickedResult;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -265,8 +267,8 @@ public class MessageListActivity extends BaseWorkerActivity implements
         super.onResume();
 //        page = 1;
 
-        XGPushManager.onActivityStarted(this);
-        XGPushClickedResult clickedResult = XGPushManager.onActivityStarted(this);
+//        XGPushManager.onActivityStarted(this);
+        IXGPushClickedResult clickedResult = SDKManager.getXGPush(this).onActivityStarted(this);
         Log.d("TPush", "onResumeXGPushClickedResult:" + clickedResult);
         if (clickedResult != null) { // 判断是否来自信鸽的打开方式
             Toast.makeText(this, "通知被点击:" + clickedResult.toString(),

@@ -21,6 +21,7 @@ import com.alibaba.fastjson.JSON;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.biz.model.entity.UserEntity;
 import com.eanfang.config.Config;
 import com.eanfang.delegate.BGASortableDelegate;
@@ -31,8 +32,7 @@ import com.eanfang.biz.model.GroupDetailBean;
 import com.eanfang.biz.model.Message;
 import com.eanfang.biz.model.TemplateBean;
 import com.eanfang.biz.model.WorkAddCheckBean;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
+
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.takevideo.TakeVdideoMode;
 import com.eanfang.takevideo.TakeVideoActivity;
@@ -358,18 +358,13 @@ public class AddNewCheckActivity extends BaseActivity implements SelectTimeDialo
         isTrue = true;//重置状态
 
         if (mUploadMap.size() != 0) {
-
-            OSSUtils.initOSS(this).asyncPutImages(mUploadMap, new OSSCallBack(this, true) {
-                @Override
-                public void onOssSuccess() {
-                    runOnUiThread(() -> {
-                        if (isTrue) {
-                            initTaskData(detailsBean);
-                            isTrue = false;
-                        }
-                    });
-                }
-
+            SDKManager.ossKit(this).asyncPutImages(mUploadMap,(isSuccess) -> {
+                runOnUiThread(() -> {
+                    if (isTrue) {
+                        initTaskData(detailsBean);
+                        isTrue = false;
+                    }
+                });
             });
         } else {
             initTaskData(detailsBean);

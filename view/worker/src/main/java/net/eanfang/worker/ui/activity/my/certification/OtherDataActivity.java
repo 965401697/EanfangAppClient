@@ -14,11 +14,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
+
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
@@ -187,16 +187,13 @@ public class OtherDataActivity extends BaseWorkerActivity {
          * 提交照片
          * */
         if (uploadMap.size() != 0) {
-            OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
-                @Override
-                public void onOssSuccess() {
-                    runOnUiThread(() -> EanfangHttp.post(UserApi.GET_TECH_WORKER_ADD_V4).upJson(JSONObject.toJSONString(mTechWorkerVerifyEntity)).execute(new EanfangCallback<JSONObject>(OtherDataActivity.this, true, JSONObject.class, (bean) -> {
-                        Intent intent = new Intent(OtherDataActivity.this, SubmitSuccessfullyJsActivity.class);
-                        intent.putExtra("order", 3);
-                        startAnimActivity(intent);
-                        closeActivity();
-                    })));
-                }
+            SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
+                runOnUiThread(() -> EanfangHttp.post(UserApi.GET_TECH_WORKER_ADD_V4).upJson(JSONObject.toJSONString(mTechWorkerVerifyEntity)).execute(new EanfangCallback<JSONObject>(OtherDataActivity.this, true, JSONObject.class, (bean) -> {
+                    Intent intent = new Intent(OtherDataActivity.this, SubmitSuccessfullyJsActivity.class);
+                    intent.putExtra("order", 3);
+                    startAnimActivity(intent);
+                    closeActivity();
+                })));
             });
             return;
         } else {

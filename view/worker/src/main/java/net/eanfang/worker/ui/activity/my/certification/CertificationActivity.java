@@ -9,11 +9,11 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
+
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.PermissionUtils;
@@ -148,11 +148,9 @@ public class CertificationActivity extends BaseActivityWithTakePhoto {
             default:
                 break;
         }
-        OSSUtils.initOSS(this).asyncPutImage(imgKey, image.getOriginalPath(), new OSSCallBack(this, true) {
-
+        SDKManager.ossKit(this).asyncPutImage(imgKey, image.getOriginalPath(),(isSuccess) -> {
 
         });
-
     }
 
     private void setData() {

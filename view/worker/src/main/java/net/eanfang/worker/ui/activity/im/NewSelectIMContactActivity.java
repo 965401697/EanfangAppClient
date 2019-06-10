@@ -20,13 +20,13 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.GroupCreatBean;
 import com.eanfang.biz.model.GroupDetailBean;
 import com.eanfang.biz.model.TemplateBean;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
+
 import com.eanfang.util.DialogUtil;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UuidUtil;
@@ -119,13 +119,8 @@ public class NewSelectIMContactActivity extends BaseWorkerActivity {
 
             if (!TextUtils.isEmpty(path)) {
                 String inageKey = "im/group/" + UuidUtil.getUUID() + ".png";
-                OSSUtils.initOSS(NewSelectIMContactActivity.this).asyncPutImage(inageKey, path, new OSSCallBack(NewSelectIMContactActivity.this, false) {
-
-                    @Override
-                    public void onOssSuccess() {
-//                        super.onOssSuccess();
-                        updataGroupInfo(mTitle, inageKey, "", "");
-                    }
+                SDKManager.ossKit(NewSelectIMContactActivity.this).asyncPutImage(inageKey, path,(isSuccess)->{
+                    updataGroupInfo(mTitle, inageKey, "", "");
                 });
             }
 
@@ -559,39 +554,31 @@ public class NewSelectIMContactActivity extends BaseWorkerActivity {
         }
 
         //头像上传成功后  提交数据
-        OSSUtils.initOSS(NewSelectIMContactActivity.this).asyncPutImage(imgKey, path, new OSSCallBack(NewSelectIMContactActivity.this, false) {
+        SDKManager.ossKit(NewSelectIMContactActivity.this).asyncPutImage(imgKey, path,(isSuccess)->{
+            //创建群组
+            EanfangHttp.post(UserApi.POST_CREAT_GROUP)
+                    .upJson(jsonObject)
+                    .execute(new EanfangCallback<GroupCreatBean>(NewSelectIMContactActivity.this, false, GroupCreatBean.class) {
+                        @Override
+                        public void onSuccess(GroupCreatBean bean) {
+                            super.onSuccess(bean);
+                            ToastUtil.get().showToast(NewSelectIMContactActivity.this, "创建成功");
+                            Group groupInfo = new Group(bean.getRcloudGroupId(), bean.getGroupName(), Uri.parse(BuildConfig.OSS_SERVER + imgKey));
+                            RongIM.getInstance().refreshGroupInfoCache(groupInfo);
 
-            @Override
-            public void onOssSuccess() {
-                super.onOssSuccess();
+                            WorkerApplication.get().set(bean.getRcloudGroupId(), bean.getGroupId());
+                            RongIM.getInstance().startGroupChat(NewSelectIMContactActivity.this, bean.getRcloudGroupId(), bean.getGroupName());
+                            dialog.dismiss();
+                            NewSelectIMContactActivity.this.finish();
+                        }
 
-
-                //创建群组
-                EanfangHttp.post(UserApi.POST_CREAT_GROUP)
-                        .upJson(jsonObject)
-                        .execute(new EanfangCallback<GroupCreatBean>(NewSelectIMContactActivity.this, false, GroupCreatBean.class) {
-                            @Override
-                            public void onSuccess(GroupCreatBean bean) {
-                                super.onSuccess(bean);
-                                ToastUtil.get().showToast(NewSelectIMContactActivity.this, "创建成功");
-                                Group groupInfo = new Group(bean.getRcloudGroupId(), bean.getGroupName(), Uri.parse(BuildConfig.OSS_SERVER + imgKey));
-                                RongIM.getInstance().refreshGroupInfoCache(groupInfo);
-
-                                WorkerApplication.get().set(bean.getRcloudGroupId(), bean.getGroupId());
-                                RongIM.getInstance().startGroupChat(NewSelectIMContactActivity.this, bean.getRcloudGroupId(), bean.getGroupName());
-                                dialog.dismiss();
-                                NewSelectIMContactActivity.this.finish();
-                            }
-
-                            @Override
-                            public void onFail(Integer code, String message, com.alibaba.fastjson.JSONObject jsonObject) {
-                                super.onFail(code, message, jsonObject);
-                                ToastUtil.get().showToast(NewSelectIMContactActivity.this, "创建失败");
-                                dialog.dismiss();
-                            }
-                        });
-
-            }
+                        @Override
+                        public void onFail(Integer code, String message, com.alibaba.fastjson.JSONObject jsonObject) {
+                            super.onFail(code, message, jsonObject);
+                            ToastUtil.get().showToast(NewSelectIMContactActivity.this, "创建失败");
+                            dialog.dismiss();
+                        }
+                    });
         });
 
     }

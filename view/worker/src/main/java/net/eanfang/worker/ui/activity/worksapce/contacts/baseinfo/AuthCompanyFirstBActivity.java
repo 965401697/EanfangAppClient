@@ -16,6 +16,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
@@ -24,8 +25,7 @@ import com.eanfang.biz.model.AuthCompanyBaseInfoBean;
 import com.eanfang.biz.model.SelectAddressItem;
 import com.eanfang.biz.model.entity.BaseDataEntity;
 import com.eanfang.biz.model.entity.OrgUnitEntity;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
+
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GetConstDataUtils;
@@ -285,8 +285,7 @@ public class AuthCompanyFirstBActivity extends BaseActivityWithTakePhoto {
             infoBean.setLogoPic(imgKey);
             GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),ivUpload2);
         }
-        OSSUtils.initOSS(this).asyncPutImage(imgKey, image.getOriginalPath(), new OSSCallBack(this, true) {
-        });
+        SDKManager.ossKit(this).asyncPutImage(imgKey, image.getOriginalPath(),(isSuccess) -> {});
     }
 
     private void commit(String json) {

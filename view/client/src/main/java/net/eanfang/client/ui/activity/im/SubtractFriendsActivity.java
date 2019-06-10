@@ -9,11 +9,11 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.GroupDetailBean;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
+
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UuidUtil;
 import com.eanfang.util.compound.CompoundHelper;
@@ -57,13 +57,8 @@ public class SubtractFriendsActivity extends BaseClientActivity {
 
             if (!TextUtils.isEmpty(path)) {
                 String inageKey = UuidUtil.getUUID() + ".png";
-                OSSUtils.initOSS(SubtractFriendsActivity.this).asyncPutImage(inageKey, path, new OSSCallBack(SubtractFriendsActivity.this, false) {
-
-                    @Override
-                    public void onOssSuccess() {
-//                        super.onOssSuccess();
-                        updataGroupInfo(mTitle, inageKey, "", "");
-                    }
+                SDKManager.ossKit(SubtractFriendsActivity.this).asyncPutImage(inageKey, path,(isSuccess) -> {
+                    updataGroupInfo(mTitle, inageKey, "", "");
                 });
                 SubtractFriendsActivity.this.setResult(RESULT_OK);
                 SubtractFriendsActivity.this.endTransaction(true);

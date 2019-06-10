@@ -9,7 +9,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
+
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.security.SecurityLikeBean;
@@ -181,7 +181,7 @@ public class SecurityFoucsFragment extends TemplateItemListFragment {
         }
         mQueryEntry.setPage(mPage);
         mQueryEntry.setSize(10);
-        mQueryEntry.getEquals().put("followAccId", EanfangApplication.get().getAccId() + "");
+        mQueryEntry.getEquals().put("followAccId", ClientApplication.get().getAccId() + "");
         EanfangHttp.post(NewApiService.SERCURITY_FOUCS)
                 .upJson(JsonUtils.obj2String(mQueryEntry))
                 .execute(new EanfangCallback<SecurityListBean>(getActivity(), true, SecurityListBean.class) {

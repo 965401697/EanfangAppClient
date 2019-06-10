@@ -9,7 +9,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.application.EanfangApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.security.SecurityFoucsBean;
@@ -166,15 +165,15 @@ public class SecurityHotFragment extends TemplateItemListFragment {
      */
     private void doFoucus(SecurityListBean.ListBean listBean) {
         SecurityFoucsBean securityFoucsBean = new SecurityFoucsBean();
-        securityFoucsBean.setFollowUserId(EanfangApplication.get().getUserId());
-        securityFoucsBean.setFollowCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getCompanyId());
-        securityFoucsBean.setFollowTopCompanyId(EanfangApplication.get().getUser().getAccount().getDefaultUser().getTopCompanyId());
+        securityFoucsBean.setFollowUserId(ClientApplication.get().getUserId());
+        securityFoucsBean.setFollowCompanyId(ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyId());
+        securityFoucsBean.setFollowTopCompanyId(ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getTopCompanyId());
 
         securityFoucsBean.setAsUserId(listBean.getPublisherUserId());
         securityFoucsBean.setAsCompanyId(listBean.getPublisherCompanyId());
         securityFoucsBean.setAsTopCompanyId(listBean.getPublisherTopCompanyId());
         securityFoucsBean.setAsAccId(listBean.getPublisherUser().getAccId());
-        securityFoucsBean.setFollowAccId(EanfangApplication.get().getAccId());
+        securityFoucsBean.setFollowAccId(ClientApplication.get().getAccId());
         /**
          * 状态：0 关注 1 未关注
          * */
