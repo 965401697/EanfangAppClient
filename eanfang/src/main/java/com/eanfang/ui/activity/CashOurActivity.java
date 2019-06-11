@@ -104,6 +104,7 @@ public class CashOurActivity extends BaseActivity {
                 .upJson(object.toString())
                 .execute(new EanfangCallback(this, true, JSONObject.class, bean -> {
                     startActivity(new Intent(CashOurActivity.this, ExtractSuccessActivity.class));
+                    finishSelf();
                 }));
     }
 

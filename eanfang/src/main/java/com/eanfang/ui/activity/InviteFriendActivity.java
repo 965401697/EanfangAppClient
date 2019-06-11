@@ -70,6 +70,11 @@ public class InviteFriendActivity extends BaseActivity {
         setLeftBack();
         setTitle("邀请好友赚现金");
         initView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         initAllPerson();
         initInviteDetail();
     }
@@ -89,7 +94,6 @@ public class InviteFriendActivity extends BaseActivity {
         mTvActivityDescription.setOnClickListener(v -> {
             activityDialogShow();
         });
-
     }
 
     /**
