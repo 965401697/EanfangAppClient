@@ -20,13 +20,13 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.GroupCreatBean;
 import com.eanfang.biz.model.GroupDetailBean;
 import com.eanfang.biz.model.TemplateBean;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
+
 import com.eanfang.util.DialogUtil;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UuidUtil;
@@ -123,13 +123,8 @@ public class SelectIMContactActivity extends BaseWorkerActivity {
 
             if (!TextUtils.isEmpty(path)) {
                 String inageKey = "im/group/" + UuidUtil.getUUID() + ".png";
-                OSSUtils.initOSS(SelectIMContactActivity.this).asyncPutImage(inageKey, path, new OSSCallBack(SelectIMContactActivity.this, false) {
-
-                    @Override
-                    public void onOssSuccess() {
-//                        super.onOssSuccess();
-                        updataGroupInfo(mTitle, inageKey, "", "");
-                    }
+                SDKManager.ossKit(SelectIMContactActivity.this).asyncPutImage(inageKey, path,(isSuccess) -> {
+                    updataGroupInfo(mTitle, inageKey, "", "");
                 });
             }
 
@@ -391,7 +386,30 @@ public class SelectIMContactActivity extends BaseWorkerActivity {
      */
     private void sendCheckedMsg(String id) {
         if (bundle != null) {
-            String shareType = bundle.getString("shareType");//区分消息的类型
+            //区分消息的类型
+            String shareType = bundle.getString("shareType");
+            String mPush = null;
+            if (shareType.equals("1")) {
+                mPush = "报修订单";
+            } else if (shareType.equals("2")) {
+                mPush = "故障处理";
+            } else if (shareType.equals("3")) {
+                mPush = "工作汇报";
+            } else if (shareType.equals("4")) {
+                mPush = "布置任务";
+            } else if (shareType.equals("5")) {
+                mPush = "设备点检";
+            } else if (shareType.equals("6")) {
+                mPush = "交接班";
+            } else if (shareType.equals("7")) {
+                mPush = "面谈员工";
+            } else if (shareType.equals("8")) {
+                mPush = "开店日志";
+            } else if (shareType.equals("9")) {
+                mPush = "布防日志";
+            } else if (shareType.equals("10")) {
+                mPush = "安防圈";
+            }
             Conversation.ConversationType conversationType;
 
             CustomizeMessage customizeMessage = new CustomizeMessage();
@@ -402,13 +420,14 @@ public class SelectIMContactActivity extends BaseWorkerActivity {
             customizeMessage.setOrderId(bundle.getString("id"));
             customizeMessage.setStatus(bundle.getString("status"));
             customizeMessage.setShareType(bundle.getString("shareType"));
+            customizeMessage.setCreatReleaseTime(bundle.getString("creatReleaseTime"));
             if (isInteger(id)) {
                 conversationType = Conversation.ConversationType.PRIVATE;
             } else {
                 conversationType = Conversation.ConversationType.GROUP;
             }
 
-            RongIM.getInstance().sendMessage(conversationType, id, customizeMessage, "报修订单", "报修订单", new RongIMClient.SendMessageCallback() {
+            RongIM.getInstance().sendMessage(conversationType, id, customizeMessage, mPush, mPush, new RongIMClient.SendMessageCallback() {
                 @Override
                 public void onError(Integer integer, RongIMClient.ErrorCode errorCode) {
                     Log.e("zzw", "发送失败=" + integer + "=" + errorCode);
@@ -502,39 +521,31 @@ public class SelectIMContactActivity extends BaseWorkerActivity {
         }
 
         //头像上传成功后  提交数据
-        OSSUtils.initOSS(SelectIMContactActivity.this).asyncPutImage(imgKey, path, new OSSCallBack(SelectIMContactActivity.this, false) {
+        SDKManager.ossKit(SelectIMContactActivity.this).asyncPutImage(imgKey, path,(isSuccess) -> {
+            //创建群组
+            EanfangHttp.post(UserApi.POST_CREAT_GROUP)
+                    .upJson(jsonObject)
+                    .execute(new EanfangCallback<GroupCreatBean>(SelectIMContactActivity.this, false, GroupCreatBean.class) {
+                        @Override
+                        public void onSuccess(GroupCreatBean bean) {
+                            super.onSuccess(bean);
+                            ToastUtil.get().showToast(SelectIMContactActivity.this, "创建成功");
+                            Group groupInfo = new Group(bean.getRcloudGroupId(), bean.getGroupName(), Uri.parse(BuildConfig.OSS_SERVER + imgKey));
+                            RongIM.getInstance().refreshGroupInfoCache(groupInfo);
 
-            @Override
-            public void onOssSuccess() {
-                super.onOssSuccess();
+                            WorkerApplication.get().set(bean.getRcloudGroupId(), bean.getGroupId());
+                            RongIM.getInstance().startGroupChat(SelectIMContactActivity.this, bean.getRcloudGroupId(), bean.getGroupName());
+                            dialog.dismiss();
+                            SelectIMContactActivity.this.finish();
+                        }
 
-
-                //创建群组
-                EanfangHttp.post(UserApi.POST_CREAT_GROUP)
-                        .upJson(jsonObject)
-                        .execute(new EanfangCallback<GroupCreatBean>(SelectIMContactActivity.this, false, GroupCreatBean.class) {
-                            @Override
-                            public void onSuccess(GroupCreatBean bean) {
-                                super.onSuccess(bean);
-                                ToastUtil.get().showToast(SelectIMContactActivity.this, "创建成功");
-                                Group groupInfo = new Group(bean.getRcloudGroupId(), bean.getGroupName(), Uri.parse(BuildConfig.OSS_SERVER + imgKey));
-                                RongIM.getInstance().refreshGroupInfoCache(groupInfo);
-
-                                WorkerApplication.get().set(bean.getRcloudGroupId(), bean.getGroupId());
-                                RongIM.getInstance().startGroupChat(SelectIMContactActivity.this, bean.getRcloudGroupId(), bean.getGroupName());
-                                dialog.dismiss();
-                                SelectIMContactActivity.this.finish();
-                            }
-
-                            @Override
-                            public void onFail(Integer code, String message, com.alibaba.fastjson.JSONObject jsonObject) {
-                                super.onFail(code, message, jsonObject);
-                                ToastUtil.get().showToast(SelectIMContactActivity.this, "创建失败");
-                                dialog.dismiss();
-                            }
-                        });
-
-            }
+                        @Override
+                        public void onFail(Integer code, String message, com.alibaba.fastjson.JSONObject jsonObject) {
+                            super.onFail(code, message, jsonObject);
+                            ToastUtil.get().showToast(SelectIMContactActivity.this, "创建失败");
+                            dialog.dismiss();
+                        }
+                    });
         });
 
     }

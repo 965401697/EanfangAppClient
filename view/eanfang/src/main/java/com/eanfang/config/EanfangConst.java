@@ -102,7 +102,7 @@ public interface EanfangConst {
     public static final String XIAOMI_APPID_CLIENT = "2882303761517848571";
     public static final String XIAOMI_APPKEY_CLIENT = "5151784822571";
 
-    // 魅族 Appid Appkey
+    // 魅族推送 Appid Appkey
     public static final String MEIZU_APPID_WORKER = "114610";
     public static final String MEIZU_APPKEY_WORKER = "0415a897aa1e48b2a850e6896de87a18";
 

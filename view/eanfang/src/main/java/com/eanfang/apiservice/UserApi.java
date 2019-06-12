@@ -156,6 +156,11 @@ public interface UserApi {
     String GET_ORGUNIT_SHOP_ADD_AREA = BuildConfig.API_HOST + "/yaf_sys/company2basedata/companyarea/";
 
     /**
+     * 新服务区域
+     */
+    String GET_ORGUNIT_SHOP_ADD_AREA_V2 = BuildConfig.API_HOST + "/yaf_sys/company2basedata/companyareaV2/";
+
+    /**
      * 新增企业
      */
     String GET_ORGUNIT_ENT_ADD = BuildConfig.API_HOST + "/yaf_sys/orgunit/ent/add";
@@ -197,8 +202,7 @@ public interface UserApi {
     /**
      * 填写技师信息 实名认证
      */
-    String GET_TECH_WORKER_ADD_V4 = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/safetyInfo";
-    /**
+    String GET_TECH_WORKER_ADD_V4 = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/safetyInfo";/**
      * 填写技师信息 实名认证
      */
     String GET_TECH_WORKER_ADD_V2 = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/insertV2";
@@ -320,6 +324,10 @@ public interface UserApi {
      */
     String GET_TECH_WORKER_SYS = BuildConfig.API_HOST + "/yaf_sys/basedata2user/list/";
     /**
+     * 选择区域
+     */
+    String GET_TECH_WORKER_AREA = BuildConfig.API_HOST + "/yaf_sys/basedata2user/areaList/";
+    /**
      * 技师绑定系统类别
      */
     String POST_TECH_WORKER_SYS = BuildConfig.API_HOST + "/yaf_sys/basedata2user/workersys";
@@ -333,6 +341,11 @@ public interface UserApi {
      * 技师绑定服务区域
      */
     String POST_TECH_WORKER_AREA = BuildConfig.API_HOST + "/yaf_sys/basedata2user/workerarea";
+
+    /**
+     * 技师绑定服务区域
+     */
+    String POST_TECH_WORKER_AREA_V3 = BuildConfig.API_HOST + "/yaf_sys/basedata2user/workerareaV3";
 
     /**
      * 技师提交认证
@@ -351,6 +364,10 @@ public interface UserApi {
      * 加载系统类别
      */
     String GET_COMPANY_ORG_SYS_INFO = BuildConfig.API_HOST + "/yaf_sys/company2basedata/list/";
+    /**
+     * 企业选择区域
+     */
+    String GET_COMPANY_ORG_AREA_INFO = BuildConfig.API_HOST + "/yaf_sys/company2basedata/areaList/";
     /**
      * 技师接单状态
      */
@@ -469,7 +486,6 @@ public interface UserApi {
      * /**
      * 群组详情
      */
-    @Deprecated
     String POST_GROUP_DETAIL_RY = BuildConfig.API_HOST + "/yaf_im/sysgroup/detail/ry";
     /**
      * /**
@@ -509,13 +525,11 @@ public interface UserApi {
     /**
      * 根据账户id 查找用户
      */
-    @Deprecated
     String POST_USER_INFO = BuildConfig.API_HOST + "/yaf_sys/account/info/";
     /**
      * 技师认证页 实名认证和技师认证状态
      */
-    String POST_WORKER_AUTH_STATUS_B = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/verifyStatusV2";
-    /**
+    String POST_WORKER_AUTH_STATUS_B = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/verifyStatusV2";   /**
      * 技师认证，资料完善状态查询
      */
     String POST_WORKER_AUTH_STATUS = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/verifyStatus";
@@ -655,6 +669,10 @@ public interface UserApi {
      * 技师技能认证的详情
      */
     String TECH_WORKER_DETAIL = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/detail/sp1";
+    /**
+     * 技师技能认证的详情2
+     */
+    String TECH_WORKER_DETAIL_V2 = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/detailV2";
     /**
      * 专家在线免费 我要提问
      */

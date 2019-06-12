@@ -14,7 +14,6 @@
         android:layout_marginTop="@dimen/dimen_20"
         android:background="@drawable/bg_worker_home_datastics_back"
         android:orientation="vertical"
-        android:paddingBottom="@dimen/dimen_18"
         android:paddingTop="@dimen/dimen_26">
 
         <LinearLayout
@@ -238,7 +237,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_22"
             android:gravity="center"
             android:orientation="horizontal"
             android:paddingLeft="@dimen/dimen_34"
@@ -250,7 +248,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/dimen_20"
+                android:paddingTop="@dimen/dimen_20">
 
                 <ImageView
                     android:id="@+id/iv_like"
@@ -275,7 +275,9 @@
                 android:layout_toRightOf="@id/ll_like"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/dimen_20"
+                android:paddingTop="@dimen/dimen_20">
 
                 <ImageView
                     android:id="@+id/iv_comment"
@@ -292,13 +294,16 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_share"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_80"
                 android:layout_toRightOf="@id/ll_comments"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/dimen_20"
+                android:paddingTop="@dimen/dimen_20">
 
                 <ImageView
                     android:id="@+id/iv_share"

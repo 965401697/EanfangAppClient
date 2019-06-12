@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/layout_header"
+        layout="@layout/header" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/bg_invite_friend"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_header"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="-163dp" />
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="@dimen/dimen_434"
+        android:layout_height="@dimen/dimen_50"
+        android:background="@drawable/shape_bg_btn_invite_friend_notice"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.32">
+
+        <ImageView
+            android:id="@+id/img_horn"
+            android:layout_width="@dimen/dimen_26"
+            android:layout_height="@dimen/dimen_26"
+            android:layout_marginStart="@dimen/dimen_26"
+            android:src="@drawable/icon_horn"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.eanfang.witget.RollTextView
+            android:id="@+id/roll_text_invite_friend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="@id/img_horn"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+    <RelativeLayout
+        android:layout_width="@dimen/dimen_604"
+        android:layout_height="@dimen/dimen_570"
+        android:background="@drawable/bg_client_contact_create"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.9">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dimen_48"
+            android:drawableLeft="@drawable/icon_invite_left_slices"
+            android:drawableRight="@drawable/icon_invite_right_slices"
+            android:drawablePadding="@dimen/dimen_10"
+            android:text="邀请越多赚得越多，上不封顶"
+            android:textColor="@color/color_btn_to_invite"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/btn_to_invite"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="@dimen/dimen_558"
+            android:layout_height="@dimen/dimen_88"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/dimen_46"
+            android:background="@drawable/shape_bg_btn_invite_friend"
+            android:gravity="center"
+            android:text="立即邀请赚现金 >>"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/cl_military_exploits"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_170"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="@dimen/dimen_28"
+            android:layout_marginTop="@dimen/dimen_116"
+            android:layout_marginRight="@dimen/dimen_28"
+            android:background="@drawable/bg_military_exploits"
+            android:paddingLeft="@dimen/dimen_50">
+
+            <TextView
+                android:id="@+id/tv_invite_person"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_24"
+                android:text="12人"
+                android:textColor="@color/color_btn_to_invite"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toStartOf="@+id/tv_invite_getMoney"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_invite_person_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="已邀请"
+                android:textColor="@color/color_btn_to_invite"
+                android:textSize="12sp"
+                app:layout_constraintLeft_toLeftOf="@id/tv_invite_person"
+                app:layout_constraintRight_toRightOf="@id/tv_invite_person"
+                app:layout_constraintTop_toBottomOf="@id/tv_invite_person" />
+
+            <TextView
+                android:id="@+id/tv_invite_getMoney"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_24"
+                android:text="36元"
+                android:textColor="@color/color_btn_to_invite"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toStartOf="@+id/tv_invite_lossMoney"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintStart_toEndOf="@+id/tv_invite_person"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_invite_getMoney_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="已获得"
+                android:textColor="@color/color_btn_to_invite"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toStartOf="@+id/tv_invite_getMoney"
+                app:layout_constraintStart_toEndOf="@+id/tv_invite_getMoney"
+                app:layout_constraintTop_toBottomOf="@id/tv_invite_person" />
+
+            <TextView
+                android:id="@+id/tv_invite_lossMoney"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_24"
+                android:text="3元"
+                android:textColor="@color/color_invite_lose_money"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="spread"
+                app:layout_constraintStart_toEndOf="@+id/tv_invite_getMoney"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_invite_lossMoney_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="已失效"
+                android:textColor="@color/color_invite_lose_money"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="@+id/tv_invite_lossMoney"
+                app:layout_constraintStart_toStartOf="@+id/tv_invite_lossMoney"
+                app:layout_constraintTop_toBottomOf="@id/tv_invite_lossMoney" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="查看明细>>"
+                android:textColor="@color/color_btn_to_invite"
+                android:textSize="11sp"
+                app:layout_constraintLeft_toLeftOf="@id/tv_invite_getMoney_title"
+                app:layout_constraintRight_toRightOf="@id/tv_invite_getMoney_title"
+                app:layout_constraintTop_toBottomOf="@id/tv_invite_getMoney_title" />
+        </android.support.constraint.ConstraintLayout>
+
+        <Button
+            android:id="@+id/btn_could_extract"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="@dimen/dimen_374"
+            android:layout_height="@dimen/dimen_60"
+            android:layout_below="@id/cl_military_exploits"
+            android:layout_marginLeft="@dimen/dimen_28"
+            android:layout_marginTop="@dimen/dimen_48"
+            android:background="#FFE6E4"
+            android:gravity="center"
+            android:text="可提现金额：23元"
+            android:textColor="@color/color_btn_to_invite"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/btn_do_extract"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="@dimen/dimen_162"
+            android:layout_height="@dimen/dimen_60"
+            android:layout_below="@id/cl_military_exploits"
+            android:layout_marginLeft="@dimen/dimen_14"
+            android:layout_marginTop="@dimen/dimen_48"
+            android:layout_toRightOf="@id/btn_could_extract"
+            android:background="@color/color_btn_to_invite"
+            android:gravity="center"
+            android:text="去提现"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_activity_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dimen_26"
+        android:text="活动规则说明 >"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+</android.support.constraint.ConstraintLayout>

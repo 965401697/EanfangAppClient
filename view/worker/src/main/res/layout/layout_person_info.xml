@@ -33,7 +33,7 @@
                     android:layout_marginLeft="@dimen/dimen_36"
                     android:layout_weight="1"
                     android:drawableLeft="@mipmap/ic_must_input"
-                    android:drawablePadding="@dimen/dimen_10"
+                    android:drawablePadding="@dimen/dimen_4"
                     android:text="@string/text_personal_head"
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_14" />
@@ -52,8 +52,8 @@
                     android:layout_width="@dimen/dimen_14"
                     android:layout_height="@dimen/dimen_26"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginRight="@dimen/dimen_24"
-                    android:layout_marginLeft="@dimen/dimen_34"
+                    android:layout_marginRight="@dimen/dimen_34"
+                    android:layout_marginLeft="@dimen/dimen_17"
                     android:src="@mipmap/arrow_right" />
 
             </LinearLayout>
@@ -71,7 +71,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/dimen_36"
                     android:drawableLeft="@mipmap/ic_must_input"
-                    android:drawablePadding="@dimen/dimen_10"
+                    android:drawablePadding="@dimen/dimen_4"
                     android:text="昵称"
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_14" />
@@ -140,7 +140,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/dimen_36"
                     android:drawableLeft="@mipmap/ic_must_input"
-                    android:drawablePadding="@dimen/dimen_10"
+                    android:drawablePadding="@dimen/dimen_4"
                     android:text="当前城市"
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_14" />
@@ -331,8 +331,8 @@
                     android:textSize="@dimen/textSize_14" />
 
                 <Button
-                    android:id="@+id/btn_man"
                     style="?android:attr/borderlessButtonStyle"
+                    android:id="@+id/btn_man"
                     android:layout_width="@dimen/dimen_120"
                     android:layout_height="@dimen/dimen_60"
                     android:layout_gravity="center_vertical"
@@ -344,16 +344,16 @@
                     android:textSize="12sp" />
 
                 <Button
-                    android:id="@+id/btn_woman"
                     style="?android:attr/borderlessButtonStyle"
+                    android:id="@+id/btn_woman"
                     android:layout_width="@dimen/dimen_120"
                     android:layout_height="@dimen/dimen_60"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="@dimen/dimen_30"
+                    android:textColor="@drawable/selector_text_color_person_info_sex"
                     android:background="@drawable/bg_button_blue_selector"
                     android:gravity="center"
                     android:text="女"
-                    android:textColor="@drawable/selector_text_color_person_info_sex"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -371,7 +371,6 @@
                 android:text="个人简介"
                 android:textColor="@color/color_client_neworder"
                 android:textSize="14sp" />
-
             <View style="@style/style_common_line_gray" />
 
             <EditText
@@ -380,10 +379,10 @@
                 android:layout_height="@dimen/dimen_146"
                 android:background="@color/white"
                 android:gravity="start"
-                android:hint="请输入..."
-                android:inputType="text"
-                android:paddingLeft="@dimen/dimen_36"
                 android:paddingTop="@dimen/dp_10"
+                android:hint="请输入..."
+                android:paddingLeft="@dimen/dimen_36"
+                android:inputType="text"
                 android:textColor="@color/font_color"
                 android:textSize="13sp" />
 
@@ -419,8 +418,8 @@
                 </LinearLayout>
 
                 <Button
-                    android:id="@+id/btn_bigSave"
                     style="?android:attr/borderlessButtonStyle"
+                    android:id="@+id/btn_bigSave"
                     android:layout_width="@dimen/dimen_600"
                     android:layout_height="@dimen/dimen_88"
                     android:layout_below="@id/ll_saveAndAuth"

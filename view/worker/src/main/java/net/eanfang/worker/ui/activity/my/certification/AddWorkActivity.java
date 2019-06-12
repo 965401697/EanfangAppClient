@@ -12,11 +12,11 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
+
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.PhotoUtils;
@@ -110,24 +110,25 @@ public class AddWorkActivity extends BaseActivityWithTakePhoto {
         etJobPosition.setEnabled(isZd);
         llDate.setEnabled(isZd);
         etCertificate.setEnabled(isZd);
-        snplMomentAccident.setPlusEnable(isZd);
-        snplMomentAccident.setEditable(isZd);
+        snplMomentAccident.setPlusEnable(isZd || StringUtils.isEmpty(bean.getCardPics()));
+        snplMomentAccident.setEditable(isZd || StringUtils.isEmpty(bean.getCardPics()));
+        snplMomentAccident.setItemClickble(isZd);
     }
 
     private void fillData() {
-
         ArrayList<String> picList = new ArrayList<>();
-
-        String[] pics = bean.getCardPics().split(",");
-
-        for (int i = 0; i < pics.length; i++) {
-            picList.add(BuildConfig.OSS_SERVER + pics[i]);
+        if (bean.getCardPics() != null && bean.getCardPics().length() > 0) {
+            String[] pics = bean.getCardPics().split(",");
+            for (String pic1 : pics) {
+                picList.add(BuildConfig.OSS_SERVER + pic1);
+            }
         }
-
         etCompanyName.setText(bean.getCompanyName());
         etPosition.setText(bean.getJob());
         etJobPosition.setText(bean.getWorkplace());
-        tvTime.setText(DateUtils.formatDate(bean.getBeginTime(), "yyyy-MM-dd") + " ～ " + DateUtils.formatDate(bean.getEndTime(), "yyyy-MM-dd"));
+        if (bean.getBeginTime() != null && bean.getEndTime() != null) {
+            tvTime.setText(DateUtils.formatDate(bean.getBeginTime(), "yyyy-MM-dd") + " ～ " + DateUtils.formatDate(bean.getEndTime(), "yyyy-MM-dd"));
+        }
         snplMomentAccident.setData(picList);
         etCertificate.setText(bean.getJobIntro());
 
@@ -150,28 +151,22 @@ public class AddWorkActivity extends BaseActivityWithTakePhoto {
         entity.setCompanyName(etCompanyName.getText().toString().trim());
         entity.setJob(etPosition.getText().toString().trim());
         entity.setWorkplace(etJobPosition.getText().toString().trim());
-        entity.setBeginTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[0], "yyyy-MM-dd"));
-        entity.setEndTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[1], "yyyy-MM-dd"));
+        if (!StringUtils.isEmpty(tvTime.getText().toString().trim())) {
+            entity.setBeginTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[0], "yyyy-MM-dd"));
+            entity.setEndTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[1], "yyyy-MM-dd"));
+        }
         entity.setJobIntro(etCertificate.getText().toString().trim());
+        pic = PhotoUtils.getPhotoUrl("", snplMomentAccident, uploadMap, false);
         entity.setCardPics(pic);
         entity.setType(0);
-
-        OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
-            @Override
-            public void onOssSuccess() {
-                runOnUiThread(() -> {
-
-                    EanfangHttp.post(url)
-                            .upJson(JSONObject.toJSONString(entity))
-                            .execute(new EanfangCallback<JSONObject>(AddWorkActivity.this, true, JSONObject.class, (bean) -> {
-                                setResult(RESULT_OK);
-                                finish();
-                            }));
-
-
-                });
-            }
-        });
+        SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> runOnUiThread(() -> {
+            EanfangHttp.post(url)
+                    .upJson(JSONObject.toJSONString(entity))
+                    .execute(new EanfangCallback<JSONObject>(AddWorkActivity.this, true, JSONObject.class, (bean) -> {
+                        setResult(RESULT_OK);
+                        finish();
+                    }));
+        }));
 
 
     }
@@ -179,30 +174,6 @@ public class AddWorkActivity extends BaseActivityWithTakePhoto {
     private boolean checkedData() {
         if (TextUtils.isEmpty(etCompanyName.getText().toString())) {
             ToastUtil.get().showToast(this, "请输入任职机构");
-            return true;
-        }
-
-        if (TextUtils.isEmpty(etPosition.getText().toString())) {
-            ToastUtil.get().showToast(this, "请输入岗位名称");
-            return true;
-        }
-
-        if (TextUtils.isEmpty(etJobPosition.getText().toString())) {
-            ToastUtil.get().showToast(this, "请输入工作地点");
-            return true;
-        }
-        if (TextUtils.isEmpty(tvTime.getText().toString())) {
-            ToastUtil.get().showToast(this, "请选起止时间");
-            return true;
-        }
-        if (TextUtils.isEmpty(etCertificate.getText().toString())) {
-            ToastUtil.get().showToast(this, "请输入工作描述");
-            return true;
-        }
-
-        pic = PhotoUtils.getPhotoUrl("", snplMomentAccident, uploadMap, false);
-        if (StringUtils.isEmpty(pic)) {
-            showToast("请添加名牌或者工牌照片");
             return true;
         }
 

@@ -7,9 +7,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.delegate.BGASortableDelegate;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
+
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
@@ -179,14 +179,11 @@ public class MeintenanceEditPhotoActivity extends BaseWorkerActivity {
          * 提交照片
          * */
         if (uploadMap.size() != 0) {
-            OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
-                @Override
-                public void onOssSuccess() {
-                    Intent intent = new Intent();
-                    intent.putExtra("bean", deviceEntity);
-                    setResult(RESULT_OK, intent);
-                    finishSelf();
-                }
+            SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
+                Intent intent = new Intent();
+                intent.putExtra("bean", deviceEntity);
+                setResult(RESULT_OK, intent);
+                finishSelf();
             });
             return;
         }

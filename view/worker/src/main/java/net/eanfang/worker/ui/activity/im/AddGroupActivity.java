@@ -9,12 +9,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.GroupDetailBean;
 import com.eanfang.biz.model.GroupsBean;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
+
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UuidUtil;
@@ -141,13 +141,8 @@ public class AddGroupActivity extends BaseWorkerActivity {
         //把生成的图片 传到服务器 更新本地群组头像
         if (!TextUtils.isEmpty(mPath)) {
             String inageKey = UuidUtil.getUUID() + ".png";
-            OSSUtils.initOSS(AddGroupActivity.this).asyncPutImage(inageKey, mPath, new OSSCallBack(AddGroupActivity.this, false) {
-
-                @Override
-                public void onOssSuccess() {
-//                        super.onOssSuccess();
-                    updataGroupInfo(mTitle, inageKey, "", "");
-                }
+            SDKManager.ossKit(this).asyncPutImage(inageKey,mPath,(isSuccess) -> {
+                updataGroupInfo(mTitle, inageKey, "", "");
             });
         }
 

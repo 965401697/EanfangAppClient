@@ -3,9 +3,9 @@ package net.eanfang.worker.ui.activity.worksapce.online;
 import android.os.Bundle;
 import android.widget.EditText;
 
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.delegate.BGASortableDelegate;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
+
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
@@ -53,11 +53,8 @@ public class IAnswerActivity extends BaseWorkerActivity {
         if (StringUtils.isEmpty(pic)) {
             showToast("请添加名牌或者工牌照片");
         }
-
-        OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
-            @Override
-            public void onOssSuccess() {
-                runOnUiThread(() -> {
+        SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
+//            runOnUiThread(() -> {
 
 //                    EanfangHttp.post(url)
 //                            .upJson(JSONObject.toJSONString(entity))
@@ -67,8 +64,7 @@ public class IAnswerActivity extends BaseWorkerActivity {
 //                            }));
 
 
-                });
-            }
+//            });
         });
     }
 }

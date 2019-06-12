@@ -40,11 +40,9 @@ public class SecurityListAdapter extends BaseQuickAdapter<SecurityListBean.ListB
     private boolean mIsUnRead = false;
     private Parser mTagParser = new Parser();
     protected FormatRangeManager mRangeManager = new FormatRangeManager();
-    private Context mContext;
 
-    public SecurityListAdapter(Context mContext, boolean isUnRead) {
+    public SecurityListAdapter( boolean isUnRead) {
         super(R.layout.layout_security_item);
-        this.mContext = mContext;
         this.mIsUnRead = isUnRead;
     }
 

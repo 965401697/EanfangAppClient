@@ -998,6 +998,10 @@
         <activity android:name=".ui.activity.worksapce.repair.RepairInfoEditActivity" />
         <activity android:name=".ui.activity.worksapce.repair.RepairProjectListActivity" />
         <activity android:name=".ui.activity.worksapce.repair.RepairAddProjectAcitivity" />
+        <!-- 华为 配置结束 < -->
+        <activity
+            android:name=".ui.activity.worksapce.security.SecurityCommentDetailActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
     </application>
 
 </manifest>

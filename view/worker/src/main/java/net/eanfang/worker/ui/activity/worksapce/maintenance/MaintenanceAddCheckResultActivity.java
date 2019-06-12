@@ -8,9 +8,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.eanfang.BuildConfig;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.delegate.BGASortableDelegate;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
+
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PhotoUtils;
@@ -121,14 +121,11 @@ public class MaintenanceAddCheckResultActivity extends BaseWorkerActivity {
                  * 提交照片
                  * */
                 if (uploadMap.size() != 0) {
-                    OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
-                        @Override
-                        public void onOssSuccess() {
-                            if (mType != null && mType.equals("scanDevice")) {
-                                doPassTwo(resultEntity);
-                            } else {
-                                doPassOne(resultEntity);
-                            }
+                    SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
+                        if (mType != null && mType.equals("scanDevice")) {
+                            doPassTwo(resultEntity);
+                        } else {
+                            doPassOne(resultEntity);
                         }
                     });
                     return;

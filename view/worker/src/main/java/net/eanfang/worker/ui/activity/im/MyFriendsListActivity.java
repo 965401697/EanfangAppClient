@@ -1,7 +1,8 @@
 package net.eanfang.worker.ui.activity.im;
 
+import android.app.Activity;
 import android.content.DialogInterface;
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -9,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -20,6 +20,7 @@ import com.eanfang.witget.SideBar;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
+import net.eanfang.worker.ui.activity.my.UserHomeActivity;
 import net.eanfang.worker.ui.adapter.FriendsAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
@@ -33,16 +34,22 @@ import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
-import io.rong.imlib.model.UserInfo;
 
 public class MyFriendsListActivity extends BaseWorkerActivity {
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
     private FriendsAdapter mFriendsAdapter;
-    private int flag = 0;//显示不显示checkbox的标志位
+    /**
+     * 显示不显示checkbox的标志位
+     */
+    private int flag = 0;
     @BindView(R.id.side_bar)
     SideBar sideBar;
+    /**
+     * 当前item位置
+     */
+    private int mClickPosition = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +77,10 @@ public class MyFriendsListActivity extends BaseWorkerActivity {
                             if (bean.getNickName().length() > 0) {
                                 // 根据姓名获取拼音
                                 bean.setPinyin(bean.getNickName());
-                                bean.setFirstLetter(Cn2Spell.getPinYin(bean.getNickName()).substring(0, 1).toUpperCase()); // 获取拼音首字母并转成大写
-                                if (!Cn2Spell.getPinYin(bean.getNickName()).substring(0, 1).toUpperCase().matches("[A-Z]")) { // 如果不在A-Z中则默认为“#”
+                                //获取拼音首字母并转成大写
+                                bean.setFirstLetter(Cn2Spell.getPinYin(bean.getNickName()).substring(0, 1).toUpperCase());
+                                if (!Cn2Spell.getPinYin(bean.getNickName()).substring(0, 1).toUpperCase().matches("[A-Z]")) {
+                                    // 如果不在A-Z中则默认为“#”
                                     bean.setFirstLetter("#");
                                 }
                             }
@@ -90,7 +99,18 @@ public class MyFriendsListActivity extends BaseWorkerActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mFriendsAdapter = new FriendsAdapter(R.layout.item_friend_list, flag);
         mFriendsAdapter.bindToRecyclerView(recyclerView);
-        startConv();
+        mFriendsAdapter.setOnItemClickListener((adapter, view, position) -> {
+            mClickPosition = position;
+            FriendListBean bean = (FriendListBean) adapter.getData().get(position);
+            if (bean != null) {
+                //跳转用户首页
+                UserHomeActivity.startActivityForAccId(MyFriendsListActivity.this, bean.getAccId());
+            }
+            //跳转聊天
+//                UserInfo userInfo = new UserInfo(bean.getAccId(), bean.getNickName(), Uri.parse(BuildConfig.OSS_SERVER + bean.getAvatar()));
+//                RongIM.getInstance().refreshUserInfoCache(userInfo);
+//                RongIM.getInstance().startConversation(MyFriendsListActivity.this, Conversation.ConversationType.PRIVATE, ((FriendListBean) adapter.getData().get(position)).getAccId(), ((FriendListBean) adapter.getData().get(position)).getNickName());
+        });
 
 
         //删除好友
@@ -109,7 +129,8 @@ public class MyFriendsListActivity extends BaseWorkerActivity {
             public void onSelectStr(int index, String selectStr) {
                 for (int i = 0; i < mFriendsAdapter.getData().size(); i++) {
                     if (selectStr.equalsIgnoreCase(mFriendsAdapter.getData().get(i).getFirstLetter())) {
-                        recyclerView.scrollToPosition(i); // 选择到首字母出现的位置
+                        // 选择到首字母出现的位置
+                        recyclerView.scrollToPosition(i);
                         return;
                     }
                 }
@@ -117,26 +138,13 @@ public class MyFriendsListActivity extends BaseWorkerActivity {
         });
     }
 
-    /**
-     * 开始聊天
-     */
-    private void startConv() {
-        mFriendsAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                FriendListBean bean = (FriendListBean) adapter.getData().get(position);
-                UserInfo userInfo = new UserInfo(bean.getAccId(), bean.getNickName(), Uri.parse(BuildConfig.OSS_SERVER + bean.getAvatar()));
-                RongIM.getInstance().refreshUserInfoCache(userInfo);
-                RongIM.getInstance().startConversation(MyFriendsListActivity.this, Conversation.ConversationType.PRIVATE, ((FriendListBean) adapter.getData().get(position)).getAccId(), ((FriendListBean) adapter.getData().get(position)).getNickName());
-            }
-        });
-    }
-
     private void DialogShow(String userId, String name, int position) {
         AlertDialog dialog = new AlertDialog.Builder(this)
 //                .setIcon(R.mipmap.icon)//设置标题的图片
-                .setTitle("删除好友")//设置对话框的标题
-                .setMessage("您确定删除“" + name + "”好友？")//设置对话框的内容
+                //设置对话框的标题
+                .setTitle("删除好友")
+                //设置对话框的内容
+                .setMessage("您确定删除“" + name + "”好友？")
                 //设置对话框的按钮
                 .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
@@ -179,5 +187,17 @@ public class MyFriendsListActivity extends BaseWorkerActivity {
                     }
                 }).create();
         dialog.show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK && data != null) {
+            boolean isFriend = data.getBooleanExtra(UserHomeActivity.RESULT_FRIEND_STATE, true);
+            if (!isFriend) {
+                mFriendsAdapter.remove(mClickPosition);
+                mFriendsAdapter.notifyDataSetChanged();
+            }
+        }
     }
 }

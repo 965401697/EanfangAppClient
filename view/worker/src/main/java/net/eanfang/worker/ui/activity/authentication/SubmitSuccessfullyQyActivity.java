@@ -148,8 +148,6 @@ public class SubmitSuccessfullyQyActivity extends BaseActivity {
                     case 6:
                         Intent intentf = new Intent(this, EnterpriseCertificationActivity.class);
                         intentf.putExtra("mOrgId", mOrgId);
-                        intentf.putExtra("status", 0);
-                        intentf.putExtra("orgName", orgName);
                         startActivity(intentf);
                         finish();
                         break;

@@ -61,7 +61,7 @@ public class PermKit {
             //如果是技师端  并且
 
             try {
-                String appType = (String) SharePreferenceUtil.get().get("app", "");
+                String appType = (String) BaseApplication.get().get("app", "");
 
                 if (appType.equals("worker") && BaseApplication.get().getLoginBean().getAccount().getAccountExtInfo() == null) {
                     intent.putExtra("info", "请先进行技师认证。");

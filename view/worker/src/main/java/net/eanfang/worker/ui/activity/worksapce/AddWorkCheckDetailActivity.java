@@ -8,12 +8,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.annimon.stream.Stream;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.config.Config;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.listener.MultiClickListener;
 import com.eanfang.biz.model.WorkAddCheckBean;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
+
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
@@ -135,16 +135,13 @@ public class AddWorkCheckDetailActivity extends BaseWorkerActivity {
         detailsBean.setPictures(ursStr);
         //服务器上传
         if (uploadMap.size() != 0) {
-            OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
-                @Override
-                public void onOssSuccess() {
-                    runOnUiThread(() -> {
-                        Intent intent = new Intent();
-                        intent.putExtra("result", detailsBean);
-                        setResult( 101, intent);
-                        finish();
-                    });
-                }
+            SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
+                runOnUiThread(() -> {
+                    Intent intent = new Intent();
+                    intent.putExtra("result", detailsBean);
+                    setResult( 101, intent);
+                    finish();
+                });
             });
         } else {
             Intent intent = new Intent();

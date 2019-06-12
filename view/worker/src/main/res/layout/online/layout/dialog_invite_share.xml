@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#4C4C4C">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_400"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_40"
+            android:text="分享到"
+            android:textColor="@color/color_invite_share_text"
+            android:textSize="15sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/img_share_weixin"
+            android:layout_width="@dimen/dimen_96"
+            android:layout_height="@dimen/dimen_96"
+            android:layout_marginTop="@dimen/dimen_46"
+            android:src="@drawable/ic_share_weixin"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="@id/img_share_circle_friend"
+            app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:text="微信"
+            android:textColor="@color/color_invite_share_text"
+            android:textSize="13sp"
+            app:layout_constraintLeft_toLeftOf="@id/img_share_weixin"
+            app:layout_constraintRight_toRightOf="@id/img_share_weixin"
+            app:layout_constraintTop_toBottomOf="@id/img_share_weixin" />
+
+        <ImageView
+            android:id="@+id/img_share_circle_friend"
+            android:layout_width="@dimen/dimen_96"
+            android:layout_height="@dimen/dimen_96"
+            android:layout_marginTop="@dimen/dimen_46"
+            android:src="@drawable/ic_share_circle_friend"
+            app:layout_constraintLeft_toLeftOf="@id/img_share_weixin"
+            app:layout_constraintRight_toRightOf="@id/img_share_qr_code"
+            app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:text="朋友圈"
+            android:textColor="@color/color_invite_share_text"
+            android:textSize="13sp"
+            app:layout_constraintLeft_toLeftOf="@id/img_share_circle_friend"
+            app:layout_constraintRight_toRightOf="@id/img_share_circle_friend"
+            app:layout_constraintTop_toBottomOf="@id/img_share_circle_friend" />
+
+        <ImageView
+            android:id="@+id/img_share_qr_code"
+            android:layout_width="@dimen/dimen_96"
+            android:layout_height="@dimen/dimen_96"
+            android:layout_marginTop="@dimen/dimen_46"
+            android:src="@drawable/ic_share_qr_code"
+            app:layout_constraintLeft_toLeftOf="@id/img_share_circle_friend"
+            app:layout_constraintRight_toRightOf="@id/img_copy_link"
+            app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:text="二维码"
+            android:textColor="@color/color_invite_share_text"
+            android:textSize="13sp"
+            app:layout_constraintLeft_toLeftOf="@id/img_share_qr_code"
+            app:layout_constraintRight_toRightOf="@id/img_share_qr_code"
+            app:layout_constraintTop_toBottomOf="@id/img_share_qr_code" />
+
+        <ImageView
+            android:id="@+id/img_copy_link"
+            android:layout_width="@dimen/dimen_96"
+            android:layout_height="@dimen/dimen_96"
+            android:layout_marginTop="@dimen/dimen_46"
+            android:src="@drawable/ic_share_copy_link"
+            app:layout_constraintLeft_toLeftOf="@id/img_share_qr_code"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_title" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:text="复制链接"
+            android:textColor="@color/color_invite_share_text"
+            android:textSize="13sp"
+            app:layout_constraintLeft_toLeftOf="@id/img_copy_link"
+            app:layout_constraintRight_toRightOf="@id/img_copy_link"
+            app:layout_constraintTop_toBottomOf="@id/img_copy_link" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_2"
+            android:background="@color/color_invite_share_line"
+            app:layout_constraintBottom_toTopOf="@id/tv_invite_cancel" />
+
+        <TextView
+            android:id="@+id/tv_invite_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_94"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="@color/color_invite_share_cancel"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+</android.support.constraint.ConstraintLayout>

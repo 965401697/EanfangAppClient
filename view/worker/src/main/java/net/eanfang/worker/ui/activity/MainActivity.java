@@ -1,5 +1,6 @@
 package net.eanfang.worker.ui.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
@@ -22,6 +23,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.config.EanfangConst;
@@ -39,17 +41,16 @@ import com.eanfang.sys.activity.LoginActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.BadgeUtil;
 import com.eanfang.util.CleanMessageUtil;
+import com.eanfang.util.ContactUtil;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.LocationUtil;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.QueryEntry;
-import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UpdateAppManager;
 import com.picker.common.util.ScreenUtils;
-import com.tencent.android.tpush.XGPushConfig;
 import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.worker.BuildConfig;
@@ -73,6 +74,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -168,7 +170,7 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
         RongIM.setConnectionStatusListener(new MyConnectionStatusListener());
 
         //判断是否完善资料
-//        if (TextUtils.isEmpty(WorkerApplication.get().getUser().getAccount().getRealName()) || "待提供".equals(WorkerApplication.get().getUser().getAccount().getRealName())) {
+//        if (TextUtils.isEmpty(WorkerApplication.get().getLoginBean().getAccount().getRealName()) || "待提供".equals(WorkerApplication.get().getLoginBean().getAccount().getRealName())) {
 //            startAnimActivity(new Intent(this, LoginHintActivity.class));
 //        }
         // 判断是否有密码
@@ -290,20 +292,28 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
 
     private void registerXinGe() {
         // 打开第三方推送
-        XGPushConfig.enableOtherPush(MainActivity.this, true);
+        SDKManager.getXGPush(MainActivity.this).enableOtherPush(true);
+        //开启信鸽日志输出
+        SDKManager.getXGPush(MainActivity.this).enableDebug(true);
+        SDKManager.getXGPush(MainActivity.this).setHuaweiDebug(true);
+        SDKManager.getXGPush(MainActivity.this).setMiPush(XIAOMI_APPID_WORKER,XIAOMI_APPKEY_WORKER);
+        SDKManager.getXGPush(MainActivity.this).setMzPush(MEIZU_APPID_WORKER,MEIZU_APPKEY_WORKER);
+        SDKManager.getXGPush(MainActivity.this).registerPush(user.getAccount().getMobile());
+
+       /* XGPushConfig.enableOtherPush(MainActivity.this, true);
         //开启信鸽日志输出
         XGPushConfig.enableDebug(MainActivity.this, true);
         XGPushConfig.setHuaweiDebug(true);
-        /**
+        *//**
          * 小米
-         * */
+         * *//*
         XGPushConfig.setMiPushAppId(MainActivity.this, XIAOMI_APPID_WORKER);
         XGPushConfig.setMiPushAppKey(MainActivity.this, XIAOMI_APPKEY_WORKER);
-        /**
+        *//**
          * 魅族
-         * */
+         * *//*
         XGPushConfig.setMzPushAppId(MainActivity.this, MEIZU_APPID_WORKER);
-        XGPushConfig.setMzPushAppKey(MainActivity.this, MEIZU_APPKEY_WORKER);
+        XGPushConfig.setMzPushAppKey(MainActivity.this, MEIZU_APPKEY_WORKER);*/
 
         ReceiverInit.getInstance().inits(MainActivity.this, user.getAccount().getMobile());
     }
@@ -396,9 +406,9 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
     }
 
     public void setHeaders() {
-        if (WorkerApplication.get().getUser() != null) {
+        if (WorkerApplication.get().getLoginBean() != null) {
             EanfangHttp.setToken(WorkerApplication.get().getLoginBean().getToken());
-//            HttpConfig.get().setToken(WorkerApplication.get().getUser().getToken());
+//            HttpConfig.get().setToken(WorkerApplication.get().getLoginBean().getToken());
         }
         EanfangHttp.setWorker();
     }
@@ -663,7 +673,7 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
             mExitTime = System.currentTimeMillis();
 
             CleanMessageUtil.clearAllCache(WorkerApplication.get());
-            SharePreferenceUtil.get().clear();
+            WorkerApplication.get().clear();
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
             RongIM.getInstance().logout();
             MainActivity.this.finish();
@@ -849,6 +859,19 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
 
     public String onNoConatac() {
         return mStatus;
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RongIM.getInstance().disconnect();
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        int index = Arrays.asList(permissions).indexOf(Manifest.permission.READ_CONTACTS);
+        if (grantResults[index] == 0) {
+            ContactUtil.postAccount(MainActivity.this);
+        }
     }
 }
 

@@ -6,11 +6,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
 import com.alibaba.fastjson.JSONObject;
+import com.annimon.stream.Stream;
+import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
+
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.security.SecurityLikeBean;
 import com.eanfang.biz.model.security.SecurityListBean;
+import com.eanfang.model.security.SecurityLikeStatusBean;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
@@ -23,7 +27,10 @@ import net.eanfang.client.ui.activity.im.SelectIMContactActivity;
 import net.eanfang.client.ui.activity.worksapce.online.FaultExplainActivity;
 import net.eanfang.client.ui.activity.worksapce.security.SecurityDetailActivity;
 import net.eanfang.client.ui.adapter.security.SecurityListAdapter;
+import net.eanfang.client.util.ImagePerviewUtil;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 
 
@@ -35,6 +42,8 @@ public class SecurityFoucsFragment extends TemplateItemListFragment {
     private SecurityListAdapter securityListAdapter;
     public static final int REFRESH_ITEM = 1010;
     private SecurityListBean.ListBean securityDetailBean;
+    private ArrayList<String> picList = new ArrayList<>();
+    private String[] pics = null;
 
     public static SecurityFoucsFragment getInstance(String title) {
         SecurityFoucsFragment sf = new SecurityFoucsFragment();
@@ -71,10 +80,15 @@ public class SecurityFoucsFragment extends TemplateItemListFragment {
                 case R.id.ll_comments:
                     doJump(position, true);
                     break;
-                case R.id.iv_share:
+                case R.id.ll_share:
                     doShare(securityListAdapter.getData().get(position));
                     break;
                 case R.id.ll_pic:
+                    picList.clear();
+                    pics = securityListAdapter.getData().get(position).getSpcImg().split(",");
+                    picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> BuildConfig.OSS_SERVER + (url).toString()).toList());
+                    ImagePerviewUtil.perviewImage(getActivity(), picList);
+                    break;
                 case R.id.ll_question:
                 case R.id.rl_video:
                     doJump(position, false);
@@ -116,11 +130,11 @@ public class SecurityFoucsFragment extends TemplateItemListFragment {
          * */
         if (listBean.getLikeStatus() == 0) {
             listBean.setLikeStatus(1);
-            listBean.setLikesCount(listBean.getLikesCount() - 1);
+            listBean.setLikesCount(listBean.getLikesCount());
             securityLikeBean.setLikeStatus("1");
         } else {
             listBean.setLikeStatus(0);
-            listBean.setLikesCount(listBean.getLikesCount() + 1);
+            listBean.setLikesCount(listBean.getLikesCount());
             securityLikeBean.setLikeStatus("0");
         }
         securityLikeBean.setLikeUserId(ClientApplication.get().getUserId());
@@ -128,8 +142,10 @@ public class SecurityFoucsFragment extends TemplateItemListFragment {
         securityLikeBean.setLikeTopCompanyId(ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getTopCompanyId());
         EanfangHttp.post(NewApiService.SERCURITY_LIKE)
                 .upJson(JSONObject.toJSONString(securityLikeBean))
-                .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class, bean -> {
+                .execute(new EanfangCallback<SecurityLikeStatusBean>(getActivity(), true, SecurityLikeStatusBean.class, bean -> {
                     getActivity().runOnUiThread(() -> {
+                        securityListAdapter.getData().get(position).setLikeStatus(bean.getLikeStatus());
+                        securityListAdapter.getData().get(position).setLikesCount(bean.getLikesCount());
                         securityListAdapter.notifyItemChanged(position);
                     });
                 }));

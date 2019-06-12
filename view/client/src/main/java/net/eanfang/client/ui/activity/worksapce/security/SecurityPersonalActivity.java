@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
@@ -36,6 +37,10 @@ import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.im.SelectIMContactActivity;
 import net.eanfang.client.ui.activity.worksapce.online.FaultExplainActivity;
 import net.eanfang.client.ui.adapter.security.SecurityListAdapter;
+import net.eanfang.client.util.ImagePerviewUtil;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -100,6 +105,8 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
     private long mAccId;
 
     private int mSecurityNum;
+    private ArrayList<String> picList = new ArrayList<>();
+    private String[] pics = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,12 +167,17 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
                 case R.id.ll_comments:
                     doJump(position, true);
                     break;
-                case R.id.iv_share:
+                case R.id.ll_share:
                     doShare(securityListAdapter.getData().get(position));
+                    break;
+                case R.id.ll_pic:
+                    picList.clear();
+                    pics = securityListAdapter.getData().get(position).getSpcImg().split(",");
+                    picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> BuildConfig.OSS_SERVER + (url).toString()).toList());
+                    ImagePerviewUtil.perviewImage(SecurityPersonalActivity.this, picList);
                     break;
                 case R.id.tv_isFocus:
                 case R.id.ll_like:
-                case R.id.ll_pic:
                 case R.id.ll_question:
                 case R.id.rl_video:
                     doJump(position, false);

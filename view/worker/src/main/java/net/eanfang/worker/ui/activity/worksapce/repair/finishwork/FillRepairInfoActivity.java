@@ -22,6 +22,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.config.Config;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.dialog.TrueFalseDialog;
@@ -29,8 +30,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.MultiClickListener;
 import com.eanfang.biz.model.TemplateBean;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
+
 import com.eanfang.takevideo.TakeVdideoMode;
 import com.eanfang.takevideo.TakeVideoActivity;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
@@ -592,15 +592,12 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
     //提交完工
     private void submit() {
         if (uploadMap.size() != 0) {
-            OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
-                @Override
-                public void onOssSuccess() {
-                    runOnUiThread(() -> {
-                        //代表不需要挂单Z
-                        String requestJson = JSONObject.toJSONString(bughandleConfirmEntity);
-                        doHttp(requestJson);
-                    });
-                }
+            SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
+                runOnUiThread(() -> {
+                    //代表不需要挂单Z
+                    String requestJson = JSONObject.toJSONString(bughandleConfirmEntity);
+                    doHttp(requestJson);
+                });
             });
             return;
         } else {
@@ -617,17 +614,14 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
     private void putUpOrder() {
 
         if (uploadMap.size() != 0) {
-            OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
-                @Override
-                public void onOssSuccess() {
-                    Intent intent = new Intent(activity, PutUpOrderActivity.class);
-                    intent.putExtra("bean", bughandleConfirmEntity);
-                    intent.putExtra("companyName", companyName);
-                    intent.putExtra("companyId", companyId);
-                    intent.putExtra("businessId", (ArrayList<String>) businessIdLis);
-                    intent.putExtra("orderId", bughandleConfirmEntity.getBusRepairOrderId());
-                    startActivity(intent);
-                }
+            SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
+                Intent intent = new Intent(activity, PutUpOrderActivity.class);
+                intent.putExtra("bean", bughandleConfirmEntity);
+                intent.putExtra("companyName", companyName);
+                intent.putExtra("companyId", companyId);
+                intent.putExtra("businessId", (ArrayList<String>) businessIdLis);
+                intent.putExtra("orderId", bughandleConfirmEntity.getBusRepairOrderId());
+                startActivity(intent);
             });
             return;
         }

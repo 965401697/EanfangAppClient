@@ -5,20 +5,21 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.base.widget.customview.CircleImageView;
+import com.eanfang.base.kit.SDKManager;
+import com.eanfang.biz.model.AuthCompanyBaseInfoBean;
+import com.eanfang.biz.model.SelectAddressItem;
+import com.eanfang.biz.model.entity.OrgUnitEntity;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.AuthCompanyBaseInfoBean;
-import com.eanfang.biz.model.SelectAddressItem;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
+
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GlideUtil;
@@ -28,7 +29,6 @@ import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
 import com.jph.takephoto.model.TImage;
 import com.jph.takephoto.model.TResult;
-import com.eanfang.biz.model.entity.OrgUnitEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.fragment.ContactsFragment;
@@ -40,7 +40,7 @@ import butterknife.ButterKnife;
  * Created by guanluocang
  * 2018年10月12日 10:48:52
  *
- * @desc 公司认证 第一步
+ * @desc 新公司认证
  */
 public class AuthCompanyFirstActivity extends BaseActivityWithTakePhoto {
 
@@ -57,7 +57,7 @@ public class AuthCompanyFirstActivity extends BaseActivityWithTakePhoto {
     @BindView(R.id.et_detail_office_address)
     EditText etDetailOfficeAddress;
     @BindView(R.id.iv_uploadlogo)
-    CircleImageView ivUploadlogo;
+    ImageView ivUploadlogo;
     @BindView(R.id.et_desc)
     EditText etDesc;
     @BindView(R.id.btn_complete)
@@ -122,7 +122,7 @@ public class AuthCompanyFirstActivity extends BaseActivityWithTakePhoto {
             if (byNetBean.getOfficeAddress() != null) {
                 etDetailOfficeAddress.setText(byNetBean.getOfficeAddress());
             }
-            if (StringUtils.isEmpty(byNetBean.getAreaCode())) {
+            if (!StringUtils.isEmpty(byNetBean.getAreaCode())) {
                 tvOfficeAddress.setText(Config.get().getAddressByCode(byNetBean.getAreaCode()));
             }
             if (!StringUtils.isEmpty(byNetBean.getLogoPic())) {
@@ -213,7 +213,7 @@ public class AuthCompanyFirstActivity extends BaseActivityWithTakePhoto {
 //        if (infoBean.getAdminUserId() != null) {
 //            infoBean.setAdminUserId(byNetBean.getAdminUserId());
 //        } else {
-//            infoBean.setAdminUserId(ClientApplication.get().getUserId());
+//            infoBean.setAdminUserId(EanfangApplication.getApplication().getUserId());
 //        }
 
         String json = JSONObject.toJSONString(infoBean);
@@ -239,10 +239,9 @@ public class AuthCompanyFirstActivity extends BaseActivityWithTakePhoto {
             infoBean.setLogoPic(imgKey);
             GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),ivUploadlogo);
         }
-        OSSUtils.initOSS(this).asyncPutImage(imgKey, image.getOriginalPath(), new OSSCallBack(this, true) {
-        });
-
+        SDKManager.ossKit(this).asyncPutImage(imgKey, image.getOriginalPath(),(isSuccess) -> {});
     }
+
     private void commit(String json) {
         EanfangHttp.post(UserApi.GET_ORGUNIT_ENT_INSERT)
                 .upJson(json)

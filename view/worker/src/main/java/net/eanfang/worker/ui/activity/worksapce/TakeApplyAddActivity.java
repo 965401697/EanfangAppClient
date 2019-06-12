@@ -8,14 +8,14 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.biz.model.Message;
 import com.eanfang.biz.model.TakeApplyAddBean;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
+
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
 import com.eanfang.util.GetConstDataUtils;
@@ -171,13 +171,10 @@ public class TakeApplyAddActivity extends BaseActivity implements SelectTimeDial
 
         String json = JSONObject.toJSONString(applyTaskBean);
         if (uploadMap.size() != 0) {
-            OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
-                @Override
-                public void onOssSuccess() {
-                    runOnUiThread(() -> {
-                        doHttp(json);
-                    });
-                }
+            SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
+                runOnUiThread(() -> {
+                    doHttp(json);
+                });
             });
         } else {
             doHttp(json);
@@ -197,7 +194,7 @@ public class TakeApplyAddActivity extends BaseActivity implements SelectTimeDial
 
     private void submitSuccess() {
         showToast("接单成功");
-//        EanfangApplication.get().closeActivity(TakeTaskListActivity.class.getName(), TakeApplyAddActivity.class.getName());
+//        WorkerApplication.get().closeActivity(TakeTaskListActivity.class.getName(), TakeApplyAddActivity.class.getName());
         Bundle bundle = new Bundle();
         Message message = new Message();
         message.setMsgContent("任务接单。");

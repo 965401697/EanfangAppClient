@@ -8,7 +8,8 @@
 
     <include layout="@layout/header" />
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_fresh"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -47,8 +48,7 @@
                             android:id="@+id/iv_seucrity_header"
                             android:layout_width="@dimen/dimen_80"
                             android:layout_height="@dimen/dimen_80"
-                            android:src="@mipmap/ic_nodata"
-                            />
+                            android:src="@mipmap/ic_nodata" />
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -249,13 +249,13 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/dimen_20"
                 android:background="@color/color_white"
-                android:orientation="vertical"
-                android:paddingLeft="@dimen/dimen_34">
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/dimen_34">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -290,7 +290,7 @@
 
 
         </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

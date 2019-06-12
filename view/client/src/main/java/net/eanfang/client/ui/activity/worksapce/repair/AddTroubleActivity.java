@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.config.EanfangConst;
@@ -21,8 +22,7 @@ import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.MultiClickListener;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
+
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.takevideo.TakeVdideoMode;
 import com.eanfang.takevideo.TakeVideoActivity;
@@ -357,13 +357,10 @@ public class AddTroubleActivity extends BaseClientActivity {
             repairBugEntity.setModelName(etBrand.getText().toString().trim());
         }
         if (uploadMap.size() != 0) {
-            OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
-                @Override
-                public void onOssSuccess() {
-                    runOnUiThread(() -> {
-                        doVerify();
-                    });
-                }
+            SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
+                runOnUiThread(() -> {
+                    doVerify();
+                });
             });
         } else {
             doVerify();
@@ -487,6 +484,11 @@ public class AddTroubleActivity extends BaseClientActivity {
                     @Override
                     public void onDeviceType() {
                         //设备类别
+                        etDeviceLocationNum.setFocusable(true);
+                        etDeviceLocation.setFocusable(true);
+                        llDeviceBrand.setClickable(true);
+                        etDeviceLocation.setText("");
+                        etDeviceLocationNum.setText("");
                         JumpItent.jump(AddTroubleActivity.this, SelectDeviceTypeActivity.class, REQUEST_FAULTDEVICEINFO);
                         repairSelectDevicesDialog.dismiss();
                     }
@@ -609,6 +611,8 @@ public class AddTroubleActivity extends BaseClientActivity {
             tvDeviceBrand.setText(data.getStringExtra("deviceBrandName"));
             etDeviceLocationNum.setFocusable(true);
             etDeviceLocationNum.setFocusableInTouchMode(true);
+            etDeviceLocationNum.requestFocus();
+            etDeviceLocationNum.findFocus();
             //将光标定位
             etDeviceLocation.setFocusable(true);
             etDeviceLocation.setFocusableInTouchMode(true);

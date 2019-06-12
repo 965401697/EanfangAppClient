@@ -98,7 +98,7 @@ public class OfferAndPayOrderActivity extends BaseActivity {
 //        if ("1".equals(type)) {
 //            queryEntry.getEquals().put("createUserId", WorkerApplication.get().getUserId() + "");
 //        } else if ("2".equals(type)) {
-//            queryEntry.getEquals().put("assigneeCompanyId", WorkerApplication.get().getUser().getAccount().getDefaultUser().getCompanyId() + "");
+//            queryEntry.getEquals().put("assigneeCompanyId", WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyId() + "");
 //        }
 //        queryEntry.getEquals().put("status", status + "");
 //

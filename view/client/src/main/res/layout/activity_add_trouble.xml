@@ -174,17 +174,26 @@
                         android:textColor="@color/color_bottom"
                         android:textSize="@dimen/textSize_13" />
 
-                    <EditText
-                        android:id="@+id/et_deviceLocation"
+                    <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="@dimen/dimen_36"
-                        android:layout_weight="1"
-                        android:background="@null"
-                        android:gravity="right"
-                        android:hint="请输入故障位置"
-                        android:textColor="@color/color_client_neworder"
-                        android:textSize="@dimen/textSize_13" />
+                        android:layout_weight="1">
+
+                        <EditText
+                            android:id="@+id/et_deviceLocation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginLeft="@dimen/dimen_36"
+                            android:background="@null"
+                            android:hint="请输入故障位置"
+                            android:inputType="text"
+                            android:maxLength="20"
+                            android:maxLines="1"
+                            android:textColor="@color/color_client_neworder"
+                            android:textSize="@dimen/textSize_13" />
+                    </RelativeLayout>
+
                 </LinearLayout>
 
                 <View style="@style/style_common_line_gray" />
@@ -203,17 +212,24 @@
                         android:textColor="@color/color_bottom"
                         android:textSize="@dimen/textSize_13" />
 
-                    <EditText
-                        android:id="@+id/et_deviceLocationNum"
+                    <RelativeLayout
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="@dimen/dimen_36"
-                        android:layout_weight="1"
-                        android:background="@null"
-                        android:gravity="right"
-                        android:hint="请输入位置编号"
-                        android:textColor="@color/color_client_neworder"
-                        android:textSize="@dimen/textSize_13" />
+                        android:layout_weight="1">
+
+                        <EditText
+                            android:id="@+id/et_deviceLocationNum"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginLeft="@dimen/dimen_36"
+                            android:background="@null"
+                            android:hint="请输入位置编号"
+                            android:inputType="text"
+                            android:maxLines="1"
+                            android:textColor="@color/color_client_neworder"
+                            android:textSize="@dimen/textSize_13" />
+                    </RelativeLayout>
                 </LinearLayout>
 
                 <LinearLayout

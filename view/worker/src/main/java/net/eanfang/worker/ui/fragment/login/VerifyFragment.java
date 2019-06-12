@@ -11,7 +11,9 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatCheckBox;
 
+import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.config.FastjsonConfig;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.bean.LoginBean;
@@ -40,7 +42,6 @@ import java.nio.charset.StandardCharsets;
  */
 @Deprecated
 public class VerifyFragment extends BaseFragment {
-
     private String legalText;
     private EditText et_phone;
     private EditText et_yanzheng;
@@ -60,7 +61,7 @@ public class VerifyFragment extends BaseFragment {
     }
 
     protected int setLayoutResouceId() {
-        return R.layout.fragment_verify_eanfang;
+        return R.layout.fragment_verify;
     }
 
     @Override
@@ -69,12 +70,12 @@ public class VerifyFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        et_phone = findViewById(R.id.et_phone);
-        et_yanzheng = findViewById(R.id.et_yanzheng);
-        tv_yanzheng = findViewById(R.id.tv_yanzheng);
-        cb = findViewById(R.id.cb);
-        read = findViewById(R.id.tv_read_agreement);
-        btn_login = findViewById(R.id.btn_login);
+        et_phone = (EditText) findViewById(R.id.et_phone);
+        et_yanzheng = (EditText) findViewById(R.id.et_yanzheng);
+        tv_yanzheng = (TextView) findViewById(R.id.tv_yanzheng);
+        cb = (AppCompatCheckBox) findViewById(R.id.cb);
+        read = (TextView) findViewById(R.id.tv_read_agreement);
+        btn_login = (Button) findViewById(R.id.btn_login);
 
         try {
             InputStream is = null;
@@ -84,7 +85,7 @@ public class VerifyFragment extends BaseFragment {
             byte[] buffer = new byte[size];
             is.read(buffer);
             is.close();
-            legalText = new String(buffer, StandardCharsets.UTF_8);
+            legalText = new String(buffer, "UTF-8");
         } catch (IOException e1) {
             e1.printStackTrace();
         }
@@ -175,11 +176,9 @@ public class VerifyFragment extends BaseFragment {
                 .params("verifycode", pwd)
                 .execute(new EanfangCallback<LoginBean>(getActivity(), true, LoginBean.class, (bean) -> {
                     isUpdataPassword = bean.getAccount().isSimplePwd();
-                    WorkerApplication.get().set(LoginBean.class.getName(),bean);
+                    WorkerApplication.get().set(LoginBean.class.getName(), JSONObject.toJSONString(bean, FastjsonConfig.config));
                     EanfangHttp.setToken(bean.getToken());
-                    getActivity().runOnUiThread(() -> {
-                        goMain();
-                    });
+                    goMain();
                 }));
 
     }

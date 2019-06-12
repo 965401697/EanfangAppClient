@@ -101,12 +101,12 @@ public class WorkReportDetailActivity extends BaseWorkerActivity {
                     Bundle bundle = new Bundle();
 
                     bundle.putString("id", String.valueOf(mBean.getId()));
-                    if(mBean.getCreateOrg()!=null)
                     bundle.putString("orderNum", mBean.getCreateOrg().getOrgName());
                     if (mBean.getWorkReportDetails() != null && !TextUtils.isEmpty(mBean.getWorkReportDetails().get(0).getPictures())) {
                         bundle.putString("picUrl", mBean.getWorkReportDetails().get(0).getPictures().split(",")[0]);
                     }
                     bundle.putString("creatTime", String.valueOf(mBean.getType()));
+                    bundle.putString("creatReleaseTime", mBean.getCreateTime());
                     bundle.putString("workerName", mBean.getCreateUser().getAccountEntity().getRealName());
                     bundle.putString("status", String.valueOf(mBean.getStatus()));
                     bundle.putString("shareType", "3");
@@ -170,16 +170,15 @@ public class WorkReportDetailActivity extends BaseWorkerActivity {
                 .tag(this)
                 .params("id", mId)
                 .execute(new EanfangCallback<WorkReportInfoBean>(this, true, WorkReportInfoBean.class, (bean) -> {
-                            if (bean == null) {
-                                return;
-                            }
                             mBean = bean;
+
                             setTitle(bean.getCreateUser().getAccountEntity().getRealName() + "的" + GetConstDataUtils.getWorkReportTypeList().get(bean.getType()));
+
                             completeList = new ArrayList<>();
                             findList = new ArrayList<>();
                             planList = new ArrayList<>();
                             //头像
-                            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + bean.getCreateUser().getAccountEntity().getAvatar()),ivHeader);
+                            ivHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bean.getCreateUser().getAccountEntity().getAvatar()));
                             tvCompany.setText(bean.getCreateCompany().getOrgName());
                             tvSection.setText(bean.getCreateOrg().getOrgName());
                             tvType.setText(GetConstDataUtils.getWorkReportTypeList().get(bean.getType()));

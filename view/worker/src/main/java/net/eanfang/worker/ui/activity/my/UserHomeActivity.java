@@ -27,6 +27,7 @@ import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.witget.DefaultPopWindow;
+import com.okgo.request.base.Request;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
@@ -35,6 +36,7 @@ import net.eanfang.worker.ui.activity.worksapce.security.SecurityPersonalActivit
 import net.eanfang.worker.ui.adapter.UserHomeAdapter;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.MessageFormat;
@@ -58,6 +60,7 @@ public class UserHomeActivity extends BaseWorkerActivity {
     public static final String EXTRA_ACCID = "UserHomeActivity.accId";
     public static final String EXTRA_UID = "UserHomeActivity.userId";
     public static final String RESULT_FOLLOW_STATE = "UserHomeActivity.followState";
+    public static final String RESULT_FRIEND_STATE = "UserHomeActivity.friendState";
     @BindView(R.id.iv_right)
     ImageView mIvRight;
     @BindView(R.id.img_user_header)
@@ -124,7 +127,7 @@ public class UserHomeActivity extends BaseWorkerActivity {
      * 启动用户主页页面
      *
      * @param activity
-     * @param accId   被查看用户的accId
+     * @param accId    被查看用户的accId
      */
     public static void startActivityForAccId(Activity activity, String accId) {
         Intent intent = new Intent(activity, UserHomeActivity.class);
@@ -136,7 +139,7 @@ public class UserHomeActivity extends BaseWorkerActivity {
      * uid启动用户主页页面
      *
      * @param activity
-     * @param uid   被查看用户的uid
+     * @param uid      被查看用户的uid
      */
     public static void startActivityForUid(Activity activity, Long uid) {
         Intent intent = new Intent(activity, UserHomeActivity.class);
@@ -182,6 +185,13 @@ public class UserHomeActivity extends BaseWorkerActivity {
             RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width, height);
             mImgCircle.setLayoutParams(params);
         });
+        setViewClick();
+    }
+
+    /**
+     * 设置view点击
+     */
+    private void setViewClick() {
         DefaultPopWindow popWindow = new DefaultPopWindow(mPopWindowContent);
         popWindow.setOnDismissListener(() -> popWindow.backgroundAlpha(UserHomeActivity.this, 1.0f));
         mTvAddAndCancelFriend.setOnClickListener(v -> {
@@ -221,38 +231,24 @@ public class UserHomeActivity extends BaseWorkerActivity {
                 showToast("用户信息有误！");
             }
         });
-
-        mLlUserHomeConcern.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mCompanyInfoBean != null) {
-                    changeFollowStatus(mCompanyInfoBean.getAccId(), mCompanyInfoBean.getUserId(), mCompanyInfoBean.getCompanyId(),
-                            mCompanyInfoBean.getTopCompanyId(), mIsFollowed);
-                } else {
-                    showToast("用户信息有误！");
-                }
+        mLlUserHomeConcern.setOnClickListener(v -> {
+            if (mCompanyInfoBean != null) {
+                changeFollowStatus(mCompanyInfoBean.getAccId(), mCompanyInfoBean.getUserId(), mCompanyInfoBean.getCompanyId(),
+                        mCompanyInfoBean.getTopCompanyId(), mIsFollowed);
+            } else {
+                showToast("用户信息有误！");
             }
         });
-
-        mImgAnswer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(UserHomeActivity.this, ExpertOnlineActivity.class));
-            }
-        });
-
-        mImgCircle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mCompanyInfoBean != null) {
-                    Bundle bundle = new Bundle();
-                    bundle.putBoolean("isLookOther", !mIsSelf);
-                    bundle.putLong("mAccId", Long.parseLong(mCompanyInfoBean.getAccId()));
-                    bundle.putLong("mUserId", Long.parseLong(mCompanyInfoBean.getUserId()));
-                    JumpItent.jump(UserHomeActivity.this, SecurityPersonalActivity.class, bundle);
-                } else {
-                    showToast("用户信息有误！");
-                }
+        mImgAnswer.setOnClickListener(v -> startActivity(new Intent(UserHomeActivity.this, ExpertOnlineActivity.class)));
+        mImgCircle.setOnClickListener(v -> {
+            if (mCompanyInfoBean != null) {
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("isLookOther", !mIsSelf);
+                bundle.putLong("mAccId", Long.parseLong(mCompanyInfoBean.getAccId()));
+                bundle.putLong("mUserId", Long.parseLong(mCompanyInfoBean.getUserId()));
+                JumpItent.jump(UserHomeActivity.this, SecurityPersonalActivity.class, bundle);
+            } else {
+                showToast("用户信息有误！");
             }
         });
     }
@@ -305,7 +301,7 @@ public class UserHomeActivity extends BaseWorkerActivity {
                         } else {
                             mTvPositionLocation.setVisibility(View.INVISIBLE);
                         }
-                        String intro = accountBean.getIntro();
+                        String intro = accountBean.getPersonalNote();
                         if (!StringUtils.isEmpty(intro)) {
                             mTvIntro.setText(intro.length() > 18
                                     ? intro.substring(0, 16) + "..." : intro);
@@ -361,12 +357,30 @@ public class UserHomeActivity extends BaseWorkerActivity {
      */
     private void pushFriendStatus(boolean doDelete) {
         if (!mIsSelf) {
+            Request request = null;
+            if (doDelete) {
+                request = EanfangHttp.post(UserApi.POST_DELETE_FRIEND).params("ids", mUserInfo.getUserId());
+            } else {
+                JSONObject jsonObject = new JSONObject();
+                try {
+                    jsonObject.put("accId", mUserInfo.getUserId());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                request = EanfangHttp.post(UserApi.POST_ADD_FRIEND).upJson(jsonObject);
+            }
+            request.execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
+                ToastUtil.get().showToast(this, doDelete ? "删除成功" : "发送成功");
+                mIsFriend = false;
+                setFriendStatus();
+                Intent intent = new Intent();
+                intent.putExtra(RESULT_FRIEND_STATE, mIsFriend);
+                setResult(Activity.RESULT_OK, intent);
+            }));
             EanfangHttp.post(doDelete ? UserApi.POST_DELETE_FRIEND_PUSH : UserApi.POST_ADD_FRIEND_PUSH)
                     .params("senderId", WorkerApplication.get().getAccId())
                     .params("targetIds", mUserInfo.getUserId())
                     .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (json) -> {
-                        ToastUtil.get().showToast(this, doDelete ? "删除成功" : "发送成功");
-                        setFriendStatus();
                     }));
         } else {
             showSelfHint();

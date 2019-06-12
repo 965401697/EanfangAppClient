@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.BuildConfig;
 import com.eanfang.biz.model.bean.LoginBean;
+import com.eanfang.ui.activity.InviteFriendActivity;
 import com.eanfang.ui.activity.QrCodeShowActivity;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.GlideUtil;
@@ -74,6 +75,10 @@ public class MyFragment extends BaseFragment {
         });
         findViewById(R.id.iv_setting).setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), SettingActivity.class));
+        });
+        //邀请抢红包
+        findViewById(R.id.img_invite).setOnClickListener((v) -> {
+            startActivity(new Intent(getActivity(), InviteFriendActivity.class));
         });
     }
 

@@ -41,7 +41,7 @@ public class JscQualificationsAndAbilitiesAdapter extends BaseQuickAdapter<Educa
             helper.setText(R.id.c_tv, "起止时间：" + DateUtils.formatDate(item.getBeginTime(), "yyyy-MM-dd") + " 至 " + DateUtils.formatDate(item.getEndTime(), "yyyy-MM-dd"));
 
         } else {
-            helper.setText(R.id.c_tv, "起止时间：" + " 至");
+            helper.setText(R.id.c_tv, "起止时间：");
         }
     }
 }

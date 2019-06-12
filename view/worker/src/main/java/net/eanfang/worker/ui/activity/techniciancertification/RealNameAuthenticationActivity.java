@@ -22,10 +22,10 @@ import com.baidu.ocr.ui.camera.CameraNativeHelper;
 import com.baidu.ocr.ui.camera.CameraView;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
+
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
@@ -168,14 +168,12 @@ public class RealNameAuthenticationActivity extends BaseActivityWithTakePhoto {
             case ID_CARD_SIDE:
                 mTechWorkerVerifyEntity.setIdCardSide(imgKey);
                 GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),ivIdCardBack);
-                OSSUtils.initOSS(this).asyncPutImage(imgKey, image.getOriginalPath(), new OSSCallBack(this, true) {
-                });
+                SDKManager.ossKit(this).asyncPutImage(imgKey, image.getOriginalPath(),(isSuccess) -> {});
                 break;
             case ID_CARD_HAND:
                 mTechWorkerVerifyEntity.setIdCardHand(imgKey);
                 GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),ivIdCardInHand);
-                OSSUtils.initOSS(this).asyncPutImage(imgKey, image.getOriginalPath(), new OSSCallBack(this, true) {
-                });
+                SDKManager.ossKit(this).asyncPutImage(imgKey, image.getOriginalPath(),(isSuccess) -> {});
                 break;
             default:
         }
@@ -256,7 +254,7 @@ public class RealNameAuthenticationActivity extends BaseActivityWithTakePhoto {
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
-                        OSSUtils.initOSS(RealNameAuthenticationActivity.this).asyncPutImage(imgKey, filePath, new OSSCallBack(RealNameAuthenticationActivity.this, true) {
+                        SDKManager.ossKit(RealNameAuthenticationActivity.this).asyncPutImage(imgKey, filePath,(isSuccess)->{
                         });
                     } else {
                         idCardNum = "";

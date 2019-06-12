@@ -3,8 +3,6 @@ package com.eanfang.base.kit;
 import android.app.Activity;
 import android.content.Context;
 
-import com.eanfang.base.kit.ali.alioss.IOSSStorage;
-import com.eanfang.base.kit.ali.alioss.OSSStorage;
 import com.eanfang.base.kit.ali.alipay.ALiPayManager;
 import com.eanfang.base.kit.ali.alipay.IALiPay;
 import com.eanfang.base.kit.ali.oss.IOssService;

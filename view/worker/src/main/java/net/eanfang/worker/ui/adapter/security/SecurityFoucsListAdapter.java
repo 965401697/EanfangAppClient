@@ -21,12 +21,10 @@ import net.eanfang.worker.R;
 
 public class SecurityFoucsListAdapter extends BaseQuickAdapter<SecurityFoucsListBean.ListBean, BaseViewHolder> {
 
-    private Context mContext;
     private boolean isCreate = false;
 
-    public SecurityFoucsListAdapter(Context context, boolean mIsCreate) {
+    public SecurityFoucsListAdapter( boolean mIsCreate) {
         super(R.layout.layout_security_foucs_item);
-        this.mContext = context;
         this.isCreate = mIsCreate;
     }
 
@@ -50,10 +48,12 @@ public class SecurityFoucsListAdapter extends BaseQuickAdapter<SecurityFoucsList
         /**
          * 是否认证
          * */
-        if (item.getWorkerEntity().getVerifyStatus() == 1) {
-            helper.setVisible(R.id.iv_certifi, true);
-        } else {
-            helper.setVisible(R.id.iv_certifi, false);
+        if (item.getWorkerEntity() != null) {
+            if (item.getWorkerEntity().getVerifyStatus() == 1) {
+                helper.setVisible(R.id.iv_certifi, true);
+            } else {
+                helper.setVisible(R.id.iv_certifi, false);
+            }
         }
         /**
          * 创建安防圈 不显示关注人

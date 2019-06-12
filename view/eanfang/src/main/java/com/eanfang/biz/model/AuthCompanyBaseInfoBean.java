@@ -65,6 +65,7 @@ public class AuthCompanyBaseInfoBean implements Serializable {
     private String   expirationDate;
     private int unitType;
     private Long accId;
+    private int bizCertify;
 
     public String geteMail() {
         return eMail;

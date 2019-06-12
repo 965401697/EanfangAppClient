@@ -9,15 +9,16 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
+
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
 import com.eanfang.util.PhotoUtils;
@@ -36,6 +37,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -77,10 +79,10 @@ public class AddCertificationActivity extends BaseActivityWithTakePhoto implemen
     private String pic;
 
 
-    //        private TimePickerView mTimeYearMonthDay;
     private HonorCertificateEntity bean;
     private String url = "";
     // 是否安防公司的荣誉证书
+
     private String isCompany = "";
     private Long orgid;
 
@@ -98,75 +100,98 @@ public class AddCertificationActivity extends BaseActivityWithTakePhoto implemen
         isCompany = getIntent().getStringExtra("role");
         orgid = getIntent().getLongExtra("orgid", 0);
         bean = (HonorCertificateEntity) getIntent().getSerializableExtra("bean");
-
         snplMomentAccident.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_CERTIFICATE, REQUEST_CODE_PHOTO_CERTIFICATE));
         snplMomentAccident.setData(picList_certificate);
-
         doSelectYearMonthDay();
-
+        setRightTitleOnClickListener(view -> setData());
         if (bean != null) {
+            setTitle("荣誉");
+            setRightTitle("编辑");
+            setZhiDu(false);
             fillData();
-            setTitle("修改证书");
+            setRightTitleOnClickListener(view -> {
+                        setRightTitle("保存");
+                        setZhiDu(true);
+                        setRightTitleOnClickListener(view1 -> setData());
+                    }
 
+            );
         } else {
-            setTitle("添加证书");
+            setRightTitle("保存");
+            setTitle("荣誉");
+            tvSave.setVisibility(View.GONE);
         }
     }
 
-    /**
-     * 只进行查看操作不看编辑
-     */
-    private void doUnWrite() {
-        tvSave.setVisibility(View.GONE);
-        etCertificate.setEnabled(false);
-        etName.setEnabled(false);
-        etOrg.setEnabled(false);
-        llDate.setEnabled(false);
-        snplMomentAccident.setEditable(false);
+    private void setZhiDu(boolean isZd) {
+        tvSave.setVisibility(isZd ? View.VISIBLE : View.GONE);
+        etOrg.setEnabled(isZd);
+        etName.setEnabled(isZd);
+        llDate.setEnabled(isZd);
+        snplMomentAccident.setPlusEnable(isZd || StringUtils.isEmpty(bean.getHonorPics()));
+        snplMomentAccident.setEditable(isZd || StringUtils.isEmpty(bean.getHonorPics()));
+        snplMomentAccident.setItemClickble(isZd);
     }
 
     private void fillData() {
-
         ArrayList<String> picList = new ArrayList<>();
-
-        if (bean.getHonorPics() != null) {
-
+        if (bean.getHonorPics() != null && bean.getHonorPics().length() > 0) {
             String[] pics = bean.getHonorPics().split(",");
-
-            for (int i = 0; i < pics.length; i++) {
-                picList.add(BuildConfig.OSS_SERVER + pics[i]);
+            for (String pic1 : pics) {
+                picList.add(BuildConfig.OSS_SERVER + pic1);
             }
         }
         etName.setText(bean.getHonorName());
         etOrg.setText(bean.getAwardOrg());
-        tvTime.setText(DateUtils.formatDate(bean.getAwardTime(), "yyyy-MM-dd"));
+        if (bean.getAwardTime() != null) {
+            tvTime.setText(DateUtils.formatDate(bean.getAwardTime(), "yyyy-MM-dd"));
+        }
         snplMomentAccident.setData(picList);
         etName.setText(bean.getHonorName());
-        etCertificate.setText(bean.getIntro());
+
     }
 
     @OnClick({R.id.ll_date, R.id.tv_save})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_date:
-                // 隐藏软键盘
-                ((InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(AddCertificationActivity.this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-
-                //                mTimeYearMonthDay.show();
+                ((InputMethodManager) Objects.requireNonNull(getSystemService(Context.INPUT_METHOD_SERVICE))).hideSoftInputFromWindow(Objects.requireNonNull(AddCertificationActivity.this.getCurrentFocus()).getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
                 new SelectTimeDialogFragment().show(getSupportFragmentManager(), R.string.app_name + "");
                 break;
             case R.id.tv_save:
-                setData();
+                if (bean != null) {
+                    delete();
+                } else {
+                    finish();
+                }
                 break;
+            default:
         }
     }
 
-    private void setData() {
+    private void delete() {
+        String url;
+        if (isCompany.equals("company")) {
+            url = UserApi.COMPANY_CERTIFICATE_DELETE;
+            // 安防公司
+        } else {
+            url = UserApi.GET_TECH_WORKER_ADD_CERTIFICATE_DELETE;
+            // 技师认证
+        }
+        EanfangHttp.post(url + "/" + bean.getId()).execute(new EanfangCallback<org.json.JSONObject>(this, true, org.json.JSONObject.class) {
+            @Override
+            public void onSuccess(org.json.JSONObject bean) {
+                Toast.makeText(AddCertificationActivity.this, "删除成功", Toast.LENGTH_LONG).show();
+                finish();
+            }
 
+        });
+    }
+
+    private void setData() {
         if (checkedData()) {
             return;
         }
-
         HonorCertificateEntity entity = new HonorCertificateEntity();
         entity.setAccId(WorkerApplication.get().getAccId());
         if (!TextUtils.isEmpty(isCompany) && isCompany.equals("company")) {// 安防公司
@@ -189,55 +214,22 @@ public class AddCertificationActivity extends BaseActivityWithTakePhoto implemen
         entity.setHonorName(etName.getText().toString().trim());
         entity.setAwardOrg(etOrg.getText().toString().trim());
         entity.setAwardTime(DateUtils.parseDate(tvTime.getText().toString().trim(), "yyyy-MM-dd"));
+        pic = PhotoUtils.getPhotoUrl("", snplMomentAccident, uploadMap, false);
         entity.setHonorPics(pic);
-        entity.setIntro(etCertificate.getText().toString().trim());
+        entity.setIntro("");
         entity.setType(0);
-
-        OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
-            @Override
-            public void onOssSuccess() {
-                runOnUiThread(() -> {
-
-                    EanfangHttp.post(url)
-                            .upJson(JSONObject.toJSONString(entity))
-                            .execute(new EanfangCallback<JSONObject>(AddCertificationActivity.this, true, JSONObject.class, (bean) -> {
-                                setResult(RESULT_OK);
-                                finish();
-                            }));
-
-
-                });
-            }
+        SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
+            runOnUiThread(() -> EanfangHttp.post(url).upJson(JSONObject.toJSONString(entity)).execute(new EanfangCallback<JSONObject>(AddCertificationActivity.this, true, JSONObject.class, (bean) -> {
+                setResult(RESULT_OK);
+                finish();
+            })));
         });
-
-
     }
 
 
     private boolean checkedData() {
         if (TextUtils.isEmpty(etName.getText().toString())) {
             ToastUtil.get().showToast(this, "请输入荣誉名称");
-            return true;
-        }
-
-        if (TextUtils.isEmpty(etOrg.getText().toString())) {
-            ToastUtil.get().showToast(this, "请输入颁发机构名称");
-            return true;
-        }
-
-        if (TextUtils.isEmpty(tvTime.getText().toString())) {
-            ToastUtil.get().showToast(this, "请选择颁发时间");
-            return true;
-        }
-
-        pic = PhotoUtils.getPhotoUrl("", snplMomentAccident, uploadMap, false);
-        if (StringUtils.isEmpty(pic)) {
-            showToast("请添加荣誉证书照片");
-            return true;
-        }
-
-        if (TextUtils.isEmpty(etCertificate.getText().toString())) {
-            ToastUtil.get().showToast(this, "请输入荣誉说明");
             return true;
         }
 
@@ -266,27 +258,9 @@ public class AddCertificationActivity extends BaseActivityWithTakePhoto implemen
         Calendar endDate = Calendar.getInstance();
         startDate.set(1960, 1, 1);
         endDate.set(2040, 11, 31);
-//        mTimeYearMonthDay = new TimePickerBuilder(this, new OnTimeSelectListener() {
-//            @Override
-//            public void onTimeSelect(Date date, View v) {//选中事件回调
-//                tvTime.setText(ETimeUtils.getTimeByYearMonthDay(date));
-//            }
-//        })
-//                .setType(new boolean[]{true, true, true, false, false, false})// 默认全部显示
-//                .setCancelText("取消")//取消按钮文字
-//                .setSubmitText("确定")//确认按钮文字
-//                .setContentTextSize(18)//滚轮文字大小
-//                .setTitleSize(20)//标题文字大小
-////                .setTitleText("上门日期")//标题文字
-//                .setOutSideCancelable(true)//点击屏幕，点在控件外部范围时，是否取消显示
-//                .setDate(selectedDate)// 如果不设置的话，默认是系统时间*/
-//                .setRangDate(startDate, endDate)//起始终止年月日设定
-//                .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
-//                .isDialog(false)//是否显示为对话框样式
-//                .build();
     }
 
-//    @Override
+    @Override
     public void getData(String time) {
         if (StringUtils.isEmpty(time) || " ".equals(time)) {
             tvTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));

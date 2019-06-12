@@ -12,11 +12,11 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
+
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
@@ -118,21 +118,28 @@ public class AddEducationHistoryActivity extends BaseActivityWithTakePhoto {
         llEducation.setEnabled(isZd);
         llDate.setEnabled(isZd);
         chengJi.setEnabled(isZd);
-        snplMomentAccident.setPlusEnable(isZd);
-        snplMomentAccident.setEditable(isZd);
+        snplMomentAccident.setPlusEnable(isZd || StringUtils.isEmpty(bean.getCertificatePics()));
+        snplMomentAccident.setEditable(isZd || StringUtils.isEmpty(bean.getCertificatePics()));
+        snplMomentAccident.setItemClickble(isZd);
     }
 
     private void fillData() {
         ArrayList<String> picList = new ArrayList<>();
-        String[] pics = bean.getCertificatePics().split(",");
-        for (int i = 0; i < pics.length; i++) {
-            picList.add(BuildConfig.OSS_SERVER + pics[i]);
+        if (bean.getCertificatePics() != null && bean.getCertificatePics().length() > 0) {
+            String[] pics = bean.getCertificatePics().split(",");
+            for (String pic1 : pics) {
+                picList.add(BuildConfig.OSS_SERVER + pic1);
+            }
         }
         etSchoolName.setText(bean.getSchoolName());
         etMajor.setText(bean.getMajorName());
         chengJi.setText(bean.getScore());
-        tvEducation.setText(GetConstDataUtils.getDiplomaList().get(bean.getDiploma()));
-        tvTime.setText(DateUtils.formatDate(bean.getBeginTime(), "yyyy-MM-dd") + " ～ " + DateUtils.formatDate(bean.getEndTime(), "yyyy-MM-dd"));
+        if (bean.getDiploma() != null && bean.getDiploma() >= 0) {
+            tvEducation.setText(GetConstDataUtils.getDiplomaList().get(bean.getDiploma()));
+        }
+        if (bean.getBeginTime() != null && bean.getEndTime() != null) {
+            tvTime.setText(DateUtils.formatDate(bean.getBeginTime(), "yyyy-MM-dd") + " ～ " + DateUtils.formatDate(bean.getEndTime(), "yyyy-MM-dd"));
+        }
         snplMomentAccident.setData(picList);
         etNum.setText(bean.getCertificateNumber());
     }
@@ -200,51 +207,26 @@ public class AddEducationHistoryActivity extends BaseActivityWithTakePhoto {
         entity.setScore(chengJi.getText().toString().trim());
         entity.setDiploma(GetConstDataUtils.getDiplomaList().indexOf(tvEducation.getText().toString().trim()));
         entity.setCertificateNumber(etNum.getText().toString().trim());
-        entity.setBeginTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[0], "yyyy-MM-dd"));
-        entity.setEndTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[1], "yyyy-MM-dd"));
+        if (!StringUtils.isEmpty(tvTime.getText().toString().trim())) {
+            entity.setBeginTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[0], "yyyy-MM-dd"));
+            entity.setEndTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[1], "yyyy-MM-dd"));
+        }
+        pic = PhotoUtils.getPhotoUrl("", snplMomentAccident, uploadMap, false);
         entity.setCertificatePics(pic);
         entity.setType(0);
-        OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
-            @Override
-            public void onOssSuccess() {
-                runOnUiThread(() -> {
-                    EanfangHttp.post(url).upJson(JSONObject.toJSONString(entity)).execute(new EanfangCallback<JSONObject>(AddEducationHistoryActivity.this, true, JSONObject.class, (bean) -> {
-                        setResult(RESULT_OK);
-                        finish();
-                    }));
-                });
-            }
+        SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
+            runOnUiThread(() -> {
+                EanfangHttp.post(url).upJson(JSONObject.toJSONString(entity)).execute(new EanfangCallback<JSONObject>(AddEducationHistoryActivity.this, true, JSONObject.class, (bean) -> {
+                    setResult(RESULT_OK);
+                    finish();
+                }));
+            });
         });
     }
 
     private boolean checkedData() {
         if (TextUtils.isEmpty(etMajor.getText().toString())) {
             ToastUtil.get().showToast(this, "请输入专业或培训内容");
-            return true;
-        }
-        if (TextUtils.isEmpty(etNum.getText().toString())) {
-            ToastUtil.get().showToast(this, "请输入证书编号");
-            return true;
-        }
-        if (TextUtils.isEmpty(tvEducation.getText().toString())) {
-            ToastUtil.get().showToast(this, "请选学位或级别");
-            return true;
-        }
-        if (TextUtils.isEmpty(etSchoolName.getText().toString())) {
-            ToastUtil.get().showToast(this, "请输入学校名称");
-            return true;
-        }
-        if (TextUtils.isEmpty(tvTime.getText().toString())) {
-            ToastUtil.get().showToast(this, "请选择起止时间");
-            return true;
-        }
-        if (TextUtils.isEmpty(chengJi.getText().toString())) {
-            ToastUtil.get().showToast(this, "请输入成绩");
-            return true;
-        }
-        pic = PhotoUtils.getPhotoUrl("", snplMomentAccident, uploadMap, false);
-        if (StringUtils.isEmpty(pic)) {
-            showToast("请添加证书照片");
             return true;
         }
         return false;

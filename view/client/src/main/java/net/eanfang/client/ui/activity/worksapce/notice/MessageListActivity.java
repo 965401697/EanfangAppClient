@@ -10,6 +10,8 @@ import com.camera.util.LogUtil;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.kit.tencent.xingepush.IXGPushClickedResult;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -17,8 +19,6 @@ import com.eanfang.biz.model.NoticeEntity;
 import com.eanfang.biz.model.NoticeListBean;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
-import com.tencent.android.tpush.XGPushClickedResult;
-import com.tencent.android.tpush.XGPushManager;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.adapter.MessageListAdapter;
@@ -260,8 +260,8 @@ public class MessageListActivity extends BaseClientActivity implements
         super.onResume();
 //        page = 1;
 //        getJPushMessage();
-        XGPushManager.onActivityStarted(this);
-        XGPushClickedResult clickedResult = XGPushManager.onActivityStarted(this);
+//        XGPushManager.onActivityStarted(this);
+        IXGPushClickedResult clickedResult = SDKManager.getXGPush(this).onActivityStarted(this);
         if (clickedResult != null) {
             String title = clickedResult.getTitle();
             LogUtil.v("TPush", "title:" + title);

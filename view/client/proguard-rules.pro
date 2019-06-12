@@ -337,3 +337,6 @@ public <methods>;
 
 # 忽略警告
 -ignorewarnings
+#去除微信分享混淆
+-dontwarn com.tencent.mm.**
+-keep class com.tencent.mm.**{*;}

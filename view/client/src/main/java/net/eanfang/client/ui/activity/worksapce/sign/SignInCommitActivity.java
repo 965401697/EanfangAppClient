@@ -8,12 +8,12 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.SigninBean;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
+
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.PhotoUtils;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
@@ -95,12 +95,11 @@ public class SignInCommitActivity extends BaseActivity {
         ursStr = PhotoUtils.getPhotoUrl("oa/sign/", snplMomentAddPhotos, uploadMap, true);
 
         if (snplMomentAddPhotos.getData().size() >= 1) {
+            SDKManager.ossKit(this).asyncPutImages(uploadMap,(isfinish) -> {
+                commit(ursStr);
+            });
+            SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
 
-            OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(SignInCommitActivity.this, true) {
-                @Override
-                public void onFinish() {
-                    commit(ursStr);
-                }
             });
 
         } else {

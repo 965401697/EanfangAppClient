@@ -60,7 +60,7 @@ public class CertificationInfoActivity extends BaseWorkerActivity {
     BGASortableNinePhotoLayout snplMomentAccident;
     @BindView(R.id.snpl_moment_crim)
     BGASortableNinePhotoLayout snplMomentCrim;
-
+    private static final String DEFAULT_CARD_GENDER = "女";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,11 +92,9 @@ public class CertificationInfoActivity extends BaseWorkerActivity {
             tvContactPhone.setText(mobile);
         }
         etCardId.setFocusable(false);
-        //Log.i("zhangyanran",EanfangApplication.get().getUser().getAccount().getIdCard()+"-----------"+EanfangApplication.get().getUser().getAccount().getRealName());
-        etCardId.setText(WorkerApplication.get().getLoginBean().getAccount().getIdCard());
-        Log.d("66566", "initViews: "+WorkerApplication.get().getLoginBean().getAccount().getGender());
-        //0女1男
-        if (WorkerApplication.get().getLoginBean().getAccount().getGender() == 0) {
+        //Log.i("zhangyanran",WorkerApplication.get().getLoginBean().getAccount().getIdCard()+"-----------"+WorkerApplication.get().getLoginBean().getAccount().getRealName());
+        etCardId.setText(bean.getIdCardNum());
+        if (DEFAULT_CARD_GENDER.equals(bean.getIdCardGender())) {
             rbWoman.setSelected(true);
         } else {
             rbMan.setSelected(true);

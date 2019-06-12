@@ -6,8 +6,8 @@ import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
+import com.eanfang.base.kit.SDKManager;
+
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.PermissionUtils;
@@ -126,9 +126,7 @@ public class IdentityCardCertification extends BaseActivityWithTakePhoto {
                 GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),ivIdCardInHand);
                 break;
         }
-        OSSUtils.initOSS(this).asyncPutImage(imgKey, image.getOriginalPath(), new OSSCallBack(this, true) {
-        });
-
+        SDKManager.ossKit(this).asyncPutImage(imgKey, image.getOriginalPath(),(isSuccess) -> {});
     }
 
 }

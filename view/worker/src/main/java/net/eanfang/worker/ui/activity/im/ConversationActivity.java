@@ -17,6 +17,7 @@ import com.eanfang.takevideo.TakeVdideoMode;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.my.UserHomeActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -46,9 +47,9 @@ public class ConversationActivity extends BaseWorkerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conversation);
         ButterKnife.bind(this);
-        String title = getIntent().getData().getQueryParameter("title");//群组名称
+        String title = getIntent().getData().getQueryParameter("title").toString();//群组名称
         //单聊就是userid 群聊就是groupid
-        mId = getIntent().getData().getQueryParameter("targetId");
+        mId = getIntent().getData().getQueryParameter("targetId").toString();
         tvTitle.setText(title);
         setLeftBack();
         endTransaction(false);
@@ -74,19 +75,20 @@ public class ConversationActivity extends BaseWorkerActivity {
                 if (mType.equals(Conversation.ConversationType.GROUP.getName().toUpperCase(Locale.US))) {
 
                     intent.setClass(ConversationActivity.this, GroupDetailActivity.class);
+                    if (!TextUtils.isEmpty(mId)) {
+                        intent.putExtra(EanfangConst.RONG_YUN_ID, mId);
+                        intent.putExtra("title", title);
+                    }
+                    startActivity(intent);
 
                 } else if (mType.equals(Conversation.ConversationType.PRIVATE.getName().toUpperCase(Locale.US))) {
 
-                    intent.setClass(ConversationActivity.this, IMPresonInfoActivity.class);
+                    UserHomeActivity.startActivityForAccId(ConversationActivity.this, mId);
 
                 }
 
 
-                if (!TextUtils.isEmpty(mId)) {
-                    intent.putExtra(EanfangConst.RONG_YUN_ID, mId);
-                    intent.putExtra("title", title);
-                }
-                startActivity(intent);
+
             }
         });
 

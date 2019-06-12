@@ -137,7 +137,7 @@ public class CacheKit extends LruCache<String, Object> {
                 object.put(fieldName, val);
             }
         }
-        return put(key, object.toString(),1);
+        return put(key, object.toString(), 1);
     }
 
     public <T> T getVo(String key, Class<T> clazz) {
@@ -201,6 +201,11 @@ public class CacheKit extends LruCache<String, Object> {
     public Object remove(@NonNull String key) {
         disCacheKit.remove(key);
         return super.remove(key);
+    }
+
+    public void clear() {
+        disCacheKit.delete();
+        super.evictAll();
     }
 
     /**

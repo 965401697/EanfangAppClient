@@ -198,16 +198,16 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
 
             @Override
             public boolean onConversationPortraitClick(Context context, Conversation.ConversationType conversationType, String s) {
-                if (conversationType.equals(Conversation.ConversationType.PRIVATE)) {
-                    Intent intent = new Intent(getActivity(), IMPresonInfoActivity.class);
-                    intent.putExtra(EanfangConst.RONG_YUN_ID, s);
-                    startActivity(intent);
-                } else if (conversationType.equals(Conversation.ConversationType.GROUP)) {
-                    Intent intent = new Intent(getActivity(), GroupDetailActivity.class);
-                    intent.putExtra(EanfangConst.RONG_YUN_ID, s);
-                    startActivity(intent);
-                }
-                return true;
+//                if (conversationType.equals(Conversation.ConversationType.PRIVATE)) {
+//                    Intent intent = new Intent(getActivity(), IMPresonInfoActivity.class);
+//                    intent.putExtra(EanfangConst.RONG_YUN_ID, s);
+//                    startActivity(intent);
+//                } else if (conversationType.equals(Conversation.ConversationType.GROUP)) {
+//                    Intent intent = new Intent(getActivity(), GroupDetailActivity.class);
+//                    intent.putExtra(EanfangConst.RONG_YUN_ID, s);
+//                    startActivity(intent);
+//                }
+                return false;
             }
 
             @Override
@@ -323,6 +323,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
 
                 }));
     }
+
 
 
     /**
@@ -472,7 +473,15 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
      * @return true 有网, false 没有网络.
      */
     public boolean isNetConnect() {
-        return isNetWork;
+        if (isNetWork) {
+            return true;
+        }
+        return false;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().unregisterReceiver(netBroadcastReceiver);
+    }
 }

@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -18,13 +19,16 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.delegate.BGASortableDelegate;
+import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.security.SecurityCommentBean;
@@ -32,13 +36,17 @@ import com.eanfang.biz.model.security.SecurityDetailBean;
 import com.eanfang.biz.model.security.SecurityFoucsBean;
 import com.eanfang.biz.model.security.SecurityLikeBean;
 import com.eanfang.biz.model.security.SecurityListBean;
+import com.eanfang.model.security.SecurityLikeStatusBean;
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.ETimeUtils;
 import com.eanfang.util.GlideUtil;
+import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
+import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
+import com.eanfang.witget.DefaultPopWindow;
 import com.eanfang.witget.mentionedittext.edit.util.FormatRangeManager;
 import com.eanfang.witget.mentionedittext.text.MentionTextView;
 import com.eanfang.witget.mentionedittext.text.listener.Parser;
@@ -67,10 +75,13 @@ import butterknife.OnClick;
  * @description 安防圈详情
  */
 
-public class SecurityDetailActivity extends BaseActivity implements Parser.OnParseAtClickListener {
+public class SecurityDetailActivity extends BaseActivity implements Parser.OnParseAtClickListener,
+        SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
 
 
     private static final int REQUEST_CODE_CHOOSE_PHOTO = 1;
+
+    private static final int REQUEST_CODE_COMMENT_DETAIL = 100;
 
     private static final int REQUEST_CODE_CHOOSE_PHOTO_two = 1;
     @BindView(R.id.iv_seucrity_header)
@@ -123,13 +134,15 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
     RelativeLayout rlVideo;
     @BindView(R.id.tv_content)
     MentionTextView tvContent;
+    @BindView(R.id.swipe_fresh)
+    SwipeRefreshLayout swipeFresh;
 
     private SecurityDetailBean.SpcListBean securityDetailBean;
     private ArrayList<String> picList = new ArrayList<>();
     private Long mId;
 
     private SecurityCommentAdapter securityCommentAdapter;
-    private List<SecurityDetailBean.ListBean> commentList = new ArrayList<>();
+    private List<SecurityDetailBean.PageUtilBean.ListBean> commentList = new ArrayList<>();
 
     /**
      * 点赞状态
@@ -166,6 +179,18 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
      * 修改item状态
      */
     private SecurityListBean.ListBean mItenSecurityDetailBean;
+    /**
+     * 删除安防圈
+     */
+    private View mPopWindowContent;
+    private TextView mTvDelete;
+
+    private QueryEntry mQueryEntry;
+    private int page = 1;
+    /**
+     * 是否回复
+     */
+    private boolean isReply = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -179,11 +204,16 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
 
     private void initView() {
         setTitle("安防圈");
-        securityCommentAdapter = new SecurityCommentAdapter(this);
+        mPopWindowContent = LayoutInflater.from(this).inflate(R.layout.layout_pop_security_delete, null);
+        mTvDelete = mPopWindowContent.findViewById(R.id.tv_delete);
+        mTvDelete.setText("删除");
+        securityCommentAdapter = new SecurityCommentAdapter();
         rvComments.setLayoutManager(new LinearLayoutManager(this));
         securityCommentAdapter.bindToRecyclerView(rvComments);
+        swipeFresh.setOnRefreshListener(this);
+        securityCommentAdapter.setOnLoadMoreListener(this, rvComments);
+        securityCommentAdapter.disableLoadMoreIfNotFullPage();
         rvComments.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
-        rvComments.setNestedScrollingEnabled(false);
         isCommont = getIntent().getBooleanExtra("isCommon", false);
         mId = getIntent().getLongExtra("spcId", 0);
         mItenSecurityDetailBean = new SecurityListBean.ListBean();
@@ -200,8 +230,15 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
     }
 
     private void initListener() {
+        securityCommentAdapter.setOnItemClickListener((adapter, view, position) -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt("mCommentId", securityCommentAdapter.getData().get(position).getId());
+            bundle.putLong("mAsId", securityCommentAdapter.getData().get(position).getAsId());
+            bundle.putSerializable("mComment", securityCommentAdapter.getData().get(position));
+            JumpItent.jump(this, SecurityCommentDetailActivity.class, bundle, REQUEST_CODE_COMMENT_DETAIL);
+        });
         securityCommentAdapter.setOnItemLongClickListener((adapter, view, position) -> {
-            if (!WorkerApplication.get().getUserId().equals(Long.valueOf(securityCommentAdapter.getData().get(position).getCommentsAnswerId()))) {
+            if (!WorkerApplication.getApplication().getAccId().equals(Long.valueOf(securityCommentAdapter.getData().get(position).getCommentsAnswerAccId()))) {
                 showToast("只可删除自己评论");
                 return false;
             }
@@ -216,7 +253,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         });
 
         securityCommentAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            SecurityDetailBean.ListBean listBean = (SecurityDetailBean.ListBean) adapter.getData().get(position);
+            SecurityDetailBean.PageUtilBean.ListBean listBean = (SecurityDetailBean.PageUtilBean.ListBean) adapter.getData().get(position);
             if (listBean != null && listBean.getCommentUser() != null &&
                     listBean.getCommentUser().getAccId() != null) {
                 mIsPubUid = listBean.getCommentUser().getAccId().
@@ -233,6 +270,18 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
             setResult(RESULT_OK, intent);
             finishSelf();
         });
+        DefaultPopWindow popWindow = new DefaultPopWindow(mPopWindowContent);
+        popWindow.setOnDismissListener(() -> popWindow.backgroundAlpha(SecurityDetailActivity.this, 1.0f));
+        mTvDelete.setOnClickListener(v -> {
+            new TrueFalseDialog(this, "系统提示", "是否删除?", () -> {
+                doDelete();
+            }).showDialog();
+            popWindow.dismiss();
+        });
+        setRightImageOnClickListener(v -> {
+            popWindow.showAsDropDown(findViewById(R.id.iv_right));
+            popWindow.backgroundAlpha(SecurityDetailActivity.this, 0.5f);
+        });
     }
 
     /**
@@ -244,6 +293,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
                     showToast("删除成功");
                     generalDialog.dismiss();
+                    page = 1;
                     getComments();
                 }));
     }
@@ -253,28 +303,64 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
      */
 
     private void getComments() {
+        if (mQueryEntry == null) {
+            mQueryEntry = new QueryEntry();
+        }
+        mQueryEntry.setPage(page);
+        mQueryEntry.setSize(10);
+        mQueryEntry.getEquals().put("id", mId + "");
         EanfangHttp.post(NewApiService.SERCURITY_DETAIL)
-                .params("id", mId)
-                .execute(new EanfangCallback<SecurityDetailBean>(this, true, SecurityDetailBean.class, bean -> {
-                    commentList = bean.getList();
-                    securityCommentAdapter.setNewData(commentList);
-                    securityDetailBean = bean.getSpcList();
+                .upJson(JsonUtils.obj2String(mQueryEntry))
+                .execute(new EanfangCallback<SecurityDetailBean>(this, true, SecurityDetailBean.class) {
+                    @Override
+                    public void onSuccess(SecurityDetailBean bean) {
+                        if (page == 1) {
+                            commentList = bean.getPageUtil().getList();
+                            securityCommentAdapter.setNewData(commentList);
+                            securityDetailBean = bean.getSpcList();
 
-                    /**
-                     * 阅读数  评价数
-                     * */
-                    if (bean.getSpcList() != null) {
-                        tvReadCount.setText(bean.getSpcList().getReadCount() + "");
-                        tvCommentCount.setText(bean.getSpcList().getCommentCount() + "");
+                            /**
+                             * 阅读数  评价数
+                             * */
+                            if (bean.getSpcList() != null) {
+                                tvReadCount.setText(bean.getSpcList().getReadCount() + "");
+                                tvCommentCount.setText(bean.getSpcList().getCommentCount() + "");
+                            }
+                            if (isCommont && isFirstCome && !isReply) {
+                                ShowKeyboard();
+                            } else {
+                                hideKeyboard();
+                            }
+                            rvComments.scrollToPosition(0);
+                            swipeFresh.setRefreshing(false);
+                            securityCommentAdapter.loadMoreComplete();
+                            if (bean.getPageUtil().getList() != null && bean.getPageUtil().getList().size() < 10) {
+                                securityCommentAdapter.loadMoreEnd();
+                                //释放对象
+                                mQueryEntry = null;
+                            }
+                            mItenSecurityDetailBean.setCommentCount(bean.getSpcList().getCommentCount());
+                            setData(securityDetailBean);
+                        } else {
+                            securityCommentAdapter.addData(bean.getPageUtil().getList());
+                            securityCommentAdapter.loadMoreComplete();
+                            if (bean.getPageUtil().getList().size() < 10) {
+                                securityCommentAdapter.loadMoreEnd();
+                            }
+                        }
                     }
-                    if (isCommont && isFirstCome) {
-                        ShowKeyboard();
-                    } else {
-                        hideKeyboard();
+
+                    @Override
+                    public void onNoData(String message) {
+                        swipeFresh.setRefreshing(false);
+                        securityCommentAdapter.loadMoreEnd();
                     }
-                    mItenSecurityDetailBean.setCommentCount(bean.getSpcList().getCommentCount());
-                    setData(securityDetailBean);
-                }));
+
+                    @Override
+                    public void onCommitAgain() {
+                        swipeFresh.setRefreshing(false);
+                    }
+                });
     }
 
     public void setData(SecurityDetailBean.SpcListBean securityDetailBean) {
@@ -303,8 +389,11 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         tvTime.setText(ETimeUtils.getTimeFormatText(securityDetailBean.getCreateTime()));
         if (securityDetailBean.getPublisherAccId().equals(WorkerApplication.get().getAccId())) {
             tvIsFocus.setVisibility(View.GONE);
+            setRightImageVisible();
+            setRightImageResId(R.drawable.icon_right_more);
         } else {
             tvIsFocus.setVisibility(View.VISIBLE);
+            setRightImageGone();
         }
         /**
          * 是否是好友 2 好友 1 不是好友
@@ -481,12 +570,15 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         securityCommentBean.setCommentsAnswerAccId(WorkerApplication.get().getLoginBean().getAccount().getAccId());
         securityCommentBean.setCommentsCompanyId(WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyId());
         securityCommentBean.setCommentsTopCompanyId(WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getTopCompanyId());
+        securityCommentBean.setTopCommentsId(null);
+        securityCommentBean.setParentCommentsId(null);
         EanfangHttp.post(NewApiService.SERCURITY_COMMENT)
                 .upJson(JSONObject.toJSONString(securityCommentBean))
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
                     isFirstCome = false;
                     isCommentEdit = true;
                     hideKeyboard();
+                    page = 1;
                     getComments();
 
                 }));
@@ -513,20 +605,20 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         securityLikeBean.setLikeTopCompanyId(WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getTopCompanyId());
         EanfangHttp.post(NewApiService.SERCURITY_LIKE)
                 .upJson(JSONObject.toJSONString(securityLikeBean))
-                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
+                .execute(new EanfangCallback<SecurityLikeStatusBean>(this, true, SecurityLikeStatusBean.class, bean -> {
                     /**
                      * 0 点赞 1 未点赞
                      * */
-                    if (mLikeStatus == 0) {
+                    if (bean.getLikeStatus() == 1) {
                         mLikeStatus = 1;
                         ivLike.setImageResource(R.mipmap.ic_worker_security_like_unpressed);
-                        mItenSecurityDetailBean.setLikeStatus(1);
-                        mItenSecurityDetailBean.setLikesCount(mLikeCount - 1);
-                    } else {
+                        mItenSecurityDetailBean.setLikeStatus(bean.getLikeStatus());
+                        mItenSecurityDetailBean.setLikesCount(bean.getLikesCount());
+                    } else if (bean.getLikeStatus() == 0) {
                         ivLike.setImageResource(R.mipmap.ic_worker_security_like_pressed);
                         mLikeStatus = 0;
-                        mItenSecurityDetailBean.setLikeStatus(0);
-                        mItenSecurityDetailBean.setLikesCount(mLikeCount + 1);
+                        mItenSecurityDetailBean.setLikeStatus(bean.getLikeStatus());
+                        mItenSecurityDetailBean.setLikesCount(bean.getLikesCount());
                     }
                     isLikeEdit = true;
                 }));
@@ -539,10 +631,25 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         //显示布局
         llEditComments.setVisibility(View.VISIBLE);
         llBottom.setVisibility(View.GONE);
-        etInput.requestFocus();
         etInput.setFocusable(true);
         etInput.setFocusableInTouchMode(true);
+        etInput.requestFocus();
         StringUtils.showKeyboard(SecurityDetailActivity.this, etInput);
+    }
+
+
+    /**
+     * 删除安防圈
+     */
+    private void doDelete() {
+        EanfangHttp.post(NewApiService.SERCURITY_DELETE)
+                .params("spcId", mId)
+                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, bean -> {
+                    Intent intent = new Intent();
+                    intent.putExtra("isDelete", true);
+                    setResult(RESULT_OK, intent);
+                    finishSelf();
+                }));
     }
 
     /**
@@ -554,9 +661,9 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         llBottom.setVisibility(View.VISIBLE);
         //清空输入
         etInput.setText("");
-        View view = getWindow().getDecorView();
+        View view = this.getCurrentFocus();
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         if (view != null) {
-            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
@@ -637,6 +744,26 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         UserHomeActivity.startActivityForUid(this, mUserId);
     }
 
+    /**
+     * 下拉刷新
+     */
+    @Override
+    public void onRefresh() {
+        mQueryEntry = null;
+        page = 1;
+        getComments();
+    }
+
+
+    /**
+     * 加载更多
+     */
+    @Override
+    public void onLoadMoreRequested() {
+        page++;
+        getComments();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -645,6 +772,13 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
                 isFoucus = data.getBooleanExtra(UserHomeActivity.RESULT_FOLLOW_STATE, true);
                 isFoucsEdit = isFoucus;
                 tvIsFocus.setText(isFoucus ? "取消关注" : "关注");
+            }
+            boolean isEdit = data.getBooleanExtra("isEdit", true);
+            if (isEdit) {
+                isReply = true;
+                isCommentEdit = true;
+                page = 1;
+                getComments();
             }
         }
     }

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.delegate.BGASortableDelegate;
@@ -20,8 +21,7 @@ import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.biz.model.Message;
 import com.eanfang.biz.model.SelectAddressItem;
 import com.eanfang.biz.model.TaskPublishBean;
-import com.eanfang.oss.OSSCallBack;
-import com.eanfang.oss.OSSUtils;
+
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
@@ -198,14 +198,10 @@ public class TaskPublishActivity extends BaseActivity implements SelectTimeDialo
         bean.setPictures(ursStr);
         String json = JSONObject.toJSONString(bean);
         if (uploadMap.size() != 0) {
-            OSSUtils.initOSS(this).asyncPutImages(uploadMap, new OSSCallBack(this, true) {
-                @Override
-                public void onOssSuccess() {
-                    runOnUiThread(() -> {
-                        doHttpSubmit(json);
-                    });
-
-                }
+            SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
+                runOnUiThread(() -> {
+                    doHttpSubmit(json);
+                });
             });
         } else {
             doHttpSubmit(json);

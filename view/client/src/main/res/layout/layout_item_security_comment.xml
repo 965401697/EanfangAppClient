@@ -4,7 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="@dimen/dimen_30">
+    android:paddingLeft="@dimen/dimen_30"
+    android:paddingRight="@dimen/dimen_16"
+    android:paddingTop="@dimen/dimen_30">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -13,7 +15,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <com.eanfang.base.widget.customview.CircleImageView
@@ -43,7 +44,6 @@
                             android:id="@+id/tv_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="我的名字"
                             android:textColor="@color/black"
                             android:textSize="@dimen/textSize_15" />
 
@@ -66,17 +66,7 @@
                             android:visibility="gone" />
                     </LinearLayout>
 
-
-                    <TextView
-                        android:id="@+id/tv_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:text="时间"
-                        android:textColor="@color/color_bottom"
-                        android:textSize="@dimen/textSize_15" />
                 </RelativeLayout>
-
 
                 <TextView
                     android:id="@+id/tv_company"
@@ -86,15 +76,71 @@
                     android:textColor="@color/color_bottom"
                     android:textSize="@dimen/textSize_13" />
 
-                <TextView
-                    android:id="@+id/tv_content"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen_16"
-                    android:textColor="@color/color_client_neworder"
-                    android:textSize="@dimen/textSize_15" />
-            </LinearLayout>
+                    android:orientation="vertical">
 
+                    <TextView
+                        android:id="@+id/tv_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_15" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_80">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tv_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:textColor="@color/color_client_neworder"
+                                android:textSize="@dimen/textSize_13" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/dimen_20"
+                                android:text="回复"
+                                android:textColor="@color/color_client_neworder"
+                                android:textSize="@dimen/textSize_13" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tv_deleteComment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:gravity="center"
+                            android:paddingLeft="@dimen/dimen_20"
+                            android:paddingRight="@dimen/dimen_20"
+                            android:text="删除"
+                            android:textColor="@color/color_client_neworder"
+                            android:textSize="@dimen/textSize_15"
+                            android:visibility="gone" />
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_other_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_30"
+                    android:background="@drawable/bg_security_detail_other_comment"
+                    android:orientation="vertical" />
+            </LinearLayout>
 
         </LinearLayout>
 

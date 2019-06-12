@@ -1,5 +1,6 @@
 package net.eanfang.client.ui.activity;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -18,6 +19,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.biz.model.AllMessageBean;
 import com.eanfang.biz.model.GroupDetailBean;
 import com.eanfang.biz.model.bean.BaseDataBean;
@@ -30,13 +32,12 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.BadgeUtil;
 import com.eanfang.util.CleanMessageUtil;
+import com.eanfang.util.ContactUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermissionUtils;
-import com.eanfang.util.SharePreferenceUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UpdateAppManager;
-import com.tencent.android.tpush.XGPushConfig;
 import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.client.BuildConfig;
@@ -59,6 +60,7 @@ import net.eanfang.client.util.PrefUtils;
 
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 import butterknife.ButterKnife;
@@ -72,9 +74,13 @@ import io.rong.message.TextMessage;
 import q.rorbin.badgeview.QBadgeView;
 
 import static com.eanfang.config.EanfangConst.MEIZU_APPID_CLIENT;
+import static com.eanfang.config.EanfangConst.MEIZU_APPID_WORKER;
 import static com.eanfang.config.EanfangConst.MEIZU_APPKEY_CLIENT;
+import static com.eanfang.config.EanfangConst.MEIZU_APPKEY_WORKER;
 import static com.eanfang.config.EanfangConst.XIAOMI_APPID_CLIENT;
+import static com.eanfang.config.EanfangConst.XIAOMI_APPID_WORKER;
 import static com.eanfang.config.EanfangConst.XIAOMI_APPKEY_CLIENT;
+import static com.eanfang.config.EanfangConst.XIAOMI_APPKEY_WORKER;
 
 /**
  * {@link net.eanfang.client.main.activity.MainActivity}
@@ -280,21 +286,29 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
 
     private void registerXinGe() {
         // 打开第三方推送
+        SDKManager.getXGPush(MainActivity.this).enableOtherPush(true);
+        //开启信鸽日志输出
+        SDKManager.getXGPush(MainActivity.this).enableDebug(true);
+        SDKManager.getXGPush(MainActivity.this).setHuaweiDebug(true);
+        SDKManager.getXGPush(MainActivity.this).setMiPush(XIAOMI_APPID_CLIENT,XIAOMI_APPKEY_CLIENT);
+        SDKManager.getXGPush(MainActivity.this).setMzPush(MEIZU_APPID_CLIENT,MEIZU_APPKEY_CLIENT);
+        SDKManager.getXGPush(MainActivity.this).registerPush(user.getAccount().getMobile());
+      /*  // 打开第三方推送
         XGPushConfig.enableOtherPush(MainActivity.this, true);
         //开启信鸽日志输出
         XGPushConfig.enableDebug(MainActivity.this, true);
         XGPushConfig.setHuaweiDebug(true);
-        /**
+        *//**
          * 小米
-         * */
+         * *//*
         XGPushConfig.setMiPushAppId(MainActivity.this, XIAOMI_APPID_CLIENT);
         XGPushConfig.setMiPushAppKey(MainActivity.this, XIAOMI_APPKEY_CLIENT);
-        /**
+        *//**
          * 魅族
-         * */
+         * *//*
         XGPushConfig.setMzPushAppId(MainActivity.this, MEIZU_APPID_CLIENT);
         XGPushConfig.setMzPushAppKey(MainActivity.this, MEIZU_APPKEY_CLIENT);
-        ReceiverInit.getInstance().inits(MainActivity.this, user.getAccount().getMobile());
+        ReceiverInit.getInstance().inits(MainActivity.this, user.getAccount().getMobile());*/
     }
 
     public void setHeaders() {
@@ -561,7 +575,7 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
             mExitTime = System.currentTimeMillis();
 
             CleanMessageUtil.clearAllCache(ClientApplication.get());
-            SharePreferenceUtil.get().clear();
+            ClientApplication.get().clear();
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
 //            RongIM.getInstance().logout();
             MainActivity.this.finish();
@@ -680,6 +694,19 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
     public String onNoConatac() {
         return mStatus;
     }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RongIM.getInstance().disconnect();
+    }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        int index = Arrays.asList(permissions).indexOf(Manifest.permission.READ_CONTACTS);
+        if (grantResults[index] == 0) {
+            ContactUtil.postAccount(MainActivity.this);
+        }
+    }
 }
 

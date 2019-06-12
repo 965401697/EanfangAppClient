@@ -8,11 +8,15 @@ import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.annimon.stream.Stream;
+import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
+
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.security.SecurityLikeBean;
 import com.eanfang.biz.model.security.SecurityListBean;
+import com.eanfang.model.security.SecurityLikeStatusBean;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
@@ -25,7 +29,10 @@ import net.eanfang.worker.ui.activity.im.SelectIMContactActivity;
 import net.eanfang.worker.ui.activity.worksapce.online.FaultExplainActivity;
 import net.eanfang.worker.ui.activity.worksapce.security.SecurityDetailActivity;
 import net.eanfang.worker.ui.adapter.security.SecurityListAdapter;
+import net.eanfang.worker.util.ImagePerviewUtil;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 
 public class SecurityFoucsFragment extends TemplateItemListFragment {
@@ -36,6 +43,8 @@ public class SecurityFoucsFragment extends TemplateItemListFragment {
     private SecurityListAdapter securityListAdapter;
     public static final int REFRESH_ITEM = 1010;
     private SecurityListBean.ListBean securityDetailBean;
+    private ArrayList<String> picList = new ArrayList<>();
+    private String[] pics = null;
 
     public static SecurityFoucsFragment getInstance(String title) {
         SecurityFoucsFragment sf = new SecurityFoucsFragment();
@@ -50,7 +59,7 @@ public class SecurityFoucsFragment extends TemplateItemListFragment {
 
     @Override
     protected void initAdapter() {
-        securityListAdapter = new SecurityListAdapter(WorkerApplication.get().getApplicationContext(), false);
+        securityListAdapter = new SecurityListAdapter( false);
         RecyclerView.RecycledViewPool pool = mRecyclerView.getRecycledViewPool();
         pool.setMaxRecycledViews(0, 10);
         mRecyclerView.setRecycledViewPool(pool);
@@ -66,10 +75,15 @@ public class SecurityFoucsFragment extends TemplateItemListFragment {
                 case R.id.ll_comments:
                     doJump(position, true);
                     break;
-                case R.id.iv_share:
+                case R.id.ll_share:
                     doShare(securityListAdapter.getData().get(position));
                     break;
                 case R.id.ll_pic:
+                    picList.clear();
+                    pics = securityListAdapter.getData().get(position).getSpcImg().split(",");
+                    picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> BuildConfig.OSS_SERVER + (url).toString()).toList());
+                    ImagePerviewUtil.perviewImage(getActivity(), picList);
+                    break;
                 case R.id.ll_question:
                 case R.id.rl_video:
                     doJump(position, false);
@@ -111,11 +125,11 @@ public class SecurityFoucsFragment extends TemplateItemListFragment {
          * */
         if (listBean.getLikeStatus() == 0) {
             listBean.setLikeStatus(1);
-            listBean.setLikesCount(listBean.getLikesCount() - 1);
+            listBean.setLikesCount(listBean.getLikesCount() );
             securityLikeBean.setLikeStatus("1");
         } else {
             listBean.setLikeStatus(0);
-            listBean.setLikesCount(listBean.getLikesCount() + 1);
+            listBean.setLikesCount(listBean.getLikesCount());
             securityLikeBean.setLikeStatus("0");
         }
         securityLikeBean.setLikeUserId(WorkerApplication.get().getUserId());
@@ -123,8 +137,11 @@ public class SecurityFoucsFragment extends TemplateItemListFragment {
         securityLikeBean.setLikeTopCompanyId(WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getTopCompanyId());
         EanfangHttp.post(NewApiService.SERCURITY_LIKE)
                 .upJson(JSONObject.toJSONString(securityLikeBean))
-                .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class, bean -> {
+                .execute(new EanfangCallback<SecurityLikeStatusBean>(getActivity(), true, SecurityLikeStatusBean.class, bean -> {
                     getActivity().runOnUiThread(() -> {
+
+                        securityListAdapter.getData().get(position).setLikeStatus(bean.getLikeStatus());
+                        securityListAdapter.getData().get(position).setLikesCount(bean.getLikesCount());
                         securityListAdapter.notifyItemChanged(position);
                     });
                 }));
