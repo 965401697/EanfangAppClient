@@ -3,6 +3,8 @@ package net.eanfang.worker.ui.fragment.worktalk;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.lifecycle.ViewModel;
+
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -132,7 +134,6 @@ public class WorkTalkListFragment extends TemplateItemListFragment {
     }
 
 
-    @Override
     protected void setListener() {
         workTalkAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             WorkTalkListBean.ListBean workTalkBean = workTalkAdapter.getData().get(position);
@@ -212,6 +213,11 @@ public class WorkTalkListFragment extends TemplateItemListFragment {
         workTalkAdapter = new WorkTalkAdapter(isCreate);
         workTalkAdapter.bindToRecyclerView(mRecyclerView);
         workTalkAdapter.setOnLoadMoreListener(this, mRecyclerView);
+        setListener();
     }
 
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
+    }
 }

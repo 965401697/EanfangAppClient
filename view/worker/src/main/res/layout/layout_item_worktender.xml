@@ -6,8 +6,8 @@
     android:layout_marginTop="@dimen/dimen_16"
     android:background="@color/color_white"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/dimen_18"
-    android:paddingTop="@dimen/dimen_30">
+    android:paddingTop="@dimen/dimen_30"
+    android:paddingBottom="@dimen/dimen_18">
 
 
     <LinearLayout
@@ -39,10 +39,18 @@
                 android:visibility="gone" />
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="项目名称:"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/textSize_15" />
+
+            <TextView
                 android:id="@+id/tv_tender_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_marginStart="@dimen/dimen_20"
                 android:textColor="@color/color_client_neworder"
                 android:textSize="@dimen/textSize_15" />
 
@@ -120,7 +128,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/dimen_36"
                     android:layout_marginTop="@dimen/dimen_20"
-                    android:textColor="@color/color_tender_info"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/textSize_14" />
 
 

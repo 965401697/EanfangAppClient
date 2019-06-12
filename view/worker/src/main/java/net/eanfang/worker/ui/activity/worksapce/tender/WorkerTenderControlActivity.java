@@ -1,102 +1,140 @@
 package net.eanfang.worker.ui.activity.worksapce.tender;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+
+import androidx.annotation.RequiresApi;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.lifecycle.ViewModel;
 import androidx.viewpager.widget.ViewPager;
+
+import android.view.Gravity;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.base.BaseActivity;
+import com.eanfang.biz.model.bean.QueryEntry;
+import com.eanfang.biz.rds.base.LViewModelProviders;
+import com.eanfang.listener.EventListener;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.QueryEntry;
-import com.flyco.tablayout.SlidingTabLayout;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.databinding.ActivityWorkerTenderControlBinding;
+import net.eanfang.worker.ui.fragment.tender.WorkTenderFindFragment;
 import net.eanfang.worker.ui.fragment.tender.WorkTenderFragment;
-import net.eanfang.worker.ui.fragment.worktalk.WorkTalkListFragment;
+import net.eanfang.worker.ui.widget.TenderNoticePop;
+import net.eanfang.worker.viewmodle.tender.TenderViewModle;
 
-import java.util.ArrayList;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+
 
 /**
  * @author guanluocang
- * @data 2019/1/9
+ * @data 2019年5月27日 15:57:16
  * @description 招标信息
  */
 
 public class WorkerTenderControlActivity extends BaseActivity {
 
-    @BindView(R.id.tl_tender_list)
-    SlidingTabLayout tlTenderList;
-    @BindView(R.id.tv_filtrate)
-    TextView tvFiltrate;
-    @BindView(R.id.vp_tender_list)
-    ViewPager vpTenderList;
-
-    private ArrayList<Fragment> mFragments = new ArrayList<>();
-    private String[] mTitles = {"正在公告", "已过期", "全部"};
-    private MyPagerAdapter mAdapter;
     private final int FILTRATE_TYPE_CODE = 1001;
+    private ViewPager mTenderViewPager;
+    /**
+     * 正在公告 0  已过期 1
+     */
+    private String[] mTitles = {"招标公告", "用工找活"};
+    @Setter
+    @Accessors(chain = true)
+    private TenderViewModle mTenderViewModle;
+    private ActivityWorkerTenderControlBinding mWorkerTenderControlBinding;
+    private MyPagerAdapter mAdapter;
+
+    private ImageView mIvTenderNotice;
+    private ImageView mIvTenderFind;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mWorkerTenderControlBinding = DataBindingUtil.setContentView(this, R.layout.activity_worker_tender_control);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_worker_tender_control);
-        ButterKnife.bind(this);
         initView();
+        initListener();
     }
 
-    private void initView() {
+    @Override
+    protected void initView() {
         setTitle("招标信息");
-        setLeftBack();
+        setLeftBack(true);
+        setRightTitle("我的");
+        setRightImageResId(R.mipmap.ic_security_right);
+        mIvTenderNotice = mWorkerTenderControlBinding.ivTenderNotice;
+        mIvTenderFind = mWorkerTenderControlBinding.ivTenderFind;
+        mTenderViewPager = mWorkerTenderControlBinding.vpTenderList;
+        mAdapter = new MyPagerAdapter(getSupportFragmentManager(), mTitles);
+//        mAdapter.getFragments().add(WorkTenderFragment.getInstance(mTenderViewModle));
+        mAdapter.getFragments().add(WorkTenderFindFragment.getInstance(mTenderViewModle));
 
-        mFragments.add(WorkTenderFragment.getInstance("正在公告", 0));
-        mFragments.add(WorkTenderFragment.getInstance("已过期", 1));
-        mFragments.add(WorkTenderFragment.getInstance("全部", 2));
-
-        mAdapter = new MyPagerAdapter(getSupportFragmentManager());
-        vpTenderList.setAdapter(mAdapter);
-        tlTenderList.setViewPager(vpTenderList, mTitles, this, mFragments);
-
-        vpTenderList.setCurrentItem(0);
+        mTenderViewPager.setAdapter(mAdapter);
+        mTenderViewPager.setCurrentItem(0);
+        mWorkerTenderControlBinding.tvFiltrate.setOnClickListener((view) -> {
+//            Bundle bundle = new Bundle();
+//            if (mTenderViewPager.getCurrentItem() == 0) {
+//                bundle.putInt("type", 0);
+//            } else if (mTenderViewPager.getCurrentItem() == 1) {
+//                bundle.putInt("type", 1);
+//            }
+//            JumpItent.jump(WorkerTenderControlActivity.this, FilterTenderActivity.class, bundle, FILTRATE_TYPE_CODE);
+        });
     }
 
-    @OnClick(R.id.tv_filtrate)
-    public void onViewClicked() {
-        Bundle bundle = new Bundle();
-        if (vpTenderList.getCurrentItem() == 0) {// 我创建的
-            bundle.putInt("type", 0);
-        } else if (vpTenderList.getCurrentItem() == 1) {// 我接收的
-            bundle.putInt("type", 1);
-        }
-        JumpItent.jump(WorkerTenderControlActivity.this, FilterTenderActivity.class, bundle, FILTRATE_TYPE_CODE);
+    @Override
+    protected ViewModel initViewModel() {
+        mTenderViewModle = LViewModelProviders.of(this, TenderViewModle.class);
+        mWorkerTenderControlBinding.setTenderViewModle(mTenderViewModle);
+        mTenderViewModle.setWorkerTenderControlBinding(mWorkerTenderControlBinding);
+        return mTenderViewModle;
     }
 
-    private class MyPagerAdapter extends FragmentPagerAdapter {
-        public MyPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
+    private void initListener() {
+        mTenderViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-        @Override
-        public int getCount() {
-            return mFragments.size();
-        }
+            }
 
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mTitles[position];
-        }
+            @Override
+            public void onPageSelected(int position) {
+                switch (position) {
+                    case 0:
+                        mIvTenderNotice.setImageResource(R.drawable.ic_tender_notice_pressed_down);
+                        mIvTenderFind.setImageResource(R.drawable.ic_tender_find);
+                        break;
+                    case 1:
+                        mIvTenderNotice.setImageResource(R.drawable.ic_tender_notice);
+                        mIvTenderFind.setImageResource(R.drawable.ic_tender_find_pressed);
+                        break;
+                    default:
+                        break;
+                }
+            }
 
-        @Override
-        public Fragment getItem(int position) {
-            return mFragments.get(position);
-        }
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+        setRightTitleOnClickListener((view) -> {
+            //TODO 我的页面
+//            JumpItent.jump(this,);
+        });
     }
+
 
     /**
      * 筛选回调
@@ -104,17 +142,14 @@ public class WorkerTenderControlActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        int currentTab = tlTenderList.getCurrentTab();
+        int currentTab = mTenderViewPager.getCurrentItem();
         if (resultCode == RESULT_OK && requestCode == FILTRATE_TYPE_CODE) {
 
-            QueryEntry queryEntry = (QueryEntry) data.getSerializableExtra("query");
+            com.eanfang.biz.model.bean.QueryEntry queryEntry = (QueryEntry) data.getSerializableExtra("query");
             if (queryEntry != null) {
-                ((WorkTenderFragment) mFragments.get(currentTab)).getTenderData(queryEntry);
-            }
-        } else if (resultCode == RESULT_OK && requestCode == WorkTalkListFragment.DETAIL_TASK_REQUSET_COOD) {
-//            ((WorkTenderFragment) mFragments.get(currentTab)).refreshStatus();
 
+                ((WorkTenderFragment) mAdapter.getFragments().get(currentTab)).getTenderData(queryEntry);
+            }
         }
     }
-
 }

@@ -8,6 +8,8 @@ import com.eanfang.biz.rds.base.BaseViewModel;
 import com.eanfang.biz.rds.sys.api.LoginApi;
 import com.eanfang.biz.rds.sys.ds.ILoginDs;
 
+import java.util.List;
+
 public class LoginDs extends BaseRemoteDataSource implements ILoginDs {
 
     public LoginDs(BaseViewModel baseViewModel) {
@@ -23,6 +25,7 @@ public class LoginDs extends BaseRemoteDataSource implements ILoginDs {
     public void verifyCode(String phone, RequestCallback<String> callback) {
         execute(getService(LoginApi.class).verifyCode(phone), callback);
     }
+
 
     @Override
     public void loginVerify(String userName, String code, RequestCallback<LoginBean> callback) {

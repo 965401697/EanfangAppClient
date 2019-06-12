@@ -3,6 +3,7 @@ package net.eanfang.worker.ui.fragment.security;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.DividerItemDecoration;
 
 import com.eanfang.apiservice.NewApiService;
@@ -125,5 +126,10 @@ public class SecurityReceiveFragment extends TemplateItemListFragment {
         mQueryEntry = null;
         mPage = 1;
         getData();
+    }
+
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
     }
 }

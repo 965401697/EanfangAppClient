@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.lifecycle.ViewModel;
+
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -148,10 +150,10 @@ public class WorkTransferFragment extends TemplateItemListFragment {
         workTalkAdapter.setOnLoadMoreListener(this, mRecyclerView);
 
         mUserId = WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getUserId();
+        setListener();
     }
 
 
-    @Override
     protected void setListener() {
         workTalkAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             WorkTransferListBean.ListBean workTalkBean = workTalkAdapter.getData().get(position);
@@ -236,4 +238,8 @@ public class WorkTransferFragment extends TemplateItemListFragment {
         getData();
     }
 
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
+    }
 }

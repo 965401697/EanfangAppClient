@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSONObject;
@@ -44,12 +45,6 @@ public class SecurityFoucsFragment extends TemplateItemListFragment {
 
     public String getmTitle() {
         return mTitle;
-    }
-
-
-    @Override
-    protected void setListener() {
-
     }
 
 
@@ -271,4 +266,8 @@ public class SecurityFoucsFragment extends TemplateItemListFragment {
         }
     }
 
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
+    }
 }

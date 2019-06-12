@@ -2,6 +2,8 @@ package net.eanfang.worker.ui.fragment;
 
 import android.view.View;
 
+import androidx.lifecycle.ViewModel;
+
 import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
@@ -267,6 +269,11 @@ public class MineTakePublishListFragment extends TemplateItemListFragment {
                         mSwipeRefreshLayout.setRefreshing(false);
                     }
                 });
+    }
+
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
     }
 
 

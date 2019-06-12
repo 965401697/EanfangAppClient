@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 
+import androidx.lifecycle.ViewModel;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
@@ -128,5 +130,9 @@ public class EquipmentListFragment extends TemplateItemListFragment {
                 });
     }
 
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
+    }
 }
 

@@ -32,4 +32,6 @@ dependencies {
 
     api pkg.databindingRuntime
 
+    implementation pkg.fastjson
+
 }

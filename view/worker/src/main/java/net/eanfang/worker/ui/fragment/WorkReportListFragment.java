@@ -3,6 +3,8 @@ package net.eanfang.worker.ui.fragment;
 import android.content.Intent;
 import android.view.View;
 
+import androidx.lifecycle.ViewModel;
+
 import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
@@ -207,5 +209,10 @@ public class WorkReportListFragment extends TemplateItemListFragment {
             mPage = 1;
             getData();
         }
+    }
+
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
     }
 }

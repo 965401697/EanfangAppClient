@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import android.view.View;
 
+import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
@@ -124,5 +125,10 @@ public class SecuritySendFragment extends TemplateItemListFragment {
         mQueryEntry = null;
         mPage = 1;
         getData();
+    }
+
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
     }
 }

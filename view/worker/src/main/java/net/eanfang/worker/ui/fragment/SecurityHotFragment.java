@@ -2,7 +2,10 @@ package net.eanfang.worker.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.View;
 
 import com.alibaba.fastjson.JSONObject;
@@ -47,7 +50,6 @@ public class SecurityHotFragment extends TemplateItemListFragment {
     }
 
 
-    @Override
     protected void setListener() {
         securityListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             switch (view.getId()) {
@@ -104,7 +106,7 @@ public class SecurityHotFragment extends TemplateItemListFragment {
         mRecyclerView.addItemDecoration(new BGASpaceItemDecoration(20));
         securityListAdapter.setOnLoadMoreListener(this, mRecyclerView);
         mRecyclerView.addOnScrollListener(new BGARVOnScrollListener(getActivity()));
-
+        setListener();
     }
 
 
@@ -309,4 +311,8 @@ public class SecurityHotFragment extends TemplateItemListFragment {
         }
     }
 
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
+    }
 }

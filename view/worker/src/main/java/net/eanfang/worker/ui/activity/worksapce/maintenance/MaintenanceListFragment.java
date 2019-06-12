@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.lifecycle.ViewModel;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
@@ -254,5 +256,10 @@ public class MaintenanceListFragment extends TemplateItemListFragment {
         }
         showToast("只有订单负责人可以操作");
         return false;
+    }
+
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
     }
 }

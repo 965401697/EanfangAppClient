@@ -189,6 +189,18 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         ((TextView) findViewById(R.id.tv_title)).setText(txt);
     }
 
+    public void setRightImageResId(int resId) {
+        ((ImageView) findViewById(R.id.iv_right)).setImageResource(resId);
+    }
+
+    public void setRightTitle(String id) {
+        ((TextView) findViewById(R.id.tv_right)).setText(id);
+    }
+
+    public void setRightTitleOnClickListener(View.OnClickListener listener) {
+        findViewById(R.id.tv_right).setOnClickListener(listener);
+    }
+
     /**
      * 设置返回按钮
      *
@@ -405,6 +417,13 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         private String[] titles;
         @Getter
         private ArrayList<Fragment> fragments;
+
+        /**
+         * 普通，主页使用
+         */
+        public MyPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
 
         public MyPagerAdapter(FragmentManager fm, String[] mTitles) {
             super(fm);

@@ -3,6 +3,8 @@ package net.eanfang.worker.ui.fragment;
 import android.content.Intent;
 import android.view.View;
 
+import androidx.lifecycle.ViewModel;
+
 import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
@@ -155,5 +157,10 @@ public class DesignOrderFragment extends TemplateItemListFragment {
                     showToast("已同意");
                     findViewById(R.id.tv_do_second).setVisibility(View.GONE);
                 }));
+    }
+
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
     }
 }

@@ -3,6 +3,8 @@ package net.eanfang.worker.ui.fragment;
 import android.content.Intent;
 import android.view.View;
 
+import androidx.lifecycle.ViewModel;
+
 import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
@@ -75,9 +77,6 @@ public class MineTaskPublishListFragment extends TemplateItemListFragment {
 //        rvList = (RecyclerView) findViewById(R.id.rv_list);
 //    }
 
-    @Override
-    protected void setListener() {
-    }
 
     @Override
     protected void initAdapter() {
@@ -321,6 +320,11 @@ public class MineTaskPublishListFragment extends TemplateItemListFragment {
                 mAdapter.remove(mCurrentPosition);
             }
         }
+    }
+
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
     }
 
 

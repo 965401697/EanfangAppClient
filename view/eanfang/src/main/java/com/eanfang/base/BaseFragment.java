@@ -72,7 +72,9 @@ public abstract class BaseFragment extends RxFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initLoadSir();
+        onVisibleToUser();
     }
+
 
     /**
      * 初始化loadSir默认打开页面

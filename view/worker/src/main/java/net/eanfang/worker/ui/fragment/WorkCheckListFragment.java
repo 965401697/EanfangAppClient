@@ -3,6 +3,8 @@ package net.eanfang.worker.ui.fragment;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.lifecycle.ViewModel;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.config.Constant;
@@ -195,5 +197,10 @@ public class WorkCheckListFragment extends TemplateItemListFragment {
             mPage = 1;
             getData();
         }
+    }
+
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
     }
 }

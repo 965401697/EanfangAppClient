@@ -16,7 +16,7 @@ public class FastJsonResponseBodyConverter<T> implements Converter<ResponseBody,
         this.type = type;
     }
 
-    /*
+    /**
      * 转换方法
      */
     @Override
