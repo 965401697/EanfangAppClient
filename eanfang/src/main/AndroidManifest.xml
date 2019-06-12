@@ -93,11 +93,8 @@
         <activity android:name=".ui.activity.InviteFriendActivity" />
         <activity android:name=".ui.activity.InviteDetailActivity"
             android:launchMode="singleTop"/>
-        <activity android:name=".ui.activity.ActiveRuleActivity" />
         <activity android:name=".ui.activity.ExtractSuccessActivity" />
         <activity android:name=".ui.activity.CashOurActivity" />
-        <activity android:name=".ui.activity.InviteShareActivity"
-            />
         <activity android:name=".util.FileDisplayActivity" />
     </application>
 

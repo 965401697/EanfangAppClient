@@ -16,6 +16,8 @@ import com.eanfang.R;
 import com.eanfang.R2;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.application.EanfangApplication;
+import com.eanfang.dialog.ActiveRuleDialog;
+import com.eanfang.dialog.InviteShareDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.InviteHistoryBean;
@@ -100,15 +102,15 @@ public class InviteFriendActivity extends BaseActivity {
      * 显示分享页面
      */
     private void showShareDialog() {
-        startActivity(new Intent(this, InviteShareActivity.class));
-
+        new InviteShareDialog(this).show();
     }
 
     /**
      * 活动弹窗显示
      */
     private void activityDialogShow() {
-        startActivity(new Intent(this, ActiveRuleActivity.class));
+        ActiveRuleDialog dialog = new ActiveRuleDialog(this);
+        dialog.show();
     }
 
     private void initAllPerson() {

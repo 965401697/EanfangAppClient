@@ -1,5 +1,6 @@
-package com.eanfang.ui.activity;
+package com.eanfang.dialog;
 
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Intent;
@@ -12,7 +13,8 @@ import android.os.Bundle;
 import com.eanfang.BuildConfig;
 import com.eanfang.R;
 import com.eanfang.application.EanfangApplication;
-import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.ui.activity.QrCodeShowActivity;
+import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.JumpItent;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.ChecksumException;
@@ -33,29 +35,37 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+import static android.content.Context.CLIPBOARD_SERVICE;
+
 
 /**
  * @author liangkailun
  * Date ：2019-05-27
  * Describe :分享页面
  */
-public class InviteShareActivity extends BaseActivity {
+public class InviteShareDialog extends BaseDialog {
+    private final Activity mContext;
     private ClipboardManager myClipboard;
     private ClipData myClip;
     private String mCopyText;
 
-    String uri = BuildConfig.OSS_SERVER + EanfangApplication.get().getUser().getAccount().getQrCode();
+    private String uri = BuildConfig.OSS_SERVER + EanfangApplication.get().getUser().getAccount().getQrCode();
+
+    public InviteShareDialog(Activity context) {
+        super(context, true);
+        this.mContext = context;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    protected void initCustomView(Bundle savedInstanceState) {
         setContentView(R.layout.dialog_invite_share);
-        myClipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+        myClipboard = (ClipboardManager) mContext.getSystemService(CLIPBOARD_SERVICE);
         initData();
         initView();
     }
 
     private void initView() {
+        findViewById(R.id.bg_share).setOnClickListener(v -> dismiss());
         //分享到微信
         findViewById(R.id.img_share_weixin).setOnClickListener(v -> {
             shareToWx(0);
@@ -70,7 +80,7 @@ public class InviteShareActivity extends BaseActivity {
             bundle.putString("qrcodeTitle", EanfangApplication.get().getUser().getAccount().getRealName());
             bundle.putString("qrcodeAddress", EanfangApplication.get().getUser().getAccount().getQrCode());
             bundle.putString("qrcodeMessage", "personal");
-            JumpItent.jump(this, QrCodeShowActivity.class, bundle);
+            JumpItent.jump(mContext, QrCodeShowActivity.class, bundle);
         });
         //复制链接
         findViewById(R.id.img_copy_link).setOnClickListener(v -> {
@@ -79,7 +89,7 @@ public class InviteShareActivity extends BaseActivity {
             showToast(mCopyText + "\n 已复制完成");
         });
         findViewById(R.id.tv_invite_cancel).setOnClickListener(v -> {
-            finishSelf();
+            dismiss();
         });
     }
 
@@ -95,13 +105,10 @@ public class InviteShareActivity extends BaseActivity {
             public void onResponse(Call call, Response response) {
                 InputStream inputStream = response.body().byteStream();
                 Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                runOnUiThread(() -> {
-                    Result result = parseInfoFromBitmap(bitmap);
-                    if (result != null) {
-                        mCopyText = result.getText();
-                    }
-                });
-
+                Result result = parseInfoFromBitmap(bitmap);
+                if (result != null) {
+                    mCopyText = result.getText();
+                }
             }
         });
     }
@@ -126,15 +133,15 @@ public class InviteShareActivity extends BaseActivity {
         return null;
     }
 
-    private void shareToWx(int type){
-        if (isWeixinAvilible()){
+    private void shareToWx(int type) {
+        if (isWeixinAvilible()) {
             Class clz = null;
             try {
-                clz = Class.forName(getApplication().getPackageName()+".wxapi.WXEntryActivity");
-                Intent intent = new Intent(this, clz);
+                clz = Class.forName(mContext.getApplication().getPackageName() + ".wxapi.WXEntryActivity");
+                Intent intent = new Intent(mContext, clz);
                 intent.putExtra("flag", type);
                 intent.putExtra("url", mCopyText);
-                startActivity(intent);
+                mContext.startActivity(intent);
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
@@ -143,7 +150,7 @@ public class InviteShareActivity extends BaseActivity {
 
     private boolean isWeixinAvilible() {
         // 获取packagemanager
-        final PackageManager packageManager = this.getPackageManager();
+        final PackageManager packageManager = mContext.getPackageManager();
         // 获取所有已安装程序的包信息
         List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);
         if (pinfo != null) {
