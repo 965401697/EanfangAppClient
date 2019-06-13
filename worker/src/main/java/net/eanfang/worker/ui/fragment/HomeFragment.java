@@ -480,6 +480,7 @@ public class HomeFragment extends BaseFragment {
             }
         });
     }
+
     /**
      * 进行点赞
      */
@@ -593,7 +594,7 @@ public class HomeFragment extends BaseFragment {
                     continue;
                 }
 
-                if (noticeEntity.getNoticeType() == 22) {
+                if (noticeEntity.getNoticeType() == 22 || noticeEntity.getNoticeType() == 78) {
                     data.add(repairStr + "\r\n" + GetDateUtils.dateToDateTimeString(noticeEntity.getCreateTime()));
                 } else if (noticeEntity.getNoticeType() == 40) {
                     data.add(installStr + "\r\n" + GetDateUtils.dateToDateTimeString(noticeEntity.getCreateTime()));

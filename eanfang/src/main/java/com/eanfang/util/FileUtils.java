@@ -332,10 +332,13 @@ public class FileUtils {
             return "";
         }
 
+//        File f = new File(VIDEO_STORAGE_DIR + name + ".jpg");
         File f = new File(VIDEO_STORAGE_DIR + name + ".jpg");
 
         if (f.exists()) {
             f.delete();
+        } else {
+            f.mkdirs();
         }
 
         FileOutputStream fOut = null;

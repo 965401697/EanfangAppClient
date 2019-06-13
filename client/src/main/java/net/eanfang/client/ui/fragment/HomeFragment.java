@@ -353,7 +353,7 @@ public class HomeFragment extends BaseFragment {
                 if (StringUtils.isEmpty(realName)) {
                     continue;
                 }
-                if (noticeEntity.getNoticeType() == 23) {
+                if (noticeEntity.getNoticeType() == 23 || noticeEntity.getNoticeType() == 73) {
                     data.add(repairStr + "\r\n" + GetDateUtils.dateToDateTimeString(noticeEntity.getCreateTime()));
                 } else if (noticeEntity.getNoticeType() == 42) {
                     data.add(quoteStr + "\r\n" + GetDateUtils.dateToDateTimeString(noticeEntity.getCreateTime()));
