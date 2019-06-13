@@ -80,7 +80,7 @@ public class SkillAreaActivity extends BaseWorkerActivity implements AreaCheckCh
 
     private void initAreaData() {
         //获取国家区域
-        if (EanfangApplication.get().sSaveArea == null) {
+        if (EanfangApplication.sSaveArea == null) {
             String areaJson = SharePreferenceUtil.get().getString(Constant.COUNTRY_AREA_LIST, "");
             if (StringUtils.isEmpty(areaJson)) {
                 showToast("加载服务区域失败！");
@@ -89,7 +89,7 @@ public class SkillAreaActivity extends BaseWorkerActivity implements AreaCheckCh
                 loadingDialog.show();
                 ThreadPoolManager manager = ThreadPoolManager.newInstance();
                 manager.addExecuteTask(() -> {
-                    EanfangApplication.get().sSaveArea = JSONObject.toJavaObject(JSONObject.parseObject(areaJson), BaseDataEntity.class);
+                    EanfangApplication.sSaveArea = JSONObject.toJavaObject(JSONObject.parseObject(areaJson), BaseDataEntity.class);
                     runOnUiThread(this::initData);
                 });
             }
@@ -101,7 +101,7 @@ public class SkillAreaActivity extends BaseWorkerActivity implements AreaCheckCh
 
     private void initData() {
         loadingDialog.dismiss();
-        areaListBean = EanfangApplication.get().sSaveArea.getChildren();
+        areaListBean = EanfangApplication.sSaveArea.getChildren();
         EanfangHttp.get(UserApi.GET_TECH_WORKER_AREA + userid + "/AREA").execute(new EanfangCallback<SystypeBean>(this, true, SystypeBean.class, (bean) -> {
             byNetGrant = bean;
             fillData();
@@ -224,13 +224,13 @@ public class SkillAreaActivity extends BaseWorkerActivity implements AreaCheckCh
         GroupAdapter.FirstHolder holder = mAdapter.getChangeTextView(onPos);
         if (holder != null) {
             if (areaSize == checkAreaSize) {
-                holder.tv_cb.setText("取消全选");
+                holder.getTvCb().setText("取消全选");
                 areaListBean.get(onPos).setCheck(true);
             } else {
-                holder.tv_cb.setText("全选");
+                holder.getTvCb().setText("全选");
                 areaListBean.get(onPos).setCheck(false);
             }
-            holder.tv.setText(areaListBean.get(onPos).getDataName() + "(" + checkAreaSize + "/" + areaSize + ")");
+            holder.getTv().setText(areaListBean.get(onPos).getDataName() + "(" + checkAreaSize + "/" + areaSize + ")");
         }
     }
 }

@@ -10,6 +10,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.provider.ContactsContract;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.eanfang.apiservice.NewApiService;
@@ -25,6 +26,7 @@ import org.json.JSONObject;
  * Describe :获取用户通讯录信息
  */
 public class ContactUtil {
+    private static final String TAG = "ContactUtil";
     private static final String ADDRESS_LIST = "addressList";
     private static final int POST_TIME = 15 * 24 * 60 * 60 * 1000;
 
@@ -41,7 +43,7 @@ public class ContactUtil {
                     try {
                         SharePreferenceUtil.get().set(ADDRESS_LIST, System.currentTimeMillis());
                     } catch (IOException e) {
-                        e.printStackTrace();
+                        Log.e(TAG, e.getMessage());
                     }
                 }));
             }

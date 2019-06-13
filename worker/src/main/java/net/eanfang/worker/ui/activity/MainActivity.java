@@ -355,14 +355,14 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
                 provinceEntity.setChildren(cityList);
             }
             entity.setChildren(areaListBean);
-            EanfangApplication.get().sSaveArea = entity;
+            EanfangApplication.sSaveArea = entity;
             try {
                 SharePreferenceUtil.get().set(Constant.COUNTRY_AREA_LIST, JSON.toJSONString(entity));
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.e(TAG, e.getMessage());
             }
         } else {
-            EanfangApplication.get().sSaveArea = JSONObject.toJavaObject(JSONObject.parseObject(areaJson), BaseDataEntity.class);
+            EanfangApplication.sSaveArea = JSONObject.toJavaObject(JSONObject.parseObject(areaJson), BaseDataEntity.class);
         }
     }
 

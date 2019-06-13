@@ -47,7 +47,7 @@ public class EanfangApplication extends CustomeApplication {
     /**
      * 存储地域
      */
-    public BaseDataEntity sSaveArea;
+    public static BaseDataEntity sSaveArea;
     /**
      * app类型
      */

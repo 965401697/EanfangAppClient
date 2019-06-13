@@ -25,18 +25,18 @@ public class PeerConnectionListAdapter extends BaseQuickAdapter<PeerConnectionDa
         if (item == null) {
             return;
         }
-        helper.mTvConnectionItemName.setText(item.getRealName());
-        helper.mIvConnectionItemHeader.setImageURI(BuildConfig.OSS_SERVER
+        helper.getTvConnectionItemName().setText(item.getRealName());
+        helper.getIvConnectionItemHeader().setImageURI(BuildConfig.OSS_SERVER
                 + item.getAvatar());
         //公司
         OrgEntity orgEntity = item.getOrgEntity();
         if (orgEntity != null) {
-            helper.mTvConnectionItemCompany.setText(orgEntity.getOrgName());
+            helper.getTvConnectionItemCompany().setText(orgEntity.getOrgName());
         }
         if (item.getDefaultUser() != null) {
             item.getDefaultUser().setFollowStatus(1);
-            helper.mBtnConnectionItemAddOrCancel.setText("+ 关注");
-            helper.mBtnConnectionItemAddOrCancel.setSelected(true);
+            helper.getBtnConnectionItemAddOrCancel().setText("+ 关注");
+            helper.getBtnConnectionItemAddOrCancel().setSelected(true);
         }
 
 

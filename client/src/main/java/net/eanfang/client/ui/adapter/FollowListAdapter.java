@@ -34,8 +34,8 @@ public class FollowListAdapter extends BaseQuickAdapter<FollowDataBean.FollowLis
         if (userEntity != null && userEntity.getAccountEntity() != null) {
             AccountEntity accountEntityBean = userEntity.getAccountEntity();
             //设置姓名、头像
-            helper.mTvFollowItemName.setText(accountEntityBean.getRealName());
-            helper.mIvFollowItemHeader.setImageURI(BuildConfig.OSS_SERVER
+            helper.getTvFollowItemName().setText(accountEntityBean.getRealName());
+            helper.getIvFollowItemHeader().setImageURI(BuildConfig.OSS_SERVER
                     + accountEntityBean.getAvatar());
         }
 
@@ -43,20 +43,20 @@ public class FollowListAdapter extends BaseQuickAdapter<FollowDataBean.FollowLis
         if (workerEntity != null) {
             //设置认证状态
             int visible = workerEntity.getVerifyStatus() == 1 ? View.VISIBLE : View.GONE;
-            helper.mImgFollowItemAuth.setVisibility(visible);
+            helper.getImgFollowItemAuth().setVisibility(visible);
         }
 
         OrgEntity orgEntity = item.getOrgEntity();
         if (orgEntity != null) {
             //设置工资名称
-            helper.mTvFollowItemCompany.setText(orgEntity.getOrgName());
+            helper.getTvFollowItemCompany().setText(orgEntity.getOrgName());
         }
         //设置好友状态显示
-        helper.mTvFollowItemFriendStatus.setVisibility(
+        helper.getTvFollowItemFriendStatus().setVisibility(
                 item.getFriend() == 0 ? View.VISIBLE : View.GONE);
         item.setFollowsStatus(0);
-        helper.mBtnFollowItemAddOrCancel.setSelected(false);
-        helper.mBtnFollowItemAddOrCancel.setText("已关注");
+        helper.getBtnFollowItemAddOrCancel().setSelected(false);
+        helper.getBtnFollowItemAddOrCancel().setText("已关注");
     }
 
 }
