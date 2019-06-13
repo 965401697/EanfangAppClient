@@ -9,8 +9,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.lifecycle.ViewModel;
+
+import com.eanfang.base.BaseActivity;
 import com.eanfang.config.Config;
-import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
@@ -39,20 +41,8 @@ public class FilterTenderActivity extends BaseActivity implements SelectTimeDial
 
     @BindView(R.id.tag_system_type)
     TagFlowLayout tagSystemType;
-    @BindView(R.id.tv_start)
-    TextView tvStart;
-    @BindView(R.id.ll_start)
-    LinearLayout llStart;
-    @BindView(R.id.tv_end)
-    TextView tvEnd;
-    @BindView(R.id.ll_end)
-    LinearLayout llEnd;
-    @BindView(R.id.tv_cancle)
-    TextView tvCancle;
     @BindView(R.id.tv_sure)
     TextView tvSure;
-    @BindView(R.id.et_adress)
-    EditText etAdress;
 
     private TextView mCurrentText;
 
@@ -70,9 +60,15 @@ public class FilterTenderActivity extends BaseActivity implements SelectTimeDial
         initView();
     }
 
-    private void initView() {
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
+    }
+
+    @Override
+    protected void initView() {
         setTitle("筛选");
-        setLeftBack();
+        setLeftBack(true);
         for (BaseDataEntity s : systemTypeList) {
             s.setCheck(false);
         }
@@ -97,22 +93,9 @@ public class FilterTenderActivity extends BaseActivity implements SelectTimeDial
 
     }
 
-    @OnClick({R.id.ll_start, R.id.ll_end, R.id.tv_cancle, R.id.tv_sure})
+    @OnClick({R.id.tv_sure})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.ll_start:
-                mCurrentText = tvStart;
-                SelectTimeDialogFragment selectTimeDialogFragment = SelectTimeDialogFragment.newInstance("tender");
-                selectTimeDialogFragment.show(getSupportFragmentManager(), R.string.app_name + "");
-                break;
-            case R.id.ll_end:
-                mCurrentText = tvEnd;
-                SelectTimeDialogFragment selectTimeDialogFragment_end = SelectTimeDialogFragment.newInstance("tender");
-                selectTimeDialogFragment_end.show(getSupportFragmentManager(), R.string.app_name + "");
-                break;
-            case R.id.tv_cancle:
-                finishSelf();
-                break;
             case R.id.tv_sure:
                 sub();
                 break;
@@ -126,29 +109,6 @@ public class FilterTenderActivity extends BaseActivity implements SelectTimeDial
         QueryEntry queryEntry = new QueryEntry();
         if (!StringUtils.isEmpty(mCode)) {
             queryEntry.getEquals().put("businessOneCode", mCode + "");
-        }
-
-        if (!TextUtils.isEmpty(etAdress.getText().toString().trim())) {
-            if (queryEntry == null) {
-                queryEntry = new QueryEntry();
-            }
-            queryEntry.getEquals().put("projectAddress", etAdress.getText().toString().trim());
-        }
-        if (!TextUtils.isEmpty(tvStart.getText().toString().trim())) {
-
-            if (queryEntry == null) {
-                queryEntry = new QueryEntry();
-            }
-
-            queryEntry.getGtEquals().put("startDate", tvStart.getText().toString().trim());
-        }
-        if (!TextUtils.isEmpty(tvEnd.getText().toString().trim())) {
-
-            if (queryEntry == null) {
-                queryEntry = new QueryEntry();
-            }
-
-            queryEntry.getLtEquals().put("endDate", tvEnd.getText().toString().trim());
         }
 
         Intent intent = new Intent();
