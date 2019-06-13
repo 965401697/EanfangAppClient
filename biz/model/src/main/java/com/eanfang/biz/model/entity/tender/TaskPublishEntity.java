@@ -1,13 +1,13 @@
 package com.eanfang.biz.model.entity.tender;
 
+import com.eanfang.biz.model.entity.OrgEntity;
+import com.eanfang.biz.model.entity.UserEntity;
+import com.eanfang.biz.model.entity.WorkerEntity;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-
-import com.eanfang.biz.model.entity.OrgEntity;
-import com.eanfang.biz.model.entity.UserEntity;
-import com.eanfang.biz.model.entity.WorkerEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -89,7 +89,7 @@ public class TaskPublishEntity implements Serializable {
     /**
      * 项目预算
      */
-    private BigDecimal budget;
+    private Double budget;
     /**
      * 预算单位
      */
