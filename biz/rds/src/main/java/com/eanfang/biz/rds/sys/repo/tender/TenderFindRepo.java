@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.eanfang.biz.model.bean.PageBean;
 import com.eanfang.biz.model.bean.QueryEntry;
-import com.eanfang.biz.model.entity.IfbOrderEntity;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
 import com.eanfang.biz.rds.base.BaseRepo;
 import com.eanfang.biz.rds.sys.ds.impl.tender.TenderFindDs;
@@ -23,12 +22,10 @@ public class TenderFindRepo extends BaseRepo<TenderFindDs> {
     /**
      * 用工找活
      */
-    public MutableLiveData<PageBean<TaskPublishEntity>> doGetTenderFindeList(QueryEntry queryEntry) {
+    public MutableLiveData<PageBean<TaskPublishEntity>> doGetTenderFinderList(QueryEntry queryEntry) {
         MutableLiveData<PageBean<TaskPublishEntity>> tenderFindMutableLiveData = new MutableLiveData<>();
         queryEntry.setSize(10);
-        remoteDataSource.getTendeFind(queryEntry, (val) -> {
-            tenderFindMutableLiveData.setValue(val);
-        });
+        remoteDataSource.getTenderFind(queryEntry, tenderFindMutableLiveData::setValue);
         return tenderFindMutableLiveData;
     }
 }

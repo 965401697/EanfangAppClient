@@ -121,9 +121,8 @@ public enum RetrofitManagement {
                             actionLiveData.setValue(new BaseActionEvent(BaseActionEvent.EMPTY_DATA));
                             break;
                         default:
-                            throw new ServerResultException(result.getCode(), result.getMessage());
                     }
-                    return createData(result.getMessage());
+                    throw new ServerResultException(result.getCode(), result.getMessage());
                 });
     }
 
@@ -140,17 +139,17 @@ public enum RetrofitManagement {
 
     public <T> T getService(Class<T> clz, String host) {
         T value;
-        if (serviceMap.containsKey(host)) {
-            Object obj = serviceMap.get(host);
+        if (serviceMap.containsKey(clz.getName())) {
+            Object obj = serviceMap.get(clz.getName());
             if (obj == null) {
                 value = createRetrofit(host).create(clz);
-                serviceMap.put(host, value);
+                serviceMap.put(clz.getName(), value);
             } else {
                 value = (T) obj;
             }
         } else {
             value = createRetrofit(host).create(clz);
-            serviceMap.put(host, value);
+            serviceMap.put(clz.getName(), value);
         }
         return value;
     }

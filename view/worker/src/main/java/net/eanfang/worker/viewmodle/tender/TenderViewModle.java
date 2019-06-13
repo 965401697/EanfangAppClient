@@ -114,7 +114,7 @@ public class TenderViewModle extends BaseViewModel {
         }
         this.mFindPage = page;
         mFindQueryEntry.setPage(page);
-        tenderFindRepo.doGetTenderFindeList(mFindQueryEntry).observe(lifecycleOwner, tenderBean -> {
+        tenderFindRepo.doGetTenderFinderList(mFindQueryEntry).observe(lifecycleOwner, tenderBean -> {
             tenderFindLiveData.setValue(tenderBean);
         });
     }

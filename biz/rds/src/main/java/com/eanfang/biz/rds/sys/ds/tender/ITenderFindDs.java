@@ -13,9 +13,8 @@ import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
 public interface ITenderFindDs {
 
     /**
-     *
      * @param queryEntry
      * @param callback
      */
-    void getTendeFind(QueryEntry queryEntry, RequestCallback<PageBean<TaskPublishEntity>> callback);
+    void getTenderFind(QueryEntry queryEntry, RequestCallback<PageBean<TaskPublishEntity>> callback);
 }
