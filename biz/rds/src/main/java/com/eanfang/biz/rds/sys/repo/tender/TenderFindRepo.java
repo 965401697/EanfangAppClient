@@ -8,6 +8,8 @@ import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
 import com.eanfang.biz.rds.base.BaseRepo;
 import com.eanfang.biz.rds.sys.ds.impl.tender.TenderFindDs;
 
+import lombok.val;
+
 /**
  * @author guanluocang
  * @data 2019/6/11
@@ -25,7 +27,9 @@ public class TenderFindRepo extends BaseRepo<TenderFindDs> {
     public MutableLiveData<PageBean<TaskPublishEntity>> doGetTenderFinderList(QueryEntry queryEntry) {
         MutableLiveData<PageBean<TaskPublishEntity>> tenderFindMutableLiveData = new MutableLiveData<>();
         queryEntry.setSize(10);
-        remoteDataSource.getTenderFind(queryEntry, tenderFindMutableLiveData::setValue);
+        remoteDataSource.getTenderFind(queryEntry, (val) -> {
+            tenderFindMutableLiveData.setValue(val);
+        });
         return tenderFindMutableLiveData;
     }
 }

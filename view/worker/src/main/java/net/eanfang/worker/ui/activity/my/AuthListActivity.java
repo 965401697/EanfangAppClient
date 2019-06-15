@@ -123,7 +123,7 @@ public class AuthListActivity extends BaseActivity {
                 break;
             //服务区域
             case R.id.rl_service_area:
-                startActivity(new Intent(this, AuthWorkerAreaActivity.class).putExtra("status", verify));
+//                startActivity(new Intent(this, SelectAreaActivity.class).putExtra("status", verify));
                 break;
             case R.id.rl_other_info:
                 break;

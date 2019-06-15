@@ -62,7 +62,7 @@ public class AuthAreaActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_area_auth);
+        setContentView(R.layout.activity_select_area);
         ButterKnife.bind(this);
         doLoadArea();
         initView();

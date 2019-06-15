@@ -40,13 +40,6 @@ public class WorkTenderFindFragment extends TemplateItemListFragment {
         return new WorkTenderFindFragment().setMTenderViewModle(tenderViewModle);
     }
 
-
-    @Override
-    protected ViewModel initViewModel() {
-        mTenderViewModle.getTenderLiveData().observe(this, this::getCommenData);
-        return mTenderViewModle;
-    }
-
     @Override
     protected void initAdapter(BaseQuickAdapter baseQuickAdapter) {
         workTenderFindAdapter = new WorkTenderFindAdapter();
@@ -54,8 +47,16 @@ public class WorkTenderFindFragment extends TemplateItemListFragment {
     }
 
     @Override
+    protected ViewModel initViewModel() {
+        mTenderViewModle.getTenderFindLiveData().observe(this, this::getCommenData);
+        return mTenderViewModle;
+    }
+
+
+    @Override
     protected void getData() {
         mTenderViewModle.doGetFindData(mPage);
     }
+
 
 }

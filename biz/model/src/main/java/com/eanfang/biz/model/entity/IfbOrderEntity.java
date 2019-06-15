@@ -61,7 +61,7 @@ public class IfbOrderEntity implements Serializable {
     /**
      * 招标文件价格
      */
-    private BigDecimal ifbFilePrice;
+    private Double ifbFilePrice;
     /**
      * 获取招标文件地点
      */
@@ -77,7 +77,7 @@ public class IfbOrderEntity implements Serializable {
     /**
      * 预算金额
      */
-    private BigDecimal budgetPrice;
+    private Double budgetPrice;
     /**
      * 项目联系人
      */

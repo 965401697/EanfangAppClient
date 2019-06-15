@@ -76,7 +76,8 @@
         android:supportsRtl="true"
         android:theme="@style/NewBaseTheme"
         tools:replace="android:name,android:theme">
-        <activity android:name=".ui.activity.worksapce.tender.TenderCreateActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.tender.TenderPersonalActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.tender.TenderCreateActivity" />
         <activity android:name=".ui.activity.worksapce.contacts.baseinfo.AuthCompanyFirstBActivity" />
         <activity android:name=".ui.activity.techniciancertification.JsCapabilityTagActivity" />
         <activity android:name=".ui.activity.techniciancertification.JsQualificationsAndAbilitiesActivity" />
@@ -382,7 +383,7 @@
         <activity android:name=".ui.activity.my.AuthWorkerSysTypeActivity" /> <!-- 技师绑定业务类型 -->
         <activity android:name=".ui.activity.my.AuthWorkerBizActivity" /> <!-- 技师绑定服务地区 -->
         <activity
-            android:name=".ui.activity.my.AuthWorkerAreaActivity"
+            android:name=".ui.activity.SelectAreaActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.worksapce.WebActivity"

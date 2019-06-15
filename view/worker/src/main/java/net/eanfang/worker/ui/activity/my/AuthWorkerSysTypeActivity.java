@@ -144,8 +144,9 @@ public class AuthWorkerSysTypeActivity extends BaseActivity {
         List<Integer> checkList = Stream.of(businessOneList)
                 .filter(beans -> beans.isCheck() && Stream.of(byNetGrant.getList()).filter(existsBean -> existsBean.getDataId().equals(beans.getDataId())).count() == 0)
                 .map(BaseDataEntity::getDataId).distinct().toList();
-        List<Integer> unCheckList = Stream.of(businessOneList).filter(beans -> !beans.isCheck()
-                && Stream.of(byNetGrant.getList()).filter(existsBean -> existsBean.getDataId().equals(beans.getDataId())).count() > 0)
+
+        List<Integer> unCheckList = Stream.of(businessOneList).
+                filter(beans -> !beans.isCheck() && Stream.of(byNetGrant.getList()).filter(existsBean -> existsBean.getDataId().equals(beans.getDataId())).count() > 0)
                 .map(BaseDataEntity::getDataId).distinct().toList();
 
         grantChange.setAddIds(checkList);

@@ -70,6 +70,7 @@ public class TenderViewModle extends BaseViewModel {
     public void doClickNotice() {
         if (workerTenderControlBinding.vpTenderList.getCurrentItem() != 0) {
             workerTenderControlBinding.vpTenderList.setCurrentItem(0);
+            workerTenderControlBinding.ivCreate.setVisibility(View.GONE);
             doChangeItem(mIntType);
         } else {
             doSetPop();
@@ -101,6 +102,7 @@ public class TenderViewModle extends BaseViewModel {
                 popWindow.dismiss();
             }
             workerTenderControlBinding.vpTenderList.setCurrentItem(1);
+            workerTenderControlBinding.ivCreate.setVisibility(View.VISIBLE);
             doChangeItem(2);
         }
     }

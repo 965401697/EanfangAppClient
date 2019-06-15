@@ -77,19 +77,19 @@ public class WorkerTenderControlActivity extends BaseActivity {
         mIvTenderFind = mWorkerTenderControlBinding.ivTenderFind;
         mTenderViewPager = mWorkerTenderControlBinding.vpTenderList;
         mAdapter = new MyPagerAdapter(getSupportFragmentManager(), mTitles);
-//        mAdapter.getFragments().add(WorkTenderFragment.getInstance(mTenderViewModle));
+        mAdapter.getFragments().add(WorkTenderFragment.getInstance(mTenderViewModle));
         mAdapter.getFragments().add(WorkTenderFindFragment.getInstance(mTenderViewModle));
 
         mTenderViewPager.setAdapter(mAdapter);
         mTenderViewPager.setCurrentItem(0);
         mWorkerTenderControlBinding.tvFiltrate.setOnClickListener((view) -> {
-//            Bundle bundle = new Bundle();
-//            if (mTenderViewPager.getCurrentItem() == 0) {
-//                bundle.putInt("type", 0);
-//            } else if (mTenderViewPager.getCurrentItem() == 1) {
-//                bundle.putInt("type", 1);
-//            }
-//            JumpItent.jump(WorkerTenderControlActivity.this, FilterTenderActivity.class, bundle, FILTRATE_TYPE_CODE);
+            Bundle bundle = new Bundle();
+            if (mTenderViewPager.getCurrentItem() == 0) {
+                bundle.putInt("type", 0);
+            } else if (mTenderViewPager.getCurrentItem() == 1) {
+                bundle.putInt("type", 1);
+            }
+            JumpItent.jump(WorkerTenderControlActivity.this, FilterTenderActivity.class, bundle, FILTRATE_TYPE_CODE);
         });
     }
 
@@ -114,10 +114,12 @@ public class WorkerTenderControlActivity extends BaseActivity {
                     case 0:
                         mIvTenderNotice.setImageResource(R.drawable.ic_tender_notice_pressed_down);
                         mIvTenderFind.setImageResource(R.drawable.ic_tender_find);
+                        mWorkerTenderControlBinding.ivCreate.setVisibility(View.GONE);
                         break;
                     case 1:
                         mIvTenderNotice.setImageResource(R.drawable.ic_tender_notice);
                         mIvTenderFind.setImageResource(R.drawable.ic_tender_find_pressed);
+                        mWorkerTenderControlBinding.ivCreate.setVisibility(View.VISIBLE);
                         break;
                     default:
                         break;
@@ -144,10 +146,8 @@ public class WorkerTenderControlActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         int currentTab = mTenderViewPager.getCurrentItem();
         if (resultCode == RESULT_OK && requestCode == FILTRATE_TYPE_CODE) {
-
-            com.eanfang.biz.model.bean.QueryEntry queryEntry = (QueryEntry) data.getSerializableExtra("query");
+            QueryEntry queryEntry = (QueryEntry) data.getSerializableExtra("query");
             if (queryEntry != null) {
-
                 ((WorkTenderFragment) mAdapter.getFragments().get(currentTab)).getTenderData(queryEntry);
             }
         }

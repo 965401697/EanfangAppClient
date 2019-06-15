@@ -47,6 +47,15 @@
                 android:textSize="@dimen/textSize_15" />
 
             <TextView
+                android:id="@+id/tv_tender_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_30"
+                android:layout_toRightOf="@id/tv_tender_name"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/textSize_15" />
+
+            <TextView
                 android:id="@+id/tv_tender_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -85,8 +94,8 @@
                     android:id="@+id/tv_tender_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dimen_36"
-                    android:textColor="@color/colorPrimary"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_14" />
 
             </LinearLayout>
@@ -114,8 +123,8 @@
                         android:id="@+id/tv_tender_limit_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dimen_36"
-                        android:textColor="@color/colorPrimary"
+                        android:layout_marginLeft="@dimen/dimen_20"
+                        android:textColor="@color/color_tender_offer_bg"
                         android:textSize="@dimen/textSize_14" />
                 </LinearLayout>
 
@@ -137,8 +146,8 @@
                         android:id="@+id/tv_tender_budget"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dimen_36"
-                        android:textColor="@color/colorPrimary"
+                        android:layout_marginLeft="@dimen/dimen_20"
+                        android:textColor="@color/color_tender_offer_bg"
                         android:textSize="@dimen/textSize_14" />
                 </LinearLayout>
 
@@ -167,6 +176,7 @@
                     android:id="@+id/tv_tender_require"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_20"
                     android:layout_marginTop="@dimen/dimen_20"
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_14" />

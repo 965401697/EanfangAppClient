@@ -131,6 +131,10 @@ public class TaskPublishEntity implements Serializable {
      */
     private Date createTime;
     /**
+     * 结束时间
+     */
+    private Date endTime;
+    /**
      * 创建人总公司ID
      */
     private Long createTopCompanyId;
@@ -162,7 +166,7 @@ public class TaskPublishEntity implements Serializable {
     /**
      * 被选中的申请金额
      */
-    private BigDecimal taskApplyMoney;
+    private Double taskApplyMoney;
     /**
      * 订单编号
      */
