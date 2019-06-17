@@ -11,9 +11,13 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.alibaba.fastjson.JSON;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.config.EanfangConst;
@@ -22,10 +26,12 @@ import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.MultiClickListener;
-
+import com.eanfang.sdk.picture.GridImageAdapter;
+import com.eanfang.sdk.picture.PictureInvoking;
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.takevideo.TakeVdideoMode;
 import com.eanfang.takevideo.TakeVideoActivity;
+import com.eanfang.ui.base.BasePictureActivity;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.ConnectivityChangeUtil;
 import com.eanfang.util.JumpItent;
@@ -33,6 +39,9 @@ import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.config.PictureMimeType;
+import com.luck.picture.lib.entity.LocalMedia;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
@@ -44,7 +53,6 @@ import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.worksapce.equipment.EquipmentListActivity;
 import net.eanfang.client.ui.activity.worksapce.scancode.ScanCodeActivity;
-import net.eanfang.client.ui.base.BaseClientActivity;
 import net.eanfang.client.ui.widget.RepairSelectDevicesDialog;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -70,7 +78,7 @@ import static android.provider.MediaStore.Video.Thumbnails.MINI_KIND;
  */
 
 
-public class AddTroubleActivity extends BaseClientActivity {
+public class AddTroubleActivity extends BasePictureActivity implements IPictureCallBack {
 
     private static final int CLIENT_ADD_TROUBLE = 2;
     /**
@@ -141,6 +149,10 @@ public class AddTroubleActivity extends BaseClientActivity {
     TextView tvSave;
     @BindView(R.id.tv_add)
     TextView tvAdd;
+    @BindView(R.id.recycleview)
+    RecyclerView recycleview;
+    @BindView(R.id.recycle_video)
+    RecyclerView recycleVideo;
     /**
      * 设备编号
      */
@@ -251,7 +263,41 @@ public class AddTroubleActivity extends BaseClientActivity {
         if (ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyId() == null) {
         }
         snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this));
+
+        initRecycle();
+        initRecycleVideo();
     }
+
+    private List<LocalMedia> selectList = new ArrayList<>();
+    private final int HEAD_PHOTO = 100;
+    private PictureInvoking imgInvoke;
+    private void initRecycle() {
+
+         imgInvoke = new PictureInvoking(this, recycleview, selectList);
+        imgInvoke.initRecycle(3, onAddPicClickListener);
+    }
+
+    GridImageAdapter.onAddPicClickListener onAddPicClickListener = () -> {
+        takePhotos(AddTroubleActivity.this, HEAD_PHOTO, this);
+    };
+    private List<LocalMedia> videoList = new ArrayList<>();
+    private PictureInvoking videoInvoke;
+    private GridImageAdapter vieoAdapter;
+    private void initRecycleVideo() {
+        videoInvoke = new PictureInvoking(this, recycleVideo, videoList);
+        videoInvoke.setType(1);
+        videoInvoke.initRecycle(1, videoListenner);
+    }
+
+    GridImageAdapter.onAddPicClickListener videoListenner = () -> {
+        videoSelect(true, new IPictureCallBack() {
+            @Override
+            public void onSuccess(List<LocalMedia> list) {
+                videoList = list;
+                videoInvoke.setList(videoList);
+            }
+        });
+    };
 
     /**
      * 扫码获取数据
@@ -357,7 +403,7 @@ public class AddTroubleActivity extends BaseClientActivity {
             repairBugEntity.setModelName(etBrand.getText().toString().trim());
         }
         if (uploadMap.size() != 0) {
-            SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
+            SDKManager.ossKit(this).asyncPutImages(uploadMap, (isSuccess) -> {
                 runOnUiThread(() -> {
                     doVerify();
                 });
@@ -671,5 +717,11 @@ public class AddTroubleActivity extends BaseClientActivity {
         new TrueFalseDialog(this, "系统提示", "是否放弃报修？", () -> {
             finish();
         }).showDialog();
+    }
+
+    @Override
+    public void onSuccess(List<LocalMedia> list) {
+        selectList = list;
+        imgInvoke.setList(selectList);
     }
 }

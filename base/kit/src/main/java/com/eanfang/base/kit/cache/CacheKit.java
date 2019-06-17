@@ -117,9 +117,16 @@ public class CacheKit extends LruCache<String, Object> {
             String fieldName = field.getName();
             Object val;
             //解决viewModel的Observable数据类型
+
+
             if ((field.getType().toString().contains("androidx.databinding.Observable"))) {
-                Object obj = ReflectUtil.getFieldValue(value, fieldName);
-                val = ReflectUtil.invoke(obj, "get");
+                if ((field.getType().toString().contains("androidx.databinding.ObservableList"))) {
+                    val = ReflectUtil.getFieldValue(value, fieldName);
+                }else {
+                    Object obj = ReflectUtil.getFieldValue(value, fieldName);
+                    val = ReflectUtil.invoke(obj, "get");
+                }
+
             } else {
                 val = ReflectUtil.getFieldValue(value, fieldName);
             }
@@ -137,7 +144,8 @@ public class CacheKit extends LruCache<String, Object> {
                 object.put(fieldName, val);
             }
         }
-        return put(key, object.toString(), 1);
+        System.out.println("原始字符串:" + object.toString());
+        return put(key, object.toString());
     }
 
     public <T> T getVo(String key, Class<T> clazz) {
@@ -145,6 +153,19 @@ public class CacheKit extends LruCache<String, Object> {
         try {
             object = clazz.newInstance();
             String json = (String) get(key, clazz);
+            if("".equals(json)||null==json){
+                return null;
+            }
+            if(json.indexOf("\\")!=-1){
+                System.out.println("原始字符串:" + json);
+                String replaceAll = json.replaceAll("\\\\", "");
+                System.out.println("replaceAll:"+replaceAll);
+                String substring = replaceAll.substring(1, replaceAll.length() - 1);
+                System.out.println("substring:"+substring);
+                json=substring;
+            }
+
+
             JSONObject jsonObject = JSON.parseObject(json);
             Field[] fields = clazz.getDeclaredFields();
             for (Field field : fields) {

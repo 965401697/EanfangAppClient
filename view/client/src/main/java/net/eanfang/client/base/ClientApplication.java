@@ -24,6 +24,7 @@ import net.eanfang.client.ui.activity.im.CustomizeVideoMessageItemProvider;
 import net.eanfang.client.ui.activity.im.MyConversationClickListener;
 import net.eanfang.client.ui.activity.im.SampleExtensionModule;
 
+import io.reactivex.plugins.RxJavaPlugins;
 import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
