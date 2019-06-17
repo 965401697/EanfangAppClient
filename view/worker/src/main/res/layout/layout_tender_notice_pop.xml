@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/ll_noticing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/dimen_34">
+
+        <TextView
+            android:id="@+id/tv_noticing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="公告中"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/textSize_12" />
+
+        <ImageView
+            android:id="@+id/iv_noticing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_16"
+            android:src="@mipmap/ic_tender_notice_right"
+            android:visibility="visible" />
+    </LinearLayout>
+
+    <View style="@style/style_common_line_gray" />
+
+    <LinearLayout
+        android:id="@+id/ll_overing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="@dimen/dimen_34">
+
+        <TextView
+            android:id="@+id/tv_overing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="已过期"
+            android:textColor="@color/color_client_neworder"
+            android:textSize="@dimen/textSize_12" />
+
+        <ImageView
+            android:id="@+id/iv_overing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_16"
+            android:src="@mipmap/ic_tender_notice_right"
+            android:visibility="invisible" />
+    </LinearLayout>
+
+</LinearLayout>
