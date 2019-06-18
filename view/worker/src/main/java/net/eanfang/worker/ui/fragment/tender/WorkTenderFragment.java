@@ -40,6 +40,12 @@ public class WorkTenderFragment extends TemplateItemListFragment {
     }
 
     @Override
+    public void onRefresh() {
+        mTenderViewModle.mNoticeQueryEntry = null;
+        super.onRefresh();
+    }
+
+    @Override
     protected void getData() {
         mTenderViewModle.doGetNoticeData(mTenderViewModle.mIntType, mPage);
     }

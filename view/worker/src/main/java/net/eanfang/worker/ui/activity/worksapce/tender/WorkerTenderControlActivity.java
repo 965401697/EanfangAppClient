@@ -91,6 +91,9 @@ public class WorkerTenderControlActivity extends BaseActivity {
             }
             JumpItent.jump(WorkerTenderControlActivity.this, FilterTenderActivity.class, bundle, FILTRATE_TYPE_CODE);
         });
+        mWorkerTenderControlBinding.ivCreate.setOnClickListener((v) -> {
+            JumpItent.jump(this, TenderCreateActivity.class);
+        });
     }
 
     @Override
@@ -148,7 +151,11 @@ public class WorkerTenderControlActivity extends BaseActivity {
         if (resultCode == RESULT_OK && requestCode == FILTRATE_TYPE_CODE) {
             QueryEntry queryEntry = (QueryEntry) data.getSerializableExtra("query");
             if (queryEntry != null) {
-                ((WorkTenderFragment) mAdapter.getFragments().get(currentTab)).getTenderData(queryEntry);
+                if (currentTab == 0) {
+                    ((WorkTenderFragment) mAdapter.getFragments().get(currentTab)).getTenderData(queryEntry);
+                } else {
+                    ((WorkTenderFindFragment) mAdapter.getFragments().get(currentTab)).getTenderData(queryEntry);
+                }
             }
         }
     }

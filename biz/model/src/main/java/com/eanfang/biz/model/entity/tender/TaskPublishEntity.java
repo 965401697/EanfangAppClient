@@ -75,14 +75,6 @@ public class TaskPublishEntity implements Serializable {
      */
     private String latitude;
     /**
-     * 项目类型（0安装，1维修）
-     */
-    private Integer type;
-    /**
-     * 上门时间
-     */
-    private Date toDoorTime;
-    /**
      * 预计工期（0当天完工，1三天左右，2一周左右，3一个月左右，4三个月左右，5六个月左右，6一年左右，7一年以上）
      */
     private Integer predicttime;
@@ -98,10 +90,6 @@ public class TaskPublishEntity implements Serializable {
      * 一级业务类型==业务类型：
      */
     private String businessOneCode;
-    /**
-     * 一级业务类型ID（基础数据表）
-     */
-    private Long businessOneId;
     /**
      * 需求描述==环境描述
      */

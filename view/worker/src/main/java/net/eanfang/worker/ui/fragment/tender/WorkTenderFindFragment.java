@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.base.BaseFragment;
+import com.eanfang.biz.model.bean.QueryEntry;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.worktender.WorkTenderFindAdapter;
@@ -50,6 +51,18 @@ public class WorkTenderFindFragment extends TemplateItemListFragment {
     protected ViewModel initViewModel() {
         mTenderViewModle.getTenderFindLiveData().observe(this, this::getCommenData);
         return mTenderViewModle;
+    }
+
+    @Override
+    public void onRefresh() {
+        mTenderViewModle.mFindQueryEntry = null;
+        super.onRefresh();
+    }
+
+    public void getTenderData(QueryEntry queryEntry) {
+        mTenderViewModle.mFindQueryEntry = queryEntry;
+        mPage = 1;
+        getData();
     }
 
 

@@ -15,6 +15,7 @@ import com.eanfang.biz.rds.sys.ds.impl.tender.TenderNoticeDs;
  * @description
  */
 public class TenderNoticeRepo extends BaseRepo<TenderNoticeDs> {
+
     public TenderNoticeRepo(TenderNoticeDs remoteDataSource) {
         super(remoteDataSource);
     }

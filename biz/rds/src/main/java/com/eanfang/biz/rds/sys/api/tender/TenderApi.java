@@ -7,6 +7,8 @@ import com.eanfang.biz.model.entity.IfbOrderEntity;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
 import com.eanfang.biz.model.vo.LoginVo;
 
+import java.lang.reflect.Field;
+
 import io.reactivex.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
@@ -31,9 +33,21 @@ public interface TenderApi {
 
     /**
      * 用工找活
+     *
      * @param queryMap
      * @return
      */
     @POST("/yaf_task_publish/taskPublish/laborList")
     Observable<BaseResponseBody<PageBean<TaskPublishEntity>>> getTenderFindList(@Body QueryEntry queryMap);
+
+    /**
+     * 用工找活发布
+     *
+     * @param field
+     * @return
+     */
+    @POST("/yaf_task_publish/taskPublish/laborInsert")
+    Observable<BaseResponseBody<PageBean<TaskPublishEntity>>> setNewTender(@Body Field field);
+
+
 }

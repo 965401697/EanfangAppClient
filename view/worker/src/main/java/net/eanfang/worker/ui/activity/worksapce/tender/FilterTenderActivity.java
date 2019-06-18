@@ -45,12 +45,17 @@ public class FilterTenderActivity extends BaseActivity {
      * 获取系统类别
      */
     List<BaseDataEntity> systemTypeList = Config.get().getBusinessList(1);
-    private String mCode = "";
+    /**
+     * 业务类型
+     */
+    List<BaseDataEntity> businessTypeList = Config.get().getServiceList(1);
 
     private ActivityFilterTenderBinding mFilterTenderBinding;
 
     private final static int REQUEST_SELECT_ADDRESS = 1001;
     private List<String> projectArea;
+
+    private int mType = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,10 +73,23 @@ public class FilterTenderActivity extends BaseActivity {
     protected void initView() {
         setTitle("筛选");
         setLeftBack(true);
+        mType = getIntent().getIntExtra("type", 100);
         for (BaseDataEntity s : systemTypeList) {
             s.setCheck(false);
         }
+        for (BaseDataEntity b : businessTypeList) {
+            b.setCheck(false);
+        }
 
+        /**
+         * 0 招标公告
+         * 1 用工找活
+         * */
+        if (mType == 0) {
+            mFilterTenderBinding.llOrderType.setVisibility(View.GONE);
+        } else {
+            mFilterTenderBinding.llOrderType.setVisibility(View.VISIBLE);
+        }
         mFilterTenderBinding.tagSystemType.setAdapter(new TagAdapter<BaseDataEntity>(systemTypeList) {
             @Override
             public View getView(FlowLayout parent, int position, BaseDataEntity mrepairResult) {
@@ -88,6 +106,22 @@ public class FilterTenderActivity extends BaseActivity {
                 return true;
             }
         });
+        mFilterTenderBinding.tagOrderType.setAdapter(new TagAdapter<BaseDataEntity>(businessTypeList) {
+            @Override
+            public View getView(FlowLayout parent, int position, BaseDataEntity mrepairResult) {
+                TextView tv = (TextView) LayoutInflater.from(FilterTenderActivity.this).inflate(R.layout.layout_trouble_result_item, mFilterTenderBinding.tagOrderType, false);
+                tv.setText(mrepairResult.getDataName());
+                return tv;
+            }
+        });
+
+        mFilterTenderBinding.tagOrderType.setOnTagClickListener(new TagFlowLayout.OnTagClickListener() {
+            @Override
+            public boolean onTagClick(View view, int position, FlowLayout parent) {
+                businessTypeList.get(position).setCheck(!businessTypeList.get(position).isCheck());
+                return true;
+            }
+        });
 
         mFilterTenderBinding.rlSelectaddress.setOnClickListener((v) -> {
             JumpItent.jump(this, SelectAreaActivity.class, REQUEST_SELECT_ADDRESS);
@@ -101,11 +135,29 @@ public class FilterTenderActivity extends BaseActivity {
     private void sub() {
         QueryEntry queryEntry = new QueryEntry();
         List<String> checkList = Stream.of(systemTypeList).filter(beans -> beans.isCheck()).map(BaseDataEntity::getDataCode).toList();
-        if (checkList != null && checkList.size() > 0) {
-            queryEntry.getIsIn().put("businessOneCode", checkList);
-        }
-        if (projectArea != null && projectArea.size() > 0) {
-            queryEntry.getIsIn().put("projectArea", projectArea);
+        List<String> checkOrderList = Stream.of(businessTypeList).filter(beans -> beans.isCheck()).map(BaseDataEntity::getDataCode).toList();
+
+        /**
+         * 0 招标公告
+         * 1 用工找活
+         * */
+        if (mType == 0) {
+            if (checkList != null && checkList.size() > 0) {
+                queryEntry.getIsIn().put("businessOneCode", checkList);
+            }
+            if (projectArea != null && projectArea.size() > 0) {
+                queryEntry.getIsIn().put("projectArea", projectArea);
+            }
+        } else {
+            if (checkList != null && checkList.size() > 0) {
+                queryEntry.getIsIn().put("systemType", checkList);
+            }
+            if (checkOrderList != null && checkOrderList.size() > 0) {
+                queryEntry.getIsIn().put("businessOneCode", checkOrderList);
+            }
+            if (projectArea != null && projectArea.size() > 0) {
+                queryEntry.getIsIn().put("zoneCode", projectArea);
+            }
         }
 
         Intent intent = new Intent();

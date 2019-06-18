@@ -25,4 +25,5 @@ public class TenderNoticeDs extends BaseRemoteDataSource implements ITenderDs {
     public void getTendeNotice(QueryEntry queryEntry, RequestCallback<PageBean<IfbOrderEntity>> callback) {
         execute(getService(TenderApi.class).getTenderNoticeList(queryEntry), callback);
     }
+
 }

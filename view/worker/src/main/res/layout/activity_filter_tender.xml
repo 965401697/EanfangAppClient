@@ -43,7 +43,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:drawableRight="@mipmap/arrow_right"
-                    android:text="已选12个地区"
+                    android:text="已选0个地区"
                     android:textColor="@color/color_bottom"
                     android:textSize="@dimen/textSize_11" />
             </RelativeLayout>
@@ -70,6 +70,38 @@
 
                 <com.zhy.view.flowlayout.TagFlowLayout
                     android:id="@+id/tag_system_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/color_white"
+                    android:padding="@dimen/dimen_30"
+                    android:scrollbars="none" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_order_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:visibility="gone"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/dimen_20">
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dimen_90"
+                    android:layout_marginLeft="@dimen/dimen_30"
+                    android:gravity="center_vertical"
+                    android:text="按订单类型筛选"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_15" />
+
+                <com.zhy.view.flowlayout.TagFlowLayout
+                    android:id="@+id/tag_order_type"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/color_white"
