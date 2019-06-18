@@ -1,9 +1,7 @@
 package com.eanfang.biz.model.entity;
 
-import com.alibaba.fastjson.JSON;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
 import lombok.AllArgsConstructor;

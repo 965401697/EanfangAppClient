@@ -3,9 +3,7 @@ package com.eanfang.biz.model.entity.tender;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Map;
 
-import com.alibaba.fastjson.JSON;
 import com.eanfang.biz.model.entity.UserEntity;
 import com.eanfang.biz.model.entity.WorkerEntity;
 
@@ -71,28 +69,28 @@ public class TaskApplyEntity implements Serializable {
      */
     private Date confirmTime;
     /**
-     *创建人ID
+     * 创建人ID
      */
     private Long createUserId;
     /**
-     *创建人总公司
+     * 创建人总公司
      */
     private Long createTopCompanyId;
     /**
      * 创建人部门编码
-     * */
+     */
     private String createOrgCode;
     /**
      * 创建人公司ID
-     * */
+     */
     private Long createCompanyId;
     /**
      * 创建时间
-     * */
+     */
     private Date createTime;
     /**
      * 预算单位
-     * */
+     */
     private String budgetUnit;
 
     @Getter
@@ -101,7 +99,7 @@ public class TaskApplyEntity implements Serializable {
 
     /**
      * 认证状态
-     * */
+     */
     @Getter
     @Setter
     private Integer verifyStatus;

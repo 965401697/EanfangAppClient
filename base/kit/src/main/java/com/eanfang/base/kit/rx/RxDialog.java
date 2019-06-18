@@ -126,6 +126,7 @@ public class RxDialog {
         });
     }
 
+
     public Flowable dialogToFlowable() {
         return Flowable.create(new FlowableOnSubscribe() {
             @Override

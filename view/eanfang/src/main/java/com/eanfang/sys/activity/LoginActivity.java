@@ -20,7 +20,6 @@ import com.eanfang.biz.rds.base.LViewModelProviders;
 import com.eanfang.sys.fragment.PasswordFragment;
 import com.eanfang.sys.fragment.VerifyFragment;
 import com.eanfang.sys.viewmodel.LoginViewModel;
-import com.eanfang.util.QueryEntry;
 
 /**
  * @author jornl
@@ -65,7 +64,6 @@ public class LoginActivity extends BaseActivity {
         loginViewModel.getLoginLiveData().observe(this, this::handlerLogin);
         return loginViewModel;
     }
-
 
 
     @Override

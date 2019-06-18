@@ -38,7 +38,6 @@ public class LoginViewModel extends BaseViewModel {
     private LoginRepo loginRepo;
     private LoginVo loginVo;
     @Setter
-    @Getter
     private FragmentVerifyEanfangBinding verifyBinding;
     @Setter
     private FragmentPasswordEanfangBinding passwordBinding;
@@ -235,5 +234,4 @@ public class LoginViewModel extends BaseViewModel {
                     passwordBinding.setLoginVo(loginVo);
                 });
     }
-
 }

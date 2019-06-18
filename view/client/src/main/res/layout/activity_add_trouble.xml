@@ -472,11 +472,13 @@
 
 
                 <LinearLayout
+                    android:layout_marginTop="@dimen/dimen_40"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <com.photopicker.com.widget.BGASortableNinePhotoLayout
+                        android:visibility="gone"
                         android:id="@+id/snpl_moment_add_photos"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -494,6 +496,13 @@
                         app:bga_snpl_plusDrawable="@mipmap/ic_pic_add"
                         app:bga_snpl_plusEnable="true"
                         app:bga_snpl_sortable="true" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycleview"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                       >
+
+                    </androidx.recyclerview.widget.RecyclerView>
 
                     <RelativeLayout
                         android:id="@+id/rl_thumbnail"
@@ -518,12 +527,21 @@
                     </RelativeLayout>
 
                     <ImageView
+                        android:visibility="gone"
                         android:id="@+id/iv_add_video"
                         android:layout_width="@dimen/dimen_100"
                         android:layout_height="@dimen/dimen_100"
                         android:layout_marginLeft="@dimen/dimen_20"
-                        android:layout_marginTop="@dimen/dimen_40"
                         android:src="@mipmap/ic_add_video" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recycle_video"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_20"
+
+                        >
+
+                    </androidx.recyclerview.widget.RecyclerView>
 
                 </LinearLayout>
 

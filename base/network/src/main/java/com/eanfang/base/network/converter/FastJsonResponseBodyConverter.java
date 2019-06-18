@@ -1,7 +1,5 @@
 package com.eanfang.base.network.converter;
 
-import androidx.annotation.NonNull;
-
 import com.alibaba.fastjson.JSON;
 
 import java.io.IOException;
@@ -18,11 +16,11 @@ public class FastJsonResponseBodyConverter<T> implements Converter<ResponseBody,
         this.type = type;
     }
 
-    /**
+    /*
      * 转换方法
      */
     @Override
-    public T convert(@NonNull ResponseBody responseBody) throws IOException {
+    public T convert(ResponseBody responseBody) throws IOException {
         long contentLength = responseBody.contentLength();
         if (contentLength == 0) {
             return null;

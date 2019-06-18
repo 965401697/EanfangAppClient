@@ -16,12 +16,8 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.base.BaseFragment;
 import com.eanfang.biz.model.bean.PageBean;
-import com.eanfang.biz.model.entity.IfbOrderEntity;
 
-import net.eanfang.worker.R;
 import net.eanfang.worker.databinding.FragmentTemplateItemListBinding;
-import net.eanfang.worker.ui.activity.worksapce.tender.WorkTenderDetailActivity;
-import net.eanfang.worker.ui.adapter.worktender.WorkTenderAdapter;
 
 /**
  * Created by O u r on 2018/5/3.
@@ -81,10 +77,13 @@ public abstract class TemplateItemListFragment extends BaseFragment implements S
         getData();
     }
 
-    protected void initAdapter(){};
+    protected void initAdapter() {
+    }
+
+    ;
 
     protected void initAdapter(BaseQuickAdapter baseQuickAdapter) {
-        this.baseQuickAdapter  = baseQuickAdapter;
+        this.baseQuickAdapter = baseQuickAdapter;
         if (baseQuickAdapter == null) {
             return;
         }

@@ -1,7 +1,6 @@
 package com.eanfang.util;
 
 import android.content.Intent;
-
 import com.eanfang.base.BaseApplication;
 import com.eanfang.ui.activity.NoPermissionActivity;
 
@@ -505,11 +504,6 @@ public class PermKit {
         return getPerm(PermCode.BID_DETAIL_CODE);
     }
 
-    //-------------------技师端招标用工--------------------
-    public boolean getWorkerTenderListPrem() {
-        return getPerm(PermCode.BID_DETAIL_CODE);
-    }
-
     /**
      * 权限编码
      */
@@ -612,9 +606,9 @@ public class PermKit {
         String OPENSHOP_LIST_CODE = "oa:openShop:list";
         String OPENSHOP_DETAIL_CODE = "oa:openShop:detail";
 
-        /***
-         * 布防日志
-         */
+        /*
+            布防日志
+       */
         String PROTECTION_CREATE_CODE = "oa:protection:create";
         String PROTECTION_LIST_CODE = "oa:protection:list";
         String PROTECTION_DETAIL_CODE = "oa:protection:detail";
@@ -654,11 +648,11 @@ public class PermKit {
         //部门管理
         String COMPANY_DEPARTMENT_CREATE_CODE = "company:department:create";
         String COMPANY_DEPARTMENT_LIST_CODE = "company:department:list";
-        /**
-         * 合作业务
-         */
+        //合作业务
         String CUSTOMER_COOPERATION_LISTALL_CODE = "customer:cooperation:listAll";
         String CUSTOMER_COOPERATION_DETAIL_CODE = "customer:cooperation:detail";
         String CUSTOMER_COOPERATION_CONFIRM_CODE = "customer:cooperation:confirm";
+
+
     }
 }
