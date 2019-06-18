@@ -114,6 +114,11 @@
     <color name="color_invite_share_text">#323232</color>
     <color name="color_invite_share_line">#DFDFDF</color>
     <color name="color_invite_share_cancel">#FF3657</color>
-
+    <!--最新订单-->
+    <color name="color_new_order_left_bg_color">#E3EFFF</color>
+    <color name="color_new_order_bg">#F7F8FA</color>
+    <color name="color_new_order_bg_item_line">#EAEAEA</color>
+    <color name="color_new_order_screen_btn_bg">#EFEFEF</color>
+    <color name="color_new_order_remain_time">#FF3C00</color>
 
 </resources>

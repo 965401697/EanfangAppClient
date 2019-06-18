@@ -30,6 +30,7 @@ import com.eanfang.model.NoticeEntity;
 import com.eanfang.model.security.SecurityLikeBean;
 import com.eanfang.model.security.SecurityLikeStatusBean;
 import com.eanfang.model.security.SecurityListBean;
+import net.eanfang.worker.ui.activity.NewOrderActivity;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JsonUtils;
@@ -639,16 +640,14 @@ public class HomeFragment extends BaseFragment {
         rollTextView.setViews(views);
         rollTextView.setOnItemClickListener((position, view) -> {
 //            showToast("暂无可点");
+            startActivity(new Intent(getActivity(), NewOrderActivity.class));
         });
     }
 
     public void doHttpNews() {
-
         EanfangHttp.get(NewApiService.GET_PUSH_NEWS_WORKER).execute(new EanfangCallback<NoticeEntity>(getActivity(), false, NoticeEntity.class, true, (list -> {
             initRollTextView(list);
         })));
-
-
     }
 
 

@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_new_order_item_shape"
+    android:paddingLeft="@dimen/dimen_36"
+    android:layout_marginTop="@dimen/dimen_20"
+    android:paddingBottom="@dimen/dimen_30">
+
+    <TextView
+        android:id="@+id/tv_newOrder_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_36"
+        android:paddingBottom="@dimen/dimen_8"
+        android:text="电视监控"
+        android:textColor="@color/colorPrimary"
+        android:textSize="15sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_newOrder_type_left"
+        android:layout_width="@dimen/dimen_126"
+        android:layout_height="@dimen/dimen_46"
+        android:layout_marginTop="@dimen/dimen_28"
+        android:layout_marginRight="@dimen/dimen_28"
+        android:background="@drawable/bg_new_order_left_shape"
+        android:gravity="center"
+        android:text="电视监控"
+        android:textColor="@color/colorPrimary"
+        android:textSize="12sp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_newOrder_project_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:text="项目名称"
+        android:textColor="@color/color_home_titile"
+        android:textSize="13sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_newOrder_title" />
+
+    <TextView
+        android:id="@+id/tv_newOrder_tenderee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:text="招标单位"
+        android:textColor="@color/color_home_titile"
+        android:textSize="13sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_newOrder_project_name" />
+    <TextView
+        android:id="@+id/tv_newOrder_area"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:text="地区"
+        android:textColor="@color/color_home_titile"
+        android:textSize="13sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_newOrder_tenderee" />
+
+    <TextView
+        android:id="@+id/tv_newOrder_person"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:text="下单人"
+        android:textColor="@color/color_home_titile"
+        android:textSize="13sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_newOrder_area" />
+
+    <TextView
+        android:id="@+id/tv_newOrder_start_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:text="下单时间"
+        android:textColor="@color/color_home_titile"
+        android:textSize="13sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_newOrder_person" />
+
+    <TextView
+        android:id="@+id/tv_newOrder_end_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:text="计划时间"
+        android:textColor="@color/color_home_titile"
+        android:textSize="13sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_newOrder_start_time" />
+
+    <TextView
+        android:id="@+id/tv_newOrder_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:text="维保类型"
+        android:textColor="@color/color_home_titile"
+        android:textSize="13sp"
+        android:visibility="gone"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_newOrder_end_time" />
+
+    <TextView
+        android:id="@+id/tv_newOrder_worker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:text="技师"
+        android:textColor="@color/color_home_titile"
+        android:textSize="13sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_newOrder_type" />
+
+    <TextView
+        android:id="@+id/tv_newOrder_time_remaining"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:text="距离截止时间"
+        android:textColor="@color/color_new_order_remain_time"
+        android:textSize="13sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_newOrder_worker" />
+    <TextView
+        android:id="@+id/tv_newOrder_price"
+        android:layout_width="@dimen/dimen_254"
+        android:layout_height="@dimen/dimen_70"
+        android:text="我要报价"
+        android:gravity="center"
+        android:textColor="@color/colorPrimary"
+        android:textSize="13sp"
+        android:layout_marginTop="@dimen/dimen_40"
+        android:background="@drawable/bg_new_order_btn_shape"
+        app:layout_constraintTop_toBottomOf="@id/tv_newOrder_time_remaining"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
+</android.support.constraint.ConstraintLayout>

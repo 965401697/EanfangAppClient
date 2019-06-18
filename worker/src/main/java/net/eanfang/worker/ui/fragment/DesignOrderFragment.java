@@ -53,7 +53,7 @@ public class DesignOrderFragment extends TemplateItemListFragment {
                 if(!PermKit.get().getDesignDetailPrem()) {
                     return;
                 }
-                startActivity(new Intent(getActivity(), DesignOrderDetailActivity.class).putExtra("id", String.valueOf(((DesignOrderListBean.ListBean) adapter.getData().get(position)).getId())));
+                startActivity(new Intent(getActivity(), DesignOrderDetailActivity.class).putExtra("id", ((DesignOrderListBean.ListBean) adapter.getData().get(position)).getId()));
             }
         });
 
@@ -64,7 +64,7 @@ public class DesignOrderFragment extends TemplateItemListFragment {
                         return;
                     }
                     DesignOrderListBean.ListBean bean = (DesignOrderListBean.ListBean) adapter.getData().get(position);
-                    startActivity(new Intent(getActivity(), DesignOrderDetailActivity.class).putExtra("id", String.valueOf(((DesignOrderListBean.ListBean) adapter.getData().get(position)).getId())));
+                    startActivity(new Intent(getActivity(), DesignOrderDetailActivity.class).putExtra("id", ((DesignOrderListBean.ListBean) adapter.getData().get(position)).getId()));
                     break;
                 default:
                     break;

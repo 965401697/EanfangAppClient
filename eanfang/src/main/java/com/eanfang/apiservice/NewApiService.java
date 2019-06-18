@@ -782,4 +782,9 @@ public interface NewApiService {
      */
     String INSERT_WITHDRAWALS_RECORD = BASE_URL + YAF_SYS + "/withdrawalsrecord/insertWithdrawalsRecord";
 
+    /**
+     * 最新订单列表
+     */
+    String QUERY_LASTEST_ORDER = BASE_URL + YAF_SYS + "/lastestorder/queryLastestOrder";
+
 }

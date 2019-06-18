@@ -41,7 +41,7 @@ public class DesignOrderDetailActivity extends BaseWorkerActivity {
     @BindView(R.id.tv_limit)
     TextView tvLimit;
 
-    private String id;
+    private Long id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +50,7 @@ public class DesignOrderDetailActivity extends BaseWorkerActivity {
         ButterKnife.bind(this);
         setTitle("设计明细");
         setLeftBack();
-        id = getIntent().getStringExtra("id");
+        id = getIntent().getLongExtra("id", 0);
         initData();
     }
 
