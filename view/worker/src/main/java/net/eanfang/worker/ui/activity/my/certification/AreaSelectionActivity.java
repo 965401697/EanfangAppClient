@@ -37,7 +37,7 @@ import butterknife.OnClick;
 /**
  * 技能资质的区域
  */
-public class SkillAreaActivity extends BaseWorkerActivity implements AreaCheckChangeListener {
+public class AreaSelectionActivity extends BaseWorkerActivity implements AreaCheckChangeListener {
 
     @BindView(R.id.elv_area)
     ExpandableListView elvArea;

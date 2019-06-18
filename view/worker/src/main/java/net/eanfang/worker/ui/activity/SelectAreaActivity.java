@@ -71,21 +71,21 @@ public class SelectAreaActivity extends BaseActivity implements AreaCheckChangeL
     private void initArea() {
 
         //获取国家区域
-        if (WorkerApplication.getApplication().sSaveArea == null) {
+        if (WorkerApplication.get().sSaveArea == null) {
             BaseDataEntity areaJson = (BaseDataEntity) WorkerApplication.get().get(Constant.COUNTRY_AREA_LIST, BaseDataEntity.class);
             if (areaJson != null) {
                 showToast("加载服务区域失败！");
             } else {
                 ThreadPoolManager manager = ThreadPoolManager.newInstance();
                 manager.addExecuteTask(() -> {
-                    WorkerApplication.getApplication().sSaveArea = areaJson;
+                    WorkerApplication.get().sSaveArea = areaJson;
                     runOnUiThread(this::initData);
                 });
             }
         } else {
             initData();
         }
-        areaListBean = WorkerApplication.getApplication().sSaveArea.getChildren();
+        areaListBean = WorkerApplication.get().sSaveArea.getChildren();
     }
 
     private void initData() {

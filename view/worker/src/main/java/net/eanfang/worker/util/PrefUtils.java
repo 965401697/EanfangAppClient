@@ -17,7 +17,7 @@ public class PrefUtils {
     public static final String RECEIVE_MSG_SWITCH_CHECK = "receive_msg_switch_check";
 
     public static Context getContext() {
-        return WorkerApplication.getApplication().getApplicationContext();
+        return WorkerApplication.get().getApplicationContext();
     }
 
 

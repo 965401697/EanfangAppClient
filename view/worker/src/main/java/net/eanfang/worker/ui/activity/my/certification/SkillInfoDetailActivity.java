@@ -120,7 +120,7 @@ public class SkillInfoDetailActivity extends BaseWorkerActivity {
 
     @OnClick(R.id.tv_area)
     public void onViewClicked() {
-        startActivity(new Intent(SkillInfoDetailActivity.this, SkillAreaActivity.class).putExtra("isLook", true));
+        startActivity(new Intent(SkillInfoDetailActivity.this, AreaSelectionActivity.class).putExtra("isLook", true));
     }
 
     private void getData() {

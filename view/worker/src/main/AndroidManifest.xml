@@ -865,7 +865,7 @@
             android:name=".ui.activity.my.certification.SkillTypeActivity"
             android:screenOrientation="portrait" /> <!-- 技师区域绑定 -->
         <activity
-            android:name=".ui.activity.my.certification.SkillAreaActivity"
+            android:name=".ui.activity.my.certification.AreaSelectionActivity"
             android:screenOrientation="portrait" /> <!-- 技师技能认证 -->
         <activity
             android:name=".ui.activity.my.certification.SkillCertificafeListActivity"

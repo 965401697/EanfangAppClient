@@ -22,7 +22,7 @@ import com.eanfang.base.widget.controltool.timeline.TimeLineManager;
  * at 2019/4/24
  * summary:
  */
-public class ControlToolManager {
+public class ControlToolView {
     private static IFlycoTabLayout IFLYCOTABLAYOUT;
     private static ITimeLine ITIMELINE;
     private static IMaterialRatingBar IMATERIALRATINGBAR;

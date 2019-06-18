@@ -238,7 +238,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
             JumpItent.jump(this, SecurityCommentDetailActivity.class, bundle, REQUEST_CODE_COMMENT_DETAIL);
         });
         securityCommentAdapter.setOnItemLongClickListener((adapter, view, position) -> {
-            if (!WorkerApplication.getApplication().getAccId().equals(Long.valueOf(securityCommentAdapter.getData().get(position).getCommentsAnswerAccId()))) {
+            if (!WorkerApplication.get().getAccId().equals(Long.valueOf(securityCommentAdapter.getData().get(position).getCommentsAnswerAccId()))) {
                 showToast("只可删除自己评论");
                 return false;
             }

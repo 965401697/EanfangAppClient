@@ -8,6 +8,7 @@ import androidx.multidex.MultiDexApplication;
 
 import com.camera.CameraApplication;
 import com.eanfang.BuildConfig;
+import com.eanfang.biz.model.entity.BaseDataEntity;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.biz.model.bean.LoginBean;
@@ -50,7 +51,10 @@ public class BaseApplication extends MultiDexApplication {
 
     /*Activity堆*/
     private Stack<Activity> activityStack = new Stack<>();
-
+    /**
+     * 存储地域
+     */
+    public BaseDataEntity sSaveArea;
     @Override
     public void onCreate() {
         super.onCreate();
