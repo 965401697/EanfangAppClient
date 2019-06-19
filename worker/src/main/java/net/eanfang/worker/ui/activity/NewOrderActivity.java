@@ -77,6 +77,7 @@ public class NewOrderActivity extends BaseActivity {
 
     private void initData() {
         mQueryEntry.setPage(mCurrent);
+        mQueryEntry.setSize(10);
         EanfangHttp.post(NewApiService.QUERY_LASTEST_ORDER)
                 .upJson(JSON.toJSONString(mQueryEntry))
                 .execute(new EanfangCallback<NewOrderBean>(this, true, NewOrderBean.class, bean -> {
