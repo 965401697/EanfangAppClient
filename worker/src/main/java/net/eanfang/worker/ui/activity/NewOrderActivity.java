@@ -81,7 +81,7 @@ public class NewOrderActivity extends BaseActivity {
         EanfangHttp.post(NewApiService.QUERY_LASTEST_ORDER)
                 .upJson(JSON.toJSONString(mQueryEntry))
                 .execute(new EanfangCallback<NewOrderBean>(this, true, NewOrderBean.class, bean -> {
-                    if (bean.getTotalPage() == mCurrent) {
+                    if (1 == mCurrent) {
                         mNewOrderAdapter.getData().clear();
                         mNewOrderAdapter.setNewData(bean.getList());
                     } else {
