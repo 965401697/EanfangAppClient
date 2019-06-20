@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.lifecycle.ViewModel;
 
 import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.base.kit.picture.PictureManager;

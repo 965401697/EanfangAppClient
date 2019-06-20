@@ -296,6 +296,10 @@ public interface Constant {
      */
 
     String EXPERT = "exptVerifyType";
+    /**
+     * 46.发布用工预算单位
+     */
+    String TENDERAPPLYBUDGETUNIT = "applyBudgetUnit";
 
     /**
      * 国家区域集合

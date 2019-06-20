@@ -5,6 +5,8 @@ import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.biz.model.bean.PageBean;
 import com.eanfang.biz.model.bean.QueryEntry;
 import com.eanfang.biz.model.entity.IfbOrderEntity;
+import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
+import com.eanfang.biz.model.vo.tender.TenderCreateVo;
 
 import retrofit2.http.QueryMap;
 
@@ -17,8 +19,27 @@ public interface ITenderDs {
 
     /**
      * 招标大厅 公告中 已过期
+     *
      * @param queryEntry
      * @param callback
      */
     void getTendeNotice(QueryEntry queryEntry, RequestCallback<PageBean<IfbOrderEntity>> callback);
+
+    /**
+     * 用工找活列表
+     *
+     * @param queryEntry
+     * @param callback
+     */
+    void getTenderFind(QueryEntry queryEntry, RequestCallback<PageBean<TaskPublishEntity>> callback);
+
+    /**
+     * 发布用工
+     *
+     * @param tenderCreateVo
+     * @param callback
+     */
+    void setNewTende(TenderCreateVo tenderCreateVo, RequestCallback<TaskPublishEntity> callback);
+
+
 }

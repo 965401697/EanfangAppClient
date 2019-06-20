@@ -10,10 +10,8 @@ import com.eanfang.biz.model.bean.QueryEntry;
 import com.eanfang.biz.model.entity.IfbOrderEntity;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
 import com.eanfang.biz.rds.base.BaseViewModel;
-import com.eanfang.biz.rds.sys.ds.impl.tender.TenderFindDs;
-import com.eanfang.biz.rds.sys.ds.impl.tender.TenderNoticeDs;
-import com.eanfang.biz.rds.sys.repo.tender.TenderFindRepo;
-import com.eanfang.biz.rds.sys.repo.tender.TenderNoticeRepo;
+import com.eanfang.biz.rds.sys.ds.impl.tender.TenderDs;
+import com.eanfang.biz.rds.sys.repo.tender.TenderRepo;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.databinding.ActivityWorkerTenderControlBinding;
@@ -30,8 +28,7 @@ import lombok.Setter;
  * @description 招标用工
  */
 public class TenderViewModle extends BaseViewModel {
-    private TenderNoticeRepo tenderNoticeRepo;
-    private TenderFindRepo tenderFindRepo;
+    private TenderRepo tenderRepo;
     @Getter
     private MutableLiveData<PageBean<IfbOrderEntity>> tenderLiveData;
     @Getter
@@ -60,8 +57,7 @@ public class TenderViewModle extends BaseViewModel {
     public TenderViewModle() {
         tenderLiveData = new MutableLiveData<>();
         tenderFindLiveData = new MutableLiveData<>();
-        tenderNoticeRepo = new TenderNoticeRepo(new TenderNoticeDs(this));
-        tenderFindRepo = new TenderFindRepo(new TenderFindDs(this));
+        tenderRepo = new TenderRepo(new TenderDs(this));
     }
 
     /**
@@ -88,7 +84,7 @@ public class TenderViewModle extends BaseViewModel {
         //正在公告 0   已过期 1
         mNoticeQueryEntry.getEquals().put("status", status + "");
         mNoticeQueryEntry.setPage(page);
-        tenderNoticeRepo.doGetTenderNoticeList(mNoticeQueryEntry).observe(lifecycleOwner, tenderBean -> {
+        tenderRepo.doGetTenderNoticeList(mNoticeQueryEntry).observe(lifecycleOwner, tenderBean -> {
             tenderLiveData.setValue(tenderBean);
         });
     }
@@ -116,7 +112,7 @@ public class TenderViewModle extends BaseViewModel {
         }
         this.mFindPage = page;
         mFindQueryEntry.setPage(page);
-        tenderFindRepo.doGetTenderFinderList(mFindQueryEntry).observe(lifecycleOwner, tenderBean -> {
+        tenderRepo.doGetTenderFinderList(mFindQueryEntry).observe(lifecycleOwner, tenderBean -> {
             tenderFindLiveData.setValue(tenderBean);
         });
     }

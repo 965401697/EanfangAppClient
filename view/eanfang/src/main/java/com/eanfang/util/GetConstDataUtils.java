@@ -35,6 +35,7 @@ public class GetConstDataUtils {
     private static List<String> workTaskStatus;
 
     private static List<String> taskPublishStatus;
+    private static List<String> tenderBudgetUnit;
 
     /**
      * 面谈员工
@@ -425,6 +426,20 @@ public class GetConstDataUtils {
             }
         }
         return taskPublishStatus;
+    }
+
+    /**
+     * 用工预算单位
+     */
+    public static List<String> getTenderBudgetUnit() {
+        if (tenderBudgetUnit == null) {
+            synchronized (GetConstDataUtils.class) {
+                if (tenderBudgetUnit == null) {
+                    tenderBudgetUnit = Config.get().getConstBean().getData().getConst().get(Constant.TENDERAPPLYBUDGETUNIT);
+                }
+            }
+        }
+        return tenderBudgetUnit;
     }
 
     /**

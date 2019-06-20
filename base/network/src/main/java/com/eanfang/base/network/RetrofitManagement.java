@@ -34,6 +34,8 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
+import static io.reactivex.plugins.RxJavaPlugins.onError;
+
 
 /**
  * @author jornl
@@ -129,9 +131,16 @@ public enum RetrofitManagement {
 
     private <T> Observable<T> createData(T t) {
         return Observable.create(emitter -> {
+            Object object = new Object();
             try {
-                emitter.onNext(t);
-                emitter.onComplete();
+                if (t == null) {
+                    emitter.onNext((T) object);
+                    emitter.onComplete();
+                } else {
+                    emitter.onNext(t);
+                    emitter.onComplete();
+                }
+
             } catch (Exception e) {
                 emitter.onError(e);
             }

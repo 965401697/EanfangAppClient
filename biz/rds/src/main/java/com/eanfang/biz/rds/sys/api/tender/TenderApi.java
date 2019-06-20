@@ -6,6 +6,7 @@ import com.eanfang.biz.model.bean.QueryEntry;
 import com.eanfang.biz.model.entity.IfbOrderEntity;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
 import com.eanfang.biz.model.vo.LoginVo;
+import com.eanfang.biz.model.vo.tender.TenderCreateVo;
 
 import java.lang.reflect.Field;
 
@@ -43,11 +44,11 @@ public interface TenderApi {
     /**
      * 用工找活发布
      *
-     * @param field
+     * @param tenderCreateVo
      * @return
      */
     @POST("/yaf_task_publish/taskPublish/laborInsert")
-    Observable<BaseResponseBody<PageBean<TaskPublishEntity>>> setNewTender(@Body Field field);
+    Observable<BaseResponseBody<PageBean<TaskPublishEntity>>> setNewTender(@Body TenderCreateVo tenderCreateVo);
 
 
 }

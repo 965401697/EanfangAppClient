@@ -253,7 +253,7 @@ public class AddTroubleActivity extends BasePictureActivity implements IPictureC
         setListener();
     }
 
-    private void initView() {
+    public void initView() {
         setTitle("新增故障");
         fromTroubleList = getIntent().getBooleanExtra("fromTroubleList", false);
         if (fromTroubleList) {
@@ -271,9 +271,10 @@ public class AddTroubleActivity extends BasePictureActivity implements IPictureC
     private List<LocalMedia> selectList = new ArrayList<>();
     private final int HEAD_PHOTO = 100;
     private PictureInvoking imgInvoke;
+
     private void initRecycle() {
 
-         imgInvoke = new PictureInvoking(this, recycleview, selectList);
+        imgInvoke = new PictureInvoking(this, recycleview, selectList);
         imgInvoke.initRecycle(3, onAddPicClickListener);
     }
 
@@ -283,6 +284,7 @@ public class AddTroubleActivity extends BasePictureActivity implements IPictureC
     private List<LocalMedia> videoList = new ArrayList<>();
     private PictureInvoking videoInvoke;
     private GridImageAdapter vieoAdapter;
+
     private void initRecycleVideo() {
         videoInvoke = new PictureInvoking(this, recycleVideo, videoList);
         videoInvoke.setType(1);
