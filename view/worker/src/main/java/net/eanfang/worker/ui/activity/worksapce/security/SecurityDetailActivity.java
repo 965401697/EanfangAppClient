@@ -46,6 +46,8 @@ import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
+import com.eanfang.util.contentsafe.ContentDefaultAuditing;
+import com.eanfang.util.contentsafe.ContentSecurityAuditUtil;
 import com.eanfang.witget.DefaultPopWindow;
 import com.eanfang.witget.mentionedittext.edit.util.FormatRangeManager;
 import com.eanfang.witget.mentionedittext.text.MentionTextView;
@@ -463,7 +465,18 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
                 doShare();
                 break;
             case R.id.tv_send:
-                doComments();
+                String content = etInput.getText().toString().trim();
+                if (StringUtils.isEmpty(content)) {
+                    showToast("请输入评论内容");
+                    return;
+                }
+                ContentSecurityAuditUtil.getInstance().toAuditing
+                        (content, new ContentDefaultAuditing(this) {
+                            @Override
+                            public void auditingSuccess() {
+                                doComments(content);
+                            }
+                        });
                 break;
             case R.id.tv_isFocus:
                 doUnFoucus(securityDetailBean);
@@ -555,16 +568,11 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
     /**
      * 评论
      */
-    private void doComments() {
-        String mComments = etInput.getText().toString().trim();
-        if (StringUtils.isEmpty(mComments)) {
-            showToast("请输入评论内容");
-            return;
-        }
+    private void doComments(String content) {
         SecurityCommentBean securityCommentBean = new SecurityCommentBean();
         securityCommentBean.setType("0");
         securityCommentBean.setStatus("0");
-        securityCommentBean.setCommentsContent(mComments);
+        securityCommentBean.setCommentsContent(content);
         securityCommentBean.setAsId(mId);
         securityCommentBean.setCommentsAnswerId(WorkerApplication.get().getUserId());
         securityCommentBean.setCommentsAnswerAccId(WorkerApplication.get().getLoginBean().getAccount().getAccId());

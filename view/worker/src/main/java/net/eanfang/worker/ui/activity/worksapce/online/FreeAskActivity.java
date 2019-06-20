@@ -23,6 +23,8 @@ import com.eanfang.util.JumpItent;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
+import com.eanfang.util.contentsafe.ContentDefaultAuditing;
+import com.eanfang.util.contentsafe.ContentSecurityAuditUtil;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
@@ -126,7 +128,30 @@ public class FreeAskActivity extends BaseWorkerActivity {
                 }
                 break;
             case R.id.tv_ask:
-                fillData();
+                if (TextUtils.isEmpty(tvFaultDeviceName.getText().toString().trim())) {
+                    ToastUtil.get().showToast(this, "请选择设备名称");
+                    break;
+                }
+                if (TextUtils.isEmpty(tvDeviceBrand.getText().toString().trim())) {
+                    ToastUtil.get().showToast(this, "请选择品牌型号");
+                    break;
+                }
+                if (TextUtils.isEmpty(tvFaultInfo.getText().toString().trim())) {
+                    ToastUtil.get().showToast(this, "请选择故障简述");
+                    break;
+                }
+                String input = etInputInfo.getText().toString().trim();
+                if (TextUtils.isEmpty(input)) {
+                    ToastUtil.get().showToast(this, "请填写故障简述");
+                    break;
+                }
+                ContentSecurityAuditUtil.getInstance().toAuditing(input,
+                        new ContentDefaultAuditing(this) {
+                            @Override
+                            public void auditingSuccess() {
+                                fillData();
+                            }
+                        });
                 break;
             default:
                 break;

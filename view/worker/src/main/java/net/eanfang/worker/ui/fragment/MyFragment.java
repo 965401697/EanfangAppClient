@@ -88,6 +88,7 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
     private SpecialistAuthStatusBean mAuthStatusBean;
     private int e=0;
     private int t=0;
+    private int workerStatus;
     @Override
     protected int setLayoutResouceId() {
         return R.layout.fragment_config;
@@ -179,6 +180,7 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
     @Override
     protected void initView() {
         headViewSize(ivHeader,(int) getResources().getDimension(com.eanfang.R.dimen.dimen_155));
+        workerStatus = WorkerApplication.get().getLoginBean().getWorkerStatus();
         rgWorkStauts.setOnCheckedChangeListener(this);
     }
 
@@ -224,19 +226,15 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
         if (!StringUtils.isEmpty(user.getAccount().getAvatar())) {
             GlideUtil.intoImageView(getActivity(), Uri.parse(BuildConfig.OSS_SERVER + user.getAccount().getAvatar()), ivHeader);
         }
-        /**
-         * 获取技师工作状态
-         * */
-        String mStatus = PrefUtils.getString("status", "");
-        if (mStatus.equals("空闲状态")) {
+        if (workerStatus==0) {
             rbFree.setChecked(true);
             rbStop.setChecked(false);
             rbWorking.setChecked(false);
-        } else if (mStatus.equals("停止接单")) {
+        } else if (workerStatus==2) {
             rbFree.setChecked(false);
             rbStop.setChecked(true);
             rbWorking.setChecked(false);
-        } else if (mStatus.equals("工作中")) {
+        } else if (workerStatus==1) {
             rbFree.setChecked(false);
             rbStop.setChecked(false);
             rbWorking.setChecked(true);
@@ -258,7 +256,6 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
 
     private void doExpertWorkAuth() {
         // 技师未认证，提示完善个人资料
-
         String realName =  WorkerApplication.get().getLoginBean().getAccount().getRealName();
         if (StringUtils.isEmpty(realName) || "待提供".equals(realName)) {
             showToast("请先完善个人资料");
@@ -272,12 +269,15 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
     public void onCheckedChanged(RadioGroup radioGroup, int i) {
         switch (radioGroup.getCheckedRadioButtonId()) {
             case R.id.rb_free:
+                workerStatus=0;
                 doChangeWorkStatus("空闲状态");
                 break;
             case R.id.rb_stop:
+                workerStatus=2;
                 doChangeWorkStatus("停止接单");
                 break;
             case R.id.rb_working:
+                workerStatus=1;
                 doChangeWorkStatus("工作中");
                 break;
             default:

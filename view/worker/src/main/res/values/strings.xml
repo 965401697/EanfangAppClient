@@ -83,4 +83,5 @@
     <string name="group_portrait">群头像</string>
 
     <string name="text_user_home_intro_default">这家伙很懒，没有留下任何内容</string>
+    <string name="text_new_order_screen_choose_area">已选%1$d个地区</string>
 </resources>

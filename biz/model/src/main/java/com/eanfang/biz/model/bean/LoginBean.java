@@ -18,4 +18,8 @@ public class LoginBean implements Serializable {
     private String constMD5;
     private String baseDataMD5;
     private Integer workerVerifyStatus;
+    /**
+     * 0空闲，1工作中，2停止接单
+     */
+    private int workerStatus;
 }

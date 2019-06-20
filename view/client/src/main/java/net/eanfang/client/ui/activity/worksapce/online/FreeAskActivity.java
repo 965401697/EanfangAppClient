@@ -22,6 +22,8 @@ import com.eanfang.util.JumpItent;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
+import com.eanfang.util.contentsafe.ContentDefaultAuditing;
+import com.eanfang.util.contentsafe.ContentSecurityAuditUtil;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
@@ -125,35 +127,37 @@ public class FreeAskActivity extends BaseClientActivity {
                 }
                 break;
             case R.id.tv_ask:
-                fillData();
+                if (TextUtils.isEmpty(tvFaultDeviceName.getText().toString().trim())) {
+                    ToastUtil.get().showToast(this, "请选择设备名称");
+                    break;
+                }
+                if (TextUtils.isEmpty(tvDeviceBrand.getText().toString().trim())) {
+                    ToastUtil.get().showToast(this, "请选择品牌型号");
+                    break;
+                }
+                if (TextUtils.isEmpty(tvFaultInfo.getText().toString().trim())) {
+                    ToastUtil.get().showToast(this, "请选择故障简述");
+                    break;
+                }
+                String input = etInputInfo.getText().toString().trim();
+                if (TextUtils.isEmpty(input)) {
+                    ToastUtil.get().showToast(this, "请填写故障简述");
+                    break;
+                }
+                ContentSecurityAuditUtil.getInstance().toAuditing(input,
+                        new ContentDefaultAuditing(this) {
+                            @Override
+                            public void auditingSuccess() {
+                                fillData();
+                            }
+                        });
                 break;
         }
     }
 
-
-    private boolean fillData() {
-        //new
-        if (TextUtils.isEmpty(tvFaultDeviceName.getText().toString().trim())) {
-            ToastUtil.get().showToast(this, "请选择设备名称");
-            return false;
-        }
-        if (TextUtils.isEmpty(tvDeviceBrand.getText().toString().trim())) {
-            ToastUtil.get().showToast(this, "请选择品牌型号");
-            return false;
-        }
-        if (TextUtils.isEmpty(tvFaultInfo.getText().toString().trim())) {
-            ToastUtil.get().showToast(this, "请选择故障简述");
-            return false;
-        }
-        if (TextUtils.isEmpty(etInputInfo.getText().toString().trim())) {
-            ToastUtil.get().showToast(this, "请填写故障简述");
-            return false;
-        }
-
-
-
+    private void fillData() {
         String accidentPic = PhotoUtils.getPhotoUrl("online/", snplMomentAddPhotos, uploadMap, false);
-       // detailsBean.setPictures(accidentPic);
+        // detailsBean.setPictures(accidentPic);
 //        if (uploadMap.size() <= 0) {
 //            ToastUtil.get().showToast(this, "添加现场照片可能会优先得到回答哦");
 //            return false;
@@ -197,7 +201,6 @@ public class FreeAskActivity extends BaseClientActivity {
         askQuestionsEntity.setQuestionPics(accidentPic);
         subData(askQuestionsEntity);
 
-        return true;
     }
 
     private void subData(AskQuestionsEntity askQuestionsEntity) {

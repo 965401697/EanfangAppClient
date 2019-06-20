@@ -6,6 +6,7 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.R;
 import com.eanfang.model.InviteDetailBean;
+import com.eanfang.ui.viewHolder.InviteDetailViewHolder;
 
 /**
  * @author liangkailun
@@ -34,24 +35,24 @@ public class InviteDetailArrayAdapter extends BaseQuickAdapter<InviteDetailBean.
             maskNumber = phoneNum.substring(0, 3) + "*******" + phoneNum.substring(9);
         }
         if (mState == 0) {
-            helper.phone.setText(mActivity.getString(R.string.text_invite_person, maskNumber));
-            helper.money.setVisibility(View.GONE);
-            helper.money.setText(mActivity.getString(R.string.text_invite_money_enter, item.getWithdrawalMoney() / 100));
-            helper.money.setTextColor(mActivity.getResources().getColor(R.color.colorPrimary));
+            helper.getPhone().setText(mActivity.getString(R.string.text_invite_person, maskNumber));
+            helper.getMoney().setVisibility(View.GONE);
+            helper.getMoney().setText(mActivity.getString(R.string.text_invite_money_enter, item.getWithdrawalMoney() / 100));
+            helper.getMoney().setTextColor(mActivity.getResources().getColor(R.color.colorPrimary));
         } else if (mState == 1) {
-            helper.money.setVisibility(View.VISIBLE);
-            helper.phone.setText(mActivity.getString(R.string.text_withdraw_person, maskNumber));
-            helper.money.setText(mActivity.getString(R.string.text_invite_money_withdraw, item.getWithdrawalMoney() / 100));
-            helper.money.setTextColor(mActivity.getResources().getColor(R.color.colorPrimary));
+            helper.getMoney().setVisibility(View.VISIBLE);
+            helper.getPhone().setText(mActivity.getString(R.string.text_withdraw_person, maskNumber));
+            helper.getMoney().setText(mActivity.getString(R.string.text_invite_money_withdraw, item.getWithdrawalMoney() / 100));
+            helper.getMoney().setTextColor(mActivity.getResources().getColor(R.color.colorPrimary));
         } else {
-            helper.money.setVisibility(View.VISIBLE);
-            helper.phone.setText(mActivity.getString(R.string.text_invite_person, maskNumber));
-            helper.money.setText(mActivity.getString(R.string.text_invite_money_lose, item.getWithdrawalMoney() / 100));
-            helper.money.setTextColor(mActivity.getResources().getColor(R.color.color_bottom));
-            helper.phone.setTextColor(mActivity.getResources().getColor(R.color.color_bottom));
+            helper.getMoney().setVisibility(View.VISIBLE);
+            helper.getPhone().setText(mActivity.getString(R.string.text_invite_person, maskNumber));
+            helper.getMoney().setText(mActivity.getString(R.string.text_invite_money_lose, item.getWithdrawalMoney() / 100));
+            helper.getMoney().setTextColor(mActivity.getResources().getColor(R.color.color_bottom));
+            helper.getPhone().setTextColor(mActivity.getResources().getColor(R.color.color_bottom));
         }
 
-        helper.time.setText(item.getEditTime());
+        helper.getTime().setText(item.getEditTime());
 
     }
 }

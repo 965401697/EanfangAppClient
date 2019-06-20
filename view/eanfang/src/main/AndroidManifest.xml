@@ -159,6 +159,13 @@
         <activity
             android:name=".sdk.typechoose.group.SelectOAGroupActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".ui.activity.SecurityCompanyDetailsActivity" />
+        <activity android:name=".ui.activity.InviteFriendActivity" />
+        <activity android:name=".ui.activity.InviteDetailActivity"
+            android:launchMode="singleTop"/>
+        <activity android:name=".ui.activity.ExpertDetailsActivity" />
+        <activity android:name=".ui.activity.ExtractSuccessActivity" />
+        <activity android:name=".ui.activity.CashOurActivity" />
     </application>
 
 </manifest>

@@ -10,18 +10,21 @@ import com.eanfang.base.widget.customview.CircleImageView;
 
 import net.eanfang.worker.R;
 
+import lombok.Getter;
+
 /**
  * @author liangkailun
  * Date ：2019/4/9
  * Describe :
  */
+@Getter
 public class FollowListViewHolder extends BaseViewHolder {
-    public TextView mTvFollowItemName;
-    public TextView mTvFollowItemCompany;
-    public TextView mTv_Follow_Item_FriendStatus;
-    public ImageView mImgFollowItemAuth;
-    public Button mBtnFollowItemAddOrCancel;
-    public CircleImageView mIvFollowItemHeader;
+    private TextView mTvFollowItemName;
+    private TextView mTvFollowItemCompany;
+    private TextView mTv_Follow_Item_FriendStatus;
+    private ImageView mImgFollowItemAuth;
+    private Button mBtnFollowItemAddOrCancel;
+    private CircleImageView mIvFollowItemHeader;
 
     public FollowListViewHolder(View view) {
         super(view);

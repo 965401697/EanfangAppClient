@@ -751,7 +751,6 @@ public interface NewApiService {
      * 报修增加个人信息
      */
     String REPAIR_PRESONAL_INFO_ADD = BASE_URL + "/yaf_sys/receive/create";
-
     /**
      * 报修增加个人信息修改
      */
@@ -782,5 +781,10 @@ public interface NewApiService {
      * 新增用户推荐信息
      */
     String INSERT_WITHDRAWALS_RECORD = BASE_URL + YAF_SYS + "/withdrawalsrecord/insertWithdrawalsRecord";
+
+    /**
+     * 最新订单列表
+     */
+    String QUERY_LASTEST_ORDER = BASE_URL + YAF_SYS + "/lastestorder/queryLastestOrder";
 
 }

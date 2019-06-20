@@ -224,13 +224,13 @@ public class AreaSelectionActivity extends BaseWorkerActivity implements AreaChe
         GroupAdapter.FirstHolder holder = mAdapter.getChangeTextView(onPos);
         if (holder != null) {
             if (areaSize == checkAreaSize) {
-                holder.tv_cb.setText("取消全选");
+                holder.getTvCb().setText("取消全选");
                 areaListBean.get(onPos).setCheck(true);
             } else {
-                holder.tv_cb.setText("全选");
+                holder.getTvCb().setText("全选");
                 areaListBean.get(onPos).setCheck(false);
             }
-            holder.tv.setText(areaListBean.get(onPos).getDataName() + "(" + checkAreaSize + "/" + areaSize + ")");
+            holder.getTv().setText(areaListBean.get(onPos).getDataName() + "(" + checkAreaSize + "/" + areaSize + ")");
         }
     }
 }

@@ -17,6 +17,8 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 
 import com.eanfang.util.PhotoUtils;
+import com.eanfang.util.contentsafe.ContentDefaultAuditing;
+import com.eanfang.util.contentsafe.ContentSecurityAuditUtil;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
@@ -67,8 +69,13 @@ public class MyFreeAskActivity extends BaseWorkerActivity implements View.OnClic
             public void onClick(View v) {
                 answerContent1 = MyFreeAskActivity.this.answerContent.getText().toString();
                 if (!TextUtils.isEmpty(answerContent1)){
-                    urls = PhotoUtils.getPhotoUrl("online/",snplPhotos, uploadMap, true);
-                    getData();
+                    ContentSecurityAuditUtil.getInstance().toAuditing(answerContent1, new ContentDefaultAuditing(MyFreeAskActivity.this) {
+                        @Override
+                        public void auditingSuccess() {
+                            urls = PhotoUtils.getPhotoUrl("online/",snplPhotos, uploadMap, true);
+                            getData();
+                        }
+                    });
                 }else {
                     Toast.makeText(MyFreeAskActivity.this,"內容不可为空",Toast.LENGTH_SHORT).show();
                 }

@@ -191,7 +191,7 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
                 Conversation.ConversationType.GROUP, Conversation.ConversationType.SYSTEM,
                 Conversation.ConversationType.PUBLIC_SERVICE, Conversation.ConversationType.APP_PUBLIC_SERVICE
         };
-
+        ContactUtil.postAccount(MainActivity.this);
         RongIM.getInstance().addUnReadMessageCountChangedObserver(this, conversationTypes);
     }
 
@@ -295,21 +295,6 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
         SDKManager.getXGPush(MainActivity.this).setMzPush(MEIZU_APPID_WORKER, MEIZU_APPKEY_WORKER);
         SDKManager.getXGPush(MainActivity.this).registerPush(user.getAccount().getMobile());
 
-       /* XGPushConfig.enableOtherPush(MainActivity.this, true);
-        //开启信鸽日志输出
-        XGPushConfig.enableDebug(MainActivity.this, true);
-        XGPushConfig.setHuaweiDebug(true);
-        *//**
-         * 小米
-         * *//*
-        XGPushConfig.setMiPushAppId(MainActivity.this, XIAOMI_APPID_WORKER);
-        XGPushConfig.setMiPushAppKey(MainActivity.this, XIAOMI_APPKEY_WORKER);
-        *//**
-         * 魅族
-         * *//*
-        XGPushConfig.setMzPushAppId(MainActivity.this, MEIZU_APPID_WORKER);
-        XGPushConfig.setMzPushAppKey(MainActivity.this, MEIZU_APPKEY_WORKER);*/
-
         ReceiverInit.getInstance().inits(MainActivity.this, user.getAccount().getMobile());
     }
 
@@ -331,12 +316,6 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
                         WorkerApplication.get().set(BaseDataBean.class.getName(), baseDataBean);
                     }
                     saveArea();
-//                    new Thread(() -> {
-//                        if (jsonObject != null && !jsonObject.isEmpty() && jsonObject.containsKey("data") && !jsonObject.get("data").equals(Constant.NO_UPDATE)) {
-////                            BaseDataBean newDate = jsonObject.toJavaObject(BaseDataBean.class);
-//                            WorkerApplication.get().set(BaseDataBean.class.getName(), jsonObject.toJavaObject(BaseDataBean.class));
-//                        }
-//                    }).start();
                 }));
     }
 
@@ -391,12 +370,6 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
                     if (constAllBean != null) {
                         WorkerApplication.get().set(ConstAllBean.class.getName(), constAllBean);
                     }
-//                    new Thread(() -> {
-//                        if (jsonObject != null && !jsonObject.isEmpty() && jsonObject.containsKey("data") && !jsonObject.get("data").equals(Constant.NO_UPDATE)) {
-////                            ConstAllBean newDate = JSONObject.parseObject(str, ConstAllBean.class);
-//
-//                        }
-//                    }).start();
                 }));
     }
 
@@ -444,9 +417,7 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
                 UserInfo userInfo = new UserInfo(String.valueOf(WorkerApplication.get().getAccId()),
                         WorkerApplication.get().getLoginBean().getAccount().getNickName(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER +
                         WorkerApplication.get().getLoginBean().getAccount().getAvatar()));
-
                 Log.e("zzw", "userInfo=" + userInfo.toString());
-
 
                 return userInfo;
             }

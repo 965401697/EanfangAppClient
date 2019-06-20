@@ -17,6 +17,7 @@ import com.eanfang.R;
 import com.eanfang.R2;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.base.BaseApplication;
+import com.eanfang.dialog.ActiveRuleDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.InviteHistoryBean;
@@ -58,6 +59,8 @@ public class InviteFriendActivity extends BaseActivity {
     TextView mTvActivityDescription;
     @BindView(R2.id.cl_military_exploits)
     ConstraintLayout mClMilitaryExploits;
+    @BindView(R2.id.constraint_all_invite)
+    ConstraintLayout constraintAllInvite;
 
     private int mExtractMoney = 0;
 
@@ -103,7 +106,8 @@ public class InviteFriendActivity extends BaseActivity {
      * 活动弹窗显示
      */
     private void activityDialogShow() {
-        startActivity(new Intent(this, ActiveRuleActivity.class));
+        ActiveRuleDialog dialog = new ActiveRuleDialog(this);
+        dialog.show();
     }
 
     private void initAllPerson() {
@@ -162,6 +166,7 @@ public class InviteFriendActivity extends BaseActivity {
      */
     private void initRollTextView(RewardPerson rewardPerson) {
         List<View> views = new ArrayList<>();
+        constraintAllInvite.setVisibility(View.VISIBLE);
         for (int i = 0; i < rewardPerson.getList().size(); i++) {
             View view = View.inflate(this, R.layout.item_invite_friend_scroll, null);
             TextView title = (TextView) view.findViewById(R.id.tv_invite_friend_scroll);

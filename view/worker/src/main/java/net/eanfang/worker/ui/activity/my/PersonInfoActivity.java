@@ -39,6 +39,8 @@ import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
+import com.eanfang.util.contentsafe.ContentDefaultAuditing;
+import com.eanfang.util.contentsafe.ContentSecurityAuditUtil;
 import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.worker.R;
@@ -183,8 +185,18 @@ public class PersonInfoActivity extends BasePictureActivity implements IPictureC
         });
         mTvBirthday.setOnClickListener(this::setBirthday);
         mImgCalendar.setOnClickListener(this::setBirthday);
-        mBtnBigSave.setOnClickListener(new MultiClickListener(this, this::checkInfo, this::submitSuccess));
+        //mBtnBigSave.setOnClickListener(new MultiClickListener(this, this::checkInfo, this::submitSuccess));
         mTvToWorkerAuth.setSelected(true);
+        mBtnBigSave.setOnClickListener(v -> ContentSecurityAuditUtil.getInstance().toAuditing
+                (mEtPersonalNote.getText().toString(), new ContentDefaultAuditing(PersonInfoActivity.this) {
+                    @Override
+                    public void auditingSuccess() {
+                        if (checkInfo()) {
+                            submitSuccess();
+                        }
+                    }
+                })
+        );
     }
 
     private void headImage() {

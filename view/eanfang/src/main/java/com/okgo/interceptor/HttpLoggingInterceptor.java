@@ -16,6 +16,7 @@
 package com.okgo.interceptor;
 
 
+import com.eanfang.BuildConfig;
 import com.okgo.utils.IOUtils;
 import com.okgo.utils.OkLogger;
 
@@ -79,8 +80,10 @@ public class HttpLoggingInterceptor implements Interceptor {
         String subtype = mediaType.subtype();
         if (subtype != null) {
             subtype = subtype.toLowerCase();
-            //
-            return subtype.contains("x-www-form-urlencoded") || subtype.contains("json") || subtype.contains("xml") || subtype.contains("html");
+            if (subtype.contains("x-www-form-urlencoded") || subtype.contains("json") || subtype.contains("xml") || subtype.contains("html")) //
+            {
+                return true;
+            }
         }
         return false;
     }
@@ -97,7 +100,9 @@ public class HttpLoggingInterceptor implements Interceptor {
     }
 
     private void log(String message) {
-        logger.log(colorLevel, message);
+        if (BuildConfig.LOG_DEBUG) {
+            logger.log(colorLevel, message);
+        }
     }
 
     @Override
@@ -125,7 +130,7 @@ public class HttpLoggingInterceptor implements Interceptor {
         return logForResponse(response, tookMs);
     }
 
-    private void logForRequest(Request request, Connection connection) {
+    private void logForRequest(Request request, Connection connection) throws IOException {
         boolean logBody = (printLevel == Level.BODY);
         boolean logHeaders = (printLevel == Level.BODY || printLevel == Level.HEADERS);
         RequestBody requestBody = request.body();

@@ -24,9 +24,9 @@ public class UserHomeAdapter extends BaseQuickAdapter<UserHomePageBean.JobListBe
 
     @Override
     protected void convert(UserHomePageViewHolder helper, UserHomePageBean.JobListBean item) {
-        helper.mImgCompany.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getCompanyImg()));
-        helper.mTvCompany.setText(item.getCompanyName());
-        helper.mTvInServiceTime.setText(MessageFormat.format("{0} —— {1}", item.getStartDate(), item.getEndDate()));
-        helper.mTvJobPosition.setText(item.getJob());
+        helper.getImgCompany().setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getCompanyImg()));
+        helper.getTvCompany().setText(item.getCompanyName());
+        helper.getTvInServiceTime().setText(MessageFormat.format("{0} —— {1}", item.getStartDate(), item.getEndDate()));
+        helper.getTvJobPosition().setText(item.getJob());
     }
 }

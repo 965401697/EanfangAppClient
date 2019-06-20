@@ -9,25 +9,28 @@ import com.eanfang.base.widget.customview.CircleImageView;
 
 import net.eanfang.client.R;
 
+import lombok.Getter;
+
 
 /**
  * @author liangkailun
  * Date ：2019/4/9
  * Describe :同行人脉viewholder
  */
+@Getter
 public class PeerConnectionListViewHolder extends BaseViewHolder {
-    public TextView mTvConnectionItemName;
-    public TextView mTvConnectionItemCompany;
-    public Button mBtnConnectionItemAddOrCancel;
-    public CircleImageView mIvConnectionItemHeader;
+    private TextView tvConnectionItemName;
+    private TextView tvConnectionItemCompany;
+    private Button btnConnectionItemAddOrCancel;
+    private CircleImageView ivConnectionItemHeader;
 
     public PeerConnectionListViewHolder(View view) {
         super(view);
-        mTvConnectionItemName = view.findViewById(R.id.tv_connection_item_name);
-        mTvConnectionItemCompany = view.findViewById(R.id.tv_connection_item_company);
-        mBtnConnectionItemAddOrCancel = view.findViewById(R.id.btn_connection_item_addOrCancel);
-        mIvConnectionItemHeader = view.findViewById(R.id.iv_connection_item_header);
-        mBtnConnectionItemAddOrCancel.setSelected(true);
+        tvConnectionItemName = view.findViewById(R.id.tv_connection_item_name);
+        tvConnectionItemCompany = view.findViewById(R.id.tv_connection_item_company);
+        btnConnectionItemAddOrCancel = view.findViewById(R.id.btn_connection_item_addOrCancel);
+        ivConnectionItemHeader = view.findViewById(R.id.iv_connection_item_header);
+        btnConnectionItemAddOrCancel.setSelected(true);
         addOnClickListener(R.id.btn_connection_item_addOrCancel);
     }
 }

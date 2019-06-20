@@ -4,9 +4,11 @@ import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
 
 import com.eanfang.BuildConfig;
+import com.luck.picture.lib.entity.LocalMedia;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -47,6 +49,35 @@ public class PhotoUtils {
                 urls.append(object);
             }
             if (i < mPhotosSnpl.getData().size() - 1) {
+                urls.append(",");
+            }
+//            urls.add(BuildConfig.OSS_SERVER + object);
+        }
+        return urls.toString();
+    }
+
+    public static String getPhotoUrl(String uploadType, List<LocalMedia> selectList, Map<String, String> uploadMap, boolean clean) {
+        if (uploadMap == null) {
+            uploadMap = new HashMap<>();
+        }
+        if (clean) {
+            uploadMap.clear();
+        }
+//        List<String> urls = new ArrayList<>();
+        StringBuilder urls = new StringBuilder();
+
+        for (int i = 0; i <selectList.size(); i++) {
+            String path =selectList.get(i).getCutPath();
+            String object = uploadType + UuidUtil.getUUID() + ".png";
+            if (path == null || path.length() <= 0) {
+                continue;
+            } else if (path.startsWith(BuildConfig.OSS_SERVER)) {
+                urls.append(path.replace(BuildConfig.OSS_SERVER, ""));
+            } else {
+                uploadMap.put(object, path);
+                urls.append(object);
+            }
+            if (i < selectList.size()- 1) {
                 urls.append(",");
             }
 //            urls.add(BuildConfig.OSS_SERVER + object);

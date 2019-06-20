@@ -1164,6 +1164,9 @@
         <activity
             android:name=".ui.activity.worksapce.security.SecurityCommentDetailActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name="net.eanfang.worker.ui.activity.NewOrderActivity" />
+        <activity android:name="net.eanfang.worker.ui.activity.NewOrderScreenActivity" />
+        <activity android:name="net.eanfang.worker.ui.activity.ChooseAreaActivity" />
     </application>
 
 </manifest>

@@ -59,8 +59,5 @@ public class RewardPerson {
         public int getWithdrawalMoney() {
             return withdrawalMoney / 100;
         }
-
-        public void setWithdrawalMoney(int withdrawalMoney) {
-        }
     }
 }

@@ -25,9 +25,16 @@ import com.eanfang.biz.model.BusinessManagementData;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
+import com.eanfang.util.PermKit;
+import com.eanfang.util.ToastUtil;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
+import net.eanfang.worker.ui.activity.worksapce.contacts.AdministratorSetActivity;
+import net.eanfang.worker.ui.activity.worksapce.contacts.CooperationRelationActivity;
+import net.eanfang.worker.ui.activity.worksapce.contacts.CreatSectionActivity;
+import net.eanfang.worker.ui.activity.worksapce.contacts.PermissionManagerActivity;
+import net.eanfang.worker.ui.activity.worksapce.contacts.SearchStaffActivity;
 import net.eanfang.worker.ui.activity.worksapce.contacts.baseinfo.AuthCompanyFirstBActivity;
 import net.eanfang.worker.ui.activity.worksapce.setting.UpdatePasswordActivity;
 import net.eanfang.worker.ui.fragment.ContactsFragment;
@@ -82,7 +89,7 @@ public class CompanyManagerBActivity extends BaseActivity implements DissloveTea
      * 解散团队
      */
     private DissloveTeamDialog dissloveTeamDialog;
-
+    private String adminUserId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,7 +101,8 @@ public class CompanyManagerBActivity extends BaseActivity implements DissloveTea
     private void initView() {
         setLeftBack();
         setTitle("企业管理");
-        if (String.valueOf(WorkerApplication.get().getUserId()).equals(getIntent().getStringExtra("adminUserId"))) {
+        adminUserId = getIntent().getStringExtra("adminUserId");
+        if (String.valueOf(WorkerApplication.get().getUserId()).equals(adminUserId)) {
             setRightTitle("解散团队");
             setRightTitleOnClickListener(v -> doDisslove());
         } else {
@@ -122,14 +130,35 @@ public class CompanyManagerBActivity extends BaseActivity implements DissloveTea
                 finish();
                 break;
             case R.id.rl_admin_set:
+                if (String.valueOf(WorkerApplication.get().getUserId()).equals(adminUserId)) {
+                    JumpItent.jump(CompanyManagerBActivity.this, AdministratorSetActivity.class);
+                } else {
+                    ToastUtil.get().showToast(this, "您不是当前公司的管理员");
+                }
                 break;
             case R.id.rl_creat_section:
+                if (!PermKit.get().getCompanyDepartmentCreatPerm()) {
+                    return;
+                }
+                JumpItent.jump(CompanyManagerBActivity.this, CreatSectionActivity.class);
                 break;
             case R.id.rl_add_staff:
+                if (!PermKit.get().getCompanyStaffCreatPerm()) {
+                    return;
+                }
+                JumpItent.jump(CompanyManagerBActivity.this, SearchStaffActivity.class);
                 break;
             case R.id.rl_permission:
+                if (!PermKit.get().getCompanyStaffAssignrolePerm()) {
+                    return;
+                }
+                JumpItent.jump(CompanyManagerBActivity.this, PermissionManagerActivity.class);
                 break;
             case R.id.ll_cooperation_relation:
+                if (!PermKit.get().getCooperationListAllPerm()) {
+                    return;
+                }
+                JumpItent.jump(CompanyManagerBActivity.this, CooperationRelationActivity.class);
                 break;
             case R.id.gg_iv:
                 break;
