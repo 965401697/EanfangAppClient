@@ -29,7 +29,7 @@ public interface TenderApi {
      * @param queryMap
      * @return
      */
-    @POST("/yaf_ifb/ifborder/list")
+    @POST("/yaf_ifb/ifborder/lists")
     Observable<BaseResponseBody<PageBean<IfbOrderEntity>>> getTenderNoticeList(@Body QueryEntry queryMap);
 
     /**
@@ -49,6 +49,16 @@ public interface TenderApi {
      */
     @POST("/yaf_task_publish/taskPublish/laborInsert")
     Observable<BaseResponseBody<PageBean<TaskPublishEntity>>> setNewTender(@Body TenderCreateVo tenderCreateVo);
+
+
+    /**
+     * 用工详情
+     *
+     * @param id
+     * @return
+     */
+    @POST("/yaf_task_publish/taskPublish/laborDetail")
+    Observable<BaseResponseBody<TaskPublishEntity>> getTenderDetail(@Query("id") String id);
 
 
 }

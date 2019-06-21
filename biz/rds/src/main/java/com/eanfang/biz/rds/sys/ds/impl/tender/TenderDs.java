@@ -36,4 +36,9 @@ public class TenderDs extends BaseRemoteDataSource implements ITenderDs {
     public void setNewTende(TenderCreateVo tenderCreateVo, RequestCallback<TaskPublishEntity> callback) {
         execute(getService(TenderApi.class).setNewTender(tenderCreateVo), callback);
     }
+
+    @Override
+    public void getFindDetail(String id, RequestCallback<TaskPublishEntity> callback) {
+        execute(getService(TenderApi.class).getTenderDetail(id), callback);
+    }
 }

@@ -42,4 +42,11 @@ public interface ITenderDs {
     void setNewTende(TenderCreateVo tenderCreateVo, RequestCallback<TaskPublishEntity> callback);
 
 
+    /**
+     * 用工详情
+     * @param id
+     * @param callback
+     */
+    void getFindDetail(String id,RequestCallback<TaskPublishEntity> callback);
+
 }

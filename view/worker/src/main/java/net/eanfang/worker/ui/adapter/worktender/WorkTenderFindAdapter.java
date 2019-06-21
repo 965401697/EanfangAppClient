@@ -1,5 +1,7 @@
 package net.eanfang.worker.ui.adapter.worktender;
 
+import android.view.View;
+
 import androidx.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -7,6 +9,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
 import com.eanfang.config.Config;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
 
@@ -24,6 +27,7 @@ public class WorkTenderFindAdapter extends BaseQuickAdapter<TaskPublishEntity, B
 
     @Override
     protected void convert(BaseViewHolder helper, TaskPublishEntity item) {
+        String endTime = GetDateUtils.dateToDateTimeString(item.getEndTime());
         //名称
         helper.setText(R.id.tv_tender_name, Config.get().getBusinessNameByCode(item.getSystemType(), 1));
         //类型 0 安装 1  维修
@@ -39,7 +43,20 @@ public class WorkTenderFindAdapter extends BaseQuickAdapter<TaskPublishEntity, B
         // 用工要求
         helper.setText(R.id.tv_tender_require, item.getLaborRequirements());
         //截止时间
-        helper.setText(R.id.tv_cutoff_time, "距截止还剩：" + GetDateUtils.dateToDateTimeString(item.getEndTime()));
+        if (!StringUtils.isEmpty(endTime)) {
+            //剩余时间
+            long currentTime = System.currentTimeMillis() / 1000;
+            long remainTime = GetDateUtils.convertDateToSecond(endTime) - currentTime;
+            if (remainTime > 0) {
+                int oneDay = 24 * 60 * 60;
+                int day = (int) (remainTime / oneDay);
+                int oneHour = 60 * 60;
+                int hour = (int) ((remainTime % oneDay) / oneHour);
+                int oneMin = 60;
+                int min = (int) (((remainTime % oneDay) % oneHour)) / oneMin;
+                helper.setText(R.id.tv_cutoff_time, mContext.getString(R.string.text_tender_count_down, day, hour, min));
+            }
+        }
         helper.addOnClickListener(R.id.tv_offer);
     }
 }

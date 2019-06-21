@@ -76,7 +76,8 @@
         android:supportsRtl="true"
         android:theme="@style/NewBaseTheme"
         tools:replace="android:name,android:theme">
-        <activity android:name=".ui.activity.worksapce.tender.TenderPersonalActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.tender.TenderFindDetailActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.tender.TenderPersonalActivity" />
         <activity
             android:name=".ui.activity.worksapce.tender.TenderCreateActivity"
             android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />

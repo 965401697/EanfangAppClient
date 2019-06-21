@@ -55,6 +55,17 @@ public class TenderRepo extends BaseRepo<TenderDs> {
         });
         return setNewTenderLiveData;
     }
+
+    /**
+     * 用工详情
+     */
+    public MutableLiveData<TaskPublishEntity> doGetTenderDetail(String id) {
+        MutableLiveData<TaskPublishEntity> getTenderDetailLiveData = new MutableLiveData<>();
+        remoteDataSource.getFindDetail(id, (val) -> {
+            getTenderDetailLiveData.setValue(val);
+        });
+        return getTenderDetailLiveData;
+    }
 }
 
 

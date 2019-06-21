@@ -12,10 +12,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.eanfang.base.BaseActivity;
 import com.eanfang.base.BaseFragment;
 import com.eanfang.biz.model.bean.QueryEntry;
+import com.eanfang.util.JumpItent;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.worksapce.tender.TenderFindDetailActivity;
 import net.eanfang.worker.ui.adapter.worktender.WorkTenderFindAdapter;
 import net.eanfang.worker.ui.fragment.TemplateItemListFragment;
 import net.eanfang.worker.viewmodle.tender.TenderViewModle;
@@ -45,6 +48,7 @@ public class WorkTenderFindFragment extends TemplateItemListFragment {
     protected void initAdapter(BaseQuickAdapter baseQuickAdapter) {
         workTenderFindAdapter = new WorkTenderFindAdapter();
         super.initAdapter(workTenderFindAdapter);
+        setLinstener();
     }
 
     @Override
@@ -69,6 +73,15 @@ public class WorkTenderFindFragment extends TemplateItemListFragment {
     @Override
     protected void getData() {
         mTenderViewModle.doGetFindData(mPage);
+    }
+
+
+    private void setLinstener() {
+        workTenderFindAdapter.setOnItemClickListener((adapter, view, position) -> {
+            Bundle bundle = new Bundle();
+            bundle.putLong("tendFindId",workTenderFindAdapter.getData().get(position).getId());
+            JumpItent.jump(getActivity(), TenderFindDetailActivity.class,bundle);
+        });
     }
 
 

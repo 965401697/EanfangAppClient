@@ -19,6 +19,11 @@ import lombok.experimental.Accessors;
 @Getter()
 @Accessors(chain = true)
 public class TenderCreateVo extends BaseVo implements Serializable {
+
+    /**
+     * 订单编号
+     */
+    private ObservableField<String> orderNum = new ObservableField<>();
     /**
      * 联系人==发布人：
      */
@@ -72,6 +77,10 @@ public class TenderCreateVo extends BaseVo implements Serializable {
      * 系统类别--用工发布
      */
     private ObservableField<String> systemType = new ObservableField<>();
+    /**
+     * 创建时间
+     */
+    private ObservableField<String> createTime = new ObservableField<>();
     /**
      * 结束时间
      */
