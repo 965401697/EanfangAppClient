@@ -3,9 +3,9 @@ package net.eanfang.client.ui.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentPagerAdapter;
+
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,61 +14,34 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSONObject;
-import com.annimon.stream.Stream;
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnItemClickListener;
-import com.eanfang.BuildConfig;
-import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.biz.model.security.SecurityLikeBean;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.AllMessageBean;
-import com.eanfang.biz.model.NoticeEntity;
 import com.eanfang.biz.model.datastatistics.HomeDatastisticeBean;
-import com.eanfang.biz.model.security.SecurityListBean;
-import com.eanfang.model.security.SecurityLikeStatusBean;
 import com.eanfang.ui.base.BaseFragment;
-import com.eanfang.util.GetDateUtils;
-import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.QueryEntry;
-import com.eanfang.util.StringUtils;
-import com.eanfang.util.V;
 import com.eanfang.witget.BannerView;
 import com.eanfang.witget.HomeScanPopWindow;
-import com.eanfang.witget.RollTextView;
-import com.photopicker.com.util.BGASpaceItemDecoration;
+import com.flyco.tablayout.SlidingTabLayout;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.CameraActivity;
-import net.eanfang.client.ui.activity.worksapce.CustomerServiceActivity;
 import net.eanfang.client.ui.activity.worksapce.DesignOrderActivity;
-import net.eanfang.client.ui.activity.worksapce.NoContentActivity;
 import net.eanfang.client.ui.activity.worksapce.RealTimeMonitorActivity;
-import net.eanfang.client.ui.activity.worksapce.datastatistics.DataDesignActivity;
-import net.eanfang.client.ui.activity.worksapce.datastatistics.DataInstallActivity;
 import net.eanfang.client.ui.activity.worksapce.datastatistics.DataStaticsticsListActivity;
-import net.eanfang.client.ui.activity.worksapce.datastatistics.DataStatisticsActivity;
 import net.eanfang.client.ui.activity.worksapce.install.InstallOrderParentActivity;
 import net.eanfang.client.ui.activity.worksapce.online.ExpertOnlineActivity;
-import net.eanfang.client.ui.activity.worksapce.online.FaultExplainActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.RepairTypeActivity;
 import net.eanfang.client.ui.activity.worksapce.scancode.ScanCodeActivity;
-import net.eanfang.client.ui.activity.worksapce.security.SecurityDetailActivity;
 import net.eanfang.client.ui.activity.worksapce.security.SecurityListActivity;
-import net.eanfang.client.ui.activity.worksapce.security.SecurityPersonalActivity;
-import net.eanfang.client.ui.adapter.HomeDataAdapter;
-import net.eanfang.client.ui.adapter.security.SecurityListAdapter;
-import net.eanfang.client.util.ImagePerviewUtil;
+import net.eanfang.client.ui.widget.CustomHomeViewPager;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import q.rorbin.badgeview.QBadgeView;
@@ -84,11 +57,6 @@ import static com.eanfang.util.V.v;
  */
 
 public class HomeFragment extends BaseFragment {
-
-    // 实时监控
-    private TextView tvMonitor;
-    //报修数量
-    private TextView tvReapirTotal;
     //报装数量
     TextView tvInstallTotal;
     // 设计总数
@@ -96,18 +64,16 @@ public class HomeFragment extends BaseFragment {
 
     private BannerView bannerView;
 
-    private RollTextView rollTextView;
-
     //头部标题
     private TextView tvHomeTitle;
 
     // 扫码Popwindow
     private HomeScanPopWindow homeScanPopWindow;
 
-    private RecyclerView rvData;
     private List<HomeDatastisticeBean.GroupBean> clientDataList = new ArrayList<>();
-    private HomeDataAdapter homeDataAdapter;
     private RelativeLayout rlAllData;
+
+    private MyPagerAdapter mAdapter;
 
     /**
      * 图标数量
@@ -118,17 +84,9 @@ public class HomeFragment extends BaseFragment {
     private int mRepair = 0;
     private int mDesign = 0;
     private int mInstall = 0;
-    /**
-     * 安防圈
-     */
-    private RecyclerView rvSecurity;
-    private SecurityListAdapter securityListAdapter;
-    private TextView tvNoSecurity;
     private TextView mTvSecurityNewMessage;
     private RelativeLayout rlSecurityNewMessage;
     private int mSecurityNum;
-    private ArrayList<String> picList = new ArrayList<>();
-    private String[] pics = null;
 
     @Override
     protected int setLayoutResouceId() {
@@ -150,20 +108,14 @@ public class HomeFragment extends BaseFragment {
             tvHomeTitle.setText(orgName);
         }
         doHttpOrderNums();
-        doGetSecurityData();
     }
 
     @Override
     protected void initView() {
-        tvMonitor = (TextView) findViewById(R.id.tv_monitor);
-        rvData = (RecyclerView) findViewById(R.id.rv_reapir_data);
         tvHomeTitle = (TextView) findViewById(R.id.tv_homeTitle);
         rlAllData = (RelativeLayout) findViewById(R.id.rl_allData);
-        tvReapirTotal = findViewById(R.id.tv_reapir_total);
         tvInstallTotal = findViewById(R.id.tv_install_total);
         tvDesitnTotal = findViewById(R.id.tv_desitn_total);
-        rvSecurity = findViewById(R.id.rv_security);
-        tvNoSecurity = findViewById(R.id.tv_noSecurity);
         mTvSecurityNewMessage = findViewById(R.id.tv_security_count);
         rlSecurityNewMessage = findViewById(R.id.rl_security_message);
         homeScanPopWindow = new HomeScanPopWindow(getActivity(), false, scanSelectItemsOnClick);
@@ -176,13 +128,8 @@ public class HomeFragment extends BaseFragment {
         initIconClick();
         initLoopView();
 
-        //设置布局样式
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 3);
-        rvData.setLayoutManager(gridLayoutManager);
         initCount();
 
-        doHttpNews();
-        doHttpDatastatistics();
         //报修
         qBadgeViewRepair.bindTarget(findViewById(R.id.tv_reparir))
                 .setBadgeBackgroundColor(0xFFFF0000)
@@ -205,7 +152,89 @@ public class HomeFragment extends BaseFragment {
                 .setGravityOffset(11, 0, true)
                 .setBadgeTextSize(11, true);
 
-        initSecurity();
+        initViewPager1();
+        initViewPager2();
+        initViewPager3();
+        initViewPager4();
+    }
+
+    private void initViewPager1() {
+        String[] titles = {"当日维修", "当日安装", "当日设计"};
+        ArrayList<Fragment> fragments = new ArrayList<>();
+        CustomHomeViewPager vpDataStatis = findViewById(R.id.vp_datastatistics);
+        SlidingTabLayout tlDataStatisticsList = (SlidingTabLayout) findViewById(R.id.tl_datastatistics);
+
+        fragments.clear();
+        fragments.add(HomeDataStatisticsFragment.getInstance(titles[0], 1));
+        fragments.add(HomeDataStatisticsFragment.getInstance(titles[1], 2));
+        fragments.add(HomeDataStatisticsFragment.getInstance(titles[2], 3));
+
+        mAdapter = new MyPagerAdapter(titles, fragments);
+        vpDataStatis.setAdapter(mAdapter);
+        // 设置不可滑动
+        vpDataStatis.setScanScroll(false);
+        tlDataStatisticsList.setViewPager(vpDataStatis, titles, getActivity(), fragments);
+        vpDataStatis.setCurrentItem(0);
+        tlDataStatisticsList.setCurrentTab(0);
+    }
+
+    private void initViewPager2() {
+        String[] titles = {"快速报修", "免费报装", "免费设计"};
+        ArrayList<Fragment> fragments = new ArrayList<>();
+        CustomHomeViewPager vpDataStatis = findViewById(R.id.vp_home_repair);
+        SlidingTabLayout tlDataStatisticsList = (SlidingTabLayout) findViewById(R.id.tl_home_repair);
+
+        fragments.clear();
+        fragments.add(HomeRepairFragment.getInstance(0));
+        fragments.add(HomeRepairFragment.getInstance(1));
+        fragments.add(HomeRepairFragment.getInstance(2));
+
+        mAdapter = new MyPagerAdapter(titles, fragments);
+        vpDataStatis.setAdapter(mAdapter);
+        // 设置不可滑动
+        vpDataStatis.setScanScroll(false);
+        tlDataStatisticsList.setViewPager(vpDataStatis, titles, getActivity(), fragments);
+        vpDataStatis.setCurrentItem(0);
+        tlDataStatisticsList.setCurrentTab(0);
+    }
+
+    private void initViewPager3() {
+        String[] titles = {"最新订单", "全部品牌", "全部业务"};
+        ArrayList<Fragment> fragments = new ArrayList<>();
+        CustomHomeViewPager vpDataStatis = findViewById(R.id.vp_home_business);
+        SlidingTabLayout tlDataStatisticsList = (SlidingTabLayout) findViewById(R.id.tl_home_business);
+
+        fragments.clear();
+        fragments.add(new HomeNewOrderFragment());
+        fragments.add(new HomeAllBrandFragment());
+        fragments.add(new HomeAllBusinessTypeFragment());
+
+        mAdapter = new MyPagerAdapter(titles, fragments);
+        vpDataStatis.setAdapter(mAdapter);
+        // 设置不可滑动
+        vpDataStatis.setScanScroll(false);
+        tlDataStatisticsList.setViewPager(vpDataStatis, titles, getActivity(), fragments);
+        vpDataStatis.setCurrentItem(0);
+        tlDataStatisticsList.setCurrentTab(0);
+    }
+
+    private void initViewPager4() {
+        String[] titles = {"安防公司", "找技师"};
+        ArrayList<Fragment> fragments = new ArrayList<>();
+        CustomHomeViewPager vpDataStatis = findViewById(R.id.vp_home_worker);
+        SlidingTabLayout tlDataStatisticsList = (SlidingTabLayout) findViewById(R.id.tl_home_worker);
+
+        fragments.clear();
+        fragments.add(HomeCompanyFragment.getInstance(0));
+        fragments.add(HomeCompanyFragment.getInstance(1));
+
+        mAdapter = new MyPagerAdapter(titles, fragments);
+        vpDataStatis.setAdapter(mAdapter);
+        // 设置不可滑动
+        vpDataStatis.setScanScroll(false);
+        tlDataStatisticsList.setViewPager(vpDataStatis, titles, getActivity(), fragments);
+        vpDataStatis.setCurrentItem(0);
+        tlDataStatisticsList.setCurrentTab(0);
     }
 
 
@@ -217,51 +246,43 @@ public class HomeFragment extends BaseFragment {
         findViewById(R.id.tv_reparir).setOnClickListener((v) -> {
             JumpItent.jump(getActivity(), RepairTypeActivity.class);
         });
+
+        //我要报装
+        findViewById(R.id.tv_install).setOnClickListener((v) -> {
+            startActivity(new Intent(getActivity(), InstallOrderParentActivity.class));
+        });
+        //免费设计
+        findViewById(R.id.tv_design).setOnClickListener((v) -> {
+            startActivity(new Intent(getActivity(), DesignOrderActivity.class));
+        });
+        //安防头条
+        findViewById(R.id.tv_lead_news).setOnClickListener(view -> {
+
+        });
+        //安防圈
+        findViewById(R.id.tv_circle).setOnClickListener(view -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt("mSecurityNum", mSecurityNum);
+            JumpItent.jump(getActivity(), SecurityListActivity.class, bundle);
+        });
         //专家问答
         findViewById(R.id.tv_onLine).setOnClickListener((v) -> {
-//            if (!PermKit.get().getRepairListPerm()) return;
             if (workerApprove()) {
                 startActivity(new Intent(getActivity(), ExpertOnlineActivity.class));
             }
         });
-        //我要报装
-        findViewById(R.id.tv_install).setOnClickListener((v) -> {
-//            new InstallCtrlView(getActivity(), true).show();
-            startActivity(new Intent(getActivity(), InstallOrderParentActivity.class));
-
-        });
-        //免费设计
-        findViewById(R.id.tv_design).setOnClickListener((v) -> {
-//            new DesignCtrlView(getActivity(), true).show();
-            startActivity(new Intent(getActivity(), DesignOrderActivity.class));
-        });
-        //开锁
-        findViewById(R.id.tv_unlock).setOnClickListener(v -> JumpItent.jump(getActivity(), NoContentActivity.class));
         //实时监控
         findViewById(R.id.tv_monitor).setOnClickListener(v -> JumpItent.jump(getActivity(), RealTimeMonitorActivity.class));
-        //客服
-        findViewById(R.id.tv_service).setOnClickListener((v) -> {
-            startActivity(new Intent(getActivity(), CustomerServiceActivity.class));
+        //脱岗检测
+        findViewById(R.id.tv_out_post).setOnClickListener(view -> {
+
         });
+
         //扫描二维码
         findViewById(R.id.iv_scan).setOnClickListener((v) -> {
             homeScanPopWindow.showAsDropDown(findViewById(R.id.iv_scan));
             homeScanPopWindow.backgroundAlpha(0.5f);
         });
-
-        // 安防圈
-        findViewById(R.id.rl_security).setOnClickListener((v) -> {
-            Bundle bundle = new Bundle();
-            bundle.putInt("mSecurityNum", mSecurityNum);
-            JumpItent.jump(getActivity(), SecurityListActivity.class, bundle);
-        });
-        findViewById(R.id.iv_security_cancle).setOnClickListener((v) -> {
-            rlSecurityNewMessage.setVisibility(View.GONE);
-        });
-        findViewById(R.id.ll_security_new).setOnClickListener((v) -> {
-            JumpItent.jump(getActivity(), SecurityPersonalActivity.class);
-        });
-
     }
 
     View.OnClickListener scanSelectItemsOnClick = new View.OnClickListener() {
@@ -334,240 +355,23 @@ public class HomeFragment extends BaseFragment {
     }
 
     /**
-     * 初始化rolltext显示的文本
-     */
-    private void initRollTextView(List<NoticeEntity> list) {
-        rollTextView = findViewById(R.id.home_recommand_ad_text);
-        List<View> views = new ArrayList<>();
-        List<String> data = new ArrayList<>();
-        List<String> titleList = new ArrayList<>();
-
-        String repairStr = "通过易安防进行了报修。";
-        String quoteStr = "通过易安防收到了一个报价单。";
-        String maintainStr = "通过易安防进行了一次日常维保。";
-
-        if (list != null && !list.isEmpty()) {
-            for (int i = 0; i < list.size(); i++) {
-                NoticeEntity noticeEntity = list.get(i);
-
-                String realName = V.v(() -> noticeEntity.getReciveAccEntity().getRealName());
-                if (StringUtils.isEmpty(realName)) {
-                    continue;
-                }
-                if (noticeEntity.getNoticeType() == 23) {
-                    data.add(repairStr + "\r\n" + GetDateUtils.dateToDateTimeString(noticeEntity.getCreateTime()));
-                } else if (noticeEntity.getNoticeType() == 42) {
-                    data.add(quoteStr + "\r\n" + GetDateUtils.dateToDateTimeString(noticeEntity.getCreateTime()));
-                } else if (noticeEntity.getNoticeType() == 56) {
-                    data.add(maintainStr + "\r\n" + GetDateUtils.dateToDateTimeString(noticeEntity.getCreateTime()));
-                } else {
-                    continue;
-                }
-
-                StringBuilder showName = new StringBuilder();
-                if (realName.length() >= 1) {
-                    showName.append(realName.charAt(0));
-                }
-                if (realName.length() >= 2) {
-                    showName.append("*");
-                }
-                if (realName.length() >= 3) {
-                    showName.append(realName.charAt(2));
-                }
-                titleList.add(showName + "先生");
-            }
-
-        }
-
-
-        try {
-            for (int i = 0; i < data.size(); i++) {
-                View view = View.inflate(getContext(), R.layout.rolltext_item, null);
-                TextView content = (TextView) view.findViewById(R.id.tv_roll_item_text);
-                TextView title = (TextView) view.findViewById(R.id.tv_roll_item_title);
-                title.setText(titleList.get(i).toString());
-                content.setText(data.get(i).toString());
-                views.add(view);
-            }
-        } catch (NullPointerException e) {
-        }
-
-
-        rollTextView.setViews(views);
-        rollTextView.setOnItemClickListener((position, view) -> {
-//            showToast("暂无可点");
-        });
-    }
-
-    /**
-     * 安防圈
-     */
-    private void initSecurity() {
-        securityListAdapter = new SecurityListAdapter(ClientApplication.get().getApplicationContext(), false);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-        rvSecurity.setLayoutManager(layoutManager);
-        rvSecurity.setNestedScrollingEnabled(false);
-        rvSecurity.addItemDecoration(new BGASpaceItemDecoration(20));
-        securityListAdapter.bindToRecyclerView(rvSecurity);
-        doGetSecurityData();
-    }
-
-    private void doGetSecurityData() {
-        QueryEntry mQueryEntry = new QueryEntry();
-        mQueryEntry.setPage(1);
-        mQueryEntry.setSize(3);
-        EanfangHttp.post(NewApiService.SECURITY_RECOMMEND)
-                .upJson(JsonUtils.obj2String(mQueryEntry))
-                .execute(new EanfangCallback<SecurityListBean>(getActivity(), true, SecurityListBean.class) {
-
-                    @Override
-                    public void onSuccess(SecurityListBean bean) {
-                        securityListAdapter.getData().clear();
-                        securityListAdapter.setNewData(bean.getList());
-                        if (bean.getList().size() > 0) {
-                            tvNoSecurity.setVisibility(View.GONE);
-                        } else {
-                            tvNoSecurity.setVisibility(View.VISIBLE);
-                        }
-                    }
-                });
-    }
-
-    /**
-     * 获取新闻
-     */
-    public void doHttpNews() {
-        EanfangHttp.get(NewApiService.GET_PUSH_NEWS_CLIENT).execute(new EanfangCallback<NoticeEntity>(getActivity(), false, NoticeEntity.class, true, (list -> {
-            initRollTextView(list);
-        })));
-    }
-
-    /**
-     * 获取统计数据
-     */
-    private void doHttpDatastatistics() {
-        QueryEntry queryEntry = new QueryEntry();
-        queryEntry.getEquals().put("companyId", ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgId() + "");
-        EanfangHttp.post(NewApiService.HOME_DATASTASTISTICS)
-                .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<HomeDatastisticeBean>(getActivity(), false, HomeDatastisticeBean.class, bean -> {
-                    initDatastatisticsData(bean);
-                }));
-    }
-
-    /**
      * 获取订单数量
      */
     private void doHttpOrderNums() {
         EanfangHttp.get(UserApi.ALL_MESSAGE).execute(new EanfangCallback<AllMessageBean>(getActivity(), false, AllMessageBean.class, (bean -> {
+            if (bean == null) {
+                return;
+            }
             doSetOrderNums(bean);
         })));
-    }
-
-    /**
-     * 統計填充数据
-     */
-    private void initDatastatisticsData(HomeDatastisticeBean bean) {
-        clientDataList = bean.getGroup();// 报修
-        homeDataAdapter = new HomeDataAdapter(R.layout.layout_home_data);
-        rvData.setAdapter(homeDataAdapter);
-        homeDataAdapter.bindToRecyclerView(rvData);
-        homeDataAdapter.setNewData(clientDataList);
-        tvReapirTotal.setText(bean.getAll() + "");
-        tvDesitnTotal.setText(bean.getDesign().getNum() + "");
-        tvInstallTotal.setText(bean.getInstall().getNum() + "");
     }
 
     @Override
     protected void setListener() {
         findViewById(R.id.iv_camera).setOnClickListener(v -> startActivity(new Intent(getActivity(), CameraActivity.class)));
-        findViewById(R.id.ll_repair_datasticstics).setOnClickListener(v -> startActivity(new Intent(getActivity(), DataStatisticsActivity.class)));
-        rvData.addOnItemTouchListener(new OnItemClickListener() {
-            @Override
-            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivity(new Intent(getActivity(), DataStatisticsActivity.class));
-            }
-        });
-        findViewById(R.id.ll_repair_install).setOnClickListener(v -> startActivity(new Intent(getActivity(), DataInstallActivity.class)));
-        findViewById(R.id.ll_design).setOnClickListener(v -> startActivity(new Intent(getActivity(), DataDesignActivity.class)));
-        securityListAdapter.setOnItemClickListener((adapter, view, position) -> {
-            doJump(position, false);
-        });
-        securityListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
-            switch (view.getId()) {
-                case R.id.ll_comments:
-                    doJump(position, true);
-                    break;
-                case R.id.ll_pic:
-                    picList.clear();
-                    pics = securityListAdapter.getData().get(position).getSpcImg().split(",");
-                    picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> BuildConfig.OSS_SERVER + (url).toString()).toList());
-                    ImagePerviewUtil.perviewImage(getActivity(), picList);
-                    break;
-                case R.id.ll_like:
-                    doLike(position, securityListAdapter.getData().get(position));
-                    break;
-                case R.id.tv_isFocus:
-                case R.id.ll_share:
-                case R.id.ll_question:
-                case R.id.rl_video:
-                    doJump(position, false);
-                    break;
-                default:
-                    break;
-            }
-        });
     }
 
-    /**
-     * 进行点赞
-     */
-    private void doLike(int position, SecurityListBean.ListBean listBean) {
-        SecurityLikeBean securityLikeBean = new SecurityLikeBean();
-        securityLikeBean.setAsId(listBean.getSpcId());
-        securityLikeBean.setType("0");
-        /**
-         *状态：0 点赞 1 未点赞
-         * */
-        if (listBean.getLikeStatus() == 0) {
-            listBean.setLikeStatus(1);
-            listBean.setLikesCount(listBean.getLikesCount());
-            securityLikeBean.setLikeStatus("1");
-        } else {
-            listBean.setLikeStatus(0);
-            listBean.setLikesCount(listBean.getLikesCount());
-            securityLikeBean.setLikeStatus("0");
-        }
-        securityLikeBean.setLikeUserId(ClientApplication.get().getUserId());
-        securityLikeBean.setLikeCompanyId(ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyId());
-        securityLikeBean.setLikeTopCompanyId(ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getTopCompanyId());
-        EanfangHttp.post(NewApiService.SERCURITY_LIKE)
-                .upJson(JSONObject.toJSONString(securityLikeBean))
-                .execute(new EanfangCallback<SecurityLikeStatusBean>(getActivity(), true, SecurityLikeStatusBean.class, bean -> {
-                    getActivity().runOnUiThread(() -> {
-                        securityListAdapter.getData().get(position).setLikeStatus(bean.getLikeStatus());
-                        securityListAdapter.getData().get(position).setLikesCount(bean.getLikesCount());
-                        securityListAdapter.notifyItemChanged(position);
-                    });
-                }));
-    }
-
-    public void doJump(int position, boolean isCommon) {
-        //专家问答
-        if (securityListAdapter.getData().get(position).getType() == 1) {
-            Bundle bundle_question = new Bundle();
-            bundle_question.putInt("QuestionIdZ", Integer.parseInt(securityListAdapter.getData().get(position).getQuestionId()));
-            JumpItent.jump(getActivity(), FaultExplainActivity.class, bundle_question);
-        } else {
-            Bundle bundle = new Bundle();
-            bundle.putLong("spcId", securityListAdapter.getData().get(position).getSpcId());
-            bundle.putInt("friend", securityListAdapter.getData().get(position).getFriend());
-            bundle.putBoolean("isCommon", isCommon);
-            JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
-        }
-    }
-
-    public void doSetOrderNums(AllMessageBean bean) {
+    private void doSetOrderNums(AllMessageBean bean) {
         // 报修
         if (bean.getRepair() > 0) {
             mRepair = bean.getRepair();
@@ -602,6 +406,32 @@ public class HomeFragment extends BaseFragment {
          * 底部红点更新
          * */
         EventBus.getDefault().post(bean);
+    }
+
+    private class MyPagerAdapter extends FragmentPagerAdapter {
+        private final String[] titles;
+        private final ArrayList<Fragment> fragments;
+
+        private MyPagerAdapter(String[] titles, ArrayList<Fragment> fragments) {
+            super(getChildFragmentManager());
+            this.titles = titles;
+            this.fragments = fragments;
+        }
+
+        @Override
+        public int getCount() {
+            return fragments.size();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return titles[position];
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return fragments.get(position);
+        }
     }
 
 }

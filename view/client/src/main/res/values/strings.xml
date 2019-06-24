@@ -11,11 +11,12 @@
     <!-- 首页 -->
     <string name="text_home_reapir">我要报修</string>
     <string name="text_home_install">我要报装</string>
-    <string name="text_home_design">我要设计</string>
-    <string name="text_home_unlock">开锁</string>
-    <string name="text_home_service">客服</string>
-    <string name="text_home_monitor">实时监控</string>
+    <string name="text_home_design">免费设计</string>
+    <string name="text_home_lead_news">安防头条</string>
+    <string name="text_home_circle">安防圈</string>
     <string name="text_home_mo">专家问答</string>
+    <string name="text_home_monitor">实时监控</string>
+    <string name="text_home_out_post">脱岗检测</string>
     <string name="text_work_repair">报修管控</string>
     <string name="text_work_install">报装管控</string>
     <string name="text_work_price">维修报价</string>
@@ -58,4 +59,13 @@
     <string name="text_user_home_intro_default">这家伙很懒，没有留下任何内容</string>
 
     <string name="text_to_install_worker"><u>易安防技师端 >></u></string>
+    <string name="text_home_company_designCount">设：%1$d</string>
+    <string name="text_home_company_goodRateCount">评：%1$s</string>
+    <string name="text_home_company_installCount">施：%1$d</string>
+    <string name="text_home_company_repairCount">修：%1$d</string>
+    <string name="text_home_company_worker_year">从业年限：%1$d年</string>
+    <string name="text_home_company_level">等级：Lv%1$d</string>
+    <string name="text_home_company_consultCount">已有\t%1$d\t人咨询</string>
+    <string name="text_home_safe_run">您的设备已安全运行%d天</string>
+
 </resources>
