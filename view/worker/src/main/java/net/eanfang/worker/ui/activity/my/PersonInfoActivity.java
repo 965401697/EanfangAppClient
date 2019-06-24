@@ -15,9 +15,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.lifecycle.ViewModel;
+
 import com.alibaba.fastjson.JSONObject;
+import com.eanfang.base.BaseActivity;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.IPictureCallBack;
+import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
@@ -26,12 +30,10 @@ import com.eanfang.biz.model.SelectAddressItem;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.listener.MultiClickListener;
 import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.biz.model.entity.AccountEntity;
 
 import com.eanfang.ui.activity.SelectAddressActivity;
-import com.eanfang.ui.base.BasePictureActivity;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JsonUtils;
@@ -64,7 +66,7 @@ import io.rong.imlib.model.UserInfo;
  * Created by Administrator on 2017/3/15.
  */
 
-public class PersonInfoActivity extends BasePictureActivity implements IPictureCallBack {
+public class PersonInfoActivity extends BaseActivity implements IPictureCallBack {
 
     private final int SELECT_ADDRESS_REQUEST_CODE = 1;
     /**
@@ -137,26 +139,29 @@ public class PersonInfoActivity extends BasePictureActivity implements IPictureC
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_person_info);
         ButterKnife.bind(this);
-        headViewSize(ivUpload,(int) getResources().getDimension(com.eanfang.R.dimen.dimen_80));
-        initPermission();
-        initView();
-        initData();
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
     }
 
     /**
      * 申请拍照权限
      */
     private void initPermission() {
-        PermissionUtils.get(this).getCameraPermission(() -> {
+        RxPerm.get(this).cameraPerm((isSuccess)->{
         });
     }
 
-    private void initView() {
+    public void initView() {
+        headViewSize(ivUpload,(int) getResources().getDimension(com.eanfang.R.dimen.dimen_80));
+        initPermission();
         setTitle("我的资料");
-        setLeftBack();
+        setLeftBack(true);
         setSexChoose();
         setHeaderShow(false);
         llHeader.setOnClickListener(v -> {
@@ -197,6 +202,7 @@ public class PersonInfoActivity extends BasePictureActivity implements IPictureC
                     }
                 })
         );
+        initData();
     }
 
     private void headImage() {

@@ -12,14 +12,17 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSON;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.base.BaseActivity;
 import com.eanfang.base.BaseApplication;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.IPictureCallBack;
+import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.config.EanfangConst;
@@ -33,18 +36,14 @@ import com.eanfang.sdk.picture.PictureInvoking;
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.takevideo.TakeVdideoMode;
 import com.eanfang.takevideo.TakeVideoActivity;
-import com.eanfang.ui.base.BasePictureActivity;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.ConnectivityChangeUtil;
 import com.eanfang.util.FileUtils;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
 import com.eanfang.util.V;
-import com.luck.picture.lib.PictureSelector;
-import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
@@ -59,7 +58,6 @@ import net.eanfang.client.ui.activity.worksapce.equipment.EquipmentListActivity;
 import net.eanfang.client.ui.activity.worksapce.scancode.ScanCodeActivity;
 import net.eanfang.client.ui.widget.RepairSelectDevicesDialog;
 
-import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.Serializable;
@@ -83,7 +81,7 @@ import static android.provider.MediaStore.Video.Thumbnails.MINI_KIND;
  */
 
 
-public class AddTroubleActivity extends BasePictureActivity implements IPictureCallBack {
+public class AddTroubleActivity extends BaseActivity implements IPictureCallBack {
 
     private static final int CLIENT_ADD_TROUBLE = 2;
     /**
@@ -250,15 +248,13 @@ public class AddTroubleActivity extends BasePictureActivity implements IPictureC
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_trouble);
         ButterKnife.bind(this);
-        initView();
-        initData();
-        setListener();
-    }
+        super.onCreate(savedInstanceState);
 
-    private void initView() {
+    }
+    @Override
+    public void initView() {
         setTitle("新增故障");
         fromTroubleList = getIntent().getBooleanExtra("fromTroubleList", false);
         if (fromTroubleList) {
@@ -267,10 +263,10 @@ public class AddTroubleActivity extends BasePictureActivity implements IPictureC
         //个人客户 不显示设备库选择
         if (ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyId() == null) {
         }
-        snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this));
-
         initRecycle();
         initRecycleVideo();
+        initData();
+        setListener();
     }
 
     private List<LocalMedia> selectList = new ArrayList<>();
@@ -321,18 +317,19 @@ public class AddTroubleActivity extends BasePictureActivity implements IPictureC
      * 图片和视频公用一个UUID
      */
     String uploadKey = "biz/repair/video/" + UuidUtil.getUUID();
+
     private void doCommitThumbnail() {
-        if(videoList==null&&videoList.size()==0){
+        if (videoList == null && videoList.size() == 0) {
             return;
         }
-        String mVideoPath=videoList.get(0).getPath();
+        String mVideoPath = videoList.get(0).getPath();
         if (!StringUtils.isEmpty(mVideoPath)) {
 //            PhotoUtils.getVideoThumbnail(mVideoPath, 100, 100, MINI_KIND);
             mThumbnailName = "pic_addtrouble_" + new SimpleDateFormat("yyyy-MM-dd").format(new Date());
             mThumbnailPath = FileUtils.bitmapToFile(PhotoUtils.getVideoThumbnail(mVideoPath, 100, 100, MediaStore.Images.Thumbnails.MINI_KIND), mThumbnailName);
         }
         if (!StringUtils.isEmpty(mThumbnailPath)) {
-            SDKManager.ossKit(this).asyncPutImage(uploadKey + ".jpg",mThumbnailPath,(isSuccess) -> {
+            SDKManager.ossKit(this).asyncPutImage(uploadKey + ".jpg", mThumbnailPath, (isSuccess) -> {
                 // showToast("上传缩略图成功");
                 doCommitVideo();
             });
@@ -343,13 +340,13 @@ public class AddTroubleActivity extends BasePictureActivity implements IPictureC
      * 进行上传视频
      */
     public void doCommitVideo() {
-        if(videoList==null&&videoList.size()==0){
+        if (videoList == null && videoList.size() == 0) {
             return;
         }
-        String mVideoPath=videoList.get(0).getPath();
+        String mVideoPath = videoList.get(0).getPath();
         if (!StringUtils.isEmpty(mVideoPath)) {
             SDKManager.ossKit(this).asyncPutVideo(uploadKey + ".mp4", mVideoPath, (isSuccess) -> {
-          //      showToast("上传视频成功");
+                //      showToast("上传视频成功");
             });
         }
     }
@@ -640,7 +637,7 @@ public class AddTroubleActivity extends BasePictureActivity implements IPictureC
                 JumpItent.jump(AddTroubleActivity.this, TakeVideoActivity.class, bundle);
                 break;
             case R.id.iv_input_voice:
-                PermissionUtils.get(this).getVoicePermission(() -> {
+                RxPerm.get(this).voicePerm((isSuccess) -> {
                     RecognitionManager.getSingleton().startRecognitionWithDialog(AddTroubleActivity.this, evFaultDescripte);
                 });
                 break;
@@ -754,6 +751,11 @@ public class AddTroubleActivity extends BasePictureActivity implements IPictureC
     }
 
     @Override
+    protected ViewModel initViewModel() {
+        return null;
+    }
+
+    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
             if (beanList != null && beanList.size() > 0) {
@@ -776,7 +778,12 @@ public class AddTroubleActivity extends BasePictureActivity implements IPictureC
 
     @Override
     public void onSuccess(List<LocalMedia> list) {
-        selectList = list;
-        imgInvoke.setList(selectList);
+        if (list != null && list.size() > 0) {
+            for (int i = 0; i < list.size(); i++) {
+                selectList.add(list.get(i));
+            }
+            imgInvoke.setList(selectList);
+        }
+
     }
 }

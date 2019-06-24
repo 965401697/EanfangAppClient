@@ -72,6 +72,7 @@ public class PictureInvoking {
     };
 
     public void setList(List<LocalMedia> list) {
+        this.list=list;
         adapter.setList(list);
         adapter.notifyDataSetChanged();
     }

@@ -175,7 +175,7 @@ public class PictureSelect implements IPicture {
                 .glideOverride(widch, height)
                 .withAspectRatio(aspect_ratio_x, aspect_ratio_y)
                 .freeStyleCropEnabled(freeStyleCropEnabled)
-                .selectionMedia(selectList)
+//                .selectionMedia(selectList)
                 .minimumCompressSize(imageSize)
                 .forResult(resultCode);
     }
