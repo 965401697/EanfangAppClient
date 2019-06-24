@@ -160,9 +160,9 @@ public class TenderCreateViewModle extends BaseViewModel {
         int zoneId = Config.get().getBaseIdByCode(zondCode, 3, Constant.AREA);
         String bussinessOneCode = Config.get().getBaseCodeByName(mTenderCreateBinding.tvBusinessType.getText().toString(), 1, Constant.BIZ_TYPE).get(0);
         String systemType = Config.get().getBusinessCodeByName(mTenderCreateBinding.tvSystemType.getText().toString(), 1);
-        tenderCreateVo.getContacts().set("管罗苍  ");
-        tenderCreateVo.getContactsPhone().set("17600738557");
-        tenderCreateVo.getPublishCompanyName().set(BaseApplication.get().getUser().getCompanyEntity().getOrgName());
+        tenderCreateVo.getContacts().set(BaseApplication.get().getAccount().getRealName());
+        tenderCreateVo.getContactsPhone().set(BaseApplication.get().getAccount().getMobile());
+        tenderCreateVo.getPublishCompanyName().set(BaseApplication.get().getCompanyEntity().getOrgName());
         tenderCreateVo.getLatitude().set(lat);
         tenderCreateVo.getLongitude().set(lon);
         tenderCreateVo.getCity().set(city);
@@ -172,9 +172,8 @@ public class TenderCreateViewModle extends BaseViewModel {
         tenderCreateVo.getZoneId().set(zoneId);
         tenderCreateVo.getBusinessOneCode().set(bussinessOneCode);
         tenderCreateVo.getSystemType().set(systemType);
-//        tenderCreateVo.province+tenderCreateVo.city+tenderCreateVo.city+tenderCreateVo.detailPlace
-        tenderCreateVo.getDetailPlace().set(detailPlace);
         tenderCreateVo.getPredicttime().set(mTenderCreateBinding.etPredictTime.getText().toString().trim());
+        tenderCreateVo.getDetailPlace().set(detailPlace);
         tenderCreateVo.getEndTime().set(mTenderCreateBinding.tvStartTime.getText().toString().trim());
         tenderCreateVo.getBudget().set(mTenderCreateBinding.tvBudget.getText().toString());
         tenderCreateVo.getBudgetUnit().set(mTenderCreateBinding.tvBudgetUnit.getText().toString());

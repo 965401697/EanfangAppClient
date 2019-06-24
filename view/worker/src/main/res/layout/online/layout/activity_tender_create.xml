@@ -284,7 +284,7 @@
                                 android:gravity="right"
                                 android:hint="请输入"
                                 android:inputType="number"
-                                android:text="@{tenderCreateVo.predicttime}"
+                                android:text="@={tenderCreateVo.predicttime}"
                                 android:textColor="@color/color_client_neworder"
                                 android:textSize="@dimen/textSize_14" />
 

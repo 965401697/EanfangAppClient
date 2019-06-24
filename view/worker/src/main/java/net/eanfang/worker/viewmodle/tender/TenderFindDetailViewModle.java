@@ -1,6 +1,7 @@
 package net.eanfang.worker.viewmodle.tender;
 
 import android.net.Uri;
+import android.os.Bundle;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -13,11 +14,14 @@ import com.eanfang.biz.rds.sys.ds.impl.tender.TenderDs;
 import com.eanfang.biz.rds.sys.repo.tender.TenderRepo;
 import com.eanfang.config.Config;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.GlideUtil;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.databinding.ActivityTenderFindDetailBinding;
 import net.eanfang.worker.databinding.ActivityWorkerTenderControlBinding;
+import net.eanfang.worker.ui.activity.worksapce.tender.TenderCommitActivity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -49,7 +53,7 @@ public class TenderFindDetailViewModle extends BaseViewModel {
             // 发布时间
             tenderFindDetailBinding.tvTime.setText(GetDateUtils.dateToDateTimeString(tenderBean.getCreateTime()));
             // 头像
-            tenderFindDetailBinding.ivHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + tenderBean.getUserEntity().getAccountEntity().getAvatar()));
+            GlideUtil.intoImageView(tenderFindDetailBinding.getRoot().getContext(), Uri.parse(BuildConfig.OSS_SERVER + tenderBean.getUserEntity().getAccountEntity().getAvatar()), tenderFindDetailBinding.ivHeader);
             // 项目地址
             tenderFindDetailBinding.tvProjectAddress.setText(tenderBean.getProvince() + tenderBean.getCity() + tenderBean.getCounty() + tenderBean.getDetailPlace());
             // 业务类型
@@ -80,13 +84,6 @@ public class TenderFindDetailViewModle extends BaseViewModel {
             }
 
         });
-    }
-
-    /**
-     * 我要报价
-     */
-    public void doCommitTender() {
-
     }
 
 }

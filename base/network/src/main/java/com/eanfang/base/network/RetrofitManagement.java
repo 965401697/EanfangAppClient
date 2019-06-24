@@ -101,8 +101,13 @@ public enum RetrofitManagement {
                             actionLiveData.setValue(new BaseActionEvent(BaseActionEvent.REQUEST_FAST));
                             throw new RequestFastException();
                         case HttpCode.CODE_SUCCESS:
-                            actionLiveData.setValue(new BaseActionEvent(BaseActionEvent.SUCCESS));
-                            return createData(result.getData());
+                            if (result.getData() == null) {
+                                actionLiveData.setValue(new BaseActionEvent(BaseActionEvent.EMPTY_DATA));
+                                break;
+                            } else {
+                                actionLiveData.setValue(new BaseActionEvent(BaseActionEvent.SUCCESS));
+                                return createData(result.getData());
+                            }
                         case HttpCode.CODE_UNKNOWN:
                             actionLiveData.setValue(new BaseActionEvent(BaseActionEvent.SERVER_ERROR));
                             break;
@@ -131,16 +136,9 @@ public enum RetrofitManagement {
 
     private <T> Observable<T> createData(T t) {
         return Observable.create(emitter -> {
-            Object object = new Object();
             try {
-                if (t == null) {
-                    emitter.onNext((T) object);
-                    emitter.onComplete();
-                } else {
-                    emitter.onNext(t);
-                    emitter.onComplete();
-                }
-
+                emitter.onNext(t);
+                emitter.onComplete();
             } catch (Exception e) {
                 emitter.onError(e);
             }

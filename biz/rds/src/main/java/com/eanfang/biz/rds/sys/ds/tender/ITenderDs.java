@@ -6,6 +6,7 @@ import com.eanfang.biz.model.bean.PageBean;
 import com.eanfang.biz.model.bean.QueryEntry;
 import com.eanfang.biz.model.entity.IfbOrderEntity;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
+import com.eanfang.biz.model.vo.tender.TenderCommitVo;
 import com.eanfang.biz.model.vo.tender.TenderCreateVo;
 
 import retrofit2.http.QueryMap;
@@ -44,9 +45,30 @@ public interface ITenderDs {
 
     /**
      * 用工详情
+     *
      * @param id
      * @param callback
      */
-    void getFindDetail(String id,RequestCallback<TaskPublishEntity> callback);
+    void getFindDetail(String id, RequestCallback<TaskPublishEntity> callback);
+
+    /**
+     * 我要报价
+     */
+    void setCommitTender(TenderCommitVo tenderCommitVo, RequestCallback<TaskPublishEntity> callback);
+
+    /**
+     * 我的发布
+     * @param queryEntry
+     * @param callback
+     */
+    void getMyReleaseTender(QueryEntry queryEntry, RequestCallback<PageBean<TaskPublishEntity>> callback);
+
+    /**
+     * 我的招标
+     * @param queryEntry
+     * @param callback
+     */
+    void getMyBidTender(QueryEntry queryEntry, RequestCallback<PageBean<TaskPublishEntity>> callback);
+
 
 }

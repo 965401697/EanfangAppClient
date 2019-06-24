@@ -508,13 +508,12 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/tv_tender"
+                android:id="@+id/tv_offer_tender"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
                 android:background="@color/color_tender_offer_bg"
                 android:gravity="center"
-                android:onClick="@{()->tenderFindDetailVm.doCommitTender()}"
                 android:paddingLeft="@dimen/dimen_50"
                 android:paddingRight="@dimen/dimen_50"
                 android:text="我要报价"

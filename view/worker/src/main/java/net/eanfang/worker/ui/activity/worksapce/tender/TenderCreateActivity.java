@@ -25,6 +25,7 @@ import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.ui.base.BasePictureActivity;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
@@ -42,6 +43,8 @@ import java.util.List;
 
 import lombok.Setter;
 import lombok.experimental.Accessors;
+
+import static com.eanfang.base.network.event.BaseActionEvent.EMPTY_DATA;
 
 /**
  * @author guanluocang
@@ -74,9 +77,9 @@ public class TenderCreateActivity extends BaseActivity implements SelectTimeDial
         setLeftBack(true);
         initListener();
 
-        mTenderCreateBinding.ivHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + BaseApplication.get().getUser().getAccountEntity().getAvatar()));
-        mTenderCreateBinding.tvName.setText(BaseApplication.get().getUser().getAccountEntity().getRealName());
-        mTenderCreateBinding.tvCompany.setText(BaseApplication.get().getUser().getCompanyEntity().getOrgName());
+        GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + BaseApplication.get().getAccount().getAvatar()), mTenderCreateBinding.ivHeader);
+        mTenderCreateBinding.tvName.setText(BaseApplication.get().getAccount().getRealName());
+        mTenderCreateBinding.tvCompany.setText(BaseApplication.get().getCompanyEntity().getOrgName());
     }
 
     private void initListener() {
@@ -92,6 +95,12 @@ public class TenderCreateActivity extends BaseActivity implements SelectTimeDial
         mTenderCreateBinding.rlSelectTime.setOnClickListener((v) -> {
             new SelectTimeDialogFragment().show(getSupportFragmentManager(), R.string.app_name + "");
         });
+        tenderCreateViewModle.getActionLiveData().observe(this,(v)->{
+            if(v.getAction() == EMPTY_DATA){
+                //TODO
+                finish();
+            }
+        });
 
     }
 
@@ -100,7 +109,7 @@ public class TenderCreateActivity extends BaseActivity implements SelectTimeDial
         tenderCreateViewModle = LViewModelProviders.of(this, TenderCreateViewModle.class);
         mTenderCreateBinding.setTenderCreateViewModle(tenderCreateViewModle);
         tenderCreateViewModle.setMTenderCreateBinding(mTenderCreateBinding);
-        tenderCreateViewModle.getCreateTenderLiveData().observe(this,this::doCreateFinish);
+        tenderCreateViewModle.getCreateTenderLiveData().observe(this, this::doCreateFinish);
         return tenderCreateViewModle;
     }
 

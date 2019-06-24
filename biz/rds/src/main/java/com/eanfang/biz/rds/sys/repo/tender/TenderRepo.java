@@ -6,6 +6,7 @@ import com.eanfang.biz.model.bean.PageBean;
 import com.eanfang.biz.model.bean.QueryEntry;
 import com.eanfang.biz.model.entity.IfbOrderEntity;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
+import com.eanfang.biz.model.vo.tender.TenderCommitVo;
 import com.eanfang.biz.model.vo.tender.TenderCreateVo;
 import com.eanfang.biz.rds.base.BaseRepo;
 import com.eanfang.biz.rds.sys.ds.impl.tender.TenderDs;
@@ -65,6 +66,42 @@ public class TenderRepo extends BaseRepo<TenderDs> {
             getTenderDetailLiveData.setValue(val);
         });
         return getTenderDetailLiveData;
+    }
+
+    /**
+     * 我要报价
+     */
+    public MutableLiveData<TaskPublishEntity> doSetCommitTender(TenderCommitVo tenderCommitVo) {
+        MutableLiveData<TaskPublishEntity> getTenderDetailLiveData = new MutableLiveData<>();
+        remoteDataSource.setCommitTender(tenderCommitVo, (val) -> {
+            getTenderDetailLiveData.setValue(val);
+        });
+        return getTenderDetailLiveData;
+    }
+
+
+    /**
+     * 我发布的
+     */
+    public MutableLiveData<PageBean<TaskPublishEntity>> doGetTenderRelaeseList(QueryEntry queryEntry) {
+        MutableLiveData<PageBean<TaskPublishEntity>> tenderMyReleaseLiveData = new MutableLiveData<>();
+        queryEntry.setSize(10);
+        remoteDataSource.getMyReleaseTender(queryEntry, (val) -> {
+            tenderMyReleaseLiveData.setValue(val);
+        });
+        return tenderMyReleaseLiveData;
+    }
+
+    /**
+     * 我招标的
+     */
+    public MutableLiveData<PageBean<TaskPublishEntity>> doGetTenderBidList(QueryEntry queryEntry) {
+        MutableLiveData<PageBean<TaskPublishEntity>> tenderMyBidLiveData = new MutableLiveData<>();
+        queryEntry.setSize(10);
+        remoteDataSource.getMyBidTender(queryEntry, (val) -> {
+            tenderMyBidLiveData.setValue(val);
+        });
+        return tenderMyBidLiveData;
     }
 }
 

@@ -8,6 +8,8 @@ import androidx.multidex.MultiDexApplication;
 
 import com.camera.CameraApplication;
 import com.eanfang.BuildConfig;
+import com.eanfang.biz.model.WorkTalkDetailBean;
+import com.eanfang.biz.model.entity.OrgEntity;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.biz.model.bean.LoginBean;
@@ -29,6 +31,7 @@ import com.okgo.model.HttpHeaders;
 import com.photopicker.com.imageloader.BGAGlideImageLoader;
 import com.photopicker.com.imageloader.BGAImage;
 import com.tencent.smtt.sdk.QbSdk;
+import com.yaf.base.entity.ShopCompanyEntity;
 
 import java.util.Stack;
 import java.util.concurrent.TimeUnit;
@@ -273,9 +276,12 @@ public class BaseApplication extends MultiDexApplication {
     public void remove(String key) {
         CacheKit.get().remove(key);
     }
-    public void clear(){
+
+    public void clear() {
         CacheKit.get().clear();
-    };
+    }
+
+    ;
 
     /**
      * 取缓存 LoginBean
@@ -329,6 +335,33 @@ public class BaseApplication extends MultiDexApplication {
      */
     public String getOrgCode() {
         return V.v(() -> getUser().getDepartmentEntity().getOrgCode());
+    }
+
+    /**
+     * 取缓存 getCompanyEntity
+     *
+     * @return getCompanyEntity
+     */
+    public OrgEntity getCompanyEntity() {
+        return V.v(() -> getAccount().getDefaultUser().getCompanyEntity());
+    }
+
+    /**
+     * 取缓存 getTopCompanyEntity
+     *
+     * @return getTopCompanyEntity
+     */
+    public OrgEntity getTopCompanyEntity() {
+        return V.v(() -> getAccount().getDefaultUser().getTopCompanyEntity());
+    }
+
+    /**
+     * 取缓存 getDepartmentEntity
+     *
+     * @return getDepartmentEntity
+     */
+    public OrgEntity getDepartmentEntity() {
+        return V.v(() -> getAccount().getDefaultUser().getDepartmentEntity());
     }
 
     /**

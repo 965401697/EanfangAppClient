@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tl="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tl="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
-            name="tenderViewModle"
-            type="net.eanfang.worker.viewmodle.tender.TenderViewModle" />
+            name="tenderPersonalControVm"
+            type="net.eanfang.worker.viewmodle.tender.TenderPersonControlViewModle" />
     </data>
 
     <RelativeLayout
@@ -26,28 +28,24 @@
                 android:background="@color/white"
                 android:orientation="horizontal">
 
-                <LinearLayout
+                <com.flyco.tablayout.SlidingTabLayout
+                    android:id="@+id/tl_perosonal_list"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="48dp"
                     android:layout_weight="1"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/iv_tenderNotice"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:onClick="@{()->tenderViewModle.doClickNotice()}"
-                        android:src="@drawable/ic_tender_notice_pressed_down" />
-
-                    <ImageView
-                        android:id="@+id/iv_tenderFind"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:onClick="@{()->tenderViewModle.doClickFind()}"
-                        android:src="@drawable/bg_tender_find" />
-                </LinearLayout>
+                    android:background="#FFFFFF"
+                    tl:tl_divider_color="#1A000000"
+                    tl:tl_divider_padding="13dp"
+                    tl:tl_divider_width="0dp"
+                    tl:tl_indicator_color="@color/client"
+                    tl:tl_indicator_height="1.5dp"
+                    tl:tl_indicator_width_equal_title="true"
+                    tl:tl_tab_padding="22dp"
+                    tl:tl_textSelectColor="@color/client"
+                    tl:tl_textUnselectColor="@color/font_color"
+                    tl:tl_textsize="16dp"
+                    tl:tl_underline_color="#1A000000"
+                    tl:tl_underline_height="1dp" />
 
                 <TextView
                     android:layout_width="@dimen/dimen_2"
@@ -89,7 +87,7 @@
             android:layout_marginRight="@dimen/dimen_40"
             android:layout_marginBottom="@dimen/dimen_30"
             android:scaleType="fitXY"
-            android:visibility="gone"
-            android:src="@mipmap/ic_worker_security_create" />
+            android:src="@mipmap/ic_worker_security_create"
+            android:visibility="gone" />
     </RelativeLayout>
 </layout>

@@ -6,7 +6,9 @@ import com.eanfang.biz.model.bean.QueryEntry;
 import com.eanfang.biz.model.entity.IfbOrderEntity;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
 import com.eanfang.biz.model.vo.LoginVo;
+import com.eanfang.biz.model.vo.tender.TenderCommitVo;
 import com.eanfang.biz.model.vo.tender.TenderCreateVo;
+import com.google.gson.JsonObject;
 
 import java.lang.reflect.Field;
 
@@ -48,8 +50,7 @@ public interface TenderApi {
      * @return
      */
     @POST("/yaf_task_publish/taskPublish/laborInsert")
-    Observable<BaseResponseBody<PageBean<TaskPublishEntity>>> setNewTender(@Body TenderCreateVo tenderCreateVo);
-
+    Observable<BaseResponseBody<JsonObject>> setNewTender(@Body TenderCreateVo tenderCreateVo);
 
     /**
      * 用工详情
@@ -59,6 +60,26 @@ public interface TenderApi {
      */
     @POST("/yaf_task_publish/taskPublish/laborDetail")
     Observable<BaseResponseBody<TaskPublishEntity>> getTenderDetail(@Query("id") String id);
+
+    /**
+     * 我要报价
+     */
+    @POST("/yaf_task_publish/taskApply/bidInsert")
+    Observable<BaseResponseBody<JsonObject>> setCommitTender(@Body TenderCommitVo tenderCommitVo);
+
+    /**
+     * 我的招标
+     */
+
+    @POST("/yaf_task_publish/taskApply/bidList")
+    Observable<BaseResponseBody<PageBean<TaskPublishEntity>>> getMyBidTenderList(@Body QueryEntry queryMap);
+
+    /**
+     * 我的发布
+     */
+
+    @POST("/yaf_task_publish/taskPublish/releasedList")
+    Observable<BaseResponseBody<PageBean<TaskPublishEntity>>> getMyReleaseTendeList(@Body QueryEntry queryMap);
 
 
 }

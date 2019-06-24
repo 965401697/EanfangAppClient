@@ -21,7 +21,6 @@ import android.widget.TextView;
 import com.eanfang.base.BaseActivity;
 import com.eanfang.biz.model.bean.QueryEntry;
 import com.eanfang.biz.rds.base.LViewModelProviders;
-import com.eanfang.listener.EventListener;
 import com.eanfang.util.JumpItent;
 
 import net.eanfang.worker.R;
@@ -135,8 +134,7 @@ public class WorkerTenderControlActivity extends BaseActivity {
             }
         });
         setRightTitleOnClickListener((view) -> {
-            //TODO 我的页面
-//            JumpItent.jump(this,);
+            JumpItent.jump(this,TenderPersonControlActivity.class);
         });
     }
 

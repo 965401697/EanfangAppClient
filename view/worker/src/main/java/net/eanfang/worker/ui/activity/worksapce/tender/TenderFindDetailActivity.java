@@ -14,6 +14,7 @@ import com.eanfang.biz.rds.base.LViewModelProviders;
 import com.eanfang.config.Config;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.JumpItent;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.databinding.ActivityTenderFindDetailBinding;
@@ -49,7 +50,17 @@ public class TenderFindDetailActivity extends BaseActivity {
         setLeftBack(true);
         tenderFindDetailViewModle.mTendFindId = getIntent().getLongExtra("tendFindId", 0);
         tenderFindDetailViewModle.initData();
+
+        /**
+         * 我要报价
+         */
+        tenderFindDetailBinding.tvOfferTender.setOnClickListener((v) -> {
+            Bundle bundle = new Bundle();
+            bundle.putLong("publishId", getIntent().getLongExtra("tendFindId", 0));
+            JumpItent.jump(TenderFindDetailActivity.this, TenderCommitActivity.class, bundle);
+        });
     }
+
     @Override
     protected ViewModel initViewModel() {
         tenderFindDetailViewModle = LViewModelProviders.of(this, TenderFindDetailViewModle.class);
