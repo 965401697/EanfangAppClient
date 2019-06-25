@@ -78,4 +78,9 @@
     <color name="color_home_data_text_one">#129725</color>
     <color name="color_home_data_text_three">#FF1833</color>
     <color name="color_home_circle_unChoose">#85888B</color>
+    <color name="color_item_leave_post_manage_list_count">#F35D3F</color>
+    <color name="color_item_leave_post_check_bg">#E4E4E4</color>
+    <color name="color_item_leave_post_check_btn">#ff9519</color>
+    <color name="color_leave_post_check_bg">#F5F3F3</color>
+    <color name="color_leave_post_seekBar_less">#FFA019</color>
 </resources>

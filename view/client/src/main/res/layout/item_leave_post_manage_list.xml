@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/img_item_leave_post_manage_bg"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="@dimen/dimen_16"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:layout_marginRight="@dimen/dimen_16"
+        android:background="@drawable/shape_bg_item_leave_post_check_detail"
+        app:layout_constraintDimensionRatio="w,117:345"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/img_item_leave_post_manage_areaName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_42"
+        android:layout_marginTop="@dimen/dimen_40"
+        android:text="北京"
+        android:textColor="@color/color_client_neworder"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@id/img_item_leave_post_manage_count"
+        app:layout_constraintLeft_toLeftOf="@id/img_item_leave_post_manage_bg"
+        app:layout_constraintTop_toTopOf="@id/img_item_leave_post_manage_bg" />
+
+    <TextView
+        android:id="@+id/img_item_leave_post_manage_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dimen_40"
+        android:text="678"
+        android:textColor="@color/color_item_leave_post_manage_list_count"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@id/img_item_leave_post_manage_bg"
+        app:layout_constraintLeft_toLeftOf="@id/img_item_leave_post_manage_areaName"
+        app:layout_constraintRight_toRightOf="@id/img_item_leave_post_manage_areaName"
+        app:layout_constraintTop_toBottomOf="@id/img_item_leave_post_manage_areaName" />
+
+    <View
+        android:id="@+id/line_item_leave_post_manage_list"
+        android:layout_width="@dimen/dimen_2"
+        android:layout_height="0dp"
+        android:layout_marginLeft="@dimen/dimen_34"
+        android:layout_marginTop="@dimen/dimen_30"
+        android:layout_marginBottom="@dimen/dimen_38"
+        android:background="#C7C7C7"
+        app:layout_constraintBottom_toBottomOf="@id/img_item_leave_post_manage_bg"
+        app:layout_constraintLeft_toRightOf="@id/img_item_leave_post_manage_areaName"
+        app:layout_constraintTop_toTopOf="@id/img_item_leave_post_manage_bg" />
+
+    <TextView
+        android:id="@+id/img_item_leave_post_manage_item1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_32"
+        android:text="北京"
+        android:textColor="@color/color_client_neworder"
+        android:textSize="13sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/img_item_leave_post_manage_item2"
+        app:layout_constraintLeft_toLeftOf="@id/line_item_leave_post_manage_list"
+        app:layout_constraintTop_toTopOf="@id/img_item_leave_post_manage_bg" />
+
+    <TextView
+        android:id="@+id/img_item_leave_post_manage_item2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_32"
+        android:text="北京"
+        android:textColor="@color/color_client_neworder"
+        android:textSize="13sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/img_item_leave_post_manage_item3"
+        app:layout_constraintLeft_toLeftOf="@id/line_item_leave_post_manage_list"
+        app:layout_constraintTop_toBottomOf="@id/img_item_leave_post_manage_item1" />
+
+    <TextView
+        android:id="@+id/img_item_leave_post_manage_item3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_32"
+        android:text="北京"
+        android:textColor="@color/color_client_neworder"
+        android:textSize="13sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/img_item_leave_post_manage_item4"
+        app:layout_constraintLeft_toLeftOf="@id/line_item_leave_post_manage_list"
+        app:layout_constraintTop_toBottomOf="@id/img_item_leave_post_manage_item2" />
+
+    <TextView
+        android:id="@+id/img_item_leave_post_manage_item4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_32"
+        android:layout_marginBottom="@dimen/dimen_8"
+        android:text="北京"
+        android:textColor="@color/color_client_neworder"
+        android:textSize="13sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/img_item_leave_post_manage_bg"
+        app:layout_constraintLeft_toLeftOf="@id/line_item_leave_post_manage_list"
+        app:layout_constraintTop_toBottomOf="@id/img_item_leave_post_manage_item3" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dimen_22"
+        android:src="@drawable/arrow_right"
+        app:layout_constraintBottom_toBottomOf="@id/img_item_leave_post_manage_bg"
+        app:layout_constraintRight_toRightOf="@id/img_item_leave_post_manage_bg"
+        app:layout_constraintTop_toTopOf="@id/img_item_leave_post_manage_bg" />
+</androidx.constraintlayout.widget.ConstraintLayout>

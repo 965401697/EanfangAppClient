@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <include
+            android:id="@+id/header"
+            layout="@layout/header" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_100"
+            android:layout_marginLeft="@dimen/dimen_34"
+            android:gravity="center_vertical"
+            android:text="按所在地筛选"
+            android:textColor="@color/bga_adapter_empty_view_msg_textColor"
+            android:textSize="14sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/header" />
+
+        <TextView
+            android:id="@+id/tv_leave_post_screen_area"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_100"
+            android:layout_marginRight="@dimen/dimen_34"
+            android:drawableRight="@drawable/arrow_right"
+            android:drawablePadding="@dimen/dimen_28"
+            android:gravity="center_vertical"
+            android:hint="请选择"
+
+            android:textColor="@color/bga_adapter_empty_view_msg_textColor"
+            android:textSize="12sp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/header" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_20"
+            android:background="@color/color_leave_post_check_bg"
+            app:layout_constraintTop_toBottomOf="@id/tv_leave_post_screen_area" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_100"
+            android:layout_marginLeft="@dimen/dimen_34"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:gravity="center_vertical"
+            android:text="岗位名称"
+            android:textColor="@color/bga_adapter_empty_view_msg_textColor"
+            android:textSize="14sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_leave_post_screen_area" />
+
+        <TextView
+            android:id="@+id/tv_leave_post_screen_post_name"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_100"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:layout_marginRight="@dimen/dimen_34"
+            android:drawableRight="@drawable/arrow_right"
+            android:drawablePadding="@dimen/dimen_28"
+            android:gravity="center_vertical"
+            android:hint="请选择"
+            android:textColor="@color/bga_adapter_empty_view_msg_textColor"
+            android:textSize="12sp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_leave_post_screen_area" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_20"
+            android:background="@color/color_leave_post_check_bg"
+            app:layout_constraintTop_toBottomOf="@id/tv_leave_post_screen_post_name" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_100"
+            android:layout_marginLeft="@dimen/dimen_34"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:gravity="center_vertical"
+            android:text="选择报警时间"
+            android:textColor="@color/bga_adapter_empty_view_msg_textColor"
+            android:textSize="14sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_leave_post_screen_post_name" />
+
+        <TextView
+            android:id="@+id/tv_leave_post_screen_post_time"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_100"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:layout_marginRight="@dimen/dimen_34"
+            android:drawableRight="@drawable/arrow_right"
+            android:drawablePadding="@dimen/dimen_28"
+            android:gravity="center_vertical"
+            android:hint="请选择"
+            android:textColor="@color/bga_adapter_empty_view_msg_textColor"
+            android:textSize="12sp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_leave_post_screen_post_name" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_20"
+            android:background="@color/color_leave_post_check_bg"
+            app:layout_constraintTop_toBottomOf="@id/tv_leave_post_screen_post_time" />
+
+        <TextView
+            android:id="@+id/tv_leave_post_screen_status"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_100"
+            android:layout_marginLeft="@dimen/dimen_34"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:gravity="center_vertical"
+            android:text="按报警状态筛选"
+            android:textColor="@color/bga_adapter_empty_view_msg_textColor"
+            android:textSize="14sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_leave_post_screen_post_time" />
+
+        <CheckBox
+            android:id="@+id/leave_post_screen_status_all"
+            android:layout_width="@dimen/dimen_132"
+            android:layout_height="@dimen/dimen_60"
+            android:layout_marginLeft="@dimen/dimen_34"
+            android:background="@drawable/selector_leave_post_screen_status"
+            android:gravity="center"
+            android:text="全部"
+            android:textColor="@drawable/select_camera_text_back"
+            android:textSize="14sp"
+            android:button="@null"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/leave_post_screen_status_untreated"
+            app:layout_constraintTop_toBottomOf="@id/tv_leave_post_screen_status" />
+
+        <CheckBox
+            android:id="@+id/leave_post_screen_status_untreated"
+            android:layout_width="@dimen/dimen_132"
+            android:layout_height="@dimen/dimen_60"
+            android:layout_marginLeft="@dimen/dimen_34"
+            android:background="@drawable/selector_leave_post_screen_status"
+            android:gravity="center"
+            android:text="未处理"
+            android:textColor="@drawable/select_camera_text_back"
+            android:textSize="14sp"
+            android:button="@null"
+            app:layout_constraintLeft_toRightOf="@id/leave_post_screen_status_all"
+            app:layout_constraintTop_toBottomOf="@id/tv_leave_post_screen_status" />
+
+        <CheckBox
+            android:id="@+id/leave_post_screen_status_processed"
+            android:layout_width="@dimen/dimen_132"
+            android:layout_height="@dimen/dimen_60"
+            android:layout_marginLeft="@dimen/dimen_34"
+            android:background="@drawable/selector_leave_post_screen_status"
+            android:gravity="center"
+            android:text="已处理"
+            android:textColor="@drawable/select_camera_text_back"
+            android:textSize="14sp"
+            android:button="@null"
+            app:layout_constraintLeft_toRightOf="@id/leave_post_screen_status_untreated"
+            app:layout_constraintTop_toBottomOf="@id/tv_leave_post_screen_status" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/dimen_42"
+            android:background="@color/color_leave_post_check_bg"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/leave_post_screen_status_processed" />
+
+        <TextView
+            android:id="@+id/leave_post_screen_ok"
+            android:layout_width="@dimen/dimen_640"
+            android:layout_height="@dimen/dimen_84"
+            android:layout_marginBottom="@dimen/dimen_76"
+            android:background="@drawable/shape_btn_leave_post_detail"
+            android:gravity="center"
+            android:text="确定"
+            android:textColor="@color/bga_adapter_empty_view_msg_textColor"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

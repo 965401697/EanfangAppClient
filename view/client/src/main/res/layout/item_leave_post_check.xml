@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_item_leave_post_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="监控1"
+        android:textSize="15sp"
+        android:layout_marginLeft="@dimen/dimen_36"
+        android:layout_marginRight="@dimen/dimen_36"
+        android:textColor="@color/color_text"
+        android:layout_marginTop="@dimen/dimen_30"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/img_item_leave_post_check"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/dimen_28"
+        android:layout_marginRight="@dimen/dimen_36"
+        android:layout_marginLeft="@dimen/dimen_36"
+        app:layout_constraintDimensionRatio="w,135:324"
+        app:layout_constraintTop_toBottomOf="@id/tv_item_leave_post_check" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_2"
+        android:background="@color/content_bg"
+        app:layout_constraintTop_toBottomOf="@id/img_item_leave_post_check"
+        android:layout_marginTop="@dimen/dimen_36"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

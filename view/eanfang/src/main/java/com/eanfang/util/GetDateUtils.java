@@ -486,5 +486,38 @@ public class GetDateUtils {
         return dateToFormatString(datab, "yyyy年MM月dd日");
     }
 
+    /***
+     * 传入String格式日期格式化并返回日期
+     * @param dateStr "yyyy-MM-dd HH:mm:ss"
+     * @return  "yyyy年MM月dd日"
+     * @throws ParseException
+     */
+    public static String dateToTime(String dateStr){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date datab = null;
+        try {
+            datab = sdf.parse(dateStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return dateToFormatString(datab, "yyyy年MM月dd日");
+    }
+
+    /***
+     * 传入String格式日期格式化并返回日期
+     * @param dateStr "yyyy-MM-dd HH:mm:ss"
+     * @return  "HH:mm"
+     * @throws ParseException
+     */
+    public static String dateToHourMin(String dateStr){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date datab = null;
+        try {
+            datab = sdf.parse(dateStr);
+        } catch (ParseException e) {
+        }
+        return dateToFormatString(datab, "HH:ss");
+    }
+
 
 }

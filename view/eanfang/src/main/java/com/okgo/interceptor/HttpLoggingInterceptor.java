@@ -16,7 +16,6 @@
 package com.okgo.interceptor;
 
 
-import com.eanfang.BuildConfig;
 import com.okgo.utils.IOUtils;
 import com.okgo.utils.OkLogger;
 

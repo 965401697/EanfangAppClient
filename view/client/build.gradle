@@ -35,7 +35,11 @@ android {
 
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
     }
-
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
     //签名设置
     signingConfigs {
         release {
@@ -162,7 +166,7 @@ dependencies {
     annotationProcessor pkg.butterknifeCompiler
     implementation pkg.lombok
     annotationProcessor pkg.lombok
-
+    implementation pkg.yingshiyun
     implementation project(':view:eanfang')
 
 }

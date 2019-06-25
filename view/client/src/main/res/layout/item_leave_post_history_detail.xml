@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen_128"
+    android:background="@color/color_leave_post_check_bg">
+
+    <TextView
+        android:id="@+id/tv_item_leave_post_history_detail_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="脱岗"
+        android:layout_marginLeft="@dimen/dimen_28"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="@dimen/dimen_34"
+        android:layout_height="@dimen/dimen_34"
+        android:layout_marginLeft="@dimen/dimen_18"
+        android:src="@drawable/icon_cancel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/tv_item_leave_post_history_detail_name"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/img_item_leave_post_history_detail_line_top"
+        android:layout_width="@dimen/dimen_2"
+        android:layout_height="0dp"
+        android:src="@color/color_invite_detail_line"
+        app:layout_constraintBottom_toTopOf="@id/img"
+        app:layout_constraintLeft_toLeftOf="@id/img"
+        app:layout_constraintRight_toRightOf="@id/img"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/img_item_leave_post_history_detail_line_bottom"
+        android:layout_width="@dimen/dimen_2"
+        android:layout_height="0dp"
+        android:src="@color/color_invite_detail_line"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/img"
+        app:layout_constraintRight_toRightOf="@id/img"
+        app:layout_constraintTop_toBottomOf="@id/img" />
+
+    <ImageView
+        android:id="@+id/img_content"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/dimen_24"
+        android:layout_marginTop="@dimen/dimen_10"
+        android:layout_marginRight="@dimen/dimen_18"
+        android:layout_marginBottom="@dimen/dimen_10"
+        android:background="@color/white"
+        app:layout_constraintLeft_toRightOf="@id/img"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_item_leave_post_history_detail_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_26"
+        android:layout_marginTop="@dimen/dimen_26"
+        android:text="12"
+        android:textColor="@color/color_client_neworder"
+        android:textSize="12sp"
+        app:layout_constraintLeft_toLeftOf="@id/img_content"
+        app:layout_constraintTop_toTopOf="@id/img_content" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_26"
+        android:layout_marginRight="@dimen/dimen_24"
+        android:drawableRight="@drawable/arrow_right"
+        android:drawablePadding="@dimen/dimen_16"
+        android:text="详情"
+        android:textColor="@color/color_bottom"
+        android:textSize="12sp"
+        app:layout_constraintRight_toRightOf="@id/img_content"
+        app:layout_constraintTop_toTopOf="@id/img_content" />
+
+    <ImageView
+        android:id="@+id/img_item_leave_post_history_detail_bar"
+        android:layout_width="@dimen/dimen_420"
+        android:layout_height="@dimen/dimen_14"
+        android:layout_marginLeft="@dimen/dimen_28"
+        android:layout_marginRight="@dimen/dimen_152"
+        android:layout_marginBottom="@dimen/dimen_22"
+        android:background="@drawable/selector_leave_post_seekbar"
+        app:layout_constraintBottom_toBottomOf="@id/img_content"
+        app:layout_constraintLeft_toLeftOf="@id/img_content"
+        app:layout_constraintRight_toRightOf="@id/img_content" />
+
+    <TextView
+        android:id="@+id/tv_item_leave_post_history_detail_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_18"
+        android:text="30min"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/img_item_leave_post_history_detail_bar"
+        app:layout_constraintLeft_toRightOf="@id/img_item_leave_post_history_detail_bar"
+        app:layout_constraintTop_toTopOf="@id/img_item_leave_post_history_detail_bar" />
+</androidx.constraintlayout.widget.ConstraintLayout>

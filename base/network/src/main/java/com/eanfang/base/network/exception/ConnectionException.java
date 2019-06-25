@@ -1,5 +1,7 @@
 package com.eanfang.base.network.exception;
 
+import android.util.Log;
+
 import com.eanfang.base.network.config.HttpCode;
 import com.eanfang.base.network.exception.base.BaseException;
 
@@ -11,6 +13,7 @@ public class ConnectionException extends BaseException {
 
     public ConnectionException() {
         super(HttpCode.CODE_CONNECTION_FAILED, "网络请求失败");
+
     }
 
 }

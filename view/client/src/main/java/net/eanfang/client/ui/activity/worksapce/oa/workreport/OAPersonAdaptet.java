@@ -24,6 +24,7 @@ import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.im.CreateGroupActivity;
 import net.eanfang.client.ui.activity.im.CreateGroupOrganizationActivity;
 import net.eanfang.client.ui.activity.im.NewSelectIMContactActivity;
+import net.eanfang.client.ui.activity.leave_post.LeavePostAddPostActivity;
 import net.eanfang.client.ui.activity.worksapce.defendlog.FilterDefendLogActivity;
 import net.eanfang.client.ui.activity.worksapce.oa.SelectOAGroupActivity;
 import net.eanfang.client.ui.activity.worksapce.oa.task.TaskAssignmentCreationActivity;
@@ -88,6 +89,8 @@ public class OAPersonAdaptet extends RecyclerView.Adapter<OAPersonAdaptet.ViewHo
                             ((TaskAssignmentCreationActivity) mContext).setFlag(mFlag);
                         } else if (mContext instanceof FilterDefendLogActivity) {
                             ((FilterDefendLogActivity) mContext).setFlag(mFlag);
+                        } else if (mContext instanceof LeavePostAddPostActivity) {
+                            ((LeavePostAddPostActivity) mContext).setFlag(mFlag);
                         }
 
                     }

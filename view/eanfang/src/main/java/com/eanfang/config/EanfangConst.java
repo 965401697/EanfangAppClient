@@ -112,4 +112,6 @@ public interface EanfangConst {
     // 讯飞ID
     @Deprecated
     public static final String XUNFEI_APPID = "5b8cd9c3";
+    //萤石云app key
+    String YING_SHI_YUN_APP_KEY = "e1c0c37930874e04b8db23168def1ddc";
 }

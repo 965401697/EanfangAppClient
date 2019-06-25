@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/img_bg"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="@dimen/dimen_24"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:layout_marginRight="@dimen/dimen_24"
+        android:layout_marginBottom="@dimen/dimen_20"
+        android:background="@drawable/shape_bg_item_leave_post_check_detail"
+        app:layout_constraintDimensionRatio="H, 335:63"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.eanfang.base.widget.customview.CircleImageView
+        android:id="@+id/cirImg_item_leave_post_check_detail_header"
+        android:layout_width="@dimen/dimen_80"
+        android:layout_height="@dimen/dimen_80"
+        android:layout_marginLeft="@dimen/dimen_26"
+        app:layout_constraintBottom_toBottomOf="@id/img_bg"
+        app:layout_constraintLeft_toLeftOf="@id/img_bg"
+        app:layout_constraintTop_toTopOf="@id/img_bg" />
+
+    <TextView
+        android:id="@+id/tv_item_leave_post_check_detail_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_26"
+        android:layout_marginTop="@dimen/dimen_30"
+        android:text="张三"
+        android:textColor="@color/color_client_neworder"
+        android:textSize="15sp"
+        app:layout_constraintLeft_toRightOf="@id/cirImg_item_leave_post_check_detail_header"
+        app:layout_constraintTop_toTopOf="@id/img_bg" />
+
+    <TextView
+        android:id="@+id/tv_item_leave_post_check_detail_tel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_8"
+        android:text="张三"
+        android:textColor="@color/color_client_neworder"
+        android:textSize="12sp"
+        app:layout_constraintLeft_toLeftOf="@id/tv_item_leave_post_check_detail_name"
+        app:layout_constraintTop_toBottomOf="@id/tv_item_leave_post_check_detail_name" />
+
+    <Button
+        android:id="@+id/btn_item_leave_post_check_detail_call"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="@dimen/dimen_144"
+        android:layout_height="@dimen/dimen_50"
+        android:layout_marginRight="@dimen/dimen_18"
+        android:background="@drawable/shape_btn_item_leave_post_check_detail"
+        android:gravity="center"
+        android:text="拨打电话"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="@id/img_bg"
+        app:layout_constraintRight_toRightOf="@id/img_bg"
+        app:layout_constraintTop_toTopOf="@id/img_bg" />
+</androidx.constraintlayout.widget.ConstraintLayout>

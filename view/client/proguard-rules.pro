@@ -340,3 +340,49 @@ public <methods>;
 #去除微信分享混淆
 -dontwarn com.tencent.mm.**
 -keep class com.tencent.mm.**{*;}
+-keepattributes EnclosingMethod
+
+#萤石云忽略
+-dontwarn com.ezviz.player.**
+-keep class com.ezviz.player.** { *;}
+
+-dontwarn com.ezviz.statistics.**
+-keep class com.ezviz.statistics.** { *;}
+
+-dontwarn com.ezviz.stream.**
+-keep class com.ezviz.stream.** { *;}
+
+-dontwarn com.ezviz.hcnetsdk.**
+-keep class com.ezviz.hcnetsdk.** { *;}
+
+
+-dontwarn com.ezviz.opensdk.**
+-keep class com.ezviz.opensdk.** { *;}
+
+-dontwarn com.hik.**
+-keep class com.hik.** { *;}
+
+-dontwarn com.hikvision.**
+-keep class com.hikvision.** { *;}
+
+-dontwarn com.videogo.**
+-keep class com.videogo.** { *;}
+
+-dontwarn org.MediaPlayer.PlayM4.**
+-keep class org.MediaPlayer.PlayM4.** { *;}
+
+-dontwarn com.sun.jna.**
+-keep class com.sun.jna.**{*;}
+
+#Gson混淆配置
+-keepattributes Annotation
+-keep class sun.misc.Unsafe { *; }
+-keep class com.idea.fifaalarmclock.entity.*
+-keep class com.google.gson.stream.* { *; }
+
+#引用mars的xlog，混淆配置
+-keep class com.tencent.mars.** {
+ public protected private *;
+
+
+}

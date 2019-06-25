@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/dimen_32"
+    android:background="@color/white">
+
+    <ImageView
+        android:id="@+id/img_item_leave_post_manage_detail"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="@dimen/dimen_38"
+        android:src="@drawable/rz"
+        app:layout_constraintDimensionRatio="w,9:8"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginBottom="@dimen/dimen_32"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_item_leave_post_manage_detail_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_32"
+        android:text="@string/text_home_lead_news"
+        android:textColor="@color/color_client_neworder"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toTopOf="@id/tv_item_leave_post_manage_detail_area"
+        app:layout_constraintLeft_toRightOf="@id/img_item_leave_post_manage_detail"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_item_leave_post_manage_detail_area"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_32"
+        android:text="@string/text_home_lead_news"
+        android:layout_marginTop="@dimen/dimen_12"
+        android:textColor="@color/color_client_neworder"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toTopOf="@id/tv_item_leave_post_manage_detail_position"
+        app:layout_constraintLeft_toRightOf="@id/img_item_leave_post_manage_detail"
+        app:layout_constraintTop_toBottomOf="@id/tv_item_leave_post_manage_detail_name" />
+
+    <TextView
+        android:id="@+id/tv_item_leave_post_manage_detail_position"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_32"
+        android:text="@string/text_home_lead_news"
+        android:layout_marginTop="@dimen/dimen_12"
+        android:textColor="@color/color_client_neworder"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toTopOf="@id/tv_item_leave_post_manage_detail_status"
+        app:layout_constraintLeft_toRightOf="@id/img_item_leave_post_manage_detail"
+        app:layout_constraintTop_toBottomOf="@id/tv_item_leave_post_manage_detail_area" />
+
+    <TextView
+        android:id="@+id/tv_item_leave_post_manage_detail_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_32"
+        android:text="@string/text_home_lead_news"
+        android:layout_marginTop="@dimen/dimen_12"
+        android:textColor="@color/color_client_neworder"
+        android:textSize="13sp"
+        app:layout_goneMarginBottom="@dimen/dimen_32"
+        app:layout_constraintBottom_toTopOf="@id/tv_item_leave_post_manage_detail_use"
+        app:layout_constraintLeft_toRightOf="@id/img_item_leave_post_manage_detail"
+        app:layout_constraintTop_toBottomOf="@id/tv_item_leave_post_manage_detail_position" />
+
+    <TextView
+        android:id="@+id/tv_item_leave_post_manage_detail_use"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_32"
+        android:text="@string/text_home_lead_news"
+        android:textColor="@color/color_client_neworder"
+        android:textSize="13sp"
+        android:visibility="gone"
+        app:layout_goneMarginBottom="@dimen/dimen_32"
+        android:layout_marginTop="@dimen/dimen_12"
+        app:layout_constraintBottom_toTopOf="@id/tv_item_leave_post_manage_detail_count"
+        app:layout_constraintLeft_toRightOf="@id/img_item_leave_post_manage_detail"
+        app:layout_constraintTop_toBottomOf="@id/tv_item_leave_post_manage_detail_status" />
+
+    <TextView
+        android:id="@+id/tv_item_leave_post_manage_detail_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_32"
+        android:text="@string/text_home_lead_news"
+        android:textColor="@color/color_client_neworder"
+        android:textSize="13sp"
+        android:visibility="gone"
+        app:layout_goneMarginBottom="@dimen/dimen_32"
+        android:layout_marginTop="@dimen/dimen_12"
+        app:layout_constraintBottom_toTopOf="@id/tv_item_leave_post_manage_detail_time"
+        app:layout_constraintLeft_toRightOf="@id/img_item_leave_post_manage_detail"
+        app:layout_constraintTop_toBottomOf="@id/tv_item_leave_post_manage_detail_use" />
+
+    <TextView
+        android:id="@+id/tv_item_leave_post_manage_detail_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_32"
+        android:text="@string/text_home_lead_news"
+        android:textColor="@color/color_client_neworder"
+        android:textSize="13sp"
+        android:visibility="gone"
+        android:layout_marginBottom="@dimen/dimen_32"
+        android:layout_marginTop="@dimen/dimen_12"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/img_item_leave_post_manage_detail"
+        app:layout_constraintTop_toBottomOf="@id/tv_item_leave_post_manage_detail_count"/>
+
+    <ImageView
+        android:id="@+id/img_item_leave_post_manage_detail_next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/dimen_22"
+        android:src="@drawable/arrow_right"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_2"
+        android:background="@color/color_item_leave_post_check_bg"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>
