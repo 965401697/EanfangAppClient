@@ -3,7 +3,6 @@ package com.eanfang.base;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -16,7 +15,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -24,14 +22,13 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.ViewModel;
 
 import com.eanfang.R;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.loading.LoadKit;
 import com.eanfang.base.kit.loading.callback.EmptyCallback;
 import com.eanfang.base.kit.loading.callback.ErrorCallback;
 import com.eanfang.base.kit.loading.callback.NotFoundCallback;
 import com.eanfang.base.kit.loading.callback.PermissionCallback;
 import com.eanfang.base.kit.loading.callback.TimeoutCallback;
-import com.eanfang.base.kit.picture.IPictureCallBack;
-import com.eanfang.base.kit.picture.PictureManager;
 import com.eanfang.base.network.config.HttpConfig;
 import com.eanfang.base.network.event.BaseActionEvent;
 import com.eanfang.base.widget.customview.CircleImageView;
@@ -40,8 +37,6 @@ import com.eanfang.sys.activity.LoginActivity;
 import com.kingja.loadsir.core.LoadService;
 import com.kingja.loadsir.core.LoadSir;
 import com.luck.picture.lib.config.PictureConfig;
-import com.luck.picture.lib.config.PictureMimeType;
-import com.luck.picture.lib.entity.LocalMedia;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import java.util.ArrayList;
@@ -455,91 +450,33 @@ public abstract class BaseActivity extends RxAppCompatActivity {
             return fragments.get(position);
         }
     }
-/*----------------PictureSelector------------------*/
+    /*----------------PictureSelector------------------*/
 
-    private AlertDialog.Builder builder;
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        PictureManager.Builder().create().onActivityResult(requestCode, resultCode, data);
+        pictureSelect(requestCode,resultCode,data);
     }
 
-
-
-    public void takePhoto(Activity activity, int resultCode, IPictureCallBack onImageChooseCallBack) {
-        initDialogs(activity, PictureConfig.SINGLE,1,onImageChooseCallBack);
-    }
-    public void takePhotos(Activity activity,int resultCode,IPictureCallBack onImageChooseCallBack){
-        initDialogs(activity,PictureConfig.MULTIPLE,3,onImageChooseCallBack);
-    }
-
-    private void initDialogs(Context context,int mode,int max, IPictureCallBack onImageChooseCallBack) {
-        if (!((Activity) context).isFinishing()) {
-            builder = new AlertDialog.Builder(this)
-                    .setTitle("选择图片：")
-                    .setItems(new String[]{"相机", "图库"}, new android.content.DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            switch (which) {
-                                case 1:
-                                    pictureSelect(false,mode,max,onImageChooseCallBack);
-                                    break;
-                                case 0:
-                                    pictureSelect(true,mode,max,onImageChooseCallBack);
-                                    break;
-                                default:
-                                    break;
-                            }
-
-                        }
-                    });
-            builder.create().show();
+    /**
+     * 图片选择
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    private void pictureSelect(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == PictureConfig.CHOOSE_REQUEST) {
+                SDKManager.getPicture().create(this).onActivityResult(requestCode, resultCode, data);
+            }
         }
     }
-    private void pictureSelect(boolean openCamera,int mode, int max,IPictureCallBack OnImageChooseCallBack) {
-        PictureManager.Builder()
-                .setChooseMode(PictureMimeType.ofImage())
-                .setOpenCamera(openCamera)
-                .setSelectionMode(mode)
-                .setMaxSelectNum(max)
-                .setCrop(true)
-                .create()
-                .photoChoose(this, new IPictureCallBack() {
-                    @Override
-                    public void onSuccess(List<LocalMedia> list) {
-                        if (list != null && list.size() > 0) {
-                            if (OnImageChooseCallBack != null) {
-                                OnImageChooseCallBack.onSuccess(list);
-                            }
-                        }
-                    }
-                });
-    }
 
-    public void videoSelect(boolean openCamera,IPictureCallBack OnImageChooseCallBack) {
-        PictureManager.Builder()
-                .setChooseMode(PictureMimeType.ofVideo())
-                .setOpenCamera(openCamera)
-                .setSelectionMode(PictureConfig.SINGLE)
-                .setMaxSelectNum(1)
-                .setCrop(true)
-                .create()
-                .photoChoose(this, new IPictureCallBack() {
-                    @Override
-                    public void onSuccess(List<LocalMedia> list) {
-                        if (list != null && list.size() > 0) {
-                            if (OnImageChooseCallBack != null) {
-                                OnImageChooseCallBack.onSuccess(list);
-                            }
-                        }
-                    }
-                });
-    }
     public void headViewSize(CircleImageView circleImageView, int size) {
         LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) circleImageView.getLayoutParams();
         layoutParams.width = size;
         layoutParams.height = size;
     }
-/*----------------PictureSelector------------------*/
+    /*----------------PictureSelector------------------*/
 
 }

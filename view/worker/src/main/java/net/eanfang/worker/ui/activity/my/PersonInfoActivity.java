@@ -66,7 +66,7 @@ import io.rong.imlib.model.UserInfo;
  * Created by Administrator on 2017/3/15.
  */
 
-public class PersonInfoActivity extends BaseActivity implements IPictureCallBack {
+public class PersonInfoActivity extends BaseActivity {
 
     private final int SELECT_ADDRESS_REQUEST_CODE = 1;
     /**
@@ -206,8 +206,21 @@ public class PersonInfoActivity extends BaseActivity implements IPictureCallBack
     }
 
     private void headImage() {
-        takePhoto(this, HEAD_PHOTO, this);
+        takePhoto( HEAD_PHOTO, iPictureCallBack);
     }
+    IPictureCallBack iPictureCallBack=new IPictureCallBack() {
+        @Override
+        public void onSuccess(List<LocalMedia> list) {
+            String imgKey = "account/" + UuidUtil.getUUID() + ".png";
+            GlideUtil.intoImageView(PersonInfoActivity.this,"file://" + list.get(0).getCutPath(),ivUpload);
+            SDKManager.ossKit(PersonInfoActivity.this).asyncPutImage(imgKey, list.get(0).getCutPath(), (isSuccess) -> {
+                LoginBean entity = WorkerApplication.get().getLoginBean();
+                entity.getAccount().setAvatar(imgKey);
+                path = entity.getAccount().getAvatar();
+                setHeaderShow(true);
+            });
+        }
+    };
 
     private void initData() {
         EanfangHttp.get(UserApi.GET_USER_INFO)
@@ -446,17 +459,5 @@ public class PersonInfoActivity extends BaseActivity implements IPictureCallBack
     private void choosePosition(View v) {
         Intent intent = new Intent(PersonInfoActivity.this, SelectAddressActivity.class);
         startActivityForResult(intent, SELECT_ADDRESS_REQUEST_CODE);
-    }
-
-    @Override
-    public void onSuccess(List<LocalMedia> list) {
-        String imgKey = "account/" + UuidUtil.getUUID() + ".png";
-        GlideUtil.intoImageView(PersonInfoActivity.this,"file://" + list.get(0).getCutPath(),ivUpload);
-        SDKManager.ossKit(this).asyncPutImage(imgKey, list.get(0).getCutPath(), (isSuccess) -> {
-            LoginBean entity = WorkerApplication.get().getLoginBean();
-            entity.getAccount().setAvatar(imgKey);
-            path = entity.getAccount().getAvatar();
-            setHeaderShow(true);
-        });
     }
 }

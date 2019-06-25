@@ -7,6 +7,7 @@ import com.eanfang.base.kit.ali.alipay.ALiPayManager;
 import com.eanfang.base.kit.ali.alipay.IALiPay;
 import com.eanfang.base.kit.ali.oss.IOssService;
 import com.eanfang.base.kit.ali.oss.OssKit;
+import com.eanfang.base.kit.picture.PictureSelect;
 import com.eanfang.base.kit.tencent.bugly.BuglyManager;
 import com.eanfang.base.kit.tencent.bugly.IBugly;
 import com.eanfang.base.kit.tencent.wechatsdk.IWXPay;
@@ -59,5 +60,13 @@ public class SDKManager {
      */
     public static IOssService ossKit(Activity activity) {
         return OssKit.get(activity);
+    }
+
+    /**
+     * 图片选择
+     * @return
+     */
+    public static PictureSelect getPicture(){
+        return PictureSelect.getInstance();
     }
 }

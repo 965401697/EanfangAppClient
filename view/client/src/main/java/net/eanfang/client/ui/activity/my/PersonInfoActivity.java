@@ -35,11 +35,9 @@ import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.biz.model.entity.AccountEntity;
 
 import com.eanfang.ui.activity.SelectAddressActivity;
-import com.eanfang.ui.base.BasePictureActivity;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
 import com.luck.picture.lib.entity.LocalMedia;
@@ -64,7 +62,7 @@ import io.rong.imlib.model.UserInfo;
  * Created by Administrator on 2017/3/15.
  */
 
-public class PersonInfoActivity extends BaseActivity implements IPictureCallBack {
+public class PersonInfoActivity extends BaseActivity  {
 
     private static final int SELECT_ADDRESS_CALL_BACK_CODE = 1;
     /**
@@ -192,9 +190,21 @@ public class PersonInfoActivity extends BaseActivity implements IPictureCallBack
     }
 
     private void headImage() {
-        takePhoto(this, HEAD_PHOTO, this);
+        SDKManager.getPicture().create(this).takePhoto(iPictureCallBack);
     }
-
+    IPictureCallBack iPictureCallBack=new IPictureCallBack() {
+        @Override
+        public void onSuccess(List<LocalMedia> list) {
+            String imgKey = "account/" + UuidUtil.getUUID() + ".png";
+            GlideUtil.intoImageView(PersonInfoActivity.this, "file://" + list.get(0).getCutPath(), ivUpload);
+            SDKManager.ossKit(PersonInfoActivity.this).asyncPutImage(imgKey, list.get(0).getCutPath(), (isSuccess) -> {
+                LoginBean entity = ClientApplication.get().getLoginBean();
+                entity.getAccount().setAvatar(imgKey);
+                path = entity.getAccount().getAvatar();
+                setHeaderShow(true);
+            });
+        }
+    };
     /**
      * 设置性别按钮的选中状态
      */
@@ -425,17 +435,5 @@ public class PersonInfoActivity extends BaseActivity implements IPictureCallBack
     private void choosePosition(View v) {
         Intent intent = new Intent(PersonInfoActivity.this, SelectAddressActivity.class);
         startActivityForResult(intent, SELECT_ADDRESS_CALL_BACK_CODE);
-    }
-
-    @Override
-    public void onSuccess(List<LocalMedia> list) {
-        String imgKey = "account/" + UuidUtil.getUUID() + ".png";
-        GlideUtil.intoImageView(this, "file://" + list.get(0).getCutPath(), ivUpload);
-        SDKManager.ossKit(this).asyncPutImage(imgKey, list.get(0).getCutPath(), (isSuccess) -> {
-            LoginBean entity = ClientApplication.get().getLoginBean();
-            entity.getAccount().setAvatar(imgKey);
-            path = entity.getAccount().getAvatar();
-            setHeaderShow(true);
-        });
     }
 }

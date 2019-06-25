@@ -13,13 +13,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.lifecycle.ViewModel;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSON;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.base.BaseActivity;
-import com.eanfang.base.BaseApplication;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.base.kit.rx.RxPerm;
@@ -44,6 +42,7 @@ import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
 import com.eanfang.util.V;
+import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
@@ -81,7 +80,7 @@ import static android.provider.MediaStore.Video.Thumbnails.MINI_KIND;
  */
 
 
-public class AddTroubleActivity extends BaseActivity implements IPictureCallBack {
+public class AddTroubleActivity extends BaseActivity {
 
     private static final int CLIENT_ADD_TROUBLE = 2;
     /**
@@ -253,6 +252,7 @@ public class AddTroubleActivity extends BaseActivity implements IPictureCallBack
         super.onCreate(savedInstanceState);
 
     }
+
     @Override
     public void initView() {
         setTitle("新增故障");
@@ -274,17 +274,25 @@ public class AddTroubleActivity extends BaseActivity implements IPictureCallBack
     private PictureInvoking imgInvoke;
 
     private void initRecycle() {
-
         imgInvoke = new PictureInvoking(this, recycleview, selectList);
         imgInvoke.initRecycle(3, onAddPicClickListener);
     }
 
     GridImageAdapter.onAddPicClickListener onAddPicClickListener = () -> {
-        takePhotos(AddTroubleActivity.this, HEAD_PHOTO, this);
+        SDKManager.getPicture().create(AddTroubleActivity.this).takePhotos(new IPictureCallBack() {
+            @Override
+            public void onSuccess(List<LocalMedia> list) {
+            //选择图片成功之后的逻辑处理
+                selectList = list;
+                imgInvoke.setList(selectList);
+            }
+        });
+
     };
+
+
     private List<LocalMedia> videoList = new ArrayList<>();
     private PictureInvoking videoInvoke;
-    private GridImageAdapter vieoAdapter;
 
     private void initRecycleVideo() {
         videoInvoke = new PictureInvoking(this, recycleVideo, videoList);
@@ -293,7 +301,7 @@ public class AddTroubleActivity extends BaseActivity implements IPictureCallBack
     }
 
     GridImageAdapter.onAddPicClickListener videoListenner = () -> {
-        videoSelect(true, new IPictureCallBack() {
+        SDKManager.getPicture().create(AddTroubleActivity.this).takeVideo(new IPictureCallBack() {
             @Override
             public void onSuccess(List<LocalMedia> list) {
                 videoList = list;
@@ -774,16 +782,5 @@ public class AddTroubleActivity extends BaseActivity implements IPictureCallBack
         new TrueFalseDialog(this, "系统提示", "是否放弃报修？", () -> {
             finish();
         }).showDialog();
-    }
-
-    @Override
-    public void onSuccess(List<LocalMedia> list) {
-        if (list != null && list.size() > 0) {
-            for (int i = 0; i < list.size(); i++) {
-                selectList.add(list.get(i));
-            }
-            imgInvoke.setList(selectList);
-        }
-
     }
 }

@@ -30,7 +30,6 @@ import androidx.core.app.ActivityCompat;
 
 import com.eanfang.R;
 import com.eanfang.base.kit.picture.IPictureCallBack;
-import com.eanfang.base.kit.picture.PictureManager;
 import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.util.ETimeUtils;
 import com.eanfang.util.PermissionUtils;
@@ -341,78 +340,4 @@ public abstract class BaseActivityWithTakePhoto extends com.eanfang.takephoto.Ta
             builder.create().show();
         }
     }
-
-    public void takePhoto(Activity activity, int resultCode, OnImageChooseCallBack onImageChooseCallBack) {
-        setOnImageChooseCallBack(onImageChooseCallBack);
-        initDialogs(activity);
-    }
-
-    private void initDialogs(Context context) {
-        if (!((Activity) context).isFinishing()) {
-            builder = new AlertDialog.Builder(this)
-                    .setTitle("选择图片：")
-                    .setItems(new String[]{"相机", "图库"}, new android.content.DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            switch (which) {
-                                case 1:
-                                    imageChoose(false);
-                                    break;
-                                case 0:
-                                    imageChoose(true);
-                                    break;
-                                default:
-                                    break;
-                            }
-
-                        }
-                    });
-            builder.create().show();
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        PictureManager.Builder().create().onActivityResult(requestCode, resultCode, data);
-    }
-
-    private void imageChoose(boolean openCamera) {
-        PictureManager.Builder()
-                .setOpenCamera(openCamera)
-                .setSelectionMode(PictureConfig.SINGLE)
-                .setCrop(true)
-                .create()
-                .photoChoose(BaseActivityWithTakePhoto.this, new IPictureCallBack() {
-                    @Override
-                    public void onSuccess(List<LocalMedia> list) {
-                        if (list != null && list.size() > 0) {
-                            if (getOnImageChooseCallBack() != null) {
-                                OnImageChooseCallBack.onSuccess(list);
-                            }
-                        }
-                    }
-                });
-    }
-
-    OnImageChooseCallBack OnImageChooseCallBack;
-
-    public interface OnImageChooseCallBack {
-        void onSuccess(List<LocalMedia> list);
-    }
-
-    public void setOnImageChooseCallBack(OnImageChooseCallBack onImageChooseCallBack) {
-        OnImageChooseCallBack = onImageChooseCallBack;
-    }
-
-    public OnImageChooseCallBack getOnImageChooseCallBack() {
-        return OnImageChooseCallBack;
-    }
-
-    public void headViewSize(CircleImageView circleImageView, int size){
-        LinearLayout.LayoutParams layoutParams= (LinearLayout.LayoutParams) circleImageView.getLayoutParams();
-        layoutParams.width= size;
-        layoutParams.height=size;
-    }
-
 }
