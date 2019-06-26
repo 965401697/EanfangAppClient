@@ -40,6 +40,9 @@ import net.eanfang.worker.ui.activity.techniciancertification.TechnicianCertific
 import net.eanfang.worker.ui.widget.InviteView;
 import net.eanfang.worker.util.PrefUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -86,9 +89,10 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
     RelativeLayout rlExpertVerfityB;
     private int verify = -1;
     private SpecialistAuthStatusBean mAuthStatusBean;
-    private int e=0;
-    private int t=0;
+    private int e = 0;
+    private int t = 0;
     private int workerStatus;
+
     @Override
     protected int setLayoutResouceId() {
         return R.layout.fragment_config;
@@ -103,12 +107,12 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
         // 获取认证状态
         EanfangHttp.post(UserApi.POST_WORKER_EXPERT_AUTH_STATUS)
                 .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class, (bean) -> {
-                     e = (int) bean.get("expert");//专家
-                     t = (int) bean.get("techWorker");//技师
+                    e = (int) bean.get("expert");//专家
+                    t = (int) bean.get("techWorker");//技师
                     setOnClick(e, t);
                 }));
         // 获取认证状态
-        EanfangHttp.post(UserApi.GET_EXPERT_CERTIFICATION_STATUS).params("accId",WorkerApplication.get().getAccId()).execute(new EanfangCallback<SpecialistAuthStatusBean>(getActivity(), true, SpecialistAuthStatusBean.class, (bean) -> {
+        EanfangHttp.post(UserApi.GET_EXPERT_CERTIFICATION_STATUS).params("accId", WorkerApplication.get().getAccId()).execute(new EanfangCallback<SpecialistAuthStatusBean>(getActivity(), true, SpecialistAuthStatusBean.class, (bean) -> {
             verify = bean.verify;
 //                    if (verify == 2) {
 //                        setRightTitle("重新认证");
@@ -179,7 +183,7 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
 
     @Override
     protected void initView() {
-        headViewSize(ivHeader,(int) getResources().getDimension(com.eanfang.R.dimen.dimen_155));
+        headViewSize(ivHeader, (int) getResources().getDimension(com.eanfang.R.dimen.dimen_155));
         workerStatus = WorkerApplication.get().getLoginBean().getWorkerStatus();
         rgWorkStauts.setOnCheckedChangeListener(this);
     }
@@ -226,15 +230,15 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
         if (!StringUtils.isEmpty(user.getAccount().getAvatar())) {
             GlideUtil.intoImageView(getActivity(), Uri.parse(BuildConfig.OSS_SERVER + user.getAccount().getAvatar()), ivHeader);
         }
-        if (workerStatus==0) {
+        if (workerStatus == 0) {
             rbFree.setChecked(true);
             rbStop.setChecked(false);
             rbWorking.setChecked(false);
-        } else if (workerStatus==2) {
+        } else if (workerStatus == 2) {
             rbFree.setChecked(false);
             rbStop.setChecked(true);
             rbWorking.setChecked(false);
-        } else if (workerStatus==1) {
+        } else if (workerStatus == 1) {
             rbFree.setChecked(false);
             rbStop.setChecked(false);
             rbWorking.setChecked(true);
@@ -256,7 +260,7 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
 
     private void doExpertWorkAuth() {
         // 技师未认证，提示完善个人资料
-        String realName =  WorkerApplication.get().getLoginBean().getAccount().getRealName();
+        String realName = WorkerApplication.get().getLoginBean().getAccount().getRealName();
         if (StringUtils.isEmpty(realName) || "待提供".equals(realName)) {
             showToast("请先完善个人资料");
         } else {
@@ -269,15 +273,15 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
     public void onCheckedChanged(RadioGroup radioGroup, int i) {
         switch (radioGroup.getCheckedRadioButtonId()) {
             case R.id.rb_free:
-                workerStatus=0;
+                workerStatus = 0;
                 doChangeWorkStatus("空闲状态");
                 break;
             case R.id.rb_stop:
-                workerStatus=2;
+                workerStatus = 2;
                 doChangeWorkStatus("停止接单");
                 break;
             case R.id.rb_working:
-                workerStatus=1;
+                workerStatus = 1;
                 doChangeWorkStatus("工作中");
                 break;
             default:
@@ -291,7 +295,7 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
     }
 
     @OnClick({R.id.iv_setting, R.id.iv_user_header, R.id.rl_worker_verfity, R.id.rl_expert_verfity, R.id.rl_ivite, R.id.iv_personalQRCode,
-            R.id.rl_evaluate,R.id.rl_worker_verfity_b,R.id.rl_expert_verfity_b})
+            R.id.rl_evaluate, R.id.rl_worker_verfity_b, R.id.rl_expert_verfity_b})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_setting:
@@ -314,8 +318,8 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
                 break;
             case R.id.iv_personalQRCode:
                 Bundle bundle = new Bundle();
-                bundle.putString("qrcodeTitle",  WorkerApplication.get().getLoginBean().getAccount().getRealName());
-                bundle.putString("qrcodeAddress",  WorkerApplication.get().getLoginBean().getAccount().getQrCode());
+                bundle.putString("qrcodeTitle", WorkerApplication.get().getLoginBean().getAccount().getRealName());
+                bundle.putString("qrcodeAddress", WorkerApplication.get().getLoginBean().getAccount().getQrCode());
                 bundle.putString("qrcodeMessage", "personal");
                 JumpItent.jump(getActivity(), QrCodeShowActivity.class, bundle);
                 break;
@@ -326,7 +330,7 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
             case R.id.rl_worker_verfity_b:
                 doWorkAuthB();
                 break;
-                case R.id.rl_expert_verfity_b:
+            case R.id.rl_expert_verfity_b:
                 doExpertB();
                 break;
         }
@@ -354,7 +358,7 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
     // 判断是否认证
     private void doWorkAuthB() {
         // 技师未认证，提示完善个人资料
-        String realName =  WorkerApplication.get().getLoginBean().getAccount().getRealName();
+        String realName = WorkerApplication.get().getLoginBean().getAccount().getRealName();
         if (StringUtils.isEmpty(realName) || "待提供".equals(realName)) {
             showToast("请先完善个人资料");
         } else {

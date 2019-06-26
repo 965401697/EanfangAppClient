@@ -206,7 +206,8 @@ public class PersonInfoActivity extends BaseActivity {
     }
 
     private void headImage() {
-        takePhoto( HEAD_PHOTO, iPictureCallBack);
+        //takePhoto( HEAD_PHOTO, iPictureCallBack);
+        SDKManager.getPicture().create(this).takePhoto(iPictureCallBack);
     }
     IPictureCallBack iPictureCallBack=new IPictureCallBack() {
         @Override

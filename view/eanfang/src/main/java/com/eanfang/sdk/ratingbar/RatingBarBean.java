@@ -8,5 +8,6 @@ import lombok.Setter;
 public class RatingBarBean {
 
     private String tvContent="";
-    private int startNum=0;
+    private float ratingNum=0;
+    private boolean isIndicator=false;
 }

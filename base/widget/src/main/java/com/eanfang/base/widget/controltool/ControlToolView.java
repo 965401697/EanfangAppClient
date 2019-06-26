@@ -1,7 +1,7 @@
 package com.eanfang.base.widget.controltool;
 
-import com.eanfang.base.widget.controltool.badgeview.BadgeViewManager;
-import com.eanfang.base.widget.controltool.badgeview.IBadgeView;
+import android.content.Context;
+import com.eanfang.base.widget.controltool.badgeview.MyBadgeView;
 import com.eanfang.base.widget.controltool.calendarview.CalendarViewManager;
 import com.eanfang.base.widget.controltool.calendarview.ICalendarView;
 import com.eanfang.base.widget.controltool.flowlayout.FlowlayoutManager;
@@ -28,7 +28,7 @@ public class ControlToolView {
     private static IMaterialRatingBar IMATERIALRATINGBAR;
     private static INumberProgressBar INUMBERPROGRESSBAR;
     private static IFlowLayout IFLOWLAYOUT;
-    private static IBadgeView IBADGEVIEW;
+    private static MyBadgeView IBADGEVIEW;
     private static IPieChart IPIECHART;
     private static ICalendarView ICALENDARVIEW;
 
@@ -67,10 +67,8 @@ public class ControlToolView {
         return IFLOWLAYOUT;
     }
 
-    public static IBadgeView badgeView() {
-        if (IBADGEVIEW == null) {
-            IBADGEVIEW = new BadgeViewManager();
-        }
+    public static MyBadgeView getBadge(Context context) {
+        IBADGEVIEW =MyBadgeView.get(context);
         return IBADGEVIEW;
     }
 
