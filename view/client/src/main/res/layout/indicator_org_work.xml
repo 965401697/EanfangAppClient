@@ -3,7 +3,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/dimen_110"
+    android:layout_height="@dimen/dimen_120"
     android:layout_gravity="center"
     android:background="@color/color_bottom_back"
     android:gravity="center"
@@ -14,7 +14,16 @@
         android:id="@+id/tabImg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_18"
         android:src="@drawable/main_tab_org_selector" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tabImg"
+        android:layout_centerHorizontal="true"
+        android:textSize="11sp"
+        android:textColor="@drawable/selector_home_tab_color"
+        android:text="通讯录"/>
 
 </LinearLayout>

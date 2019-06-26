@@ -139,11 +139,15 @@
                 android:background="@color/color_home_demarcation_line" />
 
             <include layout="@layout/layout_home_business" />
-
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_20"
+                android:background="@color/color_home_demarcation_line" />
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_20"
+                android:scaleType="fitXY"
+                android:background="@color/color_home_demarcation_line"
                 android:src="@drawable/img_special_service" />
 
             <include layout="@layout/layout_home_worker" />

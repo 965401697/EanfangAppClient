@@ -27,6 +27,7 @@ public class HomeAllBrandFragment extends BaseFragment {
 
     @BindView(R.id.rec_home_all_brand)
     RecyclerView mRecHomeAllBrand;
+    private HomeAllBrandAdapter adapter;
 
     @Override
     protected int setLayoutResouceId() {
@@ -39,16 +40,20 @@ public class HomeAllBrandFragment extends BaseFragment {
     }
 
     @Override
-    protected void initView() {
-        mRecHomeAllBrand.setLayoutManager(new GridLayoutManager(getContext(), 4));
-        HomeAllBrandAdapter adapter = new HomeAllBrandAdapter();
+    protected void onLazyLoad() {
         QueryEntry queryEntry = new QueryEntry();
-        adapter.bindToRecyclerView(mRecHomeAllBrand);
         EanfangHttp.post(NewApiService.HOME_ALL_BRAND).upJson(JSON.toJSONString(queryEntry)).execute(new EanfangCallback<AllBrandBean>(getActivity(), true, AllBrandBean.class, bean -> {
             adapter.getData().clear();
             adapter.setNewData(bean.getList());
             adapter.loadMoreComplete();
         }));
+    }
+
+    @Override
+    protected void initView() {
+        mRecHomeAllBrand.setLayoutManager(new GridLayoutManager(getContext(), 4));
+        adapter = new HomeAllBrandAdapter();
+        adapter.bindToRecyclerView(mRecHomeAllBrand);
     }
 
     @Override

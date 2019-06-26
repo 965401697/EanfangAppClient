@@ -21,6 +21,8 @@ import com.eanfang.R;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
+import lombok.Setter;
+
 /**
  * Created by MrHou
  *
@@ -36,6 +38,16 @@ public class BannerView extends FrameLayout {
     private LinearLayout mLinearPosition = null;
     private ViewPager mViewPager = null;
     private BannerHandler mBannerHandler = null;
+    /**
+     * 设置当前页轮播下方展示的图片
+     */
+    @Setter
+    private int currentDownImage = R.drawable.banner_point_select;
+    /**
+     * 设置其他页轮播下方展示的图片
+     */
+    @Setter
+    private int defaultDownImage = R.drawable.banner_point;
 
     private List<View> viewList;
     private int viewSize;
@@ -188,7 +200,7 @@ public class BannerView extends FrameLayout {
                         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
                         layoutParams.rightMargin = getResources().getDimensionPixelOffset(R.dimen.dimen_9dp);
                         img.setLayoutParams(layoutParams);
-                        img.setBackgroundResource(R.drawable.banner_point);
+                        img.setBackgroundResource(defaultDownImage);
                         mLinearPosition.addView(img);
                     } else {
                         mLinearPosition.removeViewAt(0);
@@ -198,9 +210,9 @@ public class BannerView extends FrameLayout {
             int curPos = mViewPager.getCurrentItem();
             for (int i = 0; i < mLinearPosition.getChildCount(); i++) {
                 if (i == (curPos % viewSize)) {
-                    mLinearPosition.getChildAt(i).setBackgroundResource(R.drawable.banner_point_select);
+                    mLinearPosition.getChildAt(i).setBackgroundResource(currentDownImage);
                 } else {
-                    mLinearPosition.getChildAt(i).setBackgroundResource(R.drawable.banner_point);
+                    mLinearPosition.getChildAt(i).setBackgroundResource(defaultDownImage);
                 }
             }
         }

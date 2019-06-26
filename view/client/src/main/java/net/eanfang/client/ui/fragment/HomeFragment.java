@@ -350,6 +350,8 @@ public class HomeFragment extends BaseFragment {
             image.setImageResource(images[i]);
             viewList.add(image);
         }
+        bannerView.setCurrentDownImage(R.drawable.shape_circle_home_choose);
+        bannerView.setDefaultDownImage(R.drawable.shape_circle_home_unchoose);
         bannerView.startLoop(true);
         bannerView.setViewList(viewList);
     }

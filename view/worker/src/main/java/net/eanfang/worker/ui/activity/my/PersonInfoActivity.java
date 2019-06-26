@@ -210,8 +210,12 @@ public class PersonInfoActivity extends BaseActivity {
     }
 
     private void headImage() {
+<<<<<<< HEAD
         //takePhoto( HEAD_PHOTO, iPictureCallBack);
         SDKManager.getPicture().create(this).takePhoto(iPictureCallBack);
+=======
+//        takePhoto( HEAD_PHOTO, iPictureCallBack);
+>>>>>>> 97e510c3e... 客户端首页改版优化
     }
 
     IPictureCallBack iPictureCallBack = new IPictureCallBack() {

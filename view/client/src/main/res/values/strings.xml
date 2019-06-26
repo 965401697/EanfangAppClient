@@ -66,6 +66,7 @@
     <string name="text_home_company_worker_year">从业年限：%1$d年</string>
     <string name="text_home_company_level">等级：Lv%1$d</string>
     <string name="text_home_company_consultCount">已有\t%1$d\t人咨询</string>
+    <string name="text_home_repair_count">已有\t%1$d\t人 报装/报修</string>
     <string name="text_home_safe_run">您的设备已安全运行%d天</string>
 
 </resources>

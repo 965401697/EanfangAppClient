@@ -55,10 +55,7 @@ public class HomeCompanyFragment extends BaseFragment {
     }
 
     @Override
-    protected void initView() {
-        mRecHomeCompany.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new FragmentHomeCompanyAdapter();
-        adapter.bindToRecyclerView(mRecHomeCompany);
+    protected void onLazyLoad() {
         if (mPageType == 0) {
             EanfangHttp.post(NewApiService.HOME_COMPANY_LIST).params("page", "1").params("size", "2").execute(new EanfangCallback<CompanyBean>(getActivity(), true, CompanyBean.class, bean -> {
                 adapter.getData().clear();
@@ -100,6 +97,13 @@ public class HomeCompanyFragment extends BaseFragment {
                 adapter.setNewData(homeCompanyBeans);
             }));
         }
+    }
+
+    @Override
+    protected void initView() {
+        mRecHomeCompany.setLayoutManager(new LinearLayoutManager(getActivity()));
+        adapter = new FragmentHomeCompanyAdapter();
+        adapter.bindToRecyclerView(mRecHomeCompany);
     }
 
     @Override

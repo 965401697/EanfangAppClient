@@ -150,4 +150,9 @@
         <item name="android:windowTranslucentNavigation" tools:ignore="NewApi">true</item> <!--导航栏为透明-->
         <item name="android:statusBarColor" tools:ignore="NewApi">@android:color/transparent</item>
     </style>
+
+    <style name="HomeEditText" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/color_service_deiveder</item>
+        <item name="colorControlActivated">@color/color_service_deiveder</item>
+    </style>
 </resources>
