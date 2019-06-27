@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/guide"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/j_guide2"
-    android:gravity="bottom|center_horizontal"
-    android:orientation="horizontal">
+    android:background="@mipmap/j_guide2">
 
 
     <Button
@@ -15,12 +14,30 @@
         android:layout_marginLeft="0dp"
         android:layout_marginBottom="10dp"
         android:background="@android:color/transparent"
-        android:paddingBottom="50dp"
         android:paddingLeft="100dp"
-        android:paddingRight="100dp"
         android:paddingTop="50dp"
+        android:paddingRight="100dp"
+        android:paddingBottom="50dp"
         android:text=""
-        android:textColor="#ffffff" />
+        android:textColor="#ffffff"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+    <TextView
+        android:id="@+id/button2"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/dimen_90"
+        android:text="立即参与"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:gravity="center"
+        app:layout_constraintVertical_bias="0.87"
+        app:layout_constraintDimensionRatio="w, 5.3:1"
+        android:background="@drawable/shape_splash_btn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"/>
 
 
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

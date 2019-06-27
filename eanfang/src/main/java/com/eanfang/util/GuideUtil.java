@@ -52,7 +52,7 @@ public class GuideUtil {
         int index = 0;
         for (int i : guides) {
             index++;
-            MyFragment fragment = MyFragment.newInstance(index == guides.length, i);
+            MyFragment fragment = MyFragment.newInstance(index == 1, index == guides.length, i);
             mAdapter.addItem(fragment);
             mLayoutViewIdsMap.put(fragment.getRootViewId(), fragment.getChildViewIds());
         }
@@ -71,10 +71,11 @@ public class GuideUtil {
         boolean last;
         int resource;
 
-        public static MyFragment newInstance(boolean last, int i) {
+        public static MyFragment newInstance(boolean showbtn2, boolean last, int i) {
             Bundle bundle = new Bundle();
             bundle.putBoolean("last", last);
             bundle.putInt("resource", i);
+            bundle.putBoolean("showBtn2", showbtn2);
             MyFragment instance = new MyFragment();
             instance.setArguments(bundle);
             return instance;
@@ -99,8 +100,9 @@ public class GuideUtil {
             super.onViewCreated(view, savedInstanceState);
             last = getArguments().getBoolean("last");
             resource = getArguments().getInt("resource");
+            boolean showBtn2 = getArguments().getBoolean("showBtn2");
             getView().setBackgroundResource(resource);
-
+            view.findViewById(R.id.button2).setVisibility(showBtn2 ? View.VISIBLE : View.GONE);
             if (last) {
                 view.findViewById(R.id.button1).setVisibility(View.VISIBLE);
                 view.findViewById(R.id.button1).setOnClickListener((v) -> {
