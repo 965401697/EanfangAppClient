@@ -18,6 +18,7 @@ import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
 
@@ -183,5 +184,24 @@ public class TenderCreateViewModle extends BaseViewModel {
         tenderRepo.doSetNewTender(tenderCreateVo).observe(lifecycleOwner, tenderBean -> {
             createTenderLiveData.setValue(tenderBean);
         });
+    }
+
+    /**
+     * 再次报价
+     */
+    public void doReleaseAgain(TaskPublishEntity taskPublishEntity) {
+        city = taskPublishEntity.getCity();
+        contry = taskPublishEntity.getCounty();
+        lat = taskPublishEntity.getLatitude();
+        lon = taskPublishEntity.getLongitude();
+        mTenderCreateBinding.tvProjectAddress.setText(taskPublishEntity.getProvince() + city + contry);
+        mTenderCreateBinding.tvBusinessType.setText(Config.get().getBaseNameByCode(taskPublishEntity.getBusinessOneCode(), 2));
+        mTenderCreateBinding.tvSystemType.setText(Config.get().getBaseNameByCode(taskPublishEntity.getSystemType(), 1));
+        mTenderCreateBinding.tvStartTime.setText(GetDateUtils.dateToDateTimeString(taskPublishEntity.getEndTime()));
+        mTenderCreateBinding.etPredictTime.setText(taskPublishEntity.getPredicttime() + "");
+        mTenderCreateBinding.tvBudget.setText(taskPublishEntity.getBudget() + "");
+        mTenderCreateBinding.tvBudgetUnit.setText(taskPublishEntity.getBudgetUnit());
+        mTenderCreateBinding.etEnvironment.setText(taskPublishEntity.getDescription());
+        mTenderCreateBinding.etRequire.setText(taskPublishEntity.getLaborRequirements());
     }
 }

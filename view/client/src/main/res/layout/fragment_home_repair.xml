@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen_810"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_home_repair_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/dimen_38"
+        android:drawableLeft="@drawable/icon_today"
+        android:gravity="center"
+        android:drawablePadding="@dimen/dimen_16"
+        android:text="已有8883人 报装/报修"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv_home_repair_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/dimen_38"
+        android:drawableLeft="@drawable/icon_geographical_position_small"
+        android:drawableRight="@drawable/icon_client_arrow_right"
+        android:drawablePadding="@dimen/dimen_12"
+        android:lines="1"
+        android:gravity="center"
+        android:text="选位置"
+        android:textColor="@color/color_main_header_bg"
+        android:textSize="15sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_38"
+        android:layout_marginTop="@dimen/dimen_56"
+        android:layout_marginRight="@dimen/dimen_38"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/et_home_repair_sys"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dimen_18"
+            android:layout_weight="1"
+            android:drawableRight="@drawable/arrow_right"
+            android:hint="请选择系统"
+            android:textColor="@color/color_text_default"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/et_home_repair_brand"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_18"
+            android:layout_weight="1"
+            android:drawableRight="@drawable/arrow_right"
+            android:hint="请选择品牌"
+            android:textColor="@color/color_text_default"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/et_home_repair_describe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_38"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:layout_marginRight="@dimen/dimen_38"
+        android:drawableRight="@mipmap/ic_client_voice_input"
+        android:hint="请输入详细描述"
+        android:maxLines="2"
+        android:textColor="@color/color_text_default"
+        android:textSize="14sp" />
+
+    <ImageView
+        android:id="@+id/img_moment_accident"
+        android:layout_width="@dimen/dimen_108"
+        android:layout_height="@dimen/dimen_108"
+        android:layout_gravity="center"
+        android:scaleType="centerCrop"
+        android:layout_marginTop="@dimen/dimen_50"
+        android:src="@mipmap/bga_pp_ic_plus" />
+
+    <Button
+        android:id="@+id/btn_home_repair_commit"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="@dimen/dimen_374"
+        android:layout_height="@dimen/dimen_84"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dimen_34"
+        android:gravity="center"
+        android:text="立即报修"
+        android:background="@drawable/shape_bg_home_repair_commit"
+        android:textColor="@color/white"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/tv_home_repair_more"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dimen_32"
+        android:layout_marginBottom="@dimen/dimen_32"
+        android:gravity="center"
+        android:text="精准报修，快速高效 去试试 >>"
+        android:textColor="@color/color_main_header_bg"
+        android:textSize="12sp" />
+</LinearLayout>

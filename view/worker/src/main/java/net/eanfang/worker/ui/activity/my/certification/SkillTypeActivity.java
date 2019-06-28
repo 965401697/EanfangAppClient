@@ -1,7 +1,6 @@
 package net.eanfang.worker.ui.activity.my.certification;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -153,7 +152,7 @@ public class SkillTypeActivity extends BaseWorkerActivity {
             if (businessCooperationAddAdapter.getUnbCheckedId() != null) {
                 businessCooperationAddAdapter.getUnbCheckedId().clear();
             }
-            startAnimActivity(new Intent(this, SkillAreaActivity.class).putExtra("status", mStatus));
+            startAnimActivity(new Intent(this, AreaSelectionActivity.class).putExtra("status", mStatus));
             finish();
         }));
 

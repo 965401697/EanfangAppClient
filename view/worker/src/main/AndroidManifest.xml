@@ -76,13 +76,15 @@
         android:supportsRtl="true"
         android:theme="@style/NewBaseTheme"
         tools:replace="android:name,android:theme">
-        <activity android:name=".ui.activity.worksapce.tender.TenderPersonControlActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.tender.TenderBidDetailActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.tender.TenderOfferDetailActivity" />
+        <activity android:name=".ui.activity.worksapce.tender.TenderPersonControlActivity" />
         <activity android:name=".ui.activity.worksapce.tender.TenderCommitActivity" />
         <activity android:name=".ui.activity.worksapce.tender.TenderFindDetailActivity" />
         <activity android:name=".ui.activity.worksapce.tender.TenderPersonalActivity" />
         <activity
             android:name=".ui.activity.worksapce.tender.TenderCreateActivity"
-            android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
+            android:windowSoftInputMode="stateAlwaysHidden|stateUnchanged" />
         <activity android:name=".ui.activity.worksapce.contacts.baseinfo.AuthCompanyFirstBActivity" />
         <activity android:name=".ui.activity.techniciancertification.JsCapabilityTagActivity" />
         <activity android:name=".ui.activity.techniciancertification.JsQualificationsAndAbilitiesActivity" />
@@ -870,7 +872,7 @@
             android:name=".ui.activity.my.certification.SkillTypeActivity"
             android:screenOrientation="portrait" /> <!-- 技师区域绑定 -->
         <activity
-            android:name=".ui.activity.my.certification.SkillAreaActivity"
+            android:name=".ui.activity.my.certification.AreaSelectionActivity"
             android:screenOrientation="portrait" /> <!-- 技师技能认证 -->
         <activity
             android:name=".ui.activity.my.certification.SkillCertificafeListActivity"
@@ -1169,6 +1171,9 @@
         <activity
             android:name=".ui.activity.worksapce.security.SecurityCommentDetailActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity android:name=".ui.activity.NewOrderActivity" />
+        <activity android:name=".ui.activity.NewOrderScreenActivity" />
+        <activity android:name=".ui.activity.ChooseAreaActivity" />
     </application>
 
 </manifest>

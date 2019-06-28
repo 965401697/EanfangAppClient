@@ -16,6 +16,7 @@ import com.eanfang.base.network.interceptor.FilterInterceptor;
 import com.eanfang.base.network.interceptor.HeaderInterceptor;
 import com.eanfang.base.network.interceptor.HttpInterceptor;
 import com.eanfang.base.network.model.BaseResponseBody;
+import com.eanfang.base.network.model.Optional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,13 +102,8 @@ public enum RetrofitManagement {
                             actionLiveData.setValue(new BaseActionEvent(BaseActionEvent.REQUEST_FAST));
                             throw new RequestFastException();
                         case HttpCode.CODE_SUCCESS:
-                            if (result.getData() == null) {
-                                actionLiveData.setValue(new BaseActionEvent(BaseActionEvent.EMPTY_DATA));
-                                break;
-                            } else {
-                                actionLiveData.setValue(new BaseActionEvent(BaseActionEvent.SUCCESS));
-                                return createData(result.getData());
-                            }
+                            actionLiveData.setValue(new BaseActionEvent(BaseActionEvent.SUCCESS));
+                            return createData(new Optional(result.getData()));
                         case HttpCode.CODE_UNKNOWN:
                             actionLiveData.setValue(new BaseActionEvent(BaseActionEvent.SERVER_ERROR));
                             break;
@@ -130,7 +126,7 @@ public enum RetrofitManagement {
                         default:
                             throw new ServerResultException(result.getCode(), result.getMessage());
                     }
-                    return createData(result.getMessage());
+                    return createData(new Optional(null));
                 });
     }
 

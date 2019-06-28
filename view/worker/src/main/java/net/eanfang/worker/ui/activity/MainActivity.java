@@ -24,6 +24,7 @@ import com.annimon.stream.Stream;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.widget.controltool.ControlToolView;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.config.EanfangConst;
@@ -100,12 +101,6 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
     private long mExitTime;
     //被删除的 群组id 容器
     public static HashMap<String, String> hashMap = new HashMap<>();
-    /**
-     * 底部消息数量
-     */
-    private QBadgeView qBadgeViewHome = new QBadgeView(WorkerApplication.get().getApplicationContext());
-    private QBadgeView qBadgeViewContact = new QBadgeView(WorkerApplication.get().getApplicationContext());
-    private QBadgeView qBadgeViewWork = new QBadgeView(WorkerApplication.get().getApplicationContext());
     private int mHome = 0;
     private int mContact = 0;
     private int mWork = 0;
@@ -180,7 +175,7 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
         getEquipmentUnread();//首次
 
 /*
-       WorkerApplication.getApplication().setmForwardListener(new WorkerApplication.ForwardListener() {
+       WorkerApplication.get().setmForwardListener(new WorkerApplication.ForwardListener() {
             @Override
             public void onForwardListener() {
                 getEquipmentUnread();
@@ -196,7 +191,7 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
                 Conversation.ConversationType.GROUP, Conversation.ConversationType.SYSTEM,
                 Conversation.ConversationType.PUBLIC_SERVICE, Conversation.ConversationType.APP_PUBLIC_SERVICE
         };
-
+        ContactUtil.postAccount(MainActivity.this);
         RongIM.getInstance().addUnReadMessageCountChangedObserver(this, conversationTypes);
     }
 
@@ -296,24 +291,9 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
         //开启信鸽日志输出
         SDKManager.getXGPush(MainActivity.this).enableDebug(true);
         SDKManager.getXGPush(MainActivity.this).setHuaweiDebug(true);
-        SDKManager.getXGPush(MainActivity.this).setMiPush(XIAOMI_APPID_WORKER,XIAOMI_APPKEY_WORKER);
-        SDKManager.getXGPush(MainActivity.this).setMzPush(MEIZU_APPID_WORKER,MEIZU_APPKEY_WORKER);
+        SDKManager.getXGPush(MainActivity.this).setMiPush(XIAOMI_APPID_WORKER, XIAOMI_APPKEY_WORKER);
+        SDKManager.getXGPush(MainActivity.this).setMzPush(MEIZU_APPID_WORKER, MEIZU_APPKEY_WORKER);
         SDKManager.getXGPush(MainActivity.this).registerPush(user.getAccount().getMobile());
-
-       /* XGPushConfig.enableOtherPush(MainActivity.this, true);
-        //开启信鸽日志输出
-        XGPushConfig.enableDebug(MainActivity.this, true);
-        XGPushConfig.setHuaweiDebug(true);
-        *//**
-         * 小米
-         * *//*
-        XGPushConfig.setMiPushAppId(MainActivity.this, XIAOMI_APPID_WORKER);
-        XGPushConfig.setMiPushAppKey(MainActivity.this, XIAOMI_APPKEY_WORKER);
-        *//**
-         * 魅族
-         * *//*
-        XGPushConfig.setMzPushAppId(MainActivity.this, MEIZU_APPID_WORKER);
-        XGPushConfig.setMzPushAppKey(MainActivity.this, MEIZU_APPKEY_WORKER);*/
 
         ReceiverInit.getInstance().inits(MainActivity.this, user.getAccount().getMobile());
     }
@@ -336,12 +316,6 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
                         WorkerApplication.get().set(BaseDataBean.class.getName(), baseDataBean);
                     }
                     saveArea();
-//                    new Thread(() -> {
-//                        if (jsonObject != null && !jsonObject.isEmpty() && jsonObject.containsKey("data") && !jsonObject.get("data").equals(Constant.NO_UPDATE)) {
-////                            BaseDataBean newDate = jsonObject.toJavaObject(BaseDataBean.class);
-//                            WorkerApplication.get().set(BaseDataBean.class.getName(), jsonObject.toJavaObject(BaseDataBean.class));
-//                        }
-//                    }).start();
                 }));
     }
 
@@ -372,10 +346,10 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
                 provinceEntity.setChildren(cityList);
             }
             entity.setChildren(areaListBean);
-            WorkerApplication.getApplication().sSaveArea = entity;
+            WorkerApplication.get().sSaveArea = entity;
             WorkerApplication.get().set(Constant.COUNTRY_AREA_LIST, entity);
         } else {
-            WorkerApplication.getApplication().sSaveArea = areaJson;
+            WorkerApplication.get().sSaveArea = areaJson;
         }
     }
 
@@ -396,12 +370,6 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
                     if (constAllBean != null) {
                         WorkerApplication.get().set(ConstAllBean.class.getName(), constAllBean);
                     }
-//                    new Thread(() -> {
-//                        if (jsonObject != null && !jsonObject.isEmpty() && jsonObject.containsKey("data") && !jsonObject.get("data").equals(Constant.NO_UPDATE)) {
-////                            ConstAllBean newDate = JSONObject.parseObject(str, ConstAllBean.class);
-//
-//                        }
-//                    }).start();
                 }));
     }
 
@@ -449,9 +417,7 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
                 UserInfo userInfo = new UserInfo(String.valueOf(WorkerApplication.get().getAccId()),
                         WorkerApplication.get().getLoginBean().getAccount().getNickName(), Uri.parse(com.eanfang.BuildConfig.OSS_SERVER +
                         WorkerApplication.get().getLoginBean().getAccount().getAvatar()));
-
                 Log.e("zzw", "userInfo=" + userInfo.toString());
-
 
                 return userInfo;
             }
@@ -615,7 +581,7 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
     }
 
     private void doChange(int mContactNum, int nums) {
-        qBadgeViewContact.setBadgeNumber(mContactNum);
+        badgeView(R.id.tab_contact, mContactNum);
         BadgeUtil.setBadgeCount(MainActivity.this, nums, R.drawable.client_logo);
     }
 
@@ -834,37 +800,29 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
         BadgeUtil.setBadgeCount(MainActivity.this, mTotalCount, R.drawable.client_logo);
 //                }
 //            }, 3 * 1000);
-        qBadgeViewHome.bindTarget(findViewById(R.id.tab_home))
-                .setBadgeNumber(mHome)
-                .setBadgeBackgroundColor(0xFFFF0000)
-                .setBadgePadding(2, true)
-                .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setGravityOffset(0, 3, true)
-                .setBadgeTextSize(11, true);
-        qBadgeViewContact.bindTarget(findViewById(R.id.tab_contact))
-                .setBadgeNumber(mAllCount)
-                .setBadgeBackgroundColor(0xFFFF0000)
-                .setBadgePadding(2, true)
-                .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setGravityOffset(0, 3, true)
-                .setBadgeTextSize(11, true);
-        qBadgeViewWork.bindTarget(findViewById(R.id.tab_work))
-                .setBadgeNumber(mWork)
-                .setBadgeBackgroundColor(0xFFFF0000)
-                .setBadgePadding(2, true)
-                .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setGravityOffset(0, 3, true)
-                .setBadgeTextSize(11, true);
+
+        badgeView(R.id.tab_home, mHome);
+        badgeView(R.id.tab_contact, mAllCount);
+        badgeView(R.id.tab_work, mWork);
+    }
+
+    private QBadgeView badgeView(int id, int number) {
+        return ControlToolView.badgeView()
+                .bindTarget(findViewById(id))
+                .setBadgeNumber(number)
+                .create(WorkerApplication.get().getApplicationContext());
     }
 
     public String onNoConatac() {
         return mStatus;
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         RongIM.getInstance().disconnect();
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);

@@ -3,6 +3,8 @@ package com.eanfang.base.widget.controltool.badgeview;
 import android.content.Context;
 import android.view.View;
 
+import q.rorbin.badgeview.QBadgeView;
+
 
 /**
  * created by wtt
@@ -17,5 +19,5 @@ public interface IBadgeView {
     IBadgeView setBadgeGravity(int gravity);
     IBadgeView setGravityOffset(float offsetX, float offsetY, boolean isDpValue);
     IBadgeView setBadgeTextSize(float size, boolean isSpValue);
-    void create(Context context);
+    QBadgeView create(Context context);
 }

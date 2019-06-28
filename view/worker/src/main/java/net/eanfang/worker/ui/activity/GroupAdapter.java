@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import lombok.Getter;
+
 /**
  * Created by MrHou
  *
@@ -90,8 +92,8 @@ public class GroupAdapter extends BaseExpandableListAdapter {
             holder = new FirstHolder();
             convertView = mInflate.inflate(R.layout.item_expand_lv_first, parent, false);
             holder.tv = ((TextView) convertView.findViewById(R.id.tv));
-            holder.tv_cb = ((CheckBox) convertView.findViewById(R.id.tv_cb));
-            holder.img_area = ((ImageView) convertView.findViewById(R.id.img_area));
+            holder.tvCb = ((CheckBox) convertView.findViewById(R.id.tv_cb));
+            holder.imgArea = ((ImageView) convertView.findViewById(R.id.img_area));
             convertView.setTag(holder);
         } else {
             holder = (FirstHolder) convertView.getTag();
@@ -99,12 +101,12 @@ public class GroupAdapter extends BaseExpandableListAdapter {
         final FirstHolder finalHolder = holder;
         mTextViews.put(groupPosition, holder);
         if (isAuth) {
-            holder.tv_cb.setEnabled(false);
-            holder.tv_cb.setClickable(false);
+            holder.tvCb.setEnabled(false);
+            holder.tvCb.setClickable(false);
         } else {
-            holder.tv_cb.setOnClickListener(v -> {
-                boolean isChecked = finalHolder.tv_cb.isChecked();
-                finalHolder.tv_cb.setText(isChecked ? "取消全选" : "全选");
+            holder.tvCb.setOnClickListener(v -> {
+                boolean isChecked = finalHolder.tvCb.isChecked();
+                finalHolder.tvCb.setText(isChecked ? "取消全选" : "全选");
                 mListData.get(groupPosition).setCheck(isChecked);
                 if (mListData.get(groupPosition).getChildren() != null) {
                     for (int i = 0; i < mListData.get(groupPosition).getChildren().size(); i++) {
@@ -120,9 +122,9 @@ public class GroupAdapter extends BaseExpandableListAdapter {
                 notifyDataSetChanged();
             });
         }
-        finalHolder.tv_cb.setChecked(mListData.get(groupPosition).isCheck());
-        holder.img_area.setSelected(isExpanded);
-        holder.tv_cb.setChecked(mListData.get(groupPosition).isCheck());
+        finalHolder.tvCb.setChecked(mListData.get(groupPosition).isCheck());
+        holder.imgArea.setSelected(isExpanded);
+        holder.tvCb.setChecked(mListData.get(groupPosition).isCheck());
         holder.tv.setText(mListData.get(groupPosition).getDataName());
         mListener.onCheckAreaChange(groupPosition, -1, -1, mListData.get(groupPosition).isCheck());
 
@@ -155,11 +157,11 @@ public class GroupAdapter extends BaseExpandableListAdapter {
     public void setListener(AreaCheckChangeListener listener) {
         this.mListener = listener;
     }
-
+    @Getter
     public class FirstHolder {
-        public TextView tv;
-        public CheckBox tv_cb;
-        public ImageView img_area;
+        private TextView tv;
+        private CheckBox tvCb;
+        private ImageView imgArea;
     }
 
     public FirstHolder getChangeTextView(int position) {

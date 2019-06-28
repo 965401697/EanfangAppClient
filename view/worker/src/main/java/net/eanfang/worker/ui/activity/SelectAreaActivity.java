@@ -71,21 +71,21 @@ public class SelectAreaActivity extends BaseActivity implements AreaCheckChangeL
     private void initArea() {
 
         //获取国家区域
-        if (WorkerApplication.getApplication().sSaveArea == null) {
+        if (WorkerApplication.get().sSaveArea == null) {
             BaseDataEntity areaJson = (BaseDataEntity) WorkerApplication.get().get(Constant.COUNTRY_AREA_LIST, BaseDataEntity.class);
             if (areaJson != null) {
                 showToast("加载服务区域失败！");
             } else {
                 ThreadPoolManager manager = ThreadPoolManager.newInstance();
                 manager.addExecuteTask(() -> {
-                    WorkerApplication.getApplication().sSaveArea = areaJson;
+                    WorkerApplication.get().sSaveArea = areaJson;
                     runOnUiThread(this::initData);
                 });
             }
         } else {
             initData();
         }
-        areaListBean = WorkerApplication.getApplication().sSaveArea.getChildren();
+        areaListBean = WorkerApplication.get().sSaveArea.getChildren();
     }
 
     private void initData() {
@@ -185,13 +185,13 @@ public class SelectAreaActivity extends BaseActivity implements AreaCheckChangeL
         GroupAdapter.FirstHolder holder = mAdapter.getChangeTextView(onPos);
         if (holder != null) {
             if (areaSize == checkAreaSize) {
-                holder.tv_cb.setText("取消全选");
+                holder.getTvCb().setText("取消全选");
                 areaListBean.get(onPos).setCheck(true);
             } else {
-                holder.tv_cb.setText("全选");
+                holder.getTvCb().setText("全选");
                 areaListBean.get(onPos).setCheck(false);
             }
-            holder.tv.setText(areaListBean.get(onPos).getDataName() + "(" + checkAreaSize + "/" + areaSize + ")");
+            holder.getTv().setText(areaListBean.get(onPos).getDataName() + "(" + checkAreaSize + "/" + areaSize + ")");
         }
     }
 }

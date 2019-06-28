@@ -51,7 +51,7 @@ public class TaskApplyEntity implements Serializable {
     /**
      * 项目报价==预算金额
      */
-    private BigDecimal projectQuote;
+    private Double projectQuote;
     /**
      * 需求描述==施工方案
      */
@@ -61,7 +61,7 @@ public class TaskApplyEntity implements Serializable {
      */
     private String pictures;
     /**
-     * 任务申请的状态==待评标，0待确认，1被确认==待评标，2被忽略,3已完成==已中标
+     * 任务申请的状态 2待评标，1被忽略,3已中标
      */
     private Integer status;
     /**

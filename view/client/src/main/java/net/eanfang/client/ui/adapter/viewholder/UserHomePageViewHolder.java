@@ -8,21 +8,24 @@ import com.chad.library.adapter.base.BaseViewHolder;
 
 import net.eanfang.client.R;
 
+import lombok.Getter;
+
 /**
  * @author liangkailun
  * Date ：2019/4/10
  * Describe :用户主页的viewholder
  */
+@Getter
 public class UserHomePageViewHolder extends BaseViewHolder {
-    public ImageView mImgCompany;
-    public TextView mTvCompany;
-    public TextView mTvInServiceTime;
-    public TextView mTvJobPosition;
+    private ImageView imgCompany;
+    private TextView tvCompany;
+    private TextView tvInServiceTime;
+    private TextView tvJobPosition;
     public UserHomePageViewHolder(View view) {
         super(view);
-        mImgCompany = view.findViewById(R.id.img_company);
-        mTvCompany = view.findViewById(R.id.tv_company);
-        mTvInServiceTime = view.findViewById(R.id.tv_inServiceTime);
-        mTvJobPosition = view.findViewById(R.id.tv_jobPosition);
+        imgCompany = view.findViewById(R.id.img_company);
+        tvCompany = view.findViewById(R.id.tv_company);
+        tvInServiceTime = view.findViewById(R.id.tv_inServiceTime);
+        tvJobPosition = view.findViewById(R.id.tv_jobPosition);
     }
 }

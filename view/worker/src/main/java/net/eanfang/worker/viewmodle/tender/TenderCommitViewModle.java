@@ -40,6 +40,7 @@ public class TenderCommitViewModle extends BaseViewModel {
 
     public TenderCommitViewModle() {
         tenderRepo = new TenderRepo(new TenderDs(this));
+        createTenderLiveData = new MutableLiveData<>();
         tenderCommitVo = new TenderCommitVo();
     }
 

@@ -174,6 +174,10 @@ public interface NewApiService {
     String GET_PUSH_NEWS_CLIENT = BuildConfig.API_HOST + "/yaf_sys/notice/newsClient";
 
     String GET_PUSH_NEWS_WORKER = BuildConfig.API_HOST + "/yaf_sys/notice/newsWorker";
+    /**
+     * 最新订单
+     */
+    String GET_PUSH_NEWS = BuildConfig.API_HOST + "/yaf_sys/notice/site/news";
 
 
     /**
@@ -751,7 +755,6 @@ public interface NewApiService {
      * 报修增加个人信息
      */
     String REPAIR_PRESONAL_INFO_ADD = BASE_URL + "/yaf_sys/receive/create";
-
     /**
      * 报修增加个人信息修改
      */
@@ -782,5 +785,36 @@ public interface NewApiService {
      * 新增用户推荐信息
      */
     String INSERT_WITHDRAWALS_RECORD = BASE_URL + YAF_SYS + "/withdrawalsrecord/insertWithdrawalsRecord";
+
+    /**
+     * 最新订单列表
+     */
+    String QUERY_LASTEST_ORDER = BASE_URL + YAF_SYS + "/lastestorder/queryLastestOrder";
+    /**
+     *安防公司列表
+     */
+    String HOME_COMPANY_LIST = BASE_URL + "/yaf_site/findCompany/shopListBySite";
+
+    /**
+     *技师列表
+     */
+    String HOME_WORKER_LIST = BASE_URL + "/yaf_site/findTeachWork/workerListBySite";
+
+    /**
+     *全部品牌
+     */
+    String HOME_ALL_BRAND = BASE_URL + "/yaf_sys/withdrawalsrecord/baseList";
+    /**
+     *快速报修
+     */
+    String HOME_QUICK_REPAIR = BASE_URL + "/yaf_site/siteRepairOrder/create";
+    /**
+     *快速报装
+     */
+    String HOME_QUICK_INSTALL = BASE_URL + "/yaf_site/siteInstallOrder/create";
+    /**
+     *免费设计
+     */
+    String HOME_FREE_DESIGN = BASE_URL + "/yaf_site/freeDesign/create";
 
 }

@@ -56,12 +56,4 @@ public class WorkTenderFragment extends TemplateItemListFragment {
         getData();
     }
 
-    @Subscribe
-    public void onEvent(String createSuccess) {
-        if (createSuccess.equals("addTenderSuccess")) {
-            mTenderViewModle.mNoticeQueryEntry = null;
-            mPage = 1;
-            getData();
-        }
-    }
 }

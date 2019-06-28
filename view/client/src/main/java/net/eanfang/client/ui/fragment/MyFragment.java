@@ -3,8 +3,8 @@ package net.eanfang.client.ui.fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.eanfang.base.widget.customview.CircleImageView;
@@ -16,7 +16,6 @@ import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
-import com.eanfang.witget.PersonalQRCodeDialog;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
@@ -41,8 +40,6 @@ public class MyFragment extends BaseFragment {
     CircleImageView ivUserHeader;
     private TextView tv_user_name;
     private ImageView mIvPersonalQRCode;
-    // Dialog
-    private PersonalQRCodeDialog personalQRCodeDialog;
 
     @Override
     protected int setLayoutResouceId() {
@@ -56,7 +53,7 @@ public class MyFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        headViewSize(ivUserHeader,(int) getResources().getDimension(com.eanfang.R.dimen.dimen_155));
+        headViewSize(ivUserHeader, (int) getResources().getDimension(com.eanfang.R.dimen.dimen_155));
         tv_user_name = findViewById(R.id.tv_user_name);
         mIvPersonalQRCode = findViewById(R.id.iv_personalQRCode);
         findViewById(R.id.iv_user_header).setOnClickListener((v) -> {
@@ -80,19 +77,12 @@ public class MyFragment extends BaseFragment {
         findViewById(R.id.img_invite).setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), InviteFriendActivity.class));
         });
+        findViewById(R.id.tv_personalQRCode).setOnClickListener(this::gotoQrPage);
     }
 
     @Override
     protected void setListener() {
-        mIvPersonalQRCode.setOnClickListener((v) -> {
-            Bundle bundle = new Bundle();
-            bundle.putString("qrcodeTitle", ClientApplication.get().getLoginBean().getAccount().getRealName());
-            bundle.putString("qrcodeAddress", ClientApplication.get().getLoginBean().getAccount().getQrCode());
-            bundle.putString("qrcodeMessage", "personal");
-            JumpItent.jump(getActivity(), QrCodeShowActivity.class, bundle);
-//            personalQRCodeDialog = new PersonalQRCodeDialog(getActivity(), ClientApplication.get().getLoginBean().getAccount().getQrCode());
-//            personalQRCodeDialog.show();
-        });
+        mIvPersonalQRCode.setOnClickListener(this::gotoQrPage);
     }
 
 
@@ -109,7 +99,7 @@ public class MyFragment extends BaseFragment {
         }
 
         if (!StringUtils.isEmpty(user.getAccount().getAvatar())) {
-            GlideUtil.intoImageView(getActivity(),Uri.parse(BuildConfig.OSS_SERVER + user.getAccount().getAvatar()),ivUserHeader);
+            GlideUtil.intoImageView(getActivity(), Uri.parse(BuildConfig.OSS_SERVER + user.getAccount().getAvatar()), ivUserHeader);
         }
 
     }
@@ -135,5 +125,18 @@ public class MyFragment extends BaseFragment {
 
     public void setQrCode() {
 
+    }
+
+    /**
+     * 跳转我的二维码
+     *
+     * @param v
+     */
+    private void gotoQrPage(View v) {
+        Bundle bundle = new Bundle();
+        bundle.putString("qrcodeTitle", ClientApplication.get().getLoginBean().getAccount().getRealName());
+        bundle.putString("qrcodeAddress", ClientApplication.get().getLoginBean().getAccount().getQrCode());
+        bundle.putString("qrcodeMessage", "personal");
+        JumpItent.jump(getActivity(), QrCodeShowActivity.class, bundle);
     }
 }

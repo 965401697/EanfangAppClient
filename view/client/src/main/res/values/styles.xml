@@ -115,6 +115,19 @@
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
+    <style name="my_item_style">
+        <item name="android:paddingTop">@dimen/dimen_40</item>
+        <item name="android:paddingBottom">@dimen/dimen_40</item>
+        <item name="android:paddingLeft">@dimen/dimen_20</item>
+    </style>
+    <!-- 我的页面 样式 -->
+    <style name="style_common_line_my">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dimen_1</item>
+        <item name="android:background">@color/color_my_line</item>
+    </style>
+
+
     <!--对话框的样式-->
     <style name="NormalDialogStyle">
         <!--对话框背景 -->

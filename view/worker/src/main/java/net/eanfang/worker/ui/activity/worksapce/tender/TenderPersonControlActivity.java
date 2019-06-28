@@ -12,15 +12,13 @@ import android.widget.ImageView;
 import com.eanfang.base.BaseActivity;
 import com.eanfang.biz.model.bean.QueryEntry;
 import com.eanfang.biz.rds.base.LViewModelProviders;
+import com.eanfang.util.JumpItent;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.databinding.ActivityTenderPersonControlBinding;
 import net.eanfang.worker.ui.fragment.tender.TenderMyBidFragment;
 import net.eanfang.worker.ui.fragment.tender.TenderMyReleaseFragment;
-import net.eanfang.worker.ui.fragment.tender.WorkTenderFindFragment;
-import net.eanfang.worker.ui.fragment.tender.WorkTenderFragment;
 import net.eanfang.worker.viewmodle.tender.TenderPersonControlViewModle;
-import net.eanfang.worker.viewmodle.tender.TenderViewModle;
 
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -46,7 +44,6 @@ public class TenderPersonControlActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         tenderPersonControlBinding = DataBindingUtil.setContentView(this, R.layout.activity_tender_person_control);
         super.onCreate(savedInstanceState);
-        initView();
     }
 
     @Override
@@ -58,6 +55,17 @@ public class TenderPersonControlActivity extends BaseActivity {
         mAdapter.getFragments().add(TenderMyBidFragment.newInstance(tenderPersonControlViewModle));
         tenderPersonControlBinding.vpTenderList.setCurrentItem(0);
         tenderPersonControlBinding.tlPerosonalList.setViewPager(tenderPersonControlBinding.vpTenderList, mTitles, this, mAdapter.getFragments());
+        tenderPersonControlBinding.tvFiltrate.setOnClickListener((V) -> {
+            Bundle bundle = new Bundle();
+            if (tenderPersonControlBinding.vpTenderList.getCurrentItem() == 0) {
+                bundle.putInt("type", 2);
+            } else if (tenderPersonControlBinding.vpTenderList.getCurrentItem() == 1) {
+                bundle.putInt("type", 3);
+            }
+            bundle.putBoolean("isPersonal", true);
+            JumpItent.jump(TenderPersonControlActivity.this, FilterTenderActivity.class, bundle, FILTRATE_TYPE_CODE);
+        });
+
     }
 
     @Override

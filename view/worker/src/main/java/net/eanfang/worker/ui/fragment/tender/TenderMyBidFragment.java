@@ -11,9 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.eanfang.base.BaseApplication;
 import com.eanfang.biz.model.bean.QueryEntry;
+import com.eanfang.util.JumpItent;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.worksapce.tender.TenderBidDetailActivity;
+import net.eanfang.worker.ui.activity.worksapce.tender.TenderOfferDetailActivity;
+import net.eanfang.worker.ui.adapter.worktender.WorkTenderBidAdapter;
 import net.eanfang.worker.ui.fragment.TemplateItemListFragment;
 import net.eanfang.worker.viewmodle.tender.TenderPersonControlViewModle;
 import net.eanfang.worker.viewmodle.tender.TenderViewModle;
@@ -34,13 +40,36 @@ public class TenderMyBidFragment extends TemplateItemListFragment {
     @Accessors(chain = true)
     private TenderPersonControlViewModle mTenderPersonControlViewModle;
 
+    private WorkTenderBidAdapter workTenderBidAdapter;
+
     public static TenderMyBidFragment newInstance(TenderPersonControlViewModle tenderPersonControlViewModle) {
         return new TenderMyBidFragment().setMTenderPersonControlViewModle(tenderPersonControlViewModle);
     }
 
     @Override
-    protected void getData() {
+    protected void initAdapter(BaseQuickAdapter baseQuickAdapter) {
+        workTenderBidAdapter = new WorkTenderBidAdapter();
+        super.initAdapter(workTenderBidAdapter);
+        setListener();
+    }
 
+    @Override
+    protected ViewModel initViewModel() {
+        mTenderPersonControlViewModle.getMyBidTenderLiveData().observe(this, this::getCommenData);
+        return mTenderPersonControlViewModle;
+    }
+
+    private void setListener() {
+        workTenderBidAdapter.setOnItemClickListener((adapter, view, position) -> {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("bidId", workTenderBidAdapter.getData().get(position).getId());
+            JumpItent.jump(getActivity(), TenderBidDetailActivity.class, bundle);
+        });
+    }
+
+    @Override
+    protected void getData() {
+        mTenderPersonControlViewModle.getBidData(mPage);
     }
 
     @Override
@@ -56,9 +85,4 @@ public class TenderMyBidFragment extends TemplateItemListFragment {
     }
 
 
-    @Override
-    protected ViewModel initViewModel() {
-//        mTenderPersonControlViewModle.getTenderLiveData().observe(this, this::getCommenData);
-        return mTenderPersonControlViewModle;
-    }
 }

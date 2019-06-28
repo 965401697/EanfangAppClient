@@ -19,7 +19,7 @@ android {
         buildConfigField("String", "MOB_WORKER_APPID", cfg.mobWorkerAppId)
         buildConfigField("String", "MOB_WORKER_APPKEY", cfg.mobWorkerAppKey)
 
-       /* buildConfigField("String", "TYPE_TECHNICIAN", "\"technician\"")
+        /* buildConfigField("String", "TYPE_TECHNICIAN", "\"technician\"")
         buildConfigField("String", "TYPE", "\"worker\"")
         buildConfigField("String", "TYPE_APP", "\"app\"")
         buildConfigField("int", "APP_TYPE", "0")*/
@@ -171,6 +171,8 @@ dependencies {
 
     //butterknife
     implementation pkg.butterknife
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     annotationProcessor pkg.butterknifeCompiler
     implementation pkg.lombok
     annotationProcessor pkg.lombok

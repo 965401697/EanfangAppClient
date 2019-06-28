@@ -4,6 +4,7 @@ import com.eanfang.base.network.model.BaseResponseBody;
 import com.eanfang.biz.model.bean.PageBean;
 import com.eanfang.biz.model.bean.QueryEntry;
 import com.eanfang.biz.model.entity.IfbOrderEntity;
+import com.eanfang.biz.model.entity.tender.TaskApplyEntity;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
 import com.eanfang.biz.model.vo.LoginVo;
 import com.eanfang.biz.model.vo.tender.TenderCommitVo;
@@ -17,6 +18,7 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
+import retrofit2.http.QueryName;
 
 /**
  * @author guanluocang
@@ -50,7 +52,7 @@ public interface TenderApi {
      * @return
      */
     @POST("/yaf_task_publish/taskPublish/laborInsert")
-    Observable<BaseResponseBody<JsonObject>> setNewTender(@Body TenderCreateVo tenderCreateVo);
+    Observable<BaseResponseBody<TaskPublishEntity>> setNewTender(@Body TenderCreateVo tenderCreateVo);
 
     /**
      * 用工详情
@@ -65,14 +67,14 @@ public interface TenderApi {
      * 我要报价
      */
     @POST("/yaf_task_publish/taskApply/bidInsert")
-    Observable<BaseResponseBody<JsonObject>> setCommitTender(@Body TenderCommitVo tenderCommitVo);
+    Observable<BaseResponseBody<TaskPublishEntity>> setCommitTender(@Body TenderCommitVo tenderCommitVo);
 
     /**
      * 我的招标
      */
 
     @POST("/yaf_task_publish/taskApply/bidList")
-    Observable<BaseResponseBody<PageBean<TaskPublishEntity>>> getMyBidTenderList(@Body QueryEntry queryMap);
+    Observable<BaseResponseBody<PageBean<TaskApplyEntity>>> getMyBidTenderList(@Body QueryEntry queryMap);
 
     /**
      * 我的发布
@@ -81,5 +83,37 @@ public interface TenderApi {
     @POST("/yaf_task_publish/taskPublish/releasedList")
     Observable<BaseResponseBody<PageBean<TaskPublishEntity>>> getMyReleaseTendeList(@Body QueryEntry queryMap);
 
+    /**
+     * 关闭我的发布
+     *
+     * @param taskPublishEntity
+     * @return
+     */
+    @POST("/yaf_task_publish/taskPublish/shutDown")
+    Observable<BaseResponseBody<TaskPublishEntity>> doCloseReleaseTende(@Body TaskPublishEntity taskPublishEntity);
+
+    /**
+     * 我的用工 发布的详情
+     * @param queryEntry
+     * @return
+     */
+    @POST("/yaf_task_publish/taskPublish/assessmentList")
+    Observable<BaseResponseBody<PageBean<TaskApplyEntity>>> getMyReleaseTendeDetail(@Body QueryEntry queryEntry);
+
+    /**
+     * 我的用工 招标的详情
+     * @param id
+     * @return
+     */
+    @POST("/yaf_task_publish/taskApply/bidDetail")
+    Observable<BaseResponseBody<TaskApplyEntity>> getMyBidTendeDetail(@Query("id") String id);
+
+    /**
+     * 忽略 中标
+     * @param taskApplyEntity
+     * @return
+     */
+    @POST("/yaf_task_publish/taskApply/bidUpdate")
+    Observable<BaseResponseBody<TaskApplyEntity>> getMyReleaseTendeDetail(@Body TaskApplyEntity taskApplyEntity);
 
 }

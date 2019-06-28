@@ -30,6 +30,8 @@ import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
+import com.eanfang.util.contentsafe.ContentDefaultAuditing;
+import com.eanfang.util.contentsafe.ContentSecurityAuditUtil;
 import com.eanfang.witget.TakeVideoPopWindow;
 import com.eanfang.witget.mentionedittext.edit.MentionEditText;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
@@ -165,19 +167,25 @@ public class SecurityCreateActivity extends BaseActivity {
         String mContent = etContent.getText().toString().trim();
         mPic = PhotoUtils.getPhotoUrl("sercurity/", snplAddPhoto, uploadMap, false);
         if (!StringUtils.isEmpty(mContent) || !StringUtils.isEmpty(mPic)) {
-            securityCreateBean.setSpcContent(mContent);
-            securityCreateBean.setSpcImg(mPic);
-            securityCreateBean.setSpcVideo(mUploadKey);
-            securityCreateBean.setAtUserId(mAtUserId.toString());
-            if (uploadMap.size() != 0) {
-                SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
-                    runOnUiThread(() -> {
+
+            ContentSecurityAuditUtil.getInstance().toAuditing(mContent, new ContentDefaultAuditing(SecurityCreateActivity.this) {
+                @Override
+                public void auditingSuccess() {
+                    securityCreateBean.setSpcContent(mContent);
+                    securityCreateBean.setSpcImg(mPic);
+                    securityCreateBean.setSpcVideo(mUploadKey);
+                    securityCreateBean.setAtUserId(mAtUserId.toString());
+                    if (uploadMap.size() != 0) {
+                        SDKManager.ossKit(SecurityCreateActivity.this).asyncPutImages(uploadMap,(isSuccess) -> {
+                            runOnUiThread(() -> {
+                                doSubmit();
+                            });
+                        });
+                    } else {
                         doSubmit();
-                    });
-                });
-            } else {
-                doSubmit();
-            }
+                    }
+                }
+            });
         } else {
             showToast("请输入发布内容");
         }

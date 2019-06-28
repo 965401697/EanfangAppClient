@@ -5,6 +5,7 @@ import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.biz.model.bean.PageBean;
 import com.eanfang.biz.model.bean.QueryEntry;
 import com.eanfang.biz.model.entity.IfbOrderEntity;
+import com.eanfang.biz.model.entity.tender.TaskApplyEntity;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
 import com.eanfang.biz.model.vo.tender.TenderCommitVo;
 import com.eanfang.biz.model.vo.tender.TenderCreateVo;
@@ -58,6 +59,7 @@ public interface ITenderDs {
 
     /**
      * 我的发布
+     *
      * @param queryEntry
      * @param callback
      */
@@ -65,10 +67,29 @@ public interface ITenderDs {
 
     /**
      * 我的招标
+     *
      * @param queryEntry
      * @param callback
      */
-    void getMyBidTender(QueryEntry queryEntry, RequestCallback<PageBean<TaskPublishEntity>> callback);
+    void getMyBidTender(QueryEntry queryEntry, RequestCallback<PageBean<TaskApplyEntity>> callback);
 
+    /**
+     * 关闭招标
+     */
+    void doCloseReleaseTender(TaskPublishEntity taskPublishEntity, RequestCallback<TaskPublishEntity> callback);
 
+    /**
+     * 评标详情
+     */
+    void getTenderOfferDetail(QueryEntry queryEntry, RequestCallback<PageBean<TaskApplyEntity>> callback);
+
+    /**
+     * 招标详情
+     */
+    void getTenderBidDetail(String mBidId, RequestCallback<TaskApplyEntity> callback);
+
+    /**
+     * 忽略 中标
+     */
+    void doChangeOfferStatus(TaskApplyEntity taskApplyEntity, RequestCallback<TaskApplyEntity> callback);
 }

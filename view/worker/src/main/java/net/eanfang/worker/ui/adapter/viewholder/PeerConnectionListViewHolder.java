@@ -9,16 +9,19 @@ import com.eanfang.base.widget.customview.CircleImageView;
 
 import net.eanfang.worker.R;
 
+import lombok.Getter;
+
 /**
  * @author liangkailun
  * Date ：2019/4/9
  * Describe :同行人脉viewholder
  */
+@Getter
 public class PeerConnectionListViewHolder extends BaseViewHolder {
-    public TextView mTvConnectionItemName;
-    public TextView mTvConnectionItemCompany;
-    public Button mBtnConnectionItemAddOrCancel;
-    public CircleImageView mIvConnectionItemHeader;
+    private TextView mTvConnectionItemName;
+    private TextView mTvConnectionItemCompany;
+    private Button mBtnConnectionItemAddOrCancel;
+    private CircleImageView mIvConnectionItemHeader;
 
     public PeerConnectionListViewHolder(View view) {
         super(view);

@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_white"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/dimen_18">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_white"
+            android:orientation="horizontal"
+            android:padding="@dimen/dimen_30">
+
+            <com.eanfang.base.widget.customview.CircleImageView
+                android:id="@+id/iv_header"
+                android:layout_width="@dimen/dimen_82"
+                android:layout_height="@dimen/dimen_82"
+                android:layout_centerInParent="true"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_header_userinfo" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_34"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_20"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_14" />
+
+                    <ImageView
+                        android:id="@+id/iv_verify_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/ic_security_ceritifi"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_20"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="报价单位:"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/textSize_12" />
+
+                        <TextView
+                            android:id="@+id/tv_company"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dimen_20"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="@dimen/textSize_12" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_30"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="预算金额："
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_14" />
+
+                    <TextView
+                        android:id="@+id/tv_budget"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_20"
+                        android:textColor="@color/color_tender_offer_bg"
+                        android:textSize="@dimen/textSize_14" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/arrow_right" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_20"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="施工方案："
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_14" />
+
+                <TextView
+                    android:id="@+id/tv_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_14" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_select"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_30"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/dimen_80"
+            android:paddingRight="@dimen/dimen_80">
+
+            <TextView
+                android:id="@+id/tv_ignore"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/dimen_30"
+                android:layout_weight="1"
+                android:background="@drawable/bg_tender_personal_close"
+                android:gravity="center"
+                android:paddingLeft="@dimen/dimen_50"
+                android:paddingTop="@dimen/dimen_20"
+                android:paddingRight="@dimen/dimen_50"
+                android:paddingBottom="@dimen/dimen_20"
+                android:text="忽略"
+                android:textColor="@color/color_tender_offer_bg"
+                android:textSize="@dimen/textSize_13" />
+
+            <TextView
+                android:id="@+id/tv_select"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_30"
+                android:layout_weight="1"
+                android:background="@drawable/bg_tender_personal_offer"
+                android:gravity="center"
+                android:paddingLeft="@dimen/dimen_50"
+                android:paddingTop="@dimen/dimen_20"
+                android:paddingRight="@dimen/dimen_50"
+                android:paddingBottom="@dimen/dimen_20"
+                android:text="选他"
+                android:textColor="@color/white"
+                android:textSize="@dimen/textSize_13" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

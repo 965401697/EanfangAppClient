@@ -26,7 +26,9 @@ public class CooperationRelationAdapter extends BaseQuickAdapter<CooperationEnti
     @SuppressLint("ResourceType")
     @Override
     protected void convert(BaseViewHolder helper, CooperationEntity item) {
-        GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + item.getOwnerOrg().getOrgUnitEntity().getLogoPic()),helper.getView(R.id.iv_user_header));
+        if (item.getAssigneeOrg().getOrgUnitEntity() != null) {
+            GlideUtil.intoImageView(mContext, Uri.parse(BuildConfig.OSS_SERVER + item.getOwnerOrg().getOrgUnitEntity().getLogoPic()), helper.getView(R.id.iv_user_header));
+        }
         helper.setText(R.id.tv_company_name, item.getOwnerOrg().getOrgName());
         helper.setText(R.id.tv_time, GetDateUtils.dateToFormatString(item.getBeginTime(), "yyyy.MM.dd") + " - " + GetDateUtils.dateToFormatString(item.getEndTime(), "yyyy.MM.dd"));
         //0 待审核 1:审核通过 2：失效/拒绝

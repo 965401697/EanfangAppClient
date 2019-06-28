@@ -4,6 +4,7 @@ import com.eanfang.base.network.callback.RequestCallback;
 import com.eanfang.biz.model.bean.PageBean;
 import com.eanfang.biz.model.bean.QueryEntry;
 import com.eanfang.biz.model.entity.IfbOrderEntity;
+import com.eanfang.biz.model.entity.tender.TaskApplyEntity;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
 import com.eanfang.biz.model.vo.tender.TenderCommitVo;
 import com.eanfang.biz.model.vo.tender.TenderCreateVo;
@@ -77,9 +78,43 @@ public class TenderDs extends BaseRemoteDataSource implements ITenderDs {
      * 我的招标
      */
     @Override
-    public void getMyBidTender(QueryEntry queryEntry, RequestCallback<PageBean<TaskPublishEntity>> callback) {
+    public void getMyBidTender(QueryEntry queryEntry, RequestCallback<PageBean<TaskApplyEntity>> callback) {
         execute(getService(TenderApi.class).getMyBidTenderList(queryEntry), callback);
     }
 
+    /**
+     * 关闭我的发布
+     *
+     * @param taskPublishEntity
+     * @param callback
+     */
+    @Override
+    public void doCloseReleaseTender(TaskPublishEntity taskPublishEntity, RequestCallback<TaskPublishEntity> callback) {
+        execute(getService(TenderApi.class).doCloseReleaseTende(taskPublishEntity), callback);
+    }
+
+    /**
+     * 评标详情
+     */
+    @Override
+    public void getTenderOfferDetail(QueryEntry queryEntry, RequestCallback<PageBean<TaskApplyEntity>> callback) {
+        execute(getService(TenderApi.class).getMyReleaseTendeDetail(queryEntry), callback);
+    }
+
+    /**
+     * 招标详情
+     */
+    @Override
+    public void getTenderBidDetail(String mBidId, RequestCallback<TaskApplyEntity> callback) {
+        execute(getService(TenderApi.class).getMyBidTendeDetail(mBidId), callback);
+    }
+
+    /**
+     * 忽略 中标
+     */
+    @Override
+    public void doChangeOfferStatus(TaskApplyEntity taskApplyEntity, RequestCallback<TaskApplyEntity> callback) {
+        execute(getService(TenderApi.class).getMyReleaseTendeDetail(taskApplyEntity), callback);
+    }
 
 }

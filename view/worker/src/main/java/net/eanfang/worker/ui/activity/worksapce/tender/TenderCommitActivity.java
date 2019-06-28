@@ -10,6 +10,8 @@ import android.os.Bundle;
 import com.eanfang.BuildConfig;
 import com.eanfang.base.BaseActivity;
 import com.eanfang.base.BaseApplication;
+import com.eanfang.base.network.event.BaseActionEvent;
+import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
 import com.eanfang.biz.rds.base.LViewModelProviders;
 import com.eanfang.util.GlideUtil;
 
@@ -40,8 +42,6 @@ public class TenderCommitActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         tenderCommitBinding = DataBindingUtil.setContentView(this, R.layout.activity_tender_commit);
         super.onCreate(savedInstanceState);
-        initView();
-        initListener();
     }
 
     @Override
@@ -53,15 +53,15 @@ public class TenderCommitActivity extends BaseActivity {
         GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + BaseApplication.get().getAccount().getAvatar()), tenderCommitBinding.ivHeader);
         tenderCommitBinding.tvName.setText(BaseApplication.get().getAccount().getRealName());
         tenderCommitBinding.tvCompany.setText(BaseApplication.get().getCompanyEntity().getOrgName());
+        initListener();
     }
 
     private void initListener() {
-        tenderCommitViewModle.getActionLiveData().observe(this, (v) -> {
-            if (v.getAction() == EMPTY_DATA) {
-                //TODO
-                finish();
-            }
-        });
+        tenderCommitViewModle.getCreateTenderLiveData().observe(this, this::getCommonData);
+    }
+
+    private void getCommonData(TaskPublishEntity taskPublishEntity) {
+            finish();
     }
 
     @Override

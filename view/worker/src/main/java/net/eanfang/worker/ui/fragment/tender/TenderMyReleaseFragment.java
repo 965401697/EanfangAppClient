@@ -11,14 +11,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.eanfang.base.network.event.BaseActionEvent;
 import com.eanfang.biz.model.bean.QueryEntry;
+import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
+import com.eanfang.util.CallUtils;
+import com.eanfang.util.JumpItent;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.activity.worksapce.tender.TenderCommitActivity;
+import net.eanfang.worker.ui.activity.worksapce.tender.TenderCreateActivity;
+import net.eanfang.worker.ui.activity.worksapce.tender.TenderFindDetailActivity;
+import net.eanfang.worker.ui.activity.worksapce.tender.TenderOfferDetailActivity;
+import net.eanfang.worker.ui.adapter.worktender.WorkTenderReleaseAdapter;
 import net.eanfang.worker.ui.fragment.TemplateItemListFragment;
 import net.eanfang.worker.viewmodle.tender.TenderPersonControlViewModle;
 
 import lombok.Setter;
 import lombok.experimental.Accessors;
+
+import static com.eanfang.base.network.event.BaseActionEvent.EMPTY_DATA;
 
 /**
  * @author guanluocang
@@ -31,14 +43,29 @@ public class TenderMyReleaseFragment extends TemplateItemListFragment {
     @Accessors(chain = true)
     private TenderPersonControlViewModle mTenderPersonControlViewModle;
 
+    private WorkTenderReleaseAdapter workTenderReleaseAdapter;
+
     public static TenderMyReleaseFragment newInstance(TenderPersonControlViewModle tenderPersonControlViewModle) {
         return new TenderMyReleaseFragment().setMTenderPersonControlViewModle(tenderPersonControlViewModle);
     }
 
     @Override
+    protected void initAdapter(BaseQuickAdapter baseQuickAdapter) {
+        workTenderReleaseAdapter = new WorkTenderReleaseAdapter();
+        super.initAdapter(workTenderReleaseAdapter);
+        setListener();
+    }
+
+    @Override
+    protected ViewModel initViewModel() {
+        mTenderPersonControlViewModle.getMyReleaseTenderData().observe(this, this::getCommenData);
+        mTenderPersonControlViewModle.getMyCloseReleaseTenderData().observe(this, this::getCloseData);
+        return mTenderPersonControlViewModle;
+    }
+
+    @Override
     protected void getData() {
-
-
+        mTenderPersonControlViewModle.getReleaseData(mPage);
     }
 
     @Override
@@ -53,9 +80,49 @@ public class TenderMyReleaseFragment extends TemplateItemListFragment {
         getData();
     }
 
-    @Override
-    protected ViewModel initViewModel() {
-//        mTenderPersonControlViewModle.getTenderLiveData().observe(this, this::getCommenData);
-        return mTenderPersonControlViewModle;
+    private void getCloseData(TaskPublishEntity taskPublishEntity) {
+        mTenderPersonControlViewModle.mReleaseQueryEntry = null;
+        mPage = 1;
+        getData();
     }
+
+    private void setListener() {
+        workTenderReleaseAdapter.setOnItemClickListener((adapter, view, position) -> {
+            Bundle bundle = new Bundle();
+            if (workTenderReleaseAdapter.getData().get(position).getPublishStatus() == 1) {
+                bundle.putBoolean("offing", true);
+            }
+            bundle.putSerializable("tenderDetail", workTenderReleaseAdapter.getData().get(position));
+            JumpItent.jump(getActivity(), TenderOfferDetailActivity.class, bundle);
+        });
+        workTenderReleaseAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+            switch (view.getId()) {
+                //再次发布
+                case R.id.tv_release:
+                    Bundle bundle_release = new Bundle();
+                    bundle_release.putSerializable("agaginRelase", workTenderReleaseAdapter.getData().get(position));
+                    JumpItent.jump(getActivity(), TenderCreateActivity.class, bundle_release);
+                    break;
+                // 关闭
+                case R.id.tv_close:
+                    mTenderPersonControlViewModle.doCloseMyReleaseTender(workTenderReleaseAdapter.getData().get(position));
+                    break;
+                // 评标
+                case R.id.tv_offer:
+                    Bundle bundle_offer = new Bundle();
+                    bundle_offer.putBoolean("offing", true);
+                    bundle_offer.putSerializable("tenderDetail", workTenderReleaseAdapter.getData().get(position));
+                    JumpItent.jump(getActivity(), TenderOfferDetailActivity.class, bundle_offer);
+                    break;
+                // 联系中标人
+                case R.id.tv_contact:
+                    CallUtils.call(getActivity(), workTenderReleaseAdapter.getData().get(position).getContactsPhone());
+                    break;
+                default:
+                    break;
+            }
+        });
+    }
+
+
 }

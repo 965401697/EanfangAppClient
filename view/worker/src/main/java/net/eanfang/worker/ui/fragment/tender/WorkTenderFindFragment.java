@@ -73,10 +73,15 @@ public class WorkTenderFindFragment extends TemplateItemListFragment {
         getData();
     }
 
-
     @Override
     protected void getData() {
         mTenderViewModle.doGetFindData(mPage);
+        /**
+         * 添加完成后回来
+         *    mTenderViewModle.mNoticeQueryEntry = null;
+         *             mPage = 1;
+         *             getData();
+         * */
     }
 
 

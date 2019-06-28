@@ -30,7 +30,7 @@ public class WorkTenderFindAdapter extends BaseQuickAdapter<TaskPublishEntity, B
         String endTime = GetDateUtils.dateToDateTimeString(item.getEndTime());
         //名称
         helper.setText(R.id.tv_tender_name, Config.get().getBusinessNameByCode(item.getSystemType(), 1));
-        //类型 0 安装 1  维修
+        //类型
         helper.setText(R.id.tv_tender_type, Config.get().getBaseNameByCode(item.getBusinessOneCode(), 2));
         // 时间
         helper.setText(R.id.tv_tender_time, GetDateUtils.dateToDateTimeString(item.getCreateTime()));

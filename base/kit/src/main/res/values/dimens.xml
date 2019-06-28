@@ -612,6 +612,8 @@
     <dimen name="dimen_750">375.0dp</dimen>
     <dimen name="dimen_780">390.0dp</dimen>
     <dimen name="dimen_800">400.0dp</dimen>
+    <dimen name="dimen_810">405.0dp</dimen>
+    <dimen name="dimen_910">505.0dp</dimen>
     <dimen name="dimen_1000">500.0dp</dimen>
     <dimen name="section_padding">7dp</dimen>
     <dimen name="section_text_size">20sp</dimen>

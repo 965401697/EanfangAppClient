@@ -143,7 +143,7 @@ public class TaskPublishEntity implements Serializable {
      */
     private Integer status;
     /**
-     * 0关闭发包(只有在status是待确认状态才能关闭发包)，1在发布==招标中，2已被接受==已中标3已流标
+     * 0已关闭，1招标中，2已中标3已流标  (只有在status是待确认状态才能关闭发包)
      */
     private Integer publishStatus;
     /**

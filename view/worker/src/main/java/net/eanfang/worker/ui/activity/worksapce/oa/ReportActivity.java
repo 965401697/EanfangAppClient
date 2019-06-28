@@ -409,8 +409,8 @@ public class ReportActivity extends BaseWorkerActivity implements View.OnClickLi
 
         EanfangHttp.get(NewApiService.GET_COLLEAGUE)
                 .tag(this)
-                .params("id", WorkerApplication.getApplication().getUserId())
-                .params("companyId", WorkerApplication.getApplication().getCompanyId())
+                .params("id", WorkerApplication.get().getUserId())
+                .params("companyId", WorkerApplication.get().getCompanyId())
                 .execute(new EanfangCallback<UserEntity>(ReportActivity.this, true, UserEntity.class, true, (list) -> {
                     userlist = list;
                     userNameList.addAll(Stream.of(userlist).map((user) -> user.getAccountEntity().getRealName()).toList());

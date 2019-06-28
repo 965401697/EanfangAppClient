@@ -62,8 +62,7 @@ public class WorkerTenderControlActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         mWorkerTenderControlBinding = DataBindingUtil.setContentView(this, R.layout.activity_worker_tender_control);
         super.onCreate(savedInstanceState);
-        initView();
-        initListener();
+
     }
 
     @Override
@@ -81,6 +80,7 @@ public class WorkerTenderControlActivity extends BaseActivity {
 
         mTenderViewPager.setAdapter(mAdapter);
         mTenderViewPager.setCurrentItem(0);
+        initListener();
         mWorkerTenderControlBinding.tvFiltrate.setOnClickListener((view) -> {
             Bundle bundle = new Bundle();
             if (mTenderViewPager.getCurrentItem() == 0) {
@@ -134,7 +134,7 @@ public class WorkerTenderControlActivity extends BaseActivity {
             }
         });
         setRightTitleOnClickListener((view) -> {
-            JumpItent.jump(this,TenderPersonControlActivity.class);
+            JumpItent.jump(this, TenderPersonControlActivity.class);
         });
     }
 

@@ -99,7 +99,7 @@
     <string name="text_data_yesterday">昨日</string>
     <string name="text_data_month">本月</string>
 
-    <string name="text_edit_personal_info">编辑个人资料</string>
+    <string name="text_edit_personal_info">编辑个人资料>></string>
     <string name="text_change_personal_head">点击更换头像</string>
     <string name="text_personal_head">头像</string>
     <string name="text_work_talk_one">1.如果还有进步空间，应从哪方面入手？</string>
@@ -121,14 +121,31 @@
     <string name="text_worker_detail_see_more_type">查看所有标签</string>
 
     <string name="text_invite_all_reward_person">%1$s 已获得现金奖励%2$d 元</string>
-    <string name="text_invite_person">邀请用户  %1$s</string>
-    <string name="text_withdraw_person">提现用户  %1$s</string>
+    <string name="text_invite_person">邀请用户\t\t\t%1$s</string>
+    <string name="text_withdraw_person">提现用户\t\t\t%1$s</string>
     <string name="text_invite_money_enter">待入账：  %1$d元</string>
     <string name="text_invite_money_lose">已失效：  %1$d元</string>
     <string name="text_invite_money_withdraw">已提现：  %1$d元</string>
     <string name="text_invite_extra_money">可提现金额：%1$d 元</string>
 
-    <string name="text_active_rule"><Data><![CDATA[<font color="#FF9037"><b>活动时间：</b></font>2019-XX-XX 至 2019-XX-XX <br><br><font color="#FF9037"><b>活动规则：</b></font>用户注册后可以在个人中心页面获得用户推广权限，进行推广（推广链接和推广二维码）
+    <string name="text_active_rule"><Data><![CDATA[<font color="#FF9037"><b>活动时间：</b></font>2019-06-01 至 2019-12-31 <br><br><font color="#FF9037"><b>活动规则：</b></font>用户注册后可以在个人中心页面获得用户推广权限，进行推广（推广链接和推广二维码）
     <br><br><font color="#FF9037"><b>活动奖励：</b></font>通过用户分享的二维码或推广链接注册后，推广关系绑定，推广用户自动获得推广佣金，推广人数越多，佣金越高。佣金=推广人数 x 3元
     <br><br><font color="#FF9037"><b>奖品发放：</b></font>推广佣金通过微信红包形式发放，三个工作日后到账。佣金提现时效为7天，超过7天未提现，佣金将失效。<br><br><font color="#FF9037"><b>补充说明：</b></font>此次活动最终解释权归易安防（易安网(北京）科技有限公司）所有。]]></Data></string>
+    <!--最新订单页面-->
+    <string name="text_new_order_area">地区：%1$s</string>
+    <string name="text_new_order_person">下单人：%1$s</string>
+    <string name="text_new_order_start_time">下单时间：%1$s</string>
+    <string name="text_new_order_worker">技师：%1$s</string>
+    <string name="text_new_order_end_time">计划时间：%1$s</string>
+    <string name="text_new_order_type_maintenance">维保类型：%1$s</string>
+    <string name="text_new_order_time_remaining">距离截止还剩：%1$d天 %2$d时%3$d分</string>
+    <string name="text_new_order_time_reply_end">回复截止时间：%1$s</string>
+    <string name="text_new_order_budget_scale">预算规模：%1$s</string>
+    <string name="text_new_order_name_program">项目名称：%1$s</string>
+    <string name="text_new_order_tenderee">招标单位：%1$s</string>
+    <string name="text_new_order_area1">地域：%1$s</string>
+    <string name="text_new_order_time_end_get_file">获取招标文件截止时间：%1$s</string>
+    <string name="text_new_order_screen_choose_area">已选%1$d个地区</string>
+    <string name="text_content_audit_fail">内容包括"\"%s\""未通过审核</string>
+
 </resources>

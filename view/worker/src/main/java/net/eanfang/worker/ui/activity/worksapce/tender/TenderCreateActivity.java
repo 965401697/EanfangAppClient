@@ -14,6 +14,7 @@ import com.eanfang.BuildConfig;
 import com.eanfang.base.BaseActivity;
 import com.eanfang.base.BaseApplication;
 import com.eanfang.base.kit.picture.IPictureCallBack;
+import com.eanfang.base.network.event.BaseActionEvent;
 import com.eanfang.biz.model.SelectAddressItem;
 import com.eanfang.biz.model.bean.PageBean;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
@@ -62,12 +63,12 @@ public class TenderCreateActivity extends BaseActivity implements SelectTimeDial
     @Accessors(chain = true)
     private TenderCreateViewModle tenderCreateViewModle;
 
+    private TaskPublishEntity mReleasetaskPublishEntity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mTenderCreateBinding = DataBindingUtil.setContentView(this, R.layout.activity_tender_create);
         super.onCreate(savedInstanceState);
-        initView();
     }
 
     @Override
@@ -76,10 +77,13 @@ public class TenderCreateActivity extends BaseActivity implements SelectTimeDial
         setTitle("用工发布");
         setLeftBack(true);
         initListener();
-
+        mReleasetaskPublishEntity = (TaskPublishEntity) getIntent().getSerializableExtra("agaginRelase");
         GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + BaseApplication.get().getAccount().getAvatar()), mTenderCreateBinding.ivHeader);
         mTenderCreateBinding.tvName.setText(BaseApplication.get().getAccount().getRealName());
         mTenderCreateBinding.tvCompany.setText(BaseApplication.get().getCompanyEntity().getOrgName());
+        if (mReleasetaskPublishEntity != null) {
+            tenderCreateViewModle.doReleaseAgain(mReleasetaskPublishEntity);
+        }
     }
 
     private void initListener() {
@@ -95,14 +99,8 @@ public class TenderCreateActivity extends BaseActivity implements SelectTimeDial
         mTenderCreateBinding.rlSelectTime.setOnClickListener((v) -> {
             new SelectTimeDialogFragment().show(getSupportFragmentManager(), R.string.app_name + "");
         });
-        tenderCreateViewModle.getActionLiveData().observe(this,(v)->{
-            if(v.getAction() == EMPTY_DATA){
-                //TODO
-                finish();
-            }
-        });
-
     }
+
 
     @Override
     protected ViewModel initViewModel() {

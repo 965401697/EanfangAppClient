@@ -1,5 +1,7 @@
 package net.eanfang.client.ui.adapter;
 
+import android.widget.TextView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.biz.model.datastatistics.HomeDatastisticeBean;
@@ -21,22 +23,33 @@ public class HomeDataAdapter extends BaseQuickAdapter<HomeDatastisticeBean.Group
     protected void convert(BaseViewHolder helper, HomeDatastisticeBean.GroupBean item) {
         // 数量
         helper.setText(R.id.tv_repair_num, item.getNum() + "");
-
         if ("已修复".equals(V.v(() -> GetConstDataUtils.getHomeRepairStatuslList().get(Integer.parseInt(item.getType()))))) {
-            helper.setBackgroundRes(R.id.tv_repair_num, R.drawable.bg_home_data_one);
+            helper.setText(R.id.tv_repair_type, V.v(() -> GetConstDataUtils.getHomeRepairStatuslList().get(Integer.parseInt(item.getType()))));
+            helper.setBackgroundRes(R.id.rl_back_data, R.drawable.bg_home_data_one);
+            ((TextView) helper.getView(R.id.tv_repair_num)).setTextColor(helper.getConvertView().getResources().getColor(R.color.color_home_data_text_one));
+            ((TextView) helper.getView(R.id.tv_repair_type)).setTextColor(helper.getConvertView().getResources().getColor(R.color.color_home_data_text_one));
         } else if ("维修中".equals(V.v(() -> GetConstDataUtils.getHomeRepairStatuslList().get(Integer.parseInt(item.getType()))))) {
-            helper.setBackgroundRes(R.id.tv_repair_num, R.drawable.bg_home_data_two);
+            helper.setText(R.id.tv_repair_type, V.v(() -> GetConstDataUtils.getHomeRepairStatuslList().get(Integer.parseInt(item.getType()))));
+            helper.setBackgroundRes(R.id.rl_back_data, R.drawable.bg_home_data_two);
+            ((TextView) helper.getView(R.id.tv_repair_num)).setTextColor(helper.getConvertView().getResources().getColor(R.color.color_home_company_rz));
+            ((TextView) helper.getView(R.id.tv_repair_type)).setTextColor(helper.getConvertView().getResources().getColor(R.color.color_home_company_rz));
         } else if ("报废".equals(V.v(() -> GetConstDataUtils.getHomeRepairStatuslList().get(Integer.parseInt(item.getType()))))) {
-            helper.setBackgroundRes(R.id.tv_repair_num, R.drawable.bg_home_data_three);
-        } else {
-            helper.setBackgroundRes(R.id.tv_repair_num, R.drawable.bg_home_data_four);
-        }
-        // 底下类型
-        if ("5".equals(item.getType())) {
+            helper.setText(R.id.tv_repair_type, V.v(() -> GetConstDataUtils.getHomeRepairStatuslList().get(Integer.parseInt(item.getType()))));
+            helper.setBackgroundRes(R.id.rl_back_data, R.drawable.bg_home_data_four);
+            ((TextView) helper.getView(R.id.tv_repair_num)).setTextColor(helper.getConvertView().getResources().getColor(R.color.roll_content));
+            ((TextView) helper.getView(R.id.tv_repair_type)).setTextColor(helper.getConvertView().getResources().getColor(R.color.roll_content));
+        } else if ("5".equals(item.getType())) {
+            helper.setText(R.id.tv_repair_type, V.v(() -> GetConstDataUtils.getHomeRepairStatuslList().get(Integer.parseInt(item.getType()))));
             helper.setText(R.id.tv_repair_type, "待处理");
+            helper.setBackgroundRes(R.id.rl_back_data, R.drawable.bg_home_data_three);
+            ((TextView) helper.getView(R.id.tv_repair_num)).setTextColor(helper.getConvertView().getResources().getColor(R.color.color_home_data_text_three));
+            ((TextView) helper.getView(R.id.tv_repair_type)).setTextColor(helper.getConvertView().getResources().getColor(R.color.color_home_data_text_three));
         } else {
             helper.setText(R.id.tv_repair_type, V.v(() -> GetConstDataUtils.getHomeRepairStatuslList().get(Integer.parseInt(item.getType()))));
+            helper.setBackgroundRes(R.id.rl_back_data, R.drawable.bg_home_data_four);
+            ((TextView) helper.getView(R.id.tv_repair_num)).setTextColor(helper.getConvertView().getResources().getColor(R.color.roll_content));
+            ((TextView) helper.getView(R.id.tv_repair_type)).setTextColor(helper.getConvertView().getResources().getColor(R.color.roll_content));
         }
-
     }
+
 }

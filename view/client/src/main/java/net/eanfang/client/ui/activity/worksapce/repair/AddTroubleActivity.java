@@ -2,6 +2,7 @@ package net.eanfang.client.ui.activity.worksapce.repair;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSON;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.base.BaseApplication;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.config.Config;
@@ -34,10 +36,12 @@ import com.eanfang.takevideo.TakeVideoActivity;
 import com.eanfang.ui.base.BasePictureActivity;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.ConnectivityChangeUtil;
+import com.eanfang.util.FileUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
+import com.eanfang.util.UuidUtil;
 import com.eanfang.util.V;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureMimeType;
@@ -55,6 +59,7 @@ import net.eanfang.client.ui.activity.worksapce.equipment.EquipmentListActivity;
 import net.eanfang.client.ui.activity.worksapce.scancode.ScanCodeActivity;
 import net.eanfang.client.ui.widget.RepairSelectDevicesDialog;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.io.Serializable;
@@ -297,9 +302,57 @@ public class AddTroubleActivity extends BasePictureActivity implements IPictureC
             public void onSuccess(List<LocalMedia> list) {
                 videoList = list;
                 videoInvoke.setList(videoList);
+//                doCommitThumbnail();
+                doCommitVideo();
             }
         });
     };
+
+    /**
+     * 上传拍摄视频缩略图
+     */
+    /**
+     * 缩略图路径
+     */
+    private String mThumbnailName = "";
+
+    private String mThumbnailPath = "";
+    /**
+     * 图片和视频公用一个UUID
+     */
+    String uploadKey = "biz/repair/video/" + UuidUtil.getUUID();
+    private void doCommitThumbnail() {
+        if(videoList==null&&videoList.size()==0){
+            return;
+        }
+        String mVideoPath=videoList.get(0).getPath();
+        if (!StringUtils.isEmpty(mVideoPath)) {
+//            PhotoUtils.getVideoThumbnail(mVideoPath, 100, 100, MINI_KIND);
+            mThumbnailName = "pic_addtrouble_" + new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+            mThumbnailPath = FileUtils.bitmapToFile(PhotoUtils.getVideoThumbnail(mVideoPath, 100, 100, MediaStore.Images.Thumbnails.MINI_KIND), mThumbnailName);
+        }
+        if (!StringUtils.isEmpty(mThumbnailPath)) {
+            SDKManager.ossKit(this).asyncPutImage(uploadKey + ".jpg",mThumbnailPath,(isSuccess) -> {
+                // showToast("上传缩略图成功");
+                doCommitVideo();
+            });
+        }
+    }
+
+    /**
+     * 进行上传视频
+     */
+    public void doCommitVideo() {
+        if(videoList==null&&videoList.size()==0){
+            return;
+        }
+        String mVideoPath=videoList.get(0).getPath();
+        if (!StringUtils.isEmpty(mVideoPath)) {
+            SDKManager.ossKit(this).asyncPutVideo(uploadKey + ".mp4", mVideoPath, (isSuccess) -> {
+          //      showToast("上传视频成功");
+            });
+        }
+    }
 
     /**
      * 扫码获取数据
@@ -396,7 +449,7 @@ public class AddTroubleActivity extends BasePictureActivity implements IPictureC
         //位置编号
         repairBugEntity.setLocationNumber(etDeviceLocationNum.getText().toString().trim());
         repairBugEntity.setMp4_path(mUploadKey);
-        String ursStr = PhotoUtils.getPhotoUrl("biz/repair/", snplMomentAddPhotos, uploadMap, true);
+        String ursStr = PhotoUtils.getPhotoUrl("biz/repair/", selectList, uploadMap, true);
         repairBugEntity.setPictures(ursStr);
         if (llInputDevice.getVisibility() == View.VISIBLE) {
             repairBugEntity.setBusinessThreeName(etDevice.getText().toString().trim());

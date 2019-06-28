@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bg_active"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#7F7F7F7F">
+    android:background="#7F7F7F">
 
     <RelativeLayout
         android:layout_width="0dp"
@@ -11,6 +12,8 @@
         android:layout_marginLeft="@dimen/dimen_56"
         android:layout_marginRight="@dimen/dimen_52"
         android:background="@drawable/bg_client_contact_create"
+        android:clickable="true"
+        android:focusable="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

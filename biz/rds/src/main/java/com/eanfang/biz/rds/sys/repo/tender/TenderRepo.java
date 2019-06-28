@@ -5,11 +5,14 @@ import androidx.lifecycle.MutableLiveData;
 import com.eanfang.biz.model.bean.PageBean;
 import com.eanfang.biz.model.bean.QueryEntry;
 import com.eanfang.biz.model.entity.IfbOrderEntity;
+import com.eanfang.biz.model.entity.tender.TaskApplyEntity;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
 import com.eanfang.biz.model.vo.tender.TenderCommitVo;
 import com.eanfang.biz.model.vo.tender.TenderCreateVo;
 import com.eanfang.biz.rds.base.BaseRepo;
 import com.eanfang.biz.rds.sys.ds.impl.tender.TenderDs;
+
+import lombok.val;
 
 /**
  * @author guanluocang
@@ -95,13 +98,59 @@ public class TenderRepo extends BaseRepo<TenderDs> {
     /**
      * 我招标的
      */
-    public MutableLiveData<PageBean<TaskPublishEntity>> doGetTenderBidList(QueryEntry queryEntry) {
-        MutableLiveData<PageBean<TaskPublishEntity>> tenderMyBidLiveData = new MutableLiveData<>();
+    public MutableLiveData<PageBean<TaskApplyEntity>> doGetTenderBidList(QueryEntry queryEntry) {
+        MutableLiveData<PageBean<TaskApplyEntity>> tenderMyBidLiveData = new MutableLiveData<>();
         queryEntry.setSize(10);
         remoteDataSource.getMyBidTender(queryEntry, (val) -> {
             tenderMyBidLiveData.setValue(val);
         });
         return tenderMyBidLiveData;
+    }
+
+    /**
+     * 关闭我的发布
+     */
+    public MutableLiveData<TaskPublishEntity> doCloseReleaseTender(TaskPublishEntity taskPublishEntity) {
+        MutableLiveData<TaskPublishEntity> closeRelaeseTenderLiveData = new MutableLiveData<>();
+        remoteDataSource.doCloseReleaseTender(taskPublishEntity, (val) -> {
+            closeRelaeseTenderLiveData.setValue(val);
+        });
+        return closeRelaeseTenderLiveData;
+    }
+
+    /**
+     * 评标详情
+     */
+    public MutableLiveData<PageBean<TaskApplyEntity>> doGetTenderOfferDetail(String shopTaskPublishId) {
+        MutableLiveData<PageBean<TaskApplyEntity>> offerDetailTenderLiveData = new MutableLiveData<>();
+        QueryEntry queryEntry = new QueryEntry();
+        queryEntry.getEquals().put("shopTaskPublishId", shopTaskPublishId);
+        remoteDataSource.getTenderOfferDetail(queryEntry, (val) -> {
+            offerDetailTenderLiveData.setValue(val);
+        });
+        return offerDetailTenderLiveData;
+    }
+
+    /**
+     * 招标详情
+     */
+    public MutableLiveData<TaskApplyEntity> doGetTenderBidDetail(String mId) {
+        MutableLiveData<TaskApplyEntity> bidDetailTenderLiveData = new MutableLiveData<>();
+        remoteDataSource.getTenderBidDetail(mId, (val) -> {
+            bidDetailTenderLiveData.setValue(val);
+        });
+        return bidDetailTenderLiveData;
+    }
+
+    /**
+     * 忽略 中标
+     */
+    public MutableLiveData<TaskApplyEntity> doChangeOfferStatus(TaskApplyEntity taskApplyEntity) {
+        MutableLiveData<TaskApplyEntity> changeOfferStatusTenderLiveData = new MutableLiveData<>();
+        remoteDataSource.doChangeOfferStatus(taskApplyEntity, (val) -> {
+            changeOfferStatusTenderLiveData.setValue(val);
+        });
+        return changeOfferStatusTenderLiveData;
     }
 }
 

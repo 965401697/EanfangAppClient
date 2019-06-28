@@ -74,7 +74,7 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
             firstUse();
         } else {
             //不是第一次
-            LoginBean user = WorkerApplication.getApplication().getLoginBean();
+            LoginBean user = WorkerApplication.get().getLoginBean();
             //token失效
             if (user == null || StringUtils.isEmpty(user.getToken())) {
                 goLogin();

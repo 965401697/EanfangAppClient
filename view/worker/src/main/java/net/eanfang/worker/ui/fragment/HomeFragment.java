@@ -48,6 +48,7 @@ import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.MapTestActivity;
 import net.eanfang.worker.ui.activity.CameraActivity;
+import net.eanfang.worker.ui.activity.NewOrderActivity;
 import net.eanfang.worker.ui.activity.worksapce.InstallOrderParentActivity;
 import net.eanfang.worker.ui.activity.worksapce.MineTaskPublishListSendParentActivity;
 import net.eanfang.worker.ui.activity.worksapce.OfferAndPayOrderParentActivity;
@@ -639,6 +640,7 @@ public class HomeFragment extends BaseFragment {
         rollTextView.setViews(views);
         rollTextView.setOnItemClickListener((position, view) -> {
 //            showToast("暂无可点");
+            startActivity(new Intent(getActivity(), NewOrderActivity.class));
         });
     }
 

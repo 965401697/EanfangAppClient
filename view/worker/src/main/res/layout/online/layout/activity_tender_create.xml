@@ -25,6 +25,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:orientation="vertical">
 
         <include layout="@layout/header" />
@@ -32,7 +34,8 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="none">
+            android:scrollbarThumbVertical="@android:color/transparent"
+            android:scrollbars="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -160,9 +163,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentRight="true"
-                            android:hint="请选择"
                             android:drawableRight="@mipmap/ic_tender_location"
                             android:drawablePadding="@dimen/dimen_20"
+                            android:hint="请选择"
                             android:textColor="@color/color_client_neworder"
                             android:textSize="@dimen/textSize_14" />
                     </RelativeLayout>
@@ -191,7 +194,6 @@
                             android:drawableRight="@mipmap/ic_worker_detail_area_down"
                             android:drawablePadding="@dimen/dimen_20"
                             android:hint="请选择"
-                            android:text="@{tenderCreateVo.businessOneCode}"
                             android:textColor="@color/color_client_neworder"
                             android:textSize="@dimen/textSize_14" />
                     </RelativeLayout>
@@ -284,7 +286,7 @@
                                 android:gravity="right"
                                 android:hint="请输入"
                                 android:inputType="number"
-                                android:text="@={tenderCreateVo.predicttime}"
+                                android:text="@{tenderCreateVo.predicttime}"
                                 android:textColor="@color/color_client_neworder"
                                 android:textSize="@dimen/textSize_14" />
 
@@ -399,7 +401,7 @@
                             android:background="@null"
                             android:hint="请输入详细描述"
                             android:padding="@dimen/dimen_30"
-                            android:text="@={tenderCreateVo.description}"
+                            android:text="@{tenderCreateVo.description}"
                             android:textColor="@color/color_client_neworder"
                             android:textColorHint="@color/color_bottom"
                             android:textSize="@dimen/textSize_13" />
@@ -443,7 +445,7 @@
                             android:background="@null"
                             android:hint="请输入用工要求"
                             android:padding="@dimen/dimen_30"
-                            android:text="@={tenderCreateVo.laborRequirements}"
+                            android:text="@{tenderCreateVo.laborRequirements}"
                             android:textColor="@color/color_client_neworder"
                             android:textColorHint="@color/color_bottom"
                             android:textSize="@dimen/textSize_13" />
@@ -494,8 +496,8 @@
                     android:layout_margin="@dimen/dimen_30"
                     android:background="@drawable/shape_bg_sure"
                     android:gravity="center"
-                    android:padding="@dimen/dimen_30"
                     android:onClick="@{()->tenderCreateViewModle.doCheckInfo()}"
+                    android:padding="@dimen/dimen_30"
                     android:text="发布"
                     android:textColor="@color/white"
                     android:textSize="@dimen/textSize_13" />
