@@ -16,122 +16,118 @@ import com.luck.picture.lib.entity.LocalMedia;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * created by wtt
  * at 2019/4/18
  * summary:
  */
-public class PictureSelect implements IPicture {
+@Getter
+@Setter
+public class PictureSelect {
 
     /**
      * 全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
      */
-    private static  int chooseMode = PictureMimeType.ofImage();
+    public int chooseMode = PictureMimeType.ofImage();
     /**
      * 主题样式设置 具体参考 values/styles   用法：R.style.picture.white.style
      */
-    private static int themeId = R.style.picture_default_style;
+    public int themeId = R.style.picture_default_style;
     /**
      * 最大图片选择数量
      */
-    private static int maxSelectNum = 9;
+    public int maxSelectNum = 9;
 
     /**
      * 最小选择数量
      */
-    private static int minSelectNum = 1;
+    public int minSelectNum = 1;
 
     /**
      * 每行显示个数
      */
-    private static int imageSpanCount = 4;
+    public int imageSpanCount = 4;
 
     /**
      * 多选 or 单选
      * 多选 PictureConfig.MULTIPLE
      * 单选 PictureConfig.SINGLE
      */
-    private static int selectionMode = PictureConfig.SINGLE;
+    public int selectionMode = PictureConfig.SINGLE;
 
     /**
      * 是否可预览图片
      */
-    private static boolean preview_img = true;
+    public boolean preview_img = true;
     /**
      * 是否显示拍照按钮
      */
-    private static  boolean isCamera = true;
+    public boolean isCamera = true;
     /**
      * 是否裁剪
      */
-    private static boolean crop = false;
+    public boolean crop = false;
     /**
      * 是否压缩
      */
-    private static boolean compress = false;
+    public boolean compress = false;
     /**
      * 同步true或异步false 压缩 默认同步
      */
-    private static boolean synOrAsy = true;
+    public boolean synOrAsy = true;
     /**
      * glide 加载宽高，越小图片列表越流畅，但会影响列表图片浏览的清晰度
      */
-    private static int widch = 160;
-    private static int height = 160;
+    public int widch = 160;
+    public int height = 160;
     /**
      * 裁剪比例 如16:9 3:2 3:4 1:1 可自定义
      */
-    private static int aspect_ratio_x = 0;
-    private static int aspect_ratio_y = 0;
+    public int aspect_ratio_x = 0;
+    public int aspect_ratio_y = 0;
     /**
      * 裁剪框是否可拖拽
      */
-    private static boolean freeStyleCropEnabled = false;
+    public boolean freeStyleCropEnabled = false;
     /**
      * 是否传入已选图片
      */
-    private static List<LocalMedia> selectList = new ArrayList<>();
+    public List<LocalMedia> selectList = new ArrayList<>();
+    public List<LocalMedia> videoList = new ArrayList<>();
 
     /**
      * 小于100kb的图片不压缩
      */
-    private static int imageSize = 100;
+    public int imageSize = 100;
     /**
      * 拍照保存图片格式后缀,默认jpeg
      */
-    private static String imageFormat=PictureMimeType.PNG;
+    public String imageFormat = PictureMimeType.PNG;
     /**
      * 单独拍照
      */
-    private static boolean openCamera=true;
+    public boolean openCamera = true;
+
+
     /**
      * 结果回调onActivityResult code
      */
-    private static int resultCode = PictureConfig.CHOOSE_REQUEST;
-    private static int RESULT_OK = -1;
+    private int resultCode = PictureConfig.CHOOSE_REQUEST;
+    private int RESULT_OK = -1;
     private IPictureCallBack iImageChooseCallBack;
-    private static IPicture iImageChoose;
+    private static PictureSelect iImageChoose;
+    private PictureSelector pictureSelector;
 
-    public static IPicture getInstance(Builder builder) {
+    public static PictureSelect getInstance() {
         if (iImageChoose == null) {
             iImageChoose = new PictureSelect();
         }
-        setData(builder);
         return iImageChoose;
     }
-    private static  void setData(Builder builder){
-        chooseMode = builder.getChooseMode();
-        selectionMode = builder.getSelectionMode();
-        maxSelectNum = builder.getMaxSelectNum();
-        compress = builder.isCompress();
-        crop = builder.isCrop();
-        aspect_ratio_x = builder.getAspect_ratio_x();
-        aspect_ratio_y = builder.getAspect_ratio_y();
-        freeStyleCropEnabled = builder.isFreeStyleCropEnabled();
-        themeId = builder.getThemeId();
-        imageFormat=builder.getImageFormat();
-        openCamera=builder.isOpenCamera();
-    }
+
 
     public void setiImageChooseCallBack(IPictureCallBack iImageChooseCallBack) {
         this.iImageChooseCallBack = iImageChooseCallBack;
@@ -141,23 +137,73 @@ public class PictureSelect implements IPicture {
         return iImageChooseCallBack;
     }
 
-    private void imageChoose(Activity activity, IPictureCallBack iImageChooseCallBack){
-        setiImageChooseCallBack(iImageChooseCallBack);
-        PictureSelector pictureSelector=   PictureSelector.create(activity);
-        imageChoose(pictureSelector);
+    public PictureSelect create(Activity activity) {
+        pictureSelector = PictureSelector.create(activity);
+        return this;
     }
 
-    private void imageChoose(Fragment fragment, IPictureCallBack iImageChooseCallBack){
-        setiImageChooseCallBack(iImageChooseCallBack);
-        PictureSelector pictureSelector=   PictureSelector.create(fragment);
-        imageChoose(pictureSelector);
+    public PictureSelect create(Fragment fragment) {
+        pictureSelector = PictureSelector.create(fragment);
+        return this;
     }
-    private void imageChoose(PictureSelector pictureSelector){
+
+    /**
+     * 单张图片选择
+     *
+     * @param onImageChooseCallBack
+     */
+    public void takePhoto(IPictureCallBack onImageChooseCallBack) {
+        pictureSelect(PictureMimeType.ofImage(), false, PictureConfig.SINGLE, 1, onImageChooseCallBack);
+    }
+
+    /**
+     * 多张图片选择
+     *
+     * @param onImageChooseCallBack
+     */
+    public void takePhotos(IPictureCallBack onImageChooseCallBack) {
+        pictureSelect(PictureMimeType.ofImage(), false, PictureConfig.MULTIPLE, 3, onImageChooseCallBack);
+    }
+
+    /**
+     * 选择视频
+     *
+     * @param onImageChooseCallBack
+     */
+    public void takeVideo(IPictureCallBack onImageChooseCallBack) {
+        pictureSelect(PictureMimeType.ofVideo(), true, PictureConfig.SINGLE, 1, onImageChooseCallBack);
+    }
+
+    /**
+     * 多选视频
+     *
+     * @param onImageChooseCallBack
+     */
+    public void takeVideos(IPictureCallBack onImageChooseCallBack) {
+        pictureSelect(PictureMimeType.ofVideo(), false, PictureConfig.MULTIPLE, 3, onImageChooseCallBack);
+    }
+
+    private void pictureSelect(int chooseMode, boolean openCamera, int mode, int max, IPictureCallBack OnImageChooseCallBack) {
+        setiImageChooseCallBack(OnImageChooseCallBack);
+        setChooseMode(chooseMode);
+        setOpenCamera(openCamera);
+        setSelectionMode(mode);
+        setMaxSelectNum(max);
+        setCrop(true);
+        imageChoose();
+    }
+
+    public void imageChoose(IPictureCallBack OnImageChooseCallBack) {
+        setiImageChooseCallBack(OnImageChooseCallBack);
+        imageChoose();
+    }
+
+    private void imageChoose() {
         PictureSelectionModel pictureSelectionModel;
-        if(!openCamera){
-            pictureSelectionModel=pictureSelector.openGallery(chooseMode);
-        }else{
-            pictureSelectionModel=  pictureSelector.openCamera(chooseMode);
+        if (!openCamera) {
+            pictureSelectionModel = pictureSelector.openGallery(chooseMode);
+        } else {
+            pictureSelectionModel = pictureSelector.openCamera(chooseMode);
         }
 
         pictureSelectionModel
@@ -180,16 +226,6 @@ public class PictureSelect implements IPicture {
                 .forResult(resultCode);
     }
 
-    @Override
-    public void photoChoose(Activity activity, IPictureCallBack iImageChooseCallBack) {
-        imageChoose(activity, iImageChooseCallBack);
-    }
-
-    @Override
-    public void photoChoose(Fragment fragment, IPictureCallBack iImageChooseCallBack) {
-        imageChoose(fragment, iImageChooseCallBack);
-    }
-
     /**
      * 例如 LocalMedia 里面返回三种path
      * 1.media.getPath(); 为原图path
@@ -201,18 +237,12 @@ public class PictureSelect implements IPicture {
      * @param resultCode
      * @param data
      */
-    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case PictureConfig.CHOOSE_REQUEST:
                     // 图片选择结果回调
-                    selectList = PictureSelector.obtainMultipleResult(data);
-                    if (selectList != null && selectList.size() > 0) {
-                        if (getiImageChooseCallBack() != null) {
-                            getiImageChooseCallBack().onSuccess(selectList);
-                        }
-                    }
+                    pictureChoose(data);
                     break;
                 default:
                     break;
@@ -220,5 +250,121 @@ public class PictureSelect implements IPicture {
         }
     }
 
+    private void pictureChoose(Intent data) {
+        if (chooseMode == PictureMimeType.ofVideo()) {
+            videoList = PictureSelector.obtainMultipleResult(data);
+            if (videoList != null && videoList.size() > 0) {
+                if (getiImageChooseCallBack() != null) {
+                    getiImageChooseCallBack().onSuccess(videoList);
+                }
+            }
+            return;
+        }
+        selectList = PictureSelector.obtainMultipleResult(data);
+        if (selectList != null && selectList.size() > 0) {
+            if (getiImageChooseCallBack() != null) {
+                getiImageChooseCallBack().onSuccess(selectList);
+            }
+        }
+    }
 
+    public PictureSelect setChooseMode(int chooseMode) {
+        this.chooseMode = chooseMode;
+        return this;
+    }
+
+    public PictureSelect setThemeId(int themeId) {
+        this.themeId = themeId;
+        return this;
+    }
+
+    public PictureSelect setMaxSelectNum(int maxSelectNum) {
+        this.maxSelectNum = maxSelectNum;
+        return this;
+    }
+
+    public PictureSelect setMinSelectNum(int minSelectNum) {
+        this.minSelectNum = minSelectNum;
+        return this;
+    }
+
+    public PictureSelect setImageSpanCount(int imageSpanCount) {
+        this.imageSpanCount = imageSpanCount;
+        return this;
+    }
+
+    public PictureSelect setSelectionMode(int selectionMode) {
+        this.selectionMode = selectionMode;
+        return this;
+    }
+
+    public PictureSelect setPreview_img(boolean preview_img) {
+        this.preview_img = preview_img;
+        return this;
+    }
+
+    public PictureSelect setCamera(boolean camera) {
+        isCamera = camera;
+        return this;
+    }
+
+    public PictureSelect setCrop(boolean crop) {
+        this.crop = crop;
+        return this;
+    }
+
+    public PictureSelect setCompress(boolean compress) {
+        this.compress = compress;
+        return this;
+    }
+
+    public PictureSelect setSynOrAsy(boolean synOrAsy) {
+        this.synOrAsy = synOrAsy;
+        return this;
+    }
+
+    public PictureSelect setWidch(int widch) {
+        this.widch = widch;
+        return this;
+    }
+
+    public PictureSelect setHeight(int height) {
+        this.height = height;
+        return this;
+    }
+
+    public PictureSelect setAspect_ratio_x(int aspect_ratio_x) {
+        this.aspect_ratio_x = aspect_ratio_x;
+        return this;
+    }
+
+    public PictureSelect setAspect_ratio_y(int aspect_ratio_y) {
+        this.aspect_ratio_y = aspect_ratio_y;
+        return this;
+    }
+
+    public PictureSelect setFreeStyleCropEnabled(boolean freeStyleCropEnabled) {
+        this.freeStyleCropEnabled = freeStyleCropEnabled;
+        return this;
+    }
+
+    public PictureSelect setSelectList(List<LocalMedia> selectList) {
+        this.selectList = selectList;
+        return this;
+    }
+
+    public PictureSelect setImageSize(int imageSize) {
+        this.imageSize = imageSize;
+        return this;
+    }
+
+    public PictureSelect setImageFormat(String imageFormat) {
+        this.imageFormat = imageFormat;
+        return this;
+    }
+
+    public PictureSelect setOpenCamera(boolean openCamera) {
+        this.openCamera = openCamera;
+        return this;
+    }
 }

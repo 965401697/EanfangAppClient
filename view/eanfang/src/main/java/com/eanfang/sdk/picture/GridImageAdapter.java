@@ -201,7 +201,9 @@ public class GridImageAdapter extends
             }
         }
         if(type==0){
-            viewHolder.mImg.setImageResource(R.mipmap.ic_pic_add);
+            if (getItemViewType(position) == TYPE_CAMERA) {
+                viewHolder.mImg.setImageResource(R.mipmap.ic_pic_add);
+            }
         }else{
             viewHolder.mImg.setImageResource(R.mipmap.ic_add_video);
         }

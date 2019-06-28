@@ -10,6 +10,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.lifecycle.ViewModel;
 
 import com.eanfang.R;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.loading.LoadKit;
 import com.eanfang.base.kit.loading.callback.EmptyCallback;
 import com.eanfang.base.kit.loading.callback.ErrorCallback;
@@ -29,10 +31,12 @@ import com.eanfang.base.kit.loading.callback.PermissionCallback;
 import com.eanfang.base.kit.loading.callback.TimeoutCallback;
 import com.eanfang.base.network.config.HttpConfig;
 import com.eanfang.base.network.event.BaseActionEvent;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.biz.rds.base.IViewModelAction;
 import com.eanfang.sys.activity.LoginActivity;
 import com.kingja.loadsir.core.LoadService;
 import com.kingja.loadsir.core.LoadSir;
+import com.luck.picture.lib.config.PictureConfig;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import java.util.ArrayList;
@@ -446,6 +450,33 @@ public abstract class BaseActivity extends RxAppCompatActivity {
             return fragments.get(position);
         }
     }
+    /*----------------PictureSelector------------------*/
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        pictureSelect(requestCode,resultCode,data);
+    }
+
+    /**
+     * 图片选择
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    private void pictureSelect(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == PictureConfig.CHOOSE_REQUEST) {
+                SDKManager.getPicture().create(this).onActivityResult(requestCode, resultCode, data);
+            }
+        }
+    }
+
+    public void headViewSize(CircleImageView circleImageView, int size) {
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) circleImageView.getLayoutParams();
+        layoutParams.width = size;
+        layoutParams.height = size;
+    }
+    /*----------------PictureSelector------------------*/
 
 }

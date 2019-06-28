@@ -399,7 +399,6 @@
                             android:layout_centerVertical="true"
                             android:src="@mipmap/ic_icon_right" />
                     </RelativeLayout>
-
                 </LinearLayout>
 
                 <LinearLayout

@@ -38,6 +38,7 @@ import com.eanfang.biz.model.NoticeEntity;
 import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.biz.model.device.User;
 import com.eanfang.biz.model.entity.BaseDataEntity;
+import com.eanfang.base.widget.controltool.badgeview.MyBadgeView;
 import com.eanfang.sys.activity.LoginActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.BadgeUtil;
@@ -87,7 +88,6 @@ import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
 import io.rong.message.TextMessage;
-import q.rorbin.badgeview.QBadgeView;
 
 import static com.eanfang.config.EanfangConst.MEIZU_APPID_WORKER;
 import static com.eanfang.config.EanfangConst.MEIZU_APPKEY_WORKER;
@@ -806,11 +806,12 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
         badgeView(R.id.tab_work, mWork);
     }
 
-    private QBadgeView badgeView(int id, int number) {
-        return ControlToolView.badgeView()
-                .bindTarget(findViewById(id))
-                .setBadgeNumber(number)
-                .create(WorkerApplication.get().getApplicationContext());
+    private void badgeView(int id, int number) {
+        ControlToolView.getBadge(WorkerApplication.get().getApplicationContext())
+                .setTargetView(findViewById(id))
+                .setBadgeNum(number)
+                .badge();
+
     }
 
     public String onNoConatac() {

@@ -15,9 +15,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.lifecycle.ViewModel;
+
 import com.alibaba.fastjson.JSONObject;
+import com.eanfang.base.BaseActivity;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.IPictureCallBack;
+import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
@@ -31,11 +35,9 @@ import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.biz.model.entity.AccountEntity;
 
 import com.eanfang.ui.activity.SelectAddressActivity;
-import com.eanfang.ui.base.BasePictureActivity;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
 import com.luck.picture.lib.entity.LocalMedia;
@@ -60,7 +62,7 @@ import io.rong.imlib.model.UserInfo;
  * Created by Administrator on 2017/3/15.
  */
 
-public class PersonInfoActivity extends BasePictureActivity implements IPictureCallBack {
+public class PersonInfoActivity extends BaseActivity  {
 
     private static final int SELECT_ADDRESS_CALL_BACK_CODE = 1;
     /**
@@ -135,26 +137,30 @@ public class PersonInfoActivity extends BasePictureActivity implements IPictureC
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_person_info);
         ButterKnife.bind(this);
-        headViewSize(ivUpload, (int) getResources().getDimension(com.eanfang.R.dimen.dimen_80));
-        initPermission();
-        initView();
-        initData();
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
     }
 
     /**
      * 申请拍照权限
      */
     private void initPermission() {
-        PermissionUtils.get(this).getCameraPermission(() -> {
+        RxPerm.get(this).cameraPerm((isSuccess)->{
+
         });
     }
 
-    private void initView() {
+    public void initView() {
+        headViewSize(ivUpload, (int) getResources().getDimension(com.eanfang.R.dimen.dimen_80));
+        initPermission();
         setTitle("我的资料");
-        setLeftBack();
+        setLeftBack(true);
         llHeader.setOnClickListener(v -> {
 //            takePhoto(PersonInfoActivity.this, HEAD_PHOTO);
             headImage();
@@ -180,12 +186,25 @@ public class PersonInfoActivity extends BasePictureActivity implements IPictureC
                 startActivity(intent);
             }
         });
+        initData();
     }
 
     private void headImage() {
-        takePhoto(this, HEAD_PHOTO, this);
+        SDKManager.getPicture().create(this).takePhoto(iPictureCallBack);
     }
-
+    IPictureCallBack iPictureCallBack=new IPictureCallBack() {
+        @Override
+        public void onSuccess(List<LocalMedia> list) {
+            String imgKey = "account/" + UuidUtil.getUUID() + ".png";
+            GlideUtil.intoImageView(PersonInfoActivity.this, "file://" + list.get(0).getCutPath(), ivUpload);
+            SDKManager.ossKit(PersonInfoActivity.this).asyncPutImage(imgKey, list.get(0).getCutPath(), (isSuccess) -> {
+                LoginBean entity = ClientApplication.get().getLoginBean();
+                entity.getAccount().setAvatar(imgKey);
+                path = entity.getAccount().getAvatar();
+                setHeaderShow(true);
+            });
+        }
+    };
     /**
      * 设置性别按钮的选中状态
      */
@@ -416,17 +435,5 @@ public class PersonInfoActivity extends BasePictureActivity implements IPictureC
     private void choosePosition(View v) {
         Intent intent = new Intent(PersonInfoActivity.this, SelectAddressActivity.class);
         startActivityForResult(intent, SELECT_ADDRESS_CALL_BACK_CODE);
-    }
-
-    @Override
-    public void onSuccess(List<LocalMedia> list) {
-        String imgKey = "account/" + UuidUtil.getUUID() + ".png";
-        GlideUtil.intoImageView(this, "file://" + list.get(0).getCutPath(), ivUpload);
-        SDKManager.ossKit(this).asyncPutImage(imgKey, list.get(0).getCutPath(), (isSuccess) -> {
-            LoginBean entity = ClientApplication.get().getLoginBean();
-            entity.getAccount().setAvatar(imgKey);
-            path = entity.getAccount().getAvatar();
-            setHeaderShow(true);
-        });
     }
 }
