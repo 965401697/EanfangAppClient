@@ -31,13 +31,13 @@ import com.camera.util.BitmapUtil;
 import com.camera.util.ImageUtil;
 import com.camera.view.TakePhotoActivity;
 import com.eanfang.base.kit.cache.CacheKit;
+import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.biz.model.CameraBean;
 import com.eanfang.biz.model.SelectAddressItem;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.ConnectivityChangeUtil;
 import com.eanfang.util.GetDateUtils;
-import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
 
@@ -285,7 +285,7 @@ public class CameraActivity extends BaseClientActivity implements AMapLocationLi
      * 开始拍照
      */
     public void startTakePhoto(View v) {
-        PermissionUtils.get(this).getCameraPermission(() -> {
+        RxPerm.get(this). cameraPerm((isSuccess) -> {
             if (!checkCameraData()) {
                 return;
             }
@@ -530,7 +530,7 @@ public class CameraActivity extends BaseClientActivity implements AMapLocationLi
     }
 
     private void inputVoice(EditText editText) {
-        PermissionUtils.get(this).getVoicePermission(() -> {
+        RxPerm.get(this).voicePerm((isSuccess)->{
             RecognitionManager.getSingleton().startRecognitionWithDialog(CameraActivity.this, editText);
         });
     }

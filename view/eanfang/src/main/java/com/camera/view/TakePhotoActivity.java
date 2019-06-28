@@ -16,10 +16,10 @@ import com.camera.model.CameraModel;
 import com.camera.widget.CameraFocusView;
 import com.camera.widget.CameraSurfaceView;
 import com.eanfang.R;
+import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.listener.MultiClickListener;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.DialogUtil;
-import com.eanfang.util.PermissionUtils;
 
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -124,7 +124,7 @@ public class TakePhotoActivity extends BaseActivity implements CameraFocusView.I
 
     private void savePhoto() {
         loadingDialog.show();
-        PermissionUtils.get(TakePhotoActivity.this).getStoragePermission(() -> {
+        RxPerm.get(this).storagePerm((isSuccess)->{
             Observable.just(photoData).map(bytes -> {
                 String path = mCameraModel.handlePhoto(bytes, cameraSurfaceView.getCameraId());
                 return path;

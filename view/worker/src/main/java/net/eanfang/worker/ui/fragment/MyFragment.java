@@ -9,7 +9,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.BuildConfig;
@@ -39,10 +38,6 @@ import net.eanfang.worker.ui.activity.my.specialist.SpecialistSkillTypeActivity;
 import net.eanfang.worker.ui.activity.techniciancertification.TechnicianCertificationActivity;
 import net.eanfang.worker.ui.widget.InviteView;
 import net.eanfang.worker.util.PrefUtils;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -178,7 +173,6 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
                 ToastUtil.get().showToast(getActivity(), "请先进行技师认证");
             }
         });
-
     }
 
     @Override

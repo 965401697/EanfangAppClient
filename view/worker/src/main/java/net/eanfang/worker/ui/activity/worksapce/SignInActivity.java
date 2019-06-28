@@ -21,7 +21,7 @@ import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.LocationUtil;
 import com.eanfang.util.NumberUtil;
-import com.eanfang.util.PermissionUtils;
+import com.eanfang.base.kit.rx.RxPerm;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
@@ -91,7 +91,9 @@ public class SignInActivity extends BaseWorkerActivity {
 
     private void initMap() {
         locationUtil = LocationUtil.get(SignInActivity.this, mapView);
-        PermissionUtils.get(this).getLocationPermission(() -> locationUtil.startOnce());
+        RxPerm.get(this).locationPerm((isSuccess)->{
+            locationUtil.startOnce();
+        });
         //禁止所有手势
         locationUtil.mAMap.getUiSettings().setAllGesturesEnabled(false);
         locationUtil.onChanged = (keywords, latLng) -> {

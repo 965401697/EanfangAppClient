@@ -29,7 +29,7 @@ import com.eanfang.biz.model.SelectAddressItem;
 import com.eanfang.ui.adapter.SelectAddressAdapter;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.LocationUtil;
-import com.eanfang.util.PermissionUtils;
+import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.StringUtils;
 
 import java.util.ArrayList;
@@ -88,7 +88,7 @@ public class SelectAddressActivity extends BaseActivity implements PoiSearch.OnP
         initView();
         initAdapter();
         runOnUiThread(() -> {
-            PermissionUtils.get(this).getLocationPermission(() -> locationUtil.startOnce());
+            RxPerm.get(this).locationPerm((isSuccess)-> locationUtil.startOnce());
         });
     }
 

@@ -16,7 +16,7 @@ import com.eanfang.http.EanfangHttp;
 
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.PermissionUtils;
+import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
 import com.jph.takephoto.model.TImage;
@@ -120,7 +120,7 @@ public class SpecialistCertificationActivity extends BaseActivityWithTakePhoto {
     private void setOnClick() {
 
 
-        llHeaders.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(SpecialistCertificationActivity.this, HEADER_PIC)));
+        llHeaders.setOnClickListener(v -> RxPerm.get(this).cameraPerm((isSuccess)-> takePhoto(SpecialistCertificationActivity.this, HEADER_PIC)));
     }
 
 

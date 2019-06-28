@@ -20,8 +20,12 @@ public class OrderStateAdapter extends BaseQuickAdapter<OrderProgressBean, BaseV
     private TimelineView timelineView;
     private String tempText;
     private LinearLayout mOrderFinish;
+    private OrderProgressBean orderProgressBean;
     public OrderStateAdapter(int layoutResId, @Nullable List<OrderProgressBean> data) {
         super(layoutResId, data);
+        if(data!=null&&data.size()>0) {
+            orderProgressBean = data.get(0);
+        }
     }
 
     @Override
@@ -35,11 +39,13 @@ public class OrderStateAdapter extends BaseQuickAdapter<OrderProgressBean, BaseV
         Drawable unmarker = mContext.getResources().getDrawable(R.drawable.ic_up_backs);
 
         int status = item.getNodeCode();
-       /* if (orderProgressBean.getNodeCode() == status) {
-            timelineView.setMarker(marker);
-        } else {
-            timelineView.setMarker(unmarker);
-        }*/
+        if(orderProgressBean!=null) {
+            if (orderProgressBean.getNodeCode() == status) {
+                timelineView.setMarker(marker);
+            } else {
+                timelineView.setMarker(unmarker);
+            }
+        }
         if (!StringUtils.isEmpty(item.getNodeInfo())) {
             tempText = "(" + item.getNodeInfo() + ")";
         } else {

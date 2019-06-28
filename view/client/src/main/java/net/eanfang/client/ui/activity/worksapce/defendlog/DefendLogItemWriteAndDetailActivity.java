@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.PermissionUtils;
+import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.PickerSelectUtil;
 import com.yaf.base.entity.LogDetailsEntity;
 
@@ -171,7 +171,7 @@ public class DefendLogItemWriteAndDetailActivity extends BaseClientActivity impl
 
     @OnClick(R.id.iv_project_voice)
     public void onViewClicked() {
-        PermissionUtils.get(this).getVoicePermission(() -> {
+         RxPerm.get(this).voicePerm((isSuccess)->{
             RecognitionManager.getSingleton().startRecognitionWithDialog(DefendLogItemWriteAndDetailActivity.this, evDefendDesc);
         });
     }

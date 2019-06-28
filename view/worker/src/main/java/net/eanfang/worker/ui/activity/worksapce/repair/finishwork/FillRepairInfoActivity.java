@@ -40,7 +40,7 @@ import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.LocationUtil;
-import com.eanfang.util.PermissionUtils;
+import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
@@ -371,7 +371,7 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
 
         // 遗留问题
         ivVoiceInputRemainQuestion.setOnClickListener((v) -> {
-            PermissionUtils.get(this).getVoicePermission(() -> {
+             RxPerm.get(this).voicePerm((isSuccess)->{
                 RecognitionManager.getSingleton().startRecognitionWithDialog(FillRepairInfoActivity.this, etRemainQuestion);
             });
         });

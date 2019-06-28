@@ -16,6 +16,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import lombok.Getter;
+
 /**
  * Created by MrHou
  *
@@ -154,7 +156,7 @@ public class GroupAdapter extends BaseExpandableListAdapter {
     public void setListener(AreaCheckChangeListener listener) {
         this.mListener = listener;
     }
-
+    @Getter
     public class FirstHolder {
         public TextView tv;
         public CheckBox tv_cb;

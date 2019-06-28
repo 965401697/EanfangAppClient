@@ -15,7 +15,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModel;
+import androidx.viewpager.widget.ViewPager;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.base.BaseActivity;
@@ -33,12 +35,12 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.biz.model.entity.AccountEntity;
 
+import com.eanfang.sdk.MySlidingTabLayout;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
 import com.eanfang.util.contentsafe.ContentDefaultAuditing;
@@ -49,7 +51,9 @@ import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.techniciancertification.TechnicianCertificationActivity;
 import net.eanfang.worker.ui.activity.worksapce.StateChangeActivity;
+import net.eanfang.worker.ui.fragment.HomeDataStatisticsFragment;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -153,12 +157,12 @@ public class PersonInfoActivity extends BaseActivity {
      * 申请拍照权限
      */
     private void initPermission() {
-        RxPerm.get(this).cameraPerm((isSuccess)->{
+        RxPerm.get(this).cameraPerm((isSuccess) -> {
         });
     }
 
     public void initView() {
-        headViewSize(ivUpload,(int) getResources().getDimension(com.eanfang.R.dimen.dimen_80));
+        headViewSize(ivUpload, (int) getResources().getDimension(com.eanfang.R.dimen.dimen_80));
         initPermission();
         setTitle("我的资料");
         setLeftBack(true);
@@ -209,11 +213,12 @@ public class PersonInfoActivity extends BaseActivity {
         //takePhoto( HEAD_PHOTO, iPictureCallBack);
         SDKManager.getPicture().create(this).takePhoto(iPictureCallBack);
     }
-    IPictureCallBack iPictureCallBack=new IPictureCallBack() {
+
+    IPictureCallBack iPictureCallBack = new IPictureCallBack() {
         @Override
         public void onSuccess(List<LocalMedia> list) {
             String imgKey = "account/" + UuidUtil.getUUID() + ".png";
-            GlideUtil.intoImageView(PersonInfoActivity.this,"file://" + list.get(0).getCutPath(),ivUpload);
+            GlideUtil.intoImageView(PersonInfoActivity.this, "file://" + list.get(0).getCutPath(), ivUpload);
             SDKManager.ossKit(PersonInfoActivity.this).asyncPutImage(imgKey, list.get(0).getCutPath(), (isSuccess) -> {
                 LoginBean entity = WorkerApplication.get().getLoginBean();
                 entity.getAccount().setAvatar(imgKey);
@@ -247,7 +252,7 @@ public class PersonInfoActivity extends BaseActivity {
         if (!StringUtils.isEmpty(accountEntity.getAvatar())) {
             isUploadHead = true;
             path = accountEntity.getAvatar();
-            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + accountEntity.getAvatar()),ivUpload);
+            GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + accountEntity.getAvatar()), ivUpload);
             setHeaderShow(true);
         } else {
             setHeaderShow(false);
@@ -284,8 +289,8 @@ public class PersonInfoActivity extends BaseActivity {
             tvArea.setText(Config.get().getAddressByCode(accountEntity.getAreaCode()));
         }
         boolean auth = accountEntity.getRealVerify() == 0;
-        mLlSaveAndAuth.setVisibility(auth ?View.GONE : View.VISIBLE);
-        mTvToWorkerAuth.setVisibility(auth ?View.GONE : View.VISIBLE);
+        mLlSaveAndAuth.setVisibility(auth ? View.GONE : View.VISIBLE);
+        mTvToWorkerAuth.setVisibility(auth ? View.GONE : View.VISIBLE);
     }
 
     /**
@@ -442,7 +447,7 @@ public class PersonInfoActivity extends BaseActivity {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this,  new DatePickerDialog.OnDateSetListener() {
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                 mTvBirthday.setText(GetDateUtils.dateToDateString(new GregorianCalendar

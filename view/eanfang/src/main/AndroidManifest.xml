@@ -166,6 +166,10 @@
         <activity android:name=".ui.activity.ExpertDetailsActivity" />
         <activity android:name=".ui.activity.ExtractSuccessActivity" />
         <activity android:name=".ui.activity.CashOurActivity" />
+        <!-- 技师区域绑定 -->
+        <activity
+            android:name=".sdk.areachoose.AreaSelectionActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

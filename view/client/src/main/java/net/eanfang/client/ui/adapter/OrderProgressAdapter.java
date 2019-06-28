@@ -20,7 +20,7 @@ import java.util.List;
  * 订单进度的adapter
  * Created by Administrator on 2017/3/16.
  */
-
+//已提取
 public class OrderProgressAdapter extends BaseQuickAdapter<OrderProgressBean, BaseViewHolder> {
     private TimelineView timelineView;
     private OrderProgressBean orderProgressBean;

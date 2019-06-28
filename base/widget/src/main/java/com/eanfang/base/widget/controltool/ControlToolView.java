@@ -4,16 +4,12 @@ import android.content.Context;
 import com.eanfang.base.widget.controltool.badgeview.MyBadgeView;
 import com.eanfang.base.widget.controltool.calendarview.CalendarViewManager;
 import com.eanfang.base.widget.controltool.calendarview.ICalendarView;
-import com.eanfang.base.widget.controltool.flowlayout.FlowlayoutManager;
-import com.eanfang.base.widget.controltool.flowlayout.IFlowLayout;
 import com.eanfang.base.widget.controltool.flycotablayout.FlycoTablayoutManager;
 import com.eanfang.base.widget.controltool.flycotablayout.IFlycoTabLayout;
 import com.eanfang.base.widget.controltool.materialratingbar.IMaterialRatingBar;
 import com.eanfang.base.widget.controltool.materialratingbar.MateriaIRatingBarManager;
 import com.eanfang.base.widget.controltool.numberprogress.INumberProgressBar;
 import com.eanfang.base.widget.controltool.numberprogress.NumProgressManager;
-import com.eanfang.base.widget.controltool.piechart.IPieChart;
-import com.eanfang.base.widget.controltool.piechart.PieChartmanager;
 import com.eanfang.base.widget.controltool.timeline.ITimeLine;
 import com.eanfang.base.widget.controltool.timeline.TimeLineManager;
 
@@ -27,9 +23,7 @@ public class ControlToolView {
     private static ITimeLine ITIMELINE;
     private static IMaterialRatingBar IMATERIALRATINGBAR;
     private static INumberProgressBar INUMBERPROGRESSBAR;
-    private static IFlowLayout IFLOWLAYOUT;
     private static MyBadgeView IBADGEVIEW;
-    private static IPieChart IPIECHART;
     private static ICalendarView ICALENDARVIEW;
 
     public static IFlycoTabLayout flycoTabLayoutManager() {
@@ -60,23 +54,9 @@ public class ControlToolView {
         return INUMBERPROGRESSBAR;
     }
 
-    public static IFlowLayout flowLayout() {
-        if (IFLOWLAYOUT == null) {
-            IFLOWLAYOUT = new FlowlayoutManager();
-        }
-        return IFLOWLAYOUT;
-    }
-
     public static MyBadgeView getBadge(Context context) {
         IBADGEVIEW =MyBadgeView.get(context);
         return IBADGEVIEW;
-    }
-
-    public static IPieChart pieChart() {
-        if (IPIECHART == null) {
-            IPIECHART = new PieChartmanager();
-        }
-        return IPIECHART;
     }
 
     public static ICalendarView calendarV() {

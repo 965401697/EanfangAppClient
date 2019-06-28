@@ -29,7 +29,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.PermissionUtils;
+import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
 import com.jph.takephoto.model.TImage;
@@ -281,10 +281,10 @@ public class RealNameAuthenticationActivity extends BaseActivityWithTakePhoto {
                 startActivityForResult(intent, ID_CARD_FRONT);
                 break;
             case R.id.iv_idCard_back:
-                PermissionUtils.get(this).getCameraPermission(() -> takePhoto(this, ID_CARD_SIDE));
+                RxPerm.get(this).cameraPerm((isSuccess)-> takePhoto(this, ID_CARD_SIDE));
                 break;
             case R.id.iv_idCard_inHand:
-                PermissionUtils.get(this).getCameraPermission(() -> takePhoto(this, ID_CARD_HAND));
+                RxPerm.get(this).cameraPerm((isSuccess)-> takePhoto(this, ID_CARD_HAND));
                 break;
             case R.id.tv_save:
                 doSave();

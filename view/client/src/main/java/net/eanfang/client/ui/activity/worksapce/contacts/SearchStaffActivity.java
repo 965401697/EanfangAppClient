@@ -16,7 +16,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.FriendListBean;
 import com.eanfang.util.Cn2Spell;
-import com.eanfang.util.PermissionUtils;
+import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.witget.SideBar;
 import com.eanfang.biz.model.entity.AccountEntity;
@@ -30,6 +30,7 @@ import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -55,8 +56,7 @@ public class SearchStaffActivity extends BaseClientActivity {
 
         mList = getPhoneContacts();
         initViews();
-
-        PermissionUtils.get(this).getStorageAndLocationPermission(() -> {
+        RxPerm.get(this).storagePerm((isSuccess) -> {
             initData();
         });
     }

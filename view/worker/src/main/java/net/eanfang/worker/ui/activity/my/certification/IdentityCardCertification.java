@@ -10,7 +10,7 @@ import com.eanfang.base.kit.SDKManager;
 
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.PermissionUtils;
+import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
 import com.jph.takephoto.model.TImage;
@@ -57,9 +57,9 @@ public class IdentityCardCertification extends BaseActivityWithTakePhoto {
     }
 
     private void initListener() {
-        ivIdCardFront.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(IdentityCardCertification.this, ID_CARD_FRONT)));
-        ivIdCardBack.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(IdentityCardCertification.this, ID_CARD_SIDE)));
-        ivIdCardInHand.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(IdentityCardCertification.this, ID_CARD_HAND)));
+        ivIdCardFront.setOnClickListener(v -> RxPerm.get(this).cameraPerm((isSuccess)-> takePhoto(IdentityCardCertification.this, ID_CARD_FRONT)));
+        ivIdCardBack.setOnClickListener(v -> RxPerm.get(this).cameraPerm((isSuccess)-> takePhoto(IdentityCardCertification.this, ID_CARD_SIDE)));
+        ivIdCardInHand.setOnClickListener(v -> RxPerm.get(this).cameraPerm((isSuccess)-> takePhoto(IdentityCardCertification.this, ID_CARD_HAND)));
         tvSave.setOnClickListener((v) -> {
             doSave();
         });

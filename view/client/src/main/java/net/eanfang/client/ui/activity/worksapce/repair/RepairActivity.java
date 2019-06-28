@@ -26,7 +26,7 @@ import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.PermissionUtils;
+import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
 import com.yaf.base.entity.RepairBugEntity;
@@ -297,7 +297,7 @@ public class RepairActivity extends BaseClientActivity {
                 JumpItent.jump(this, RepairPersonInfoListActivity.class, REQUEST_PERSONAL_INFO);
                 break;
             case R.id.iv_input_voice:
-                PermissionUtils.get(this).getVoicePermission(() -> {
+                 RxPerm.get(this).voicePerm((isSuccess)->{
                     RecognitionManager.getSingleton().startRecognitionWithDialog(RepairActivity.this, etNotice);
                 });
                 break;
