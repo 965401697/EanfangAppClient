@@ -1,19 +1,16 @@
 package net.eanfang.worker.ui.activity.worksapce.tender;
 
-import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModel;
 
-import android.os.Bundle;
-
 import com.eanfang.base.BaseActivity;
 import com.eanfang.biz.rds.base.LViewModelProviders;
-import com.eanfang.biz.rds.sys.repo.tender.TenderRepo;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.databinding.ActivityTenderBidDetailBinding;
 import net.eanfang.worker.viewmodle.tender.TenderBidDetailViewModle;
-import net.eanfang.worker.viewmodle.tender.TenderOfferDetailViewModle;
 
 /**
  * @author guanluocang
@@ -35,8 +32,13 @@ public class TenderBidDetailActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        setTitle("报价详情");
+        setLeftBack(true);
         mId = getIntent().getLongExtra("bidId", 0);
         bidDetailViewModle.doGetData(mId);
+        tenderBidDetailBinding.llOfferPersonalInfo.setOnClickListener((v)->{
+
+        });
     }
 
     @Override

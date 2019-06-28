@@ -286,7 +286,6 @@
                                 android:gravity="right"
                                 android:hint="请输入"
                                 android:inputType="number"
-                                android:text="@{tenderCreateVo.predicttime}"
                                 android:textColor="@color/color_client_neworder"
                                 android:textSize="@dimen/textSize_14" />
 
@@ -337,7 +336,6 @@
                                 android:hint="请输入"
                                 android:inputType="number"
                                 android:padding="@dimen/dimen_30"
-                                android:text="@{tenderCreateVo.budget}"
                                 android:textColor="@color/color_client_neworder"
                                 android:textSize="@dimen/textSize_14" />
 
@@ -401,7 +399,6 @@
                             android:background="@null"
                             android:hint="请输入详细描述"
                             android:padding="@dimen/dimen_30"
-                            android:text="@{tenderCreateVo.description}"
                             android:textColor="@color/color_client_neworder"
                             android:textColorHint="@color/color_bottom"
                             android:textSize="@dimen/textSize_13" />
@@ -445,7 +442,6 @@
                             android:background="@null"
                             android:hint="请输入用工要求"
                             android:padding="@dimen/dimen_30"
-                            android:text="@{tenderCreateVo.laborRequirements}"
                             android:textColor="@color/color_client_neworder"
                             android:textColorHint="@color/color_bottom"
                             android:textSize="@dimen/textSize_13" />

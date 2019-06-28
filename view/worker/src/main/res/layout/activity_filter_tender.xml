@@ -15,129 +15,134 @@
 
         <include layout="@layout/header" />
 
-
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:id="@+id/rl_select_time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:visibility="gone"
-                android:padding="@dimen/dimen_34">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="选择发布时间"
-                    android:textColor="@color/color_client_neworder"
-                    android:textSize="@dimen/textSize_14" />
-
-                <TextView
-                    android:id="@+id/tv_select_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:drawableRight="@mipmap/arrow_right"
-                    android:hint="请选择"
-                    android:textColor="@color/color_bottom"
-                    android:textSize="@dimen/textSize_11" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rl_selectaddress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:padding="@dimen/dimen_34">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="按项目地区筛选"
-                    android:textColor="@color/color_client_neworder"
-                    android:textSize="@dimen/textSize_14" />
-
-                <TextView
-                    android:id="@+id/tv_address_select"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:drawableRight="@mipmap/arrow_right"
-                    android:text="已选0个地区"
-                    android:textColor="@color/color_bottom"
-                    android:textSize="@dimen/textSize_11" />
-            </RelativeLayout>
+            android:layout_weight="1">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="@dimen/dimen_20"
-                android:background="@color/white"
-                android:orientation="vertical"
-                android:paddingBottom="@dimen/dimen_20">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dimen_90"
-                    android:layout_marginLeft="@dimen/dimen_30"
-                    android:gravity="center_vertical"
-                    android:text="按系统类别筛选"
-                    android:textColor="@color/color_client_neworder"
-                    android:textSize="@dimen/textSize_15" />
-
-                <com.zhy.view.flowlayout.TagFlowLayout
-                    android:id="@+id/tag_system_type"
+                <RelativeLayout
+                    android:id="@+id/rl_select_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/color_white"
-                    android:padding="@dimen/dimen_30"
-                    android:scrollbars="none" />
+                    android:background="@color/white"
+                    android:padding="@dimen/dimen_34"
+                    android:visibility="gone">
 
-            </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="选择发布时间"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_14" />
 
-            <LinearLayout
-                android:id="@+id/ll_order_type"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="@dimen/dimen_20"
-                android:background="@color/white"
-                android:orientation="vertical"
-                android:paddingBottom="@dimen/dimen_20"
-                android:visibility="gone">
+                    <TextView
+                        android:id="@+id/tv_select_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:drawableRight="@mipmap/arrow_right"
+                        android:hint="请选择"
+                        android:textColor="@color/color_bottom"
+                        android:textSize="@dimen/textSize_11" />
+                </RelativeLayout>
 
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dimen_90"
-                    android:layout_marginLeft="@dimen/dimen_30"
-                    android:gravity="center_vertical"
-                    android:text="按订单类型筛选"
-                    android:textColor="@color/color_client_neworder"
-                    android:textSize="@dimen/textSize_15" />
-
-                <com.zhy.view.flowlayout.TagFlowLayout
-                    android:id="@+id/tag_order_type"
+                <RelativeLayout
+                    android:id="@+id/rl_selectaddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/color_white"
-                    android:padding="@dimen/dimen_30"
-                    android:scrollbars="none" />
+                    android:background="@color/white"
+                    android:padding="@dimen/dimen_34">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="按项目地区筛选"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_14" />
+
+                    <TextView
+                        android:id="@+id/tv_address_select"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:drawableRight="@mipmap/arrow_right"
+                        android:text="已选0个地区"
+                        android:textColor="@color/color_bottom"
+                        android:textSize="@dimen/textSize_11" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="@dimen/dimen_20"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/dimen_20">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dimen_90"
+                        android:layout_marginLeft="@dimen/dimen_30"
+                        android:gravity="center_vertical"
+                        android:text="按系统类别筛选"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_15" />
+
+                    <com.zhy.view.flowlayout.TagFlowLayout
+                        android:id="@+id/tag_system_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/color_white"
+                        android:padding="@dimen/dimen_30"
+                        android:scrollbars="none" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_order_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="@dimen/dimen_20"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/dimen_20"
+                    android:visibility="gone">
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/dimen_90"
+                        android:layout_marginLeft="@dimen/dimen_30"
+                        android:gravity="center_vertical"
+                        android:text="按订单类型筛选"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_15" />
+
+                    <com.zhy.view.flowlayout.TagFlowLayout
+                        android:id="@+id/tag_order_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/color_white"
+                        android:padding="@dimen/dimen_30"
+                        android:scrollbars="none" />
+
+                </LinearLayout>
 
             </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
 
-        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_sure"
@@ -145,7 +150,7 @@
             android:layout_height="@dimen/dimen_80"
             android:layout_marginStart="@dimen/dimen_40"
             android:layout_marginEnd="@dimen/dimen_40"
-            android:layout_marginBottom="@dimen/dimen_100"
+            android:layout_marginBottom="@dimen/dimen_50"
             android:background="@drawable/shape_bg_sure"
             android:gravity="center"
             android:text="确定"

@@ -14,7 +14,6 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.databinding.BindingAdapter;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,7 +33,6 @@ import com.eanfang.util.GlideUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.witget.ArcProgressView;
 import com.eanfang.witget.CustomRadioGroup;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 import com.yaf.base.entity.RepairOrderEntity;
 import com.yaf.base.entity.WorkerEntity;
 
@@ -203,6 +201,7 @@ public class WorkDetailActivity extends BaseActivity {
         initData();
         setListener();
     }
+
     private void initView() {
         rvList1.setLayoutManager(new GridLayoutManager(this, 2));
 
@@ -324,7 +323,7 @@ public class WorkDetailActivity extends BaseActivity {
             return;
         }
         if (bean.getAccountEntity() != null) {
-            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + bean.getVerifyEntity().getAvatarPhoto()),ivHeader);
+            GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + bean.getVerifyEntity().getAvatarPhoto()), ivHeader);
             headUrl = bean.getAccountEntity().getAvatar();
             workerName = bean.getAccountEntity().getRealName();
             comapnyName = bean.getCompanyEntity().getOrgName();

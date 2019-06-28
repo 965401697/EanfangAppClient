@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/textSize_15" />
+                android:textSize="@dimen/textSize_14" />
 
             <TextView
                 android:id="@+id/tv_tender_type"
@@ -53,7 +53,7 @@
                 android:layout_marginStart="@dimen/dimen_30"
                 android:layout_toRightOf="@id/tv_tender_name"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/textSize_15" />
+                android:textSize="@dimen/textSize_14" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -72,7 +72,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textColor="@color/color_bottom"
-                        android:textSize="@dimen/textSize_15" />
+                        android:textSize="@dimen/textSize_12" />
 
                     <TextView
                         android:id="@+id/tv_tender_time"
@@ -81,7 +81,7 @@
                         android:layout_marginTop="@dimen/dimen_6"
                         android:layout_weight="1"
                         android:textColor="@color/color_bottom"
-                        android:textSize="@dimen/textSize_15" />
+                        android:textSize="@dimen/textSize_12" />
 
                 </LinearLayout>
 

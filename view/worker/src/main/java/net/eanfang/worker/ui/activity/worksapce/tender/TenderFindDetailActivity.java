@@ -1,27 +1,21 @@
 package net.eanfang.worker.ui.activity.worksapce.tender;
 
-import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModel;
 
-import android.net.Uri;
-import android.os.Bundle;
-
-import com.eanfang.BuildConfig;
 import com.eanfang.base.BaseActivity;
+import com.eanfang.base.BaseApplication;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
 import com.eanfang.biz.rds.base.LViewModelProviders;
-import com.eanfang.config.Config;
-import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JumpItent;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.databinding.ActivityTenderFindDetailBinding;
+import net.eanfang.worker.ui.activity.my.UserHomeActivity;
 import net.eanfang.worker.viewmodle.tender.TenderFindDetailViewModle;
-import net.eanfang.worker.viewmodle.tender.TenderViewModle;
 
-import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
@@ -58,6 +52,12 @@ public class TenderFindDetailActivity extends BaseActivity {
             Bundle bundle = new Bundle();
             bundle.putLong("publishId", getIntent().getLongExtra("tendFindId", 0));
             JumpItent.jump(TenderFindDetailActivity.this, TenderCommitActivity.class, bundle);
+        });
+        /**
+         * 用户信息
+         * */
+        tenderFindDetailBinding.llReleaseInfo.setOnClickListener((v) -> {
+            UserHomeActivity.startActivityForUid(TenderFindDetailActivity.this, BaseApplication.get().getUserId());
         });
     }
 

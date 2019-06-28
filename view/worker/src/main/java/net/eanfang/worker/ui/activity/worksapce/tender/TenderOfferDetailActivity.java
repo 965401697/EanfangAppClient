@@ -1,13 +1,12 @@
 package net.eanfang.worker.ui.activity.worksapce.tender;
 
-import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
-
-import android.os.Bundle;
-import android.view.View;
 
 import com.eanfang.base.BaseActivity;
 import com.eanfang.biz.model.bean.PageBean;
@@ -18,7 +17,6 @@ import com.eanfang.biz.rds.base.LViewModelProviders;
 import net.eanfang.worker.R;
 import net.eanfang.worker.databinding.ActivityTenderOfferDetailBinding;
 import net.eanfang.worker.ui.adapter.worktender.WorkTenderOfferDetailAdapter;
-import net.eanfang.worker.viewmodle.tender.TenderCreateViewModle;
 import net.eanfang.worker.viewmodle.tender.TenderOfferDetailViewModle;
 
 import lombok.Setter;
@@ -94,6 +92,7 @@ public class TenderOfferDetailActivity extends BaseActivity {
         // 如果是3 就是中标人
         if (taskApplyEntityPageBean.getList().size() > 0 && taskApplyEntityPageBean.getList().get(0).getStatus() == 3) {
             tenderOfferDetailBinding.rlWin.setVisibility(View.VISIBLE);
+            setTitle("评标历史");
             tenderOfferDetailViewModle.doSetWinData(taskApplyEntityPageBean.getList().get(0));
         }
         tenderOfferDetailBinding.tvOfferNum.setText("(" + taskApplyEntityPageBean.getList().size() + ")");

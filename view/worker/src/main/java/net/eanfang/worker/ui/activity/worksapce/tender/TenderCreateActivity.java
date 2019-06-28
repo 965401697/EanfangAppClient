@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModel;
 import com.eanfang.BuildConfig;
 import com.eanfang.base.BaseActivity;
 import com.eanfang.base.BaseApplication;
+import com.eanfang.biz.model.Message;
 import com.eanfang.biz.model.SelectAddressItem;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
 import com.eanfang.biz.rds.base.LViewModelProviders;
@@ -22,6 +23,7 @@ import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.databinding.ActivityTenderCreateBinding;
+import net.eanfang.worker.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.worker.viewmodle.tender.TenderCreateViewModle;
 
 import java.text.SimpleDateFormat;
@@ -95,6 +97,12 @@ public class TenderCreateActivity extends BaseActivity implements SelectTimeDial
     }
 
     private void doCreateFinish(TaskPublishEntity taskPublishEntityPageBean) {
+        Bundle bundle = new Bundle();
+        Message message = new Message();
+        message.setMsgContent(" 恭喜您，您的用工发布提交成功，请耐心等待他人的报价申请。");
+        message.setTip("确定");
+        bundle.putSerializable("message", message);
+        JumpItent.jump(this, StateChangeActivity.class, bundle);
         finish();
     }
 

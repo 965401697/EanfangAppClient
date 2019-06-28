@@ -65,21 +65,27 @@ public class TenderCommitViewModle extends BaseViewModel {
     }
 
     /**
-     * 提交报价
+     * 完善资料
      */
-    public void doSubmit() {
-        tenderCommitVo.getShopTaskPublishId().set(mPublishId + "");
-        tenderCommitVo.getApplyContacts().set(BaseApplication.get().getAccount().getRealName());
-        tenderCommitVo.getApplyConstactsPhone().set(BaseApplication.get().getAccount().getMobile());
-        tenderCommitVo.getApplyCompanyName().set(BaseApplication.get().getCompanyEntity().getOrgName());
-        tenderCommitVo.getProjectQuote().set(tenderCommitBinding.tvBudget.getText().toString().trim());
-        tenderCommitVo.getBudgetUnit().set(tenderCommitBinding.tvBudgetUnit.getText().toString().trim());
-        tenderCommitVo.getDescription().set(tenderCommitBinding.etPlan.getText().toString().trim());
-
-        tenderRepo.doSetCommitTender(tenderCommitVo).observe(lifecycleOwner, tenderBean -> {
-            createTenderLiveData.setValue(tenderBean);
-        });
-//        tenderCommitVo.getPictures().set();
+    public boolean doCheckInfo() {
+        return true;
     }
+        /**
+         * 提交报价
+         */
+        public void doSubmit () {
+            tenderCommitVo.getShopTaskPublishId().set(mPublishId + "");
+            tenderCommitVo.getApplyContacts().set(BaseApplication.get().getAccount().getRealName());
+            tenderCommitVo.getApplyConstactsPhone().set(BaseApplication.get().getAccount().getMobile());
+            tenderCommitVo.getApplyCompanyName().set(BaseApplication.get().getCompanyEntity().getOrgName());
+            tenderCommitVo.getProjectQuote().set(tenderCommitBinding.tvBudget.getText().toString().trim());
+            tenderCommitVo.getBudgetUnit().set(tenderCommitBinding.tvBudgetUnit.getText().toString().trim());
+            tenderCommitVo.getDescription().set(tenderCommitBinding.etPlan.getText().toString().trim());
 
-}
+            tenderRepo.doSetCommitTender(tenderCommitVo).observe(lifecycleOwner, tenderBean -> {
+                createTenderLiveData.setValue(tenderBean);
+            });
+//        tenderCommitVo.getPictures().set();
+        }
+
+    }

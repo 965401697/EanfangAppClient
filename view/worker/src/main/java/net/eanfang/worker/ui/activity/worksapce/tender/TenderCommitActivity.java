@@ -1,28 +1,27 @@
 package net.eanfang.worker.ui.activity.worksapce.tender;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModel;
-
 import android.net.Uri;
 import android.os.Bundle;
+
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModel;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.base.BaseActivity;
 import com.eanfang.base.BaseApplication;
-import com.eanfang.base.network.event.BaseActionEvent;
+import com.eanfang.biz.model.Message;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
 import com.eanfang.biz.rds.base.LViewModelProviders;
 import com.eanfang.util.GlideUtil;
+import com.eanfang.util.JumpItent;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.databinding.ActivityTenderCommitBinding;
+import net.eanfang.worker.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.worker.viewmodle.tender.TenderCommitViewModle;
 
 import lombok.Setter;
 import lombok.experimental.Accessors;
-
-import static com.eanfang.base.network.event.BaseActionEvent.EMPTY_DATA;
 
 /**
  * @author guanluocang
@@ -61,7 +60,13 @@ public class TenderCommitActivity extends BaseActivity {
     }
 
     private void getCommonData(TaskPublishEntity taskPublishEntity) {
-            finish();
+        Bundle bundle = new Bundle();
+        Message message = new Message();
+        message.setMsgContent(" 恭喜您，您的报价申请提交成功， 请耐心等待用工单位的回复。 ");
+        message.setTip("确定");
+        bundle.putSerializable("message", message);
+        JumpItent.jump(this, StateChangeActivity.class, bundle);
+        finish();
     }
 
     @Override

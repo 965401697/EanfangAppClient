@@ -46,7 +46,7 @@
                 android:layout_centerInParent="true"
                 android:layout_marginTop="@dimen/dimen_102"
                 android:gravity="center"
-                android:text="尊敬的用户，您必须进行资质认证才可以接单，并获得更多订单"
+                android:text="尊敬的用户，您必须进行资质认证才可以接单您必须进行资质认证才可以接单，并获得更多订单"
                 android:textSize="@dimen/textSize_15" />
         </RelativeLayout>
 

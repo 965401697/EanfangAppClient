@@ -7,8 +7,6 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.annimon.stream.Stream;
 import com.eanfang.base.BaseApplication;
-import com.eanfang.biz.model.bean.PageBean;
-import com.eanfang.biz.model.entity.IfbOrderEntity;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
 import com.eanfang.biz.model.vo.tender.TenderCreateVo;
 import com.eanfang.biz.rds.base.BaseViewModel;
@@ -149,6 +147,14 @@ public class TenderCreateViewModle extends BaseViewModel {
             showToast("请填写预期预算");
             return false;
         }
+        if (StringUtils.isEmpty(mTenderCreateBinding.etEnvironment.getText())) {
+            showToast("请填写环境描述");
+            return false;
+        }
+        if (StringUtils.isEmpty(mTenderCreateBinding.etRequire.getText())) {
+            showToast("请填写用工要求");
+            return false;
+        }
         doCommitTender();
         return true;
     }
@@ -178,8 +184,8 @@ public class TenderCreateViewModle extends BaseViewModel {
         tenderCreateVo.getEndTime().set(mTenderCreateBinding.tvStartTime.getText().toString().trim());
         tenderCreateVo.getBudget().set(mTenderCreateBinding.tvBudget.getText().toString());
         tenderCreateVo.getBudgetUnit().set(mTenderCreateBinding.tvBudgetUnit.getText().toString());
-        tenderCreateVo.getLaborRequirements().set(mTenderCreateBinding.etEnvironment.getText().toString().trim());
-        tenderCreateVo.getDescription().set(mTenderCreateBinding.etRequire.getText().toString().trim());
+        tenderCreateVo.getDescription().set(mTenderCreateBinding.etEnvironment.getText().toString().trim());
+        tenderCreateVo.getLaborRequirements().set(mTenderCreateBinding.etRequire.getText().toString().trim());
 
         tenderRepo.doSetNewTender(tenderCreateVo).observe(lifecycleOwner, tenderBean -> {
             createTenderLiveData.setValue(tenderBean);
@@ -190,6 +196,7 @@ public class TenderCreateViewModle extends BaseViewModel {
      * 再次报价
      */
     public void doReleaseAgain(TaskPublishEntity taskPublishEntity) {
+        province = taskPublishEntity.getProvince();
         city = taskPublishEntity.getCity();
         contry = taskPublishEntity.getCounty();
         lat = taskPublishEntity.getLatitude();
