@@ -35,8 +35,6 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
-import static io.reactivex.plugins.RxJavaPlugins.onError;
-
 
 /**
  * @author jornl
@@ -143,17 +141,17 @@ public enum RetrofitManagement {
 
     public <T> T getService(Class<T> clz, String host) {
         T value;
-        if (serviceMap.containsKey(host)) {
-            Object obj = serviceMap.get(host);
+        if (serviceMap.containsKey(clz.getName())) {
+            Object obj = serviceMap.get(clz.getName());
             if (obj == null) {
                 value = createRetrofit(host).create(clz);
-                serviceMap.put(host, value);
+                serviceMap.put(clz.getName(), value);
             } else {
                 value = (T) obj;
             }
         } else {
             value = createRetrofit(host).create(clz);
-            serviceMap.put(host, value);
+            serviceMap.put(clz.getName(), value);
         }
         return value;
     }

@@ -1,51 +1,34 @@
 package net.eanfang.worker.ui.activity.worksapce.tender;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModel;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.annimon.stream.Stream;
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModel;
+
 import com.eanfang.BuildConfig;
 import com.eanfang.base.BaseActivity;
 import com.eanfang.base.BaseApplication;
-import com.eanfang.base.kit.picture.IPictureCallBack;
-import com.eanfang.base.network.event.BaseActionEvent;
 import com.eanfang.biz.model.SelectAddressItem;
-import com.eanfang.biz.model.bean.PageBean;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
 import com.eanfang.biz.rds.base.LViewModelProviders;
-import com.eanfang.config.Config;
-import com.eanfang.config.Constant;
-import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
 import com.eanfang.ui.activity.SelectAddressActivity;
-import com.eanfang.ui.base.BaseActivityWithTakePhoto;
-import com.eanfang.ui.base.BasePictureActivity;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
-import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.databinding.ActivityTenderCreateBinding;
-import net.eanfang.worker.ui.activity.worksapce.design.DesignActivity;
 import net.eanfang.worker.viewmodle.tender.TenderCreateViewModle;
-import net.eanfang.worker.viewmodle.tender.TenderViewModle;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import lombok.Setter;
 import lombok.experimental.Accessors;
-
-import static com.eanfang.base.network.event.BaseActionEvent.EMPTY_DATA;
 
 /**
  * @author guanluocang
