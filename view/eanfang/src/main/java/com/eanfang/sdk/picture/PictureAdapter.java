@@ -57,7 +57,7 @@ public class PictureAdapter extends BaseQuickAdapter<LocalMedia, BaseViewHolder>
         params.topMargin=10;
         params.bottomMargin=10;
         //图片展示
-        GlideUtil.intoImageView(context, item.getPath(), imageView,20);
+        GlideUtil.intoImageView(context, item.getPath(), imageView);
         //判断是否是视频或音频，相关页面展示
         int pictureType = PictureMimeType.isPictureType(item.getPictureType());
         long duration = item.getDuration();
@@ -76,7 +76,7 @@ public class PictureAdapter extends BaseQuickAdapter<LocalMedia, BaseViewHolder>
         if (mimeType == PictureMimeType.ofAudio()) {
             imageView.setImageResource(R.drawable.audio_placeholder);
         } else {
-            GlideUtil.intoImageView(context, item.getPath(), imageView,20);
+            GlideUtil.intoImageView(context, item.getPath(), imageView);
         }
         //点击查看大图
 
