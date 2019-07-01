@@ -1,4 +1,4 @@
-package net.eanfang.client.ui.activity.worksapce.scancode;
+package com.eanfang.sdk.zing;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,8 +9,10 @@ import android.view.KeyEvent;
 import androidx.lifecycle.ViewModel;
 
 import com.alibaba.fastjson.JSONObject;
+import com.eanfang.R;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.base.BaseActivity;
+import com.eanfang.base.BaseApplication;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -23,11 +25,6 @@ import com.journeyapps.barcodescanner.BarcodeResult;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
 import com.journeyapps.barcodescanner.DefaultDecoderFactory;
 import com.yaf.base.entity.WorkerEntity;
-
-import net.eanfang.client.R;
-import net.eanfang.client.base.ClientApplication;
-import net.eanfang.client.ui.activity.im.AddFriendActivity;
-import net.eanfang.client.ui.activity.worksapce.equipment.EquipmentDetailActivity;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -116,10 +113,14 @@ public class ScanCodeActivity extends BaseActivity {
                 String accountId = resultString.substring(resultString.indexOf("=") + 1);
                 if (!TextUtils.isEmpty(mAddFriend)) {
                     if (mFromWhere.equals("home_addfriend")) {
-                        Bundle bundle = new Bundle();
-                        bundle.putString("add_friend", "add_friend");
-                        bundle.putString("accountId", accountId);
-                        JumpItent.jump(ScanCodeActivity.this, AddFriendActivity.class, bundle);
+//                        Bundle bundle = new Bundle();
+//                        bundle.putString("add_friend", "add_friend");
+//                        bundle.putString("accountId", accountId);
+//                        JumpItent.jump(ScanCodeActivity.this, AddFriendActivity.class, bundle);
+                        Intent intent=new Intent();
+                        intent.putExtra("add_friend", "add_friend");
+                        intent.putExtra("accountId", accountId);
+                        setResult(1066,intent);
                     } else {
                         EventBus.getDefault().post(accountId);
                     }
@@ -158,10 +159,14 @@ public class ScanCodeActivity extends BaseActivity {
                 finish();
             } else if (resultString.contains("qr?uid=")) {
                 // 扫描设备 查看设备详情 并报修
-                Bundle bundle = new Bundle();
-                bundle.putString("id", getValueByName(result.getText(), "uid"));
-                bundle.putBoolean("scan", true);
-                JumpItent.jump(ScanCodeActivity.this, EquipmentDetailActivity.class, bundle);
+//                Bundle bundle = new Bundle();
+//                bundle.putString("id", getValueByName(result.getText(), "uid"));
+//                bundle.putBoolean("scan", true);
+//                JumpItent.jump(ScanCodeActivity.this, EquipmentDetailActivity.class, bundle);
+                Intent intent=new Intent();
+                intent.putExtra("id", getValueByName(result.getText(), "uid"));
+                intent.putExtra("scan", true);
+                setResult(1067,intent);
                 finish();
             } else {
                 showToast("二维码无效");
@@ -231,7 +236,7 @@ public class ScanCodeActivity extends BaseActivity {
         EanfangHttp.post(NewApiService.QR_CODE)
                 .params("uuid", uuid)
                 .params("requestFrom", requestFrom)
-                .params("accountId", ClientApplication.get().getAccId())
+                .params("accountId", BaseApplication.get().getAccId())
                 .execute(new EanfangCallback<JSONObject>(ScanCodeActivity.this, true, JSONObject.class) {
                     @Override
                     public void onSuccess(JSONObject bean) {
@@ -239,9 +244,13 @@ public class ScanCodeActivity extends BaseActivity {
                         String isLogin = (String) bean.get("data");
                         if ("true".equals(isLogin)) {
                             // 进行登录
-                            startActivity(new Intent(ScanCodeActivity.this, LoginConfirmActivity.class)
+                          /*  startActivity(new Intent(ScanCodeActivity.this, LoginConfirmActivity.class)
                                     .putExtra("which", requestFrom)
-                                    .putExtra("uuid", uuid));
+                                    .putExtra("uuid", uuid));*/
+                            Intent intent=new Intent();
+                            intent.putExtra("which", requestFrom);
+                            intent.putExtra("uuid", uuid);
+                            setResult(1068,intent);
                             finish();
 
                         } else {
@@ -250,7 +259,7 @@ public class ScanCodeActivity extends BaseActivity {
                         }
                     }
 
-                    public void onFail(Integer code, String message, com.alibaba.fastjson.JSONObject jsonObject) {
+                    public void onFail(Integer code, String message, JSONObject jsonObject) {
                         super.onFail(code, message, jsonObject);
                         showToast("扫描失败");
                         finish();
