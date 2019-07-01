@@ -30,7 +30,7 @@ import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.ui.base.voice.RecognitionManager;
-import com.eanfang.util.PermissionUtils;
+import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
@@ -286,7 +286,7 @@ public class HomeRepairFragment extends BaseFragment {
                 break;
             case R.id.img_moment_accident:
                 File takePhotoDir = new File(Environment.getExternalStorageDirectory(), "EanfangPhotoData");
-                PermissionUtils.get((BaseActivity) getActivity()).getCameraPermission(() -> {
+                RxPerm.get(getActivity()).cameraPerm((isSuccess)->{
                     startActivityForResult(BGAPhotoPickerActivity.newIntent(getActivity(), takePhotoDir, 1, null, false), BGASortableDelegate.REQUEST_CODE_CHOOSE_PHOTO);
                 });
                 break;
@@ -321,7 +321,7 @@ public class HomeRepairFragment extends BaseFragment {
     }
 
     private void inputVoice(EditText editText) {
-        PermissionUtils.get((BaseActivity) getActivity()).getVoicePermission(() -> {
+        RxPerm.get(getActivity()).voicePerm((isSuccess) -> {
             RecognitionManager.getSingleton().startRecognitionWithDialog(getActivity(), editText);
         });
     }

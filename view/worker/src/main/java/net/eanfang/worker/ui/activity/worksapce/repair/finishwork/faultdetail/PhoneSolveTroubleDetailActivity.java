@@ -25,7 +25,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.PermissionUtils;
+import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.StringUtils;
 import com.yaf.base.entity.BughandleDetailEntity;
 import com.yaf.base.entity.BughandleParamEntity;
@@ -190,7 +190,7 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
         });
         // 原因判断
         ivVoiceInputTroubleReason.setOnClickListener((v) -> {
-            PermissionUtils.get(this).getVoicePermission(() -> {
+             RxPerm.get(this).voicePerm((isSuccess)->{
                 RecognitionManager.getSingleton().startRecognitionWithDialog(PhoneSolveTroubleDetailActivity.this,etTroubleReason);
             });
         });
@@ -225,7 +225,7 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
         });
         //过程方法
         ivVoiceInputTroublePoint.setOnClickListener((v) -> {
-            PermissionUtils.get(this).getVoicePermission(() -> {
+             RxPerm.get(this).voicePerm((isSuccess)->{
                 RecognitionManager.getSingleton().startRecognitionWithDialog(PhoneSolveTroubleDetailActivity.this,etTroublePoint);
             });
         });
@@ -261,7 +261,7 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
 
         // 处理措施
         ivVoiceInputTroubleDeal.setOnClickListener((v) -> {
-            PermissionUtils.get(this).getVoicePermission(() -> {
+             RxPerm.get(this).voicePerm((isSuccess)->{
                 RecognitionManager.getSingleton().startRecognitionWithDialog(PhoneSolveTroubleDetailActivity.this,etTroubleDeal);
             });
         });
@@ -296,7 +296,7 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
         });
         // 使用建议
         ivVoiceInputTroubleUseAdvance.setOnClickListener((v) -> {
-            PermissionUtils.get(this).getVoicePermission(() -> {
+             RxPerm.get(this).voicePerm((isSuccess)->{
                 RecognitionManager.getSingleton().startRecognitionWithDialog(PhoneSolveTroubleDetailActivity.this,etTroubleUseAdvace);
             });
         });

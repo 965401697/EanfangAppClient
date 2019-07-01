@@ -34,7 +34,7 @@ import com.eanfang.util.BadgeUtil;
 import com.eanfang.util.CleanMessageUtil;
 import com.eanfang.util.ContactUtil;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.PermissionUtils;
+import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UpdateAppManager;
@@ -149,8 +149,7 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
         initXinGe();
         getBaseData();
         getConst();
-        PermissionUtils.get(this).getStorageAndLocationPermission(() -> {
-        });
+        RxPerm.get(this).storagePerm();;
 
         privoderMy();
         RongIM.setOnReceiveMessageListener(new MyReceiveMessageListener());

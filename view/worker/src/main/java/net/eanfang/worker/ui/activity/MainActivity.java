@@ -47,7 +47,7 @@ import com.eanfang.util.ContactUtil;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.LocationUtil;
-import com.eanfang.util.PermissionUtils;
+import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
@@ -156,8 +156,7 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
 
         getBaseData();
         getConst();
-        PermissionUtils.get(this).getStorageAndLocationPermission(() -> {
-        });
+        RxPerm.get(this).storagePerm();
         submitLocation();
         privoderMy();
 

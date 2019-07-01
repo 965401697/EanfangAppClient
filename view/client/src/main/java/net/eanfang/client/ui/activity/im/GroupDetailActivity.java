@@ -28,7 +28,7 @@ import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.PermissionUtils;
+import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UuidUtil;
 import com.eanfang.witget.MyGridView;
@@ -357,7 +357,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                 startActivity(iet);
                 break;
             case R.id.ll_group_port:
-                PermissionUtils.get(this).getCameraPermission(() -> takePhoto(GroupDetailActivity.this, HEADER_PIC));
+                RxPerm.get(this).cameraPerm((isSuccess)-> takePhoto(GroupDetailActivity.this, HEADER_PIC));
                 break;
             case R.id.ll_group_qr:
                 Bundle bundle = new Bundle();

@@ -36,7 +36,7 @@ import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.DialogUtil;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.PermissionUtils;
+import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
@@ -536,7 +536,7 @@ public class TaskAssignmentCreationActivity extends BaseClientActivity {
 
 
     private void inputVoice(EditText editText) {
-        PermissionUtils.get(this).getVoicePermission(() -> {
+         RxPerm.get(this).voicePerm((isSuccess)->{
             RecognitionManager.getSingleton().startRecognitionWithDialog(TaskAssignmentCreationActivity.this, editText);
         });
     }

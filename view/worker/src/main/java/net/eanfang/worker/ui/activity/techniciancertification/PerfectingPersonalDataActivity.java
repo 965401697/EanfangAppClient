@@ -29,7 +29,7 @@ import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.PermissionUtils;
+import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
 import com.jph.takephoto.model.TImage;
@@ -112,7 +112,7 @@ public class PerfectingPersonalDataActivity extends BaseActivityWithTakePhoto {
         setTitle("个人资料");
         mStatus = getIntent().getIntExtra("status", -1);
         statusB = getIntent().getIntExtra("statusB", -1);
-        llHeaders.setOnClickListener(v -> PermissionUtils.get(this).getCameraPermission(() -> takePhoto(this, HEADER_PIC)));
+        llHeaders.setOnClickListener(v -> RxPerm.get(this).cameraPerm((isSuccess)-> takePhoto(this, HEADER_PIC)));
         EanfangHttp.get(UserApi.GET_USER_INFO).params("userId", WorkerApplication.get().getUserId()).tag(this).execute(new EanfangCallback<LoginBean>(this, true, LoginBean.class, (bean) -> {
             runOnUiThread(() -> {
                 accountEntity = bean.getAccount();

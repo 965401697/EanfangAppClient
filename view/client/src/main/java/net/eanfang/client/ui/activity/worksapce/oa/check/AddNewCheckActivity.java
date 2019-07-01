@@ -19,6 +19,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.config.Config;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.dialog.TrueFalseDialog;
@@ -38,7 +39,6 @@ import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
 import com.eanfang.util.DialogUtil;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
@@ -533,7 +533,7 @@ public class AddNewCheckActivity extends BaseActivity implements SelectTimeDialo
     }
 
     private void inputVoice(EditText editText) {
-        PermissionUtils.get(this).getVoicePermission(() -> {
+         RxPerm.get(this).voicePerm((isSuccess)->{
             RecognitionManager.getSingleton().startRecognitionWithDialog(AddNewCheckActivity.this, editText);
         });
     }

@@ -17,7 +17,7 @@ import com.eanfang.biz.model.GroupCreatBean;
 
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.PermissionUtils;
+import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UuidUtil;
 import com.eanfang.util.compound.CompoundHelper;
@@ -143,7 +143,7 @@ public class GroupCreatActivity extends BaseActivityWithTakePhoto {
 
     @OnClick(R.id.iv_icon)
     public void onImageClicked() {
-        PermissionUtils.get(GroupCreatActivity.this).getCameraPermission(() -> takePhoto(GroupCreatActivity.this, HEADER_PIC));
+        RxPerm.get(GroupCreatActivity.this).cameraPerm((isSuccess) -> takePhoto(GroupCreatActivity.this, HEADER_PIC));
     }
 
 

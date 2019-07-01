@@ -23,7 +23,7 @@ import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.PermissionUtils;
+import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
@@ -490,7 +490,7 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
     }
 
     private void inputVoice(EditText editText) {
-        PermissionUtils.get(this).getVoicePermission(() -> {
+         RxPerm.get(this).voicePerm((isSuccess)->{
             RecognitionManager.getSingleton().startRecognitionWithDialog(WorkTransferCreateDetailActivity.this, editText);
         });
     }

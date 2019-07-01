@@ -30,7 +30,7 @@ import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.PermKit;
-import com.eanfang.util.PermissionUtils;
+import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
@@ -145,10 +145,10 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
 
     private void initListener() {
         ivUpload.setOnClickListener((v) -> {
-            PermissionUtils.get(this).getCameraPermission(() -> takePhoto(AuthCompanyActivity.this, LICENSE_CALLBACK_CODE));
+            RxPerm.get(this).cameraPerm((isSuccess)-> takePhoto(AuthCompanyActivity.this, LICENSE_CALLBACK_CODE));
         });
         ivUpload2.setOnClickListener((v -> {
-            PermissionUtils.get(this).getCameraPermission(() -> takePhoto(AuthCompanyActivity.this, ADPIC_CALLBACK_CODE));
+            RxPerm.get(this).cameraPerm((isSuccess)-> takePhoto(AuthCompanyActivity.this, ADPIC_CALLBACK_CODE));
         }));
 
         llOfficeAddress.setOnClickListener((v) -> {

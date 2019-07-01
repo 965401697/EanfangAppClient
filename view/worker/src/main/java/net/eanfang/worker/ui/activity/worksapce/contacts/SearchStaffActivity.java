@@ -6,8 +6,10 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.TextUtils;
 import android.view.View;
 
@@ -18,7 +20,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.FriendListBean;
 import com.eanfang.util.Cn2Spell;
-import com.eanfang.util.PermissionUtils;
+import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.V;
 import com.eanfang.witget.SideBar;
@@ -56,10 +58,10 @@ public class SearchStaffActivity extends BaseWorkerActivity {
 
         mList = getPhoneContacts();
         initViews();
-
-        PermissionUtils.get(this).getStorageAndLocationPermission(() -> {
+        RxPerm.get(this).storagePerm((isSuccess) -> {
             initData();
         });
+
     }
 
     private void initViews() {
