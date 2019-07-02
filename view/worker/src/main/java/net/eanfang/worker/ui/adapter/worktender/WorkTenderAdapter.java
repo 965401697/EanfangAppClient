@@ -2,9 +2,10 @@ package net.eanfang.worker.ui.adapter.worktender;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.config.Config;
 import com.eanfang.biz.model.entity.IfbOrderEntity;
+import com.eanfang.config.Config;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
 
@@ -21,6 +22,7 @@ public class WorkTenderAdapter extends BaseQuickAdapter<IfbOrderEntity, BaseView
 
     @Override
     protected void convert(BaseViewHolder helper, IfbOrderEntity item) {
+        String endTime = GetDateUtils.dateToDateTimeString(item.getIfbFileEndTime());
         // 公告名称
         helper.setText(R.id.tv_tender_name, item.getAnnouncementName());
         //招标单位
@@ -30,6 +32,21 @@ public class WorkTenderAdapter extends BaseQuickAdapter<IfbOrderEntity, BaseView
         //项目地区
         helper.setText(R.id.tv_tender_address, Config.get().getAddressByCode(item.getProjectArea()));
         //发布时间
-        helper.setText(R.id.tv_tender_update_time, GetDateUtils.dateToDateTimeStringForChinse(item.getReleaseTime()));
+        helper.setText(R.id.tv_tender_update_time, GetDateUtils.dateToDateTimeString(item.getReleaseTime()));
+        //截止时间
+        if (!StringUtils.isEmpty(endTime)) {
+            //剩余时间
+            long currentTime = System.currentTimeMillis() / 1000;
+            long remainTime = GetDateUtils.convertDateToSecond(endTime) - currentTime;
+            if (remainTime > 0) {
+                int oneDay = 24 * 60 * 60;
+                int day = (int) (remainTime / oneDay);
+                int oneHour = 60 * 60;
+                int hour = (int) ((remainTime % oneDay) / oneHour);
+                int oneMin = 60;
+                int min = (int) (((remainTime % oneDay) % oneHour)) / oneMin;
+                helper.setText(R.id.tv_cutoff_time, mContext.getString(R.string.text_tender_count_down, day, hour, min));
+            }
+        }
     }
 }

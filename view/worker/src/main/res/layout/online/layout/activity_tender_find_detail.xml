@@ -157,6 +157,13 @@
                                 android:text="@{tenderCreateVo.contacts}"
                                 android:textColor="@color/color_client_neworder"
                                 android:textSize="@dimen/textSize_14" />
+
+                            <ImageView
+                                android:id="@+id/iv_verify_status"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@mipmap/ic_contact_auth"
+                                android:visibility="gone" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -321,6 +328,13 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/dimen_20"
                             android:text="@{String.valueOf(tenderCreateVo.predicttime)}"
+                            android:textColor="@color/color_client_neworder"
+                            android:textSize="@dimen/textSize_14" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="天"
                             android:textColor="@color/color_client_neworder"
                             android:textSize="@dimen/textSize_14" />
                     </LinearLayout>

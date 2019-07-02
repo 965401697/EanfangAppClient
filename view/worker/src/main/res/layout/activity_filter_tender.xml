@@ -73,6 +73,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
                         android:drawableRight="@mipmap/arrow_right"
+                        android:drawablePadding="@dimen/dimen_18"
                         android:text="已选0个地区"
                         android:textColor="@color/color_bottom"
                         android:textSize="@dimen/textSize_11" />
@@ -91,7 +92,7 @@
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="@dimen/dimen_90"
+                        android:layout_height="@dimen/dimen_100"
                         android:layout_marginLeft="@dimen/dimen_30"
                         android:gravity="center_vertical"
                         android:text="按系统类别筛选"
@@ -103,7 +104,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/color_white"
-                        android:padding="@dimen/dimen_30"
+                        android:paddingStart="@dimen/dimen_30"
+                        android:paddingTop="@dimen/dimen_20"
+                        android:paddingBottom="@dimen/dimen_20"
                         android:scrollbars="none" />
 
                 </LinearLayout>
@@ -123,7 +126,7 @@
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="@dimen/dimen_90"
+                    android:layout_height="@dimen/dimen_100"
                         android:layout_marginLeft="@dimen/dimen_30"
                         android:gravity="center_vertical"
                         android:text="按订单类型筛选"
@@ -135,7 +138,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/color_white"
-                        android:padding="@dimen/dimen_30"
+                        android:paddingStart="@dimen/dimen_30"
+                        android:paddingTop="@dimen/dimen_20"
+                        android:paddingBottom="@dimen/dimen_20"
                         android:scrollbars="none" />
 
                 </LinearLayout>

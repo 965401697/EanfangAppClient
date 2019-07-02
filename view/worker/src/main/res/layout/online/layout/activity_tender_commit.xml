@@ -8,6 +8,7 @@
         <variable
             name="tenderCommitVo"
             type="com.eanfang.biz.model.vo.tender.TenderCommitVo" />
+
         <variable
             name="tenderCommitVm"
             type="net.eanfang.worker.viewmodle.tender.TenderCommitViewModle" />
@@ -78,6 +79,14 @@
                             android:layout_marginStart="@dimen/dimen_20"
                             android:textColor="@color/color_client_neworder"
                             android:textSize="@dimen/textSize_14" />
+
+                        <ImageView
+                            android:id="@+id/iv_verify_status"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dimen_10"
+                            android:src="@mipmap/ic_contact_auth"
+                            android:visibility="gone" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -169,7 +178,6 @@
                             android:hint="请输入"
                             android:inputType="number"
                             android:padding="@dimen/dimen_30"
-                            android:text="@{tenderCommitVo.projectQuote}"
                             android:textColor="@color/color_client_neworder"
                             android:textSize="@dimen/textSize_14" />
 
@@ -200,6 +208,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_20"
                 android:background="@color/color_white"
                 android:orientation="vertical">
 
@@ -218,7 +227,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginStart="@dimen/dimen_30"
                             android:text="施工方案描述"
-                            android:textColor="@color/color_client_neworder"
+                            android:textColor="@color/color_bottom"
                             android:textSize="@dimen/textSize_13" />
 
                         <ImageView
@@ -239,9 +248,8 @@
                         android:background="@null"
                         android:hint="请输入详细描述"
                         android:padding="@dimen/dimen_30"
-                        android:text="@{tenderCommitVo.description}"
                         android:textColor="@color/color_client_neworder"
-                        android:textColorHint="@color/color_bottom"
+                        android:textColorHint="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_13" />
                 </LinearLayout>
 
@@ -270,10 +278,10 @@
             android:layout_marginStart="@dimen/dimen_40"
             android:layout_marginEnd="@dimen/dimen_40"
             android:layout_marginBottom="@dimen/dimen_100"
-            android:onClick="@{()->tenderCommitVm.doSubmit()}"
             android:background="@drawable/shape_bg_sure"
             android:gravity="center"
-            android:text="确定"
+            android:onClick="@{()->tenderCommitVm.doCheckInfo()}"
+            android:text="提交报价"
             android:textColor="@color/white" />
 
     </LinearLayout>

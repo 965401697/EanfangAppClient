@@ -49,8 +49,8 @@
                 android:id="@+id/tv_tender_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginStart="@dimen/dimen_20"
+                android:layout_weight="1"
                 android:textColor="@color/color_client_neworder"
                 android:textSize="@dimen/textSize_15" />
 
@@ -131,15 +131,27 @@
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/textSize_14" />
 
-
-                <TextView
-                    android:id="@+id/tv_tender_address"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dimen_36"
-                    android:layout_marginTop="@dimen/dimen_20"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="@dimen/textSize_14" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tv_tender_address"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/dimen_36"
+                        android:layout_marginTop="@dimen/dimen_20"
+                        android:layout_weight="1"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/textSize_14" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:src="@mipmap/arrow_right" />
+                </LinearLayout>
 
 
                 <TextView
@@ -152,6 +164,24 @@
                     android:textSize="@dimen/textSize_14" />
             </LinearLayout>
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/dimen_38"
+            android:paddingTop="@dimen/dimen_14"
+            android:paddingBottom="@dimen/dimen_14">
+
+            <TextView
+                android:id="@+id/tv_cutoff_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="距截止还剩："
+                android:textColor="@color/color_tender_offer_bg"
+                android:textSize="@dimen/textSize_13" />
         </LinearLayout>
 
     </LinearLayout>

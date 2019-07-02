@@ -77,6 +77,7 @@
                         android:layout_marginTop="@dimen/dimen_26"
                         android:orientation="vertical"
                         android:paddingLeft="@dimen/dimen_38"
+                        android:paddingBottom="@dimen/dimen_30"
                         android:paddingRight="@dimen/dimen_22">
 
                         <LinearLayout
@@ -126,7 +127,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/dimen_20"
-                                    android:textColor="@color/color_tender_offer_bg"
+                                    android:textColor="@color/color_client_neworder"
                                     android:textSize="@dimen/textSize_14" />
                             </LinearLayout>
 
@@ -154,7 +155,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/dimen_20"
-                                android:textColor="@color/color_tender_offer_bg"
+                                android:textColor="@color/color_client_neworder"
                                 android:textSize="@dimen/textSize_14" />
                         </LinearLayout>
                     </LinearLayout>
@@ -167,7 +168,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen_20"
                     android:background="@color/color_white"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -224,7 +225,7 @@
                                         android:id="@+id/iv_verify_status"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:src="@mipmap/ic_security_ceritifi"
+                                        android:src="@mipmap/ic_contact_auth"
                                         android:visibility="gone" />
                                 </LinearLayout>
 
@@ -268,6 +269,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
+                                android:paddingRight="@dimen/dimen_30"
                                 android:orientation="horizontal">
 
 

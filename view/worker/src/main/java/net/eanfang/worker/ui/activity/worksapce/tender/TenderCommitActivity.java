@@ -2,6 +2,7 @@ package net.eanfang.worker.ui.activity.worksapce.tender;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModel;
@@ -10,6 +11,7 @@ import com.eanfang.BuildConfig;
 import com.eanfang.base.BaseActivity;
 import com.eanfang.base.BaseApplication;
 import com.eanfang.biz.model.Message;
+import com.eanfang.biz.model.entity.tender.TaskApplyEntity;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
 import com.eanfang.biz.rds.base.LViewModelProviders;
 import com.eanfang.util.GlideUtil;
@@ -37,6 +39,8 @@ public class TenderCommitActivity extends BaseActivity {
 
     private ActivityTenderCommitBinding tenderCommitBinding;
 
+    private TaskApplyEntity mTaskApplyEntity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         tenderCommitBinding = DataBindingUtil.setContentView(this, R.layout.activity_tender_commit);
@@ -49,9 +53,18 @@ public class TenderCommitActivity extends BaseActivity {
         setTitle("我要报价");
         setLeftBack(true);
         tenderCommitViewModle.mPublishId = getIntent().getLongExtra("publishId", 0);
+        mTaskApplyEntity = (TaskApplyEntity) getIntent().getSerializableExtra("bidDetail");
         GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + BaseApplication.get().getAccount().getAvatar()), tenderCommitBinding.ivHeader);
         tenderCommitBinding.tvName.setText(BaseApplication.get().getAccount().getRealName());
         tenderCommitBinding.tvCompany.setText(BaseApplication.get().getCompanyEntity().getOrgName());
+        if (BaseApplication.get().getAccount().getRealVerify() == 0) {
+            tenderCommitBinding.ivVerifyStatus.setVisibility(View.VISIBLE);
+        } else {
+            tenderCommitBinding.ivVerifyStatus.setVisibility(View.GONE);
+        }
+        if (mTaskApplyEntity != null){
+            tenderCommitViewModle.doSetAgainData(mTaskApplyEntity);
+        }
         initListener();
     }
 

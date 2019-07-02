@@ -124,7 +124,7 @@ public enum RetrofitManagement {
                         default:
                             throw new ServerResultException(result.getCode(), result.getMessage());
                     }
-                    return createData(new Optional(null));
+                    throw new ServerResultException(result.getCode(), result.getMessage());
                 });
     }
 

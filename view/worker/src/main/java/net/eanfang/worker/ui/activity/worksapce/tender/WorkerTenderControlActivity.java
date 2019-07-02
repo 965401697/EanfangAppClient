@@ -1,22 +1,13 @@
 package net.eanfang.worker.ui.activity.worksapce.tender;
 
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.RequiresApi;
-import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.lifecycle.ViewModel;
-import androidx.viewpager.widget.ViewPager;
-
-import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
-import android.widget.TextView;
+
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModel;
+import androidx.viewpager.widget.ViewPager;
 
 import com.eanfang.base.BaseActivity;
 import com.eanfang.biz.model.bean.QueryEntry;
@@ -27,10 +18,8 @@ import net.eanfang.worker.R;
 import net.eanfang.worker.databinding.ActivityWorkerTenderControlBinding;
 import net.eanfang.worker.ui.fragment.tender.WorkTenderFindFragment;
 import net.eanfang.worker.ui.fragment.tender.WorkTenderFragment;
-import net.eanfang.worker.ui.widget.TenderNoticePop;
 import net.eanfang.worker.viewmodle.tender.TenderViewModle;
 
-import butterknife.OnClick;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
@@ -67,7 +56,7 @@ public class WorkerTenderControlActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        setTitle("招标信息");
+        setTitle("招标用工大厅");
         setLeftBack(true);
         setRightTitle("我的");
         setRightImageResId(R.mipmap.ic_security_right);

@@ -52,7 +52,7 @@
                         android:id="@+id/iv_verify_status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@mipmap/ic_security_ceritifi"
+                        android:src="@mipmap/ic_contact_auth"
                         android:visibility="gone" />
                 </LinearLayout>
 
@@ -96,7 +96,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingRight="@dimen/dimen_30">
 
 
                 <LinearLayout

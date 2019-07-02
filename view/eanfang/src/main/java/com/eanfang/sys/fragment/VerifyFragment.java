@@ -49,7 +49,6 @@ public class VerifyFragment extends BaseFragment {
     protected ViewModel initViewModel() {
         return loginViewModel;
     }
-
     @Override
     public void onStart() {
         super.onStart();

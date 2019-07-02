@@ -3,12 +3,9 @@ package net.eanfang.worker.ui.activity.worksapce.tender;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -18,15 +15,13 @@ import androidx.lifecycle.ViewModel;
 import com.annimon.stream.Stream;
 import com.eanfang.base.BaseActivity;
 import com.eanfang.biz.model.bean.QueryEntry;
+import com.eanfang.biz.model.entity.BaseDataEntity;
 import com.eanfang.config.Config;
-import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
-import com.eanfang.biz.model.entity.BaseDataEntity;
 import com.eanfang.util.ToastUtil;
 import com.picker.DoubleDatePickerDialog;
-import com.picker.common.util.DateUtils;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -34,14 +29,10 @@ import com.zhy.view.flowlayout.TagFlowLayout;
 import net.eanfang.worker.R;
 import net.eanfang.worker.databinding.ActivityFilterTenderBinding;
 import net.eanfang.worker.ui.activity.SelectAreaActivity;
-import net.eanfang.worker.ui.activity.my.certification.AddSkillCertificafeActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-
-import butterknife.OnClick;
 
 /**
  * @author guanluocang
@@ -88,7 +79,7 @@ public class FilterTenderActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        setTitle("筛选");
+        setTitle("招标用工大厅");
         setLeftBack(true);
         mType = getIntent().getIntExtra("type", 100);
         isPerson = getIntent().getBooleanExtra("isPersonal", false);

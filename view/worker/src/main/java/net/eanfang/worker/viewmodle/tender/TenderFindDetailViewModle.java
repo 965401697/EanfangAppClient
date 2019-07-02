@@ -1,13 +1,11 @@
 package net.eanfang.worker.viewmodle.tender;
 
 import android.net.Uri;
-import android.os.Bundle;
+import android.view.View;
 
 import androidx.lifecycle.MutableLiveData;
 
 import com.eanfang.BuildConfig;
-import com.eanfang.biz.model.bean.PageBean;
-import com.eanfang.biz.model.entity.IfbOrderEntity;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
 import com.eanfang.biz.rds.base.BaseViewModel;
 import com.eanfang.biz.rds.sys.ds.impl.tender.TenderDs;
@@ -15,13 +13,9 @@ import com.eanfang.biz.rds.sys.repo.tender.TenderRepo;
 import com.eanfang.config.Config;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
 
-import net.eanfang.worker.R;
 import net.eanfang.worker.databinding.ActivityTenderFindDetailBinding;
-import net.eanfang.worker.databinding.ActivityWorkerTenderControlBinding;
-import net.eanfang.worker.ui.activity.worksapce.tender.TenderCommitActivity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -54,6 +48,12 @@ public class TenderFindDetailViewModle extends BaseViewModel {
             tenderFindDetailBinding.tvTime.setText(GetDateUtils.dateToDateTimeString(tenderBean.getCreateTime()));
             // 头像
             GlideUtil.intoImageView(tenderFindDetailBinding.getRoot().getContext(), Uri.parse(BuildConfig.OSS_SERVER + tenderBean.getUserEntity().getAccountEntity().getAvatar()), tenderFindDetailBinding.ivHeader);
+            //是否认证
+            if (tenderBean.getTaskApplyEntity().getVerifyStatus() == 1) {
+                tenderFindDetailBinding.ivVerifyStatus.setVisibility(View.VISIBLE);
+            } else {
+                tenderFindDetailBinding.ivVerifyStatus.setVisibility(View.GONE);
+            }
             // 项目地址
             tenderFindDetailBinding.tvProjectAddress.setText(tenderBean.getProvince() + tenderBean.getCity() + tenderBean.getCounty() + tenderBean.getDetailPlace());
             // 业务类型
@@ -63,7 +63,7 @@ public class TenderFindDetailViewModle extends BaseViewModel {
             //开始时间
             tenderFindDetailBinding.tvStartTime.setText(GetDateUtils.dateToDateString(tenderBean.getEndTime()));
             //预算
-            tenderFindDetailBinding.tvBudget.setText(tenderBean.getBudget() + "/" + tenderBean.getBudgetUnit());
+            tenderFindDetailBinding.tvBudget.setText(tenderBean.getBudget() + "元/" + tenderBean.getBudgetUnit());
             // 天  时  分
             String endTime = GetDateUtils.dateToDateTimeString(tenderBean.getEndTime());
             if (!StringUtils.isEmpty(endTime)) {
