@@ -434,6 +434,13 @@
                         android:text="附件"
                         android:textColor="@color/color_bottom"
                         android:textSize="@dimen/textSize_13" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_select_pic"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dimen_30"
+                        android:scrollbars="none" />
                 </LinearLayout>
             </LinearLayout>
 

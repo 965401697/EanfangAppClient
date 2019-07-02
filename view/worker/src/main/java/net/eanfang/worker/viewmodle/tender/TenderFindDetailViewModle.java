@@ -64,6 +64,8 @@ public class TenderFindDetailViewModle extends BaseViewModel {
             tenderFindDetailBinding.tvStartTime.setText(GetDateUtils.dateToDateString(tenderBean.getEndTime()));
             //预算
             tenderFindDetailBinding.tvBudget.setText(tenderBean.getBudget() + "元/" + tenderBean.getBudgetUnit());
+            // 附件
+
             // 天  时  分
             String endTime = GetDateUtils.dateToDateTimeString(tenderBean.getEndTime());
             if (!StringUtils.isEmpty(endTime)) {
