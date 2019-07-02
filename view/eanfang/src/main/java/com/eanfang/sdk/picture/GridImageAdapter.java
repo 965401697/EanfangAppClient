@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
@@ -18,6 +19,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.eanfang.R;
 import com.eanfang.util.GlideUtil;
+import com.eanfang.util.V;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
@@ -44,11 +46,13 @@ public class GridImageAdapter extends
     private int selectMax = 3;
     private int type = 0;
     private Context context;
+    private int size = 0;
+    private boolean isShow=true;
     /**
      * 点击添加图片跳转
      */
     private onAddPicClickListener mOnAddPicClickListener;
-
+    ViewHolder viewHolder;
     public interface onAddPicClickListener {
         void onAddPicClick();
     }
@@ -59,11 +63,26 @@ public class GridImageAdapter extends
         this.mOnAddPicClickListener = mOnAddPicClickListener;
     }
 
+    public GridImageAdapter(Context context, int size, onAddPicClickListener mOnAddPicClickListener) {
+        this.context = context;
+        mInflater = LayoutInflater.from(context);
+        this.mOnAddPicClickListener = mOnAddPicClickListener;
+        this.size = size;
+    }
+    public GridImageAdapter(Context context, int size,boolean isShow, onAddPicClickListener mOnAddPicClickListener) {
+        this.context = context;
+        mInflater = LayoutInflater.from(context);
+        this.mOnAddPicClickListener = mOnAddPicClickListener;
+        this.size = size;
+        this.isShow=isShow;
+    }
+
     public void setSelectMax(int selectMax) {
         this.selectMax = selectMax;
     }
-    public void setType(int type){
-        this.type=type;
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public void setList(List<LocalMedia> list) {
@@ -75,9 +94,11 @@ public class GridImageAdapter extends
         ImageView mImg;
         LinearLayout ll_del;
         TextView tv_duration;
+        RelativeLayout relative;
 
         public ViewHolder(View view) {
             super(view);
+            relative = (RelativeLayout) view.findViewById(R.id.relative);
             mImg = (ImageView) view.findViewById(R.id.fiv);
             ll_del = (LinearLayout) view.findViewById(R.id.ll_del);
             tv_duration = (TextView) view.findViewById(R.id.tv_duration);
@@ -110,6 +131,7 @@ public class GridImageAdapter extends
         View view = mInflater.inflate(R.layout.gv_filter_image,
                 viewGroup, false);
         final ViewHolder viewHolder = new ViewHolder(view);
+        this.viewHolder=viewHolder;
         return viewHolder;
     }
 
@@ -123,9 +145,17 @@ public class GridImageAdapter extends
      */
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, final int position) {
-        //少于8张，显示继续添加的图标
+        //少于最多张数，显示继续添加的图标
         if (getItemViewType(position) == TYPE_CAMERA) {
             viewHolder.mImg.setImageResource(R.mipmap.ic_pic_add);
+            if(!isShow){
+                viewHolder.mImg.setVisibility(View.INVISIBLE);
+            }else{
+                viewHolder.mImg.setVisibility(View.VISIBLE);
+            }
+            if (size != 0) {
+                viewHolder.mImg.setImageResource(R.mipmap.bga_pp_ic_plus);
+            }
             viewHolder.mImg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -187,7 +217,7 @@ public class GridImageAdapter extends
             if (mimeType == PictureMimeType.ofAudio()) {
                 viewHolder.mImg.setImageResource(R.drawable.audio_placeholder);
             } else {
-                GlideUtil.intoImageView(context,path,viewHolder.mImg);
+                GlideUtil.intoImageView(context, path, viewHolder.mImg);
             }
             //itemView 的点击事件
             if (mItemClickListener != null) {
@@ -200,12 +230,31 @@ public class GridImageAdapter extends
                 });
             }
         }
-        if(type==0){
+        if (type == 0) {
             if (getItemViewType(position) == TYPE_CAMERA) {
                 viewHolder.mImg.setImageResource(R.mipmap.ic_pic_add);
+                if(!isShow){
+                    viewHolder.mImg.setVisibility(View.INVISIBLE);
+                }else{
+                    viewHolder.mImg.setVisibility(View.VISIBLE);
+                }
+                if (size != 0) {
+                    viewHolder.mImg.setImageResource(R.mipmap.bga_pp_ic_plus);
+                }
             }
-        }else{
+        } else {
             viewHolder.mImg.setImageResource(R.mipmap.ic_add_video);
+        }
+        if (size != 0) {
+            RelativeLayout.LayoutParams imageParams = (RelativeLayout.LayoutParams) viewHolder.mImg.getLayoutParams();
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) viewHolder.relative.getLayoutParams();
+            imageParams.width = size;
+            imageParams.height = size;
+            params.width = size + 10;
+            params.height = size + 10;
+        }
+        if(!isShow){
+            viewHolder.ll_del.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -217,5 +266,9 @@ public class GridImageAdapter extends
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.mItemClickListener = listener;
+    }
+    public void isShow(boolean bl){
+        this.isShow=bl;
+        notifyDataSetChanged();
     }
 }

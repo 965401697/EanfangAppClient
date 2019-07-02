@@ -32,17 +32,28 @@ public class PictureInvoking {
     }
 
     public void initRecycle(int maxSelectNum, GridImageAdapter.onAddPicClickListener mOnAddPicClickListener) {
+        adapter = new GridImageAdapter(activity, mOnAddPicClickListener);
+        init(maxSelectNum);
+
+    }
+    public void initRecycle(int maxSelectNum,int size, GridImageAdapter.onAddPicClickListener mOnAddPicClickListener) {
+        adapter = new GridImageAdapter(activity,size, mOnAddPicClickListener);
+        init(maxSelectNum);
+    }
+    public void initRecycle(int maxSelectNum,int size, boolean isShow,GridImageAdapter.onAddPicClickListener mOnAddPicClickListener) {
+        adapter = new GridImageAdapter(activity,size,isShow, mOnAddPicClickListener);
+        init(maxSelectNum);
+    }
+    public void init(int maxSelectNum){
         themeId = R.style.picture_default_style;
         // FullyGridLayoutManager manager = new FullyGridLayoutManager(AddTroubleActivity.this, 3, GridLayoutManager.VERTICAL, false);
         LinearLayoutManager manager = new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false);
         recyclerView.setLayoutManager(manager);
-        adapter = new GridImageAdapter(activity, mOnAddPicClickListener);
         adapter.setList(list);
         adapter.setSelectMax(maxSelectNum);
         adapter.setType(type);
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(listener);
-
     }
 
     GridImageAdapter.OnItemClickListener listener = new GridImageAdapter.OnItemClickListener() {
@@ -75,5 +86,8 @@ public class PictureInvoking {
         this.list=list;
         adapter.setList(list);
         adapter.notifyDataSetChanged();
+    }
+    public void isShow(boolean isShow){
+        adapter.isShow(isShow);
     }
 }
