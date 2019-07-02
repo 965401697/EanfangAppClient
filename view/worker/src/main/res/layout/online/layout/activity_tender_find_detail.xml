@@ -162,6 +162,7 @@
                                 android:id="@+id/iv_verify_status"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/dimen_10"
                                 android:src="@mipmap/ic_contact_auth"
                                 android:visibility="gone" />
                         </LinearLayout>

@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.annimon.stream.Stream;
 import com.eanfang.base.BaseApplication;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
 import com.eanfang.biz.model.vo.tender.TenderCreateVo;
 import com.eanfang.biz.rds.base.BaseViewModel;
@@ -21,9 +22,12 @@ import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.databinding.ActivityTenderCreateBinding;
+import net.eanfang.worker.ui.activity.worksapce.tender.TenderCommitActivity;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import lombok.Getter;
-import lombok.Setter;
 
 /**
  * @author guanluocang
@@ -60,14 +64,20 @@ public class TenderCreateViewModle extends BaseViewModel {
 
     private TenderRepo tenderRepo;
 
-    @Setter
     @Getter
     private ActivityTenderCreateBinding mTenderCreateBinding;
+
+    public void setTenderCreateBinding(ActivityTenderCreateBinding tenderCreateBinding) {
+        this.mTenderCreateBinding = tenderCreateBinding;
+        tenderCreateBinding.setTenderCreateVo(tenderCreateVo);
+    }
 
     private TenderCreateVo tenderCreateVo;
 
     @Getter
     private MutableLiveData<TaskPublishEntity> createTenderLiveData;
+
+    public Map<String, String> uploadMap = new HashMap<>();
 
     public TenderCreateViewModle() {
         createTenderLiveData = new MutableLiveData<>();
@@ -187,13 +197,18 @@ public class TenderCreateViewModle extends BaseViewModel {
         tenderCreateVo.getDescription().set(mTenderCreateBinding.etEnvironment.getText().toString().trim());
         tenderCreateVo.getLaborRequirements().set(mTenderCreateBinding.etRequire.getText().toString().trim());
 
-        tenderRepo.doSetNewTender(tenderCreateVo).observe(lifecycleOwner, tenderBean -> {
-            createTenderLiveData.setValue(tenderBean);
-        });
+        if (uploadMap.size() != 0) {
+            SDKManager.ossKit((TenderCommitActivity) mTenderCreateBinding.getRoot().getContext()).asyncPutImages(uploadMap, (isSuccess) -> {
+                tenderRepo.doSetNewTender(tenderCreateVo).observe(lifecycleOwner, tenderBean -> {
+                    createTenderLiveData.setValue(tenderBean);
+                });
+            });
+        }
+
     }
 
     /**
-     * 再次报价
+     * 再次发布
      */
     public void doReleaseAgain(TaskPublishEntity taskPublishEntity) {
         province = taskPublishEntity.getProvince();

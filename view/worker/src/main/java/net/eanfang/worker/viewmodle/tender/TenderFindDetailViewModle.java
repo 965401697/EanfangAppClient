@@ -49,7 +49,7 @@ public class TenderFindDetailViewModle extends BaseViewModel {
             // 头像
             GlideUtil.intoImageView(tenderFindDetailBinding.getRoot().getContext(), Uri.parse(BuildConfig.OSS_SERVER + tenderBean.getUserEntity().getAccountEntity().getAvatar()), tenderFindDetailBinding.ivHeader);
             //是否认证
-            if (tenderBean.getTaskApplyEntity().getVerifyStatus() == 1) {
+            if (tenderBean.getWorkerEntity().getVerifyStatus() == 1) {
                 tenderFindDetailBinding.ivVerifyStatus.setVisibility(View.VISIBLE);
             } else {
                 tenderFindDetailBinding.ivVerifyStatus.setVisibility(View.GONE);
