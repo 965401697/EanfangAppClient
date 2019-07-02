@@ -67,7 +67,7 @@ public class PhotoUtils {
         StringBuilder urls = new StringBuilder();
 
         for (int i = 0; i <selectList.size(); i++) {
-            String path =selectList.get(i).getCutPath();
+            String path =selectList.get(i).getPath();
             String object = uploadType + UuidUtil.getUUID() + ".png";
             if (path == null || path.length() <= 0) {
                 continue;

@@ -1,4 +1,8 @@
 package net.eanfang.worker.ui.base;
 
-public class BaseWorkeActivity {
+import androidx.lifecycle.ViewModel;
+
+import com.eanfang.base.BaseActivity;
+
+public  abstract class BaseWorkeActivity extends BaseActivity {
 }

@@ -11,19 +11,24 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-
-import com.eanfang.ui.base.BaseActivityWithTakePhoto;
+import com.eanfang.sdk.picture.GridImageAdapter;
+import com.eanfang.sdk.picture.PictureInvoking;
 import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
+import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.V;
+import com.luck.picture.lib.entity.LocalMedia;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 import com.picker.common.util.DateUtils;
@@ -36,6 +41,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -80,6 +86,8 @@ public class AddAuthQualifyActivity extends BaseActivityWithTakePhoto implements
     BGASortableNinePhotoLayout snplMomentAccident;
     @BindView(R.id.tv_save)
     TextView tvSave;
+    @BindView(R.id.recycleview)
+    RecyclerView recycleview;
 
     /**
      * 证书照片
@@ -94,6 +102,8 @@ public class AddAuthQualifyActivity extends BaseActivityWithTakePhoto implements
     private boolean isBegin = true;
     private String isAuth;
     private Long mOrgId;
+    private List<LocalMedia> selectList=new ArrayList<>();
+    private  PictureInvoking invoking;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,10 +138,24 @@ public class AddAuthQualifyActivity extends BaseActivityWithTakePhoto implements
             setTitle("资质证书");
             tvSave.setVisibility(View.GONE);
         }
+         invoking=new PictureInvoking(this,recycleview,selectList);
+        invoking.initRecycle(1,onAddPicClickListener);
     }
-
+    GridImageAdapter.onAddPicClickListener onAddPicClickListener=new GridImageAdapter.onAddPicClickListener() {
+        @Override
+        public void onAddPicClick() {
+            SDKManager.getPicture().create(AddAuthQualifyActivity.this).takePhotos(new IPictureCallBack() {
+                @Override
+                public void onSuccess(List<LocalMedia> list) {
+                    //选择图片成功之后的逻辑处理
+                    selectList = list;
+                    invoking.setList(selectList);
+                }
+            });
+        }
+    };
     private void setZhiDu(boolean isZd) {
-        tvSave.setVisibility(isZd?View.VISIBLE:View.GONE);
+        tvSave.setVisibility(isZd ? View.VISIBLE : View.GONE);
         etCertificateName.setEnabled(isZd);
         etNum.setEnabled(isZd);
         etOrg.setEnabled(isZd);
@@ -227,7 +251,7 @@ public class AddAuthQualifyActivity extends BaseActivityWithTakePhoto implements
         } else {
             url = UserApi.ADD_QUALIFY;
         }
-        SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
+        SDKManager.ossKit(this).asyncPutImages(uploadMap, (isSuccess) -> {
             runOnUiThread(() -> EanfangHttp.post(url).upJson(JSONObject.toJSONString(bean)).execute(new EanfangCallback<JSONObject>(AddAuthQualifyActivity.this, true, JSONObject.class, bean1 -> {
                 setResult(RESULT_OK);
                 finishSelf();

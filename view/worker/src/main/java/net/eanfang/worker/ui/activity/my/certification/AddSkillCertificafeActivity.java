@@ -3,43 +3,54 @@ package net.eanfang.worker.ui.activity.my.certification;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.lifecycle.ViewModel;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.BaseActivity;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-
+import com.eanfang.sdk.picture.GridImageAdapter;
+import com.eanfang.sdk.picture.PictureInvoking;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
+import com.luck.picture.lib.entity.LocalMedia;
+import com.luck.picture.lib.tools.PictureFileUtils;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 import com.picker.DoubleDatePickerDialog;
 import com.picker.common.util.DateUtils;
 import com.yaf.base.entity.QualificationCertificateEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
+import net.eanfang.worker.ui.base.BaseWorkeActivity;
+import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class AddSkillCertificafeActivity extends BaseActivityWithTakePhoto {
+public class AddSkillCertificafeActivity extends BaseWorkeActivity {
 
     @BindView(R.id.et_certificate_name)
     EditText etCertificateName;
@@ -51,12 +62,12 @@ public class AddSkillCertificafeActivity extends BaseActivityWithTakePhoto {
     EditText etNum;
     @BindView(R.id.tv_time)
     TextView tvTime;
-    @BindView(R.id.snpl_moment_accident)
-    BGASortableNinePhotoLayout snplMomentAccident;
     @BindView(R.id.tv_save)
     TextView tvSave;
     @BindView(R.id.ll_date)
     LinearLayout llDate;
+    @BindView(R.id.recycleview)
+    RecyclerView recycleview;
     /**
      * 证书照片
      */
@@ -70,15 +81,16 @@ public class AddSkillCertificafeActivity extends BaseActivityWithTakePhoto {
     private String url;
 
     private QualificationCertificateEntity bean;
+    private List<LocalMedia> selectList = new ArrayList<>();
+    private PictureInvoking invoking;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_skill_certificafe);
         ButterKnife.bind(this);
-        setLeftBack();
+        super.onCreate(savedInstanceState);
+        setLeftBack(true);
         bean = (QualificationCertificateEntity) getIntent().getSerializableExtra("bean");
-        snplMomentAccident.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_CERTIFICATE, REQUEST_CODE_PHOTO_CERTIFICATE));
         setRightTitleOnClickListener(view -> setData());
         if (bean != null) {
             setTitle("资质证书");
@@ -88,17 +100,54 @@ public class AddSkillCertificafeActivity extends BaseActivityWithTakePhoto {
             setRightTitleOnClickListener(view -> {
                         setRightTitle("保存");
                         setZhiDu(true);
+                        invoking.isShow(true);
                         setRightTitleOnClickListener(view1 -> setData());
                     }
-
             );
 
         } else {
             setTitle("资质证书");
             setRightTitle("保存");
             tvSave.setVisibility(View.GONE);
+            picture(true);
         }
     }
+
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
+    }
+
+
+    GridImageAdapter.onAddPicClickListener onAddPicClickListener = new GridImageAdapter.onAddPicClickListener() {
+        @Override
+        public void onAddPicClick() {
+            SDKManager.getPicture().create(AddSkillCertificafeActivity.this)
+                    .setSelectList(selectList)
+                    .takePhotos(list -> {
+                        //选择图片成功之后的逻辑处理
+                        selectList = list;
+                        invoking.setList(selectList);
+                    });
+        }
+    };
+
+    GridImageAdapter.onAddPicClickListener listener = new GridImageAdapter.onAddPicClickListener() {
+        @Override
+        public void onAddPicClick() {
+            SDKManager.getPicture().create(AddSkillCertificafeActivity.this).takePhoto(new IPictureCallBack() {
+                @Override
+                public void onSuccess(List<LocalMedia> list) {
+                    //选择图片成功之后的逻辑处理
+                    if(selectList.size()<3) {
+                        selectList.add(list.get(0));
+                        invoking.setList(selectList);
+                    }
+
+                }
+            });
+        }
+    };
 
     private void setZhiDu(boolean isZd) {
         tvSave.setVisibility(isZd ? View.VISIBLE : View.GONE);
@@ -106,8 +155,6 @@ public class AddSkillCertificafeActivity extends BaseActivityWithTakePhoto {
         etNum.setEnabled(isZd);
         etOrg.setEnabled(isZd);
         llDate.setEnabled(isZd);
-        snplMomentAccident.setPlusEnable(isZd);
-        snplMomentAccident.setEditable(isZd);
     }
 
 
@@ -119,15 +166,28 @@ public class AddSkillCertificafeActivity extends BaseActivityWithTakePhoto {
 
         for (int i = 0; i < pics.length; i++) {
             picList.add(BuildConfig.OSS_SERVER + pics[i]);
+            LocalMedia localMedia = new LocalMedia();
+            localMedia.setPath(BuildConfig.OSS_SERVER + pics[i]);
+            selectList.add(localMedia);
         }
 
         etCertificateName.setText(bean.getCertificateName());
         etOrg.setText(bean.getAwardOrg());
         etNum.setText(bean.getCertificateNumber());
         tvTime.setText(DateUtils.formatDate(bean.getBeginTime(), "yyyy-MM-dd") + " ～ " + DateUtils.formatDate(bean.getEndTime(), "yyyy-MM-dd"));
-        snplMomentAccident.setData(picList);
+        picture(false);
     }
 
+    private void picture(boolean isShow) {
+        invoking = new PictureInvoking(this, recycleview, selectList);
+        if(isShow){
+            invoking.initRecycle(3, 200,  onAddPicClickListener);
+        }else{
+            invoking.initRecycle(3, 200, isShow, listener);
+        }
+
+
+    }
 
     private void setData() {
 
@@ -152,7 +212,7 @@ public class AddSkillCertificafeActivity extends BaseActivityWithTakePhoto {
         entity.setCertificatePics(pic);
 
         entity.setType(0);
-        SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
+        SDKManager.ossKit(this).asyncPutImages(uploadMap, (isSuccess) -> {
             runOnUiThread(() -> {
 
                 EanfangHttp.post(url).upJson(JSONObject.toJSONString(entity)).execute(new EanfangCallback<JSONObject>(AddSkillCertificafeActivity.this, true, JSONObject.class, (bean) -> {
@@ -186,7 +246,7 @@ public class AddSkillCertificafeActivity extends BaseActivityWithTakePhoto {
             return true;
         }
 
-        pic = PhotoUtils.getPhotoUrl("", snplMomentAccident, uploadMap, false);
+        pic = PhotoUtils.getPhotoUrl("", selectList, uploadMap, false);
         if (StringUtils.isEmpty(pic)) {
             showToast("请添加证书");
             return true;
@@ -197,14 +257,6 @@ public class AddSkillCertificafeActivity extends BaseActivityWithTakePhoto {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (data == null) {
-            return;
-        }
-        switch (requestCode) {
-            case REQUEST_CODE_CHOOSE_CERTIFICATE:
-                snplMomentAccident.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
-                break;
-        }
     }
 
     @OnClick({R.id.ll_date, R.id.tv_save})
@@ -253,5 +305,10 @@ public class AddSkillCertificafeActivity extends BaseActivityWithTakePhoto {
                 finish();
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

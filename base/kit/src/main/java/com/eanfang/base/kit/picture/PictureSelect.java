@@ -39,7 +39,7 @@ public class PictureSelect {
     /**
      * 最大图片选择数量
      */
-    public int maxSelectNum = 9;
+    public int maxSelectNum = 3;
 
     /**
      * 最小选择数量
@@ -153,6 +153,7 @@ public class PictureSelect {
      * @param onImageChooseCallBack
      */
     public void takePhoto(IPictureCallBack onImageChooseCallBack) {
+        setSelectList(null);
         pictureSelect(PictureMimeType.ofImage(), false, PictureConfig.SINGLE, 1, onImageChooseCallBack);
     }
 
@@ -193,6 +194,7 @@ public class PictureSelect {
         imageChoose();
     }
 
+    //自定义设置参数后调用
     public void imageChoose(IPictureCallBack OnImageChooseCallBack) {
         setiImageChooseCallBack(OnImageChooseCallBack);
         imageChoose();

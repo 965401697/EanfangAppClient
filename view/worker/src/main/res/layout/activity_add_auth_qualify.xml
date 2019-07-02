@@ -254,6 +254,7 @@
                 android:orientation="horizontal">
 
                 <com.photopicker.com.widget.BGASortableNinePhotoLayout
+                    android:visibility="gone"
                     android:id="@+id/snpl_moment_accident"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -271,6 +272,12 @@
                     app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
                     app:bga_snpl_plusEnable="true"
                     app:bga_snpl_sortable="true" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycleview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </androidx.recyclerview.widget.RecyclerView>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

@@ -13,6 +13,7 @@
         android:layout_centerHorizontal="true">
 
         <ImageView
+            android:layout_marginTop="@dimen/dimen_8"
             android:id="@+id/fiv"
             android:layout_width="@dimen/dimen_100"
             android:layout_height="@dimen/dimen_100"
