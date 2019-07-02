@@ -24,24 +24,25 @@ import com.eanfang.ui.base.BaseActivity;
 public abstract class BaseClientActivity extends BaseActivity {
 
     @SuppressLint("CheckResult")
-    public void into(InvokingData invokingData) {
+    public void into(String key,InvokingData invokingData) {
         RxDialog dialog = new RxDialog(this);
         dialog.setTitle("提示")
                 .setMessage("是否使用缓存数据")
                 .setPositiveText("是")
-                .setNegativeText("使用")
-                .setNeutralText("不使用")
+                .setNegativeText("否")
+//                .setNeutralText("不使用")
                 .dialogToObservable()
                 .subscribe((code) -> {
                     if (code.equals(RxDialog.POSITIVE)) {
-                    } else if (code.equals(RxDialog.NEGATIVE)) {
                         //使用
                         if (invokingData != null)
                             invokingData.invoke();
+                    } else if (code.equals(RxDialog.NEGATIVE)) {
+                        //不使用
+                        CacheKit.get().remove(key);
 
                     } else if (code.equals(RxDialog.NEUTRAL)) {
-                        //不使用
-                        CacheKit.get().remove("installOrder");
+
                     }
                 });
     }
@@ -51,7 +52,7 @@ public abstract class BaseClientActivity extends BaseActivity {
     }
 
     @SuppressLint("CheckResult")
-    public void out(BaseVo baseVo) {
+    public void out(String key,BaseVo baseVo) {
         RxDialog dialog = new RxDialog(this);
         dialog.setTitle("提示")
                 .setMessage("是否放弃报装并保存已编辑信息？")
@@ -60,9 +61,10 @@ public abstract class BaseClientActivity extends BaseActivity {
                 .dialogToObservable()
                 .subscribe((code) -> {
                     if (code.equals(RxDialog.POSITIVE)) {
-                        CacheKit.get().putVo("installOrder", baseVo);
+                        CacheKit.get().putVo(key, baseVo);
                         finish();
                     } else if (code.equals(RxDialog.NEGATIVE)) {
+                        finish();
                     }
                 });
     }

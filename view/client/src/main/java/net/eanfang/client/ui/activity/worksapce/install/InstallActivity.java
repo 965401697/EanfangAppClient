@@ -125,7 +125,7 @@ public class InstallActivity extends BaseClientActivity {
             return;
         }
 
-        into(new InvokingData() {
+        into("installOrder",new InvokingData() {
             @Override
             public void invoke() {
                 binding.setInstallbean(installOrderConfirmVo);
@@ -281,7 +281,7 @@ public class InstallActivity extends BaseClientActivity {
      */
     @SuppressLint("CheckResult")
     private void giveUp() {
-        out(installOrderConfirmVo);
+        out("installOrder",installOrderConfirmVo);
     }
 
     @Override

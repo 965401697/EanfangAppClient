@@ -6,12 +6,14 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 
+import androidx.lifecycle.ViewModel;
+
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.base.BaseActivity;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
 import com.google.zxing.BarcodeFormat;
@@ -60,9 +62,14 @@ public class ScanCodeActivity extends BaseActivity {
         initView();
     }
 
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
+    }
 
-    private void initView() {
-        setLeftBack();
+
+    public void initView() {
+        setLeftBack(true);
         setTitle("二维码扫描");
         barcodeScannerView = findViewById(R.id.zxing_barcode_scanner);
         Collection<BarcodeFormat> formats = Arrays.asList(BarcodeFormat.QR_CODE, BarcodeFormat.CODE_39);
@@ -106,7 +113,7 @@ public class ScanCodeActivity extends BaseActivity {
                     } else {
                         EventBus.getDefault().post(accountId);
                     }
-                    finishSelf();
+                    finish();
                 } else {
                     doGetAccount(accountId);
                 }
@@ -137,7 +144,7 @@ public class ScanCodeActivity extends BaseActivity {
                 }
                 intent.putExtra("groupId", resultString);
                 startActivity(intent);
-                finishSelf();
+                finish();
             } else if (resultString.contains("qr?uid=")) {// 扫描设备
                 String deviceId = getValueByName(result.getText(), "uid");
                 String assigneeCompanyId = getValueByName(result.getText(), "assigneeCompanyId");
@@ -147,10 +154,10 @@ public class ScanCodeActivity extends BaseActivity {
                 bundle.putString("assigneeCompanyId", assigneeCompanyId);
                 bundle.putString("businessOneCode", businessOneCode);
                 JumpItent.jump(ScanCodeActivity.this, EquipmentDetailActivity.class, bundle);
-                finishSelf();
+                finish();
             } else {
                 showToast("二维码无效");
-                finishSelf();
+                finish();
             }
         }
 
@@ -195,7 +202,7 @@ public class ScanCodeActivity extends BaseActivity {
                     public void onFail(Integer code, String message, JSONObject jsonObject) {
                         super.onFail(code, message, jsonObject);
                         Log.e("GG", "失败");
-                        finishSelf();
+                        finish();
                     }
                 });
     }
@@ -205,7 +212,7 @@ public class ScanCodeActivity extends BaseActivity {
      */
     private void doGetWorkDetail(WorkerEntity workerEntity) {
         EventBus.getDefault().post(workerEntity);
-        finishSelf();
+        finish();
     }
 
     /**
@@ -226,7 +233,7 @@ public class ScanCodeActivity extends BaseActivity {
                             startActivity(new Intent(ScanCodeActivity.this, LoginConfirmActivity.class)
                                     .putExtra("which", requestFrom)
                                     .putExtra("uuid", uuid));
-                            finishSelf();
+                            finish();
                         } else {
                             showToast("暂无权限");
                             finish();
