@@ -6,7 +6,9 @@ import android.view.View;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.eanfang.BuildConfig;
 import com.eanfang.R;
+import com.eanfang.util.StringUtils;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
@@ -89,5 +91,19 @@ public class PictureInvoking {
     }
     public void isShow(boolean isShow){
         adapter.isShow(isShow);
+    }
+    public void setData(String str, int type) {
+        if(StringUtils.isEmpty(str)){
+            return;
+        }
+        String[] images = str.split(",");
+        for (int i = 0; i < images.length; i++) {
+            LocalMedia localMedi = new LocalMedia();
+            localMedi.setPath(BuildConfig.OSS_SERVER +images[i]+".jpg");
+            localMedi.setPictureType(type+"");
+            list.add(localMedi);
+        }
+        setList(list);
+
     }
 }
