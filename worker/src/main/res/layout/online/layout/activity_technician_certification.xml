@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scaleType="fitXY"
-        android:src="@mipmap/jsrz_lc" />
+        android:src="@mipmap/qyrz_wsxx" />
 
     <net.eanfang.worker.ui.widget.WQLeftRightClickTextView
         android:id="@+id/sm_rz_wq_tv"
