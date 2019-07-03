@@ -2,17 +2,11 @@ package net.eanfang.worker.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.view.View;
-import android.widget.ExpandableListView;
-import android.widget.TextView;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModel;
 
-import com.annimon.stream.Stream;
 import com.eanfang.base.BaseActivity;
-import com.eanfang.config.Config;
 import com.eanfang.biz.model.GrantChange;
 import com.eanfang.biz.model.SystypeBean;
 import com.eanfang.biz.model.entity.BaseDataEntity;
@@ -26,10 +20,7 @@ import net.eanfang.worker.ui.interfaces.AreaCheckChangeListener;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
-
-import butterknife.BindView;
 
 /**
  * @author guanluocang
@@ -47,6 +38,8 @@ public class SelectAreaActivity extends BaseActivity implements AreaCheckChangeL
     private GrantChange grantChange = new GrantChange();
 
     private ActivitySelectAreaBinding mSelectAreaBinding;
+
+    private int mSelectSize = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,20 +82,13 @@ public class SelectAreaActivity extends BaseActivity implements AreaCheckChangeL
     }
 
     private void initData() {
-//        byNetGrant = bean;
         fillData();
     }
 
 
     private void fillData() {
-//        if (byNetGrant != null) {
-//            selDataId = new HashSet<>(byNetGrant.getList().size());
-//            selDataId.addAll(Stream.of(byNetGrant.getList()).map(bean -> bean.getDataId()).toList());
-//            setListData(areaListBean, true, selDataId);
-//        }
         initAdapter(areaListBean);
     }
-
 
     private void initAdapter(List<BaseDataEntity> areaListBean) {
         mAdapter = new net.eanfang.worker.ui.activity.GroupAdapter(this, areaListBean);
@@ -192,6 +178,7 @@ public class SelectAreaActivity extends BaseActivity implements AreaCheckChangeL
                 areaListBean.get(onPos).setCheck(false);
             }
             holder.getTv().setText(areaListBean.get(onPos).getDataName() + "(" + checkAreaSize + "/" + areaSize + ")");
+            mSelectSize = checkAreaSize;
         }
     }
 }

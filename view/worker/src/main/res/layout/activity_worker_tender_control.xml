@@ -87,7 +87,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             android:layout_marginRight="@dimen/dimen_40"
-            android:layout_marginBottom="@dimen/dimen_30"
+            android:layout_marginBottom="@dimen/dimen_200"
             android:scaleType="fitXY"
             android:visibility="gone"
             android:src="@mipmap/ic_worker_security_create" />

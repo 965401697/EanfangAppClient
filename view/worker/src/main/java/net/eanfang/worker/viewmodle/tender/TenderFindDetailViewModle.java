@@ -1,6 +1,8 @@
 package net.eanfang.worker.viewmodle.tender;
 
+import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.view.View;
 
 import androidx.lifecycle.MutableLiveData;
@@ -17,6 +19,8 @@ import com.eanfang.util.GlideUtil;
 import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.databinding.ActivityTenderFindDetailBinding;
+import net.eanfang.worker.ui.activity.im.SelectIMContactActivity;
+import net.eanfang.worker.ui.activity.my.UserHomeActivity;
 import net.eanfang.worker.ui.activity.worksapce.tender.TenderFindDetailActivity;
 
 import lombok.Getter;
@@ -94,4 +98,29 @@ public class TenderFindDetailViewModle extends BaseViewModel {
         });
     }
 
+    /**
+     * 跳转用户主页
+     */
+    public void doJumpUserHome() {
+        UserHomeActivity.startActivityForUid((TenderFindDetailActivity) tenderFindDetailBinding.getRoot().getContext(), tenderLiveData.getValue().getUserEntity().getUserId());
+    }
+
+    /**
+     * 分享
+     */
+    public void doShare() {
+        Intent intent = new Intent((TenderFindDetailActivity) tenderFindDetailBinding.getRoot().getContext(), SelectIMContactActivity.class);
+        Bundle bundle = new Bundle();
+
+        bundle.putString("id", String.valueOf(tenderLiveData.getValue().getId()));
+        bundle.putString("orderNum", tenderLiveData.getValue().getPublishCompanyName());
+        if (!StringUtils.isEmpty(tenderLiveData.getValue().getPictures())) {
+            bundle.putString("picUrl", tenderLiveData.getValue().getPictures().split(",")[0]);
+        }
+        bundle.putString("creatTime", tenderLiveData.getValue().getLaborRequirements());
+        bundle.putString("workerName", tenderLiveData.getValue().getContacts());
+        bundle.putString("shareType", "11");
+        intent.putExtras(bundle);
+        tenderFindDetailBinding.getRoot().getContext().startActivity(intent);
+    }
 }

@@ -10,10 +10,10 @@ import com.eanfang.biz.model.vo.tender.TenderCommitVo;
 import com.eanfang.biz.model.vo.tender.TenderCreateVo;
 import com.eanfang.biz.rds.base.BaseRemoteDataSource;
 import com.eanfang.biz.rds.base.BaseViewModel;
+import com.eanfang.biz.rds.base.CacheModel;
 import com.eanfang.biz.rds.sys.api.tender.TenderApi;
 import com.eanfang.biz.rds.sys.ds.tender.ITenderDs;
-
-import java.lang.reflect.Field;
+import com.zchu.rxcache.stategy.CacheStrategy;
 
 /**
  * @author guanluocang
@@ -30,7 +30,8 @@ public class TenderDs extends BaseRemoteDataSource implements ITenderDs {
      */
     @Override
     public void getTenderFind(QueryEntry queryEntry, RequestCallback<PageBean<TaskPublishEntity>> callback) {
-        execute(getService(TenderApi.class).getTenderFindList(queryEntry), callback);
+        execute(getService(TenderApi.class).getTenderFindList(queryEntry), callback,
+                new CacheModel().setCacheStrategy(CacheStrategy.firstRemote()).setClazz(TenderApi.class).setMethod("getTenderFind").setValues(queryEntry));
     }
 
     /**
@@ -38,7 +39,8 @@ public class TenderDs extends BaseRemoteDataSource implements ITenderDs {
      */
     @Override
     public void getTendeNotice(QueryEntry queryEntry, RequestCallback<PageBean<IfbOrderEntity>> callback) {
-        execute(getService(TenderApi.class).getTenderNoticeList(queryEntry), callback);
+        execute(getService(TenderApi.class).getTenderNoticeList(queryEntry), callback,
+                new CacheModel().setCacheStrategy(CacheStrategy.firstRemote()).setClazz(TenderApi.class).setMethod("getTendeNotice").setValues(queryEntry));
     }
 
 
@@ -47,7 +49,8 @@ public class TenderDs extends BaseRemoteDataSource implements ITenderDs {
      */
     @Override
     public void setNewTende(TenderCreateVo tenderCreateVo, RequestCallback<TaskPublishEntity> callback) {
-        execute(getService(TenderApi.class).setNewTender(tenderCreateVo), callback);
+        execute(getService(TenderApi.class).setNewTender(tenderCreateVo), callback,
+                new CacheModel().setCacheStrategy(CacheStrategy.firstRemote()).setClazz(TenderApi.class).setMethod("setNewTende").setValues(tenderCreateVo));
     }
 
     /**
@@ -55,7 +58,8 @@ public class TenderDs extends BaseRemoteDataSource implements ITenderDs {
      */
     @Override
     public void getFindDetail(String id, RequestCallback<TaskPublishEntity> callback) {
-        execute(getService(TenderApi.class).getTenderDetail(id), callback);
+        execute(getService(TenderApi.class).getTenderDetail(id), callback,
+                new CacheModel().setCacheStrategy(CacheStrategy.firstRemote()).setClazz(TenderApi.class).setMethod("getFindDetail").setValues(id));
     }
 
     /**
@@ -63,7 +67,8 @@ public class TenderDs extends BaseRemoteDataSource implements ITenderDs {
      */
     @Override
     public void setCommitTender(TenderCommitVo tenderCommitVo, RequestCallback<TaskPublishEntity> callback) {
-        execute(getService(TenderApi.class).setCommitTender(tenderCommitVo), callback);
+        execute(getService(TenderApi.class).setCommitTender(tenderCommitVo), callback,
+                new CacheModel().setCacheStrategy(CacheStrategy.firstRemote()).setClazz(TenderApi.class).setMethod("setCommitTender").setValues(tenderCommitVo));
     }
 
     /**
@@ -71,7 +76,8 @@ public class TenderDs extends BaseRemoteDataSource implements ITenderDs {
      */
     @Override
     public void getMyReleaseTender(QueryEntry queryEntry, RequestCallback<PageBean<TaskPublishEntity>> callback) {
-        execute(getService(TenderApi.class).getMyReleaseTendeList(queryEntry), callback);
+        execute(getService(TenderApi.class).getMyReleaseTendeList(queryEntry), callback,
+                new CacheModel().setCacheStrategy(CacheStrategy.firstRemote()).setClazz(TenderApi.class).setMethod("getMyReleaseTender").setValues(queryEntry));
     }
 
     /**
@@ -79,7 +85,8 @@ public class TenderDs extends BaseRemoteDataSource implements ITenderDs {
      */
     @Override
     public void getMyBidTender(QueryEntry queryEntry, RequestCallback<PageBean<TaskApplyEntity>> callback) {
-        execute(getService(TenderApi.class).getMyBidTenderList(queryEntry), callback);
+        execute(getService(TenderApi.class).getMyBidTenderList(queryEntry), callback,
+                new CacheModel().setCacheStrategy(CacheStrategy.firstRemote()).setClazz(TenderApi.class).setMethod("getMyBidTender").setValues(queryEntry));
     }
 
     /**
@@ -90,7 +97,8 @@ public class TenderDs extends BaseRemoteDataSource implements ITenderDs {
      */
     @Override
     public void doCloseReleaseTender(TaskPublishEntity taskPublishEntity, RequestCallback<TaskPublishEntity> callback) {
-        execute(getService(TenderApi.class).doCloseReleaseTende(taskPublishEntity), callback);
+        execute(getService(TenderApi.class).doCloseReleaseTende(taskPublishEntity), callback,
+                new CacheModel().setCacheStrategy(CacheStrategy.firstRemote()).setClazz(TenderApi.class).setMethod("doCloseReleaseTender").setValues(taskPublishEntity));
     }
 
     /**
@@ -98,7 +106,8 @@ public class TenderDs extends BaseRemoteDataSource implements ITenderDs {
      */
     @Override
     public void getTenderOfferDetail(QueryEntry queryEntry, RequestCallback<PageBean<TaskApplyEntity>> callback) {
-        execute(getService(TenderApi.class).getMyReleaseTendeDetail(queryEntry), callback);
+        execute(getService(TenderApi.class).getMyReleaseTendeDetail(queryEntry), callback,
+                new CacheModel().setCacheStrategy(CacheStrategy.firstRemote()).setClazz(TenderApi.class).setMethod("getTenderOfferDetail").setValues(queryEntry));
     }
 
     /**
@@ -106,7 +115,8 @@ public class TenderDs extends BaseRemoteDataSource implements ITenderDs {
      */
     @Override
     public void getTenderBidDetail(String mBidId, RequestCallback<TaskApplyEntity> callback) {
-        execute(getService(TenderApi.class).getMyBidTendeDetail(mBidId), callback);
+        execute(getService(TenderApi.class).getMyBidTendeDetail(mBidId), callback,
+                new CacheModel().setCacheStrategy(CacheStrategy.firstRemote()).setClazz(TenderApi.class).setMethod("getTenderBidDetail").setValues(mBidId));
     }
 
     /**
@@ -114,7 +124,8 @@ public class TenderDs extends BaseRemoteDataSource implements ITenderDs {
      */
     @Override
     public void doChangeOfferStatus(TaskApplyEntity taskApplyEntity, RequestCallback<TaskApplyEntity> callback) {
-        execute(getService(TenderApi.class).getMyReleaseTendeDetail(taskApplyEntity), callback);
+        execute(getService(TenderApi.class).getMyReleaseTendeDetail(taskApplyEntity), callback,
+                new CacheModel().setCacheStrategy(CacheStrategy.firstRemote()).setClazz(TenderApi.class).setMethod("doChangeOfferStatus").setValues(taskApplyEntity));
     }
 
 }

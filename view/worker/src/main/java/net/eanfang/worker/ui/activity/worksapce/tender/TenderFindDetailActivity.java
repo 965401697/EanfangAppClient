@@ -42,6 +42,7 @@ public class TenderFindDetailActivity extends BaseActivity {
     protected void initView() {
         setTitle("用工详情");
         setLeftBack(true);
+        setRightTitle("分享");
         tenderFindDetailViewModle.mTendFindId = getIntent().getLongExtra("tendFindId", 0);
         tenderFindDetailViewModle.initData();
 
@@ -57,7 +58,10 @@ public class TenderFindDetailActivity extends BaseActivity {
          * 用户信息
          * */
         tenderFindDetailBinding.llReleaseInfo.setOnClickListener((v) -> {
-            UserHomeActivity.startActivityForUid(TenderFindDetailActivity.this, BaseApplication.get().getUserId());
+            tenderFindDetailViewModle.doJumpUserHome();
+        });
+        setRightTitleOnClickListener((v) -> {
+            tenderFindDetailViewModle.doShare();
         });
     }
 

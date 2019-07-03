@@ -1,13 +1,10 @@
 package net.eanfang.worker.ui.activity.worksapce.tender;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.ViewModel;
-import androidx.viewpager.widget.ViewPager;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ImageView;
+
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModel;
 
 import com.eanfang.base.BaseActivity;
 import com.eanfang.biz.model.bean.QueryEntry;
@@ -83,6 +80,9 @@ public class TenderPersonControlActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         int currentTab = tenderPersonControlBinding.vpTenderList.getCurrentItem();
+        if(data==null){
+            return;
+        }
         if (resultCode == RESULT_OK && requestCode == FILTRATE_TYPE_CODE) {
             QueryEntry queryEntry = (QueryEntry) data.getSerializableExtra("query");
             if (queryEntry != null) {
