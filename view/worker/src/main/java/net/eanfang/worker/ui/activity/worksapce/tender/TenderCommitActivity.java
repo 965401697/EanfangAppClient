@@ -80,17 +80,19 @@ public class TenderCommitActivity extends BaseActivity {
         GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + BaseApplication.get().getAccount().getAvatar()), tenderCommitBinding.ivHeader);
         tenderCommitBinding.tvName.setText(BaseApplication.get().getAccount().getRealName());
         tenderCommitBinding.tvCompany.setText(BaseApplication.get().getCompanyEntity().getOrgName());
+        mPicInvoke = new PictureInvoking((TenderCommitActivity) tenderCommitBinding.getRoot().getContext(), tenderCommitBinding.rvSelectPic);
+        mPicInvoke.initRecycle(3, onAddPicClickListener);
         if (BaseApplication.get().getAccount().getRealVerify() == 0) {
             tenderCommitBinding.ivVerifyStatus.setVisibility(View.VISIBLE);
         } else {
             tenderCommitBinding.ivVerifyStatus.setVisibility(View.GONE);
         }
         if (mTaskApplyEntity != null) {
+            mPicInvoke.setData(mTaskApplyEntity.getPictures(),1);
             tenderCommitViewModle.doSetAgainData(mTaskApplyEntity);
         }
         initListener();
-        mPicInvoke = new PictureInvoking((TenderCommitActivity) tenderCommitBinding.getRoot().getContext(), tenderCommitBinding.rvSelectPic, mPicList);
-        mPicInvoke.initRecycle(3, onAddPicClickListener);
+
     }
 
     private void initListener() {

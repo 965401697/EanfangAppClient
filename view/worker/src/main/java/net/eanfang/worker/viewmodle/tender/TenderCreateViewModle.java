@@ -22,7 +22,7 @@ import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.databinding.ActivityTenderCreateBinding;
-import net.eanfang.worker.ui.activity.worksapce.tender.TenderCommitActivity;
+import net.eanfang.worker.ui.activity.worksapce.tender.TenderCreateActivity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -198,7 +198,7 @@ public class TenderCreateViewModle extends BaseViewModel {
         tenderCreateVo.getLaborRequirements().set(mTenderCreateBinding.etRequire.getText().toString().trim());
 
         if (uploadMap.size() != 0) {
-            SDKManager.ossKit((TenderCommitActivity) mTenderCreateBinding.getRoot().getContext()).asyncPutImages(uploadMap, (isSuccess) -> {
+            SDKManager.ossKit((TenderCreateActivity) mTenderCreateBinding.getRoot().getContext()).asyncPutImages(uploadMap, (isSuccess) -> {
                 tenderRepo.doSetNewTender(tenderCreateVo).observe(lifecycleOwner, tenderBean -> {
                     createTenderLiveData.setValue(tenderBean);
                 });
