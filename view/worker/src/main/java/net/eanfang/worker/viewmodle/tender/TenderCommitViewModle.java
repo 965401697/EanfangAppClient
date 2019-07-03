@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.annimon.stream.Stream;
 import com.eanfang.base.BaseApplication;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.biz.model.entity.tender.TaskApplyEntity;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
 import com.eanfang.biz.model.vo.tender.TenderCommitVo;
@@ -19,9 +20,12 @@ import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.databinding.ActivityTenderCommitBinding;
+import net.eanfang.worker.ui.activity.worksapce.tender.TenderCommitActivity;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import lombok.Getter;
-import lombok.Setter;
 
 /**
  * @author guanluocang
@@ -30,15 +34,22 @@ import lombok.Setter;
  */
 public class TenderCommitViewModle extends BaseViewModel {
     private TenderRepo tenderRepo;
-    @Setter
     @Getter
     private ActivityTenderCommitBinding tenderCommitBinding;
+
+    public void setTenderCommitBinding(ActivityTenderCommitBinding mTenderCommitBinding){
+        this.tenderCommitBinding = mTenderCommitBinding;
+        tenderCommitBinding.setTenderCommitVo(tenderCommitVo);
+    }
 
     @Getter
     private MutableLiveData<TaskPublishEntity> createTenderLiveData;
 
     private TenderCommitVo tenderCommitVo;
     public Long mPublishId;
+
+    public Map<String, String> uploadMap = new HashMap<>();
+
 
     public TenderCommitViewModle() {
         tenderRepo = new TenderRepo(new TenderDs(this));
@@ -52,7 +63,6 @@ public class TenderCommitViewModle extends BaseViewModel {
     public void doSelectBudgetUnit() {
         PickerSelectUtil.singleTextPicker((Activity) tenderCommitBinding.getRoot().getContext(), "", tenderCommitBinding.tvBudgetUnit,
                 Stream.of(GetConstDataUtils.getTenderBudgetUnit()).map(bus -> bus).toList());
-
     }
 
     /**
@@ -94,15 +104,18 @@ public class TenderCommitViewModle extends BaseViewModel {
         tenderCommitVo.getProjectQuote().set(tenderCommitBinding.tvBudget.getText().toString().trim());
         tenderCommitVo.getBudgetUnit().set(tenderCommitBinding.tvBudgetUnit.getText().toString().trim());
         tenderCommitVo.getDescription().set(tenderCommitBinding.etPlan.getText().toString().trim());
-
-        tenderRepo.doSetCommitTender(tenderCommitVo).observe(lifecycleOwner, tenderBean -> {
-            createTenderLiveData.setValue(tenderBean);
-        });
-//        tenderCommitVo.getPictures().set();
+        if (uploadMap.size() != 0) {
+            SDKManager.ossKit((TenderCommitActivity) tenderCommitBinding.getRoot().getContext()).asyncPutImages(uploadMap, (isSuccess) -> {
+                tenderRepo.doSetCommitTender(tenderCommitVo).observe(lifecycleOwner, tenderBean -> {
+                    createTenderLiveData.setValue(tenderBean);
+                });
+            });
+        }
     }
 
     /**
      * 再次报价
+     *
      * @param mTaskApplyEntity
      */
     public void doSetAgainData(TaskApplyEntity mTaskApplyEntity) {
@@ -111,4 +124,5 @@ public class TenderCommitViewModle extends BaseViewModel {
         tenderCommitBinding.tvBudgetUnit.setText(mTaskApplyEntity.getBudgetUnit());
         tenderCommitBinding.etPlan.setText(mTaskApplyEntity.getDescription());
     }
+
 }

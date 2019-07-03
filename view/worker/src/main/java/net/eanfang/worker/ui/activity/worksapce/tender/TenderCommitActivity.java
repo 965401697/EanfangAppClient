@@ -10,17 +10,26 @@ import androidx.lifecycle.ViewModel;
 import com.eanfang.BuildConfig;
 import com.eanfang.base.BaseActivity;
 import com.eanfang.base.BaseApplication;
+import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.biz.model.Message;
 import com.eanfang.biz.model.entity.tender.TaskApplyEntity;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
 import com.eanfang.biz.rds.base.LViewModelProviders;
+import com.eanfang.sdk.picture.GridImageAdapter;
+import com.eanfang.sdk.picture.PictureInvoking;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
+import com.eanfang.util.PhotoUtils;
+import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.databinding.ActivityTenderCommitBinding;
 import net.eanfang.worker.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.worker.viewmodle.tender.TenderCommitViewModle;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -41,10 +50,24 @@ public class TenderCommitActivity extends BaseActivity {
 
     private TaskApplyEntity mTaskApplyEntity;
 
+    /**
+     * 选择图片
+     */
+    private List<LocalMedia> mPicList = new ArrayList<>();
+    private PictureInvoking mPicInvoke;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         tenderCommitBinding = DataBindingUtil.setContentView(this, R.layout.activity_tender_commit);
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected ViewModel initViewModel() {
+        tenderCommitViewModle = LViewModelProviders.of(this, TenderCommitViewModle.class);
+        tenderCommitBinding.setTenderCommitVm(tenderCommitViewModle);
+        tenderCommitViewModle.setTenderCommitBinding(tenderCommitBinding);
+        return tenderCommitViewModle;
     }
 
     @Override
@@ -62,15 +85,18 @@ public class TenderCommitActivity extends BaseActivity {
         } else {
             tenderCommitBinding.ivVerifyStatus.setVisibility(View.GONE);
         }
-        if (mTaskApplyEntity != null){
+        if (mTaskApplyEntity != null) {
             tenderCommitViewModle.doSetAgainData(mTaskApplyEntity);
         }
         initListener();
+        mPicInvoke = new PictureInvoking((TenderCommitActivity) tenderCommitBinding.getRoot().getContext(), tenderCommitBinding.rvSelectPic, mPicList);
+        mPicInvoke.initRecycle(3, onAddPicClickListener);
     }
 
     private void initListener() {
         tenderCommitViewModle.getCreateTenderLiveData().observe(this, this::getCommonData);
     }
+
 
     private void getCommonData(TaskPublishEntity taskPublishEntity) {
         Bundle bundle = new Bundle();
@@ -82,11 +108,16 @@ public class TenderCommitActivity extends BaseActivity {
         finish();
     }
 
-    @Override
-    protected ViewModel initViewModel() {
-        tenderCommitViewModle = LViewModelProviders.of(this, TenderCommitViewModle.class);
-        tenderCommitBinding.setTenderCommitVm(tenderCommitViewModle);
-        tenderCommitViewModle.setTenderCommitBinding(tenderCommitBinding);
-        return tenderCommitViewModle;
-    }
+    GridImageAdapter.onAddPicClickListener onAddPicClickListener = () -> {
+        SDKManager.getPicture().create((TenderCommitActivity) tenderCommitBinding.getRoot().getContext()).takePhotos(new IPictureCallBack() {
+            @Override
+            public void onSuccess(List<LocalMedia> list) {
+                mPicList = list;
+                mPicInvoke.setList(mPicList);
+                String mImages = PhotoUtils.getPhotoUrl("biz/tender/", mPicList, tenderCommitViewModle.uploadMap, true);
+                tenderCommitBinding.getTenderCommitVo().getPictures().set(mImages);
+            }
+        });
+    };
+
 }

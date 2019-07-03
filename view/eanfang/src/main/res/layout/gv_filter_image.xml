@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rl"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    >
+    android:layout_height="wrap_content">
 
     <RelativeLayout
         android:id="@+id/relative"
@@ -17,8 +16,7 @@
             android:id="@+id/fiv"
             android:layout_width="@dimen/dimen_100"
             android:layout_height="@dimen/dimen_100"
-            android:src="@color/color_f6"
-            />
+            android:src="@color/color_f6" />
 
         <LinearLayout
             android:id="@+id/ll_del"
