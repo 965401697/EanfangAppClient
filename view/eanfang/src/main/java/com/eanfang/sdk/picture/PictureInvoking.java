@@ -13,6 +13,7 @@ import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PictureInvoking {
@@ -33,20 +34,28 @@ public class PictureInvoking {
         this.list = list;
     }
 
+    public PictureInvoking(Activity activity, RecyclerView recyclerView) {
+        this.activity = activity;
+        this.recyclerView = recyclerView;
+    }
+
     public void initRecycle(int maxSelectNum, GridImageAdapter.onAddPicClickListener mOnAddPicClickListener) {
         adapter = new GridImageAdapter(activity, mOnAddPicClickListener);
         init(maxSelectNum);
 
     }
-    public void initRecycle(int maxSelectNum,int size, GridImageAdapter.onAddPicClickListener mOnAddPicClickListener) {
-        adapter = new GridImageAdapter(activity,size, mOnAddPicClickListener);
+
+    public void initRecycle(int maxSelectNum, int size, GridImageAdapter.onAddPicClickListener mOnAddPicClickListener) {
+        adapter = new GridImageAdapter(activity, size, mOnAddPicClickListener);
         init(maxSelectNum);
     }
-    public void initRecycle(int maxSelectNum,int size, boolean isShow,GridImageAdapter.onAddPicClickListener mOnAddPicClickListener) {
-        adapter = new GridImageAdapter(activity,size,isShow, mOnAddPicClickListener);
+
+    public void initRecycle(int maxSelectNum, int size, boolean isShow, GridImageAdapter.onAddPicClickListener mOnAddPicClickListener) {
+        adapter = new GridImageAdapter(activity, size, isShow, mOnAddPicClickListener);
         init(maxSelectNum);
     }
-    public void init(int maxSelectNum){
+
+    public void init(int maxSelectNum) {
         themeId = R.style.picture_default_style;
         // FullyGridLayoutManager manager = new FullyGridLayoutManager(AddTroubleActivity.this, 3, GridLayoutManager.VERTICAL, false);
         LinearLayoutManager manager = new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false);
@@ -85,22 +94,25 @@ public class PictureInvoking {
     };
 
     public void setList(List<LocalMedia> list) {
-        this.list=list;
+        this.list = list;
         adapter.setList(list);
         adapter.notifyDataSetChanged();
     }
-    public void isShow(boolean isShow){
+
+    public void isShow(boolean isShow) {
         adapter.isShow(isShow);
     }
+
     public void setData(String str, int type) {
-        if(StringUtils.isEmpty(str)){
+        if (StringUtils.isEmpty(str)) {
             return;
         }
+        list = new ArrayList<>();
         String[] images = str.split(",");
         for (int i = 0; i < images.length; i++) {
             LocalMedia localMedi = new LocalMedia();
-            localMedi.setPath(BuildConfig.OSS_SERVER +images[i]+".jpg");
-            localMedi.setPictureType(type+"");
+            localMedi.setPath(BuildConfig.OSS_SERVER + images[i] );
+            localMedi.setPictureType(type + "");
             list.add(localMedi);
         }
         setList(list);

@@ -11,11 +11,13 @@ import com.eanfang.biz.rds.base.BaseViewModel;
 import com.eanfang.biz.rds.sys.ds.impl.tender.TenderDs;
 import com.eanfang.biz.rds.sys.repo.tender.TenderRepo;
 import com.eanfang.config.Config;
+import com.eanfang.sdk.picture.PictureInvoking;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.databinding.ActivityTenderFindDetailBinding;
+import net.eanfang.worker.ui.activity.worksapce.tender.TenderFindDetailActivity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -35,6 +37,7 @@ public class TenderFindDetailViewModle extends BaseViewModel {
     @Getter
     private ActivityTenderFindDetailBinding tenderFindDetailBinding;
 
+    private PictureInvoking invoking;
 
     public TenderFindDetailViewModle() {
         tenderLiveData = new MutableLiveData<>();
@@ -65,7 +68,10 @@ public class TenderFindDetailViewModle extends BaseViewModel {
             //预算
             tenderFindDetailBinding.tvBudget.setText(tenderBean.getBudget() + "元/" + tenderBean.getBudgetUnit());
             // 附件
-
+            invoking = new PictureInvoking((TenderFindDetailActivity) tenderFindDetailBinding.getRoot().getContext(), tenderFindDetailBinding.rvSelectPic);
+            invoking.initRecycle(3, 200, false, null);
+            invoking.setData(tenderBean.getPictures(), 1);
+            invoking.isShow(false);
             // 天  时  分
             String endTime = GetDateUtils.dateToDateTimeString(tenderBean.getEndTime());
             if (!StringUtils.isEmpty(endTime)) {
