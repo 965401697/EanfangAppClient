@@ -399,8 +399,8 @@
                             android:background="@null"
                             android:hint="请输入详细描述"
                             android:padding="@dimen/dimen_30"
-                            android:textColor="@color/color_bottom"
-                            android:textColorHint="@color/color_bottom"
+                            android:textColor="@color/color_client_neworder"
+                            android:textColorHint="@color/color_client_neworder"
                             android:textSize="@dimen/textSize_13" />
                     </LinearLayout>
 
@@ -443,7 +443,7 @@
                             android:hint="请输入用工要求"
                             android:padding="@dimen/dimen_30"
                             android:textColor="@color/color_client_neworder"
-                            android:textColorHint="@color/color_bottom"
+                            android:textColorHint="@color/color_client_neworder"
                             android:textSize="@dimen/textSize_13" />
                     </LinearLayout>
 

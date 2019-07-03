@@ -14,12 +14,8 @@ import android.widget.TextView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.RequestOptions;
 import com.eanfang.R;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.V;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
@@ -47,12 +43,13 @@ public class GridImageAdapter extends
     private int type = 0;
     private Context context;
     private int size = 0;
-    private boolean isShow=true;
+    private boolean isShow = true;
     /**
      * 点击添加图片跳转
      */
     private onAddPicClickListener mOnAddPicClickListener;
     ViewHolder viewHolder;
+
     public interface onAddPicClickListener {
         void onAddPicClick();
     }
@@ -69,12 +66,13 @@ public class GridImageAdapter extends
         this.mOnAddPicClickListener = mOnAddPicClickListener;
         this.size = size;
     }
-    public GridImageAdapter(Context context, int size,boolean isShow, onAddPicClickListener mOnAddPicClickListener) {
+
+    public GridImageAdapter(Context context, int size, boolean isShow, onAddPicClickListener mOnAddPicClickListener) {
         this.context = context;
         mInflater = LayoutInflater.from(context);
         this.mOnAddPicClickListener = mOnAddPicClickListener;
         this.size = size;
-        this.isShow=isShow;
+        this.isShow = isShow;
     }
 
     public void setSelectMax(int selectMax) {
@@ -107,7 +105,9 @@ public class GridImageAdapter extends
 
     @Override
     public int getItemCount() {
-        if (list.size() < selectMax) {
+        if (list == null) {
+            return 0;
+        } else if (list.size() < selectMax) {
             return list.size() + 1;
         } else {
             return list.size();
@@ -131,7 +131,7 @@ public class GridImageAdapter extends
         View view = mInflater.inflate(R.layout.gv_filter_image,
                 viewGroup, false);
         final ViewHolder viewHolder = new ViewHolder(view);
-        this.viewHolder=viewHolder;
+        this.viewHolder = viewHolder;
         return viewHolder;
     }
 
@@ -148,9 +148,9 @@ public class GridImageAdapter extends
         //少于最多张数，显示继续添加的图标
         if (getItemViewType(position) == TYPE_CAMERA) {
             viewHolder.mImg.setImageResource(R.mipmap.ic_pic_add);
-            if(!isShow){
+            if (!isShow) {
                 viewHolder.mImg.setVisibility(View.INVISIBLE);
-            }else{
+            } else {
                 viewHolder.mImg.setVisibility(View.VISIBLE);
             }
             if (size != 0) {
@@ -233,9 +233,9 @@ public class GridImageAdapter extends
         if (type == 0) {
             if (getItemViewType(position) == TYPE_CAMERA) {
                 viewHolder.mImg.setImageResource(R.mipmap.ic_pic_add);
-                if(!isShow){
+                if (!isShow) {
                     viewHolder.mImg.setVisibility(View.INVISIBLE);
-                }else{
+                } else {
                     viewHolder.mImg.setVisibility(View.VISIBLE);
                 }
                 if (size != 0) {
@@ -253,7 +253,7 @@ public class GridImageAdapter extends
             params.width = size + 10;
             params.height = size + 10;
         }
-        if(!isShow){
+        if (!isShow) {
             viewHolder.ll_del.setVisibility(View.INVISIBLE);
         }
     }
@@ -267,8 +267,9 @@ public class GridImageAdapter extends
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.mItemClickListener = listener;
     }
-    public void isShow(boolean bl){
-        this.isShow=bl;
+
+    public void isShow(boolean bl) {
+        this.isShow = bl;
         notifyDataSetChanged();
     }
 }

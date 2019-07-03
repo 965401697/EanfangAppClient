@@ -135,6 +135,9 @@ public class WorkerTenderControlActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         int currentTab = mTenderViewPager.getCurrentItem();
+        if (data == null) {
+            return;
+        }
         if (resultCode == RESULT_OK && requestCode == FILTRATE_TYPE_CODE) {
             QueryEntry queryEntry = (QueryEntry) data.getSerializableExtra("query");
             if (queryEntry != null) {

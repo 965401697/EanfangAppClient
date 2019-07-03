@@ -122,17 +122,13 @@ public class TenderViewModle extends BaseViewModel {
         if (i == 0) {
             workerTenderControlBinding.ivTenderNotice.setImageResource(R.drawable.ic_tender_notice_pressed_down);
             workerTenderControlBinding.ivTenderFind.setImageResource(R.drawable.ic_tender_find);
-            mIntType = 0;
-            doGetNoticeData(mIntType, mNoticePage);
         } else if (i == 1) {
             workerTenderControlBinding.ivTenderNotice.setImageResource(R.drawable.ic_tender_notice_pressed_down);
             workerTenderControlBinding.ivTenderFind.setImageResource(R.drawable.ic_tender_find);
-            mIntType = 1;
-            doGetNoticeData(mIntType, mNoticePage);
         } else {
             workerTenderControlBinding.ivTenderNotice.setImageResource(R.drawable.ic_tender_notice);
             workerTenderControlBinding.ivTenderFind.setImageResource(R.drawable.ic_tender_find_pressed);
-            doGetFindData(mFindPage);
+//            doGetFindData(mFindPage);
         }
     }
 
@@ -158,12 +154,16 @@ public class TenderViewModle extends BaseViewModel {
                 // 公告中
                 case R.id.ll_noticing:
                     mType = "notice";
+                    mIntType = 0;
+                    doGetNoticeData(mIntType, mNoticePage);
                     doChangeItem(0);
                     popWindow.dismiss();
                     break;
                 // 已过期
                 case R.id.ll_overing:
                     mType = "over";
+                    mIntType = 1;
+                    doGetNoticeData(mIntType, mNoticePage);
                     doChangeItem(1);
                     popWindow.dismiss();
                     break;

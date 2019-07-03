@@ -79,11 +79,13 @@ public class TenderCreateActivity extends BaseActivity implements SelectTimeDial
         GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + BaseApplication.get().getAccount().getAvatar()), mTenderCreateBinding.ivHeader);
         mTenderCreateBinding.tvName.setText(BaseApplication.get().getAccount().getRealName());
         mTenderCreateBinding.tvCompany.setText(BaseApplication.get().getCompanyEntity().getOrgName());
+        mPicInvoke = new PictureInvoking((TenderCreateActivity) mTenderCreateBinding.getRoot().getContext(), mTenderCreateBinding.rvSelectPic);
+        mPicInvoke.initRecycle(3, onAddPicClickListener);
         if (mReleasetaskPublishEntity != null) {
+            mPicInvoke.setData(mReleasetaskPublishEntity.getPictures(), 1);
             tenderCreateViewModle.doReleaseAgain(mReleasetaskPublishEntity);
         }
-        mPicInvoke = new PictureInvoking((TenderCommitActivity) mTenderCreateBinding.getRoot().getContext(), mTenderCreateBinding.rvSelectPic, mPicList);
-        mPicInvoke.initRecycle(3, onAddPicClickListener);
+
     }
 
     private void initListener() {
@@ -131,6 +133,7 @@ public class TenderCreateActivity extends BaseActivity implements SelectTimeDial
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (data == null) {
             return;
         }
@@ -148,7 +151,7 @@ public class TenderCreateActivity extends BaseActivity implements SelectTimeDial
     }
 
     GridImageAdapter.onAddPicClickListener onAddPicClickListener = () -> {
-        SDKManager.getPicture().create((TenderCommitActivity) mTenderCreateBinding.getRoot().getContext()).takePhotos(new IPictureCallBack() {
+        SDKManager.getPicture().create((TenderCreateActivity) mTenderCreateBinding.getRoot().getContext()).takePhotos(new IPictureCallBack() {
             @Override
             public void onSuccess(List<LocalMedia> list) {
                 mPicList = list;
