@@ -1,6 +1,5 @@
 package net.eanfang.worker.ui.activity.my.certification;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -9,31 +8,36 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.lifecycle.ViewModel;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
-
 import com.eanfang.base.kit.SDKManager;
-import com.eanfang.delegate.BGASortableDelegate;
+import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.sdk.picture.GridImageAdapter;
+import com.eanfang.sdk.picture.PictureInvoking;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
-import com.photopicker.com.activity.BGAPhotoPickerActivity;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
+import com.luck.picture.lib.entity.LocalMedia;
 import com.picker.DoubleDatePickerDialog;
 import com.picker.common.util.DateUtils;
 import com.yaf.base.entity.JobExperienceEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
+import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,7 +46,7 @@ import butterknife.OnClick;
 /**
  * 添加工作经历
  */
-public class AddWorkActivity extends BaseActivityWithTakePhoto {
+public class AddWorkActivity extends BaseWorkeActivity {
 
     @BindView(R.id.et_company_name)
     EditText etCompanyName;
@@ -54,43 +58,40 @@ public class AddWorkActivity extends BaseActivityWithTakePhoto {
     TextView tvTime;
     @BindView(R.id.et_certificate)
     EditText etCertificate;
-    @BindView(R.id.snpl_moment_accident)
-    BGASortableNinePhotoLayout snplMomentAccident;
     @BindView(R.id.tv_save)
     TextView tvSave;
     @BindView(R.id.ll_date)
     LinearLayout llDate;
+    @BindView(R.id.recycleview)
+    RecyclerView recycleview;
     /**
      * 证书照片
      */
-    private ArrayList<String> picList_certificate = new ArrayList<>();
+    private List<LocalMedia> selectList = new ArrayList<>();
+    private PictureInvoking invoking;
     private HashMap<String, String> uploadMap = new HashMap<>();
-
-    private static final int REQUEST_CODE_CHOOSE_CERTIFICATE = 1;
-    private static final int REQUEST_CODE_PHOTO_CERTIFICATE = 101;
     private String pic;
     private String url;
     private JobExperienceEntity bean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_work);
         ButterKnife.bind(this);
-        setLeftBack();
+        super.onCreate(savedInstanceState);
+        setLeftBack(true);
         bean = (JobExperienceEntity) getIntent().getSerializableExtra("bean");
-        snplMomentAccident.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_CERTIFICATE, REQUEST_CODE_PHOTO_CERTIFICATE));
-        snplMomentAccident.setData(picList_certificate);
         setRightTitleOnClickListener(view -> setData());
         if (bean != null) {
-            fillData();
             setTitle("工作经历");
             setRightTitle("编辑");
             setZhiDu(false);
             fillData();
+            picture(false);
             setRightTitleOnClickListener(view -> {
                         setRightTitle("保存");
                         setZhiDu(true);
+                        invoking.isShow(true);
                         setRightTitleOnClickListener(view1 -> setData());
                     }
             );
@@ -99,9 +100,57 @@ public class AddWorkActivity extends BaseActivityWithTakePhoto {
             setTitle("工作经历");
             setRightTitle("保存");
             tvSave.setVisibility(View.GONE);
+            picture(true);
         }
 
     }
+
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
+    }
+
+    private boolean isShow;
+
+    private void picture(boolean isShow) {
+        this.isShow = isShow;
+        invoking = new PictureInvoking(this, recycleview, selectList);
+        if (isShow) {
+            invoking.initRecycle(3, 200, onAddPicClickListener);
+        } else {
+            invoking.initRecycle(3, 200, isShow, listener);
+            invoking.setImage(bean.getCardPics(), 1);
+        }
+    }
+
+    GridImageAdapter.onAddPicClickListener onAddPicClickListener = new GridImageAdapter.onAddPicClickListener() {
+        @Override
+        public void onAddPicClick() {
+            SDKManager.getPicture().create(AddWorkActivity.this)
+                    .setSelectList(selectList)
+                    .takePhotos(list -> {
+                        //选择图片成功之后的逻辑处理
+                        selectList = list;
+                        invoking.setList(selectList);
+                    });
+        }
+    };
+
+    GridImageAdapter.onAddPicClickListener listener = new GridImageAdapter.onAddPicClickListener() {
+        @Override
+        public void onAddPicClick() {
+            SDKManager.getPicture().create(AddWorkActivity.this).takePhoto(new IPictureCallBack() {
+                @Override
+                public void onSuccess(List<LocalMedia> list) {
+                    //选择图片成功之后的逻辑处理
+                    if(selectList.size()<3) {
+                        selectList.add(list.get(0));
+                        invoking.setList(selectList);
+                    }
+                }
+            });
+        }
+    };
 
     private void setZhiDu(boolean isZd) {
         tvSave.setVisibility(isZd ? View.VISIBLE : View.GONE);
@@ -110,28 +159,16 @@ public class AddWorkActivity extends BaseActivityWithTakePhoto {
         etJobPosition.setEnabled(isZd);
         llDate.setEnabled(isZd);
         etCertificate.setEnabled(isZd);
-        snplMomentAccident.setPlusEnable(isZd || StringUtils.isEmpty(bean.getCardPics()));
-        snplMomentAccident.setEditable(isZd || StringUtils.isEmpty(bean.getCardPics()));
-        snplMomentAccident.setItemClickble(isZd);
     }
 
     private void fillData() {
-        ArrayList<String> picList = new ArrayList<>();
-        if (bean.getCardPics() != null && bean.getCardPics().length() > 0) {
-            String[] pics = bean.getCardPics().split(",");
-            for (String pic1 : pics) {
-                picList.add(BuildConfig.OSS_SERVER + pic1);
-            }
-        }
         etCompanyName.setText(bean.getCompanyName());
         etPosition.setText(bean.getJob());
         etJobPosition.setText(bean.getWorkplace());
         if (bean.getBeginTime() != null && bean.getEndTime() != null) {
             tvTime.setText(DateUtils.formatDate(bean.getBeginTime(), "yyyy-MM-dd") + " ～ " + DateUtils.formatDate(bean.getEndTime(), "yyyy-MM-dd"));
         }
-        snplMomentAccident.setData(picList);
         etCertificate.setText(bean.getJobIntro());
-
     }
 
     private void setData() {
@@ -156,10 +193,10 @@ public class AddWorkActivity extends BaseActivityWithTakePhoto {
             entity.setEndTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[1], "yyyy-MM-dd"));
         }
         entity.setJobIntro(etCertificate.getText().toString().trim());
-        pic = PhotoUtils.getPhotoUrl("", snplMomentAccident, uploadMap, false);
+        pic = PhotoUtils.getPhotoUrl("", selectList, uploadMap, false);
         entity.setCardPics(pic);
         entity.setType(0);
-        SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> runOnUiThread(() -> {
+        SDKManager.ossKit(this).asyncPutImages(uploadMap, (isSuccess) -> runOnUiThread(() -> {
             EanfangHttp.post(url)
                     .upJson(JSONObject.toJSONString(entity))
                     .execute(new EanfangCallback<JSONObject>(AddWorkActivity.this, true, JSONObject.class, (bean) -> {
@@ -167,8 +204,6 @@ public class AddWorkActivity extends BaseActivityWithTakePhoto {
                         finish();
                     }));
         }));
-
-
     }
 
     private boolean checkedData() {
@@ -238,16 +273,4 @@ public class AddWorkActivity extends BaseActivityWithTakePhoto {
                 });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (data == null) {
-            return;
-        }
-        switch (requestCode) {
-            case REQUEST_CODE_CHOOSE_CERTIFICATE:
-                snplMomentAccident.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
-                break;
-        }
-    }
 }

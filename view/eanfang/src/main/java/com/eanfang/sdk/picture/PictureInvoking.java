@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.R;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.util.StringUtils;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureMimeType;
@@ -15,6 +16,7 @@ import com.luck.picture.lib.entity.LocalMedia;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class PictureInvoking {
     private Activity activity;
@@ -108,14 +110,22 @@ public class PictureInvoking {
             return;
         }
         list = new ArrayList<>();
+        setImage(str, type);
+
+    }
+
+    public void setImage(String str, int type) {
+        if (StringUtils.isEmpty(str)) {
+            return;
+        }
         String[] images = str.split(",");
         for (int i = 0; i < images.length; i++) {
             LocalMedia localMedi = new LocalMedia();
-            localMedi.setPath(BuildConfig.OSS_SERVER + images[i] );
+            localMedi.setPath(BuildConfig.OSS_SERVER + images[i]);
             localMedi.setPictureType(type + "");
             list.add(localMedi);
         }
         setList(list);
-
     }
+
 }

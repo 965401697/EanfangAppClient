@@ -9,14 +9,18 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.lifecycle.ViewModel;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
-import com.eanfang.delegate.BGASortableDelegate;
+import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-
+import com.eanfang.sdk.picture.GridImageAdapter;
+import com.eanfang.sdk.picture.PictureInvoking;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
@@ -24,18 +28,20 @@ import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
+import com.luck.picture.lib.entity.LocalMedia;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 import com.picker.DoubleDatePickerDialog;
 import com.picker.common.util.DateUtils;
 import com.yaf.base.entity.EducationExperienceEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
+import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,7 +50,7 @@ import butterknife.OnClick;
 /**
  * 教育经历
  */
-public class AddEducationHistoryActivity extends BaseActivityWithTakePhoto {
+public class AddEducationHistoryActivity extends BaseWorkeActivity {
 
     @BindView(R.id.et_school_name)
     EditText etSchoolName;
@@ -56,8 +62,6 @@ public class AddEducationHistoryActivity extends BaseActivityWithTakePhoto {
     EditText etNum;
     @BindView(R.id.tv_time)
     TextView tvTime;
-    @BindView(R.id.snpl_moment_accident)
-    BGASortableNinePhotoLayout snplMomentAccident;
     @BindView(R.id.tv_save)
     TextView tvSave;
     @BindView(R.id.ll_education)
@@ -66,39 +70,38 @@ public class AddEducationHistoryActivity extends BaseActivityWithTakePhoto {
     LinearLayout llDate;
     @BindView(R.id.cheng_ji)
     EditText chengJi;
+    @BindView(R.id.recycleview)
+    RecyclerView recycleview;
 
-
+    private HashMap<String, String> uploadMap = new HashMap<>();
     /**
      * 证书照片
      */
-    private ArrayList<String> picList_certificate = new ArrayList<>();
-    private HashMap<String, String> uploadMap = new HashMap<>();
-
-    private static final int REQUEST_CODE_CHOOSE_CERTIFICATE = 1;
-    private static final int REQUEST_CODE_PHOTO_CERTIFICATE = 101;
+    private List<LocalMedia> selectList = new ArrayList<>();
+    private PictureInvoking invoking;
     private String pic;
     private String url;
     private EducationExperienceEntity bean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_education_history);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("添加教育培训");
-        setLeftBack();
+        setLeftBack(true);
         bean = (EducationExperienceEntity) getIntent().getSerializableExtra("bean");
-        snplMomentAccident.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_CERTIFICATE, REQUEST_CODE_PHOTO_CERTIFICATE));
-        snplMomentAccident.setData(picList_certificate);
         setRightTitleOnClickListener(view -> setData());
         if (bean != null) {
             setTitle("教育培训");
             setRightTitle("编辑");
             setZhiDu(false);
             fillData();
+            picture(false);
             setRightTitleOnClickListener(view -> {
                         setRightTitle("保存");
                         setZhiDu(true);
+                        invoking.isShow(true);
                         setRightTitleOnClickListener(view1 -> setData());
                     }
 
@@ -107,9 +110,54 @@ public class AddEducationHistoryActivity extends BaseActivityWithTakePhoto {
             setTitle("教育培训");
             setRightTitle("保存");
             tvSave.setVisibility(View.GONE);
+            picture(true);
         }
     }
 
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
+    }
+
+    private void picture(boolean isShow) {
+        invoking = new PictureInvoking(this, recycleview, selectList);
+        if (isShow) {
+            invoking.initRecycle(3, 200, onAddPicClickListener);
+        } else {
+            invoking.initRecycle(3, 200, isShow, listener);
+            invoking.setImage(bean.getCertificatePics(), 1);
+        }
+    }
+
+    GridImageAdapter.onAddPicClickListener onAddPicClickListener = new GridImageAdapter.onAddPicClickListener() {
+        @Override
+        public void onAddPicClick() {
+            SDKManager.getPicture().create(AddEducationHistoryActivity.this)
+                    .setSelectList(selectList)
+                    .takePhotos(list -> {
+                        //选择图片成功之后的逻辑处理
+                        selectList = list;
+                        invoking.setList(selectList);
+                    });
+        }
+    };
+
+    GridImageAdapter.onAddPicClickListener listener = new GridImageAdapter.onAddPicClickListener() {
+        @Override
+        public void onAddPicClick() {
+            SDKManager.getPicture().create(AddEducationHistoryActivity.this).takePhoto(new IPictureCallBack() {
+                @Override
+                public void onSuccess(List<LocalMedia> list) {
+                    //选择图片成功之后的逻辑处理
+                    if(selectList.size()<3) {
+                        selectList.add(list.get(0));
+                        invoking.setList(selectList);
+                    }
+
+                }
+            });
+        }
+    };
     private void setZhiDu(boolean isZd) {
         tvSave.setVisibility(isZd ? View.VISIBLE : View.GONE);
         etNum.setEnabled(isZd);
@@ -118,19 +166,9 @@ public class AddEducationHistoryActivity extends BaseActivityWithTakePhoto {
         llEducation.setEnabled(isZd);
         llDate.setEnabled(isZd);
         chengJi.setEnabled(isZd);
-        snplMomentAccident.setPlusEnable(isZd || StringUtils.isEmpty(bean.getCertificatePics()));
-        snplMomentAccident.setEditable(isZd || StringUtils.isEmpty(bean.getCertificatePics()));
-        snplMomentAccident.setItemClickble(isZd);
     }
 
     private void fillData() {
-        ArrayList<String> picList = new ArrayList<>();
-        if (bean.getCertificatePics() != null && bean.getCertificatePics().length() > 0) {
-            String[] pics = bean.getCertificatePics().split(",");
-            for (String pic1 : pics) {
-                picList.add(BuildConfig.OSS_SERVER + pic1);
-            }
-        }
         etSchoolName.setText(bean.getSchoolName());
         etMajor.setText(bean.getMajorName());
         chengJi.setText(bean.getScore());
@@ -140,8 +178,8 @@ public class AddEducationHistoryActivity extends BaseActivityWithTakePhoto {
         if (bean.getBeginTime() != null && bean.getEndTime() != null) {
             tvTime.setText(DateUtils.formatDate(bean.getBeginTime(), "yyyy-MM-dd") + " ～ " + DateUtils.formatDate(bean.getEndTime(), "yyyy-MM-dd"));
         }
-        snplMomentAccident.setData(picList);
         etNum.setText(bean.getCertificateNumber());
+
     }
 
     @OnClick({R.id.ll_education, R.id.ll_date, R.id.tv_save})
@@ -211,10 +249,10 @@ public class AddEducationHistoryActivity extends BaseActivityWithTakePhoto {
             entity.setBeginTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[0], "yyyy-MM-dd"));
             entity.setEndTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[1], "yyyy-MM-dd"));
         }
-        pic = PhotoUtils.getPhotoUrl("", snplMomentAccident, uploadMap, false);
+        pic = PhotoUtils.getPhotoUrl("", selectList, uploadMap, false);
         entity.setCertificatePics(pic);
         entity.setType(0);
-        SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
+        SDKManager.ossKit(this).asyncPutImages(uploadMap, (isSuccess) -> {
             runOnUiThread(() -> {
                 EanfangHttp.post(url).upJson(JSONObject.toJSONString(entity)).execute(new EanfangCallback<JSONObject>(AddEducationHistoryActivity.this, true, JSONObject.class, (bean) -> {
                     setResult(RESULT_OK);
@@ -230,19 +268,5 @@ public class AddEducationHistoryActivity extends BaseActivityWithTakePhoto {
             return true;
         }
         return false;
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (data == null) {
-            return;
-        }
-        switch (requestCode) {
-            case REQUEST_CODE_CHOOSE_CERTIFICATE:
-                snplMomentAccident.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
-                break;
-            default:
-        }
     }
 }
