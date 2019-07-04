@@ -36,9 +36,6 @@ public class TenderBidDetailActivity extends BaseActivity {
         setLeftBack(true);
         mId = getIntent().getLongExtra("bidId", 0);
         bidDetailViewModle.doGetData(mId);
-        tenderBidDetailBinding.llOfferPersonalInfo.setOnClickListener((v)->{
-
-        });
     }
 
     @Override

@@ -13,9 +13,12 @@ import com.eanfang.biz.model.bean.PageBean;
 import com.eanfang.biz.model.entity.tender.TaskApplyEntity;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
 import com.eanfang.biz.rds.base.LViewModelProviders;
+import com.eanfang.util.JumpItent;
+import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.databinding.ActivityTenderOfferDetailBinding;
+import net.eanfang.worker.ui.activity.worksapce.WorkDetailActivity;
 import net.eanfang.worker.ui.adapter.worktender.WorkTenderOfferDetailAdapter;
 import net.eanfang.worker.viewmodle.tender.TenderOfferDetailViewModle;
 
@@ -74,6 +77,14 @@ public class TenderOfferDetailActivity extends BaseActivity {
     }
 
     private void initListener() {
+        workTenderOfferDetailAdapter.setOnItemClickListener((adapter, view, position) -> {
+            WorkerEntity workerEntity = new WorkerEntity();
+            workerEntity.setId(workTenderOfferDetailAdapter.getData().get(position).getWorkerEntity().getId());
+            workerEntity.setCompanyUserId(workTenderOfferDetailAdapter.getData().get(position).getCreateUserId());
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("workEntriy", workerEntity);
+            JumpItent.jump(TenderOfferDetailActivity.this, WorkDetailActivity.class, bundle);
+        });
         workTenderOfferDetailAdapter.setOnItemChildClickListener((adapter, view, position) -> {
             switch (view.getId()) {
                 case R.id.tv_ignore:
