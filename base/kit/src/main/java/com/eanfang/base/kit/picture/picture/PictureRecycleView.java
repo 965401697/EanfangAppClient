@@ -17,6 +17,7 @@ import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.luck.picture.lib.tools.ScreenUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +60,8 @@ public class PictureRecycleView extends RecyclerView {
      */
     public void addImagev(ImageListener imageListener) {
         setImageListener(imageListener);
-        adapter = new GridImageAdapter(context, 200, onAddPicClickListener);
+        int width=(ScreenUtils.getScreenWidth(context)-100)/3;
+        adapter = new GridImageAdapter(context, width, onAddPicClickListener);
         init();
     }
 
@@ -69,7 +71,8 @@ public class PictureRecycleView extends RecyclerView {
     public void showImagev(List<LocalMedia> list, ImageListener imageListener) {
         setImageListener(imageListener);
         this.mList = list;
-        adapter = new GridImageAdapter(context, 200, false, onAddPicClick);
+        int width=(ScreenUtils.getScreenWidth(context)-100)/3;
+        adapter = new GridImageAdapter(context, width, false, onAddPicClick);
         init();
     }
 

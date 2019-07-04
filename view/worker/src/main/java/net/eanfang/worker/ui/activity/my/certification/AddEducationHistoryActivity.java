@@ -17,6 +17,7 @@ import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.IPictureCallBack;
+import com.eanfang.base.kit.picture.picture.PictureRecycleView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.sdk.picture.GridImageAdapter;
@@ -71,14 +72,13 @@ public class AddEducationHistoryActivity extends BaseWorkeActivity {
     @BindView(R.id.cheng_ji)
     EditText chengJi;
     @BindView(R.id.recycleview)
-    RecyclerView recycleview;
+    PictureRecycleView recycleview;
 
     private HashMap<String, String> uploadMap = new HashMap<>();
     /**
      * 证书照片
      */
     private List<LocalMedia> selectList = new ArrayList<>();
-    private PictureInvoking invoking;
     private String pic;
     private String url;
     private EducationExperienceEntity bean;
@@ -97,11 +97,12 @@ public class AddEducationHistoryActivity extends BaseWorkeActivity {
             setRightTitle("编辑");
             setZhiDu(false);
             fillData();
-            picture(false);
+            selectList = recycleview.setData(bean.getCertificatePics());
+            recycleview.showImagev(selectList, listener);
             setRightTitleOnClickListener(view -> {
                         setRightTitle("保存");
                         setZhiDu(true);
-                        invoking.isShow(true);
+                        recycleview.isShow(true, selectList);
                         setRightTitleOnClickListener(view1 -> setData());
                     }
 
@@ -110,54 +111,17 @@ public class AddEducationHistoryActivity extends BaseWorkeActivity {
             setTitle("教育培训");
             setRightTitle("保存");
             tvSave.setVisibility(View.GONE);
-            picture(true);
+            recycleview.addImagev(listener);
         }
     }
+
+    PictureRecycleView.ImageListener listener = list -> selectList = list;
 
     @Override
     protected ViewModel initViewModel() {
         return null;
     }
 
-    private void picture(boolean isShow) {
-        invoking = new PictureInvoking(this, recycleview, selectList);
-        if (isShow) {
-            invoking.initRecycle(3, 200, onAddPicClickListener);
-        } else {
-            invoking.initRecycle(3, 200, isShow, listener);
-            invoking.setImage(bean.getCertificatePics(), 1);
-        }
-    }
-
-    GridImageAdapter.onAddPicClickListener onAddPicClickListener = new GridImageAdapter.onAddPicClickListener() {
-        @Override
-        public void onAddPicClick() {
-            SDKManager.getPicture().create(AddEducationHistoryActivity.this)
-                    .setSelectList(selectList)
-                    .takePhotos(list -> {
-                        //选择图片成功之后的逻辑处理
-                        selectList = list;
-                        invoking.setList(selectList);
-                    });
-        }
-    };
-
-    GridImageAdapter.onAddPicClickListener listener = new GridImageAdapter.onAddPicClickListener() {
-        @Override
-        public void onAddPicClick() {
-            SDKManager.getPicture().create(AddEducationHistoryActivity.this).takePhoto(new IPictureCallBack() {
-                @Override
-                public void onSuccess(List<LocalMedia> list) {
-                    //选择图片成功之后的逻辑处理
-                    if(selectList.size()<3) {
-                        selectList.add(list.get(0));
-                        invoking.setList(selectList);
-                    }
-
-                }
-            });
-        }
-    };
     private void setZhiDu(boolean isZd) {
         tvSave.setVisibility(isZd ? View.VISIBLE : View.GONE);
         etNum.setEnabled(isZd);
@@ -179,7 +143,6 @@ public class AddEducationHistoryActivity extends BaseWorkeActivity {
             tvTime.setText(DateUtils.formatDate(bean.getBeginTime(), "yyyy-MM-dd") + " ～ " + DateUtils.formatDate(bean.getEndTime(), "yyyy-MM-dd"));
         }
         etNum.setText(bean.getCertificateNumber());
-
     }
 
     @OnClick({R.id.ll_education, R.id.ll_date, R.id.tv_save})

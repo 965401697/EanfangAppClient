@@ -143,12 +143,12 @@
                 android:orientation="horizontal"
                 android:layout_margin="@dimen/dimen_30"
                 >
-                <androidx.recyclerview.widget.RecyclerView
+                <com.eanfang.base.kit.picture.picture.PictureRecycleView
                     android:id="@+id/recycleview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                </androidx.recyclerview.widget.RecyclerView>
+                </com.eanfang.base.kit.picture.picture.PictureRecycleView>
             </LinearLayout>
 
 

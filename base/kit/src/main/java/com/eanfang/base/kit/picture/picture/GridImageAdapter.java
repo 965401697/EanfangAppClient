@@ -253,8 +253,8 @@ public class GridImageAdapter extends
             RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) viewHolder.relative.getLayoutParams();
             imageParams.width = size;
             imageParams.height = size;
-            params.width = size + 10;
-            params.height = size + 10;
+            params.width = size ;
+            params.height = size ;
         }
         if (!isShow) {
             viewHolder.ll_del.setVisibility(View.INVISIBLE);
