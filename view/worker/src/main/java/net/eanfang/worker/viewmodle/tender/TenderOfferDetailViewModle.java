@@ -21,6 +21,7 @@ import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.worker.databinding.ActivityTenderOfferDetailBinding;
 import net.eanfang.worker.ui.activity.worksapce.WorkDetailActivity;
+import net.eanfang.worker.ui.activity.worksapce.tender.TenderFindDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.tender.TenderOfferDetailActivity;
 
 import lombok.Getter;
@@ -42,6 +43,7 @@ public class TenderOfferDetailViewModle extends BaseViewModel {
     private MutableLiveData<PageBean<TaskApplyEntity>> offerDetailLiveData;
 
     private Long mOfferId;
+    private TaskApplyEntity mTaskApplyEntity;
 
     public TenderOfferDetailViewModle() {
         offerDetailLiveData = new MutableLiveData<>();
@@ -96,6 +98,7 @@ public class TenderOfferDetailViewModle extends BaseViewModel {
      * 中标人信息
      */
     public void doSetWinData(TaskApplyEntity taskApplyEntity) {
+        mTaskApplyEntity = taskApplyEntity;
         //头像
         GlideUtil.intoImageView(tenderOfferDetailBinding.getRoot().getContext(), Uri.parse(BuildConfig.OSS_SERVER + taskApplyEntity.getUserEntity().getAccountEntity().getAvatar()), tenderOfferDetailBinding.ivHeader);
         //姓名
@@ -112,14 +115,27 @@ public class TenderOfferDetailViewModle extends BaseViewModel {
         tenderOfferDetailBinding.tvBudget.setText(taskApplyEntity.getProjectQuote() + "元/" + taskApplyEntity.getBudgetUnit());
         // 施工方案
         tenderOfferDetailBinding.tvDescription.setText(taskApplyEntity.getDescription());
+    }
 
-        tenderOfferDetailBinding.rlWin.setOnClickListener((v) -> {
-            WorkerEntity workerEntity = new WorkerEntity();
-            workerEntity.setId(taskApplyEntity.getWorkerEntity().getId());
-            workerEntity.setCompanyUserId(taskApplyEntity.getCreateUserId());
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("workEntriy", workerEntity);
-            JumpItent.jump((TenderOfferDetailActivity) tenderOfferDetailBinding.getRoot().getContext(), WorkDetailActivity.class, bundle);
-        });
+    /**
+     * 查看技师详情
+     */
+    public void doJumpWorkDetail() {
+        WorkerEntity workerEntity = new WorkerEntity();
+        workerEntity.setId(mTaskApplyEntity.getWorkerEntity().getId());
+        workerEntity.setCompanyUserId(mTaskApplyEntity.getCreateUserId());
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("workEntriy", workerEntity);
+        JumpItent.jump((TenderOfferDetailActivity) tenderOfferDetailBinding.getRoot().getContext(), WorkDetailActivity.class, bundle);
+    }
+
+    /**
+     * 查看用工详情
+     */
+    public void doJumpOfferDetail() {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("tendFindId", mOfferId);
+        bundle.putBoolean("isLookDetail", true);
+        JumpItent.jump((TenderOfferDetailActivity) tenderOfferDetailBinding.getRoot().getContext(), TenderFindDetailActivity.class, bundle);
     }
 }

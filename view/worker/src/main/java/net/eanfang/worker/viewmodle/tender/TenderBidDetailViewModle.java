@@ -1,21 +1,28 @@
 package net.eanfang.worker.viewmodle.tender;
 
 import android.net.Uri;
+import android.os.Bundle;
 import android.view.View;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.base.BaseApplication;
+import com.eanfang.base.kit.picture.picture.PictureRecycleView;
 import com.eanfang.biz.model.entity.tender.TaskApplyEntity;
 import com.eanfang.biz.rds.base.BaseViewModel;
 import com.eanfang.biz.rds.sys.ds.impl.tender.TenderDs;
 import com.eanfang.biz.rds.sys.repo.tender.TenderRepo;
 import com.eanfang.config.Config;
-import com.eanfang.sdk.picture.PictureInvoking;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
+import com.eanfang.util.JumpItent;
+import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.worker.databinding.ActivityTenderBidDetailBinding;
 import net.eanfang.worker.ui.activity.worksapce.tender.TenderBidDetailActivity;
+import net.eanfang.worker.ui.activity.worksapce.tender.TenderFindDetailActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -32,7 +39,11 @@ public class TenderBidDetailViewModle extends BaseViewModel {
     @Getter
     private ActivityTenderBidDetailBinding tenderBidDetailBinding;
 
-    private PictureInvoking invoking;
+
+    private List<LocalMedia> mPicList = new ArrayList<>();
+    public PictureRecycleView.ImageListener listener = list -> mPicList = list;
+
+    private Long mBidId;
 
     public TenderBidDetailViewModle() {
         tenderRepo = new TenderRepo(new TenderDs(this));
@@ -50,6 +61,7 @@ public class TenderBidDetailViewModle extends BaseViewModel {
     }
 
     public void doSetTopData(TaskApplyEntity taskApplyEntity) {
+        mBidId = taskApplyEntity.getShopTaskPublishId();
         //名称
         tenderBidDetailBinding.tvTenderName.setText(Config.get().getBusinessNameByCode(taskApplyEntity.getTaskPublishEntity().getSystemType(), 1));
         //类型
@@ -79,10 +91,19 @@ public class TenderBidDetailViewModle extends BaseViewModel {
         // 施工方案
         tenderBidDetailBinding.tvPlan.setText(taskApplyEntity.getDescription());
         // 附件
-        invoking = new PictureInvoking((TenderBidDetailActivity) tenderBidDetailBinding.getRoot().getContext(), tenderBidDetailBinding.rvSelectPic);
-        invoking.initRecycle(3, 200, false, null);
-        invoking.setData(taskApplyEntity.getPictures(), 1);
-        invoking.isShow(false);
+        mPicList = tenderBidDetailBinding.rvSelectPic.setData(taskApplyEntity.getPictures());
+        tenderBidDetailBinding.rvSelectPic.showImagev(mPicList, listener);
+        tenderBidDetailBinding.rvSelectPic.isShow(false, mPicList);
+    }
+
+    /**
+     * 查看用工详情
+     */
+    public void doJumpOfferDetail() {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("tendFindId", mBidId);
+        bundle.putBoolean("isLookDetail", true);
+        JumpItent.jump((TenderBidDetailActivity) tenderBidDetailBinding.getRoot().getContext(), TenderFindDetailActivity.class, bundle);
     }
 
 }

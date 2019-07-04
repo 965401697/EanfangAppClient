@@ -76,6 +76,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/dimen_26"
                         android:orientation="vertical"
+                        android:onClick="@{()->tenderOfferDetailVm.doJumpOfferDetail()}"
                         android:paddingLeft="@dimen/dimen_38"
                         android:paddingRight="@dimen/dimen_22"
                         android:paddingBottom="@dimen/dimen_30">
@@ -167,6 +168,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen_20"
+                    android:onClick="@{()->tenderOfferDetailVm.doJumpWorkDetail()}"
                     android:background="@color/color_white"
                     android:visibility="gone">
 
