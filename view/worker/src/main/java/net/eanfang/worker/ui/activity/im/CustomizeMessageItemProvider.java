@@ -28,6 +28,7 @@ import net.eanfang.worker.ui.activity.worksapce.oa.check.DealWithFirstActivity;
 import net.eanfang.worker.ui.activity.worksapce.oa.task.TaskDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.oa.workreport.WorkReportDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.security.SecurityDetailActivity;
+import net.eanfang.worker.ui.activity.worksapce.tender.TenderFindDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.worktalk.WorkTalkDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.worktransfer.WorkTransferDetailActivity;
 
@@ -64,14 +65,14 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
         if (customizeMessage.getShareType().equals("1")) {
             holder.title.setText("报修订单");
             holder.orderNum.setText("单号：  " + customizeMessage.getOrderNum());
-            GlideUtil.intoImageView(WorkerApplication.get().getApplicationContext(),Uri.parse(BuildConfig.OSS_SERVER + customizeMessage.getPicUrl()),holder.ivUpload);
+            GlideUtil.intoImageView(WorkerApplication.get().getApplicationContext(), Uri.parse(BuildConfig.OSS_SERVER + customizeMessage.getPicUrl()), holder.ivUpload);
             holder.creatTime.setText("下单时间：  " + customizeMessage.getCreatTime());
             holder.workerName.setText("负责人：  " + customizeMessage.getWorkerName());
             holder.status.setText(GetConstDataUtils.getRepairStatus().get(Integer.parseInt(customizeMessage.getStatus())));
         } else if (customizeMessage.getShareType().equals("2")) {
             holder.title.setText("故障处理");
             holder.orderNum.setText("设备名称：  " + customizeMessage.getOrderNum());
-            GlideUtil.intoImageView(WorkerApplication.get().getApplicationContext(),Uri.parse(BuildConfig.OSS_SERVER + customizeMessage.getPicUrl()),holder.ivUpload);
+            GlideUtil.intoImageView(WorkerApplication.get().getApplicationContext(), Uri.parse(BuildConfig.OSS_SERVER + customizeMessage.getPicUrl()), holder.ivUpload);
             holder.creatTime.setText("设备位置：  " + customizeMessage.getCreatTime());
             if (!TextUtils.isEmpty(customizeMessage.getWorkerName())) {
                 holder.workerName.setText("维修历史：  " + customizeMessage.getWorkerName());
@@ -82,7 +83,7 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
         } else if (customizeMessage.getShareType().equals("3")) {
             holder.title.setText("工作汇报");
             holder.orderNum.setText("部门：" + customizeMessage.getOrderNum());
-            GlideUtil.intoImageView(WorkerApplication.get().getApplicationContext(),Uri.parse(BuildConfig.OSS_SERVER + customizeMessage.getPicUrl()),holder.ivUpload);
+            GlideUtil.intoImageView(WorkerApplication.get().getApplicationContext(), Uri.parse(BuildConfig.OSS_SERVER + customizeMessage.getPicUrl()), holder.ivUpload);
             holder.creatTime.setText("类型：" + GetConstDataUtils.getWorkReportTypeList().get(Integer.parseInt(customizeMessage.getCreatTime())));
             holder.workerName.setText("发布人：" + customizeMessage.getWorkerName());
             holder.status.setText(Integer.parseInt(customizeMessage.getStatus()) == 1 ? "已读" : "未读");
@@ -91,7 +92,7 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
         } else if (customizeMessage.getShareType().equals("4")) {
             holder.title.setText("布置任务");
             holder.orderNum.setText("公司：" + customizeMessage.getOrderNum());
-            GlideUtil.intoImageView(WorkerApplication.get().getApplicationContext(),Uri.parse(BuildConfig.OSS_SERVER + customizeMessage.getPicUrl()),holder.ivUpload);
+            GlideUtil.intoImageView(WorkerApplication.get().getApplicationContext(), Uri.parse(BuildConfig.OSS_SERVER + customizeMessage.getPicUrl()), holder.ivUpload);
             holder.creatTime.setText("标题：" + customizeMessage.getCreatTime());
             holder.workerName.setText("发布人：" + customizeMessage.getWorkerName());
             holder.status.setText(Integer.parseInt(customizeMessage.getStatus()) == 1 ? "已读" : "未读");
@@ -131,6 +132,13 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
             holder.orderNum.setText("公司：" + customizeMessage.getOrderNum());
             holder.ivUpload.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + customizeMessage.getPicUrl()));
             holder.creatTime.setText("标题：" + customizeMessage.getCreatTime());
+            holder.workerName.setText("发布人：" + customizeMessage.getWorkerName());
+            holder.status.setVisibility(View.GONE);
+        } else if (customizeMessage.getShareType().equals("9")) {
+            holder.title.setText("用工详情");
+            holder.orderNum.setText("公司：" + customizeMessage.getOrderNum());
+            holder.ivUpload.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + customizeMessage.getPicUrl()));
+            holder.creatTime.setText("项目信息：" + customizeMessage.getCreatTime());
             holder.workerName.setText("发布人：" + customizeMessage.getWorkerName());
             holder.status.setVisibility(View.GONE);
         }
@@ -174,6 +182,8 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
             return new SpannableString("面谈员工(快去查看吧!)");
         } else if (customizeMessage.getShareType().equals("8")) {
             return new SpannableString("安防圈(快去查看吧!)");
+        } else if (customizeMessage.getShareType().equals("11")) {
+            return new SpannableString("用工详情(快去查看吧!)");
         }
         return null;
     }
@@ -211,7 +221,10 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
             view.getContext().startActivity(new Intent((Activity) view.getContext(), WorkTalkDetailActivity.class).putExtra("itemId", customizeMessage.getOrderId()));
         } else if (customizeMessage.getShareType().equals("8")) {
             view.getContext().startActivity(new Intent((Activity) view.getContext(), SecurityDetailActivity.class).putExtra("spcId", Long.parseLong(customizeMessage.getOrderId())));
+        } else if (customizeMessage.getShareType().equals("11")) {
+            view.getContext().startActivity(new Intent((Activity) view.getContext(), TenderFindDetailActivity.class).putExtra("tendFindId", Long.parseLong(customizeMessage.getOrderId())));
         }
+
     }
 
     @Override
@@ -223,7 +236,7 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
         holder.orderNum = (TextView) view.findViewById(R.id.tv_order_id);
         holder.creatTime = (TextView) view.findViewById(R.id.tv_create_time);
         holder.workerName = (TextView) view.findViewById(R.id.tv_person_name);
-        holder.ivUpload =  view.findViewById(R.id.iv_upload);
+        holder.ivUpload = view.findViewById(R.id.iv_upload);
         holder.ll_custom = (LinearLayout) view.findViewById(R.id.ll_custom);
         holder.mTime = view.findViewById(R.id.tv_time);
         view.setTag(holder);

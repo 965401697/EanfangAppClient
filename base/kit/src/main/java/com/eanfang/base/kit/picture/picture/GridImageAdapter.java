@@ -1,4 +1,4 @@
-package com.eanfang.sdk.picture;
+package com.eanfang.base.kit.picture.picture;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -14,8 +14,8 @@ import android.widget.TextView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.eanfang.R;
-import com.eanfang.util.GlideUtil;
+import com.eanfang.base.kit.R;
+import com.eanfang.base.kit.utils.GlideUtil;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
@@ -244,6 +244,9 @@ public class GridImageAdapter extends
             }
         } else {
             viewHolder.mImg.setImageResource(R.mipmap.ic_add_video);
+            if(size!=0){
+                viewHolder.mImg.setImageResource(R.mipmap.bga_pp_ic_plus);
+            }
         }
         if (size != 0) {
             RelativeLayout.LayoutParams imageParams = (RelativeLayout.LayoutParams) viewHolder.mImg.getLayoutParams();
@@ -270,6 +273,5 @@ public class GridImageAdapter extends
 
     public void isShow(boolean bl) {
         this.isShow = bl;
-        notifyDataSetChanged();
     }
 }

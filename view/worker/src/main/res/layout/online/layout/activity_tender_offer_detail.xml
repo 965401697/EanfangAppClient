@@ -37,8 +37,8 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
                         android:layout_marginTop="@dimen/dimen_30"
+                        android:orientation="horizontal"
                         android:paddingLeft="@dimen/dimen_38"
                         android:paddingRight="@dimen/dimen_22">
 
@@ -77,8 +77,8 @@
                         android:layout_marginTop="@dimen/dimen_26"
                         android:orientation="vertical"
                         android:paddingLeft="@dimen/dimen_38"
-                        android:paddingBottom="@dimen/dimen_30"
-                        android:paddingRight="@dimen/dimen_22">
+                        android:paddingRight="@dimen/dimen_22"
+                        android:paddingBottom="@dimen/dimen_30">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -168,7 +168,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen_20"
                     android:background="@color/color_white"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -269,8 +269,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
-                                android:paddingRight="@dimen/dimen_30"
-                                android:orientation="horizontal">
+                                android:orientation="horizontal"
+                                android:paddingRight="@dimen/dimen_30">
 
 
                                 <LinearLayout
@@ -347,8 +347,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/color_white"
                     android:layout_marginTop="@dimen/dimen_20"
+                    android:background="@color/color_white"
                     android:orientation="vertical">
 
                     <LinearLayout

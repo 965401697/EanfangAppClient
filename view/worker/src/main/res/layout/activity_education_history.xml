@@ -237,26 +237,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_margin="@dimen/dimen_30"
+                >
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycleview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                <com.photopicker.com.widget.BGASortableNinePhotoLayout
-                    android:id="@+id/snpl_moment_accident"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dimen_30"
-                    app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
-                    app:bga_snpl_deleteDrawableOverlapQuarter="false"
-                    app:bga_snpl_editable="true"
-                    app:bga_snpl_itemCornerRadius="0dp"
-                    app:bga_snpl_itemSpanCount="3"
-                    app:bga_snpl_itemWhiteSpacing="4dp"
-                    app:bga_snpl_itemWidth="0dp"
-                    app:bga_snpl_maxItemCount="3"
-                    app:bga_snpl_otherWhiteSpacing="100dp"
-                    app:bga_snpl_placeholderDrawable="@mipmap/ic_nodata"
-                    app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
-                    app:bga_snpl_plusEnable="true"
-                    app:bga_snpl_sortable="true" />
+                </androidx.recyclerview.widget.RecyclerView>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

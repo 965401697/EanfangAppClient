@@ -399,8 +399,8 @@
                             android:background="@null"
                             android:hint="请输入详细描述"
                             android:padding="@dimen/dimen_30"
-                            android:textColor="@color/color_bottom"
-                            android:textColorHint="@color/color_bottom"
+                            android:textColor="@color/color_client_neworder"
+                            android:textColorHint="@color/color_client_neworder"
                             android:textSize="@dimen/textSize_13" />
                     </LinearLayout>
 
@@ -443,7 +443,7 @@
                             android:hint="请输入用工要求"
                             android:padding="@dimen/dimen_30"
                             android:textColor="@color/color_client_neworder"
-                            android:textColorHint="@color/color_bottom"
+                            android:textColorHint="@color/color_client_neworder"
                             android:textSize="@dimen/textSize_13" />
                     </LinearLayout>
 
@@ -463,25 +463,12 @@
                             android:textColor="@color/color_bottom"
                             android:textSize="@dimen/textSize_13" />
 
-                        <com.photopicker.com.widget.BGASortableNinePhotoLayout
-                            android:id="@+id/snpl_picture"
-                            android:layout_width="wrap_content"
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_select_pic"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/dimen_30"
-                            android:layout_marginBottom="@dimen/dimen_30"
-                            app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
-                            app:bga_snpl_deleteDrawableOverlapQuarter="false"
-                            app:bga_snpl_editable="true"
-                            app:bga_snpl_itemCornerRadius="0dp"
-                            app:bga_snpl_itemSpanCount="3"
-                            app:bga_snpl_itemWhiteSpacing="4dp"
-                            app:bga_snpl_itemWidth="0dp"
-                            app:bga_snpl_maxItemCount="3"
-                            app:bga_snpl_otherWhiteSpacing="100dp"
-                            app:bga_snpl_placeholderDrawable="@mipmap/ic_nodata"
-                            app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
-                            app:bga_snpl_plusEnable="true"
-                            app:bga_snpl_sortable="true" />
+                            android:layout_margin="@dimen/dimen_30"
+                            android:scrollbars="none" />
                     </LinearLayout>
                 </LinearLayout>
 

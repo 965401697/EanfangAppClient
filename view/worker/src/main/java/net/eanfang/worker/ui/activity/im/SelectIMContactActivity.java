@@ -6,8 +6,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -15,23 +13,25 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
-import com.eanfang.http.EanfangCallback;
-import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.GroupCreatBean;
 import com.eanfang.biz.model.GroupDetailBean;
 import com.eanfang.biz.model.TemplateBean;
-
+import com.eanfang.biz.model.entity.OrgEntity;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.DialogUtil;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UuidUtil;
 import com.eanfang.util.compound.CompoundHelper;
-import com.eanfang.biz.model.entity.OrgEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
@@ -123,7 +123,7 @@ public class SelectIMContactActivity extends BaseWorkerActivity {
 
             if (!TextUtils.isEmpty(path)) {
                 String inageKey = "im/group/" + UuidUtil.getUUID() + ".png";
-                SDKManager.ossKit(SelectIMContactActivity.this).asyncPutImage(inageKey, path,(isSuccess) -> {
+                SDKManager.ossKit(SelectIMContactActivity.this).asyncPutImage(inageKey, path, (isSuccess) -> {
                     updataGroupInfo(mTitle, inageKey, "", "");
                 });
             }
@@ -409,6 +409,8 @@ public class SelectIMContactActivity extends BaseWorkerActivity {
                 mPush = "布防日志";
             } else if (shareType.equals("10")) {
                 mPush = "安防圈";
+            } else if (shareType.equals("11")) {
+                mPush = "安防圈";
             }
             Conversation.ConversationType conversationType;
 
@@ -521,7 +523,7 @@ public class SelectIMContactActivity extends BaseWorkerActivity {
         }
 
         //头像上传成功后  提交数据
-        SDKManager.ossKit(SelectIMContactActivity.this).asyncPutImage(imgKey, path,(isSuccess) -> {
+        SDKManager.ossKit(SelectIMContactActivity.this).asyncPutImage(imgKey, path, (isSuccess) -> {
             //创建群组
             EanfangHttp.post(UserApi.POST_CREAT_GROUP)
                     .upJson(jsonObject)

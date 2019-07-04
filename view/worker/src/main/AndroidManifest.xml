@@ -79,7 +79,9 @@
         <activity android:name=".ui.activity.worksapce.tender.TenderBidDetailActivity"></activity>
         <activity android:name=".ui.activity.worksapce.tender.TenderOfferDetailActivity" />
         <activity android:name=".ui.activity.worksapce.tender.TenderPersonControlActivity" />
-        <activity android:name=".ui.activity.worksapce.tender.TenderCommitActivity" />
+        <activity
+            android:name=".ui.activity.worksapce.tender.TenderCommitActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|stateHidden|adjustPan" />
         <activity android:name=".ui.activity.worksapce.tender.TenderFindDetailActivity" />
         <activity android:name=".ui.activity.worksapce.tender.TenderPersonalActivity" />
         <activity

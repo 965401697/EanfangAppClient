@@ -53,7 +53,7 @@ public class CacheKit extends LruCache<String, Object> {
     public String getStr(String key) {
         checkDue(key);
         this.clazz = String.class;
-        return (String) super.get(key);
+        return  super.get(key)==null?null:super.get(key).toString();
     }
 
 

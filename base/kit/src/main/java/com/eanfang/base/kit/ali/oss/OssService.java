@@ -138,13 +138,17 @@ public class OssService implements IOssService {
 
     @Override
     public void asyncPutImages(Map<String, String> objectMap, Consumer<Boolean> consumer) {
-        compressPic(objectMap);
-        isCompress.observe((LifecycleOwner) activity, (isSuccess) -> {
-            if (isSuccess) {
-                upFile(objectMap);
-            }
-        });
         isUpload.observe((LifecycleOwner) activity, consumer::accept);
+        if (objectMap != null && objectMap.size() > 0) {
+            compressPic(objectMap);
+            isCompress.observe((LifecycleOwner) activity, (isSuccess) -> {
+                if (isSuccess) {
+                    upFile(objectMap);
+                }
+            });
+        } else {
+            isUpload.setValue(true);
+        }
     }
 
     @Override
@@ -156,5 +160,10 @@ public class OssService implements IOssService {
     @Override
     public void asyncPutVideos(Map<String, String> objectMap, Consumer<Boolean> consumer) {
         isUpload.observe((LifecycleOwner) activity, (consumer::accept));
+        if (objectMap != null && objectMap.size() > 0) {
+            upFile(objectMap);
+        } else {
+            isUpload.setValue(true);
+        }
     }
 }

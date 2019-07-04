@@ -1,9 +1,7 @@
 package net.eanfang.worker.ui.activity.my.certification;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -14,24 +12,19 @@ import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSONObject;
-import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.base.BaseActivity;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.IPictureCallBack;
-import com.eanfang.delegate.BGASortableDelegate;
+import com.eanfang.base.kit.picture.picture.PictureRecycleView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.sdk.picture.GridImageAdapter;
 import com.eanfang.sdk.picture.PictureInvoking;
-import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.luck.picture.lib.tools.PictureFileUtils;
-import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.picker.DoubleDatePickerDialog;
 import com.picker.common.util.DateUtils;
 import com.yaf.base.entity.QualificationCertificateEntity;
@@ -39,7 +32,6 @@ import com.yaf.base.entity.QualificationCertificateEntity;
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.base.BaseWorkeActivity;
-import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -66,23 +58,19 @@ public class AddSkillCertificafeActivity extends BaseWorkeActivity {
     TextView tvSave;
     @BindView(R.id.ll_date)
     LinearLayout llDate;
-    @BindView(R.id.recycleview)
-    RecyclerView recycleview;
-    /**
-     * 证书照片
-     */
-    private ArrayList<String> picList_certificate = new ArrayList<>();
+    @BindView(R.id.picture_recycler)
+    PictureRecycleView pictureRecycler;
+
     private HashMap<String, String> uploadMap = new HashMap<>();
 
-
-    private static final int REQUEST_CODE_CHOOSE_CERTIFICATE = 1;
-    private static final int REQUEST_CODE_PHOTO_CERTIFICATE = 101;
     private String pic;
     private String url;
 
     private QualificationCertificateEntity bean;
+    /**
+     * 证书照片
+     */
     private List<LocalMedia> selectList = new ArrayList<>();
-    private PictureInvoking invoking;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,10 +85,12 @@ public class AddSkillCertificafeActivity extends BaseWorkeActivity {
             setRightTitle("编辑");
             setZhiDu(false);
             fillData();
+            selectList = pictureRecycler.setData(bean.getCertificatePics());
+            pictureRecycler.showImagev(selectList, listener);
             setRightTitleOnClickListener(view -> {
                         setRightTitle("保存");
                         setZhiDu(true);
-                        invoking.isShow(true);
+                        pictureRecycler.isShow(true, selectList);
                         setRightTitleOnClickListener(view1 -> setData());
                     }
             );
@@ -109,45 +99,16 @@ public class AddSkillCertificafeActivity extends BaseWorkeActivity {
             setTitle("资质证书");
             setRightTitle("保存");
             tvSave.setVisibility(View.GONE);
-            picture(true);
+            pictureRecycler.addImagev(listener);
         }
     }
+
+    PictureRecycleView.ImageListener listener = list -> selectList = list;
 
     @Override
     protected ViewModel initViewModel() {
         return null;
     }
-
-
-    GridImageAdapter.onAddPicClickListener onAddPicClickListener = new GridImageAdapter.onAddPicClickListener() {
-        @Override
-        public void onAddPicClick() {
-            SDKManager.getPicture().create(AddSkillCertificafeActivity.this)
-                    .setSelectList(selectList)
-                    .takePhotos(list -> {
-                        //选择图片成功之后的逻辑处理
-                        selectList = list;
-                        invoking.setList(selectList);
-                    });
-        }
-    };
-
-    GridImageAdapter.onAddPicClickListener listener = new GridImageAdapter.onAddPicClickListener() {
-        @Override
-        public void onAddPicClick() {
-            SDKManager.getPicture().create(AddSkillCertificafeActivity.this).takePhoto(new IPictureCallBack() {
-                @Override
-                public void onSuccess(List<LocalMedia> list) {
-                    //选择图片成功之后的逻辑处理
-                    if(selectList.size()<3) {
-                        selectList.add(list.get(0));
-                        invoking.setList(selectList);
-                    }
-
-                }
-            });
-        }
-    };
 
     private void setZhiDu(boolean isZd) {
         tvSave.setVisibility(isZd ? View.VISIBLE : View.GONE);
@@ -159,33 +120,10 @@ public class AddSkillCertificafeActivity extends BaseWorkeActivity {
 
 
     private void fillData() {
-
-        ArrayList<String> picList = new ArrayList<>();
-
-        String[] pics = bean.getCertificatePics().split(",");
-
-        for (int i = 0; i < pics.length; i++) {
-            picList.add(BuildConfig.OSS_SERVER + pics[i]);
-            LocalMedia localMedia = new LocalMedia();
-            localMedia.setPath(BuildConfig.OSS_SERVER + pics[i]);
-            selectList.add(localMedia);
-        }
-
         etCertificateName.setText(bean.getCertificateName());
         etOrg.setText(bean.getAwardOrg());
         etNum.setText(bean.getCertificateNumber());
         tvTime.setText(DateUtils.formatDate(bean.getBeginTime(), "yyyy-MM-dd") + " ～ " + DateUtils.formatDate(bean.getEndTime(), "yyyy-MM-dd"));
-        picture(false);
-    }
-
-    private void picture(boolean isShow) {
-        invoking = new PictureInvoking(this, recycleview, selectList);
-        if(isShow){
-            invoking.initRecycle(3, 200,  onAddPicClickListener);
-        }else{
-            invoking.initRecycle(3, 200, isShow, listener);
-        }
-
 
     }
 
@@ -252,11 +190,6 @@ public class AddSkillCertificafeActivity extends BaseWorkeActivity {
             return true;
         }
         return false;
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @OnClick({R.id.ll_date, R.id.tv_save})

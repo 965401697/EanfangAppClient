@@ -1,6 +1,8 @@
 package net.eanfang.worker.viewmodle.tender;
 
+import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.view.View;
 
 import androidx.lifecycle.MutableLiveData;
@@ -11,11 +13,15 @@ import com.eanfang.biz.rds.base.BaseViewModel;
 import com.eanfang.biz.rds.sys.ds.impl.tender.TenderDs;
 import com.eanfang.biz.rds.sys.repo.tender.TenderRepo;
 import com.eanfang.config.Config;
+import com.eanfang.sdk.picture.PictureInvoking;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.databinding.ActivityTenderFindDetailBinding;
+import net.eanfang.worker.ui.activity.im.SelectIMContactActivity;
+import net.eanfang.worker.ui.activity.my.UserHomeActivity;
+import net.eanfang.worker.ui.activity.worksapce.tender.TenderFindDetailActivity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -35,6 +41,7 @@ public class TenderFindDetailViewModle extends BaseViewModel {
     @Getter
     private ActivityTenderFindDetailBinding tenderFindDetailBinding;
 
+    private PictureInvoking invoking;
 
     public TenderFindDetailViewModle() {
         tenderLiveData = new MutableLiveData<>();
@@ -49,7 +56,7 @@ public class TenderFindDetailViewModle extends BaseViewModel {
             // 头像
             GlideUtil.intoImageView(tenderFindDetailBinding.getRoot().getContext(), Uri.parse(BuildConfig.OSS_SERVER + tenderBean.getUserEntity().getAccountEntity().getAvatar()), tenderFindDetailBinding.ivHeader);
             //是否认证
-            if (tenderBean.getTaskApplyEntity().getVerifyStatus() == 1) {
+            if (tenderBean.getWorkerEntity().getVerifyStatus() == 1) {
                 tenderFindDetailBinding.ivVerifyStatus.setVisibility(View.VISIBLE);
             } else {
                 tenderFindDetailBinding.ivVerifyStatus.setVisibility(View.GONE);
@@ -64,6 +71,11 @@ public class TenderFindDetailViewModle extends BaseViewModel {
             tenderFindDetailBinding.tvStartTime.setText(GetDateUtils.dateToDateString(tenderBean.getEndTime()));
             //预算
             tenderFindDetailBinding.tvBudget.setText(tenderBean.getBudget() + "元/" + tenderBean.getBudgetUnit());
+            // 附件
+            invoking = new PictureInvoking((TenderFindDetailActivity) tenderFindDetailBinding.getRoot().getContext(), tenderFindDetailBinding.rvSelectPic);
+            invoking.initRecycle(3, 200, false, null);
+            invoking.setData(tenderBean.getPictures(), 1);
+            invoking.isShow(false);
             // 天  时  分
             String endTime = GetDateUtils.dateToDateTimeString(tenderBean.getEndTime());
             if (!StringUtils.isEmpty(endTime)) {
@@ -86,4 +98,29 @@ public class TenderFindDetailViewModle extends BaseViewModel {
         });
     }
 
+    /**
+     * 跳转用户主页
+     */
+    public void doJumpUserHome() {
+        UserHomeActivity.startActivityForUid((TenderFindDetailActivity) tenderFindDetailBinding.getRoot().getContext(), tenderLiveData.getValue().getUserEntity().getUserId());
+    }
+
+    /**
+     * 分享
+     */
+    public void doShare() {
+        Intent intent = new Intent((TenderFindDetailActivity) tenderFindDetailBinding.getRoot().getContext(), SelectIMContactActivity.class);
+        Bundle bundle = new Bundle();
+
+        bundle.putString("id", String.valueOf(tenderLiveData.getValue().getId()));
+        bundle.putString("orderNum", tenderLiveData.getValue().getPublishCompanyName());
+        if (!StringUtils.isEmpty(tenderLiveData.getValue().getPictures())) {
+            bundle.putString("picUrl", tenderLiveData.getValue().getPictures().split(",")[0]);
+        }
+        bundle.putString("creatTime", tenderLiveData.getValue().getLaborRequirements());
+        bundle.putString("workerName", tenderLiveData.getValue().getContacts());
+        bundle.putString("shareType", "11");
+        intent.putExtras(bundle);
+        tenderFindDetailBinding.getRoot().getContext().startActivity(intent);
+    }
 }
