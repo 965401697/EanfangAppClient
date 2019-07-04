@@ -82,7 +82,8 @@ public class AddWorkActivity extends BaseWorkeActivity {
             setRightTitle("编辑");
             setZhiDu(false);
             fillData();
-            pictureRecycler.showImagev(bean.getCardPics(), listener);
+            selectList=pictureRecycler.setData(bean.getCardPics());
+            pictureRecycler.showImagev(selectList,listener);
             setRightTitleOnClickListener(view -> {
                         setRightTitle("保存");
                         setZhiDu(true);

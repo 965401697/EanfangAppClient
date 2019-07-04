@@ -85,11 +85,12 @@ public class AddSkillCertificafeActivity extends BaseWorkeActivity {
             setRightTitle("编辑");
             setZhiDu(false);
             fillData();
-         pictureRecycler.showImagev(bean.getCertificatePics(),listener);
+            selectList = pictureRecycler.setData(bean.getCertificatePics());
+            pictureRecycler.showImagev(selectList, listener);
             setRightTitleOnClickListener(view -> {
                         setRightTitle("保存");
                         setZhiDu(true);
-                        pictureRecycler.isShow(true,selectList);
+                        pictureRecycler.isShow(true, selectList);
                         setRightTitleOnClickListener(view1 -> setData());
                     }
             );
@@ -101,11 +102,14 @@ public class AddSkillCertificafeActivity extends BaseWorkeActivity {
             pictureRecycler.addImagev(listener);
         }
     }
-    PictureRecycleView.ImageListener listener= list -> selectList=list;
+
+    PictureRecycleView.ImageListener listener = list -> selectList = list;
+
     @Override
     protected ViewModel initViewModel() {
         return null;
     }
+
     private void setZhiDu(boolean isZd) {
         tvSave.setVisibility(isZd ? View.VISIBLE : View.GONE);
         etCertificateName.setEnabled(isZd);
@@ -122,6 +126,7 @@ public class AddSkillCertificafeActivity extends BaseWorkeActivity {
         tvTime.setText(DateUtils.formatDate(bean.getBeginTime(), "yyyy-MM-dd") + " ～ " + DateUtils.formatDate(bean.getEndTime(), "yyyy-MM-dd"));
 
     }
+
     private void setData() {
 
         if (checkedData()) {

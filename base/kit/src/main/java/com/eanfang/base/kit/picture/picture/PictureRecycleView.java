@@ -66,15 +66,16 @@ public class PictureRecycleView extends RecyclerView {
     /**
      * 展示图片
      */
-    public void showImagev(String imageStr, ImageListener imageListener) {
+    public void showImagev(List<LocalMedia> list, ImageListener imageListener) {
         setImageListener(imageListener);
-        setData(imageStr, 1);
+        this.mList = list;
         adapter = new GridImageAdapter(context, 200, false, onAddPicClick);
         init();
     }
 
     /**
      * 切换状态
+     *
      * @param isShow
      * @param lis
      */
@@ -127,17 +128,24 @@ public class PictureRecycleView extends RecyclerView {
         adapter.notifyDataSetChanged();
     }
 
-    public void setData(String str, int type) {
+    public List<LocalMedia> setData(String str) {
+        return setData(str, 1);
+    }
+
+    private List<LocalMedia> setData(String str, int type) {
+        List<LocalMedia> select = new ArrayList<>();
         if (StrUtil.isEmpty(str)) {
-            return;
+            return select;
         }
+
         String[] images = str.split(",");
         for (int i = 0; i < images.length; i++) {
             LocalMedia localMedi = new LocalMedia();
             localMedi.setPath(BuildConfig.OSS_SERVER + images[i]);
             localMedi.setPictureType(type + "");
-            mList.add(localMedi);
+            select.add(localMedi);
         }
+        return select;
     }
 
 
