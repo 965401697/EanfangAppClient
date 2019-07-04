@@ -253,6 +253,8 @@
                         android:textSize="@dimen/textSize_13" />
                 </LinearLayout>
 
+                <View style="@style/style_common_line_gray" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -268,13 +270,14 @@
                         android:textColor="@color/color_bottom"
                         android:textSize="@dimen/textSize_13" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_select_pic"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/dimen_30"
-                        android:scrollbars="none" />
                 </LinearLayout>
+
+                <com.eanfang.base.kit.picture.picture.PictureRecycleView
+                    android:id="@+id/rv_select_pic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_30"
+                    android:scrollbars="none" />
             </LinearLayout>
 
         </LinearLayout>
@@ -285,7 +288,7 @@
             android:layout_height="@dimen/dimen_80"
             android:layout_marginStart="@dimen/dimen_40"
             android:layout_marginEnd="@dimen/dimen_40"
-            android:layout_marginBottom="@dimen/dimen_100"
+            android:layout_marginBottom="@dimen/dimen_40"
             android:background="@drawable/shape_bg_sure"
             android:gravity="center"
             android:onClick="@{()->tenderCommitVm.doCheckInfo()}"

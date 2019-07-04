@@ -16,7 +16,6 @@ import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.picture.PictureRecycleView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.sdk.picture.PictureInvoking;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
@@ -82,12 +81,12 @@ public class AddWorkActivity extends BaseWorkeActivity {
             setRightTitle("编辑");
             setZhiDu(false);
             fillData();
-            selectList=pictureRecycler.setData(bean.getCardPics());
-            pictureRecycler.showImagev(selectList,listener);
+            selectList = pictureRecycler.setData(bean.getCardPics());
+            pictureRecycler.showImagev(selectList, listener);
             setRightTitleOnClickListener(view -> {
                         setRightTitle("保存");
                         setZhiDu(true);
-                        pictureRecycler.isShow(true,selectList);
+                        pictureRecycler.isShow(true, selectList);
                         setRightTitleOnClickListener(view1 -> setData());
                     }
             );
@@ -100,7 +99,7 @@ public class AddWorkActivity extends BaseWorkeActivity {
         }
     }
 
-    PictureRecycleView.ImageListener listener= list -> selectList=list;
+    PictureRecycleView.ImageListener listener = list -> selectList = list;
 
     @Override
     protected ViewModel initViewModel() {

@@ -11,21 +11,15 @@ import androidx.lifecycle.ViewModel;
 import com.eanfang.BuildConfig;
 import com.eanfang.base.BaseActivity;
 import com.eanfang.base.BaseApplication;
-import com.eanfang.base.kit.SDKManager;
-import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.biz.model.Message;
 import com.eanfang.biz.model.SelectAddressItem;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
 import com.eanfang.biz.rds.base.LViewModelProviders;
-import com.eanfang.sdk.picture.GridImageAdapter;
-import com.eanfang.sdk.picture.PictureInvoking;
 import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
-import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.databinding.ActivityTenderCreateBinding;
@@ -33,9 +27,7 @@ import net.eanfang.worker.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.worker.viewmodle.tender.TenderCreateViewModle;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -57,11 +49,6 @@ public class TenderCreateActivity extends BaseActivity implements SelectTimeDial
     private TenderCreateViewModle tenderCreateViewModle;
 
     private TaskPublishEntity mReleasetaskPublishEntity;
-    /**
-     * 选择图片
-     */
-    private List<LocalMedia> mPicList = new ArrayList<>();
-    private PictureInvoking mPicInvoke;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,10 +66,8 @@ public class TenderCreateActivity extends BaseActivity implements SelectTimeDial
         GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + BaseApplication.get().getAccount().getAvatar()), mTenderCreateBinding.ivHeader);
         mTenderCreateBinding.tvName.setText(BaseApplication.get().getAccount().getRealName());
         mTenderCreateBinding.tvCompany.setText(BaseApplication.get().getCompanyEntity().getOrgName());
-        mPicInvoke = new PictureInvoking((TenderCreateActivity) mTenderCreateBinding.getRoot().getContext(), mTenderCreateBinding.rvSelectPic);
-        mPicInvoke.initRecycle(3, onAddPicClickListener);
+        mTenderCreateBinding.rvSelectPic.addImagev(tenderCreateViewModle.listener);
         if (mReleasetaskPublishEntity != null) {
-            mPicInvoke.setData(mReleasetaskPublishEntity.getPictures(), 1);
             tenderCreateViewModle.doReleaseAgain(mReleasetaskPublishEntity);
         }
 
@@ -150,17 +135,6 @@ public class TenderCreateActivity extends BaseActivity implements SelectTimeDial
         }
     }
 
-    GridImageAdapter.onAddPicClickListener onAddPicClickListener = () -> {
-        SDKManager.getPicture().create((TenderCreateActivity) mTenderCreateBinding.getRoot().getContext()).takePhotos(new IPictureCallBack() {
-            @Override
-            public void onSuccess(List<LocalMedia> list) {
-                mPicList = list;
-                mPicInvoke.setList(mPicList);
-                String mImages = PhotoUtils.getPhotoUrl("biz/tender/", mPicList, tenderCreateViewModle.uploadMap, true);
-                mTenderCreateBinding.getTenderCreateVo().getPictures().set(mImages);
-            }
-        });
-    };
 
     @Override
     public void getData(String time) {

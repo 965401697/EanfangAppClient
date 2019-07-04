@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.annimon.stream.Stream;
 import com.eanfang.base.BaseApplication;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.kit.picture.picture.PictureRecycleView;
 import com.eanfang.biz.model.entity.tender.TaskApplyEntity;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
 import com.eanfang.biz.model.vo.tender.TenderCommitVo;
@@ -16,13 +17,17 @@ import com.eanfang.biz.rds.sys.ds.impl.tender.TenderDs;
 import com.eanfang.biz.rds.sys.repo.tender.TenderRepo;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.GetConstDataUtils;
+import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
+import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.worker.databinding.ActivityTenderCommitBinding;
 import net.eanfang.worker.ui.activity.worksapce.tender.TenderCommitActivity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import lombok.Getter;
@@ -37,7 +42,7 @@ public class TenderCommitViewModle extends BaseViewModel {
     @Getter
     private ActivityTenderCommitBinding tenderCommitBinding;
 
-    public void setTenderCommitBinding(ActivityTenderCommitBinding mTenderCommitBinding){
+    public void setTenderCommitBinding(ActivityTenderCommitBinding mTenderCommitBinding) {
         this.tenderCommitBinding = mTenderCommitBinding;
         tenderCommitBinding.setTenderCommitVo(tenderCommitVo);
     }
@@ -50,6 +55,11 @@ public class TenderCommitViewModle extends BaseViewModel {
 
     public Map<String, String> uploadMap = new HashMap<>();
 
+    /**
+     * 选择图片
+     */
+    private List<LocalMedia> mPicList = new ArrayList<>();
+    public PictureRecycleView.ImageListener listener = list -> mPicList = list;
 
     public TenderCommitViewModle() {
         tenderRepo = new TenderRepo(new TenderDs(this));
@@ -104,14 +114,23 @@ public class TenderCommitViewModle extends BaseViewModel {
         tenderCommitVo.getProjectQuote().set(tenderCommitBinding.tvBudget.getText().toString().trim());
         tenderCommitVo.getBudgetUnit().set(tenderCommitBinding.tvBudgetUnit.getText().toString().trim());
         tenderCommitVo.getDescription().set(tenderCommitBinding.etPlan.getText().toString().trim());
+        String mImages = PhotoUtils.getPhotoUrl("biz/tender/", mPicList, uploadMap, true);
+        tenderCommitVo.getPictures().set(mImages);
         if (uploadMap.size() != 0) {
             SDKManager.ossKit((TenderCommitActivity) tenderCommitBinding.getRoot().getContext()).asyncPutImages(uploadMap, (isSuccess) -> {
                 tenderRepo.doSetCommitTender(tenderCommitVo).observe(lifecycleOwner, tenderBean -> {
                     createTenderLiveData.setValue(tenderBean);
+
                 });
             });
+        } else if (tenderCommitVo.getPictures() != null) {
+            tenderRepo.doSetCommitTender(tenderCommitVo).observe(lifecycleOwner, tenderBean -> {
+                createTenderLiveData.setValue(tenderBean);
+            });
         }
+
     }
+
 
     /**
      * 再次报价
@@ -123,6 +142,11 @@ public class TenderCommitViewModle extends BaseViewModel {
         tenderCommitBinding.tvBudget.setText(mTaskApplyEntity.getProjectQuote() + "");
         tenderCommitBinding.tvBudgetUnit.setText(mTaskApplyEntity.getBudgetUnit());
         tenderCommitBinding.etPlan.setText(mTaskApplyEntity.getDescription());
+
+        mPicList = tenderCommitBinding.rvSelectPic.setData(mTaskApplyEntity.getPictures());
+        tenderCommitBinding.rvSelectPic.showImagev(mPicList, listener);
+        tenderCommitBinding.rvSelectPic.isShow(true, mPicList);
+
     }
 
 }

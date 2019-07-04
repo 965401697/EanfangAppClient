@@ -1,19 +1,18 @@
 package net.eanfang.worker.ui.activity.worksapce.tender;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModel;
 
 import com.eanfang.base.BaseActivity;
-import com.eanfang.base.BaseApplication;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
 import com.eanfang.biz.rds.base.LViewModelProviders;
 import com.eanfang.util.JumpItent;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.databinding.ActivityTenderFindDetailBinding;
-import net.eanfang.worker.ui.activity.my.UserHomeActivity;
 import net.eanfang.worker.viewmodle.tender.TenderFindDetailViewModle;
 
 import lombok.Setter;
@@ -32,6 +31,8 @@ public class TenderFindDetailActivity extends BaseActivity {
     @Accessors(chain = true)
     private TenderFindDetailViewModle tenderFindDetailViewModle;
 
+    private boolean isLookDetail = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         tenderFindDetailBinding = DataBindingUtil.setContentView(this, R.layout.activity_tender_find_detail);
@@ -44,6 +45,7 @@ public class TenderFindDetailActivity extends BaseActivity {
         setLeftBack(true);
         setRightTitle("分享");
         tenderFindDetailViewModle.mTendFindId = getIntent().getLongExtra("tendFindId", 0);
+        tenderFindDetailBinding.rlTime.setVisibility(getIntent().getBooleanExtra("isLookDetail", false) ? View.GONE : View.INVISIBLE);
         tenderFindDetailViewModle.initData();
 
         /**
