@@ -1,6 +1,7 @@
 package net.eanfang.worker.viewmodle.tender;
 
 import android.net.Uri;
+import android.os.Bundle;
 import android.view.View;
 
 import androidx.lifecycle.MutableLiveData;
@@ -15,10 +16,12 @@ import com.eanfang.biz.rds.sys.repo.tender.TenderRepo;
 import com.eanfang.config.Config;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
+import com.eanfang.util.JumpItent;
+import com.yaf.base.entity.WorkerEntity;
 
-import net.eanfang.worker.R;
 import net.eanfang.worker.databinding.ActivityTenderOfferDetailBinding;
-import net.eanfang.worker.ui.adapter.worktender.WorkTenderOfferDetailAdapter;
+import net.eanfang.worker.ui.activity.worksapce.WorkDetailActivity;
+import net.eanfang.worker.ui.activity.worksapce.tender.TenderOfferDetailActivity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -109,5 +112,14 @@ public class TenderOfferDetailViewModle extends BaseViewModel {
         tenderOfferDetailBinding.tvBudget.setText(taskApplyEntity.getProjectQuote() + "元/" + taskApplyEntity.getBudgetUnit());
         // 施工方案
         tenderOfferDetailBinding.tvDescription.setText(taskApplyEntity.getDescription());
+
+        tenderOfferDetailBinding.rlWin.setOnClickListener((v) -> {
+            WorkerEntity workerEntity = new WorkerEntity();
+            workerEntity.setId(taskApplyEntity.getWorkerEntity().getId());
+            workerEntity.setCompanyUserId(taskApplyEntity.getCreateUserId());
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("workEntriy", workerEntity);
+            JumpItent.jump((TenderOfferDetailActivity) tenderOfferDetailBinding.getRoot().getContext(), WorkDetailActivity.class, bundle);
+        });
     }
 }

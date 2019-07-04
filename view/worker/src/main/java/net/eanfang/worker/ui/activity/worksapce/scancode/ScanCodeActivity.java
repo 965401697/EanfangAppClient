@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 
+import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModel;
 
 import com.alibaba.fastjson.JSONObject;
@@ -26,6 +27,7 @@ import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
+import net.eanfang.worker.databinding.ActivityScanCodeBinding;
 import net.eanfang.worker.ui.activity.im.AddFriendActivity;
 import net.eanfang.worker.ui.activity.worksapce.equipment.EquipmentDetailActivity;
 
@@ -54,12 +56,12 @@ public class ScanCodeActivity extends BaseActivity {
 
     // 扫描什么类型的二维码
     private String mScanType = "";
+    private ActivityScanCodeBinding scanCodeBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        scanCodeBinding = DataBindingUtil.setContentView(this, R.layout.activity_scan_code);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scan_code);
-        initView();
     }
 
     @Override
@@ -67,10 +69,10 @@ public class ScanCodeActivity extends BaseActivity {
         return null;
     }
 
-
-    public void initView() {
-        setLeftBack(true);
+    @Override
+    protected void initView() {
         setTitle("二维码扫描");
+        setLeftBack(true);
         barcodeScannerView = findViewById(R.id.zxing_barcode_scanner);
         Collection<BarcodeFormat> formats = Arrays.asList(BarcodeFormat.QR_CODE, BarcodeFormat.CODE_39);
         barcodeScannerView.getBarcodeView().setDecoderFactory(new DefaultDecoderFactory(formats));
