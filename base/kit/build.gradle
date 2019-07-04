@@ -9,6 +9,7 @@ android {
         targetSdkVersion cfg.targetSdkVersion
         versionCode cfg.versionCode
         versionName cfg.versionName
+        buildConfigField("String", "OSS_SERVER", cfg.ossServer)
     }
 
     buildTypes {
@@ -56,5 +57,6 @@ dependencies {
     api pkg.xghw
     api pkg.mipush
     api pkg.xgmz
+    api pkg.cymChad
 
 }

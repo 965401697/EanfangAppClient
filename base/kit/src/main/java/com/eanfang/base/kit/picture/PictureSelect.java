@@ -4,9 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.eanfang.base.kit.R;
+import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.kit.picture.picture.GridImageAdapter;
+import com.eanfang.base.kit.picture.picture.PictureInvoking;
 import com.luck.picture.lib.PictureSelectionModel;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
@@ -172,7 +176,7 @@ public class PictureSelect {
      * @param onImageChooseCallBack
      */
     public void takeVideo(IPictureCallBack onImageChooseCallBack) {
-        pictureSelect(PictureMimeType.ofVideo(), true, PictureConfig.SINGLE, 1, onImageChooseCallBack);
+        pictureSelect(PictureMimeType.ofVideo(), false, PictureConfig.SINGLE, 1, onImageChooseCallBack);
     }
 
     /**
