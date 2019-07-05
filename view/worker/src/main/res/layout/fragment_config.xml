@@ -81,11 +81,12 @@
                                 android:layout_centerVertical="true"
                                 android:gravity="center"
                                 android:orientation="vertical">
+
                                 <LinearLayout
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:layout_marginTop="-2dp">
+                                    android:layout_marginTop="-2dp"
+                                    android:gravity="center">
 
                                     <include layout="@layout/layout_headview" />
                                 </LinearLayout>
@@ -324,8 +325,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_22"
                 android:layout_marginRight="@dimen/dimen_32"
-                android:src="@drawable/img_invitation_entrance"
-                />
+                android:src="@drawable/img_invitation_entrance" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -722,7 +723,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:layout_marginLeft="10dp"
                             android:text="活动"
                             android:textColor="@color/color_contact_companyname"
                             android:textSize="@dimen/textSize_14" />
@@ -749,7 +749,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:layout_marginLeft="10dp"
                             android:text="评价"
                             android:textColor="@color/color_client_neworder"
                             android:textSize="@dimen/textSize_14" />
@@ -777,7 +776,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:layout_marginLeft="10dp"
                             android:text="我的收藏"
                             android:textColor="@color/color_client_neworder"
                             android:textSize="@dimen/textSize_14" />
@@ -804,7 +802,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:layout_marginLeft="10dp"
                             android:text="邀请"
                             android:textColor="@color/color_client_neworder"
                             android:textSize="@dimen/textSize_14" />
