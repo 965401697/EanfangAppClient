@@ -2,10 +2,12 @@ package net.eanfang.worker.ui.activity.worksapce;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
+
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
@@ -41,6 +43,9 @@ public class PutUpSelectWorkerActivity extends BaseWorkerActivity {
 
     @BindView(R.id.rv_list)
     RecyclerView rvList;
+    @BindView(R.id.tv_no_data)
+    TextView tvNoData;
+
 
     private List<WorkerEntity> mDataList = new ArrayList<>();
     private List<String> businessId;
@@ -76,8 +81,15 @@ public class PutUpSelectWorkerActivity extends BaseWorkerActivity {
         EanfangHttp.post(RepairApi.GET_REPAIR_SEARCH)
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<WorkerEntity>(this, true, WorkerEntity.class, true, (list) -> {
-                    mDataList = list;
-                    initAdapter();
+                    if (list != null && list.size() > 0) {
+                        mDataList = list;
+                        initAdapter();
+                        rvList.setVisibility(View.VISIBLE);
+                        tvNoData.setVisibility(View.GONE);
+                    } else {
+                        rvList.setVisibility(View.GONE);
+                        tvNoData.setVisibility(View.VISIBLE);
+                    }
                 }));
     }
 
