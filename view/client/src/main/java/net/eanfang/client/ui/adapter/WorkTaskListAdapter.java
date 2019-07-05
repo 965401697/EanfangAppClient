@@ -12,7 +12,7 @@ import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.R;
 
-import static com.eanfang.util.V.v;
+import static com.eanfang.base.kit.V.v;
 
 
 /**

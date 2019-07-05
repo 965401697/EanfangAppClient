@@ -31,11 +31,10 @@ import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
-import com.eanfang.util.V;
+import com.eanfang.base.kit.V;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
-import net.eanfang.worker.ui.adapter.SignListAdapter;
 import net.eanfang.worker.ui.adapter.security.SecurityCommentSecondAdapter;
 import net.eanfang.worker.ui.widget.DividerItemDecoration;
 import net.eanfang.worker.ui.widget.GeneralSDialog;

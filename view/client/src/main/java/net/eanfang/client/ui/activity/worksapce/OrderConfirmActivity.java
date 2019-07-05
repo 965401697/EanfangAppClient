@@ -32,7 +32,7 @@ import com.eanfang.biz.model.reapair.RepairPersonalInfoEntity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.V;
+import com.eanfang.base.kit.V;
 import com.yaf.base.entity.PayLogEntity;
 import com.yaf.base.entity.RepairBugEntity;
 import com.yaf.base.entity.RepairOrderEntity;
@@ -53,7 +53,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.eanfang.util.V.v;
+import static com.eanfang.base.kit.V.v;
 
 
 /**

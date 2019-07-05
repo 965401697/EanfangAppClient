@@ -11,7 +11,7 @@ import com.eanfang.BuildConfig;
 import com.eanfang.biz.model.EvaluateBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.V;
+import com.eanfang.base.kit.V;
 
 import net.eanfang.worker.R;
 

@@ -9,7 +9,7 @@ import com.eanfang.BuildConfig;
 import com.eanfang.R;
 import com.eanfang.biz.model.SecurityCompanyDetailsBean;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.V;
+import com.eanfang.base.kit.V;
 
 
 /**

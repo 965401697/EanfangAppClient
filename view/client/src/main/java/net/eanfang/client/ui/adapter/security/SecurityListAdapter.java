@@ -14,7 +14,7 @@ import com.eanfang.biz.model.security.SecurityListBean;
 import com.eanfang.util.ETimeUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.StringUtils;
-import com.eanfang.util.V;
+import com.eanfang.base.kit.V;
 import com.eanfang.witget.SecurityCircleImageLayout;
 import com.eanfang.witget.mentionedittext.edit.util.FormatRangeManager;
 import com.eanfang.witget.mentionedittext.text.MentionTextView;

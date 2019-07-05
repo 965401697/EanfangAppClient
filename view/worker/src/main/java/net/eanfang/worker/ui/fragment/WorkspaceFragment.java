@@ -54,7 +54,7 @@ import java.util.List;
 import butterknife.BindView;
 import q.rorbin.badgeview.QBadgeView;
 
-import static com.eanfang.util.V.v;
+import static com.eanfang.base.kit.V.v;
 
 
 /**

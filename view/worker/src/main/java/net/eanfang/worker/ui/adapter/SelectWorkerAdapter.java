@@ -15,7 +15,7 @@ import net.eanfang.worker.R;
 
 import java.util.List;
 
-import static com.eanfang.util.V.v;
+import static com.eanfang.base.kit.V.v;
 
 /**
  * Created by admin on 2018/4/27.

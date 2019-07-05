@@ -40,7 +40,7 @@ import com.eanfang.util.ConnectivityChangeUtil;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
-import com.eanfang.util.V;
+import com.eanfang.base.kit.V;
 import com.eanfang.witget.CustomRadioGroup;
 
 import net.eanfang.worker.R;

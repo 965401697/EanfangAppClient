@@ -15,8 +15,6 @@ import lombok.Getter;
 public abstract class TypeToken<T> {
     @Getter
     private final Type type;
-    @Getter
-    private final Class<T> clazz;
 
     public TypeToken() {
         Type genericSuperclass = getClass().getGenericSuperclass();
@@ -27,7 +25,5 @@ public abstract class TypeToken<T> {
         assert parameterizedType != null;
         Type[] typeArguments = parameterizedType.getActualTypeArguments();
         type = typeArguments[0];
-
-        clazz = (Class<T>) type.getClass().getGenericSuperclass();
     }
 }

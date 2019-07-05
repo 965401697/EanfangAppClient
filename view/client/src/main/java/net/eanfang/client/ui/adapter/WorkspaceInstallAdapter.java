@@ -8,7 +8,7 @@ import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.biz.model.WorkspaceInstallBean;
 import com.eanfang.util.ToastUtil;
-import com.eanfang.util.V;
+import com.eanfang.base.kit.V;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;

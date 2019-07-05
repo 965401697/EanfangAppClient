@@ -117,7 +117,7 @@ public class InstallActivity extends BaseClientActivity {
 
 
     private void initDialog() {
-        installOrderConfirmVo = CacheKit.get().get("installOrder");
+        installOrderConfirmVo = CacheKit.get().get("installOrder", InstallOrderConfirmVo.class);
         if (null == installOrderConfirmVo) {
             installOrderConfirmVo = new InstallOrderConfirmVo();
             binding.setInstallbean(installOrderConfirmVo);

@@ -62,7 +62,8 @@ public class CacheKit extends LruCache<String, Object> {
     public String getStr(String key) {
         checkDue(key);
         this.clazz = String.class;
-        return super.get(key) == null ? null : super.get(key).toString();
+        Object obj = super.get(key);
+        return obj != null ? obj.toString() : null;
     }
 
     /**
@@ -74,7 +75,8 @@ public class CacheKit extends LruCache<String, Object> {
     public Integer getInt(String key) {
         checkDue(key);
         this.clazz = Integer.TYPE;
-        return (Integer) super.get(key);
+        Object obj = super.get(key);
+        return obj != null ? Integer.parseInt(obj.toString()) : null;
     }
 
     /**
@@ -86,7 +88,8 @@ public class CacheKit extends LruCache<String, Object> {
     public Long getLong(String key) {
         checkDue(key);
         this.clazz = Long.TYPE;
-        return (Long) super.get(key);
+        Object obj = super.get(key);
+        return obj != null ? Long.parseLong(obj.toString()) : null;
     }
 
     /**
@@ -99,20 +102,19 @@ public class CacheKit extends LruCache<String, Object> {
     public Boolean getBool(String key, boolean def) {
         checkDue(key);
         this.clazz = Boolean.TYPE;
-        Boolean result = (Boolean) super.get(key);
-        return result != null ? result : def;
+        Object obj = super.get(key);
+        return obj != null ? Boolean.parseBoolean(obj.toString()) : def;
     }
 
 
     /**
-     * 已过时 {@link CacheKit get(String key)}
+     * get
      *
      * @param key   key
      * @param clazz clazz
      * @param <T>   T
      * @return T
      */
-    @Deprecated
     public <T> T get(String key, Class<T> clazz) {
         checkDue(key);
         this.clazz = clazz;
@@ -124,29 +126,9 @@ public class CacheKit extends LruCache<String, Object> {
         return (T) super.get(key);
     }
 
-    /**
-     * get
-     *
-     * @param key key
-     * @param <T> T
-     * @return T
-     */
-    public <T> T get(String key) {
+    public <T> List<T> getArr(String key, Class<T> clazz) {
         checkDue(key);
-        this.clazz = new TypeToken<T>() {
-        }.getClazz();
-        if (this.clazz.getName().contains(COM_EANFANG_BIZ_MODEL_VO)) {
-            this.clazz = JSONObject.class;
-            JSONObject json = (JSONObject) super.get(key);
-            return VoKit.obj2Vo(json);
-        }
-        return (T) super.get(key);
-    }
-
-    public <T> List<T> getArr(String key) {
-        checkDue(key);
-        this.clazz = new TypeToken<T>() {
-        }.getClazz();
+        this.clazz = clazz;
         return (List<T>) super.get(key);
     }
 
@@ -207,11 +189,12 @@ public class CacheKit extends LruCache<String, Object> {
             disCacheKit.put(timeKey, DateUtil.currentSeconds() + due);
             super.put(timeKey, DateUtil.currentSeconds() + due);
         }
-        value = VoKit.vo2Json(value);
         if (!isDisk) {
             return super.put(key, value);
+        } else {
+            JSONObject jsonValue = VoKit.vo2Json(value);
+            disCacheKit.put(key, jsonValue);
         }
-        disCacheKit.put(key, value);
         return super.put(key, value);
     }
 
@@ -237,7 +220,7 @@ public class CacheKit extends LruCache<String, Object> {
     protected Object create(@NonNull String key) {
         super.create(key);
         Object obj = disCacheKit.get(key, this.clazz);
-        if (obj != null) {
+        if (obj != null || key.contains("_seconds")) {
             return obj;
         }
         return disCacheKit.getArr(key, this.clazz);

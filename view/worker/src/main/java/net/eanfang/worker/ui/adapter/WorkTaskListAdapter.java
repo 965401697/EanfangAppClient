@@ -1,6 +1,5 @@
 package net.eanfang.worker.ui.adapter;
 
-import android.net.Uri;
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -12,7 +11,7 @@ import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
 
-import static com.eanfang.util.V.v;
+import static com.eanfang.base.kit.V.v;
 
 
 /**

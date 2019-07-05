@@ -17,7 +17,7 @@ import com.eanfang.biz.model.entity.OrgEntity;
 import com.eanfang.biz.model.entity.UserEntity;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.voice.RecognitionManager;
-import com.eanfang.util.V;
+import com.eanfang.base.kit.V;
 import com.facebook.imagepipeline.backends.okhttp3.OkHttpImagePipelineConfigFactory;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.okgo.OkGo;
@@ -261,27 +261,14 @@ public class BaseApplication extends MultiDexApplication {
 
     /**
      * 缓存取值 T
-     * 请使用 {@link CacheKit get(String key) }
      *
      * @param key   key
      * @param clazz clazz
      * @param <T>   T
      * @return Object
      */
-    @Deprecated
     public <T> Object get(String key, Class<T> clazz) {
         return CacheKit.get().get(key, clazz);
-    }
-
-    /**
-     * 缓存取值 T
-     *
-     * @param key key
-     * @param <T> T
-     * @return T
-     */
-    public <T> T get(String key) {
-        return CacheKit.get().get(key);
     }
 
     /**
@@ -303,7 +290,7 @@ public class BaseApplication extends MultiDexApplication {
      * @return LoginBean
      */
     public LoginBean getLoginBean() {
-        return CacheKit.get().get(LoginBean.class.getName());
+        return CacheKit.get().get(LoginBean.class.getName(), LoginBean.class);
     }
 
     /**

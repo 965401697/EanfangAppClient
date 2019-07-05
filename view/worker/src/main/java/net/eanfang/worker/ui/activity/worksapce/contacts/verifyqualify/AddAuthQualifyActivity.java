@@ -27,7 +27,7 @@ import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
-import com.eanfang.util.V;
+import com.eanfang.base.kit.V;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
