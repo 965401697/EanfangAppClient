@@ -11,7 +11,7 @@
 
     <include layout="@layout/layout_search" />
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    <com.eanfang.swipefresh.SwipyRefreshLayout
         android:id="@+id/swiprefresh"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,7 +23,8 @@
             android:id="@+id/rv_faultList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </com.eanfang.swipefresh.SwipyRefreshLayout>
+
     <TextView
         android:id="@+id/tv_go"
         android:layout_width="match_parent"
