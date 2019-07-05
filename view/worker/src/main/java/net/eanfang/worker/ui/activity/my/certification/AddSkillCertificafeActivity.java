@@ -18,8 +18,6 @@ import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.base.kit.picture.picture.PictureRecycleView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.sdk.picture.GridImageAdapter;
-import com.eanfang.sdk.picture.PictureInvoking;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
