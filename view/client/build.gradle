@@ -23,15 +23,16 @@ android {
         ndk {
             // 设置支持的SO库架构
             abiFilters 'armeabi'
+            //信鸽配置
+            manifestPlaceholders = [
+                    XG_ACCESS_ID : cfg.xgClientAccessId,
+                    XG_ACCESS_KEY: cfg.xgClientAccessKey,
+                    AMAP_KEY     : cfg.xgClientAmapKey,
+                    HW_APPID     : cfg.xgClientHwAppid,
+                    PACKAGE_NAME : cfg.clientId
+            ]
         }
-        //信鸽配置
-        manifestPlaceholders = [
-                XG_ACCESS_ID : cfg.xgClientAccessId,
-                XG_ACCESS_KEY: cfg.xgClientAccessKey,
-                AMAP_KEY     : cfg.xgClientAmapKey,
-                HW_APPID     : cfg.xgClientHwAppid,
-                PACKAGE_NAME : cfg.clientId
-        ]
+
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
     }
 
