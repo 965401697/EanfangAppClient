@@ -61,7 +61,7 @@ public abstract class BaseClientActivity extends BaseActivity {
                 .dialogToObservable()
                 .subscribe((code) -> {
                     if (code.equals(RxDialog.POSITIVE)) {
-                        CacheKit.get().putVo(key, baseVo);
+                        CacheKit.get().put(key, baseVo);
                         finish();
                     } else if (code.equals(RxDialog.NEGATIVE)) {
                         finish();

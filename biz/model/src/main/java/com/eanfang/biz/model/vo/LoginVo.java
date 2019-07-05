@@ -27,5 +27,4 @@ public class LoginVo implements Serializable {
     private transient ObservableBoolean legalCk = new ObservableBoolean(true);
     private transient ObservableBoolean showPwd = new ObservableBoolean(false);
 
-
 }

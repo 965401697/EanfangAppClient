@@ -5,9 +5,11 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.0'
+        classpath 'com.android.tools.build:gradle:3.4.1'
         classpath 'com.jakewharton:butterknife-gradle-plugin:10.1.0'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0'
+        classpath 'com.jakewharton.hugo:hugo-plugin:1.2.1'
+        classpath 'com.hujiang.aspectjx:gradle-android-plugin-aspectjx:2.0.5'
     }
 }
 allprojects {
@@ -43,9 +45,9 @@ ext {
     cfg = [
             // SDK And Tools
             minSdkVersion    : 17,
-            targetSdkVersion : 28,
-            compileSdkVersion: 28,
-            buildToolsVersion: "28.0.3",
+            targetSdkVersion : 29,
+            compileSdkVersion: 29,
+            buildToolsVersion: "29.0.0",
             versionName      : "2.3.38",
             versionCode      : 19033001,
 
@@ -55,9 +57,9 @@ ext {
             ossEndpoint      : "\"oss-cn-beijing.aliyuncs.com/\"",
             javaVersion      : JavaVersion.VERSION_1_8,
             debugMod         : "true",
+            localApiHost     : "\"http://192.168.0.222:8080\"",
             betaApiHost      : "\"http://api.beta.eanfang.net\"",
             proApiHost       : "\"https://api.eanfang.net\"",
-            localApiHost     : "\"http://192.168.0.222:8080\"",
             clientId         : "net.eanfang.client",
             workerId         : "net.eanfang.worker",
             clientBetaBugly  : "\"6f03b7d57f\"",
@@ -112,6 +114,7 @@ ext {
             zxing                : "com.google.zxing:core:3.3.2",
             databindingCompiler  : "androidx.databinding:databinding-compiler:3.4.0",
             databindingRuntime   : 'androidx.databinding:databinding-runtime:3.4.0',
+            aspectj              : "org.aspectj:aspectjrt:1.9.4",
 
             //component
             recyclerview         : "androidx.recyclerview:recyclerview:1.0.0",
@@ -141,12 +144,12 @@ ext {
             //tencent
             bugly                : "com.tencent.bugly:crashreport:2.6.6.1",
             nativecrashreport    : "com.tencent.bugly:nativecrashreport:3.3.1",
-            xinge                : "com.tencent.xinge:xinge:3.2.7-Release",
-            xghw                 : "com.tencent.xinge:xghw:3.2.8-Release",
-            mipush               : "com.tencent.xinge:mipush:3.2.8-release",
-            xgmz                 : "com.tencent.xinge:xgmz:3.2.8-release",
+            xinge                : "com.tencent.xinge:xinge:4.3.2-release",
+            xghw                 : "com.tencent.xinge:xghw:4.3.2-huawei-release",
+            mipush               : "com.tencent.xinge:mipush:4.3.2-xiaomi-release",
+            xgmz                 : "com.tencent.xinge:xgmz:4.3.2-meizu-release",
             wup                  : "com.tencent.wup:wup:1.0.0.E-release",
-            mid                  : "com.tencent.mid:mid:4.0.6-release",
+            mid                  : "com.tencent.mid:mid:4.0.7-Release",
             jg                   : "com.tencent.jg:jg:1.1",
             wechat               : "com.tencent.mm.opensdk:wechat-sdk-android-without-mta:5.3.1",
 
@@ -163,7 +166,7 @@ ext {
             update               : "com.qianwen:update-app:3.5.2",
             pinyin4j             : "com.belerweb:pinyin4j:2.5.1",
             monitor              : "leavesc.hello:Monitor:1.0.3",
-            gson                 : 'com.google.code.gson:gson:2.8.5'
+//            gson                 : 'com.google.code.gson:gson:2.8.5'
 
     ]
 }

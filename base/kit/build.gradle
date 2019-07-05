@@ -37,11 +37,10 @@ dependencies {
     implementation pkg.disklrucache
     implementation pkg.hutoolCore
     implementation pkg.fastjson
+    implementation pkg.aspectj
 
     api pkg.loadsir
     api pkg.pictureselector
-
-
 
     api pkg.aliyunOss
     api pkg.eventbus

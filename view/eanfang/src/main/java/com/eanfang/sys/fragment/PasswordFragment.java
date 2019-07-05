@@ -41,7 +41,7 @@ public class PasswordFragment extends BaseFragment {
         binding.setApp(getApp());
 
         loginViewModel.setPasswordBinding(binding);
-        loginViewModel.LegalText(mActivity);
+        loginViewModel.legalText(mActivity);
         return binding.getRoot();
     }
 

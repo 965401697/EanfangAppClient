@@ -8,6 +8,10 @@ import com.alibaba.sdk.android.oss.OSSClient;
 import com.alibaba.sdk.android.oss.common.auth.OSSCredentialProvider;
 import com.eanfang.base.network.config.HttpConfig;
 
+/**
+ * @author jornl
+ * @date 2019-07-01
+ */
 public class OssKit {
 
     public static IOssService get(Activity activity) {
@@ -22,6 +26,6 @@ public class OssKit {
         // 失败后最大重试次数，默认2次
         conf.setMaxErrorRetry(3);
         OSS oss = new OSSClient(activity, HttpConfig.get().getOssEndpoint(), credentialProvider, conf);
-        return new OssService(activity, oss, HttpConfig.get().getOssBucket());
+        return new OssServiceImpl(activity, oss, HttpConfig.get().getOssBucket());
     }
 }

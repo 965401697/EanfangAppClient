@@ -13,6 +13,9 @@ import io.reactivex.schedulers.Schedulers;
 
 /**
  * 使用 Retrofit请求token 并设置缓存 1小时失效
+ *
+ * @author jornl
+ * @date 2019-07-01
  */
 public class STSGetter extends OSSFederationCredentialProvider {
     private OssBean ossBean;

@@ -27,21 +27,28 @@ import top.zibin.luban.Luban;
  * created by wtt
  * at 2019/4/12
  * summary:
+ *
+ * @author jornl
+ * @date 2019-07-01
  */
-public class OssService implements IOssService {
-    private static final String TAG = OssService.class.getSimpleName();
+public class OssServiceImpl implements IOssService {
+    private static final String TAG = OssServiceImpl.class.getSimpleName();
     private Activity activity;
     private OSS oss;
     private String bucket;
     private Dialog loading;
 
 
-    //是否压缩完的标识
+    /**
+     * 是否压缩完的标识
+     */
     private MutableLiveData<Boolean> isCompress = new MutableLiveData<>();
-    //是否上传成功的标识
+    /**
+     * 是否上传成功的标识
+     */
     private MutableLiveData<Boolean> isUpload = new MutableLiveData<>();
 
-    OssService(Activity activity, OSS oss, String bucket) {
+    OssServiceImpl(Activity activity, OSS oss, String bucket) {
         this.oss = oss;
         this.bucket = bucket;
         this.activity = activity;
@@ -86,7 +93,6 @@ public class OssService implements IOssService {
         AtomicInteger successCount = new AtomicInteger();
         Flowable.fromIterable(objectMap.keySet())
                 .flatMap(key -> Flowable.just(key).map(fileKey -> {
-//                    OSSAsyncTask<PutObjectResult> asyncTask;
                     PutObjectRequest put = getPutObjectRequest(fileKey, objectMap.get(fileKey));
                     return oss.putObject(put);
                 }).subscribeOn(Schedulers.io()))
@@ -108,7 +114,11 @@ public class OssService implements IOssService {
     }
 
 
-    //压缩图片的方法
+    /**
+     * 压缩图片的方法
+     *
+     * @param objectMap objectMap
+     */
     private void compressPic(Map<String, String> objectMap) {
         AtomicInteger successCount = new AtomicInteger();
         loading.show();
@@ -117,15 +127,13 @@ public class OssService implements IOssService {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((path) -> {
-                    String arr[] = path.split("_F_");
+                    String[] arr = path.split("_F_");
                     objectMap.put(arr[1], arr[0]);
                     successCount.getAndIncrement();
-
                     LoadKit.setText(loading, StrUtil.format("正在压缩图片 {}/{}", successCount.get(), objectMap.size()));
                     if (successCount.get() >= objectMap.size()) {
                         isCompress.setValue(true);
                         LoadKit.setText(loading, "压缩成功");
-//                        LoadKit.closeDialog(loading);
                     }
                 });
     }
@@ -159,6 +167,7 @@ public class OssService implements IOssService {
 
     @Override
     public void asyncPutVideos(Map<String, String> objectMap, Consumer<Boolean> consumer) {
+        upFile(objectMap);
         isUpload.observe((LifecycleOwner) activity, (consumer::accept));
         if (objectMap != null && objectMap.size() > 0) {
             upFile(objectMap);

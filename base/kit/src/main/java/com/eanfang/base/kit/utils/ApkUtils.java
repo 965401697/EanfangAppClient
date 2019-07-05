@@ -35,13 +35,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 /**
- * ================================================
- * 作    者：jeasonlzy（廖子尧）Github地址：https://github.com/jeasonlzy
- * 版    本：1.0
- * 创建日期：2016/1/25
- * 描    述：
- * 修订历史：
- * ================================================
+ * @author jornl
+ * @date 2019-07-01
  */
 public class ApkUtils {
 
@@ -54,17 +49,6 @@ public class ApkUtils {
             intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             Uri contentUri = FileProvider.getUriForFile(context, getPackageName(context, uriFile.getAbsolutePath()) + ".fileprovider", uriFile);
             intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
-
-//            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-//            intent.addCategory(Intent.CATEGORY_DEFAULT);
-//            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            intent.setDataAndType(Uri.fromFile(uriFile), "file/*");
-//            try {
-//                context.startActivity(intent);
-//                context.startActivity(Intent.createChooser(intent, "选择浏览工具"));
-//            } catch (ActivityNotFoundException e) {
-//                e.printStackTrace();
-//            }
 
         } else {
             intent.setDataAndType(Uri.fromFile(uriFile), "application/vnd.android.package-archive");
@@ -192,19 +176,13 @@ public class ApkUtils {
     }
 
     public static int getAppVersionCode(Context context) {
-        int versionName = 0;
         try {
-            // ---get the package info---
             PackageManager pm = context.getPackageManager();
             PackageInfo pi = pm.getPackageInfo(context.getPackageName(), 0);
-
-            versionName = pi.versionCode;
-            if (versionName <= 0) {
-                return 0;
-            }
+            return pi.versionCode <= 0 ? 1 : pi.versionCode;
         } catch (Exception e) {
             Log.e("VersionInfo", "Exception", e);
         }
-        return versionName;
+        return 1;
     }
 }

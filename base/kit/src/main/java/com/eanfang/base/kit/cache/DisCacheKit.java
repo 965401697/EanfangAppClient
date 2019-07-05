@@ -186,7 +186,8 @@ class DisCacheKit {
         }).subscribeOn(Schedulers.io())
                 .subscribe();
     }
-    public void delete(){
+
+    public void delete() {
         try {
             getDisk().delete();
         } catch (IOException e) {

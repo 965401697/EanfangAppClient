@@ -93,20 +93,19 @@
 
         <service android:name="com.amap.api.location.APSService" />
 
-        <!-- <meta-data -->
-        <!-- android:name="XG_V2_ACCESS_ID" -->
-        <!-- android:value="2100270001" -->
-        <!-- tools:replace="android:value" /> -->
-        <!-- <meta-data -->
-        <!-- android:name="XG_V2_ACCESS_KEY" -->
-        <!-- android:value="ADCL916N8D7M" -->
-        <!-- tools:replace="android:value" /> -->
+        <meta-data
+            android:name="XG_ACCESS_ID"
+            android:value="${XG_ACCESS_ID}" />
+        <meta-data
+            android:name="XG_ACCESS_KEY"
+            android:value="${XG_ACCESS_KEY}" />
 
 
         <!-- 信鸽 -->
         <receiver
-            android:name=".ui.receiver.MessageReceiver"
-            android:exported="true">
+            android:name="net.eanfang.client.ui.receiver.MessageReceiver"
+            android:exported="true"
+            tools:ignore="ExportedReceiver">
             <intent-filter>
 
                 <!-- 接收消息透传 -->

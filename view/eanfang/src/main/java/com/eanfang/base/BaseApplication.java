@@ -8,14 +8,14 @@ import androidx.multidex.MultiDexApplication;
 
 import com.camera.CameraApplication;
 import com.eanfang.BuildConfig;
-import com.eanfang.biz.model.entity.OrgEntity;
-import com.eanfang.biz.model.entity.BaseDataEntity;
-import com.eanfang.http.EanfangHttp;
 import com.eanfang.base.kit.cache.CacheKit;
+import com.eanfang.base.network.Leaves;
 import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.biz.model.entity.AccountEntity;
+import com.eanfang.biz.model.entity.BaseDataEntity;
+import com.eanfang.biz.model.entity.OrgEntity;
 import com.eanfang.biz.model.entity.UserEntity;
-import com.eanfang.base.network.Leaves;
+import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.V;
 import com.facebook.imagepipeline.backends.okhttp3.OkHttpImagePipelineConfigFactory;
@@ -31,7 +31,6 @@ import com.okgo.model.HttpHeaders;
 import com.photopicker.com.imageloader.BGAGlideImageLoader;
 import com.photopicker.com.imageloader.BGAImage;
 import com.tencent.smtt.sdk.QbSdk;
-import com.yaf.base.entity.ShopCompanyEntity;
 
 import java.util.Stack;
 import java.util.concurrent.TimeUnit;
@@ -57,6 +56,7 @@ public class BaseApplication extends MultiDexApplication {
      * 存储地域
      */
     public BaseDataEntity sSaveArea;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -261,14 +261,27 @@ public class BaseApplication extends MultiDexApplication {
 
     /**
      * 缓存取值 T
+     * 请使用 {@link CacheKit get(String key) }
      *
      * @param key   key
      * @param clazz clazz
      * @param <T>   T
      * @return Object
      */
+    @Deprecated
     public <T> Object get(String key, Class<T> clazz) {
         return CacheKit.get().get(key, clazz);
+    }
+
+    /**
+     * 缓存取值 T
+     *
+     * @param key key
+     * @param <T> T
+     * @return T
+     */
+    public <T> T get(String key) {
+        return CacheKit.get().get(key);
     }
 
     /**
@@ -284,15 +297,13 @@ public class BaseApplication extends MultiDexApplication {
         CacheKit.get().clear();
     }
 
-    ;
-
     /**
      * 取缓存 LoginBean
      *
      * @return LoginBean
      */
     public LoginBean getLoginBean() {
-        return CacheKit.get().get(LoginBean.class.getName(), LoginBean.class);
+        return CacheKit.get().get(LoginBean.class.getName());
     }
 
     /**

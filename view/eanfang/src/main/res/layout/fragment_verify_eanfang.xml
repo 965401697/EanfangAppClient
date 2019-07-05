@@ -149,7 +149,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
-                    android:onClick="@{()->vm.readClick(0)}"
+                    android:onClick="@{(v)->vm.readClick(v,0)}"
                     android:text="阅读协议"
                     android:textColor="@{app==0?@color/color_main_client:@color/color_main_worker}"
                     android:textSize="14sp" />

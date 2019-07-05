@@ -35,7 +35,7 @@ dependencies {
     implementation pkg.hutoolCore
 
     implementation pkg.fastjson
-    implementation pkg.gson
+//    implementation pkg.gson
 
 
     api project(':base:network')

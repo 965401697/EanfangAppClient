@@ -1,28 +1,31 @@
 package com.eanfang.base.kit.cache;
 
 import android.content.Context;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.Environment;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.eanfang.base.kit.utils.ApkUtils;
+import com.eanfang.base.kit.utils.TypeToken;
+import com.eanfang.base.network.kit.VoKit;
 
 import java.io.File;
-import java.lang.reflect.Field;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.util.ReflectUtil;
-import cn.hutool.core.util.StrUtil;
 
+
+/**
+ * 缓存工具类
+ *
+ * @author jornl
+ */
+@SuppressWarnings("unchecked")
 public class CacheKit extends LruCache<String, Object> {
+    public static final String COM_EANFANG_BIZ_MODEL_VO = "com.eanfang.biz.model.vo";
     private static DisCacheKit disCacheKit;
     private static CacheKit cacheKit;
     private Class clazz;
@@ -43,32 +46,56 @@ public class CacheKit extends LruCache<String, Object> {
             synchronized (CacheKit.class) {
                 if (cacheKit == null) {
                     cacheKit = new CacheKit(100);
-                    disCacheKit = DisCacheKit.get(getAppVersion(context), getDiskCacheDir(context));
+                    disCacheKit = DisCacheKit.get(ApkUtils.getAppVersionCode(context), getDiskCacheDir(context));
                 }
             }
         }
         return cacheKit;
     }
 
+    /**
+     * getStr
+     *
+     * @param key key
+     * @return String
+     */
     public String getStr(String key) {
         checkDue(key);
         this.clazz = String.class;
-        return  super.get(key)==null?null:super.get(key).toString();
+        return super.get(key) == null ? null : super.get(key).toString();
     }
 
-
+    /**
+     * getInt
+     *
+     * @param key key
+     * @return Integer
+     */
     public Integer getInt(String key) {
         checkDue(key);
         this.clazz = Integer.TYPE;
         return (Integer) super.get(key);
     }
 
+    /**
+     * getLong
+     *
+     * @param key key
+     * @return Long
+     */
     public Long getLong(String key) {
         checkDue(key);
         this.clazz = Long.TYPE;
         return (Long) super.get(key);
     }
 
+    /**
+     * getBool
+     *
+     * @param key key
+     * @param def default
+     * @return Boolean
+     */
     public Boolean getBool(String key, boolean def) {
         checkDue(key);
         this.clazz = Boolean.TYPE;
@@ -76,15 +103,50 @@ public class CacheKit extends LruCache<String, Object> {
         return result != null ? result : def;
     }
 
+
+    /**
+     * 已过时 {@link CacheKit get(String key)}
+     *
+     * @param key   key
+     * @param clazz clazz
+     * @param <T>   T
+     * @return T
+     */
+    @Deprecated
     public <T> T get(String key, Class<T> clazz) {
         checkDue(key);
         this.clazz = clazz;
+        if (this.clazz.getName().contains(COM_EANFANG_BIZ_MODEL_VO)) {
+            this.clazz = JSONObject.class;
+            JSONObject json = (JSONObject) super.get(key);
+            return VoKit.obj2Vo(json);
+        }
         return (T) super.get(key);
     }
 
-    public <T> List<T> getArr(String key, Class<T> clazz) {
+    /**
+     * get
+     *
+     * @param key key
+     * @param <T> T
+     * @return T
+     */
+    public <T> T get(String key) {
         checkDue(key);
-        this.clazz = clazz;
+        this.clazz = new TypeToken<T>() {
+        }.getClazz();
+        if (this.clazz.getName().contains(COM_EANFANG_BIZ_MODEL_VO)) {
+            this.clazz = JSONObject.class;
+            JSONObject json = (JSONObject) super.get(key);
+            return VoKit.obj2Vo(json);
+        }
+        return (T) super.get(key);
+    }
+
+    public <T> List<T> getArr(String key) {
+        checkDue(key);
+        this.clazz = new TypeToken<T>() {
+        }.getClazz();
         return (List<T>) super.get(key);
     }
 
@@ -95,106 +157,28 @@ public class CacheKit extends LruCache<String, Object> {
      * @return boolean
      */
     public boolean isClient() {
-        return getStr("APP_TYPE").equals("client");
+        return "client".equals(getStr("APP_TYPE"));
     }
 
     @Nullable
     @Override
     public Object put(@NonNull String key, @NonNull Object value) {
         disCacheKit.put(key, value);
-        return super.put(key, value);
+        return this.put(key, value, true, null);
     }
 
-    public Object putVo(String key, Object value) {
-        JSONObject object = new JSONObject();
-
-        Field[] fields = value.getClass().getDeclaredFields();
-        for (Field field : fields) {
-            //忽略掉transient
-            if (field.toString().contains(" transient ")) {
-                continue;
-            }
-            String fieldName = field.getName();
-            Object val;
-            //解决viewModel的Observable数据类型
-
-
-            if ((field.getType().toString().contains("androidx.databinding.Observable"))) {
-                if ((field.getType().toString().contains("androidx.databinding.ObservableList"))) {
-                    val = ReflectUtil.getFieldValue(value, fieldName);
-                }else {
-                    Object obj = ReflectUtil.getFieldValue(value, fieldName);
-                    val = ReflectUtil.invoke(obj, "get");
-                }
-
-            } else {
-                val = ReflectUtil.getFieldValue(value, fieldName);
-            }
-            if (val != null) {
-                //如果是空map  空list  空字符 则跳过参数
-                if (val instanceof Map && ((Map) val).isEmpty()) {
-                    continue;
-                }
-                if (val instanceof List && ((List) val).isEmpty()) {
-                    continue;
-                }
-                if (StrUtil.isEmpty(val.toString())) {
-                    continue;
-                }
-                object.put(fieldName, val);
-            }
-        }
-        System.out.println("原始字符串:" + object.toString());
-        return put(key, object.toString());
-    }
-
-    public <T> T getVo(String key, Class<T> clazz) {
-        Object object = null;
-        try {
-            object = clazz.newInstance();
-            String json = (String) get(key, clazz);
-            if("".equals(json)||null==json){
-                return null;
-            }
-            if(json.indexOf("\\")!=-1){
-                System.out.println("原始字符串:" + json);
-                String replaceAll = json.replaceAll("\\\\", "");
-                System.out.println("replaceAll:"+replaceAll);
-                String substring = replaceAll.substring(1, replaceAll.length() - 1);
-                System.out.println("substring:"+substring);
-                json=substring;
-            }
-
-
-            JSONObject jsonObject = JSON.parseObject(json);
-            Field[] fields = clazz.getDeclaredFields();
-            for (Field field : fields) {
-                String fieldName = field.getName();
-                if (jsonObject.get(fieldName) != null) {
-                    //获取viewModel的Observable数据类型
-                    if ((field.getType().toString().contains("androidx.databinding.Observable"))) {
-                        Object objs = ReflectUtil.getFieldValue(object, fieldName);
-                        ReflectUtil.invoke(objs, "set", new Object[]{jsonObject.get(fieldName)});
-                    }
-                }
-            }
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        }
-        return (T) object;
-    }
-
+    /**
+     * 是否磁盘缓存
+     *
+     * @param key    key
+     * @param value  value
+     * @param isDisk rue缓存磁盘，false不缓存磁盘
+     * @return Object
+     */
     @Nullable
-    public Object put(@NonNull String key, @NonNull Object value, boolean noDisk) {
-        if (noDisk) {
-            return super.put(key, value);
-        }
-        disCacheKit.put(key, value);
-        return super.put(key, value);
+    public Object put(@NonNull String key, @NonNull Object value, boolean isDisk) {
+        return this.put(key, value, isDisk, null);
     }
-
 
     /**
      * 可以设置一个过期时间
@@ -204,20 +188,34 @@ public class CacheKit extends LruCache<String, Object> {
      * @param due   due过期时间 秒单位
      * @return
      */
-    @Nullable
     public Object put(@NonNull String key, @NonNull Object value, Integer due) {
+        return this.put(key, value, true, due);
+    }
+
+    /**
+     * 缓存值
+     *
+     * @param key    key
+     * @param value  value
+     * @param isDisk true缓存磁盘，false不缓存磁盘
+     * @param due    失效时间 秒为单位
+     * @return Object
+     */
+    public Object put(@NonNull String key, @NonNull Object value, boolean isDisk, Integer due) {
         if (due != null) {
             String timeKey = key + "_seconds";
             disCacheKit.put(timeKey, DateUtil.currentSeconds() + due);
             super.put(timeKey, DateUtil.currentSeconds() + due);
         }
-
+        value = VoKit.vo2Json(value);
+        if (!isDisk) {
+            return super.put(key, value);
+        }
         disCacheKit.put(key, value);
         return super.put(key, value);
     }
 
 
-    @Nullable
     @Override
     public Object remove(@NonNull String key) {
         disCacheKit.remove(key);
@@ -279,19 +277,4 @@ public class CacheKit extends LruCache<String, Object> {
         return new File(cachePath + File.separator);
     }
 
-    /**
-     * getAppVersion
-     *
-     * @param context context
-     * @return int
-     */
-    private static int getAppVersion(Context context) {
-        try {
-            PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-            return info.versionCode;
-        } catch (PackageManager.NameNotFoundException e) {
-            Log.e("eanfang.getAppVersion", e.getMessage());
-        }
-        return 1;
-    }
 }
