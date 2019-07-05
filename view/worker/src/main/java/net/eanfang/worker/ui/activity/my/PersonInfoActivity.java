@@ -15,27 +15,23 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModel;
-import androidx.viewpager.widget.ViewPager;
 
 import com.alibaba.fastjson.JSONObject;
+import com.eanfang.BuildConfig;
+import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.BaseActivity;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.base.widget.customview.CircleImageView;
-import com.eanfang.BuildConfig;
-import com.eanfang.apiservice.UserApi;
 import com.eanfang.biz.model.Message;
 import com.eanfang.biz.model.SelectAddressItem;
+import com.eanfang.biz.model.bean.LoginBean;
+import com.eanfang.biz.model.entity.AccountEntity;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.bean.LoginBean;
-import com.eanfang.biz.model.entity.AccountEntity;
-
-import com.eanfang.sdk.MySlidingTabLayout;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
@@ -51,9 +47,7 @@ import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.techniciancertification.TechnicianCertificationActivity;
 import net.eanfang.worker.ui.activity.worksapce.StateChangeActivity;
-import net.eanfang.worker.ui.fragment.HomeDataStatisticsFragment;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -210,12 +204,7 @@ public class PersonInfoActivity extends BaseActivity {
     }
 
     private void headImage() {
-<<<<<<< HEAD
-        //takePhoto( HEAD_PHOTO, iPictureCallBack);
         SDKManager.getPicture().create(this).takePhoto(iPictureCallBack);
-=======
-//        takePhoto( HEAD_PHOTO, iPictureCallBack);
->>>>>>> 97e510c3e... 客户端首页改版优化
     }
 
     IPictureCallBack iPictureCallBack = new IPictureCallBack() {
