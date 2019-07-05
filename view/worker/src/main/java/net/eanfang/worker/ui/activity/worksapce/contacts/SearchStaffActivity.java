@@ -22,7 +22,7 @@ import com.eanfang.biz.model.FriendListBean;
 import com.eanfang.util.Cn2Spell;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.ToastUtil;
-import com.eanfang.util.V;
+import com.eanfang.base.kit.V;
 import com.eanfang.witget.SideBar;
 import com.eanfang.biz.model.entity.AccountEntity;
 

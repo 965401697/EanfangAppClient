@@ -13,7 +13,7 @@ import net.eanfang.worker.R;
 
 import java.util.List;
 
-import static com.eanfang.util.V.v;
+import static com.eanfang.base.kit.V.v;
 
 /**
  * 合作公司的adapter

@@ -100,7 +100,7 @@ public class HttpLoggingInterceptor implements Interceptor {
     }
 
     private void log(String message) {
-        if (BuildConfig.LOG_DEBUG) {
+        if (BuildConfig.DEBUG_MOD) {
             logger.log(colorLevel, message);
         }
     }

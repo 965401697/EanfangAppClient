@@ -21,7 +21,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.V;
+import com.eanfang.base.kit.V;
 import com.yaf.base.entity.ShopMaintenanceOrderEntity;
 
 import net.eanfang.client.R;

@@ -15,7 +15,7 @@ import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
-import com.eanfang.util.V;
+import com.eanfang.base.kit.V;
 import com.yaf.base.entity.ShopMaintenanceOrderEntity;
 
 import net.eanfang.client.R;

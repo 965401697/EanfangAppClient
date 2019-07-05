@@ -37,7 +37,7 @@ import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
-import com.eanfang.util.V;
+import com.eanfang.base.kit.V;
 import com.eanfang.witget.BannerView;
 import com.eanfang.witget.HomeScanPopWindow;
 import com.eanfang.witget.RollTextView;
@@ -46,7 +46,6 @@ import com.photopicker.com.util.BGASpaceItemDecoration;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
-import net.eanfang.worker.ui.MapTestActivity;
 import net.eanfang.worker.ui.activity.CameraActivity;
 import net.eanfang.worker.ui.activity.NewOrderActivity;
 import net.eanfang.worker.ui.activity.worksapce.InstallOrderParentActivity;
@@ -79,7 +78,7 @@ import java.util.List;
 
 import q.rorbin.badgeview.QBadgeView;
 
-import static com.eanfang.util.V.v;
+import static com.eanfang.base.kit.V.v;
 
 
 /**

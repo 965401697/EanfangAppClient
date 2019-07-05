@@ -10,20 +10,22 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.databinding.DataBindingUtil;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.base.kit.cache.CacheKit;
+import com.eanfang.biz.model.InstallOrderConfirmBean;
+import com.eanfang.biz.model.Message;
+import com.eanfang.biz.model.SelectAddressItem;
+import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.biz.model.vo.InstallOrderConfirmVo;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.InstallOrderConfirmBean;
-import com.eanfang.biz.model.bean.LoginBean;
-import com.eanfang.biz.model.Message;
-import com.eanfang.biz.model.SelectAddressItem;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PickerSelectUtil;
@@ -33,8 +35,6 @@ import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.databinding.ActivityInstallBinding;
 import net.eanfang.client.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
-
-import androidx.databinding.DataBindingUtil;
 
 /**
  * Created by MrHou
@@ -117,7 +117,7 @@ public class InstallActivity extends BaseClientActivity {
 
 
     private void initDialog() {
-        installOrderConfirmVo = CacheKit.get().getVo("installOrder", InstallOrderConfirmVo.class);
+        installOrderConfirmVo = CacheKit.get().get("installOrder", InstallOrderConfirmVo.class);
         if (null == installOrderConfirmVo) {
             installOrderConfirmVo = new InstallOrderConfirmVo();
             binding.setInstallbean(installOrderConfirmVo);
@@ -125,7 +125,7 @@ public class InstallActivity extends BaseClientActivity {
             return;
         }
 
-        into("installOrder",new InvokingData() {
+        into("installOrder", new InvokingData() {
             @Override
             public void invoke() {
                 binding.setInstallbean(installOrderConfirmVo);
@@ -281,7 +281,7 @@ public class InstallActivity extends BaseClientActivity {
      */
     @SuppressLint("CheckResult")
     private void giveUp() {
-        out("installOrder",installOrderConfirmVo);
+        out("installOrder", installOrderConfirmVo);
     }
 
     @Override

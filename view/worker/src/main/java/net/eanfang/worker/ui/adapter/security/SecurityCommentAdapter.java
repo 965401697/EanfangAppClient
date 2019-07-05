@@ -12,7 +12,7 @@ import com.eanfang.BuildConfig;
 import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.biz.model.security.SecurityDetailBean;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.V;
+import com.eanfang.base.kit.V;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;

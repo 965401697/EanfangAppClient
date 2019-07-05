@@ -21,7 +21,6 @@ import java.util.List;
 
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
-import io.reactivex.FlowableEmitter;
 import io.reactivex.FlowableOnSubscribe;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -128,43 +127,32 @@ public class RxDialog {
 
 
     public Flowable dialogToFlowable() {
-        return Flowable.create(new FlowableOnSubscribe() {
-            @Override
-            public void subscribe(@NonNull final FlowableEmitter e) throws Exception {
-                DialogInterface.OnClickListener onClickListener = new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        switch (i) {
-                            case -1:
-                                e.onNext(POSITIVE);
-                                break;
-                            case -2:
-                                e.onNext(NEGATIVE);
-                                break;
-                            case -3:
-                                e.onNext(NEUTRAL);
-                                break;
-                            default:
-                                e.onNext(i);
-                        }
-                    }
-                };
-                View.OnClickListener mviewListener = new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        e.onNext(v.getId());
-                    }
-                };
-                if (view != null) {
-                    for (int id : idList) {
-                        view.findViewById(id).setOnClickListener(mviewListener);
-                    }
+        return Flowable.create((FlowableOnSubscribe) e -> {
+            DialogInterface.OnClickListener onClickListener = (dialogInterface, i) -> {
+                switch (i) {
+                    case -1:
+                        e.onNext(POSITIVE);
+                        break;
+                    case -2:
+                        e.onNext(NEGATIVE);
+                        break;
+                    case -3:
+                        e.onNext(NEUTRAL);
+                        break;
+                    default:
+                        e.onNext(i);
                 }
-                builder.setPositiveButton(positiveText, onClickListener);
-                builder.setNegativeButton(negativeText, onClickListener);
-                builder.setNeutralButton(neutralText, onClickListener);
-                builder.show();
+            };
+            View.OnClickListener mviewListener = v -> e.onNext(v.getId());
+            if (view != null) {
+                for (int id : idList) {
+                    view.findViewById(id).setOnClickListener(mviewListener);
+                }
             }
+            builder.setPositiveButton(positiveText, onClickListener);
+            builder.setNegativeButton(negativeText, onClickListener);
+            builder.setNeutralButton(neutralText, onClickListener);
+            builder.show();
         }, BackpressureStrategy.BUFFER);
     }
 

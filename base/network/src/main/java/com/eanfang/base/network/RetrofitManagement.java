@@ -40,19 +40,23 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
  * @author jornl
  * @date 2019-04-17 18:11:04
  */
+@SuppressWarnings("unchecked")
 public enum RetrofitManagement {
 
+    /**
+     * INSTANCE
+     */
     INSTANCE;
 
     public static RetrofitManagement getInstance() {
         return INSTANCE;
     }
 
-    private static final long READ_TIMEOUT = 6000;
+    private static final long READ_TIMEOUT = 1000 * 60;
 
-    private static final long WRITE_TIMEOUT = 6000;
+    private static final long WRITE_TIMEOUT = 1000 * 60;
 
-    private static final long CONNECT_TIMEOUT = 6000;
+    private static final long CONNECT_TIMEOUT = 1000 * 60;
 
     private final Map<String, Object> serviceMap = new ConcurrentHashMap<>();
 

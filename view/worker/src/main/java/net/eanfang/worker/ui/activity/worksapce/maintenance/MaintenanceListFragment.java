@@ -17,7 +17,7 @@ import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
-import com.eanfang.util.V;
+import com.eanfang.base.kit.V;
 import com.yaf.base.entity.ShopMaintenanceOrderEntity;
 
 import net.eanfang.worker.R;

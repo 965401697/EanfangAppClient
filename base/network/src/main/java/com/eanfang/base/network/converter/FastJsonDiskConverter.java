@@ -12,6 +12,8 @@ import java.lang.reflect.Type;
 
 /**
  * RxCache 的FastJson解析器
+ *
+ * @author jornl
  */
 public class FastJsonDiskConverter implements IDiskConverter {
     @Override

@@ -31,7 +31,7 @@ import com.eanfang.util.JumpItent;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
-import com.eanfang.util.V;
+import com.eanfang.base.kit.V;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;

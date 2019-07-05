@@ -8,7 +8,7 @@ import com.eanfang.BuildConfig;
 import com.eanfang.config.Config;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.StringUtils;
-import com.eanfang.util.V;
+import com.eanfang.base.kit.V;
 
 import com.yaf.base.entity.BughandleDetailEntity;
 
@@ -16,7 +16,7 @@ import net.eanfang.client.R;
 
 import java.util.List;
 
-import static com.eanfang.util.V.v;
+import static com.eanfang.base.kit.V.v;
 
 
 /**

@@ -1,28 +1,33 @@
 package com.eanfang.sys.viewmodel;
 
+import android.annotation.SuppressLint;
 import android.text.Selection;
 import android.text.Spannable;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.view.View;
 
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.MutableLiveData;
 
 import com.eanfang.R;
-import com.eanfang.databinding.FragmentPasswordEanfangBinding;
-import com.eanfang.databinding.FragmentVerifyEanfangBinding;
+import com.eanfang.base.kit.aop.annotation.SingleClick;
 import com.eanfang.base.kit.rx.RxDialog;
+import com.eanfang.base.network.holder.ContextHolder;
 import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.biz.model.vo.LoginVo;
 import com.eanfang.biz.rds.base.BaseViewModel;
 import com.eanfang.biz.rds.sys.ds.impl.LoginDs;
 import com.eanfang.biz.rds.sys.repo.LoginRepo;
+import com.eanfang.databinding.FragmentPasswordEanfangBinding;
+import com.eanfang.databinding.FragmentVerifyEanfangBinding;
 
 import java.util.concurrent.TimeUnit;
 
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.lang.Validator;
 import cn.hutool.core.util.StrUtil;
+import hugo.weaving.DebugLog;
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
@@ -134,7 +139,6 @@ public class LoginViewModel extends BaseViewModel {
                 .observeOn(AndroidSchedulers.mainThread())
                 .map(count -> 60 - count)
                 .subscribe(new Observer<Long>() {
-
                     @Override
                     public void onSubscribe(Disposable d) {
 
@@ -156,32 +160,20 @@ public class LoginViewModel extends BaseViewModel {
                         verifyBinding.tvYanzheng.setEnabled(true);
                     }
                 });
-//        timer.start();
+
+
     }
-
-
-    //验证码倒计时
-//    @Getter
-//    protected CountDownTimer timer = new CountDownTimer(60000, 1000) {
-//
-//        @Override
-//        public void onTick(long millisUntilFinished) {
-//            verifyBinding.tvYanzheng.setText(millisUntilFinished / 1000 + "秒");
-//        }
-//
-//        @Override
-//        public void onFinish() {
-//            verifyBinding.tvYanzheng.setEnabled(true);
-//            verifyBinding.tvYanzheng.setText("获取验证码");
-//        }
-//    };
 
     /**
      * 阅读协议
      *
      * @param type 0验证码登录，1密码登录
      */
-    public void readClick(int type) {
+    @SuppressLint("CheckResult")
+    @SuppressWarnings("unchecked")
+    @SingleClick
+    @DebugLog
+    public void readClick(View view, int type) {
         RxDialog dialog;
         if (type == 0) {
             dialog = new RxDialog(verifyBinding.getRoot().getContext());
@@ -192,7 +184,7 @@ public class LoginViewModel extends BaseViewModel {
                 .setMessage(loginVo.getLegalText().get())
                 .setPositiveText("我同意")
                 .setNegativeText("不同意")
-                .dialogToObservable()
+                .dialogToFlowable()
                 .subscribe((code) -> {
                     if (code.equals(RxDialog.POSITIVE)) {
                         loginVo.getLegalCk().set(true);
@@ -222,13 +214,14 @@ public class LoginViewModel extends BaseViewModel {
         }
     }
 
-    public void LegalText(FragmentActivity mActivity) {
+    @SuppressLint("CheckResult")
+    public void legalText(FragmentActivity mActivity) {
         Observable.create((ObservableOnSubscribe<String>) emitter -> {
             emitter.onNext(IoUtil.read(mActivity.getResources().openRawResource(R.raw.legal), "UTF-8"));
             emitter.onComplete();
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((txt) -> {
+                .subscribe(txt -> {
                     loginVo.getLegalText().set(txt);
                     verifyBinding.setLoginVo(loginVo);
                     passwordBinding.setLoginVo(loginVo);

@@ -13,7 +13,7 @@ import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.client.R;
 
-import static com.eanfang.util.V.v;
+import static com.eanfang.base.kit.V.v;
 
 /**
  * Created by admin on 2018/4/27.

@@ -1,6 +1,5 @@
 package net.eanfang.worker.ui.adapter.security;
 
-import android.content.Context;
 import android.net.Uri;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -9,7 +8,7 @@ import com.eanfang.BuildConfig;
 import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.biz.model.security.SecurityFoucsListBean;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.V;
+import com.eanfang.base.kit.V;
 
 import net.eanfang.worker.R;
 

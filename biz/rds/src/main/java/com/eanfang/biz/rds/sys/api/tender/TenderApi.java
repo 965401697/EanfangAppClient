@@ -6,19 +6,13 @@ import com.eanfang.biz.model.bean.QueryEntry;
 import com.eanfang.biz.model.entity.IfbOrderEntity;
 import com.eanfang.biz.model.entity.tender.TaskApplyEntity;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
-import com.eanfang.biz.model.vo.LoginVo;
 import com.eanfang.biz.model.vo.tender.TenderCommitVo;
 import com.eanfang.biz.model.vo.tender.TenderCreateVo;
-import com.google.gson.JsonObject;
-
-import java.lang.reflect.Field;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
-import retrofit2.http.QueryMap;
-import retrofit2.http.QueryName;
 
 /**
  * @author guanluocang
@@ -94,6 +88,7 @@ public interface TenderApi {
 
     /**
      * 我的用工 发布的详情
+     *
      * @param queryEntry
      * @return
      */
@@ -102,6 +97,7 @@ public interface TenderApi {
 
     /**
      * 我的用工 招标的详情
+     *
      * @param id
      * @return
      */
@@ -110,6 +106,7 @@ public interface TenderApi {
 
     /**
      * 忽略 中标
+     *
      * @param taskApplyEntity
      * @return
      */

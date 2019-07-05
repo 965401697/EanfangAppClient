@@ -61,7 +61,7 @@ public class VerifyFragment extends BaseFragment {
         binding.setVm(loginViewModel);
         binding.setApp(getApp());
         loginViewModel.setVerifyBinding(binding);
-        loginViewModel.LegalText(mActivity);
+        loginViewModel.legalText(mActivity);
         return binding.getRoot();
     }
 

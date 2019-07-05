@@ -72,6 +72,8 @@ class DisCacheKit {
                 //如果是json格式
                 if (json.startsWith("{") && json.endsWith("}")) {
                     result = JSON.parseObject(json, clazz);
+                } else if (json.startsWith("[") && json.endsWith("]")) {
+                    result = null;
                 } else {
                     result = (T) json;
                 }
@@ -132,6 +134,8 @@ class DisCacheKit {
                 //如果是json格式
                 if (json.startsWith("[") && json.endsWith("]")) {
                     result = JSON.parseArray(json, clazz);
+                } else if (json.startsWith("{") && json.endsWith("}")) {
+                    result = null;
                 } else {
                     result = Collections.singletonList((T) json);
                 }
@@ -162,6 +166,8 @@ class DisCacheKit {
                 //如果是json格式
                 if (json.startsWith("[") && json.endsWith("]")) {
                     result = JSON.parseArray(json, clazz);
+                } else if (json.startsWith("{") && json.endsWith("}")) {
+                    result = null;
                 } else {
                     result = Collections.singletonList((T) json);
                 }
@@ -186,7 +192,8 @@ class DisCacheKit {
         }).subscribeOn(Schedulers.io())
                 .subscribe();
     }
-    public void delete(){
+
+    public void delete() {
         try {
             getDisk().delete();
         } catch (IOException e) {

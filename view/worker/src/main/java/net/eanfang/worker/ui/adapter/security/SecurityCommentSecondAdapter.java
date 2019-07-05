@@ -7,12 +7,10 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.model.security.SecurityCommentDetailBean;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.V;
+import com.eanfang.base.kit.V;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
-
-import java.util.List;
 
 /**
  * @author guanluocang

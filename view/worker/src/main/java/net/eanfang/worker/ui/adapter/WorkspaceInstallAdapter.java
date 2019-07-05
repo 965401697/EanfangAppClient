@@ -11,7 +11,7 @@ import com.eanfang.util.GetConstDataUtils;
 
 import net.eanfang.worker.R;
 
-import static com.eanfang.util.V.v;
+import static com.eanfang.base.kit.V.v;
 
 /**
  * 工作台-我要报装adapter

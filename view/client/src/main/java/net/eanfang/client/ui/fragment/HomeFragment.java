@@ -43,7 +43,9 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.eanfang.util.V.v;
+import q.rorbin.badgeview.QBadgeView;
+
+import static com.eanfang.base.kit.V.v;
 
 /**
  * Created by MrHou

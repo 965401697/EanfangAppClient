@@ -17,7 +17,7 @@ import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.biz.model.TemplateBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.V;
+import com.eanfang.base.kit.V;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;

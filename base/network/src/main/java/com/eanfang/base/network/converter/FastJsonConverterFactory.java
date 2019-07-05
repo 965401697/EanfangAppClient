@@ -8,6 +8,11 @@ import okhttp3.ResponseBody;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
 
+/**
+ * retrofit2  FastJson转换器
+ *
+ * @author jornl
+ */
 public class FastJsonConverterFactory extends Converter.Factory {
 
     public static FastJsonConverterFactory create() {

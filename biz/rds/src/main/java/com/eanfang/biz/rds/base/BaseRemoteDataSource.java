@@ -1,11 +1,11 @@
 package com.eanfang.biz.rds.base;
 
+import com.eanfang.base.kit.utils.TypeToken;
 import com.eanfang.base.network.RetrofitManagement;
 import com.eanfang.base.network.callback.RequestCallback;
 import com.eanfang.base.network.callback.RequestMultiplyCallback;
 import com.eanfang.base.network.config.HttpConfig;
 import com.eanfang.base.network.model.BaseResponseBody;
-import com.google.gson.reflect.TypeToken;
 import com.zchu.rxcache.RxCache;
 import com.zchu.rxcache.data.CacheResult;
 import com.zchu.rxcache.stategy.CacheStrategy;
@@ -71,7 +71,8 @@ public abstract class BaseRemoteDataSource {
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .compose(RxCache.getDefault().<BaseResponseBody<T>>transformObservable(cacheModel != null ? cacheModel.getKey() : "", new TypeToken<T>() {
-                }.getType(), cacheModel != null ? cacheModel.getCacheStrategy() : CacheStrategy.firstRemote()))//默认优先使用网络
+                    //默认优先使用网络
+                }.getType(), cacheModel != null ? cacheModel.getCacheStrategy() : CacheStrategy.firstRemote()))
                 .map(new CacheResult.MapFunc<BaseResponseBody<T>>())
                 .compose(applySchedulers())
                 .compose(isDismiss ? loadingTransformer() : loadingTransformerWithoutDismiss())

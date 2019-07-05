@@ -21,7 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.eanfang.util.V.v;
+import static com.eanfang.base.kit.V.v;
 
 /**
  * Created by MrHou

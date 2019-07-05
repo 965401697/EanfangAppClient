@@ -39,7 +39,7 @@ import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.ConnectivityChangeUtil;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.StringUtils;
-import com.eanfang.util.V;
+import com.eanfang.base.kit.V;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;

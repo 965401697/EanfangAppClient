@@ -84,6 +84,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
 
 
         loadService = LoadSir.getDefault().register(this, this::onNetReload);
+        loadService.showSuccess();
         initLoadSir();
     }
 

@@ -33,7 +33,7 @@ import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
-import com.eanfang.util.V;
+import com.eanfang.base.kit.V;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;

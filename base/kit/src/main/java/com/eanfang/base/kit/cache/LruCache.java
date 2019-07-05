@@ -65,7 +65,7 @@ class LruCache<K, V> {
      * be created.
      */
     @Nullable
-    public final V get(@NonNull K key) {
+    V get(@NonNull K key) {
         if (key == null) {
             throw new NullPointerException("key == null");
         }

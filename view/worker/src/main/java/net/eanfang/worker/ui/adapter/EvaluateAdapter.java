@@ -9,7 +9,7 @@ import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.biz.model.EvaluateBean;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.StringUtils;
-import com.eanfang.util.V;
+import com.eanfang.base.kit.V;
 
 import net.eanfang.worker.R;
 
