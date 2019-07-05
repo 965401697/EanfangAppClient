@@ -10,29 +10,27 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSONObject;
-import com.eanfang.BuildConfig;
-import com.eanfang.apiservice.UserApi;
+import androidx.lifecycle.ViewModel;
 
+import com.alibaba.fastjson.JSONObject;
+import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
-import com.eanfang.delegate.BGASortableDelegate;
+import com.eanfang.base.kit.picture.picture.PictureRecycleView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
-import com.photopicker.com.activity.BGAPhotoPickerActivity;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
+import com.luck.picture.lib.entity.LocalMedia;
 import com.yaf.base.entity.TechWorkerVerifyEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.techniciancertification.SubmitSuccessfullyJsActivity;
-import net.eanfang.worker.ui.base.BaseWorkerActivity;
-import net.eanfang.worker.ui.widget.WQLeftRightClickTextView;
+import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -40,22 +38,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class OtherDataActivity extends BaseWorkerActivity {
+public class OtherDataActivity extends BaseWorkeActivity {
 
-
-    //意外保险
-    private static final int REQUEST_CODE_CHOOSE_ACCIDENT = 6;
-    private static final int REQUEST_CODE_PHOTO_ACCIDENT = 106;
-    //有无犯罪记录
-    private static final int REQUEST_CODE_CHOOSE_CRIM = 1;
-    private static final int REQUEST_CODE_PHOTO_CRIM = 101;
-
-    /**
-     * 保险照片
-     * （3张）
-     */
-    @BindView(R.id.snpl_moment_accident)
-    BGASortableNinePhotoLayout snplMomentAccident;
     @BindView(R.id.et_urgent_name)
     EditText etUrgentName;
     @BindView(R.id.et_urgent_phone)
@@ -64,36 +48,43 @@ public class OtherDataActivity extends BaseWorkerActivity {
     TextView tsLrTv;
     @BindView(R.id.yx_et)
     EditText yxEt;
-    private ArrayList<String> picList_accident = new ArrayList<>();
-    private TechWorkerVerifyEntity mTechWorkerVerifyEntity;
     /**
      * 犯罪照片
      * （3张）
      */
-    @BindView(R.id.snpl_moment_crim)
-    BGASortableNinePhotoLayout snplMomentCrim;
-    private ArrayList<String> picList_crim = new ArrayList<>();
+    @BindView(R.id.recycleview_crim)
+    PictureRecycleView recycleviewCrim;
+    /**
+     * 保险照片
+     * （3张）
+     */
+    @BindView(R.id.recycleview_accident)
+    PictureRecycleView recycleviewAccident;
+    private TechWorkerVerifyEntity mTechWorkerVerifyEntity;
+    private List<LocalMedia> picList_accident = new ArrayList<>();
+    private List<LocalMedia> picList_crim = new ArrayList<>();
     private HashMap<String, String> uploadMap = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_other_data);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("保障信息");
-        setLeftBack();
         EanfangHttp.get(UserApi.GET_WORKER_INFO).execute(new EanfangCallback<TechWorkerVerifyEntity>(this, true, TechWorkerVerifyEntity.class, (bean) -> {
             mTechWorkerVerifyEntity = bean;
-            Log.d("564866", "bean: " + bean.toString());
             if (!TextUtils.isEmpty(mTechWorkerVerifyEntity.getContactName())) {
                 fillData();
             }
         }));
-        initViews();
+    }
+
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
     }
 
     private void fillData() {
-        Log.d("5648", "fillData: " + mTechWorkerVerifyEntity.getContactName());
         if (StringUtils.isEmpty(mTechWorkerVerifyEntity.geteMail()) | mTechWorkerVerifyEntity.geteMail() == null) {
 
         } else {
@@ -107,34 +98,23 @@ public class OtherDataActivity extends BaseWorkerActivity {
         etUrgentPhone.setText(mTechWorkerVerifyEntity.getContactPhone());
 
         if (!StringUtils.isEmpty(mTechWorkerVerifyEntity.getCrimePic())) {
-            String[] crimePic = mTechWorkerVerifyEntity.getCrimePic().split(",");
-            if (crimePic.length > 0) {
-                for (byte i = 0; i < crimePic.length; i++) {
-                    picList_crim.add(BuildConfig.OSS_SERVER + crimePic[i]);
-                }
-                snplMomentCrim.setData(picList_crim);
-            }
+            picList_crim=recycleviewCrim.setData(mTechWorkerVerifyEntity.getCrimePic());
+            recycleviewCrim.showImagev(picList_crim,listener_crim);
+            recycleviewCrim.isShow(true,picList_crim);
+        }else{
+            recycleviewCrim.addImagev(listener_crim);
         }
 
         if (!StringUtils.isEmpty(mTechWorkerVerifyEntity.getAccidentPics())) {
-            String[] accidentPics = mTechWorkerVerifyEntity.getAccidentPics().split(",");
-            if (accidentPics.length > 0) {
-                for (byte i = 0; i < accidentPics.length; i++) {
-                    picList_accident.add(BuildConfig.OSS_SERVER + accidentPics[i]);
-                }
-                snplMomentAccident.setData(picList_accident);
-            }
+            picList_accident=recycleviewAccident.setData(mTechWorkerVerifyEntity.getAccidentPics());
+            recycleviewAccident.showImagev(picList_accident,listener_accident);
+            recycleviewAccident.isShow(true,picList_accident);
+        }else{
+            recycleviewAccident.addImagev(listener_accident);
         }
     }
-
-    private void initViews() {
-        // 保险照
-        snplMomentAccident.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_ACCIDENT, REQUEST_CODE_PHOTO_ACCIDENT));
-        snplMomentAccident.setData(picList_accident);
-        // 犯罪照
-        snplMomentCrim.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_CRIM, REQUEST_CODE_PHOTO_CRIM));
-        snplMomentCrim.setData(picList_crim);
-    }
+    PictureRecycleView.ImageListener listener_crim = list -> picList_crim = list;
+    PictureRecycleView.ImageListener listener_accident = list -> picList_accident = list;
 
     @OnClick(R.id.tv_save)
     public void onViewClicked() {
@@ -165,7 +145,7 @@ public class OtherDataActivity extends BaseWorkerActivity {
         mTechWorkerVerifyEntity.setContactPhone(mUrgentPhone);
 
 
-        String crimePic = PhotoUtils.getPhotoUrl("account/verify/", snplMomentCrim, uploadMap, false);
+        String crimePic = PhotoUtils.getPhotoUrl("account/verify/", picList_crim, uploadMap, false);
         if (crimePic.equals("")) {
             showToast("请上传无犯罪证明");
             return;
@@ -174,7 +154,7 @@ public class OtherDataActivity extends BaseWorkerActivity {
             mTechWorkerVerifyEntity.setCrimePic(crimePic);
         }
 
-        String accidentPic = PhotoUtils.getPhotoUrl("account/verify/", snplMomentAccident, uploadMap, false);
+        String accidentPic = PhotoUtils.getPhotoUrl("account/verify/", picList_accident, uploadMap, false);
         if (accidentPic.equals("")) {
             showToast("请上传保险状态");
             return;
@@ -187,11 +167,11 @@ public class OtherDataActivity extends BaseWorkerActivity {
          * 提交照片
          * */
         if (uploadMap.size() != 0) {
-            SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
+            SDKManager.ossKit(this).asyncPutImages(uploadMap, (isSuccess) -> {
                 runOnUiThread(() -> EanfangHttp.post(UserApi.GET_TECH_WORKER_ADD_V4).upJson(JSONObject.toJSONString(mTechWorkerVerifyEntity)).execute(new EanfangCallback<JSONObject>(OtherDataActivity.this, true, JSONObject.class, (bean) -> {
                     Intent intent = new Intent(OtherDataActivity.this, SubmitSuccessfullyJsActivity.class);
                     intent.putExtra("order", 3);
-                    startAnimActivity(intent);
+                    startActivity(intent);
                     closeActivity();
                 })));
             });
@@ -200,7 +180,7 @@ public class OtherDataActivity extends BaseWorkerActivity {
             EanfangHttp.post(UserApi.GET_TECH_WORKER_ADD_V4).upJson(JSONObject.toJSONString(mTechWorkerVerifyEntity)).execute(new EanfangCallback<JSONObject>(OtherDataActivity.this, true, JSONObject.class, (bean) -> {
                 Intent intent = new Intent(this, SubmitSuccessfullyJsActivity.class);
                 intent.putExtra("order", 3);
-                startAnimActivity(intent);
+                startActivity(intent);
                 closeActivity();
             }));
 
@@ -208,7 +188,7 @@ public class OtherDataActivity extends BaseWorkerActivity {
 
     }
 
-    @Override
+ /*   @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (data == null) {
@@ -223,12 +203,12 @@ public class OtherDataActivity extends BaseWorkerActivity {
                 break;
             default:
         }
-    }
+    }*/
 
     private void closeActivity() {
         WorkerApplication.get().closeActivity(CertificationActivity.class);
         WorkerApplication.get().closeActivity(IdentityCardCertification.class);
-        finishSelf();
+        finish();
     }
 
     @OnClick(R.id.ts_lr_tv)

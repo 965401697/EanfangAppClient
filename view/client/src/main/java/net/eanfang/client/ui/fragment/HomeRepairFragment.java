@@ -1,9 +1,15 @@
 package net.eanfang.client.ui.fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.AbsoluteSizeSpan;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,6 +26,7 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.biz.model.DesignOrderInfoBean;
 import com.eanfang.biz.model.InstallOrderConfirmBean;
+import com.eanfang.biz.model.OrderCountBean;
 import com.eanfang.biz.model.SelectAddressItem;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
@@ -31,6 +38,8 @@ import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.base.kit.rx.RxPerm;
+import com.eanfang.util.PermissionUtils;
+import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
@@ -45,6 +54,7 @@ import net.eanfang.client.ui.activity.worksapce.repair.DeviceBrandActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.SelectDeviceTypeActivity;
 import net.eanfang.client.ui.widget.RepairSelectDevicesDialog;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -95,10 +105,8 @@ public class HomeRepairFragment extends BaseFragment {
     Button mBtnHomeRepairCommit;
     @BindView(R.id.tv_home_repair_more)
     TextView mTvHomeRepairMore;
-    /**
-     * 选择故障设备
-     */
-    private RepairSelectDevicesDialog repairSelectDevicesDialog;
+    @BindView(R.id.tv_commit_text)
+    TextView mTvCommitText;
     /**
      * 设备code 设备id
      */
@@ -133,6 +141,11 @@ public class HomeRepairFragment extends BaseFragment {
     }
 
     @Override
+    protected void onLazyLoad() {
+        initRepairCount();
+    }
+
+    @Override
     protected void initData(Bundle arguments) {
         if (arguments != null) {
             mStatus = arguments.getInt(STATUS, 0);
@@ -150,6 +163,7 @@ public class HomeRepairFragment extends BaseFragment {
     protected void initView() {
         if (mStatus != 0) {
             imgMomentAccident.setVisibility(View.GONE);
+            mTvCommitText.setVisibility(View.GONE);
         }
         mEtHomeRepairSys.setCursorVisible(false);
         mEtHomeRepairSys.setFocusable(false);
@@ -176,6 +190,21 @@ public class HomeRepairFragment extends BaseFragment {
             }
             return false;
         });
+    }
+
+    private void initRepairCount() {
+        EanfangHttp.post(NewApiService.HOME_OREDER_COUNT).upJson(JSON.toJSONString(new QueryEntry())).execute(new EanfangCallback<OrderCountBean>(getActivity(), true, OrderCountBean.class, bean -> {
+            setCountText(bean.getOrderNum());
+        }));
+    }
+
+    private void setCountText(int orderNum) {
+        String count = getString(R.string.text_home_repair_count, orderNum);
+        SpannableString spannableString = new SpannableString(count);
+        spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#FF6419")), 3, count.length() - 7, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        AbsoluteSizeSpan span = new AbsoluteSizeSpan(24, true);
+        spannableString.setSpan(span, 3, count.length() - 7, Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        mTvHomeRepairCount.setText(spannableString);
     }
 
     @Override
@@ -217,20 +246,12 @@ public class HomeRepairFragment extends BaseFragment {
                 mRepairBugEntity.setPictures(objectKey);
             });
         } else if (requestCode == REQUEST_FAULTDEVICEINFO && resultCode == RESULT_DATACODE) {
-            // 选择故障设备
+            //设备库
             dataCode = data.getStringExtra("dataCode");
             String businessOneCode = data.getStringExtra("businessOneCode");
             mRepairBugEntity.setBusinessThreeCode(businessOneCode);
             String text = Config.get().getBusinessNameByCode(dataCode, 1);
             mEtHomeRepairSys.setText(text);
-        } else if (resultCode == RESULT_OK && requestCode == REQUEST_EQUIPMENT) {
-            //设备库
-            CustDeviceEntity custDeviceEntity = (CustDeviceEntity) data.getSerializableExtra("custDeviceEntity");
-            dataCode = custDeviceEntity.getBusinessThreeCode();
-            mRepairBugEntity.setBusinessThreeCode(dataCode);
-            mEtHomeRepairSys.setText(Config.get().getBusinessNameByCode(dataCode, 1));
-            mRepairBugEntity.setMaintenanceStatus(custDeviceEntity.getWarrantyStatus());
-            mRepairBugEntity.setRepairCount(custDeviceEntity.getDeviceVersion());
         } else if (resultCode == RESULT_DEVICE_BRAND_CODE && requestCode == REQUEST_DEVICE_BRAND_CODE) {
             // 设备品牌
             String brandName = data.getStringExtra("deviceBrandName");
@@ -244,24 +265,8 @@ public class HomeRepairFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.et_home_repair_sys:
-                repairSelectDevicesDialog = new RepairSelectDevicesDialog(getActivity(), new RepairSelectDevicesDialog.OnSelectListener() {
-                    @Override
-                    public void onDeviceType() {
-                        //设备类别
-                        startActivityForResult(new Intent(getActivity(), SelectDeviceTypeActivity.class), REQUEST_FAULTDEVICEINFO);
-                        repairSelectDevicesDialog.dismiss();
-                    }
-
-                    @Override
-                    public void onDeviceWareHouse() {
-                        // 设备库精选
-                        Bundle bundle = new Bundle();
-                        bundle.putBoolean("repair", true);
-                        startActivityForResult(new Intent(getActivity(), EquipmentListActivity.class).putExtras(bundle), REQUEST_EQUIPMENT);
-                        repairSelectDevicesDialog.dismiss();
-                    }
-                });
-                repairSelectDevicesDialog.show();
+                //设备类别
+                startActivityForResult(new Intent(getActivity(), SelectDeviceTypeActivity.class), REQUEST_FAULTDEVICEINFO);
                 break;
             case R.id.et_home_repair_brand:
                 String busOneCode = Config.get().getBaseCodeByName(Config.get().getBusinessNameByCode(dataCode, 1), 1, Constant.MODEL).get(0);
@@ -324,14 +329,6 @@ public class HomeRepairFragment extends BaseFragment {
         RxPerm.get(getActivity()).voicePerm((isSuccess) -> {
             RecognitionManager.getSingleton().startRecognitionWithDialog(getActivity(), editText);
         });
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (repairSelectDevicesDialog != null) {
-            repairSelectDevicesDialog.dismiss();
-        }
     }
 
 }

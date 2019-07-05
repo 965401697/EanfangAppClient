@@ -1,4 +1,4 @@
-package com.eanfang.sdk.picture;
+package com.eanfang.base.kit.picture.picture;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,11 +12,10 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
-import com.camera.util.ScreenSizeUtil;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.R;
-import com.eanfang.util.GlideUtil;
+import com.eanfang.base.kit.R;
+import com.eanfang.base.kit.utils.GlideUtil;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
@@ -25,6 +24,8 @@ import com.luck.picture.lib.tools.DateUtils;
 import com.luck.picture.lib.tools.StringUtils;
 
 import java.util.List;
+
+import cn.hutool.core.swing.ScreenUtil;
 
 public class PictureAdapter extends BaseQuickAdapter<LocalMedia, BaseViewHolder> {
     private Context context;
@@ -41,7 +42,7 @@ public class PictureAdapter extends BaseQuickAdapter<LocalMedia, BaseViewHolder>
     protected void convert(BaseViewHolder helper, LocalMedia item) {
         //初始化参数
         themeId = R.style.picture_default_style;
-        int width= (ScreenSizeUtil.getScreenWidth()-120)/3;
+        int width= (ScreenUtil.getWidth()-120)/3;
         helper.getView(R.id.ll_del).setVisibility(View.GONE);
         TextView tvDuration = helper.getView(R.id.tv_duration);
         RelativeLayout relativeLayout = helper.getView(R.id.relative);

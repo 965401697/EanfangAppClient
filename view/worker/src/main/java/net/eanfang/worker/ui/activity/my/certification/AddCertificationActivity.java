@@ -1,7 +1,6 @@
 package net.eanfang.worker.ui.activity.my.certification;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -12,26 +11,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.lifecycle.ViewModel;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSONObject;
-import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
-import com.eanfang.base.kit.picture.IPictureCallBack;
-import com.eanfang.delegate.BGASortableDelegate;
+
+import com.eanfang.base.kit.picture.picture.PictureRecycleView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.sdk.picture.GridImageAdapter;
-import com.eanfang.sdk.picture.PictureInvoking;
 import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
-import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.photopicker.com.activity.BGAPhotoPickerActivity;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 import com.picker.common.util.DateUtils;
 import com.yaf.base.entity.HonorCertificateEntity;
 
@@ -72,17 +64,13 @@ public class AddCertificationActivity extends BaseWorkeActivity implements Selec
     @BindView(R.id.tv_save)
     TextView tvSave;
     @BindView(R.id.recycleview)
-    RecyclerView recycleview;
-    private PictureInvoking invoking;
+    PictureRecycleView recycleview;
     private List<LocalMedia> selectList = new ArrayList<>();
-
     /**
      * 证书照片
      */
     private HashMap<String, String> uploadMap = new HashMap<>();
     private String pic;
-
-
     private HonorCertificateEntity bean;
     private String url = "";
     // 是否安防公司的荣誉证书
@@ -114,10 +102,12 @@ public class AddCertificationActivity extends BaseWorkeActivity implements Selec
             setRightTitle("编辑");
             setZhiDu(false);
             fillData();
+            selectList = recycleview.setData(bean.getHonorPics());
+            recycleview.showImagev(selectList, listener);
             setRightTitleOnClickListener(view -> {
                         setRightTitle("保存");
                         setZhiDu(true);
-                        invoking.isShow(true);
+                        recycleview.isShow(true, selectList);
                         setRightTitleOnClickListener(view1 -> setData());
                     }
 
@@ -126,49 +116,12 @@ public class AddCertificationActivity extends BaseWorkeActivity implements Selec
             setRightTitle("保存");
             setTitle("荣誉");
             tvSave.setVisibility(View.GONE);
-            picture(true);
+            recycleview.addImagev(listener);
         }
     }
-    private void picture(boolean isShow) {
-        invoking = new PictureInvoking(this, recycleview,selectList);
-        if(isShow){
-            invoking.initRecycle(3, 200,  onAddPicClickListener);
-        }else{
-            invoking.initRecycle(3, 200, isShow, listener);
-            invoking.setImage(bean.getHonorPics(),1);
-        }
 
+    PictureRecycleView.ImageListener listener = list -> selectList = list;
 
-    }
-    GridImageAdapter.onAddPicClickListener onAddPicClickListener = new GridImageAdapter.onAddPicClickListener() {
-        @Override
-        public void onAddPicClick() {
-            SDKManager.getPicture().create(AddCertificationActivity.this)
-                    .setSelectList(selectList)
-                    .takePhotos(list -> {
-                        //选择图片成功之后的逻辑处理
-                        selectList = list;
-                        invoking.setList(selectList);
-                    });
-        }
-    };
-
-    GridImageAdapter.onAddPicClickListener listener = new GridImageAdapter.onAddPicClickListener() {
-        @Override
-        public void onAddPicClick() {
-            SDKManager.getPicture().create(AddCertificationActivity.this).takePhoto(new IPictureCallBack() {
-                @Override
-                public void onSuccess(List<LocalMedia> list) {
-                    //选择图片成功之后的逻辑处理
-                    if(selectList.size()<3) {
-                        selectList.add(list.get(0));
-                        invoking.setList(selectList);
-                    }
-
-                }
-            });
-        }
-    };
     private void setZhiDu(boolean isZd) {
         tvSave.setVisibility(isZd ? View.VISIBLE : View.GONE);
         etOrg.setEnabled(isZd);
@@ -177,20 +130,12 @@ public class AddCertificationActivity extends BaseWorkeActivity implements Selec
     }
 
     private void fillData() {
-  /*      if (bean.getHonorPics() != null && bean.getHonorPics().length() > 0) {
-            String[] pics = bean.getHonorPics().split(",");
-            for (String pic1 : pics) {
-//                picList.add(BuildConfig.OSS_SERVER + pic1);
-
-            }
-        }*/
         etName.setText(bean.getHonorName());
         etOrg.setText(bean.getAwardOrg());
         if (bean.getAwardTime() != null) {
             tvTime.setText(DateUtils.formatDate(bean.getAwardTime(), "yyyy-MM-dd"));
         }
         etName.setText(bean.getHonorName());
-        picture(false);
     }
 
     @OnClick({R.id.ll_date, R.id.tv_save})

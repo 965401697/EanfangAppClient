@@ -1,4 +1,4 @@
-package com.eanfang.sdk.picture;
+package com.eanfang.base.kit.picture.picture;
 
 import android.content.Context;
 import android.view.View;

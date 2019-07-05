@@ -9,18 +9,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.lifecycle.ViewModel;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSONObject;
-import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
-import com.eanfang.base.kit.picture.IPictureCallBack;
+import com.eanfang.base.kit.picture.picture.PictureRecycleView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.sdk.picture.GridImageAdapter;
-import com.eanfang.sdk.picture.PictureInvoking;
-import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
@@ -62,13 +57,12 @@ public class AddWorkActivity extends BaseWorkeActivity {
     TextView tvSave;
     @BindView(R.id.ll_date)
     LinearLayout llDate;
-    @BindView(R.id.recycleview)
-    RecyclerView recycleview;
+    @BindView(R.id.picture_recycler)
+    PictureRecycleView pictureRecycler;
     /**
      * 证书照片
      */
     private List<LocalMedia> selectList = new ArrayList<>();
-    private PictureInvoking invoking;
     private HashMap<String, String> uploadMap = new HashMap<>();
     private String pic;
     private String url;
@@ -87,11 +81,12 @@ public class AddWorkActivity extends BaseWorkeActivity {
             setRightTitle("编辑");
             setZhiDu(false);
             fillData();
-            picture(false);
+            selectList = pictureRecycler.setData(bean.getCardPics());
+            pictureRecycler.showImagev(selectList, listener);
             setRightTitleOnClickListener(view -> {
                         setRightTitle("保存");
                         setZhiDu(true);
-                        invoking.isShow(true);
+                        pictureRecycler.isShow(true, selectList);
                         setRightTitleOnClickListener(view1 -> setData());
                     }
             );
@@ -100,57 +95,17 @@ public class AddWorkActivity extends BaseWorkeActivity {
             setTitle("工作经历");
             setRightTitle("保存");
             tvSave.setVisibility(View.GONE);
-            picture(true);
+            pictureRecycler.addImagev(listener);
         }
-
     }
+
+    PictureRecycleView.ImageListener listener = list -> selectList = list;
 
     @Override
     protected ViewModel initViewModel() {
         return null;
     }
 
-    private boolean isShow;
-
-    private void picture(boolean isShow) {
-        this.isShow = isShow;
-        invoking = new PictureInvoking(this, recycleview, selectList);
-        if (isShow) {
-            invoking.initRecycle(3, 200, onAddPicClickListener);
-        } else {
-            invoking.initRecycle(3, 200, isShow, listener);
-            invoking.setImage(bean.getCardPics(), 1);
-        }
-    }
-
-    GridImageAdapter.onAddPicClickListener onAddPicClickListener = new GridImageAdapter.onAddPicClickListener() {
-        @Override
-        public void onAddPicClick() {
-            SDKManager.getPicture().create(AddWorkActivity.this)
-                    .setSelectList(selectList)
-                    .takePhotos(list -> {
-                        //选择图片成功之后的逻辑处理
-                        selectList = list;
-                        invoking.setList(selectList);
-                    });
-        }
-    };
-
-    GridImageAdapter.onAddPicClickListener listener = new GridImageAdapter.onAddPicClickListener() {
-        @Override
-        public void onAddPicClick() {
-            SDKManager.getPicture().create(AddWorkActivity.this).takePhoto(new IPictureCallBack() {
-                @Override
-                public void onSuccess(List<LocalMedia> list) {
-                    //选择图片成功之后的逻辑处理
-                    if(selectList.size()<3) {
-                        selectList.add(list.get(0));
-                        invoking.setList(selectList);
-                    }
-                }
-            });
-        }
-    };
 
     private void setZhiDu(boolean isZd) {
         tvSave.setVisibility(isZd ? View.VISIBLE : View.GONE);

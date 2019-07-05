@@ -38,17 +38,20 @@ public class HomeNewOrderFragment extends BaseFragment {
     }
 
     @Override
-    protected void initView() {
-        mRecHomeNewOrder.setLayoutManager(new LinearLayoutManager(getContext()));
-        mFragmentHomeNewOrderAdapter = new FragmentHomeNewOrderAdapter();
-        mFragmentHomeNewOrderAdapter.bindToRecyclerView(mRecHomeNewOrder);
-
+    protected void onLazyLoad() {
         EanfangHttp.get(NewApiService.GET_PUSH_NEWS).execute(new EanfangCallback<HomeNewOrderBean>(getActivity(), false, HomeNewOrderBean.class, true, (list -> {
             Log.d("HomeNewOrderFragment", "initView: " + list);
             mFragmentHomeNewOrderAdapter.getData().clear();
             mFragmentHomeNewOrderAdapter.setNewData(list);
             mFragmentHomeNewOrderAdapter.loadMoreComplete();
         })));
+    }
+
+    @Override
+    protected void initView() {
+        mRecHomeNewOrder.setLayoutManager(new LinearLayoutManager(getContext()));
+        mFragmentHomeNewOrderAdapter = new FragmentHomeNewOrderAdapter();
+        mFragmentHomeNewOrderAdapter.bindToRecyclerView(mRecHomeNewOrder);
     }
 
     @Override

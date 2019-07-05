@@ -1,4 +1,4 @@
-package com.eanfang.sdk.picture;
+package com.eanfang.base.kit.picture.picture;
 
 import android.app.Activity;
 import android.view.View;
@@ -6,17 +6,16 @@ import android.view.View;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.eanfang.BuildConfig;
-import com.eanfang.R;
-import com.eanfang.base.kit.SDKManager;
-import com.eanfang.util.StringUtils;
+import com.eanfang.base.kit.BuildConfig;
+import com.eanfang.base.kit.R;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
+
+import cn.hutool.core.util.StrUtil;
 
 public class PictureInvoking {
     private Activity activity;
@@ -106,7 +105,7 @@ public class PictureInvoking {
     }
 
     public void setData(String str, int type) {
-        if (StringUtils.isEmpty(str)) {
+        if (StrUtil.isEmpty(str)) {
             return;
         }
         list = new ArrayList<>();
@@ -115,7 +114,7 @@ public class PictureInvoking {
     }
 
     public void setImage(String str, int type) {
-        if (StringUtils.isEmpty(str)) {
+        if (StrUtil.isEmpty(str)) {
             return;
         }
         String[] images = str.split(",");

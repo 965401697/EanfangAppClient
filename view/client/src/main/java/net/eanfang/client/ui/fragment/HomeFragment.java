@@ -2,11 +2,6 @@ package net.eanfang.client.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentPagerAdapter;
-
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -14,12 +9,16 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentPagerAdapter;
+
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.widget.controltool.ControlToolView;
+import com.eanfang.biz.model.AllMessageBean;
+import com.eanfang.biz.model.datastatistics.HomeDatastisticeBean;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.AllMessageBean;
-import com.eanfang.biz.model.datastatistics.HomeDatastisticeBean;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JumpItent;
 import com.eanfang.witget.BannerView;
@@ -75,12 +74,6 @@ public class HomeFragment extends BaseFragment {
 
     private MyPagerAdapter mAdapter;
 
-    /**
-     * 图标数量
-     */
-    private QBadgeView qBadgeViewRepair = new QBadgeView(ClientApplication.get().getApplicationContext());
-    private QBadgeView qBadgeViewDesign = new QBadgeView(ClientApplication.get().getApplicationContext());
-    private QBadgeView qBadgeViewInstall = new QBadgeView(ClientApplication.get().getApplicationContext());
     private int mRepair = 0;
     private int mDesign = 0;
     private int mInstall = 0;
@@ -129,28 +122,6 @@ public class HomeFragment extends BaseFragment {
         initLoopView();
 
         initCount();
-
-        //报修
-        qBadgeViewRepair.bindTarget(findViewById(R.id.tv_reparir))
-                .setBadgeBackgroundColor(0xFFFF0000)
-                .setBadgePadding(5, true)
-                .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setGravityOffset(11, 0, true)
-                .setBadgeTextSize(11, true);
-        // 报装
-        qBadgeViewInstall.bindTarget(findViewById(R.id.tv_install))
-                .setBadgeBackgroundColor(0xFFFF0000)
-                .setBadgePadding(5, true)
-                .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setGravityOffset(11, 0, true)
-                .setBadgeTextSize(11, true);
-        //设计
-        qBadgeViewDesign.bindTarget(findViewById(R.id.tv_design))
-                .setBadgeBackgroundColor(0xFFFF0000)
-                .setBadgePadding(5, true)
-                .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setGravityOffset(11, 0, true)
-                .setBadgeTextSize(11, true);
 
         initViewPager1();
         initViewPager2();
@@ -350,6 +321,8 @@ public class HomeFragment extends BaseFragment {
             image.setImageResource(images[i]);
             viewList.add(image);
         }
+        bannerView.setCurrentDownImage(R.drawable.shape_circle_home_choose);
+        bannerView.setDefaultDownImage(R.drawable.shape_circle_home_unchoose);
         bannerView.startLoop(true);
         bannerView.setViewList(viewList);
     }
@@ -378,24 +351,25 @@ public class HomeFragment extends BaseFragment {
         } else {
             mRepair = 0;
         }
-        qBadgeViewRepair.setBadgeNumber(mRepair);
+        badgeView(R.id.tv_reparir, mRepair);
         // 报装
         if (bean.getInstall() > 0) {
             mInstall = bean.getInstall();
         } else {
             mInstall = 0;
         }
-        qBadgeViewInstall.setBadgeNumber(mInstall);
+        badgeView(R.id.tv_install, mInstall);
         //设计
         if (bean.getDesign() > 0) {
             mDesign = bean.getDesign();
         } else {
             mDesign = 0;
         }
-        qBadgeViewDesign.setBadgeNumber(mDesign);
+        badgeView(R.id.tv_design, mDesign);
         // @我的和评论未读
         if (bean.getCommentNoRead() + bean.getNoReadCount() > 0) {
             mSecurityNum = bean.getCommentNoRead() + bean.getNoReadCount();
+            badgeView(R.id.tv_circle, mSecurityNum);
             mTvSecurityNewMessage.setText(bean.getCommentNoRead() + bean.getNoReadCount() + "");
             rlSecurityNewMessage.setVisibility(View.VISIBLE);
         } else {
@@ -406,6 +380,16 @@ public class HomeFragment extends BaseFragment {
          * 底部红点更新
          * */
         EventBus.getDefault().post(bean);
+    }
+
+    private void badgeView(int id, int number) {
+        ControlToolView.getBadge(ClientApplication.get().getApplicationContext())
+                .setTargetView(findViewById(id))
+                .setPadding(5)
+                .setOffset(11,0)
+                .setBadgeNum(number)
+                .badge();
+
     }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {

@@ -817,4 +817,9 @@ public interface NewApiService {
      */
     String HOME_FREE_DESIGN = BASE_URL + "/yaf_site/freeDesign/create";
 
+    /**
+     *订单数量
+     */
+    String HOME_OREDER_COUNT = BASE_URL + "/yaf_sys/notice/count/user/orderNum";
+
 }

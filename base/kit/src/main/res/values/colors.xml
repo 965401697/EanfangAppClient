@@ -9,5 +9,5 @@
     <!--技师端颜色-->
     <color name="colorPrimaryW">#006BFF</color>
     <color name="color_main_worker">#4988F5</color>
-
+    <color name="color_f6">#f6f6f6</color>
 </resources>

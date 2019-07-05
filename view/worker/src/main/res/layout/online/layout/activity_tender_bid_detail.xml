@@ -70,6 +70,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen_26"
+                    android:onClick="@{()->tenderBidDetailVm.doJumpOfferDetail()}"
                     android:orientation="vertical"
                     android:paddingLeft="@dimen/dimen_38"
                     android:paddingRight="@dimen/dimen_22"
@@ -325,10 +326,11 @@
                         android:textColor="@color/color_bottom"
                         android:textSize="@dimen/textSize_13" />
 
-                    <androidx.recyclerview.widget.RecyclerView
+                    <com.eanfang.base.kit.picture.picture.PictureRecycleView
                         android:id="@+id/rv_select_pic"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/dimen_30"
                         android:scrollbars="none" />
                 </LinearLayout>
             </LinearLayout>

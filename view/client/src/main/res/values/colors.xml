@@ -77,4 +77,5 @@
     <color name="color_home_more_data">#4883F7</color>
     <color name="color_home_data_text_one">#129725</color>
     <color name="color_home_data_text_three">#FF1833</color>
+    <color name="color_home_circle_unChoose">#85888B</color>
 </resources>

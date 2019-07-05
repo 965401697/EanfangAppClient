@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.annimon.stream.Stream;
 import com.eanfang.base.BaseApplication;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.kit.picture.picture.PictureRecycleView;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
 import com.eanfang.biz.model.vo.tender.TenderCreateVo;
 import com.eanfang.biz.rds.base.BaseViewModel;
@@ -18,13 +19,17 @@ import com.eanfang.config.Constant;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
+import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.worker.databinding.ActivityTenderCreateBinding;
 import net.eanfang.worker.ui.activity.worksapce.tender.TenderCreateActivity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import lombok.Getter;
@@ -78,6 +83,11 @@ public class TenderCreateViewModle extends BaseViewModel {
     private MutableLiveData<TaskPublishEntity> createTenderLiveData;
 
     public Map<String, String> uploadMap = new HashMap<>();
+    /**
+     * 选择图片
+     */
+    private List<LocalMedia> mPicList = new ArrayList<>();
+    public PictureRecycleView.ImageListener listener = list -> mPicList = list;
 
     public TenderCreateViewModle() {
         createTenderLiveData = new MutableLiveData<>();
@@ -196,13 +206,19 @@ public class TenderCreateViewModle extends BaseViewModel {
         tenderCreateVo.getBudgetUnit().set(mTenderCreateBinding.tvBudgetUnit.getText().toString());
         tenderCreateVo.getDescription().set(mTenderCreateBinding.etEnvironment.getText().toString().trim());
         tenderCreateVo.getLaborRequirements().set(mTenderCreateBinding.etRequire.getText().toString().trim());
-
+        String mImages = PhotoUtils.getPhotoUrl("biz/tender/", mPicList, uploadMap, true);
+        tenderCreateVo.getPictures().set(mImages);
         if (uploadMap.size() != 0) {
             SDKManager.ossKit((TenderCreateActivity) mTenderCreateBinding.getRoot().getContext()).asyncPutImages(uploadMap, (isSuccess) -> {
                 tenderRepo.doSetNewTender(tenderCreateVo).observe(lifecycleOwner, tenderBean -> {
                     createTenderLiveData.setValue(tenderBean);
                 });
             });
+        } else if (tenderCreateVo.getPictures() != null) {
+            tenderRepo.doSetNewTender(tenderCreateVo).observe(lifecycleOwner, tenderBean -> {
+                createTenderLiveData.setValue(tenderBean);
+            });
+
         }
 
     }
@@ -225,5 +241,9 @@ public class TenderCreateViewModle extends BaseViewModel {
         mTenderCreateBinding.tvBudgetUnit.setText(taskPublishEntity.getBudgetUnit());
         mTenderCreateBinding.etEnvironment.setText(taskPublishEntity.getDescription());
         mTenderCreateBinding.etRequire.setText(taskPublishEntity.getLaborRequirements());
+
+        mPicList = mTenderCreateBinding.rvSelectPic.setData(taskPublishEntity.getPictures());
+        mTenderCreateBinding.rvSelectPic.showImagev(mPicList, listener);
+        mTenderCreateBinding.rvSelectPic.isShow(true, mPicList);
     }
 }
