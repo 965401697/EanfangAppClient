@@ -69,4 +69,17 @@
     <string name="text_home_repair_count">已有\t%1$d\t人 报装/报修</string>
     <string name="text_home_safe_run">您的设备已安全运行%d天</string>
 
+    <string name="text_leave_post_detail_device_name">设备名称\t\t%1$s</string>
+    <string name="text_leave_post_detail_post_name">岗位名称\t\t%1$s</string>
+    <string name="text_leave_post_detail_area">所在地区\t\t%1$s</string>
+    <string name="text_leave_post_detail_position">岗位位置\t\t%1$s</string>
+    <string name="text_leave_post_detail_count">报警数量\t\t%1$d</string>
+    <string name="text_leave_post_detail_status">岗位状态\t\t%1$s</string>
+    <string name="text_leave_post_detail_use">是否占用\t\t%1$s</string>
+    <string name="text_leave_post_detail_serial_num">序列号\t\t\t%1$s</string>
+    <string name="text_leave_post_detail_time">报警时间\t\t%1$s</string>
+    <string name="text_leave_post_todo_count">今日待处理事件：%1$d</string>
+    <string name="text_leave_post_history_alert_name">事件名称\t\t%1$s</string>
+
+
 </resources>

@@ -167,6 +167,8 @@ ext {
             pinyin4j             : "com.belerweb:pinyin4j:2.5.1",
             monitor              : "leavesc.hello:Monitor:1.0.3",
 //            gson                 : 'com.google.code.gson:gson:2.8.5'
+            //萤石云
+            yingshiyun           : 'com.hikvision.ezviz:ezviz-sdk:4.8.6.2'
 
     ]
 }

@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <include
+            android:id="@+id/header"
+            layout="@layout/header" />
+        <ImageView
+            android:id="@+id/img_map"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/dimen_36"
+            android:background="@drawable/weixin"
+            app:layout_constraintDimensionRatio="h, 360:226"
+            app:layout_constraintTop_toBottomOf="@id/bg_year" />
+        <View
+            android:layout_marginTop="@dimen/dimen_16"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_20"
+            android:background="@color/color_leave_post_check_bg"
+            app:layout_constraintTop_toBottomOf="@id/bg_year" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_20"
+            android:background="@color/color_leave_post_check_bg"
+            app:layout_constraintTop_toBottomOf="@id/img_map" />
+        <View
+            android:id="@+id/bg_year"
+            android:layout_width="@dimen/dimen_132"
+            android:layout_height="@dimen/dimen_60"
+            android:layout_marginLeft="@dimen/dimen_30"
+            android:layout_marginTop="@dimen/dimen_16"
+            android:background="@color/color_new_order_screen_btn_bg"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/header" />
+
+        <TextView
+            android:id="@+id/tv_leave_post_alarm_ranking_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableRight="@mipmap/arrow_down"
+            android:drawablePadding="@dimen/dimen_16"
+            android:text="请选择"
+            android:textColor="@color/color_client_neworder"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="@id/bg_year"
+            app:layout_constraintLeft_toLeftOf="@id/bg_year"
+            app:layout_constraintRight_toRightOf="@id/bg_year"
+            app:layout_constraintTop_toTopOf="@id/bg_year" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_12"
+            android:text="年"
+            android:textColor="@color/color_client_neworder"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/bg_year"
+            app:layout_constraintLeft_toRightOf="@id/bg_year"
+            app:layout_constraintTop_toTopOf="@id/bg_year" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rec_choose_year"
+            android:layout_width="@dimen/dimen_132"
+            android:layout_height="@dimen/dimen_300"
+            app:layout_constraintTop_toBottomOf="@id/bg_year"
+            app:layout_constraintLeft_toLeftOf="@id/bg_year"
+            app:layout_constraintRight_toRightOf="@id/bg_year"
+            android:background="@color/color_new_order_screen_btn_bg"
+            android:visibility="gone"/>
+
+        <View
+            android:id="@+id/bg_month"
+            android:layout_width="@dimen/dimen_132"
+            android:layout_height="@dimen/dimen_60"
+            android:layout_marginLeft="@dimen/dimen_80"
+            android:layout_marginTop="@dimen/dimen_16"
+            android:background="@color/color_new_order_screen_btn_bg"
+            app:layout_constraintLeft_toRightOf="@id/bg_year"
+            app:layout_constraintTop_toBottomOf="@id/header" />
+
+        <TextView
+            android:id="@+id/tv_leave_post_alarm_ranking_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableRight="@mipmap/arrow_down"
+            android:drawablePadding="@dimen/dimen_16"
+            android:text="请选择"
+            android:textColor="@color/color_client_neworder"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="@id/bg_month"
+            app:layout_constraintLeft_toLeftOf="@id/bg_month"
+            app:layout_constraintRight_toRightOf="@id/bg_month"
+            app:layout_constraintTop_toTopOf="@id/bg_month" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_12"
+            android:text="月"
+            android:textColor="@color/color_client_neworder"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/bg_month"
+            app:layout_constraintLeft_toRightOf="@id/bg_month"
+            app:layout_constraintTop_toTopOf="@id/bg_year" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rec_choose_month"
+            android:layout_width="@dimen/dimen_132"
+            android:layout_height="@dimen/dimen_300"
+            app:layout_constraintTop_toBottomOf="@id/bg_month"
+            app:layout_constraintLeft_toLeftOf="@id/bg_month"
+            app:layout_constraintRight_toRightOf="@id/bg_month"
+            android:background="@color/color_new_order_screen_btn_bg"
+            android:visibility="gone"/>
+
+        <View
+            android:id="@+id/bg_day"
+            android:layout_width="@dimen/dimen_132"
+            android:layout_height="@dimen/dimen_60"
+            android:layout_marginLeft="@dimen/dimen_80"
+            android:layout_marginTop="@dimen/dimen_16"
+            android:background="@color/color_new_order_screen_btn_bg"
+            app:layout_constraintLeft_toRightOf="@id/bg_month"
+            app:layout_constraintTop_toBottomOf="@id/header" />
+
+        <TextView
+            android:id="@+id/tv_leave_post_alarm_ranking_day"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableRight="@mipmap/arrow_down"
+            android:drawablePadding="@dimen/dimen_16"
+            android:text="请选择"
+            android:textColor="@color/color_client_neworder"
+            android:textSize="11sp"
+            app:layout_constraintBottom_toBottomOf="@id/bg_day"
+            app:layout_constraintLeft_toLeftOf="@id/bg_day"
+            app:layout_constraintRight_toRightOf="@id/bg_day"
+            app:layout_constraintTop_toTopOf="@id/bg_day" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_12"
+            android:text="日"
+            android:textColor="@color/color_client_neworder"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@id/bg_day"
+            app:layout_constraintLeft_toRightOf="@id/bg_day"
+            app:layout_constraintTop_toTopOf="@id/bg_day" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rec_choose_day"
+            android:layout_width="@dimen/dimen_132"
+            android:layout_height="@dimen/dimen_300"
+            app:layout_constraintTop_toBottomOf="@id/bg_day"
+            app:layout_constraintLeft_toLeftOf="@id/bg_day"
+            app:layout_constraintRight_toRightOf="@id/bg_day"
+            android:background="@color/color_new_order_screen_btn_bg"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/tv_ok"
+            android:layout_width="@dimen/dimen_132"
+            android:layout_height="@dimen/dimen_60"
+            android:textSize="13sp"
+            android:text="确定"
+            android:textColor="@color/white"
+            android:background="@color/colorPrimary"
+            app:layout_constraintTop_toTopOf="@id/bg_day"
+            app:layout_constraintBottom_toBottomOf="@id/bg_day"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/bg_day"/>
+
+        <CheckBox
+            android:id="@+id/tv_leave_post_ranking_post"
+            android:layout_width="@dimen/dimen_300"
+            android:layout_height="@dimen/dimen_68"
+            android:layout_marginLeft="@dimen/dimen_28"
+            android:layout_marginTop="@dimen/dimen_54"
+            android:gravity="center"
+            android:text="岗位报警排名"
+            android:textColor="@drawable/select_camera_text_back"
+            android:textSize="14sp"
+            android:button="@null"
+            android:background="@drawable/selector_leave_post_screen_status"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/img_map" />
+
+        <CheckBox
+            android:id="@+id/tv_leave_post_ranking_question"
+            android:layout_width="@dimen/dimen_300"
+            android:layout_height="@dimen/dimen_68"
+            android:layout_marginTop="@dimen/dimen_54"
+            android:layout_marginRight="@dimen/dimen_28"
+            android:gravity="center"
+            android:text="问题汇总排名"
+            android:button="@null"
+            android:background="@drawable/selector_leave_post_screen_status"
+            android:textColor="@drawable/select_camera_text_back"
+            android:textSize="14sp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/img_map" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rec_leave_post_alarm_ranking"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_10"
+            app:layout_constraintTop_toBottomOf="@id/tv_leave_post_ranking_post" />
+
+        <TextView
+            android:id="@+id/tv_leave_post_ranking_all"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_28"
+            android:layout_marginTop="@dimen/dimen_28"
+            android:text="查看全部 > >"
+            android:textColor="@color/color_bottom"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rec_leave_post_alarm_ranking" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

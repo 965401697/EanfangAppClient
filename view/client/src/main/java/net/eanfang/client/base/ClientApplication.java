@@ -7,16 +7,14 @@ import com.eanfang.base.BaseApplication;
 import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.base.kit.loading.LoadKit;
 import com.eanfang.base.network.config.HttpConfig;
-import com.eanfang.biz.model.entity.AccountEntity;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.kit.ToolsKit;
 import com.mob.MobSDK;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.videogo.openapi.EZOpenSDK;
 
 import net.eanfang.client.BuildConfig;
-import net.eanfang.client.ui.activity.MainActivity;
 import net.eanfang.client.ui.activity.im.CustomizeMessage;
 import net.eanfang.client.ui.activity.im.CustomizeMessageItemProvider;
 import net.eanfang.client.ui.activity.im.CustomizeVideoMessage;
@@ -27,8 +25,6 @@ import net.eanfang.client.ui.activity.im.SampleExtensionModule;
 import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.Conversation;
-import io.rong.imlib.model.UserInfo;
 import lombok.Getter;
 
 import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
@@ -45,6 +41,7 @@ public class ClientApplication extends BaseApplication {
      * 是否自动更新过
      */
     public static boolean isUpdated = false;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -52,6 +49,16 @@ public class ClientApplication extends BaseApplication {
         initRongIM();
         initWxPay();
         initHttp();
+        initYingShiYun();
+    }
+
+    private void initYingShiYun() {
+        //sdk日志开关，正式发布需要去掉
+        EZOpenSDK.showSDKLog(true);
+        //设置是否支持P2P取流,详见api
+        EZOpenSDK.enableP2P(false);
+        // APP_KEY
+        EZOpenSDK.initLib(this, EanfangConst.YING_SHI_YUN_APP_KEY);
     }
 
 

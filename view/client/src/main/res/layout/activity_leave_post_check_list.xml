@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data></data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/content_bg">
+
+        <include
+            android:id="@+id/header"
+            layout="@layout/header" />
+
+        <TextView
+            android:id="@+id/leave_post_check_list_search"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_70"
+            android:layout_marginLeft="@dimen/dimen_36"
+            android:layout_marginTop="@dimen/dimen_22"
+            android:layout_marginRight="@dimen/dimen_36"
+            android:background="@color/white"
+            android:drawableLeft="@mipmap/search"
+            android:drawablePadding="@dimen/dimen_12"
+            android:text="搜索"
+            android:paddingLeft="@dimen/dimen_20"
+            android:gravity="center_vertical"
+            android:textColor="@color/color_bottom"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/header" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rec_leave_post_check_list"
+            android:layout_width="match_parent"
+            android:background="@color/white"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/leave_post_check_list_search" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

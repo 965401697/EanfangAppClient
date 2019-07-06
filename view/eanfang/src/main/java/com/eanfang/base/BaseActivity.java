@@ -132,7 +132,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
      */
     protected void initStyle() {
         if (isClient()) {
-            findViewById(R.id.titles_bar).setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryC));
+//            findViewById(R.id.titles_bar).setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryC));
         } else {
             findViewById(R.id.titles_bar).setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryW));
         }
@@ -270,7 +270,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
      * @param listener listener
      */
     public void setRightBack(View.OnClickListener listener) {
-        setLeftBack(true, listener);
+        setRightBack(true, listener);
     }
 
     /**

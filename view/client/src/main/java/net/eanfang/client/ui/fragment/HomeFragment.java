@@ -28,6 +28,7 @@ import com.flyco.tablayout.SlidingTabLayout;
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.CameraActivity;
+import net.eanfang.client.ui.activity.leave_post.LeavePostHomeActivity;
 import net.eanfang.client.ui.activity.worksapce.DesignOrderActivity;
 import net.eanfang.client.ui.activity.worksapce.RealTimeMonitorActivity;
 import net.eanfang.client.ui.activity.worksapce.datastatistics.DataStaticsticsListActivity;
@@ -246,7 +247,7 @@ public class HomeFragment extends BaseFragment {
         findViewById(R.id.tv_monitor).setOnClickListener(v -> JumpItent.jump(getActivity(), RealTimeMonitorActivity.class));
         //脱岗检测
         findViewById(R.id.tv_out_post).setOnClickListener(view -> {
-
+            startActivity(new Intent(getActivity(), LeavePostHomeActivity.class));
         });
 
         //扫描二维码

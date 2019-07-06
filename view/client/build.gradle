@@ -22,7 +22,7 @@ android {
 
         ndk {
             // 设置支持的SO库架构
-            abiFilters 'armeabi'
+            abiFilters 'armeabi','armeabi-v7a'
             //信鸽配置
             manifestPlaceholders = [
                     XG_ACCESS_ID : cfg.xgClientAccessId,
@@ -35,7 +35,11 @@ android {
 
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
     }
-
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
     //签名设置
     signingConfigs {
         release {
@@ -159,7 +163,7 @@ dependencies {
     annotationProcessor pkg.butterknifeCompiler
     implementation pkg.lombok
     annotationProcessor pkg.lombok
-
+    implementation pkg.yingshiyun
     implementation project(':view:eanfang')
 
 }

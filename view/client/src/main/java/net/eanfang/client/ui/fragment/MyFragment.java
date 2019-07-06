@@ -19,6 +19,7 @@ import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
+import net.eanfang.client.ui.activity.leave_post.LeavePostHomeActivity;
 import net.eanfang.client.ui.activity.my.CollectActivity;
 import net.eanfang.client.ui.activity.my.EvaluateActivity;
 import net.eanfang.client.ui.activity.my.PersonInfoActivity;
@@ -138,5 +139,6 @@ public class MyFragment extends BaseFragment {
         bundle.putString("qrcodeAddress", ClientApplication.get().getLoginBean().getAccount().getQrCode());
         bundle.putString("qrcodeMessage", "personal");
         JumpItent.jump(getActivity(), QrCodeShowActivity.class, bundle);
+
     }
 }
