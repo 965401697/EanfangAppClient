@@ -13,7 +13,6 @@ import androidx.lifecycle.MutableLiveData;
 import com.eanfang.R;
 import com.eanfang.base.kit.aop.annotation.SingleClick;
 import com.eanfang.base.kit.rx.RxDialog;
-import com.eanfang.base.network.holder.ContextHolder;
 import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.biz.model.vo.LoginVo;
 import com.eanfang.biz.rds.base.BaseViewModel;
@@ -27,7 +26,6 @@ import java.util.concurrent.TimeUnit;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.lang.Validator;
 import cn.hutool.core.util.StrUtil;
-import hugo.weaving.DebugLog;
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
@@ -172,7 +170,6 @@ public class LoginViewModel extends BaseViewModel {
     @SuppressLint("CheckResult")
     @SuppressWarnings("unchecked")
     @SingleClick
-    @DebugLog
     public void readClick(View view, int type) {
         RxDialog dialog;
         if (type == 0) {

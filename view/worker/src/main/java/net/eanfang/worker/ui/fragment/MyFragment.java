@@ -9,16 +9,18 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.alibaba.fastjson.JSONObject;
-import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.biz.model.SpecialistAuthStatusBean;
 import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.ui.activity.InviteFriendActivity;
 import com.eanfang.ui.activity.QrCodeShowActivity;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.GlideUtil;
@@ -38,6 +40,7 @@ import net.eanfang.worker.ui.activity.my.specialist.SpecialistSkillTypeActivity;
 import net.eanfang.worker.ui.activity.techniciancertification.TechnicianCertificationActivity;
 import net.eanfang.worker.ui.widget.InviteView;
 import net.eanfang.worker.util.PrefUtils;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -289,7 +292,7 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
     }
 
     @OnClick({R.id.iv_setting, R.id.iv_user_header, R.id.rl_worker_verfity, R.id.rl_expert_verfity, R.id.rl_ivite, R.id.iv_personalQRCode,
-            R.id.rl_evaluate, R.id.rl_worker_verfity_b, R.id.rl_expert_verfity_b})
+            R.id.rl_evaluate, R.id.rl_worker_verfity_b, R.id.rl_expert_verfity_b, R.id.img_invite})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_setting:
@@ -326,6 +329,12 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
                 break;
             case R.id.rl_expert_verfity_b:
                 doExpertB();
+                break;
+            //邀请活动入口
+            case R.id.img_invite:
+                startActivity(new Intent(getActivity(), InviteFriendActivity.class));
+                break;
+            default:
                 break;
         }
     }

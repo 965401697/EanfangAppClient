@@ -8,30 +8,33 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import androidx.lifecycle.ViewModel;
+
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-
-import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
-import com.jph.takephoto.model.TImage;
-import com.jph.takephoto.model.TResult;
+import com.luck.picture.lib.entity.LocalMedia;
 import com.yaf.base.entity.ExpertsCertificationEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
+import net.eanfang.worker.ui.base.BaseWorkeActivity;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class SpecialistCertificationActivity extends BaseActivityWithTakePhoto {
+public class SpecialistCertificationActivity extends BaseWorkeActivity {
 
 
     @BindView(R.id.ll_headers)
@@ -55,19 +58,16 @@ public class SpecialistCertificationActivity extends BaseActivityWithTakePhoto {
     @BindView(R.id.et_intro)
     EditText etIntro;
 
-    private final int HEADER_PIC = 107;
-
     private ExpertsCertificationEntity mExpertsCertificationEntity;
     private int mStatus;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_specilalist_certification);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("实名认证");
-        setLeftBack();
 
         mStatus = getIntent().getIntExtra("status", -1);
 
@@ -85,10 +85,15 @@ public class SpecialistCertificationActivity extends BaseActivityWithTakePhoto {
         }
     }
 
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
+    }
+
     private void fillData() {
-        GlideUtil.intoImageView(this,com.eanfang.BuildConfig.OSS_SERVER + mExpertsCertificationEntity.getAvatarPhoto(),ivHeader);
+        GlideUtil.intoImageView(this, com.eanfang.BuildConfig.OSS_SERVER + mExpertsCertificationEntity.getAvatarPhoto(), ivHeader);
         String contactName = WorkerApplication.get().getLoginBean().getAccount().getRealName();
-        String mobile =WorkerApplication.get().getLoginBean().getAccount().getMobile();
+        String mobile = WorkerApplication.get().getLoginBean().getAccount().getMobile();
 
         if (!StringUtils.isEmpty(contactName)) {
             tvContactName.setText(contactName);
@@ -118,36 +123,26 @@ public class SpecialistCertificationActivity extends BaseActivityWithTakePhoto {
     }
 
     private void setOnClick() {
-
-
-        llHeaders.setOnClickListener(v -> RxPerm.get(this).cameraPerm((isSuccess)-> takePhoto(SpecialistCertificationActivity.this, HEADER_PIC)));
+        llHeaders.setOnClickListener(v -> RxPerm.get(this).cameraPerm((isSuccess) -> headImage()));
     }
-
-
     /**
      * 图片选择 回调
      *
-     * @param result
-     * @param resultCode
      */
-    @Override
-    public void takeSuccess(TResult result, int resultCode) {
-        super.takeSuccess(result, resultCode);
-        if (result == null || result.getImage() == null) {
-            return;
-        }
-        TImage image = result.getImage();
-        String imgKey = "account/" + UuidUtil.getUUID() + ".png";
-        switch (resultCode) {
-            case HEADER_PIC:
-                mExpertsCertificationEntity.setAvatarPhoto(imgKey);
-                GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),ivHeader);
-                break;
-            default:
-                break;
-        }
-        SDKManager.ossKit(this).asyncPutImage(imgKey, image.getOriginalPath(),(isSuccess) -> {});
+    private void headImage() {
+        SDKManager.getPicture().create(this).takePhoto(iPictureCallBack);
     }
+
+    IPictureCallBack iPictureCallBack = new IPictureCallBack() {
+        @Override
+        public void onSuccess(List<LocalMedia> list) {
+            String imgKey = "account/" + UuidUtil.getUUID() + ".png";
+            mExpertsCertificationEntity.setAvatarPhoto(imgKey);
+            GlideUtil.intoImageView(SpecialistCertificationActivity.this, "file://" + list.get(0).getCutPath(), ivHeader);
+            SDKManager.ossKit(SpecialistCertificationActivity.this).asyncPutImage(imgKey, list.get(0).getCutPath(), (isSuccess) -> {
+            });
+        }
+    };
 
     private void setData() {
 

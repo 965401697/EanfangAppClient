@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -18,7 +19,7 @@
         app:layout_constraintVertical_bias="0.0"
         tools:layout_editor_absoluteX="-163dp" />
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint_all_invite"
         android:layout_width="@dimen/dimen_434"
         android:layout_height="@dimen/dimen_50"
@@ -48,9 +49,9 @@
             app:layout_constraintLeft_toLeftOf="@id/img_horn"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginLeft="@dimen/dimen_60"
@@ -100,7 +101,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent" />
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_military_exploits"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -207,11 +208,11 @@
                 android:textColor="@color/color_btn_to_invite"
                 android:textSize="11sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintVertical_bias="0.3"
                 app:layout_constraintLeft_toLeftOf="@id/tv_invite_getMoney_title"
                 app:layout_constraintRight_toRightOf="@id/tv_invite_getMoney_title"
-                app:layout_constraintTop_toBottomOf="@id/tv_invite_getMoney_title" />
-        </android.support.constraint.ConstraintLayout>
+                app:layout_constraintTop_toBottomOf="@id/tv_invite_getMoney_title"
+                app:layout_constraintVertical_bias="0.3" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
             android:id="@+id/btn_could_extract"
@@ -244,7 +245,7 @@
             app:layout_constraintRight_toRightOf="@id/cl_military_exploits"
             app:layout_constraintTop_toBottomOf="@id/cl_military_exploits" />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/tv_activity_description"
@@ -257,4 +258,4 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

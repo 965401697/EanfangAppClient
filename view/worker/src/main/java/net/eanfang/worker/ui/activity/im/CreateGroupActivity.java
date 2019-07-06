@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+
+import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
@@ -24,17 +27,17 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.GroupCreatBean;
 import com.eanfang.biz.model.TemplateBean;
 
-import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.DialogUtil;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UuidUtil;
 import com.eanfang.util.compound.CompoundHelper;
-import com.jph.takephoto.model.TResult;
+import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.oa.workreport.OAPersonAdaptet;
+import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,7 +52,7 @@ import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Group;
 
-public class CreateGroupActivity extends BaseActivityWithTakePhoto {
+public class CreateGroupActivity extends BaseWorkeActivity {
 
     private final int HEAD_PHOTO = 100;
     @BindView(R.id.iv_group_pic)
@@ -100,9 +103,9 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_group);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("设置群组信息");
         setLeftBack(new View.OnClickListener() {
             @Override
@@ -121,6 +124,11 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
 
         initViews();
         NewSelectIMContactActivity.transactionActivities.add(this);
+    }
+
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
     }
 
     private void initViews() {
@@ -160,27 +168,23 @@ public class CreateGroupActivity extends BaseActivityWithTakePhoto {
         dialog = DialogUtil.createLoadingDialog(this);
     }
 
-    @Override
-    public void takeSuccess(TResult result, int resultCode) {
-        super.takeSuccess(result, resultCode);
-        imgKey = "im/group/CUSTOM_" + UuidUtil.getUUID() + ".png";
-        locationUrl = "file://" + result.getImage().getOriginalPath();
-        switch (resultCode) {
-            case HEAD_PHOTO:
-                GlideUtil.intoImageView(this,"file://" + result.getImage().getOriginalPath(),ivGroupPic);
-                break;
-            default:
-                break;
-        }
-
-        SDKManager.ossKit(this).asyncPutImage(imgKey, result.getImage().getOriginalPath(),(isSuccess) -> {});
-    }
-
     @OnClick(R.id.ll_header)
     public void onViewClicked() {
-        takePhoto(CreateGroupActivity.this, HEAD_PHOTO);
+        headImage();
     }
+    private void headImage() {
+        SDKManager.getPicture().create(this).takePhoto(iPictureCallBack);
+    }
+    IPictureCallBack iPictureCallBack = new IPictureCallBack() {
+        @Override
+        public void onSuccess(List<LocalMedia> list) {
+            imgKey = "im/group/CUSTOM_" + UuidUtil.getUUID() + ".png";
+            locationUrl = "file://" +list.get(0).getCutPath();
+            GlideUtil.intoImageView(CreateGroupActivity.this,"file://" + list.get(0).getCutPath(),ivGroupPic);
 
+            SDKManager.ossKit(CreateGroupActivity.this).asyncPutImage(imgKey,list.get(0).getCutPath(),(isSuccess) -> {});
+        }
+    };
     /**
      * 合唱头像
      */

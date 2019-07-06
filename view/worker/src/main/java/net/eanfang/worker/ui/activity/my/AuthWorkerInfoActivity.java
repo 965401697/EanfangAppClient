@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.core.widget.NestedScrollView;
+import androidx.lifecycle.ViewModel;
+
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.view.ViewGroup;
@@ -18,13 +20,12 @@ import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.WorkerInfoBean;
-
-import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
@@ -32,14 +33,15 @@ import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
-import com.jph.takephoto.model.TImage;
-import com.jph.takephoto.model.TResult;
+import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
+import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -55,7 +57,7 @@ import butterknife.ButterKnife;
  * @desc 技师认证 填写个人资料 照片 等
  */
 @Deprecated
-public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
+public class AuthWorkerInfoActivity extends BaseWorkeActivity {
 
 
     private final static int RESULT_ADD_PHOTO = 200;
@@ -135,17 +137,20 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth_worker);
         ButterKnife.bind(this);
-        initView();
+        super.onCreate(savedInstanceState);
         setOnClick();
     }
 
-    private void initView() {
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
+    }
+    @Override
+    public void initView() {
         setTitle("填写技师资料");
         setRightTitle("编辑");
-        setLeftBack();
         //设置表情过滤，最多输入字数为100
         etIntro.setFilters(new InputFilter[]{inputFilter, new InputFilter.LengthFilter(100)});
         // 解决自动滑动
@@ -162,12 +167,12 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
         llWorkingYear.setOnClickListener((v) -> PickerSelectUtil.singleTextPicker(this, "", tvWorkingYear, GetConstDataUtils.getWorkingYearList()));
         llPayType.setOnClickListener((v) -> PickerSelectUtil.singleTextPicker(this, "", tvPayType, GetConstDataUtils.getPayTypeList()));
 
-        llHeaders.setOnClickListener(v -> RxPerm.get(this).cameraPerm((isSuccess)-> takePhoto(AuthWorkerInfoActivity.this, HEADER_PIC)));
+        llHeaders.setOnClickListener(v -> RxPerm.get(this).cameraPerm((isSuccess)-> headImage()));
 
         setRightTitleOnClickListener((v) -> {
             showToast("可以进行编辑");
             isEdit = true;
-            setRightGone();
+            setRightBack(false);
             doRevoke();
         });
 
@@ -196,10 +201,10 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
                 if (isEdit) {
                     doUndoVerify();
                 } else {
-                    finishSelf();
+                    finish();
                 }
             } else {
-                finishSelf();
+                finish();
             }
         });
         // 已经认证成功/ 已经提交认证，正在认证中 无法点击操作
@@ -209,7 +214,7 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
             doSetGone();
         }
         if (status != 2) {
-            setRightGone();
+            setRightBack(false);
         }
 
     }
@@ -346,7 +351,7 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
         EanfangHttp.post(UserApi.GET_TECH_WORKER_ADD)
                 .upJson(json)
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
-                    finishSelf();
+                    finish();
                 }));
     }
 
@@ -367,28 +372,20 @@ public class AuthWorkerInfoActivity extends BaseActivityWithTakePhoto {
     /**
      * 图片选择 回调
      *
-     * @param result
-     * @param resultCode
      */
-    @Override
-    public void takeSuccess(TResult result, int resultCode) {
-        super.takeSuccess(result, resultCode);
-        if (result == null || result.getImage() == null) {
-            return;
-        }
-        TImage image = result.getImage();
-        String imgKey = "account/"+UuidUtil.getUUID() + ".png";
-        switch (resultCode) {
-            case HEADER_PIC:
-                workerInfoBean.setAvatarPhoto(imgKey);
-                GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),ivHeader);
-                break;
-            default:
-                break;
-        }
-        SDKManager.ossKit(this).asyncPutImage(imgKey, image.getOriginalPath(), (isSuccess) -> {});
+    private void headImage() {
+        SDKManager.getPicture().create(this).takePhoto(iPictureCallBack);
     }
+    IPictureCallBack iPictureCallBack = new IPictureCallBack() {
+        @Override
+        public void onSuccess(List<LocalMedia> list) {
 
+            String imgKey = "account/"+UuidUtil.getUUID() + ".png";
+            workerInfoBean.setAvatarPhoto(imgKey);
+            GlideUtil.intoImageView(AuthWorkerInfoActivity.this,"file://" + list.get(0).getCutPath(),ivHeader);
+            SDKManager.ossKit(AuthWorkerInfoActivity.this).asyncPutImage(imgKey, list.get(0).getCutPath(), (isSuccess) -> {});
+        }
+    };
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
