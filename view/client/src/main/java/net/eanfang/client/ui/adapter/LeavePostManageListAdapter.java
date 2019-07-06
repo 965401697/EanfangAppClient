@@ -25,6 +25,9 @@ public class LeavePostManageListAdapter extends BaseQuickAdapter<LeavePostManage
 
     @Override
     protected void convert(LeavePostHomeViewHolder helper, LeavePostManageListBean.ListBean item) {
+        if (item == null) {
+            return;
+        }
         helper.imgItemLeavePostManageAreaname.setText(item.getPlaceName());
         int totalPost = Math.min(item.getTotal(), helper.items.size());
         helper.imgItemLeavePostManageCount.setText(String.valueOf(totalPost));

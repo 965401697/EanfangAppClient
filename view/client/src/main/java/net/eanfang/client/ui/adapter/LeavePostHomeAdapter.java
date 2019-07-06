@@ -23,9 +23,14 @@ public class LeavePostHomeAdapter extends BaseQuickAdapter<LeavePostHomeUnHandle
 
     @Override
     protected void convert(LeavePostHomeViewHolder helper, LeavePostHomeUnHandledAlertBean.UnhandledAlertListBean.ListBean item) {
+        if (item == null) {
+            return;
+        }
         helper.itemLeavePostDate.setText(item.getAlertTime());
         helper.itemLeavePostType.setText(item.getAlertName());
-        helper.itemLeavePostName.setText(item.getStationsEntity().getStationName());
+        if (item.getStationsEntity() != null) {
+            helper.itemLeavePostName.setText(item.getStationsEntity().getStationName());
+        }
         helper.tvLeavePostHomeCount.setText(String.valueOf(helper.getLayoutPosition() + 1));
     }
 

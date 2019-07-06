@@ -28,9 +28,13 @@ public class LeavePostCheckListAdapter extends BaseQuickAdapter<LeavePostDeviceL
 
     @Override
     protected void convert(LeavePostViewHolder helper, LeavePostDeviceListBean.ListBean item) {
+        if (item == null) {
+            return;
+        }
         helper.tvItemLeavePostCheck.setText(MessageFormat.format("{0}\t({1})\t{2}", item.getStationName(), item.getStationCode(), item.getDeviceName()));
-
-        GlideUtil.intoImageView(mContext, BuildConfig.OSS_SERVER + item.getDeviceEntity().getLivePic(), helper.imgItemLeavePostCheck);
+        if (item.getDeviceEntity() != null) {
+            GlideUtil.intoImageView(mContext, BuildConfig.OSS_SERVER + item.getDeviceEntity().getLivePic(), helper.imgItemLeavePostCheck);
+        }
     }
 
     class LeavePostViewHolder extends BaseViewHolder {

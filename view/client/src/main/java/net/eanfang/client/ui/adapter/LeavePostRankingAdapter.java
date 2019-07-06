@@ -23,6 +23,9 @@ public class LeavePostRankingAdapter extends BaseQuickAdapter<LeavePostDefaultRa
 
     @Override
     protected void convert(LeavePostHomeViewHolder helper, LeavePostDefaultRankingBean item) {
+        if (item == null) {
+            return;
+        }
         helper.tvRank.setText(String.valueOf(mData.indexOf(item) + 1));
         helper.tvPostName.setText(item.getAlertName());
         helper.tvAlertCount.setText(item.getAlertsCount());
@@ -34,6 +37,7 @@ public class LeavePostRankingAdapter extends BaseQuickAdapter<LeavePostDefaultRa
         private TextView tvPostName;
         private TextView tvAlertCount;
         private TextView tvAlertChange;
+
         public LeavePostHomeViewHolder(View view) {
             super(view);
             tvRank = view.findViewById(R.id.tv_rank);

@@ -31,6 +31,9 @@ public class LeavePostDetailAdapter extends BaseQuickAdapter<LeavePostDetailBean
 
     @Override
     protected void convert(LeavePostViewHolder helper, LeavePostDetailBean item) {
+        if (item == null) {
+            return;
+        }
         GlideUtil.intoImageView(mContext, BuildConfig.OSS_SERVER + item.getImg(), helper.imgItemLeavePostManageDetail);
         helper.tvItemLeavePostManageDetailName.setText(mContext.getString(R.string.text_leave_post_detail_post_name, item.getName()));
         helper.tvItemLeavePostManageDetailArea.setText(mContext.getString(R.string.text_leave_post_detail_area, item.getAreaCode()));

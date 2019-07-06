@@ -28,6 +28,9 @@ public class LeavePostHistoryDayAdapter extends BaseQuickAdapter<LeavePostHistor
 
     @Override
     protected void convert(LeavePostHomeViewHolder helper, LeavePostHistoryDayBean.AlertListBean item) {
+        if (item == null) {
+            return;
+        }
         if (getParentPosition(item) == 0) {
             helper.imgItemLeavePostHistoryDetailLineTop.setVisibility(View.GONE);
         } else if (getParentPosition(item) == getItemCount() - 1) {

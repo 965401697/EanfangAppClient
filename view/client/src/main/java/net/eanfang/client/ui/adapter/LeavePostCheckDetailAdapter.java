@@ -32,12 +32,17 @@ public class LeavePostCheckDetailAdapter extends BaseQuickAdapter<LeavePostDevic
 
     @Override
     protected void convert(BaseViewHolder helper, LeavePostDeviceInfoBean.ChargeStaffListBean item) {
+        if (item == null) {
+            return;
+        }
         if (0 == helper.getItemViewType()) {
             helper.setText(R.id.tv_item_leave_post_check_detail_post, item.getTitle());
         } else {
             GlideUtil.intoImageView(mContext, BuildConfig.OSS_SERVER + item.getAccountEntity().getAvatar(), helper.getView(R.id.cirImg_item_leave_post_check_detail_header));
             helper.setText(R.id.tv_item_leave_post_check_detail_name, item.getName());
-            helper.setText(R.id.tv_item_leave_post_check_detail_tel, item.getAccountEntity().getMobile());
+            if (item.getAccountEntity() != null) {
+                helper.setText(R.id.tv_item_leave_post_check_detail_tel, item.getAccountEntity().getMobile());
+            }
             helper.addOnClickListener(R.id.btn_item_leave_post_check_detail_call);
         }
     }

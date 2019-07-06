@@ -23,6 +23,9 @@ public class LeavePostDetailInfoAdapter extends BaseQuickAdapter<LeavePostKeyVal
 
     @Override
     protected void convert(LeavePostHomeViewHolder helper, LeavePostKeyValueBean item) {
+        if (item == null) {
+            return;
+        }
         helper.tvLeavePostDetailInfoName.setText(item.getName());
         helper.tvLeavePostDetailInfoValue.setText(item.getValue());
     }

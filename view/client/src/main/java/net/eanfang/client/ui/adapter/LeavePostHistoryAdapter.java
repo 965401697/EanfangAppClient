@@ -24,9 +24,14 @@ public class LeavePostHistoryAdapter extends BaseQuickAdapter<LeavePostAlertHist
 
     @Override
     protected void convert(LeavePostHomeViewHolder helper, LeavePostAlertHistoryBean.ListBean item) {
+        if (item == null) {
+            return;
+        }
         helper.itemLeavePostHistoryName.setText(mContext.getString(R.string.text_leave_post_history_alert_name, item.getAlertName()));
         helper.itemLeavePostHistoryDate.setText(item.getAlertTime());
-        helper.itemLeavePostHistoryPosition.setText(mContext.getString(R.string.text_leave_post_detail_position, item.getStationsEntity().getStationArea()));
+        if (item.getStationsEntity() != null) {
+            helper.itemLeavePostHistoryPosition.setText(mContext.getString(R.string.text_leave_post_detail_position, item.getStationsEntity().getStationArea()));
+        }
         helper.imgLeavePostHistoryRz.setSelected(item.getStatus() == 1);
     }
 

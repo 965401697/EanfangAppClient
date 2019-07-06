@@ -47,16 +47,23 @@ public class LeavePostHistoryDetailActivity extends BaseActivity {
         setLeftBack(true);
         int stationId = getIntent().getIntExtra("stationId", 0);
         String date = getIntent().getStringExtra("date");
-        mViewModel.historyDayData(GetDateUtils.dateToDateString(GetDateUtils.getYeanDate(date)), String.valueOf(stationId));
+        mViewModel.historyDayData(GetDateUtils.getYeanDate(date), String.valueOf(stationId));
+        mBinding.imgLeavePostHistoryDetailLeft.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewModel.setLastDay();
+            }
+        });
+        mBinding.imgLeavePostHistoryDetailRight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewModel.setNextDay(mBinding.imgLeavePostHistoryDetailRight);
+            }
+        });
         mAdapter = new LeavePostHistoryDayAdapter(R.layout.item_leave_post_history_detail);
         mBinding.recLeavePostHistoryDetail.setLayoutManager(new LinearLayoutManager(this));
         mAdapter.bindToRecyclerView(mBinding.recLeavePostHistoryDetail);
-        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                mViewModel.gotoAlarmDetailPage(LeavePostHistoryDetailActivity.this, adapter, position);
-            }
-        });
+        mAdapter.setOnItemClickListener((adapter, view, position) -> mViewModel.gotoAlarmDetailPage(LeavePostHistoryDetailActivity.this, adapter, position));
     }
 
     @Override
@@ -65,7 +72,6 @@ public class LeavePostHistoryDetailActivity extends BaseActivity {
         mViewModel.getHistoryDayData().observe(this, this::setData);
         return mViewModel;
     }
-
 
     private void setData(LeavePostHistoryDayBean leavePostHistoryDayBean) {
         if (leavePostHistoryDayBean == null || leavePostHistoryDayBean.getStation() == null) {
