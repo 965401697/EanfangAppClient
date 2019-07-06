@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/dimen_36"
-            android:background="@drawable/weixin"
+            android:background="@drawable/img_map"
             app:layout_constraintDimensionRatio="h, 360:226"
             app:layout_constraintTop_toBottomOf="@id/bg_year" />
         <View
@@ -167,16 +167,17 @@
 
         <TextView
             android:id="@+id/tv_ok"
-            android:layout_width="@dimen/dimen_132"
+            android:layout_width="@dimen/dimen_98"
             android:layout_height="@dimen/dimen_60"
             android:textSize="13sp"
             android:text="确定"
+            android:gravity="center"
             android:textColor="@color/white"
             android:background="@color/colorPrimary"
             app:layout_constraintTop_toTopOf="@id/bg_day"
             app:layout_constraintBottom_toBottomOf="@id/bg_day"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/bg_day"/>
+            android:layout_marginRight="@dimen/dimen_18"/>
 
         <CheckBox
             android:id="@+id/tv_leave_post_ranking_post"

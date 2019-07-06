@@ -57,12 +57,7 @@ public class LeavePostDetailActivity extends BaseActivity {
         mBinding.recLeavePostDetailInfo.setLayoutManager(new LinearLayoutManager(this));
         mInfoAdapter.bindToRecyclerView(mBinding.recLeavePostDetailInfo);
 
-        mBinding.btnLeavePoetDetail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mViewModel.gotoCallPersonPage(LeavePostDetailActivity.this);
-            }
-        });
+        mBinding.btnLeavePoetDetail.setOnClickListener(view -> mViewModel.gotoCallPersonPage(LeavePostDetailActivity.this));
 
         mBinding.recLeavePostDetailImg.setLayoutManager(new GridLayoutManager(this, 3));
         mBinding.recLeavePostDetailAudio.setLayoutManager(new GridLayoutManager(this, 3));

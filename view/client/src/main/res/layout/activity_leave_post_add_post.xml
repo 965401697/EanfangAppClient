@@ -34,7 +34,6 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_leave_post_add_post_info" />
 
             <TextView
-                android:id="@+id/tv_leave_post_add_post_1name"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dimen_96"
                 android:gravity="center_vertical"
@@ -62,10 +61,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_2"
                 android:background="@color/color_item_line"
-                app:layout_constraintTop_toBottomOf="@id/tv_leave_post_add_post_1name" />
+                app:layout_constraintTop_toBottomOf="@id/edt_leave_post_add_post_name" />
 
             <TextView
-                android:id="@+id/tv_leave_post_add_post_2name"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dimen_96"
                 android:gravity="center_vertical"
@@ -74,7 +72,7 @@
                 android:textColor="@color/color_text_default"
                 android:textSize="13sp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_leave_post_add_post_1name" />
+                app:layout_constraintTop_toBottomOf="@id/edt_leave_post_add_post_name" />
 
             <EditText
                 android:id="@+id/edt_leave_post_add_post_position"
@@ -87,7 +85,7 @@
                 android:textColor="@color/color_client_neworder"
                 android:textSize="13sp"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_leave_post_add_post_1name" />
+                app:layout_constraintTop_toBottomOf="@id/edt_leave_post_add_post_name" />
 
             <View
                 android:layout_width="match_parent"
@@ -96,7 +94,6 @@
                 app:layout_constraintTop_toBottomOf="@id/edt_leave_post_add_post_position" />
 
             <TextView
-                android:id="@+id/tv_leave_post_add_post_3name"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dimen_96"
                 android:gravity="center_vertical"
@@ -105,7 +102,7 @@
                 android:textColor="@color/color_text_default"
                 android:textSize="13sp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_leave_post_add_post_2name" />
+                app:layout_constraintTop_toBottomOf="@id/edt_leave_post_add_post_position" />
 
             <EditText
                 android:id="@+id/edt_leave_post_add_post_number"
@@ -118,7 +115,7 @@
                 android:textColor="@color/color_client_neworder"
                 android:textSize="13sp"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_leave_post_add_post_2name" />
+                app:layout_constraintTop_toBottomOf="@id/edt_leave_post_add_post_position" />
 
             <View
                 android:layout_width="match_parent"
@@ -127,7 +124,6 @@
                 app:layout_constraintTop_toBottomOf="@id/edt_leave_post_add_post_number" />
 
             <TextView
-                android:id="@+id/tv_leave_post_add_post_4name"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dimen_96"
                 android:gravity="center_vertical"
@@ -136,7 +132,7 @@
                 android:textColor="@color/color_text_default"
                 android:textSize="13sp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_leave_post_add_post_3name" />
+                app:layout_constraintTop_toBottomOf="@id/edt_leave_post_add_post_number" />
 
             <TextView
                 android:id="@+id/tv_leave_post_add_post_area"
@@ -149,7 +145,7 @@
                 android:textColor="@color/color_client_neworder"
                 android:textSize="13sp"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_leave_post_add_post_3name" />
+                app:layout_constraintTop_toBottomOf="@id/edt_leave_post_add_post_number" />
 
             <View
                 android:layout_width="match_parent"
@@ -158,7 +154,6 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_leave_post_add_post_area" />
 
             <TextView
-                android:id="@+id/tv_leave_post_add_post_5name"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dimen_96"
                 android:gravity="center_vertical"
@@ -167,7 +162,7 @@
                 android:textColor="@color/color_text_default"
                 android:textSize="13sp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_leave_post_add_post_4name" />
+                app:layout_constraintTop_toBottomOf="@id/tv_leave_post_add_post_area" />
 
             <TextView
                 android:id="@+id/tv_leave_post_add_post_device"
@@ -179,7 +174,7 @@
                 android:textColor="@color/color_client_neworder"
                 android:textSize="13sp"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_leave_post_add_post_4name" />
+                app:layout_constraintTop_toBottomOf="@id/tv_leave_post_add_post_area" />
 
             <View
                 android:layout_width="match_parent"
@@ -188,7 +183,6 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_leave_post_add_post_device" />
 
             <TextView
-                android:id="@+id/tv_leave_post_add_post_6name"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dimen_96"
                 android:gravity="center_vertical"
@@ -197,7 +191,7 @@
                 android:textColor="@color/color_text_default"
                 android:textSize="13sp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_leave_post_add_post_5name" />
+                app:layout_constraintTop_toBottomOf="@id/tv_leave_post_add_post_device" />
 
             <TextView
                 android:id="@+id/tv_leave_post_add_post_time"
@@ -209,7 +203,7 @@
                 android:textColor="@color/color_client_neworder"
                 android:textSize="13sp"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_leave_post_add_post_5name" />
+                app:layout_constraintTop_toBottomOf="@id/tv_leave_post_add_post_device" />
 
             <View
                 android:layout_width="match_parent"
@@ -218,7 +212,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_leave_post_add_post_time" />
 
             <TextView
-                android:id="@+id/tv_leave_post_add_post_7name"
+                android:id="@+id/tv_leave_post_add_post_status_name"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dimen_96"
                 android:gravity="center_vertical"
@@ -227,16 +221,16 @@
                 android:textColor="@color/color_text_default"
                 android:textSize="13sp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_leave_post_add_post_6name" />
+                app:layout_constraintTop_toBottomOf="@id/tv_leave_post_add_post_time" />
 
             <com.eanfang.witget.SwitchButton
-                android:id="@+id/tv_leave_post_add_post_status"
+                android:id="@+id/switch_btn_leave_post_add_post_status"
                 android:layout_width="@dimen/dimen_84"
                 android:layout_height="@dimen/dimen_46"
                 android:layout_marginRight="@dimen/dimen_18"
-                app:layout_constraintBottom_toBottomOf="@id/tv_leave_post_add_post_7name"
+                app:layout_constraintBottom_toBottomOf="@id/tv_leave_post_add_post_status_name"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@id/tv_leave_post_add_post_7name"
+                app:layout_constraintTop_toTopOf="@id/tv_leave_post_add_post_status_name"
                 app:sb_background="@color/background"
                 app:sb_button_color="@color/color_white"
                 app:sb_checked_color="#32cd32"
@@ -248,7 +242,7 @@
                 android:layout_height="@dimen/dimen_20"
                 android:layout_marginTop="@dimen/dimen_20"
                 android:background="@color/color_item_line"
-                app:layout_constraintTop_toBottomOf="@id/tv_leave_post_add_post_status" />
+                app:layout_constraintTop_toBottomOf="@id/switch_btn_leave_post_add_post_status" />
 
             <TextView
                 android:id="@+id/tv_leave_post_add_post_person_duty"
@@ -260,7 +254,7 @@
                 android:text="值班人"
                 android:textColor="@color/color_main_header_bg"
                 android:textSize="15sp"
-                app:layout_constraintTop_toBottomOf="@id/tv_leave_post_add_post_7name" />
+                app:layout_constraintTop_toBottomOf="@id/tv_leave_post_add_post_status_name" />
 
             <View
                 android:layout_width="match_parent"

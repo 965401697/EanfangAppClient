@@ -6,6 +6,7 @@ import android.content.Intent;
 import androidx.lifecycle.MutableLiveData;
 
 import com.eanfang.biz.model.SelectAddressItem;
+import com.eanfang.biz.model.TemplateBean;
 import com.eanfang.biz.rds.base.BaseViewModel;
 import com.eanfang.config.Config;
 import com.eanfang.ui.activity.SelectAddressActivity;
@@ -15,10 +16,13 @@ import net.eanfang.client.databinding.ActivityLeavePostAddPostBinding;
 import net.eanfang.client.ui.activity.leave_post.LeavePostCheckListActivity;
 import net.eanfang.client.ui.activity.leave_post.LeavePostMonitorActivity;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostAddPostPostBean;
+import net.eanfang.client.ui.activity.leave_post.bean.LeavePostDeviceInfoBean;
 import net.eanfang.client.ui.activity.leave_post.ds.LeavePostDs;
 import net.eanfang.client.ui.activity.leave_post.repo.LeavePostRepo;
 
-import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import lombok.Getter;
 
@@ -29,16 +33,43 @@ import lombok.Getter;
  */
 public class LeavePostAddPostViewModel extends BaseViewModel {
     @Getter
-    private MutableLiveData<JSONObject> leavePostAddPost;
     private LeavePostRepo mLeavePostHomeRepo;
-    private int mCurrentPage = 1;
-    private Long mCompanyId;
+    @Getter
+    private MutableLiveData<LeavePostDeviceInfoBean> leavePostDeviceDetail;
+    @Getter
+    private MutableLiveData<List<TemplateBean.Preson>> chargeStaffList;
+    @Getter
+    private MutableLiveData<List<TemplateBean.Preson>> dutyStaffList;
     private LeavePostAddPostPostBean addPostPostBean = new LeavePostAddPostPostBean();
 
     public LeavePostAddPostViewModel() {
-        leavePostAddPost = new MutableLiveData<>();
+        leavePostDeviceDetail = new MutableLiveData<>();
+        chargeStaffList = new MutableLiveData<>();
+        dutyStaffList = new MutableLiveData<>();
         mLeavePostHomeRepo = new LeavePostRepo(new LeavePostDs(this));
     }
+
+        /**
+         * 获取岗位详情
+         *
+         * @param stationId
+         */
+        public void getPostInfo(int stationId) {
+            mLeavePostHomeRepo.deviceInfoData(String.valueOf(stationId)).observe(lifecycleOwner, leavePostDeviceInfoBean -> {
+                leavePostDeviceDetail.setValue(leavePostDeviceInfoBean);
+                ArrayList<TemplateBean.Preson> chargePersons = new ArrayList<>();
+                for (LeavePostDeviceInfoBean.ChargeStaffListBean chargeStaffListBean: leavePostDeviceInfoBean.getChargeStaffList()){
+                    chargePersons.add(chargeStaffListBean.getPerson());
+                }
+                chargeStaffList.setValue(chargePersons);
+
+                ArrayList<TemplateBean.Preson> dutyStaffPersons = new ArrayList<>();
+                for (LeavePostDeviceInfoBean.ChargeStaffListBean chargeStaffListBean: leavePostDeviceInfoBean.getDutyStaffList()){
+                    dutyStaffPersons.add(chargeStaffListBean.getPerson());
+                }
+                dutyStaffList.setValue(dutyStaffPersons);
+            });
+        }
 
     /**
      * 跳转图像查岗页面
@@ -97,5 +128,9 @@ public class LeavePostAddPostViewModel extends BaseViewModel {
     public void setAreaInfo(SelectAddressItem item) {
         addPostPostBean.setStationAddress(item.getAddress());
         addPostPostBean.setStationPlaceCode(Config.get().getAreaCodeByName(item.getCity(), item.getAddress()));
+    }
+
+    public void updatePostInfo() {
+
     }
 }

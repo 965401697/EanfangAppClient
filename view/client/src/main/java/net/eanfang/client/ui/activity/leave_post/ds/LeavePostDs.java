@@ -22,7 +22,6 @@ import net.eanfang.client.ui.activity.leave_post.bean.LeavePostStationRankingLis
 
 import org.json.JSONObject;
 
-import java.util.Date;
 
 /**
  * @author liangkailun
@@ -161,7 +160,7 @@ public class LeavePostDs extends BaseRemoteDataSource {
      * @param stationId
      * @param callback
      */
-    public void leavePostAlertInfoList(Date queryDate, String stationId, RequestCallback<LeavePostHistoryDayBean> callback) {
+    public void leavePostAlertInfoList(String queryDate, String stationId, RequestCallback<LeavePostHistoryDayBean> callback) {
         execute(getService(LeavePostApi.class).leavePostAlertInfoList(queryDate, stationId), callback);
     }
 

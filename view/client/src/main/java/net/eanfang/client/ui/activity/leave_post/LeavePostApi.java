@@ -135,7 +135,7 @@ public interface LeavePostApi {
      * @return
      */
     @POST("/yaf_station/stationDetectAlerts/alertInfoByDay")
-    Observable<BaseResponseBody<LeavePostHistoryDayBean>> leavePostAlertInfoList(@Query("queryDate") Date queryDate, @Query("stationId") String stationId);
+    Observable<BaseResponseBody<LeavePostHistoryDayBean>> leavePostAlertInfoList(@Query("queryDate") String queryDate, @Query("stationId") String stationId);
 
     /**
      * 报警记录：报警详情
@@ -154,15 +154,6 @@ public interface LeavePostApi {
      */
     @POST("/yaf_station/stationDetectStations/info")
     Observable<BaseResponseBody<LeavePostDeviceInfoBean>> postInfo(@Query("stationId") String stationId);
-
-    /**
-     * 历史报警--筛选---地区列表和岗位名称
-     *
-     * @param companyId
-     * @return
-     */
-    @POST("/yaf_station/stationDetectStations/areaAndNameList")
-    Observable<BaseResponseBody<LeavePostAlertInfoDetailBean>> leavePostAreaAndnameList(@Query("companyId") long companyId);
 
     /**
      * 报警排名---->岗位报警排名

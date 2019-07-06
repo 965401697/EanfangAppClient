@@ -63,7 +63,7 @@
     <uses-permission android:name="android.permission.FLASHLIGHT" />
     <!-- 华为桌面消息图标权限 -->
     <uses-permission android:name="com.huawei.android.launcher.permission.CHANGE_BADGE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
 
     <application
         android:name=".base.ClientApplication"
@@ -1121,24 +1121,26 @@
         <activity
             android:name=".ui.activity.worksapce.security.SecurityCommentDetailActivity"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity android:name=".ui.activity.leave_post.LeavePostHomeActivity"/>
-        <activity android:name=".ui.activity.leave_post.LeavePostCheckListActivity"/>
-        <activity android:name=".ui.activity.leave_post.LeavePostCheckDetailActivity"/>
-        <activity android:name=".ui.activity.leave_post.LeavePostDetailActivity"/>
-        <activity android:name=".ui.activity.leave_post.LeavePostAddPostActivity"/>
-        <activity android:name=".ui.activity.leave_post.LeavePostHistoryActivity"/>
-        <activity android:name=".ui.activity.leave_post.LeavePostScreenActivity"/>
-        <activity android:name=".ui.activity.leave_post.LeavePostAlarmRankingActivity"/>
-        <activity android:name=".ui.activity.leave_post.LeavePostMonitorActivity"/>
-        <activity android:name=".ui.activity.leave_post.LeavePostManageDetailActivity"/>
-        <activity android:name=".ui.activity.leave_post.LeavePostManageListActivity"/>
-        <activity android:name=".ui.activity.leave_post.LeavePostListActivity"/>
-        <activity android:name=".ui.activity.leave_post.LeavePostHistoryDetailActivity"/><activity android:name=".ui.activity.leave_post.LeavePostScreenChooseListActivity"/>
+        <activity android:name=".ui.activity.leave_post.LeavePostHomeActivity" />
+        <activity android:name=".ui.activity.leave_post.LeavePostCheckListActivity" />
+        <activity android:name=".ui.activity.leave_post.LeavePostCheckDetailActivity" />
+        <activity android:name=".ui.activity.leave_post.LeavePostDetailActivity" />
+        <activity
+            android:name=".ui.activity.leave_post.LeavePostAddPostActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+        <activity android:name=".ui.activity.leave_post.LeavePostHistoryActivity" />
+        <activity android:name=".ui.activity.leave_post.LeavePostScreenActivity" />
+        <activity android:name=".ui.activity.leave_post.LeavePostAlarmRankingActivity" />
+        <activity android:name=".ui.activity.leave_post.LeavePostMonitorActivity" />
+        <activity android:name=".ui.activity.leave_post.LeavePostManageDetailActivity" />
+        <activity android:name=".ui.activity.leave_post.LeavePostManageListActivity" />
+        <activity android:name=".ui.activity.leave_post.LeavePostListActivity" />
+        <activity android:name=".ui.activity.leave_post.LeavePostHistoryDetailActivity" />
+        <activity android:name=".ui.activity.leave_post.LeavePostScreenChooseListActivity" />
         <activity
             android:name="com.videogo.main.EzvizWebViewActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation|keyboardHidden">
-        </activity>
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

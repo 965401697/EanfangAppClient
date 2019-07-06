@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.BuildConfig;
 import com.eanfang.base.BaseActivity;
 import com.eanfang.biz.rds.base.LViewModelProviders;
@@ -46,11 +47,16 @@ public class LeavePostHistoryDetailActivity extends BaseActivity {
         setLeftBack(true);
         int stationId = getIntent().getIntExtra("stationId", 0);
         String date = getIntent().getStringExtra("date");
-        mViewModel.historyDayData(GetDateUtils.getDate(date), String.valueOf(stationId));
+        mViewModel.historyDayData(GetDateUtils.dateToDateString(GetDateUtils.getYeanDate(date)), String.valueOf(stationId));
         mAdapter = new LeavePostHistoryDayAdapter(R.layout.item_leave_post_history_detail);
         mBinding.recLeavePostHistoryDetail.setLayoutManager(new LinearLayoutManager(this));
         mAdapter.bindToRecyclerView(mBinding.recLeavePostHistoryDetail);
-        mAdapter.setOnItemClickListener((adapter, view, position) -> mViewModel.gotoAlarmDetailPage(LeavePostHistoryDetailActivity.this, adapter, position));
+        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                mViewModel.gotoAlarmDetailPage(LeavePostHistoryDetailActivity.this, adapter, position);
+            }
+        });
     }
 
     @Override

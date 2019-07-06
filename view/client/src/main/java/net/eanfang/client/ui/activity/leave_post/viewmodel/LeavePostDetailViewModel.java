@@ -70,6 +70,7 @@ public class LeavePostDetailViewModel extends BaseViewModel {
         Intent intent = new Intent(activity, LeavePostCheckDetailActivity.class);
         intent.putExtra("mAlertId", Objects.requireNonNull(leavePostAlertInfoData.getValue()).getAlertId());
         intent.putExtra("isShowTopContent", false);
+        activity.startActivity(intent);
 
     }
 }

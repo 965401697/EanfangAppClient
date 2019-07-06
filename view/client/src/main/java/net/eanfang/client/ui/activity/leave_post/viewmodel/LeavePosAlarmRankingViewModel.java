@@ -64,16 +64,15 @@ public class LeavePosAlarmRankingViewModel extends BaseViewModel {
         QueryEntry queryEntry = new QueryEntry();
         if (mBinding != null) {
             String year = mBinding.tvLeavePostAlarmRankingYear.getText().toString();
-            if (defaultText.equals(year)) {
-                showToast("请选择年份");
-                return;
-            }
-            queryEntry.getEquals().put("year", year);
-            if (!defaultText.equals(mBinding.tvLeavePostAlarmRankingMonth.getText().toString())) {
-                queryEntry.getEquals().put("month", mBinding.tvLeavePostAlarmRankingMonth.getText().toString());
-            }
-            if (!defaultText.equals(mBinding.tvLeavePostAlarmRankingDay.getText().toString())) {
-                queryEntry.getEquals().put("day", mBinding.tvLeavePostAlarmRankingDay.getText().toString());
+            if (!defaultText.equals(year)) {
+
+                queryEntry.getEquals().put("year", year);
+                if (!defaultText.equals(mBinding.tvLeavePostAlarmRankingMonth.getText().toString())) {
+                    queryEntry.getEquals().put("month", mBinding.tvLeavePostAlarmRankingMonth.getText().toString());
+                }
+                if (!defaultText.equals(mBinding.tvLeavePostAlarmRankingDay.getText().toString())) {
+                    queryEntry.getEquals().put("day", mBinding.tvLeavePostAlarmRankingDay.getText().toString());
+                }
             }
         }
         queryEntry.getEquals().put("isQuarter", "false");

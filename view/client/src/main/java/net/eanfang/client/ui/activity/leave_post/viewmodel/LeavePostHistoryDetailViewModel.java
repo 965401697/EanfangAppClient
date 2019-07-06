@@ -9,6 +9,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.biz.rds.base.BaseViewModel;
 
 import net.eanfang.client.ui.activity.leave_post.LeavePostDetailActivity;
+import net.eanfang.client.ui.activity.leave_post.bean.LeavePostDetailBean;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostHistoryDayBean;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostHomeUnHandledAlertBean;
 import net.eanfang.client.ui.activity.leave_post.ds.LeavePostDs;
@@ -43,12 +44,12 @@ public class LeavePostHistoryDetailViewModel extends BaseViewModel {
      * @param queryDate
      * @param stationId
      */
-    public void historyDayData(Date queryDate, String stationId) {
+    public void historyDayData(String queryDate, String stationId) {
         mLeavePostHomeRepo.leavePostAlertInfoList(queryDate, stationId).observe(lifecycleOwner, historyDayData::setValue);
     }
 
     public void gotoAlarmDetailPage(Activity activity, BaseQuickAdapter adapter, int position) {
-        LeavePostHistoryDayBean.AlertListBean bean = (LeavePostHistoryDayBean.AlertListBean) adapter.getData().get(position);
+        LeavePostHistoryDayBean.AlertListBean bean = ( LeavePostHistoryDayBean.AlertListBean) adapter.getData().get(position);
         Intent intent = new Intent(activity, LeavePostDetailActivity.class);
         intent.putExtra("alertId", bean.getAlertId());
         activity.startActivity(intent);

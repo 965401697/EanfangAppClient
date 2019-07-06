@@ -55,4 +55,9 @@ public class LeavePostDetailBean {
      * 0 地区岗位 1 设备监测 2历史记录数据
      */
     private int pageType;
+
+    /**
+     * 岗位id
+     */
+    private int stationId;
 }

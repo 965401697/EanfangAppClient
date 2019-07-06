@@ -60,6 +60,10 @@ public class LeavePostManageDetailViewModel extends BaseViewModel {
     }
 
     public void gotoPostDetailPage(Activity activity, BaseQuickAdapter adapter, int position) {
-        activity.startActivity(new Intent(activity, LeavePostAddPostActivity.class).putExtra("postType", 1));
+        LeavePostDetailBean bean = (LeavePostDetailBean) adapter.getData().get(position);
+        Intent intent = new Intent(activity, LeavePostAddPostActivity.class);
+        intent.putExtra("postType", 1);
+        intent.putExtra("stationId", bean.getStationId());
+        activity.startActivity(intent);
     }
 }

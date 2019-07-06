@@ -177,7 +177,7 @@ public class LeavePostRepo extends BaseRepo<LeavePostDs> {
      *
      * @return
      */
-    public MutableLiveData<LeavePostHistoryDayBean> leavePostAlertInfoList(Date queryDate, String stationId) {
+    public MutableLiveData<LeavePostHistoryDayBean> leavePostAlertInfoList(String queryDate, String stationId) {
         MutableLiveData<LeavePostHistoryDayBean> mutableLiveData = new MutableLiveData<>();
         remoteDataSource.leavePostAlertInfoList(queryDate, stationId, mutableLiveData::setValue);
         return mutableLiveData;

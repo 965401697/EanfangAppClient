@@ -1,5 +1,6 @@
 package net.eanfang.client.ui.activity.leave_post.bean;
 
+import com.eanfang.biz.model.TemplateBean;
 import com.eanfang.biz.model.entity.AccountEntity;
 
 import java.util.List;
@@ -85,6 +86,15 @@ public class LeavePostDeviceInfoBean {
         private int stationId;
         private int status;
         private String userId;
+        private TemplateBean.Preson mPerson;
+
+        public TemplateBean.Preson getPerson(){
+            mPerson = new TemplateBean.Preson();
+            mPerson.setMobile(mobile);
+            mPerson.setName(name);
+            mPerson.setProtraivat(accountEntity.getAvatar());
+            return mPerson;
+        }
         /**
          * 布局类型
          */

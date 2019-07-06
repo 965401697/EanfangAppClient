@@ -49,6 +49,7 @@ public class LeavePostDeviceListBean {
             mLeavePostDetailBean.setStatus(status);
             mLeavePostDetailBean.setImg(deviceEntity.livePic);
             mLeavePostDetailBean.setPageType(0);
+            mLeavePostDetailBean.setStationId(stationId);
             return mLeavePostDetailBean;
         }
 
