@@ -5,8 +5,7 @@
     android:id="@+id/rl_security_create"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_white"
-    tools:context="net.eanfang.worker.ui.activity.worksapce.security.SecurityCreateActivity">
+    android:background="@color/color_white">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,7 +15,7 @@
 
         <include layout="@layout/header_eanfang" />
 
-        <EditText
+        <com.eanfang.witget.mentionedittext.edit.MentionEditText
             android:id="@+id/et_content"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_300"
@@ -25,6 +24,35 @@
             android:padding="@dimen/dimen_40"
             android:textColor="@color/color_bottom"
             android:textSize="@dimen/textSize_15" />
+
+        <RelativeLayout
+            android:id="@+id/rl_video"
+            android:layout_width="@dimen/dimen_170"
+            android:layout_height="@dimen/dimen_170"
+            android:layout_marginLeft="@dimen/dimen_10"
+            android:layout_marginTop="@dimen/dimen_30"
+            android:visibility="gone">
+
+
+            <ImageView
+                android:id="@+id/iv_show_video"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:background="#1A000000"
+                android:visibility="visible" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/ic_play_video" />
+        </RelativeLayout>
 
         <com.photopicker.com.widget.BGASortableNinePhotoLayout
             android:id="@+id/snpl_add_photo"

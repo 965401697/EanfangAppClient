@@ -41,6 +41,7 @@ import com.eanfang.model.security.SecurityLikeStatusBean;
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.ETimeUtils;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
@@ -380,7 +381,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         // 发布人
         tvName.setText(V.v(() -> securityDetailBean.getAccountEntity().getRealName()));
         // 头像
-        ivSeucrityHeader.setImageURI((Uri.parse(BuildConfig.OSS_SERVER + V.v(() -> securityDetailBean.getAccountEntity().getAvatar()))));
+        GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + V.v(() -> securityDetailBean.getAccountEntity().getAvatar())),ivSeucrityHeader);
         // 公司名称
         tvCompany.setText(securityDetailBean.getPublisherOrg().getOrgName());
         //发布的内容

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -207,10 +208,10 @@
                 android:textColor="@color/color_btn_to_invite"
                 android:textSize="11sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintVertical_bias="0.3"
                 app:layout_constraintLeft_toLeftOf="@id/tv_invite_getMoney_title"
                 app:layout_constraintRight_toRightOf="@id/tv_invite_getMoney_title"
-                app:layout_constraintTop_toBottomOf="@id/tv_invite_getMoney_title" />
+                app:layout_constraintTop_toBottomOf="@id/tv_invite_getMoney_title"
+                app:layout_constraintVertical_bias="0.3" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <Button
