@@ -6,30 +6,33 @@ import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.lifecycle.ViewModel;
+
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-
-import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
-import com.jph.takephoto.model.TImage;
-import com.jph.takephoto.model.TResult;
+import com.luck.picture.lib.entity.LocalMedia;
 import com.yaf.base.entity.ExpertsCertificationEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.OwnDataHintActivity;
+import net.eanfang.worker.ui.base.BaseWorkeActivity;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class SpecialistIdentityCardCertification extends BaseActivityWithTakePhoto {
+public class SpecialistIdentityCardCertification extends BaseWorkeActivity {
     //身份证正面
     private final int ID_CARD_FRONT = 101;
     // 身份证反面
@@ -53,36 +56,76 @@ public class SpecialistIdentityCardCertification extends BaseActivityWithTakePho
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_specialist_identity_card_certification);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("实名认证");
-        setLeftBack();
         mExpertsCertificationEntity = (ExpertsCertificationEntity) getIntent().getSerializableExtra("bean");
-
         initListener();
     }
 
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
+    }
+
+    private int states = 0;
+
     private void initListener() {
-        ivIdCardFront.setOnClickListener(v -> RxPerm.get(this).cameraPerm((isSuccess)-> takePhoto(SpecialistIdentityCardCertification.this, ID_CARD_FRONT)));
-        ivIdCardBack.setOnClickListener(v -> RxPerm.get(this).cameraPerm((isSuccess)-> takePhoto(SpecialistIdentityCardCertification.this, ID_CARD_SIDE)));
-        ivIdCardInHand.setOnClickListener(v -> RxPerm.get(this).cameraPerm((isSuccess)-> takePhoto(SpecialistIdentityCardCertification.this, ID_CARD_HAND)));
-        tvSave.setOnClickListener((v) -> {
-            doSave();
-        });
+        ivIdCardFront.setOnClickListener(v -> RxPerm.get(this).cameraPerm((isSuccess) -> {
+            states = ID_CARD_FRONT;
+            iv();
+        }));
+        ivIdCardBack.setOnClickListener(v -> RxPerm.get(this).cameraPerm((isSuccess) -> {
+            states = ID_CARD_SIDE;
+            iv();
+        }));
+        ivIdCardInHand.setOnClickListener(v -> RxPerm.get(this).cameraPerm((isSuccess) -> {
+            states = ID_CARD_HAND;
+            iv();
+        }));
+        tvSave.setOnClickListener((v) -> doSave());
 
         if (!TextUtils.isEmpty(mExpertsCertificationEntity.getIdCardFront())) {
             fillData();
         }
-
-
     }
 
+    private void iv() {
+        SDKManager.getPicture().create(this).takePhoto(iPictureCallBack);
+    }
+
+    IPictureCallBack iPictureCallBack = new IPictureCallBack() {
+        @Override
+        public void onSuccess(List<LocalMedia> list) {
+            String imgKey = UuidUtil.getUUID() + ".png";
+            switch (states) {
+                // 身份证正面
+                case ID_CARD_FRONT:
+                    mExpertsCertificationEntity.setIdCardFront(imgKey);
+                    GlideUtil.intoImageView(SpecialistIdentityCardCertification.this, "file://" + list.get(0).getCutPath(), ivIdCardFront);
+                    break;
+                // 反面
+                case ID_CARD_SIDE:
+                    mExpertsCertificationEntity.setIdCardSide(imgKey);
+                    GlideUtil.intoImageView(SpecialistIdentityCardCertification.this, "file://" + list.get(0).getCutPath(), ivIdCardBack);
+                    break;
+                // 手持
+                case ID_CARD_HAND:
+                    mExpertsCertificationEntity.setIdCardHand(imgKey);
+                    GlideUtil.intoImageView(SpecialistIdentityCardCertification.this, "file://" + list.get(0).getCutPath(), ivIdCardInHand);
+                    break;
+            }
+            SDKManager.ossKit(SpecialistIdentityCardCertification.this).asyncPutImage(imgKey, list.get(0).getCutPath(), (isSuccess) -> {
+            });
+            states=0;
+        }
+    };
 
     private void fillData() {
-        GlideUtil.intoImageView(this,com.eanfang.BuildConfig.OSS_SERVER + mExpertsCertificationEntity.getIdCardFront(),ivIdCardFront);
-        GlideUtil.intoImageView(this,com.eanfang.BuildConfig.OSS_SERVER + mExpertsCertificationEntity.getIdCardSide(),ivIdCardBack);
-        GlideUtil.intoImageView(this,com.eanfang.BuildConfig.OSS_SERVER + mExpertsCertificationEntity.getIdCardHand(),ivIdCardInHand);
+        GlideUtil.intoImageView(this, com.eanfang.BuildConfig.OSS_SERVER + mExpertsCertificationEntity.getIdCardFront(), ivIdCardFront);
+        GlideUtil.intoImageView(this, com.eanfang.BuildConfig.OSS_SERVER + mExpertsCertificationEntity.getIdCardSide(), ivIdCardBack);
+        GlideUtil.intoImageView(this, com.eanfang.BuildConfig.OSS_SERVER + mExpertsCertificationEntity.getIdCardHand(), ivIdCardInHand);
     }
 
     /**
@@ -121,35 +164,7 @@ public class SpecialistIdentityCardCertification extends BaseActivityWithTakePho
     private void closeActivity() {
         WorkerApplication.get().closeActivity(SpecialistCertificationActivity.class);
         WorkerApplication.get().closeActivity(SpecialistIdentityCardCertification.class);
-        finishSelf();
-    }
-
-    @Override
-    public void takeSuccess(TResult result, int resultCode) {
-        super.takeSuccess(result, resultCode);
-        if (result == null || result.getImage() == null) {
-            return;
-        }
-        TImage image = result.getImage();
-        String imgKey = UuidUtil.getUUID() + ".png";
-        switch (resultCode) {
-            // 身份证正面
-            case ID_CARD_FRONT:
-                mExpertsCertificationEntity.setIdCardFront(imgKey);
-                GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),ivIdCardFront);
-                break;
-            // 反面
-            case ID_CARD_SIDE:
-                mExpertsCertificationEntity.setIdCardSide(imgKey);
-                GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),ivIdCardBack);
-                break;
-            // 手持
-            case ID_CARD_HAND:
-                mExpertsCertificationEntity.setIdCardHand(imgKey);
-                GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),ivIdCardInHand);
-                break;
-        }
-        SDKManager.ossKit(this).asyncPutImage(imgKey, image.getOriginalPath(),(isSuccess) -> {});
+       finish();
     }
 
 }

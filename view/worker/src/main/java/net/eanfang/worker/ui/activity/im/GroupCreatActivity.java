@@ -9,29 +9,31 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import androidx.lifecycle.ViewModel;
+
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.GroupCreatBean;
-
-import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UuidUtil;
 import com.eanfang.util.compound.CompoundHelper;
-import com.jph.takephoto.model.TImage;
-import com.jph.takephoto.model.TResult;
+import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
+import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,7 +41,7 @@ import butterknife.OnClick;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Group;
 
-public class GroupCreatActivity extends BaseActivityWithTakePhoto {
+public class GroupCreatActivity extends BaseWorkeActivity {
 
     @BindView(R.id.et_group_name)
     EditText etGroupName;
@@ -47,7 +49,6 @@ public class GroupCreatActivity extends BaseActivityWithTakePhoto {
     Button btnCreated;
     @BindView(R.id.iv_icon)
     ImageView ivIcon;
-    private final int HEADER_PIC = 107;
     private String imgKey;
     private String path;
 
@@ -70,16 +71,20 @@ public class GroupCreatActivity extends BaseActivityWithTakePhoto {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_group_creat);
         ButterKnife.bind(this);
         setTitle("创建群组");
-        setLeftBack();
+        setContentView(R.layout.activity_group_creat);
 
         ArrayList<String> userIconList = getIntent().getStringArrayListExtra("userIconList");
         userIconList.add(WorkerApplication.get().getLoginBean().getAccount().getAvatar());//添加自己的头像
         //合成头像
 
         CompoundHelper.getInstance().sendBitmap(this, handler, userIconList);//生成图片
+    }
+
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
     }
 
     /**
@@ -143,21 +148,18 @@ public class GroupCreatActivity extends BaseActivityWithTakePhoto {
 
     @OnClick(R.id.iv_icon)
     public void onImageClicked() {
-        RxPerm.get(GroupCreatActivity.this).cameraPerm((isSuccess) -> takePhoto(GroupCreatActivity.this, HEADER_PIC));
+        RxPerm.get(GroupCreatActivity.this).cameraPerm((isSuccess) -> headImage());
     }
-
-
-    @Override
-    public void takeSuccess(TResult result) {
-        super.takeSuccess(result);
-
-        if (result == null || result.getImage() == null) {
-            return;
+    private void headImage() {
+        SDKManager.getPicture().create(this).takePhoto(iPictureCallBack);
+    }
+    IPictureCallBack iPictureCallBack = new IPictureCallBack() {
+        @Override
+        public void onSuccess(List<LocalMedia> list) {
+            imgKey = "im/group/" + UuidUtil.getUUID() + ".png";
+            GlideUtil.intoImageView(GroupCreatActivity.this, "file://" + list.get(0).getCutPath(), ivIcon);
+            SDKManager.ossKit(GroupCreatActivity.this).asyncPutImage(imgKey, list.get(0).getCutPath(),(isSuccess) -> {});
         }
-        TImage image = result.getImage();
-        imgKey = "im/group/" + UuidUtil.getUUID() + ".png";
-        GlideUtil.intoImageView(this, "file://" + image.getOriginalPath(), ivIcon);
-        SDKManager.ossKit(this).asyncPutImage(imgKey, image.getOriginalPath(),(isSuccess) -> {});
-    }
+    };
 
 }

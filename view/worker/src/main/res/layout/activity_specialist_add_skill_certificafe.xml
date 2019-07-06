@@ -202,9 +202,11 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="@dimen/dimen_30">
 
                 <com.photopicker.com.widget.BGASortableNinePhotoLayout
+                    android:visibility="gone"
                     android:id="@+id/snpl_moment_accident"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -222,6 +224,10 @@
                     app:bga_snpl_plusDrawable="@mipmap/bga_pp_ic_plus"
                     app:bga_snpl_plusEnable="true"
                     app:bga_snpl_sortable="true" />
+                <com.eanfang.base.kit.picture.picture.PictureRecycleView
+                    android:id="@+id/recycleview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
