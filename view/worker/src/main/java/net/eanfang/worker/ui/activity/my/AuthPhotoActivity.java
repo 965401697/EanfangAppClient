@@ -6,26 +6,25 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.lifecycle.ViewModel;
+
 import com.eanfang.BuildConfig;
 import com.eanfang.base.kit.SDKManager;
-import com.eanfang.delegate.BGASortableDelegate;
-import com.eanfang.biz.model.WorkerInfoBean;
-
-import com.eanfang.ui.base.BaseActivityWithTakePhoto;
-import com.eanfang.util.GlideUtil;
+import com.eanfang.base.kit.picture.IPictureCallBack;
+import com.eanfang.base.kit.picture.picture.PictureRecycleView;
 import com.eanfang.base.kit.rx.RxPerm;
+import com.eanfang.biz.model.WorkerInfoBean;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
-import com.jph.takephoto.model.TImage;
-import com.jph.takephoto.model.TResult;
-import com.photopicker.com.activity.BGAPhotoPickerActivity;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
-
+import com.luck.picture.lib.entity.LocalMedia;
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -36,7 +35,7 @@ import butterknife.ButterKnife;
  * @decision 技师认证 上传照片
  */
 @Deprecated
-public class AuthPhotoActivity extends BaseActivityWithTakePhoto {
+public class AuthPhotoActivity extends BaseWorkeActivity {
 
 
     private final static int RESULT_ADD_PHOTO = 200;
@@ -65,26 +64,21 @@ public class AuthPhotoActivity extends BaseActivityWithTakePhoto {
 
     @BindView(R.id.tv_save)
     TextView tvSave;
-
-    private int mVerifyStatus = 100;
-
     /**
      * 保险照片
      * （3张）
      */
-    @BindView(R.id.snpl_moment_accident)
-    BGASortableNinePhotoLayout snplMomentAccident;
-    private ArrayList<String> picList_accident = new ArrayList<>();
-
+    @BindView(R.id.recycleview_accident)
+    PictureRecycleView recycleviewAccident;
+    private List<LocalMedia> picList_accident = new ArrayList<>();
     /**
      * 犯罪照片
      * （3张）
      */
-    @BindView(R.id.snpl_moment_crim)
-    BGASortableNinePhotoLayout snplMomentCrim;
-    private ArrayList<String> picList_crim = new ArrayList<>();
-
-
+    @BindView(R.id.recycleview_crim)
+    PictureRecycleView recycleviewCrim;
+    private List<LocalMedia> picList_crim = new ArrayList<>();
+    private int mVerifyStatus = 100;
     private WorkerInfoBean workerInfoBean;
 
     private HashMap<String, String> uploadMap = new HashMap<>();
@@ -95,17 +89,21 @@ public class AuthPhotoActivity extends BaseActivityWithTakePhoto {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth_photo);
         ButterKnife.bind(this);
-        initView();
+        super.onCreate(savedInstanceState);
         initData();
         initListener();
     }
 
-    private void initView() {
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
+    }
+
+    @Override
+    public void initView() {
         setTitle("身份信息");
-        setLeftBack();
         workerInfoBean = (WorkerInfoBean) getIntent().getSerializableExtra("workerInfoBean");
         isAdd = getIntent().getBooleanExtra("isAdd", false);
         isEdit = getIntent().getBooleanExtra("isEdit", false);
@@ -114,29 +112,22 @@ public class AuthPhotoActivity extends BaseActivityWithTakePhoto {
 
     private void initData() {
         initImgUrlList();
-        // 保险照
-        snplMomentAccident.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_ACCIDENT, REQUEST_CODE_PHOTO_ACCIDENT));
-        snplMomentAccident.setData(picList_accident);
-
-        // 犯罪照
-        snplMomentCrim.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_CRIM, REQUEST_CODE_PHOTO_CRIM));
-        snplMomentCrim.setData(picList_crim);
 
         if (!StringUtils.isEmpty(workerInfoBean.getIdCardFront())) {
-            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + workerInfoBean.getIdCardFront()),ivIdCardFront);
+            GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + workerInfoBean.getIdCardFront()), ivIdCardFront);
         }
         if (!StringUtils.isEmpty(workerInfoBean.getIdCardSide())) {
-            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + workerInfoBean.getIdCardSide()),ivIdCardBack);
+            GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + workerInfoBean.getIdCardSide()), ivIdCardBack);
         }
         if (!StringUtils.isEmpty(workerInfoBean.getIdCardHand())) {
-            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + workerInfoBean.getIdCardHand()),ivIdCardInHand);
+            GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + workerInfoBean.getIdCardHand()), ivIdCardInHand);
         }
     }
 
     private void initListener() {
-        ivIdCardFront.setOnClickListener(v -> RxPerm.get(this).cameraPerm((isSuccess)-> takePhoto(AuthPhotoActivity.this, ID_CARD_FRONT)));
-        ivIdCardBack.setOnClickListener(v -> RxPerm.get(this).cameraPerm((isSuccess)-> takePhoto(AuthPhotoActivity.this, ID_CARD_SIDE)));
-        ivIdCardInHand.setOnClickListener(v -> RxPerm.get(this).cameraPerm((isSuccess)-> takePhoto(AuthPhotoActivity.this, ID_CARD_HAND)));
+        ivIdCardFront.setOnClickListener(v -> RxPerm.get(this).cameraPerm((isSuccess) -> frontImage()));
+        ivIdCardBack.setOnClickListener(v -> RxPerm.get(this).cameraPerm((isSuccess) -> backImage()));
+        ivIdCardInHand.setOnClickListener(v -> RxPerm.get(this).cameraPerm((isSuccess) -> inhandImage()));
         tvSave.setOnClickListener((v) -> {
             doSave();
         });
@@ -146,19 +137,58 @@ public class AuthPhotoActivity extends BaseActivityWithTakePhoto {
             ivIdCardFront.setEnabled(false);
             ivIdCardBack.setEnabled(false);
             ivIdCardInHand.setEnabled(false);
-            snplMomentAccident.setEditable(false);
-            snplMomentCrim.setEditable(false);
         }
         // 编辑
         if (isEdit) {
             ivIdCardFront.setEnabled(true);
             ivIdCardBack.setEnabled(true);
             ivIdCardInHand.setEnabled(true);
-            snplMomentAccident.setEditable(true);
-            snplMomentCrim.setEditable(true);
         }
 
     }
+
+    private boolean front = false;
+    private boolean back = false;
+    private boolean inhand = false;
+
+    private void frontImage() {
+        front = true;
+        SDKManager.getPicture().create(this).takePhoto(iPictureCallBack);
+    }
+
+    private void backImage() {
+        back = true;
+        SDKManager.getPicture().create(this).takePhoto(iPictureCallBack);
+    }
+
+    private void inhandImage() {
+        inhand = true;
+        SDKManager.getPicture().create(this).takePhoto(iPictureCallBack);
+    }
+
+    IPictureCallBack iPictureCallBack = new IPictureCallBack() {
+        @Override
+        public void onSuccess(List<LocalMedia> list) {
+            String imgKey = UuidUtil.getUUID() + ".png";
+            if (front) {
+                workerInfoBean.setIdCardFront(imgKey);
+                GlideUtil.intoImageView(AuthPhotoActivity.this, "file://" + list.get(0).getCutPath(), ivIdCardFront);
+                front = false;
+            }
+            if (back) {
+                workerInfoBean.setIdCardSide(imgKey);
+                GlideUtil.intoImageView(AuthPhotoActivity.this, "file://" + list.get(0).getCutPath(), ivIdCardBack);
+                back = false;
+            }
+            if (inhand) {
+                workerInfoBean.setIdCardHand(imgKey);
+                GlideUtil.intoImageView(AuthPhotoActivity.this, "file://" + list.get(0).getCutPath(), ivIdCardInHand);
+                inhand = false;
+            }
+            SDKManager.ossKit(AuthPhotoActivity.this).asyncPutImage(imgKey, list.get(0).getCutPath(), (isSuccess) -> {
+            });
+        }
+    };
 
     /**
      * 保存照片
@@ -176,14 +206,14 @@ public class AuthPhotoActivity extends BaseActivityWithTakePhoto {
             showToast("请添加身份证反面照");
             return;
         }
-        String accidentPic = PhotoUtils.getPhotoUrl("account/verify/", snplMomentAccident, uploadMap, false);
+        String accidentPic = PhotoUtils.getPhotoUrl("account/verify/", picList_accident, uploadMap, false);
 //        if (StringUtils.isEmpty(accidentPic)) {
 //            showToast("请添加保险照");
 //            return;
 //        }
         workerInfoBean.setAccidentPics(accidentPic);
 
-        String crimePic = PhotoUtils.getPhotoUrl("account/verify/", snplMomentCrim, uploadMap, false);
+        String crimePic = PhotoUtils.getPhotoUrl("account/verify/", picList_crim, uploadMap, false);
 //        if (StringUtils.isEmpty(crimePic)) {
 //            showToast("请添加犯罪照");
 //            return;
@@ -194,12 +224,12 @@ public class AuthPhotoActivity extends BaseActivityWithTakePhoto {
          * 提交照片
          * */
         if (uploadMap.size() != 0) {
-            SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
+            SDKManager.ossKit(this).asyncPutImages(uploadMap, (isSuccess) -> {
                 runOnUiThread(() -> {
                     Intent intent = new Intent();
                     intent.putExtra("photos", workerInfoBean);
                     setResult(RESULT_ADD_PHOTO, intent);
-                    finishSelf();
+                    finish();
                 });
             });
             return;
@@ -207,42 +237,9 @@ public class AuthPhotoActivity extends BaseActivityWithTakePhoto {
             Intent intent = new Intent();
             intent.putExtra("photos", workerInfoBean);
             setResult(RESULT_ADD_PHOTO, intent);
-            finishSelf();
+            finish();
         }
 
-    }
-
-    @Override
-    public void takeSuccess(TResult result, int resultCode) {
-        super.takeSuccess(result, resultCode);
-        if (result == null || result.getImage() == null) {
-            return;
-        }
-        TImage image = result.getImage();
-        String imgKey = UuidUtil.getUUID() + ".png";
-        switch (resultCode) {
-            // 身份证正面
-            case ID_CARD_FRONT:
-                workerInfoBean.setIdCardFront(imgKey);
-                GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),ivIdCardFront);
-                break;
-            // 反面
-            case ID_CARD_SIDE:
-                workerInfoBean.setIdCardSide(imgKey);
-                GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),ivIdCardBack);
-                break;
-            // 手持
-            case ID_CARD_HAND:
-                workerInfoBean.setIdCardHand(imgKey);
-                GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),ivIdCardInHand);
-                break;
-        }
-        SDKManager.ossKit(this).asyncPutImage(imgKey, image.getOriginalPath(),(isSuccess) -> {});
-//        ivIdCardFront.setEnabled(false);
-//        ivIdCardBack.setEnabled(false);
-//        ivIdCardInHand.setEnabled(false);
-//        ivAccidentPics.setEnabled(false);
-//        ivCrimePic.setEnabled(false);
     }
 
     /**
@@ -251,45 +248,18 @@ public class AuthPhotoActivity extends BaseActivityWithTakePhoto {
     private void initImgUrlList() {
         // 保险照
         if (!StringUtils.isEmpty(workerInfoBean.getAccidentPics())) {
-            String[] presentationPic = workerInfoBean.getAccidentPics().split(",");
-            if (presentationPic.length >= 1) {
-                picList_accident.add(BuildConfig.OSS_SERVER + presentationPic[0]);
-            }
-            if (presentationPic.length >= 2) {
-                picList_accident.add(BuildConfig.OSS_SERVER + presentationPic[1]);
-            }
-            if (presentationPic.length >= 3) {
-                picList_accident.add(BuildConfig.OSS_SERVER + presentationPic[2]);
-            }
+            picList_accident = recycleviewAccident.setData(workerInfoBean.getAccidentPics());
+            recycleviewAccident.showImagev(picList_accident, listener_accident);
+            recycleviewAccident.isShow(true, picList_accident);
         }
         // 犯罪照
         if (!StringUtils.isEmpty(workerInfoBean.getCrimePic())) {
-            String[] presentationPic = workerInfoBean.getCrimePic().split(",");
-            if (presentationPic.length >= 1) {
-                picList_crim.add(BuildConfig.OSS_SERVER + presentationPic[0]);
-            }
-            if (presentationPic.length >= 2) {
-                picList_crim.add(BuildConfig.OSS_SERVER + presentationPic[1]);
-            }
-            if (presentationPic.length >= 3) {
-                picList_crim.add(BuildConfig.OSS_SERVER + presentationPic[2]);
-            }
+            picList_crim = recycleviewCrim.setData(workerInfoBean.getCrimePic());
+            recycleviewCrim.showImagev(picList_crim, listener_crim);
+            recycleviewCrim.isShow(true, picList_crim);
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (data == null) {
-            return;
-        }
-        switch (requestCode) {
-            case REQUEST_CODE_CHOOSE_ACCIDENT:
-                snplMomentAccident.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
-                break;
-            case REQUEST_CODE_CHOOSE_CRIM:
-                snplMomentCrim.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
-                break;
-        }
-    }
+    PictureRecycleView.ImageListener listener_accident = list -> picList_accident = list;
+    PictureRecycleView.ImageListener listener_crim = list -> picList_crim = list;
 }
