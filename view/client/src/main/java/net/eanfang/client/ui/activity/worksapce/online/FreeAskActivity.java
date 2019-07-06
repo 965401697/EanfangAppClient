@@ -8,22 +8,25 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.lifecycle.ViewModel;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.kit.picture.picture.PictureRecycleView;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.contentsafe.ContentDefaultAuditing;
 import com.eanfang.util.contentsafe.ContentSecurityAuditUtil;
+import com.luck.picture.lib.entity.LocalMedia;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
@@ -35,10 +38,13 @@ import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.worksapce.repair.DeviceBrandActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.FaultLibraryActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.SelectDeviceTypeActivity;
+import net.eanfang.client.ui.base.BaseClienActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -48,9 +54,8 @@ import butterknife.OnClick;
 /**
  * 免费提问
  */
-public class FreeAskActivity extends BaseClientActivity {
+public class FreeAskActivity extends BaseClienActivity {
 
-    private static final Integer WORKER_ADD_TROUBLE = 10003;
     // 设备信息 RequestCode
     private static final int REQUEST_FAULTDEVICEINFO = 100;
     private static final int RESULT_DATACODE = 200;
@@ -72,8 +77,8 @@ public class FreeAskActivity extends BaseClientActivity {
     TextView tvFaultInfo;
     @BindView(R.id.et_input_info)
     EditText etInputInfo;
-    @BindView(R.id.snpl_moment_add_photos)
-    BGASortableNinePhotoLayout snplMomentAddPhotos;
+    @BindView(R.id.recycleview)
+    PictureRecycleView recycleview;
 
     // 设备code 设备id
     private String dataCode = "";
@@ -86,21 +91,25 @@ public class FreeAskActivity extends BaseClientActivity {
     private String mModelCodeT;
     private String deviceFailureId;
     private String failureTypeId;
-
+    private List<LocalMedia> selectList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_free_ask);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("免费提问");
-        setLeftBack();
         initViews();
     }
 
-    private void initViews() {
-        snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this));
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
     }
 
+    private void initViews() {
+        recycleview.addImagev(listener);
+    }
+    PictureRecycleView.ImageListener listener = list -> selectList = list;
     @OnClick({R.id.ll_faultDeviceName, R.id.ll_deviceBrand, R.id.ll_faultInfo, R.id.tv_ask})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -156,7 +165,7 @@ public class FreeAskActivity extends BaseClientActivity {
     }
 
     private void fillData() {
-        String accidentPic = PhotoUtils.getPhotoUrl("online/", snplMomentAddPhotos, uploadMap, false);
+        String accidentPic = PhotoUtils.getPhotoUrl("online/", selectList, uploadMap, false);
         // detailsBean.setPictures(accidentPic);
 //        if (uploadMap.size() <= 0) {
 //            ToastUtil.get().showToast(this, "添加现场照片可能会优先得到回答哦");
@@ -164,19 +173,19 @@ public class FreeAskActivity extends BaseClientActivity {
 //        }
 
         if (uploadMap.size() != 0) {
-            SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
-                runOnUiThread(() -> {
+            SDKManager.ossKit(this).asyncPutImages(uploadMap, (isSuccess) -> {
+              /*  runOnUiThread(() -> {
                     Intent intent = new Intent();
                     intent.putExtra("resultTwo", accidentPic);
                     setResult( 101, intent);
                     finish();
-                });
+                });*/
             });
         } else {
-            Intent intent = new Intent();
+          /*  Intent intent = new Intent();
             intent.putExtra("resultTwo", accidentPic);
             setResult(101, intent);
-            finish();
+            finish();*/
         }
 
 //        if (StringUtils.isEmpty(accidentPic)) {
@@ -212,11 +221,11 @@ public class FreeAskActivity extends BaseClientActivity {
 
                     @Override
                     public void onSuccess(JSONObject bean) {
-                        Toast.makeText(FreeAskActivity.this,"提问成功",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(FreeAskActivity.this, "提问成功", Toast.LENGTH_SHORT).show();
                         int questionId = (int) bean.get("questionId");
-                        Intent intent = new Intent(FreeAskActivity.this,FaultExplainActivity.class);
+                        Intent intent = new Intent(FreeAskActivity.this, FaultExplainActivity.class);
                         intent.putExtra("QuestionIdZ", questionId);
-                        startAnimActivity(intent);
+                        startActivity(intent);
                         finish();
                     }
                 });
@@ -228,11 +237,7 @@ public class FreeAskActivity extends BaseClientActivity {
         if (data == null) {
             return;
         }
-        if (resultCode == RESULT_OK && requestCode == BGASortableDelegate.REQUEST_CODE_CHOOSE_PHOTO) {
-            snplMomentAddPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
-        } else if (requestCode == BGASortableDelegate.REQUEST_CODE_CHOOSE_PHOTO) {
-            snplMomentAddPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
-        } else if (requestCode == REQUEST_FAULTDEVICEINFO && resultCode == RESULT_DATACODE) {//设备名称
+       if (requestCode == REQUEST_FAULTDEVICEINFO && resultCode == RESULT_DATACODE) {//设备名称
             dataCode = data.getStringExtra("dataCode");
             businessOneCode = data.getStringExtra("businessOneCode");
             tvFaultDeviceName.setText(Config.get().getBusinessNameByCode(dataCode, 1) + " - " + Config.get().getBusinessNameByCode(dataCode, 3));
@@ -246,9 +251,9 @@ public class FreeAskActivity extends BaseClientActivity {
             tvDeviceBrand.setText(Config.get().getModelNameByCode(custDeviceEntity.getModelCode(), 2));
         } else if (resultCode == RESULT_DEVICE_BRAND_CODE && requestCode == REQUEST_DEVICE_BRAND_CODE) {// 设备品牌
             //品牌型号ModelCode值-----bug 必须选择两次，否则值为空
-            if (Config.get().getBaseCodeByName(tvDeviceBrand.getText().toString().trim(), 2, Constant.MODEL).get(0)==""){
+            if (Config.get().getBaseCodeByName(tvDeviceBrand.getText().toString().trim(), 2, Constant.MODEL).get(0) == "") {
                 mModelCodeT = "5.1.18";
-            }else {
+            } else {
                 mModelCodeT = Config.get().getBaseCodeByName(tvDeviceBrand.getText().toString().trim(), 2, Constant.MODEL).get(0);
             }
             tvDeviceBrand.setText(data.getStringExtra("deviceBrandName"));
