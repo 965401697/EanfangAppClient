@@ -3,10 +3,6 @@ package net.eanfang.worker.ui.activity.worksapce;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.annotation.RequiresApi;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,22 +11,27 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.biz.model.Message;
+import com.eanfang.biz.model.QuotationBean;
+import com.eanfang.biz.model.SelectAddressItem;
+import com.eanfang.biz.model.entity.UserEntity;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.Message;
-import com.eanfang.biz.model.QuotationBean;
-import com.eanfang.biz.model.SelectAddressItem;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
-import com.eanfang.biz.model.entity.UserEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
@@ -328,7 +329,7 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
                 lon = data.getStringExtra("lon");
                 bean.setLongitude(lon);
                 bean.setZone_code(code);
-                bean.setZone_id(Long.valueOf(Config.get().getBaseIdByCode(code, 3, Constant.AREA)));
+                bean.setZone_id(Long.valueOf(Config.get().getBaseIdByCode(code, 2, Constant.AREA)));
                 if (radioClient.isChecked() == true) {
                     if (StringUtils.isEmpty(orderID)) {
                         return;

@@ -156,7 +156,7 @@
                 android:textSize="@dimen/app_sp_gs_rz_item_size" />
         </LinearLayout>
 
-        <com.customview.LtReView
+        <com.eanfang.base.widget.customview.LtReView
             android:id="@+id/jz_rq_lrv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
