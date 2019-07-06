@@ -3,10 +3,12 @@ package net.eanfang.worker.ui.fragment;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.annotation.Nullable;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +34,7 @@ import com.eanfang.biz.model.entity.OrgEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
+import net.eanfang.worker.ui.activity.authentication.CompanyManagerBActivity;
 import net.eanfang.worker.ui.activity.im.MorePopWindow;
 import net.eanfang.worker.ui.activity.im.MyFriendsListActivity;
 import net.eanfang.worker.ui.activity.im.MyGroupsListActivity;
@@ -308,7 +311,7 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
                     bundle.putString("orgName", mDatas.get(position).getOrgName());
                     bundle.putString("isAuth", mDatas.get(position).getVerifyStatus() + "");
                     bundle.putString("adminUserId", String.valueOf(mDatas.get(position).getAdminUserId()));
-                    JumpItent.jump(getActivity(), CompanyManagerActivity.class, bundle, CREAT_TEAM_CODE);
+                    JumpItent.jump(getActivity(), CompanyManagerBActivity.class, bundle, CREAT_TEAM_CODE);
                     break;
                 default:
                     break;
@@ -369,7 +372,7 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
                     if (bean != null) {
                         PermKit.permList.clear();
                         WorkerApplication.get().remove(LoginBean.class.getName());
-                        WorkerApplication.get().set(LoginBean.class.getName(),bean);
+                        WorkerApplication.get().set(LoginBean.class.getName(), bean);
                         EanfangHttp.setToken(WorkerApplication.get().getLoginBean().getToken());
                         HttpConfig.get().setToken(WorkerApplication.get().getLoginBean().getToken());
                         EanfangHttp.setClient();
