@@ -1,7 +1,6 @@
 package net.eanfang.worker.ui.activity.techniciancertification;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +9,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.lifecycle.ViewModel;
+
 import com.alibaba.fastjson.JSONObject;
 import com.baidu.ocr.sdk.OCR;
 import com.baidu.ocr.sdk.OnResultListener;
@@ -17,30 +18,30 @@ import com.baidu.ocr.sdk.exception.OCRError;
 import com.baidu.ocr.sdk.model.AccessToken;
 import com.baidu.ocr.sdk.model.IDCardParams;
 import com.baidu.ocr.sdk.model.IDCardResult;
-import com.baidu.ocr.ui.camera.CameraActivity;
 import com.baidu.ocr.ui.camera.CameraNativeHelper;
 import com.baidu.ocr.ui.camera.CameraView;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 
-import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
-import com.jph.takephoto.model.TImage;
-import com.jph.takephoto.model.TResult;
+import com.luck.picture.lib.entity.LocalMedia;
 import com.yaf.base.entity.TechWorkerVerifyEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
+import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import java.io.File;
 import java.text.ParseException;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,7 +50,7 @@ import butterknife.OnClick;
 /**
  * @author WQ
  */
-public class RealNameAuthenticationActivity extends BaseActivityWithTakePhoto {
+public class RealNameAuthenticationActivity extends BaseWorkeActivity {
 
     @BindView(R.id.iv_idCard_front)
     ImageView ivIdCardFront;
@@ -72,15 +73,14 @@ public class RealNameAuthenticationActivity extends BaseActivityWithTakePhoto {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_real_name_authentication);
         ButterKnife.bind(this);
-        initView();
+        super.onCreate(savedInstanceState);
     }
-
-    private void initView() {
-        setLeftBack();
+    @Override
+    public void initView() {
         setTitle("实名认证");
+        setLeftBack(true);
         statusB = getIntent().getIntExtra("statusB", -1);
         initAccessToken();
         initData();
@@ -101,13 +101,13 @@ public class RealNameAuthenticationActivity extends BaseActivityWithTakePhoto {
 
     private void fillData() {
         if (mTechWorkerVerifyEntity.getIdCardFront() != null) {
-            GlideUtil.intoImageView(this,BuildConfig.OSS_SERVER + mTechWorkerVerifyEntity.getIdCardFront(),ivIdCardFront);
+            GlideUtil.intoImageView(this, BuildConfig.OSS_SERVER + mTechWorkerVerifyEntity.getIdCardFront(), ivIdCardFront);
         }
         if (mTechWorkerVerifyEntity.getIdCardSide() != null) {
-            GlideUtil.intoImageView(this,BuildConfig.OSS_SERVER + mTechWorkerVerifyEntity.getIdCardSide(),ivIdCardBack);
+            GlideUtil.intoImageView(this, BuildConfig.OSS_SERVER + mTechWorkerVerifyEntity.getIdCardSide(), ivIdCardBack);
         }
         if (mTechWorkerVerifyEntity.getIdCardHand() != null) {
-            GlideUtil.intoImageView(this,BuildConfig.OSS_SERVER + mTechWorkerVerifyEntity.getIdCardHand(),ivIdCardInHand);
+            GlideUtil.intoImageView(this, BuildConfig.OSS_SERVER + mTechWorkerVerifyEntity.getIdCardHand(), ivIdCardInHand);
         }
         try {
             if (mTechWorkerVerifyEntity.getIdCardNum() != null) {
@@ -124,8 +124,6 @@ public class RealNameAuthenticationActivity extends BaseActivityWithTakePhoto {
     private String idCardNum = "";
 
     private void doSave() {
-        Log.d("recIDCard6688866", "doSave: " + idCardNum);
-
         if (StringUtils.isEmpty(idCardNum)) {
             showToast("请添加正确的身份证正面照");
             return;
@@ -154,45 +152,6 @@ public class RealNameAuthenticationActivity extends BaseActivityWithTakePhoto {
             startActivity(intent);
             finish();
         }));
-    }
-
-    @Override
-    public void takeSuccess(TResult result, int resultCode) {
-        super.takeSuccess(result, resultCode);
-        if (result == null || result.getImage() == null) {
-            return;
-        }
-        TImage image = result.getImage();
-        String imgKey = UuidUtil.getUUID() + ".png";
-        switch (resultCode) {
-            case ID_CARD_SIDE:
-                mTechWorkerVerifyEntity.setIdCardSide(imgKey);
-                GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),ivIdCardBack);
-                SDKManager.ossKit(this).asyncPutImage(imgKey, image.getOriginalPath(),(isSuccess) -> {});
-                break;
-            case ID_CARD_HAND:
-                mTechWorkerVerifyEntity.setIdCardHand(imgKey);
-                GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),ivIdCardInHand);
-                SDKManager.ossKit(this).asyncPutImage(imgKey, image.getOriginalPath(),(isSuccess) -> {});
-                break;
-            default:
-        }
-
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == ID_CARD_FRONT && resultCode == Activity.RESULT_OK) {
-            if (data != null) {
-                String contentType = data.getStringExtra(CameraActivity.KEY_CONTENT_TYPE);
-                String filePath = FileUtil.getSaveFile(getApplicationContext()).getAbsolutePath();
-                GlideUtil.intoImageView(this,"file://" + filePath,ivIdCardFront);
-                Log.d("recIDCard669", "onActivityResult: " + filePath);
-                nem++;
-                recIDCard(IDCardParams.ID_CARD_SIDE_FRONT, filePath);
-            }
-        }
     }
 
     private void initAccessToken() {
@@ -254,7 +213,7 @@ public class RealNameAuthenticationActivity extends BaseActivityWithTakePhoto {
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
-                        SDKManager.ossKit(RealNameAuthenticationActivity.this).asyncPutImage(imgKey, filePath,(isSuccess)->{
+                        SDKManager.ossKit(RealNameAuthenticationActivity.this).asyncPutImage(imgKey, filePath, (isSuccess) -> {
                         });
                     } else {
                         idCardNum = "";
@@ -269,22 +228,34 @@ public class RealNameAuthenticationActivity extends BaseActivityWithTakePhoto {
         });
     }
 
+    private int state = 0;
+
     @OnClick({R.id.iv_idCard_front, R.id.iv_idCard_back, R.id.iv_idCard_inHand, R.id.tv_save})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_idCard_front:
-                Intent intent = new Intent(this, CameraActivity.class);
+               /* Intent intent = new Intent(this, CameraActivity.class);
                 intent.putExtra(CameraActivity.KEY_OUTPUT_FILE_PATH, FileUtil.getSaveFile(getApplication()).getAbsolutePath());
                 intent.putExtra(CameraActivity.KEY_NATIVE_ENABLE, true);
                 intent.putExtra(CameraActivity.KEY_NATIVE_MANUAL, true);
                 intent.putExtra(CameraActivity.KEY_CONTENT_TYPE, CameraActivity.CONTENT_TYPE_ID_CARD_FRONT);
-                startActivityForResult(intent, ID_CARD_FRONT);
+                startActivityForResult(intent, ID_CARD_FRONT);*/
+                RxPerm.get(this).cameraPerm((isSuccess) -> {
+                    state = ID_CARD_FRONT;
+                    iv();
+                });
                 break;
             case R.id.iv_idCard_back:
-                RxPerm.get(this).cameraPerm((isSuccess)-> takePhoto(this, ID_CARD_SIDE));
+                RxPerm.get(this).cameraPerm((isSuccess) -> {
+                    state=ID_CARD_SIDE;
+                    iv();
+                });
                 break;
             case R.id.iv_idCard_inHand:
-                RxPerm.get(this).cameraPerm((isSuccess)-> takePhoto(this, ID_CARD_HAND));
+                RxPerm.get(this).cameraPerm((isSuccess) -> {
+                    state=ID_CARD_HAND;
+                    iv();
+                });
                 break;
             case R.id.tv_save:
                 doSave();
@@ -293,11 +264,45 @@ public class RealNameAuthenticationActivity extends BaseActivityWithTakePhoto {
         }
     }
 
+    private void iv() {
+        SDKManager.getPicture().create(this).takePhoto(iPictureCallBack);
+    }
+
+    IPictureCallBack iPictureCallBack = new IPictureCallBack() {
+        @Override
+        public void onSuccess(List<LocalMedia> list) {
+            String imgKey = UuidUtil.getUUID() + ".png";
+            switch (state) {
+                case ID_CARD_FRONT:
+                    GlideUtil.intoImageView(RealNameAuthenticationActivity.this, "file://" + list.get(0).getCutPath(), ivIdCardFront);
+                    recIDCard(IDCardParams.ID_CARD_SIDE_FRONT,  list.get(0).getCutPath());
+                    break;
+                case ID_CARD_SIDE:
+                    mTechWorkerVerifyEntity.setIdCardSide(imgKey);
+                    GlideUtil.intoImageView(RealNameAuthenticationActivity.this, "file://" + list.get(0).getCutPath(), ivIdCardBack);
+                    break;
+                case ID_CARD_HAND:
+                    mTechWorkerVerifyEntity.setIdCardHand(imgKey);
+                    GlideUtil.intoImageView(RealNameAuthenticationActivity.this, "file://" + list.get(0).getCutPath(), ivIdCardInHand);
+                    break;
+                default:
+            }
+            SDKManager.ossKit(RealNameAuthenticationActivity.this).asyncPutImage(imgKey, list.get(0).getCutPath(), (isSuccess) -> {
+            });
+            state=0;
+        }
+    };
+
     @Override
     protected void onDestroy() {
         CameraNativeHelper.release();
         OCR.getInstance(this).release();
         super.onDestroy();
+    }
+
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
     }
 
     private static int nem = 0;

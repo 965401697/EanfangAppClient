@@ -131,8 +131,11 @@ public abstract class BaseActivity extends RxAppCompatActivity {
      * 初始化页面风格样式方法
      */
     protected void initStyle() {
+        if(findViewById(R.id.titles_bar)==null){
+            return;
+        }
         if (isClient()) {
-//            findViewById(R.id.titles_bar).setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryC));
+            findViewById(R.id.titles_bar).setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryC));
         } else {
             findViewById(R.id.titles_bar).setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryW));
         }

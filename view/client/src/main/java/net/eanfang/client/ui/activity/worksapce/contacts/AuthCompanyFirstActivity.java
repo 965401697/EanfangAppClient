@@ -9,10 +9,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.lifecycle.ViewModel;
+
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.biz.model.AuthCompanyBaseInfoBean;
 import com.eanfang.biz.model.SelectAddressItem;
 import com.eanfang.biz.model.entity.OrgUnitEntity;
@@ -21,17 +24,18 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 
 import com.eanfang.ui.activity.SelectAddressActivity;
-import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
-import com.jph.takephoto.model.TImage;
-import com.jph.takephoto.model.TResult;
+import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.base.BaseClienActivity;
 import net.eanfang.client.ui.fragment.ContactsFragment;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,7 +46,7 @@ import butterknife.ButterKnife;
  *
  * @desc 新公司认证
  */
-public class AuthCompanyFirstActivity extends BaseActivityWithTakePhoto {
+public class AuthCompanyFirstActivity extends BaseClienActivity {
 
     @BindView(R.id.et_company)
     EditText etCompany;
@@ -83,17 +87,20 @@ public class AuthCompanyFirstActivity extends BaseActivityWithTakePhoto {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth_company_first);
         ButterKnife.bind(this);
-        initView();
+        super.onCreate(savedInstanceState);
         initData();
         initListener();
     }
 
-    private void initView() {
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
+    }
+    @Override
+    public void initView() {
         setTitle("完善资料");
-        setLeftBack();
         orgid = getIntent().getLongExtra("orgid", 0);
         orgName = getIntent().getStringExtra("orgName");
         // 完善资料
@@ -126,7 +133,7 @@ public class AuthCompanyFirstActivity extends BaseActivityWithTakePhoto {
                 tvOfficeAddress.setText(Config.get().getAddressByCode(byNetBean.getAreaCode()));
             }
             if (!StringUtils.isEmpty(byNetBean.getLogoPic())) {
-                GlideUtil.intoImageView(this,BuildConfig.OSS_SERVER + byNetBean.getLogoPic(),ivUploadlogo);
+                GlideUtil.intoImageView(this, BuildConfig.OSS_SERVER + byNetBean.getLogoPic(), ivUploadlogo);
                 infoBean.setLogoPic(byNetBean.getLogoPic());
             }
         }
@@ -145,18 +152,34 @@ public class AuthCompanyFirstActivity extends BaseActivityWithTakePhoto {
             setOnFouse(etDesc);
         }
         if (byNetBean.getStatus() != 2) {
-            setRightGone();
+            setRightBack(false);
         }
     }
 
     private void setOnFouse(EditText editText) {
         editText.setEnabled(false);
     }
+    /**
+     * 图片选择
+     */
+    private void logoImage() {
+        SDKManager.getPicture().create(this).takePhoto(iPictureCallBack);
+    }
 
+    IPictureCallBack iPictureCallBack = new IPictureCallBack() {
+        @Override
+        public void onSuccess(List<LocalMedia> list) {
+            String imgKey = UuidUtil.getUUID() + ".png";
+            infoBean.setLogoPic(imgKey);
+            GlideUtil.intoImageView(AuthCompanyFirstActivity.this, "file://" + list.get(0).getCutPath(), ivUploadlogo);
+            SDKManager.ossKit(AuthCompanyFirstActivity.this).asyncPutImage(imgKey, list.get(0).getCutPath(), (isSuccess) -> {
+            });
+        }
+    };
 
     private void initListener() {
         ivUploadlogo.setOnClickListener((v -> {
-            RxPerm.get(this).cameraPerm((isSuccess)-> takePhoto(AuthCompanyFirstActivity.this, ADPIC_CALLBACK_CODE));
+            RxPerm.get(this).cameraPerm((isSuccess) -> logoImage());
         }));
 
         llOfficeAddress.setOnClickListener((v) -> {
@@ -220,27 +243,7 @@ public class AuthCompanyFirstActivity extends BaseActivityWithTakePhoto {
         commit(json);
     }
 
-    /**
-     * 图片选择 回调
-     *
-     * @param result
-     * @param resultCode
-     */
-    @Override
-    public void takeSuccess(TResult result, int resultCode) {
-        super.takeSuccess(result, resultCode);
-        if (result == null || result.getImage() == null) {
-            return;
-        }
-        TImage image = result.getImage();
-        String imgKey = UuidUtil.getUUID() + ".png";
 
-        if (resultCode == ADPIC_CALLBACK_CODE) {
-            infoBean.setLogoPic(imgKey);
-            GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),ivUploadlogo);
-        }
-        SDKManager.ossKit(this).asyncPutImage(imgKey, image.getOriginalPath(),(isSuccess) -> {});
-    }
 
     private void commit(String json) {
         EanfangHttp.post(UserApi.GET_ORGUNIT_ENT_INSERT)
