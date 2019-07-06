@@ -2,8 +2,6 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.jakewharton.butterknife'
 apply plugin: 'android-aspectjx'
 apply plugin: 'com.jakewharton.hugo'
-//lambda
-//apply plugin: 'me.tatarka.retrolambda'
 
 android {
     compileSdkVersion cfg.compileSdkVersion
@@ -43,8 +41,8 @@ android {
         debug {
             buildConfigField("boolean", "DEBUG_MOD", cfg.debugMod)
 
-//            buildConfigField("String", "API_HOST", cfg.betaApiHost)
-            buildConfigField("String", "API_HOST", cfg.localApiHost)
+            buildConfigField("String", "API_HOST", cfg.betaApiHost)
+//            buildConfigField("String", "API_HOST", cfg.localApiHost)
         }
         release {
             // 上线url
@@ -65,9 +63,6 @@ android {
     dataBinding {
         enabled = true
     }
-//    hugo {
-//        enabled true
-//    }
 
     // aapt2 问题 png图片问题
     aaptOptions.cruncherEnabled = false

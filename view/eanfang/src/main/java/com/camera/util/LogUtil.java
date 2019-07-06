@@ -3,6 +3,7 @@ package com.camera.util;
 import android.util.Log;
 
 import com.camera.CameraApplication;
+import com.eanfang.BuildConfig;
 import com.eanfang.R;
 
 
@@ -15,7 +16,8 @@ import com.eanfang.R;
  */
 public class LogUtil {
     private static final String TAG = CameraApplication.getCommonLibContext().getResources().getString(R.string.app_name);
-    public static Boolean isDebug = CameraApplication.DEBUG; // 日志文件总开关
+    // 日志文件总开关
+    public static Boolean isDebug = BuildConfig.DEBUG_MOD;
 
     public static void w(String tag, Object msg) { // 警告信息
         log(msg.toString(), 'w');

@@ -143,9 +143,6 @@ android {
     dataBinding {
         enabled = true
     }
-//    hugo {
-//        enabled true
-//    }
 }
 
 static def releaseTime() {

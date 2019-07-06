@@ -3,6 +3,7 @@ package com.eanfang.base.network;
 import androidx.lifecycle.MutableLiveData;
 
 import com.eanfang.base.network.config.HttpCode;
+import com.eanfang.base.network.config.HttpConfig;
 import com.eanfang.base.network.converter.FastJsonConverterFactory;
 import com.eanfang.base.network.event.BaseActionEvent;
 import com.eanfang.base.network.exception.AccountInvalidException;
@@ -62,7 +63,7 @@ public enum RetrofitManagement {
 
     private List<Interceptor> interceptorList;
 
-    private boolean log = true;
+    private boolean log = HttpConfig.get().isDebug();
 
     private Retrofit createRetrofit(String url) {
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
