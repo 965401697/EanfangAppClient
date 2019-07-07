@@ -8,7 +8,7 @@
     tools:context="net.eanfang.worker.ui.activity.worksapce.maintenance.MeintenancePhotoActivity">
 
 
-    <include layout="@layout/header" />
+    <include layout="@layout/header_eanfang" />
 
     <RelativeLayout
         android:layout_width="match_parent"

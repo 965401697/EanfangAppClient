@@ -20,19 +20,19 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.base.kit.V;
 import com.eanfang.base.widget.customview.CircleImageView;
+import com.eanfang.biz.model.Message;
+import com.eanfang.biz.model.reapair.RepairPersonalInfoEntity;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.MultiClickListener;
-import com.eanfang.biz.model.Message;
-import com.eanfang.biz.model.reapair.RepairPersonalInfoEntity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
-import com.eanfang.base.kit.V;
 import com.yaf.base.entity.PayLogEntity;
 import com.yaf.base.entity.RepairBugEntity;
 import com.yaf.base.entity.RepairOrderEntity;
@@ -165,7 +165,7 @@ public class OrderConfirmActivity extends BaseClientActivity {
         tvProjectName.setText(repairOrderEntity.getProjectName());
         // 备注信息
         tvProjectInfo.setText(repairOrderEntity.getRemarkInfo());
-        GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + headUrl),ivHeader);
+        GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + headUrl), ivHeader);
         tvRealname.setText(workerName);
         tvCompanyName.setText(comapnyName);
 
@@ -238,8 +238,11 @@ public class OrderConfirmActivity extends BaseClientActivity {
         EanfangHttp.post(RepairApi.ADD_CLIENT_REPAIR)
                 .upJson(JSON.toJSONString(repairOrderEntity))
                 .execute(new EanfangCallback<RepairOrderEntity>(this, true, RepairOrderEntity.class, (bean) -> {
+                    if (bean == null) {
+                        return;
+                    }
                     //待支付
-                    if (Constant.RepairStatus.CREATED.v == bean.getStatus().intValue()) {
+                    if (Constant.RepairStatus.CREATED.v == bean.getStatus()) {
                         payment(bean);
                     } else {
                         submitSuccess();
@@ -265,9 +268,8 @@ public class OrderConfirmActivity extends BaseClientActivity {
         bundle.putSerializable("message", message);
         intent.putExtras(bundle);
         startActivity(intent);
-        closeActivity();
 
-
+        finish();
     }
 
     /**

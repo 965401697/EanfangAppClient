@@ -1,4 +1,5 @@
 package com.yaf.base.entity;
+
 import com.eanfang.biz.model.entity.AccountEntity;
 import com.eanfang.biz.model.entity.UserEntity;
 import com.mybatisplus.annotations.TableField;
@@ -10,10 +11,6 @@ import org.hibernate.validator.constraints.NotBlank;
 
 import java.io.Serializable;
 import java.util.Date;
-
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -48,43 +45,34 @@ public class TechWorkerVerifyEntity implements Serializable {
 
     //所属的acc_id
     //@TableField(value = "acc_id")
-    @NotNull
-    @Digits(integer = 19, fraction = 0)
     private Long accId;
 
     //所属的user_id
     //@TableField(value = "user_id")
-    @Digits(integer = 19, fraction = 0)
     private Long userId;
 
     //紧急联系人联系人姓名
     //@TableField(value = "contact_name")
-    @Size(min = 0, max = 5)
     private String contactName;
 
     //紧急联系人电话
     //@TableField(value = "contact_phone")
-    @Size(min = 0, max = 12)
     private String contactPhone;
 
     //pay_type
     //@TableField(value = "pay_type")
-    @Digits(integer = 3, fraction = 0)
     private Integer payType;
 
     //支付账号
     //@TableField(value = "pay_account")
-    @Size(min = 0, max = 20)
     private String payAccount;
 
     //working_level
     //@TableField(value = "working_level")
-    @Digits(integer = 3, fraction = 0)
     private Integer workingLevel;
 
     //working_year
     //@TableField(value = "working_year")
-    @Digits(integer = 3, fraction = 0)
     private Integer workingYear;
 
     //头像
@@ -92,7 +80,6 @@ public class TechWorkerVerifyEntity implements Serializable {
     @NotBlank
     @Getter
     @Setter
-    @Size(min = 0, max = 255)
     private String avatarPhoto;
 
     @Override
@@ -133,38 +120,31 @@ public class TechWorkerVerifyEntity implements Serializable {
 
     //无犯罪证明图片
     //@TableField(value = "crime_pic")
-    @Size(min = 0, max = 50)
     private String crimePic;
 
     //身份证正面图片
     //@TableField(value = "id_card_front")
-    @Size(min = 0, max = 50)
     private String idCardFront;
 
     //身份证反面
     //@TableField(value = "id_card_side")
-    @Size(min = 0, max = 50)
     private String idCardSide;
 
     //手持身份证图片
     //@TableField(value = "id_card_hand")
-    @Size(min = 0, max = 50)
     private String idCardHand;
 
     //accident_pics
     //@TableField(value = "accident_pics")
-    @Size(min = 0, max = 200)
     private String accidentPics;
 
 
     //个人简介
     //@TableField(value = "intro")
-    @Size(min = 0, max = 500)
     private String intro;
 
     //0认证中，1认证通过，2认证拒绝，3禁用/删除
     //@TableField(value = "status")
-    @Digits(integer = 3, fraction = 0)
     private Integer status;
 
     //创建时间
@@ -184,7 +164,6 @@ public class TechWorkerVerifyEntity implements Serializable {
 
     //认证操作人员
     //@TableField(value = "verify_user_name")
-    @Size(min = 0, max = 10)
     private String verifyUserName;
     private String eMail;
     private String idCardName;
@@ -225,7 +204,6 @@ public class TechWorkerVerifyEntity implements Serializable {
 
     //备注信息（审核意见）
     //@TableField(value = "verify_message")
-    @Size(min = 0, max = 200)
     private String verifyMessage;
 
     private String idCardNum;

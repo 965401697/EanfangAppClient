@@ -9,7 +9,7 @@
     android:orientation="vertical"
     tools:context="net.eanfang.worker.ui.activity.worksapce.repair.DeviceParameterActivity">
 
-    <include layout="@layout/header" />
+    <include layout="@layout/header_eanfang" />
 
 
     <LinearLayout

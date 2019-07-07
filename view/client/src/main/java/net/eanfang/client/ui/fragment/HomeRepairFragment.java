@@ -24,6 +24,7 @@ import com.alibaba.fastjson.JSON;
 import com.bumptech.glide.Glide;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.biz.model.DesignOrderInfoBean;
 import com.eanfang.biz.model.InstallOrderConfirmBean;
 import com.eanfang.biz.model.OrderCountBean;
@@ -34,27 +35,20 @@ import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.activity.SelectAddressActivity;
-import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.ui.base.voice.RecognitionManager;
-import com.eanfang.base.kit.rx.RxPerm;
-import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
-import com.yaf.base.entity.CustDeviceEntity;
 import com.yaf.base.entity.RepairBugEntity;
 import com.yaf.base.entity.RepairOrderEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
-import net.eanfang.client.ui.activity.worksapce.equipment.EquipmentListActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.DeviceBrandActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.SelectDeviceTypeActivity;
-import net.eanfang.client.ui.widget.RepairSelectDevicesDialog;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -291,8 +285,8 @@ public class HomeRepairFragment extends BaseFragment {
                 break;
             case R.id.img_moment_accident:
                 File takePhotoDir = new File(Environment.getExternalStorageDirectory(), "EanfangPhotoData");
-                RxPerm.get(getActivity()).cameraPerm((isSuccess)->{
-                    startActivityForResult(BGAPhotoPickerActivity.newIntent(getActivity(), takePhotoDir, 1, null, false), BGASortableDelegate.REQUEST_CODE_CHOOSE_PHOTO);
+                RxPerm.get(getActivity()).cameraPerm((isSuccess) -> {
+                    startActivityForResult(BGAPhotoPickerActivity.newIntent(mActivity, takePhotoDir, 1, null, false), BGASortableDelegate.REQUEST_CODE_CHOOSE_PHOTO);
                 });
                 break;
             default:

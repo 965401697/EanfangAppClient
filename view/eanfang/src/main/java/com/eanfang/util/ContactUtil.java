@@ -1,8 +1,5 @@
 package com.eanfang.util;
 
-import java.io.IOException;
-import java.util.ArrayList;
-
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
@@ -18,7 +15,15 @@ import com.eanfang.base.BaseApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.AccountMailBean;
+
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * @author liangkailun
@@ -27,23 +32,39 @@ import org.json.JSONObject;
  */
 public class ContactUtil {
     private static final String TAG = "ContactUtil";
-    private static final String ADDRESS_LIST = "addressList";
+    private static final String ADDRESS_LIST_SAVE_TIME = "address_list_save_time";
     private static final int POST_TIME = 15 * 24 * 60 * 60 * 1000;
 
     /**
      * 上传联系人列表到服务器
      */
     public static void postAccount(Activity context) {
-        ThreadPoolManager threadPoolManager = ThreadPoolManager.newInstance();
-        threadPoolManager.addExecuteTask(() -> {
-            long saveTime = Long.valueOf(BaseApplication.get().get(ADDRESS_LIST, 0));
+        Observable.create((ObservableOnSubscribe<Long>) emitter -> {
+            long saveTime = Long.valueOf(BaseApplication.get().get(ADDRESS_LIST_SAVE_TIME, 0));
             if (System.currentTimeMillis() - saveTime > POST_TIME) {
                 EanfangHttp.post(NewApiService.ACCOUNT_POST)
-                        .upJson(JSON.toJSONString(getAllContacts(context))).execute(new EanfangCallback(context,false,JSONObject.class, bean -> {
-                    BaseApplication.get().set(ADDRESS_LIST, System.currentTimeMillis());
-                }));
+                        .upJson(JSON.toJSONString(getAllContacts(context)))
+                        .execute(new EanfangCallback(context, false, JSONObject.class, bean -> {
+                            emitter.onNext(System.currentTimeMillis());
+                            emitter.onComplete();
+                        }));
             }
-        });
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe((saveTime) -> {
+                    BaseApplication.get().set(ADDRESS_LIST_SAVE_TIME, System.currentTimeMillis());
+                });
+//        ThreadPoolManager threadPoolManager = ThreadPoolManager.newInstance();
+//        threadPoolManager.addExecuteTask(() -> {
+//            long saveTime = Long.valueOf(BaseApplication.get().get(ADDRESS_LIST_SAVE_TIME, 0));
+//            if (System.currentTimeMillis() - saveTime > POST_TIME) {
+//                EanfangHttp.post(NewApiService.ACCOUNT_POST)
+//                        .upJson(JSON.toJSONString(getAllContacts(context)))
+//                        .execute(new EanfangCallback(context, false, JSONObject.class, bean -> {
+//                            BaseApplication.get().set(ADDRESS_LIST_SAVE_TIME, System.currentTimeMillis());
+//                        }));
+//            }
+//        });
     }
 
     /**

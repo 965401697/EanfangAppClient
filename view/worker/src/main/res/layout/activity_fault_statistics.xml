@@ -7,7 +7,7 @@
     tools:context="net.eanfang.worker.ui.activity.worksapce.FaultStatisticsListActivity">
 
 
-    <include layout="@layout/header" />
+    <include layout="@layout/header_eanfang" />
 
     <RadioGroup
         android:id="@+id/radio_group"

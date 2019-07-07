@@ -6,7 +6,8 @@
     android:background="@color/background"
     android:orientation="vertical">
 
-    <include layout="@layout/header" />
+    <!--<include layout="@layout/header_eanfang" />-->
+    <include layout="@layout/header_eanfang" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -211,8 +212,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dimen_100"
                         android:layout_marginLeft="@dimen/dimen_30"
-                        android:layout_marginRight="@dimen/dimen_30"
                         android:layout_marginTop="@dimen/dimen_36"
+                        android:layout_marginRight="@dimen/dimen_30"
                         android:background="@null"
                         android:gravity="start"
                         android:hint="请输入"
@@ -224,8 +225,8 @@
                         android:id="@+id/tv_num"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignBottom="@id/et_remarks"
                         android:layout_alignRight="@id/et_remarks"
+                        android:layout_alignBottom="@id/et_remarks"
                         android:padding="10dp"
                         android:text="0/50"
                         android:textColor="@color/color_bottom"

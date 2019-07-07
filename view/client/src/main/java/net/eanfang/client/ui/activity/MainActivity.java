@@ -20,6 +20,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.biz.model.AllMessageBean;
 import com.eanfang.biz.model.GroupDetailBean;
 import com.eanfang.biz.model.bean.BaseDataBean;
@@ -34,7 +35,6 @@ import com.eanfang.util.BadgeUtil;
 import com.eanfang.util.CleanMessageUtil;
 import com.eanfang.util.ContactUtil;
 import com.eanfang.util.JumpItent;
-import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UpdateAppManager;
@@ -55,7 +55,6 @@ import net.eanfang.client.ui.fragment.ContactsFragment;
 import net.eanfang.client.ui.fragment.HomeFragment;
 import net.eanfang.client.ui.fragment.MyFragment;
 import net.eanfang.client.ui.fragment.WorkspaceFragment;
-import net.eanfang.client.ui.receiver.ReceiverInit;
 import net.eanfang.client.util.PrefUtils;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -74,13 +73,9 @@ import io.rong.message.TextMessage;
 import q.rorbin.badgeview.QBadgeView;
 
 import static com.eanfang.config.EanfangConst.MEIZU_APPID_CLIENT;
-import static com.eanfang.config.EanfangConst.MEIZU_APPID_WORKER;
 import static com.eanfang.config.EanfangConst.MEIZU_APPKEY_CLIENT;
-import static com.eanfang.config.EanfangConst.MEIZU_APPKEY_WORKER;
 import static com.eanfang.config.EanfangConst.XIAOMI_APPID_CLIENT;
-import static com.eanfang.config.EanfangConst.XIAOMI_APPID_WORKER;
 import static com.eanfang.config.EanfangConst.XIAOMI_APPKEY_CLIENT;
-import static com.eanfang.config.EanfangConst.XIAOMI_APPKEY_WORKER;
 
 /**
  * {@link net.eanfang.client.main.activity.MainActivity}
@@ -149,7 +144,8 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
         initXinGe();
         getBaseData();
         getConst();
-        RxPerm.get(this).storagePerm();;
+        RxPerm.get(this).storagePerm();
+        ;
 
         privoderMy();
         RongIM.setOnReceiveMessageListener(new MyReceiveMessageListener());
@@ -289,8 +285,8 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
         //开启信鸽日志输出
         SDKManager.getXGPush(MainActivity.this).enableDebug(true);
         SDKManager.getXGPush(MainActivity.this).setHuaweiDebug(true);
-        SDKManager.getXGPush(MainActivity.this).setMiPush(XIAOMI_APPID_CLIENT,XIAOMI_APPKEY_CLIENT);
-        SDKManager.getXGPush(MainActivity.this).setMzPush(MEIZU_APPID_CLIENT,MEIZU_APPKEY_CLIENT);
+        SDKManager.getXGPush(MainActivity.this).setMiPush(XIAOMI_APPID_CLIENT, XIAOMI_APPKEY_CLIENT);
+        SDKManager.getXGPush(MainActivity.this).setMzPush(MEIZU_APPID_CLIENT, MEIZU_APPKEY_CLIENT);
         SDKManager.getXGPush(MainActivity.this).registerPush(user.getAccount().getMobile());
       /*  // 打开第三方推送
         XGPushConfig.enableOtherPush(MainActivity.this, true);
@@ -693,6 +689,7 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
     public String onNoConatac() {
         return mStatus;
     }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();

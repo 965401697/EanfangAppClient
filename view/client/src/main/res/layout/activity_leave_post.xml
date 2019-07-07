@@ -11,16 +11,17 @@
         android:layout_height="match_parent"
         android:background="@color/color_leave_post_check_bg">
 
-        <include
-            android:id="@+id/header"
-            layout="@layout/header" />
+        <!--<include-->
+        <!--android:id="@+id/header"-->
+        <!--layout="@layout/header" />-->
+        <include layout="@layout/header_eanfang" />
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@color/color_main_header_bg"
             app:layout_constraintDimensionRatio="H, 360:127"
-            app:layout_constraintTop_toBottomOf="@id/header" />
+            app:layout_constraintTop_toBottomOf="@id/titles_bar" />
 
         <TextView
             android:id="@+id/tv_leave_post_date"
@@ -32,7 +33,7 @@
             android:textColor="@color/white"
             android:textSize="12sp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/header" />
+            app:layout_constraintTop_toBottomOf="@id/titles_bar" />
 
         <TextView
             android:id="@+id/tv_leave_post_post_count"
@@ -84,9 +85,9 @@
             android:text="+286"
             android:textColor="@color/white"
             android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_leave_post_post_count"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_leave_post_post_count"
-            app:layout_constraintBottom_toBottomOf="@id/tv_leave_post_post_count"/>
+            app:layout_constraintTop_toTopOf="@id/tv_leave_post_post_count" />
 
         <TextView
             android:id="@+id/tv_leave_post_change_name"
@@ -96,9 +97,9 @@
             android:text="较昨日"
             android:textColor="@color/white"
             android:textSize="13sp"
+            app:layout_constraintBottom_toBottomOf="@id/tv_leave_post_post_count"
             app:layout_constraintRight_toLeftOf="@id/tv_leave_post_change_count"
-            app:layout_constraintTop_toTopOf="@id/tv_leave_post_post_count"
-            app:layout_constraintBottom_toBottomOf="@id/tv_leave_post_post_count"/>
+            app:layout_constraintTop_toTopOf="@id/tv_leave_post_post_count" />
 
         <TextView
             android:id="@+id/tv_leave_post_all_warn"
@@ -200,20 +201,20 @@
             android:id="@+id/tv_leave_post_todo_count"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_70"
+            android:layout_marginTop="@dimen/dimen_28"
+            android:background="@color/white"
+            android:gravity="center"
             android:text="今日待处理"
             android:textColor="@color/bga_adapter_empty_view_msg_textColor"
             android:textSize="12sp"
-            android:background="@color/white"
-            android:gravity="center"
-            android:layout_marginTop="@dimen/dimen_28"
             app:layout_constraintTop_toBottomOf="@id/constraint_leave_post" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rec_leave_post_todo"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@color/white"
             android:layout_marginTop="@dimen/dimen_2"
+            android:background="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_leave_post_todo_count" />
     </androidx.constraintlayout.widget.ConstraintLayout>

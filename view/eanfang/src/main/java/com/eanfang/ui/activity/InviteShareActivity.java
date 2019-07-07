@@ -67,8 +67,8 @@ public class InviteShareActivity extends BaseActivity {
         //跳转二维码页面
         findViewById(R.id.img_share_qr_code).setOnClickListener(v -> {
             Bundle bundle = new Bundle();
-            bundle.putString("qrcodeTitle",  BaseApplication.get().getLoginBean().getAccount().getRealName());
-            bundle.putString("qrcodeAddress",  BaseApplication.get().getLoginBean().getAccount().getQrCode());
+            bundle.putString("qrcodeTitle", BaseApplication.get().getLoginBean().getAccount().getRealName());
+            bundle.putString("qrcodeAddress", BaseApplication.get().getLoginBean().getAccount().getQrCode());
             bundle.putString("qrcodeMessage", "personal");
             JumpItent.jump(this, QrCodeShowActivity.class, bundle);
         });
@@ -126,11 +126,11 @@ public class InviteShareActivity extends BaseActivity {
         return null;
     }
 
-    private void shareToWx(int type){
-        if (isWeixinAvilible()){
+    private void shareToWx(int type) {
+        if (isWeixinAvilible()) {
             Class clz = null;
             try {
-                clz = Class.forName(getApplication().getPackageName()+".wxapi.WXEntryActivity");
+                clz = Class.forName(getApplication().getPackageName() + ".wxapi.WXEntryActivity");
                 Intent intent = new Intent(this, clz);
                 intent.putExtra("flag", type);
                 intent.putExtra("url", mCopyText);

@@ -1,6 +1,5 @@
 package net.eanfang.client.base;
 
-import android.net.Uri;
 import android.util.Log;
 
 import com.eanfang.base.BaseApplication;

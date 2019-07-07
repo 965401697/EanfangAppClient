@@ -6,7 +6,6 @@
 
 
     <include
-        android:id="@+id/header"
         layout="@layout/header_eanfang" />
 
 
@@ -14,7 +13,7 @@
         android:id="@+id/rl_checked_staff"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/header"
+        android:layout_below="@+id/titles_bar"
         android:background="@color/white"
         android:visibility="gone">
 

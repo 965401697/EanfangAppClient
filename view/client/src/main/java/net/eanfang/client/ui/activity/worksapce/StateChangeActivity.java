@@ -1,5 +1,6 @@
 package net.eanfang.client.ui.activity.worksapce;
 
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +10,7 @@ import com.eanfang.biz.model.Message;
 import com.eanfang.util.CallUtils;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.MainActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
 import butterknife.BindView;
@@ -63,6 +65,7 @@ public class StateChangeActivity extends BaseClientActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_go:
+                startActivity(new Intent(StateChangeActivity.this, MainActivity.class));
                 finishSelf();
                 break;
             case R.id.tv_phone:

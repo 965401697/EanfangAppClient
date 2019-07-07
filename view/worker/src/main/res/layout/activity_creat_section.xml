@@ -3,15 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include
-        android:id="@+id/header"
-        layout="@layout/header" />
-
+    <!--<include-->
+        <!--android:id="@+id/header"-->
+        <!--layout="@layout/header" />-->
+    <include layout="@layout/header_eanfang" />
     <LinearLayout
         android:id="@+id/ll_new_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/header"
+        android:layout_below="@+id/titles_bar"
         android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal">

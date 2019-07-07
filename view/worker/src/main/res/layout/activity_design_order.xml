@@ -6,7 +6,8 @@
     android:background="@color/font_color"
     android:orientation="vertical">
 
-    <include layout="@layout/header" />
+    <!--<include layout="@layout/header_eanfang" />-->
+    <include layout="@layout/header_eanfang" />
 
     <com.flyco.tablayout.SlidingTabLayout
         android:id="@+id/tab_layout"

@@ -9,8 +9,10 @@ import android.view.View;
 import android.view.WindowManager;
 
 import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentTabHost;
 import androidx.lifecycle.ViewModel;
+
 import com.eanfang.base.BaseActivity;
 import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.base.kit.rx.RxPerm;
@@ -109,6 +111,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        DataBindingUtil.setContentView(this, R.layout.activity_main);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         super.onCreate(savedInstanceState);
 

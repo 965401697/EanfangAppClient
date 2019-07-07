@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.butterknife'
 apply plugin: 'android-aspectjx'
-apply plugin: 'com.jakewharton.hugo'
+//apply plugin: 'com.jakewharton.hugo'
 
 android {
     compileSdkVersion cfg.compileSdkVersion
@@ -13,7 +13,6 @@ android {
         versionCode cfg.versionCode
         versionName cfg.versionName
         multiDexEnabled true
-
         // gradle 3.0.0 以上需要有这个
         flavorDimensions "app"
         buildConfigField("String", "APP_TYPE", "\"worker\"")
@@ -21,10 +20,6 @@ android {
         buildConfigField("String", "MOB_WORKER_APPID", cfg.mobWorkerAppId)
         buildConfigField("String", "MOB_WORKER_APPKEY", cfg.mobWorkerAppKey)
 
-        /* buildConfigField("String", "TYPE_TECHNICIAN", "\"technician\"")
-        buildConfigField("String", "TYPE", "\"worker\"")
-        buildConfigField("String", "TYPE_APP", "\"app\"")
-        buildConfigField("int", "APP_TYPE", "0")*/
         ndk {
             // 设置支持的SO库架构
             abiFilters 'armeabi'
@@ -38,11 +33,9 @@ android {
 
             ]
         }
-
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
 
     }
-
     //签名设置
     signingConfigs {
         release {
@@ -56,10 +49,10 @@ android {
         main {
             jni.srcDirs = []
             jniLibs.srcDirs = ['src/main/jnilibs']
-            res.srcDirs = [
-                    'src/main/res/layout/online',
-                    'src/main/res'
-            ]
+//            res.srcDirs = [
+//                    'src/main/res/layout/online',
+//                    'src/main/res'
+//            ]
         }
     }
 

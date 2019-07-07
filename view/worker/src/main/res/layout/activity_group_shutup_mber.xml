@@ -6,7 +6,7 @@
     android:orientation="vertical"
     tools:context="net.eanfang.worker.ui.activity.im.TransferOwnActivity">
 
-    <include layout="@layout/header" />
+    <include layout="@layout/header_eanfang" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"

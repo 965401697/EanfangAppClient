@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:context="net.eanfang.worker.ui.activity.im.OAListActivity">
 
-    <include layout="@layout/header" />
+    <include layout="@layout/header_eanfang" />
 
     <TextView
         android:id="@+id/tv_work_report"

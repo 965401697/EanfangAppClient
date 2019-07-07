@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context="net.eanfang.worker.ui.activity.my.specialist.AddBrandActivity">
 
-    <include layout="@layout/header" />
+    <include layout="@layout/header_eanfang" />
 
     <EditText
         android:id="@+id/et_brand"

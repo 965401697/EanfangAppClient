@@ -8,16 +8,16 @@
         android:layout_height="match_parent"
         android:background="@color/color_leave_post_check_bg">
 
-        <include
-            android:id="@+id/header"
-            layout="@layout/header" />
-
+        <!--<include-->
+            <!--android:id="@+id/header"-->
+            <!--layout="@layout/header" />-->
+        <include layout="@layout/header_eanfang" />
         <include
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/post_detail"
             layout="@layout/item_leave_post_manage_detail"
-            app:layout_constraintTop_toBottomOf="@id/header" />
+            app:layout_constraintTop_toBottomOf="@id/titles_bar" />
 
         <TextView
             android:id="@+id/tv_leave_post_history_detail_date"

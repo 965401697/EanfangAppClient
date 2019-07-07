@@ -11,6 +11,9 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.amap.api.maps.CameraUpdate;
 import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
@@ -24,18 +27,16 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.R;
 import com.eanfang.R2;
-import com.eanfang.config.Constant;
+import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.biz.model.SelectAddressItem;
+import com.eanfang.config.Constant;
 import com.eanfang.ui.adapter.SelectAddressAdapter;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.LocationUtil;
-import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.StringUtils;
 
 import java.util.ArrayList;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -88,7 +89,7 @@ public class SelectAddressActivity extends BaseActivity implements PoiSearch.OnP
         initView();
         initAdapter();
         runOnUiThread(() -> {
-            RxPerm.get(this).locationPerm((isSuccess)-> locationUtil.startOnce());
+            RxPerm.get(this).locationPerm((isSuccess) -> locationUtil.startOnce());
         });
     }
 

@@ -15,8 +15,9 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <include layout="@layout/header" />
+        <!--<include layout="@layout/header_eanfang" />-->
 
+        <include layout="@layout/header_eanfang" />
         <RelativeLayout
             android:id="@+id/rl_systom_type"
             android:layout_width="match_parent"

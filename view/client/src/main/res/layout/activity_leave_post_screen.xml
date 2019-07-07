@@ -8,10 +8,10 @@
         android:layout_height="match_parent"
         android:background="@color/white">
 
-        <include
-            android:id="@+id/header"
-            layout="@layout/header" />
-
+        <!--<include-->
+            <!--android:id="@+id/header"-->
+            <!--layout="@layout/header" />-->
+        <include layout="@layout/header_eanfang" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="@dimen/dimen_100"
@@ -21,7 +21,7 @@
             android:textColor="@color/bga_adapter_empty_view_msg_textColor"
             android:textSize="14sp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/header" />
+            app:layout_constraintTop_toBottomOf="@id/titles_bar" />
 
         <TextView
             android:id="@+id/tv_leave_post_screen_area"
@@ -36,7 +36,7 @@
             android:textColor="@color/bga_adapter_empty_view_msg_textColor"
             android:textSize="12sp"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/header" />
+            app:layout_constraintTop_toBottomOf="@id/titles_bar" />
 
         <View
             android:layout_width="match_parent"
@@ -129,11 +129,11 @@
             android:layout_height="@dimen/dimen_60"
             android:layout_marginLeft="@dimen/dimen_34"
             android:background="@drawable/selector_leave_post_screen_status"
+            android:button="@null"
             android:gravity="center"
             android:text="全部"
             android:textColor="@drawable/select_camera_text_back"
             android:textSize="14sp"
-            android:button="@null"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/leave_post_screen_status_untreated"
             app:layout_constraintTop_toBottomOf="@id/tv_leave_post_screen_status" />
@@ -144,11 +144,11 @@
             android:layout_height="@dimen/dimen_60"
             android:layout_marginLeft="@dimen/dimen_34"
             android:background="@drawable/selector_leave_post_screen_status"
+            android:button="@null"
             android:gravity="center"
             android:text="未处理"
             android:textColor="@drawable/select_camera_text_back"
             android:textSize="14sp"
-            android:button="@null"
             app:layout_constraintLeft_toRightOf="@id/leave_post_screen_status_all"
             app:layout_constraintTop_toBottomOf="@id/tv_leave_post_screen_status" />
 
@@ -158,11 +158,11 @@
             android:layout_height="@dimen/dimen_60"
             android:layout_marginLeft="@dimen/dimen_34"
             android:background="@drawable/selector_leave_post_screen_status"
+            android:button="@null"
             android:gravity="center"
             android:text="已处理"
             android:textColor="@drawable/select_camera_text_back"
             android:textSize="14sp"
-            android:button="@null"
             app:layout_constraintLeft_toRightOf="@id/leave_post_screen_status_untreated"
             app:layout_constraintTop_toBottomOf="@id/tv_leave_post_screen_status" />
 

@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context="net.eanfang.client.ui.activity.worksapce.repair.TroubleListActivity">
 
-    <include layout="@layout/header" />
+    <include layout="@layout/header_eanfang" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_list"

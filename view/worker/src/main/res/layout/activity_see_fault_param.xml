@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context="net.eanfang.worker.ui.activity.worksapce.repair.SeeFaultParamActivity">
 
-    <include layout="@layout/header" />
+    <include layout="@layout/header_eanfang" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_param"

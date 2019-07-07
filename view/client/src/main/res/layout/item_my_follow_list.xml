@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="@dimen/dimen_128"
@@ -10,11 +10,10 @@
         android:layout_width="@dimen/dimen_80"
         android:layout_height="@dimen/dimen_80"
         android:layout_marginStart="@dimen/dimen_36"
+        android:src="@mipmap/ic_header"
         fresco:layout_constraintBottom_toBottomOf="parent"
         fresco:layout_constraintStart_toStartOf="parent"
-        fresco:layout_constraintTop_toTopOf="parent"
-        android:src="@mipmap/ic_header"
-        />
+        fresco:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btn_follow_item_addOrCancel"
@@ -50,14 +49,14 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen_24"
         android:layout_marginTop="@dimen/dimen_4"
+        android:lines="1"
         android:text="王璐"
         android:textColor="@color/color_text_default"
         android:textSize="13sp"
-        android:lines="1"
         fresco:layout_constrainedWidth="true"
         fresco:layout_constraintHorizontal_bias="0"
-        fresco:layout_constraintRight_toLeftOf="@id/btn_follow_item_addOrCancel"
         fresco:layout_constraintLeft_toRightOf="@id/iv_follow_item_header"
+        fresco:layout_constraintRight_toLeftOf="@id/btn_follow_item_addOrCancel"
         fresco:layout_constraintTop_toBottomOf="@id/tv_follow_item_name" />
 
     <TextView
@@ -87,4 +86,4 @@
         android:layout_height="@dimen/dimen_2"
         android:background="@color/color_item_line"
         fresco:layout_constraintBottom_toBottomOf="parent" />
-</ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

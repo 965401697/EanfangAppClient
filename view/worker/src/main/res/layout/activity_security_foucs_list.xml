@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context="net.eanfang.worker.ui.activity.worksapce.security.SecurityFoucsListActivity">
 
-    <include layout="@layout/header" />
+    <include layout="@layout/header_eanfang" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipre_fresh"

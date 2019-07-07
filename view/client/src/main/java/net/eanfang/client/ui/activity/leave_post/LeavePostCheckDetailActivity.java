@@ -86,10 +86,14 @@ public class LeavePostCheckDetailActivity extends BaseActivity {
     }
 
     private void initData(LeavePostDeviceInfoBean leavePostDeviceInfoBean) {
+        if (leavePostDeviceInfoBean == null) {
+            return;
+        }
         if (showTopContent) {
             mBinding.tvLeavePostCheckDetailTitle.setText(MessageFormat.format("{0}\t({1})\t{2}", leavePostDeviceInfoBean.getStationName(), leavePostDeviceInfoBean.getStationCode(), leavePostDeviceInfoBean.getDeviceName()));
             GlideUtil.intoImageView(this, BuildConfig.OSS_SERVER + leavePostDeviceInfoBean.getDeviceEntity().getLivePic(), mBinding.imgLeavePostCheckDetail);
         }
+
         ArrayList<LeavePostDeviceInfoBean.ChargeStaffListBean> beans = new ArrayList<>(leavePostDeviceInfoBean.getChargeStaffList());
         LeavePostDeviceInfoBean.ChargeStaffListBean bean1 = new LeavePostDeviceInfoBean.ChargeStaffListBean();
         bean1.setType(0);

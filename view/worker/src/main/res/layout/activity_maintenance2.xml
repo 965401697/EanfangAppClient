@@ -6,7 +6,7 @@
     android:orientation="vertical"
     tools:context="net.eanfang.worker.ui.activity.worksapce.maintenance.MaintenanceActivity">
 
-    <include layout="@layout/header" />
+    <include layout="@layout/header_eanfang" />
 
     <ImageView
         android:id="@+id/iv_own"

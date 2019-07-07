@@ -62,6 +62,10 @@ public class LeavePostHomeActivity extends BaseActivity {
     }
 
     private void initBottomData(LeavePostHomeUnHandledAlertBean leavePostHomeUnHandledAlertBean) {
+        if (leavePostHomeUnHandledAlertBean == null) {
+            finishWithResultOk();
+            return;
+        }
         LeavePostHomeUnHandledAlertBean.UnhandledAlertListBean unhandledAlertListBean = leavePostHomeUnHandledAlertBean.getUnhandledAlertList();
         mBinding.tvLeavePostTodoCount.setText(getString(R.string.text_leave_post_todo_count, leavePostHomeUnHandledAlertBean.getUnhandledAlertCount()));
         if (unhandledAlertListBean.getCurrPage() == 1) {

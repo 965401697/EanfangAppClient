@@ -9,7 +9,7 @@
     android:orientation="vertical"
     tools:context="net.eanfang.worker.ui.activity.my.certification.CertificationInfoActivity">
 
-    <include layout="@layout/header" />
+    <include layout="@layout/header_eanfang" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

@@ -8,7 +8,6 @@ import androidx.annotation.Nullable;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.base.kit.utils.ApkUtils;
-import com.eanfang.base.kit.utils.TypeToken;
 import com.eanfang.base.network.kit.VoKit;
 
 import java.io.File;
@@ -121,7 +120,7 @@ public class CacheKit extends LruCache<String, Object> {
         if (this.clazz.getName().contains(COM_EANFANG_BIZ_MODEL_VO)) {
             this.clazz = JSONObject.class;
             JSONObject json = (JSONObject) super.get(key);
-            return VoKit.obj2Vo(json);
+            return VoKit.obj2Vo(json, clazz);
         }
         return (T) super.get(key);
     }

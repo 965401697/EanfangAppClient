@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
-    <include
-        android:id="@+id/header"
-        layout="@layout/header" />
-
+    <!--<include-->
+    <!--android:id="@+id/header"-->
+    <!--layout="@layout/header" />-->
+    <include layout="@layout/header_eanfang" />
 
     <RelativeLayout
         android:id="@+id/rl_checked_staff"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/header"
+        android:layout_below="@+id/titles_bar"
         android:background="@color/white"
         android:visibility="gone">
 
@@ -22,11 +21,10 @@
             android:id="@+id/iv_user_header"
             android:layout_width="@dimen/dimen_80"
             android:layout_height="@dimen/dimen_80"
-            android:layout_marginBottom="@dimen/dimen_24"
             android:layout_marginLeft="@dimen/dimen_36"
             android:layout_marginTop="@dimen/dimen_24"
-            android:src="@mipmap/ic_header"
-             />
+            android:layout_marginBottom="@dimen/dimen_24"
+            android:src="@mipmap/ic_header" />
 
         <TextView
             android:id="@+id/tv_name_phone"
@@ -44,8 +42,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_name_phone"
-            android:layout_marginBottom="@dimen/dimen_30"
             android:layout_marginLeft="@dimen/dimen_38"
+            android:layout_marginBottom="@dimen/dimen_30"
             android:layout_toRightOf="@+id/iv_user_header"
             android:text="  "
             android:textColor="#999999"

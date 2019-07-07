@@ -103,10 +103,11 @@ public class LocationUtil implements AMap.OnMarkerClickListener,
     }
 
     private void init() {
-//        if (mAMap == null) {
-//            mAMap = mMapView.getMap();
-//        }
         mAMap = mMapView.getMap();
+
+        if (mAMap == null) {
+            return;
+        }
 
         geocoderSearch = new GeocodeSearch(activity);
         ////逆编码监听事件

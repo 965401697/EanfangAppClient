@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:context="com.eanfang.ui.activity.SearchPersonByOrgannizationActivity">
 
-    <include layout="@layout/header" />
+    <include layout="@layout/header_eanfang" />
 
     <LinearLayout
         android:id="@+id/ll_search"

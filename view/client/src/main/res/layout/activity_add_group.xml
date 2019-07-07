@@ -6,14 +6,13 @@
     android:orientation="vertical">
 
     <include
-        android:id="@+id/header"
         layout="@layout/header_eanfang" />
 
     <ImageView
         android:id="@+id/iv_icon"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_below="@+id/header"
+        android:layout_below="@+id/titles_bar"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"

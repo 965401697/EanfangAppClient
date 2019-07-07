@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:ignore="MissingDefaultResource">
 
-    <include layout="@layout/header" />
+    <include layout="@layout/header_eanfang" />
 
     <EditText
         android:id="@+id/et_input_projectName"

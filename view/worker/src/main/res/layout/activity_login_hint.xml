@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/header" />
+    <include layout="@layout/header_eanfang" />
 
     <ImageView
         android:id="@+id/iv_pic"

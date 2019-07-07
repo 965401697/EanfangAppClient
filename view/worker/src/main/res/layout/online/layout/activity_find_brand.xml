@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context="net.eanfang.worker.ui.activity.worksapce.online.FindBrandActivity">
 
-    <include layout="@layout/header" />
+    <include layout="@layout/header_eanfang" />
 
 
 

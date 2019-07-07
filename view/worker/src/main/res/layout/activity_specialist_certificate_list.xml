@@ -7,8 +7,8 @@
     android:orientation="vertical"
     tools:context="net.eanfang.worker.ui.activity.my.certification.CertificateListActivity">
 
-    <include layout="@layout/header" />
-
+    <!--<include layout="@layout/header_eanfang" />-->
+    <include layout="@layout/header_eanfang" />
     <RelativeLayout
         android:id="@+id/rl_add"
         android:layout_width="match_parent"

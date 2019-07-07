@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.jakewharton.butterknife'
 apply plugin: 'android-aspectjx'
-apply plugin: 'com.jakewharton.hugo'
+//apply plugin: 'com.jakewharton.hugo'
 
 android {
     compileSdkVersion cfg.compileSdkVersion
@@ -46,7 +46,7 @@ android {
         }
         release {
             // 上线url
-            buildConfigField("String", "API_HOST", cfg.betaApiHost)
+            buildConfigField("String", "API_HOST", cfg.proApiHost)
             // 不显示Log
             buildConfigField("boolean", "DEBUG_MOD", cfg.debugMod)
             //Zipalign优化

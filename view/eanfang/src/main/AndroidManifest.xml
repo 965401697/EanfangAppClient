@@ -170,6 +170,7 @@
         <activity
             android:name=".sdk.areachoose.AreaSelectionActivity"
             android:screenOrientation="portrait" />
+        <activity android:name=".ui.activity.InviteShareActivity" />
     </application>
 
 </manifest>

@@ -11,10 +11,10 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <include
-            android:id="@+id/header"
-            layout="@layout/header" />
-
+        <!--<include-->
+        <!--android:id="@+id/header"-->
+        <!--layout="@layout/header" />-->
+        <include layout="@layout/header_eanfang" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,13 +42,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:padding="@dimen/dimen_30"
-        android:background="@drawable/shape_bg_sure"
-        android:gravity="center"
-        android:text="创建"
         android:layout_marginLeft="@dimen/dimen_38"
         android:layout_marginRight="@dimen/dimen_38"
         android:layout_marginBottom="@dimen/dimen_40"
+        android:background="@drawable/shape_bg_sure"
+        android:gravity="center"
+        android:padding="@dimen/dimen_30"
+        android:text="创建"
         android:textColor="@color/color_white"
         android:textSize="@dimen/textSize_13" />
 

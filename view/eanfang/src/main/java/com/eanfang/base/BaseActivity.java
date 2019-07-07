@@ -77,7 +77,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         //始终竖屏
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         super.onCreate(savedInstanceState);
-        // BaseApplication.get().addActivity(this);
+        BaseApplication.get().addActivity(this);
         initViewModelEvent();
         initView();
         initStyle();
@@ -92,7 +92,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         dismissLoading();
-        // BaseApplication.get().closeActivity(this);
+        BaseApplication.get().closeActivity(this);
     }
 
     @Override
@@ -131,7 +131,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
      * 初始化页面风格样式方法
      */
     protected void initStyle() {
-        if(findViewById(R.id.titles_bar)==null){
+        if (findViewById(R.id.titles_bar) == null) {
             return;
         }
         if (isClient()) {
@@ -216,6 +216,9 @@ public abstract class BaseActivity extends RxAppCompatActivity {
      * @param listener   listener
      */
     private void setLeftBack(boolean visibility, View.OnClickListener listener) {
+        if (findViewById(R.id.titles_bar) == null) {
+            return;
+        }
         ImageView iv_left = findViewById(R.id.iv_left);
         if (visibility) {
             iv_left.setVisibility(View.VISIBLE);
@@ -254,6 +257,9 @@ public abstract class BaseActivity extends RxAppCompatActivity {
      * @param listener   listener
      */
     private void setRightBack(boolean visibility, View.OnClickListener listener) {
+        if (findViewById(R.id.titles_bar) == null) {
+            return;
+        }
         TextView iv_right = findViewById(R.id.tv_right);
         if (visibility) {
             iv_right.setVisibility(View.VISIBLE);
@@ -459,11 +465,12 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        pictureSelect(requestCode,resultCode,data);
+        pictureSelect(requestCode, resultCode, data);
     }
 
     /**
      * 图片选择
+     *
      * @param requestCode
      * @param resultCode
      * @param data

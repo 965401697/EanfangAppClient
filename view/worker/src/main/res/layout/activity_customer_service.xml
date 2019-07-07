@@ -9,7 +9,7 @@
     android:orientation="vertical"
     tools:context=".ui.activity.worksapce.CustomerServiceActivity">
 
-    <include layout="@layout/header" />
+    <include layout="@layout/header_eanfang" />
 
     <com.flyco.tablayout.SlidingTabLayout
         android:id="@+id/slidingtablayout"

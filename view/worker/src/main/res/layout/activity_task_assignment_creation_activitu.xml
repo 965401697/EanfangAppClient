@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context="net.eanfang.worker.ui.activity.worksapce.oa.task.TaskAssignmentCreationActivity">
 
-    <include layout="@layout/header" />
+    <include layout="@layout/header_eanfang" />
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scroll_view"

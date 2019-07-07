@@ -5,8 +5,10 @@ import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.biz.model.vo.LoginVo;
 import com.eanfang.biz.rds.base.BaseRemoteDataSource;
 import com.eanfang.biz.rds.base.BaseViewModel;
+import com.eanfang.biz.rds.base.CacheModel;
 import com.eanfang.biz.rds.sys.api.LoginApi;
 import com.eanfang.biz.rds.sys.ds.ILoginDs;
+import com.zchu.rxcache.stategy.CacheStrategy;
 
 public class LoginDs extends BaseRemoteDataSource implements ILoginDs {
 

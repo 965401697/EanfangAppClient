@@ -82,14 +82,16 @@ public class VoKit {
      * @param <T>  T
      * @return T
      */
-    public static <T> T json2Vo(JSONObject json, Object vo) {
+    public static <T> T json2Vo(JSONObject json, Object vo, Class<T> clazz) {
+        if (json == null) {
+            return null;
+        }
         try {
             Object object;
             if (vo != null) {
                 object = vo;
             } else {
-                object = new TypeToken<T>() {
-                }.getClazz().newInstance();
+                object = clazz.newInstance();
             }
             Field[] fields = object.getClass().getDeclaredFields();
             for (Field field : fields) {
@@ -128,8 +130,8 @@ public class VoKit {
      * @param <T> T
      * @return T
      */
-    public static <T> T obj2Vo(Object obj) {
-        return json2Vo(JSONObject.parseObject(JSON.toJSONString(obj)), null);
+    public static <T> T obj2Vo(Object obj, Class<T> clazz) {
+        return json2Vo(JSONObject.parseObject(JSON.toJSONString(obj)), null, clazz);
     }
 
     /**
@@ -141,8 +143,8 @@ public class VoKit {
      * @param <T> <T>
      * @return T
      */
-    public static <T> T obj2Vo(Object obj, Object vo) {
-        return json2Vo(JSONObject.parseObject(JSON.toJSONString(obj)), vo);
+    public static <T> T obj2Vo(Object obj, Object vo, Class<T> clazz) {
+        return json2Vo(JSONObject.parseObject(JSON.toJSONString(obj)), vo, clazz);
     }
 
 

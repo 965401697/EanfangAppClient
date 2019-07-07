@@ -15,7 +15,7 @@
         android:layout_above="@+id/tv_sub"
         android:orientation="vertical">
 
-        <include layout="@layout/header" />
+        <include layout="@layout/header_eanfang" />
 
 
         <LinearLayout

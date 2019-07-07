@@ -5,15 +5,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include
-        android:id="@+id/header"
-        layout="@layout/header" />
-
+    <!--<include-->
+        <!--android:id="@+id/header"-->
+        <!--layout="@layout/header" />-->
+    <include layout="@layout/header_eanfang" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/header"
+        android:layout_below="@+id/titles_bar"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:orientation="vertical">

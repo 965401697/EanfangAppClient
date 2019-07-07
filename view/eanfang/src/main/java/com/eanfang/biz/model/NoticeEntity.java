@@ -8,10 +8,6 @@ import com.eanfang.biz.model.entity.UserEntity;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
 
 /**
  * 系统通知
@@ -31,18 +27,14 @@ public class NoticeEntity implements Serializable {
 
     //接收人
     //@TableField(value = "recive_acc_id")
-    @Digits(integer = 19, fraction = 0)
     private Long reciveAccId;
 
     //发送人ID
     //@TableField(value = "sender_user_id")
-    @Digits(integer = 19, fraction = 0)
     private Long senderUserId;
 
     //通知类别
     //@TableField(value = "notice_type")
-    @NotNull
-    @Digits(integer = 5, fraction = 0)
     private Integer noticeType;
 
     //创建时间
@@ -51,18 +43,14 @@ public class NoticeEntity implements Serializable {
 
     //状态0未读1已读2已删除
     //@TableField(value = "status")
-    @Digits(integer = 3, fraction = 0)
     private Integer status;
 
     //参数
     //@TableField(value = "params")
-    @Size(min = 0, max = 200)
     private String params;
 
     //归属公司
     //@TableField(value = "company_id")
-    @NotNull
-    @Digits(integer = 19, fraction = 0)
     private Long companyId;
 
     /**

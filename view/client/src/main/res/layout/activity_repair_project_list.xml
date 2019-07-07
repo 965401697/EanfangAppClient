@@ -8,7 +8,7 @@
     tools:context="net.eanfang.client.ui.activity.worksapce.repair.RepairPersonInfoListActivity"
     tools:ignore="MissingDefaultResource">
 
-    <include layout="@layout/header" />
+    <include layout="@layout/header_eanfang" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_projectList"

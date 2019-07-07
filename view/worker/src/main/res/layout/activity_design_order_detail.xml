@@ -6,7 +6,7 @@
     android:orientation="vertical"
     tools:context="net.eanfang.worker.ui.activity.worksapce.equipment.EquipmentParameterActivity">
 
-    <include layout="@layout/header" />
+    <include layout="@layout/header_eanfang" />
 
     <ScrollView
         android:layout_width="match_parent"

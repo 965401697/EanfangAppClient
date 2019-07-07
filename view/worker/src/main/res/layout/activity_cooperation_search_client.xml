@@ -6,15 +6,15 @@
     android:orientation="vertical"
     tools:context="net.eanfang.worker.ui.activity.worksapce.contacts.AdministratorSetActivity">
 
-    <include
-        android:id="@+id/header"
-        layout="@layout/header" />
-
+    <!--<include-->
+        <!--android:id="@+id/header"-->
+        <!--layout="@layout/header" />-->
+    <include layout="@layout/header_eanfang" />
     <LinearLayout
         android:id="@+id/ll"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_70"
-        android:layout_below="@+id/header"
+        android:layout_below="@+id/titles_bar"
         android:layout_marginLeft="@dimen/dimen_36"
         android:layout_marginRight="@dimen/dimen_36"
         android:layout_marginTop="@dimen/dimen_26"

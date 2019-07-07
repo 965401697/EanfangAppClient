@@ -5,9 +5,10 @@
     android:background="@color/background"
     android:orientation="vertical">
 
-    <include
-        android:id="@+id/header"
-        layout="@layout/header" />
+    <!--<include-->
+    <!--android:id="@+id/header"-->
+    <!--layout="@layout/header" />-->
+    <include layout="@layout/header_eanfang" />
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/sv"
@@ -155,8 +156,7 @@
                         android:layout_width="@dimen/dimen_70"
                         android:layout_height="@dimen/dimen_70"
                         android:layout_gravity="center_vertical"
-                        android:src="@mipmap/ic_nodata"
-                        />
+                        android:src="@mipmap/ic_nodata" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -198,9 +198,9 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="@dimen/dimen_20"
                     android:paddingLeft="@dimen/dimen_38"
                     android:paddingTop="@dimen/dimen_20"
+                    android:paddingBottom="@dimen/dimen_20"
                     android:text="维修详情"
                     android:textColor="@color/color_client_data_item_title"
                     android:textSize="@dimen/textSize_15" />
@@ -289,9 +289,9 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/dimen_40"
                 android:layout_marginStart="@dimen/dimen_40"
                 android:layout_marginTop="@dimen/dimen_30"
+                android:layout_marginEnd="@dimen/dimen_40"
                 android:paddingBottom="@dimen/dimen_30">
 
                 <TextView
@@ -302,8 +302,8 @@
                     android:layout_centerHorizontal="true"
                     android:background="@drawable/shape_bg_sure"
                     android:gravity="center"
-                    android:paddingBottom="@dimen/dimen_30"
                     android:paddingTop="@dimen/dimen_30"
+                    android:paddingBottom="@dimen/dimen_30"
                     android:text="提交"
                     android:textColor="@color/color_white"
                     android:textSize="@dimen/textSize_13" />

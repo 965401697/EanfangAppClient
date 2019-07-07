@@ -13,6 +13,9 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.NewOrderBean;
+import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.QueryEntry;
+import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
@@ -22,11 +25,6 @@ import net.eanfang.worker.ui.activity.worksapce.maintenance.MaintenanceDetailAct
 import net.eanfang.worker.ui.activity.worksapce.tender.WorkTenderDetailActivity;
 import net.eanfang.worker.ui.adapter.NewOrderAdapter;
 import net.eanfang.worker.ui.widget.InstallCtrlItemView;
-
-import com.eanfang.ui.base.BaseActivity;
-import com.eanfang.util.QueryEntry;
-import com.eanfang.util.StringUtils;
-
 
 import java.util.HashMap;
 import java.util.List;

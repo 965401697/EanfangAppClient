@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context="net.eanfang.worker.ui.activity.worksapce.security.SecurityCommentDetailActivity">
 
-    <include layout="@layout/header" />
+    <include layout="@layout/header_eanfang" />
 
     <LinearLayout
         android:layout_width="match_parent"

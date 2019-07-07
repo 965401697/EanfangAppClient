@@ -13,7 +13,7 @@
         android:orientation="vertical"
         tools:context="net.eanfang.client.ui.activity.worksapce.scancode.ScanCodeActivity">
 
-        <include layout="@layout/header" />
+        <include layout="@layout/header_eanfang" />
 
         <com.journeyapps.barcodescanner.DecoratedBarcodeView
             android:id="@+id/zxing_barcode_scanner"

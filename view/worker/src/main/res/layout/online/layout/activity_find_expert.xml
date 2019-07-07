@@ -8,7 +8,7 @@
     android:background="@color/color_contact_line_gray"
     tools:context="net.eanfang.worker.ui.activity.worksapce.online.FindExpertActivity">
 
-    <include layout="@layout/header" />
+    <include layout="@layout/header_eanfang" />
 
 
     <LinearLayout

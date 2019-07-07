@@ -20,7 +20,6 @@ import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.ui.activity.InviteFriendActivity;
 import com.eanfang.ui.activity.QrCodeShowActivity;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.GlideUtil;
@@ -332,7 +331,8 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
                 break;
             //邀请活动入口
             case R.id.img_invite:
-                startActivity(new Intent(getActivity(), InviteFriendActivity.class));
+                //闪退  先注释掉
+//                startActivity(new Intent(getActivity(), InviteFriendActivity.class));
                 break;
             default:
                 break;

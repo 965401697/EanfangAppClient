@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.jakewharton.butterknife'
 apply plugin: 'android-aspectjx'
-apply plugin: 'com.jakewharton.hugo'
+//apply plugin: 'com.jakewharton.hugo'
 
 android {
     compileSdkVersion cfg.compileSdkVersion
@@ -22,7 +22,7 @@ android {
 
         ndk {
             // 设置支持的SO库架构
-            abiFilters 'armeabi','armeabi-v7a'
+            abiFilters 'armeabi', 'armeabi-v7a'
             //信鸽配置
             manifestPlaceholders = [
                     XG_ACCESS_ID : cfg.xgClientAccessId,
@@ -35,11 +35,7 @@ android {
 
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
     }
-    sourceSets {
-        main {
-            jniLibs.srcDirs = ['libs']
-        }
-    }
+
     //签名设置
     signingConfigs {
         release {
@@ -47,6 +43,16 @@ android {
             keyPassword KEY_PASSWORD_CLIENT
             storeFile file('../client/keystore/client.jks')
             storePassword KEYSTORE_PASSWORD_CLIENT
+        }
+    }
+    sourceSets {
+        main {
+            jni.srcDirs = []
+            jniLibs.srcDirs = ['src/main/jnilibs']
+//            res.srcDirs = [
+//                    'src/main/res/layout/online',
+//                    'src/main/res'
+//            ]
         }
     }
     buildTypes {

@@ -13,7 +13,7 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-        <include layout="@layout/header" />
+        <include layout="@layout/header_eanfang" />
 
         <com.eanfang.witget.mentionedittext.edit.MentionEditText
             android:id="@+id/et_content"

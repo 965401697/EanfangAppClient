@@ -6,7 +6,9 @@
     android:background="@color/background"
     android:orientation="vertical">
 
-    <include layout="@layout/header" />
+    <!--<include layout="@layout/header_eanfang" />-->
+
+    <include layout="@layout/header_eanfang" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -272,8 +274,8 @@
                             android:id="@+id/tv_num"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignBottom="@id/et_trouble_reason"
                             android:layout_alignRight="@id/et_trouble_reason"
+                            android:layout_alignBottom="@id/et_trouble_reason"
                             android:padding="10dp"
                             android:text="0/200"
                             android:textColor="@color/color_bottom"
@@ -330,8 +332,8 @@
                             android:id="@+id/tv_trouble_point_num"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignBottom="@id/et_trouble_point"
                             android:layout_alignRight="@id/et_trouble_point"
+                            android:layout_alignBottom="@id/et_trouble_point"
                             android:padding="10dp"
                             android:text="0/200"
                             android:textColor="@color/color_bottom"
@@ -388,8 +390,8 @@
                             android:id="@+id/tv_trouble_deal_num"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignBottom="@id/et_trouble_deal"
                             android:layout_alignRight="@id/et_trouble_deal"
+                            android:layout_alignBottom="@id/et_trouble_deal"
                             android:padding="10dp"
                             android:text="0/200"
                             android:textColor="@color/color_bottom"
@@ -446,8 +448,8 @@
                             android:id="@+id/tv_use_advance_num"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignBottom="@id/et_trouble_useAdvace"
                             android:layout_alignRight="@id/et_trouble_useAdvace"
+                            android:layout_alignBottom="@id/et_trouble_useAdvace"
                             android:padding="10dp"
                             android:text="0/200"
                             android:textColor="@color/color_bottom"
@@ -555,10 +557,10 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="@dimen/dimen_40"
                 android:paddingLeft="@dimen/dimen_36"
+                android:paddingTop="@dimen/dimen_40"
                 android:paddingRight="@dimen/dimen_36"
-                android:paddingTop="@dimen/dimen_40">
+                android:paddingBottom="@dimen/dimen_40">
 
                 <Button
                     android:id="@+id/btn_add_trouble"
