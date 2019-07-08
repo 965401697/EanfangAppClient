@@ -24,7 +24,9 @@ import com.alibaba.fastjson.JSON;
 import com.bumptech.glide.Glide;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.base.kit.rx.RxPerm;
+import com.eanfang.base.kit.utils.GlideUtil;
 import com.eanfang.biz.model.DesignOrderInfoBean;
 import com.eanfang.biz.model.InstallOrderConfirmBean;
 import com.eanfang.biz.model.OrderCountBean;
@@ -40,6 +42,8 @@ import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
+import com.luck.picture.lib.config.PictureConfig;
+import com.luck.picture.lib.entity.LocalMedia;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.yaf.base.entity.RepairBugEntity;
 import com.yaf.base.entity.RepairOrderEntity;
@@ -53,6 +57,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -231,14 +236,6 @@ public class HomeRepairFragment extends BaseFragment {
                 mDesignOrderInfoBean.setDetailPlace(item.getName());
             }
             mTvHomeRepairAddress.setText(item.getName());
-        } else if (resultCode == RESULT_OK && requestCode == BGASortableDelegate.REQUEST_CODE_CHOOSE_PHOTO) {
-            String path = BGAPhotoPickerActivity.getSelectedImages(data).get(0);
-            Glide.with(Objects.requireNonNull(getActivity())).load(path).into(imgMomentAccident);
-            String objectKey = UuidUtil.getUUID() + ".png";
-            //上传图片
-            SDKManager.ossKit(getActivity()).asyncPutImage(objectKey, path, (isSucess) -> {
-                mRepairBugEntity.setPictures(objectKey);
-            });
         } else if (requestCode == REQUEST_FAULTDEVICEINFO && resultCode == RESULT_DATACODE) {
             //设备库
             dataCode = data.getStringExtra("dataCode");
@@ -254,7 +251,6 @@ public class HomeRepairFragment extends BaseFragment {
         }
 
     }
-
     @OnClick({R.id.et_home_repair_sys, R.id.et_home_repair_brand, R.id.btn_home_repair_commit, R.id.tv_home_repair_more, R.id.et_home_repair_describe, R.id.tv_home_repair_address, R.id.img_moment_accident})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -284,16 +280,28 @@ public class HomeRepairFragment extends BaseFragment {
                 startActivityForResult(intent, SELECT_ADDRESS_CALL_BACK_CODE);
                 break;
             case R.id.img_moment_accident:
-                File takePhotoDir = new File(Environment.getExternalStorageDirectory(), "EanfangPhotoData");
                 RxPerm.get(getActivity()).cameraPerm((isSuccess) -> {
-                    startActivityForResult(BGAPhotoPickerActivity.newIntent(mActivity, takePhotoDir, 1, null, false), BGASortableDelegate.REQUEST_CODE_CHOOSE_PHOTO);
+                    accidentImage();
                 });
                 break;
             default:
                 break;
         }
     }
-
+    private void accidentImage() {
+        SDKManager.getPicture().create(this).takePhoto(iPictureCallBack);
+    }
+    IPictureCallBack iPictureCallBack=new IPictureCallBack() {
+        @Override
+        public void onSuccess(List<LocalMedia> list) {
+                GlideUtil.intoImageView(getActivity(), "file://" + list.get(0).getPath(), imgMomentAccident);
+                String objectKey = UuidUtil.getUUID() + ".png";
+                //上传图片
+                SDKManager.ossKit(getActivity()).asyncPutImage(objectKey, list.get(0).getPath(), (isSucess) -> {
+                    mRepairBugEntity.setPictures(objectKey);
+                });
+        }
+    };
     private void doCommit() {
         if (mStatus == 0) {
             mRepairOrderEntity.setRepairWay(0);

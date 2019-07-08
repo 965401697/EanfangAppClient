@@ -17,6 +17,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.IdRes;
+import androidx.lifecycle.ViewModel;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -29,8 +30,10 @@ import com.amap.api.services.weather.WeatherSearch;
 import com.amap.api.services.weather.WeatherSearchQuery;
 import com.camera.util.BitmapUtil;
 import com.camera.util.ImageUtil;
-import com.camera.view.TakePhotoActivity;
+import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.kit.V;
 import com.eanfang.base.kit.cache.CacheKit;
+import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.biz.model.CameraBean;
 import com.eanfang.biz.model.SelectAddressItem;
@@ -38,14 +41,17 @@ import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.ConnectivityChangeUtil;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.StringUtils;
-import com.eanfang.base.kit.V;
+import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
+import net.eanfang.client.ui.base.BaseClienActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
 import java.io.FileNotFoundException;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,7 +66,7 @@ import butterknife.OnClick;
  * @desc 相机助手
  */
 
-public class CameraActivity extends BaseClientActivity implements AMapLocationListener, RadioGroup.OnCheckedChangeListener {
+public class CameraActivity extends BaseClienActivity implements AMapLocationListener, RadioGroup.OnCheckedChangeListener {
     //选择其他地址回调 code
     private final int REPAIR_ADDRESS_CALLBACK_CODE = 1;
     @BindView(R.id.et_project_name)
@@ -116,10 +122,9 @@ public class CameraActivity extends BaseClientActivity implements AMapLocationLi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
         ButterKnife.bind(this);
-        initView();
+        super.onCreate(savedInstanceState);
         initLocal();
         getData();
     }
@@ -140,6 +145,11 @@ public class CameraActivity extends BaseClientActivity implements AMapLocationLi
     protected void onDestroy() {
         super.onDestroy();
         destroyLocation();
+    }
+
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
     }
 
     /**
@@ -164,10 +174,10 @@ public class CameraActivity extends BaseClientActivity implements AMapLocationLi
         // 停止定位
         locationClient.stopLocation();
     }
-
-    private void initView() {
+    @Override
+    public void initView() {
         setTitle("专业相机");
-        setLeftBack();
+        setLeftBack(true);
         initGPS();
         rgColor.setOnCheckedChangeListener(this);
         rgType.setOnCheckedChangeListener(this);
@@ -285,15 +295,36 @@ public class CameraActivity extends BaseClientActivity implements AMapLocationLi
      * 开始拍照
      */
     public void startTakePhoto(View v) {
-        RxPerm.get(this). cameraPerm((isSuccess) -> {
+        RxPerm.get(this).cameraPerm((isSuccess) -> {
             if (!checkCameraData()) {
                 return;
             }
             setData();
-            Intent intent = new Intent(CameraActivity.this, TakePhotoActivity.class);
-            startActivityForResult(intent, TakePhotoActivity.REQUEST_CAPTRUE_CODE);
+            imageV();
         });
     }
+
+    private void imageV() {
+        SDKManager.getPicture().create(this).takeCamera(iPictureCallBack);
+    }
+
+    IPictureCallBack iPictureCallBack = new IPictureCallBack() {
+        @Override
+        public void onSuccess(List<LocalMedia> list) {
+            //往图片绘制文字
+            time = GetDateUtils.dateToDateTimeString(GetDateUtils.getDateNow());
+            String path = list.get(0).getPath();
+            Bitmap waterBitmap = BitmapUtil.getBitmap(path);
+            Bitmap watermarkBitmap = ImageUtil.createWaterMaskCenter(waterBitmap, waterBitmap);
+            if (ConnectivityChangeUtil.isNetConnected(CameraActivity.this) == true) {
+                String netAddress = tvLocationAddress.getText().toString();
+                drawBitmap(path, watermarkBitmap, netAddress, time);
+            } else {
+                String address = etAddress.getText().toString().trim();
+                drawBitmap(path, watermarkBitmap, address, time);
+            }
+        }
+    };
 
     /**
      * 检查有没有输入属性
@@ -365,22 +396,6 @@ public class CameraActivity extends BaseClientActivity implements AMapLocationLi
             return;//当回掉无数据时，保持app正常
         }
         switch (requestCode) {
-            case TakePhotoActivity.REQUEST_CAPTRUE_CODE:
-                //往图片绘制文字
-                time = GetDateUtils.dateToDateTimeString(GetDateUtils.getDateNow());
-                String path = data.getStringExtra(TakePhotoActivity.RESULT_PHOTO_PATH);
-                Bitmap waterBitmap = BitmapUtil.getBitmap(path);
-                Bitmap watermarkBitmap = ImageUtil.createWaterMaskCenter(waterBitmap, waterBitmap);
-
-
-                if (ConnectivityChangeUtil.isNetConnected(this) == true) {
-                    String netAddress = tvLocationAddress.getText().toString();
-                    drawBitmap(path, watermarkBitmap, netAddress, time);
-                } else {
-                    String address = etAddress.getText().toString().trim();
-                    drawBitmap(path, watermarkBitmap, address, time);
-                }
-                break;
             case REPAIR_ADDRESS_CALLBACK_CODE:
                 locationClient.stopLocation();
                 SelectAddressItem item = (SelectAddressItem) data.getSerializableExtra("data");
@@ -507,7 +522,7 @@ public class CameraActivity extends BaseClientActivity implements AMapLocationLi
             if (flCamera.getVisibility() == View.VISIBLE) {
                 flCamera.setVisibility(View.GONE);
             } else {
-                finishSelf();
+                finish();
             }
             return true;
         }
@@ -530,7 +545,7 @@ public class CameraActivity extends BaseClientActivity implements AMapLocationLi
     }
 
     private void inputVoice(EditText editText) {
-        RxPerm.get(this).voicePerm((isSuccess)->{
+        RxPerm.get(this).voicePerm((isSuccess) -> {
             RecognitionManager.getSingleton().startRecognitionWithDialog(CameraActivity.this, editText);
         });
     }

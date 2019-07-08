@@ -91,7 +91,6 @@ public class CompleteWorkView extends BaseDialog {
                 ivPic2.setVisibility(View.GONE);
             }
             if (urls.length >= 3) {
-                ivPic3.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[2]));
                 GlideUtil.intoImageView(mContext,BuildConfig.OSS_SERVER + Uri.parse(urls[2]),ivPic3);
                 ivPic3.setVisibility(View.VISIBLE);
             } else {

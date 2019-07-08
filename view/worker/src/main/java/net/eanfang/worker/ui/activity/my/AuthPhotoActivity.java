@@ -172,20 +172,20 @@ public class AuthPhotoActivity extends BaseWorkeActivity {
             String imgKey = UuidUtil.getUUID() + ".png";
             if (front) {
                 workerInfoBean.setIdCardFront(imgKey);
-                GlideUtil.intoImageView(AuthPhotoActivity.this, "file://" + list.get(0).getCutPath(), ivIdCardFront);
+                GlideUtil.intoImageView(AuthPhotoActivity.this, "file://" + list.get(0).getPath(), ivIdCardFront);
                 front = false;
             }
             if (back) {
                 workerInfoBean.setIdCardSide(imgKey);
-                GlideUtil.intoImageView(AuthPhotoActivity.this, "file://" + list.get(0).getCutPath(), ivIdCardBack);
+                GlideUtil.intoImageView(AuthPhotoActivity.this, "file://" + list.get(0).getPath(), ivIdCardBack);
                 back = false;
             }
             if (inhand) {
                 workerInfoBean.setIdCardHand(imgKey);
-                GlideUtil.intoImageView(AuthPhotoActivity.this, "file://" + list.get(0).getCutPath(), ivIdCardInHand);
+                GlideUtil.intoImageView(AuthPhotoActivity.this, "file://" + list.get(0).getPath(), ivIdCardInHand);
                 inhand = false;
             }
-            SDKManager.ossKit(AuthPhotoActivity.this).asyncPutImage(imgKey, list.get(0).getCutPath(), (isSuccess) -> {
+            SDKManager.ossKit(AuthPhotoActivity.this).asyncPutImage(imgKey, list.get(0).getPath(), (isSuccess) -> {
             });
         }
     };

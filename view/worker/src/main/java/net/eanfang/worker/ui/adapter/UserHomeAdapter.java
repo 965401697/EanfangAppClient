@@ -5,6 +5,7 @@ import android.net.Uri;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.BuildConfig;
 import com.eanfang.biz.model.UserHomePageBean;
+import com.eanfang.util.GlideUtil;
 
 import net.eanfang.worker.ui.adapter.viewholder.UserHomePageViewHolder;
 
@@ -24,7 +25,7 @@ public class UserHomeAdapter extends BaseQuickAdapter<UserHomePageBean.JobListBe
 
     @Override
     protected void convert(UserHomePageViewHolder helper, UserHomePageBean.JobListBean item) {
-        helper.getImgCompany().setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getCompanyImg()));
+        GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + item.getCompanyImg()), helper.getImgCompany());
         helper.getTvCompany().setText(item.getCompanyName());
         helper.getTvInServiceTime().setText(MessageFormat.format("{0} —— {1}", item.getStartDate(), item.getEndDate()));
         helper.getTvJobPosition().setText(item.getJob());

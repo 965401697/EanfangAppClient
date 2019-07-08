@@ -103,20 +103,20 @@ public class SpecialistIdentityCardCertification extends BaseWorkeActivity {
                 // 身份证正面
                 case ID_CARD_FRONT:
                     mExpertsCertificationEntity.setIdCardFront(imgKey);
-                    GlideUtil.intoImageView(SpecialistIdentityCardCertification.this, "file://" + list.get(0).getCutPath(), ivIdCardFront);
+                    GlideUtil.intoImageView(SpecialistIdentityCardCertification.this, "file://" + list.get(0).getPath(), ivIdCardFront);
                     break;
                 // 反面
                 case ID_CARD_SIDE:
                     mExpertsCertificationEntity.setIdCardSide(imgKey);
-                    GlideUtil.intoImageView(SpecialistIdentityCardCertification.this, "file://" + list.get(0).getCutPath(), ivIdCardBack);
+                    GlideUtil.intoImageView(SpecialistIdentityCardCertification.this, "file://" + list.get(0).getPath(), ivIdCardBack);
                     break;
                 // 手持
                 case ID_CARD_HAND:
                     mExpertsCertificationEntity.setIdCardHand(imgKey);
-                    GlideUtil.intoImageView(SpecialistIdentityCardCertification.this, "file://" + list.get(0).getCutPath(), ivIdCardInHand);
+                    GlideUtil.intoImageView(SpecialistIdentityCardCertification.this, "file://" + list.get(0).getPath(), ivIdCardInHand);
                     break;
             }
-            SDKManager.ossKit(SpecialistIdentityCardCertification.this).asyncPutImage(imgKey, list.get(0).getCutPath(), (isSuccess) -> {
+            SDKManager.ossKit(SpecialistIdentityCardCertification.this).asyncPutImage(imgKey, list.get(0).getPath(), (isSuccess) -> {
             });
             states=0;
         }

@@ -178,7 +178,7 @@ public class WorkReportDetailActivity extends BaseWorkerActivity {
                             findList = new ArrayList<>();
                             planList = new ArrayList<>();
                             //头像
-                            ivHeader.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + bean.getCreateUser().getAccountEntity().getAvatar()));
+                            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + bean.getCreateUser().getAccountEntity().getAvatar()),ivHeader);
                             tvCompany.setText(bean.getCreateCompany().getOrgName());
                             tvSection.setText(bean.getCreateOrg().getOrgName());
                             tvType.setText(GetConstDataUtils.getWorkReportTypeList().get(bean.getType()));

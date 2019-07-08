@@ -179,10 +179,10 @@ public class CreateGroupActivity extends BaseWorkeActivity {
         @Override
         public void onSuccess(List<LocalMedia> list) {
             imgKey = "im/group/CUSTOM_" + UuidUtil.getUUID() + ".png";
-            locationUrl = "file://" +list.get(0).getCutPath();
-            GlideUtil.intoImageView(CreateGroupActivity.this,"file://" + list.get(0).getCutPath(),ivGroupPic);
+            locationUrl = "file://" +list.get(0).getPath();
+            GlideUtil.intoImageView(CreateGroupActivity.this,"file://" + list.get(0).getPath(),ivGroupPic);
 
-            SDKManager.ossKit(CreateGroupActivity.this).asyncPutImage(imgKey,list.get(0).getCutPath(),(isSuccess) -> {});
+            SDKManager.ossKit(CreateGroupActivity.this).asyncPutImage(imgKey,list.get(0).getPath(),(isSuccess) -> {});
         }
     };
     /**

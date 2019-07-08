@@ -171,8 +171,8 @@ public class AuthCompanyFirstActivity extends BaseClienActivity {
         public void onSuccess(List<LocalMedia> list) {
             String imgKey = UuidUtil.getUUID() + ".png";
             infoBean.setLogoPic(imgKey);
-            GlideUtil.intoImageView(AuthCompanyFirstActivity.this, "file://" + list.get(0).getCutPath(), ivUploadlogo);
-            SDKManager.ossKit(AuthCompanyFirstActivity.this).asyncPutImage(imgKey, list.get(0).getCutPath(), (isSuccess) -> {
+            GlideUtil.intoImageView(AuthCompanyFirstActivity.this, "file://" + list.get(0).getPath(), ivUploadlogo);
+            SDKManager.ossKit(AuthCompanyFirstActivity.this).asyncPutImage(imgKey, list.get(0).getPath(), (isSuccess) -> {
             });
         }
     };

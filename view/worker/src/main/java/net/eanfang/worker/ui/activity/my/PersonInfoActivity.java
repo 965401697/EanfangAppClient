@@ -211,8 +211,8 @@ public class PersonInfoActivity extends BaseActivity {
         @Override
         public void onSuccess(List<LocalMedia> list) {
             String imgKey = "account/" + UuidUtil.getUUID() + ".png";
-            GlideUtil.intoImageView(PersonInfoActivity.this, "file://" + list.get(0).getCutPath(), ivUpload);
-            SDKManager.ossKit(PersonInfoActivity.this).asyncPutImage(imgKey, list.get(0).getCutPath(), (isSuccess) -> {
+            GlideUtil.intoImageView(PersonInfoActivity.this, "file://" + list.get(0).getPath(), ivUpload);
+            SDKManager.ossKit(PersonInfoActivity.this).asyncPutImage(imgKey, list.get(0).getPath(), (isSuccess) -> {
                 LoginBean entity = WorkerApplication.get().getLoginBean();
                 entity.getAccount().setAvatar(imgKey);
                 path = entity.getAccount().getAvatar();

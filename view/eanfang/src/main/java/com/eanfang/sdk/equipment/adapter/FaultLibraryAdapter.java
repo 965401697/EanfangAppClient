@@ -30,7 +30,6 @@ public class FaultLibraryAdapter extends BaseQuickAdapter<FaultListBean.ListBean
         ImageView simpleDraweeView = helper.getView(R.id.iv_faultPic);
         if (!StringUtils.isEmpty(item.getPictures())) {
             String[] imgs = item.getPictures().split(",");
-            simpleDraweeView.setImageURI(Uri.parse(com.eanfang.BuildConfig.OSS_SERVER  + imgs[0]));
             GlideUtil.intoImageView(context,Uri.parse(com.eanfang.BuildConfig.OSS_SERVER  + imgs[0]),simpleDraweeView);
         }
         helper.setText(R.id.tv_faultDes, item.getDescription());

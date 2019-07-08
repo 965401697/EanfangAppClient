@@ -12,8 +12,10 @@ import com.baozi.treerecyclerview.item.TreeItem;
 import com.baozi.treerecyclerview.item.TreeItemGroup;
 import com.eanfang.BuildConfig;
 import com.eanfang.R;
+import com.eanfang.base.BaseApplication;
 import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.biz.model.TemplateBean;
+import com.eanfang.util.GlideUtil;
 
 /**
  * Created by O u r on 2018/5/31.
@@ -29,7 +31,8 @@ public class OrgSelectItem extends TreeItem<TemplateBean.Preson> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder) {
         viewHolder.setText(R.id.tv_name, data.getName());
-        viewHolder.getImageView(R.id.iv_user_header).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + data.getProtraivat()));
+        GlideUtil.intoImageView(BaseApplication.get().getApplicationContext(),Uri.parse(BuildConfig.OSS_SERVER + data.getProtraivat()),
+                viewHolder.getImageView(R.id.iv_user_header));
 
         if (data.isVisible()) {
             viewHolder.getView(R.id.cb_check).setVisibility(View.INVISIBLE);

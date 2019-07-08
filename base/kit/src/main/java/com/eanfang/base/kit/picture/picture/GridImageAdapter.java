@@ -249,12 +249,12 @@ public class GridImageAdapter extends
             }
         }
         if (size != 0) {
-//            RelativeLayout.LayoutParams imageParams = (RelativeLayout.LayoutParams) viewHolder.mImg.getLayoutParams();
-//            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) viewHolder.relative.getLayoutParams();
-//            imageParams.width = size;
-//            imageParams.height = size;
-//            params.width = size ;
-//            params.height = size ;
+            RelativeLayout.LayoutParams imageParams = (RelativeLayout.LayoutParams) viewHolder.mImg.getLayoutParams();
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) viewHolder.relative.getLayoutParams();
+            imageParams.width = size;
+            imageParams.height = size;
+            params.width = size ;
+            params.height = size ;
         }
         if (!isShow) {
             viewHolder.ll_del.setVisibility(View.INVISIBLE);

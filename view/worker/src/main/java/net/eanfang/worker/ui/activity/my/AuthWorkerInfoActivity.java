@@ -382,8 +382,8 @@ public class AuthWorkerInfoActivity extends BaseWorkeActivity {
 
             String imgKey = "account/"+UuidUtil.getUUID() + ".png";
             workerInfoBean.setAvatarPhoto(imgKey);
-            GlideUtil.intoImageView(AuthWorkerInfoActivity.this,"file://" + list.get(0).getCutPath(),ivHeader);
-            SDKManager.ossKit(AuthWorkerInfoActivity.this).asyncPutImage(imgKey, list.get(0).getCutPath(), (isSuccess) -> {});
+            GlideUtil.intoImageView(AuthWorkerInfoActivity.this,"file://" + list.get(0).getPath(),ivHeader);
+            SDKManager.ossKit(AuthWorkerInfoActivity.this).asyncPutImage(imgKey, list.get(0).getPath(), (isSuccess) -> {});
         }
     };
     @Override
