@@ -119,7 +119,11 @@ public class CacheKit extends LruCache<String, Object> {
         this.clazz = clazz;
         if (this.clazz.getName().contains(COM_EANFANG_BIZ_MODEL_VO)) {
             this.clazz = JSONObject.class;
-            JSONObject json = (JSONObject) super.get(key);
+            Object result = super.get(key);
+            if (result != null && (clazz.getName().equals(result.getClass().getName()))) {
+                return (T) result;
+            }
+            JSONObject json = (JSONObject) result;
             return VoKit.obj2Vo(json, clazz);
         }
         return (T) super.get(key);

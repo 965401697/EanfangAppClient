@@ -452,7 +452,7 @@ public class Config {
             return Arrays.asList("");
         }
         return Stream.of(getDataListByType(type)).filter(bean -> bean.getDataType() == type && (level + 1) == bean.getLevel() && bean.getDataName().equals(name))
-                .map(bean -> bean.getDataCode()).distinct().toList();
+                .map(BaseDataEntity::getDataCode).distinct().toList();
 
     }
 
@@ -508,7 +508,7 @@ public class Config {
             return null;
         }
         return Stream.of(getDataListByType(type)).filter(bean -> bean.getDataType() == type && code.startsWith(bean.getDataCode()) && bean.getLevel() == (level + 1)).
-                map(bean -> bean.getDataId().intValue()).findFirst().orElseGet(() -> null);
+                map(BaseDataEntity::getDataId).findFirst().orElseGet(() -> null);
 
     }
 
