@@ -24,9 +24,11 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.eanfang.R;
 import com.eanfang.base.BaseApplication;
+import com.eanfang.base.network.config.HttpConfig;
 import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.util.DialogUtil;
 import com.eanfang.util.PermissionUtils;
@@ -59,6 +61,13 @@ public class BaseActivity extends AppCompatActivity implements
     @Deprecated
     public final static ArrayList<Activity> transactionActivities = new ArrayList<>();
 
+    protected int getApp() {
+        return HttpConfig.get().getApp();
+    }
+
+    protected boolean isClient() {
+        return getApp() == 0;
+    }
 
     //Android6.0申请权限的回调方法
     @Deprecated
@@ -149,6 +158,22 @@ public class BaseActivity extends AppCompatActivity implements
     @Override
     protected void onStart() {
         super.onStart();
+        initStyle();
+    }
+
+    /**
+     * 初始化页面风格样式方法
+     */
+    protected void initStyle() {
+        if (findViewById(R.id.titles_bar) == null) {
+            return;
+        }
+        if (isClient()) {
+            findViewById(R.id.titles_bar).setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryC));
+        } else {
+            findViewById(R.id.titles_bar).setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryW));
+        }
+
     }
 
     public void setLeftBack() {
@@ -199,9 +224,11 @@ public class BaseActivity extends AppCompatActivity implements
     public void setRightImageVisible() {
         ((ImageView) findViewById(R.id.iv_right)).setVisibility(View.VISIBLE);
     }
+
     public void setRightImageGone() {
         ((ImageView) findViewById(R.id.iv_right)).setVisibility(View.GONE);
     }
+
     @Override
     public void setTitle(int id) {
         ((TextView) findViewById(R.id.tv_title)).setText(id);
