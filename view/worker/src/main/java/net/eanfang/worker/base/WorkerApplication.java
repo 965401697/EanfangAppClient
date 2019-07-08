@@ -78,11 +78,11 @@ public class WorkerApplication extends BaseApplication {
      */
     private void initRongIM() {
         if (getApplicationInfo().packageName.equals(getCurProcessName(getApplicationContext()))) {
-            PushConfig config = new PushConfig.Builder()
-                    .enableMiPush(XIAOMI_APPID_WORKER, XIAOMI_APPKEY_WORKER)
-                    .enableMeiZuPush(MEIZU_APPID_WORKER, MEIZU_APPKEY_WORKER)
-                    .build();
-            RongPushClient.setPushConfig(config);
+//            PushConfig config = new PushConfig.Builder()
+//                    .enableMiPush(XIAOMI_APPID_WORKER, XIAOMI_APPKEY_WORKER)
+//                    .enableMeiZuPush(MEIZU_APPID_WORKER, MEIZU_APPKEY_WORKER)
+//                    .build();
+//            RongPushClient.setPushConfig(config);
             RongIM.init(this);
             RongExtensionManager.getInstance().registerExtensionModule(new SampleExtensionModule());
             RongIM.setConversationClickListener(new MyConversationClickListener());

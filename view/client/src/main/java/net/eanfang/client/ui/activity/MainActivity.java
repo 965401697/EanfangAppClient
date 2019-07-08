@@ -127,12 +127,13 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
         user = ClientApplication.get().getLoginBean();
         setHeaders();
 
+        String rongToken = ClientApplication.get().get(EanfangConst.RONG_YUN_TOKEN, "");
         //融云登录
-        if (TextUtils.isEmpty(ClientApplication.get().get(EanfangConst.RONG_YUN_TOKEN, ""))) {
+        if (TextUtils.isEmpty(rongToken)) {
             getRongYToken();
         } else {
             //如果有融云token 就直接登录
-            ClientApplication.connect(ClientApplication.get().get(EanfangConst.RONG_YUN_TOKEN, ""));
+            ClientApplication.connect(rongToken);
         }
 
         initFragment();

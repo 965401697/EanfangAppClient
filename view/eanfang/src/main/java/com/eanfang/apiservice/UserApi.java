@@ -202,7 +202,8 @@ public interface UserApi {
     /**
      * 填写技师信息 实名认证
      */
-    String GET_TECH_WORKER_ADD_V4 = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/safetyInfo";/**
+    String GET_TECH_WORKER_ADD_V4 = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/safetyInfo";
+    /**
      * 填写技师信息 实名认证
      */
     String GET_TECH_WORKER_ADD_V2 = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/insertV2";
@@ -429,7 +430,7 @@ public interface UserApi {
     String GET_MOBILE_INFO = BuildConfig.API_HOST + "/yaf_sys/account/getAccInfo/mobile";
 
     /**
-     * 获取好有列表
+     * 获取融云token
      */
     String POST_RONGY_TOKEN = BuildConfig.API_HOST + "/yaf_im/im/getToken";
 
@@ -529,7 +530,8 @@ public interface UserApi {
     /**
      * 技师认证页 实名认证和技师认证状态
      */
-    String POST_WORKER_AUTH_STATUS_B = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/verifyStatusV2";   /**
+    String POST_WORKER_AUTH_STATUS_B = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/verifyStatusV2";
+    /**
      * 技师认证，资料完善状态查询
      */
     String POST_WORKER_AUTH_STATUS = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/verifyStatus";

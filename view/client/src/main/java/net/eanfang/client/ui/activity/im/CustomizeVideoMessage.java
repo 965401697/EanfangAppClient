@@ -5,6 +5,7 @@ import android.os.Parcel;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 
 import io.rong.common.ParcelUtils;
@@ -43,7 +44,12 @@ public class CustomizeVideoMessage extends MessageContent {
             io.rong.common.RLog.e("CustomizeVideoMessage", "JSONException " + var4.getMessage());
         }
 
-        return jsonObj.toString().getBytes(StandardCharsets.UTF_8);
+        try {
+            return jsonObj.toString().getBytes("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 
@@ -54,8 +60,9 @@ public class CustomizeVideoMessage extends MessageContent {
     public CustomizeVideoMessage(byte[] data) {
         String jsonStr = null;
 
-        jsonStr = new String(data, StandardCharsets.UTF_8);
+
         try {
+            jsonStr = new String(data, "UTF-8");
             JSONObject jsonObj = new JSONObject(jsonStr);
             if (jsonObj.has("mp4Path")) {
                 this.setMp4Path(jsonObj.optString("mp4Path"));
@@ -64,9 +71,10 @@ public class CustomizeVideoMessage extends MessageContent {
                 this.setImgUrl(jsonObj.optString("imgUrl"));
             }
 
-
         } catch (JSONException var4) {
             io.rong.common.RLog.e("CustomizeVideoMessage", "JSONException " + var4.getMessage());
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
 
     }
