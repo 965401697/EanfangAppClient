@@ -13,15 +13,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.lifecycle.ViewModel;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSON;
 import com.eanfang.apiservice.RepairApi;
-import com.eanfang.base.BaseActivity;
 import com.eanfang.base.kit.SDKManager;
-import com.eanfang.base.kit.picture.IPictureCallBack;
-import com.eanfang.base.kit.picture.picture.GridImageAdapter;
-import com.eanfang.base.kit.picture.picture.PictureInvoking;
+import com.eanfang.base.kit.V;
+import com.eanfang.base.kit.picture.picture.PictureRecycleView;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
@@ -41,7 +38,6 @@ import com.eanfang.util.JumpItent;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
-import com.eanfang.base.kit.V;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
@@ -54,6 +50,7 @@ import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.worksapce.equipment.EquipmentListActivity;
 import net.eanfang.client.ui.activity.worksapce.scancode.ScanCodeActivity;
+import net.eanfang.client.ui.base.BaseClienActivity;
 import net.eanfang.client.ui.widget.RepairSelectDevicesDialog;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -79,7 +76,7 @@ import static android.provider.MediaStore.Video.Thumbnails.MINI_KIND;
  */
 
 
-public class AddTroubleActivity extends BaseActivity {
+public class AddTroubleActivity extends BaseClienActivity {
 
     private static final int CLIENT_ADD_TROUBLE = 2;
     /**
@@ -150,10 +147,10 @@ public class AddTroubleActivity extends BaseActivity {
     TextView tvSave;
     @BindView(R.id.tv_add)
     TextView tvAdd;
-    @BindView(R.id.recycleview)
-    RecyclerView recycleview;
-    @BindView(R.id.recycle_video)
-    RecyclerView recycleVideo;
+    @BindView(R.id.picture_recycler)
+    PictureRecycleView pictureRecycler;
+    @BindView(R.id.video_recycle)
+    PictureRecycleView videoRecycle;
     /**
      * 设备编号
      */
@@ -269,47 +266,19 @@ public class AddTroubleActivity extends BaseActivity {
     }
 
     private List<LocalMedia> selectList = new ArrayList<>();
-    private final int HEAD_PHOTO = 100;
-    private PictureInvoking imgInvoke;
 
     private void initRecycle() {
-        imgInvoke = new PictureInvoking(this, recycleview, selectList);
-        imgInvoke.initRecycle(3, onAddPicClickListener);
+        pictureRecycler.addImage(listener);
     }
 
-    GridImageAdapter.onAddPicClickListener onAddPicClickListener = () -> {
-        SDKManager.getPicture().create(AddTroubleActivity.this).takePhotos(new IPictureCallBack() {
-            @Override
-            public void onSuccess(List<LocalMedia> list) {
-            //选择图片成功之后的逻辑处理
-                selectList = list;
-                imgInvoke.setList(selectList);
-            }
-        });
-
-    };
-
+    PictureRecycleView.ImageListener listener = list -> selectList = list;
+    PictureRecycleView.ImageListener videoListener = list -> videoList = list;
 
     private List<LocalMedia> videoList = new ArrayList<>();
-    private PictureInvoking videoInvoke;
 
     private void initRecycleVideo() {
-        videoInvoke = new PictureInvoking(this, recycleVideo, videoList);
-        videoInvoke.setType(1);
-        videoInvoke.initRecycle(1, videoListenner);
+        videoRecycle.addVideo(videoListener);
     }
-
-    GridImageAdapter.onAddPicClickListener videoListenner = () -> {
-        SDKManager.getPicture().create(AddTroubleActivity.this).takeVideo(new IPictureCallBack() {
-            @Override
-            public void onSuccess(List<LocalMedia> list) {
-                videoList = list;
-                videoInvoke.setList(videoList);
-//                doCommitThumbnail();
-                doCommitVideo();
-            }
-        });
-    };
 
     /**
      * 上传拍摄视频缩略图

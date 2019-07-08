@@ -313,7 +313,7 @@ public class DealWithFirstActivity extends BaseActivity {
      * MP4
      */
     public void setMp4(String mp4Path) {
-        ivTakevideoWork.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + mp4Path + ".jpg"));
+        GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + mp4Path + ".jpg"),ivTakevideoWork);
         ivTakevideoWork.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

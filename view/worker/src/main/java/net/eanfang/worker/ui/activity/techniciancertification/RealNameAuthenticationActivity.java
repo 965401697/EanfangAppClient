@@ -274,20 +274,20 @@ public class RealNameAuthenticationActivity extends BaseWorkeActivity {
             String imgKey = UuidUtil.getUUID() + ".png";
             switch (state) {
                 case ID_CARD_FRONT:
-                    GlideUtil.intoImageView(RealNameAuthenticationActivity.this, "file://" + list.get(0).getCutPath(), ivIdCardFront);
-                    recIDCard(IDCardParams.ID_CARD_SIDE_FRONT,  list.get(0).getCutPath());
+                    GlideUtil.intoImageView(RealNameAuthenticationActivity.this, "file://" + list.get(0).getPath(), ivIdCardFront);
+                    recIDCard(IDCardParams.ID_CARD_SIDE_FRONT,  list.get(0).getPath());
                     break;
                 case ID_CARD_SIDE:
                     mTechWorkerVerifyEntity.setIdCardSide(imgKey);
-                    GlideUtil.intoImageView(RealNameAuthenticationActivity.this, "file://" + list.get(0).getCutPath(), ivIdCardBack);
+                    GlideUtil.intoImageView(RealNameAuthenticationActivity.this, "file://" + list.get(0).getPath(), ivIdCardBack);
                     break;
                 case ID_CARD_HAND:
                     mTechWorkerVerifyEntity.setIdCardHand(imgKey);
-                    GlideUtil.intoImageView(RealNameAuthenticationActivity.this, "file://" + list.get(0).getCutPath(), ivIdCardInHand);
+                    GlideUtil.intoImageView(RealNameAuthenticationActivity.this, "file://" + list.get(0).getPath(), ivIdCardInHand);
                     break;
                 default:
             }
-            SDKManager.ossKit(RealNameAuthenticationActivity.this).asyncPutImage(imgKey, list.get(0).getCutPath(), (isSuccess) -> {
+            SDKManager.ossKit(RealNameAuthenticationActivity.this).asyncPutImage(imgKey, list.get(0).getPath(), (isSuccess) -> {
             });
             state=0;
         }

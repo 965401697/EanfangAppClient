@@ -15,6 +15,7 @@ import com.eanfang.R;
 import com.eanfang.R2;
 import com.eanfang.biz.model.TemplateBean;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.ToastUtil;
 
 import org.greenrobot.eventbus.Subscribe;
@@ -107,7 +108,7 @@ public class SelectContactActivity extends BaseActivity {
 
         @Override
         protected void convert(BaseViewHolder helper, TemplateBean.Preson item) {
-            ((ImageView) helper.getView(R.id.iv_user_header)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getProtraivat()));
+            GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + item.getProtraivat()),helper.getView(R.id.iv_user_header));
         }
     }
 

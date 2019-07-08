@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.biz.model.entity.BaseDataEntity;
+import com.eanfang.util.GlideUtil;
 
 
 import net.eanfang.worker.R;
@@ -27,7 +28,7 @@ public class RepairDeviceTypeRightAdapter extends BaseQuickAdapter<BaseDataEntit
         helper.setText(R.id.tv_rightName, item.getDataName());
         ImageView ivPic;
         ivPic = helper.getView(R.id.iv_rightIcon);
-        ivPic.setImageURI(Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + item.getRemarkInfo()));
+        GlideUtil.intoImageView(mContext,Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + item.getRemarkInfo()),ivPic);
         helper.setVisible(R.id.check_true_t,false);
     }
 }

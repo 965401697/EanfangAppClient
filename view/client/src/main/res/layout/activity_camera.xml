@@ -435,14 +435,13 @@
                 </com.eanfang.witget.CustomRadioGroup>
             </LinearLayout>
 
-
             <ImageView
                 android:id="@+id/start_take_photo"
-                android:layout_width="@dimen/dimen_200"
+                android:layout_width="wrap_content"
                 android:layout_height="@dimen/dimen_200"
                 android:layout_gravity="center"
-                android:layout_marginBottom="20dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
                 android:onClick="startTakePhoto"
                 android:src="@mipmap/ic_client_camera" />
 

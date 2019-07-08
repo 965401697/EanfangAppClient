@@ -130,14 +130,14 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
         } else if (customizeMessage.getShareType().equals("8")) {
             holder.title.setText("安防圈");
             holder.orderNum.setText("公司：" + customizeMessage.getOrderNum());
-            holder.ivUpload.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + customizeMessage.getPicUrl()));
+            GlideUtil.intoImageView(WorkerApplication.get().getApplicationContext(), Uri.parse(BuildConfig.OSS_SERVER + customizeMessage.getPicUrl()), holder.ivUpload);
             holder.creatTime.setText("标题：" + customizeMessage.getCreatTime());
             holder.workerName.setText("发布人：" + customizeMessage.getWorkerName());
             holder.status.setVisibility(View.GONE);
         } else if (customizeMessage.getShareType().equals("9")) {
             holder.title.setText("用工详情");
             holder.orderNum.setText("公司：" + customizeMessage.getOrderNum());
-            holder.ivUpload.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + customizeMessage.getPicUrl()));
+            GlideUtil.intoImageView(WorkerApplication.get().getApplicationContext(), Uri.parse(BuildConfig.OSS_SERVER + customizeMessage.getPicUrl()), holder.ivUpload);
             holder.creatTime.setText("项目信息：" + customizeMessage.getCreatTime());
             holder.workerName.setText("发布人：" + customizeMessage.getWorkerName());
             holder.status.setVisibility(View.GONE);

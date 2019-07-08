@@ -60,6 +60,9 @@ public class MyFragment extends BaseFragment {
         findViewById(R.id.iv_user_header).setOnClickListener((v) -> {
             PersonInfoActivity.jumpToActivity(getActivity());
         });
+        findViewById(R.id.tv_write_personnel).setOnClickListener((v) -> {
+            PersonInfoActivity.jumpToActivity(getActivity());
+        });
 
         findViewById(R.id.rl_evaluate).setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), EvaluateActivity.class));

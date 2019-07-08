@@ -143,7 +143,7 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
         } else if (customizeMessage.getShareType().equals("10")) {
             holder.title.setText("安防圈");
             holder.orderNum.setText("公司：" + customizeMessage.getOrderNum());
-            holder.simpleDraweeView.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + customizeMessage.getPicUrl()));
+            GlideUtil.intoImageView(ClientApplication.get().getApplicationContext(),Uri.parse(BuildConfig.OSS_SERVER + customizeMessage.getPicUrl()),holder.simpleDraweeView);
             holder.creatTime.setText("标题：" + customizeMessage.getCreatTime());
             holder.workerName.setText("发布人：" + customizeMessage.getWorkerName());
             holder.status.setVisibility(View.GONE);

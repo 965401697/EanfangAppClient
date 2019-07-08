@@ -1,6 +1,7 @@
 package com.eanfang.ui.base;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,16 +13,20 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.R;
 import com.eanfang.listener.NetBroadcastReceiver;
 import com.eanfang.util.ToastUtil;
+import com.luck.picture.lib.config.PictureConfig;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.ButterKnife;
+
+import static android.app.Activity.RESULT_OK;
 
 
 /**
@@ -92,6 +97,26 @@ public abstract class BaseFragment extends Fragment implements IBase {
         onVisibleToUser();
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        pictureSelect(requestCode,resultCode,data);
+    }
+
+    /**
+     * 图片选择
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    private void pictureSelect(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == PictureConfig.CHOOSE_REQUEST) {
+                SDKManager.getPicture().create(this).onActivityResult(requestCode, resultCode, data);
+            }
+        }
+    }
     @Override
     public void finishSelf() {
         getActivity().finish();

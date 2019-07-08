@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rl"
-    android:layout_width="@dimen/dimen_200"
-    android:layout_height="@dimen/dimen_200"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:layout_marginRight="@dimen/dimen_10">
 
     <RelativeLayout
         android:id="@+id/relative"
-        android:layout_width="@dimen/dimen_200"
-        android:layout_height="@dimen/dimen_200"
+        android:layout_width="@dimen/dimen_100"
+        android:layout_height="@dimen/dimen_100"
         android:layout_centerInParent="true"
         android:layout_centerHorizontal="true">
 
         <ImageView
             android:id="@+id/fiv"
-            android:layout_width="@dimen/dimen_200"
-            android:layout_height="@dimen/dimen_200"
+            android:layout_width="@dimen/dimen_100"
+            android:layout_height="@dimen/dimen_100"
             android:src="@color/color_f6" />
 
         <LinearLayout
@@ -35,15 +35,15 @@
 
         <TextView
             android:id="@+id/tv_duration"
-            android:layout_width="80dp"
-            android:layout_height="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_50"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="5dp"
             android:background="@drawable/buybuybuy"
             android:drawableLeft="@drawable/video_icon"
-            android:drawablePadding="5dp"
+            android:drawablePadding="3dp"
             android:gravity="center_vertical"
-            android:paddingLeft="5dp"
+            android:paddingLeft="2dp"
             android:paddingTop="8dp"
             android:text="00:00"
             android:textColor="@color/white"

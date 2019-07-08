@@ -457,7 +457,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         }
         if (!StringUtils.isEmpty(securityDetailBean.getSpcVideo())) {
             rlVideo.setVisibility(View.VISIBLE);
-            ivShowVideo.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + securityDetailBean.getSpcVideo() + ".jpg"));
+            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + securityDetailBean.getSpcVideo() + ".jpg"),ivShowVideo);
         } else {
             rlVideo.setVisibility(View.GONE);
         }

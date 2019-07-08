@@ -50,7 +50,7 @@ public class EvaluateAdapter extends BaseQuickAdapter<EvaluateBean.ListBean, Bas
                     .setText(R.id.tv_time, item.getCreateTime());
         } else {
             if (!StringUtils.isEmpty(V.v(()->item.getCreateUser().getAccountEntity().getAvatar()))) {
-                iv_header.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + V.v(()->item.getOwnerUser().getAccountEntity().getAvatar())));
+                GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + V.v(()->item.getOwnerUser().getAccountEntity().getAvatar())),iv_header);
             }
             totalStar = item.getItem1() + item.getItem2() +
                     item.getItem3();

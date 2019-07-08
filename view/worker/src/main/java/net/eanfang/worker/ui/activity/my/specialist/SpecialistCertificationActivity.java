@@ -138,8 +138,8 @@ public class SpecialistCertificationActivity extends BaseWorkeActivity {
         public void onSuccess(List<LocalMedia> list) {
             String imgKey = "account/" + UuidUtil.getUUID() + ".png";
             mExpertsCertificationEntity.setAvatarPhoto(imgKey);
-            GlideUtil.intoImageView(SpecialistCertificationActivity.this, "file://" + list.get(0).getCutPath(), ivHeader);
-            SDKManager.ossKit(SpecialistCertificationActivity.this).asyncPutImage(imgKey, list.get(0).getCutPath(), (isSuccess) -> {
+            GlideUtil.intoImageView(SpecialistCertificationActivity.this, "file://" + list.get(0).getPath(), ivHeader);
+            SDKManager.ossKit(SpecialistCertificationActivity.this).asyncPutImage(imgKey, list.get(0).getPath(), (isSuccess) -> {
             });
         }
     };

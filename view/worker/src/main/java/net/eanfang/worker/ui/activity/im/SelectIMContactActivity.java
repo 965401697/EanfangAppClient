@@ -29,6 +29,7 @@ import com.eanfang.biz.model.entity.OrgEntity;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.DialogUtil;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UuidUtil;
 import com.eanfang.util.compound.CompoundHelper;
@@ -375,7 +376,7 @@ public class SelectIMContactActivity extends BaseWorkerActivity {
 
         @Override
         protected void convert(BaseViewHolder helper, TemplateBean.Preson item) {
-            ((ImageView) helper.getView(R.id.iv_user_header)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getProtraivat()));
+            GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + item.getProtraivat()),helper.getView(R.id.iv_user_header));
         }
     }
 

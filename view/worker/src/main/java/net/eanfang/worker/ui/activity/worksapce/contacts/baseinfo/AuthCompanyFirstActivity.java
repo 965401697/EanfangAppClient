@@ -133,8 +133,8 @@ public class AuthCompanyFirstActivity extends BaseWorkeActivity {
         public void onSuccess(List<LocalMedia> list) {
             String imgKey = "org/" + UuidUtil.getUUID() + ".png";
             infoBean.setLicensePic(imgKey);
-            GlideUtil.intoImageView(AuthCompanyFirstActivity.this, "file://" + list.get(0).getCutPath(), ivUpload);
-            SDKManager.ossKit(AuthCompanyFirstActivity.this).asyncPutImage(imgKey, list.get(0).getCutPath(), (isSuccess) -> {
+            GlideUtil.intoImageView(AuthCompanyFirstActivity.this, "file://" + list.get(0).getPath(), ivUpload);
+            SDKManager.ossKit(AuthCompanyFirstActivity.this).asyncPutImage(imgKey, list.get(0).getPath(), (isSuccess) -> {
             });
         }
     };
