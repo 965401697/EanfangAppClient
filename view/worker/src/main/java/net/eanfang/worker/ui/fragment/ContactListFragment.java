@@ -1,5 +1,6 @@
 package net.eanfang.worker.ui.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -21,7 +22,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
- ;
 import com.eanfang.biz.model.AllMessageBean;
 import com.eanfang.biz.model.GroupsBean;
 import com.eanfang.biz.model.bean.GroupDetailBean;
@@ -56,8 +56,11 @@ import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Group;
 import io.rong.imlib.model.UserInfo;
 import q.rorbin.badgeview.QBadgeView;
+
 import static android.app.Activity.RESULT_CANCELED;
 import static com.okgo.utils.HttpUtils.runOnUiThread;
+
+;
 
 /**
  * Created by MrHou

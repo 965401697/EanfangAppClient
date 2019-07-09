@@ -14,6 +14,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseFragment;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.worksapce.online.DividerItemDecoration;
 import net.eanfang.client.ui.adapter.HomeAllBrandAdapter;
 
 import butterknife.BindView;
@@ -52,6 +53,7 @@ public class HomeAllBrandFragment extends BaseFragment {
     @Override
     protected void initView() {
         mRecHomeAllBrand.setLayoutManager(new GridLayoutManager(getContext(), 4));
+        mRecHomeAllBrand.addItemDecoration(new DividerItemDecoration(getContext()));
         adapter = new HomeAllBrandAdapter();
         adapter.bindToRecyclerView(mRecHomeAllBrand);
     }

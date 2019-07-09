@@ -3,7 +3,6 @@ package net.eanfang.client.main.activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -16,6 +15,7 @@ import androidx.lifecycle.ViewModel;
 import com.eanfang.base.BaseActivity;
 import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.base.kit.rx.RxPerm;
+import com.eanfang.base.widget.controltool.ControlToolView;
 import com.eanfang.biz.model.AllMessageBean;
 import com.eanfang.biz.model.bean.BaseDataBean;
 import com.eanfang.biz.model.bean.ConstAllBean;
@@ -60,7 +60,6 @@ import cn.hutool.core.util.StrUtil;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
-import q.rorbin.badgeview.QBadgeView;
 
 import static com.eanfang.config.EanfangConst.MEIZU_APPID_CLIENT;
 import static com.eanfang.config.EanfangConst.MEIZU_APPKEY_CLIENT;
@@ -78,12 +77,6 @@ public class MainActivity extends BaseActivity {
     private ActivityMainBinding binding;
     private FragmentTabHost mTabHost;
 
-    /**
-     * 底部消息数量
-     */
-    private QBadgeView qBadgeViewHome = new QBadgeView(ClientApplication.get().getApplicationContext());
-    private QBadgeView qBadgeViewContact = new QBadgeView(ClientApplication.get().getApplicationContext());
-    private QBadgeView qBadgeViewWork = new QBadgeView(ClientApplication.get().getApplicationContext());
     private int mHome = 0;
     private int mContact = 0;
     private int mWork = 0;
@@ -226,31 +219,13 @@ public class MainActivity extends BaseActivity {
         }
         //桌面app红点
         mTotalCount = mHome + mAllCount + mWork;
+        badgeView(R.id.tab_home, mHome);
+        badgeView(R.id.tab_contact, mAllCount);
+        badgeView(R.id.tab_work, mWork);
         // 首页红点
         // 桌面气泡赋值
         BadgeUtil.setBadgeCount(MainActivity.this, mTotalCount, R.drawable.client_logo);
 
-        qBadgeViewHome.bindTarget(findViewById(R.id.tab_home))
-                .setBadgeNumber(mHome)
-                .setBadgeBackgroundColor(0xFFFF0000)
-                .setBadgePadding(2, true)
-                .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setGravityOffset(0, 3, true)
-                .setBadgeTextSize(11, true);
-        qBadgeViewContact.bindTarget(findViewById(R.id.tab_contact))
-                .setBadgeNumber(mAllCount)
-                .setBadgeBackgroundColor(0xFFFF0000)
-                .setBadgePadding(2, true)
-                .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setGravityOffset(0, 3, true)
-                .setBadgeTextSize(11, true);
-        qBadgeViewWork.bindTarget(findViewById(R.id.tab_work))
-                .setBadgeNumber(mWork)
-                .setBadgeBackgroundColor(0xFFFF0000)
-                .setBadgePadding(2, true)
-                .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setGravityOffset(0, 3, true)
-                .setBadgeTextSize(11, true);
     }
 
     /**
@@ -401,9 +376,17 @@ public class MainActivity extends BaseActivity {
             mContactNum = integer;
             int i = mContact + integer;
             int nums = mTotalCount + integer;
-            qBadgeViewContact.setBadgeNumber(i);
+            badgeView(R.id.tab_contact, i);
             BadgeUtil.setBadgeCount(this, nums, R.drawable.client_logo);
         }, conversationTypes);
+
+    }
+
+    private void badgeView(int id, int number) {
+        ControlToolView.getBadge(ClientApplication.get().getApplicationContext())
+                .setTargetView(findViewById(id))
+                .setBadgeNum(number)
+                .badge();
 
     }
 

@@ -50,7 +50,8 @@ public class HomeNewOrderFragment extends BaseFragment {
     @Override
     protected void initView() {
         mRecHomeNewOrder.setLayoutManager(new LinearLayoutManager(getContext()));
-        mFragmentHomeNewOrderAdapter = new FragmentHomeNewOrderAdapter();
+        mRecHomeNewOrder.setNestedScrollingEnabled(false);
+                mFragmentHomeNewOrderAdapter = new FragmentHomeNewOrderAdapter();
         mFragmentHomeNewOrderAdapter.bindToRecyclerView(mRecHomeNewOrder);
     }
 

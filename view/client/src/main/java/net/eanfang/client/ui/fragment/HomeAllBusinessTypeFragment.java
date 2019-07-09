@@ -9,6 +9,7 @@ import com.eanfang.biz.model.bean.BusinessTypeBean;
 import com.eanfang.ui.base.BaseFragment;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.worksapce.online.DividerItemDecoration;
 import net.eanfang.client.ui.adapter.HomeAllBusinessTypeAdapter;
 
 import java.util.ArrayList;
@@ -21,8 +22,8 @@ import butterknife.BindView;
  * Describe :
  */
 public class HomeAllBusinessTypeFragment extends BaseFragment {
-    @BindView(R.id.rec_home_all_brand)
-    RecyclerView mRecHomeAllBrand;
+    @BindView(R.id.rec_home_all_bussiness)
+    RecyclerView mRecHomeAllBusiness;
     private String[] mNames = new String[]{
             "电视监控", "防盗报警", "公共报警", "停车场", "门禁一卡通", "可视对讲", "EAS", "公共广播"
     };
@@ -32,7 +33,7 @@ public class HomeAllBusinessTypeFragment extends BaseFragment {
 
     @Override
     protected int setLayoutResouceId() {
-        return R.layout.fragment_home_all_brand;
+        return R.layout.fragment_home_all_bussiness;
     }
 
     @Override
@@ -49,9 +50,10 @@ public class HomeAllBusinessTypeFragment extends BaseFragment {
             bean.setImgRes(mImgRes[i]);
             businessTypeBeanArrayList.add(bean);
         }
-        mRecHomeAllBrand.setLayoutManager(new GridLayoutManager(getContext(), 4));
+        mRecHomeAllBusiness.setLayoutManager(new GridLayoutManager(getContext(), 4));
+        mRecHomeAllBusiness.addItemDecoration(new DividerItemDecoration(getContext()));
         HomeAllBusinessTypeAdapter adapter = new HomeAllBusinessTypeAdapter();
-        adapter.bindToRecyclerView(mRecHomeAllBrand);
+        adapter.bindToRecyclerView(mRecHomeAllBusiness);
         adapter.setNewData(businessTypeBeanArrayList);
     }
 

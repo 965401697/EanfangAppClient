@@ -9,17 +9,20 @@ import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.view.View;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.alibaba.fastjson.JSON;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.kit.rx.RxPerm;
+import com.eanfang.biz.model.FriendListBean;
+import com.eanfang.biz.model.entity.AccountEntity;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.FriendListBean;
 import com.eanfang.util.Cn2Spell;
-import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.witget.SideBar;
-import com.eanfang.biz.model.entity.AccountEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
@@ -27,9 +30,6 @@ import net.eanfang.client.ui.base.BaseClientActivity;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,12 +50,15 @@ public class SearchStaffActivity extends BaseClientActivity {
         setContentView(R.layout.activity_search_staff2);
         ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
+        RxPerm.get(this).contactsPerm((isSuccess) -> {
+            mList = getPhoneContacts();
+        });
         setTitle("添加员工");
         setLeftBack();
         startTransaction(true);
 
-        mList = getPhoneContacts();
         initViews();
+
         RxPerm.get(this).storagePerm((isSuccess) -> {
             initData();
         });
