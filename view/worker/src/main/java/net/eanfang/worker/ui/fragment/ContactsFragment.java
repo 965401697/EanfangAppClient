@@ -3,45 +3,44 @@ package net.eanfang.worker.ui.fragment;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.Nullable;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.RelativeLayout;
 
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.network.config.HttpConfig;
+import com.eanfang.biz.model.OrganizationBean;
+import com.eanfang.biz.model.bean.LoginBean;
+import com.eanfang.biz.model.entity.OrgEntity;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.bean.LoginBean;
-import com.eanfang.biz.model.OrganizationBean;
-import com.eanfang.base.network.config.HttpConfig;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.witget.recycleview.FullyLinearLayoutManager;
-import com.eanfang.biz.model.entity.OrgEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.authentication.CompanyManagerBActivity;
+import net.eanfang.worker.ui.activity.im.FollowListActivity;
 import net.eanfang.worker.ui.activity.im.MorePopWindow;
 import net.eanfang.worker.ui.activity.im.MyFriendsListActivity;
 import net.eanfang.worker.ui.activity.im.MyGroupsListActivity;
 import net.eanfang.worker.ui.activity.worksapce.ExternalCompanyActivity;
 import net.eanfang.worker.ui.activity.worksapce.PartnerActivity;
 import net.eanfang.worker.ui.activity.worksapce.SubcompanyActivity;
-import net.eanfang.worker.ui.activity.worksapce.contacts.CompanyManagerActivity;
 import net.eanfang.worker.ui.activity.worksapce.contacts.CreatTeamActivity;
 import net.eanfang.worker.ui.adapter.ParentAdapter;
 
@@ -193,12 +192,12 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
             }
         });
 
-//        findViewById(R.id.rl_focus).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
+        view.findViewById(R.id.rl_focus).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), FollowListActivity.class));
+            }
+        });
 
         view.findViewById(R.id.ll_add).setOnClickListener(new View.OnClickListener() {
             @Override

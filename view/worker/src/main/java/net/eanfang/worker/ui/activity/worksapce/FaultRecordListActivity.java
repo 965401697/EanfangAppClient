@@ -1,10 +1,10 @@
 package net.eanfang.worker.ui.activity.worksapce;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -12,11 +12,15 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.biz.model.FaultListsBean;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.FaultListsBean;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
@@ -45,6 +49,8 @@ public class FaultRecordListActivity extends BaseWorkerActivity implements Swipe
     private FaultRecordAdapter mAdapter;
     private Bundle mBundle;
 
+    private static final int MSG_SEARCH = 1;
+    private static final int RESULT_ADDRESS_CALLBACK_CODE = 1002;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,17 +121,17 @@ public class FaultRecordListActivity extends BaseWorkerActivity implements Swipe
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                
-                if (!TextUtils.isEmpty(s)) {
-                    searchData(s.toString());
-                } else {
-                    refresh();
-                }
+
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                //文字变动 ， 有未发出的搜索请求，应取消
+                if (mHandler.hasMessages(MSG_SEARCH)) {
+                    mHandler.removeMessages(MSG_SEARCH);
+                }
+                //否则延迟500ms开始搜索
+                mHandler.sendEmptyMessageDelayed(MSG_SEARCH, 500);
             }
         });
         getData();
@@ -180,11 +186,11 @@ public class FaultRecordListActivity extends BaseWorkerActivity implements Swipe
                             mAdapter.setNewData(bean.getList());
                             mSwipeRefreshLayout.setRefreshing(false);
                             mAdapter.loadMoreComplete();
-                            if (bean.getList()==null) {
+                            if (bean.getList() == null) {
                                 mAdapter.loadMoreEnd();
                             }
 
-                            if (bean.getList()!=null) {
+                            if (bean.getList() != null) {
                                 mTvNoData.setVisibility(View.GONE);
                             } else {
                                 mTvNoData.setVisibility(View.VISIBLE);
@@ -266,6 +272,17 @@ public class FaultRecordListActivity extends BaseWorkerActivity implements Swipe
                     }
                 });
     }
+
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            String message = etSearch.getText().toString().trim();
+            searchData(message);
+        }
+    };
+
 }
+
 
 

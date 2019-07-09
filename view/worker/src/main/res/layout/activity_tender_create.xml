@@ -94,6 +94,14 @@
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/color_client_neworder"
                                 android:textSize="@dimen/textSize_14" />
+
+                            <ImageView
+                                android:id="@+id/iv_verify_status"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/dimen_10"
+                                android:src="@mipmap/ic_contact_auth"
+                                android:visibility="gone" />
                         </LinearLayout>
 
 
@@ -466,8 +474,8 @@
                         <com.eanfang.base.kit.picture.picture.PictureRecycleView
                             android:id="@+id/rv_select_pic"
                             android:layout_width="match_parent"
-                            android:layout_marginStart="@dimen/dimen_30"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/dimen_30"
                             android:scrollbars="none" />
                     </LinearLayout>
                 </LinearLayout>

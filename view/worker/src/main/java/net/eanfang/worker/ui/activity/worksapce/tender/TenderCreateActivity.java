@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModel;
@@ -66,6 +67,12 @@ public class TenderCreateActivity extends BaseActivity implements SelectTimeDial
         GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + BaseApplication.get().getAccount().getAvatar()), mTenderCreateBinding.ivHeader);
         mTenderCreateBinding.tvName.setText(BaseApplication.get().getAccount().getRealName());
         mTenderCreateBinding.tvCompany.setText(BaseApplication.get().getCompanyEntity().getOrgName());
+        //是否认证
+        if (BaseApplication.get().getAccount().getRealVerify() == 0) {
+            mTenderCreateBinding.ivVerifyStatus.setVisibility(View.VISIBLE);
+        } else {
+            mTenderCreateBinding.ivVerifyStatus.setVisibility(View.GONE);
+        }
         mTenderCreateBinding.rvSelectPic.addImagev(tenderCreateViewModle.listener);
         if (mReleasetaskPublishEntity != null) {
             tenderCreateViewModle.doReleaseAgain(mReleasetaskPublishEntity);

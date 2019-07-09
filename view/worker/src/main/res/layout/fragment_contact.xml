@@ -78,8 +78,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/dimen_70"
-                        android:layout_marginRight="@dimen/dimen_36"
                         android:layout_marginTop="@dimen/dimen_26"
+                        android:layout_marginRight="@dimen/dimen_36"
                         android:background="#f5f5f5"
                         android:onClick="noOpen"
                         android:orientation="horizontal">
@@ -215,9 +215,9 @@
                             <TextView style="@style/style_common_line_gray" />
 
                             <RelativeLayout
+                                android:id="@+id/rl_focus"
                                 android:layout_width="match_parent"
                                 android:layout_height="50dp"
-                                android:onClick="noOpen"
                                 android:orientation="horizontal">
 
 
