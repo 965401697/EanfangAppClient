@@ -92,7 +92,7 @@ public class InstallOrderDetailActivity extends BaseActivity {
         tvContract.setText(bean.getConnector());
         tvContractPhone.setText(bean.getConnectorPhone());
 
-        tvTime.setText(V.v(() -> GetConstDataUtils.getArriveList().get(bean.getRevertTimeLimit())));
+        tvTime.setText(V.v(() -> GetConstDataUtils.getRevertList().get(bean.getRevertTimeLimit())));
         String area = Config.get().getAddressByCode(bean.getZone());
         tvAddress.setText(area + bean.getDetailPlace());
         tvBusiness.setText(Config.get().getBusinessNameByCode(bean.getBusinessOneCode(), 1));

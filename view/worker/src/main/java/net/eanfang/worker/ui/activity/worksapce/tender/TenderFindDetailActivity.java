@@ -45,7 +45,7 @@ public class TenderFindDetailActivity extends BaseActivity {
         setLeftBack(true);
         setRightTitle("分享");
         tenderFindDetailViewModle.mTendFindId = getIntent().getLongExtra("tendFindId", 0);
-        tenderFindDetailBinding.rlTime.setVisibility(getIntent().getBooleanExtra("isLookDetail", false) ? View.GONE : View.INVISIBLE);
+        tenderFindDetailBinding.rlTime.setVisibility(getIntent().getBooleanExtra("isLookDetail", false) ? View.GONE : View.VISIBLE);
         tenderFindDetailViewModle.initData();
 
         /**

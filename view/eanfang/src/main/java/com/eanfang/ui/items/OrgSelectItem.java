@@ -31,9 +31,7 @@ public class OrgSelectItem extends TreeItem<TemplateBean.Preson> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder) {
         viewHolder.setText(R.id.tv_name, data.getName());
-        GlideUtil.intoImageView(BaseApplication.get().getApplicationContext(),Uri.parse(BuildConfig.OSS_SERVER + data.getProtraivat()),
-                viewHolder.getImageView(R.id.iv_user_header));
-
+        GlideUtil.intoImageView(BaseApplication.get().getApplicationContext(), Uri.parse(BuildConfig.OSS_SERVER + data.getProtraivat()), viewHolder.getView(R.id.iv_user_header));
         if (data.isVisible()) {
             viewHolder.getView(R.id.cb_check).setVisibility(View.INVISIBLE);
         }
