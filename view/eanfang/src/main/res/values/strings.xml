@@ -140,7 +140,7 @@
     <string name="text_new_order_type_maintenance">维保类型：%1$s</string>
     <string name="text_new_order_time_remaining">距离截止还剩：%1$d天 %2$d时%3$d分</string>
     <string name="text_new_order_time_reply_end">回复截止时间：%1$s</string>
-    <string name="text_new_order_budget_scale">预算规模：%1$s</string>
+    <string name="text_new_order_budget_scale">预算规模：%1$s.0\t元/月</string>
     <string name="text_new_order_name_program">项目名称：%1$s</string>
     <string name="text_new_order_tenderee">招标单位：%1$s</string>
     <string name="text_new_order_area1">地域：%1$s</string>

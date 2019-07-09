@@ -22,6 +22,7 @@ import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.OrderDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.design.DesignOrderDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.maintenance.MaintenanceDetailActivity;
+import net.eanfang.worker.ui.activity.worksapce.tender.TenderFindDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.tender.WorkTenderDetailActivity;
 import net.eanfang.worker.ui.adapter.NewOrderAdapter;
 import net.eanfang.worker.ui.widget.InstallCtrlItemView;
@@ -54,7 +55,7 @@ public class NewOrderActivity extends BaseActivity {
         mClassMap.put(type1, OrderDetailActivity.class);
         mClassMap.put(type2, MaintenanceDetailActivity.class);
         mClassMap.put(type3, DesignOrderDetailActivity.class);
-        mClassMap.put(type4, OrderDetailActivity.class);
+        mClassMap.put(type4, TenderFindDetailActivity.class);
         mClassMap.put(type5, WorkTenderDetailActivity.class);
         mClassMap.put(type6, InstallCtrlItemView.class);
     }
@@ -95,6 +96,7 @@ public class NewOrderActivity extends BaseActivity {
 
     private void initView() {
         String typeTender = "标讯";
+        String typeTendFind = "用工找活";
         String typeInstallCtrl = "安装";
         mRecyclerView = findViewById(R.id.rec_new_order);
         setLeftBack();
@@ -117,16 +119,21 @@ public class NewOrderActivity extends BaseActivity {
             }
             String type = listBean.getOrderType();
             boolean isJumpAccId = listBean.getAccId() != null && listBean.getAccId().equals(String.valueOf(WorkerApplication.get().getAccId()));
-            boolean couldJump = mClassMap.get(type) != null && (isJumpAccId || typeTender.equals(type));
+            boolean couldJump = mClassMap.get(type) != null && (isJumpAccId || typeTender.equals(type) || typeTendFind.equals(type));
             if (couldJump) {
-                if (!typeInstallCtrl.equals(type)) {
-                    Intent intent = new Intent(NewOrderActivity.this, mClassMap.get(listBean.getOrderType()));
+                if (typeInstallCtrl.equals(type)) {
+                    new InstallCtrlItemView(this, true, listBean.getOrderId()).show();
+                    return;
+                }
+                Intent intent = new Intent(NewOrderActivity.this, mClassMap.get(listBean.getOrderType()));
+                if (typeTendFind.equals(type)) {
+                    intent.putExtra("tendFindId", listBean.getOrderId());
+                    intent.putExtra("isLookDetail", false);
+                } else {
                     intent.putExtra("id", listBean.getOrderId());
                     intent.putExtra("orderTime", listBean.getCreateTime());
-                    startActivity(intent);
-                } else {
-                    new InstallCtrlItemView(this, true, listBean.getOrderId()).show();
                 }
+                startActivity(intent);
             }
         });
     }
