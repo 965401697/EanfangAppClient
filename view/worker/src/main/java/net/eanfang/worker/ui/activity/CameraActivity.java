@@ -17,6 +17,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.IdRes;
+import androidx.lifecycle.ViewModel;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -29,7 +30,6 @@ import com.amap.api.services.weather.WeatherSearch;
 import com.amap.api.services.weather.WeatherSearchQuery;
 import com.camera.util.BitmapUtil;
 import com.camera.util.ImageUtil;
-import com.camera.view.TakePhotoActivity;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.base.kit.picture.IPictureCallBack;
@@ -48,7 +48,7 @@ import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
-import net.eanfang.worker.ui.base.BaseWorkerActivity;
+import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -66,7 +66,7 @@ import butterknife.OnClick;
  * @desc 相机助手
  */
 
-public class CameraActivity extends BaseWorkerActivity implements AMapLocationListener, RadioGroup.OnCheckedChangeListener {
+public class CameraActivity extends BaseWorkeActivity implements AMapLocationListener, RadioGroup.OnCheckedChangeListener {
     //选择其他地址回调 code
     private final int REPAIR_ADDRESS_CALLBACK_CODE = 1;
     @BindView(R.id.et_project_name)
@@ -125,7 +125,6 @@ public class CameraActivity extends BaseWorkerActivity implements AMapLocationLi
         setContentView(R.layout.activity_camera);
         ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
-        initView();
         initLocal();
         getData();
     }
@@ -146,6 +145,11 @@ public class CameraActivity extends BaseWorkerActivity implements AMapLocationLi
     protected void onDestroy() {
         super.onDestroy();
         destroyLocation();
+    }
+
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
     }
 
     /**
@@ -170,10 +174,10 @@ public class CameraActivity extends BaseWorkerActivity implements AMapLocationLi
         // 停止定位
         locationClient.stopLocation();
     }
-
-    private void initView() {
+    @Override
+    public void initView() {
         setTitle("专业相机");
-        setLeftBack();
+        setLeftBack(true);
         initGPS();
         rgColor.setOnCheckedChangeListener(this);
         rgType.setOnCheckedChangeListener(this);
@@ -511,7 +515,7 @@ public class CameraActivity extends BaseWorkerActivity implements AMapLocationLi
             if (flCamera.getVisibility() == View.VISIBLE) {
                 flCamera.setVisibility(View.GONE);
             } else {
-                finishSelf();
+                finish();
             }
             return true;
         }
