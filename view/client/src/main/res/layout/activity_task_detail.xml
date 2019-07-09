@@ -26,7 +26,6 @@
                 android:layout_height="@dimen/dimen_100"
                 android:layout_marginLeft="@dimen/dimen_36"
                 android:layout_marginTop="@dimen/dimen_40"
-                android:layout_toRightOf="@+id/cb_checked"
                 android:src="@mipmap/ic_header"
                 />
 
