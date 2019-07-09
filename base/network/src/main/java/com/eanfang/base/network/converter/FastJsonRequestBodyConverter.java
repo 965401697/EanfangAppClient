@@ -18,10 +18,14 @@ import retrofit2.Converter;
  */
 public class FastJsonRequestBodyConverter<T> implements Converter<T, RequestBody> {
     private static final MediaType MEDIA_TYPE = MediaType.parse("application/json; charset=UTF-8");
+    private static final String COM_EANFANG_BIZ_MODEL_VO = "com.eanfang.biz.model.vo";
 
     @Override
     public RequestBody convert(@NonNull T value) {
-        JSONObject object = VoKit.vo2Json(value);
-        return RequestBody.create(MEDIA_TYPE, JSON.toJSONBytes(object));
+        JSONObject object = null;
+        if (value.getClass().getName().contains(COM_EANFANG_BIZ_MODEL_VO)) {
+            object = VoKit.vo2Json(value);
+        }
+        return RequestBody.create(MEDIA_TYPE, JSON.toJSONBytes(object != null ? object : value));
     }
 }

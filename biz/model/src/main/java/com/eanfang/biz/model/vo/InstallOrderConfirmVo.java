@@ -14,7 +14,7 @@ import lombok.Getter;
  * Created by yaosheng on 2017/4/27.
  */
 @Getter
-public class InstallOrderConfirmVo extends BaseVo implements Serializable {
+public class   InstallOrderConfirmVo extends BaseVo implements Serializable {
     /**
      * clientCompanyName : 安防公司
      * longitude : 3243

@@ -18,10 +18,12 @@ import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.tools.ScreenUtils;
+import com.luck.picture.lib.tools.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 
 public class PictureRecycleView extends RecyclerView {
@@ -60,11 +62,31 @@ public class PictureRecycleView extends RecyclerView {
      */
     public void addImagev(ImageListener imageListener) {
         setImageListener(imageListener);
-        int width=(ScreenUtils.getScreenWidth(context)-100)/3;
-        adapter = new GridImageAdapter(context, width, onAddPicClickListener);
+        adapter = new GridImageAdapter(context, 200, onAddPicClickListener);
+        adapter.setSelectMax(3);
         init();
     }
 
+    /**
+     * 新增故障页面
+     * @param imageListener
+     */
+    public void addImage(ImageListener imageListener) {
+        setImageListener(imageListener);
+        adapter = new GridImageAdapter(context,  onAddPicClickListener);
+        adapter.setSelectMax(3);
+        init();
+    }
+    /**
+     * 添加视频
+     */
+    public void addVideo(ImageListener imageListener){
+        setImageListener(imageListener);
+        adapter = new GridImageAdapter(context,  videoListenner);
+        adapter.setSelectMax(1);
+        type=1;
+        init();
+    }
     /**
      * 展示图片
      */
@@ -73,6 +95,7 @@ public class PictureRecycleView extends RecyclerView {
         this.mList = list;
         int width=(ScreenUtils.getScreenWidth(context)-100)/3;
         adapter = new GridImageAdapter(context, width, false, onAddPicClick);
+        adapter.setSelectMax(3);
         init();
     }
 
@@ -93,7 +116,6 @@ public class PictureRecycleView extends RecyclerView {
         LinearLayoutManager manager = new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false);
         setLayoutManager(manager);
         adapter.setList(mList);
-        adapter.setSelectMax(3);
         adapter.setType(type);
         setAdapter(adapter);
         adapter.setOnItemClickListener(listener);
@@ -150,7 +172,41 @@ public class PictureRecycleView extends RecyclerView {
         }
         return select;
     }
+    /**
+     * 图片和视频公用一个UUID
+     * 生成随机UUID::IdUtil.simpleUUID()
+     */
+    String uploadKey = "biz/repair/video/" + IdUtil.simpleUUID();
+    GridImageAdapter.onAddPicClickListener videoListenner = () -> {
+        SDKManager.getPicture().create((Activity) context).setSelectList(null).takeVideo(new IPictureCallBack() {
+            @Override
+            public void onSuccess(List<LocalMedia> list) {
+                //选择视频成功之后的逻辑操作
+                mList = list;
+                setList(mList);
+                doCommitVideo(mList);
+                if (getImageListener() != null) {
+                    getImageListener().imageData(list);
+                }
+            }
+        });
+    };
 
+    /**
+     * 进行上传视频
+     * @param videoList
+     */
+    public void doCommitVideo(List<LocalMedia> videoList) {
+        if (videoList == null && videoList.size() == 0) {
+            return;
+        }
+        String mVideoPath = videoList.get(0).getPath();
+        if (!StrUtil.isEmpty(mVideoPath)) {
+            SDKManager.ossKit((Activity) context).asyncPutVideo(uploadKey + ".mp4", mVideoPath, (isSuccess) -> {
+                //      showToast("上传视频成功");
+            });
+        }
+    }
 
     GridImageAdapter.onAddPicClickListener onAddPicClickListener = new GridImageAdapter.onAddPicClickListener() {
         @Override

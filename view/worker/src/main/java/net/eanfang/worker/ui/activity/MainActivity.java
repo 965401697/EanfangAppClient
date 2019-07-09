@@ -143,12 +143,13 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
         initFragment();
         initUpdate();
 
+        String rongToken = WorkerApplication.get().get(EanfangConst.RONG_YUN_TOKEN, "");
         //融云登录
-        if (TextUtils.isEmpty(WorkerApplication.get().get(EanfangConst.RONG_YUN_TOKEN, ""))) {
+        if (TextUtils.isEmpty(rongToken)) {
             getRongYToken();
         } else {
             //如果有融云token 就直接登录
-            WorkerApplication.connect(WorkerApplication.get().get(EanfangConst.RONG_YUN_TOKEN, ""));
+            WorkerApplication.connect(rongToken);
         }
 
         //阻止底部 菜单拦被软键盘顶起

@@ -240,6 +240,9 @@ public class AllWorkerFragment extends BaseFragment implements SwipeRefreshLayou
                 .upJson(JSON.toJSONString(toRepairBean))
                 .execute(new EanfangCallback<RepairOrderEntity>(getActivity(), true, RepairOrderEntity.class, (bean) -> {
                     //待支付
+                    if (bean == null) {
+                        return;
+                    }
                     if (Constant.RepairStatus.CREATED.v == bean.getStatus().intValue()) {
                         payment(bean);
                     } else {
@@ -261,7 +264,8 @@ public class AllWorkerFragment extends BaseFragment implements SwipeRefreshLayou
         bundle.putSerializable("message", message);
         intent.putExtras(bundle);
         startActivity(intent);
-        closeActivity();
+//        closeActivity();
+        finishSelf();
 
     }
 

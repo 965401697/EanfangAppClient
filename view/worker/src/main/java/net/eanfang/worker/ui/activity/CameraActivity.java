@@ -30,7 +30,9 @@ import com.amap.api.services.weather.WeatherSearchQuery;
 import com.camera.util.BitmapUtil;
 import com.camera.util.ImageUtil;
 import com.camera.view.TakePhotoActivity;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.cache.CacheKit;
+import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.biz.model.CameraBean;
 import com.eanfang.biz.model.SelectAddressItem;
@@ -42,12 +44,14 @@ import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.base.kit.V;
 import com.eanfang.witget.CustomRadioGroup;
+import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import java.io.FileNotFoundException;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -285,10 +289,31 @@ public class CameraActivity extends BaseWorkerActivity implements AMapLocationLi
                 return;
             }
             setData();
-            Intent intent = new Intent(CameraActivity.this, TakePhotoActivity.class);
-            startActivityForResult(intent, TakePhotoActivity.REQUEST_CAPTRUE_CODE);
+            imageV();
         });
     }
+    private void imageV() {
+        SDKManager.getPicture().create(this).takeCamera(iPictureCallBack);
+    }
+
+    IPictureCallBack iPictureCallBack = new IPictureCallBack() {
+        @Override
+        public void onSuccess(List<LocalMedia> list) {
+            //往图片绘制文字
+            time = GetDateUtils.dateToDateTimeString(GetDateUtils.getDateNow());
+            String path = list.get(0).getPath();
+            Bitmap waterBitmap = BitmapUtil.getBitmap(path);
+            Bitmap watermarkBitmap = ImageUtil.createWaterMaskCenter(waterBitmap, waterBitmap);
+
+            if (ConnectivityChangeUtil.isNetConnected(CameraActivity.this) == true) {
+                String netAddress = tvLocationAddress.getText().toString();
+                drawBitmap(path, watermarkBitmap, netAddress, time);
+            } else {
+                String address = etAddress.getText().toString().trim();
+                drawBitmap(path, watermarkBitmap, address, time);
+            }
+        }
+    };
 
     /**
      * 检查有没有输入属性
@@ -359,21 +384,6 @@ public class CameraActivity extends BaseWorkerActivity implements AMapLocationLi
             return;//当回掉无数据时，保持app正常
         }
         switch (requestCode) {
-            case TakePhotoActivity.REQUEST_CAPTRUE_CODE:
-                //往图片绘制文字
-                time = GetDateUtils.dateToDateTimeString(GetDateUtils.getDateNow());
-                String path = data.getStringExtra(TakePhotoActivity.RESULT_PHOTO_PATH);
-                Bitmap waterBitmap = BitmapUtil.getBitmap(path);
-                Bitmap watermarkBitmap = ImageUtil.createWaterMaskCenter(waterBitmap, waterBitmap);
-
-                if (ConnectivityChangeUtil.isNetConnected(this) == true) {
-                    String netAddress = tvLocationAddress.getText().toString();
-                    drawBitmap(path, watermarkBitmap, netAddress, time);
-                } else {
-                    String address = etAddress.getText().toString().trim();
-                    drawBitmap(path, watermarkBitmap, address, time);
-                }
-                break;
             case REPAIR_ADDRESS_CALLBACK_CODE:
                 locationClient.stopLocation();
                 SelectAddressItem item = (SelectAddressItem) data.getSerializableExtra("data");

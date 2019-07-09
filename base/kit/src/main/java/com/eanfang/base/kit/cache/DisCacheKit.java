@@ -45,7 +45,11 @@ class DisCacheKit {
         Observable.create(emitter -> {
             DiskLruCache.Editor editor = getDisk().edit(hashKeyForDisk(key));
             if (editor != null) {
-                editor.set(0, JSONObject.toJSONString(value));
+                if (value instanceof String) {
+                    editor.set(0, value.toString());
+                } else {
+                    editor.set(0, JSONObject.toJSONString(value));
+                }
                 editor.commit();
             }
             getDisk().flush();
@@ -75,7 +79,7 @@ class DisCacheKit {
                 } else if (json.startsWith("[") && json.endsWith("]")) {
                     result = null;
                 } else {
-                    result = (T) json;
+                    result = (T) json.replace("\"", "");
                 }
             }
             getDisk().flush();
@@ -106,7 +110,7 @@ class DisCacheKit {
                 } else if (json.startsWith("[") && json.endsWith("]")) {
                     result = null;
                 } else {
-                    result = (T) json;
+                    result = (T) json.replace("\"", "");
                 }
             }
             getDisk().flush();
@@ -137,7 +141,7 @@ class DisCacheKit {
                 } else if (json.startsWith("{") && json.endsWith("}")) {
                     result = null;
                 } else {
-                    result = Collections.singletonList((T) json);
+                    result = Collections.singletonList((T) json.replace("\"", ""));
                 }
             }
             getDisk().flush();
@@ -169,7 +173,7 @@ class DisCacheKit {
                 } else if (json.startsWith("{") && json.endsWith("}")) {
                     result = null;
                 } else {
-                    result = Collections.singletonList((T) json);
+                    result = Collections.singletonList((T) json.replace("\"", ""));
                 }
                 getDisk().flush();
             }

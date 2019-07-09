@@ -28,6 +28,7 @@ import com.eanfang.biz.model.GroupDetailBean;
 import com.eanfang.biz.model.TemplateBean;
 
 import com.eanfang.util.DialogUtil;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UuidUtil;
 import com.eanfang.util.compound.CompoundHelper;
@@ -398,9 +399,9 @@ public class NewSelectIMContactActivity extends BaseWorkerActivity {
         @Override
         protected void convert(BaseViewHolder helper, TemplateBean.Preson item) {
             if (item.getProtraivat().startsWith("http")) {
-                ((ImageView) helper.getView(R.id.iv_user_header)).setImageURI(Uri.parse(item.getProtraivat()));
+                GlideUtil.intoImageView(mContext,Uri.parse(item.getProtraivat()),helper.getView(R.id.iv_user_header));
             } else {
-                ((ImageView) helper.getView(R.id.iv_user_header)).setImageURI(Uri.parse(BuildConfig.OSS_SERVER + item.getProtraivat()));
+                GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + item.getProtraivat()), helper.getView(R.id.iv_user_header));
             }
         }
     }

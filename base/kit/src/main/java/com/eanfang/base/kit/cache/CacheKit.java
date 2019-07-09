@@ -24,7 +24,7 @@ import cn.hutool.core.date.DateUtil;
  */
 @SuppressWarnings("unchecked")
 public class CacheKit extends LruCache<String, Object> {
-    public static final String COM_EANFANG_BIZ_MODEL_VO = "com.eanfang.biz.model.vo";
+    private static final String COM_EANFANG_BIZ_MODEL_VO = "com.eanfang.biz.model.vo";
     private static DisCacheKit disCacheKit;
     private static CacheKit cacheKit;
     private Class clazz;
@@ -119,7 +119,11 @@ public class CacheKit extends LruCache<String, Object> {
         this.clazz = clazz;
         if (this.clazz.getName().contains(COM_EANFANG_BIZ_MODEL_VO)) {
             this.clazz = JSONObject.class;
-            JSONObject json = (JSONObject) super.get(key);
+            Object result = super.get(key);
+            if (result != null && (clazz.getName().equals(result.getClass().getName()))) {
+                return (T) result;
+            }
+            JSONObject json = (JSONObject) result;
             return VoKit.obj2Vo(json, clazz);
         }
         return (T) super.get(key);
@@ -144,7 +148,6 @@ public class CacheKit extends LruCache<String, Object> {
     @Nullable
     @Override
     public Object put(@NonNull String key, @NonNull Object value) {
-        disCacheKit.put(key, value);
         return this.put(key, value, true, null);
     }
 
@@ -191,8 +194,13 @@ public class CacheKit extends LruCache<String, Object> {
         if (!isDisk) {
             return super.put(key, value);
         } else {
-            JSONObject jsonValue = VoKit.vo2Json(value);
-            disCacheKit.put(key, jsonValue);
+            if (value.getClass().getName().contains(COM_EANFANG_BIZ_MODEL_VO)) {
+                JSONObject jsonValue = VoKit.vo2Json(value);
+                disCacheKit.put(key, jsonValue);
+            } else {
+                disCacheKit.put(key, value);
+            }
+
         }
         return super.put(key, value);
     }

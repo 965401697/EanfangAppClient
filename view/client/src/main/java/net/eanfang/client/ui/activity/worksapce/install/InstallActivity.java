@@ -231,7 +231,7 @@ public class InstallActivity extends BaseClientActivity {
         installOrderConfirmBean.setLongitude(longitude);
         installOrderConfirmBean.setClientCompanyName(company);
         installOrderConfirmBean.setZone(Config.get().getAreaCodeByName(city, zone));
-        installOrderConfirmBean.setZoneId(Long.valueOf(Config.get().getBaseIdByCode(installOrderConfirmBean.getZone(), 3, Constant.AREA)));
+//        installOrderConfirmBean.setZoneId(Long.valueOf(installOrderConfirmVo.getZoneId().get()));
         installOrderConfirmBean.setConnector(contact);
         installOrderConfirmBean.setConnectorPhone(phone);
         installOrderConfirmBean.setDetailPlace(installOrderConfirmVo.getDetailPlace().get());
@@ -311,6 +311,10 @@ public class InstallActivity extends BaseClientActivity {
             longitude = item.getLongitude().toString();
             city = item.getCity();
             zone = item.getAddress();
+            binding.getInstallbean().getZone().set(zone);
+            binding.getInstallbean().getLatitude().set(latitude);
+            binding.getInstallbean().getLongitude().set(longitude);
+//            binding.getInstallbean().getZoneId().set(Config.get().getBaseIdByCode(zone, 3, Constant.AREA).toString());
             binding.tvAddress.setText(item.getProvince() + "-" + item.getCity() + "-" + item.getAddress());
             //地图选址 取 显示值
             binding.etDetailAddress.setText(item.getName());

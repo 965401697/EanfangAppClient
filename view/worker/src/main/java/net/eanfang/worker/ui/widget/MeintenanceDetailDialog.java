@@ -106,14 +106,12 @@ public class MeintenanceDetailDialog extends BaseDialog {
             }
 
             if (urls.length >= 2) {
-                ivPic2.setImageURI(Uri.parse(BuildConfig.OSS_SERVER + urls[1]));
                 GlideUtil.intoImageView(context,Uri.parse(BuildConfig.OSS_SERVER + urls[1]),ivPic2);
                 ivPic2.setVisibility(View.VISIBLE);
             } else {
                 ivPic2.setVisibility(View.GONE);
             }
             if (urls.length >= 3) {
-                ivPic3.setImageURI(Uri.parse(BuildConfig.OSS_SERVER +urls[2]));
                 GlideUtil.intoImageView(context,Uri.parse(BuildConfig.OSS_SERVER + urls[2]),ivPic3);
                 ivPic3.setVisibility(View.VISIBLE);
             } else {

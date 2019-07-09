@@ -2,6 +2,7 @@ package com.eanfang.base;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModel;
 
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.loading.LoadKit;
 import com.eanfang.base.kit.loading.callback.EmptyCallback;
 import com.eanfang.base.kit.loading.callback.ErrorCallback;
@@ -24,10 +26,13 @@ import com.eanfang.base.network.event.BaseActionEvent;
 import com.eanfang.biz.rds.base.IViewModelAction;
 import com.kingja.loadsir.core.LoadService;
 import com.kingja.loadsir.core.LoadSir;
+import com.luck.picture.lib.config.PictureConfig;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.app.Activity.RESULT_OK;
 
 
 /**
@@ -254,4 +259,23 @@ public abstract class BaseFragment extends RxFragment {
         return getApp() == 1;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        pictureSelect(requestCode,resultCode,data);
+    }
+    /**
+     * 图片选择
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    private void pictureSelect(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == PictureConfig.CHOOSE_REQUEST) {
+                SDKManager.getPicture().create(this).onActivityResult(requestCode, resultCode, data);
+            }
+        }
+    }
 }

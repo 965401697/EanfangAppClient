@@ -386,8 +386,8 @@ public class GroupDetailActivity extends BaseWorkeActivity {
         @Override
         public void onSuccess(List<LocalMedia> list) {
             headPortrait = "im/select/CUSTOM_" + UuidUtil.getUUID() + ".png";
-            GlideUtil.intoImageView(GroupDetailActivity.this,"file://" +  list.get(0).getCutPath(),groupHeader);
-            SDKManager.ossKit(GroupDetailActivity.this).asyncPutImage(headPortrait,  list.get(0).getCutPath(),(isSuccess) -> {
+            GlideUtil.intoImageView(GroupDetailActivity.this,"file://" +  list.get(0).getPath(),groupHeader);
+            SDKManager.ossKit(GroupDetailActivity.this).asyncPutImage(headPortrait,  list.get(0).getPath(),(isSuccess) -> {
                 updataGroupInfo(title, headPortrait, "", "");
             });
         }

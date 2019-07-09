@@ -110,7 +110,9 @@ public class VoKit {
                         }
                         ReflectUtil.invoke(obj, "set", json.get(fieldName));
                     } else {
-                        ReflectUtil.invoke(object, StrUtil.toCamelCase("set_" + fieldName), json.get(fieldName));
+                        if (ReflectUtil.getMethodByName(clazz, StrUtil.toCamelCase("set_" + fieldName)) != null) {
+                            ReflectUtil.invoke(object, StrUtil.toCamelCase("set_" + fieldName), json.get(fieldName));
+                        }
                     }
                 }
             }

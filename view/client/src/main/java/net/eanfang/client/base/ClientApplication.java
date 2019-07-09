@@ -24,6 +24,7 @@ import net.eanfang.client.ui.activity.im.SampleExtensionModule;
 import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
 import lombok.Getter;
 
 import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
@@ -114,6 +115,12 @@ public class ClientApplication extends BaseApplication {
             RongIM.registerMessageType(CustomizeVideoMessage.class);
             RongIM.registerMessageTemplate(new CustomizeVideoMessageItemProvider());
 
+            Conversation.ConversationType[] types = new Conversation.ConversationType[]{
+                    Conversation.ConversationType.PRIVATE,
+                    Conversation.ConversationType.GROUP,
+                    Conversation.ConversationType.DISCUSSION
+            };
+            RongIM.getInstance().setReadReceiptConversationTypeList(types);
         }
 
     }
