@@ -6,25 +6,24 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.text.TextUtils;
+import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.TextUtils;
-import android.view.View;
-
 import com.alibaba.fastjson.JSON;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.kit.V;
+import com.eanfang.base.kit.rx.RxPerm;
+import com.eanfang.biz.model.FriendListBean;
+import com.eanfang.biz.model.entity.AccountEntity;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.FriendListBean;
 import com.eanfang.util.Cn2Spell;
-import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.ToastUtil;
-import com.eanfang.base.kit.V;
 import com.eanfang.witget.SideBar;
-import com.eanfang.biz.model.entity.AccountEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
@@ -52,11 +51,12 @@ public class SearchStaffActivity extends BaseWorkerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_staff2);
         ButterKnife.bind(this);
+        RxPerm.get(this).contactsPerm((isSuccess) -> {
+            mList = getPhoneContacts();
+        });
         setTitle("添加员工");
         setLeftBack();
         startTransaction(true);
-
-        mList = getPhoneContacts();
         initViews();
         RxPerm.get(this).storagePerm((isSuccess) -> {
             initData();

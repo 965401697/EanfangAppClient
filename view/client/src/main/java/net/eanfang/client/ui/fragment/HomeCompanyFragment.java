@@ -15,6 +15,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseFragment;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.worksapce.online.DividerItemDecoration;
 import net.eanfang.client.ui.adapter.FragmentHomeCompanyAdapter;
 
 
@@ -102,6 +103,7 @@ public class HomeCompanyFragment extends BaseFragment {
     @Override
     protected void initView() {
         mRecHomeCompany.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecHomeCompany.addItemDecoration(new DividerItemDecoration(getContext()));
         adapter = new FragmentHomeCompanyAdapter();
         adapter.bindToRecyclerView(mRecHomeCompany);
     }

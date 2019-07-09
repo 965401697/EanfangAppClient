@@ -193,7 +193,7 @@ public class RxPerm {
      * @param success 成功回调
      */
     public void contactsPerm(Consumer<Boolean> success) {
-        cameraPerm()
+        contactsPerm()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(permission -> {
                     if (permission.granted) {

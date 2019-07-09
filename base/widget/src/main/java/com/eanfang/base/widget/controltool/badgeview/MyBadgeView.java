@@ -13,7 +13,7 @@ public class MyBadgeView extends QBadgeView {
     private float padding = 2;
     private boolean isDpValue = true;
     private int gravity = Gravity.END | Gravity.TOP;
-    private float offsetX = 0;
+    private float offsetX = 5;
     private float offsetY = 3;
     private boolean isDpValueGravityOffset = true;
     private float size = 11;

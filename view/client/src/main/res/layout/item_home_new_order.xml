@@ -50,6 +50,7 @@
             android:layout_marginLeft="@dimen/dimen_36"
             android:layout_weight="8"
             android:lines="1"
+            android:ellipsize="end"
             android:text="需求描述"
             android:textColor="@color/color_bottom"
             android:textSize="13sp" />

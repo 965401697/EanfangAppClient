@@ -6,8 +6,10 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
+import com.eanfang.base.kit.V;
 import com.eanfang.biz.model.FriendListBean;
 import com.eanfang.util.GlideUtil;
+import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.R;
 
@@ -27,14 +29,18 @@ public class AddStaffAdapter extends BaseQuickAdapter<FriendListBean, BaseViewHo
     @Override
     protected void convert(BaseViewHolder helper, FriendListBean item) {
         if (!TextUtils.isEmpty(item.getAvatar()) && item.getAvatar().length() > 0) {
-            GlideUtil.intoImageView(mContext,BuildConfig.OSS_SERVER + item.getAvatar(),helper.getView(R.id.iv_friend_header));
+            GlideUtil.intoImageView(mContext, BuildConfig.OSS_SERVER + item.getAvatar(), helper.getView(R.id.iv_friend_header));
             helper.setVisible(R.id.iv_friend_title, false);
             helper.getView(R.id.iv_friend_header).setVisibility(View.VISIBLE);
         } else {
             helper.setVisible(R.id.iv_friend_title, true);
-            helper.setText(R.id.iv_friend_title, item.getRealName().length() > 2 ?
-                    item.getRealName().substring(item.getRealName().length() - 2) :
-                    item.getRealName());
+
+            if (!StringUtils.isEmpty(item.getRealName())) {
+                helper.setText(R.id.iv_friend_title, item.getRealName().length() > 2 ?
+                        item.getRealName().substring(item.getRealName().length() - 2) :
+                        item.getRealName());
+            }
+
             helper.getView(R.id.iv_friend_header).setVisibility(View.INVISIBLE);
         }
         if (mFlag == 1) {

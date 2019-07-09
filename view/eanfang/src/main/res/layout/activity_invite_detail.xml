@@ -33,7 +33,7 @@
         app:layout_constraintBottom_toBottomOf="@id/tab_title" />
 
     <androidx.viewpager.widget.ViewPager
-        android:id="@+id/vp_invite_detail"
+        android:id="@+id/vp_my_invite_detail"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constrainedHeight="true"

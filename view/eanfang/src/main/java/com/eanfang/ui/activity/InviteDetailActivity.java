@@ -25,7 +25,7 @@ public class InviteDetailActivity extends BaseActivity {
     public static final String EXTRA_STATUS = "extraStatus";
     @BindView(R2.id.tab_title)
     SlidingTabLayout mTabTitle;
-    @BindView(R2.id.vp_invite_detail)
+    @BindView(R2.id.vp_my_invite_detail)
     ViewPager mVpInviteDetail;
     private String[] mTitles = new String[]{"已获得", "已提现", "已失效"};
     private InviteDetailPagerAdapter mInvitePagerAdapter;
