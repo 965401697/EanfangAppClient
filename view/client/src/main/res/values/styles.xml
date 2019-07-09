@@ -153,6 +153,6 @@
 
     <style name="HomeEditText" parent="Theme.AppCompat.Light">
         <item name="colorControlNormal">@color/color_service_deiveder</item>
-        <item name="colorControlActivated">@color/color_service_deiveder</item>
+        <item name="colorControlActivated">@color/colorPrimaryC</item>
     </style>
 </resources>

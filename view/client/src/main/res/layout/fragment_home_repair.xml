@@ -38,15 +38,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen_38"
-        android:layout_marginTop="@dimen/dimen_56"
+        android:layout_marginTop="@dimen/dimen_30"
         android:layout_marginRight="@dimen/dimen_38"
         android:orientation="horizontal">
 
         <EditText
-            style="@style/HomeEditText"
+            android:theme="@style/HomeEditText"
             android:id="@+id/et_home_repair_sys"
             android:layout_width="0dp"
-            android:layout_height="@dimen/dimen_120"
+            android:layout_height="@dimen/dimen_100"
             android:layout_marginRight="@dimen/dimen_18"
             android:layout_weight="1"
             android:drawableRight="@drawable/arrow_right"
@@ -55,10 +55,10 @@
             android:textSize="14sp" />
 
         <EditText
-            style="@style/HomeEditText"
+            android:theme="@style/HomeEditText"
             android:id="@+id/et_home_repair_brand"
             android:layout_width="0dp"
-            android:layout_height="@dimen/dimen_120"
+            android:layout_height="@dimen/dimen_100"
             android:layout_marginLeft="@dimen/dimen_18"
             android:layout_weight="1"
             android:drawableRight="@drawable/arrow_right"
@@ -68,7 +68,7 @@
     </LinearLayout>
 
     <EditText
-        style="@style/HomeEditText"
+        android:theme="@style/HomeEditText"
         android:id="@+id/et_home_repair_describe"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_120"

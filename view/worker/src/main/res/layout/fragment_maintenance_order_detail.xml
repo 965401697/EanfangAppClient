@@ -22,7 +22,7 @@
                 android:layout_height="@dimen/dimen_126"
                 android:background="@color/white">
 
-                <ImageView
+                <com.eanfang.base.widget.customview.CircleImageView
                     android:id="@+id/iv_report_header"
                     android:layout_width="@dimen/dimen_70"
                     android:layout_height="@dimen/dimen_70"

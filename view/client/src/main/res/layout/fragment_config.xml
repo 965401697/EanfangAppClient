@@ -79,12 +79,18 @@
 
                             <TextView
                                 android:id="@+id/tv_user_name"
-                                android:layout_width="wrap_content"
+                                android:layout_width="@dimen/dimen_200"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
+                                android:ellipsize="marquee"
+                                android:focusable="true"
+                                android:focusableInTouchMode="true"
                                 android:gravity="center_vertical"
+                                android:marqueeRepeatLimit="marquee_forever"
                                 android:paddingTop="@dimen/dimen_20"
                                 android:paddingBottom="@dimen/dimen_20"
+                                android:scrollHorizontally="true"
+                                android:singleLine="true"
                                 android:text="小明童鞋"
                                 android:textColor="@color/color_white"
                                 android:textSize="@dimen/textSize_20" />
