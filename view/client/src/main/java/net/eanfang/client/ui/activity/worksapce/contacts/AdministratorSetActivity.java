@@ -42,9 +42,9 @@ public class AdministratorSetActivity extends BaseClientActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_administrator_set);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("管理员设置");
         setLeftBack();
 

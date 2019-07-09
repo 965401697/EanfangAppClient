@@ -124,9 +124,9 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         user = WorkerApplication.get().getLoginBean();
 //        XGPushClickedResult message = XGPushManager.onActivityStarted(this);
 //        if (message != null) {

@@ -43,9 +43,9 @@ public class GroupMoreMemberActivity extends BaseClientActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_more_mumber);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("群组成员");
         setLeftBack();
         mList = (ArrayList<GroupDetailBean.ListBean>) getIntent().getSerializableExtra("list");

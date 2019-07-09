@@ -37,9 +37,9 @@ public class TaskAssignmentListActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_assignment_list);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
     }
 

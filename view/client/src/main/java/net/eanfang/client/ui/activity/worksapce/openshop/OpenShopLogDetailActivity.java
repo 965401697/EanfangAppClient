@@ -73,9 +73,9 @@ public class OpenShopLogDetailActivity extends BaseClientActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_open_shop_log_detail);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("日志详情");
         setLeftBack();
         initData();

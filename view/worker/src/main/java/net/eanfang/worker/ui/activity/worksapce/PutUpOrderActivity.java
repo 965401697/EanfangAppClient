@@ -97,9 +97,9 @@ public class PutUpOrderActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_put_up_order);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
         initData();
     }

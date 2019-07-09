@@ -96,9 +96,9 @@ public class TechnicianDetailsActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_technician_details);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
     }
 

@@ -62,9 +62,9 @@ public class QualificationsAndHonoursActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qualifications_and_honours);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
     }
 

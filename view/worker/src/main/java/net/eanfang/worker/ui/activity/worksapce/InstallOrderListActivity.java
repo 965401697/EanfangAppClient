@@ -54,9 +54,9 @@ public class InstallOrderListActivity extends BaseWorkerActivity implements Swip
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_list);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
     }
 

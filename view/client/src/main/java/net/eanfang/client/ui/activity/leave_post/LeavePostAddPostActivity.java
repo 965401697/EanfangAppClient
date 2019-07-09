@@ -57,10 +57,10 @@ public class LeavePostAddPostActivity extends BaseActivity {
         } else {
             int stationId = getIntent().getIntExtra("stationId", 0);
             setTitle("岗位详情");
-            setRightBack(view -> {
+            setRightClick(view -> {
                 setViewEnable(true);
                 setRightTitle("确定");
-                setRightBack(view1 -> {
+                setRightClick(view1 -> {
                     mViewModel.updatePostInfo();
                 });
             });

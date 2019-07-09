@@ -92,9 +92,9 @@ public class CompanyManagerBActivity extends BaseActivity implements DissloveTea
     private String adminUserId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_company_manager_b);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
     }
 

@@ -108,9 +108,9 @@ public class AddReportPlanActivity extends BaseWorkerActivity implements View.On
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_plan_info);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
     }
 

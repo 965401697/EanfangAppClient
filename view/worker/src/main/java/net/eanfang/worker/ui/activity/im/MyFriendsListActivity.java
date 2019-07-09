@@ -53,10 +53,10 @@ public class MyFriendsListActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_my_friends_list);
         ButterKnife.bind(this);
-
+        super.onCreate(savedInstanceState);
         setLeftBack();
         setTitle("我的好友");
         initViews();

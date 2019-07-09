@@ -53,10 +53,9 @@ public class FaultStatisticsListActivity extends BaseClientActivity implements S
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_fault_statistics);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("故障统计");
         setLeftBack();
 

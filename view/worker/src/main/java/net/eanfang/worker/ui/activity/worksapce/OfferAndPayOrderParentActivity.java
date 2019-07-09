@@ -36,9 +36,9 @@ public class OfferAndPayOrderParentActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_offer_and_pay_order_parent);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("报价管控");
         setLeftBack();
         initView();

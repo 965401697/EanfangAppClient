@@ -78,7 +78,7 @@ public class LeavePostAlarmRankingActivity extends BaseActivity {
         mBinding.recLeavePostAlarmRanking.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new LeavePostRankingAdapter();
         mAdapter.bindToRecyclerView(mBinding.recLeavePostAlarmRanking);
-        setRightBack(view -> mViewModel.gotoHistoryPage(LeavePostAlarmRankingActivity.this));
+        setRightClick(view -> mViewModel.gotoHistoryPage(LeavePostAlarmRankingActivity.this));
         initChooseView();
         mAdapter.setOnItemClickListener((adapter, view, position) -> mViewModel.gotoAlertDetailPage(LeavePostAlarmRankingActivity.this, adapter, position));
         mBinding.tvLeavePostRankingAll.setOnClickListener(view -> mViewModel.gotoAllAlert(LeavePostAlarmRankingActivity.this, mJumpAllType));

@@ -111,9 +111,9 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_detail);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("群组信息");
         setLeftBack();
         groupId = getIntent().getStringExtra(EanfangConst.RONG_YUN_ID);

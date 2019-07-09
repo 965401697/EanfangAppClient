@@ -41,9 +41,9 @@ public class DesignOrderListActivity extends BaseClientActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_design_list);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
     }
 

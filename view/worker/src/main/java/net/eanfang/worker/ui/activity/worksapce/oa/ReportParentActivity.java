@@ -38,9 +38,9 @@ public class ReportParentActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report_parent);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("工作汇报");
         setLeftBack();
         initView();

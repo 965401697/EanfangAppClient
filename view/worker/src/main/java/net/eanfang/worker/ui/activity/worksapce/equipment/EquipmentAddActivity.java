@@ -47,9 +47,9 @@ public class EquipmentAddActivity extends BaseWorkerActivity implements SwipeRef
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipment_search);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         mBundle = getIntent().getExtras();
         setTitle(Config.get().getBusinessNameByCode((String) mBundle.get("businessOneCode"), 3));
         setLeftBack();

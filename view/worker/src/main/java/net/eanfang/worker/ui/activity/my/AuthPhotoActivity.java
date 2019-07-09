@@ -103,6 +103,7 @@ public class AuthPhotoActivity extends BaseWorkeActivity {
 
     @Override
     public void initView() {
+        super.initView();
         setTitle("身份信息");
         workerInfoBean = (WorkerInfoBean) getIntent().getSerializableExtra("workerInfoBean");
         isAdd = getIntent().getBooleanExtra("isAdd", false);

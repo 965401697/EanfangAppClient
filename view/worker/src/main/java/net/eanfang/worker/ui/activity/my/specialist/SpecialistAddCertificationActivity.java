@@ -78,9 +78,10 @@ public class SpecialistAddCertificationActivity extends BaseActivityWithTakePhot
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_specialist_add_certification);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
 
     }

@@ -66,9 +66,9 @@ public class TaskPublishDetailActivitty extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_publish_detail_activitty);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("项目详情");
         setLeftBack();
         listBean = (MineTaskListBean.ListBean) getIntent().getSerializableExtra("bean");

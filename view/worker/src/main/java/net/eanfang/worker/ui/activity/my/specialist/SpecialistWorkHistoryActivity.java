@@ -42,9 +42,10 @@ public class SpecialistWorkHistoryActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_specialist_work_history);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         startTransaction(true);
         setTitle("工作经历");
         setLeftBack();

@@ -151,9 +151,9 @@ public class TaskAssignmentCreationActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_assignment_creation_activitu);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("新建任务");
         setLeftBack(new View.OnClickListener() {
             @Override

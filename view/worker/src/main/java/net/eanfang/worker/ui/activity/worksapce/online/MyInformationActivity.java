@@ -50,9 +50,9 @@ public class MyInformationActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_information);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("我的回答");
         initView();
         //mAdapter = new MyInfoAdapter();

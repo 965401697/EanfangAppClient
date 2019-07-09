@@ -65,9 +65,9 @@ public class FiltrateTaskActivity extends BaseWorkerActivity implements SelectTi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filtrate_task);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("布置任务筛选");
         setLeftBack();
 

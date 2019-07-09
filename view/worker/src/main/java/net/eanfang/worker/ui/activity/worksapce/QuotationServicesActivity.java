@@ -38,9 +38,9 @@ public class QuotationServicesActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quotation_services);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("服务明细");
         setLeftBack();
         tvCommit.setOnClickListener(v -> commit());

@@ -78,9 +78,9 @@ public class AuthCompanySecondActivity extends BaseActivityWithTakePhoto {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth_company_second);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
         initListener();
         initData();

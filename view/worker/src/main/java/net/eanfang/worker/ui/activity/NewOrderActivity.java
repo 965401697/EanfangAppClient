@@ -62,8 +62,8 @@ public class NewOrderActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_order);
+        super.onCreate(savedInstanceState);
         String queryEntry = getIntent().getStringExtra("query");
         if (StringUtils.isEmpty(queryEntry)) {
             mQueryEntry = new QueryEntry();

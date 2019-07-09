@@ -65,9 +65,9 @@ public class CooperationRelationDetailActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cooperation_relation_detail);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("合作业务");
         setLeftBack();
         initData();

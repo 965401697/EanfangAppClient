@@ -58,9 +58,9 @@ public class AuthQualifyListActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth_qualify_list);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
         initData();
     }

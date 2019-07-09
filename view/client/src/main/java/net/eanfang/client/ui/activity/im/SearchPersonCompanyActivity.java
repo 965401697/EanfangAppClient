@@ -41,9 +41,9 @@ public class SearchPersonCompanyActivity extends BaseClientActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_person_company);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("搜索人员");
         setLeftBack();
         setRightTitle("确定");

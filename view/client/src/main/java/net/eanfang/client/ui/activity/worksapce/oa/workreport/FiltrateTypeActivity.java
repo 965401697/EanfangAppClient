@@ -70,9 +70,9 @@ public class FiltrateTypeActivity extends BaseClientActivity implements SelectTi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filtrate_type);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("工作汇报筛选");
         setLeftBack();
 

@@ -91,9 +91,9 @@ public class SignActivity extends BaseActivity implements LocationSource, AMapLo
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
         // 此方法必须重写
         mapView.onCreate(savedInstanceState);

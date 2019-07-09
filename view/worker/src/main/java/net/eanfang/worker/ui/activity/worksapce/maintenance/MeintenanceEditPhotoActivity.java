@@ -78,9 +78,9 @@ public class MeintenanceEditPhotoActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meintenance_edit_photo);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("照片信息");
         setLeftBack();
 

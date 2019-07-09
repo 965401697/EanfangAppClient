@@ -104,9 +104,10 @@ public class WorkTenderDetailActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_work_tender_detail);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
     }
 

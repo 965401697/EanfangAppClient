@@ -40,9 +40,9 @@ public class EquipmentCooperationCompanyActivity extends BaseWorkerActivity impl
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipment_cooperation_company);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("合作公司列表");
         setLeftBack();
         setRightTitle("确定");

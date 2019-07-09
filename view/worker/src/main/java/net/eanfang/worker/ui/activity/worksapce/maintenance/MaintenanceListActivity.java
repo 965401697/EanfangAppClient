@@ -39,9 +39,9 @@ public class MaintenanceListActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maintenance_list);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
 
         int type = getIntent().getIntExtra("type", 0);
 

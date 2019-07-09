@@ -72,9 +72,10 @@ public class SpecialistSkillInfoDetailActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_specialist_skill_info_detail);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("技能资质详情");
         setLeftBack();
 

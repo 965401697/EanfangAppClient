@@ -62,9 +62,9 @@ public class AuthQualifySecondActivity extends BaseActivity implements AreaCheck
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth_qualify_second);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
         initAreaData();
     }

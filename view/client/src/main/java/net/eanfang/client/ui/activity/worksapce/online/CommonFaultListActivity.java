@@ -64,9 +64,9 @@ public class CommonFaultListActivity extends BaseClientActivity implements Swipe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_common_fault_list);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("类似故障");
         setLeftBack();
         initViews();

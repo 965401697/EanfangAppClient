@@ -39,9 +39,9 @@ public class AddBrandActivity extends BaseClientActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_brand);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("添加熟悉品牌");
         setLeftBack();
 

@@ -28,9 +28,9 @@ public class GroupNoticeActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_notice);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("群公告");
         setLeftBack();
         setRightTitle("完成");

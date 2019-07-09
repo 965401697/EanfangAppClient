@@ -35,9 +35,9 @@ public class SkillCertificafeListActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_skill_certificafe_list);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("技能认证");
         setLeftBack();
         initViews();

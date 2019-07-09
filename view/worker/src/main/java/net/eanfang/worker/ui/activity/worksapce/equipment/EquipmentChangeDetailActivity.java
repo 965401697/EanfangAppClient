@@ -61,9 +61,9 @@ public class EquipmentChangeDetailActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipment_change_detail);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("变更详情");
         setLeftBack();
 

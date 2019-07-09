@@ -40,9 +40,9 @@ public class TransferOwnActivity extends BaseClientActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transfer_own);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("转让群主");
         setLeftBack();
         setRightTitle("确定");

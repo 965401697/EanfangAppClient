@@ -44,6 +44,7 @@ public class PersonMaintainHistoryView{
 //    protected void initCustomView(Bundle savedInstanceState) {
 //        setContentView(R.layout.activity_main_list);
 //        ButterKnife.bind(this);
+//        super.onCreate(savedInstanceState);
 //        initAdapter();
 //        initView();
 //

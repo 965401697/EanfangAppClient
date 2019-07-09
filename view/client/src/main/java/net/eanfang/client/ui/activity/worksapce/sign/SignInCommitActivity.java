@@ -64,9 +64,9 @@ public class SignInCommitActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_commit);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
     }
 

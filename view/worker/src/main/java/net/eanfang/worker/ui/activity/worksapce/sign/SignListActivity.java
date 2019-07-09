@@ -82,9 +82,9 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_list);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
         initData();
     }

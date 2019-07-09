@@ -47,9 +47,9 @@ public class DefendLogItemWriteAndDetailActivity extends BaseClientActivity impl
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_defend_log_item_write);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
 //        (0-旁路,1-闯防,2-误报)
         title = getIntent().getStringExtra("title");
         mPosition = getIntent().getIntExtra("position", 0);

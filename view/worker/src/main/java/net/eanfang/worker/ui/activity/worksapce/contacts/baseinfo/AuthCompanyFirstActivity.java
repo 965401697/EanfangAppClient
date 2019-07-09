@@ -101,6 +101,7 @@ public class AuthCompanyFirstActivity extends BaseWorkeActivity {
     }
     @Override
     public void initView() {
+        super.initView();
         setTitle("完善资料");
         setLeftBack(true);
         orgid = getIntent().getLongExtra("orgid", 0);

@@ -112,9 +112,10 @@ public class SpecialistSkillTypeActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_specialist_skill_type);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("专家认证");
         setLeftBack();
         startTransaction(true);

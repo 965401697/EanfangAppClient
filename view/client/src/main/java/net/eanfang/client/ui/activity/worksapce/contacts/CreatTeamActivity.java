@@ -38,9 +38,9 @@ public class CreatTeamActivity extends BaseClientActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creat_team);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setLeftBack();
         setRightTitle("创建");
         startTransaction(true);

@@ -65,9 +65,9 @@ public class PeerConnectionListActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_peer_connection_list);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
         initDate();
     }

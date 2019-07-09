@@ -59,9 +59,9 @@ public class AreaSelectionActivity extends BaseWorkerActivity implements AreaChe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_skill_area);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         startTransaction(true);
         initView();
         initAreaData();

@@ -118,12 +118,12 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
 //        initState();
 
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         user = ClientApplication.get().getLoginBean();
         setHeaders();
 

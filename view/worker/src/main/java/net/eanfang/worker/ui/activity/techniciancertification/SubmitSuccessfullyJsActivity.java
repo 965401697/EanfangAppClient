@@ -46,9 +46,9 @@ public class SubmitSuccessfullyJsActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_submit_successfully2);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
         initData();
     }

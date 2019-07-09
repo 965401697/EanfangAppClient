@@ -46,8 +46,8 @@ public class RepairCtrlActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_repair_ctrl);
+        super.onCreate(savedInstanceState);
         final List<String> mFilterWorkerTitle = Stream.of(mTitlesWorker).filter(bean -> !"待付款".equals(bean)).collect(Collectors.toList());
         mTitles = new String[mFilterWorkerTitle.size()];
         mFilterWorkerTitle.toArray(mTitles);

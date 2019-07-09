@@ -35,9 +35,9 @@ public class ManufacturerAfterSaleActivity extends BaseClientActivity implements
     private static final int RESULT_DATACODE = 200;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manufacturer_after_sale);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         int find = intent.getIntExtra("find", 0);
 

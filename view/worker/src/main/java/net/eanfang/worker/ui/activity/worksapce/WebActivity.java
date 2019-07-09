@@ -62,9 +62,9 @@ public class WebActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_webview);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         urls = getIntent().getStringExtra("url");
         title = getIntent().getStringExtra("title");
 //        extraHeaders.put("token", WorkerApplication.get().getLoginBean().getToken());

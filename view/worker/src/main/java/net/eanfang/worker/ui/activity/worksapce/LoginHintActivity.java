@@ -15,9 +15,9 @@ public class LoginHintActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_hint);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("完善资料");
         setLeftBack();
     }

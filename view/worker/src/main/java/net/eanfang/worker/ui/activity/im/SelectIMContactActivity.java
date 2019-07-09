@@ -136,9 +136,9 @@ public class SelectIMContactActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_im_contact);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         supprotToolbar();
         setTitle("选择联系人");
 

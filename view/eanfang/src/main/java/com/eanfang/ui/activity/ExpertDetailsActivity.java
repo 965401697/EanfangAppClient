@@ -79,9 +79,9 @@ public class ExpertDetailsActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expert_details);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
     }
 

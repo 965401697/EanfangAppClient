@@ -39,9 +39,10 @@ public class VideoSelectedActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_video_selected);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initViews();
         setTitle("视频文件选择");
         setLeftBack();

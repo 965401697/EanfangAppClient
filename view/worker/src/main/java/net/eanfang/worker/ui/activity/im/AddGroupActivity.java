@@ -72,9 +72,9 @@ public class AddGroupActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_group);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         mGroupId = getIntent().getStringExtra("groupId");
         setTitle("群组信息");
         setLeftBack();

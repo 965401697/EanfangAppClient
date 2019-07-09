@@ -46,9 +46,9 @@ public class SelectContactActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_contact);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         supprotToolbar();
         setTitle("选择联系人");
 

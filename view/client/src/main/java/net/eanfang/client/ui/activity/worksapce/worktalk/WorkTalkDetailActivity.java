@@ -74,11 +74,11 @@ public class WorkTalkDetailActivity extends BaseActivity {
     TextView tvWrokTalkEleven;
     private String mItemId = "";
 
-    @Override
+      @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_work_talk_detail);
+          setContentView(R.layout.activity_work_talk_detail);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
         initData();
     }

@@ -109,9 +109,9 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth_qualify_first);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
         initData();
     }

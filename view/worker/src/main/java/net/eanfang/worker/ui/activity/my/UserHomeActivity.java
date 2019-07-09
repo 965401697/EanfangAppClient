@@ -149,9 +149,9 @@ public class UserHomeActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_home);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         String accId = getIntent().getStringExtra(EXTRA_ACCID);
         Long userId = getIntent().getLongExtra(EXTRA_UID, 0);
         mIsSelf = (accId != null && accId.equals(String.valueOf(WorkerApplication.get().getAccId())))

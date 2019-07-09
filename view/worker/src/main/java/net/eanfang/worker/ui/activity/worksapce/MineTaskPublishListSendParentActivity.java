@@ -29,9 +29,9 @@ public class MineTaskPublishListSendParentActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mine_task_publish_list_send);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("我的找工人");
         setLeftBack();
 

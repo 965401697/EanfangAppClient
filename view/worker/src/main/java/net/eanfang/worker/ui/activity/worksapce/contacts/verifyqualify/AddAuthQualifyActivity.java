@@ -2,7 +2,6 @@ package net.eanfang.worker.ui.activity.worksapce.contacts.verifyqualify;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -12,21 +11,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.lifecycle.ViewModel;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSONObject;
-import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.kit.V;
 import com.eanfang.base.kit.picture.picture.PictureRecycleView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
-import com.eanfang.base.kit.V;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.picker.common.util.DateUtils;
 import com.yaf.base.entity.AptitudeCertificateEntity;
 
@@ -94,7 +90,7 @@ public class AddAuthQualifyActivity extends BaseWorkeActivity implements SelectT
     private boolean isBegin = true;
     private String isAuth;
     private Long mOrgId;
-    private List<LocalMedia> selectList=new ArrayList<>();
+    private List<LocalMedia> selectList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,8 +103,10 @@ public class AddAuthQualifyActivity extends BaseWorkeActivity implements SelectT
     protected ViewModel initViewModel() {
         return null;
     }
+
     @Override
     public void initView() {
+        super.initView();
         isAuth = getIntent().getStringExtra("isAuth");
         mOrgId = getIntent().getLongExtra("orgid", 0);
         aptitudeCertificateEntity = (AptitudeCertificateEntity) getIntent().getSerializableExtra("bean");
@@ -135,7 +133,9 @@ public class AddAuthQualifyActivity extends BaseWorkeActivity implements SelectT
         }
 
     }
+
     PictureRecycleView.ImageListener listener = list -> selectList = list;
+
     private void setZhiDu(boolean isZd) {
         tvSave.setVisibility(isZd ? View.VISIBLE : View.GONE);
         etCertificateName.setEnabled(isZd);

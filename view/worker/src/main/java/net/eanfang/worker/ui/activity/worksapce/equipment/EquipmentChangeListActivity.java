@@ -44,11 +44,9 @@ public class EquipmentChangeListActivity extends BaseWorkerActivity implements S
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-
         setContentView(R.layout.activity_equipment_change);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("变更记录");
         setLeftBack();
         deviceNo = getIntent().getStringExtra("deviceNo");

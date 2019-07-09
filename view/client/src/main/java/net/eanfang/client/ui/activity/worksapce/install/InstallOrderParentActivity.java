@@ -30,9 +30,9 @@ public class InstallOrderParentActivity extends BaseClientActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_install_parent);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("报装管控");
         setLeftBack();
         initView();

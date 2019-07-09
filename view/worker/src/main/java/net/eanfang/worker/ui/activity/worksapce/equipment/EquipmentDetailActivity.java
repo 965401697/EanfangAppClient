@@ -104,9 +104,9 @@ public class EquipmentDetailActivity extends BaseWorkerActivity {
     // 扫描二维码返回 数据
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipment_detail);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("设备详情");
         setLeftBack();
         id = getIntent().getStringExtra("id");

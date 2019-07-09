@@ -79,9 +79,9 @@ public class WorkReportDetailActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_work_report_detail);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
 
         setLeftBack(new View.OnClickListener() {
             @Override

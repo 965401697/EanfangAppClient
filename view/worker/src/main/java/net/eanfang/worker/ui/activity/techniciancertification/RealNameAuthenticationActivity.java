@@ -79,6 +79,7 @@ public class RealNameAuthenticationActivity extends BaseWorkeActivity {
     }
     @Override
     public void initView() {
+        super.initView();
         setTitle("实名认证");
         setLeftBack(true);
         statusB = getIntent().getIntExtra("statusB", -1);

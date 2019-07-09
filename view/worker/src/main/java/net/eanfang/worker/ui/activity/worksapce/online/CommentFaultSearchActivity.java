@@ -44,9 +44,9 @@ public class CommentFaultSearchActivity extends BaseWorkerActivity implements Sw
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment_fault_search);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("常见故障");
         setLeftBack();
 

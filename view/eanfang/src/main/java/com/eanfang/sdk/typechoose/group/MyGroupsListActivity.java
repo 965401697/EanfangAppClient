@@ -43,9 +43,9 @@ public class MyGroupsListActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_groups_list);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
 
         setTitle("我的群组");
         setLeftBack();

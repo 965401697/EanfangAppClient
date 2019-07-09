@@ -2,6 +2,7 @@ package com.eanfang.base.network;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.alibaba.fastjson.JSON;
 import com.eanfang.base.network.config.HttpCode;
 import com.eanfang.base.network.config.HttpConfig;
 import com.eanfang.base.network.converter.FastJsonConverterFactory;
@@ -16,6 +17,7 @@ import com.eanfang.base.network.holder.ContextHolder;
 import com.eanfang.base.network.interceptor.FilterInterceptor;
 import com.eanfang.base.network.interceptor.HeaderInterceptor;
 import com.eanfang.base.network.interceptor.HttpInterceptor;
+import com.eanfang.base.network.kit.TypeToken;
 import com.eanfang.base.network.model.BaseResponseBody;
 import com.eanfang.base.network.model.Optional;
 
@@ -25,6 +27,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
+import cn.hutool.core.util.StrUtil;
 import io.reactivex.Observable;
 import io.reactivex.ObservableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -105,6 +108,13 @@ public enum RetrofitManagement {
                             actionLiveData.setValue(new BaseActionEvent(BaseActionEvent.REQUEST_FAST));
                             throw new RequestFastException();
                         case HttpCode.CODE_SUCCESS:
+                            if (result.getData() == null) {
+                                Object obj = JSON.parseObject("{}", new TypeToken<T>() {
+                                }.getType());
+                                if (obj instanceof String && StrUtil.isNotEmpty(result.getMessage())) {
+                                    return createData(result.getMessage());
+                                }
+                            }
                             actionLiveData.setValue(new BaseActionEvent(BaseActionEvent.SUCCESS));
                             return createData(new Optional(result.getData()));
                         case HttpCode.CODE_UNKNOWN:

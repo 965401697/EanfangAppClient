@@ -105,11 +105,10 @@ public class CompanyManagerActivity extends BaseActivity implements DissloveTeam
     private DissloveTeamDialog dissloveTeamDialog;
 
     @Override
-
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comapany_manager);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
     }
 
     @Override

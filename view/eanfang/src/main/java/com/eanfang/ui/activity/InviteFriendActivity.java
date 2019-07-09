@@ -66,9 +66,9 @@ public class InviteFriendActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_invite_friend);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setLeftBack();
         setTitle("邀请好友赚现金");
         initView();

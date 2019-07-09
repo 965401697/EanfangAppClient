@@ -129,9 +129,10 @@ public class DefendLogWriteActivity extends BaseClientActivity implements View.O
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_defend_log_write);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("布防日志");
         setLeftBack();
         initViews();

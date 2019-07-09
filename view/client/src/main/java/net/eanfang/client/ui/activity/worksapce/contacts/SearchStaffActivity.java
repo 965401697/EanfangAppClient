@@ -47,9 +47,9 @@ public class SearchStaffActivity extends BaseClientActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_staff2);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("添加员工");
         setLeftBack();
         startTransaction(true);

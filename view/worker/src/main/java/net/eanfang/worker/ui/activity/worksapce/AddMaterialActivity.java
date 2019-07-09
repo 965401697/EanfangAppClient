@@ -63,9 +63,9 @@ public class AddMaterialActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_material);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
         setListener();
 

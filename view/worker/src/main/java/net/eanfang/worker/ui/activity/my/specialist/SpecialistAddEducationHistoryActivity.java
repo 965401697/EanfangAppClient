@@ -74,9 +74,9 @@ public class SpecialistAddEducationHistoryActivity extends BaseActivityWithTakeP
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_specialist_add_education_history);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("添加教育经历");
         setLeftBack();
 

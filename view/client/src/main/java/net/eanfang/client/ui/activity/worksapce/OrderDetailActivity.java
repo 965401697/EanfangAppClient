@@ -61,8 +61,8 @@ public class OrderDetailActivity extends BaseClientActivity implements OnTabSele
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_detail);
+        super.onCreate(savedInstanceState);
         //loading加载动画
         loadingDialog.show();
         id = getIntent().getLongExtra("id", 0);

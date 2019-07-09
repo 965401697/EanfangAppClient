@@ -68,9 +68,9 @@ public class PlayVideoActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play_video);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
     }
 

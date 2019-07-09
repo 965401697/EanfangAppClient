@@ -39,9 +39,9 @@ public class CreatSectionActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creat_section);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("创建部门");
         setLeftBack();
 //        setRightTitle("创建");

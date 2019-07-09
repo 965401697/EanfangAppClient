@@ -57,9 +57,9 @@ public class SelectWorkerActivity extends BaseActivity implements OnTabSelectLis
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_worker);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
         setListener();
     }

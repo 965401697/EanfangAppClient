@@ -146,9 +146,9 @@ public class TakeVideoActivity extends BaseActivity implements PLRecordStateList
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_take_video);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
         initListener();
     }

@@ -64,9 +64,9 @@ public class InvoiceActivity extends BaseClientActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fapiao);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
 
         setRightTitle("保存");
         setLeftBack();

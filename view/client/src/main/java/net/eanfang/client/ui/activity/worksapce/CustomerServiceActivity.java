@@ -34,8 +34,8 @@ public class CustomerServiceActivity extends BaseActivity implements OnTabSelect
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_service);
+        super.onCreate(savedInstanceState);
         initView();
         setTitle("客服帮助");
         setLeftBack();

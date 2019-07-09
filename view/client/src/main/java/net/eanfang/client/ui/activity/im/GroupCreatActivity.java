@@ -71,9 +71,9 @@ public class GroupCreatActivity extends BaseActivityWithTakePhoto {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_creat);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("创建群组");
         setLeftBack();
 

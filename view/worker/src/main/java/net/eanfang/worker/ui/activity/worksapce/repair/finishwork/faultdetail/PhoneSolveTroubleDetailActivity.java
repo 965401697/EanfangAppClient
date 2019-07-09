@@ -159,6 +159,7 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
         setContentView(R.layout.activity_ps_trouble_detail);
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
         initData();
         initListener();

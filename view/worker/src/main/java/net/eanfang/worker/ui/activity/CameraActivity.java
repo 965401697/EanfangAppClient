@@ -122,9 +122,9 @@ public class CameraActivity extends BaseWorkerActivity implements AMapLocationLi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
         initLocal();
         getData();

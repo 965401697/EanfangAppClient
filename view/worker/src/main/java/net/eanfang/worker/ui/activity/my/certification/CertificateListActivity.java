@@ -51,9 +51,10 @@ public class CertificateListActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_certificate);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("荣誉证书");
         setLeftBack();
         initViews();

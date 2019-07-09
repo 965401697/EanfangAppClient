@@ -139,9 +139,9 @@ public class NewPayActivity extends BaseClientActivity implements View.OnClickLi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pay1);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("支付");
         setLeftBack();
         initData();

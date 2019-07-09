@@ -42,9 +42,9 @@ public class PersonOfferAndPayOrderActivity extends BaseClientActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_work_report_list);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
     }
 

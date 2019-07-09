@@ -43,9 +43,9 @@ public class OASearchActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_oasearch);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("搜索人员");
         setLeftBack();
         setRightTitle("确定");

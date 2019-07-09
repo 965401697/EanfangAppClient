@@ -78,9 +78,9 @@ public class TakeApplyAddActivity extends BaseActivity implements SelectTimeDial
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_take_apply_add);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
         initEndTimePicker();
         initData();

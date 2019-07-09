@@ -23,8 +23,8 @@ public class OAListActivity extends BaseClientActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_oalist);
+        super.onCreate(savedInstanceState);
         setTitle("工作协同");
         setLeftBack();
 

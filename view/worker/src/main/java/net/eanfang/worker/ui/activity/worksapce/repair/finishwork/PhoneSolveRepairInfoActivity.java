@@ -123,9 +123,10 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_ps_fill_repair_info);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
 
         initView();
         initData();

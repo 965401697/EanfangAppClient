@@ -17,7 +17,8 @@ import net.eanfang.worker.R;
 public class DepartmentActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.son_item);
+        super.onCreate(savedInstanceState);
+
     }
 }

@@ -49,9 +49,9 @@ public class ExpertListActivity extends BaseWorkerActivity implements SwipeRefre
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expert_list);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         ivLeft.setVisibility(View.GONE);
         mBrand = (BaseDataEntity) getIntent().getSerializableExtra("brand");
         if (mBrand != null) {

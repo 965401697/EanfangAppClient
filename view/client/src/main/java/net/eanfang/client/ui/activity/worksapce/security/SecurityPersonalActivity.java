@@ -20,10 +20,10 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.base.widget.customview.CircleImageView;
-import com.eanfang.http.EanfangCallback;
-import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.security.SecurityListBean;
 import com.eanfang.biz.model.security.SecurityPersonalTopBean;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JsonUtils;
@@ -110,9 +110,9 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_security_personal);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
     }
 
@@ -271,7 +271,7 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
                 .upJson(JsonUtils.obj2String(queryEntry1))
                 .execute(new EanfangCallback<SecurityPersonalTopBean>(SecurityPersonalActivity.this, true, SecurityPersonalTopBean.class, bean -> {
                     GlideUtil.intoImageView(SecurityPersonalActivity.this,
-                            Uri.parse(BuildConfig.OSS_SERVER + bean.getUserEntity().getAccountEntity().getAvatar()),ivHead);
+                            Uri.parse(BuildConfig.OSS_SERVER + bean.getUserEntity().getAccountEntity().getAvatar()), ivHead);
                     tvName.setText(bean.getUserEntity().getAccountEntity().getRealName());
                     //粉丝数
                     tvFansCount.setText(bean.getAsFollowerCount() + "");

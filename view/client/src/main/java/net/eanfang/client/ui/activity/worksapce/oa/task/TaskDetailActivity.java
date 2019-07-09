@@ -55,9 +55,9 @@ public class TaskDetailActivity extends BaseClientActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_detail);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("任务详情");
         setLeftBack(new View.OnClickListener() {
             @Override

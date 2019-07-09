@@ -44,9 +44,9 @@ public class ChooseAreaActivity extends BaseActivity implements AreaCheckChangeL
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_area);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         startTransaction(true);
         initView();
         initAreaData();

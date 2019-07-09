@@ -37,9 +37,8 @@ public class RepairCtrlActivity extends BaseClientActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_repair_ctrl);
-
+        super.onCreate(savedInstanceState);
         mTitles = new String[mTitlesClient.size()];
         mTitlesClient.toArray(mTitles);
         for (String title : mTitles) {

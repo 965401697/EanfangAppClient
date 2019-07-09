@@ -45,9 +45,9 @@ public class DesignOrderDetailActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_design_order_detail);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("设计明细");
         setLeftBack();
         id = getIntent().getStringExtra("id");

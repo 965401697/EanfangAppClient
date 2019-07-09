@@ -35,9 +35,9 @@ public class IAnswerActivity extends BaseClientActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ianswer);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("我来回答");
         setLeftBack();
         initViews();

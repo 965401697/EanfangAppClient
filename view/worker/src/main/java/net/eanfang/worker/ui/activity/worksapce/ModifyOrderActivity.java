@@ -37,9 +37,9 @@ public class ModifyOrderActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_order);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         supprotToolbar();
         setTitle("选择订单");
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

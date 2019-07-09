@@ -50,9 +50,9 @@ public class EnterpriseCertificationActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_enterprise_certification);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
     }
 

@@ -36,9 +36,9 @@ public class GroupShutupMberActivity extends BaseClientActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_shutup_mber);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("禁言成员");
 
         setLeftBack(new View.OnClickListener() {

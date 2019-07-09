@@ -34,9 +34,9 @@ public class DesignOrderActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_design_order);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("我接收的订单");
         setLeftBack();
         initView();

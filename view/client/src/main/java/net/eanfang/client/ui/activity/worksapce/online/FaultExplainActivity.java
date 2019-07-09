@@ -93,9 +93,9 @@ public class FaultExplainActivity extends BaseClientActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fault_explain);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         intent = getIntent();
         setTitle("故障解答");
         setLeftBack();

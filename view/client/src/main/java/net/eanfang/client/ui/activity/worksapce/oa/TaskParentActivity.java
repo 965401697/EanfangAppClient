@@ -32,9 +32,9 @@ public class TaskParentActivity extends BaseClientActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_parent);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("布置任务");
         setLeftBack();
         initView();

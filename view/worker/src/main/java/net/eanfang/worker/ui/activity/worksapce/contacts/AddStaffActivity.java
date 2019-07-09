@@ -37,9 +37,9 @@ public class AddStaffActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_staff);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("添加员工");
         setLeftBack();
         initViews();

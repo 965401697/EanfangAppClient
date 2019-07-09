@@ -44,8 +44,8 @@ public class LoginActivity extends BaseActivity implements OnTabSelectListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_eanfang);
+        super.onCreate(savedInstanceState);
         initView();
         setTitle("登录");
         setLeftGone();

@@ -54,8 +54,8 @@ public class FaPiaoActivity extends BaseClientActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fapiao);
+        super.onCreate(savedInstanceState);
         getData();
         initView();
         initData();

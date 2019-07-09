@@ -53,10 +53,9 @@ public class NewAuthListActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_auth_list);
         ButterKnife.bind(this);
-
+        super.onCreate(savedInstanceState);
 
         setRightTitleOnClickListener(new View.OnClickListener() {
             @Override

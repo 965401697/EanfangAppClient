@@ -24,9 +24,9 @@ public class EquipmentParameterActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_equipment_parameter);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("设备参数");
         setLeftBack();
 

@@ -142,9 +142,9 @@ public class DataDesignActivity extends BaseActivity implements RadioGroup.OnChe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_design);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
         initData();
         initListener();

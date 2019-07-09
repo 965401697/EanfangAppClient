@@ -28,9 +28,9 @@ public class AuthWorkerAreaNewActivity extends BaseActivity {
     List<BaseDataEntity> areaListBean = Config.get().getRegionList(1);
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth_worker_area);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
 
 
 

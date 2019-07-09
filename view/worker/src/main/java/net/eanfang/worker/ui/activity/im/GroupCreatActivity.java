@@ -72,6 +72,7 @@ public class GroupCreatActivity extends BaseWorkeActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("创建群组");
         setContentView(R.layout.activity_group_creat);
 

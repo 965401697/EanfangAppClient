@@ -2,22 +2,23 @@ package net.eanfang.worker.ui.activity.worksapce.worktransfer;
 
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.base.widget.customview.CircleImageView;
+import com.eanfang.biz.model.WorkTransferDetailBean;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.WorkTransferDetailBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
@@ -122,9 +123,9 @@ public class WorkTransferDetailActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_work_transfer_detail);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
         initData();
         initListener();
@@ -174,7 +175,7 @@ public class WorkTransferDetailActivity extends BaseActivity {
     }
 
     private void initContent(WorkTransferDetailBean bean) {
-        GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + bean.getOwnerUserEntity().getAccountEntity().getAvatar()),ivReportHeader);
+        GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + bean.getOwnerUserEntity().getAccountEntity().getAvatar()), ivReportHeader);
         // 创建人
         tvTalkerName.setText(bean.getOwnerUserEntity().getAccountEntity().getRealName() + "(汇报人)");
         // 部门
@@ -283,6 +284,7 @@ public class WorkTransferDetailActivity extends BaseActivity {
                 }));
 
     }
+
     /**
      * 监听 返回键
      */

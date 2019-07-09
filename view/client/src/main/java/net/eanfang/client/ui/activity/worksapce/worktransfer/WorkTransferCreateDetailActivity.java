@@ -122,9 +122,9 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_work_transfer_create_detail);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
         initPhoto();
         initListener();

@@ -199,10 +199,10 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_trouble_detail);
         ButterKnife.bind(this);
-
+        super.onCreate(savedInstanceState);
         initView();
         initData();
         initListener();

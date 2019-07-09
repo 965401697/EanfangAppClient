@@ -69,9 +69,10 @@ public class SpecialistAddWorkActivity extends BaseActivityWithTakePhoto {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_specialist_add_work);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("工作经历");
         setLeftBack();
 

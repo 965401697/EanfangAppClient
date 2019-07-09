@@ -48,8 +48,8 @@ public class InviteShareActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_invite_share);
+        super.onCreate(savedInstanceState);
         myClipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
         initData();
         initView();

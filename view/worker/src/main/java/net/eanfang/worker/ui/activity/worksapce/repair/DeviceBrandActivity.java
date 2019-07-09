@@ -53,9 +53,10 @@ public class DeviceBrandActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_device_brand);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
         initData();
         initListener();

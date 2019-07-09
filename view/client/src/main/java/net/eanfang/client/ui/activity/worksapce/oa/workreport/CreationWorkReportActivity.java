@@ -244,9 +244,9 @@ public class CreationWorkReportActivity extends BaseClientActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creation_work_report);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("新建汇报");
         setLeftBack(new View.OnClickListener() {
             @Override

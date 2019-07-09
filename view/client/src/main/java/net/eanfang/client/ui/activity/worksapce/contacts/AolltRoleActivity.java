@@ -33,9 +33,9 @@ public class AolltRoleActivity extends BaseClientActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_aollt_role);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("分配角色");
         setLeftBack();
         initViews();

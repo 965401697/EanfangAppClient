@@ -47,9 +47,9 @@ public class CheckListActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_check_list_device);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
     }
 

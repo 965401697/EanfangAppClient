@@ -16,17 +16,16 @@ import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.IPictureCallBack;
+import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.biz.model.AuthCompanyBaseInfoBean;
 import com.eanfang.biz.model.SelectAddressItem;
 import com.eanfang.biz.model.entity.OrgUnitEntity;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
-import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
 import com.luck.picture.lib.entity.LocalMedia;
@@ -98,8 +97,10 @@ public class AuthCompanyFirstActivity extends BaseClienActivity {
     protected ViewModel initViewModel() {
         return null;
     }
+
     @Override
     public void initView() {
+        super.initView();
         setTitle("完善资料");
         orgid = getIntent().getLongExtra("orgid", 0);
         orgName = getIntent().getStringExtra("orgName");
@@ -152,13 +153,14 @@ public class AuthCompanyFirstActivity extends BaseClienActivity {
             setOnFouse(etDesc);
         }
         if (byNetBean.getStatus() != 2) {
-            setRightBack(false);
+            setRightClick(false);
         }
     }
 
     private void setOnFouse(EditText editText) {
         editText.setEnabled(false);
     }
+
     /**
      * 图片选择
      */
@@ -242,7 +244,6 @@ public class AuthCompanyFirstActivity extends BaseClienActivity {
         String json = JSONObject.toJSONString(infoBean);
         commit(json);
     }
-
 
 
     private void commit(String json) {

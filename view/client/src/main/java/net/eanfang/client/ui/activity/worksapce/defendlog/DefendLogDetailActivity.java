@@ -80,9 +80,10 @@ public class DefendLogDetailActivity extends BaseClientActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_defend_log_detail);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("布防日志");
         setLeftBack();
 

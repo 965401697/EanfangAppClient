@@ -24,9 +24,9 @@ public class CreatTeamStatusHintActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creat_team_status_hint);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("提交成功");
         setLeftBack();
         findViewById(R.id.tv_go).setOnClickListener(v -> {

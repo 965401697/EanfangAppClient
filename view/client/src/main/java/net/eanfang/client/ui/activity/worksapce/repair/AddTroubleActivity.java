@@ -251,6 +251,7 @@ public class AddTroubleActivity extends BaseClienActivity {
 
     @Override
     public void initView() {
+        super.initView();
         setTitle("新增故障");
         fromTroubleList = getIntent().getBooleanExtra("fromTroubleList", false);
         if (fromTroubleList) {

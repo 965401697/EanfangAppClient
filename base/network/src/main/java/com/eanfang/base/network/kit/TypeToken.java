@@ -12,13 +12,11 @@ import lombok.Getter;
  * @author jornl
  * @date 2019-07-01
  */
-class TypeToken<T> {
+public class TypeToken<T> {
     @Getter
     private final Type type;
-    @Getter
-    private final Class<T> clazz;
 
-    TypeToken() {
+    public TypeToken() {
         Type genericSuperclass = getClass().getGenericSuperclass();
         if (genericSuperclass instanceof Class) {
             throw new RuntimeException("Missing type parameter.");
@@ -27,8 +25,6 @@ class TypeToken<T> {
         assert parameterizedType != null;
         Type[] typeArguments = parameterizedType.getActualTypeArguments();
         type = typeArguments[0];
-
-        clazz = (Class<T>) type.getClass().getGenericSuperclass();
     }
 
 }

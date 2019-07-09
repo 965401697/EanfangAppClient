@@ -52,9 +52,10 @@ public class SpecialistCertificationInfoActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_specialist_certification_info);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("专家认证详情");
         setLeftBack();
         getData();

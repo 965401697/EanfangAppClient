@@ -54,9 +54,9 @@ public class ExpertOnlineActivity extends BaseClientActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expert_online);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("专家在线");
 
         setLeftBack();

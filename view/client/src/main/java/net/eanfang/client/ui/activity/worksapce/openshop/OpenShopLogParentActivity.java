@@ -40,9 +40,9 @@ public class OpenShopLogParentActivity extends BaseClientActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_open_shop_log_parent);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
     }
 

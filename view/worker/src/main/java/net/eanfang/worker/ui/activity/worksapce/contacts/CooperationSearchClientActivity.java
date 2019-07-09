@@ -41,9 +41,9 @@ public class CooperationSearchClientActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cooperation_search_client);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("搜索客户");
         setLeftBack();
         initViews();

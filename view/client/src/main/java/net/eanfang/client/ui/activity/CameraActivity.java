@@ -176,6 +176,7 @@ public class CameraActivity extends BaseClienActivity implements AMapLocationLis
     }
     @Override
     public void initView() {
+        super.initView();
         setTitle("专业相机");
         setLeftBack(true);
         initGPS();

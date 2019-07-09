@@ -173,7 +173,6 @@ public class BaseActivity extends AppCompatActivity implements
         } else {
             findViewById(R.id.titles_bar).setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryW));
         }
-
     }
 
     public void setLeftBack() {

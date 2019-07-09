@@ -87,8 +87,8 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quotation_payment);
+        super.onCreate(savedInstanceState);
         setTitle("报价申请");
         setLeftBack();
         initViews();

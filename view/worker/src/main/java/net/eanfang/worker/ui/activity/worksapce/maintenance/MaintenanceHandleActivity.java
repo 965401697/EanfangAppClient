@@ -124,9 +124,9 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maintenance_handle);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("维保处理");
         setLeftBack();
 

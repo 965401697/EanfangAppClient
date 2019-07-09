@@ -13,15 +13,15 @@ public class DesignActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_design2);
+        super.onCreate(savedInstanceState);
         setTitle("设计订单");
         setLeftBack();
 
         findViewById(R.id.iv_design).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!PermKit.get().getDesignListPrem()) {
+                if (!PermKit.get().getDesignListPrem()) {
                     return;
                 }
                 JumpItent.jump(DesignActivity.this, DesignOrderActivity.class);

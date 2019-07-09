@@ -67,9 +67,9 @@ public class AddWorkCheckDetailActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_detail);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
 //        initData();
         initAdapter();
         setTitle("添加检查明细");

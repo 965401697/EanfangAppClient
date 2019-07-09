@@ -38,7 +38,7 @@ public class LeavePostManageListActivity extends BaseActivity {
     protected void initView() {
         setLeftBack(true);
         setRightImageResId(R.mipmap.ic_add);
-        setRightBack(view -> mViewModel.gotoAddPostPage(LeavePostManageListActivity.this));
+        setRightClick(view -> mViewModel.gotoAddPostPage(LeavePostManageListActivity.this));
         setTitle("岗位管理");
         mAdapter = new LeavePostManageListAdapter(R.layout.item_leave_post_manage_list);
         mBinding.recLeavePostManage.setLayoutManager(new LinearLayoutManager(this));

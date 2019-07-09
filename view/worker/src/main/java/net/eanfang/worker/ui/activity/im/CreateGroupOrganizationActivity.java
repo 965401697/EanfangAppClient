@@ -58,9 +58,10 @@ public class CreateGroupOrganizationActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_create_group_organization);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         //----------------------------------
         startTransaction(true);
 

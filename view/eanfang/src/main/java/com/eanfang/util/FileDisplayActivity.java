@@ -59,9 +59,9 @@ public class FileDisplayActivity extends BaseActivity implements TbsReaderView.R
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_file_display);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
     }
 

@@ -65,9 +65,9 @@ public class AddFriendActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_friend);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
 
         initViews();
         setLeftBack();

@@ -59,9 +59,9 @@ public class EvaluateShowActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_evaluate_worker);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
 
     }

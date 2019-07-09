@@ -91,9 +91,9 @@ public class FiltrateCheckActivity extends BaseActivity implements SelectTimeDia
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filtrate_check);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
     }
 

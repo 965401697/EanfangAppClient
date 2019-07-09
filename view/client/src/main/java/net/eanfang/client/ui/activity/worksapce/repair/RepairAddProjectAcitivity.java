@@ -27,9 +27,9 @@ public class RepairAddProjectAcitivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_repair_add_project);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
     }
 

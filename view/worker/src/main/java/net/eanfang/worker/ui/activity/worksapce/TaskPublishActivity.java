@@ -114,9 +114,9 @@ public class TaskPublishActivity extends BaseActivity implements SelectTimeDialo
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_publish);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
         initData();
         setListener();

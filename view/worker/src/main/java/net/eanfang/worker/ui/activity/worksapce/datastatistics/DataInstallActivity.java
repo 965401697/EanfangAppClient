@@ -144,9 +144,9 @@ public class DataInstallActivity extends BaseActivity implements RadioGroup.OnCh
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_install);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
         initData();
         initListener();

@@ -103,9 +103,9 @@ public class AddReportCompleteActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_complete_info);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initData();
         setLeftBack(new View.OnClickListener() {
             @Override

@@ -10,7 +10,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
+
 import com.eanfang.R;
+import com.eanfang.base.network.config.HttpConfig;
 
 
 /**
@@ -47,6 +50,29 @@ public abstract class BaseDialog extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initCustomView(savedInstanceState);
+        initStyle();
+    }
+
+    /**
+     * 初始化页面风格样式方法
+     */
+    protected void initStyle() {
+        if (findViewById(R.id.titles_bar) == null) {
+            return;
+        }
+        if (isClient()) {
+            findViewById(R.id.titles_bar).setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryC));
+        } else {
+            findViewById(R.id.titles_bar).setBackgroundColor(ContextCompat.getColor(getContext(), R.color.colorPrimaryW));
+        }
+    }
+
+    protected int getApp() {
+        return HttpConfig.get().getApp();
+    }
+
+    protected boolean isClient() {
+        return getApp() == 0;
     }
 
 

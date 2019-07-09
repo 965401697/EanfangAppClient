@@ -52,9 +52,9 @@ public class SecurityListActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_security_list);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
     }
 

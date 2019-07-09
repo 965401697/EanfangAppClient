@@ -63,9 +63,9 @@ public class SettingActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         try {
             tv_cache.setText(CleanMessageUtil.getTotalCacheSize(WorkerApplication.get()));
         } catch (Exception e) {

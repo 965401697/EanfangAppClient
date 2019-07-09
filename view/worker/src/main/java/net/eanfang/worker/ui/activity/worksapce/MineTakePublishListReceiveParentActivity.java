@@ -30,9 +30,9 @@ public class MineTakePublishListReceiveParentActivity extends BaseWorkerActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mine_take_publish_list_parent);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("我的找活");
         setLeftBack();
         initView();

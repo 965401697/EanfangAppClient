@@ -40,8 +40,8 @@ public class MaterialInfoActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_material);
+        super.onCreate(savedInstanceState);
         getData();
         initView();
         initData();

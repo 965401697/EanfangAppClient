@@ -30,9 +30,9 @@ public class DesignOrderActivity extends BaseClientActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_design_order);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("安防设计");
         setLeftBack();
         initView();

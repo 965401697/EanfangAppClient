@@ -49,9 +49,9 @@ public class SystemMessageActivity extends BaseClientActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_system_message);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("系统消息");
         setLeftBack();
         userInfo = (UserInfo) getIntent().getParcelableExtra("sendUserInfo");

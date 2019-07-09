@@ -14,8 +14,8 @@ import com.eanfang.ui.base.BaseActivity;
 public class ExtractSuccessActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_extract_success);
+        super.onCreate(savedInstanceState);
         setLeftBack();
         setTitle("充值");
     }

@@ -46,9 +46,9 @@ public class MaintenanceAddCheckResultShowActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_check_result_show);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("检查结果");
         setLeftBack();
 

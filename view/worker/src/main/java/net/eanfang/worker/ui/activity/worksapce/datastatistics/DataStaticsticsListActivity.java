@@ -47,9 +47,9 @@ public class DataStaticsticsListActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_staticstics_list);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
         doHttpDatastatistics();
     }

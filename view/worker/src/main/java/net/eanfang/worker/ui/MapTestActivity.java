@@ -35,9 +35,9 @@ public class MapTestActivity extends BaseActivity implements AMap.OnMyLocationCh
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maptest);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         MapM.getInstance()
                 .init(mapView, savedInstanceState)
                 .location(this,this);

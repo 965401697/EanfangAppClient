@@ -63,9 +63,9 @@ public class CertificationInfoActivity extends BaseWorkerActivity {
     private static final String DEFAULT_CARD_GENDER = "女";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_certification_info);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("技师认证详情");
         setLeftBack();
         getData();

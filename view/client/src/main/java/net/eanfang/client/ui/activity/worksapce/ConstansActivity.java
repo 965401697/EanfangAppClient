@@ -34,9 +34,9 @@ public class ConstansActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contacts);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
     }
 

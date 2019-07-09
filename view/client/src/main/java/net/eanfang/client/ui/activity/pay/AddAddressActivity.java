@@ -53,9 +53,9 @@ public class AddAddressActivity extends BaseClientActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_address);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
 
         setLeftBack();
 

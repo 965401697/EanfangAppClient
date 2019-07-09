@@ -65,9 +65,9 @@ public class SelectDeviceTypeActivity extends BaseActivity implements
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_device_type);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
             tvGo.setVisibility(View.GONE);
             initView();
             initData();

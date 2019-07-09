@@ -31,9 +31,9 @@ public class OfficialDetailActivity extends BaseClientActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_official_detail);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
 
         setTitle(getIntent().getStringExtra("title"));
         setLeftBack();

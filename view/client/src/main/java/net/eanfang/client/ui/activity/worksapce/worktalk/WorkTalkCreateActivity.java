@@ -170,11 +170,11 @@ public class WorkTalkCreateActivity extends BaseActivity {
         }
     };
 
-    @Override
+      @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_work_talk_create);
+          setContentView(R.layout.activity_work_talk_create);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
     }
 

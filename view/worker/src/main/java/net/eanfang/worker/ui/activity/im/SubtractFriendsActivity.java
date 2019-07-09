@@ -70,9 +70,10 @@ public class SubtractFriendsActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_subtract_friends);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("群组移除好友");
         setRightTitle("确定");
         setLeftBack();

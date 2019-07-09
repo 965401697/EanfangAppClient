@@ -104,9 +104,9 @@ public class RepairInfoEditActivity extends BaseActivity implements RadioGroup.O
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_repair_info_edit);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
         initData();
     }

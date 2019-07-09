@@ -141,9 +141,9 @@ public class ReportActivity extends BaseClientActivity implements View.OnClickLi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_report);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
     }
 

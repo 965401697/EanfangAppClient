@@ -41,9 +41,9 @@ public class AddressListActivity extends BaseClientActivity implements SwipeRefr
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address_list);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("地址列表");
         setLeftBack();
         setRightImageResId(R.mipmap.ic_news_add);

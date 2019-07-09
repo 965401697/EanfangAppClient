@@ -9,8 +9,8 @@ public class SubConversationListActivtiy extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sub_conversation_list_activtiy);
+        super.onCreate(savedInstanceState);
         setTitle("系统消息");
         setLeftBack();
         startTransaction(true);

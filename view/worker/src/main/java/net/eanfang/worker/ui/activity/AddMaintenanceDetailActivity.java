@@ -62,9 +62,8 @@ public class AddMaintenanceDetailActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maintenance_detail);
-
+        super.onCreate(savedInstanceState);
         initView();
         setTitle("添加明细");
         setLeftBack();

@@ -29,9 +29,9 @@ public class RealTimeMonitorActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_real_time_monitor);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
     }
 
     @OnClick({R.id.iv_left, R.id.rl_consult})

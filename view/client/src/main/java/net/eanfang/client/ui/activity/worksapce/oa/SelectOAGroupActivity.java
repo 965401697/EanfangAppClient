@@ -38,9 +38,9 @@ public class SelectOAGroupActivity extends BaseClientActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_oagroup);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("选择联系人");
         setLeftBack();
         startTransaction(true);

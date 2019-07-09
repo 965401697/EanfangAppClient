@@ -173,9 +173,9 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client_fill_repair_info);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
         initData();
 

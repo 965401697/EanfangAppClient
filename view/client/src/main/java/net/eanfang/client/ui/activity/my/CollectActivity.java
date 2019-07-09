@@ -38,9 +38,9 @@ public class CollectActivity extends BaseClientActivity implements OnTabSelectLi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_collect);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
     }
 

@@ -50,9 +50,9 @@ public class IMCardActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_imcard);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         mUser = (User) getIntent().getSerializableExtra("user");
         setTitle("详细信息");
         setLeftBack();

@@ -52,9 +52,9 @@ public class IMPresonInfoActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_impreson_info);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         mUserId = getIntent().getStringExtra(EanfangConst.RONG_YUN_ID);
         mTitle = getIntent().getStringExtra("title");
         setTitle(mTitle);

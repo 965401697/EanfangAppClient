@@ -12,9 +12,9 @@ import androidx.fragment.app.DialogFragment;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.sys.activity.LoginActivity;
 import com.eanfang.util.CleanMessageUtil;
 import com.eanfang.util.JumpItent;
@@ -64,9 +64,9 @@ public class SettingActivity extends BaseClientActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         try {
             tv_cache.setText(CleanMessageUtil.getTotalCacheSize(ClientApplication.get()));
         } catch (Exception e) {

@@ -196,9 +196,9 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_security_detail);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
         initListener();
     }

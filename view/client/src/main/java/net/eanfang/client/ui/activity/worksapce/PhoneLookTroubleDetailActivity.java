@@ -60,9 +60,9 @@ public class PhoneLookTroubleDetailActivity extends BaseClientActivity /*impleme
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phonetrouble_detail);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
         getData();
     }

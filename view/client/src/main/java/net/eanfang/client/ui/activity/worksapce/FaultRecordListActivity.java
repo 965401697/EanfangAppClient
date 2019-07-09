@@ -49,9 +49,9 @@ public class FaultRecordListActivity extends BaseClientActivity implements Swipe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fault_record_list);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("故障列表");
         setLeftBack();
         mPage = 1;

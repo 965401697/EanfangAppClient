@@ -189,9 +189,9 @@ public class AddNewCheckActivity extends BaseActivity implements SelectTimeDialo
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_check);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
 
         initView();
         initData();

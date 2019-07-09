@@ -112,8 +112,8 @@ public class PayActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pay);
+        super.onCreate(savedInstanceState);
         initData();
         setListener();
         setTitle("支付中心");

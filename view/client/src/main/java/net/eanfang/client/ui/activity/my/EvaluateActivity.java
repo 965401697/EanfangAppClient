@@ -37,9 +37,9 @@ public class EvaluateActivity extends BaseClientActivity implements OnTabSelectL
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_detail);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
     }
 

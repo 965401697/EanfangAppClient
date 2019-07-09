@@ -159,7 +159,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
      */
     protected void initView() {
         setLeftBack(true);
-        setRightBack(false);
+        setRightClick(false);
     }
 
     private void initViewModelEvent() {
@@ -256,7 +256,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
      * @param visibility visibility
      * @param listener   listener
      */
-    private void setRightBack(boolean visibility, View.OnClickListener listener) {
+    private void setRightClick(boolean visibility, View.OnClickListener listener) {
         if (findViewById(R.id.titles_bar) == null) {
             return;
         }
@@ -278,8 +278,8 @@ public abstract class BaseActivity extends RxAppCompatActivity {
      *
      * @param listener listener
      */
-    public void setRightBack(View.OnClickListener listener) {
-        setRightBack(true, listener);
+    public void setRightClick(View.OnClickListener listener) {
+        setRightClick(true, listener);
     }
 
     /**
@@ -287,8 +287,8 @@ public abstract class BaseActivity extends RxAppCompatActivity {
      *
      * @param visibility 是否可见
      */
-    public void setRightBack(boolean visibility) {
-        setLeftBack(visibility, null);
+    public void setRightClick(boolean visibility) {
+        setRightClick(visibility, null);
     }
 
 

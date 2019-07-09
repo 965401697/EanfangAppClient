@@ -18,9 +18,8 @@ public class GuideActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.view_guide);
-
+        super.onCreate(savedInstanceState);
         RelativeLayout relativeLayout = findViewById(R.id.rl_parent);
 
         findViewById(R.id.tv_know).setOnClickListener(new View.OnClickListener() {

@@ -26,9 +26,9 @@ public class OwnDataHintActivity extends BaseClientActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_own_data_hint);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("提交成功");
         setLeftBack();
 

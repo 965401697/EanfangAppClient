@@ -165,9 +165,9 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_statistics);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
         initData();
         initListener();

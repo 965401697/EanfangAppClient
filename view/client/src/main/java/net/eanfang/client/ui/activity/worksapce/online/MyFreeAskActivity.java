@@ -51,9 +51,9 @@ public class MyFreeAskActivity extends BaseClientActivity implements View.OnClic
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_free_ask);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         tvTitle.setText("我来回答");
         ivLeft.setOnClickListener(this);
         snplPhotos.setDelegate(new BGASortableDelegate(this));

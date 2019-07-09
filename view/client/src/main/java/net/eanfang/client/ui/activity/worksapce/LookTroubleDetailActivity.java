@@ -89,9 +89,9 @@ public class LookTroubleDetailActivity extends BaseClientActivity /*implements V
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_look_trouble_detail);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
         getData();
     }

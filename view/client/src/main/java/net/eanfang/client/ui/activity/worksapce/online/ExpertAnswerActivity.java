@@ -79,9 +79,9 @@ public class ExpertAnswerActivity extends BaseClientActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expert_answer);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("专家回复");
         Intent intent = getIntent();
         String format1 = intent.getStringExtra("format1");

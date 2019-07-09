@@ -63,9 +63,9 @@ public class FollowListActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_follow_list);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
         initDate();
     }

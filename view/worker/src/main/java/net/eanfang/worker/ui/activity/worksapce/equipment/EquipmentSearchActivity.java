@@ -40,11 +40,9 @@ public class EquipmentSearchActivity extends BaseWorkerActivity implements Swipe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-
         setContentView(R.layout.activity_equipment_list);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("设备列表");
         setLeftBack();
         mBundle = getIntent().getExtras();

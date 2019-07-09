@@ -78,9 +78,9 @@ public class QrCodeShowActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr_code_show);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         supprotToolbar();
         setTitle("二维码名片");
         initView();

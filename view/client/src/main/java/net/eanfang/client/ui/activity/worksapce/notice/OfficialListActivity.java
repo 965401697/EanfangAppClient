@@ -47,9 +47,9 @@ public class OfficialListActivity extends BaseClientActivity implements SwipeRef
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_official_list);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("官方通知");
         setLeftBack(new View.OnClickListener() {
             @Override

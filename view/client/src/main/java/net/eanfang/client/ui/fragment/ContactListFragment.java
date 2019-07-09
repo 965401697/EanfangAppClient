@@ -24,7 +24,6 @@ import com.eanfang.biz.model.AllMessageBean;
 import com.eanfang.biz.model.GroupDetailBean;
 import com.eanfang.biz.model.GroupsBean;
 import com.eanfang.biz.model.device.User;
-import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.NetBroadcastReceiver;
@@ -35,8 +34,6 @@ import com.eanfang.util.StringUtils;
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.MainActivity;
-import net.eanfang.client.ui.activity.im.GroupDetailActivity;
-import net.eanfang.client.ui.activity.im.IMPresonInfoActivity;
 import net.eanfang.client.ui.activity.im.MorePopWindow;
 import net.eanfang.client.ui.activity.im.MyConversationListFragment;
 import net.eanfang.client.ui.activity.im.SystemMessageActivity;
@@ -73,7 +70,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
 
     private boolean isFrist = true;
     private List<String> invalidList = new ArrayList<>();//无效的会话id
-    private Set<String> conversationsId =new HashSet<>();
+    private Set<String> conversationsId = new HashSet<>();
 
     private QBadgeView qBadgeViewAllMsg = new QBadgeView(ClientApplication.get().getApplicationContext());
 
@@ -323,7 +320,6 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
 
                 }));
     }
-
 
 
     /**

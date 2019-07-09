@@ -49,6 +49,7 @@
 //    protected void initCustomView(Bundle savedInstanceState) {
 //        setContentView(R.layout.activity_stop_order);
 //        ButterKnife.bind(this);
+//        super.onCreate(savedInstanceState);
 //        initView();
 //    }
 //

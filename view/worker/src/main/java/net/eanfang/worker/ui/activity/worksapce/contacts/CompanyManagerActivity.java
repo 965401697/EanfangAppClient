@@ -63,9 +63,9 @@ public class CompanyManagerActivity extends BaseActivity implements DissloveTeam
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_company_manager);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
     }
 

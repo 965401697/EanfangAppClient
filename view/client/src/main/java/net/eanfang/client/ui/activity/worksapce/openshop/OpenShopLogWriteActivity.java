@@ -120,9 +120,9 @@ public class OpenShopLogWriteActivity extends BaseClientActivity implements Sele
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_open_shop_log_write);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("开店日志");
         setLeftBack(new View.OnClickListener() {
             @Override

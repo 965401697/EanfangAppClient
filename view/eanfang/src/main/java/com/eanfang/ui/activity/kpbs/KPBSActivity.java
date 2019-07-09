@@ -29,9 +29,9 @@ public class KPBSActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_kpbs);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         initView();
         setTitle("录像计算");

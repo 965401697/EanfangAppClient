@@ -82,9 +82,9 @@ public class CooperationAddActivity extends BaseWorkerActivity implements Select
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cooperation_add);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("添加合作业务");
         setLeftBack();
 

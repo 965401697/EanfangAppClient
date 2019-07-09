@@ -24,9 +24,9 @@ public class FindBrandActivity extends BaseClientActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_brand);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("选择设备类型");
 
 

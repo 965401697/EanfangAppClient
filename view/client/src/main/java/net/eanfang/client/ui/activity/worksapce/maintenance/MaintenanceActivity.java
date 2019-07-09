@@ -14,9 +14,9 @@ public class MaintenanceActivity extends BaseClientActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maintenance2);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("维保管控");
         setLeftBack();
     }

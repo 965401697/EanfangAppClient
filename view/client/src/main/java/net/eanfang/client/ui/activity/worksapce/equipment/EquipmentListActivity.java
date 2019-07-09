@@ -41,9 +41,10 @@ public class EquipmentListActivity extends BaseClientActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_equipment_list);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("设备列表");
         setLeftBack();
         initView();

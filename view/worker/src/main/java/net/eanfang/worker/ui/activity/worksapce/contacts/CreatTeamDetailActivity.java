@@ -32,9 +32,9 @@ public class CreatTeamDetailActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_creat_team_detail);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("创建团队");
         setLeftBack();
 

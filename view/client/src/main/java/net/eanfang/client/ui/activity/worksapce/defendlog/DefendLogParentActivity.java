@@ -39,9 +39,9 @@ public class DefendLogParentActivity extends BaseClientActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_defend_log_parent);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
     }
 

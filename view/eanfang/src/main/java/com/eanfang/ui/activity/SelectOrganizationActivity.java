@@ -50,9 +50,9 @@ public class SelectOrganizationActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_organization_contact);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         supprotToolbar();
         startTransaction(true);
         isRadio = getIntent().getStringExtra("isRadio");//单选

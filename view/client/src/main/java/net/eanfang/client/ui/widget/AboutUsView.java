@@ -36,6 +36,7 @@ public class AboutUsView extends BaseDialog {
 //    public void initView() {
 //        setContentView(R.layout.activity_about_us);
 //        ButterKnife.bind(this);
+//        super.onCreate(savedInstanceState);
 //
 //    }
 

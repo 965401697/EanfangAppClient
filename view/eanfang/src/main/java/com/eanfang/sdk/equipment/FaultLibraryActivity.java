@@ -66,9 +66,9 @@ public class FaultLibraryActivity extends BaseActivity implements SwipyRefreshLa
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fault_library);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         tvGo.setVisibility(View.GONE);
         initView();
         initData();

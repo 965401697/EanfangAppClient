@@ -149,6 +149,7 @@ public class AuthWorkerInfoActivity extends BaseWorkeActivity {
     }
     @Override
     public void initView() {
+        super.initView();
         setTitle("填写技师资料");
         setRightTitle("编辑");
         //设置表情过滤，最多输入字数为100
@@ -172,7 +173,7 @@ public class AuthWorkerInfoActivity extends BaseWorkeActivity {
         setRightTitleOnClickListener((v) -> {
             showToast("可以进行编辑");
             isEdit = true;
-            setRightBack(false);
+            setRightClick(false);
             doRevoke();
         });
 
@@ -214,7 +215,7 @@ public class AuthWorkerInfoActivity extends BaseWorkeActivity {
             doSetGone();
         }
         if (status != 2) {
-            setRightBack(false);
+            setRightClick(false);
         }
 
     }

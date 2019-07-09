@@ -52,9 +52,9 @@ public class SetPasswordActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_password);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
     }
 

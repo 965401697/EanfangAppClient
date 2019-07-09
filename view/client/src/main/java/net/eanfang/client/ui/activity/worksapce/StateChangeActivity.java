@@ -34,9 +34,9 @@ public class StateChangeActivity extends BaseClientActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_state);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
         Bundle extras = getIntent().getExtras();
         showViewType(extras);

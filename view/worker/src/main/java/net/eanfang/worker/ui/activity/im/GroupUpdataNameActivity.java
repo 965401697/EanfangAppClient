@@ -24,9 +24,9 @@ public class GroupUpdataNameActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_updata_name);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("修改群组名称");
         setRightTitle("确定");
         setLeftBack();

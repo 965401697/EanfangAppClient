@@ -45,9 +45,10 @@ public class RepairAppointTimeActivity extends BaseActivity implements SelectTim
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_repair_appoint_time);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
         initListener();
     }

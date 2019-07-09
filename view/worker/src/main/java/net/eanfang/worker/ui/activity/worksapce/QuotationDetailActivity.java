@@ -50,8 +50,8 @@ public class QuotationDetailActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quotation_detail);
+        super.onCreate(savedInstanceState);
         setTitle("报价明细");
         setLeftBack();
         initView();

@@ -75,6 +75,7 @@ public class PermissionManagerActivity extends BaseWorkerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_permission_manager);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("权限管理");
         setLeftBack();
 

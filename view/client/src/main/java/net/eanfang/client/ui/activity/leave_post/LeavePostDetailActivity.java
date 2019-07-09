@@ -44,7 +44,7 @@ public class LeavePostDetailActivity extends BaseActivity {
     protected void initView() {
         setLeftBack(true);
         setTitle("报警详情");
-        setRightBack(new View.OnClickListener() {
+        setRightClick(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 

@@ -51,9 +51,9 @@ public class CashOurActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cash_our);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         mExtractMoney = getIntent().getIntExtra(EXTRA_MONEY, 0);
         initView();
     }

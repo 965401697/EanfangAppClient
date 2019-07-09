@@ -77,9 +77,9 @@ public class SkillTypeActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_skill_type);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setTitle("服务认证");
         setLeftBack();
         startTransaction(true);

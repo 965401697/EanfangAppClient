@@ -116,9 +116,9 @@ public class TaskActivity extends BaseWorkerActivity implements View.OnClickList
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activityu_task);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
     }
 

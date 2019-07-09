@@ -85,9 +85,9 @@ public class FindExpertActivity extends BaseWorkerActivity implements View.OnCli
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_expert);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         chooseBrand.setOnClickListener(this);
         basis = getSharedPreferences("basis", MODE_PRIVATE);
         pinName.setText(basis.getString("DataName", "海康威视 >"));

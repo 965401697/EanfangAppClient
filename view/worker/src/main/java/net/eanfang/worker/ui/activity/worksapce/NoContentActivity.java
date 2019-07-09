@@ -16,8 +16,8 @@ public class NoContentActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_no_content);
+        super.onCreate(savedInstanceState);
         setLeftBack();
     }
 }

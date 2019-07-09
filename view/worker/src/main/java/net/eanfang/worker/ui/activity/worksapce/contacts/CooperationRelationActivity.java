@@ -39,10 +39,9 @@ public class CooperationRelationActivity extends BaseWorkerActivity implements S
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cooperation_relation);
         ButterKnife.bind(this);
-
+        super.onCreate(savedInstanceState);
         initView();
         mPage = 1;
         startTransaction(true);

@@ -48,9 +48,9 @@ public class PartnerActivity extends BaseClientActivity implements SwipeRefreshL
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_partner);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
 
         initView();
         mPage = 1;

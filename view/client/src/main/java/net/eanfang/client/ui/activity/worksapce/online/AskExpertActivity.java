@@ -82,9 +82,9 @@ public class AskExpertActivity extends BaseClientActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ask_expert);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         mBrand = getIntent().getStringExtra("com2");
         mUserId = getIntent().getStringExtra("com");
         if (mBrand != null) {

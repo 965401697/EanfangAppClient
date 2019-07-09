@@ -44,9 +44,10 @@ public class ConversationActivity extends BaseWorkerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_conversation);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         String title = getIntent().getData().getQueryParameter("title").toString();//群组名称
         //单聊就是userid 群聊就是groupid
         mId = getIntent().getData().getQueryParameter("targetId").toString();

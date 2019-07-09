@@ -68,9 +68,9 @@ public class InstallOrderDetailActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_install_order_detail);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         setLeftBack();
         setTitle("报装详情");
         initData();

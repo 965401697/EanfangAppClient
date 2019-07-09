@@ -71,7 +71,7 @@ public abstract class BaseDialog extends RxDialogFragment {
         super.onViewCreated(view, savedInstanceState);
         initViewModelEvent();
         setLeftBack(true);
-        setRightBack(false);
+        setRightClick(false);
         mActivity = getActivity();
         initLoadSir();
         initStyle();
@@ -212,7 +212,7 @@ public abstract class BaseDialog extends RxDialogFragment {
      * @param visibility visibility
      * @param listener   listener
      */
-    private void setRightBack(boolean visibility, View.OnClickListener listener) {
+    private void setRightClick(boolean visibility, View.OnClickListener listener) {
         TextView iv_right = findViewById(R.id.tv_right);
         if (visibility) {
             iv_right.setVisibility(View.VISIBLE);
@@ -231,8 +231,8 @@ public abstract class BaseDialog extends RxDialogFragment {
      *
      * @param listener listener
      */
-    public void setRightBack(View.OnClickListener listener) {
-        setRightBack(true, listener);
+    public void setRightClick(View.OnClickListener listener) {
+        setRightClick(true, listener);
     }
 
     /**
@@ -240,8 +240,8 @@ public abstract class BaseDialog extends RxDialogFragment {
      *
      * @param visibility 是否可见
      */
-    public void setRightBack(boolean visibility) {
-        setRightBack(visibility, null);
+    public void setRightClick(boolean visibility) {
+        setRightClick(visibility, null);
     }
 
 

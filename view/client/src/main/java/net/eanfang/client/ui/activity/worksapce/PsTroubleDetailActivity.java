@@ -76,9 +76,8 @@ public class PsTroubleDetailActivity extends BaseClientActivity /*implements Vie
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ps_client_fill_repair_info);
-
+        super.onCreate(savedInstanceState);
         id = getIntent().getLongExtra("orderId", 0);
         repairOrderId = getIntent().getLongExtra("repairOrderId", 0);
         status = getIntent().getStringExtra("status");

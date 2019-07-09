@@ -110,9 +110,9 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_security_personal);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
         initView();
     }
 

@@ -170,9 +170,9 @@ public class TroubleDetailActivity extends BaseClientActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client_fill_repair_info);
         ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
 
         id = getIntent().getLongExtra("orderId", 0);
         repairOrderId = getIntent().getLongExtra("repairOrderId", 0);
