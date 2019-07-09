@@ -7,6 +7,7 @@ import android.widget.CheckBox;
 import androidx.lifecycle.MutableLiveData;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.eanfang.base.kit.V;
 import com.eanfang.biz.model.bean.QueryEntry;
 import com.eanfang.biz.rds.base.BaseViewModel;
 import com.eanfang.util.StringUtils;
@@ -50,10 +51,13 @@ public class LeavePostScreenViewModel extends BaseViewModel {
      */
     public void setScreenResult(Activity activity) {
         Intent intent = new Intent();
-        intent.putExtra("stationId", Objects.requireNonNull(chooseData.getValue()).getList().get(mPosition).getStationId());
+        if (chooseData.getValue() != null && chooseData.getValue().getList() != null && chooseData.getValue().getList().get(mPosition) != null) {
+            intent.putExtra("stationId", chooseData.getValue().getList().get(mPosition).getStationId());
+        }
         intent.putExtra("placeName", mBinding.tvLeavePostScreenArea.getText());
         intent.putExtra("status", mStatus);
         activity.setResult(Activity.RESULT_OK, intent);
+        finish();
     }
 
     /**

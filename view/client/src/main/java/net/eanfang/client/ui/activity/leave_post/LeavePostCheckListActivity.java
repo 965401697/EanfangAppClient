@@ -1,6 +1,7 @@
 package net.eanfang.client.ui.activity.leave_post;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
@@ -38,6 +39,15 @@ public class LeavePostCheckListActivity extends BaseActivity {
     protected void initView() {
         setTitle("图像查岗");
         setLeftBack(true);
+        mBinding.leavePostCheckListSearch.setCursorVisible(false);
+        mBinding.leavePostCheckListSearch.setFocusable(false);
+        mBinding.leavePostCheckListSearch.setFocusableInTouchMode(false);
+        mBinding.leavePostCheckListSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mViewModel.gotoCheckSecondPage(LeavePostCheckListActivity.this);
+            }
+        });
         mAdapter = new LeavePostCheckListAdapter(R.layout.item_leave_post_check);
         mBinding.recLeavePostCheckList.setLayoutManager(new LinearLayoutManager(this));
         mAdapter.bindToRecyclerView(mBinding.recLeavePostCheckList);
@@ -52,7 +62,7 @@ public class LeavePostCheckListActivity extends BaseActivity {
     protected ViewModel initViewModel() {
         mViewModel = LViewModelProviders.of(this, LeavePostCheckViewModel.class);
         mViewModel.getLeavePostDeviceList().observe(this, this::setData);
-        mViewModel.getDeviceListData(ClientApplication.get().getCompanyId());
+        mViewModel.getDeviceListData(ClientApplication.get().getCompanyId(), null);
         return mViewModel;
     }
 
@@ -63,7 +73,7 @@ public class LeavePostCheckListActivity extends BaseActivity {
             mAdapter.addData(bean.getList());
         }
         mAdapter.loadMoreComplete();
-        if (bean.getCurrPage() >= bean.getTotalCount()) {
+        if (bean.getCurrPage() >= bean.getTotalPage()) {
             mAdapter.loadMoreEnd();
         }
     }

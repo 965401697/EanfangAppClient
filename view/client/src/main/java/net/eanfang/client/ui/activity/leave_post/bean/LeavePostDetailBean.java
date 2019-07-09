@@ -60,4 +60,11 @@ public class LeavePostDetailBean {
      * 岗位id
      */
     private int stationId;
+
+    private LeavePostAddPostPostBean.DeviceEntityBean mDeviceEntityBean;
+
+    /**
+     * 检测设备页面选择设备位置
+     */
+    private int choosePosition = -1;
 }

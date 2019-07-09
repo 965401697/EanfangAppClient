@@ -56,7 +56,7 @@
         android:layout_marginRight="@dimen/dimen_18"
         android:background="@drawable/shape_btn_item_leave_post_check_detail"
         android:gravity="center"
-        android:text="拨打电话"
+        android:text="马上联系"
         android:textColor="@color/white"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@id/img_bg"

@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.eanfang.biz.model.SelectAddressItem;
 import com.eanfang.biz.model.TemplateBean;
+import com.eanfang.biz.model.entity.AccountEntity;
 import com.eanfang.biz.rds.base.BaseViewModel;
 import com.eanfang.config.Config;
 import com.eanfang.ui.activity.SelectAddressActivity;
@@ -32,44 +33,67 @@ import lombok.Getter;
  * Describe :添加岗位
  */
 public class LeavePostAddPostViewModel extends BaseViewModel {
-    @Getter
     private LeavePostRepo mLeavePostHomeRepo;
     @Getter
-    private MutableLiveData<LeavePostDeviceInfoBean> leavePostDeviceDetail;
+    private MutableLiveData<List<String>> leavePostInfo;
     @Getter
     private MutableLiveData<List<TemplateBean.Preson>> chargeStaffList;
     @Getter
     private MutableLiveData<List<TemplateBean.Preson>> dutyStaffList;
+    @Getter
+    private MutableLiveData<LeavePostDeviceInfoBean> deviceInfo;
+
+    private List<LeavePostAddPostPostBean.ChargeStaffListBean> mChargeStaffListBeans;
+    private List<LeavePostAddPostPostBean.ChargeStaffListBean> mDutyStaffListBeans;
+
     private LeavePostAddPostPostBean addPostPostBean = new LeavePostAddPostPostBean();
+    private String[] infos = new String[]{
+            "岗位名称:\t", "岗位位置:\t", "岗位编号:\t", "所在地区:\t", "绑定设备:\t", "报警阀值:\t", "岗位状态:\t",
+    };
+    private List<String> mListInfo;
 
     public LeavePostAddPostViewModel() {
-        leavePostDeviceDetail = new MutableLiveData<>();
         chargeStaffList = new MutableLiveData<>();
         dutyStaffList = new MutableLiveData<>();
+        leavePostInfo = new MutableLiveData<>();
+        deviceInfo = new MutableLiveData<>();
         mLeavePostHomeRepo = new LeavePostRepo(new LeavePostDs(this));
+        mListInfo = new ArrayList<>();
+        mChargeStaffListBeans = new ArrayList<>();
+        mDutyStaffListBeans = new ArrayList<>();
     }
 
-        /**
-         * 获取岗位详情
-         *
-         * @param stationId
-         */
-        public void getPostInfo(int stationId) {
-            mLeavePostHomeRepo.deviceInfoData(String.valueOf(stationId)).observe(lifecycleOwner, leavePostDeviceInfoBean -> {
-                leavePostDeviceDetail.setValue(leavePostDeviceInfoBean);
-                ArrayList<TemplateBean.Preson> chargePersons = new ArrayList<>();
-                for (LeavePostDeviceInfoBean.ChargeStaffListBean chargeStaffListBean: leavePostDeviceInfoBean.getChargeStaffList()){
-                    chargePersons.add(chargeStaffListBean.getPerson());
-                }
-                chargeStaffList.setValue(chargePersons);
-
-                ArrayList<TemplateBean.Preson> dutyStaffPersons = new ArrayList<>();
-                for (LeavePostDeviceInfoBean.ChargeStaffListBean chargeStaffListBean: leavePostDeviceInfoBean.getDutyStaffList()){
-                    dutyStaffPersons.add(chargeStaffListBean.getPerson());
-                }
-                dutyStaffList.setValue(dutyStaffPersons);
-            });
-        }
+    /**
+     * 获取岗位详情
+     *
+     * @param stationId
+     */
+    public void getPostInfo(int stationId) {
+        mLeavePostHomeRepo.deviceInfoData(String.valueOf(stationId)).observe(lifecycleOwner, leavePostDeviceInfoBean -> {
+            if (leavePostDeviceInfoBean == null) {
+                return;
+            }
+            deviceInfo.setValue(leavePostDeviceInfoBean);
+            ArrayList<TemplateBean.Preson> chargePersons = new ArrayList<>();
+            for (LeavePostDeviceInfoBean.ChargeStaffListBean chargeStaffListBean : leavePostDeviceInfoBean.getChargeStaffList()) {
+                chargePersons.add(chargeStaffListBean.getPerson());
+            }
+            chargeStaffList.setValue(chargePersons);
+            ArrayList<TemplateBean.Preson> dutyStaffPersons = new ArrayList<>();
+            for (LeavePostDeviceInfoBean.ChargeStaffListBean chargeStaffListBean : leavePostDeviceInfoBean.getDutyStaffList()) {
+                dutyStaffPersons.add(chargeStaffListBean.getPerson());
+            }
+            dutyStaffList.setValue(dutyStaffPersons);
+            mListInfo.add(infos[0] + leavePostDeviceInfoBean.getStationName());
+            mListInfo.add(infos[1] + leavePostDeviceInfoBean.getStationArea());
+            mListInfo.add(infos[2] + leavePostDeviceInfoBean.getStationCode());
+            mListInfo.add(infos[3] + Config.get().getAddressByCode(leavePostDeviceInfoBean.getStationPlaceCode()));
+            mListInfo.add(infos[4] + (StringUtils.isEmpty(leavePostDeviceInfoBean.getDeviceName()) ? "" : leavePostDeviceInfoBean.getDeviceName()));
+            mListInfo.add(infos[5] + leavePostDeviceInfoBean.getIntervalLength() + "分钟");
+            mListInfo.add(infos[6] + (leavePostDeviceInfoBean.getStatus() == 0 ? "未开启" : "已启用"));
+            leavePostInfo.setValue(mListInfo);
+        });
+    }
 
     /**
      * 跳转图像查岗页面
@@ -80,21 +104,36 @@ public class LeavePostAddPostViewModel extends BaseViewModel {
         activity.startActivity(new Intent(activity, LeavePostCheckListActivity.class));
     }
 
-    public void addDevice(Activity activity) {
-        activity.startActivity(new Intent(activity, LeavePostMonitorActivity.class));
+    public void addDevice(Activity activity, int requestCode) {
+        activity.startActivityForResult(new Intent(activity, LeavePostMonitorActivity.class), requestCode);
     }
 
-    public void addPostCommit(ActivityLeavePostAddPostBinding binding) {
+    /**
+     * 添加岗位上传
+     *
+     * @param binding
+     */
+    public void addPostCommit(ActivityLeavePostAddPostBinding binding, int type) {
         if (checkoutInfo(binding)) {
             addPostPostBean.setStationName(binding.edtLeavePostAddPostName.getText().toString());
             addPostPostBean.setStationArea(binding.edtLeavePostAddPostPosition.getText().toString());
             addPostPostBean.setStationCode(binding.edtLeavePostAddPostNumber.getText().toString());
-            mLeavePostHomeRepo.addPost(addPostPostBean).observe(lifecycleOwner, jsonObject -> {
-                showToast("提交成功");
-            });
+            addPostPostBean.setStatus(binding.switchBtnLeavePostAddPostStatus.isChecked() ? "1" : "0");
+            addPostPostBean.setIntervalLength(Integer.parseInt(binding.tvLeavePostAddPostTime.getText().toString()));
+            addPostPostBean.setChargeUserList(mChargeStaffListBeans);
+            addPostPostBean.setDutyUserList(mDutyStaffListBeans);
+            if (type == 0) {
+                mLeavePostHomeRepo.addPost(addPostPostBean).observe(lifecycleOwner, jsonObject -> {
+                    showToast("提交成功");
+                    finish();
+                });
+            } else {
+                mLeavePostHomeRepo.updatePost(addPostPostBean).observe(lifecycleOwner, jsonObject -> {
+                    showToast("提交成功");
+                    finish();
+                });
+            }
         }
-
-
     }
 
     private boolean checkoutInfo(ActivityLeavePostAddPostBinding binding) {
@@ -126,11 +165,37 @@ public class LeavePostAddPostViewModel extends BaseViewModel {
     }
 
     public void setAreaInfo(SelectAddressItem item) {
-        addPostPostBean.setStationAddress(item.getAddress());
+        addPostPostBean.setStationAddress(item.getName());
         addPostPostBean.setStationPlaceCode(Config.get().getAreaCodeByName(item.getCity(), item.getAddress()));
     }
 
-    public void updatePostInfo() {
-
+    /**
+     * 设置设备返回结果
+     */
+    public void setDeviceResult(LeavePostAddPostPostBean.DeviceEntityBean deviceEntityBean) {
+        addPostPostBean.setDeviceEntity(deviceEntityBean);
     }
+
+    /**
+     * 上传负责人
+     *
+     * @param whoList
+     */
+    public void setChargeStaff(List<TemplateBean.Preson> whoList, int type) {
+        for (TemplateBean.Preson preson : whoList) {
+            LeavePostAddPostPostBean.ChargeStaffListBean bean = new LeavePostAddPostPostBean.ChargeStaffListBean();
+            AccountEntity accountEntity = new AccountEntity();
+            accountEntity.setAccId(Long.valueOf(preson.getId()));
+            accountEntity.setRealName(preson.getName());
+            accountEntity.setMobile(preson.getMobile());
+            bean.setUserId(preson.getUserId());
+            bean.setAccountEntity(accountEntity);
+            if (type == 0) {
+                mChargeStaffListBeans.add(bean);
+            } else {
+                mDutyStaffListBeans.add(bean);
+            }
+        }
+    }
+
 }

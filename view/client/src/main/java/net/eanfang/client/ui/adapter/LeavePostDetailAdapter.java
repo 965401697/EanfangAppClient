@@ -1,13 +1,20 @@
 package net.eanfang.client.ui.adapter;
 
+import android.graphics.Color;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
+import com.eanfang.config.Config;
 import com.eanfang.util.GlideUtil;
+import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostDetailBean;
@@ -25,39 +32,44 @@ public class LeavePostDetailAdapter extends BaseQuickAdapter<LeavePostDetailBean
     }
 
     @Override
-    public int getItemCount() {
-        return 10;
-    }
-
-    @Override
     protected void convert(LeavePostViewHolder helper, LeavePostDetailBean item) {
         if (item == null) {
             return;
         }
         GlideUtil.intoImageView(mContext, BuildConfig.OSS_SERVER + item.getImg(), helper.imgItemLeavePostManageDetail);
         helper.tvItemLeavePostManageDetailName.setText(mContext.getString(R.string.text_leave_post_detail_post_name, item.getName()));
-        helper.tvItemLeavePostManageDetailArea.setText(mContext.getString(R.string.text_leave_post_detail_area, item.getAreaCode()));
+        String area = StringUtils.isEmpty(Config.get().getAddressByCode(item.getAreaCode())) ?  item.getAreaCode() : Config.get().getAddressByCode(item.getAreaCode());
+        helper.tvItemLeavePostManageDetailArea.setText(mContext.getString(R.string.text_leave_post_detail_area, area));
         if (item.getPageType() == 0) {
             helper.tvItemLeavePostManageDetailPosition.setText(mContext.getString(R.string.text_leave_post_detail_position, item.getPosition()));
-            helper.tvItemLeavePostManageDetailStatus.setText(mContext.getString(R.string.text_leave_post_detail_status, item.getStatus()));
+            String postStatus = mContext.getString(R.string.text_leave_post_detail_status, item.getStatus() == 0 ? "不可用" : "启用");
+            SpannableString spannableString = new SpannableString(postStatus);
+            spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#FF6419")), 4, postStatus.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            helper.tvItemLeavePostManageDetailStatus.setText(spannableString);
         } else if (item.getPageType() == 1) {
             helper.tvItemLeavePostManageDetailUse.setVisibility(View.VISIBLE);
             helper.tvItemLeavePostManageDetailPosition.setVisibility(View.GONE);
             helper.imgItemLeavePostManageDetailNext.setVisibility(View.GONE);
+            helper.checkboxItemLeavePostManageDetail.setVisibility(View.VISIBLE);
             helper.tvItemLeavePostManageDetailName.setText(mContext.getString(R.string.text_leave_post_detail_device_name, item.getName()));
             helper.tvItemLeavePostManageDetailArea.setText(mContext.getString(R.string.text_leave_post_detail_serial_num, item.getSerialNum()));
-            helper.tvItemLeavePostManageDetailUse.setText(mContext.getString(R.string.text_leave_post_detail_use, item.getUse()));
-            helper.tvItemLeavePostManageDetailStatus.setText(mContext.getString(R.string.text_leave_post_detail_status, item.getStatus()));
+            helper.tvItemLeavePostManageDetailUse.setText(mContext.getString(R.string.text_leave_post_detail_use, item.getUse() == 0 ? "未占用" : "已占用"));
+            String postStatus = mContext.getString(R.string.text_leave_post_detail_device_status, item.getStatus() == 0 ? "不可用" : "启用");
+            SpannableString spannableString = new SpannableString(postStatus);
+            spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#FF6419")), 4, postStatus.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            helper.tvItemLeavePostManageDetailStatus.setText(spannableString);
+            helper.checkboxItemLeavePostManageDetail.setChecked(item.getChoosePosition() == mData.indexOf(item));
         } else {
             helper.tvItemLeavePostManageDetailCount.setVisibility(View.VISIBLE);
             helper.tvItemLeavePostManageDetailTime.setVisibility(View.VISIBLE);
             helper.tvItemLeavePostManageDetailStatus.setVisibility(View.GONE);
             helper.tvItemLeavePostManageDetailPosition.setText(mContext.getString(R.string.text_leave_post_detail_position, item.getPosition()));
-            helper.tvItemLeavePostManageDetailCount.setText(mContext.getString(R.string.text_leave_post_detail_count, item.getCount()));
+            String count = mContext.getString(R.string.text_leave_post_detail_count, item.getCount());
+            SpannableString spannableString = new SpannableString(count);
+            spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#FF6419")), 4, count.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            helper.tvItemLeavePostManageDetailCount.setText(spannableString);
             helper.tvItemLeavePostManageDetailTime.setText(mContext.getString(R.string.text_leave_post_detail_time, item.getTime()));
         }
-
-
     }
 
     class LeavePostViewHolder extends BaseViewHolder {
@@ -70,6 +82,7 @@ public class LeavePostDetailAdapter extends BaseQuickAdapter<LeavePostDetailBean
         private TextView tvItemLeavePostManageDetailCount;
         private TextView tvItemLeavePostManageDetailTime;
         private ImageView imgItemLeavePostManageDetailNext;
+        private CheckBox checkboxItemLeavePostManageDetail;
 
         public LeavePostViewHolder(View view) {
             super(view);
@@ -82,6 +95,10 @@ public class LeavePostDetailAdapter extends BaseQuickAdapter<LeavePostDetailBean
             tvItemLeavePostManageDetailCount = view.findViewById(R.id.tv_item_leave_post_manage_detail_count);
             tvItemLeavePostManageDetailTime = view.findViewById(R.id.tv_item_leave_post_manage_detail_time);
             imgItemLeavePostManageDetailNext = view.findViewById(R.id.img_item_leave_post_manage_detail_next);
+            checkboxItemLeavePostManageDetail = view.findViewById(R.id.checkbox_item_leave_post_manage_detail);
+            checkboxItemLeavePostManageDetail.setEnabled(false);
+            checkboxItemLeavePostManageDetail.setClickable(false);
         }
+
     }
 }

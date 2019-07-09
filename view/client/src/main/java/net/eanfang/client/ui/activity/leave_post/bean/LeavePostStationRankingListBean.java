@@ -68,23 +68,30 @@ public class LeavePostStationRankingListBean {
         private LeavePostDetailBean mLeavePostDetailBean;
         private LeavePostDefaultRankingBean mRankingBean;
 
-        public LeavePostDefaultRankingBean getRankingBean() {
+        public LeavePostDefaultRankingBean getRankingBean(int dateType) {
             mRankingBean = new LeavePostDefaultRankingBean();
-            mRankingBean.setAlertName(alertName);
+            if (stationsEntity != null) {
+                mRankingBean.setAlertName(stationsEntity.getStationName());
+            }
             mRankingBean.setAlertsCount(alertsCount + "次");
             mRankingBean.setCompareValue(compareValue);
             mRankingBean.setStationId(stationId);
             mRankingBean.setDate(alertTime);
+            mRankingBean.setRankingType(dateType);
             return mRankingBean;
         }
 
         public LeavePostDetailBean getLeavePostDetailBean() {
             mLeavePostDetailBean = new LeavePostDetailBean();
             mLeavePostDetailBean.setPageType(2);
-            mLeavePostDetailBean.setName(stationsEntity.getStationName());
-            mLeavePostDetailBean.setAreaCode(stationsEntity.getStationPlaceName());
-            mLeavePostDetailBean.setPosition(stationsEntity.getStationName());
-            mLeavePostDetailBean.setImg(devicesEntity.getLivePic());
+            if (stationsEntity != null) {
+                mLeavePostDetailBean.setName(stationsEntity.getStationName());
+                mLeavePostDetailBean.setAreaCode(stationsEntity.getStationPlaceName());
+                mLeavePostDetailBean.setPosition(stationsEntity.getStationName());
+            }
+            if (devicesEntity != null) {
+                mLeavePostDetailBean.setImg(devicesEntity.getLivePic());
+            }
             mLeavePostDetailBean.setCount(alertsCount);
             mLeavePostDetailBean.setTime(alertTime);
             return mLeavePostDetailBean;

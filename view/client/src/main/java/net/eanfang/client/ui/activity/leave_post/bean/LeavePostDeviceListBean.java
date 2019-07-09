@@ -43,11 +43,13 @@ public class LeavePostDeviceListBean {
 
         public LeavePostDetailBean getLeavePostDetailBean() {
             mLeavePostDetailBean = new LeavePostDetailBean();
-            mLeavePostDetailBean.setName(deviceName);
+            mLeavePostDetailBean.setName(stationName);
             mLeavePostDetailBean.setAreaCode(stationPlaceCode);
             mLeavePostDetailBean.setPosition(stationArea);
             mLeavePostDetailBean.setStatus(status);
-            mLeavePostDetailBean.setImg(deviceEntity.livePic);
+            if (deviceEntity != null) {
+                mLeavePostDetailBean.setImg(deviceEntity.livePic);
+            }
             mLeavePostDetailBean.setPageType(0);
             mLeavePostDetailBean.setStationId(stationId);
             return mLeavePostDetailBean;

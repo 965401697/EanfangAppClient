@@ -15,7 +15,7 @@
 
         <include layout="@layout/header_eanfang" />
 
-        <TextView
+        <EditText
             android:id="@+id/leave_post_check_list_search"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_70"
@@ -27,7 +27,9 @@
             android:drawablePadding="@dimen/dimen_12"
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/dimen_20"
-            android:text="搜索"
+            android:hint="搜索"
+            android:imeOptions="actionDone"
+            android:inputType="text"
             android:textColor="@color/color_bottom"
             android:textSize="12sp"
             app:layout_constraintLeft_toLeftOf="parent"

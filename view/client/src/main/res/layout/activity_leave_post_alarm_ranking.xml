@@ -7,9 +7,6 @@
         android:layout_height="match_parent"
         android:background="@color/white">
 
-        <!--<include-->
-        <!--android:id="@+id/header"-->
-        <!--layout="@layout/header" />-->
         <include layout="@layout/header_eanfang" />
 
         <ImageView
@@ -19,14 +16,14 @@
             android:layout_marginTop="@dimen/dimen_36"
             android:background="@drawable/img_map"
             app:layout_constraintDimensionRatio="h, 360:226"
-            app:layout_constraintTop_toBottomOf="@id/bg_year" />
+            app:layout_constraintTop_toBottomOf="@id/checkbox_leave_post_ranking_year" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_20"
             android:layout_marginTop="@dimen/dimen_16"
             android:background="@color/color_leave_post_check_bg"
-            app:layout_constraintTop_toBottomOf="@id/bg_year" />
+            app:layout_constraintTop_toBottomOf="@id/checkbox_leave_post_ranking_year" />
 
         <View
             android:layout_width="match_parent"
@@ -34,154 +31,80 @@
             android:background="@color/color_leave_post_check_bg"
             app:layout_constraintTop_toBottomOf="@id/img_map" />
 
-        <View
-            android:id="@+id/bg_year"
-            android:layout_width="@dimen/dimen_132"
+        <CheckBox
+            android:id="@+id/checkbox_leave_post_ranking_year"
+            android:layout_width="@dimen/dimen_120"
             android:layout_height="@dimen/dimen_60"
-            android:layout_marginLeft="@dimen/dimen_30"
+            android:layout_marginLeft="@dimen/dimen_28"
             android:layout_marginTop="@dimen/dimen_16"
-            android:background="@color/color_new_order_screen_btn_bg"
+            android:background="@drawable/selector_leave_post_screen_status"
+            android:button="@null"
+            android:gravity="center"
+            android:text="年排名"
+            android:textColor="@drawable/select_camera_text_back"
+            android:textSize="12sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/titles_bar" />
 
-        <TextView
-            android:id="@+id/tv_leave_post_alarm_ranking_year"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableRight="@mipmap/arrow_down"
-            android:drawablePadding="@dimen/dimen_16"
-            android:text="请选择"
-            android:textColor="@color/color_client_neworder"
-            android:textSize="11sp"
-            app:layout_constraintBottom_toBottomOf="@id/bg_year"
-            app:layout_constraintLeft_toLeftOf="@id/bg_year"
-            app:layout_constraintRight_toRightOf="@id/bg_year"
-            app:layout_constraintTop_toTopOf="@id/bg_year" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dimen_12"
-            android:text="年"
-            android:textColor="@color/color_client_neworder"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@id/bg_year"
-            app:layout_constraintLeft_toRightOf="@id/bg_year"
-            app:layout_constraintTop_toTopOf="@id/bg_year" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rec_choose_year"
-            android:layout_width="@dimen/dimen_132"
-            android:layout_height="@dimen/dimen_300"
-            android:background="@color/color_new_order_screen_btn_bg"
-            android:visibility="gone"
-            app:layout_constraintLeft_toLeftOf="@id/bg_year"
-            app:layout_constraintRight_toRightOf="@id/bg_year"
-            app:layout_constraintTop_toBottomOf="@id/bg_year" />
-
-        <View
-            android:id="@+id/bg_month"
-            android:layout_width="@dimen/dimen_132"
+        <CheckBox
+            android:id="@+id/checkbox_leave_post_ranking_quarter"
+            android:layout_width="@dimen/dimen_120"
             android:layout_height="@dimen/dimen_60"
-            android:layout_marginLeft="@dimen/dimen_80"
             android:layout_marginTop="@dimen/dimen_16"
-            android:background="@color/color_new_order_screen_btn_bg"
-            app:layout_constraintLeft_toRightOf="@id/bg_year"
-            app:layout_constraintTop_toBottomOf="@id/titles_bar" />
-
-        <TextView
-            android:id="@+id/tv_leave_post_alarm_ranking_month"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableRight="@mipmap/arrow_down"
-            android:drawablePadding="@dimen/dimen_16"
-            android:text="请选择"
-            android:textColor="@color/color_client_neworder"
-            android:textSize="11sp"
-            app:layout_constraintBottom_toBottomOf="@id/bg_month"
-            app:layout_constraintLeft_toLeftOf="@id/bg_month"
-            app:layout_constraintRight_toRightOf="@id/bg_month"
-            app:layout_constraintTop_toTopOf="@id/bg_month" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dimen_12"
-            android:text="月"
-            android:textColor="@color/color_client_neworder"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@id/bg_month"
-            app:layout_constraintLeft_toRightOf="@id/bg_month"
-            app:layout_constraintTop_toTopOf="@id/bg_year" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rec_choose_month"
-            android:layout_width="@dimen/dimen_132"
-            android:layout_height="@dimen/dimen_300"
-            android:background="@color/color_new_order_screen_btn_bg"
-            android:visibility="gone"
-            app:layout_constraintLeft_toLeftOf="@id/bg_month"
-            app:layout_constraintRight_toRightOf="@id/bg_month"
-            app:layout_constraintTop_toBottomOf="@id/bg_month" />
-
-        <View
-            android:id="@+id/bg_day"
-            android:layout_width="@dimen/dimen_132"
-            android:layout_height="@dimen/dimen_60"
-            android:layout_marginLeft="@dimen/dimen_80"
-            android:layout_marginTop="@dimen/dimen_16"
-            android:background="@color/color_new_order_screen_btn_bg"
-            app:layout_constraintLeft_toRightOf="@id/bg_month"
-            app:layout_constraintTop_toBottomOf="@id/titles_bar" />
-
-        <TextView
-            android:id="@+id/tv_leave_post_alarm_ranking_day"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableRight="@mipmap/arrow_down"
-            android:drawablePadding="@dimen/dimen_16"
-            android:text="请选择"
-            android:textColor="@color/color_client_neworder"
-            android:textSize="11sp"
-            app:layout_constraintBottom_toBottomOf="@id/bg_day"
-            app:layout_constraintLeft_toLeftOf="@id/bg_day"
-            app:layout_constraintRight_toRightOf="@id/bg_day"
-            app:layout_constraintTop_toTopOf="@id/bg_day" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dimen_12"
-            android:text="日"
-            android:textColor="@color/color_client_neworder"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@id/bg_day"
-            app:layout_constraintLeft_toRightOf="@id/bg_day"
-            app:layout_constraintTop_toTopOf="@id/bg_day" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rec_choose_day"
-            android:layout_width="@dimen/dimen_132"
-            android:layout_height="@dimen/dimen_300"
-            android:background="@color/color_new_order_screen_btn_bg"
-            android:visibility="gone"
-            app:layout_constraintLeft_toLeftOf="@id/bg_day"
-            app:layout_constraintRight_toRightOf="@id/bg_day"
-            app:layout_constraintTop_toBottomOf="@id/bg_day" />
-
-        <TextView
-            android:id="@+id/tv_ok"
-            android:layout_width="@dimen/dimen_98"
-            android:layout_height="@dimen/dimen_60"
-            android:layout_marginRight="@dimen/dimen_18"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/selector_leave_post_screen_status"
+            android:button="@null"
             android:gravity="center"
-            android:text="确定"
-            android:textColor="@color/white"
-            android:textSize="13sp"
-            app:layout_constraintBottom_toBottomOf="@id/bg_day"
+            android:text="季度排名"
+            android:textColor="@drawable/select_camera_text_back"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toRightOf="@id/checkbox_leave_post_ranking_year"
+            app:layout_constraintRight_toLeftOf="@id/checkbox_leave_post_ranking_month"
+            app:layout_constraintTop_toBottomOf="@id/titles_bar" />
+
+        <CheckBox
+            android:id="@+id/checkbox_leave_post_ranking_month"
+            android:layout_width="@dimen/dimen_120"
+            android:layout_height="@dimen/dimen_60"
+            android:layout_marginTop="@dimen/dimen_16"
+            android:background="@drawable/selector_leave_post_screen_status"
+            android:button="@null"
+            android:gravity="center"
+            android:text="月排名"
+            android:textColor="@drawable/select_camera_text_back"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toRightOf="@id/checkbox_leave_post_ranking_quarter"
+            app:layout_constraintRight_toLeftOf="@id/checkbox_leave_post_ranking_week"
+            app:layout_constraintTop_toBottomOf="@id/titles_bar" />
+
+        <CheckBox
+            android:id="@+id/checkbox_leave_post_ranking_week"
+            android:layout_width="@dimen/dimen_120"
+            android:layout_height="@dimen/dimen_60"
+            android:layout_marginTop="@dimen/dimen_16"
+            android:background="@drawable/selector_leave_post_screen_status"
+            android:button="@null"
+            android:gravity="center"
+            android:text="周排名"
+            android:textColor="@drawable/select_camera_text_back"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toRightOf="@id/checkbox_leave_post_ranking_month"
+            app:layout_constraintRight_toLeftOf="@id/checkbox_leave_post_ranking_day"
+            app:layout_constraintTop_toBottomOf="@id/titles_bar" />
+
+        <CheckBox
+            android:id="@+id/checkbox_leave_post_ranking_day"
+            android:layout_width="@dimen/dimen_120"
+            android:layout_height="@dimen/dimen_60"
+            android:layout_marginTop="@dimen/dimen_16"
+            android:background="@drawable/selector_leave_post_screen_status"
+            android:button="@null"
+            android:gravity="center"
+            android:text="日排名"
+            android:textColor="@drawable/select_camera_text_back"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toRightOf="@id/checkbox_leave_post_ranking_week"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@id/bg_day" />
+            app:layout_constraintTop_toBottomOf="@id/titles_bar" />
 
         <CheckBox
             android:id="@+id/tv_leave_post_ranking_post"
@@ -213,12 +136,63 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/img_map" />
 
+        <TextView
+            android:id="@+id/tv_rank_number"
+            android:layout_width="@dimen/dimen_60"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_36"
+            android:text="序号"
+            android:textColor="@color/color_bottom"
+            android:textSize="12sp"
+            android:layout_marginLeft="@dimen/dimen_22"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_leave_post_ranking_question" />
+
+        <TextView
+            android:id="@+id/tv_rank_post_name"
+            android:layout_width="@dimen/dimen_180"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_36"
+            android:text="岗位名称"
+            android:gravity="center"
+            android:textColor="@color/color_bottom"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toRightOf="@id/tv_rank_number"
+            app:layout_constraintRight_toLeftOf="@id/tv_rank_count"
+            app:layout_constraintTop_toBottomOf="@id/tv_leave_post_ranking_question" />
+
+        <TextView
+            android:id="@+id/tv_rank_count"
+            android:layout_width="@dimen/dimen_120"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_36"
+            android:text="报警次数"
+            android:gravity="center"
+            android:textColor="@color/color_bottom"
+            android:textSize="12sp"
+            app:layout_constraintLeft_toRightOf="@id/tv_rank_post_name"
+            app:layout_constraintRight_toLeftOf="@id/tv_rank_compare"
+            app:layout_constraintTop_toBottomOf="@id/tv_leave_post_ranking_question" />
+
+        <TextView
+            android:id="@+id/tv_rank_compare"
+            android:layout_width="@dimen/dimen_200"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_36"
+            android:text="较去年"
+            android:gravity="center"
+            android:textColor="@color/color_bottom"
+            android:textSize="12sp"
+            android:layout_marginRight="@dimen/dimen_140"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_leave_post_ranking_question" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rec_leave_post_alarm_ranking"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_10"
-            app:layout_constraintTop_toBottomOf="@id/tv_leave_post_ranking_post" />
+            app:layout_constraintTop_toBottomOf="@id/tv_rank_compare" />
 
         <TextView
             android:id="@+id/tv_leave_post_ranking_all"

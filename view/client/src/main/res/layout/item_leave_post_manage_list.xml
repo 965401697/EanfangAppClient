@@ -1,28 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/img_item_leave_post_manage_bg"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/dimen_16"
+    android:layout_marginTop="@dimen/dimen_20"
+    android:layout_marginRight="@dimen/dimen_16"
+    android:background="@drawable/shape_bg_item_leave_post_check_detail">
 
-    <ImageView
-        android:id="@+id/img_item_leave_post_manage_bg"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginLeft="@dimen/dimen_16"
-        android:layout_marginTop="@dimen/dimen_20"
-        android:layout_marginRight="@dimen/dimen_16"
-        android:background="@drawable/shape_bg_item_leave_post_check_detail"
-        app:layout_constraintDimensionRatio="w,117:345"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/img_item_leave_post_manage_areaName"
-        android:layout_width="wrap_content"
+        android:layout_width="@dimen/dimen_120"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen_42"
         android:layout_marginTop="@dimen/dimen_40"
+        android:gravity="center"
         android:text="北京"
         android:textColor="@color/color_client_neworder"
         android:textSize="18sp"
@@ -60,46 +54,53 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen_32"
+        android:layout_marginTop="@dimen/dimen_30"
         android:text="北京"
         android:textColor="@color/color_client_neworder"
         android:textSize="13sp"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/img_item_leave_post_manage_item2"
         app:layout_constraintLeft_toLeftOf="@id/line_item_leave_post_manage_list"
-        app:layout_constraintTop_toTopOf="@id/img_item_leave_post_manage_bg" />
+        app:layout_constraintTop_toTopOf="@id/img_item_leave_post_manage_bg"
+        app:layout_goneMarginBottom="@dimen/dimen_30" />
 
     <TextView
         android:id="@+id/img_item_leave_post_manage_item2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen_32"
+        android:layout_marginTop="@dimen/dimen_16"
         android:text="北京"
         android:textColor="@color/color_client_neworder"
         android:textSize="13sp"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/img_item_leave_post_manage_item3"
         app:layout_constraintLeft_toLeftOf="@id/line_item_leave_post_manage_list"
-        app:layout_constraintTop_toBottomOf="@id/img_item_leave_post_manage_item1" />
+        app:layout_constraintTop_toBottomOf="@id/img_item_leave_post_manage_item1"
+        app:layout_goneMarginBottom="@dimen/dimen_30" />
 
     <TextView
         android:id="@+id/img_item_leave_post_manage_item3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen_32"
+        android:layout_marginTop="@dimen/dimen_16"
         android:text="北京"
         android:textColor="@color/color_client_neworder"
         android:textSize="13sp"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/img_item_leave_post_manage_item4"
         app:layout_constraintLeft_toLeftOf="@id/line_item_leave_post_manage_list"
-        app:layout_constraintTop_toBottomOf="@id/img_item_leave_post_manage_item2" />
+        app:layout_constraintTop_toBottomOf="@id/img_item_leave_post_manage_item2"
+        app:layout_goneMarginBottom="@dimen/dimen_30" />
 
     <TextView
         android:id="@+id/img_item_leave_post_manage_item4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen_32"
-        android:layout_marginBottom="@dimen/dimen_8"
+        android:layout_marginTop="@dimen/dimen_16"
+        android:layout_marginBottom="@dimen/dimen_30"
         android:text="北京"
         android:textColor="@color/color_client_neworder"
         android:textSize="13sp"

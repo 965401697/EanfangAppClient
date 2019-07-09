@@ -243,6 +243,8 @@ public class HomeRepairFragment extends BaseFragment {
             mRepairBugEntity.setBusinessThreeCode(businessOneCode);
             String text = Config.get().getBusinessNameByCode(dataCode, 1);
             mEtHomeRepairSys.setText(text);
+            mInstallOrderConfirmBean.setBusinessOneCode(businessOneCode);
+            mDesignOrderInfoBean.setBusinessOneCode(businessOneCode);
         } else if (resultCode == RESULT_DEVICE_BRAND_CODE && requestCode == REQUEST_DEVICE_BRAND_CODE) {
             // 设备品牌
             String brandName = data.getStringExtra("deviceBrandName");
@@ -264,8 +266,6 @@ public class HomeRepairFragment extends BaseFragment {
                     showToast("请先选择故障设备");
                     return;
                 }
-                mInstallOrderConfirmBean.setBusinessOneCode(busOneCode);
-                mDesignOrderInfoBean.setBusinessOneCode(busOneCode);
                 Bundle bundleDevice = new Bundle();
                 bundleDevice.putString("busOneCode", busOneCode);
                 startActivityForResult(new Intent(getActivity(), DeviceBrandActivity.class).putExtras(bundleDevice), REQUEST_DEVICE_BRAND_CODE);
@@ -314,13 +314,15 @@ public class HomeRepairFragment extends BaseFragment {
             }));
         } else if (mStatus == 1) {
             mInstallOrderConfirmBean.setDescription(mEtHomeRepairDescribe.getText().toString());
-            mInstallOrderConfirmBean.setConnectorPhone(ClientApplication.get().getAccount().getRealName());
-            mInstallOrderConfirmBean.setConnector(ClientApplication.get().getAccount().getMobile());
+            mInstallOrderConfirmBean.setConnectorPhone(ClientApplication.get().getAccount().getMobile());
+            mInstallOrderConfirmBean.setConnector(ClientApplication.get().getAccount().getRealName());
             EanfangHttp.post(NewApiService.HOME_QUICK_INSTALL).upJson(JSON.toJSONString(mInstallOrderConfirmBean)).execute(new EanfangCallback(getActivity(), true, JSONObject.class, bean -> {
                 showToast("提交成功！");
             }));
         } else {
             mDesignOrderInfoBean.setRemarkInfo(mEtHomeRepairDescribe.getText().toString());
+            mDesignOrderInfoBean.setContactPhone(ClientApplication.get().getAccount().getMobile());
+            mDesignOrderInfoBean.setContactUser(ClientApplication.get().getAccount().getRealName());
             EanfangHttp.post(NewApiService.HOME_FREE_DESIGN).upJson(JSON.toJSONString(mDesignOrderInfoBean)).execute(new EanfangCallback(getActivity(), true, JSONObject.class, bean -> {
                 showToast("提交成功！");
             }));

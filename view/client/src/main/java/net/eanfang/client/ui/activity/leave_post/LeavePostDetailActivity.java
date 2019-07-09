@@ -15,7 +15,6 @@ import com.eanfang.biz.rds.base.LViewModelProviders;
 import net.eanfang.client.R;
 import net.eanfang.client.databinding.ActivityLeavePostDetailBinding;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostAlertInfoDetailBean;
-import net.eanfang.client.ui.activity.leave_post.bean.LeavePostKeyValueBean;
 import net.eanfang.client.ui.activity.leave_post.viewmodel.LeavePostDetailViewModel;
 import net.eanfang.client.ui.adapter.LeavePostDetailImageAdapter;
 import net.eanfang.client.ui.adapter.LeavePostDetailInfoAdapter;
@@ -30,7 +29,8 @@ import java.util.List;
 public class LeavePostDetailActivity extends BaseActivity {
     private ActivityLeavePostDetailBinding mBinding;
     private LeavePostDetailViewModel mViewModel;
-    private LeavePostDetailInfoAdapter mInfoAdapter;
+    private LeavePostDetailInfoAdapter mEventInfoAdapter;
+    private LeavePostDetailInfoAdapter mLeaveInfoAdapter;
     private LeavePostDetailImageAdapter mImageAdapter;
     private LeavePostDetailImageAdapter mVideoAdapter;
 
@@ -53,9 +53,12 @@ public class LeavePostDetailActivity extends BaseActivity {
         setRightTitle("图像查岗");
         int alertId = getIntent().getIntExtra("alertId", 0);
         mViewModel.getAlertInfoData(String.valueOf(alertId));
-        mInfoAdapter = new LeavePostDetailInfoAdapter(R.layout.item_leave_post_detail_info);
-        mBinding.recLeavePostDetailInfo.setLayoutManager(new LinearLayoutManager(this));
-        mInfoAdapter.bindToRecyclerView(mBinding.recLeavePostDetailInfo);
+        mEventInfoAdapter = new LeavePostDetailInfoAdapter();
+        mLeaveInfoAdapter = new LeavePostDetailInfoAdapter();
+        mBinding.recLeavePostDetailEventInfo.setLayoutManager(new LinearLayoutManager(this));
+        mBinding.recLeavePostDetailLeaveInfo.setLayoutManager(new LinearLayoutManager(this));
+        mEventInfoAdapter.bindToRecyclerView(mBinding.recLeavePostDetailEventInfo);
+        mLeaveInfoAdapter.bindToRecyclerView(mBinding.recLeavePostDetailLeaveInfo);
 
         mBinding.btnLeavePoetDetail.setOnClickListener(view -> mViewModel.gotoCallPersonPage(LeavePostDetailActivity.this));
 
@@ -71,12 +74,17 @@ public class LeavePostDetailActivity extends BaseActivity {
     protected ViewModel initViewModel() {
         mViewModel = LViewModelProviders.of(this, LeavePostDetailViewModel.class);
         mViewModel.getLeavePostAlertInfoData().observe(this, this::setData);
-        mViewModel.getLeavePostAlertList().observe(this, this::setInfoData);
+        mViewModel.getLeavePostAlertEventList().observe(this, this::setEventInfoData);
+        mViewModel.getLeavePostAlertLeaveList().observe(this, this::setLeaveInfoData);
         return mViewModel;
     }
 
-    private void setInfoData(List<LeavePostKeyValueBean> leavePostKeyValueBeans) {
-        mInfoAdapter.setNewData(leavePostKeyValueBeans);
+    private void setLeaveInfoData(List<String> leavePostKeyValueBeans) {
+        mLeaveInfoAdapter.setNewData(leavePostKeyValueBeans);
+    }
+
+    private void setEventInfoData(List<String> leavePostKeyValueBeans) {
+        mEventInfoAdapter.setNewData(leavePostKeyValueBeans);
     }
 
     private void setData(LeavePostAlertInfoDetailBean leavePostAlertInfoDetailBean) {

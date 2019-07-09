@@ -7,6 +7,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.base.BaseActivity;
 import com.eanfang.biz.rds.base.LViewModelProviders;
 
@@ -36,22 +37,40 @@ public class LeavePostMonitorActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        super.initView();
+        setTitle("监测设备");
+        setRightTitle("确定");
+        setLeftBack(true);
+        setRightClick(view -> mViewModel.setResult(LeavePostMonitorActivity.this));
         mAdapter = new LeavePostDetailAdapter();
         mBinding.recLeavePostCheckList.setLayoutManager(new LinearLayoutManager(this));
         mAdapter.bindToRecyclerView(mBinding.recLeavePostCheckList);
+        mAdapter.setOnItemClickListener((adapter, view, position) -> mViewModel.setItemCheck(adapter, view, position));
+        mBinding.leavePostCheckListSearch.setCursorVisible(false);
+        mBinding.leavePostCheckListSearch.setFocusable(false);
+        mBinding.leavePostCheckListSearch.setFocusableInTouchMode(false);
+        mAdapter.setOnLoadMoreListener(() -> mViewModel.loadMoreData(), mBinding.recLeavePostCheckList);
     }
 
     @Override
     protected ViewModel initViewModel() {
         mViewModel = LViewModelProviders.of(this, LeavePostMonitorViewModel.class);
         mViewModel.getLeavePostDetailData().observe(this, this::setData);
-        mViewModel.getMonitorList();
+        mViewModel.getMonitorList(null);
         return mViewModel;
     }
 
     private void setData(List<LeavePostDetailBean> leavePostDetailBeans) {
-        mAdapter.setNewData(leavePostDetailBeans);
+        if (mViewModel.getMLeavePostMonitorBean() != null) {
+            if (mViewModel.getMLeavePostMonitorBean().getCurrPage() == 1) {
+                mAdapter.setNewData(leavePostDetailBeans);
+            } else {
+                mAdapter.addData(leavePostDetailBeans);
+            }
+            mAdapter.loadMoreComplete();
+            if (mViewModel.getMLeavePostMonitorBean().getCurrPage() >= mViewModel.getMLeavePostMonitorBean().getTotalPage()) {
+                mAdapter.loadMoreEnd();
+            }
+        }
     }
 
 }

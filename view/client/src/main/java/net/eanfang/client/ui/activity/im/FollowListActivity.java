@@ -106,7 +106,7 @@ public class FollowListActivity extends BaseClientActivity {
         });
 
         mFollowListAdapter.setOnLoadMoreListener(() -> {
-            if (mCurrPage < mTotalPage) {
+           if (mCurrPage < mTotalPage) {
                 mCurrPage++;
                 initDate();
             }

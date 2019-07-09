@@ -19,18 +19,19 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@color/color_main_header_bg"
-            app:layout_constraintDimensionRatio="H, 360:127"
-            app:layout_constraintTop_toBottomOf="@id/titles_bar" />
+            android:background="@color/white"
+            app:layout_constraintDimensionRatio="H, 360:77"
+            app:layout_constraintTop_toBottomOf="@id/tv_leave_post_date" />
 
         <TextView
             android:id="@+id/tv_leave_post_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dimen_40"
-            android:layout_marginTop="@dimen/dimen_20"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_58"
+            android:background="@color/color_contact_line_gray"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/dimen_78"
             android:text="2019"
-            android:textColor="@color/white"
+            android:textColor="@color/color_client_neworder"
             android:textSize="12sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/titles_bar" />
@@ -39,10 +40,10 @@
             android:id="@+id/tv_leave_post_post_count"
             android:layout_width="@dimen/dimen_120"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dimen_38"
+            android:layout_marginLeft="@dimen/dimen_74"
             android:layout_marginTop="@dimen/dimen_44"
             android:text="0"
-            android:textColor="@color/white"
+            android:textColor="@color/color_leave_post_count_text"
             android:textSize="24sp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_leave_post_date" />
@@ -54,7 +55,7 @@
             android:layout_marginLeft="@dimen/dimen_64"
             android:layout_marginTop="@dimen/dimen_44"
             android:text="0"
-            android:textColor="@color/white"
+            android:textColor="@color/color_main_header_bg"
             android:textSize="24sp"
             app:layout_constraintLeft_toRightOf="@id/tv_leave_post_post_count"
             app:layout_constraintTop_toBottomOf="@id/tv_leave_post_date" />
@@ -64,7 +65,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_10"
             android:text="岗位数量"
-            android:textColor="@color/white"
+            android:textColor="@color/color_client_neworder"
+            android:textSize="13sp"
             app:layout_constraintLeft_toLeftOf="@id/tv_leave_post_post_count"
             app:layout_constraintTop_toBottomOf="@id/tv_leave_post_post_count" />
 
@@ -73,7 +75,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_10"
             android:text="当日报警"
-            android:textColor="@color/white"
+            android:textColor="@color/color_client_neworder"
+            android:textSize="13sp"
             app:layout_constraintLeft_toLeftOf="@id/tv_leave_post_warn_count"
             app:layout_constraintTop_toBottomOf="@id/tv_leave_post_warn_count" />
 
@@ -81,9 +84,9 @@
             android:id="@+id/tv_leave_post_change_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/dimen_100"
+            android:layout_marginRight="@dimen/dimen_80"
             android:text="+286"
-            android:textColor="@color/white"
+            android:textColor="@color/color_main_header_bg"
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="@id/tv_leave_post_post_count"
             app:layout_constraintRight_toRightOf="parent"
@@ -95,7 +98,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/dimen_54"
             android:text="较昨日"
-            android:textColor="@color/white"
+            android:textColor="@color/color_client_neworder"
             android:textSize="13sp"
             app:layout_constraintBottom_toBottomOf="@id/tv_leave_post_post_count"
             app:layout_constraintRight_toLeftOf="@id/tv_leave_post_change_count"
@@ -107,7 +110,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_16"
             android:text="10000"
-            android:textColor="@color/white"
+            android:textColor="@color/color_main_header_bg"
             android:textSize="15sp"
             app:layout_constraintLeft_toLeftOf="@id/tv_leave_post_change_count"
             app:layout_constraintTop_toBottomOf="@id/tv_leave_post_change_count" />
@@ -117,19 +120,27 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_18"
             android:text="累计报警"
-            android:textColor="@color/white"
+            android:textColor="@color/color_client_neworder"
             android:textSize="13sp"
             app:layout_constraintLeft_toLeftOf="@id/tv_leave_post_change_name"
             app:layout_constraintTop_toBottomOf="@id/tv_leave_post_change_name" />
+
+        <View
+            android:layout_width="@dimen/dimen_2"
+            android:layout_height="0dp"
+            android:background="@color/color_leave_post_home_Y_line"
+            app:layout_constraintBottom_toBottomOf="@id/tv_leave_post_all_warn"
+            app:layout_constraintHorizontal_bias="0.54"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_leave_post_warn_count" />
 
         <ImageView
             android:id="@+id/constraint_leave_post"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginLeft="@dimen/dimen_24"
             android:layout_marginTop="@dimen/dimen_46"
-            android:layout_marginRight="@dimen/dimen_24"
-            android:background="@drawable/shape_bg_item_leave_post_check_detail"
+            android:background="@color/white"
             app:layout_constraintDimensionRatio="H,338:77"
             app:layout_constraintTop_toBottomOf="@id/tv_leave_post_all_warn" />
 
@@ -149,6 +160,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="图像查岗"
+            android:textColor="@color/black"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@id/constraint_leave_post"
             app:layout_constraintLeft_toLeftOf="@id/img_leave_post_check"
@@ -159,7 +171,7 @@
             android:id="@+id/img_leave_post_manage"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/img_post_mangement"
+            android:src="@drawable/img_post_management"
             app:layout_constraintBottom_toBottomOf="@id/tv_post_management"
             app:layout_constraintLeft_toRightOf="@id/img_leave_post_check"
             app:layout_constraintRight_toLeftOf="@id/img_leave_post_history"
@@ -170,6 +182,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="岗位管理"
+            android:textColor="@color/black"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@id/constraint_leave_post"
             app:layout_constraintLeft_toLeftOf="@id/img_leave_post_manage"
@@ -190,7 +203,8 @@
             android:id="@+id/tv_checkup_history"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="报警历史"
+            android:text="历史记录"
+            android:textColor="@color/black"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@id/constraint_leave_post"
             app:layout_constraintLeft_toLeftOf="@id/img_leave_post_history"
@@ -209,13 +223,19 @@
             android:textSize="12sp"
             app:layout_constraintTop_toBottomOf="@id/constraint_leave_post" />
 
+        <include
+            layout="@layout/item_home_leave_post"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_100"
+            android:layout_marginTop="@dimen/dimen_2"
+            app:layout_constraintTop_toBottomOf="@id/tv_leave_post_todo_count" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rec_leave_post_todo"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/dimen_2"
             android:background="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_leave_post_todo_count" />
+            app:layout_constraintTop_toBottomOf="@id/item_home_leave_post" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
