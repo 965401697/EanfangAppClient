@@ -39,6 +39,7 @@ import net.eanfang.client.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.client.ui.activity.worksapce.WorkerDetailActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.RepairActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.RepairTypeActivity;
+import net.eanfang.client.ui.activity.worksapce.repair.TroubleListActivity;
 import net.eanfang.client.ui.adapter.SelectWorkerAdapter;
 
 import java.util.ArrayList;
@@ -276,6 +277,7 @@ public class ServicedWorkerFragment extends BaseFragment implements SwipeRefresh
     }
 
     private void closeActivity() {
+        ClientApplication.get().closeActivity(TroubleListActivity.class);
         ClientApplication.get().closeActivity(RepairTypeActivity.class);
         ClientApplication.get().closeActivity(RepairActivity.class);
         ClientApplication.get().closeActivity(SelectWorkerActivity.class);
