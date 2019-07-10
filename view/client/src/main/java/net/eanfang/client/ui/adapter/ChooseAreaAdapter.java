@@ -28,7 +28,9 @@ public class ChooseAreaAdapter extends BaseQuickAdapter<LeavePostChooseAreaBean.
 
     @Override
     protected void convert(BaseViewHolder helper, LeavePostChooseAreaBean.ListBean item) {
-
+        if (item == null) {
+            return;
+        }
         //根据position获取首字母作为目录catalog
         String catalog = Cn2Spell.getPinYin(item.getStationPlaceName()).substring(0, 1).toUpperCase();
 

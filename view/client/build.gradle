@@ -32,7 +32,6 @@ android {
                     PACKAGE_NAME : cfg.clientId
             ]
         }
-
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
     }
 

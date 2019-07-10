@@ -10,11 +10,14 @@ import com.eanfang.biz.model.bean.QueryEntry;
 import com.eanfang.biz.rds.base.BaseViewModel;
 import com.eanfang.util.StringUtils;
 
+import net.eanfang.client.ui.activity.leave_post.LeavePostDetailActivity;
 import net.eanfang.client.ui.activity.leave_post.LeavePostHistoryDetailActivity;
 import net.eanfang.client.ui.activity.leave_post.LeavePostScreenActivity;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostAlertHistoryBean;
 import net.eanfang.client.ui.activity.leave_post.ds.LeavePostDs;
 import net.eanfang.client.ui.activity.leave_post.repo.LeavePostRepo;
+
+import java.util.Objects;
 
 import lombok.Getter;
 
@@ -66,19 +69,24 @@ public class LeavePostHistoryListViewModel extends BaseViewModel {
      * 加载更多数据
      */
     public void loadMoreData() {
-        mCurrentPage++;
-        getHistoryListData(this.mCompanyId);
+        if (mCurrentPage < Objects.requireNonNull(leavePostHistoryListData.getValue()).getTotalPage()) {
+            mCurrentPage++;
+            getHistoryListData(this.mCompanyId);
+        }
     }
 
+    /**
+     * 跳转筛选页面
+     * @param activity
+     */
     public void gotoScreenPage(Activity activity) {
-        activity.startActivity(new Intent(activity, LeavePostScreenActivity.class));
+        activity.startActivityForResult(new Intent(activity, LeavePostScreenActivity.class), 0);
     }
 
     public void gotoHistoryDetailPage(Activity activity, BaseQuickAdapter adapter, int position) {
         LeavePostAlertHistoryBean.ListBean bean = (LeavePostAlertHistoryBean.ListBean) adapter.getData().get(position);
-        Intent intent = new Intent(activity, LeavePostHistoryDetailActivity.class);
-        intent.putExtra("stationId", bean.getStationId());
-        intent.putExtra("date", bean.getAlertTime());
+        Intent intent = new Intent(activity, LeavePostDetailActivity.class);
+        intent.putExtra("alertId", bean.getAlertId());
         activity.startActivity(intent);
     }
 

@@ -62,6 +62,11 @@ public class LeavePostCheckDetailActivity extends BaseActivity {
             mBinding.tvLeavePostCheckDetailTitle.setVisibility(View.GONE);
             mBinding.imgLeavePostCheckDetail.setVisibility(View.GONE);
         }
+        if (showTopContent) {
+            mViewModel.getDeviceListData(mStationId);
+        } else {
+            mViewModel.getContactsListData(mAlertId);
+        }
         mAdapter = new LeavePostCheckDetailAdapter();
         mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
             @Override
@@ -77,11 +82,6 @@ public class LeavePostCheckDetailActivity extends BaseActivity {
     protected ViewModel initViewModel() {
         mViewModel = LViewModelProviders.of(this, LeavePostCheckDetailViewModel.class);
         mViewModel.getLeavePostDeviceDetail().observe(this, this::initData);
-        if (showTopContent) {
-            mViewModel.getDeviceListData(mStationId);
-        } else {
-            mViewModel.getContactsListData(mAlertId);
-        }
         return mViewModel;
     }
 

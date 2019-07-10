@@ -40,6 +40,7 @@ public class LeavePostManageDetailActivity extends BaseActivity {
         setLeftBack(true);
         String areaName = getIntent().getStringExtra("areaName");
         setTitle(areaName + "地区岗位");
+        mViewModel.getDeviceListData(ClientApplication.get().getCompanyId(), areaName);
         mAdapter = new LeavePostDetailAdapter();
         mBinding.recLeavePostManage.setLayoutManager(new LinearLayoutManager(this));
         mAdapter.bindToRecyclerView(mBinding.recLeavePostManage);
@@ -50,7 +51,6 @@ public class LeavePostManageDetailActivity extends BaseActivity {
     protected ViewModel initViewModel() {
         mViewModel = LViewModelProviders.of(this, LeavePostManageDetailViewModel.class);
         mViewModel.getLeavePostDetailBean().observe(this, this::setData);
-        mViewModel.getDeviceListData(ClientApplication.get().getCompanyId());
         return mViewModel;
     }
 

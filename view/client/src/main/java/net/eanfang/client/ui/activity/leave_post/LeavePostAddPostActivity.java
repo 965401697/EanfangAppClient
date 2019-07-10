@@ -2,26 +2,30 @@ package net.eanfang.client.ui.activity.leave_post;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.eanfang.base.BaseActivity;
 import com.eanfang.biz.model.SelectAddressItem;
 import com.eanfang.biz.model.TemplateBean;
 import com.eanfang.biz.rds.base.LViewModelProviders;
 import com.eanfang.config.Config;
+import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.R;
 import net.eanfang.client.databinding.ActivityLeavePostAddPostBinding;
+import net.eanfang.client.ui.activity.leave_post.bean.LeavePostAddPostPostBean;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostDeviceInfoBean;
 import net.eanfang.client.ui.activity.leave_post.viewmodel.LeavePostAddPostViewModel;
 import net.eanfang.client.ui.activity.worksapce.oa.workreport.OAPersonAdaptet;
+import net.eanfang.client.ui.adapter.LeavePostDetailInfoAdapter;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
@@ -34,12 +38,14 @@ import java.util.List;
  */
 public class LeavePostAddPostActivity extends BaseActivity {
     private static final int SELECT_ADDRESS_CALL_BACK_CODE = 1;
+    private static final int SELECT_DEVICE_CALL_BACK_CODE = 2;
     private ActivityLeavePostAddPostBinding mBinding;
     private LeavePostAddPostViewModel mViewModel;
     private List<TemplateBean.Preson> whoList = new ArrayList<>();
     private OAPersonAdaptet mChargeStaffAdapter;
     private OAPersonAdaptet mDutyStaffAdapter;
     private int mFlag;
+    private LeavePostDetailInfoAdapter mAdapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,6 +55,9 @@ public class LeavePostAddPostActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
         //岗位类型 0：添加 1只读
         int postType = getIntent().getIntExtra("postType", 0);
         setLeftBack(true);
@@ -56,56 +65,66 @@ public class LeavePostAddPostActivity extends BaseActivity {
             setTitle("添加岗位");
         } else {
             int stationId = getIntent().getIntExtra("stationId", 0);
+            mBinding.btnLeavePostAddCommit.setVisibility(View.GONE);
+            mBinding.viewBottomBg.setVisibility(View.GONE);
+            mViewModel.getPostInfo(stationId);
             setTitle("岗位详情");
+            mBinding.contentInfo.setVisibility(View.GONE);
+            mBinding.recLeavePostDetailInfo.setVisibility(View.VISIBLE);
             setRightClick(view -> {
-                setViewEnable(true);
                 setRightTitle("确定");
+                mChargeStaffAdapter.setCanClick(true);
+                mDutyStaffAdapter.setCanClick(true);
+                mBinding.contentInfo.setVisibility(View.VISIBLE);
+                mBinding.recLeavePostDetailInfo.setVisibility(View.GONE);
+                setDefaultData();
                 setRightClick(view1 -> {
-                    mViewModel.updatePostInfo();
+                    mViewModel.addPostCommit(mBinding, 1);
                 });
             });
             setRightTitle("编辑");
-            setViewEnable(false);
-            mViewModel.getPostInfo(stationId);
         }
-        mBinding.tvLeavePostAddPostDevice.setOnClickListener(view -> mViewModel.addDevice(LeavePostAddPostActivity.this));
-        mBinding.btnLeavePostAddCommit.setOnClickListener(view -> mViewModel.addPostCommit(mBinding));
+        mAdapter = new LeavePostDetailInfoAdapter();
+        mBinding.recLeavePostDetailInfo.setLayoutManager(new LinearLayoutManager(this));
+        mBinding.tvLeavePostAddPostDevice.setOnClickListener(view -> mViewModel.addDevice(LeavePostAddPostActivity.this, SELECT_DEVICE_CALL_BACK_CODE));
+        mBinding.btnLeavePostAddCommit.setOnClickListener(view -> mViewModel.addPostCommit(mBinding, 0));
         mBinding.tvLeavePostAddPostArea.setOnClickListener(view -> {
             mViewModel.gotoChooseArea(LeavePostAddPostActivity.this, SELECT_ADDRESS_CALL_BACK_CODE);
         });
-        mBinding.switchBtnLeavePostAddPostStatus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String defaultDevice = "请选择";
-                if (defaultDevice.equals(mBinding.tvLeavePostAddPostDevice.getText().toString()) && !mBinding.switchBtnLeavePostAddPostStatus.isChecked()){
-                    showToast("请先选择绑定设备");
-                    mBinding.switchBtnLeavePostAddPostStatus.setChecked(false);
-                }
+        mAdapter.bindToRecyclerView(mBinding.recLeavePostDetailInfo);
+        mBinding.switchBtnLeavePostAddPostStatus.setOnCheckedChangeListener((view, isChecked) -> {
+            if (StringUtils.isEmpty(mBinding.tvLeavePostAddPostDevice.getText().toString())) {
+                showToast("请先选择绑定设备");
+                mBinding.switchBtnLeavePostAddPostStatus.setChecked(false);
             }
         });
-        initRecView();
+
+        initRecView(postType == 0);
     }
 
     /**
-     * 设置view是否可编辑
-     *
-     * @param enable
+     * 只读变成编辑状态设置数据
      */
-    private void setViewEnable(boolean enable) {
-        mBinding.edtLeavePostAddPostName.setEnabled(enable);
-        mBinding.edtLeavePostAddPostPosition.setEnabled(enable);
-        mBinding.edtLeavePostAddPostNumber.setEnabled(enable);
-        mBinding.tvLeavePostAddPostDevice.setEnabled(enable);
-        mBinding.tvLeavePostAddPostArea.setEnabled(enable);
-        mBinding.switchBtnLeavePostAddPostStatus.setEnabled(enable);
-        mBinding.tvLeavePostAddPostTime.setEnabled(enable);
+    private void setDefaultData() {
+        LeavePostDeviceInfoBean leavePostDeviceInfoBean = mViewModel.getDeviceInfo().getValue();
+        if (leavePostDeviceInfoBean != null) {
+            mBinding.edtLeavePostAddPostName.setText(leavePostDeviceInfoBean.getStationName());
+            mBinding.edtLeavePostAddPostPosition.setText(leavePostDeviceInfoBean.getStationArea());
+            mBinding.edtLeavePostAddPostNumber.setText(leavePostDeviceInfoBean.getStationCode());
+            mBinding.tvLeavePostAddPostArea.setText(Config.get().getAddressByCode(leavePostDeviceInfoBean.getStationPlaceCode()));
+            mBinding.tvLeavePostAddPostDevice.setText(leavePostDeviceInfoBean.getDeviceName());
+            mBinding.tvLeavePostAddPostTime.setText(String.valueOf(leavePostDeviceInfoBean.getIntervalLength()));
+            mBinding.switchBtnLeavePostAddPostStatus.setChecked(leavePostDeviceInfoBean.getStatus() == 0);
+        }
     }
 
-    private void initRecView() {
+    private void initRecView(boolean itemCanClienk) {
         mBinding.recLeavePostAddInDuty.setLayoutManager(new GridLayoutManager(this, 5));
         mBinding.recLeavePostAddInCharge.setLayoutManager(new GridLayoutManager(this, 5));
         mChargeStaffAdapter = new OAPersonAdaptet(this, new ArrayList<TemplateBean.Preson>(), 3);
         mDutyStaffAdapter = new OAPersonAdaptet(this, new ArrayList<TemplateBean.Preson>(), 2);
+        mChargeStaffAdapter.setCanClick(itemCanClienk);
+        mDutyStaffAdapter.setCanClick(itemCanClienk);
         mBinding.recLeavePostAddInDuty.setAdapter(mChargeStaffAdapter);
         mBinding.recLeavePostAddInCharge.setAdapter(mDutyStaffAdapter);
     }
@@ -113,10 +132,14 @@ public class LeavePostAddPostActivity extends BaseActivity {
     @Override
     protected ViewModel initViewModel() {
         mViewModel = LViewModelProviders.of(this, LeavePostAddPostViewModel.class);
-        mViewModel.getLeavePostDeviceDetail().observe(this, this::initPostInfo);
-        mViewModel.getChargeStaffList().observe(this, this:: setChargeStaffData);
-        mViewModel.getDutyStaffList().observe(this, this:: setDutyStaffData);
+        mViewModel.getLeavePostInfo().observe(this, this::initPostInfo);
+        mViewModel.getChargeStaffList().observe(this, this::setChargeStaffData);
+        mViewModel.getDutyStaffList().observe(this, this::setDutyStaffData);
         return mViewModel;
+    }
+
+    private void initPostInfo(List<String> infoList) {
+        mAdapter.setNewData(infoList);
     }
 
     private void setDutyStaffData(List<TemplateBean.Preson> presons) {
@@ -127,23 +150,15 @@ public class LeavePostAddPostActivity extends BaseActivity {
         mDutyStaffAdapter.setNewData(presons);
     }
 
-    private void initPostInfo(LeavePostDeviceInfoBean leavePostDeviceInfoBean) {
-        mBinding.edtLeavePostAddPostName.setText(leavePostDeviceInfoBean.getStationName());
-        mBinding.edtLeavePostAddPostPosition.setText(leavePostDeviceInfoBean.getStationArea());
-        mBinding.edtLeavePostAddPostNumber.setText(leavePostDeviceInfoBean.getStationCode());
-        mBinding.tvLeavePostAddPostArea.setText(leavePostDeviceInfoBean.getStationPlaceCode());
-        mBinding.tvLeavePostAddPostDevice.setText(leavePostDeviceInfoBean.getDeviceName());
-//        mBinding.tvLeavePostAddPostTime.setText(leavePostDeviceInfoBean.get);
-        mBinding.switchBtnLeavePostAddPostStatus.setChecked(leavePostDeviceInfoBean.getStatus() == 0);
-    }
-
     @Subscribe
     public void onEvent(List<TemplateBean.Preson> presonList) {
         whoList.clear();
         whoList.addAll(presonList);
         if (mFlag == 3) {
+            mViewModel.setChargeStaff(whoList, 0);
             mChargeStaffAdapter.setNewData(whoList);
         } else {
+            mViewModel.setChargeStaff(whoList, 1);
             mDutyStaffAdapter.setNewData(whoList);
         }
     }
@@ -159,12 +174,26 @@ public class LeavePostAddPostActivity extends BaseActivity {
             return;
         }
         if (requestCode == SELECT_ADDRESS_CALL_BACK_CODE) {
-
             SelectAddressItem item = (SelectAddressItem) data.getSerializableExtra("data");
-            Log.e("address", item.toString());
             String placeCode = Config.get().getAreaCodeByName(item.getCity(), item.getAddress());
             mBinding.tvLeavePostAddPostArea.setText(Config.get().getAddressByCode(placeCode));
             mViewModel.setAreaInfo(item);
+        }
+        if (requestCode == SELECT_DEVICE_CALL_BACK_CODE) {
+            LeavePostAddPostPostBean.DeviceEntityBean deviceEntityBean = (LeavePostAddPostPostBean.DeviceEntityBean) data.getSerializableExtra("DeviceEntityBean");
+            mViewModel.setDeviceResult(deviceEntityBean);
+            if (deviceEntityBean != null) {
+                mBinding.tvLeavePostAddPostDevice.setText(deviceEntityBean.getDeviceName());
+            }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //取消订阅
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
         }
     }
 }

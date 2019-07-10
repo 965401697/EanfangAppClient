@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FB973B</color>
+    <color name="colorPrimary">#FF6419</color>
     <color name="colorPrimaryDark">#FB973B</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorPrimary_client">#3F51B5</color>
@@ -83,4 +83,7 @@
     <color name="color_item_leave_post_check_btn">#ff9519</color>
     <color name="color_leave_post_check_bg">#F5F3F3</color>
     <color name="color_leave_post_seekBar_less">#FFA019</color>
+    <color name="color_leave_post_count_text">#009CFF</color>
+    <color name="color_leave_post_home_Y_line">#CBCBCB</color>
+    <color name="color_leave_post_ranking_btn_uncheck">#C7C7C7</color>
 </resources>

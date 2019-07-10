@@ -7,7 +7,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.leave_post.bean.LeavePostKeyValueBean;
 
 
 /**
@@ -15,29 +14,23 @@ import net.eanfang.client.ui.activity.leave_post.bean.LeavePostKeyValueBean;
  * Date ：2019-06-24
  * Describe :报警详情事件adapter
  */
-public class LeavePostDetailInfoAdapter extends BaseQuickAdapter<LeavePostKeyValueBean, LeavePostDetailInfoAdapter.LeavePostHomeViewHolder> {
+public class LeavePostDetailInfoAdapter extends BaseQuickAdapter<String, LeavePostDetailInfoAdapter.LeavePostHomeViewHolder> {
 
-    public LeavePostDetailInfoAdapter(int rec) {
-        super(rec);
+    public LeavePostDetailInfoAdapter() {
+        super(R.layout.item_leave_post_detail_info);
     }
 
     @Override
-    protected void convert(LeavePostHomeViewHolder helper, LeavePostKeyValueBean item) {
-        if (item == null) {
-            return;
-        }
-        helper.tvLeavePostDetailInfoName.setText(item.getName());
-        helper.tvLeavePostDetailInfoValue.setText(item.getValue());
+    protected void convert(LeavePostHomeViewHolder helper, String item) {
+        helper.tvLeavePostDetailInfo.setText(item);
     }
 
     class LeavePostHomeViewHolder extends BaseViewHolder {
-        private TextView tvLeavePostDetailInfoName;
-        private TextView tvLeavePostDetailInfoValue;
+        private TextView tvLeavePostDetailInfo;
 
         public LeavePostHomeViewHolder(View view) {
             super(view);
-            tvLeavePostDetailInfoValue = view.findViewById(R.id.tv_leave_post_detail_info_value);
-            tvLeavePostDetailInfoName = view.findViewById(R.id.tv_leave_post_detail_info_name);
+            tvLeavePostDetailInfo = view.findViewById(R.id.tv_leave_post_detail_info);
         }
     }
 }

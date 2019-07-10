@@ -1,12 +1,14 @@
 package net.eanfang.client.ui.activity.leave_post;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.base.BaseActivity;
 import com.eanfang.biz.rds.base.LViewModelProviders;
 
@@ -37,27 +39,40 @@ public class LeavePostManageListActivity extends BaseActivity {
     @Override
     protected void initView() {
         setLeftBack(true);
-        setRightImageResId(R.mipmap.ic_add);
+        setRightImageResId(R.mipmap.ic_news_add);
         setRightClick(view -> mViewModel.gotoAddPostPage(LeavePostManageListActivity.this));
         setTitle("岗位管理");
-        mAdapter = new LeavePostManageListAdapter(R.layout.item_leave_post_manage_list);
+        mAdapter = new LeavePostManageListAdapter();
         mBinding.recLeavePostManage.setLayoutManager(new LinearLayoutManager(this));
         mAdapter.bindToRecyclerView(mBinding.recLeavePostManage);
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             mViewModel.setItemClick(this, adapter, position);
         });
+        mBinding.tvLeavePostManageTitle.setVisibility(View.VISIBLE);
+        mAdapter.setOnLoadMoreListener(() -> mViewModel.loadMoreData(), mBinding.recLeavePostManage);
     }
 
     @Override
     protected ViewModel initViewModel() {
         mViewModel = LViewModelProviders.of(this, LeavePostManageListViewModel.class);
         mViewModel.getLeavePostManageListData().observe(this, this::setData);
-        mViewModel.getPostManageList(ClientApplication.get().getCompanyId());
+        mViewModel.getPostManageList();
         return mViewModel;
     }
 
     private void setData(LeavePostManageListBean leavePostManageListBeans) {
-        mAdapter.setNewData(leavePostManageListBeans.getList());
+        if (leavePostManageListBeans != null) {
+            if (leavePostManageListBeans.getCurrPage() == 1){
+                mAdapter.setNewData(leavePostManageListBeans.getList());
+            } else {
+                mAdapter.addData(leavePostManageListBeans.getList());
+            }
+            mAdapter.loadMoreComplete();
+            if (leavePostManageListBeans.getCurrPage() >= leavePostManageListBeans.getTotalPage()) {
+                mAdapter.loadMoreEnd();
+            }
+        }
+
     }
 
 }

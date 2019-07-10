@@ -81,6 +81,15 @@ public interface LeavePostApi {
     Observable<BaseResponseBody<JSONObject>> addPost(@Body LeavePostAddPostPostBean addPostPostBean);
 
     /**
+     * 更新岗位
+     *
+     * @param addPostPostBean
+     * @return
+     */
+    @POST("/yaf_station/stationDetectStations/update")
+    Observable<BaseResponseBody<JSONObject>> updatePost(@Body LeavePostAddPostPostBean addPostPostBean);
+
+    /**
      * 报警排名：按照时间和地区查询报警地理分布(默认查询当天)
      *
      * @param queryEntry

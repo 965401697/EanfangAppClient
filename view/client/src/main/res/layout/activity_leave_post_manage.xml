@@ -9,16 +9,26 @@
         android:layout_height="match_parent"
         android:background="@color/color_leave_post_check_bg">
 
-        <!--<include-->
-        <!--layout="@layout/header"-->
-        <!--android:id="@+id/header" />-->
         <include layout="@layout/header_eanfang" />
+
+        <TextView
+            android:id="@+id/tv_leave_post_manage_title"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen_100"
+            android:layout_marginLeft="@dimen/dimen_38"
+            android:gravity="center_vertical"
+            android:text="全国岗位分布"
+            android:textColor="@color/color_client_neworder"
+            android:textSize="15sp"
+            android:visibility="gone"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titles_bar" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rec_leave_post_manage"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/titles_bar" />
+            app:layout_constraintTop_toBottomOf="@id/tv_leave_post_manage_title" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

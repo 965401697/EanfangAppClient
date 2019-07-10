@@ -71,8 +71,14 @@ public class LeavePostMonitorBean {
             mLeavePostDetailBean.setStatus(status);
             mLeavePostDetailBean.setUse(isInUse);
             mLeavePostDetailBean.setPageType(1);
+            LeavePostAddPostPostBean.DeviceEntityBean deviceEntityBean = new LeavePostAddPostPostBean.DeviceEntityBean();
+            deviceEntityBean.setBelongTo(belongTo);
+            deviceEntityBean.setCompanyId(companyId);
+            deviceEntityBean.setDeviceId(deviceId);
+            deviceEntityBean.setDeviceName(deviceName);
+            deviceEntityBean.setIsInUse(isInUse);
+            mLeavePostDetailBean.setMDeviceEntityBean(deviceEntityBean);
             return mLeavePostDetailBean;
-
         }
     }
 }

@@ -9,6 +9,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.biz.model.bean.QueryEntry;
 import com.eanfang.biz.rds.base.BaseViewModel;
 
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.leave_post.LeavePostAddPostActivity;
 import net.eanfang.client.ui.activity.leave_post.LeavePostManageDetailActivity;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostManageListBean;
@@ -42,30 +43,29 @@ public class LeavePostManageListViewModel extends BaseViewModel {
     }
 
 
-    public void getPostManageList(Long companyId) {
+    public void getPostManageList() {
         QueryEntry queryEntry = new QueryEntry();
-        queryEntry.getEquals().put("companyId", String.valueOf(companyId));
+        queryEntry.getEquals().put("companyId", String.valueOf(ClientApplication.get().getCompanyId()));
         queryEntry.setSize(10);
         queryEntry.setPage(mCurrentPage);
         mLeavePostHomeRepo.postManageListData(queryEntry).observe(lifecycleOwner, leavePostManageListData::setValue);
     }
 
-    public void getData() {
-        ArrayList<String> list = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            list.add(i + "");
-        }
-        leavePostHomeData.setValue(list);
-    }
-
     public void setItemClick(Activity activity, BaseQuickAdapter adapter, int position) {
-
-        activity.startActivity(new Intent(activity, LeavePostManageDetailActivity.class).putExtra("areaName", ""));
+        LeavePostManageListBean.ListBean bean = (LeavePostManageListBean.ListBean) adapter.getData().get(position);
+        activity.startActivity(new Intent(activity, LeavePostManageDetailActivity.class).putExtra("areaName", bean.getPlaceName()));
     }
 
     public void gotoAddPostPage(Activity activity) {
         activity.startActivity(new Intent(activity, LeavePostAddPostActivity.class).putExtra("postType", 0));
     }
 
+    public void loadMoreData(){
+
+        if (leavePostManageListData.getValue() != null && mCurrentPage < leavePostManageListData.getValue().getTotalPage()) {
+            mCurrentPage ++;
+            getPostManageList();
+        }
+    }
 
 }

@@ -154,6 +154,16 @@ public class LeavePostDs extends BaseRemoteDataSource {
     }
 
     /**
+     * 更新岗位
+     *
+     * @param addPostPostBean
+     * @param callback
+     */
+    public void updatePost(LeavePostAddPostPostBean addPostPostBean, RequestCallback<JSONObject> callback) {
+        execute(getService(LeavePostApi.class).updatePost(addPostPostBean), callback);
+    }
+
+    /**
      * 报警记录：根据日期查询当日报警记录列表
      *
      * @param queryDate

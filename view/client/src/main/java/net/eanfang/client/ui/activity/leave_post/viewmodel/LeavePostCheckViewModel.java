@@ -8,11 +8,15 @@ import androidx.lifecycle.MutableLiveData;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.biz.model.bean.QueryEntry;
 import com.eanfang.biz.rds.base.BaseViewModel;
+import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.ui.activity.leave_post.LeavePostCheckDetailActivity;
+import net.eanfang.client.ui.activity.leave_post.LeavePostCheckListSecondActivity;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostDeviceListBean;
 import net.eanfang.client.ui.activity.leave_post.ds.LeavePostDs;
 import net.eanfang.client.ui.activity.leave_post.repo.LeavePostRepo;
+
+import java.util.Objects;
 
 import lombok.Getter;
 
@@ -24,6 +28,7 @@ import lombok.Getter;
 public class LeavePostCheckViewModel extends BaseViewModel {
     private int currentPage = 1;
     private Long mCompanyId;
+    private String mStationPlaceName;
     @Getter
     private MutableLiveData<LeavePostDeviceListBean> leavePostDeviceList;
     private LeavePostRepo mLeavePostHomeRepo;
@@ -33,10 +38,14 @@ public class LeavePostCheckViewModel extends BaseViewModel {
         mLeavePostHomeRepo = new LeavePostRepo(new LeavePostDs(this));
     }
 
-    public void getDeviceListData(Long companyId) {
+    public void getDeviceListData(Long companyId, String stationPlaceName) {
         mCompanyId = companyId;
+        mStationPlaceName = stationPlaceName;
         QueryEntry queryEntry = new QueryEntry();
         queryEntry.getEquals().put("companyId", String.valueOf(companyId));
+        if (!StringUtils.isEmpty(stationPlaceName)) {
+            queryEntry.getLike().put("stationName", stationPlaceName);
+        }
         queryEntry.setPage(currentPage);
         queryEntry.setSize(10);
         mLeavePostHomeRepo.deviceListData(queryEntry).observe(lifecycleOwner, leavePostDeviceList::setValue);
@@ -46,8 +55,10 @@ public class LeavePostCheckViewModel extends BaseViewModel {
      * 加载更多
      */
     public void loadMore() {
-        currentPage++;
-        getDeviceListData(mCompanyId);
+        if (currentPage < Objects.requireNonNull(leavePostDeviceList.getValue()).getTotalPage()) {
+            currentPage++;
+            getDeviceListData(mCompanyId, mStationPlaceName);
+        }
     }
 
     /**
@@ -63,5 +74,10 @@ public class LeavePostCheckViewModel extends BaseViewModel {
         intent.putExtra("stationId", bean.getStationId());
         intent.putExtra("isShowTopContent", true);
         activity.startActivity(intent);
+    }
+
+    public void gotoCheckSecondPage(Activity activity) {
+        activity.startActivity(new Intent(activity, LeavePostCheckListSecondActivity.class));
+        finish();
     }
 }

@@ -48,6 +48,8 @@ public class LeavePostHomeAdapter extends BaseQuickAdapter<LeavePostHomeUnHandle
             itemLeavePostName = view.findViewById(R.id.item_leave_post_name);
             tvLeavePostHomeCount = view.findViewById(R.id.tv_leave_post_home_count);
 //            itemLeavePostName1 = view.findViewById(R.id.item_leave_post_name1);
+        view.findViewById(R.id.img_arrow_right).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.bottom_line).setVisibility(View.VISIBLE);
         }
     }
 }

@@ -8,9 +8,10 @@
         android:background="@color/color_new_line">
 
         <!--<include-->
-            <!--android:id="@+id/header"-->
-            <!--layout="@layout/header" />-->
+        <!--android:id="@+id/header"-->
+        <!--layout="@layout/header" />-->
         <include layout="@layout/header_eanfang" />
+
         <ScrollView
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -22,14 +23,50 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_94"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/dimen_28"
+                    android:text="事件信息"
+                    android:textColor="@color/color_main_header_bg"
+                    android:textSize="15sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rec_leave_post_detail_info"
+                    android:id="@+id/rec_leave_post_detail_event_info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_96"
+                    android:background="@color/white"
                     android:clipChildren="false"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_94"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/dimen_28"
+                    android:text="脱岗信息"
+                    android:layout_marginTop="@dimen/dimen_20"
+                    android:textColor="@color/color_main_header_bg"
+                    android:textSize="15sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rec_leave_post_detail_event_info" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rec_leave_post_detail_leave_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_116"
+                    android:background="@color/white"
+                    android:clipChildren="false"
+                    app:layout_constraintTop_toBottomOf="@id/rec_leave_post_detail_event_info" />
 
                 <TextView
                     android:id="@+id/tv_leave_post_detail_img"
@@ -44,7 +81,7 @@
                     android:textColor="@color/color_bottom"
                     android:textSize="13sp"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/rec_leave_post_detail_info" />
+                    app:layout_constraintTop_toBottomOf="@id/rec_leave_post_detail_leave_info" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rec_leave_post_detail_img"
@@ -72,8 +109,9 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rec_leave_post_detail_audio"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:clipChildren="false"
+                    android:background="@color/white"
                     app:layout_constraintBottom_toTopOf="@id/btn_leave_poet_detail"
                     app:layout_constraintTop_toBottomOf="@id/tv_leave_post_detail_audio" />
 
@@ -82,6 +120,7 @@
                     android:layout_width="0dp"
                     android:layout_height="@dimen/dimen_84"
                     android:layout_marginLeft="@dimen/dimen_40"
+                    android:layout_marginTop="@dimen/dimen_24"
                     android:layout_marginRight="@dimen/dimen_40"
                     android:layout_marginBottom="@dimen/dimen_26"
                     android:background="@drawable/shape_btn_leave_post_detail"
@@ -89,11 +128,10 @@
                     android:text="联系责任人"
                     android:textColor="@color/white"
                     android:textSize="15sp"
-                    android:layout_marginTop="@dimen/dimen_24"
-                    app:layout_constraintTop_toBottomOf="@id/rec_leave_post_detail_audio"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent" />
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rec_leave_post_detail_audio" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>

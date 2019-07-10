@@ -44,10 +44,11 @@ public class LeavePostManageDetailViewModel extends BaseViewModel {
      *
      * @param companyId
      */
-    public void getDeviceListData(Long companyId) {
+    public void getDeviceListData(Long companyId, String areaName) {
         this.mCompanyId = companyId;
         QueryEntry queryEntry = new QueryEntry();
         queryEntry.getEquals().put("companyId", String.valueOf(companyId));
+        queryEntry.getEquals().put("stationPlaceName", areaName);
         queryEntry.setPage(mCurrentPage);
         queryEntry.setSize(10);
         mLeavePostRepo.deviceListData(queryEntry).observe(lifecycleOwner, leavePostDeviceListBean -> {

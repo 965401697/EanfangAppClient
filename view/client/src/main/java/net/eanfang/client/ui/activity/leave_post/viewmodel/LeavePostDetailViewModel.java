@@ -10,7 +10,6 @@ import com.eanfang.util.GetDateUtils;
 
 import net.eanfang.client.ui.activity.leave_post.LeavePostCheckDetailActivity;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostAlertInfoDetailBean;
-import net.eanfang.client.ui.activity.leave_post.bean.LeavePostKeyValueBean;
 import net.eanfang.client.ui.activity.leave_post.ds.LeavePostDs;
 import net.eanfang.client.ui.activity.leave_post.repo.LeavePostRepo;
 
@@ -26,44 +25,52 @@ import lombok.Getter;
  * Describe :报警详情
  */
 public class LeavePostDetailViewModel extends BaseViewModel {
-    private String[] keys = new String[]{
-            "事件名称", "报警时间", "岗位名称", "位置编号", "设备名称", "离岗时间", "回岗时间", "脱岗时长"};
-    private String[] values = new String[8];
-    private ArrayList<LeavePostKeyValueBean> mKeyValueList;
+    private String[] eventKeys = new String[]{
+            "事件名称:\t", "岗位名称:\t", "岗位位置:\t", "位置编号:\t"};
+    private String[] leaveKeys = new String[]{
+            "设备名称:\t", "报警时间:\t", "离岗时间:\t", "回岗时间:\t", "脱岗时长:\t"
+    };
+
+    private ArrayList<String> mKeyValueEventList;
+    private ArrayList<String> mKeyValueLeaveList;
     @Getter
     private MutableLiveData<LeavePostAlertInfoDetailBean> leavePostAlertInfoData;
     @Getter
-    private MutableLiveData<List<LeavePostKeyValueBean>> leavePostAlertList;
+    private MutableLiveData<List<String>> leavePostAlertEventList;
+    @Getter
+    private MutableLiveData<List<String>> leavePostAlertLeaveList;
     private LeavePostRepo mLeavePostRepo;
 
     public LeavePostDetailViewModel() {
         leavePostAlertInfoData = new MutableLiveData<>();
-        leavePostAlertList = new MutableLiveData<>();
+        leavePostAlertEventList = new MutableLiveData<>();
+        leavePostAlertLeaveList = new MutableLiveData<>();
         mLeavePostRepo = new LeavePostRepo(new LeavePostDs(this));
-        mKeyValueList = new ArrayList<>();
+        mKeyValueEventList = new ArrayList<>();
+        mKeyValueLeaveList = new ArrayList<>();
     }
 
     public void getAlertInfoData(String alertId) {
         mLeavePostRepo.leavePostAlertInfoDetail(alertId).observe(lifecycleOwner, leavePostAlertInfoDetailBean -> {
-            leavePostAlertInfoData.setValue(leavePostAlertInfoDetailBean);
-            values[0] = leavePostAlertInfoDetailBean.getAlertName();
-            values[1] = GetDateUtils.dateToDateString(GetDateUtils.getDate(leavePostAlertInfoDetailBean.getAlertTime()));
-            values[2] = leavePostAlertInfoDetailBean.getAlertName();
-            values[3] = leavePostAlertInfoDetailBean.getAlertName();
-            values[4] = leavePostAlertInfoDetailBean.getAlertName();
-            values[5] = leavePostAlertInfoDetailBean.getLeaveTime();
-            values[6] = leavePostAlertInfoDetailBean.getBackTime();
-            values[7] = leavePostAlertInfoDetailBean.getAbsencePeriod() + "min";
-            for (int i = 0; i < keys.length; i++) {
-                LeavePostKeyValueBean bean = new LeavePostKeyValueBean();
-                bean.setName(keys[i]);
-                bean.setValue(values[i]);
-                mKeyValueList.add(bean);
+            if (leavePostAlertInfoDetailBean != null) {
+                leavePostAlertInfoData.setValue(leavePostAlertInfoDetailBean);
+                mKeyValueEventList.add(eventKeys[0] + leavePostAlertInfoDetailBean.getAlertName());
+                if (leavePostAlertInfoDetailBean.getStationsEntity() != null) {
+                mKeyValueEventList.add(eventKeys[1] + leavePostAlertInfoDetailBean.getStationsEntity().getStationName());
+                mKeyValueEventList.add(eventKeys[2] + leavePostAlertInfoDetailBean.getStationsEntity().getStationPlaceName());
+                mKeyValueEventList.add(eventKeys[3] + leavePostAlertInfoDetailBean.getStationsEntity().getStationCode());
+                }
+                if (leavePostAlertInfoDetailBean.getDevicesEntity() != null) {
+                mKeyValueLeaveList.add(leaveKeys[0]+leavePostAlertInfoDetailBean.getDevicesEntity().getDeviceName());
+                }
+                mKeyValueLeaveList.add(leaveKeys[1] + GetDateUtils.dateToDateString(GetDateUtils.getDate(leavePostAlertInfoDetailBean.getAlertTime())));
+                mKeyValueLeaveList.add(leaveKeys[2] +leavePostAlertInfoDetailBean.getLeaveTime());
+                mKeyValueLeaveList.add(leaveKeys[3] +leavePostAlertInfoDetailBean.getBackTime());
+                mKeyValueLeaveList.add(leaveKeys[4] +leavePostAlertInfoDetailBean.getAbsencePeriod() + "min");
             }
-            leavePostAlertList.setValue(mKeyValueList);
+            leavePostAlertEventList.setValue(mKeyValueEventList);
+            leavePostAlertLeaveList.setValue(mKeyValueLeaveList);
         });
-
-
     }
 
     public void gotoCallPersonPage(Activity activity) {
@@ -71,6 +78,5 @@ public class LeavePostDetailViewModel extends BaseViewModel {
         intent.putExtra("mAlertId", Objects.requireNonNull(leavePostAlertInfoData.getValue()).getAlertId());
         intent.putExtra("isShowTopContent", false);
         activity.startActivity(intent);
-
     }
 }
