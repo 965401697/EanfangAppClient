@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 
+import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.PermKit;
 
@@ -54,10 +55,13 @@ public class SignCtrlView extends BaseDialog {
                 return;
             }
         }
-        Intent intent = new Intent(mContext, SignActivity.class);
-        intent.putExtra("title", title);
-        intent.putExtra("status", status);
-        mContext.startActivity(intent);
-        dismiss();
+        RxPerm.get(mContext).locationPerm((isSuccess) -> {
+            Intent intent = new Intent(mContext, SignActivity.class);
+            intent.putExtra("title", title);
+            intent.putExtra("status", status);
+            mContext.startActivity(intent);
+            dismiss();
+        });
+
     }
 }
