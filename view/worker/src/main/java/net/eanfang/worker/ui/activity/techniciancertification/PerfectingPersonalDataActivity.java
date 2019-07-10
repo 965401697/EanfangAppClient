@@ -4,7 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AlertDialog;
+import androidx.lifecycle.ViewModel;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.CalendarView;
@@ -18,6 +21,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
@@ -26,22 +30,22 @@ import com.eanfang.biz.model.SelectAddressItem;
 import com.eanfang.biz.model.bean.LoginBean;
 
 import com.eanfang.ui.activity.SelectAddressActivity;
-import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
-import com.jph.takephoto.model.TImage;
-import com.jph.takephoto.model.TResult;
 import com.eanfang.biz.model.entity.AccountEntity;
 import com.eanfang.biz.model.entity.UserEntity;
+import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
+import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,7 +54,7 @@ import butterknife.OnClick;
 /**
  * @author WQ
  */
-public class PerfectingPersonalDataActivity extends BaseActivityWithTakePhoto {
+public class PerfectingPersonalDataActivity extends BaseWorkeActivity {
     @BindView(R.id.nc_et)
     EditText ncEt;
     @BindView(R.id.dq_dz_tv)
@@ -103,16 +107,34 @@ public class PerfectingPersonalDataActivity extends BaseActivityWithTakePhoto {
         setContentView(R.layout.activity_perfecting_personal_data);
         ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
-        initView();
     }
 
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
+    }
 
-    private void initView() {
-        setLeftBack();
+    private void headImage() {
+        SDKManager.getPicture().create(this).takePhoto(iPictureCallBack);
+    }
+
+    IPictureCallBack iPictureCallBack = new IPictureCallBack() {
+        @Override
+        public void onSuccess(List<LocalMedia> list) {
+            String imgKey = "account/" + UuidUtil.getUUID() + "tx.png";
+            accountEntity.setAvatar(imgKey);
+            GlideUtil.intoImageView(PerfectingPersonalDataActivity.this, "file://" + list.get(0).getPath(), ivHeader);
+            SDKManager.ossKit(PerfectingPersonalDataActivity.this).asyncPutImage(imgKey, list.get(0).getPath(), (isSuccess) -> {
+            });
+        }
+    };
+    @Override
+    public void initView() {
+        setLeftBack(true);
         setTitle("个人资料");
         mStatus = getIntent().getIntExtra("status", -1);
         statusB = getIntent().getIntExtra("statusB", -1);
-        llHeaders.setOnClickListener(v -> RxPerm.get(this).cameraPerm((isSuccess)-> takePhoto(this, HEADER_PIC)));
+        llHeaders.setOnClickListener(v -> RxPerm.get(this).cameraPerm((isSuccess) -> headImage()));
         EanfangHttp.get(UserApi.GET_USER_INFO).params("userId", WorkerApplication.get().getUserId()).tag(this).execute(new EanfangCallback<LoginBean>(this, true, LoginBean.class, (bean) -> {
             runOnUiThread(() -> {
                 accountEntity = bean.getAccount();
@@ -129,7 +151,7 @@ public class PerfectingPersonalDataActivity extends BaseActivityWithTakePhoto {
 
     @SuppressLint("NewApi")
     private void fillData() {
-        GlideUtil.intoImageView(this,BuildConfig.OSS_SERVER + accountEntity.getAvatar(),ivHeader);
+        GlideUtil.intoImageView(this, BuildConfig.OSS_SERVER + accountEntity.getAvatar(), ivHeader);
         String contactName = WorkerApplication.get().getLoginBean().getAccount().getRealName();
         if ((!StringUtils.isEmpty(contactName)) & (!contactName.contains("易安防")) & (!contactName.contains("匿名用户"))) {
             tvContactName.setText(contactName);
@@ -184,25 +206,6 @@ public class PerfectingPersonalDataActivity extends BaseActivityWithTakePhoto {
             tvOfficeAddress.setText(item.getName());
             accountEntity.setAreaCode(areaCode);
         }
-    }
-
-    @Override
-    public void takeSuccess(TResult result, int resultCode) {
-        super.takeSuccess(result, resultCode);
-        if (result == null || result.getImage() == null) {
-            return;
-        }
-        TImage image = result.getImage();
-        String imgKey = "account/" + UuidUtil.getUUID() + "tx.png";
-        switch (resultCode) {
-            case HEADER_PIC:
-                accountEntity.setAvatar(imgKey);
-                GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),ivHeader);
-                break;
-            default:
-                break;
-        }
-        SDKManager.ossKit(this).asyncPutImage(imgKey, image.getOriginalPath(),(isSuccess) -> {});
     }
 
 
