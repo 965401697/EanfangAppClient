@@ -5,7 +5,7 @@
         android:id="@+id/titles_bar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/colorPrimaryC"
+        android:background="@color/color_main_header_bg"
         android:orientation="horizontal">
 
         <ImageView

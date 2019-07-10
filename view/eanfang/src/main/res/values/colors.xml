@@ -124,4 +124,6 @@
     <color name="color_new_order_bg_item_line">#EAEAEA</color>
     <color name="color_new_order_screen_btn_bg">#EFEFEF</color>
     <color name="color_new_order_remain_time">#FF3C00</color>
+
+    <color name="color_main_header_bg">#FF6419</color>
 </resources>
