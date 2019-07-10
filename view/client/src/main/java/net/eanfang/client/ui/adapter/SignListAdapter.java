@@ -2,14 +2,14 @@ package net.eanfang.client.ui.adapter;
 
 import android.view.View;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.biz.model.SignListBean;
 
 import net.eanfang.client.R;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 
 /**
@@ -39,7 +39,7 @@ public class SignListAdapter extends BaseQuickAdapter<SignListBean, BaseViewHold
 
         RecyclerView rv_footer = helper.getView(R.id.rv_footer);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         rv_footer.setLayoutManager(linearLayoutManager);
 
         signListSecondAdapter = new SignSecondAdapter();
