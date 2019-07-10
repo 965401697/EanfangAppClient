@@ -6,7 +6,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -22,13 +21,14 @@ import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.kit.V;
+import com.eanfang.biz.model.AllMessageBean;
+import com.eanfang.biz.model.NoticeEntity;
 import com.eanfang.biz.model.security.SecurityLikeBean;
+import com.eanfang.biz.model.security.SecurityListBean;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.AllMessageBean;
-import com.eanfang.biz.model.NoticeEntity;
-import com.eanfang.biz.model.security.SecurityListBean;
 import com.eanfang.model.security.SecurityLikeStatusBean;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.GetDateUtils;
@@ -37,7 +37,6 @@ import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
-import com.eanfang.base.kit.V;
 import com.eanfang.witget.BannerView;
 import com.eanfang.witget.HomeScanPopWindow;
 import com.eanfang.witget.RollTextView;
@@ -144,6 +143,7 @@ public class HomeFragment extends BaseFragment {
     private int mSecurityNum;
     private ArrayList<String> picList = new ArrayList<>();
     private String[] pics = null;
+
     @Override
     protected void initData(Bundle arguments) {
     }
@@ -166,12 +166,7 @@ public class HomeFragment extends BaseFragment {
         mTvSecurityNewMessage = findViewById(R.id.tv_security_count);
         rlSecurityNewMessage = findViewById(R.id.rl_security_message);
         homeScanPopWindow = new HomeScanPopWindow(getActivity(), true, scanSelectItemsOnClick);
-        homeScanPopWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                homeScanPopWindow.backgroundAlpha(1.0f);
-            }
-        });
+        homeScanPopWindow.setOnDismissListener(() -> homeScanPopWindow.backgroundAlpha(1.0f));
 
         initIconClick();
         initLoopView();
@@ -268,8 +263,8 @@ public class HomeFragment extends BaseFragment {
      * 安防圈
      */
     private void initSecurity() {
-        securityListAdapter = new SecurityListAdapter( false);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        securityListAdapter = new SecurityListAdapter(false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         rvSecurity.setLayoutManager(layoutManager);
         rvSecurity.setNestedScrollingEnabled(false);
         rvSecurity.addItemDecoration(new BGASpaceItemDecoration(20));
@@ -283,7 +278,7 @@ public class HomeFragment extends BaseFragment {
         mQueryEntry.setSize(3);
         EanfangHttp.post(NewApiService.SECURITY_RECOMMEND)
                 .upJson(JsonUtils.obj2String(mQueryEntry))
-                .execute(new EanfangCallback<SecurityListBean>(getActivity(), true, SecurityListBean.class) {
+                .execute(new EanfangCallback<SecurityListBean>(getActivity(), false, SecurityListBean.class) {
 
                     @Override
                     public void onSuccess(SecurityListBean bean) {
@@ -481,6 +476,7 @@ public class HomeFragment extends BaseFragment {
             }
         });
     }
+
     /**
      * 进行点赞
      */
@@ -658,6 +654,9 @@ public class HomeFragment extends BaseFragment {
      */
     private void doHttpOrderNums() {
         EanfangHttp.get(UserApi.ALL_MESSAGE).execute(new EanfangCallback<AllMessageBean>(getActivity(), false, AllMessageBean.class, (bean -> {
+            if (bean == null) {
+                return;
+            }
             doSetOrderNums(bean);
         })));
     }

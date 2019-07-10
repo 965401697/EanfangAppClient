@@ -108,8 +108,9 @@ public class HomeCompanyFragment extends BaseFragment {
     protected void initView() {
         mRecHomeCompany.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecHomeCompany.addItemDecoration(new DividerItemDecoration(getContext()));
+
         ThreadUtil.execute(() -> {
-            for (int i = 0; i < 20; i++) {
+            for (int i = 0; i < 50; i++) {
                 if (Config.get().getBaseDataBean() != null) {
                     getActivity().runOnUiThread(() -> {
                         adapter = new FragmentHomeCompanyAdapter();
@@ -120,8 +121,8 @@ public class HomeCompanyFragment extends BaseFragment {
                 }
                 ThreadUtil.safeSleep(1000);
             }
-
         });
+
     }
 
     @Override

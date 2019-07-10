@@ -160,7 +160,8 @@
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
+            android:windowSoftInputMode="adjustResize|stateHidden"
+            tools:replace="android:configChanges" />
         <activity
             android:name="com.alipay.sdk.app.H5AuthActivity"
             android:configChanges="orientation|keyboardHidden|navigation"
@@ -207,9 +208,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.worksapce.repair.AddTroubleActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.activity.worksapce.oa.ReportActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.worksapce.oa.TaskActivity"
@@ -776,9 +774,7 @@
         <activity
             android:name=".ui.activity.worksapce.worktalk.WorkTalkCreateActivity"
             android:screenOrientation="portrait" /> <!-- 工作汇报 -->
-        <activity
-            android:name=".ui.activity.worksapce.oa.ReportParentActivity"
-            android:screenOrientation="portrait" /> <!-- 布置任务 -->
+        <!-- 布置任务 -->
         <activity
             android:name=".ui.activity.worksapce.oa.TaskParentActivity"
             android:screenOrientation="portrait" /> <!-- 设备检点 -->

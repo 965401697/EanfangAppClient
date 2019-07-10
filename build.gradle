@@ -155,6 +155,7 @@ ext {
 
             //aliyun
             aliyunOss            : "com.aliyun.dpa:oss-android-sdk:2.9.2",
+            alipay               : "com.alipay.sdk:app:0.0.1",
 
             //amap
 

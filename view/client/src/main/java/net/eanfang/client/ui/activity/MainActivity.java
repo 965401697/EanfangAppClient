@@ -49,8 +49,6 @@ import com.yaf.base.entity.WorkerEntity;
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.im.ConversationActivity;
-import net.eanfang.client.ui.activity.worksapce.LoginHintActivity;
-import net.eanfang.client.ui.activity.worksapce.SetPasswordActivity;
 import net.eanfang.client.ui.activity.worksapce.WorkerDetailActivity;
 import net.eanfang.client.ui.activity.worksapce.notice.MessageListActivity;
 import net.eanfang.client.ui.activity.worksapce.notice.OfficialListActivity;
@@ -183,12 +181,12 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
         //阻止底部 菜单拦被软键盘顶起
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         //  判断是否有密码
-        if (ClientApplication.get().getLoginBean().getAccount().isSimplePwd()) {
-            startActivity(new Intent(this, SetPasswordActivity.class));
-            // 判断是否完善资料
-        } else if (TextUtils.isEmpty(ClientApplication.get().getAccount().getRealName()) || "待提供".equals(ClientApplication.get().getAccount().getRealName())) {
-            startActivity(new Intent(this, LoginHintActivity.class));
-        }
+//        if (ClientApplication.get().getLoginBean().getAccount().isSimplePwd()) {
+//            startActivity(new Intent(this, SetPasswordActivity.class));
+//            // 判断是否完善资料
+//        } else if (TextUtils.isEmpty(ClientApplication.get().getAccount().getRealName()) || "待提供".equals(ClientApplication.get().getAccount().getRealName())) {
+//            startActivity(new Intent(this, LoginHintActivity.class));
+//        }
 
     }
 
@@ -560,9 +558,9 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
         // 首页小红点的显示
         int mHome = 0;
         if (bean.getRepair() > 0 || bean.getInstall() > 0 || bean.getDesign() > 0
-                || bean.getNoReadCount() > 0 || bean.getCommentNoRead() > 0) {
-            mHome = bean.getRepair() + bean.getInstall() + bean.getDesign() + bean.getNoReadCount() + bean.getCommentNoRead();
-
+                || bean.getNoReadCount() > 0 || bean.getCommentNoRead() > 0 || bean.getAlert() > 0) {
+            //首页气泡 暂时去掉安防圈评论未读数量  + bean.getCommentNoRead();
+            mHome = bean.getRepair() + bean.getInstall() + bean.getDesign() + bean.getNoReadCount() + bean.getAlert();
         } else {
             mHome = 0;
         }
@@ -575,15 +573,7 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
         }
         //桌面app红点
         mTotalCount = mHome + mAllCount + mWork;
-        // 首页红点
-//            new Handler(getMainLooper()).postDelayed(new Runnable() {
-//                @Override
-//                public void run() {
-        // 桌面气泡赋值
-
         BadgeUtil.setBadgeCount(MainActivity.this, mTotalCount, R.drawable.client_logo);
-//                }
-//            }, 3 * 1000);
 
         qBadgeViewHome.bindTarget(findViewById(R.id.tab_home))
                 .setBadgeNumber(mHome)

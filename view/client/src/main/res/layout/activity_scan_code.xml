@@ -1,21 +1,25 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--已提取-->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?><!--已提取-->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="net.eanfang.client.ui.activity.worksapce.scancode.ScanCodeActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <include
-        android:id="@+id/my_awesome_toolbar"
-        layout="@layout/header_eanfang" />
+    <data>
 
-    <com.journeyapps.barcodescanner.DecoratedBarcodeView
-        android:id="@+id/zxing_barcode_scanner"
+    </data>
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@+id/my_awesome_toolbar"
-        app:zxing_use_texture_view="true" />
-</RelativeLayout>
+        android:layout_height="match_parent"
+        tools:context="net.eanfang.client.ui.activity.worksapce.scancode.ScanCodeActivity">
+
+        <include layout="@layout/header_eanfang" />
+
+        <com.journeyapps.barcodescanner.DecoratedBarcodeView
+            android:id="@+id/zxing_barcode_scanner"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_below="@+id/titles_bar"
+            android:layout_alignParentBottom="true"
+            app:zxing_use_texture_view="true" />
+    </RelativeLayout>
+</layout>

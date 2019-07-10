@@ -63,8 +63,6 @@ import com.yaf.base.entity.WorkerEntity;
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.im.ConversationActivity;
-import net.eanfang.worker.ui.activity.worksapce.LoginHintActivity;
-import net.eanfang.worker.ui.activity.worksapce.SetPasswordActivity;
 import net.eanfang.worker.ui.activity.worksapce.WorkDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.notice.MessageListActivity;
 import net.eanfang.worker.ui.activity.worksapce.notice.OfficialListActivity;
@@ -193,12 +191,12 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
         //阻止底部 菜单拦被软键盘顶起
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         // 判断是否有密码
-        if (WorkerApplication.get().getLoginBean().getAccount().isSimplePwd()) {
-            startActivity(new Intent(this, SetPasswordActivity.class));
-            // 判断是否完善资料
-        } else if (TextUtils.isEmpty(WorkerApplication.get().getLoginBean().getAccount().getRealName()) || "待提供".equals(WorkerApplication.get().getLoginBean().getAccount().getRealName())) {
-            startActivity(new Intent(this, LoginHintActivity.class));
-        }
+//        if (WorkerApplication.get().getLoginBean().getAccount().isSimplePwd()) {
+//            startActivity(new Intent(this, SetPasswordActivity.class));
+//            // 判断是否完善资料
+//        } else if (TextUtils.isEmpty(WorkerApplication.get().getLoginBean().getAccount().getRealName()) || "待提供".equals(WorkerApplication.get().getLoginBean().getAccount().getRealName())) {
+//            startActivity(new Intent(this, LoginHintActivity.class));
+//        }
 
     }
 
@@ -354,22 +352,19 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
         ThreadUtil.execute(() -> {
             BaseDataEntity entity = new BaseDataEntity();
             //获得全部 地区数据
-            List<BaseDataEntity> allAreaList = Stream.of(dataBean.getData()).filter(bean -> bean.getDataType().equals(Constant.AREA)).toList();
+            List<BaseDataEntity> allAreaList = Stream.of(dataBean.getData()).filter(bean -> bean.getDataType().equals(Constant.AREA) && !bean.getDataCode().equals(Constant.AREA + "")).toList();
             for (int i = 0; i < allAreaList.size(); i++) {
                 BaseDataEntity provinceEntity = allAreaList.get(i);
                 //处理当前省下的所有市
                 List<BaseDataEntity> cityList = Stream.of(allAreaList).filter(bean -> bean.getParentId() != null
                         && bean.getParentId().equals(provinceEntity.getDataId())).toList();
                 //查询出来后，移除，以增加效率
-//                i -= cityList.size();
                 allAreaList.removeAll(cityList);
                 for (int j = 0; j < cityList.size(); j++) {
                     BaseDataEntity cityEntity = cityList.get(j);
                     //处理当前市下所有区县
                     List<BaseDataEntity> countyList = Stream.of(allAreaList).filter(bean -> bean.getParentId() != null
                             && bean.getParentId().equals(cityEntity.getDataId())).toList();
-                    //查询出来后，移除，以增加效率
-//                    i -= countyList.size();
                     allAreaList.removeAll(countyList);
                     cityEntity.setChildren(countyList);
                 }

@@ -168,7 +168,7 @@ dependencies {
     annotationProcessor pkg.butterknifeCompiler
     implementation pkg.lombok
     annotationProcessor pkg.lombok
-
+    implementation pkg.alipay
     // add library
     implementation project(':view:eanfang')
 

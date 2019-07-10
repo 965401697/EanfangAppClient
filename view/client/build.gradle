@@ -169,6 +169,9 @@ dependencies {
     implementation pkg.lombok
     annotationProcessor pkg.lombok
     implementation pkg.yingshiyun
+    implementation pkg.alipay
+
     implementation project(':view:eanfang')
+
 
 }

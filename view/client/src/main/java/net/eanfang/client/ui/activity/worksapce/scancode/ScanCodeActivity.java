@@ -59,10 +59,12 @@ public class ScanCodeActivity extends BaseActivity {
      * 扫描什么类型的二维码
      */
     private String mScanType = "";
+//    private ActivityScanCodeBinding scanCodeBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_scan_code);
+//        scanCodeBinding = DataBindingUtil.setContentView(this, R.layout.activity_scan_code);
         super.onCreate(savedInstanceState);
     }
 
@@ -71,8 +73,9 @@ public class ScanCodeActivity extends BaseActivity {
         return null;
     }
 
+    @Override
     public void initView() {
-        setLeftBack(true);
+        super.initView();
         setTitle("二维码扫描");
         mFromWhere = getIntent().getStringExtra("from");
         mScanType = getIntent().getStringExtra("scanType");

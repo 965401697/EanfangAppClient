@@ -199,14 +199,17 @@ public abstract class BaseActivity extends RxAppCompatActivity {
 
     public void setRightImageResId(int resId) {
         ((ImageView) findViewById(R.id.iv_right)).setImageResource(resId);
+        findViewById(R.id.tv_right).setVisibility(View.VISIBLE);
     }
 
     public void setRightTitle(String id) {
         ((TextView) findViewById(R.id.tv_right)).setText(id);
+        findViewById(R.id.tv_right).setVisibility(View.VISIBLE);
     }
 
     public void setRightTitleOnClickListener(View.OnClickListener listener) {
         findViewById(R.id.tv_right).setOnClickListener(listener);
+        findViewById(R.id.tv_right).setVisibility(View.VISIBLE);
     }
 
     /**

@@ -7,18 +7,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.biz.model.Message;
+import com.eanfang.biz.model.reapair.RepairPersonalInfoEntity;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.Message;
-import com.eanfang.biz.model.reapair.RepairPersonalInfoEntity;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
@@ -40,10 +45,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -74,6 +75,7 @@ public class ServicedWorkerFragment extends BaseFragment implements SwipeRefresh
      * 个人信息
      */
     RepairPersonalInfoEntity.ListBean repairPersonalInfoEntity;
+
     public static ServicedWorkerFragment getInstance(RepairOrderEntity toRepairBean, RepairPersonalInfoEntity.ListBean repairPersonalInfoEntity, ArrayList<String> businessIds, int doorfee, Long ownerOrgId) {
         ServicedWorkerFragment servicedWorkerFragment = new ServicedWorkerFragment();
         Bundle bundle = new Bundle();
@@ -260,8 +262,8 @@ public class ServicedWorkerFragment extends BaseFragment implements SwipeRefresh
         payLogEntity.setAssigneeTopCompanyId(orderEntity.getOwnerTopCompanyId());
 
         //查询上门费
-//        payLogEntity.setOriginPrice(mDoorFee);
-        payLogEntity.setPayPrice(1);//测试专用
+        payLogEntity.setOriginPrice(mDoorFee);
+//        payLogEntity.setPayPrice(1);//测试专用
 
         EanfangHttp.post(RepairApi.GET_REPAIR_PAY_RECORD)
                 .upJson(JSON.toJSONString(payLogEntity))

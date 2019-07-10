@@ -8,6 +8,7 @@ import com.zchu.rxcache.RxCache;
 import com.zchu.rxcache.data.CacheResult;
 import com.zchu.rxcache.stategy.CacheStrategy;
 
+import cn.hutool.core.thread.ThreadUtil;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -32,7 +33,7 @@ public class STSGetter extends OSSFederationCredentialProvider {
 
     @Override
     public OSSFederationToken getFederationToken() {
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 200; i++) {
             if (ossBean != null) {
                 String ak = ossBean.getAccessKeyId();
                 String sk = ossBean.getAccessKeySecret();
@@ -40,11 +41,7 @@ public class STSGetter extends OSSFederationCredentialProvider {
                 String expiration = ossBean.getExpiration();
                 return new OSSFederationToken(ak, sk, token, expiration);
             }
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            ThreadUtil.safeSleep(50);
         }
         return null;
     }

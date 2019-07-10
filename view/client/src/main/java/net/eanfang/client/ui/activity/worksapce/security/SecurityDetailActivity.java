@@ -213,7 +213,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         securityCommentAdapter = new SecurityCommentAdapter();
         rvComments.setLayoutManager(new LinearLayoutManager(this));
         securityCommentAdapter.bindToRecyclerView(rvComments);
-        rvComments.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        rvComments.addItemDecoration(new DividerItemDecoration(this, RecyclerView.VERTICAL));
         swipeFresh.setOnRefreshListener(this);
         securityCommentAdapter.setOnLoadMoreListener(this, rvComments);
         securityCommentAdapter.disableLoadMoreIfNotFullPage();

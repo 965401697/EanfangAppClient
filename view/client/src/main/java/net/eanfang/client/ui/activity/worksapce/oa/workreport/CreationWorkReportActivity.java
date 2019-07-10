@@ -14,31 +14,33 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.alibaba.fastjson.JSON;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
-import com.eanfang.delegate.BGASortableDelegate;
-import com.eanfang.dialog.TrueFalseDialog;
-import com.eanfang.http.EanfangCallback;
-import com.eanfang.http.EanfangHttp;
+import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.biz.model.GroupDetailBean;
 import com.eanfang.biz.model.Message;
 import com.eanfang.biz.model.TemplateBean;
 import com.eanfang.biz.model.WorkAddReportBean;
 import com.eanfang.biz.model.WorkReportInfoBean;
 import com.eanfang.biz.model.device.User;
-
+import com.eanfang.delegate.BGASortableDelegate;
+import com.eanfang.dialog.TrueFalseDialog;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.takevideo.TakeVdideoMode;
 import com.eanfang.takevideo.TakeVideoActivity;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.DialogUtil;
 import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
-import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
@@ -65,10 +67,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import androidx.core.widget.NestedScrollView;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -225,14 +223,12 @@ public class CreationWorkReportActivity extends BaseClientActivity {
     private static final int REQUEST_CODE_PHOTO_PREVIEW_2 = 102;
     private static final int REQUEST_CODE_PHOTO_PREVIEW_3 = 103;
 
-    private List<WorkAddReportBean.WorkReportDetailsBean> beanList = new ArrayList<>();
 
     private List<TemplateBean.Preson> groupList = new ArrayList<>();
     private List<TemplateBean.Preson> whoList = new ArrayList<>();
 
 
     private Handler handler = new Handler() {
-
         @Override
         public void handleMessage(android.os.Message msg) {
             super.handleMessage(msg);
@@ -248,17 +244,9 @@ public class CreationWorkReportActivity extends BaseClientActivity {
         ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
         setTitle("新建汇报");
-        setLeftBack(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //是否要保存
-                giveUp();
-            }
-        });
+        setLeftBack(v -> giveUp());
 
         initViews();
-
-
     }
 
     private void initViews() {
@@ -459,7 +447,7 @@ public class CreationWorkReportActivity extends BaseClientActivity {
 
         if (mUploadMap.size() != 0) {
 
-            SDKManager.ossKit(this).asyncPutImages(mUploadMap,(isSuccess) -> {
+            SDKManager.ossKit(this).asyncPutImages(mUploadMap, (isSuccess) -> {
                 runOnUiThread(() -> {
                     if (isTrue) {
                         subWorkData(workBean);
@@ -484,19 +472,19 @@ public class CreationWorkReportActivity extends BaseClientActivity {
             rvCompleteWork.setLayoutManager(new LinearLayoutManager(this));
             mWorkCompleteAdapter = new WorKReportAdapter(mWorkDataList, this);
             mWorkCompleteAdapter.bindToRecyclerView(rvCompleteWork);
-            mWorkCompleteAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-                @Override
-                public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                    WorkAddReportBean.WorkReportDetailsBean b = (WorkAddReportBean.WorkReportDetailsBean) adapter.getData().get(position);
-                    if (view.getId() == R.id.rl_show) {
-                        b.setItemType(2);
-                        adapter.notifyItemChanged(position);
-                    } else if (view.getId() == R.id.tv_delete) {
-                        adapter.remove(position);
-                    } else if (view.getId() == R.id.tv_pack) {
-                        b.setItemType(1);
-                        adapter.notifyItemChanged(position);
-                    }
+            mWorkCompleteAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+                WorkAddReportBean.WorkReportDetailsBean b = (WorkAddReportBean.WorkReportDetailsBean) adapter.getData().get(position);
+                if (view.getId() == R.id.rl_show) {
+                    b.setItemType(2);
+                    adapter.notifyItemChanged(position);
+                } else if (view.getId() == R.id.tv_delete) {
+//                    mWorkDataList.remove(position);
+                    adapter.remove(position);
+
+
+                } else if (view.getId() == R.id.tv_pack) {
+                    b.setItemType(1);
+                    adapter.notifyItemChanged(position);
                 }
             });
         } else {
@@ -676,7 +664,7 @@ public class CreationWorkReportActivity extends BaseClientActivity {
         isTrue = true;//重置状态
 
         if (mUploadMap.size() != 0) {
-            SDKManager.ossKit(this).asyncPutImages(mUploadMap,(isSuccess) -> {
+            SDKManager.ossKit(this).asyncPutImages(mUploadMap, (isSuccess) -> {
                 runOnUiThread(() -> {
                     if (isTrue) {
                         subQuestionData(questionBean);
@@ -701,19 +689,17 @@ public class CreationWorkReportActivity extends BaseClientActivity {
             rvFindQuestion.setLayoutManager(new LinearLayoutManager(this));
             mQuestionAdapter = new FindQuestionReportAdapter(mQuestionDataList, this);
             mQuestionAdapter.bindToRecyclerView(rvFindQuestion);
-            mQuestionAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-                @Override
-                public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                    WorkAddReportBean.WorkReportDetailsBean b = (WorkAddReportBean.WorkReportDetailsBean) adapter.getData().get(position);
-                    if (view.getId() == R.id.rl_show) {
-                        b.setItemType(2);
-                        adapter.notifyItemChanged(position);
-                    } else if (view.getId() == R.id.tv_delete) {
-                        adapter.remove(position);
-                    } else if (view.getId() == R.id.tv_pack) {
-                        b.setItemType(1);
-                        adapter.notifyItemChanged(position);
-                    }
+            mQuestionAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+                WorkAddReportBean.WorkReportDetailsBean b = (WorkAddReportBean.WorkReportDetailsBean) adapter.getData().get(position);
+                if (view.getId() == R.id.rl_show) {
+                    b.setItemType(2);
+                    adapter.notifyItemChanged(position);
+                } else if (view.getId() == R.id.tv_delete) {
+//                    mQuestionDataList.remove(position);
+                    adapter.remove(position);
+                } else if (view.getId() == R.id.tv_pack) {
+                    b.setItemType(1);
+                    adapter.notifyItemChanged(position);
                 }
             });
         } else {
@@ -826,7 +812,7 @@ public class CreationWorkReportActivity extends BaseClientActivity {
         isTrue = true;//重置状态
 
         if (mUploadMap.size() != 0) {
-            SDKManager.ossKit(this).asyncPutImages(mUploadMap,(isSuccess) -> {
+            SDKManager.ossKit(this).asyncPutImages(mUploadMap, (isSuccess) -> {
                 runOnUiThread(() -> {
                     if (isTrue) {
                         subPlanData(planBean);
@@ -851,19 +837,17 @@ public class CreationWorkReportActivity extends BaseClientActivity {
             reportPlanList.setLayoutManager(new LinearLayoutManager(this));
             mPlanReportAdapter = new PlanReportAdapter(mPlanDataList, this);
             mPlanReportAdapter.bindToRecyclerView(reportPlanList);
-            mPlanReportAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-                @Override
-                public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                    WorkAddReportBean.WorkReportDetailsBean b = (WorkAddReportBean.WorkReportDetailsBean) adapter.getData().get(position);
-                    if (view.getId() == R.id.rl_show) {
-                        b.setItemType(2);
-                        adapter.notifyItemChanged(position);
-                    } else if (view.getId() == R.id.tv_delete) {
-                        adapter.remove(position);
-                    } else if (view.getId() == R.id.tv_pack) {
-                        b.setItemType(1);
-                        adapter.notifyItemChanged(position);
-                    }
+            mPlanReportAdapter.setOnItemChildClickListener((adapter, view, position) -> {
+                WorkAddReportBean.WorkReportDetailsBean b = (WorkAddReportBean.WorkReportDetailsBean) adapter.getData().get(position);
+                if (view.getId() == R.id.rl_show) {
+                    b.setItemType(2);
+                    adapter.notifyItemChanged(position);
+                } else if (view.getId() == R.id.tv_delete) {
+//                    mPlanDataList.remove(position);
+                    adapter.remove(position);
+                } else if (view.getId() == R.id.tv_pack) {
+                    b.setItemType(1);
+                    adapter.notifyItemChanged(position);
                 }
             });
         } else {
@@ -901,6 +885,7 @@ public class CreationWorkReportActivity extends BaseClientActivity {
     private void sub() {
 
         WorkAddReportBean bean = new WorkAddReportBean();
+        List<WorkAddReportBean.WorkReportDetailsBean> beanList = new ArrayList<>();
         //汇报类型
         if (TextUtils.isEmpty(etTaskName.getText().toString().trim())) {
             ToastUtil.get().showToast(this, "请选择汇报类型");
@@ -1020,7 +1005,7 @@ public class CreationWorkReportActivity extends BaseClientActivity {
                         b.putString("workerName", ClientApplication.get().getLoginBean().getAccount().getRealName());
                         b.putString("status", "0");
                         b.putString("shareType", "3");
-                        b.putString("creatReleaseTime",bean.getCreateTime());
+                        b.putString("creatReleaseTime", bean.getCreateTime());
 
                         new SendContactUtils(b, handler, groupList, DialogUtil.createLoadingDialog(CreationWorkReportActivity.this), "工作汇报").send();
 
@@ -1073,7 +1058,7 @@ public class CreationWorkReportActivity extends BaseClientActivity {
 
 
     private void inputVoice(EditText editText) {
-         RxPerm.get(this).voicePerm((isSuccess)->{
+        RxPerm.get(this).voicePerm((isSuccess) -> {
             RecognitionManager.getSingleton().startRecognitionWithDialog(CreationWorkReportActivity.this, editText);
         });
     }

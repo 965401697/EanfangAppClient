@@ -2,18 +2,20 @@ package net.eanfang.worker.ui.fragment;
 
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.base.kit.V;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -25,7 +27,6 @@ import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.NumberUtil;
 import com.eanfang.util.PermKit;
-import com.eanfang.base.kit.V;
 import com.yaf.base.entity.RepairBugEntity;
 import com.yaf.base.entity.RepairOrderEntity;
 
@@ -205,7 +206,9 @@ public class OrderDetailFragment extends BaseFragment {
                 .tag(this)
                 .params("id", id)
                 .execute(new EanfangCallback<RepairOrderEntity>(getActivity(), true, RepairOrderEntity.class, (bean) -> {
-
+                    if (bean == null) {
+                        return;
+                    }
                     hashMap.put("id", String.valueOf(bean.getId()));
                     if (bean.getBugEntityList() != null && bean.getBugEntityList().size() > 0) {
                         hashMap.put("picUrl", bean.getBugEntityList().get(0).getPictures().split(",")[0]);
@@ -248,7 +251,7 @@ public class OrderDetailFragment extends BaseFragment {
 
                     //技师端
                     if (bean.getOwnerUser() != null) {
-                        GlideUtil.intoImageView(getActivity(),BuildConfig.OSS_SERVER + Uri.parse(bean.getOwnerUser().getAccountEntity().getAvatar()),iv_pic);
+                        GlideUtil.intoImageView(getActivity(), BuildConfig.OSS_SERVER + Uri.parse(bean.getOwnerUser().getAccountEntity().getAvatar()), iv_pic);
                         tv_worker_name.setText(bean.getRepairContacts());
                         if (bean.getOwnerOrg() != null) {
                             if (bean.getOwnerOrg().getBelongCompany().getOrgName() != null) {

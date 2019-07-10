@@ -142,13 +142,12 @@ public class SettingActivity extends BaseWorkerActivity {
                     });
                     RongIM.getInstance().logout();//退出融云
                     PermKit.permList.clear();//清空权限
-                    CleanMessageUtil.clearAllCache(WorkerApplication.get());
+//                    CleanMessageUtil.clearAllCache(WorkerApplication.get());
 //                    SharePreferenceUtil.get().clear();
                     finishSelf();
-                    BaseApplication.get().closeActivity(MainActivity.class);
                     startActivity(new Intent(SettingActivity.this, SplashActivity.class));
                     showToast("退出成功");
-
+                    BaseApplication.get().closeActivity(MainActivity.class);
                 }));
     }
 

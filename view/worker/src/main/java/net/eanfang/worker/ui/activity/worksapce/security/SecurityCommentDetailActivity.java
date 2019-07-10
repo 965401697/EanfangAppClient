@@ -115,7 +115,7 @@ public class SecurityCommentDetailActivity extends BaseActivity implements
         securityCommentAdapter = new SecurityCommentSecondAdapter();
         rvComments.setLayoutManager(new LinearLayoutManager(this));
         securityCommentAdapter.bindToRecyclerView(rvComments);
-        rvComments.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        rvComments.addItemDecoration(new DividerItemDecoration(this, RecyclerView.VERTICAL));
         swipeFresh.setOnRefreshListener(this);
         securityCommentAdapter.setOnLoadMoreListener(this, rvComments);
         securityCommentAdapter.disableLoadMoreIfNotFullPage();

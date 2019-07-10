@@ -19,8 +19,8 @@
             android:id="@+id/zxing_barcode_scanner"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
             android:layout_alignParentBottom="true"
+            android:layout_weight="1"
             app:zxing_use_texture_view="true" />
     </LinearLayout>
 </layout>

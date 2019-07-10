@@ -56,6 +56,7 @@ public class ScanCodeActivity extends BaseActivity {
 
     // 扫描什么类型的二维码
     private String mScanType = "";
+
     private ActivityScanCodeBinding scanCodeBinding;
 
     @Override
@@ -70,9 +71,9 @@ public class ScanCodeActivity extends BaseActivity {
     }
 
     @Override
-    protected void initView() {
+    public void initView() {
+        super.initView();
         setTitle("二维码扫描");
-        setLeftBack(true);
         barcodeScannerView = findViewById(R.id.zxing_barcode_scanner);
         Collection<BarcodeFormat> formats = Arrays.asList(BarcodeFormat.QR_CODE, BarcodeFormat.CODE_39);
         barcodeScannerView.getBarcodeView().setDecoderFactory(new DefaultDecoderFactory(formats));

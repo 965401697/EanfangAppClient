@@ -282,7 +282,11 @@ public class OrderDetailFragment extends BaseFragment {
                 .tag(this)
                 .params("id", id)
                 .execute(new EanfangCallback<RepairOrderEntity>(getActivity(), true, RepairOrderEntity.class, (bean) -> {
+                    if (bean == null) {
+                        return;
+                    }
                     //================================================================
+
                     //初始化支付对象
                     payLogEntity = new PayLogEntity();
                     payLogEntity.setOrderId(bean.getId());
@@ -291,7 +295,11 @@ public class OrderDetailFragment extends BaseFragment {
                     payLogEntity.setAssigneeUserId(bean.getOwnerUserId());
                     payLogEntity.setAssigneeOrgCode(bean.getOwnerOrgCode());
                     payLogEntity.setAssigneeTopCompanyId(bean.getOwnerTopCompanyId());
-                    payLogEntity.setPayPrice(bean.getPayLogEntity().getPayPrice());
+                    if (bean.getPayLogEntity() != null) {
+                        payLogEntity.setPayPrice(bean.getPayLogEntity().getPayPrice());
+                    } else {
+                        payLogEntity.setPayPrice(1);
+                    }
                     //==================================================================
 
                     hashMap.put("id", String.valueOf(bean.getId()));
@@ -388,7 +396,7 @@ public class OrderDetailFragment extends BaseFragment {
                     //客户端
                     if (bean.getAssigneeUser() != null) {
                         mHeadUrl = bean.getAssigneeUser().getAccountEntity().getAvatar();
-                        GlideUtil.intoImageView(getActivity(),BuildConfig.OSS_SERVER + Uri.parse(mHeadUrl),iv_pic);
+                        GlideUtil.intoImageView(getActivity(), BuildConfig.OSS_SERVER + Uri.parse(mHeadUrl), iv_pic);
                         tv_worker_name.setText(V.v(() -> bean.getAssigneeUser().getAccountEntity().getRealName()));
                         tv_worker_company.setText(V.v(() -> bean.getAssigneeOrg().getBelongCompany().getOrgName()));
                         iv_phone.setTag(V.v(() -> bean.getAssigneeUser().getAccountEntity().getMobile()));

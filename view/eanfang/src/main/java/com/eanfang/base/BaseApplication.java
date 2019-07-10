@@ -31,7 +31,8 @@ import com.photopicker.com.imageloader.BGAGlideImageLoader;
 import com.photopicker.com.imageloader.BGAImage;
 import com.tencent.smtt.sdk.QbSdk;
 
-import java.util.Stack;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
@@ -50,7 +51,7 @@ public class BaseApplication extends MultiDexApplication {
     private static BaseApplication appContext;
 
     /*Activity堆*/
-    private Stack<Activity> activityStack = new Stack<>();
+    private List<Activity> activityStack = new ArrayList<>();
 //    /**
 //     * 存储地域
 //     */
@@ -173,7 +174,7 @@ public class BaseApplication extends MultiDexApplication {
      */
     public void addActivity(final Activity activity) {
         if (null == activityStack) {
-            activityStack = new Stack<>();
+            activityStack = new ArrayList<>();
         }
         activityStack.add(activity);
     }
@@ -185,7 +186,7 @@ public class BaseApplication extends MultiDexApplication {
      */
     public void closeActivity(final Activity activity) {
         if (null == activityStack) {
-            activityStack = new Stack<>();
+            activityStack = new ArrayList<>();
         }
         if (!activity.isFinishing()) {
             activity.finish();
@@ -200,11 +201,12 @@ public class BaseApplication extends MultiDexApplication {
      */
     public void closeActivity(final Class<? extends Activity> activity) {
         if (null == activityStack) {
-            activityStack = new Stack<>();
+            activityStack = new ArrayList<>();
         }
-        for (Activity act : activityStack) {
-            if (act.getClass().getName().equals(activity.getName())) {
-                closeActivity(act);
+        for (int i = 0; i < activityStack.size(); i++) {
+            if (activityStack.get(i).getClass().getName().equals(activity.getName())) {
+                closeActivity(activityStack.get(i));
+                i--;
             }
         }
     }
@@ -213,8 +215,8 @@ public class BaseApplication extends MultiDexApplication {
      * 关闭所有Activity
      */
     public void closeAllActivity() {
-        for (Activity activity : activityStack) {
-            closeActivity(activity);
+        for (int i = 0; i < activityStack.size(); ) {
+            closeActivity(activityStack.get(i));
         }
     }
 
@@ -223,7 +225,7 @@ public class BaseApplication extends MultiDexApplication {
      */
 
     public Activity currentActivity() {
-        return activityStack.lastElement();
+        return activityStack.get(activityStack.size() - 1);
     }
 
     /**

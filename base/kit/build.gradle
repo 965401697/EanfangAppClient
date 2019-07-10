@@ -39,6 +39,7 @@ dependencies {
     implementation pkg.hutoolCore
     implementation pkg.fastjson
     implementation pkg.aspectj
+    implementation pkg.alipay
 
     api pkg.loadsir
     api pkg.pictureselector

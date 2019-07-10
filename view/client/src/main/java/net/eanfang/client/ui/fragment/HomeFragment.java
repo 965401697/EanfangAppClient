@@ -44,8 +44,6 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.List;
 
-import q.rorbin.badgeview.QBadgeView;
-
 import static com.eanfang.base.kit.V.v;
 
 /**
@@ -78,8 +76,8 @@ public class HomeFragment extends BaseFragment {
     private int mRepair = 0;
     private int mDesign = 0;
     private int mInstall = 0;
-    private TextView mTvSecurityNewMessage;
-    private RelativeLayout rlSecurityNewMessage;
+    //    private TextView mTvSecurityNewMessage;
+//    private RelativeLayout rlSecurityNewMessage;
     private int mSecurityNum;
 
     @Override
@@ -110,8 +108,8 @@ public class HomeFragment extends BaseFragment {
         rlAllData = findViewById(R.id.rl_allData);
         tvInstallTotal = findViewById(R.id.tv_install_total);
         tvDesitnTotal = findViewById(R.id.tv_desitn_total);
-        mTvSecurityNewMessage = findViewById(R.id.tv_security_count);
-        rlSecurityNewMessage = findViewById(R.id.rl_security_message);
+//        mTvSecurityNewMessage = findViewById(R.id.tv_security_count);
+//        rlSecurityNewMessage = findViewById(R.id.rl_security_message);
         homeScanPopWindow = new HomeScanPopWindow(getActivity(), false, scanSelectItemsOnClick);
         homeScanPopWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
@@ -121,6 +119,7 @@ public class HomeFragment extends BaseFragment {
         });
         initIconClick();
         initLoopView();
+//        doHttpOrderNums();
 
         initCount();
 
@@ -372,15 +371,15 @@ public class HomeFragment extends BaseFragment {
         }
         badgeView(R.id.tv_design, mDesign);
         // @我的和评论未读
-        if (bean.getCommentNoRead() + bean.getNoReadCount() > 0) {
-            mSecurityNum = bean.getCommentNoRead() + bean.getNoReadCount();
-            badgeView(R.id.tv_circle, mSecurityNum);
-            mTvSecurityNewMessage.setText(bean.getCommentNoRead() + bean.getNoReadCount() + "");
-            rlSecurityNewMessage.setVisibility(View.VISIBLE);
-        } else {
-            mSecurityNum = 0;
-            rlSecurityNewMessage.setVisibility(View.GONE);
-        }
+//        if (bean.getCommentNoRead() + bean.getNoReadCount() > 0) {
+//            mSecurityNum = bean.getCommentNoRead() + bean.getNoReadCount();
+//            badgeView(R.id.tv_circle, mSecurityNum);
+//            mTvSecurityNewMessage.setText(bean.getCommentNoRead() + bean.getNoReadCount() + "");
+//            rlSecurityNewMessage.setVisibility(View.VISIBLE);
+//        } else {
+//            mSecurityNum = 0;
+//            rlSecurityNewMessage.setVisibility(View.GONE);
+//        }
         /**
          * 底部红点更新
          * */
@@ -391,7 +390,7 @@ public class HomeFragment extends BaseFragment {
         ControlToolView.getBadge(ClientApplication.get().getApplicationContext())
                 .setTargetView(findViewById(id))
                 .setPadding(5)
-                .setOffset(11,0)
+                .setOffset(11, 0)
                 .setBadgeNum(number)
                 .badge();
 

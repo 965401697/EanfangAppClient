@@ -4,10 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.core.widget.NestedScrollView;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -18,31 +14,34 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.alibaba.fastjson.JSON;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
-import com.eanfang.delegate.BGASortableDelegate;
-import com.eanfang.dialog.TrueFalseDialog;
-import com.eanfang.http.EanfangCallback;
-import com.eanfang.http.EanfangHttp;
+import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.biz.model.GroupDetailBean;
 import com.eanfang.biz.model.Message;
 import com.eanfang.biz.model.TemplateBean;
 import com.eanfang.biz.model.WorkAddReportBean;
 import com.eanfang.biz.model.WorkReportInfoBean;
 import com.eanfang.biz.model.device.User;
-
+import com.eanfang.delegate.BGASortableDelegate;
+import com.eanfang.dialog.TrueFalseDialog;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.takevideo.TakeVdideoMode;
 import com.eanfang.takevideo.TakeVideoActivity;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.DialogUtil;
 import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
-import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
@@ -248,13 +247,7 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
         ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
         setTitle("新建汇报");
-        setLeftBack(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //是否要保存
-                giveUp();
-            }
-        });
+        setLeftBack(v -> giveUp());
 
         initViews();
 
@@ -461,7 +454,7 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
 
         if (mUploadMap.size() != 0) {
 
-            SDKManager.ossKit(this).asyncPutImages(mUploadMap,(isSuccess) -> {
+            SDKManager.ossKit(this).asyncPutImages(mUploadMap, (isSuccess) -> {
                 runOnUiThread(() -> {
                     if (isTrue) {
                         subWorkData(workBean);
@@ -678,7 +671,7 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
         isTrue = true;//重置状态
 
         if (mUploadMap.size() != 0) {
-            SDKManager.ossKit(this).asyncPutImages(mUploadMap,(isSuccess) -> {
+            SDKManager.ossKit(this).asyncPutImages(mUploadMap, (isSuccess) -> {
                 runOnUiThread(() -> {
                     if (isTrue) {
                         subQuestionData(questionBean);
@@ -828,7 +821,7 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
         isTrue = true;//重置状态
 
         if (mUploadMap.size() != 0) {
-            SDKManager.ossKit(this).asyncPutImages(mUploadMap,(isSuccess) -> {
+            SDKManager.ossKit(this).asyncPutImages(mUploadMap, (isSuccess) -> {
                 runOnUiThread(() -> {
                     if (isTrue) {
                         subPlanData(planBean);
@@ -903,6 +896,7 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
     private void sub() {
 
         WorkAddReportBean bean = new WorkAddReportBean();
+        List<WorkAddReportBean.WorkReportDetailsBean> beanList = new ArrayList<>();
         //汇报类型
         if (TextUtils.isEmpty(etTaskName.getText().toString().trim())) {
             ToastUtil.get().showToast(this, "请选择汇报类型");
@@ -1075,7 +1069,7 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
 
 
     private void inputVoice(EditText editText) {
-         RxPerm.get(this).voicePerm((isSuccess)->{
+        RxPerm.get(this).voicePerm((isSuccess) -> {
             RecognitionManager.getSingleton().startRecognitionWithDialog(CreationWorkReportActivity.this, editText);
         });
     }

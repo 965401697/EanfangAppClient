@@ -215,7 +215,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         swipeFresh.setOnRefreshListener(this);
         securityCommentAdapter.setOnLoadMoreListener(this, rvComments);
         securityCommentAdapter.disableLoadMoreIfNotFullPage();
-        rvComments.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        rvComments.addItemDecoration(new DividerItemDecoration(this, RecyclerView.VERTICAL));
         isCommont = getIntent().getBooleanExtra("isCommon", false);
         mId = getIntent().getLongExtra("spcId", 0);
         mItenSecurityDetailBean = new SecurityListBean.ListBean();
