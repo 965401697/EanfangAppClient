@@ -96,7 +96,7 @@ public class MyFreeAskActivity extends BaseClientActivity implements View.OnClic
                     setResult( 101, intent);
                     finish();
                 });
-            });;
+            });
         }else {
             Intent intentk = new Intent();
             intentk.putExtra("resultTwo", urls);

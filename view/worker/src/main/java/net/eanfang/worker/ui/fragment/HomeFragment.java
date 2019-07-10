@@ -158,10 +158,10 @@ public class HomeFragment extends BaseFragment {
         rvWait = findViewById(R.id.rv_wait);
         rvSecurity = findViewById(R.id.rv_security);
         homeWaitIndicator = findViewById(R.id.indicator);
-        tlDataStatisticsList = (SlidingTabLayout) findViewById(R.id.tl_datastatistics);
-        rlAllData = (RelativeLayout) findViewById(R.id.rl_allData);
-        customHomeViewPager = (CustomHomeViewPager) findViewById(R.id.vp_datastatistics);
-        tvHomeTitle = (TextView) findViewById(R.id.tv_homeTitle);
+        tlDataStatisticsList = findViewById(R.id.tl_datastatistics);
+        rlAllData = findViewById(R.id.rl_allData);
+        customHomeViewPager = findViewById(R.id.vp_datastatistics);
+        tvHomeTitle = findViewById(R.id.tv_homeTitle);
         tvNoSecurity = findViewById(R.id.tv_noSecurity);
         mTvSecurityNewMessage = findViewById(R.id.tv_security_count);
         rlSecurityNewMessage = findViewById(R.id.rl_security_message);
@@ -464,7 +464,7 @@ public class HomeFragment extends BaseFragment {
                 case R.id.ll_pic:
                     picList.clear();
                     pics = securityListAdapter.getData().get(position).getSpcImg().split(",");
-                    picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> BuildConfig.OSS_SERVER + (url).toString()).toList());
+                    picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> BuildConfig.OSS_SERVER + (url)).toList());
                     ImagePerviewUtil.perviewImage(getActivity(), picList);
                     break;
                 case R.id.ll_like:
@@ -627,10 +627,10 @@ public class HomeFragment extends BaseFragment {
         try {
             for (int i = 0; i < data.size(); i++) {
                 View view = View.inflate(getContext(), R.layout.rolltext_item, null);
-                TextView content = (TextView) view.findViewById(R.id.tv_roll_item_text);
-                TextView title = (TextView) view.findViewById(R.id.tv_roll_item_title);
-                title.setText(titleList.get(i).toString());
-                content.setText(data.get(i).toString());
+                TextView content = view.findViewById(R.id.tv_roll_item_text);
+                TextView title = view.findViewById(R.id.tv_roll_item_title);
+                title.setText(titleList.get(i));
+                content.setText(data.get(i));
                 views.add(view);
             }
         } catch (NullPointerException e) {

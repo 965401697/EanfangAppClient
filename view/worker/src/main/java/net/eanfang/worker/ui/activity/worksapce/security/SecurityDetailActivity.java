@@ -435,7 +435,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         if (!StringUtils.isEmpty(securityDetailBean.getSpcImg())) {
             snplPic.setVisibility(View.VISIBLE);
             String[] pics = securityDetailBean.getSpcImg().split(",");
-            picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
+            picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
 
             snplPic.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO, REQUEST_CODE_CHOOSE_PHOTO_two));
             snplPic.setData(picList);
@@ -711,13 +711,8 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
                     && event.getY() > top && event.getY() < bottom) {
                 // 点击的是输入框区域，保留点击EditText的事件
                 return false;
-            } else if (event.getX() > sendLeft && event.getX() < sendRight
-                    && event.getY() > sendTop && event.getY() < sendBottom) {
-                // 点击的是发送按钮区域，保留点击事件
-                return false;
-            } else {
-                return true;
-            }
+            } else return !(event.getX() > sendLeft) || !(event.getX() < sendRight)
+                    || !(event.getY() > sendTop) || !(event.getY() < sendBottom);
         }
         return false;
     }

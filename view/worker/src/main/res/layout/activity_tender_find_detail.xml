@@ -440,6 +440,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/dimen_30"
+                        android:layout_marginTop="@dimen/dimen_30"
                         android:scrollbars="none" />
                 </LinearLayout>
             </LinearLayout>
@@ -449,13 +450,13 @@
         <RelativeLayout
             android:id="@+id/rl_time"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_100">
+            android:layout_height="@dimen/dimen_100"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:background="@color/color_white">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/dimen_20"
-                android:background="@color/color_white"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 

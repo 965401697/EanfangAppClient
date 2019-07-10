@@ -62,7 +62,7 @@ public class FragmentHomeCompanyAdapter extends BaseQuickAdapter<HomeCompanyBean
         helper.tvHomeCompanyInstall.setText(toSpanString(mContext.getString(R.string.text_home_company_installCount, item.getInstallCount())));
         helper.tvHomeCompanyRepair.setText(toSpanString(mContext.getString(R.string.text_home_company_repairCount, item.getRepairCount())));
         double goodRate = (double) item.getGoodRate() / 100;
-        helper.tvHomeCompanyRate.setText(toSpanString(mContext.getString(R.string.text_home_company_goodRateCount, goodRate)));
+        helper.tvHomeCompanyRate.setText(toSpanString(mContext.getString(R.string.text_home_company_goodRateCount, goodRate + "")));
         int consultCount = item.getDesignCount() + item.getInstallCount() + item.getRepairCount();
         helper.tvHomeCompanyConsult.setText(mContext.getString(R.string.text_home_company_consultCount, consultCount));
 

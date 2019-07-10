@@ -135,7 +135,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
             return;
         }
         if (isClient()) {
-            findViewById(R.id.titles_bar).setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryC));
+            findViewById(R.id.titles_bar).setBackgroundColor(ContextCompat.getColor(this, R.color.color_main_header_bg));
         } else {
             findViewById(R.id.titles_bar).setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryW));
         }

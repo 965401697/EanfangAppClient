@@ -1,7 +1,6 @@
 package com.eanfang.sdk.areachoose;
 
 import android.content.Intent;
-import android.content.pm.ConfigurationInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ExpandableListView;
@@ -17,14 +16,13 @@ import com.eanfang.R2;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.BaseActivity;
 import com.eanfang.base.BaseApplication;
+import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.biz.model.GrantChange;
 import com.eanfang.biz.model.SystypeBean;
 import com.eanfang.biz.model.entity.BaseDataEntity;
-import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.util.ThreadPoolManager;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -64,7 +62,7 @@ public class AreaSelectionActivity extends BaseActivity implements AreaCheckChan
         ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
 //        startTransaction(true);
-        initAreaData();
+        initData();
     }
 
     @Override
@@ -83,30 +81,9 @@ public class AreaSelectionActivity extends BaseActivity implements AreaCheckChan
         }
     }
 
-    private void initAreaData() {
-        //获取国家区域
-        if (BaseApplication.get().sSaveArea == null) {
-            BaseDataEntity areaJson = (BaseDataEntity) BaseApplication.get().get(Constant.COUNTRY_AREA_LIST, BaseDataEntity.class);
-            if (areaJson!=null) {
-                showToast("加载服务区域失败！");
-                tvGo.setClickable(false);
-            } else {
-                startLoading();
-                ThreadPoolManager manager = ThreadPoolManager.newInstance();
-                manager.addExecuteTask(() -> {
-                    BaseApplication.get().sSaveArea = areaJson;
-                    runOnUiThread(this::initData);
-                });
-            }
-        } else {
-            initData();
-        }
-
-    }
-
     private void initData() {
         dismissLoading();
-        areaListBean = BaseApplication.get().sSaveArea.getChildren();
+        areaListBean = CacheKit.get().get(Constant.COUNTRY_AREA_LIST, BaseDataEntity.class).getChildren();
         EanfangHttp.get(UserApi.GET_TECH_WORKER_AREA + userid + "/AREA").execute(new EanfangCallback<SystypeBean>(this, true, SystypeBean.class, (bean) -> {
             byNetGrant = bean;
             fillData();
@@ -189,11 +166,11 @@ public class AreaSelectionActivity extends BaseActivity implements AreaCheckChan
     private void setData() {
         EanfangHttp.post(UserApi.POST_TECH_WORKER_AREA_V3).upJson(JSONObject.toJSONString(grantChange)).execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
 //            Intent intent = new Intent(this, SubmitSuccessfullyJsActivity.class);
-            Intent intent=new Intent();
+            Intent intent = new Intent();
             intent.putExtra("status", mStatus);
             intent.putExtra("order", 2);
 //            startAnimActivity(intent);
-            setResult(1013,intent);
+            setResult(1013, intent);
             finish();
         }));
     }

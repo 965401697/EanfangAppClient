@@ -23,7 +23,7 @@ public class FormatRangeManager extends RangeManager {
         ArrayList<? extends Range> ranges = get();
         Collections.sort(ranges);
 
-        StringBuilder builder = new StringBuilder("");
+        StringBuilder builder = new StringBuilder();
         CharSequence newChar;
         for (Range range : ranges) {
             if (range instanceof FormatRange) {

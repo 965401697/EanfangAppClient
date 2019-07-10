@@ -21,17 +21,17 @@ import com.baidu.ocr.sdk.OnResultListener;
 import com.baidu.ocr.sdk.exception.OCRError;
 import com.baidu.ocr.sdk.model.AccessToken;
 import com.baidu.ocr.ui.camera.CameraActivity;
-import com.eanfang.base.kit.SDKManager;
-import com.eanfang.base.widget.customview.LtReView;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.http.EanfangCallback;
-import com.eanfang.http.EanfangHttp;
+import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.widget.customview.LtReView;
 import com.eanfang.biz.model.AuthCompanyBaseInfoBean;
 import com.eanfang.biz.model.ZdBusinessCertification;
-
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.GlideUtil;
 import com.eanfang.util.RecognizeService;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
@@ -40,8 +40,6 @@ import net.eanfang.worker.R;
 import net.eanfang.worker.ui.fragment.ContactsFragment;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -49,11 +47,6 @@ import java.util.GregorianCalendar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 /**
  * @author WQ
@@ -170,7 +163,7 @@ public class BusinessCertificationActivity extends BaseActivity {
 
     private void setRq() {
         View view = getLayoutInflater().inflate(R.layout.activity_dialog_date, null);
-        CalendarView datePicker = (CalendarView) view.findViewById(R.id.calendarView);
+        CalendarView datePicker = view.findViewById(R.id.calendarView);
         datePicker.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
             date = new GregorianCalendar(year, month, dayOfMonth).getTime();
             clRqLrv.setText(GetDateUtils.dateToDateString(date));
@@ -218,22 +211,7 @@ public class BusinessCertificationActivity extends BaseActivity {
 
     private void setData(AuthCompanyBaseInfoBean beans) {
         if (infoBean.getLicensePic() != null) {
-            OkHttpClient okHttpClient = new OkHttpClient();
-            Request request = new Request.Builder().url(BuildConfig.OSS_SERVER + infoBean.getLicensePic()).build();
-            okHttpClient.newCall(request).enqueue(
-                    new Callback() {
-                        @Override
-                        public void onFailure(Call call, IOException e) {
-                        }
-
-                        @Override
-                        public void onResponse(Call call, Response response) {
-                            InputStream inputStream = response.body().byteStream();
-                            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                            runOnUiThread(() -> ivUploadlogo.setImageBitmap(bitmap));
-                        }
-                    }
-            );
+            GlideUtil.intoImageView(this, BuildConfig.OSS_SERVER + infoBean.getLicensePic(), ivUploadlogo);
         }
         dwMcLrv.setText(beans.getName());
         nshLrv.setText(beans.getLicenseCode());
@@ -305,7 +283,8 @@ public class BusinessCertificationActivity extends BaseActivity {
                         String fileString = new File(getApplication().getFilesDir(), "pic.jpg").getAbsolutePath();
                         Bitmap bitmap = BitmapFactory.decodeFile(fileString);
                         String imgKey = UuidUtil.getUUID() + ".jpg";
-                        SDKManager.ossKit(this).asyncPutImage(imgKey, fileString, (isSuccess) -> {});
+                        SDKManager.ossKit(this).asyncPutImage(imgKey, fileString, (isSuccess) -> {
+                        });
                         ivUploadlogo.setImageBitmap(bitmap);
                         infoBean.setLicensePic(imgKey);
                         ZdBusinessCertification myclass = JSONObject.parseObject(result, ZdBusinessCertification.class);

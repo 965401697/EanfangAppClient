@@ -80,10 +80,8 @@ public class HttpLoggingInterceptor implements Interceptor {
         String subtype = mediaType.subtype();
         if (subtype != null) {
             subtype = subtype.toLowerCase();
-            if (subtype.contains("x-www-form-urlencoded") || subtype.contains("json") || subtype.contains("xml") || subtype.contains("html")) //
-            {
-                return true;
-            }
+            //
+            return subtype.contains("x-www-form-urlencoded") || subtype.contains("json") || subtype.contains("xml") || subtype.contains("html");
         }
         return false;
     }

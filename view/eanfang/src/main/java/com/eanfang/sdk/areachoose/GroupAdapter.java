@@ -87,9 +87,9 @@ public class GroupAdapter extends BaseExpandableListAdapter {
         if (convertView == null) {
             holder = new FirstHolder();
             convertView = mInflate.inflate(R.layout.item_expand_lv_first, parent, false);
-            holder.tv = ((TextView) convertView.findViewById(R.id.tv));
-            holder.tv_cb = ((CheckBox) convertView.findViewById(R.id.tv_cb));
-            holder.img_area = ((ImageView) convertView.findViewById(R.id.img_area));
+            holder.tv = convertView.findViewById(R.id.tv);
+            holder.tv_cb = convertView.findViewById(R.id.tv_cb);
+            holder.img_area = convertView.findViewById(R.id.img_area);
             convertView.setTag(holder);
         } else {
             holder = (FirstHolder) convertView.getTag();

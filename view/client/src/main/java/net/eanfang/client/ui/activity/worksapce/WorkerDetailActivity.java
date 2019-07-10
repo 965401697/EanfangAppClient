@@ -15,17 +15,22 @@ import android.widget.RadioGroup.LayoutParams;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.daimajia.numberprogressbar.DaiMaJiaNumberProgressBar;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.base.widget.customview.CircleImageView;
+import com.eanfang.biz.model.reapair.RepairPersonalInfoEntity;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.reapair.RepairPersonalInfoEntity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JsonUtils;
@@ -43,14 +48,10 @@ import net.eanfang.client.ui.adapter.WorkDetailHonorAdapter;
 import net.eanfang.client.ui.adapter.WorkDetailQualificationAdapter;
 import net.eanfang.client.ui.adapter.WorkerDetailAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
-import net.eanfang.client.util.PrefUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import me.zhanghai.android.materialratingbar.MaterialRatingBar;
@@ -64,6 +65,7 @@ import static com.eanfang.base.kit.V.v;
 
 public class WorkerDetailActivity extends BaseClientActivity {
 
+    public static final String IS_COLLECTED = "is_collected";
     @BindView(R.id.tv_title)
     TextView tvTitle;
     @BindView(R.id.iv_header)
@@ -249,7 +251,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
         }
 
         // 获取是否收藏
-        if (PrefUtils.getVBoolean(this, PrefUtils.ISCOLLECTED) == false) {
+        if (CacheKit.get().getBool(IS_COLLECTED, false)) {
             setRightImageResId(R.mipmap.ic_worker_collect);
         } else {
             setRightImageResId(R.mipmap.ic_worker_collect_pressed);
@@ -450,7 +452,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
                 .upJson(jsonObject.toJSONString())
                 .execute(new EanfangCallback(this, true, JSONObject.class, (bean) -> {
                     setRightImageResId(R.mipmap.ic_worker_collect_pressed);
-                    PrefUtils.setBoolean(getApplicationContext(), PrefUtils.ISCOLLECTED, true);
+                    CacheKit.get().put(IS_COLLECTED, true);
                     showToast("收藏成功");
                     isCollect = true;
                 }));
@@ -468,7 +470,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
                 .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback(this, true, JSONObject.class, (bean) -> {
                     setRightImageResId(R.mipmap.ic_worker_collect);
-                    PrefUtils.setBoolean(getApplicationContext(), PrefUtils.ISCOLLECTED, false);
+                    CacheKit.get().put(IS_COLLECTED, false);
                     showToast("取消收藏");
                     isCollect = false;
                 }));
@@ -480,7 +482,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
             return;
         }
         if (bean.getAccountEntity() != null) {
-            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + bean.getVerifyEntity().getAvatarPhoto()),ivHeader);
+            GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + bean.getVerifyEntity().getAvatarPhoto()), ivHeader);
             headUrl = bean.getVerifyEntity().getAvatarPhoto();
             workerName = bean.getAccountEntity().getRealName();
             comapnyName = bean.getCompanyEntity().getOrgName();

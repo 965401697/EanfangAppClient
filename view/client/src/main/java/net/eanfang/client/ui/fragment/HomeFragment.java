@@ -106,8 +106,8 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        tvHomeTitle = (TextView) findViewById(R.id.tv_homeTitle);
-        rlAllData = (RelativeLayout) findViewById(R.id.rl_allData);
+        tvHomeTitle = findViewById(R.id.tv_homeTitle);
+        rlAllData = findViewById(R.id.rl_allData);
         tvInstallTotal = findViewById(R.id.tv_install_total);
         tvDesitnTotal = findViewById(R.id.tv_desitn_total);
         mTvSecurityNewMessage = findViewById(R.id.tv_security_count);
@@ -135,7 +135,7 @@ public class HomeFragment extends BaseFragment {
         String[] titles = {"当日维修", "当日安装", "当日设计"};
         ArrayList<Fragment> fragments = new ArrayList<>();
         CustomHomeViewPager vpDataStatis = findViewById(R.id.vp_datastatistics);
-        SlidingTabLayout tlDataStatisticsList = (SlidingTabLayout) findViewById(R.id.tl_datastatistics);
+        SlidingTabLayout tlDataStatisticsList = findViewById(R.id.tl_datastatistics);
 
         fragments.clear();
         fragments.add(HomeDataStatisticsFragment.getInstance(titles[0], 1));
@@ -155,7 +155,7 @@ public class HomeFragment extends BaseFragment {
         String[] titles = {"快速报修", "免费报装", "免费设计"};
         ArrayList<Fragment> fragments = new ArrayList<>();
         CustomHomeViewPager vpDataStatis = findViewById(R.id.vp_home_repair);
-        SlidingTabLayout tlDataStatisticsList = (SlidingTabLayout) findViewById(R.id.tl_home_repair);
+        SlidingTabLayout tlDataStatisticsList = findViewById(R.id.tl_home_repair);
 
         fragments.clear();
         fragments.add(HomeRepairFragment.getInstance(0));
@@ -175,7 +175,7 @@ public class HomeFragment extends BaseFragment {
         String[] titles = {"最新订单", "全部品牌", "全部业务"};
         ArrayList<Fragment> fragments = new ArrayList<>();
         CustomHomeViewPager vpDataStatis = findViewById(R.id.vp_home_business);
-        SlidingTabLayout tlDataStatisticsList = (SlidingTabLayout) findViewById(R.id.tl_home_business);
+        SlidingTabLayout tlDataStatisticsList = findViewById(R.id.tl_home_business);
 
         fragments.clear();
         fragments.add(new HomeNewOrderFragment());
@@ -195,7 +195,7 @@ public class HomeFragment extends BaseFragment {
         String[] titles = {"安防公司", "找技师"};
         ArrayList<Fragment> fragments = new ArrayList<>();
         CustomHomeViewPager vpDataStatis = findViewById(R.id.vp_home_worker);
-        SlidingTabLayout tlDataStatisticsList = (SlidingTabLayout) findViewById(R.id.tl_home_worker);
+        SlidingTabLayout tlDataStatisticsList = findViewById(R.id.tl_home_worker);
 
         fragments.clear();
         fragments.add(HomeCompanyFragment.getInstance(0));

@@ -4,13 +4,14 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.RelativeLayout;
+
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.witget.SwitchButton;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
-import net.eanfang.worker.util.PrefUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,7 +25,7 @@ import butterknife.ButterKnife;
  */
 
 public class MessageStateView extends BaseDialog {
-
+    private static final String RECEIVE_MSG_SWITCH_CHECK = "receive_msg_switch_check";
 
     @BindView(R.id.sb_person_repair)
     SwitchButton sbPersonRepair;
@@ -49,9 +50,9 @@ public class MessageStateView extends BaseDialog {
 
     private void initView() {
 
-        sbPersonRepair.setChecked(PrefUtils.getVBoolean(mContext, PrefUtils.RECEIVE_MSG_SWITCH_CHECK));
+        sbPersonRepair.setChecked(CacheKit.get().getBool(RECEIVE_MSG_SWITCH_CHECK, true));
         sbPersonRepair.setOnCheckedChangeListener((view, isChecked) -> {
-            PrefUtils.setBoolean(mContext, PrefUtils.RECEIVE_MSG_SWITCH_CHECK, isChecked);
+            CacheKit.get().put(RECEIVE_MSG_SWITCH_CHECK, isChecked);
             if (!isChecked) {
                 Log.e("GG", "关闭推送");
                 SDKManager.getXGPush(mContext).unregisterPush();

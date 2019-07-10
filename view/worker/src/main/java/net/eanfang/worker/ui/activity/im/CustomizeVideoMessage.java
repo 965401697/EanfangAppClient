@@ -6,7 +6,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
 
 import io.rong.common.ParcelUtils;
 import io.rong.imlib.MessageTag;

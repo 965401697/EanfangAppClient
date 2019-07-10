@@ -10,43 +10,33 @@ import androidx.annotation.Nullable;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.kit.cache.CacheKit;
+import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.base.kit.SDKManager;
-import com.eanfang.biz.model.bean.LoginBean;
-import com.eanfang.base.network.config.HttpConfig;
 import com.eanfang.sys.activity.LoginActivity;
-import com.eanfang.util.CleanMessageUtil;
 import com.eanfang.util.GuideUtil;
 import com.eanfang.util.StringUtils;
-import com.eanfang.util.ToastUtil;
 
-import net.eanfang.worker.BuildConfig;
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.GuideActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
-import net.eanfang.worker.util.PrefUtils;
-
-import org.greenrobot.eventbus.Subscribe;
 
 
 /**
- * Created by MrHou
- *
- * @on 2017/11/9  10:11
- * @email houzhongzhou@yeah.net
- * @desc 引导页
+ * @author jornl
+ * @date 2019-07-09
  */
-
 public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCallback {
-    private static final String TAG = SplashActivity.class.getSimpleName();
-    int[] drawables_worker = {R.mipmap.ic_work_splash_one, R.mipmap.ic_work_splash_two, R.mipmap.ic_work_splash_three,R.mipmap.ic_work_splash_end};
+    public static final String SHOWGUID = "showguid";
+    public static final String GUID = "guid";
+    int[] drawables_worker = {R.mipmap.ic_work_splash_one, R.mipmap.ic_work_splash_two, R.mipmap.ic_work_splash_three, R.mipmap.ic_work_splash_end};
 
-    private boolean isFirst = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setContentView(R.layout.activity_splash);
         super.onCreate(savedInstanceState);
         // 解决 安装后直接打开 按home键 从新开启闪屏页
         if ((getIntent().getFlags() & Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT) != 0) {
@@ -54,41 +44,25 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
             finish();
             return;
         }
-        setContentView(R.layout.activity_splash);
-        //bugly初始化
-        SDKManager.getBugly().init(this, BuildConfig.BUGLY_WORKER, BuildConfig.DEBUG);
-//        CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(SplashActivity.this);
-//        strategy.setAppChannel(ChannelUtil.getChannelName(SplashActivity.this));
-//        //App的版本
-//        strategy.setAppVersion(ApkUtils.getAppVersionName(SplashActivity.this));
-//        strategy.setAppPackageName(BuildConfig.APPLICATION_ID);
-//        CrashReport.initCrashReport(getApplicationContext(), BuildConfig.BUGLY_WORKER, false, strategy);
         init();
     }
 
     private void init() {
-        isFirst = PrefUtils.getVBoolean(this, PrefUtils.SHOWGUIDE);
-        EanfangHttp.setWorker();
-        //是第一次
-        if (isFirst) {
+        if (CacheKit.get().getBool(SHOWGUID, true)) {
             firstUse();
+            return;
+        }
+        //没有登录信息
+        if (WorkerApplication.get().getLoginBean() == null) {
+            goLogin();
+            return;
+        }
+        //有网 token登录
+        if (isConnected()) {
+            loginByToken();
         } else {
-            //不是第一次
-            LoginBean user = WorkerApplication.get().getLoginBean();
-            //token失效
-            if (user == null || StringUtils.isEmpty(user.getToken())) {
-                goLogin();
-            } else {
-                EanfangHttp.setToken(user.getToken());
-                HttpConfig.get().setToken(WorkerApplication.get().getLoginBean().getToken());
-
-                if (isConnected()) {
-                    loginByToken();
-                } else {
-                    goMain();
-                }
-
-            }
+            //没网 进首页
+            goMain();
         }
     }
 
@@ -100,21 +74,14 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
 
     //加载引导页
     void firstUse() {
-        if (isFirst) {
-            new GuideUtil().init(this, findViewById(R.id.layout), drawables_worker, this);
-            try {
-                PrefUtils.setBoolean(getApplicationContext(), PrefUtils.SHOWGUIDE, false);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
+        new GuideUtil().init(this, findViewById(R.id.layout), drawables_worker, this);
+        CacheKit.get().put(SHOWGUID, false);
     }
 
     /**
      * token 登陆 验证
      */
     public void loginByToken() {
-
         EanfangHttp.get(UserApi.GET_USER_INFO)
                 .execute(new EanfangCallback<LoginBean>(this, false, LoginBean.class) {
                     @Override
@@ -130,50 +97,34 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
                     @Override
                     public void onFail(Integer code, String message, JSONObject jsonObject) {
                         goLogin();
-//
                     }
                 });
-
     }
-
 
     @Override
     public void goLogin() {
-        isFirst = true;
-        startActivityForResult(new Intent(this, com.eanfang.sys.activity.LoginActivity.class), com.eanfang.sys.activity.LoginActivity.LOGIN_BACK_CODE);
-//        startActivity(new Intent(this, LoginActivity.class));
-//        finishSelf();
+        startActivityForResult(new Intent(this, LoginActivity.class), LoginActivity.LOGIN_BACK_CODE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == com.eanfang.sys.activity.LoginActivity.LOGIN_BACK_CODE) {
-            if (PrefUtils.getVBoolean(this, PrefUtils.GUIDE)) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == LoginActivity.LOGIN_BACK_CODE) {
+            //加载引导
+            if (CacheKit.get().getBool(GUID, true)) {
                 startActivity(new Intent(this, GuideActivity.class));
+                CacheKit.get().put(GUID, false);
                 finishSelf();
             } else {
-                startActivity(new Intent(this, MainActivity.class));
-                finishSelf();
+                goMain();
             }
         }
-
-        super.onActivityResult(requestCode, resultCode, data);
-    }
-
-    @Subscribe
-    public void onEvent(Integer integer) {
-        isFirst = true;
-        ToastUtil.get().showToast(this, "登录失效，请重新登录！");
-        CleanMessageUtil.clearAllCache(WorkerApplication.get());
-//        SharePreferenceUtil.get().clear();
-        startActivity(new Intent(this, LoginActivity.class));
-        finishSelf();
     }
 
     /**
      * 判断网络是否连接
      *
-     * @return
+     * @return true有网  false无网
      */
     public boolean isConnected() {
         ConnectivityManager cm =

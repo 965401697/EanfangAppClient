@@ -74,7 +74,7 @@ public class ScanCodeActivity extends BaseActivity {
         mFromWhere = getIntent().getStringExtra("from");
         mScanType = getIntent().getStringExtra("scanType");
         mAddFriend = getIntent().getStringExtra(EanfangConst.QR_ADD_FRIEND);
-        barcodeScannerView = (DecoratedBarcodeView) findViewById(R.id.zxing_barcode_scanner);
+        barcodeScannerView = findViewById(R.id.zxing_barcode_scanner);
         Collection<BarcodeFormat> formats = Arrays.asList(BarcodeFormat.QR_CODE, BarcodeFormat.CODE_39);
         barcodeScannerView.getBarcodeView().setDecoderFactory(new DefaultDecoderFactory(formats));
         if (!StringUtils.isEmpty(mScanType)) {

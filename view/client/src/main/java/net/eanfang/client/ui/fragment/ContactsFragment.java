@@ -175,16 +175,16 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
     @Override
     protected void initView() {
 
-        ((NestedScrollView) view.findViewById(R.id.nested_view)).getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+        view.findViewById(R.id.nested_view).getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
             @Override
             public void onScrollChanged() {
-                ((SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setEnabled(((NestedScrollView) view.findViewById(R.id.nested_view)).getScrollY() == 0);
+                view.findViewById(R.id.swipre_fresh).setEnabled(view.findViewById(R.id.nested_view).getScrollY() == 0);
             }
         });
 
 
-        rl_create_team = (RelativeLayout) view.findViewById(R.id.rl_create_team);
-        tv_noTeam = (TextView) view.findViewById(R.id.tv_noTeam);
+        rl_create_team = view.findViewById(R.id.rl_create_team);
+        tv_noTeam = view.findViewById(R.id.tv_noTeam);
 
         view.findViewById(R.id.ll_my_friends).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -231,7 +231,7 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
         ((SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setOnRefreshListener(this);
 
 
-        rev_list = (RecyclerView) view.findViewById(R.id.rev_list);
+        rev_list = view.findViewById(R.id.rev_list);
 //        rev_list.setHasFixedSize(true);//应该reycylerview reqestlayout()计算
         rev_list.setNestedScrollingEnabled(false);
 
@@ -247,11 +247,7 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 OrgEntity bean = (OrgEntity) adapter.getData().get(position);
                 if (position == mOldPosition) {
-                    if (isFirstShow) {
-                        isFirstShow = false;
-                    } else {
-                        isFirstShow = true;
-                    }
+                    isFirstShow = !isFirstShow;
                 } else {
                     mOrgEntity.setFlag(false);
                     isFirstShow = true;

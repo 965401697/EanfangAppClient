@@ -10,7 +10,6 @@ import com.eanfang.base.kit.utils.ApkUtils;
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.UpdateAppManager;
 
-import net.eanfang.worker.BuildConfig;
 import net.eanfang.worker.R;
 
 import butterknife.BindView;
@@ -76,7 +75,7 @@ public class AboutUsView extends BaseDialog {
         });
         // 版本更新
         llUpdate.setOnClickListener((v) -> {
-            UpdateAppManager.update(mContext, BuildConfig.APP_TYPE, true);
+            UpdateAppManager.update(mContext, true);
 
 //            UpdateManager manager = new UpdateManager(mContext, BuildConfig.TYPE);
 //            manager.checkUpdate();

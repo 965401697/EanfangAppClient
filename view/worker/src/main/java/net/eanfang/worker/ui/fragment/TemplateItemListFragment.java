@@ -76,8 +76,6 @@ public abstract class TemplateItemListFragment extends BaseFragment implements S
     protected void initAdapter() {
     }
 
-    ;
-
     protected void initAdapter(BaseQuickAdapter baseQuickAdapter) {
         this.baseQuickAdapter = baseQuickAdapter;
         if (baseQuickAdapter == null) {
@@ -93,6 +91,9 @@ public abstract class TemplateItemListFragment extends BaseFragment implements S
 
     protected void getCommenData(PageBean pageBean) {
         if (mPage == 1) {
+            if(pageBean==null){
+                return;
+            }
             baseQuickAdapter.getData().clear();
             baseQuickAdapter.setNewData(pageBean.getList());
             mSwipeRefreshLayout.setRefreshing(false);

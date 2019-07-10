@@ -114,7 +114,7 @@ public class TenderFindDetailViewModle extends BaseViewModel {
      * 分享
      */
     public void doShare() {
-        Intent intent = new Intent((TenderFindDetailActivity) tenderFindDetailBinding.getRoot().getContext(), SelectIMContactActivity.class);
+        Intent intent = new Intent(tenderFindDetailBinding.getRoot().getContext(), SelectIMContactActivity.class);
         Bundle bundle = new Bundle();
 
         bundle.putString("id", String.valueOf(tenderLiveData.getValue().getId()));

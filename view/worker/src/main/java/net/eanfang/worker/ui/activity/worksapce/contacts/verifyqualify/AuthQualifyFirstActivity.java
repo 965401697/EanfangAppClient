@@ -277,10 +277,7 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
             @Override
             public boolean setSelected(int position, BaseDataEntity baseDataEntity) {
                 Long coutn = Stream.of(byNetGrant_system.getList()).filter(bean -> bean.getDataId().equals(baseDataEntity.getDataId())).count();
-                if (coutn > 0) {
-                    return true;
-                }
-                return false;
+                return coutn > 0;
             }
         });
 
@@ -315,10 +312,7 @@ public class AuthQualifyFirstActivity extends BaseActivity implements RadioGroup
             @Override
             public boolean setSelected(int position, BaseDataEntity baseDataEntity) {
                 Long coutn = Stream.of(byNetGrant_business.getList()).filter(bean -> bean.getDataId().equals(baseDataEntity.getDataId())).count();
-                if (coutn > 0) {
-                    return true;
-                }
-                return false;
+                return coutn > 0;
 
             }
         };

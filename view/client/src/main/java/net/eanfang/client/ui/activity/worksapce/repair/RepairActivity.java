@@ -268,7 +268,7 @@ public class RepairActivity extends BaseClientActivity {
             repairSelectTimePop = new RepairSelectTimePop(this, timeList, new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    tvTime.setText(timeList.get(i).toString());
+                    tvTime.setText(timeList.get(i));
                     repairSelectTimePop.dismiss();
                 }
             });

@@ -9,10 +9,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.base.kit.V;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
@@ -24,7 +28,6 @@ import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.NumberUtil;
-import com.eanfang.base.kit.V;
 import com.yaf.base.entity.PayLogEntity;
 import com.yaf.base.entity.RepairBugEntity;
 import com.yaf.base.entity.RepairOrderEntity;
@@ -41,9 +44,6 @@ import net.eanfang.client.util.ImagePerviewUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by MrHou
@@ -291,6 +291,7 @@ public class OrderDetailFragment extends BaseFragment {
                     payLogEntity.setAssigneeUserId(bean.getOwnerUserId());
                     payLogEntity.setAssigneeOrgCode(bean.getOwnerOrgCode());
                     payLogEntity.setAssigneeTopCompanyId(bean.getOwnerTopCompanyId());
+                    payLogEntity.setPayPrice(bean.getPayLogEntity().getPayPrice());
                     //==================================================================
 
                     hashMap.put("id", String.valueOf(bean.getId()));

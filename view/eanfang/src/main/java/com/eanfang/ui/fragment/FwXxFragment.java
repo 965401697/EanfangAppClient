@@ -48,9 +48,9 @@ public class FwXxFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-        RecyclerView rvA = (RecyclerView) findViewById(R.id.rv_a);
-        RecyclerView rvB = (RecyclerView) findViewById(R.id.rv_b);
-        RecyclerView rvC = (RecyclerView) findViewById(R.id.rv_c);
+        RecyclerView rvA = findViewById(R.id.rv_a);
+        RecyclerView rvB = findViewById(R.id.rv_b);
+        RecyclerView rvC = findViewById(R.id.rv_c);
 
         initRecyclerView(rvA,bizList);
         initRecyclerView(rvB,list);

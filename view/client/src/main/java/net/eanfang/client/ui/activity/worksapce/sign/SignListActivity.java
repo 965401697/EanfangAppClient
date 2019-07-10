@@ -6,28 +6,28 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.biz.model.SignListBean;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.SignListBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
-import com.photopicker.com.util.BGASpaceItemDecoration;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
-import net.eanfang.client.ui.adapter.SignListAdapter;
+import net.eanfang.client.ui.activity.worksapce.online.DividerItemDecoration;
+import net.eanfang.client.ui.adapter.SignSecondAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -42,7 +42,7 @@ import static com.eanfang.config.EanfangConst.TOP_REFRESH;
  * @desc 签到列表
  */
 
-public class SignListActivity extends BaseActivity implements SignListAdapter.onSecondClickListener, SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
+public class SignListActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
     @BindView(R.id.rev_list)
     RecyclerView revList;
     @BindView(R.id.ll_sign_layout)
@@ -51,15 +51,17 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
     LinearLayout llFooter;
     @BindView(R.id.tv_sign)
     TextView tvSign;
+    @BindView(R.id.tv_nodata)
+    TextView tvNodata;
     private String title;
     private int status;
 
     @BindView(R.id.swipre_fresh)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
-    private SignListAdapter signListAdapter;
+    private SignSecondAdapter signListAdapter;
 
-    private List<SignListBean> signListBeanList = new ArrayList<>();
+    private List<SignListBean.ListBean> signListBeanList = new ArrayList<>();
     private int mFirstPosition;
 
     private int page = 1;
@@ -90,8 +92,8 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
 
 
         revList.setLayoutManager(new LinearLayoutManager(this));
-        revList.addItemDecoration(new BGASpaceItemDecoration(30));
-        signListAdapter = new SignListAdapter(this);
+        revList.addItemDecoration(new DividerItemDecoration(this));
+        signListAdapter = new SignSecondAdapter();
         signListAdapter.bindToRecyclerView(revList);
 
         llSignLayout.setOnClickListener(v -> finishSelf());
@@ -100,6 +102,16 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
 
         setRightTitleOnClickListener((v) -> {
             JumpItent.jump(SignListActivity.this, SignFiltrateActivity.class, REQUEST_FILTRATE);
+        });
+        signListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Bundle bundle = new Bundle();
+                bundle.putString("id", signListAdapter.getData().get(mFirstPosition).getId());
+                bundle.putInt("status", signListAdapter.getData().get(mFirstPosition).getStatus());
+                bundle.putSerializable("bean", signListAdapter.getData().get(position));
+                JumpItent.jump(SignListActivity.this, SignListDetailActivity.class, bundle);
+            }
         });
     }
 
@@ -112,22 +124,42 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
         }
         EanfangHttp.post(UserApi.SIGN_LIST)
                 .upJson(JsonUtils.obj2String(mQueryEntry))
-                .execute(new EanfangCallback<SignListBean>(this, true, SignListBean.class, true, (bean) -> {
-                    signListBeanList = bean;
-                    initAdapter();
-                    onDataReceived();
-                    mSwipeRefreshLayout.setRefreshing(false);
-                }));
-    }
+                .execute(new EanfangCallback<SignListBean>(this, true, SignListBean.class) {
+                    @Override
+                    public void onSuccess(SignListBean bean) {
+                        if (page == 1) {
+                            signListAdapter.getData().clear();
+                            signListAdapter.setNewData(bean.getList());
+                            mSwipeRefreshLayout.setRefreshing(false);
+                            signListAdapter.loadMoreComplete();
+                            revList.stopScroll();
+                            if (bean.getList().size() < 10) {
+                                signListAdapter.loadMoreEnd();
+                                //释放对象
+                                mQueryEntry = null;
+                            }
 
-    private void initAdapter() {
+                        } else {
+                            signListAdapter.addData(bean.getList());
+                            signListAdapter.loadMoreComplete();
+                            revList.stopScroll();
+                            if (bean.getList().size() < 10) {
+                                signListAdapter.loadMoreEnd();
+                            }
+                        }
+                    }
 
-        revList.addOnItemTouchListener(new OnItemClickListener() {
-            @Override
-            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                mFirstPosition = position;
-            }
-        });
+                    @Override
+                    public void onNoData(String message) {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        signListAdapter.loadMoreEnd();//没有数据了
+                    }
+
+                    @Override
+                    public void onCommitAgain() {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+                });
     }
 
     /**
@@ -147,43 +179,12 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
         dataOption(BOTTOM_REFRESH);
     }
 
-    public void onDataReceived() {
-        if (page == 1) {
-            if (signListBeanList.size() == 0 || signListBeanList == null) {
-                showToast("暂无数据");
-                signListAdapter.getData().clear();
-                signListAdapter.notifyDataSetChanged();
-            } else {
-                signListAdapter.getData().clear();
-                signListAdapter.setNewData(signListBeanList);
-                if (signListBeanList.size() < 10) {
-                    signListAdapter.loadMoreEnd();
-                }
-            }
-        } else {
-            if (signListBeanList.size() == 0 || signListBeanList == null) {
-                showToast("暂无更多数据");
-                page = page - 1;
-                signListAdapter.loadMoreEnd();
-            } else {
-                signListAdapter.addData(signListBeanList);
-                signListAdapter.loadMoreComplete();
-                if (signListBeanList.size() < 10) {
-                    signListAdapter.loadMoreEnd();
-                }
-            }
-        }
-    }
-
     private void dataOption(int option) {
         switch (option) {
             case TOP_REFRESH:
                 //下拉刷新
                 mQueryEntry = new QueryEntry();
-                page--;
-                if (page <= 0) {
-                    page = 1;
-                }
+                page = 1;
                 initData();
                 break;
             case BOTTOM_REFRESH:
@@ -196,14 +197,6 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
         }
     }
 
-    @Override
-    public void onSecondClick(int position) {
-        Bundle bundle = new Bundle();
-        bundle.putString("id", signListAdapter.getData().get(mFirstPosition).getList().get(position).getId());
-        bundle.putInt("status", signListAdapter.getData().get(mFirstPosition).getList().get(position).getStatus());
-        bundle.putSerializable("bean", signListAdapter.getData().get(mFirstPosition).getList().get(position));
-        JumpItent.jump(SignListActivity.this, SignListDetailActivity.class, bundle);
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

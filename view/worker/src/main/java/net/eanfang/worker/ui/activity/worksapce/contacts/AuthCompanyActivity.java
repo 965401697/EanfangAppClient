@@ -10,6 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.lifecycle.ViewModel;
+
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONPObject;
 import com.annimon.stream.Stream;
@@ -17,6 +19,7 @@ import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.dialog.TrueFalseDialog;
@@ -26,7 +29,6 @@ import com.eanfang.biz.model.AuthCompanyBaseInfoBean;
 import com.eanfang.biz.model.SelectAddressItem;
 
 import com.eanfang.ui.activity.SelectAddressActivity;
-import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.PermKit;
@@ -34,12 +36,12 @@ import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
-import com.jph.takephoto.model.TImage;
-import com.jph.takephoto.model.TResult;
 import com.eanfang.biz.model.entity.BaseDataEntity;
+import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
+import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import java.util.List;
 
@@ -54,7 +56,7 @@ import butterknife.ButterKnife;
  * @desc 安防公司认证
  */
 
-public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
+public class AuthCompanyActivity extends BaseWorkeActivity {
     /**
      * 营业执照 take photo回调 code
      */
@@ -123,16 +125,20 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
         setContentView(R.layout.activity_auth_company);
         ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
-        initView();
         initListener();
         initData();
     }
 
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
+    }
 
-    private void initView() {
+    @Override
+    public void initView() {
         setTitle("填写企业信息");
         setRightTitle("编辑");
-        setLeftBack();
+        setLeftBack(true);
         orgid = getIntent().getLongExtra("orgid", 0);
         orgName = getIntent().getStringExtra("orgName");
         // mAssign = getIntent().getStringExtra("assign");
@@ -142,13 +148,19 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
         etCompany.setText(orgName);
 
     }
-
+private int state=0;
     private void initListener() {
         ivUpload.setOnClickListener((v) -> {
-            RxPerm.get(this).cameraPerm((isSuccess)-> takePhoto(AuthCompanyActivity.this, LICENSE_CALLBACK_CODE));
+            RxPerm.get(this).cameraPerm((isSuccess)-> {
+                state=LICENSE_CALLBACK_CODE;
+                imageV();
+            });
         });
         ivUpload2.setOnClickListener((v -> {
-            RxPerm.get(this).cameraPerm((isSuccess)-> takePhoto(AuthCompanyActivity.this, ADPIC_CALLBACK_CODE));
+            RxPerm.get(this).cameraPerm((isSuccess)-> {
+                state=ADPIC_CALLBACK_CODE;
+                imageV();
+            });
         }));
 
         llOfficeAddress.setOnClickListener((v) -> {
@@ -177,11 +189,29 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
             }
             showToast("可以进行编辑");
             isEdit = true;
-            setRightGone();
+            setRightClick(false);
             doRevoke();
         });
     }
+    private void imageV() {
+        SDKManager.getPicture().create(this).takePhoto(iPictureCallBack);
+    }
+    IPictureCallBack iPictureCallBack = new IPictureCallBack() {
+        @Override
+        public void onSuccess(List<LocalMedia> list) {
+            String imgKey = UuidUtil.getUUID() + ".png";
 
+            if (state == LICENSE_CALLBACK_CODE) {
+                infoBean.setLicensePic(imgKey);
+                GlideUtil.intoImageView(AuthCompanyActivity.this,"file://" + list.get(0).getPath(),ivUpload);
+            } else if (state == ADPIC_CALLBACK_CODE) {
+                infoBean.setLogoPic(imgKey);
+                GlideUtil.intoImageView(AuthCompanyActivity.this,"file://" + list.get(0).getPath(),ivUpload2);
+            }
+            state=0;
+            SDKManager.ossKit(AuthCompanyActivity.this).asyncPutImage(imgKey, list.get(0).getPath(),(isSuccess) -> {});
+        }
+    };
     private void initData() {
         EanfangHttp.get(UserApi.GET_COMPANY_ORG_INFO + orgid)
                 .execute(new EanfangCallback<AuthCompanyBaseInfoBean>(this, true, AuthCompanyBaseInfoBean.class, (beans) -> {
@@ -295,7 +325,7 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
             etDesc.setEnabled(false);
         }
         if (byNetBean.getStatus() != 2) {
-            setRightGone();
+            setRightClick(false);
         }
         if (byNetBean != null) {
             if (byNetBean.getLicenseCode() != null) {
@@ -341,7 +371,7 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
                 .upJson(json)
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
                     showToast("保存成功");
-                    finishSelf();
+                    finish();
                 }));
     }
 
@@ -376,34 +406,9 @@ public class AuthCompanyActivity extends BaseActivityWithTakePhoto {
         etDetailOfficeAddress.setEnabled(true);
         etDesc.setEnabled(true);
         btnComplete.setVisibility(View.VISIBLE);
-        setRightGone();
+        setRightClick(false);
     }
 
-    /**
-     * 图片选择 回调
-     *
-     * @param result
-     * @param resultCode
-     */
-    @Override
-    public void takeSuccess(TResult result, int resultCode) {
-        super.takeSuccess(result, resultCode);
-        if (result == null || result.getImage() == null) {
-            return;
-        }
-        TImage image = result.getImage();
-        String imgKey = UuidUtil.getUUID() + ".png";
-
-        if (resultCode == LICENSE_CALLBACK_CODE) {
-            infoBean.setLicensePic(imgKey);
-            GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),ivUpload);
-        } else if (resultCode == ADPIC_CALLBACK_CODE) {
-            infoBean.setLogoPic(imgKey);
-            GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),ivUpload2);
-        }
-        SDKManager.ossKit(this).asyncPutImage(imgKey, image.getOriginalPath(),(isSuccess) -> {});
-
-    }
 
     /**
      * 地图选址 回调

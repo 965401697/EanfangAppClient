@@ -7,16 +7,25 @@ import androidx.lifecycle.ViewModel;
 
 import com.eanfang.base.network.event.BaseActionEvent;
 
+import lombok.Setter;
+import lombok.experimental.Accessors;
+
 /**
  * @author jornl
  * @date 2019-04-17 18:11:04
  */
+@Accessors(chain = true)
 public class BaseViewModel extends ViewModel implements IViewModelAction {
 
     private MutableLiveData<BaseActionEvent> actionLiveData;
     protected LifecycleOwner lifecycleOwner;
+    /**
+     * 是否显示网络请求的loading加载框 默认显示 可以在网络请求前加上 showLoading=false 网络请求执行完会自动恢复成 true
+     */
+    @Setter
+    protected boolean showLoading = true;
 
-    protected BaseViewModel() {
+    public BaseViewModel() {
         actionLiveData = new MutableLiveData<>();
     }
 
@@ -27,6 +36,9 @@ public class BaseViewModel extends ViewModel implements IViewModelAction {
 
     @Override
     public void startLoading(String message) {
+        if (!showLoading) {
+            return;
+        }
         BaseActionEvent baseActionEvent = new BaseActionEvent(BaseActionEvent.SHOW_LOADING_DIALOG);
         baseActionEvent.setMessage(message);
         actionLiveData.setValue(baseActionEvent);
@@ -34,6 +46,10 @@ public class BaseViewModel extends ViewModel implements IViewModelAction {
 
     @Override
     public void dismissLoading() {
+        if (!showLoading) {
+            showLoading = true;
+            return;
+        }
         actionLiveData.setValue(new BaseActionEvent(BaseActionEvent.DISMISS_LOADING_DIALOG));
     }
 

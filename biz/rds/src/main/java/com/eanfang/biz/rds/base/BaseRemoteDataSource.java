@@ -14,7 +14,6 @@ import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableTransformer;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -44,13 +43,18 @@ public abstract class BaseRemoteDataSource {
         return RetrofitManagement.getInstance().getService(clz, host);
     }
 
-    private <T> ObservableTransformer<BaseResponseBody<T>, Object> applySchedulers() {
-        return RetrofitManagement.getInstance().applySchedulers(baseViewModel.getActionLiveData());
+    private <T> ObservableTransformer<BaseResponseBody<T>, Object> applySchedulers(Class<T> clazz) {
+        return RetrofitManagement.getInstance().applySchedulers(baseViewModel.getActionLiveData(), clazz);
     }
 
     protected <T> void execute(Observable observable, RequestCallback<T> callback) {
         execute(observable, new BaseSubscriber<>(callback), true, null);
     }
+
+    protected <T> void execute(Observable observable, RequestCallback<T> callback, Class<T> clazz) {
+        execute(observable, new BaseSubscriber<>(callback).setCallbackClazz(clazz), true, null);
+    }
+
 
     protected <T> void execute(Observable observable, RequestCallback<T> callback, CacheModel cacheModel) {
         execute(observable, new BaseSubscriber<>(callback), true, cacheModel);
@@ -60,11 +64,11 @@ public abstract class BaseRemoteDataSource {
         execute(observable, new BaseSubscriber<>(callback), true, null);
     }
 
-    public void executeWithoutDismiss(Observable observable, Observer observer) {
+    public void executeWithoutDismiss(Observable observable, BaseSubscriber observer) {
         execute(observable, observer, false, null);
     }
 
-    private <T> void execute(Observable observable, Observer observer, boolean isDismiss, CacheModel cacheModel) {
+    private <T> void execute(Observable observable, BaseSubscriber observer, boolean isDismiss, CacheModel cacheModel) {
         Disposable disposable = (Disposable) observable
                 .throttleFirst(500, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
@@ -74,7 +78,7 @@ public abstract class BaseRemoteDataSource {
                     //默认优先使用网络
                 }.getType(), cacheModel != null ? cacheModel.getCacheStrategy() : CacheStrategy.firstRemote()))
                 .map(new CacheResult.MapFunc<BaseResponseBody<T>>())
-                .compose(applySchedulers())
+                .compose(applySchedulers(observer.getCallbackClazz()))
                 .compose(isDismiss ? loadingTransformer() : loadingTransformerWithoutDismiss())
                 .subscribeWith(observer);
         addDisposable(disposable);
