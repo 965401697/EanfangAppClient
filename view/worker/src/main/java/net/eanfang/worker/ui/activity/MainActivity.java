@@ -24,21 +24,21 @@ import com.annimon.stream.Stream;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.base.widget.controltool.ControlToolView;
+import com.eanfang.biz.model.AllMessageBean;
+import com.eanfang.biz.model.GroupDetailBean;
+import com.eanfang.biz.model.NoticeEntity;
+import com.eanfang.biz.model.bean.BaseDataBean;
+import com.eanfang.biz.model.bean.ConstAllBean;
+import com.eanfang.biz.model.bean.LoginBean;
+import com.eanfang.biz.model.device.User;
+import com.eanfang.biz.model.entity.BaseDataEntity;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.AllMessageBean;
-import com.eanfang.biz.model.bean.BaseDataBean;
-import com.eanfang.biz.model.bean.ConstAllBean;
-import com.eanfang.biz.model.GroupDetailBean;
-import com.eanfang.biz.model.NoticeEntity;
-import com.eanfang.biz.model.bean.LoginBean;
-import com.eanfang.biz.model.device.User;
-import com.eanfang.biz.model.entity.BaseDataEntity;
-import com.eanfang.base.widget.controltool.badgeview.MyBadgeView;
 import com.eanfang.sys.activity.LoginActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.BadgeUtil;
@@ -47,7 +47,6 @@ import com.eanfang.util.ContactUtil;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.LocationUtil;
-import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
@@ -450,24 +449,6 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
 
             //开发者根据自己需求自行处理
             boolean isDelect = false;
-
-            /**String type = message.getObjectName();
-             if (type.equals("RC:InfoNtf")) {
-             InformationNotificationMessage msg = (InformationNotificationMessage) message.getContent();
-             if (msg.getMessage().equals("解散了")) {
-             isDelect = true;
-             for (Activity activity : transactionActivities) {
-             if (activity instanceof ConversationActivity) {
-             if (message.getTargetId().equals(((ConversationActivity) activity).mId)) {
-             activity.finish();
-             }
-             }
-             }
-             RongIM.getInstance().removeConversation(Conversation.ConversationType.GROUP, message.getTargetId(), null);
-             }
-
-             }*/
-
 
             if (message.getConversationType().getName().equals(Conversation.ConversationType.SYSTEM.getName())) {
                 TextMessage messageContent = (TextMessage) message.getContent();
