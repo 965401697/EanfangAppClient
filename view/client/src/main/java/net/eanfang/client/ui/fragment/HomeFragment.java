@@ -128,6 +128,7 @@ public class HomeFragment extends BaseFragment {
         initViewPager2();
         initViewPager3();
         initViewPager4();
+
     }
 
     private void initViewPager1() {
@@ -365,6 +366,9 @@ public class HomeFragment extends BaseFragment {
             mDesign = bean.getDesign();
         } else {
             mDesign = 0;
+        }
+        if (bean.getAlert() > 0) {
+            badgeView(R.id.tv_out_post, bean.getAlert());
         }
         badgeView(R.id.tv_design, mDesign);
         // @我的和评论未读

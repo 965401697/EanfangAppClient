@@ -42,6 +42,7 @@ public class AllMessageBean implements Serializable {
     private int totalCount;
     private int noReadCount;
     private int commentNoRead;
+    private int alert;
 
 
 }
