@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.BaseApplication;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.base.kit.picture.picture.PictureRecycleView;
@@ -132,7 +133,7 @@ public class AddSkillCertificafeActivity extends BaseWorkeActivity {
         }
 
         QualificationCertificateEntity entity = new QualificationCertificateEntity();
-        entity.setAccId(WorkerApplication.get().get().getAccId());
+        entity.setAccId(BaseApplication.get().getAccId());
         if (bean != null) {
             entity.setId(bean.getId());
             url = UserApi.TECH_WORKER_UPDATA_QUALIFY;
@@ -141,7 +142,7 @@ public class AddSkillCertificafeActivity extends BaseWorkeActivity {
         }
         entity.setCertificateName(etCertificateName.getText().toString().trim());
         entity.setAwardOrg(etOrg.getText().toString().trim());
-        entity.setAccId(WorkerApplication.get().get().getAccId());
+        entity.setAccId(BaseApplication.get().getAccId());
         entity.setBeginTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[0], "yyyy-MM-dd"));
         entity.setEndTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[1], "yyyy-MM-dd"));
         entity.setCertificateNumber(etNum.getText().toString().trim());

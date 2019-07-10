@@ -7,6 +7,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.network.config.HttpConfig;
 import com.vector.update_app.UpdateAppBean;
 import com.vector.update_app.UpdateCallback;
 import com.vector.update_app.utils.AppUpdateUtils;
@@ -22,14 +23,12 @@ public class UpdateAppManager {
     /**
      * 自定义接口协议
      *
-     * @param activity
+     * @param activity activity
      */
-    public static void update(Activity activity, String type, boolean isAbout) {
-//      String path = Environment.getExternalStorageDirectory().getAbsolutePath();
+    public static void update(Activity activity, boolean isAbout) {
         Map<String, String> params = new HashMap<String, String>();
-        //params.put("token", EanfangApplication.get().getUser().getToken());
-        String updateUrl = "";
-        if (type.equals("client")) {
+        String updateUrl;
+        if (HttpConfig.get().isClient()) {
             updateUrl = UserApi.GET_CILENT_UPDATE_APP + "?versionCode=" + AppUpdateUtils.getVersionCode(activity);
         } else {
             updateUrl = UserApi.GET_WORKER_UPDATE_APP + "?versionCode=" + AppUpdateUtils.getVersionCode(activity);
@@ -62,7 +61,6 @@ public class UpdateAppManager {
 //                .setTargetPath(path)
                 //设置appKey，默认从AndroidManifest.xml获取，如果，使用自定义参数，则此项无效
 //                .setAppKey("ab55ce55Ac4bcP408cPb8c1Aaeac179c5f6f")
-
                 .build()
                 //检测是否有新版本
                 .checkNewApp(new UpdateCallback() {

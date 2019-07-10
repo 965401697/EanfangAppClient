@@ -323,13 +323,8 @@ public class SecurityCommentDetailActivity extends BaseActivity implements
                     && event.getY() > top && event.getY() < bottom) {
                 // 点击的是输入框区域，保留点击EditText的事件
                 return false;
-            } else if (event.getX() > sendLeft && event.getX() < sendRight
-                    && event.getY() > sendTop && event.getY() < sendBottom) {
-                // 点击的是发送按钮区域，保留点击事件
-                return false;
-            } else {
-                return true;
-            }
+            } else return !(event.getX() > sendLeft) || !(event.getX() < sendRight)
+                    || !(event.getY() > sendTop) || !(event.getY() < sendBottom);
         }
         return false;
     }

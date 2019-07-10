@@ -84,28 +84,28 @@ public class CameraActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.bd_ocr_activity_camera);
         super.onCreate(savedInstanceState);
-        takePictureContainer = (OCRCameraLayout) findViewById(R.id.take_picture_container);
-        confirmResultContainer = (OCRCameraLayout) findViewById(R.id.confirm_result_container);
+        takePictureContainer = findViewById(R.id.take_picture_container);
+        confirmResultContainer = findViewById(R.id.confirm_result_container);
 
-        cameraView = (CameraView) findViewById(R.id.camera_view);
+        cameraView = findViewById(R.id.camera_view);
         cameraView.getCameraControl().setPermissionCallback(permissionCallback);
-        lightButton = (ImageView) findViewById(R.id.light_button);
+        lightButton = findViewById(R.id.light_button);
         lightButton.setOnClickListener(lightButtonOnClickListener);
-        takePhotoBtn = (ImageView) findViewById(R.id.take_photo_button);
+        takePhotoBtn = findViewById(R.id.take_photo_button);
         findViewById(R.id.album_button).setOnClickListener(albumButtonOnClickListener);
         takePhotoBtn.setOnClickListener(takeButtonOnClickListener);
 
         // confirm result;
-        displayImageView = (ImageView) findViewById(R.id.display_image_view);
+        displayImageView = findViewById(R.id.display_image_view);
         confirmResultContainer.findViewById(R.id.confirm_button).setOnClickListener(confirmButtonOnClickListener);
         confirmResultContainer.findViewById(R.id.cancel_button).setOnClickListener(confirmCancelButtonOnClickListener);
         findViewById(R.id.rotate_button).setOnClickListener(rotateButtonOnClickListener);
 
-        cropView = (CropView) findViewById(R.id.crop_view);
-        cropContainer = (OCRCameraLayout) findViewById(R.id.crop_container);
-        overlayView = (FrameOverlayView) findViewById(R.id.overlay_view);
+        cropView = findViewById(R.id.crop_view);
+        cropContainer = findViewById(R.id.crop_container);
+        overlayView = findViewById(R.id.overlay_view);
         cropContainer.findViewById(R.id.confirm_button).setOnClickListener(cropConfirmButtonListener);
-        cropMaskView = (MaskView) cropContainer.findViewById(R.id.crop_mask_view);
+        cropMaskView = cropContainer.findViewById(R.id.crop_mask_view);
         cropContainer.findViewById(R.id.cancel_button).setOnClickListener(cropCancelButtonListener);
 
         setOrientation(getResources().getConfiguration());

@@ -12,10 +12,10 @@ import androidx.fragment.app.DialogFragment;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.BaseApplication;
 import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.sys.activity.LoginActivity;
 import com.eanfang.util.CleanMessageUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
@@ -26,6 +26,8 @@ import com.tencent.android.tpush.XGPushManager;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
+import net.eanfang.client.ui.activity.MainActivity;
+import net.eanfang.client.ui.activity.SplashActivity;
 import net.eanfang.client.ui.activity.worksapce.setting.ChangePhoneActivity;
 import net.eanfang.client.ui.activity.worksapce.setting.UpdatePasswordActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
@@ -157,7 +159,8 @@ public class SettingActivity extends BaseClientActivity {
 //                    SharePreferenceUtil.get().clear();
                     CleanMessageUtil.clearAllCache(ClientApplication.get());
                     finishSelf();
-                    startActivity(new Intent(SettingActivity.this, LoginActivity.class));
+                    BaseApplication.get().closeActivity(MainActivity.class);
+                    startActivity(new Intent(SettingActivity.this, SplashActivity.class));
                     showToast("退出成功");
                 }));
     }

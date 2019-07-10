@@ -96,10 +96,10 @@ public class GridImageAdapter extends
 
         public ViewHolder(View view) {
             super(view);
-            relative = (RelativeLayout) view.findViewById(R.id.relative);
-            mImg = (ImageView) view.findViewById(R.id.fiv);
-            ll_del = (LinearLayout) view.findViewById(R.id.ll_del);
-            tv_duration = (TextView) view.findViewById(R.id.tv_duration);
+            relative = view.findViewById(R.id.relative);
+            mImg = view.findViewById(R.id.fiv);
+            ll_del = view.findViewById(R.id.ll_del);
+            tv_duration = view.findViewById(R.id.tv_duration);
         }
     }
 
@@ -136,7 +136,7 @@ public class GridImageAdapter extends
     }
 
     private boolean isShowAddItem(int position) {
-        int size = list.size() == 0 ? 0 : list.size();
+        int size = list.size();
         return position == size;
     }
 

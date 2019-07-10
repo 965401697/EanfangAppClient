@@ -12,7 +12,6 @@ import com.eanfang.base.BaseDialog;
 import com.eanfang.base.kit.utils.ApkUtils;
 import com.eanfang.util.UpdateAppManager;
 
-import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
 import net.eanfang.client.databinding.ActivityAboutUsBinding;
 
@@ -78,7 +77,7 @@ public class AboutUsView extends BaseDialog {
         });
         // 版本更新
         binding.llUpdate.setOnClickListener((v) -> {
-            UpdateAppManager.update(mActivity, BuildConfig.APP_TYPE, true);
+            UpdateAppManager.update(mActivity, true);
 //            UpdateManager manager = new UpdateManager(mContext, BuildConfig.TYPE);
 //            manager.checkUpdate();
 //            if (manager.isUpdate()) {

@@ -200,7 +200,7 @@ public class FaultExplainActivity extends BaseClientActivity {
     //网络请求--展示问题信息
     private void getData() {
         picList.clear();
-        questionIdZ = (int) intent.getIntExtra("QuestionIdZ", 0);
+        questionIdZ = intent.getIntExtra("QuestionIdZ", 0);
         EanfangHttp.post(NewApiService.ANSWER_List_With_Question)
                 .params("questionId", questionIdZ)
                 .execute(new EanfangCallback<AnswerListWithQuestionBean>(this, true, AnswerListWithQuestionBean.class) {
@@ -221,7 +221,7 @@ public class FaultExplainActivity extends BaseClientActivity {
                         tvDesc.setText(bean.getQuestion().getQuestionContent());
                         if (!StringUtils.isEmpty(bean.getQuestion().getQuestionPics())) {
                             String[] pics = bean.getQuestion().getQuestionPics().split(",");
-                            picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
+                            picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
                             snplPic.setDelegate(new BGASortableDelegate(FaultExplainActivity.this, REQUEST_CODE_CHOOSE_PHOTO, REQUEST_CODE_CHOOSE_PHOTO_two));
                             //            snplPic.init(this);
                             snplPic.setData(picList);

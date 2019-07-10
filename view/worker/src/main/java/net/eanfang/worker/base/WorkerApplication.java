@@ -3,11 +3,11 @@ package net.eanfang.worker.base;
 import android.util.Log;
 
 import com.eanfang.base.BaseApplication;
-import com.eanfang.biz.model.entity.BaseDataEntity;
-import com.eanfang.http.EanfangHttp;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.base.kit.loading.LoadKit;
 import com.eanfang.base.network.config.HttpConfig;
+import com.eanfang.http.EanfangHttp;
 import com.mob.MobSDK;
 
 import net.eanfang.worker.BuildConfig;
@@ -22,27 +22,21 @@ import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
-import io.rong.push.RongPushClient;
-import io.rong.push.pushconfig.PushConfig;
 
-import static com.eanfang.config.EanfangConst.MEIZU_APPID_WORKER;
-import static com.eanfang.config.EanfangConst.MEIZU_APPKEY_WORKER;
-import static com.eanfang.config.EanfangConst.XIAOMI_APPID_WORKER;
-import static com.eanfang.config.EanfangConst.XIAOMI_APPKEY_WORKER;
 import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
 
 public class WorkerApplication extends BaseApplication {
-    /**
-     * 是否自动更新过
-     */
-    public static boolean isUpdated = false;
-
 
     @Override
     public void onCreate() {
         super.onCreate();
         initRongIM();
         initHttp();
+        initBugly();
+    }
+
+    private void initBugly() {
+        SDKManager.getBugly().init(this, BuildConfig.BUGLY_WORKER, HttpConfig.get().isDebug());
     }
 
     @Override
@@ -109,6 +103,7 @@ public class WorkerApplication extends BaseApplication {
      * @param token
      */
     public static void connect(String token) {
+
         RongIM.connect(token, !BuildConfig.DEBUG ? null : new RongIMClient.ConnectCallback() {
 
             /**

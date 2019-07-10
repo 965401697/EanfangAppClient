@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.BaseApplication;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -86,7 +87,7 @@ public class AdministratorSetActivity extends BaseWorkerActivity {
             return;
         }
 
-        if (Long.parseLong(bean.getId()) == WorkerApplication.get().get().getAccId()) {
+        if (Long.parseLong(bean.getId()) == BaseApplication.get().getAccId()) {
             ToastUtil.get().showToast(AdministratorSetActivity.this, "自己不能转让自己");
             return;
         }

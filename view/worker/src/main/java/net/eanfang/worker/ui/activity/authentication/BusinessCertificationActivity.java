@@ -170,7 +170,7 @@ public class BusinessCertificationActivity extends BaseActivity {
 
     private void setRq() {
         View view = getLayoutInflater().inflate(R.layout.activity_dialog_date, null);
-        CalendarView datePicker = (CalendarView) view.findViewById(R.id.calendarView);
+        CalendarView datePicker = view.findViewById(R.id.calendarView);
         datePicker.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
             date = new GregorianCalendar(year, month, dayOfMonth).getTime();
             clRqLrv.setText(GetDateUtils.dateToDateString(date));

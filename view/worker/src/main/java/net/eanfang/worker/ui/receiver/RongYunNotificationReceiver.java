@@ -20,13 +20,13 @@ public class RongYunNotificationReceiver extends PushMessageReceiver {
     @Override
     public boolean onNotificationMessageArrived(Context context, PushType pushType, PushNotificationMessage pushNotificationMessage) {
         // 返回 false, 会弹出融云 SDK 默认通知; 返回 true, 融云 SDK 不会弹通知, 通知需要由您自定义。
-        Log.e("GG", "onNotificationMessageArrived" + pushNotificationMessage.getPushContent().toString());
+        Log.e("GG", "onNotificationMessageArrived" + pushNotificationMessage.getPushContent());
         return false;
     }
 
     @Override
     public boolean onNotificationMessageClicked(Context context, PushType pushType, PushNotificationMessage pushNotificationMessage) {
-        Log.e("GG", "onNotificationMessageClicked=" + pushNotificationMessage.getPushContent().toString());
+        Log.e("GG", "onNotificationMessageClicked=" + pushNotificationMessage.getPushContent());
         if (MainActivity.hashMap.get(pushNotificationMessage.getTargetId()) != null) {
             Intent intent = new Intent(context, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

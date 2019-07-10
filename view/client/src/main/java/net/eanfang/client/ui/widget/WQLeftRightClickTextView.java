@@ -82,11 +82,11 @@ public class WQLeftRightClickTextView extends TextView {
     }
 
     public interface DrawableLeftListener {
-        public void onDrawableLeftClick(View view);
+        void onDrawableLeftClick(View view);
     }
 
     public interface DrawableRightListener {
-        public void onDrawableRightClick(View view);
+        void onDrawableRightClick(View view);
     }
 
     @SuppressLint("ClickableViewAccessibility")

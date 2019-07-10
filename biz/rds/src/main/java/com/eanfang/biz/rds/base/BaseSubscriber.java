@@ -7,14 +7,21 @@ import com.eanfang.base.network.exception.base.BaseException;
 import com.eanfang.base.network.model.Optional;
 
 import io.reactivex.observers.DisposableObserver;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 
 /**
  * @author jornl
  * @date 2019-04-17 18:11:04
  */
+@Accessors(chain = true)
 public class BaseSubscriber<T> extends DisposableObserver<Optional<T>> {
 
     private RequestCallback<T> requestCallback;
+    @Getter
+    @Setter
+    private Class<T> callbackClazz;
 
     BaseSubscriber(RequestCallback<T> requestCallback) {
         this.requestCallback = requestCallback;

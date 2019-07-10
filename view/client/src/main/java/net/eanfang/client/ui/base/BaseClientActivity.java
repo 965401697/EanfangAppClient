@@ -5,7 +5,6 @@
 package net.eanfang.client.ui.base;
 
 import android.annotation.SuppressLint;
-import android.widget.Toast;
 
 import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.base.kit.rx.RxDialog;
@@ -24,7 +23,7 @@ import com.eanfang.ui.base.BaseActivity;
 public abstract class BaseClientActivity extends BaseActivity {
 
     @SuppressLint("CheckResult")
-    public void into(String key,InvokingData invokingData) {
+    public void into(String key, InvokingData invokingData) {
         RxDialog dialog = new RxDialog(this);
         dialog.setTitle("提示")
                 .setMessage("是否使用缓存数据")
@@ -52,10 +51,10 @@ public abstract class BaseClientActivity extends BaseActivity {
     }
 
     @SuppressLint("CheckResult")
-    public void out(String key,BaseVo baseVo) {
+    public void out(String key, BaseVo baseVo) {
         RxDialog dialog = new RxDialog(this);
         dialog.setTitle("提示")
-                .setMessage("是否放弃报装并保存已编辑信息？")
+                .setMessage("是否放弃继续填写？")
                 .setPositiveText("是")
                 .setNegativeText("否")
                 .dialogToObservable()

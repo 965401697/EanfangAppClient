@@ -5,16 +5,12 @@ import android.os.Bundle;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSONObject;
+import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.biz.model.entity.BaseDataEntity;
 import com.eanfang.config.Constant;
 import com.eanfang.ui.base.BaseActivity;
-import com.eanfang.util.StringUtils;
-import com.eanfang.util.ThreadPoolManager;
-
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.interfaces.AreaCheckChangeListener;
 
 import java.util.ArrayList;
@@ -49,7 +45,7 @@ public class ChooseAreaActivity extends BaseActivity implements AreaCheckChangeL
         super.onCreate(savedInstanceState);
         startTransaction(true);
         initView();
-        initAreaData();
+        initData();
         areaList = new ArrayList<>();
     }
 
@@ -59,31 +55,9 @@ public class ChooseAreaActivity extends BaseActivity implements AreaCheckChangeL
         areaList = getIntent().getStringArrayListExtra("chooseCode");
     }
 
-    private void initAreaData() {
-        //获取国家区域
-        if (WorkerApplication.get().sSaveArea == null) {
-            BaseDataEntity areaJson = (BaseDataEntity) WorkerApplication.get().get(Constant.COUNTRY_AREA_LIST, BaseDataEntity.class);
-
-            if (null==areaJson) {
-                showToast("加载服务区域失败！");
-                tvGo.setClickable(false);
-            } else {
-                loadingDialog.show();
-                ThreadPoolManager manager = ThreadPoolManager.newInstance();
-                manager.addExecuteTask(() -> {
-                    WorkerApplication.get().sSaveArea =areaJson;
-                    runOnUiThread(this::initData);
-                });
-            }
-        } else {
-            initData();
-        }
-
-    }
-
     private void initData() {
         loadingDialog.dismiss();
-        areaListBean = WorkerApplication.get().sSaveArea.getChildren();
+        areaListBean = CacheKit.get().get(Constant.COUNTRY_AREA_LIST, BaseDataEntity.class).getChildren();
         setListData(areaListBean);
         initAdapter(areaListBean);
     }
@@ -102,7 +76,7 @@ public class ChooseAreaActivity extends BaseActivity implements AreaCheckChangeL
         for (BaseDataEntity baseDataentity : list) {
             if (baseDataentity.isCheck()) {
                 if (baseDataentity.getChildren() == null) {
-                    chooseCitySize ++;
+                    chooseCitySize++;
                 }
                 resultList.add(baseDataentity.getDataCode());
             }

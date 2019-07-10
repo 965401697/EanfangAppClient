@@ -172,7 +172,7 @@ public class SpecialistSkillInfoDetailActivity extends BaseWorkerActivity {
                     snplPic.setData(null);
                     if (!StringUtils.isEmpty(bean.getVerifyPicUrl())) {
                         String[] pics = bean.getVerifyPicUrl().split(",");
-                        picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> (BuildConfig.OSS_SERVER + url).toString()).toList());
+                        picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
                         snplPic.setDelegate(new BGASortableDelegate(SpecialistSkillInfoDetailActivity.this, 1, 1));
                         snplPic.setData(picList);
                         snplPic.setEditable(false);

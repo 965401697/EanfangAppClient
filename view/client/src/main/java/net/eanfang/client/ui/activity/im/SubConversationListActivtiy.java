@@ -9,8 +9,9 @@ public class SubConversationListActivtiy extends BaseClientActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_sub_conversation_list_activtiy);
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_sub_conversation_list_activtiy);
+        initStyle();
         setTitle("系统消息");
         setLeftBack();
         startTransaction(true);

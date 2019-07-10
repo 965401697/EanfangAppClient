@@ -221,11 +221,11 @@ public class BaseActivity extends AppCompatActivity implements
     }
 
     public void setRightImageVisible() {
-        ((ImageView) findViewById(R.id.iv_right)).setVisibility(View.VISIBLE);
+        findViewById(R.id.iv_right).setVisibility(View.VISIBLE);
     }
 
     public void setRightImageGone() {
-        ((ImageView) findViewById(R.id.iv_right)).setVisibility(View.GONE);
+        findViewById(R.id.iv_right).setVisibility(View.GONE);
     }
 
     @Override

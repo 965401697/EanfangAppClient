@@ -49,10 +49,10 @@ public class WorkTenderReleaseAdapter extends BaseQuickAdapter<TaskPublishEntity
          * 0关闭发包(只有在status是待确认状态才能关闭发包)，1在发布==招标中，2已被接受==已中标3已流标
          */
         helper.setImageResource(R.id.iv_status, mTenderStatus[item.getPublishStatus()]);
-        helper.setGone(R.id.tv_release, item.getPublishStatus() == 0 || item.getPublishStatus() == 3 ? true : false);
-        helper.setGone(R.id.tv_close, item.getPublishStatus() == 1 ? true : false);
-        helper.setGone(R.id.tv_offer, item.getPublishStatus() == 1 ? true : false);
-        helper.setGone(R.id.tv_contact, item.getPublishStatus() == 2 ? true : false);
+        helper.setGone(R.id.tv_release, item.getPublishStatus() == 0 || item.getPublishStatus() == 3);
+        helper.setGone(R.id.tv_close, item.getPublishStatus() == 1);
+        helper.setGone(R.id.tv_offer, item.getPublishStatus() == 1);
+        helper.setGone(R.id.tv_contact, item.getPublishStatus() == 2);
         helper.addOnClickListener(R.id.tv_release);
         helper.addOnClickListener(R.id.tv_close);
         helper.addOnClickListener(R.id.tv_offer);

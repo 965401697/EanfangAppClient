@@ -61,7 +61,7 @@ public class DataStaticsticsListActivity extends BaseActivity {
         setTitle("统计数据");
         //设置布局样式
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 3);
-        gridLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
+        gridLayoutManager.setOrientation(RecyclerView.VERTICAL);
         rvData.setLayoutManager(gridLayoutManager);
         findViewById(R.id.ll_repair_datasticstics).setOnClickListener(v -> startActivity(new Intent(DataStaticsticsListActivity.this, DataStatisticsActivity.class)));
         findViewById(R.id.ll_repair_install).setOnClickListener(v -> startActivity(new Intent(DataStaticsticsListActivity.this, DataInstallActivity.class)));

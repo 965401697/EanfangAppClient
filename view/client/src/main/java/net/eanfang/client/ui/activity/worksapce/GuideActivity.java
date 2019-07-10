@@ -6,10 +6,10 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.MainActivity;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 public class GuideActivity extends AppCompatActivity {
 
@@ -22,39 +22,29 @@ public class GuideActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         RelativeLayout relativeLayout = findViewById(R.id.rl_parent);
 
-        findViewById(R.id.tv_know).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(GuideActivity.this, MainActivity.class));
-                finish();
-            }
+        findViewById(R.id.tv_know).setOnClickListener(v -> {
+            startActivity(new Intent(GuideActivity.this, MainActivity.class));
+            finish();
         });
 
-        findViewById(R.id.tv_next).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (currentIndex <= 2) {
-                    relativeLayout.setBackground(getResources().getDrawable(bgImage[currentIndex]));
-                    currentIndex++;
-                    if (currentIndex == 3) {
-                        findViewById(R.id.tv_know).setVisibility(View.GONE);
-                        ((TextView) findViewById(R.id.tv_next)).setText("开始使用易安防");
-                    }
-                } else {
-
-                    startActivity(new Intent(GuideActivity.this, MainActivity.class));
-                    finish();
-
+        findViewById(R.id.tv_next).setOnClickListener(v -> {
+            if (currentIndex <= 2) {
+                relativeLayout.setBackground(getResources().getDrawable(bgImage[currentIndex]));
+                currentIndex++;
+                if (currentIndex == 3) {
+                    findViewById(R.id.tv_know).setVisibility(View.GONE);
+                    ((TextView) findViewById(R.id.tv_next)).setText("开始使用易安防");
                 }
+            } else {
+                startActivity(new Intent(GuideActivity.this, MainActivity.class));
+                finish();
+
             }
         });
 
-        findViewById(R.id.ll_remind).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(GuideActivity.this, MainActivity.class));
-                finish();
-            }
+        findViewById(R.id.ll_remind).setOnClickListener(v -> {
+            startActivity(new Intent(GuideActivity.this, MainActivity.class));
+            finish();
         });
     }
 }

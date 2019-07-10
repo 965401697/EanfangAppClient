@@ -129,7 +129,7 @@ public class SecurityListAdapter extends BaseQuickAdapter<SecurityListBean.ListB
         if (!StringUtils.isEmpty(item.getSpcImg())) {
             securityImageLayout.setVisibility(View.VISIBLE);
             pics = item.getSpcImg().split(",");
-            picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> (url).toString()).toList());
+            picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> (url)).toList());
             securityImageLayout.setImageUrls(picList);
         } else {
             securityImageLayout.setVisibility(View.GONE);

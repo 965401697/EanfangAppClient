@@ -92,11 +92,7 @@ public class ThreadPoolManager {
      * 判断是否是最后一个任务
      */
     protected boolean isTaskEnd() {
-        if (mThreadPool.getActiveCount() == 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return mThreadPool.getActiveCount() == 0;
     }
 
     /**

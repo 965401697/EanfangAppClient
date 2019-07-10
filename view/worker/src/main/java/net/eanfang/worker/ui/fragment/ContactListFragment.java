@@ -1,6 +1,5 @@
 package net.eanfang.worker.ui.fragment;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -500,16 +499,15 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
      * @return true 有网, false 没有网络.
      */
     public boolean isNetConnect() {
-        if (isNetWork) {
-            return true;
-        }
-        return false;
+        return isNetWork;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        getActivity().unregisterReceiver(netBroadcastReceiver);
+        if (getActivity() != null && getActivity().isRestricted()) {
+            getActivity().unregisterReceiver(netBroadcastReceiver);
+        }
     }
 
 }

@@ -78,7 +78,7 @@ public class SecurityHotFragment extends TemplateItemListFragment {
                 case R.id.ll_pic:
                     picList.clear();
                     pics = securityListAdapter.getData().get(position).getSpcImg().split(",");
-                    picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> BuildConfig.OSS_SERVER + (url).toString()).toList());
+                    picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> BuildConfig.OSS_SERVER + (url)).toList());
                     ImagePerviewUtil.perviewImage(getActivity(), picList);
                     break;
                 case R.id.ll_question:

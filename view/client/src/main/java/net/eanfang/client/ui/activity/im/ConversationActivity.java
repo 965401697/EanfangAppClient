@@ -9,10 +9,10 @@ import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.biz.model.GroupDetailBean;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.GroupDetailBean;
 import com.eanfang.takevideo.TakeVdideoMode;
 import com.eanfang.util.ToastUtil;
 
@@ -44,12 +44,13 @@ public class ConversationActivity extends BaseClientActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conversation);
         ButterKnife.bind(this);
-        super.onCreate(savedInstanceState);
-        String title = getIntent().getData().getQueryParameter("title").toString();//群组名称
+        initStyle();
+        String title = getIntent().getData().getQueryParameter("title");//群组名称
         //单聊就是userid 群聊就是groupid
-        mId = getIntent().getData().getQueryParameter("targetId").toString();
+        mId = getIntent().getData().getQueryParameter("targetId");
         tvTitle.setText(title);
         setLeftBack();
         endTransaction(false);

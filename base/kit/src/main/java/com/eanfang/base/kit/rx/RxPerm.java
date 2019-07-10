@@ -11,6 +11,7 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
+@SuppressWarnings("CheckResult")
 public class RxPerm {
 
     private static RxPerm rxPerm;
@@ -72,7 +73,6 @@ public class RxPerm {
                     if (permission.shouldShowRequestPermissionRationale) {
                         ToastHolder.showToast("获取定位权限失败，请手动开启");
                         success.accept(false);
-                        return;
                     }
                 });
     }
@@ -105,7 +105,6 @@ public class RxPerm {
                     if (permission.shouldShowRequestPermissionRationale) {
                         ToastHolder.showToast("获取相机权限失败，请手动开启");
                         success.accept(false);
-                        return;
                     }
                 });
     }
@@ -138,7 +137,6 @@ public class RxPerm {
                     if (permission.shouldShowRequestPermissionRationale) {
                         ToastHolder.showToast("获取录音权限失败，请手动开启");
                         success.accept(false);
-                        return;
                     }
                 });
     }
@@ -171,7 +169,6 @@ public class RxPerm {
                     if (permission.shouldShowRequestPermissionRationale) {
                         ToastHolder.showToast("获取存储权限失败，请手动开启");
                         success.accept(false);
-                        return;
                     }
                 });
     }
@@ -203,10 +200,8 @@ public class RxPerm {
                     if (permission.shouldShowRequestPermissionRationale) {
                         ToastHolder.showToast("获取通讯录权限失败，请手动开启");
                         success.accept(false);
-                        return;
                     }
                 });
     }
-
 
 }
