@@ -2,6 +2,7 @@ package com.eanfang.base;
 
 import android.app.Activity;
 import android.os.StrictMode;
+import android.util.ArrayMap;
 import android.util.Log;
 
 import androidx.multidex.MultiDexApplication;
@@ -16,6 +17,7 @@ import com.eanfang.biz.model.entity.AccountEntity;
 import com.eanfang.biz.model.entity.OrgEntity;
 import com.eanfang.biz.model.entity.UserEntity;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.ui.base.IBase;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.facebook.imagepipeline.backends.okhttp3.OkHttpImagePipelineConfigFactory;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
@@ -31,6 +33,7 @@ import com.photopicker.com.imageloader.BGAGlideImageLoader;
 import com.photopicker.com.imageloader.BGAImage;
 import com.tencent.smtt.sdk.QbSdk;
 
+import java.util.Iterator;
 import java.util.Stack;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -51,6 +54,7 @@ public class BaseApplication extends MultiDexApplication {
 
     /*Activity堆*/
     private Stack<Activity> activityStack = new Stack<>();
+    ArrayMap<String, IBase> mJIBaseArrayMap = new ArrayMap<>();
 //    /**
 //     * 存储地域
 //     */
@@ -202,11 +206,22 @@ public class BaseApplication extends MultiDexApplication {
         if (null == activityStack) {
             activityStack = new Stack<>();
         }
-        for (Activity act : activityStack) {
-            if (act.getClass().getName().equals(activity.getName())) {
-                closeActivity(act);
+        //foreach循环等效于迭代器
+        Iterator<Activity> iterator = activityStack.iterator();
+        while (iterator.hasNext()) {
+            Activity activitys = iterator.next();
+            if (activitys.getClass().getName().equals(activity.getName())) {
+                if (!activitys.isFinishing()) {
+                    activitys.finish();
+                }
+                activityStack.remove(activity);
             }
         }
+//        for (Activity act : activityStack) {
+//            if (act.getClass().getName().equals(activity.getName())) {
+//                closeActivity(act);
+//            }
+//        }
     }
 
     /**

@@ -33,7 +33,7 @@ public class InviteDetailActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_invite_detail);
+        setContentView(R.layout.activity_my_invite_detail);
         ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
         mStatus = getIntent().getIntExtra(EXTRA_STATUS, 0);

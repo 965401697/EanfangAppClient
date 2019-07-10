@@ -40,11 +40,7 @@ import com.yaf.base.entity.RepairOrderEntity;
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.pay.NewPayActivity;
-import net.eanfang.client.ui.activity.worksapce.repair.AddTroubleActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.FaultDetailActivity;
-import net.eanfang.client.ui.activity.worksapce.repair.RepairActivity;
-import net.eanfang.client.ui.activity.worksapce.repair.RepairTypeActivity;
-import net.eanfang.client.ui.activity.worksapce.repair.TroubleListActivity;
 import net.eanfang.client.ui.adapter.RepairOrderConfirmAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
@@ -305,11 +301,6 @@ public class OrderConfirmActivity extends BaseClientActivity {
     }
 
     private void closeActivity() {
-        ClientApplication.get().closeActivity(RepairTypeActivity.class);
-        ClientApplication.get().closeActivity(AddTroubleActivity.class);
-        ClientApplication.get().closeActivity(TroubleListActivity.class);
-        ClientApplication.get().closeActivity(RepairActivity.class);
-        ClientApplication.get().closeActivity(SelectWorkerActivity.class);
         ClientApplication.get().closeActivity(WorkerDetailActivity.class);
         finishSelf();
     }
