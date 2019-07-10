@@ -32,7 +32,7 @@ public class BaseDataEntity implements Serializable, Cloneable {
 
     /*手工代码写在下面*/
 
-    private Long parentId;
+    private Integer parentId;
 
     private boolean check;
 

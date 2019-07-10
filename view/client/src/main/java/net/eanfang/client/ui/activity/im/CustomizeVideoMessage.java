@@ -6,7 +6,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
 
 import io.rong.common.ParcelUtils;
 import io.rong.imlib.MessageTag;
@@ -59,8 +58,6 @@ public class CustomizeVideoMessage extends MessageContent {
 
     public CustomizeVideoMessage(byte[] data) {
         String jsonStr = null;
-
-
         try {
             jsonStr = new String(data, "UTF-8");
             JSONObject jsonObj = new JSONObject(jsonStr);
@@ -76,7 +73,6 @@ public class CustomizeVideoMessage extends MessageContent {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-
     }
 
 

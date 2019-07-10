@@ -24,6 +24,9 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.ScrollView;
 
+import androidx.annotation.ColorInt;
+import androidx.annotation.FloatRange;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -31,14 +34,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-
-import androidx.annotation.ColorInt;
-import androidx.annotation.FloatRange;
 
 /**
  * 数据类型转换、单位转换
@@ -518,7 +517,7 @@ public class ConvertUtils {
 
     public static String toGbk(String str) {
         try {
-            return new String(str.getBytes(StandardCharsets.UTF_8), "gbk");
+            return new String(str.getBytes("UTF-8"), "gbk");
         } catch (UnsupportedEncodingException e) {
             LogUtils.warn(e);
             return str;

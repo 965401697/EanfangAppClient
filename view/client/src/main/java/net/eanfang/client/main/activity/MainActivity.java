@@ -34,7 +34,6 @@ import com.eanfang.util.UpdateAppManager;
 import com.tencent.android.tpush.XGPushConfig;
 import com.yaf.base.entity.WorkerEntity;
 
-import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.databinding.ActivityMainBinding;
@@ -68,11 +67,12 @@ import static com.eanfang.config.EanfangConst.XIAOMI_APPKEY_CLIENT;
 
 /**
  * MainActivity
+ * 暂未启用
  *
  * @author jornl
  */
 public class MainActivity extends BaseActivity {
-
+    private static final String IS_UPDATE_TAG = "IS_UPDATE_TAG";
     private MainViewModel mainViewModel;
     private ActivityMainBinding binding;
     private FragmentTabHost mTabHost;
@@ -278,10 +278,10 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initUpdate() {
-        if (!CacheKit.get().getBool("isUpdated", true)) {
+        if (!CacheKit.get().getBool(IS_UPDATE_TAG, false)) {
             //app更新
-            UpdateAppManager.update(this, BuildConfig.APP_TYPE, false);
-            CacheKit.get().put("isUpdated", true, true);
+            UpdateAppManager.update(this, false);
+            CacheKit.get().put(IS_UPDATE_TAG, true, false);
         }
     }
 

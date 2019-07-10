@@ -28,12 +28,14 @@ import androidx.core.content.ContextCompat;
 
 import com.eanfang.R;
 import com.eanfang.base.BaseApplication;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.network.config.HttpConfig;
 import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.util.DialogUtil;
 import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.ToastUtil;
 import com.jaeger.library.StatusBarUtil;
+import com.luck.picture.lib.config.PictureConfig;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -135,7 +137,7 @@ public class BaseActivity extends AppCompatActivity implements
 
     @Deprecated
     protected void setStatusBar() {
-        StatusBarUtil.setColor(this, getResources().getColor(R.color.colorPrimary));
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.color_main_header_bg));
     }
 
     /**
@@ -169,7 +171,7 @@ public class BaseActivity extends AppCompatActivity implements
             return;
         }
         if (isClient()) {
-            findViewById(R.id.titles_bar).setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryC));
+            findViewById(R.id.titles_bar).setBackgroundColor(ContextCompat.getColor(this, R.color.color_main_header_bg));
         } else {
             findViewById(R.id.titles_bar).setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryW));
         }
@@ -221,11 +223,11 @@ public class BaseActivity extends AppCompatActivity implements
     }
 
     public void setRightImageVisible() {
-        ((ImageView) findViewById(R.id.iv_right)).setVisibility(View.VISIBLE);
+        findViewById(R.id.iv_right).setVisibility(View.VISIBLE);
     }
 
     public void setRightImageGone() {
-        ((ImageView) findViewById(R.id.iv_right)).setVisibility(View.GONE);
+        findViewById(R.id.iv_right).setVisibility(View.GONE);
     }
 
     @Override
@@ -392,6 +394,26 @@ public class BaseActivity extends AppCompatActivity implements
         @Override
         public void onReceive(Context context, Intent i) {
             ((Activity) context).finish();
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        pictureSelect(requestCode, resultCode, data);
+    }
+
+    /**
+     * 图片选择
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    private void pictureSelect(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == PictureConfig.CHOOSE_REQUEST) {
+                SDKManager.getPicture().create(this).onActivityResult(requestCode, resultCode, data);
+            }
         }
     }
 

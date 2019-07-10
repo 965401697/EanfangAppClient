@@ -10,6 +10,7 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.biz.model.CompanyBean;
 import com.eanfang.biz.model.HomeWorkerBean;
 import com.eanfang.biz.model.security.HomeCompanyBean;
+import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseFragment;
@@ -18,10 +19,10 @@ import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.online.DividerItemDecoration;
 import net.eanfang.client.ui.adapter.FragmentHomeCompanyAdapter;
 
-
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import cn.hutool.core.thread.ThreadUtil;
 
 /**
  * @author liangkailun
@@ -57,6 +58,9 @@ public class HomeCompanyFragment extends BaseFragment {
 
     @Override
     protected void onLazyLoad() {
+        if (adapter == null) {
+            return;
+        }
         if (mPageType == 0) {
             EanfangHttp.post(NewApiService.HOME_COMPANY_LIST).params("page", "1").params("size", "2").execute(new EanfangCallback<CompanyBean>(getActivity(), true, CompanyBean.class, bean -> {
                 adapter.getData().clear();
@@ -104,8 +108,20 @@ public class HomeCompanyFragment extends BaseFragment {
     protected void initView() {
         mRecHomeCompany.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecHomeCompany.addItemDecoration(new DividerItemDecoration(getContext()));
-        adapter = new FragmentHomeCompanyAdapter();
-        adapter.bindToRecyclerView(mRecHomeCompany);
+        ThreadUtil.execute(() -> {
+            for (int i = 0; i < 20; i++) {
+                if (Config.get().getBaseDataBean() != null) {
+                    getActivity().runOnUiThread(() -> {
+                        adapter = new FragmentHomeCompanyAdapter();
+                        adapter.bindToRecyclerView(mRecHomeCompany);
+                        onLazyLoad();
+                    });
+                    return;
+                }
+                ThreadUtil.safeSleep(1000);
+            }
+
+        });
     }
 
     @Override

@@ -50,8 +50,8 @@ private List<SecurityCompanyDetailsBean.ToolListBean> toolList=new ArrayList<>()
 
     @Override
     protected void initView() {
-        RecyclerView rvA = (RecyclerView) findViewById(R.id.rv_a);
-        RecyclerView rvB = (RecyclerView) findViewById(R.id.rv_b);
+        RecyclerView rvA = findViewById(R.id.rv_a);
+        RecyclerView rvB = findViewById(R.id.rv_b);
 
         initRecyclerViewA(rvA, abilityList);
         initRecyclerViewB(rvB, toolList);

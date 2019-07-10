@@ -39,7 +39,6 @@ import net.eanfang.worker.ui.activity.my.specialist.SpecialistSkillInfoDetailAct
 import net.eanfang.worker.ui.activity.my.specialist.SpecialistSkillTypeActivity;
 import net.eanfang.worker.ui.activity.techniciancertification.TechnicianCertificationActivity;
 import net.eanfang.worker.ui.widget.InviteView;
-import net.eanfang.worker.util.PrefUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -288,7 +287,7 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
 
     public void doChangeWorkStatus(String status) {
         setWorkStatus(Config.get().getConstBean().getData().getShopConstant().get(Constant.WORK_STATUS).indexOf(status));
-        PrefUtils.setString("status", status);
+//        PrefUtils.setString("status", status);
     }
 
     @OnClick({R.id.iv_setting, R.id.iv_user_header, R.id.rl_worker_verfity, R.id.rl_expert_verfity, R.id.rl_ivite, R.id.iv_personalQRCode,

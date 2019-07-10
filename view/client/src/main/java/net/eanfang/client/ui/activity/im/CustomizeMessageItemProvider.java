@@ -208,41 +208,41 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
             if (!PermKit.get().getWorkReportDetailPrem()) {
                 return;
             }
-            view.getContext().startActivity(new Intent((Activity) view.getContext(), WorkReportDetailActivity.class).putExtra("id", Long.parseLong(customizeMessage.getOrderId())));
+            view.getContext().startActivity(new Intent(view.getContext(), WorkReportDetailActivity.class).putExtra("id", Long.parseLong(customizeMessage.getOrderId())));
         } else if (customizeMessage.getShareType().equals("4")) {
             if (!PermKit.get().getWorkTaskDetailPrem()) {
                 return;
             }
-            view.getContext().startActivity(new Intent((Activity) view.getContext(), TaskDetailActivity.class).putExtra("id", Long.parseLong(customizeMessage.getOrderId())));
+            view.getContext().startActivity(new Intent(view.getContext(), TaskDetailActivity.class).putExtra("id", Long.parseLong(customizeMessage.getOrderId())));
         } else if (customizeMessage.getShareType().equals("5")) {
             if (!PermKit.get().getWorkInspectDetailPrem()) {
                 return;
             }
-            view.getContext().startActivity(new Intent((Activity) view.getContext(), DealWithFirstActivity.class).putExtra("id", Long.parseLong(customizeMessage.getOrderId())));
+            view.getContext().startActivity(new Intent(view.getContext(), DealWithFirstActivity.class).putExtra("id", Long.parseLong(customizeMessage.getOrderId())));
 
         } else if (customizeMessage.getShareType().equals("6")) {
             if (!PermKit.get().getExchangeDetailPrem()) {
                 return;
             }
-            view.getContext().startActivity(new Intent((Activity) view.getContext(), WorkTransferDetailActivity.class).putExtra("itemId", customizeMessage.getOrderId()));
+            view.getContext().startActivity(new Intent(view.getContext(), WorkTransferDetailActivity.class).putExtra("itemId", customizeMessage.getOrderId()));
         } else if (customizeMessage.getShareType().equals("7")) {
             if (!PermKit.get().getFaceToWorkerDetailPrem()) {
                 return;
             }
-            view.getContext().startActivity(new Intent((Activity) view.getContext(), WorkTalkDetailActivity.class).putExtra("itemId", customizeMessage.getOrderId()));
+            view.getContext().startActivity(new Intent(view.getContext(), WorkTalkDetailActivity.class).putExtra("itemId", customizeMessage.getOrderId()));
         } else if (customizeMessage.getShareType().equals("8")) {
             if (!PermKit.get().getOpenShopDetailPrem()) {
                 return;
             }
-            view.getContext().startActivity(new Intent((Activity) view.getContext(), OpenShopLogDetailActivity.class).putExtra("id", customizeMessage.getOrderId()).putExtra("isVisible", true));
+            view.getContext().startActivity(new Intent(view.getContext(), OpenShopLogDetailActivity.class).putExtra("id", customizeMessage.getOrderId()).putExtra("isVisible", true));
         } else if (customizeMessage.getShareType().equals("9")) {
             if (!PermKit.get().getProtectionDetailPrem()) {
                 return;
             }
-            view.getContext().startActivity(new Intent((Activity) view.getContext(), DefendLogDetailActivity.class).putExtra("id", customizeMessage.getOrderId()).putExtra("isVisible", true));
+            view.getContext().startActivity(new Intent(view.getContext(), DefendLogDetailActivity.class).putExtra("id", customizeMessage.getOrderId()).putExtra("isVisible", true));
 
         } else if (customizeMessage.getShareType().equals("10")) {
-            view.getContext().startActivity(new Intent((Activity) view.getContext(), SecurityDetailActivity.class).putExtra("spcId", Long.parseLong(customizeMessage.getOrderId())));
+            view.getContext().startActivity(new Intent(view.getContext(), SecurityDetailActivity.class).putExtra("spcId", Long.parseLong(customizeMessage.getOrderId())));
         }
 
     }
@@ -251,13 +251,13 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
     public View newView(Context context, ViewGroup viewGroup) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_im_order, null);
         ViewHolder holder = new ViewHolder();
-        holder.title = (TextView) view.findViewById(R.id.tv_title);
-        holder.status = (TextView) view.findViewById(R.id.tv_state);
-        holder.orderNum = (TextView) view.findViewById(R.id.tv_order_id);
-        holder.creatTime = (TextView) view.findViewById(R.id.tv_create_time);
-        holder.workerName = (TextView) view.findViewById(R.id.tv_person_name);
+        holder.title = view.findViewById(R.id.tv_title);
+        holder.status = view.findViewById(R.id.tv_state);
+        holder.orderNum = view.findViewById(R.id.tv_order_id);
+        holder.creatTime = view.findViewById(R.id.tv_create_time);
+        holder.workerName = view.findViewById(R.id.tv_person_name);
         holder.simpleDraweeView =view.findViewById(R.id.iv_upload);
-        holder.ll_custom = (LinearLayout) view.findViewById(R.id.ll_custom);
+        holder.ll_custom = view.findViewById(R.id.ll_custom);
         holder.mTime = view.findViewById(R.id.tv_time);
         view.setTag(holder);
         return view;

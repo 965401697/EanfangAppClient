@@ -77,6 +77,7 @@ public class LoginViewModel extends BaseViewModel {
      * @param userName 手机号
      */
     private void verifyCode(String userName) {
+        showLoading = false;
         loginRepo.verifyCode(userName).observe(lifecycleOwner, this::showToast);
     }
 

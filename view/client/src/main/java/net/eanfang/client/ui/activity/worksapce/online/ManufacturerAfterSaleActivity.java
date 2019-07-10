@@ -44,7 +44,7 @@ public class ManufacturerAfterSaleActivity extends BaseClientActivity implements
         //2.声名gridview布局方式  第二个参数代表是3列的网格视图 (垂直滑动的情况下, 如果是水平滑动就代表3行)
         gridLayoutManager = new GridLayoutManager(ManufacturerAfterSaleActivity.this, 2);
         //3.给GridLayoutManager设置滑动的方向
-        gridLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
+        gridLayoutManager.setOrientation(RecyclerView.VERTICAL);
         manufacturerAfterSaleAdapter = new ManufacturerAfterSaleAdapter();
         if (find == 2) {
             setTitle("选择品牌厂商");

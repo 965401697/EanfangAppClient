@@ -96,7 +96,7 @@ public class ExpertOnlineActivity extends BaseWorkerActivity {
         //故障布局管理器
         recyclerCommonFault.setLayoutManager(new LinearLayoutManager(this));
         //3.给GridLayoutManager设置滑动的方向
-        gridLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
+        gridLayoutManager.setOrientation(RecyclerView.VERTICAL);
         SystemTypeAdapter systemTypeAdapter = new SystemTypeAdapter();
         //故障adapter
         //mAdapter = new CommentFaultSearchAdapter();

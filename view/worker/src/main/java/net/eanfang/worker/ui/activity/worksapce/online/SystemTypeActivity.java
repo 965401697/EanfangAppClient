@@ -34,7 +34,7 @@ public class SystemTypeActivity extends BaseWorkerActivity {
         //2.声名gridview布局方式  第二个参数代表是3列的网格视图 (垂直滑动的情况下, 如果是水平滑动就代表3行)
         GridLayoutManager gridLayoutManager = new GridLayoutManager(SystemTypeActivity.this, 2);
         //3.给GridLayoutManager设置滑动的方向
-        gridLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
+        gridLayoutManager.setOrientation(RecyclerView.VERTICAL);
         SystemTypeAdapter systemTypeAdapter = new SystemTypeAdapter();
         //4.为recyclerView设置布局管理器
         recyclerView.setLayoutManager(gridLayoutManager); //设置分割线

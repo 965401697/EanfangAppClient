@@ -169,7 +169,7 @@ public class InviteFriendActivity extends BaseActivity {
         constraintAllInvite.setVisibility(View.VISIBLE);
         for (int i = 0; i < rewardPerson.getList().size(); i++) {
             View view = View.inflate(this, R.layout.item_invite_friend_scroll, null);
-            TextView title = (TextView) view.findViewById(R.id.tv_invite_friend_scroll);
+            TextView title = view.findViewById(R.id.tv_invite_friend_scroll);
             String realName = rewardPerson.getList().get(i).getRealName();
             if (!StringUtils.isEmpty(realName)) {
                 if (realName.length() > 2) {

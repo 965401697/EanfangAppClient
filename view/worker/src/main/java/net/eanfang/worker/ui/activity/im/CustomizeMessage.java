@@ -58,10 +58,10 @@ public class CustomizeMessage extends MessageContent {
 
         try {
             return jsonObj.toString().getBytes("UTF-8");
-        } catch (UnsupportedEncodingException var3) {
-            var3.printStackTrace();
-            return null;
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
+        return null;
     }
 
 
@@ -69,14 +69,10 @@ public class CustomizeMessage extends MessageContent {
 
     }
 
-    public CustomizeMessage(byte[] data) {
+    public CustomizeMessage(byte[] data) throws UnsupportedEncodingException {
         String jsonStr = null;
 
-        try {
-            jsonStr = new String(data, "UTF-8");
-        } catch (UnsupportedEncodingException var5) {
-            var5.printStackTrace();
-        }
+        jsonStr = new String(data, "UTF-8");
         try {
             JSONObject jsonObj = new JSONObject(jsonStr);
             if (jsonObj.has("orderId")) {

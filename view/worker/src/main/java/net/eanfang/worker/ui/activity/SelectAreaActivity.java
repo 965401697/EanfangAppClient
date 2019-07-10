@@ -7,14 +7,13 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModel;
 
 import com.eanfang.base.BaseActivity;
+import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.biz.model.GrantChange;
 import com.eanfang.biz.model.SystypeBean;
 import com.eanfang.biz.model.entity.BaseDataEntity;
 import com.eanfang.config.Constant;
-import com.eanfang.util.ThreadPoolManager;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.databinding.ActivitySelectAreaBinding;
 import net.eanfang.worker.ui.interfaces.AreaCheckChangeListener;
 
@@ -46,7 +45,6 @@ public class SelectAreaActivity extends BaseActivity implements AreaCheckChangeL
         mSelectAreaBinding = DataBindingUtil.setContentView(this, R.layout.activity_select_area);
         super.onCreate(savedInstanceState);
         initView();
-        initArea();
         initData();
     }
 
@@ -61,27 +59,8 @@ public class SelectAreaActivity extends BaseActivity implements AreaCheckChangeL
         setLeftBack(true);
     }
 
-    private void initArea() {
-
-        //获取国家区域
-        if (WorkerApplication.get().sSaveArea == null) {
-            BaseDataEntity areaJson = (BaseDataEntity) WorkerApplication.get().get(Constant.COUNTRY_AREA_LIST, BaseDataEntity.class);
-            if (areaJson != null) {
-                showToast("加载服务区域失败！");
-            } else {
-                ThreadPoolManager manager = ThreadPoolManager.newInstance();
-                manager.addExecuteTask(() -> {
-                    WorkerApplication.get().sSaveArea = areaJson;
-                    runOnUiThread(this::initData);
-                });
-            }
-        } else {
-            initData();
-        }
-        areaListBean = WorkerApplication.get().sSaveArea.getChildren();
-    }
-
     private void initData() {
+        areaListBean = CacheKit.get().get(Constant.COUNTRY_AREA_LIST, BaseDataEntity.class).getChildren();
         fillData();
     }
 

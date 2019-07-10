@@ -72,6 +72,15 @@ public class HttpConfig {
     }
 
     /**
+     * 是否是 客户端
+     *
+     * @return true 客户端  false 技师端
+     */
+    public boolean isClient() {
+        return getApp() == 0;
+    }
+
+    /**
      * 初始化RxCache
      *
      * @param cachePath cachePath

@@ -210,7 +210,6 @@ public class AddTroubleActivity extends BaseClienActivity {
     private boolean fromTroubleList = false;
 
     private RepairBugEntity repairBugEntity;
-    ;
 
     /**
      * 扫码查看设备 报修

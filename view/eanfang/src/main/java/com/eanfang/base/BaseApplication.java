@@ -8,16 +8,15 @@ import androidx.multidex.MultiDexApplication;
 
 import com.camera.CameraApplication;
 import com.eanfang.BuildConfig;
+import com.eanfang.base.kit.V;
 import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.base.network.Leaves;
 import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.biz.model.entity.AccountEntity;
-import com.eanfang.biz.model.entity.BaseDataEntity;
 import com.eanfang.biz.model.entity.OrgEntity;
 import com.eanfang.biz.model.entity.UserEntity;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.voice.RecognitionManager;
-import com.eanfang.base.kit.V;
 import com.facebook.imagepipeline.backends.okhttp3.OkHttpImagePipelineConfigFactory;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.okgo.OkGo;
@@ -52,10 +51,10 @@ public class BaseApplication extends MultiDexApplication {
 
     /*Activity堆*/
     private Stack<Activity> activityStack = new Stack<>();
-    /**
-     * 存储地域
-     */
-    public BaseDataEntity sSaveArea;
+//    /**
+//     * 存储地域
+//     */
+//    public BaseDataEntity sSaveArea;
 
     @Override
     public void onCreate() {
@@ -67,6 +66,7 @@ public class BaseApplication extends MultiDexApplication {
 
         initConfig();
     }
+
 
     protected void initConfig() {
         //debug开启  严格模式
@@ -267,7 +267,7 @@ public class BaseApplication extends MultiDexApplication {
      * @param <T>   T
      * @return Object
      */
-    public <T> Object get(String key, Class<T> clazz) {
+    public <T> T get(String key, Class<T> clazz) {
         return CacheKit.get().get(key, clazz);
     }
 

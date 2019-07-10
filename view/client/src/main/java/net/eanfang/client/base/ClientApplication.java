@@ -3,6 +3,7 @@ package net.eanfang.client.base;
 import android.util.Log;
 
 import com.eanfang.base.BaseApplication;
+import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.base.kit.loading.LoadKit;
 import com.eanfang.base.network.config.HttpConfig;
@@ -37,10 +38,6 @@ import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
 public class ClientApplication extends BaseApplication {
     @Getter
     private static IWXAPI wxApi;
-    /**
-     * 是否自动更新过
-     */
-    public static boolean isUpdated = false;
 
     @Override
     public void onCreate() {
@@ -49,12 +46,18 @@ public class ClientApplication extends BaseApplication {
         initRongIM();
         initWxPay();
         initHttp();
+        initBugly();
         initYingShiYun();
+
+    }
+
+    private void initBugly() {
+        SDKManager.getBugly().init(this, BuildConfig.BUGLY_CLIENT, HttpConfig.get().isDebug());
     }
 
     private void initYingShiYun() {
         //sdk日志开关，正式发布需要去掉
-        EZOpenSDK.showSDKLog(true);
+        EZOpenSDK.showSDKLog(HttpConfig.get().isDebug());
         //设置是否支持P2P取流,详见api
         EZOpenSDK.enableP2P(false);
         // APP_KEY

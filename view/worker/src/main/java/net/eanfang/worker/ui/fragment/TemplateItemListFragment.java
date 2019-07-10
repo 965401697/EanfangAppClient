@@ -76,8 +76,6 @@ public abstract class TemplateItemListFragment extends BaseFragment implements S
     protected void initAdapter() {
     }
 
-    ;
-
     protected void initAdapter(BaseQuickAdapter baseQuickAdapter) {
         this.baseQuickAdapter = baseQuickAdapter;
         if (baseQuickAdapter == null) {

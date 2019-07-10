@@ -53,7 +53,7 @@ public class WorkTenderOfferDetailAdapter extends BaseQuickAdapter<TaskApplyEnti
         /**
          * 被忽略 的 不显示 选择按钮
          * */
-        helper.setGone(R.id.ll_select, item.getStatus() == 1 || item.getStatus() == 3 ? false : true);
+        helper.setGone(R.id.ll_select, item.getStatus() != 1 && item.getStatus() != 3);
 
         helper.addOnClickListener(R.id.tv_ignore);
         helper.addOnClickListener(R.id.tv_select);

@@ -25,9 +25,9 @@ public class TwoTextPicText extends LinearLayout {
     public TwoTextPicText(Context context, AttributeSet attrs) {
         super(context, attrs);
         View view = LayoutInflater.from(context).inflate(R.layout.custom_pictext, this);
-        customPicIv = (ImageView) view.findViewById(R.id.custom_pic_iv);
-        customTextTv = (TextView) view.findViewById(R.id.custom_text_tv);
-        customDateTv = (TextView) view.findViewById(R.id.custom_date_tv);
+        customPicIv = view.findViewById(R.id.custom_pic_iv);
+        customTextTv = view.findViewById(R.id.custom_text_tv);
+        customDateTv = view.findViewById(R.id.custom_date_tv);
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.TwoTextPicText);
         if (typedArray != null) {
             int picBackgroud = typedArray.getResourceId(R.styleable.TwoTextPicText_pic, 0);

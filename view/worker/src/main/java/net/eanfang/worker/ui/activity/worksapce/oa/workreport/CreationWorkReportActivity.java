@@ -393,14 +393,10 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
     }
 
     private boolean closeWorkWrite() {
-        if (TextUtils.isEmpty(etInputContent.getText().toString().trim()) && TextUtils.isEmpty(etInputLegacy.getText().toString().trim()) && TextUtils.isEmpty(etInputReason.getText().toString().trim())
+        return TextUtils.isEmpty(etInputContent.getText().toString().trim()) && TextUtils.isEmpty(etInputLegacy.getText().toString().trim()) && TextUtils.isEmpty(etInputReason.getText().toString().trim())
                 && TextUtils.isEmpty(etInputHandle.getText().toString().trim())
-                && oaPersonAdaptet.getData().size() == 0 && snplPhotosWork.getData().size() == 0 && TextUtils.isEmpty(mUploadKey)) {
+                && oaPersonAdaptet.getData().size() == 0 && snplPhotosWork.getData().size() == 0 && TextUtils.isEmpty(mUploadKey);
 
-            return true;
-        }
-
-        return false;
     }
 
     private void clearWorkData() {
@@ -528,14 +524,10 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
     }
 
     private boolean closeQuestionWrite() {
-        if (TextUtils.isEmpty(etInputContentQuestion.getText().toString().trim()) && TextUtils.isEmpty(etInputHandleQuestion.getText().toString().trim())
+        return TextUtils.isEmpty(etInputContentQuestion.getText().toString().trim()) && TextUtils.isEmpty(etInputHandleQuestion.getText().toString().trim())
 
-                && oaPersonQuestionAdaptet.getData().size() == 0 && snplPhotosQuestion.getData().size() == 0 && TextUtils.isEmpty(mQuestionUploadKey)) {
+                && oaPersonQuestionAdaptet.getData().size() == 0 && snplPhotosQuestion.getData().size() == 0 && TextUtils.isEmpty(mQuestionUploadKey);
 
-            return true;
-        }
-
-        return false;
     }
 
 
@@ -901,14 +893,10 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
 
 
     private boolean closePlanWrite() {
-        if (TextUtils.isEmpty(etInputContentPlan.getText().toString().trim()) && TextUtils.isEmpty(etInputLegacyPlan.getText().toString().trim()) && TextUtils.isEmpty(etInputReasonPlan.getText().toString().trim())
+        return TextUtils.isEmpty(etInputContentPlan.getText().toString().trim()) && TextUtils.isEmpty(etInputLegacyPlan.getText().toString().trim()) && TextUtils.isEmpty(etInputReasonPlan.getText().toString().trim())
 
-                && planAdaptet.getData().size() == 0 && snplPhotosPlan.getData().size() == 0 && TextUtils.isEmpty(mPlanVieoPath)) {
+                && planAdaptet.getData().size() == 0 && snplPhotosPlan.getData().size() == 0 && TextUtils.isEmpty(mPlanVieoPath);
 
-            return true;
-        }
-
-        return false;
     }
 
 
