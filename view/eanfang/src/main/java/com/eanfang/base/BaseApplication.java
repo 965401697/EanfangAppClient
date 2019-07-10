@@ -71,15 +71,15 @@ public class BaseApplication extends MultiDexApplication {
 
     protected void initConfig() {
         //debug开启  严格模式
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG_MOD) {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
         }
 
         //相机助手
-        CameraApplication.init(this, BuildConfig.DEBUG);
+        CameraApplication.init(this, BuildConfig.DEBUG_MOD);
         //初始换tbs  debug模式 回调 正式模式不回调
-        QbSdk.initX5Environment(getApplicationContext(), !BuildConfig.DEBUG ? null : new QbSdk.PreInitCallback() {
+        QbSdk.initX5Environment(getApplicationContext(), !BuildConfig.DEBUG_MOD ? null : new QbSdk.PreInitCallback() {
             @Override
             public void onViewInitFinished(boolean arg0) {
                 //x5內核初始化完成的回调，为true表示x5内核加载成功，否则表示x5内核加载失败，会自动切换到系统内核。

@@ -179,7 +179,7 @@ public class FullyLinearLayoutManager extends LinearLayoutManager {
     }
 
     private void logMeasureWarning(int child) {
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG_MOD) {
             Log.w("LinearLayoutManager", "Can't measure child #" + child + ", previously used dimensions will be reused." +
                     "To remove this message either use #setChildSize() method or don't run RecyclerView animations");
         }
@@ -230,7 +230,7 @@ public class FullyLinearLayoutManager extends LinearLayoutManager {
         try {
             child = recycler.getViewForPosition(position);
         } catch (IndexOutOfBoundsException e) {
-            if (BuildConfig.DEBUG) {
+            if (BuildConfig.DEBUG_MOD) {
                 Log.w("LinearLayoutManager", "LinearLayoutManager doesn't work well with animations. Consider switching them off", e);
             }
             return;
@@ -284,7 +284,7 @@ public class FullyLinearLayoutManager extends LinearLayoutManager {
 
     private static void onMakeInsertDirtyFailed() {
         canMakeInsetsDirty = false;
-        if (BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG_MOD) {
             Log.w("LinearLayoutManager", "Can't make LayoutParams insets dirty, decorations measurements might be incorrect");
         }
     }

@@ -60,12 +60,14 @@ android {
             signingConfig signingConfigs.release
             //测试环境bugly
             buildConfigField("String", "BUGLY_CLIENT", cfg.clientBetaBugly)
+            buildConfigField("boolean", "DEBUG_MOD", cfg.debugMod)
         }
         release {
             //签名配置
             signingConfig signingConfigs.release
             //正式环境bugly
             buildConfigField("String", "BUGLY_CLIENT", cfg.clientProBugly)
+            buildConfigField("boolean", "DEBUG_MOD", cfg.debugMod)
             //Zipalign优化
             zipAlignEnabled true
             //混淆

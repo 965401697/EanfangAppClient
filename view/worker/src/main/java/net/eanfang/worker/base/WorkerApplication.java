@@ -56,7 +56,7 @@ public class WorkerApplication extends BaseApplication {
                 com.eanfang.BuildConfig.OSS_ENDPOINT,
                 com.eanfang.BuildConfig.OSS_BUCKET,
                 CacheKit.getDiskCacheDir(this).getPath(),
-                BuildConfig.DEBUG,
+                BuildConfig.DEBUG_MOD,
                 BuildConfig.VERSION_CODE
         );
 
@@ -104,7 +104,7 @@ public class WorkerApplication extends BaseApplication {
      */
     public static void connect(String token) {
 
-        RongIM.connect(token, !BuildConfig.DEBUG ? null : new RongIMClient.ConnectCallback() {
+        RongIM.connect(token, !BuildConfig.DEBUG_MOD ? null : new RongIMClient.ConnectCallback() {
 
             /**
              * Token 错误。可以从下面两点检查 1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token
