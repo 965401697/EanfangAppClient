@@ -2,17 +2,18 @@ package net.eanfang.worker.ui.activity.worksapce.sign;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.biz.model.SignListBean;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.SignListBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
@@ -20,7 +21,7 @@ import com.eanfang.util.QueryEntry;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
-import net.eanfang.worker.ui.adapter.SignListAdapter;
+import net.eanfang.worker.ui.activity.worksapce.online.DividerItemDecoration;
 import net.eanfang.worker.ui.adapter.SignSecondAdapter;
 import net.eanfang.worker.util.WrapContentLinearLayoutManager;
 
@@ -42,8 +43,7 @@ import static com.eanfang.config.EanfangConst.TOP_REFRESH;
  * @desc 签到列表
  */
 
-public class SignListActivity extends BaseActivity implements SignListAdapter.onSecondClickListener,
-        SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
+public class SignListActivity extends BaseActivity implements  SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
     @BindView(R.id.rev_list)
     RecyclerView revList;
     @BindView(R.id.ll_sign_layout)
@@ -100,7 +100,7 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
         }
 
         revList.setLayoutManager(new WrapContentLinearLayoutManager(this));
-//        revList.addItemDecoration(new BGASpaceItemDecoration(30));
+        revList.addItemDecoration(new DividerItemDecoration(this));
         signListAdapter = new SignSecondAdapter();
         signListAdapter.bindToRecyclerView(revList);
         llSignLayout.setOnClickListener(v -> finishSelf());
@@ -181,34 +181,6 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
         dataOption(BOTTOM_REFRESH);
     }
 
-    public void onDataReceived() {
-        if (page == 1) {
-            if (signListBeanList.size() == 0 || signListBeanList == null) {
-                showToast("暂无数据");
-                signListAdapter.getData().clear();
-                signListAdapter.notifyDataSetChanged();
-            } else {
-                signListAdapter.getData().clear();
-                signListAdapter.setNewData(signListBeanList);
-                signListAdapter.notifyDataSetChanged();
-                if (signListBeanList.size() < 10) {
-                    signListAdapter.loadMoreEnd();
-                }
-            }
-        } else {
-            if (signListBeanList.size() == 0 || signListBeanList == null) {
-                showToast("暂无更多数据");
-                page = page - 1;
-                signListAdapter.loadMoreEnd();
-            } else {
-                signListAdapter.addData(signListBeanList);
-                signListAdapter.loadMoreComplete();
-                if (signListBeanList.size() < 10) {
-                    signListAdapter.loadMoreEnd();
-                }
-            }
-        }
-    }
 
     private void initAdapter() {
         signListAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -254,10 +226,5 @@ public class SignListActivity extends BaseActivity implements SignListAdapter.on
             mQueryEntry = (QueryEntry) data.getSerializableExtra("query_foot");
             initData();
         }
-    }
-
-    @Override
-    public void onSecondClick(int position) {
-
     }
 }
