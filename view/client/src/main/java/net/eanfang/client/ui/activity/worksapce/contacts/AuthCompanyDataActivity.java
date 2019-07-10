@@ -7,6 +7,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.lifecycle.ViewModel;
+
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.config.Config;
@@ -14,12 +16,12 @@ import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.AuthCompanyBaseInfoBean;
-import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.base.BaseClienActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,7 +34,7 @@ import butterknife.ButterKnife;
  * @desc 公司认证
  */
 
-public class AuthCompanyDataActivity extends BaseActivityWithTakePhoto {
+public class AuthCompanyDataActivity extends BaseClienActivity {
 
     //营业执照
     @BindView(R.id.iv_upload)
@@ -77,13 +79,17 @@ public class AuthCompanyDataActivity extends BaseActivityWithTakePhoto {
         setContentView(R.layout.activity_auth_company);
         ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
-        initView();
         initData();
     }
 
-    private void initView() {
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
+    }
+    @Override
+    public void initView() {
         setTitle("查看信息");
-        setLeftBack();
+        setLeftBack(true);
         orgid = getIntent().getLongExtra("orgid", 0);
     }
 
@@ -150,7 +156,7 @@ public class AuthCompanyDataActivity extends BaseActivityWithTakePhoto {
             setOnFouse(etDesc);
         }
         if (byNetBean.getStatus() != 2) {
-            setRightGone();
+          setRightClick(false);
         }
     }
 

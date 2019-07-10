@@ -7,6 +7,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.lifecycle.ViewModel;
+
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
@@ -15,12 +17,12 @@ import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.AuthCompanyBaseInfoBean;
-import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,7 +35,7 @@ import butterknife.ButterKnife;
  * @desc 安防公司认证 完善基本资料
  */
 
-public class AuthCompanyDataActivity extends BaseActivityWithTakePhoto {
+public class AuthCompanyDataActivity extends BaseWorkeActivity {
 
     @BindView(R.id.iv_upload)
     ImageView ivUpload;
@@ -76,14 +78,18 @@ public class AuthCompanyDataActivity extends BaseActivityWithTakePhoto {
         setContentView(R.layout.activity_auth_company);
         ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
-        initView();
         initData();
     }
 
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
+    }
 
-    private void initView() {
+    @Override
+    public void initView() {
         setTitle("查看信息");
-        setLeftBack();
+        setLeftBack(true);
         orgid = getIntent().getLongExtra("orgid", 0);
     }
 
@@ -118,7 +124,7 @@ public class AuthCompanyDataActivity extends BaseActivityWithTakePhoto {
             etDesc.setEnabled(false);
         }
         if (byNetBean.getStatus() != 2) {
-            setRightGone();
+            setRightClick(false);
         }
         if (byNetBean != null) {
             if (byNetBean.getLicenseCode() != null) {
@@ -168,7 +174,7 @@ public class AuthCompanyDataActivity extends BaseActivityWithTakePhoto {
                 .upJson(json)
                 .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
                     showToast("保存成功");
-                    finishSelf();
+                    finish();
                 }));
     }
 

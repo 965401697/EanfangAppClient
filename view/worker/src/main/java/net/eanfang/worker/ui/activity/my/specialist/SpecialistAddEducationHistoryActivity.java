@@ -8,41 +8,40 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.lifecycle.ViewModel;
+
 import com.alibaba.fastjson.JSONObject;
-import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
-import com.eanfang.delegate.BGASortableDelegate;
+import com.eanfang.base.kit.picture.picture.PictureRecycleView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-
-import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
-import com.photopicker.com.activity.BGAPhotoPickerActivity;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
+import com.luck.picture.lib.entity.LocalMedia;
 import com.picker.DoubleDatePickerDialog;
 import com.picker.common.util.DateUtils;
 import com.yaf.base.entity.EducationExperienceEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
+import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-
-public class SpecialistAddEducationHistoryActivity extends BaseActivityWithTakePhoto {
+public class SpecialistAddEducationHistoryActivity extends BaseWorkeActivity {
 
     @BindView(R.id.et_school_name)
     EditText etSchoolName;
@@ -54,20 +53,17 @@ public class SpecialistAddEducationHistoryActivity extends BaseActivityWithTakeP
     EditText etNum;
     @BindView(R.id.tv_time)
     TextView tvTime;
-    @BindView(R.id.snpl_moment_accident)
-    BGASortableNinePhotoLayout snplMomentAccident;
     @BindView(R.id.tv_save)
     TextView tvSave;
+    @BindView(R.id.picture_recycler)
+    PictureRecycleView pictureRecycler;
 
 
     /**
      * 证书照片
      */
-    private ArrayList<String> picList_certificate = new ArrayList<>();
+    private List<LocalMedia> picList_certificate = new ArrayList<>();
     private HashMap<String, String> uploadMap = new HashMap<>();
-
-    private static final int REQUEST_CODE_CHOOSE_CERTIFICATE = 1;
-    private static final int REQUEST_CODE_PHOTO_CERTIFICATE = 101;
     private String pic;
     private String url;
     private EducationExperienceEntity bean;
@@ -78,38 +74,34 @@ public class SpecialistAddEducationHistoryActivity extends BaseActivityWithTakeP
         ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
         setTitle("添加教育经历");
-        setLeftBack();
+        setLeftBack(true);
 
         bean = (EducationExperienceEntity) getIntent().getSerializableExtra("bean");
-
-        snplMomentAccident.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_CERTIFICATE, REQUEST_CODE_PHOTO_CERTIFICATE));
-        snplMomentAccident.setData(picList_certificate);
 
         if (bean != null) {
             fillData();
             setTitle("修改教育经历");
+            picList_certificate = pictureRecycler.setData(bean.getCertificatePics());
+            pictureRecycler.showImagev(picList_certificate, listener);
+            pictureRecycler.isShow(true, picList_certificate);
         } else {
             setTitle("添加教育经历");
+            pictureRecycler.addImagev(listener);
         }
+    }
+    PictureRecycleView.ImageListener listener = list -> picList_certificate = list;
+
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
     }
 
     private void fillData() {
-
-        ArrayList<String> picList = new ArrayList<>();
-
-        String[] pics = bean.getCertificatePics().split(",");
-
-        for (int i = 0; i < pics.length; i++) {
-            picList.add(BuildConfig.OSS_SERVER + pics[i]);
-        }
-
         etSchoolName.setText(bean.getSchoolName());
         etMajor.setText(bean.getMajorName());
         tvEducation.setText(GetConstDataUtils.getDiplomaList().get(bean.getDiploma()));
         tvTime.setText(DateUtils.formatDate(bean.getBeginTime(), "yyyy-MM-dd") + " ～ " + DateUtils.formatDate(bean.getEndTime(), "yyyy-MM-dd"));
-        snplMomentAccident.setData(picList);
         etNum.setText(bean.getCertificateNumber());
-
     }
 
     @OnClick({R.id.ll_education, R.id.ll_date, R.id.tv_save})
@@ -186,7 +178,7 @@ public class SpecialistAddEducationHistoryActivity extends BaseActivityWithTakeP
         entity.setEndTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[1], "yyyy-MM-dd"));
         entity.setCertificatePics(pic);
         entity.setType(1);
-        SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
+        SDKManager.ossKit(this).asyncPutImages(uploadMap, (isSuccess) -> {
             runOnUiThread(() -> {
 
                 EanfangHttp.post(url)
@@ -227,25 +219,12 @@ public class SpecialistAddEducationHistoryActivity extends BaseActivityWithTakeP
             return true;
         }
 
-        pic = PhotoUtils.getPhotoUrl("", snplMomentAccident, uploadMap, false);
+        pic = PhotoUtils.getPhotoUrl("", picList_certificate, uploadMap, false);
         if (StringUtils.isEmpty(pic)) {
             showToast("请添加证书照片");
             return true;
         }
 
         return false;
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (data == null) {
-            return;
-        }
-        switch (requestCode) {
-            case REQUEST_CODE_CHOOSE_CERTIFICATE:
-                snplMomentAccident.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
-                break;
-        }
     }
 }

@@ -8,30 +8,34 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import androidx.lifecycle.ViewModel;
+
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 
-import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
-import com.jph.takephoto.model.TImage;
-import com.jph.takephoto.model.TResult;
+import com.luck.picture.lib.entity.LocalMedia;
 import com.yaf.base.entity.TechWorkerVerifyEntity;
 import com.eanfang.biz.model.entity.AccountEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
+import net.eanfang.worker.ui.base.BaseWorkeActivity;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class CertificationActivity extends BaseActivityWithTakePhoto {
+public class CertificationActivity extends BaseWorkeActivity {
 
 
     @BindView(R.id.ll_headers)
@@ -67,7 +71,7 @@ public class CertificationActivity extends BaseActivityWithTakePhoto {
         ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
         setTitle("实名认证");
-        setLeftBack();
+        setLeftBack(true);
 
         mStatus = getIntent().getIntExtra("status", -1);
 
@@ -85,9 +89,14 @@ public class CertificationActivity extends BaseActivityWithTakePhoto {
         }
     }
 
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
+    }
+
     private void fillData() {
-        AccountEntity accountEntity=WorkerApplication.get().getLoginBean().getAccount();
-        GlideUtil.intoImageView(this,com.eanfang.BuildConfig.OSS_SERVER + mTechWorkerVerifyEntity.getAvatarPhoto(),ivHeader);
+        AccountEntity accountEntity = WorkerApplication.get().getLoginBean().getAccount();
+        GlideUtil.intoImageView(this, com.eanfang.BuildConfig.OSS_SERVER + mTechWorkerVerifyEntity.getAvatarPhoto(), ivHeader);
         String contactName = accountEntity.getRealName();
         String mobile = accountEntity.getMobile();
 
@@ -108,7 +117,7 @@ public class CertificationActivity extends BaseActivityWithTakePhoto {
     }
 
     private void initViews() {
-        AccountEntity accountEntity=WorkerApplication.get().getLoginBean().getAccount();
+        AccountEntity accountEntity = WorkerApplication.get().getLoginBean().getAccount();
         String contactName = accountEntity.getRealName();
         String mobile = accountEntity.getMobile();
         if (!StringUtils.isEmpty(contactName)) {
@@ -120,38 +129,30 @@ public class CertificationActivity extends BaseActivityWithTakePhoto {
     }
 
     private void setOnClick() {
-
-
-        llHeaders.setOnClickListener(v -> RxPerm.get(this).cameraPerm((isSuccess)-> takePhoto(CertificationActivity.this, HEADER_PIC)));
+        llHeaders.setOnClickListener(v -> RxPerm.get(this).cameraPerm((isSuccess) -> headImage()));
     }
 
-
+    private void headImage() {
+        SDKManager.getPicture().create(this).takePhoto(iPictureCallBack);
+    }
     /**
      * 图片选择 回调
-     *
-     * @param result
-     * @param resultCode
      */
-    @Override
-    public void takeSuccess(TResult result, int resultCode) {
-        super.takeSuccess(result, resultCode);
-        if (result == null || result.getImage() == null) {
-            return;
-        }
-        TImage image = result.getImage();
-        String imgKey = "account/" + UuidUtil.getUUID() + ".png";
-        switch (resultCode) {
-            case HEADER_PIC:
-                mTechWorkerVerifyEntity.setAvatarPhoto(imgKey);
-                GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),ivHeader);
-                break;
-            default:
-                break;
-        }
-        SDKManager.ossKit(this).asyncPutImage(imgKey, image.getOriginalPath(),(isSuccess) -> {
 
-        });
-    }
+    IPictureCallBack iPictureCallBack = new IPictureCallBack() {
+        @Override
+        public void onSuccess(List<LocalMedia> list) {
+
+            String imgKey = "account/" + UuidUtil.getUUID() + ".png";
+            mTechWorkerVerifyEntity.setAvatarPhoto(imgKey);
+            GlideUtil.intoImageView(CertificationActivity.this, "file://" + list.get(0).getPath(), ivHeader);
+
+            SDKManager.ossKit(CertificationActivity.this).asyncPutImage(imgKey, list.get(0).getPath(), (isSuccess) -> {
+
+            });
+        }
+    };
+
 
     private void setData() {
 

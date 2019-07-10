@@ -13,9 +13,12 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.lifecycle.ViewModel;
+
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.dialog.TrueFalseDialog;
@@ -25,7 +28,6 @@ import com.eanfang.biz.model.GroupDetailBean;
 
 import com.eanfang.ui.activity.QrCodeShowActivity;
 import com.eanfang.ui.base.BaseActivity;
-import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.base.kit.rx.RxPerm;
@@ -35,15 +37,18 @@ import com.eanfang.witget.MyGridView;
 import com.eanfang.witget.SwitchButton;
 import com.jph.takephoto.model.TImage;
 import com.jph.takephoto.model.TResult;
+import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.adapter.GroupsDetailAdapter;
+import net.eanfang.client.ui.base.BaseClienActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,7 +59,7 @@ import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Group;
 
 
-public class GroupDetailActivity extends BaseActivityWithTakePhoto {
+public class GroupDetailActivity extends BaseClienActivity {
 
     @BindView(R.id.grid_view)
     MyGridView gridView;
@@ -115,12 +120,17 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
         ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
         setTitle("群组信息");
-        setLeftBack();
+        setLeftBack(true);
         groupId = getIntent().getStringExtra(EanfangConst.RONG_YUN_ID);
         id = ClientApplication.get().get(groupId, 0);
         title = getIntent().getStringExtra("title");
         BaseActivity.transactionActivities.add(this);
         initData();
+    }
+
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
     }
 
 
@@ -218,7 +228,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
 
                     if (bean.getGroup() != null) {
                         groupName.setText(bean.getGroup().getGroupName());
-                        GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + bean.getGroup().getHeadPortrait()),groupHeader);
+                        GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + bean.getGroup().getHeadPortrait()), groupHeader);
                         if (!TextUtils.isEmpty(bean.getGroup().getNotice())) {
                             group_notice.setText(bean.getGroup().getNotice());
                         }
@@ -347,6 +357,20 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
 //        });
     }
 
+    private void headImage() {
+        SDKManager.getPicture().create(this).takePhoto(iPictureCallBack);
+    }
+
+    IPictureCallBack iPictureCallBack = new IPictureCallBack() {
+        @Override
+        public void onSuccess(List<LocalMedia> list) {
+            headPortrait = "im/select/CUSTOM_" + UuidUtil.getUUID() + ".png";
+            GlideUtil.intoImageView(GroupDetailActivity.this, "file://" + list.get(0).getPath(), groupHeader);
+            SDKManager.ossKit(GroupDetailActivity.this).asyncPutImage(headPortrait, list.get(0).getPath(), (isSuccess) -> {
+                updataGroupInfo(title, headPortrait, "", "");
+            });
+        }
+    };
 
     @OnClick({R.id.group_member_size_item, R.id.ll_group_port, R.id.ll_group_qr, R.id.ll_group_name, R.id.group_announcement, R.id.group_clean, R.id.group_transfer, R.id.group_shutup_mber, R.id.group_quit})
     public void onViewClicked(View view) {
@@ -357,7 +381,7 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                 startActivity(iet);
                 break;
             case R.id.ll_group_port:
-                RxPerm.get(this).cameraPerm((isSuccess)-> takePhoto(GroupDetailActivity.this, HEADER_PIC));
+                RxPerm.get(this).cameraPerm((isSuccess) -> headImage());
                 break;
             case R.id.ll_group_qr:
                 Bundle bundle = new Bundle();
@@ -601,24 +625,6 @@ public class GroupDetailActivity extends BaseActivityWithTakePhoto {
                 b.setStatus(0);
             }
         }
-    }
-
-    @Override
-    public void takeSuccess(TResult result) {
-        super.takeSuccess(result);
-
-        if (result == null || result.getImage() == null) {
-            return;
-        }
-        TImage image = result.getImage();
-
-        headPortrait = "im/select/CUSTOM_" + UuidUtil.getUUID() + ".png";
-
-        GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),groupHeader);
-
-        SDKManager.ossKit(this).asyncPutImage(headPortrait,image.getOriginalPath(),(isSuccess) -> {
-            updataGroupInfo(title, headPortrait, "", "");
-        });
     }
 
     @Override

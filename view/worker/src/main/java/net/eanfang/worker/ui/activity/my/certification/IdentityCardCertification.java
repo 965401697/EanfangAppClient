@@ -6,23 +6,27 @@ import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.lifecycle.ViewModel;
+
 import com.eanfang.base.kit.SDKManager;
 
-import com.eanfang.ui.base.BaseActivityWithTakePhoto;
+import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
-import com.jph.takephoto.model.TImage;
-import com.jph.takephoto.model.TResult;
+import com.luck.picture.lib.entity.LocalMedia;
 import com.yaf.base.entity.TechWorkerVerifyEntity;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.ui.base.BaseWorkeActivity;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class IdentityCardCertification extends BaseActivityWithTakePhoto {
+public class IdentityCardCertification extends BaseWorkeActivity {
     //身份证正面
     private final int ID_CARD_FRONT = 101;
     // 身份证反面
@@ -51,16 +55,31 @@ public class IdentityCardCertification extends BaseActivityWithTakePhoto {
         ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
         setTitle("身份信息");
-        setLeftBack();
+        setLeftBack(true);
         mTechWorkerVerifyEntity = (TechWorkerVerifyEntity) getIntent().getSerializableExtra("bean");
 
         initListener();
     }
 
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
+    }
+
+    private int state=0;
     private void initListener() {
-        ivIdCardFront.setOnClickListener(v -> RxPerm.get(this).cameraPerm((isSuccess)-> takePhoto(IdentityCardCertification.this, ID_CARD_FRONT)));
-        ivIdCardBack.setOnClickListener(v -> RxPerm.get(this).cameraPerm((isSuccess)-> takePhoto(IdentityCardCertification.this, ID_CARD_SIDE)));
-        ivIdCardInHand.setOnClickListener(v -> RxPerm.get(this).cameraPerm((isSuccess)-> takePhoto(IdentityCardCertification.this, ID_CARD_HAND)));
+        ivIdCardFront.setOnClickListener(v -> RxPerm.get(this).cameraPerm((isSuccess)-> {
+            state=ID_CARD_FRONT;
+            imageV();
+        }));
+        ivIdCardBack.setOnClickListener(v -> RxPerm.get(this).cameraPerm((isSuccess)-> {
+            state=ID_CARD_SIDE;
+            imageV();
+        }));
+        ivIdCardInHand.setOnClickListener(v -> RxPerm.get(this).cameraPerm((isSuccess)-> {
+            state=ID_CARD_HAND;
+            imageV();
+        }));
         tvSave.setOnClickListener((v) -> {
             doSave();
         });
@@ -71,7 +90,35 @@ public class IdentityCardCertification extends BaseActivityWithTakePhoto {
 
 
     }
+    private void imageV() {
+        SDKManager.getPicture().create(this).takePhoto(iPictureCallBack);
+    }
 
+    IPictureCallBack iPictureCallBack = new IPictureCallBack() {
+        @Override
+        public void onSuccess(List<LocalMedia> list) {
+            String imgKey = UuidUtil.getUUID() + ".png";
+            switch (state) {
+                // 身份证正面
+                case ID_CARD_FRONT:
+                    mTechWorkerVerifyEntity.setIdCardFront(imgKey);
+                    GlideUtil.intoImageView(IdentityCardCertification.this,"file://" + list.get(0).getPath(),ivIdCardFront);
+                    break;
+                // 反面
+                case ID_CARD_SIDE:
+                    mTechWorkerVerifyEntity.setIdCardSide(imgKey);
+                    GlideUtil.intoImageView(IdentityCardCertification.this,"file://" + list.get(0).getPath(),ivIdCardBack);
+                    break;
+                // 手持
+                case ID_CARD_HAND:
+                    mTechWorkerVerifyEntity.setIdCardHand(imgKey);
+                    GlideUtil.intoImageView(IdentityCardCertification.this,"file://" + list.get(0).getPath(),ivIdCardInHand);
+                    break;
+            }
+            state=0;
+            SDKManager.ossKit(IdentityCardCertification.this).asyncPutImage(imgKey, list.get(0).getPath(),(isSuccess) -> {});
+        }
+    };
 
     private void fillData() {
         GlideUtil.intoImageView(this,com.eanfang.BuildConfig.OSS_SERVER + mTechWorkerVerifyEntity.getIdCardFront(),ivIdCardFront);
@@ -100,34 +147,6 @@ public class IdentityCardCertification extends BaseActivityWithTakePhoto {
 //        Intent intent = new Intent(this, SubmitSuccessfullyJsActivity.class);
         intent.putExtra("bean", mTechWorkerVerifyEntity);
         startActivity(intent);
-    }
-
-    @Override
-    public void takeSuccess(TResult result, int resultCode) {
-        super.takeSuccess(result, resultCode);
-        if (result == null || result.getImage() == null) {
-            return;
-        }
-        TImage image = result.getImage();
-        String imgKey = UuidUtil.getUUID() + ".png";
-        switch (resultCode) {
-            // 身份证正面
-            case ID_CARD_FRONT:
-                mTechWorkerVerifyEntity.setIdCardFront(imgKey);
-                GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),ivIdCardFront);
-                break;
-            // 反面
-            case ID_CARD_SIDE:
-                mTechWorkerVerifyEntity.setIdCardSide(imgKey);
-                GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),ivIdCardBack);
-                break;
-            // 手持
-            case ID_CARD_HAND:
-                mTechWorkerVerifyEntity.setIdCardHand(imgKey);
-                GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),ivIdCardInHand);
-                break;
-        }
-        SDKManager.ossKit(this).asyncPutImage(imgKey, image.getOriginalPath(),(isSuccess) -> {});
     }
 
 }

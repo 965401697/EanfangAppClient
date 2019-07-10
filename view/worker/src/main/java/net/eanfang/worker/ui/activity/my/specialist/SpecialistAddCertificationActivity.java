@@ -10,39 +10,40 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.lifecycle.ViewModel;
+
 import com.alibaba.fastjson.JSONObject;
-import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
-import com.eanfang.delegate.BGASortableDelegate;
+import com.eanfang.base.kit.picture.picture.PictureRecycleView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-
-import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
+import com.luck.picture.lib.entity.LocalMedia;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 import com.picker.common.util.DateUtils;
 import com.yaf.base.entity.HonorCertificateEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
+import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class SpecialistAddCertificationActivity extends BaseActivityWithTakePhoto implements SelectTimeDialogFragment.SelectTimeListener {
+public class SpecialistAddCertificationActivity extends BaseWorkeActivity implements SelectTimeDialogFragment.SelectTimeListener {
 
     @BindView(R.id.et_name)
     EditText etName;
@@ -52,18 +53,18 @@ public class SpecialistAddCertificationActivity extends BaseActivityWithTakePhot
     LinearLayout llDate;
     @BindView(R.id.tv_time)
     TextView tvTime;
-    @BindView(R.id.snpl_moment_accident)
-    BGASortableNinePhotoLayout snplMomentAccident;
     @BindView(R.id.et_certificate)
     EditText etCertificate;
     @BindView(R.id.tv_save)
     TextView tvSave;
+    @BindView(R.id.picture_recycler)
+    PictureRecycleView pictureRecycler;
 
 
     /**
      * 证书照片
      */
-    private ArrayList<String> picList_certificate = new ArrayList<>();
+    private List<LocalMedia> picList_certificate = new ArrayList<>();
     private HashMap<String, String> uploadMap = new HashMap<>();
 
 
@@ -86,25 +87,28 @@ public class SpecialistAddCertificationActivity extends BaseActivityWithTakePhot
 
     }
 
-    private void initView() {
-        setLeftBack();
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
+    }
+    @Override
+    public void initView() {
+        setLeftBack(true);
 
         bean = (HonorCertificateEntity) getIntent().getSerializableExtra("bean");
-
-        snplMomentAccident.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_CERTIFICATE, REQUEST_CODE_PHOTO_CERTIFICATE));
-        snplMomentAccident.setData(picList_certificate);
-
         doSelectYearMonthDay();
-
         if (bean != null) {
             fillData();
             setTitle("修改证书");
-
+            picList_certificate = pictureRecycler.setData(bean.getHonorPics());
+            pictureRecycler.showImagev(picList_certificate, listener);
+            pictureRecycler.isShow(true, picList_certificate);
         } else {
             setTitle("添加证书");
+            pictureRecycler.addImagev(listener);
         }
     }
-
+    PictureRecycleView.ImageListener listener = list -> picList_certificate = list;
     /**
      * 只进行查看操作不看编辑
      */
@@ -114,25 +118,12 @@ public class SpecialistAddCertificationActivity extends BaseActivityWithTakePhot
         etName.setEnabled(false);
         etOrg.setEnabled(false);
         llDate.setEnabled(false);
-        snplMomentAccident.setEditable(false);
     }
 
     private void fillData() {
-
-        ArrayList<String> picList = new ArrayList<>();
-
-        if (bean.getHonorPics() != null) {
-
-            String[] pics = bean.getHonorPics().split(",");
-
-            for (int i = 0; i < pics.length; i++) {
-                picList.add(BuildConfig.OSS_SERVER + pics[i]);
-            }
-        }
         etName.setText(bean.getHonorName());
         etOrg.setText(bean.getAwardOrg());
         tvTime.setText(DateUtils.formatDate(bean.getAwardTime(), "yyyy-MM-dd"));
-        snplMomentAccident.setData(picList);
         etName.setText(bean.getHonorName());
         etCertificate.setText(bean.getIntro());
     }
@@ -176,7 +167,7 @@ public class SpecialistAddCertificationActivity extends BaseActivityWithTakePhot
         entity.setHonorPics(pic);
         entity.setIntro(etCertificate.getText().toString().trim());
         entity.setType(1);
-        SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
+        SDKManager.ossKit(this).asyncPutImages(uploadMap, (isSuccess) -> {
             runOnUiThread(() -> {
 
                 EanfangHttp.post(url)
@@ -208,7 +199,7 @@ public class SpecialistAddCertificationActivity extends BaseActivityWithTakePhot
             return true;
         }
 
-        pic = PhotoUtils.getPhotoUrl("", snplMomentAccident, uploadMap, false);
+        pic = PhotoUtils.getPhotoUrl("", picList_certificate, uploadMap, false);
         if (StringUtils.isEmpty(pic)) {
             showToast("请添加荣誉证书照片");
             return true;
@@ -220,19 +211,6 @@ public class SpecialistAddCertificationActivity extends BaseActivityWithTakePhot
         }
 
         return false;
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (data == null) {
-            return;
-        }
-        switch (requestCode) {
-            case REQUEST_CODE_CHOOSE_CERTIFICATE:
-                snplMomentAccident.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
-                break;
-        }
     }
 
     /**

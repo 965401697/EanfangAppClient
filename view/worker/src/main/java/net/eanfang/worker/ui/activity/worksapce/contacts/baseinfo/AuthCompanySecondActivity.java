@@ -9,11 +9,14 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.lifecycle.ViewModel;
+
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
@@ -21,7 +24,6 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.AuthCompanyBaseInfoBean;
 import com.eanfang.biz.model.Message;
 
-import com.eanfang.ui.base.BaseActivityWithTakePhoto;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
@@ -29,14 +31,14 @@ import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.UuidUtil;
-import com.jph.takephoto.model.TImage;
-import com.jph.takephoto.model.TResult;
 import com.eanfang.biz.model.entity.BaseDataEntity;
 import com.eanfang.biz.model.entity.OrgUnitEntity;
+import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.StateChangeActivity;
+import net.eanfang.worker.ui.base.BaseWorkeActivity;
 import net.eanfang.worker.ui.fragment.ContactsFragment;
 
 import java.util.List;
@@ -49,7 +51,7 @@ import butterknife.ButterKnife;
  * @data 2018/10/17
  * @description 公司认证 基本资料 第二步
  */
-public class AuthCompanySecondActivity extends BaseActivityWithTakePhoto {
+public class AuthCompanySecondActivity extends BaseWorkeActivity {
 
     /**
      * 公司LOGO take photo 回调 code
@@ -86,9 +88,15 @@ public class AuthCompanySecondActivity extends BaseActivityWithTakePhoto {
         initData();
     }
 
-    private void initView() {
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
+    }
+
+    @Override
+    public void initView() {
         setTitle("完善资料");
-        setLeftBack();
+        setLeftBack(true);
         orgid = getIntent().getLongExtra("mOrgId", 0);
     }
 
@@ -102,7 +110,7 @@ public class AuthCompanySecondActivity extends BaseActivityWithTakePhoto {
 
     private void initListener() {
         ivUpload2.setOnClickListener((v -> {
-            RxPerm.get(this).cameraPerm((isSuccess)-> takePhoto(AuthCompanySecondActivity.this, ADPIC_CALLBACK_CODE));
+            RxPerm.get(this).cameraPerm((isSuccess) -> imageV());
         }));
 
         llType.setOnClickListener(v -> showTradType());
@@ -113,6 +121,21 @@ public class AuthCompanySecondActivity extends BaseActivityWithTakePhoto {
             doVerify();
         });
     }
+
+    private void imageV() {
+        SDKManager.getPicture().create(this).takePhoto(iPictureCallBack);
+    }
+
+    IPictureCallBack iPictureCallBack = new IPictureCallBack() {
+        @Override
+        public void onSuccess(List<LocalMedia> list) {
+            String imgKey = "org/" + UuidUtil.getUUID() + ".png";
+            infoBean.setLogoPic(imgKey);
+            GlideUtil.intoImageView(AuthCompanySecondActivity.this, "file://" + list.get(0).getPath(), ivUpload2);
+            SDKManager.ossKit(AuthCompanySecondActivity.this).asyncPutImage(imgKey, list.get(0).getPath(), (isSuccess) -> {
+            });
+        }
+    };
 
     /**
      * 初始化  填充数据
@@ -128,7 +151,7 @@ public class AuthCompanySecondActivity extends BaseActivityWithTakePhoto {
             etDesc.setEnabled(false);
         }
         if (infoBean.getStatus() != 2) {
-            setRightGone();
+            setRightClick(false);
         }
         if (infoBean != null) {
             if (infoBean.getTradeTypeCode() != null) {
@@ -141,7 +164,7 @@ public class AuthCompanySecondActivity extends BaseActivityWithTakePhoto {
                 etDesc.setText(infoBean.getIntro());
             }
             if (!StringUtils.isEmpty(infoBean.getLogoPic())) {
-                GlideUtil.intoImageView(this,BuildConfig.OSS_SERVER + infoBean.getLogoPic(),ivUpload2);
+                GlideUtil.intoImageView(this, BuildConfig.OSS_SERVER + infoBean.getLogoPic(), ivUpload2);
                 infoBean.setLogoPic(infoBean.getLogoPic());
             }
         }
@@ -211,28 +234,6 @@ public class AuthCompanySecondActivity extends BaseActivityWithTakePhoto {
         }));
     }
 
-    /**
-     * 图片选择 回调
-     *
-     * @param result
-     * @param resultCode
-     */
-    @Override
-    public void takeSuccess(TResult result, int resultCode) {
-        super.takeSuccess(result, resultCode);
-        if (result == null || result.getImage() == null) {
-            return;
-        }
-        TImage image = result.getImage();
-        String imgKey = "org/" + UuidUtil.getUUID() + ".png";
-
-        if (resultCode == ADPIC_CALLBACK_CODE) {
-            infoBean.setLogoPic(imgKey);
-            GlideUtil.intoImageView(this,"file://" + image.getOriginalPath(),ivUpload2);
-        }
-        SDKManager.ossKit(this).asyncPutImage(imgKey, image.getOriginalPath(),(isSuccess) -> {});
-
-    }
 
     private void submitSuccess() {
         Bundle bundle = new Bundle();
@@ -243,7 +244,7 @@ public class AuthCompanySecondActivity extends BaseActivityWithTakePhoto {
         message.setMsgHelp("go_quaility");
         bundle.putLong("orgid", orgid);
         JumpItent.jump(AuthCompanySecondActivity.this, StateChangeActivity.class, bundle);
-        finishSelf();
+        finish();
         WorkerApplication.get().closeActivity(AuthCompanyFirstActivity.class);
     }
 }
