@@ -16,4 +16,8 @@ public class LeavePostDefaultRankingBean {
     private int compareValue;
     private int stationId;
     private String date;
+    /**
+     * 0:年 1：季 2：月 3：周 4：天
+     */
+    private int rankingType;
 }

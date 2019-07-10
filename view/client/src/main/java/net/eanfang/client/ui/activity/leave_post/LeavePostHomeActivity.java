@@ -1,6 +1,14 @@
 package net.eanfang.client.ui.activity.leave_post;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.AbsoluteSizeSpan;
+import android.text.style.ForegroundColorSpan;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
@@ -48,7 +56,10 @@ public class LeavePostHomeActivity extends BaseActivity {
         mBinding.imgLeavePostManage.setOnClickListener(view -> mLeavePostHomeViewModel.gotoManagePage(this));
         mBinding.imgLeavePostHistory.setOnClickListener(view -> mLeavePostHomeViewModel.gotoHistoryPage(this));
         mLeavePostHomeAdapter.setOnItemClickListener((adapter, view, position) -> mLeavePostHomeViewModel.gotoLeavePostDetailPage(LeavePostHomeActivity.this, adapter, position));
-
+        mBinding.tvLeavePostChangeCount .setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        mBinding.tvLeavePostAllWarn .setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        mBinding.tvLeavePostWarnCount .setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        mBinding.tvLeavePostPostCount .setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
     }
 
     @Override
@@ -67,7 +78,12 @@ public class LeavePostHomeActivity extends BaseActivity {
             return;
         }
         LeavePostHomeUnHandledAlertBean.UnhandledAlertListBean unhandledAlertListBean = leavePostHomeUnHandledAlertBean.getUnhandledAlertList();
-        mBinding.tvLeavePostTodoCount.setText(getString(R.string.text_leave_post_todo_count, leavePostHomeUnHandledAlertBean.getUnhandledAlertCount()));
+        String todoText = getString(R.string.text_leave_post_todo_count, leavePostHomeUnHandledAlertBean.getUnhandledAlertCount());
+        SpannableString spannableString = new SpannableString(todoText);
+        spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#FF6419")), 8, todoText.length() , Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        AbsoluteSizeSpan span = new AbsoluteSizeSpan(18,true);
+        spannableString.setSpan(span, 8, todoText.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+        mBinding.tvLeavePostTodoCount.setText(spannableString);
         if (unhandledAlertListBean.getCurrPage() == 1) {
             mLeavePostHomeAdapter.setNewData(unhandledAlertListBean.getList());
         } else {

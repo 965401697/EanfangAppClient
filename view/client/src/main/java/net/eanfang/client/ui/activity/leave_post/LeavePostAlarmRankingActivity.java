@@ -1,16 +1,12 @@
 package net.eanfang.client.ui.activity.leave_post;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.TextView;
+import android.widget.CheckBox;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.base.BaseActivity;
 import com.eanfang.biz.rds.base.LViewModelProviders;
 
@@ -19,10 +15,8 @@ import net.eanfang.client.databinding.ActivityLeavePostAlarmRankingBinding;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostDefaultRankingBean;
 import net.eanfang.client.ui.activity.leave_post.viewmodel.LeavePosAlarmRankingViewModel;
 import net.eanfang.client.ui.adapter.LeavePostRankingAdapter;
-import net.eanfang.client.ui.adapter.YearMonthDayAdapter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -33,33 +27,11 @@ import java.util.List;
 public class LeavePostAlarmRankingActivity extends BaseActivity {
     private ActivityLeavePostAlarmRankingBinding mBinding;
     private LeavePosAlarmRankingViewModel mViewModel;
-    private List<String> mYears;
-    private List<String> mMonths;
-    private List<String> mDays;
     private LeavePostRankingAdapter mAdapter;
     private int mJumpAllType = 0;
-    private String[] addOnDayMonth = new String[]{"1", "3", "5", "7", "8", "10", "12"};
-
-    {
-        mYears = new ArrayList<>();
-        mMonths = new ArrayList<>();
-        mDays = new ArrayList<>();
-        for (int i = 0; i < 13; i++) {
-            if (i == 0) {
-                mMonths.add("请选择");
-                continue;
-            }
-            mMonths.add(String.valueOf(i));
-        }
-        mYears.add("2019");
-        for (int i = 0; i < 31; i++) {
-            if (i == 0) {
-                mDays.add("请选择");
-                continue;
-            }
-            mDays.add(String.valueOf(i));
-        }
-    }
+    private int dateType = 0;
+    private ArrayList<CheckBox> mCheckBoxes;
+    private String[] changePromptingText = new String[]{"较去年\t", "较上季\t", "较上月\t", "较上周\t", "较昨天\t"};
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,118 +44,75 @@ public class LeavePostAlarmRankingActivity extends BaseActivity {
         setLeftBack(true);
         setTitle("报警排名");
         setRightTitle("历史详情");
-        mBinding.recChooseYear.setLayoutManager(new LinearLayoutManager(this));
-        mBinding.recChooseMonth.setLayoutManager(new LinearLayoutManager(this));
-        mBinding.recChooseDay.setLayoutManager(new LinearLayoutManager(this));
+        mCheckBoxes = new ArrayList<>();
+        mCheckBoxes.add(mBinding.checkboxLeavePostRankingYear);
+        mCheckBoxes.add(mBinding.checkboxLeavePostRankingQuarter);
+        mCheckBoxes.add(mBinding.checkboxLeavePostRankingMonth);
+        mCheckBoxes.add(mBinding.checkboxLeavePostRankingWeek);
+        mCheckBoxes.add(mBinding.checkboxLeavePostRankingDay);
         mBinding.recLeavePostAlarmRanking.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new LeavePostRankingAdapter();
         mAdapter.bindToRecyclerView(mBinding.recLeavePostAlarmRanking);
         setRightClick(view -> mViewModel.gotoHistoryPage(LeavePostAlarmRankingActivity.this));
-        initChooseView();
         mAdapter.setOnItemClickListener((adapter, view, position) -> mViewModel.gotoAlertDetailPage(LeavePostAlarmRankingActivity.this, adapter, position));
-        mBinding.tvLeavePostRankingAll.setOnClickListener(view -> mViewModel.gotoAllAlert(LeavePostAlarmRankingActivity.this, mJumpAllType));
+        mBinding.tvLeavePostRankingAll.setOnClickListener(view -> mViewModel.gotoAllAlert(LeavePostAlarmRankingActivity.this, mJumpAllType, dateType));
 
         mBinding.tvLeavePostRankingPost.setOnClickListener(view -> {
             if (mViewModel.getStationRankingData().getValue() == null) {
-                mViewModel.getStationRankingList();
+                mViewModel.getStationRankingList(dateType);
             } else {
                 mAdapter.setNewData(mViewModel.getStationRankingData().getValue());
             }
             mJumpAllType = 0;
             mBinding.tvLeavePostRankingQuestion.setChecked(false);
             mBinding.tvLeavePostRankingPost.setChecked(true);
+            mBinding.tvRankPostName.setText("岗位名称");
         });
         mBinding.tvLeavePostRankingQuestion.setOnClickListener(view -> {
             if (mViewModel.getAlertRankingData().getValue() == null) {
-                mViewModel.getAlertRankingList();
+                mViewModel.getAlertRankingList(dateType);
             } else {
                 mAdapter.setNewData(mViewModel.getAlertRankingData().getValue());
             }
             mJumpAllType = 1;
             mBinding.tvLeavePostRankingPost.setChecked(false);
             mBinding.tvLeavePostRankingQuestion.setChecked(true);
+            mBinding.tvRankPostName.setText("问题类型");
         });
-        mBinding.tvOk.setOnClickListener(view -> {
-            if (mBinding.tvLeavePostRankingPost.isChecked()) {
-                mViewModel.getStationRankingList();
-            } else {
-                mViewModel.getStationRankingList();
-            }
+
+        mBinding.checkboxLeavePostRankingYear.setOnClickListener(view -> {
+            dateType = 0;
+            getData();
+        });
+        mBinding.checkboxLeavePostRankingQuarter.setOnClickListener(view -> {
+            dateType = 1;
+            getData();
+        });
+        mBinding.checkboxLeavePostRankingMonth.setOnClickListener(view -> {
+            dateType = 2;
+            getData();
+        });
+        mBinding.checkboxLeavePostRankingWeek.setOnClickListener(view -> {
+            dateType = 3;
+            getData();
+        });
+        mBinding.checkboxLeavePostRankingDay.setOnClickListener(view -> {
+            dateType = 4;
+            getData();
         });
         mBinding.tvLeavePostRankingPost.setChecked(true);
+        mBinding.checkboxLeavePostRankingYear.setChecked(true);
     }
 
-    /**
-     * 初始化选择器控件
-     */
-    private void initChooseView() {
-        String defaultDay = "请选择";
-        YearMonthDayAdapter yearAdapter = new YearMonthDayAdapter(mYears);
-        yearAdapter.bindToRecyclerView(mBinding.recChooseYear);
-        YearMonthDayAdapter monthAdapter = new YearMonthDayAdapter(mMonths);
-        monthAdapter.bindToRecyclerView(mBinding.recChooseMonth);
-        YearMonthDayAdapter dayAdapter = new YearMonthDayAdapter(mDays);
-        dayAdapter.bindToRecyclerView(mBinding.recChooseDay);
-
-        yearAdapter.setOnItemClickListener((adapter, view, position) -> setViewText(mBinding.tvLeavePostAlarmRankingYear, mBinding.recChooseYear, adapter, position));
-
-        monthAdapter.setOnItemClickListener((adapter, view, position) -> setViewText(mBinding.tvLeavePostAlarmRankingMonth, mBinding.recChooseMonth, adapter, position));
-
-        dayAdapter.setOnItemClickListener((adapter, view, position) -> setViewText(mBinding.tvLeavePostAlarmRankingDay, mBinding.recChooseDay, adapter, position));
-
-        mBinding.bgYear.setOnClickListener(view -> {
-            mBinding.recChooseMonth.setVisibility(View.GONE);
-            mBinding.recChooseDay.setVisibility(View.GONE);
-            if (mBinding.recChooseYear.getVisibility() == View.VISIBLE) {
-                mBinding.recChooseYear.setVisibility(View.GONE);
-            } else {
-                mBinding.recChooseYear.setVisibility(View.VISIBLE);
-            }
-
-        });
-        mBinding.bgMonth.setOnClickListener(view -> {
-            mBinding.recChooseYear.setVisibility(View.GONE);
-            mBinding.recChooseDay.setVisibility(View.GONE);
-            if (defaultDay.equals(mBinding.tvLeavePostAlarmRankingYear.getText().toString())) {
-                showToast("请先选择年份");
-                return;
-            }
-            if (mBinding.recChooseMonth.getVisibility() == View.VISIBLE) {
-                mBinding.recChooseMonth.setVisibility(View.GONE);
-            } else {
-                mBinding.recChooseMonth.setVisibility(View.VISIBLE);
-            }
-        });
-
-        mBinding.bgDay.setOnClickListener(view -> {
-            mBinding.recChooseYear.setVisibility(View.GONE);
-            mBinding.recChooseMonth.setVisibility(View.GONE);
-            if (defaultDay.equals(mBinding.tvLeavePostAlarmRankingMonth.getText().toString())) {
-                showToast("请先选择月份");
-                return;
-            }
-            if (Arrays.asList(addOnDayMonth).contains(mBinding.tvLeavePostAlarmRankingMonth.getText().toString())) {
-                if (!mDays.contains("31")) {
-                    mDays.add("31");
-                }
-            } else {
-                mDays.remove("31");
-            }
-            dayAdapter.setNewData(mDays);
-            if (mBinding.recChooseDay.getVisibility() == View.VISIBLE) {
-                mBinding.recChooseDay.setVisibility(View.GONE);
-            } else {
-                mBinding.recChooseDay.setVisibility(View.VISIBLE);
-            }
-
-        });
-
-    }
-
-    private void setViewText(TextView textView, RecyclerView gongRec, BaseQuickAdapter adapter, int position) {
-        String text = String.valueOf(adapter.getData().get(position));
-        textView.setText(text);
-        gongRec.setVisibility(View.GONE);
+    private void getData() {
+        if (mBinding.tvLeavePostRankingPost.isChecked()) {
+            mViewModel.getStationRankingList(dateType);
+        } else {
+            mViewModel.getStationRankingList(dateType);
+        }
+        for (CheckBox checkBox : mCheckBoxes){
+            checkBox.setChecked(mCheckBoxes.indexOf(checkBox) == dateType);
+        }
     }
 
     @Override
@@ -192,16 +121,18 @@ public class LeavePostAlarmRankingActivity extends BaseActivity {
         mViewModel.getAlertRankingData().observe(this, this::setAlertData);
         mViewModel.getStationRankingData().observe(this, this::setStationData);
         mViewModel.setBinding(mBinding);
-        mViewModel.getStationRankingList();
+        mViewModel.getStationRankingList(0);
         return mViewModel;
     }
 
     private void setStationData(List<LeavePostDefaultRankingBean> stationRankingList) {
         mAdapter.setNewData(stationRankingList);
+        mBinding.tvRankCompare.setText(changePromptingText[dateType]);
     }
 
     private void setAlertData(List<LeavePostDefaultRankingBean> alertRankingList) {
         mAdapter.setNewData(alertRankingList);
+        mBinding.tvRankCompare.setText(changePromptingText[dateType]);
     }
 
 }

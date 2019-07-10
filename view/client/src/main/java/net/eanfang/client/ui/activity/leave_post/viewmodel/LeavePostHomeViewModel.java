@@ -18,6 +18,8 @@ import net.eanfang.client.ui.activity.leave_post.bean.LeavePostHomeUnHandledAler
 import net.eanfang.client.ui.activity.leave_post.ds.LeavePostDs;
 import net.eanfang.client.ui.activity.leave_post.repo.LeavePostRepo;
 
+import java.util.Objects;
+
 import lombok.Getter;
 
 /**
@@ -96,8 +98,10 @@ public class LeavePostHomeViewModel extends BaseViewModel {
      * 加载更多数据
      */
     public void loadMoreData() {
-        mCurrentPage++;
-        getHomeUnhandledAlert(this.mCompanyId);
+        if (mCurrentPage < Objects.requireNonNull(leavePostHomeUnhandledAlert.getValue()).getUnhandledAlertList().getTotalPage()) {
+            mCurrentPage++;
+            getHomeUnhandledAlert(this.mCompanyId);
+        }
     }
 
     /**

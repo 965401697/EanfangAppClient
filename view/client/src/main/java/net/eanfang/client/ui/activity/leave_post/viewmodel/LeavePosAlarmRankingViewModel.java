@@ -42,7 +42,6 @@ public class LeavePosAlarmRankingViewModel extends BaseViewModel {
     private MutableLiveData<List<LeavePostDetailBean>> stationDetailData;
     private LeavePostRepo mLeavePostHomeRepo;
     private int mCurrentPage = 1;
-    private Long mCompanyId;
 
     public LeavePosAlarmRankingViewModel() {
         stationRankingData = new MutableLiveData<>();
@@ -59,30 +58,16 @@ public class LeavePosAlarmRankingViewModel extends BaseViewModel {
     /**
      * 岗位排名
      */
-    public void getStationRankingList() {
-        String defaultText = "请选择";
+    public void getStationRankingList(int dateType) {
         QueryEntry queryEntry = new QueryEntry();
-        if (mBinding != null) {
-            String year = mBinding.tvLeavePostAlarmRankingYear.getText().toString();
-            if (!defaultText.equals(year)) {
-
-                queryEntry.getEquals().put("year", year);
-                if (!defaultText.equals(mBinding.tvLeavePostAlarmRankingMonth.getText().toString())) {
-                    queryEntry.getEquals().put("month", mBinding.tvLeavePostAlarmRankingMonth.getText().toString());
-                }
-                if (!defaultText.equals(mBinding.tvLeavePostAlarmRankingDay.getText().toString())) {
-                    queryEntry.getEquals().put("day", mBinding.tvLeavePostAlarmRankingDay.getText().toString());
-                }
-            }
-        }
-        queryEntry.getEquals().put("isQuarter", "false");
+        queryEntry.getEquals().put("dateType", String.valueOf(dateType));
         queryEntry.setSize(5);
-        queryEntry.setPage(1);
+        queryEntry.setPage(mCurrentPage);
         mLeavePostHomeRepo.postRankingListData(queryEntry).observe(lifecycleOwner, leavePostStationRankingListBean -> {
             ArrayList<LeavePostDefaultRankingBean> list = new ArrayList<>();
             ArrayList<LeavePostDetailBean> detailBeans = new ArrayList<>();
             for (LeavePostStationRankingListBean.ListBean bean : leavePostStationRankingListBean.getList()) {
-                list.add(bean.getRankingBean());
+                list.add(bean.getRankingBean(dateType));
                 detailBeans.add(bean.getLeavePostDetailBean());
             }
             stationRankingData.setValue(list);
@@ -93,27 +78,16 @@ public class LeavePosAlarmRankingViewModel extends BaseViewModel {
     /**
      * 问题排名
      */
-    public void getAlertRankingList() {
-        String defaultText = "请选择";
+    public void getAlertRankingList(int dateType) {
         QueryEntry queryEntry = new QueryEntry();
-        if (mBinding != null) {
-            String year = mBinding.tvLeavePostAlarmRankingYear.getText().toString();
-            if (!defaultText.equals(year)) {
-                queryEntry.getEquals().put("year", year);
-                if (!defaultText.equals(mBinding.tvLeavePostAlarmRankingMonth.getText().toString())) {
-                    queryEntry.getEquals().put("month", mBinding.tvLeavePostAlarmRankingMonth.getText().toString());
-                }
-                if (!defaultText.equals(mBinding.tvLeavePostAlarmRankingDay.getText().toString())) {
-                    queryEntry.getEquals().put("day", mBinding.tvLeavePostAlarmRankingDay.getText().toString());
-                }
-            }
-        }
-        queryEntry.getEquals().put("isQuarter", "false");
+        queryEntry.getEquals().put("dateType", String.valueOf(dateType));
+        queryEntry.setSize(5);
+        queryEntry.setPage(mCurrentPage);
         mLeavePostHomeRepo.alertRankingList(queryEntry).observe(lifecycleOwner, leavePostAlertRankingListBean -> {
             ArrayList<LeavePostDefaultRankingBean> rankingBeans = new ArrayList<>();
             ArrayList<LeavePostDetailBean> detailBeans = new ArrayList<>();
             for (LeavePostAlertRankingListBean.ListBean bean : leavePostAlertRankingListBean.getList()) {
-                rankingBeans.add(bean.getRankingBean());
+                rankingBeans.add(bean.getRankingBean(dateType));
                 detailBeans.add(bean.getLeavePostDetailBean());
             }
             alertRankingData.setValue(rankingBeans);
@@ -137,7 +111,11 @@ public class LeavePosAlarmRankingViewModel extends BaseViewModel {
     /**
      * 跳转全部报警页面
      */
-    public void gotoAllAlert(Activity activity, int jumpType) {
-        activity.startActivity(new Intent(activity, LeavePostListActivity.class).putExtra("type", jumpType));
+    public void gotoAllAlert(Activity activity, int jumpType, int dateType) {
+        Intent intent = new Intent(activity, LeavePostListActivity.class);
+        intent.putExtra("type", jumpType);
+        intent.putExtra("dateType", dateType);
+        activity.startActivity(intent);
     }
+
 }

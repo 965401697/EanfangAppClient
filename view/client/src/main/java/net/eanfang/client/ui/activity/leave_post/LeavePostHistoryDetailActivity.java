@@ -48,18 +48,8 @@ public class LeavePostHistoryDetailActivity extends BaseActivity {
         int stationId = getIntent().getIntExtra("stationId", 0);
         String date = getIntent().getStringExtra("date");
         mViewModel.historyDayData(GetDateUtils.getYeanDate(date), String.valueOf(stationId));
-        mBinding.imgLeavePostHistoryDetailLeft.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mViewModel.setLastDay();
-            }
-        });
-        mBinding.imgLeavePostHistoryDetailRight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mViewModel.setNextDay(mBinding.imgLeavePostHistoryDetailRight);
-            }
-        });
+        mBinding.imgLeavePostHistoryDetailLeft.setOnClickListener(view -> mViewModel.setLastDay());
+        mBinding.imgLeavePostHistoryDetailRight.setOnClickListener(view -> mViewModel.setNextDay(mBinding.imgLeavePostHistoryDetailRight));
         mAdapter = new LeavePostHistoryDayAdapter(R.layout.item_leave_post_history_detail);
         mBinding.recLeavePostHistoryDetail.setLayoutManager(new LinearLayoutManager(this));
         mAdapter.bindToRecyclerView(mBinding.recLeavePostHistoryDetail);

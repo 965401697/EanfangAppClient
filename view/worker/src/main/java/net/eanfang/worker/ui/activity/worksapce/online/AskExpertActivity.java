@@ -4,14 +4,15 @@ package net.eanfang.worker.ui.activity.worksapce.online;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
@@ -109,43 +110,43 @@ public class AskExpertActivity extends BaseWorkerActivity {
                 .execute(new EanfangCallback<AnswerExpertMoreDetailsBean>(this, true, AnswerExpertMoreDetailsBean.class) {
                     @Override
                     public void onSuccess(AnswerExpertMoreDetailsBean bean) {
-                        GlideUtil.intoImageView(AskExpertActivity.this,Uri.parse(BuildConfig.OSS_SERVER + bean.getExpert().getAvatarPhoto()),ivExpertHeader);
-                        if (!TextUtils.isEmpty(bean.getExpert().getCertificateName())){
+                        GlideUtil.intoImageView(AskExpertActivity.this, Uri.parse(BuildConfig.OSS_SERVER + bean.getExpert().getAvatarPhoto()), ivExpertHeader);
+                        if (!TextUtils.isEmpty(bean.getExpert().getCertificateName())) {
                             tvLevel.setText(bean.getExpert().getCertificateName());
-                        }else {
+                        } else {
                             tvLevel.setText("无");
                         }
-                        if (!TextUtils.isEmpty(bean.getExpert().getExpertName())){
+                        if (!TextUtils.isEmpty(bean.getExpert().getExpertName())) {
                             tvExpertName.setText(bean.getExpert().getExpertName());
-                        }else {
+                        } else {
                             tvExpertName.setText("无");
                         }
                         llGood.setText("好评率:" + bean.getExpert().getFavorableRate() * 100 + "%");
                         llAnswer.setText("回答:" + bean.getAnswerNums());
-                        if (!TextUtils.isEmpty(bean.getExpert().getSystemType())){
+                        if (!TextUtils.isEmpty(bean.getExpert().getSystemType())) {
                             tvMajor.setText("擅长专业:  " + bean.getExpert().getSystemType());
-                        }else {
+                        } else {
                             tvExpertName.setText("无");
                         }
-                        if (!TextUtils.isEmpty(bean.getExpert().getResponsibleBrand())){
+                        if (!TextUtils.isEmpty(bean.getExpert().getResponsibleBrand())) {
                             tvBrand.setText("擅长品牌:  " + bean.getExpert().getResponsibleBrand());
-                        }else {
+                        } else {
                             tvExpertName.setText("无");
                         }
-                        if (!TextUtils.isEmpty(bean.getExpert().getIntro())){
+                        if (!TextUtils.isEmpty(bean.getExpert().getIntro())) {
                             tvIntroduce.setText("专家介绍:  " + bean.getExpert().getIntro());
-                        }else {
+                        } else {
                             tvExpertName.setText("无");
                         }
-                        if (!TextUtils.isEmpty(bean.getExpert().getCompany())){
+                        if (!TextUtils.isEmpty(bean.getExpert().getCompany())) {
                             tvCompany.setText("就职单位:  " + bean.getExpert().getCompany());
-                        }else {
+                        } else {
                             tvExpertName.setText("无");
                         }
 
-                        if (!TextUtils.isEmpty(bean.getExpert().getSystemType())){
+                        if (!TextUtils.isEmpty(bean.getExpert().getSystemType())) {
                             tvExpertType.setText(bean.getExpert().getSystemType());
-                        }else {
+                        } else {
                             tvExpertName.setText("无");
                         }
 
@@ -154,7 +155,7 @@ public class AskExpertActivity extends BaseWorkerActivity {
                             recyclerView.setVisibility(View.VISIBLE);
                             tvNoDatas.setVisibility(View.GONE);
                             mUserAppraiseAdapter.setNewData(bean.getEvaluateList());
-                        }else {
+                        } else {
                             recyclerView.setVisibility(View.GONE);
                             tvNoDatas.setVisibility(View.VISIBLE);
                         }

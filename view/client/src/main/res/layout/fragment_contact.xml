@@ -116,6 +116,7 @@
                             android:layout_alignParentLeft="true"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="@dimen/dimen_36"
+                            android:padding="@dimen/dimen_10"
                             android:src="@drawable/ic_contact_friend" />
 
                         <TextView
@@ -153,6 +154,7 @@
                             android:layout_alignParentLeft="true"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="@dimen/dimen_36"
+                            android:padding="@dimen/dimen_10"
                             android:src="@drawable/ic_contact_group" />
 
                         <TextView
@@ -190,6 +192,7 @@
                             android:layout_alignParentLeft="true"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="@dimen/dimen_36"
+                            android:padding="@dimen/dimen_10"
                             android:src="@drawable/ic_contact_like" />
 
                         <TextView
@@ -225,6 +228,7 @@
                             android:layout_alignParentLeft="true"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="@dimen/dimen_36"
+                            android:padding="@dimen/dimen_10"
                             android:src="@drawable/icon_peer_connection" />
 
                         <TextView

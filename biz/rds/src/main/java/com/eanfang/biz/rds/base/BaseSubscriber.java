@@ -22,7 +22,8 @@ public class BaseSubscriber<T> extends DisposableObserver<Optional<T>> {
 
     @Override
     public void onNext(Optional<T> t) {
-        if (requestCallback != null) {
+
+    if (requestCallback != null) {
             requestCallback.onSuccess(t.value);
         }
     }

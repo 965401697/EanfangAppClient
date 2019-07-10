@@ -129,6 +129,17 @@ public class LeavePostRepo extends BaseRepo<LeavePostDs> {
     }
 
     /**
+     * 更新岗位
+     *
+     * @return
+     */
+    public MutableLiveData<JSONObject> updatePost(LeavePostAddPostPostBean addPostPostBean) {
+        MutableLiveData<JSONObject> mutableLiveData = new MutableLiveData<>();
+        remoteDataSource.updatePost(addPostPostBean, mutableLiveData::setValue);
+        return mutableLiveData;
+    }
+
+    /**
      * 报警排名---->岗位报警排名
      *
      * @return

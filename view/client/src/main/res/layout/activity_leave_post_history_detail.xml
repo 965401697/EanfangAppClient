@@ -38,7 +38,7 @@
             app:layout_constraintTop_toTopOf="@id/tv_leave_post_history_detail_date"
             app:layout_constraintBottom_toBottomOf="@id/tv_leave_post_history_detail_date"
             app:layout_constraintLeft_toLeftOf="@id/tv_leave_post_history_detail_date"
-            android:src="@drawable/arrow_left"
+            android:src="@drawable/arrow_left_choose"
             android:layout_marginLeft="@dimen/dimen_130" />
 
         <ImageView
@@ -48,7 +48,7 @@
             app:layout_constraintTop_toTopOf="@id/tv_leave_post_history_detail_date"
             app:layout_constraintBottom_toBottomOf="@id/tv_leave_post_history_detail_date"
             app:layout_constraintRight_toRightOf="@id/tv_leave_post_history_detail_date"
-            android:src="@drawable/arrow_right"
+            android:src="@drawable/arrow_right_choose"
             android:layout_marginRight="@dimen/dimen_130" />
 
         <androidx.recyclerview.widget.RecyclerView

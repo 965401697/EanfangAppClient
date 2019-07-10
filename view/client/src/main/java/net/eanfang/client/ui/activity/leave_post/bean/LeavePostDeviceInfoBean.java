@@ -31,48 +31,38 @@ public class LeavePostDeviceInfoBean {
     private int status;
     private List<ChargeStaffListBean> chargeStaffList;
     private List<ChargeStaffListBean> dutyStaffList;
+    /**
+     * chargeStaffList : []
+     * createTime : 2019-07-06 11:28:15
+     * createUserId : 979993533551525889
+     * deviceEntity : {"beginDate":"2019-07-06 00:00:00","belongTo":0,"companyId":"1126289639904178178","createTime":"2019-07-06 11:08:41","createUserId":"979985982335008770","detectId":29,"deviceId":27,"deviceName":"测试离岗设备","endDate":"2019-07-06 00:00:00","isInUse":1,"livePic":"ys7/img/2420190706181251.jpg","orgName":"还是辣的很","status":1,"topCompanyId":"1126289639904178178","updateTime":"2019-07-06 11:08:41","updateUserId":"979985982335008770","ys7Channel":1,"ys7DeviceSerial":"D18812270"}
+     * dutyStaffList : []
+     * imgHeight : 160
+     * imgWidth : 235
+     * imgX : 400
+     * imgY : 140
+     * intervalLength : 2
+     * stationAddress : 一个测试的详细的地址
+     * topCompanyId : 1126289639904178178
+     * updateTime : 2019-07-06 11:29:48
+     * updateUserId : 979985982335008770
+     */
 
-    @NoArgsConstructor
-    @Data
-    public static class DeviceEntityBean {
-        /**
-         * beginDate : 2019-06-24 16:37:02
-         * belongTo : 0
-         * companyId : 1134307027488649218
-         * createTime : 2019-06-24 16:29:40
-         * createUserId : 979993533551525889
-         * detectId : 21
-         * deviceId : 5
-         * deviceName : 测试绑定设备
-         * endDate : 2019-06-24 16:37:05
-         * isInUse : 0
-         * livePic : http://img.ys7.com/group9/M00/26/D4/CmGCnF0R9viABDsZAAQAAKfuF0k065.jpg
-         * status : 2
-         * topCompanyId : 1134307027488649218
-         * updateTime : 2019-06-25 16:48:02
-         * updateUserId : 979985982335008770
-         * ys7Channel : 1
-         * ys7DeviceSerial : C86980223
-         */
+    private String createTime;
+    private String createUserId;
+    private DeviceEntityBean deviceEntityX;
+    private int imgHeight;
+    private int imgWidth;
+    private int imgX;
+    private int imgY;
+    private int intervalLength;
+    private String stationAddress;
+    private String topCompanyId;
+    private String updateTime;
+    private String updateUserId;
+    private List<?> chargeStaffListX;
+    private List<?> dutyStaffListX;
 
-        private String beginDate;
-        private int belongTo;
-        private String companyId;
-        private String createTime;
-        private String createUserId;
-        private int detectId;
-        private int deviceId;
-        private String deviceName;
-        private String endDate;
-        private int isInUse;
-        private String livePic;
-        private int status;
-        private String topCompanyId;
-        private String updateTime;
-        private String updateUserId;
-        private int ys7Channel;
-        private String ys7DeviceSerial;
-    }
 
     @NoArgsConstructor
     @Data
@@ -103,6 +93,51 @@ public class LeavePostDeviceInfoBean {
          * 标题
          */
         private String title;
+
+
     }
 
+    @NoArgsConstructor
+    @Data
+    public static class DeviceEntityBean {
+        /**
+         * beginDate : 2019-07-06 00:00:00
+         * belongTo : 0
+         * companyId : 1126289639904178178
+         * createTime : 2019-07-06 11:08:41
+         * createUserId : 979985982335008770
+         * detectId : 29
+         * deviceId : 27
+         * deviceName : 测试离岗设备
+         * endDate : 2019-07-06 00:00:00
+         * isInUse : 1
+         * livePic : ys7/img/2420190706181251.jpg
+         * orgName : 还是辣的很
+         * status : 1
+         * topCompanyId : 1126289639904178178
+         * updateTime : 2019-07-06 11:08:41
+         * updateUserId : 979985982335008770
+         * ys7Channel : 1
+         * ys7DeviceSerial : D18812270
+         */
+
+        private String beginDate;
+        private int belongTo;
+        private String companyIdX;
+        private String createTime;
+        private String createUserId;
+        private int detectIdX;
+        private int deviceIdX;
+        private String deviceNameX;
+        private String endDate;
+        private int isInUse;
+        private String livePic;
+        private String orgName;
+        private int statusX;
+        private String topCompanyId;
+        private String updateTime;
+        private String updateUserId;
+        private int ys7Channel;
+        private String ys7DeviceSerial;
+    }
 }

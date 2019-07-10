@@ -58,6 +58,9 @@ public class LeavePostHistoryActivity extends BaseActivity {
     }
 
     private void setData(LeavePostAlertHistoryBean leavePostAlertHistoryBean) {
+        if (leavePostAlertHistoryBean == null) {
+            return;
+        }
         if (leavePostAlertHistoryBean.getCurrPage() == 1) {
             mAdapter.setNewData(leavePostAlertHistoryBean.getList());
         } else {
