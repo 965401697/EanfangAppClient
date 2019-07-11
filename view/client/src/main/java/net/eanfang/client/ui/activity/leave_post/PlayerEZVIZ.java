@@ -1,11 +1,5 @@
 package net.eanfang.client.ui.activity.leave_post;
 
-/**
- * @author liangkailun
- * Date ：2019-07-06
- * Describe :
- */
-
 import android.os.Handler;
 import android.view.SurfaceView;
 

@@ -5,9 +5,13 @@ import android.content.Intent;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.biz.rds.base.BaseViewModel;
 import com.eanfang.util.GetDateUtils;
 
+import net.eanfang.client.databinding.ActivityAboutUsBinding;
+import net.eanfang.client.databinding.ActivityLeavePostAudioPlayBinding;
+import net.eanfang.client.ui.activity.leave_post.LeavePostAudioPlay;
 import net.eanfang.client.ui.activity.leave_post.LeavePostCheckDetailActivity;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostAlertInfoDetailBean;
 import net.eanfang.client.ui.activity.leave_post.ds.LeavePostDs;
@@ -78,5 +82,18 @@ public class LeavePostDetailViewModel extends BaseViewModel {
         intent.putExtra("mAlertId", Objects.requireNonNull(leavePostAlertInfoData.getValue()).getAlertId());
         intent.putExtra("isShowTopContent", false);
         activity.startActivity(intent);
+    }
+
+    public void gotoAudioPlay(Activity activity) {
+        Intent intent = new Intent(activity, LeavePostCheckDetailActivity.class);
+        intent.putExtra("isShowTopContent", true);
+        if (leavePostAlertInfoData.getValue() != null) {
+            intent.putExtra("stationId", leavePostAlertInfoData.getValue().getStationId());
+        }
+        activity.startActivity(intent);
+    }
+
+    public void gotoCheckDetailPage(Activity activity, BaseQuickAdapter adapter, int position) {
+
     }
 }

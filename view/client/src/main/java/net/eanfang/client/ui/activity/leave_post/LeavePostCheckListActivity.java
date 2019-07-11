@@ -56,6 +56,7 @@ public class LeavePostCheckListActivity extends BaseActivity {
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
             mViewModel.gotoCheckDetailPage(this, adapter, position);
         });
+
     }
 
     @Override

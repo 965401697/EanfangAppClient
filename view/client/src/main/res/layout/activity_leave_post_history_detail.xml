@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_86"
             android:background="@color/white"
-            android:text="星期一"
+            android:text="星期一 "
             android:textSize="14sp"
             android:layout_marginTop="@dimen/dimen_22"
             android:textColor="@color/color_client_neworder"
@@ -33,30 +33,35 @@
 
         <ImageView
             android:id="@+id/img_leave_post_history_detail_left"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/dimen_200"
+            android:layout_height="@dimen/dimen_86"
             app:layout_constraintTop_toTopOf="@id/tv_leave_post_history_detail_date"
             app:layout_constraintBottom_toBottomOf="@id/tv_leave_post_history_detail_date"
             app:layout_constraintLeft_toLeftOf="@id/tv_leave_post_history_detail_date"
             android:src="@drawable/arrow_left_choose"
-            android:layout_marginLeft="@dimen/dimen_130" />
+            android:scaleType="center"
+            android:layout_marginLeft="@dimen/dimen_30" />
 
         <ImageView
             android:id="@+id/img_leave_post_history_detail_right"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/dimen_200"
+            android:layout_height="@dimen/dimen_86"
             app:layout_constraintTop_toTopOf="@id/tv_leave_post_history_detail_date"
             app:layout_constraintBottom_toBottomOf="@id/tv_leave_post_history_detail_date"
             app:layout_constraintRight_toRightOf="@id/tv_leave_post_history_detail_date"
             android:src="@drawable/arrow_right_choose"
-            android:layout_marginRight="@dimen/dimen_130" />
+            android:scaleType="center"
+            android:layout_marginRight="@dimen/dimen_30" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rec_leave_post_history_detail"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginTop="@dimen/dimen_24"
-            app:layout_constraintTop_toBottomOf="@id/tv_leave_post_history_detail_date" />
+            app:layout_constraintTop_toBottomOf="@id/tv_leave_post_history_detail_date"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="@dimen/dimen_20"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

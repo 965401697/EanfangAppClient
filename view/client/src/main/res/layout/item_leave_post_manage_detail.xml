@@ -11,7 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginLeft="@dimen/dimen_38"
-        android:src="@drawable/rz"
+        android:src="@mipmap/ic_nodata"
         app:layout_constraintDimensionRatio="w,9:8"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"

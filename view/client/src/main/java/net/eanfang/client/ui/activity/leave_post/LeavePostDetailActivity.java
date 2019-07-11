@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.base.BaseActivity;
 import com.eanfang.biz.rds.base.LViewModelProviders;
 
@@ -44,12 +45,7 @@ public class LeavePostDetailActivity extends BaseActivity {
     protected void initView() {
         setLeftBack(true);
         setTitle("报警详情");
-        setRightClick(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
+        setRightClick(view -> mViewModel.gotoAudioPlay(LeavePostDetailActivity.this));
         setRightTitle("图像查岗");
         int alertId = getIntent().getIntExtra("alertId", 0);
         mViewModel.getAlertInfoData(String.valueOf(alertId));
@@ -68,6 +64,12 @@ public class LeavePostDetailActivity extends BaseActivity {
         mVideoAdapter = new LeavePostDetailImageAdapter();
         mImageAdapter.bindToRecyclerView(mBinding.recLeavePostDetailImg);
         mVideoAdapter.bindToRecyclerView(mBinding.recLeavePostDetailAudio);
+        mImageAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+//                mViewModel.gotoCheckDetailPage(adapter, position);
+            }
+        });
     }
 
     @Override

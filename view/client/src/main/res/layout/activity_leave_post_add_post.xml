@@ -147,6 +147,7 @@
                     android:layout_height="@dimen/dimen_96"
                     android:layout_marginRight="@dimen/dimen_18"
                     android:drawableRight="@drawable/arrow_right"
+                    android:drawablePadding="@dimen/dimen_18"
                     android:gravity="center_vertical"
                     android:hint="请选择"
                     android:textColor="@color/color_client_neworder"
@@ -176,8 +177,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dimen_96"
                     android:layout_marginRight="@dimen/dimen_18"
+                    android:drawableRight="@drawable/arrow_right"
+                    android:drawablePadding="@dimen/dimen_18"
                     android:gravity="center_vertical"
-                    android:hint="请选择>"
+                    android:hint="请选择"
                     android:textColor="@color/color_client_neworder"
                     android:textSize="13sp"
                     app:layout_constraintRight_toRightOf="parent"
@@ -201,24 +204,6 @@
                     app:layout_constraintTop_toBottomOf="@id/tv_leave_post_add_post_device" />
 
                 <TextView
-                    android:id="@+id/tv_leave_post_add_post_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/dimen_96"
-                    android:layout_marginRight="@dimen/dimen_18"
-                    android:gravity="center_vertical"
-                    android:text="10"
-                    android:textColor="@color/color_client_neworder"
-                    android:textSize="13sp"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_leave_post_add_post_device" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/dimen_2"
-                    android:background="@color/color_item_line"
-                    app:layout_constraintTop_toBottomOf="@id/tv_leave_post_add_post_time" />
-
-                <TextView
                     android:id="@+id/tv_leave_post_add_post_status_name"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/dimen_96"
@@ -232,8 +217,8 @@
 
                 <com.eanfang.witget.SwitchButton
                     android:id="@+id/switch_btn_leave_post_add_post_status"
-                    android:layout_width="@dimen/dimen_84"
-                    android:layout_height="@dimen/dimen_46"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/dimen_18"
                     app:layout_constraintBottom_toBottomOf="@id/tv_leave_post_add_post_status_name"
                     app:layout_constraintRight_toRightOf="parent"
@@ -243,6 +228,28 @@
                     app:sb_checked_color="#32cd32"
                     app:sb_checkline_color="@color/white"
                     app:sb_uncheckcircle_color="#32cd32" />
+
+                <TextView
+                    android:id="@+id/tv_leave_post_add_post_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dimen_96"
+                    android:layout_marginRight="@dimen/dimen_18"
+                    android:drawableRight="@mipmap/arrow_down"
+                    android:drawablePadding="@dimen/dimen_18"
+                    android:gravity="center_vertical"
+                    android:text="10分钟"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="13sp"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_leave_post_add_post_device" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_2"
+                    android:background="@color/color_item_line"
+                    app:layout_constraintTop_toBottomOf="@id/tv_leave_post_add_post_time" />
+
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -327,6 +334,7 @@
                 android:background="@color/color_item_line"
                 app:layout_constraintBottom_toBottomOf="parent"
                 tools:layout_editor_absoluteX="0dp" />
+
             <Button
                 android:id="@+id/btn_leave_post_add_commit"
                 style="?android:attr/borderlessButtonStyle"

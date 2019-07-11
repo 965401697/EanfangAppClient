@@ -31,7 +31,7 @@ public class LeavePostCheckListAdapter extends BaseQuickAdapter<LeavePostDeviceL
         if (item == null) {
             return;
         }
-        helper.tvItemLeavePostCheck.setText(MessageFormat.format("{0}\t({1})\t{2}", item.getStationName(), item.getStationCode(), item.getDeviceName()));
+        helper.tvItemLeavePostCheck.setText(MessageFormat.format("{0}\t({1})\t{2}", item.getStationName(), item.getStationCode(), item.getDeviceEntity().getDeviceName()));
         if (item.getDeviceEntity() != null) {
             GlideUtil.intoImageView(mContext, BuildConfig.OSS_SERVER + item.getDeviceEntity().getLivePic(), helper.imgItemLeavePostCheck);
         }

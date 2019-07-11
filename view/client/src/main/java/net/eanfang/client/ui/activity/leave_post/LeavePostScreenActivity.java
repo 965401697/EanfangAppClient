@@ -56,4 +56,5 @@ public class LeavePostScreenActivity extends BaseActivity {
             mViewModel.getResult(data);
         }
     }
+
 }

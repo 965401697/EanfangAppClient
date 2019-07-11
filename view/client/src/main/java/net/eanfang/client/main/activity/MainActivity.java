@@ -205,8 +205,8 @@ public class MainActivity extends BaseActivity {
         }
         // 首页小红点的显示
         if (bean.getRepair() > 0 || bean.getInstall() > 0 || bean.getDesign() > 0
-                || bean.getNoReadCount() > 0 || bean.getCommentNoRead() > 0) {
-            mHome = bean.getRepair() + bean.getInstall() + bean.getDesign() + bean.getNoReadCount() + bean.getCommentNoRead();
+                || bean.getNoReadCount() > 0 || bean.getCommentNoRead() > 0 || bean.getAlert() > 0) {
+            mHome = bean.getRepair() + bean.getInstall() + bean.getDesign() + bean.getNoReadCount() + bean.getCommentNoRead() + bean.getAlert();
 
         } else {
             mHome = 0;

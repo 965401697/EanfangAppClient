@@ -194,6 +194,7 @@ public class SwitchButton extends View implements Checkable {
     private boolean isEventBroadcast = false;
     /*******************************************************/
     private OnCheckedChangeListener onCheckedChangeListener;
+    private OnClickListener onClickListener;
     /**
      * 手势按下的时刻
      */
@@ -1093,10 +1094,6 @@ public class SwitchButton extends View implements Checkable {
             setUncheckViewState(afterState);
         }
         valueAnimator.start();
-    }
-
-    @Override
-    public final void setOnClickListener(OnClickListener l) {
     }
 
     @Override

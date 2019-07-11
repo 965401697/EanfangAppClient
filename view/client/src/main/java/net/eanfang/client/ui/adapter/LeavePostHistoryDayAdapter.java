@@ -2,8 +2,9 @@ package net.eanfang.client.ui.adapter;
 
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -31,31 +32,44 @@ public class LeavePostHistoryDayAdapter extends BaseQuickAdapter<LeavePostHistor
         if (item == null) {
             return;
         }
-        if (getParentPosition(item) == 0) {
+        if (mData.indexOf(item) == 0) {
             helper.imgItemLeavePostHistoryDetailLineTop.setVisibility(View.GONE);
-        } else if (getParentPosition(item) == getItemCount() - 1) {
+        }
+        if (mData.indexOf(item) == getItemCount() - 1) {
             helper.imgItemLeavePostHistoryDetailLineBottom.setVisibility(View.GONE);
         }
         helper.tvItemLeavePostHistoryDetailName.setText(item.getAlertName());
-        helper.tvItemLeavePostHistoryDetailDate.setText(MessageFormat.format("{0}-{1}", GetDateUtils.dateToHourMin(item.getLeaveTime()), GetDateUtils.dateToHourMin(item.getBackTime())));
+
+        helper.tvItemLeavePostHistoryDetailDate.setText(MessageFormat.format("{0}\t-\t{1}", GetDateUtils.dateToHourMin(item.getLeaveTime()), GetDateUtils.dateToHourMin(item.getBackTime())));
         int hour = 60;
         helper.imgItemLeavePostHistoryDetailBar.post(() -> {
-            int width = helper.imgItemLeavePostHistoryDetailBar.getWidth();
-            int height = 0;
+            int height = helper.imgItemLeavePostHistoryDetailBar.getHeight();
+            int width = 0;
             if (item.getAbsencePeriod() < hour * 2) {
-                height = width * 30 * (item.getAbsencePeriod() / 120);
+                width = (height * 30 * item.getAbsencePeriod()) / 120;
                 if (item.getAbsencePeriod() > hour) {
                     helper.imgItemLeavePostHistoryDetailBar.setSelected(true);
+                    helper.tvItemLeavePostHistoryDetailTime.setSelected(true);
                 }
             } else {
-                height = width * 30;
+                width = height * 30;
+                helper.imgItemLeavePostHistoryDetailBar.setSelected(true);
+                helper.tvItemLeavePostHistoryDetailTime.setSelected(true);
             }
-            RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width, height);
+            ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(width, height);
+            params.topToBottom = R.id.tv_item_leave_post_history_detail_date;
+            params.bottomToBottom = R.id.img_content;
+            params.leftToLeft = R.id.img_content;
+            params.leftMargin = 20;
             helper.imgItemLeavePostHistoryDetailBar.setLayoutParams(params);
         });
         int h = item.getAbsencePeriod() / hour;
         int min = item.getAbsencePeriod() % hour;
-        helper.tvItemLeavePostHistoryDetailTime.setText(MessageFormat.format("{0}h\t{1}min", h, min));
+        if (h > 0) {
+            helper.tvItemLeavePostHistoryDetailTime.setText(MessageFormat.format("{0}h\t{1}min", h, min));
+        } else {
+            helper.tvItemLeavePostHistoryDetailTime.setText(MessageFormat.format("{0}min", min));
+        }
     }
 
     class LeavePostHomeViewHolder extends BaseViewHolder {

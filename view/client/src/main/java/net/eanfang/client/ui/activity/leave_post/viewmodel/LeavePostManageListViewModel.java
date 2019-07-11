@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author liangkailun
@@ -29,7 +30,7 @@ import lombok.Getter;
 public class LeavePostManageListViewModel extends BaseViewModel {
     @Getter
     private MutableLiveData<List<String>> leavePostHomeData;
-
+    @Setter
     private int mCurrentPage = 1;
 
     @Getter

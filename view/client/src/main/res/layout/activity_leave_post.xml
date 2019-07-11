@@ -16,7 +16,8 @@
         <!--layout="@layout/header" />-->
         <include layout="@layout/header_eanfang" />
 
-        <ImageView
+        <View
+            android:id="@+id/view_content"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@color/white"
@@ -41,24 +42,26 @@
             android:layout_width="@dimen/dimen_120"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dimen_74"
-            android:layout_marginTop="@dimen/dimen_44"
             android:text="0"
             android:textColor="@color/color_leave_post_count_text"
             android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@id/view_content"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_leave_post_date" />
+            app:layout_constraintTop_toTopOf="@id/view_content"
+            app:layout_constraintVertical_bias="0.3" />
 
         <TextView
             android:id="@+id/tv_leave_post_warn_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dimen_64"
-            android:layout_marginTop="@dimen/dimen_44"
             android:text="0"
             android:textColor="@color/color_main_header_bg"
             android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@id/view_content"
             app:layout_constraintLeft_toRightOf="@id/tv_leave_post_post_count"
-            app:layout_constraintTop_toBottomOf="@id/tv_leave_post_date" />
+            app:layout_constraintTop_toTopOf="@id/view_content"
+            app:layout_constraintVertical_bias="0.3" />
 
         <TextView
             android:layout_width="wrap_content"

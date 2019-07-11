@@ -6,6 +6,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import cn.hutool.core.util.StrUtil;
+
 /**
  * @author zhang.qijia
  * @create 2017-05-27 10:47
@@ -510,13 +512,16 @@ public class GetDateUtils {
      * @throws ParseException
      */
     public static String dateToHourMin(String dateStr){
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        if (StringUtils.isEmpty(dateStr)){
+            return "";
+        }
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date datab = null;
         try {
             datab = sdf.parse(dateStr);
         } catch (ParseException e) {
         }
-        return dateToFormatString(datab, "HH:ss");
+        return dateToFormatString(datab, "HH:mm");
     }
 
 

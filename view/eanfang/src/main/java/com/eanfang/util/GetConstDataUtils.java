@@ -46,6 +46,10 @@ public class GetConstDataUtils {
      */
     private static List<String> workTransferDetailStatus;
     /**
+     * 阀值时间
+     */
+    private static List<String> detectTime;
+    /**
      * 交接班
      */
     private static List<String> workTransfer;
@@ -332,6 +336,22 @@ public class GetConstDataUtils {
             }
         }
         return workTalkStatus;
+    }
+
+    /**
+     * 获取阀值时间
+     *
+     * @return
+     */
+    public static List<String> getDetectTime() {
+        if (detectTime == null) {
+            synchronized (GetConstDataUtils.class) {
+                if (detectTime == null) {
+                    detectTime = Config.get().getConstBean().getData().getConst().get(Constant.DETECT_TIME);
+                }
+            }
+        }
+        return detectTime;
     }
 
     /**

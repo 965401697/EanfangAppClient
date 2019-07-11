@@ -90,7 +90,7 @@ public class LeavePostCheckDetailActivity extends BaseActivity {
             return;
         }
         if (showTopContent) {
-            mBinding.tvLeavePostCheckDetailTitle.setText(MessageFormat.format("{0}\t({1})\t{2}", leavePostDeviceInfoBean.getStationName(), leavePostDeviceInfoBean.getStationCode(), leavePostDeviceInfoBean.getDeviceName()));
+            mBinding.tvLeavePostCheckDetailTitle.setText(MessageFormat.format("{0}\t({1})\t{2}", leavePostDeviceInfoBean.getStationName(), leavePostDeviceInfoBean.getStationCode(), leavePostDeviceInfoBean.getDeviceEntity().getDeviceNameX()));
             GlideUtil.intoImageView(this, BuildConfig.OSS_SERVER + leavePostDeviceInfoBean.getDeviceEntity().getLivePic(), mBinding.imgLeavePostCheckDetail);
         }
 

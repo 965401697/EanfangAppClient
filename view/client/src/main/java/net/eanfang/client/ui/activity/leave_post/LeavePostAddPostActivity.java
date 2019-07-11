@@ -6,6 +6,7 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,19 +16,20 @@ import com.eanfang.biz.model.SelectAddressItem;
 import com.eanfang.biz.model.TemplateBean;
 import com.eanfang.biz.rds.base.LViewModelProviders;
 import com.eanfang.config.Config;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.R;
 import net.eanfang.client.databinding.ActivityLeavePostAddPostBinding;
+import net.eanfang.client.ui.activity.ChooseAlertTimeDialog;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostAddPostPostBean;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostDeviceInfoBean;
 import net.eanfang.client.ui.activity.leave_post.viewmodel.LeavePostAddPostViewModel;
-import net.eanfang.client.ui.activity.worksapce.oa.workreport.OAPersonAdaptet;
 import net.eanfang.client.ui.adapter.LeavePostDetailInfoAdapter;
+import net.eanfang.client.ui.adapter.LeavePostPersonAdapter;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,11 +43,12 @@ public class LeavePostAddPostActivity extends BaseActivity {
     private static final int SELECT_DEVICE_CALL_BACK_CODE = 2;
     private ActivityLeavePostAddPostBinding mBinding;
     private LeavePostAddPostViewModel mViewModel;
-    private List<TemplateBean.Preson> whoList = new ArrayList<>();
-    private OAPersonAdaptet mChargeStaffAdapter;
-    private OAPersonAdaptet mDutyStaffAdapter;
+    private LeavePostPersonAdapter mChargeStaffAdapter;
+    private LeavePostPersonAdapter mDutyStaffAdapter;
     private int mFlag;
     private LeavePostDetailInfoAdapter mAdapter;
+    private List<TemplateBean.Preson> mDutyStaffData;
+    private List<TemplateBean.Preson> mChargeStaff;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -86,19 +89,27 @@ public class LeavePostAddPostActivity extends BaseActivity {
         }
         mAdapter = new LeavePostDetailInfoAdapter();
         mBinding.recLeavePostDetailInfo.setLayoutManager(new LinearLayoutManager(this));
-        mBinding.tvLeavePostAddPostDevice.setOnClickListener(view -> mViewModel.addDevice(LeavePostAddPostActivity.this, SELECT_DEVICE_CALL_BACK_CODE));
-        mBinding.btnLeavePostAddCommit.setOnClickListener(view -> mViewModel.addPostCommit(mBinding, 0));
+        mBinding.tvLeavePostAddPostDevice.setOnClickListener(view -> {
+            mViewModel.addDevice(LeavePostAddPostActivity.this, SELECT_DEVICE_CALL_BACK_CODE);
+        });
+        mBinding.btnLeavePostAddCommit.setOnClickListener(view -> {
+            mViewModel.addPostCommit(mBinding, 0);
+        });
         mBinding.tvLeavePostAddPostArea.setOnClickListener(view -> {
             mViewModel.gotoChooseArea(LeavePostAddPostActivity.this, SELECT_ADDRESS_CALL_BACK_CODE);
         });
         mAdapter.bindToRecyclerView(mBinding.recLeavePostDetailInfo);
-        mBinding.switchBtnLeavePostAddPostStatus.setOnCheckedChangeListener((view, isChecked) -> {
-            if (StringUtils.isEmpty(mBinding.tvLeavePostAddPostDevice.getText().toString())) {
-                showToast("请先选择绑定设备");
-                mBinding.switchBtnLeavePostAddPostStatus.setChecked(false);
-            }
+//        mBinding.switchBtnLeavePostAddPostStatus.setOnClickListener((view) -> {
+//            if (StringUtils.isEmpty(mBinding.tvLeavePostAddPostDevice.getText().toString())) {
+//                showToast("请先选择绑定设备");
+//            }
+//        });
+        mBinding.tvLeavePostAddPostTime.setOnClickListener(view -> {
+            ChooseAlertTimeDialog dialog = new ChooseAlertTimeDialog(mBinding.tvLeavePostAddPostTime.getText().toString());
+            dialog.setStyle(DialogFragment.STYLE_NORMAL, R.style.Dialog_FullScreen);
+            dialog.setMChooseTimeListener(time -> mBinding.tvLeavePostAddPostTime.setText(time));
+            dialog.show(getSupportFragmentManager(), "addPost");
         });
-
         initRecView(postType == 0);
     }
 
@@ -113,16 +124,21 @@ public class LeavePostAddPostActivity extends BaseActivity {
             mBinding.edtLeavePostAddPostNumber.setText(leavePostDeviceInfoBean.getStationCode());
             mBinding.tvLeavePostAddPostArea.setText(Config.get().getAddressByCode(leavePostDeviceInfoBean.getStationPlaceCode()));
             mBinding.tvLeavePostAddPostDevice.setText(leavePostDeviceInfoBean.getDeviceName());
-            mBinding.tvLeavePostAddPostTime.setText(String.valueOf(leavePostDeviceInfoBean.getIntervalLength()));
+            mBinding.tvLeavePostAddPostTime.setText(MessageFormat.format("{0}分钟", leavePostDeviceInfoBean.getIntervalLength()));
             mBinding.switchBtnLeavePostAddPostStatus.setChecked(leavePostDeviceInfoBean.getStatus() == 0);
         }
+        mChargeStaffAdapter.setCanClick(true);
+        mChargeStaffAdapter.setNewData(mChargeStaff == null ? new ArrayList<>() : mChargeStaff);
+        mDutyStaffAdapter.setCanClick(true);
+        mDutyStaffAdapter.setNewData(mDutyStaffData == null ? new ArrayList<>() : mChargeStaff);
+
     }
 
     private void initRecView(boolean itemCanClienk) {
         mBinding.recLeavePostAddInDuty.setLayoutManager(new GridLayoutManager(this, 5));
         mBinding.recLeavePostAddInCharge.setLayoutManager(new GridLayoutManager(this, 5));
-        mChargeStaffAdapter = new OAPersonAdaptet(this, new ArrayList<TemplateBean.Preson>(), 3);
-        mDutyStaffAdapter = new OAPersonAdaptet(this, new ArrayList<TemplateBean.Preson>(), 2);
+        mChargeStaffAdapter = new LeavePostPersonAdapter(this, new ArrayList<TemplateBean.Preson>(), 3);
+        mDutyStaffAdapter = new LeavePostPersonAdapter(this, new ArrayList<TemplateBean.Preson>(), 2);
         mChargeStaffAdapter.setCanClick(itemCanClienk);
         mDutyStaffAdapter.setCanClick(itemCanClienk);
         mBinding.recLeavePostAddInDuty.setAdapter(mChargeStaffAdapter);
@@ -143,23 +159,29 @@ public class LeavePostAddPostActivity extends BaseActivity {
     }
 
     private void setDutyStaffData(List<TemplateBean.Preson> presons) {
+        if (presons == null) {
+            return;
+        }
+        this.mDutyStaffData = presons;
         mChargeStaffAdapter.setNewData(presons);
     }
 
     private void setChargeStaffData(List<TemplateBean.Preson> presons) {
+        if (presons == null) {
+            return;
+        }
+        this.mChargeStaff = presons;
         mDutyStaffAdapter.setNewData(presons);
     }
 
     @Subscribe
     public void onEvent(List<TemplateBean.Preson> presonList) {
-        whoList.clear();
-        whoList.addAll(presonList);
         if (mFlag == 3) {
-            mViewModel.setChargeStaff(whoList, 0);
-            mChargeStaffAdapter.setNewData(whoList);
+            mViewModel.setChargeStaff(presonList, 0);
+            mChargeStaffAdapter.setNewData(presonList);
         } else {
-            mViewModel.setChargeStaff(whoList, 1);
-            mDutyStaffAdapter.setNewData(whoList);
+            mViewModel.setChargeStaff(presonList, 1);
+            mDutyStaffAdapter.setNewData(presonList);
         }
     }
 

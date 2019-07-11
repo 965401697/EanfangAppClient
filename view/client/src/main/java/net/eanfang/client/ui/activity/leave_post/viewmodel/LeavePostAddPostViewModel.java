@@ -119,7 +119,7 @@ public class LeavePostAddPostViewModel extends BaseViewModel {
             addPostPostBean.setStationArea(binding.edtLeavePostAddPostPosition.getText().toString());
             addPostPostBean.setStationCode(binding.edtLeavePostAddPostNumber.getText().toString());
             addPostPostBean.setStatus(binding.switchBtnLeavePostAddPostStatus.isChecked() ? "1" : "0");
-            addPostPostBean.setIntervalLength(Integer.parseInt(binding.tvLeavePostAddPostTime.getText().toString()));
+            addPostPostBean.setIntervalLength(Integer.parseInt(binding.tvLeavePostAddPostTime.getText().toString().replace("分钟","")));
             addPostPostBean.setChargeUserList(mChargeStaffListBeans);
             addPostPostBean.setDutyUserList(mDutyStaffListBeans);
             if (type == 0) {
@@ -138,22 +138,22 @@ public class LeavePostAddPostViewModel extends BaseViewModel {
 
     private boolean checkoutInfo(ActivityLeavePostAddPostBinding binding) {
         if (StringUtils.isEmpty(binding.edtLeavePostAddPostName.getText().toString().trim())) {
-            showToast("请填写岗位名称");
+            showToast("请填写岗位名称！");
             return false;
         } else if (StringUtils.isEmpty(binding.edtLeavePostAddPostPosition.getText().toString().trim())) {
-            showToast("请填写岗位位置");
+            showToast("请填写岗位位置！");
             return false;
         } else if (StringUtils.isEmpty(binding.tvLeavePostAddPostArea.getText().toString().trim())) {
-            showToast("请选择岗位区域");
+            showToast("请选择岗位区域！");
             return false;
         } else if (StringUtils.isEmpty(binding.edtLeavePostAddPostNumber.getText().toString().trim())) {
-            showToast("请填写岗位编码");
-            return false;
-        } else if (StringUtils.isEmpty(binding.tvLeavePostAddPostDevice.getText().toString().trim())) {
-            showToast("请选择绑定设备");
+            showToast("请填写岗位编码！");
             return false;
         } else if (StringUtils.isEmpty(binding.tvLeavePostAddPostTime.getText().toString().trim())) {
-            showToast("请选择阀值时间");
+            showToast("请选择阀值时间！");
+            return false;
+        } else if (mChargeStaffListBeans.size() == 0 || mDutyStaffListBeans.size() == 0) {
+            showToast("请选择值班人和负责人！");
             return false;
         }
         return true;
@@ -188,6 +188,7 @@ public class LeavePostAddPostViewModel extends BaseViewModel {
             accountEntity.setAccId(Long.valueOf(preson.getId()));
             accountEntity.setRealName(preson.getName());
             accountEntity.setMobile(preson.getMobile());
+            accountEntity.setAvatar(preson.getProtraivat());
             bean.setUserId(preson.getUserId());
             bean.setAccountEntity(accountEntity);
             if (type == 0) {

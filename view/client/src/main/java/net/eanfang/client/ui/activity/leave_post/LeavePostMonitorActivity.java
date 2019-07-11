@@ -1,6 +1,7 @@
 package net.eanfang.client.ui.activity.leave_post;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
@@ -48,6 +49,8 @@ public class LeavePostMonitorActivity extends BaseActivity {
         mBinding.leavePostCheckListSearch.setCursorVisible(false);
         mBinding.leavePostCheckListSearch.setFocusable(false);
         mBinding.leavePostCheckListSearch.setFocusableInTouchMode(false);
+        mBinding.leavePostCheckListSearch.setOnClickListener(view -> mViewModel.gotoSecondPage(LeavePostMonitorActivity.this));
+
         mAdapter.setOnLoadMoreListener(() -> mViewModel.loadMoreData(), mBinding.recLeavePostCheckList);
     }
 

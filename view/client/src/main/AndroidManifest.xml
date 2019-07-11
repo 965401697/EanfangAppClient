@@ -1152,6 +1152,7 @@
         <activity android:name=".ui.activity.leave_post.LeavePostScreenChooseListActivity" />
         <activity android:name=".ui.activity.leave_post.LeavePostCheckListSecondActivity" />
         <activity android:name=".ui.activity.leave_post.LeavePostMonitorSecondActivity" />
+        <activity android:name=".ui.activity.leave_post.LeavePostAudioPlay" />
         <activity
             android:name="com.videogo.main.EzvizWebViewActivity"
             android:configChanges="orientation|keyboardHidden"

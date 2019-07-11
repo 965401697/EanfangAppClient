@@ -143,10 +143,9 @@ public class TemplateBean extends BaseItemData implements Serializable {
             }
             if (obj instanceof Preson) {
                 Preson preson = (Preson) obj;
-
                 // 比较每个属性的值 一致时才返回true
 //                if (preson.id.equals(this.id) && preson.name.equals(this.name))
-                return preson.id.equals(this.id);
+                return preson.id != null && preson.id.equals(this.id);
             }
             return false;
         }

@@ -17,7 +17,9 @@ import android.widget.Toast;
 import androidx.fragment.app.FragmentTabHost;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.BaseApplication;
 import com.eanfang.base.kit.SDKManager;
@@ -44,6 +46,8 @@ import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UpdateAppManager;
+import com.google.gson.JsonArray;
+import com.videogo.openapi.EZOpenSDK;
 import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.client.R;
@@ -140,6 +144,7 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
         initFragment();
         initUpdate();
         initView();
+//        initYingShiYunData();
         if (Config.get().getBaseDataBean() == null || Config.get().getConstBean() == null) {
             Dialog dialog = LoadKit.dialog(this, "正在初始化...");
             dialog.setCancelable(false);
@@ -172,6 +177,20 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
                     });
         }
 
+    }
+
+    private void initYingShiYunData() {
+        EanfangHttp.post(NewApiService.HOME_SUB_ACCOUNT_INFO_LIST).execute(new EanfangCallback<JSONObject>(this,false,JSONObject.class, bean -> {
+            JSONObject jsonObject = bean.getJSONObject("subAccountInfoList");
+            CacheKit.get().put("subAccountInfoList",jsonObject);
+            JSONObject jsonObject1= CacheKit.get().get("subAccountInfoList", JSONObject.class);
+
+            String value = jsonObject1.getString(String.valueOf(ClientApplication.get().getCompanyId()));
+            if (!StringUtils.isEmpty(value)) {
+                EZOpenSDK.getInstance().setAccessToken(value);
+            }
+            Log.d("lkl", "initYingShiYunData: " + value);
+        }));
     }
 
     /**

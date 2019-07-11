@@ -110,6 +110,9 @@ public abstract class BaseDialog extends RxDialogFragment {
      * 初始化页面风格样式方法
      */
     protected void initStyle() {
+        if (findViewById(R.id.titles_bar) == null) {
+            return;
+        }
         if (isClient()) {
             findViewById(R.id.titles_bar).setBackgroundColor(ContextCompat.getColor(mActivity, R.color.colorPrimaryC));
         } else {
@@ -175,16 +178,19 @@ public abstract class BaseDialog extends RxDialogFragment {
      * @param listener   listener
      */
     private void setLeftBack(boolean visibility, View.OnClickListener listener) {
-        ImageView iv_left = findViewById(R.id.iv_left);
+        ImageView ivLeft = findViewById(R.id.iv_left);
+        if (ivLeft == null) {
+            return;
+        }
         if (visibility) {
-            iv_left.setVisibility(View.VISIBLE);
+            ivLeft.setVisibility(View.VISIBLE);
         } else {
-            iv_left.setVisibility(View.GONE);
+            ivLeft.setVisibility(View.GONE);
         }
         if (listener != null) {
-            iv_left.setOnClickListener(listener);
+            ivLeft.setOnClickListener(listener);
         } else {
-            iv_left.setOnClickListener(v -> dismiss());
+            ivLeft.setOnClickListener(v -> dismiss());
         }
     }
 
@@ -213,16 +219,19 @@ public abstract class BaseDialog extends RxDialogFragment {
      * @param listener   listener
      */
     private void setRightClick(boolean visibility, View.OnClickListener listener) {
-        TextView iv_right = findViewById(R.id.tv_right);
+        View llRight = findViewById(R.id.ll_right);
+        if (llRight == null) {
+            return;
+        }
         if (visibility) {
-            iv_right.setVisibility(View.VISIBLE);
+            llRight.setVisibility(View.VISIBLE);
         } else {
-            iv_right.setVisibility(View.GONE);
+            llRight.setVisibility(View.GONE);
         }
         if (listener != null) {
-            iv_right.setOnClickListener(listener);
+            llRight.setOnClickListener(listener);
         } else {
-            iv_right.setOnClickListener(v -> dismiss());
+            llRight.setOnClickListener(v -> dismiss());
         }
     }
 

@@ -35,7 +35,6 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import lombok.Setter;
 
 /**
  * Created by O u r on 2018/10/18.
@@ -48,8 +47,6 @@ public class OAPersonAdaptet extends RecyclerView.Adapter<OAPersonAdaptet.ViewHo
     private List<TemplateBean.Preson> mData;
     private int mFlag;
     private Handler mHandler;
-    @Setter
-    private boolean canClick = true;
 
     public OAPersonAdaptet(Context context, List<TemplateBean.Preson> data) {
         this.mContext = context;
@@ -86,45 +83,43 @@ public class OAPersonAdaptet extends RecyclerView.Adapter<OAPersonAdaptet.ViewHo
             holder.userHeader.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (canClick) {
-                        if (mFlag != 0 && mFlag != 6) {
-                            if (mContext instanceof CreationWorkReportActivity) {
-                                ((CreationWorkReportActivity) mContext).setFlag(mFlag);
-                            } else if (mContext instanceof TaskAssignmentCreationActivity) {
-                                ((TaskAssignmentCreationActivity) mContext).setFlag(mFlag);
-                            } else if (mContext instanceof FilterDefendLogActivity) {
-                                ((FilterDefendLogActivity) mContext).setFlag(mFlag);
-                            } else if (mContext instanceof LeavePostAddPostActivity) {
-                                ((LeavePostAddPostActivity) mContext).setFlag(mFlag);
-                            }
-
+                    if (mFlag != 0 && mFlag != 6) {
+                        if (mContext instanceof CreationWorkReportActivity) {
+                            ((CreationWorkReportActivity) mContext).setFlag(mFlag);
+                        } else if (mContext instanceof TaskAssignmentCreationActivity) {
+                            ((TaskAssignmentCreationActivity) mContext).setFlag(mFlag);
+                        } else if (mContext instanceof FilterDefendLogActivity) {
+                            ((FilterDefendLogActivity) mContext).setFlag(mFlag);
+                        } else if (mContext instanceof LeavePostAddPostActivity) {
+                            ((LeavePostAddPostActivity) mContext).setFlag(mFlag);
                         }
-                        if (mFlag == 4) {//选择群组
-                            ((BaseActivity) mContext).startActivityForResult(new Intent(mContext, SelectOAGroupActivity.class), 101);
-                        } else if (mFlag == 6) {
-                            Intent intent = new Intent(new Intent(mContext, NewSelectIMContactActivity.class));
-                            Bundle bundle = new Bundle();
-                            bundle.putSerializable("list", (Serializable) getData());
-                            intent.putExtras(bundle);
-                            intent.putExtra("flag", 1);
-                            intent.putExtra("groupName", ((CreateGroupActivity) mContext).etGroupName.getText().toString());
-                            intent.putExtra("headPortrait", ((CreateGroupActivity) mContext).imgKey);
-                            intent.putExtra("locationPortrait", ((CreateGroupActivity) mContext).locationUrl);
+
+                    }
+                    if (mFlag == 4) {//选择群组
+                        ((BaseActivity) mContext).startActivityForResult(new Intent(mContext, SelectOAGroupActivity.class), 101);
+                    } else if (mFlag == 6) {
+                        Intent intent = new Intent(new Intent(mContext, NewSelectIMContactActivity.class));
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("list", (Serializable) getData());
+                        intent.putExtras(bundle);
+                        intent.putExtra("flag", 1);
+                        intent.putExtra("groupName", ((CreateGroupActivity) mContext).etGroupName.getText().toString());
+                        intent.putExtra("headPortrait", ((CreateGroupActivity) mContext).imgKey);
+                        intent.putExtra("locationPortrait", ((CreateGroupActivity) mContext).locationUrl);
 //                        ((CreateGroupActivity) mContext).finishSelf();
-                            mContext.startActivity(intent);
-                        } else {
-                            //选择协同人员
+                        mContext.startActivity(intent);
+                    } else {
+                        //选择协同人员
 //                        ((BaseActivity) mContext).startActivity(new Intent(mContext, SelectOAPresonActivity.class).putExtra("IM", "IM"));
 
-                            Intent intent = new Intent(mContext, CreateGroupOrganizationActivity.class);
-                            intent.putExtra("isFrom", "OA");
-                            intent.putExtra("companyId", String.valueOf(ClientApplication.get().getCompanyId()));
-                            intent.putExtra("companyName", ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
-                            Bundle bundle = new Bundle();
-                            bundle.putSerializable("list", (Serializable) mData);
-                            intent.putExtras(bundle);
-                            mContext.startActivity(intent);
-                        }
+                        Intent intent = new Intent(mContext, CreateGroupOrganizationActivity.class);
+                        intent.putExtra("isFrom", "OA");
+                        intent.putExtra("companyId", String.valueOf(ClientApplication.get().getCompanyId()));
+                        intent.putExtra("companyName", ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("list", (Serializable) mData);
+                        intent.putExtras(bundle);
+                        mContext.startActivity(intent);
                     }
                 }
             });

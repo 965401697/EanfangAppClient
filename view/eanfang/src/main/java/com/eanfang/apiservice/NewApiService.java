@@ -791,35 +791,43 @@ public interface NewApiService {
      */
     String QUERY_LASTEST_ORDER = BASE_URL + YAF_SYS + "/lastestorder/queryLastestOrder";
     /**
-     *安防公司列表
+     * 安防公司列表
      */
     String HOME_COMPANY_LIST = BASE_URL + "/yaf_site/findCompany/shopListBySite";
 
     /**
-     *技师列表
+     * 技师列表
      */
     String HOME_WORKER_LIST = BASE_URL + "/yaf_site/findTeachWork/workerListBySite";
 
     /**
-     *全部品牌
+     * 全部品牌
      */
     String HOME_ALL_BRAND = BASE_URL + "/yaf_sys/withdrawalsrecord/baseList";
     /**
-     *快速报修
+     * 快速报修
      */
     String HOME_QUICK_REPAIR = BASE_URL + "/yaf_site/siteRepairOrder/create";
     /**
-     *快速报装
+     * 快速报装
      */
     String HOME_QUICK_INSTALL = BASE_URL + "/yaf_site/siteInstallOrder/create";
     /**
-     *免费设计
+     * 免费设计
      */
     String HOME_FREE_DESIGN = BASE_URL + "/yaf_site/freeDesign/create";
 
     /**
-     *订单数量
+     * 订单数量
      */
     String HOME_OREDER_COUNT = BASE_URL + "/yaf_sys/notice/count/user/orderNum";
+    /**
+     * 最新岗位报警
+     */
+    String HOME_LATEST_ALERT = BASE_URL + "/yaf_station/stationDetectAlerts/latestAlert";
+    /**
+     * 获取萤石云视频Token
+     */
+    String HOME_SUB_ACCOUNT_INFO_LIST = BASE_URL + "/yaf_station/stationDetect/subAccountInfoList";
 
 }

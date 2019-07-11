@@ -263,16 +263,16 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         if (findViewById(R.id.titles_bar) == null) {
             return;
         }
-        TextView iv_right = findViewById(R.id.tv_right);
+        View llRight = findViewById(R.id.ll_right);
         if (visibility) {
-            iv_right.setVisibility(View.VISIBLE);
+            llRight.setVisibility(View.VISIBLE);
         } else {
-            iv_right.setVisibility(View.GONE);
+            llRight.setVisibility(View.GONE);
         }
         if (listener != null) {
-            iv_right.setOnClickListener(listener);
+            llRight.setOnClickListener(listener);
         } else {
-            iv_right.setOnClickListener(v -> finishWithResultOk());
+            llRight.setOnClickListener(v -> finishWithResultOk());
         }
     }
 

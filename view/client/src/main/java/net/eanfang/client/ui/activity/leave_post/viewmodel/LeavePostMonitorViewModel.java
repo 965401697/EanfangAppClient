@@ -13,6 +13,8 @@ import com.eanfang.biz.rds.base.BaseViewModel;
 import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.leave_post.LeavePostCheckListSecondActivity;
+import net.eanfang.client.ui.activity.leave_post.LeavePostMonitorSecondActivity;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostAddPostPostBean;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostDetailBean;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostMonitorBean;
@@ -61,6 +63,9 @@ public class LeavePostMonitorViewModel extends BaseViewModel {
         queryEntry.setSize(10);
         queryEntry.setPage(mCurrentPage);
         mLeavePostRepo.postMonitorData(queryEntry).observe(lifecycleOwner, leavePostMonitorBean -> {
+            if (leavePostMonitorBean == null){
+                return;
+            }
             mLeavePostMonitorBean = leavePostMonitorBean;
             ArrayList<LeavePostDetailBean> list = new ArrayList<>();
             for (LeavePostMonitorBean.ListBean bean : leavePostMonitorBean.getList()) {
@@ -113,5 +118,10 @@ public class LeavePostMonitorViewModel extends BaseViewModel {
         adapter.notifyItemChanged(position);
         lastPosition = position;
         mDeviceEntityBean = bean.getMDeviceEntityBean();
+    }
+
+    public void gotoSecondPage(Activity activity) {
+        activity.startActivity(new Intent(activity, LeavePostMonitorSecondActivity.class));
+
     }
 }

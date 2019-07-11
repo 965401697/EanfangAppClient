@@ -73,7 +73,7 @@ public class LeavePostCheckListSecondActivity extends BaseActivity {
             mAdapter.addData(bean.getList());
         }
         mAdapter.loadMoreComplete();
-        if (bean.getCurrPage() >= bean.getTotalCount()) {
+        if (bean.getCurrPage() >= bean.getTotalPage()) {
             mAdapter.loadMoreEnd();
         }
     }

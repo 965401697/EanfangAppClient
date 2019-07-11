@@ -46,9 +46,10 @@ android {
         }
         release {
             // 上线url
-            buildConfigField("String", "API_HOST", cfg.betaApiHost)
+            buildConfigField("String", "API_HOST", cfg.proApiHost)
+//            buildConfigField("String", "API_HOST", cfg.betaApiHost)
             // 不显示Log
-            buildConfigField("boolean", "DEBUG_MOD", cfg.debugMod)
+            buildConfigField("boolean", "DEBUG_MOD", cfg.releaseMod)
             //Zipalign优化
             zipAlignEnabled true
             // 移除无用的resource文件

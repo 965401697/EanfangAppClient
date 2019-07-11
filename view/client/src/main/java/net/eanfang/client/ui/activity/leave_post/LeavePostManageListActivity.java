@@ -37,6 +37,13 @@ public class LeavePostManageListActivity extends BaseActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        mViewModel.setMCurrentPage(1);
+        mViewModel.getPostManageList();
+    }
+
+    @Override
     protected void initView() {
         setLeftBack(true);
         setRightImageResId(R.mipmap.ic_news_add);
@@ -56,7 +63,6 @@ public class LeavePostManageListActivity extends BaseActivity {
     protected ViewModel initViewModel() {
         mViewModel = LViewModelProviders.of(this, LeavePostManageListViewModel.class);
         mViewModel.getLeavePostManageListData().observe(this, this::setData);
-        mViewModel.getPostManageList();
         return mViewModel;
     }
 

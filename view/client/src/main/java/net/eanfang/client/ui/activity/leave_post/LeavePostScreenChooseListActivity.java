@@ -73,4 +73,5 @@ public class LeavePostScreenChooseListActivity extends BaseActivity {
     private void setData(LeavePostChooseAreaBean leavePostChooseAreaBean) {
         mFriendsAdapter.setNewData(leavePostChooseAreaBean.getList());
     }
+
 }

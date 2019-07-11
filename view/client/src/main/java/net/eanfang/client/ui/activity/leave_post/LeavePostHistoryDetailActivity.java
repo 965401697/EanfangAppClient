@@ -10,10 +10,10 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.BuildConfig;
 import com.eanfang.base.BaseActivity;
 import com.eanfang.biz.rds.base.LViewModelProviders;
+import com.eanfang.config.Config;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 
@@ -48,8 +48,9 @@ public class LeavePostHistoryDetailActivity extends BaseActivity {
         int stationId = getIntent().getIntExtra("stationId", 0);
         String date = getIntent().getStringExtra("date");
         mViewModel.historyDayData(GetDateUtils.getYeanDate(date), String.valueOf(stationId));
-        mBinding.imgLeavePostHistoryDetailLeft.setOnClickListener(view -> mViewModel.setLastDay());
-        mBinding.imgLeavePostHistoryDetailRight.setOnClickListener(view -> mViewModel.setNextDay(mBinding.imgLeavePostHistoryDetailRight));
+        mBinding.tvLeavePostHistoryDetailDate.setText(MessageFormat.format("{0}\t\t{1}", GetDateUtils.dateToTime(date), GetDateUtils.dateToWeek(date)));
+        mBinding.imgLeavePostHistoryDetailLeft.setOnClickListener(view -> mViewModel.setLastDay(mBinding.tvLeavePostHistoryDetailDate));
+        mBinding.imgLeavePostHistoryDetailRight.setOnClickListener(view -> mViewModel.setNextDay(mBinding.tvLeavePostHistoryDetailDate));
         mAdapter = new LeavePostHistoryDayAdapter(R.layout.item_leave_post_history_detail);
         mBinding.recLeavePostHistoryDetail.setLayoutManager(new LinearLayoutManager(this));
         mAdapter.bindToRecyclerView(mBinding.recLeavePostHistoryDetail);
@@ -76,15 +77,15 @@ public class LeavePostHistoryDetailActivity extends BaseActivity {
         TextView name = findViewById(R.id.tv_item_leave_post_manage_detail_name);
         name.setText(stationBean.getStationName());
         TextView area = findViewById(R.id.tv_item_leave_post_manage_detail_area);
-        area.setText(stationBean.getStationPlaceCode());
+        area.setText(Config.get().getAddressByCode(stationBean.getStationPlaceCode()));
         TextView position = findViewById(R.id.tv_item_leave_post_manage_detail_position);
+        findViewById(R.id.img_item_leave_post_manage_detail_next).setVisibility(View.GONE);
         position.setText(stationBean.getStationArea());
         TextView count = findViewById(R.id.tv_item_leave_post_manage_detail_count);
         count.setText(getString(R.string.text_leave_post_detail_count, leavePostHistoryDayBean.getAlertCount()));
         count.setVisibility(View.VISIBLE);
         findViewById(R.id.tv_item_leave_post_manage_detail_status).setVisibility(View.GONE);
         mAdapter.setNewData(leavePostHistoryDayBean.getAlertList());
-        mBinding.tvLeavePostHistoryDetailDate.setText(MessageFormat.format("{0}\t\t{1}", GetDateUtils.dateToTime(stationBean.getCreateTime()), GetDateUtils.dateToWeek(stationBean.getCreateTime())));
     }
 
 

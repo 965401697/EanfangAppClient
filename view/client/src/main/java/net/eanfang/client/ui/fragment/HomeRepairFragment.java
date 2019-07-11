@@ -240,7 +240,8 @@ public class HomeRepairFragment extends BaseFragment {
             //设备库
             dataCode = data.getStringExtra("dataCode");
             String businessOneCode = data.getStringExtra("businessOneCode");
-            mRepairBugEntity.setBusinessThreeCode(businessOneCode);
+
+            mRepairBugEntity.setBusinessThreeCode(dataCode);
             String text = Config.get().getBusinessNameByCode(dataCode, 1);
             mEtHomeRepairSys.setText(text);
             mInstallOrderConfirmBean.setBusinessOneCode(businessOneCode);
@@ -309,6 +310,18 @@ public class HomeRepairFragment extends BaseFragment {
             mRepairOrderEntity.setRepairContacts(ClientApplication.get().getAccount().getRealName());
             mRepairBugEntity.setBugDescription(mEtHomeRepairDescribe.getText().toString());
             mRepairOrderEntity.setRepairContactPhone(ClientApplication.get().getAccount().getMobile());
+            if (StringUtils.isEmpty(mRepairBugEntity.getBusinessThreeCode())) {
+                showToast("请选择系统类别");
+                return;
+            }
+            if (StringUtils.isEmpty(mRepairOrderEntity.getAddress())) {
+                showToast("请选择位置");
+                return;
+            }
+            if (StringUtils.isEmpty(mRepairBugEntity.getModelCode())) {
+                showToast("请选择品牌");
+                return;
+            }
             EanfangHttp.post(NewApiService.HOME_QUICK_REPAIR).upJson(JSON.toJSONString(mRepairOrderEntity)).execute(new EanfangCallback(getActivity(), true, JSONObject.class, bean -> {
                 showToast("提交成功！");
             }));
@@ -316,6 +329,14 @@ public class HomeRepairFragment extends BaseFragment {
             mInstallOrderConfirmBean.setDescription(mEtHomeRepairDescribe.getText().toString());
             mInstallOrderConfirmBean.setConnectorPhone(ClientApplication.get().getAccount().getMobile());
             mInstallOrderConfirmBean.setConnector(ClientApplication.get().getAccount().getRealName());
+            if(StringUtils.isEmpty(mInstallOrderConfirmBean.getBusinessOneCode())){
+                showToast("请选择系统类别");
+                return;
+            }
+            if (StringUtils.isEmpty(mInstallOrderConfirmBean.getDetailPlace())){
+                showToast("请选择位置");
+                return;
+            }
             EanfangHttp.post(NewApiService.HOME_QUICK_INSTALL).upJson(JSON.toJSONString(mInstallOrderConfirmBean)).execute(new EanfangCallback(getActivity(), true, JSONObject.class, bean -> {
                 showToast("提交成功！");
             }));
@@ -323,6 +344,14 @@ public class HomeRepairFragment extends BaseFragment {
             mDesignOrderInfoBean.setRemarkInfo(mEtHomeRepairDescribe.getText().toString());
             mDesignOrderInfoBean.setContactPhone(ClientApplication.get().getAccount().getMobile());
             mDesignOrderInfoBean.setContactUser(ClientApplication.get().getAccount().getRealName());
+            if (StringUtils.isEmpty(mDesignOrderInfoBean.getBusinessOneCode())){
+                showToast("请选择系统类别");
+                return;
+            }
+            if (StringUtils.isEmpty(mDesignOrderInfoBean.getDetailPlace())){
+                showToast("请选择位置");
+                return;
+            }
             EanfangHttp.post(NewApiService.HOME_FREE_DESIGN).upJson(JSON.toJSONString(mDesignOrderInfoBean)).execute(new EanfangCallback(getActivity(), true, JSONObject.class, bean -> {
                 showToast("提交成功！");
             }));

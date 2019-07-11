@@ -76,7 +76,7 @@ public class LeavePostScreenViewModel extends BaseViewModel {
      */
     public void getStationList(String placeName) {
         QueryEntry queryEntry = new QueryEntry();
-        queryEntry.getEquals().put("placeName", placeName);
+        queryEntry.getEquals().put("stationPlaceName", placeName);
         queryEntry.setPage(1);
         queryEntry.setPage(100);
         mLeavePostHomeRepo.choosePostData(queryEntry).observe(lifecycleOwner, chooseData::setValue);
@@ -96,7 +96,7 @@ public class LeavePostScreenViewModel extends BaseViewModel {
         Intent intent = new Intent(activity, LeavePostScreenChooseListActivity.class);
         intent.putExtra("chooseType", chooseType);
         intent.putExtra("placeName", mBinding.tvLeavePostScreenArea.getText());
-        activity.startActivity(intent);
+        activity.startActivityForResult(intent, chooseType);
     }
 
     /**
@@ -125,14 +125,11 @@ public class LeavePostScreenViewModel extends BaseViewModel {
      * @param position
      */
     public void setChooseResult(Activity activity, BaseQuickAdapter adapter, int position) {
-        String text = (String) adapter.getData().get(position);
+        LeavePostChooseAreaBean.ListBean bean = (LeavePostChooseAreaBean.ListBean) adapter.getData().get(position);
         Intent intent = new Intent();
-        if (mChooseType == 0) {
-            intent.putExtra("placeName", text);
-        } else {
-            mPosition = position;
-            intent.putExtra("postName", text);
-        }
+        intent.putExtra("placeName", bean.getStationPlaceName());
+        mPosition = position;
+        intent.putExtra("postName", bean.getStationName());
         activity.setResult(Activity.RESULT_OK, intent);
         activity.finish();
     }

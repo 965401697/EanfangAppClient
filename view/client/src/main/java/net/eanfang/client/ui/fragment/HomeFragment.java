@@ -12,7 +12,9 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.base.widget.controltool.ControlToolView;
 import com.eanfang.biz.model.AllMessageBean;
 import com.eanfang.biz.model.datastatistics.HomeDatastisticeBean;
@@ -20,15 +22,19 @@ import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseFragment;
+import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.witget.BannerView;
 import com.eanfang.witget.HomeScanPopWindow;
 import com.flyco.tablayout.SlidingTabLayout;
+import com.videogo.util.SharedPreferencesUtils;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.CameraActivity;
+import net.eanfang.client.ui.activity.leave_post.LeavePostDetailActivity;
 import net.eanfang.client.ui.activity.leave_post.LeavePostHomeActivity;
+import net.eanfang.client.ui.activity.leave_post.bean.LeavePostLatestAlertBean;
 import net.eanfang.client.ui.activity.worksapce.DesignOrderActivity;
 import net.eanfang.client.ui.activity.worksapce.RealTimeMonitorActivity;
 import net.eanfang.client.ui.activity.worksapce.datastatistics.DataStaticsticsListActivity;
@@ -41,7 +47,9 @@ import net.eanfang.client.ui.widget.CustomHomeViewPager;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static com.eanfang.base.kit.V.v;
@@ -100,6 +108,7 @@ public class HomeFragment extends BaseFragment {
             tvHomeTitle.setText(orgName);
         }
         doHttpOrderNums();
+        initLeavePostAlert();
     }
 
     @Override
@@ -127,6 +136,24 @@ public class HomeFragment extends BaseFragment {
         initViewPager2();
         initViewPager3();
         initViewPager4();
+
+    }
+
+    private void initLeavePostAlert() {
+        String dateString = CacheKit.get().getStr("offDuty");
+        EanfangHttp.post(NewApiService.HOME_LATEST_ALERT).params("companyId", ClientApplication.get().getCompanyId()).params("date", dateString)
+                .execute(new EanfangCallback<LeavePostLatestAlertBean>(getActivity(), false, LeavePostLatestAlertBean.class, bean -> {
+                    if (bean != null) {
+                        findViewById(R.id.ll_off_duty).setVisibility(View.VISIBLE);
+                        ((TextView) findViewById(R.id.tv_msg_off_duty)).setText(MessageFormat.format("{0}在{1}脱岗，请查看> >", bean.getAlertName(), bean.getAlertTime()));
+                        findViewById(R.id.tv_msg_off_duty).setOnClickListener(view -> startActivity(new Intent(getActivity(), LeavePostDetailActivity.class).putExtra("alertId", bean.getAlertId())));
+                        findViewById(R.id.img_cancel).setOnClickListener(view -> {
+                            Date date1 = new Date();
+                            findViewById(R.id.ll_off_duty).setVisibility(View.GONE);
+                            CacheKit.get().put("offDuty", GetDateUtils.dateToDateTimeString(date1));
+                        });
+                    }
+                }));
 
     }
 

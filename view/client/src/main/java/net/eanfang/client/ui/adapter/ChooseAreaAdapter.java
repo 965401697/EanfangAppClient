@@ -31,8 +31,13 @@ public class ChooseAreaAdapter extends BaseQuickAdapter<LeavePostChooseAreaBean.
         if (item == null) {
             return;
         }
+        String catalog;
         //根据position获取首字母作为目录catalog
-        String catalog = Cn2Spell.getPinYin(item.getStationPlaceName()).substring(0, 1).toUpperCase();
+        if (chooseType == 0) {
+            catalog = Cn2Spell.getPinYin(item.getStationPlaceName()).substring(0, 1).toUpperCase();
+        } else {
+            catalog = Cn2Spell.getPinYin(item.getStationName()).substring(0, 1).toUpperCase();
+        }
 
         //如果当前位置等于该分类首字母的Char的位置 ，则认为是第一次出现
         if (helper.getAdapterPosition() == getPositionForSection(catalog)) {
@@ -43,24 +48,27 @@ public class ChooseAreaAdapter extends BaseQuickAdapter<LeavePostChooseAreaBean.
         }
         if (chooseType == 0) {
             helper.setText(R.id.tv_area_name, item.getStationPlaceName());
-        }else {
+        } else {
             helper.setText(R.id.tv_area_name, item.getStationName());
         }
-
     }
+
 
     /**
      * 获取catalog首次出现位置
      */
     public int getPositionForSection(String catalog) {
         for (int i = 0; i < getData().size(); i++) {
-            String sortStr = Cn2Spell.getPinYin(getData().get(i).getStationPlaceName()).substring(0, 1).toUpperCase();
-            if (sortStr != null) {
-                if (catalog.equalsIgnoreCase(sortStr)) {
-                    return i;
+            if (getData().get(i) != null && getData().get(i).getStationPlaceName() != null) {
+                String sortStr = Cn2Spell.getPinYin(getData().get(i).getStationPlaceName()).substring(0, 1).toUpperCase();
+                if (sortStr != null) {
+                    if (catalog.equalsIgnoreCase(sortStr)) {
+                        return i;
+                    }
                 }
             }
         }
         return -1;
     }
+
 }

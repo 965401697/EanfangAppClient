@@ -3,6 +3,7 @@ package net.eanfang.client.ui.activity.leave_post.viewmodel;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -17,6 +18,9 @@ import net.eanfang.client.ui.activity.leave_post.ds.LeavePostDs;
 import net.eanfang.client.ui.activity.leave_post.repo.LeavePostRepo;
 
 
+import org.json.JSONObject;
+
+import java.text.MessageFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -33,7 +37,6 @@ public class LeavePostHistoryDetailViewModel extends BaseViewModel {
     @Getter
     private MutableLiveData<LeavePostHomeUnHandledAlertBean> leavePostHomeUnhandledAlert;
     private LeavePostRepo mLeavePostHomeRepo;
-    private int mCurrentPage = 1;
     private Date mDate;
     private String mStationId;
 
@@ -62,22 +65,22 @@ public class LeavePostHistoryDetailViewModel extends BaseViewModel {
         activity.startActivity(intent);
     }
 
-    public void setLastDay() {
+    public void setLastDay(TextView date) {
         Calendar ca = Calendar.getInstance();
         ca.setTime(mDate);
         ca.add(Calendar.DAY_OF_MONTH, -1);
         historyDayData(ca.getTime(), mStationId);
+        date.setText(MessageFormat.format("{0}\t\t{1}", GetDateUtils.dateToTime(GetDateUtils.dateToDateString(ca.getTime())), GetDateUtils.dateToWeek(GetDateUtils.dateToDateString(ca.getTime()))));
     }
 
-    public void setNextDay(View view) {
+    public void setNextDay(TextView date) {
         Calendar ca = Calendar.getInstance();
+        if (GetDateUtils.dateToDateString(mDate).equals(GetDateUtils.dateToDateString(new Date()))) {
+            return;
+        }
         ca.setTime(mDate);
         ca.add(Calendar.DAY_OF_MONTH, +1);
-        Date date = ca.getTime();
-        if (!date.after(new Date())) {
-            historyDayData(ca.getTime(), mStationId);
-        } else {
-            view.setVisibility(View.GONE);
-        }
+        historyDayData(ca.getTime(), mStationId);
+        date.setText(MessageFormat.format("{0}\t\t{1}", GetDateUtils.dateToTime(GetDateUtils.dateToDateString(ca.getTime())), GetDateUtils.dateToWeek(GetDateUtils.dateToDateString(ca.getTime()))));
     }
 }
