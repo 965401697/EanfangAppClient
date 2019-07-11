@@ -48,13 +48,13 @@ ext {
             targetSdkVersion : 29,
             compileSdkVersion: 29,
             buildToolsVersion: "29.0.0",
-            versionName      : "3.0.1",
-            versionCode      : 19071101,
+            versionName      : "3.0.2",
+            versionCode      : 19071102,
 
             //common config
-            ossServer        : "\"http://oss.eanfang.net/\"",
+            ossServer        : "\"https://oss.eanfang.net/\"",
             ossBucket        : "\"eanfang\"",
-            ossEndpoint      : "\"oss-cn-beijing.aliyuncs.com/\"",
+            ossEndpoint      : "\"https://oss-cn-beijing.aliyuncs.com/\"",
             javaVersion      : JavaVersion.VERSION_1_8,
             releaseMod       : "true",
             debugMod         : "false",

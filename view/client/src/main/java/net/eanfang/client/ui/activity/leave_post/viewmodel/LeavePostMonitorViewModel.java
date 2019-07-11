@@ -3,7 +3,6 @@ package net.eanfang.client.ui.activity.leave_post.viewmodel;
 import android.app.Activity;
 import android.content.Intent;
 import android.view.View;
-import android.widget.CheckBox;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -12,8 +11,6 @@ import com.eanfang.biz.model.bean.QueryEntry;
 import com.eanfang.biz.rds.base.BaseViewModel;
 import com.eanfang.util.StringUtils;
 
-import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.leave_post.LeavePostCheckListSecondActivity;
 import net.eanfang.client.ui.activity.leave_post.LeavePostMonitorSecondActivity;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostAddPostPostBean;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostDetailBean;
@@ -108,7 +105,7 @@ public class LeavePostMonitorViewModel extends BaseViewModel {
         }
         if (lastPosition != -1) {
             LeavePostDetailBean bean = (LeavePostDetailBean) adapter.getData().get(lastPosition);
-            bean.setChoosePosition(lastPosition);
+            bean.setChoosePosition(position);
             adapter.setData(lastPosition,bean);
             adapter.notifyItemChanged(lastPosition);
         }

@@ -302,6 +302,8 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
             if ((System.currentTimeMillis() - mExitTime) > 2000) {
                 Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
                 mExitTime = System.currentTimeMillis();
+            } else {
+                BaseApplication.get().closeAllActivity();
             }
             return true;
         }

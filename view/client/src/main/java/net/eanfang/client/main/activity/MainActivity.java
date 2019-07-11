@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentTabHost;
 import androidx.lifecycle.ViewModel;
 
 import com.eanfang.base.BaseActivity;
+import com.eanfang.base.BaseApplication;
 import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.base.widget.controltool.ControlToolView;
@@ -155,7 +156,9 @@ public class MainActivity extends BaseActivity {
             } else {
                 RongIM.getInstance().logout();//退出融云
                 Intent intent = new Intent(getPackageName() + ".ExitListenerReceiver");
+
                 sendBroadcast(intent);
+                BaseApplication.get().closeAllActivity();
 //                BaseApplication.get().closeAllActivity();
                 //先注释
 //                EanfangApplication.get().closeAll();

@@ -84,6 +84,8 @@ public class LeavePostAddPostViewModel extends BaseViewModel {
                 dutyStaffPersons.add(chargeStaffListBean.getPerson());
             }
             dutyStaffList.setValue(dutyStaffPersons);
+            setChargeStaff(chargePersons, 0);
+            setChargeStaff(dutyStaffPersons, 1);
             mListInfo.add(infos[0] + leavePostDeviceInfoBean.getStationName());
             mListInfo.add(infos[1] + leavePostDeviceInfoBean.getStationArea());
             mListInfo.add(infos[2] + leavePostDeviceInfoBean.getStationCode());
@@ -119,7 +121,7 @@ public class LeavePostAddPostViewModel extends BaseViewModel {
             addPostPostBean.setStationArea(binding.edtLeavePostAddPostPosition.getText().toString());
             addPostPostBean.setStationCode(binding.edtLeavePostAddPostNumber.getText().toString());
             addPostPostBean.setStatus(binding.switchBtnLeavePostAddPostStatus.isChecked() ? "1" : "0");
-            addPostPostBean.setIntervalLength(Integer.parseInt(binding.tvLeavePostAddPostTime.getText().toString().replace("分钟","")));
+            addPostPostBean.setIntervalLength(Integer.parseInt(binding.tvLeavePostAddPostTime.getText().toString().replace("分钟", "")));
             addPostPostBean.setChargeUserList(mChargeStaffListBeans);
             addPostPostBean.setDutyUserList(mDutyStaffListBeans);
             if (type == 0) {
@@ -185,7 +187,9 @@ public class LeavePostAddPostViewModel extends BaseViewModel {
         for (TemplateBean.Preson preson : whoList) {
             LeavePostAddPostPostBean.ChargeStaffListBean bean = new LeavePostAddPostPostBean.ChargeStaffListBean();
             AccountEntity accountEntity = new AccountEntity();
-            accountEntity.setAccId(Long.valueOf(preson.getId()));
+            if (preson.getId() != null) {
+                accountEntity.setAccId(Long.valueOf(preson.getId()));
+            }
             accountEntity.setRealName(preson.getName());
             accountEntity.setMobile(preson.getMobile());
             accountEntity.setAvatar(preson.getProtraivat());
