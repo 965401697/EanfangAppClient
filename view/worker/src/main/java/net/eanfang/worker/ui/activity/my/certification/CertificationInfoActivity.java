@@ -1,7 +1,6 @@
 package net.eanfang.worker.ui.activity.my.certification;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -10,13 +9,14 @@ import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.kit.picture.picture.PictureRecycleView;
 import com.eanfang.base.widget.customview.CircleImageView;
+import com.eanfang.biz.model.WorkerInfoBean;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.WorkerInfoBean;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.StringUtils;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
+import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
@@ -56,11 +56,14 @@ public class CertificationInfoActivity extends BaseWorkerActivity {
     EditText etUrgentName;
     @BindView(R.id.et_urgent_phone)
     EditText etUrgentPhone;
-    @BindView(R.id.snpl_moment_accident)
-    BGASortableNinePhotoLayout snplMomentAccident;
-    @BindView(R.id.snpl_moment_crim)
-    BGASortableNinePhotoLayout snplMomentCrim;
+
     private static final String DEFAULT_CARD_GENDER = "女";
+    @BindView(R.id.picture_recycler_accident)
+    PictureRecycleView pictureRecyclerAccident;
+    @BindView(R.id.picture_recycler_crim)
+    PictureRecycleView pictureRecyclerCrim;
+    List<LocalMedia> accidentPicList = new ArrayList<>();
+    List<LocalMedia> crimePicList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_certification_info);
@@ -81,7 +84,7 @@ public class CertificationInfoActivity extends BaseWorkerActivity {
     }
 
     private void initViews(WorkerInfoBean bean) {
-        GlideUtil.intoImageView(this,com.eanfang.BuildConfig.OSS_SERVER + bean.getAvatarPhoto(),ivHeader);
+        GlideUtil.intoImageView(this, BuildConfig.OSS_SERVER + bean.getAvatarPhoto(), ivHeader);
         String contactName = WorkerApplication.get().getLoginBean().getAccount().getRealName();
         String mobile = WorkerApplication.get().getLoginBean().getAccount().getMobile();
 
@@ -102,29 +105,20 @@ public class CertificationInfoActivity extends BaseWorkerActivity {
         rbWoman.setClickable(false);
         rbMan.setClickable(false);
         etIntro.setText(bean.getIntro());
-        GlideUtil.intoImageView(this,com.eanfang.BuildConfig.OSS_SERVER + bean.getIdCardFront(),ivIdCardFront);
-        GlideUtil.intoImageView(this,com.eanfang.BuildConfig.OSS_SERVER + bean.getIdCardSide(),ivIdCardBack);
-        GlideUtil.intoImageView(this,com.eanfang.BuildConfig.OSS_SERVER + bean.getIdCardHand(),ivIdCardInHand);
+        GlideUtil.intoImageView(this, BuildConfig.OSS_SERVER + bean.getIdCardFront(), ivIdCardFront);
+        GlideUtil.intoImageView(this, BuildConfig.OSS_SERVER + bean.getIdCardSide(), ivIdCardBack);
+        GlideUtil.intoImageView(this, BuildConfig.OSS_SERVER + bean.getIdCardHand(), ivIdCardInHand);
 
         etUrgentName.setText(bean.getContactName());
         etUrgentPhone.setText(bean.getContactPhone());
 
-        String[] crimePic = bean.getCrimePic().split(",");
-        if (crimePic.length > 0) {
-            List<String> crimePicList = new ArrayList<>();
-            for (byte i = 0; i < crimePic.length; i++) {
-                crimePicList.add(BuildConfig.OSS_SERVER + crimePic[i]);
-            }
-            snplMomentCrim.setData(crimePicList);
-        }
+        crimePicList = pictureRecyclerCrim.setData(bean.getCrimePic());
+        pictureRecyclerCrim.showImagev(crimePicList, listener);
 
-        String[] accidentPics = bean.getAccidentPics().split(",");
-        List<String> accidentPicList = new ArrayList<>();
-        if (accidentPics.length > 0) {
-            for (byte i = 0; i < accidentPics.length; i++) {
-                accidentPicList.add(BuildConfig.OSS_SERVER + accidentPics[i]);
-            }
-            snplMomentAccident.setData(accidentPicList);
-        }
+        accidentPicList = pictureRecyclerAccident.setData(bean.getAccidentPics());
+        pictureRecyclerAccident.showImagev(accidentPicList, listener_accident);
     }
+
+    PictureRecycleView.ImageListener listener = list -> crimePicList = list;
+    PictureRecycleView.ImageListener listener_accident = list -> accidentPicList = list;
 }

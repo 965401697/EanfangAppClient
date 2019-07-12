@@ -1,6 +1,5 @@
 package net.eanfang.worker.ui.activity.worksapce;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -9,31 +8,30 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.base.kit.SDKManager;
-import com.eanfang.delegate.BGASortableDelegate;
-import com.eanfang.http.EanfangCallback;
-import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.bean.LoginBean;
+import com.eanfang.base.kit.picture.picture.PictureRecycleView;
 import com.eanfang.biz.model.Message;
 import com.eanfang.biz.model.TakeApplyAddBean;
-
-import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.biz.model.bean.LoginBean;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
 import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
+import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
-import com.photopicker.com.activity.BGAPhotoPickerActivity;
-import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
+import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -65,16 +63,17 @@ public class TakeApplyAddActivity extends BaseActivity implements SelectTimeDial
     EditText tvBudget;
     @BindView(R.id.et_need_desc)
     EditText etNeedDesc;
-    @BindView(R.id.snpl_moment_add_photos)
-    BGASortableNinePhotoLayout snplMomentAddPhotos;
     @BindView(R.id.tv_ok)
     TextView tvOk;
     @BindView(R.id.ll_time_limit)
     LinearLayout llTimeLimit;
+    @BindView(R.id.picture_recycler)
+    PictureRecycleView pictureRecycler;
     private TakeApplyAddBean applyTaskBean;
     private Long entTaskPublishId;
     private HashMap<String, String> uploadMap = new HashMap<>();
-//    private TimePickerView pvEndTime;
+    //    private TimePickerView pvEndTime;
+    private List<LocalMedia> selectList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +87,7 @@ public class TakeApplyAddActivity extends BaseActivity implements SelectTimeDial
 
     private void initView() {
         entTaskPublishId = getIntent().getLongExtra("entTaskPublishId", 0);
-        snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this));
+        pictureRecycler.addImagev(listener);
         setTitle("接单申请");
         setLeftBack();
         llDoorTime.setOnClickListener(v -> new SelectTimeDialogFragment().show(getSupportFragmentManager(), R.string.app_name + ""))
@@ -96,6 +95,8 @@ public class TakeApplyAddActivity extends BaseActivity implements SelectTimeDial
         tvOk.setOnClickListener(v -> commit());
         llTimeLimit.setOnClickListener(v -> PickerSelectUtil.singleTextPicker(this, "", etTimeLimit, GetConstDataUtils.getPredictList()));
     }
+
+    PictureRecycleView.ImageListener listener = list -> selectList = list;
 
     private void initData() {
 
@@ -164,14 +165,14 @@ public class TakeApplyAddActivity extends BaseActivity implements SelectTimeDial
 //        }
         applyTaskBean.setToDoorTime(doorTime);
 
-        String ursStr = PhotoUtils.getPhotoUrl("biz/publish/", snplMomentAddPhotos, uploadMap, true);
+        String ursStr = PhotoUtils.getPhotoUrl("biz/publish/", selectList, uploadMap, true);
         applyTaskBean.setPictures(ursStr);
 
         applyTaskBean.setShopTaskPublishId(entTaskPublishId);
 
         String json = JSONObject.toJSONString(applyTaskBean);
         if (uploadMap.size() != 0) {
-            SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
+            SDKManager.ossKit(this).asyncPutImages(uploadMap, (isSuccess) -> {
                 runOnUiThread(() -> {
                     doHttp(json);
                 });
@@ -233,17 +234,6 @@ public class TakeApplyAddActivity extends BaseActivity implements SelectTimeDial
 //                .setRangDate(startDate, endDate)
 //                .build();
     }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == BGASortableDelegate.REQUEST_CODE_CHOOSE_PHOTO) {
-            snplMomentAddPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
-        } else if (requestCode == BGASortableDelegate.REQUEST_CODE_PHOTO_PREVIEW) {
-            snplMomentAddPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
-        }
-    }
-
     @Override
     public void getData(String time) {
         if (StringUtils.isEmpty(time) || " ".equals(time)) {

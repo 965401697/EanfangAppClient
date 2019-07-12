@@ -447,22 +447,14 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <com.photopicker.com.widget.BGASortableNinePhotoLayout
-                            android:id="@+id/snpl_moment_accident"
-                            android:layout_width="wrap_content"
+                        <com.eanfang.base.kit.picture.picture.PictureRecycleView
+                            android:id="@+id/picture_recycler_accident"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/dimen_30"
-                            app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
-                            app:bga_snpl_deleteDrawableOverlapQuarter="false"
-                            app:bga_snpl_editable="true"
-                            app:bga_snpl_itemCornerRadius="0dp"
-                            app:bga_snpl_itemSpanCount="3"
-                            app:bga_snpl_itemWhiteSpacing="4dp"
-                            app:bga_snpl_itemWidth="0dp"
-                            app:bga_snpl_maxItemCount="3"
-                            app:bga_snpl_otherWhiteSpacing="100dp"
-                            app:bga_snpl_placeholderDrawable="@mipmap/ic_nodata"
-                            app:bga_snpl_sortable="true" />
+                            android:layout_margin="@dimen/dimen_30">
+
+                        </com.eanfang.base.kit.picture.picture.PictureRecycleView>
+
                     </LinearLayout>
 
 
@@ -492,21 +484,13 @@
                         android:orientation="vertical"
                         android:padding="@dimen/dimen_30">
 
-                        <com.photopicker.com.widget.BGASortableNinePhotoLayout
-                            android:id="@+id/snpl_moment_crim"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
-                            app:bga_snpl_deleteDrawableOverlapQuarter="false"
-                            app:bga_snpl_editable="true"
-                            app:bga_snpl_itemCornerRadius="0dp"
-                            app:bga_snpl_itemSpanCount="3"
-                            app:bga_snpl_itemWhiteSpacing="4dp"
-                            app:bga_snpl_itemWidth="0dp"
-                            app:bga_snpl_maxItemCount="3"
-                            app:bga_snpl_otherWhiteSpacing="100dp"
-                            app:bga_snpl_placeholderDrawable="@mipmap/ic_nodata"
-                            app:bga_snpl_sortable="true" />
+                        <com.eanfang.base.kit.picture.picture.PictureRecycleView
+                            android:id="@+id/picture_recycler_crim"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                        </com.eanfang.base.kit.picture.picture.PictureRecycleView>
+
                     </LinearLayout>
                 </LinearLayout>
 

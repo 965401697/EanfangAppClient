@@ -2,20 +2,23 @@ package net.eanfang.worker.ui.activity.worksapce.repair.seefaultdetail;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
+
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.view.View;
-import android.widget.TextView;
 
 import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.base.kit.picture.picture.PictureRecycleView;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.luck.picture.lib.entity.LocalMedia;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 import com.yaf.base.entity.BughandleConfirmEntity;
 import com.yaf.base.entity.BughandleDetailEntity;
@@ -50,8 +53,8 @@ public class PsTroubleDetailActivity extends BaseWorkerActivity /*implements Vie
     /**
      * 单据照片 (3张)
      */
-    @BindView(R.id.snpl_form_photos)
-    BGASortableNinePhotoLayout snplFormPhotos;
+    @BindView(R.id.picture_recycler)
+    PictureRecycleView pictureRecycler;
 
 
     //遗留问题
@@ -72,7 +75,7 @@ public class PsTroubleDetailActivity extends BaseWorkerActivity /*implements Vie
     /**
      * 单据照片 (3张)
      */
-    private ArrayList<String> picList4 = new ArrayList<>();
+    private List<LocalMedia> picList4 = new ArrayList<>();
 
     //聊天分享的必要参数
     Bundle bundle = new Bundle();
@@ -100,7 +103,7 @@ public class PsTroubleDetailActivity extends BaseWorkerActivity /*implements Vie
                         bundle.putString("picUrl", bughandleConfirmEntity.getDetailEntityList().get(0).getFailureEntity().getPictures().split(",")[0]);
                     }
                     bundle.putString("creatTime", bughandleConfirmEntity.getDetailEntityList().get(0).getFailureEntity().getBugPosition());
-                    if (bughandleConfirmEntity.getDetailEntityList().get(0).getFailureEntity().getRepairCount()!=null) {
+                    if (bughandleConfirmEntity.getDetailEntityList().get(0).getFailureEntity().getRepairCount() != null) {
                         bundle.putString("workerName", String.valueOf(bughandleConfirmEntity.getDetailEntityList().get(0).getFailureEntity().getRepairCount()));
                     }
                     bundle.putString("status", String.valueOf(1));//电话解决
@@ -133,8 +136,7 @@ public class PsTroubleDetailActivity extends BaseWorkerActivity /*implements Vie
         tvRemainQuestion.setText(bughandleConfirmEntity.getLeftoverProblem());
         initAdapter();
         if (bughandleConfirmEntity.getInvoicesPictures() != null) {
-            String[] invoicesPic = bughandleConfirmEntity.getInvoicesPictures().split(",");
-            picList4.addAll(Stream.of(Arrays.asList(invoicesPic)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
+            picList4=pictureRecycler.setData(bughandleConfirmEntity.getInvoicesPictures());
         }
         initNinePhoto();
     }
@@ -150,9 +152,8 @@ public class PsTroubleDetailActivity extends BaseWorkerActivity /*implements Vie
     }
 
     private void initNinePhoto() {
-        snplFormPhotos.setData(picList4);
-        snplFormPhotos.setEditable(false);
-        snplFormPhotos.setDelegate(new BGASortableDelegate(this));
+        pictureRecycler.showImagev(picList4, listener);
     }
+    PictureRecycleView.ImageListener listener = list -> picList4 = list;
 }
 

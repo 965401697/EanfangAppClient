@@ -3,9 +3,6 @@ package net.eanfang.worker.ui.activity.worksapce.repair.finishwork;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -14,6 +11,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
@@ -21,23 +22,20 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.kit.picture.picture.PictureRecycleView;
+import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.config.Config;
-import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.MultiClickListener;
-
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.LocationUtil;
-import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
-import com.photopicker.com.activity.BGAPhotoPickerActivity;
-import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
+import com.luck.picture.lib.entity.LocalMedia;
 import com.yaf.base.entity.BughandleConfirmEntity;
 import com.yaf.base.entity.BughandleDetailEntity;
 import com.yaf.base.entity.RepairFailureEntity;
@@ -70,8 +68,6 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
 
 
     public static final int REQUEST_CODE_UPDATE_TROUBLE = 10001;
-    private static final int REQUEST_CODE_CHOOSE_PHOTO_4 = 4;
-    private static final int REQUEST_CODE_PHOTO_PREVIEW_4 = 104;
     private final Activity activity = this;
     @BindView(R.id.tv_add_fault)
     TextView tvAddFault;
@@ -80,12 +76,14 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
     ImageView ivVoiceInputRemainQuestion;
     @BindView(R.id.tv_num)
     TextView tvNum;
+    @BindView(R.id.picture_recycler)
+    PictureRecycleView pictureRecycler;
     private RecyclerView rv_trouble;
 
     /*
      * 单据照片 (3张)
      */
-    private BGASortableNinePhotoLayout snpl_form_photos;
+    private List<LocalMedia> selectList = new ArrayList<>();
     private TextView tv_commit;
     private List<BughandleDetailEntity> mDataList;
     private FillTroubleDetailAdapter quotationDetailAdapter;
@@ -131,7 +129,6 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
         initView();
         initData();
         setListener();
-        initNinePhoto();
     }
 
     private void initView() {
@@ -140,11 +137,11 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
         rv_trouble = findViewById(R.id.rv_trouble);
         rv_trouble.setNestedScrollingEnabled(false);
         et_remain_question = findViewById(R.id.et_remain_question);
-        snpl_form_photos = findViewById(R.id.snpl_form_photos);
         tv_commit = findViewById(R.id.tv_commit);
+        pictureRecycler.addImagev(listener);
 
     }
-
+    PictureRecycleView.ImageListener listener = list -> selectList = list;
     public void setListener() {
         //添加故障
         tvAddFault.setOnClickListener(v -> {
@@ -186,7 +183,7 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
         });
         // 遗留问题
         ivVoiceInputRemainQuestion.setOnClickListener((v) -> {
-             RxPerm.get(this).voicePerm((isSuccess)->{
+            RxPerm.get(this).voicePerm((isSuccess) -> {
                 RecognitionManager.getSingleton().startRecognitionWithDialog(PhoneSolveRepairInfoActivity.this, et_remain_question);
             });
         });
@@ -276,9 +273,6 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
         });
     }
 
-    private void initNinePhoto() {
-        snpl_form_photos.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_4, REQUEST_CODE_PHOTO_PREVIEW_4));
-    }
 
     private boolean checkInfo() {
 
@@ -308,7 +302,7 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
         bughandleConfirmEntity.setLeftoverProblem(et_remain_question.getText().toString().trim());
 //        uploadMap.clear();
         //单据照片 （3张）
-        String afterHandlePic = PhotoUtils.getPhotoUrl("biz/repair/bughandle/", snpl_form_photos, uploadMap, false);
+        String afterHandlePic = PhotoUtils.getPhotoUrl("biz/repair/bughandle/", selectList, uploadMap, false);
         bughandleConfirmEntity.setInvoicesPictures(afterHandlePic);
 
         // 签退时间
@@ -322,7 +316,7 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
     //提交完工
     private void submit() {
         if (uploadMap.size() != 0) {
-            SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
+            SDKManager.ossKit(this).asyncPutImages(uploadMap, (isSuccess) -> {
                 runOnUiThread(() -> {
                     String requestJson = JSONObject.toJSONString(bughandleConfirmEntity);
                     doHttp(requestJson);
@@ -355,12 +349,6 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
             return;
         }
         switch (requestCode) {
-            case REQUEST_CODE_CHOOSE_PHOTO_4:
-                snpl_form_photos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
-                break;
-            case REQUEST_CODE_PHOTO_PREVIEW_4:
-                snpl_form_photos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
-                break;
             case REQUEST_CODE_UPDATE_TROUBLE:
                 BughandleDetailEntity resultBean = (BughandleDetailEntity) data.getSerializableExtra("beans");
                 if (resultBean == null) {

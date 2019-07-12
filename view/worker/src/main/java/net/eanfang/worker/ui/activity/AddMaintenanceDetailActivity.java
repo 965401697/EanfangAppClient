@@ -9,26 +9,28 @@ import android.widget.TextView;
 
 import com.annimon.stream.Stream;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.kit.picture.picture.PictureRecycleView;
+import com.eanfang.biz.model.MaintenanceBean;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
-import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.listener.MultiClickListener;
-import com.eanfang.biz.model.MaintenanceBean;
-
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.NumberUtil;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
-import com.photopicker.com.activity.BGAPhotoPickerActivity;
-import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
+import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * 添加维修保养详情页面
@@ -38,6 +40,8 @@ import java.util.Map;
 public class AddMaintenanceDetailActivity extends BaseWorkerActivity {
 
 
+    @BindView(R.id.picture_recycler)
+    PictureRecycleView pictureRecycler;
     private TextView tv_business_type;
     private MaintenanceBean.MaintainDetailsBean bean;
     private TextView tv_device_type;
@@ -54,20 +58,21 @@ public class AddMaintenanceDetailActivity extends BaseWorkerActivity {
     private EditText et_question;
     private EditText et_maintenance_measures;
     private EditText et_reason_analysis;
-    private BGASortableNinePhotoLayout mPhotosSnpl;
+
     private RelativeLayout rl_device_type, rl_business_type;
 
     private TextView tv_commit;
     private Map<String, String> uploadMap = new HashMap<>();
+    private List<LocalMedia> selectList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_maintenance_detail);
+        ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
         initView();
         setTitle("添加明细");
         setLeftBack();
-        mPhotosSnpl.setDelegate(new BGASortableDelegate(this));
         registerListener();
 
     }
@@ -90,14 +95,13 @@ public class AddMaintenanceDetailActivity extends BaseWorkerActivity {
         et_question = findViewById(R.id.et_question);
         et_maintenance_measures = findViewById(R.id.et_maintenance_measures);
         et_reason_analysis = findViewById(R.id.et_reason_analysis);
-        mPhotosSnpl = findViewById(R.id.snpl_monitor_add_photos);
         tv_commit = findViewById(R.id.tv_commit);
+        pictureRecycler.addImagev(listener);
     }
-
-
+    PictureRecycleView.ImageListener listener = list -> selectList = list;
 
     private void registerListener() {
-        rl_business_type.setOnClickListener((v)->{
+        rl_business_type.setOnClickListener((v) -> {
             PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getBusinessList(1)).map(bus -> bus.getDataName()).toList(), (index, item) -> {
                 tv_business_type.setText(item);
                 tv_device_type.setText("");
@@ -105,10 +109,11 @@ public class AddMaintenanceDetailActivity extends BaseWorkerActivity {
                 tv_brand_model.setText("");
             });
         });
-        rl_device_type.setOnClickListener((v)->{
+        rl_device_type.setOnClickListener((v) -> {
             String busOneCode = Config.get().getBusinessCodeByName(tv_business_type.getText().toString().trim(), 1);
             if (StringUtils.isEmpty(busOneCode)) {
-                showToast("请先选择业务类别");return;
+                showToast("请先选择业务类别");
+                return;
             }
             PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getBusinessList(2)).filter(bus -> bus.getDataCode().startsWith(busOneCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
                 tv_device_type.setText(item);
@@ -116,10 +121,11 @@ public class AddMaintenanceDetailActivity extends BaseWorkerActivity {
                 tv_brand_model.setText("");
             }));
         });
-        rl_device_name.setOnClickListener((v)->{
+        rl_device_name.setOnClickListener((v) -> {
             String busTwoCode = Config.get().getBusinessCodeByName(tv_device_type.getText().toString().trim(), 2);
             if (StringUtils.isEmpty(busTwoCode)) {
-                showToast("请先选择设备类别");return;
+                showToast("请先选择设备类别");
+                return;
             }
             PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getBusinessList(3)).filter(bus -> bus.getDataCode().startsWith(busTwoCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
                 tv_device_name.setText(item);
@@ -127,10 +133,11 @@ public class AddMaintenanceDetailActivity extends BaseWorkerActivity {
             }));
         });
 
-        rl_brand_model.setOnClickListener((v)->{
+        rl_brand_model.setOnClickListener((v) -> {
             String busOneCode = Config.get().getBaseCodeByName(tv_business_type.getText().toString().trim(), 1, Constant.MODEL).get(0);
             if (StringUtils.isEmpty(busOneCode)) {
-                showToast("请先选择业务类别");return;
+                showToast("请先选择业务类别");
+                return;
             }
             PickerSelectUtil.singleTextPicker(this, "", Stream.of(Config.get().getModelList(2)).filter(bus -> bus.getDataCode().startsWith(busOneCode)).map(bus -> bus.getDataName()).toList(), ((index, item) -> {
                 tv_brand_model.setText(item);
@@ -156,11 +163,11 @@ public class AddMaintenanceDetailActivity extends BaseWorkerActivity {
         bean.setBusinessFourCode(Config.get().getBaseCodeByName(tv_brand_model.getText().toString().trim(), 2, Constant.MODEL).get(0));
 
         bean.setQuestion(et_question.getText().toString().trim());
-        String urls = PhotoUtils.getPhotoUrl("biz/maintain/",mPhotosSnpl, uploadMap, true);
+        String urls = PhotoUtils.getPhotoUrl("biz/maintain/", selectList, uploadMap, true);
         bean.setPictures(urls);
 
-        if (mPhotosSnpl.getData().size() != 0) {
-            SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
+        if (selectList.size() != 0) {
+            SDKManager.ossKit(this).asyncPutImages(uploadMap, (isSuccess) -> {
                 runOnUiThread(() -> {
                     Intent intent = new Intent();
                     intent.putExtra("result", bean);
@@ -206,16 +213,6 @@ public class AddMaintenanceDetailActivity extends BaseWorkerActivity {
             return false;
         }
         return true;
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == BGASortableDelegate.REQUEST_CODE_CHOOSE_PHOTO) {
-            mPhotosSnpl.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
-        } else if (requestCode == BGASortableDelegate.REQUEST_CODE_PHOTO_PREVIEW) {
-            mPhotosSnpl.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
-        }
     }
 
     @Override
