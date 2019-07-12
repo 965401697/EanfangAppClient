@@ -65,6 +65,7 @@
                             android:background="@mipmap/ic_personal_head_back"
                             android:gravity="center">
 
+
                             <include layout="@layout/layout_headview" />
                         </LinearLayout>
 

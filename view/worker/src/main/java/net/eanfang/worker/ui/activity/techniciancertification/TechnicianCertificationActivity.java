@@ -12,10 +12,11 @@ import android.widget.ImageView;
 import com.alibaba.fastjson.JSONPObject;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.BaseApplication;
+import com.eanfang.biz.model.AuthStatusBean;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.AuthStatusBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.ToastUtil;
@@ -83,6 +84,7 @@ public class TechnicianCertificationActivity extends BaseActivity {
             new TrueFalseDialog(TechnicianCertificationActivity.this, "系统提示", "是否撤销认证并保存信息", () -> EanfangHttp.post(NewApiService.WORKER_AUTH_REVOKE + WorkerApplication.get().getAccId()).execute(new EanfangCallback<JSONPObject>(TechnicianCertificationActivity.this, true, JSONPObject.class, bean -> {
                 verify = 0;
                 realVerify = 1;
+                BaseApplication.get().getAccount().setRealVerify(1);
                 setRightTitle("");
                 initView();
             }))).showDialog();
