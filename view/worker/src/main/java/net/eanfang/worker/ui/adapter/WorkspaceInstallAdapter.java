@@ -40,7 +40,7 @@ public class WorkspaceInstallAdapter extends BaseQuickAdapter<WorkspaceInstallBe
                         .getDesignOrderConstant().get(Constant.PREDICTTIME_TYPE).get(item.getPredictTime())))
                 .setText(R.id.tv_business, "业务：" + v(() -> Config.get().getBusinessNameByCode(item.getBusinessOneCode(), 1)))
                 .setText(R.id.tv_count_money, v(() -> GetConstDataUtils.getBudgetList().get(item.getBudget())));
-        helper.setVisible(R.id.iv_upload, false);
+        helper.setGone(R.id.iv_upload, false);
 
     }
 }

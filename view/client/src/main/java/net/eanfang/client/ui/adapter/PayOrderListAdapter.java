@@ -55,7 +55,7 @@ public class PayOrderListAdapter extends BaseQuickAdapter<PayOrderListBean.ListB
             if (item.getStatus() == 0) {
                 helper.setText(R.id.tv_do_second, "同意报价");
             } else {
-                helper.setVisible(R.id.tv_do_second, false);
+                helper.setGone(R.id.tv_do_second, false);
             }
 
         } else {
@@ -63,7 +63,7 @@ public class PayOrderListAdapter extends BaseQuickAdapter<PayOrderListBean.ListB
             if (item.getStatus() == 0) {
                 helper.setText(R.id.tv_do_second, "立即支付");
             } else {
-                helper.setVisible(R.id.tv_do_second, false);
+                helper.setGone(R.id.tv_do_second, false);
             }
 
         }

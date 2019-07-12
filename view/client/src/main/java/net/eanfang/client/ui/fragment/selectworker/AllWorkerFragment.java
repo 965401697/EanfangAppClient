@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -63,8 +62,6 @@ public class AllWorkerFragment extends BaseFragment implements SwipeRefreshLayou
     LinearLayout llNodata;
     @BindView(R.id.swipre_fresh)
     SwipeRefreshLayout swipreFresh;
-    @BindView(R.id.btn_key_two)
-    Button btnKeyTwo;
     @BindView(R.id.rv_allWorker)
     RecyclerView rvAllWorker;
 

@@ -85,8 +85,8 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
         //订单金额
         if (item.getOwnerOrg() != null && item.getOwnerOrg().getBelongCompany() != null && OEG_NAME.equals(item.getOwnerOrg().getBelongCompany().getOrgName())) {
 
-            helper.setVisible(R.id.tv_count_money, true);
-            helper.setVisible(R.id.tv_total, true);
+            helper.setGone(R.id.tv_count_money, true);
+            helper.setGone(R.id.tv_total, true);
 
             if (item.getPayLogEntity() != null) {
                 if (item.getPayLogEntity().getPayPrice() != null) {
@@ -98,18 +98,18 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
                 helper.setText(R.id.tv_count_money, "0.00");
             }
         } else {
-            helper.setVisible(R.id.tv_count_money, false);
-            helper.setVisible(R.id.tv_total, false);
+            helper.setGone(R.id.tv_count_money, false);
+            helper.setGone(R.id.tv_total, false);
         }
 
         helper.setText(R.id.tv_do_first, orderOerationEntity.getOperationLeft());
         helper.setText(R.id.tv_do_second, orderOerationEntity.getOperationRight());
-        helper.setVisible(R.id.tv_do_first, orderOerationEntity.isShowOperationLeft());
+        helper.setGone(R.id.tv_do_first, orderOerationEntity.isShowOperationLeft());
         //原代码判断status为5的时候判断item.getClientEvaluateId()<=0展示否则不展示第二按钮
-        helper.setVisible(R.id.tv_do_second, orderOerationEntity.isShowOperationRight() || (custom && status == 5 &&
+        helper.setGone(R.id.tv_do_second, orderOerationEntity.isShowOperationRight() || (custom && status == 5 &&
                 (item.getClientEvaluateId() == null || item.getClientEvaluateId() <= 0)));
-        helper.setVisible(R.id.iv_finish, orderOerationEntity.isFinished());
-        helper.setVisible(R.id.tv_state, !orderOerationEntity.isFinished());
+        helper.setGone(R.id.iv_finish, orderOerationEntity.isFinished());
+        helper.setGone(R.id.tv_state, !orderOerationEntity.isFinished());
 
         //将业务类型的图片显示到列表
         String imgUrl = V.v(() -> item.getFailureEntity().getPictures().split(",")[0]);
