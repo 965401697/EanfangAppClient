@@ -9,10 +9,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.eanfang.BuildConfig;
 import com.eanfang.R;
 import com.eanfang.R2;
+import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.CopyTvUtil;
 import com.eanfang.util.FileUtils;
@@ -103,7 +103,7 @@ public class QrCodeShowActivity extends BaseActivity {
         }
         if (!StringUtils.isEmpty(mQrcodeAddress)) {
             Log.d("QrCodeShowActivity_yh", "initView: " + Uri.parse(BuildConfig.OSS_SERVER + mQrcodeAddress));
-            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + mQrcodeAddress),ivQrcode);
+            GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + mQrcodeAddress), ivQrcode);
             initData();
         }
         rlSaveQrcode.setOnClickListener((v) -> doSaveQRCode());
@@ -135,15 +135,17 @@ public class QrCodeShowActivity extends BaseActivity {
     }
 
     public void doSaveQRCode() {
-        if (!StringUtils.isEmpty(mQrcodeAddress)) {
-            String path = FileUtils.bitmapToFile(FileUtils.returnBitMap(BuildConfig.OSS_SERVER + mQrcodeAddress), new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + "_qrcode_" + mSave);
-            if (!StringUtils.isEmpty(path)) {
-                showToast(mTitle + "的易安防二维码已生成");
-            } else {
-                showToast("图片无效");
-            }
+        RxPerm.get(this).storagePerm((success) -> {
+            if (!StringUtils.isEmpty(mQrcodeAddress)) {
+                String path = FileUtils.bitmapToFile(FileUtils.returnBitMap(BuildConfig.OSS_SERVER + mQrcodeAddress), new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + "_qrcode_" + mSave);
+                if (!StringUtils.isEmpty(path)) {
+                    showToast(mTitle + "的易安防二维码已生成");
+                } else {
+                    showToast("图片无效");
+                }
 
-        }
+            }
+        });
     }
 
     public Result parseInfoFromBitmap(Bitmap bitmap) {

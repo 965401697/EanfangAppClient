@@ -38,6 +38,7 @@ import net.eanfang.worker.ui.activity.im.FollowListActivity;
 import net.eanfang.worker.ui.activity.im.MorePopWindow;
 import net.eanfang.worker.ui.activity.im.MyFriendsListActivity;
 import net.eanfang.worker.ui.activity.im.MyGroupsListActivity;
+import net.eanfang.worker.ui.activity.im.PeerConnectionListActivity;
 import net.eanfang.worker.ui.activity.worksapce.ExternalCompanyActivity;
 import net.eanfang.worker.ui.activity.worksapce.PartnerActivity;
 import net.eanfang.worker.ui.activity.worksapce.SubcompanyActivity;
@@ -196,6 +197,13 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getActivity(), FollowListActivity.class));
+            }
+        });
+        view.findViewById(R.id.rl_peer_connection).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //同行人脉
+                startActivity(new Intent(getActivity(), PeerConnectionListActivity.class));
             }
         });
 

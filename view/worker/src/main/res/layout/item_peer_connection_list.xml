@@ -5,7 +5,7 @@
     android:layout_height="@dimen/dimen_128"
     android:background="@color/white">
 
-    <com.customview.CircleImageView
+    <com.eanfang.base.widget.customview.CircleImageView
         android:id="@+id/iv_connection_item_header"
         android:layout_width="@dimen/dimen_80"
         android:layout_height="@dimen/dimen_80"

@@ -1,10 +1,11 @@
 package net.eanfang.worker.ui.activity.im;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
@@ -40,8 +41,6 @@ public class CreateGroupOrganizationAdapter extends BaseQuickAdapter<TemplateBea
 
     @Override
     protected void convert(BaseViewHolder helper, TemplateBean item) {
-
-
         if (item.getPresons().size() > 0) {
             helper.setVisible(R.id.tv_company_name, true);
             helper.setText(R.id.tv_company_name, item.getOrgName() + "(" + item.getPresons().size() + ")");

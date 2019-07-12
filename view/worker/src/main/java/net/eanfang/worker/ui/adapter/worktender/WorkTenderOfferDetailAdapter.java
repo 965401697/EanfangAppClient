@@ -4,18 +4,13 @@ import android.content.Context;
 import android.net.Uri;
 import android.view.View;
 
-import androidx.annotation.Nullable;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.biz.model.entity.tender.TaskApplyEntity;
-import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
 import com.eanfang.util.GlideUtil;
 
 import net.eanfang.worker.R;
-
-import java.util.List;
 
 /**
  * @author guanluocang
@@ -38,7 +33,7 @@ public class WorkTenderOfferDetailAdapter extends BaseQuickAdapter<TaskApplyEnti
         //姓名
         helper.setText(R.id.tv_name, item.getApplyContacts());
         //是否认证
-        if (item.getVerifyStatus() == 1) {
+        if (item.getVerifyStatus() == 0) {
             helper.getView(R.id.iv_verify_status).setVisibility(View.VISIBLE);
         } else {
             helper.getView(R.id.iv_verify_status).setVisibility(View.GONE);

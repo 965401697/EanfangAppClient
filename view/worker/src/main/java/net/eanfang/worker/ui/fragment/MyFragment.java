@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.BaseApplication;
 import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.biz.model.SpecialistAuthStatusBean;
 import com.eanfang.biz.model.bean.LoginBean;
@@ -104,8 +105,10 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
         // 获取认证状态
         EanfangHttp.post(UserApi.POST_WORKER_EXPERT_AUTH_STATUS)
                 .execute(new EanfangCallback<JSONObject>(getActivity(), true, JSONObject.class, (bean) -> {
-                    e = (int) bean.get("expert");//专家
-                    t = (int) bean.get("techWorker");//技师
+                    //专家
+                    e = (int) bean.get("expert");
+                    //技师
+                    t = (int) bean.get("techWorker");
                     setOnClick(e, t);
                 }));
         // 获取认证状态
@@ -122,16 +125,19 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
         if (t == 0) {
             tvVerfiy.setText("技师未认证，待认证");
             tvVerfiyb.setText("技师未认证，待认证");
+            BaseApplication.get().getAccount().setRealVerify(1);
         } else if (t == 1) {
             tvVerfiy.setText("认证中");
             tvVerfiyb.setText("认证中");
+            BaseApplication.get().getAccount().setRealVerify(1);
         } else if (t == 2) {
             tvVerfiy.setText("已认证");
             tvVerfiyb.setText("已认证");
+            BaseApplication.get().getAccount().setRealVerify(0);
         } else if (t == 3) {
-
             tvVerfiy.setText("认证失败，请重新认证");
             tvVerfiyb.setText("认证失败，请重新认证");
+            BaseApplication.get().getAccount().setRealVerify(1);
         }
         //status 0草稿1认证中2认证通过3认证拒绝
         if (e == 0) {

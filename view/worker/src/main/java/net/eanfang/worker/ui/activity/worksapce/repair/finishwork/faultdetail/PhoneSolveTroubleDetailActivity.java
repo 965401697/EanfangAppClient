@@ -2,7 +2,6 @@ package net.eanfang.worker.ui.activity.worksapce.repair.finishwork.faultdetail;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.IdRes;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -15,9 +14,12 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.IdRes;
+
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Optional;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.config.Config;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
@@ -25,7 +27,6 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JumpItent;
-import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.StringUtils;
 import com.yaf.base.entity.BughandleDetailEntity;
 import com.yaf.base.entity.BughandleParamEntity;
@@ -159,7 +160,6 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
         setContentView(R.layout.activity_ps_trouble_detail);
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        super.onCreate(savedInstanceState);
         initView();
         initData();
         initListener();

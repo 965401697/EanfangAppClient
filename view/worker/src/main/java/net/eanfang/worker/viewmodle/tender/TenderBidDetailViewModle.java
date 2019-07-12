@@ -79,7 +79,7 @@ public class TenderBidDetailViewModle extends BaseViewModel {
         //姓名
         tenderBidDetailBinding.tvName.setText(taskApplyEntity.getApplyContacts());
         //是否认证
-        if (taskApplyEntity.getVerifyStatus() == 1) {
+        if (taskApplyEntity.getVerifyStatus() == 0) {
             tenderBidDetailBinding.ivVerifyStatus.setVisibility(View.VISIBLE);
         } else {
             tenderBidDetailBinding.ivVerifyStatus.setVisibility(View.GONE);

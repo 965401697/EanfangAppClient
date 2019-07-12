@@ -3,24 +3,25 @@ package net.eanfang.worker.ui.activity.im;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.http.EanfangCallback;
-import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.OrganizationBean;
 import com.eanfang.biz.model.SectionBean;
 import com.eanfang.biz.model.TemplateBean;
-import com.eanfang.util.DialogUtil;
 import com.eanfang.biz.model.entity.UserEntity;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
+import com.eanfang.util.DialogUtil;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
@@ -62,20 +63,26 @@ public class CreateGroupOrganizationActivity extends BaseWorkerActivity {
         setContentView(R.layout.activity_create_group_organization);
         ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
-        //----------------------------------
         startTransaction(true);
-
         setTitle("选择联系人");
         setLeftBack();
-
         String isFromOA = getIntent().getStringExtra("isFrom");
         if (TextUtils.isEmpty(isFromOA)) {
             setRightTitle("下一步");
         } else {
             setRightTitle("确定");
         }
+        companyId = getIntent().getStringExtra("companyId");
+        companyName = getIntent().getStringExtra("companyName");
+        companyOrgCode = getIntent().getStringExtra("companyOrgCode");
 
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            mDataList = (List<TemplateBean.Preson>) bundle.getSerializable("list");
+        }
 
+        mLoadingDialog = DialogUtil.createLoadingDialog(this);
+        getData();
         setRightTitleOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,25 +102,10 @@ public class CreateGroupOrganizationActivity extends BaseWorkerActivity {
                 endTransaction(true);
             }
         });
-
-        companyId = getIntent().getStringExtra("companyId");
-        companyName = getIntent().getStringExtra("companyName");
-        companyOrgCode = getIntent().getStringExtra("companyOrgCode");
-
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
-            mDataList = (List<TemplateBean.Preson>) bundle.getSerializable("list");
-        }
-
-        mLoadingDialog = DialogUtil.createLoadingDialog(this);
-
-        getData();
     }
 
     private void getData() {
-
         mLoadingDialog.show();
-
         EanfangHttp.get(UserApi.GET_BRANCH_OFFICE_LIST_TREE + companyId)
                 .execute(new EanfangCallback<UserEntity>(this, false, UserEntity.class, true, (list) -> {
                     OrganizationBean bean = new OrganizationBean();
