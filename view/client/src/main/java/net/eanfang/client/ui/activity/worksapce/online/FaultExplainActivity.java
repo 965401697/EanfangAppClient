@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.BuildConfig;
@@ -20,7 +23,6 @@ import com.eanfang.util.StringUtils;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 import com.yaf.base.entity.AnswerListWithQuestionBean;
 
-
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
@@ -28,8 +30,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -99,7 +99,6 @@ public class FaultExplainActivity extends BaseClientActivity {
         intent = getIntent();
         setTitle("故障解答");
         setLeftBack();
-        getData();
         initViews();
 
     }
@@ -179,12 +178,11 @@ public class FaultExplainActivity extends BaseClientActivity {
                     @Override
                     public void onSuccess(AnswerChangeLikeStatusBean bean) {
                         if (likeStatus % 2 != 0) {
-                            getData();
                             Toast.makeText(FaultExplainActivity.this, "点赞成功", Toast.LENGTH_SHORT).show();
                         } else {
-                            getData();
                             Toast.makeText(FaultExplainActivity.this, "取消成功", Toast.LENGTH_SHORT).show();
                         }
+                        getData();
                     }
 
                     @Override
@@ -210,8 +208,8 @@ public class FaultExplainActivity extends BaseClientActivity {
                         questionUserId = bean.getQuestion().getQuestionUserId();
                         questionCompanyId = bean.getQuestion().getQuestionCompanyId();
                         questionTopCompanyId = bean.getQuestion().getQuestionTopCompanyId();
-                        GlideUtil.intoImageView(FaultExplainActivity.this,Uri.parse(BuildConfig.OSS_SERVER
-                                + bean.getQuestion().getAccountEntity().getAvatar()),ivUserHeader);
+                        GlideUtil.intoImageView(FaultExplainActivity.this, Uri.parse(BuildConfig.OSS_SERVER
+                                + bean.getQuestion().getAccountEntity().getAvatar()), ivUserHeader);
                         tvUserName.setText(bean.getQuestion().getAccountEntity().getNickName());
                         //时间
                         format1 = format(bean.getQuestion().getQuestionCreateDateLong());
@@ -268,10 +266,11 @@ public class FaultExplainActivity extends BaseClientActivity {
 
     /**
      * UI展示更新
-     * @param answersShow 专家列表展示
+     *
+     * @param answersShow       专家列表展示
      * @param commonAnswersShow 用户回复
      */
-    private void setUIShow(boolean answersShow, boolean commonAnswersShow){
+    private void setUIShow(boolean answersShow, boolean commonAnswersShow) {
         recyclerViewAnswer.setVisibility(answersShow ? View.VISIBLE : View.GONE);
         recyclerAnswerCommon.setVisibility(commonAnswersShow ? View.VISIBLE : View.GONE);
         tvNoDatas.setVisibility(answersShow ? View.GONE : View.VISIBLE);

@@ -1,19 +1,14 @@
 package net.eanfang.worker.ui.adapter.worktender;
 
-import android.view.View;
-
-import androidx.annotation.Nullable;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.eanfang.base.kit.V;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
 import com.eanfang.config.Config;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
-
-import java.util.List;
 
 /**
  * @author guanluocang
@@ -27,7 +22,7 @@ public class WorkTenderFindAdapter extends BaseQuickAdapter<TaskPublishEntity, B
 
     @Override
     protected void convert(BaseViewHolder helper, TaskPublishEntity item) {
-        String endTime = GetDateUtils.dateToDateTimeString(item.getEndTime());
+        String endTime = GetDateUtils.dateToDateTimeString(V.v(()->item.getEndTime()));
         //名称
         helper.setText(R.id.tv_tender_name, Config.get().getBusinessNameByCode(item.getSystemType(), 1));
         //类型

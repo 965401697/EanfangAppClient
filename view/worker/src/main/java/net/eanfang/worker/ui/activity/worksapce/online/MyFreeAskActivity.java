@@ -14,20 +14,15 @@ import androidx.lifecycle.ViewModel;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.picture.PictureRecycleView;
-import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.contentsafe.ContentDefaultAuditing;
 import com.eanfang.util.contentsafe.ContentSecurityAuditUtil;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.photopicker.com.activity.BGAPhotoPickerActivity;
-import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkeActivity;
-import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,6 +50,7 @@ public class MyFreeAskActivity extends BaseWorkeActivity implements View.OnClick
     private Map<String, String> uploadMap = new HashMap<>();
     private String urls;
     private List<LocalMedia> selectList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_my_free_ask);
@@ -62,12 +58,12 @@ public class MyFreeAskActivity extends BaseWorkeActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         tvTitle.setText("我来回答");
         ivLeft.setOnClickListener(this);
-        pictureRecycler.addImagev(listener);
         Intent intent = getIntent();
         questionId = intent.getLongExtra("questionId", 0);
         questionUserId = intent.getStringExtra("questionUserId");
         questionCompanyId = intent.getStringExtra("questionCompanyId");
         questionTopCompanyId = intent.getStringExtra("questionTopCompanyId");
+        pictureRecycler.addImagev(listener);
         //提交
         tvAnswer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,6 +92,7 @@ public class MyFreeAskActivity extends BaseWorkeActivity implements View.OnClick
     }
 
     PictureRecycleView.ImageListener listener = list -> selectList = list;
+
     //网络请求--我来回答----多图上传
     private void getData() {
 

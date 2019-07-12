@@ -3,8 +3,6 @@ package net.eanfang.worker.ui.activity.worksapce.online;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -12,6 +10,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
@@ -115,7 +116,6 @@ public class ExpertAnswerActivity extends BaseWorkerActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         replyListAdapter = new ReplyListAdapter();
         replyListAdapter.bindToRecyclerView(recyclerView);
-        getData();
     }
 
     //添加回答
@@ -151,12 +151,12 @@ public class ExpertAnswerActivity extends BaseWorkerActivity {
                     @Override
                     public void onSuccess(MyReplyListBean bean) {
                         if (bean.getAnswerInfo().getAnswerUserType() == 4 || bean.getAnswerInfo().getAnswerUserType() == 5) {
-                            GlideUtil.intoImageView(ExpertAnswerActivity.this,Uri.parse(BuildConfig.OSS_SERVER + bean.getAnswerInfo().getExpertsCertificationEntity().getAvatarPhoto()),ivExpertHeader);
+                            GlideUtil.intoImageView(ExpertAnswerActivity.this, Uri.parse(BuildConfig.OSS_SERVER + bean.getAnswerInfo().getExpertsCertificationEntity().getAvatarPhoto()), ivExpertHeader);
                             tvExpertName.setText(bean.getAnswerInfo().getExpertsCertificationEntity().getApproveUserName());
                             tvMajor.setText(bean.getAnswerInfo().getExpertsCertificationEntity().getCompany());
                         } else if (bean.getAnswerInfo().getAnswerUserType() == 0 || bean.getAnswerInfo().getAnswerUserType() == 2) {
                             setTitle("用户回复");
-                            GlideUtil.intoImageView(ExpertAnswerActivity.this,Uri.parse(BuildConfig.OSS_SERVER + bean.getAnswerInfo().getAccountEntity().getAvatar()),ivExpertHeader);
+                            GlideUtil.intoImageView(ExpertAnswerActivity.this, Uri.parse(BuildConfig.OSS_SERVER + bean.getAnswerInfo().getAccountEntity().getAvatar()), ivExpertHeader);
                             tvExpertName.setText(bean.getAnswerInfo().getAccountEntity().getNickName());
                             tvMajor.setVisibility(View.GONE);
                         }
@@ -167,7 +167,7 @@ public class ExpertAnswerActivity extends BaseWorkerActivity {
                             //            snplPic.init(this);
                             snplPic.setData(picList);
                             snplPic.setEditable(false);
-                        }else {
+                        } else {
                             snplPic.setVisibility(View.GONE);
                         }
                         tvDesc.setText(bean.getAnswerInfo().getAnswerContent());

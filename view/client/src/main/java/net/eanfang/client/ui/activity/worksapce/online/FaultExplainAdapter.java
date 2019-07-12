@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
+import com.eanfang.base.kit.V;
 import com.eanfang.util.GlideUtil;
 import com.yaf.base.entity.AnswerListWithQuestionBean;
 
@@ -36,15 +37,15 @@ public class FaultExplainAdapter extends BaseQuickAdapter<AnswerListWithQuestion
     @Override
     protected void convert(BaseViewHolder helper, AnswerListWithQuestionBean.ExpertAnswersBean item) {
         //头像
-        if (!TextUtils.isEmpty(item.getExpertsCertificationEntity().getAvatarPhoto())){
-            GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + item.getExpertsCertificationEntity().getAvatarPhoto()),helper.getView(R.id.iv_expert_header));
-        }else {
+        if (!TextUtils.isEmpty(V.v(() -> item.getExpertsCertificationEntity().getAvatarPhoto()))) {
+            GlideUtil.intoImageView(mContext, Uri.parse(BuildConfig.OSS_SERVER + item.getExpertsCertificationEntity().getAvatarPhoto()), helper.getView(R.id.iv_expert_header));
+        } else {
 
         }
         //名字
-        helper.setText(R.id.tv_expert_name, item.getExpertsCertificationEntity().getApproveUserName());
+        helper.setText(R.id.tv_expert_name, V.v(()->item.getExpertsCertificationEntity().getApproveUserName()));
         //品牌专家
-        helper.setText(R.id.tv_major, item.getExpertsCertificationEntity().getCompany() + "专家");
+        helper.setText(R.id.tv_major,  V.v(() ->item.getExpertsCertificationEntity().getCompany() + "专家"));
         //时间
         helper.setText(R.id.tv_time, format(item.getAnswerCreateTimeLong()));
         //描述

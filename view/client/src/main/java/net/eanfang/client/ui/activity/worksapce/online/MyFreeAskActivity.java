@@ -11,21 +11,20 @@ import android.widget.Toast;
 
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.base.kit.SDKManager;
-import com.eanfang.delegate.BGASortableDelegate;
+import com.eanfang.base.kit.picture.picture.PictureRecycleView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.contentsafe.ContentDefaultAuditing;
 import com.eanfang.util.contentsafe.ContentSecurityAuditUtil;
-import com.photopicker.com.activity.BGAPhotoPickerActivity;
-import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
+import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -39,15 +38,20 @@ public class MyFreeAskActivity extends BaseClientActivity implements View.OnClic
     TextView tvTitle;
     @BindView(R.id.answer_content)
     EditText answerContent;
-    @BindView(R.id.snpl_photos)
-    BGASortableNinePhotoLayout snplPhotos;
     @BindView(R.id.tv_answer)
     TextView tvAnswer;
+    @BindView(R.id.picture_recycler)
+    PictureRecycleView pictureRecycler;
     private long questionId;
-    private String questionUserId,questionCompanyId,questionTopCompanyId;
+    private String questionUserId, questionCompanyId, questionTopCompanyId;
     private String answerContent1;
+
     private Map<String, String> uploadMap = new HashMap<>();
     private String urls;
+    /**
+     * 照片
+     */
+    private List<LocalMedia> selectList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,28 +60,28 @@ public class MyFreeAskActivity extends BaseClientActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         tvTitle.setText("我来回答");
         ivLeft.setOnClickListener(this);
-        snplPhotos.setDelegate(new BGASortableDelegate(this));
         Intent intent = getIntent();
         questionId = intent.getLongExtra("questionId", 0);
         questionUserId = intent.getStringExtra("questionUserId");
         questionCompanyId = intent.getStringExtra("questionCompanyId");
         questionTopCompanyId = intent.getStringExtra("questionTopCompanyId");
+        pictureRecycler.addImagev(listener);
         //提交
         tvAnswer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 answerContent1 = MyFreeAskActivity.this.answerContent.getText().toString();
-                if (!TextUtils.isEmpty(answerContent1)){
+                if (!TextUtils.isEmpty(answerContent1)) {
                     ContentSecurityAuditUtil.getInstance().toAuditing(answerContent1, new ContentDefaultAuditing(MyFreeAskActivity.this) {
                         @Override
                         public void auditingSuccess() {
-                            urls = PhotoUtils.getPhotoUrl("online/",snplPhotos, uploadMap, true);
+                            urls = PhotoUtils.getPhotoUrl("online/", selectList, uploadMap, true);
                             getData();
                         }
                     });
                 } else {
-                    Toast.makeText(MyFreeAskActivity.this,"內容不可为空",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MyFreeAskActivity.this, "內容不可为空", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -85,19 +89,21 @@ public class MyFreeAskActivity extends BaseClientActivity implements View.OnClic
 
     }
 
+    PictureRecycleView.ImageListener listener = list -> selectList = list;
+
     //网络请求--我来回答----多图上传
     private void getData() {
 
         if (uploadMap.size() != 0) {
-            SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
+            SDKManager.ossKit(this).asyncPutImages(uploadMap, (isSuccess) -> {
                 runOnUiThread(() -> {
                     Intent intent = new Intent();
                     intent.putExtra("resultTwo", urls);
-                    setResult( 101, intent);
+                    setResult(101, intent);
                     finish();
                 });
             });
-        }else {
+        } else {
             Intent intentk = new Intent();
             intentk.putExtra("resultTwo", urls);
             setResult(101, intentk);
@@ -114,7 +120,7 @@ public class MyFreeAskActivity extends BaseClientActivity implements View.OnClic
                 .execute(new EanfangCallback<AnswerAddBean>(this, true, AnswerAddBean.class) {
                     @Override
                     public void onSuccess(AnswerAddBean bean) {
-                        Toast.makeText(MyFreeAskActivity.this,"成功",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MyFreeAskActivity.this, "成功", Toast.LENGTH_SHORT).show();
                         finish();
                     }
 
@@ -128,16 +134,6 @@ public class MyFreeAskActivity extends BaseClientActivity implements View.OnClic
                 });
 
 
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK && requestCode == BGASortableDelegate.REQUEST_CODE_CHOOSE_PHOTO) {
-            snplPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
-        } else if (requestCode == BGASortableDelegate.REQUEST_CODE_PHOTO_PREVIEW) {
-            snplPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
-        }
     }
 
 

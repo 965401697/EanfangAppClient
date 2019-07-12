@@ -3,11 +3,12 @@ package net.eanfang.worker.ui.activity.worksapce.online;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -177,12 +178,11 @@ public class FaultExplainActivity extends BaseWorkerActivity {
                     @Override
                     public void onSuccess(AnswerChangeLikeStatusBean bean) {
                         if (likeStatus % 2 != 0) {
-                            getData();
                             Toast.makeText(FaultExplainActivity.this, "点赞成功", Toast.LENGTH_SHORT).show();
                         } else {
-                            getData();
                             Toast.makeText(FaultExplainActivity.this, "取消成功", Toast.LENGTH_SHORT).show();
                         }
+                        getData();
                     }
 
                     @Override

@@ -11,6 +11,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
@@ -28,8 +31,6 @@ import net.eanfang.client.ui.base.BaseClientActivity;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -115,7 +116,6 @@ public class ExpertAnswerActivity extends BaseClientActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         replyListAdapter = new ReplyListAdapter();
         replyListAdapter.bindToRecyclerView(recyclerView);
-        getData();
     }
 
     //添加回答
@@ -142,7 +142,9 @@ public class ExpertAnswerActivity extends BaseClientActivity {
                 });
     }
 
-    //网络请求---列表展示
+    /**
+     * /网络请求---列表展示
+     */
     private void getData() {
         picList.clear();
         EanfangHttp.post(NewApiService.Reply_List)
