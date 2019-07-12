@@ -9,7 +9,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.TextView;
+import android.widget.EditText;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -52,7 +52,7 @@ public class SelectAddressActivity extends BaseActivity implements PoiSearch.OnP
     @BindView(R2.id.rv_list)
     RecyclerView mRecyclerView;
     @BindView(R2.id.atv_text)
-    TextView atvText;
+    EditText atvText;
     @BindView(R2.id.map)
     MapView mMapView;
 
