@@ -172,6 +172,10 @@
             android:name=".sdk.areachoose.AreaSelectionActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.InviteShareActivity" />
+        <activity
+            android:name=".ui.activity.SelectAddressActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
     </application>
 
 </manifest>

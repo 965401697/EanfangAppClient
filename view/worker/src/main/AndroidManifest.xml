@@ -199,6 +199,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.eanfang.ui.activity.SelectAddressActivity"
+            android:windowSoftInputMode="stateAlwaysHidden"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activity.my.EvaluateActivity"
