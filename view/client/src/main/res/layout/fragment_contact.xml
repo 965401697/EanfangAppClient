@@ -259,6 +259,7 @@
                         android:id="@+id/rl_create_team"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
+                        android:visibility="gone"
                         android:orientation="horizontal">
 
                         <ImageView

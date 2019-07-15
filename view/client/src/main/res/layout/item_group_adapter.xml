@@ -83,12 +83,10 @@
         android:id="@+id/ll_show"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dimen_120"
+        android:layout_marginBottom="@dimen/dimen_20"
+        android:layout_marginLeft="@dimen/dimen_80"
         android:orientation="vertical"
-        android:visibility="gone">
-
-
-        <TextView style="@style/style_common_line_gray" />
+        android:visibility="visible">
 
         <LinearLayout
             android:id="@+id/ll_org"
@@ -96,7 +94,6 @@
             android:layout_height="@dimen/dimen_100"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingBottom="@dimen/dimen_20"
             android:paddingTop="@dimen/dimen_20">
 
             <ImageView
@@ -108,9 +105,9 @@
                 android:id="@+id/tv_org"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_44"
+                android:layout_marginLeft="@dimen/dimen_40"
                 android:text="组织架构"
-                android:textColor="@color/roll_content"
+                android:textColor="@color/color_contact_auth_text"
                 android:textSize="@dimen/textSize_14" />
         </LinearLayout>
 
@@ -127,15 +124,15 @@
             <ImageView
                 android:layout_width="@dimen/dimen_34"
                 android:layout_height="@dimen/dimen_34"
-                android:src="@mipmap/ic_client_child" />
+                android:src="@mipmap/ic_contact_child" />
 
             <TextView
                 android:id="@+id/tv_child_company"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_44"
+                android:layout_marginLeft="@dimen/dimen_40"
                 android:text="子公司"
-                android:textColor="@color/roll_content"
+                android:textColor="@color/color_contact_auth_text"
                 android:textSize="@dimen/textSize_14" />
         </LinearLayout>
 
@@ -161,9 +158,9 @@
                 android:id="@+id/tv_outside_company"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_44"
+                android:layout_marginLeft="@dimen/dimen_40"
                 android:text="外协单位"
-                android:textColor="@color/roll_content"
+                android:textColor="@color/color_contact_auth_text"
                 android:textSize="@dimen/textSize_14" />
         </LinearLayout>
 
@@ -189,9 +186,9 @@
                 android:id="@+id/tv_parten_company"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/dimen_44"
+                android:layout_marginLeft="@dimen/dimen_40"
                 android:text="合作供应商"
-                android:textColor="@color/roll_content"
+                android:textColor="@color/color_contact_auth_text"
                 android:textSize="@dimen/textSize_14" />
         </LinearLayout>
 
@@ -227,6 +224,4 @@
         </LinearLayout>
 
     </LinearLayout>
-
-
 </LinearLayout>

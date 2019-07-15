@@ -17,8 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="49dp"
             android:layout_marginLeft="14dp"
-            android:layout_marginRight="18dp"
             android:layout_marginTop="15dp"
+            android:layout_marginRight="18dp"
             android:background="@color/white">
 
             <TextView
@@ -89,6 +89,27 @@
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
                 android:text="添加群组"
+                android:textSize="16sp" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/re_create_team"
+            android:layout_width="match_parent"
+            android:layout_height="49dp"
+            android:layout_marginLeft="14dp"
+            android:layout_marginRight="18dp"
+            android:visibility="gone"
+            android:background="@color/white">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/pop_add"
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:text="创建团队"
                 android:textSize="16sp" />
 
 

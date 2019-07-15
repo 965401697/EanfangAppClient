@@ -147,72 +147,50 @@
             app:layout_constraintDimensionRatio="H,338:77"
             app:layout_constraintTop_toBottomOf="@id/tv_leave_post_all_warn" />
 
-        <ImageView
-            android:id="@+id/img_leave_post_check"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:src="@drawable/img_checkup"
-            app:layout_constraintBottom_toBottomOf="@id/tv_img_checkup"
-            app:layout_constraintLeft_toLeftOf="@id/constraint_leave_post"
-            app:layout_constraintRight_toLeftOf="@id/img_leave_post_manage"
-            app:layout_constraintTop_toTopOf="@id/constraint_leave_post" />
 
         <TextView
             android:id="@+id/tv_img_checkup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:drawableTop="@drawable/img_checkup"
+            android:drawablePadding="@dimen/dimen_20"
             android:gravity="center"
             android:text="图像查岗"
             android:textColor="@color/black"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@id/constraint_leave_post"
-            app:layout_constraintLeft_toLeftOf="@id/img_leave_post_check"
-            app:layout_constraintRight_toRightOf="@id/img_leave_post_check"
-            app:layout_constraintTop_toBottomOf="@id/img_leave_post_manage" />
-
-        <ImageView
-            android:id="@+id/img_leave_post_manage"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:src="@drawable/img_post_management"
-            app:layout_constraintBottom_toBottomOf="@id/tv_post_management"
-            app:layout_constraintLeft_toRightOf="@id/img_leave_post_check"
-            app:layout_constraintRight_toLeftOf="@id/img_leave_post_history"
+            app:layout_constraintLeft_toLeftOf="@id/constraint_leave_post"
+            app:layout_constraintRight_toLeftOf="@id/tv_post_management"
             app:layout_constraintTop_toTopOf="@id/constraint_leave_post" />
+
 
         <TextView
             android:id="@+id/tv_post_management"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:drawableTop="@drawable/img_post_management"
+            android:drawablePadding="@dimen/dimen_20"
             android:text="岗位管理"
             android:textColor="@color/black"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@id/constraint_leave_post"
-            app:layout_constraintLeft_toLeftOf="@id/img_leave_post_manage"
-            app:layout_constraintRight_toRightOf="@id/img_leave_post_manage"
-            app:layout_constraintTop_toBottomOf="@id/img_leave_post_manage" />
-
-        <ImageView
-            android:id="@+id/img_leave_post_history"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:src="@drawable/img_checkup_history"
-            app:layout_constraintBottom_toBottomOf="@id/tv_checkup_history"
-            app:layout_constraintLeft_toRightOf="@id/img_leave_post_manage"
-            app:layout_constraintRight_toRightOf="@id/constraint_leave_post"
+            app:layout_constraintLeft_toRightOf="@id/tv_img_checkup"
+            app:layout_constraintRight_toLeftOf="@id/tv_checkup_history"
             app:layout_constraintTop_toTopOf="@id/constraint_leave_post" />
 
         <TextView
             android:id="@+id/tv_checkup_history"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:drawableTop="@drawable/img_checkup_history"
+            android:drawablePadding="@dimen/dimen_20"
             android:text="历史记录"
             android:textColor="@color/black"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="@id/constraint_leave_post"
-            app:layout_constraintLeft_toLeftOf="@id/img_leave_post_history"
-            app:layout_constraintRight_toRightOf="@id/img_leave_post_history"
-            app:layout_constraintTop_toBottomOf="@id/img_leave_post_history" />
+            app:layout_constraintLeft_toRightOf="@id/tv_post_management"
+            app:layout_constraintRight_toRightOf="@id/constraint_leave_post"
+            app:layout_constraintTop_toTopOf="@id/constraint_leave_post" />
 
         <TextView
             android:id="@+id/tv_leave_post_todo_count"

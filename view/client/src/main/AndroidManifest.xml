@@ -226,6 +226,7 @@
         <!-- 添加故障 -->
         <activity
             android:name=".ui.activity.worksapce.repair.AddTroubleActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
             android:screenOrientation="portrait" />
         <!-- 设备点检 新建检查 -->
         <!-- 新建工作汇报 -->

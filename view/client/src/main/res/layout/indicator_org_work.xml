@@ -14,7 +14,6 @@
         android:id="@+id/tabImg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_18"
         android:src="@drawable/main_tab_org_selector" />
 
     <TextView

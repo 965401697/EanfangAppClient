@@ -18,24 +18,28 @@
             android:id="@+id/tv_reparir"
             style="@style/style_client_home_meun"
             android:drawableTop="@drawable/ic_client_home_repair"
+            android:drawablePadding="@dimen/dimen_16"
             android:text="@string/text_home_reapir" />
 
         <TextView
             android:id="@+id/tv_install"
             style="@style/style_client_home_meun"
             android:drawableTop="@drawable/ic_client_home_install"
+            android:drawablePadding="@dimen/dimen_16"
             android:text="@string/text_home_install" />
 
         <TextView
             android:id="@+id/tv_design"
             style="@style/style_client_home_meun"
             android:drawableTop="@drawable/ic_client_home_design"
+            android:drawablePadding="@dimen/dimen_16"
             android:text="@string/text_home_design" />
 
         <TextView
             android:id="@+id/tv_lead_news"
             style="@style/style_client_home_meun"
             android:drawableTop="@drawable/ic_client_home_lead_news"
+            android:drawablePadding="@dimen/dimen_16"
             android:text="@string/text_home_lead_news" />
 
     </LinearLayout>
@@ -51,6 +55,7 @@
             android:id="@+id/tv_circle"
             style="@style/style_client_home_meun"
             android:drawableTop="@drawable/ic_client_home_circle"
+            android:drawablePadding="@dimen/dimen_16"
             android:text="@string/text_home_circle" />
 
         <TextView
@@ -59,18 +64,21 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:drawableTop="@drawable/ic_client_home_online"
+            android:drawablePadding="@dimen/dimen_16"
             android:text="@string/text_home_mo" />
 
         <TextView
             android:id="@+id/tv_monitor"
             style="@style/style_client_home_meun"
             android:drawableTop="@drawable/ic_client_home_monitor"
+            android:drawablePadding="@dimen/dimen_16"
             android:text="@string/text_home_monitor" />
 
         <TextView
             android:id="@+id/tv_out_post"
             style="@style/style_client_home_meun"
             android:drawableTop="@drawable/ic_client_home_out_post"
+            android:drawablePadding="@dimen/dimen_16"
             android:text="@string/text_home_out_post" />
 
 
