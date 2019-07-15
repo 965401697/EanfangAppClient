@@ -26,7 +26,7 @@ public class STSGetter extends OSSFederationCredentialProvider {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 //优先使用缓存 10分钟过期
-                .compose(RxCache.getDefault().transformObservable("IOssApi:getToken", OssBean.class, CacheStrategy.firstCacheTimeout(1000 * 60 * 10)))
+                .compose(RxCache.getDefault().transformObservable("IOssApi:getToken", OssBean.class, CacheStrategy.firstCacheTimeout(1000 * 60)))
                 .map(new CacheResult.MapFunc<>())
                 .subscribe((bean) -> ossBean = bean.getData());
     }
