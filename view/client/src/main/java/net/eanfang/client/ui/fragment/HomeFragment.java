@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.cache.CacheKit;
@@ -24,10 +25,10 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JumpItent;
+import com.eanfang.util.StringUtils;
 import com.eanfang.witget.BannerView;
 import com.eanfang.witget.HomeScanPopWindow;
 import com.flyco.tablayout.SlidingTabLayout;
-import com.videogo.util.SharedPreferencesUtils;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
@@ -152,6 +153,8 @@ public class HomeFragment extends BaseFragment {
                             findViewById(R.id.ll_off_duty).setVisibility(View.GONE);
                             CacheKit.get().put("offDuty", GetDateUtils.dateToDateTimeString(date1));
                         });
+                    } else {
+                        findViewById(R.id.ll_off_duty).setVisibility(View.GONE);
                     }
                 }));
 
@@ -274,7 +277,14 @@ public class HomeFragment extends BaseFragment {
         findViewById(R.id.tv_monitor).setOnClickListener(v -> JumpItent.jump(getActivity(), RealTimeMonitorActivity.class));
         //脱岗检测
         findViewById(R.id.tv_out_post).setOnClickListener(view -> {
-            startActivity(new Intent(getActivity(), LeavePostHomeActivity.class));
+            JSONObject jsonObject1 = CacheKit.get().get("subAccountInfoList", JSONObject.class);
+
+            String value = jsonObject1.getString(String.valueOf(ClientApplication.get().getCompanyId()));
+            if (!StringUtils.isEmpty(value)) {
+                startActivity(new Intent(getActivity(), LeavePostHomeActivity.class));
+            } else {
+                showToast(R.string.text_leave_post_no_open_toast);
+            }
         });
 
         //扫描二维码
@@ -377,26 +387,29 @@ public class HomeFragment extends BaseFragment {
         if (bean.getRepair() > 0) {
             mRepair = bean.getRepair();
         } else {
-            mRepair = 0;
+            mRepair = -1;
         }
         badgeView(R.id.tv_reparir, mRepair);
         // 报装
         if (bean.getInstall() > 0) {
             mInstall = bean.getInstall();
         } else {
-            mInstall = 0;
+            mInstall = -1;
         }
         badgeView(R.id.tv_install, mInstall);
         //设计
         if (bean.getDesign() > 0) {
             mDesign = bean.getDesign();
         } else {
-            mDesign = 0;
-        }
-        if (bean.getAlert() > 0) {
-            badgeView(R.id.tv_out_post, bean.getAlert());
+            mDesign = -1;
         }
         badgeView(R.id.tv_design, mDesign);
+        if (bean.getAlert() > 0) {
+            badgeView(R.id.tv_out_post, bean.getAlert());
+        } else {
+            badgeView(R.id.tv_out_post, -1);
+        }
+
         // @我的和评论未读
 //        if (bean.getCommentNoRead() + bean.getNoReadCount() > 0) {
 //            mSecurityNum = bean.getCommentNoRead() + bean.getNoReadCount();
@@ -416,7 +429,7 @@ public class HomeFragment extends BaseFragment {
     private void badgeView(int id, int number) {
         ControlToolView.getBadge(ClientApplication.get().getApplicationContext())
                 .setTargetView(findViewById(id))
-                .setPadding(5)
+                .setPadding(number == -1 ? 0 : 5)
                 .setOffset(11, 0)
                 .setBadgeNum(number)
                 .badge();

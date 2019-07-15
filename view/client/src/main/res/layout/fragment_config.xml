@@ -40,6 +40,16 @@
                             android:layout_centerVertical="true"
                             android:layout_marginRight="@dimen/dimen_32"
                             android:src="@mipmap/ic_worker_personal_setting" />
+                        <ImageView
+                            android:id="@+id/iv_personalQRCode"
+                            android:layout_width="@dimen/dimen_44"
+                            android:layout_height="@dimen/dimen_44"
+                            android:layout_marginLeft="@dimen/dimen_44"
+                            android:layout_marginTop="@dimen/dimen_10"
+                            android:layout_toLeftOf="@id/iv_setting"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="@dimen/dimen_60"
+                            android:src="@mipmap/ic_personal_qrcode" />
 
                         <TextView
                             android:id="@+id/tv_homeTitle"
@@ -151,28 +161,6 @@
                                     android:textSize="@dimen/textSize_12" />
                             </LinearLayout>
                         </LinearLayout>
-
-                        <ImageView
-                            android:id="@+id/iv_personalQRCode"
-                            android:layout_width="@dimen/dimen_28"
-                            android:layout_height="@dimen/dimen_28"
-                            android:layout_below="@id/ll_msg"
-                            android:layout_marginLeft="@dimen/dimen_44"
-                            android:layout_marginTop="@dimen/dimen_10"
-                            android:layout_toRightOf="@id/ll_user_header"
-                            android:src="@mipmap/ic_personal_qrcode" />
-
-                        <TextView
-                            android:id="@+id/tv_personalQRCode"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/ll_msg"
-                            android:layout_marginLeft="@dimen/dimen_12"
-                            android:layout_marginTop="@dimen/dimen_10"
-                            android:layout_toRightOf="@id/iv_personalQRCode"
-                            android:text="二维码名片"
-                            android:textColor="@color/color_my_fragment_qr_code_text"
-                            android:textSize="12sp" />
 
                         <TextView
                             android:id="@+id/tv_write_personnel"
@@ -445,7 +433,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:layout_marginLeft="10dp"
                             android:text="活动"
                             android:textColor="@color/color_my_fragment_text"
                             android:textSize="@dimen/textSize_14" />
@@ -472,7 +459,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:layout_marginLeft="10dp"
                             android:text="评价"
                             android:textColor="@color/color_client_neworder"
                             android:textSize="@dimen/textSize_14" />
@@ -500,7 +486,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:layout_marginLeft="10dp"
                             android:text="我的收藏"
                             android:textColor="@color/color_client_neworder"
                             android:textSize="@dimen/textSize_14" />
@@ -527,7 +512,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:layout_marginLeft="10dp"
                             android:text="邀请"
                             android:textColor="@color/color_client_neworder"
                             android:textSize="@dimen/textSize_14" />

@@ -8,7 +8,6 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.ForegroundColorSpan;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
@@ -52,9 +51,9 @@ public class LeavePostHomeActivity extends BaseActivity {
         mLeavePostHomeAdapter.bindToRecyclerView(mBinding.recLeavePostTodo);
         mLeavePostHomeAdapter.setOnLoadMoreListener(() -> mLeavePostHomeViewModel.loadMoreData(), mBinding.recLeavePostTodo);
 
-        mBinding.imgLeavePostCheck.setOnClickListener(view -> mLeavePostHomeViewModel.gotoCheckListPage(this));
-        mBinding.imgLeavePostManage.setOnClickListener(view -> mLeavePostHomeViewModel.gotoManagePage(this));
-        mBinding.imgLeavePostHistory.setOnClickListener(view -> mLeavePostHomeViewModel.gotoHistoryPage(this));
+        mBinding.tvImgCheckup.setOnClickListener(view -> mLeavePostHomeViewModel.gotoCheckListPage(this));
+        mBinding.tvPostManagement.setOnClickListener(view -> mLeavePostHomeViewModel.gotoManagePage(this));
+        mBinding.tvCheckupHistory.setOnClickListener(view -> mLeavePostHomeViewModel.gotoHistoryPage(this));
         mLeavePostHomeAdapter.setOnItemClickListener((adapter, view, position) -> mLeavePostHomeViewModel.gotoLeavePostDetailPage(LeavePostHomeActivity.this, adapter, position));
         mBinding.tvLeavePostChangeCount .setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
         mBinding.tvLeavePostAllWarn .setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
@@ -74,7 +73,6 @@ public class LeavePostHomeActivity extends BaseActivity {
 
     private void initBottomData(LeavePostHomeUnHandledAlertBean leavePostHomeUnHandledAlertBean) {
         if (leavePostHomeUnHandledAlertBean == null) {
-            finishWithResultOk();
             return;
         }
         LeavePostHomeUnHandledAlertBean.UnhandledAlertListBean unhandledAlertListBean = leavePostHomeUnHandledAlertBean.getUnhandledAlertList();

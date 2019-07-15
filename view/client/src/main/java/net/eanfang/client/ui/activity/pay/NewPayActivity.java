@@ -167,16 +167,20 @@ public class NewPayActivity extends BaseClientActivity implements View.OnClickLi
         MoneyAdapter moneyAdapter = new MoneyAdapter(R.layout.item_money);
         List<MoneyBean> list = new ArrayList<>();
         MoneyBean bean = new MoneyBean();
-        bean.money = (float) (payLogEntity.getPayPrice() / 100.0);
-        mPayPrice = String.valueOf(payLogEntity.getPayPrice() / 100.0);
+        if (payLogEntity.getPayPrice() != null) {
+            bean.money = (float) (payLogEntity.getPayPrice() / 100.0);
+            mPayPrice = String.valueOf(payLogEntity.getPayPrice() / 100.0);
+            tvPrice.setText(String.valueOf(payLogEntity.getPayPrice() / 100.0));
+        } else {
+            bean.money = 0;
+            mPayPrice = "0";
+            tvPrice.setText("0");
+        }
         bean.title = "上门费";
         list.add(bean);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         moneyAdapter.bindToRecyclerView(recyclerView);
         moneyAdapter.setNewData(list);
-
-        tvPrice.setText(String.valueOf(payLogEntity.getPayPrice() / 100.0));
-
 
         cbWeixinPay.setChecked(true);
         tvWx.setTextColor(getResources().getColor(R.color.color_service_title));

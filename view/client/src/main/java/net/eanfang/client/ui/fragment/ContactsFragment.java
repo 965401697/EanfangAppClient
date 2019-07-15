@@ -358,12 +358,12 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
     @Override
     protected void setListener() {
 //        rl_create_team.setOnClickListener(v -> new CreateTeamView(getActivity(), () -> getData()).show());
-        rl_create_team.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivityForResult(new Intent(getActivity(), CreatTeamActivity.class), CREAT_TEAM_CODE);
-            }
-        });
+//        rl_create_team.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivityForResult(new Intent(getActivity(), CreatTeamActivity.class), CREAT_TEAM_CODE);
+//            }
+//        });
 //        rl_create_team.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {

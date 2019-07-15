@@ -81,7 +81,6 @@ public class MyFragment extends BaseFragment {
         findViewById(R.id.img_invite).setOnClickListener((v) -> {
             startActivity(new Intent(getActivity(), InviteFriendActivity.class));
         });
-        findViewById(R.id.tv_personalQRCode).setOnClickListener(this::gotoQrPage);
     }
 
     @Override

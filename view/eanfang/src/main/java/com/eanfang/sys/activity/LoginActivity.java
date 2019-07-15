@@ -3,6 +3,7 @@ package com.eanfang.sys.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
@@ -32,7 +33,7 @@ public class LoginActivity extends BaseActivity {
     private final String[] mTitles = {
             "短信快捷登录", "账号密码登录"
     };
-
+    private long mExitTime;
     private LoginViewModel loginViewModel;
 
     private ActivityLoginEanfangBinding binding;
@@ -92,9 +93,15 @@ public class LoginActivity extends BaseActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         //处理返回按钮被按下
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            //退出登录
-            Intent intent = new Intent(LoginActivity.this.getPackageName() + ".ExitListenerReceiver");
-            LoginActivity.this.sendBroadcast(intent);
+            if ((System.currentTimeMillis() - mExitTime) > 2000) {
+                Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                mExitTime = System.currentTimeMillis();
+            } else {
+                //退出登录
+                Intent intent = new Intent(LoginActivity.this.getPackageName() + ".ExitListenerReceiver");
+                LoginActivity.this.sendBroadcast(intent);
+                BaseApplication.get().closeAllActivity();
+            }
             return true;
         }
         return super.onKeyDown(keyCode, event);

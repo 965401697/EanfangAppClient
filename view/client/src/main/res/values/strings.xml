@@ -81,6 +81,7 @@
     <string name="text_leave_post_detail_time">报警时间\t\t%1$s</string>
     <string name="text_leave_post_todo_count">今日待处理事件：%1$d</string>
     <string name="text_leave_post_history_alert_name">事件名称\t\t%1$s</string>
+    <string name="text_leave_post_no_open_toast">暂未开通脱岗监测功能，请联系客服开通</string>
 
 
 </resources>
