@@ -6,7 +6,6 @@ import android.util.Log;
 
 import androidx.multidex.MultiDexApplication;
 
-import com.camera.CameraApplication;
 import com.eanfang.BuildConfig;
 import com.eanfang.base.kit.V;
 import com.eanfang.base.kit.cache.CacheKit;
@@ -77,7 +76,7 @@ public class BaseApplication extends MultiDexApplication {
         }
 
         //相机助手
-        CameraApplication.init(this, BuildConfig.DEBUG_MOD);
+//        CameraApplication.init(this, BuildConfig.DEBUG_MOD);
         //初始换tbs  debug模式 回调 正式模式不回调
         QbSdk.initX5Environment(getApplicationContext(), !BuildConfig.DEBUG_MOD ? null : new QbSdk.PreInitCallback() {
             @Override

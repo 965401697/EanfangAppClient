@@ -25,9 +25,10 @@ import static com.eanfang.config.Config.VIDEO_STORAGE_DIR;
 
 /**
  * @author hou
- *         Created at 2017/3/2
+ * Created at 2017/3/2
  * @desc
  */
+@Deprecated
 public class FileUtils {
     public static final String PATH = Environment
             .getExternalStorageDirectory()
@@ -82,7 +83,7 @@ public class FileUtils {
      * 初始化文件夹目录
      */
     public static void initDirectory(String path) {
-        File file=FileUtil.touch(path);
+        File file = FileUtil.touch(path);
         /*File f = new File(path);
         if (!f.exists()) {
             f.mkdirs();

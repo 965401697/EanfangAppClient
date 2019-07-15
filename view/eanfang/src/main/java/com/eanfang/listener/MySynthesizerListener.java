@@ -4,7 +4,7 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.os.Bundle;
 
-import com.camera.util.LogUtil;
+import com.eanfang.base.kit.utils.LogUtil;
 import com.eanfang.base.BaseApplication;
 import com.iflytek.cloud.SpeechError;
 import com.iflytek.cloud.SynthesizerListener;
@@ -15,6 +15,7 @@ import com.iflytek.cloud.SynthesizerListener;
  */
 
 public class MySynthesizerListener implements SynthesizerListener {
+    private static final String TAG = "MySynthesizerListener";
 
     private AudioManager mAudioManager;
     private int mVolume;// 当前音量
@@ -27,39 +28,39 @@ public class MySynthesizerListener implements SynthesizerListener {
 
     @Override
     public void onSpeakBegin() {
-        LogUtil.e("GG", "onSpeakBeginonSpeakBeginonSpeakBegin");
+        LogUtil.e(TAG, "onSpeakBeginonSpeakBeginonSpeakBegin");
     }
 
     @Override
     public void onBufferProgress(int i, int i1, int i2, String s) {
-        LogUtil.e("GG", "onBufferProgressonBufferProgress");
+        LogUtil.e(TAG, "onBufferProgressonBufferProgress");
     }
 
     @Override
     public void onSpeakPaused() {
-        LogUtil.e("GG", "onSpeakPausedonSpeakPausedonSpeakPausedonSpeakPaused");
+        LogUtil.e(TAG, "onSpeakPausedonSpeakPausedonSpeakPausedonSpeakPaused");
     }
 
     @Override
     public void onSpeakResumed() {
-        LogUtil.e("GG", "onSpeakResumedonSpeakResumedonSpeakResumed");
+        LogUtil.e(TAG, "onSpeakResumedonSpeakResumedonSpeakResumed");
     }
 
     @Override
     public void onSpeakProgress(int i, int i1, int i2) {
-        LogUtil.e("GG", "onSpeakProgressonSpeakProgress");
+        LogUtil.e(TAG, "onSpeakProgressonSpeakProgress");
     }
 
     @Override
     public void onCompleted(SpeechError speechError) {
-        LogUtil.e("GG", "onCompletedonCompletedonCompleted");
+        LogUtil.e(TAG, "onCompletedonCompletedonCompleted");
         mAudioManager.setStreamVolume(AudioManager.STREAM_MUSIC, mVolume, 0);
 
     }
 
     @Override
     public void onEvent(int i, int i1, int i2, Bundle bundle) {
-        LogUtil.e("GG", "onEventonEventonEvent");
+        LogUtil.e(TAG, "onEventonEventonEvent");
     }
 
 

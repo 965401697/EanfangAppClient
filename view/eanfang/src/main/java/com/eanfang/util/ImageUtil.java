@@ -1,4 +1,4 @@
-package com.camera.util;
+package com.eanfang.util;
 
 import android.content.Context;
 import android.graphics.Bitmap;

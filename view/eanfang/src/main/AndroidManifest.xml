@@ -51,7 +51,10 @@
         android:name="android.permission.BATTERY_STATS"
         tools:ignore="ProtectedPermissions" />
 
-    <application android:name=".base.BaseApplication">
+    <application
+        android:name=".base.BaseApplication"
+        android:networkSecurityConfig="@xml/network_security_config"
+        tools:ignore="UnusedAttribute">
         <activity
             android:name="com.photopicker.com.activity.BGAPhotoPreviewActivity"
             android:configChanges="keyboardHidden|orientation"
@@ -74,9 +77,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/BGAPPTheme"
             android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity
-            android:name="com.camera.view.TakePhotoActivity"
-            android:screenOrientation="portrait" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -161,8 +161,9 @@
             android:screenOrientation="portrait" />
         <activity android:name=".ui.activity.SecurityCompanyDetailsActivity" />
         <activity android:name=".ui.activity.InviteFriendActivity" />
-        <activity android:name=".ui.activity.InviteDetailActivity"
-            android:launchMode="singleTop"/>
+        <activity
+            android:name=".ui.activity.InviteDetailActivity"
+            android:launchMode="singleTop" />
         <activity android:name=".ui.activity.ExpertDetailsActivity" />
         <activity android:name=".ui.activity.ExtractSuccessActivity" />
         <activity android:name=".ui.activity.CashOurActivity" />

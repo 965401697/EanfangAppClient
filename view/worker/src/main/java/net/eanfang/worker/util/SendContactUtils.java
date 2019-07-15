@@ -4,13 +4,17 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
-import com.camera.util.ToastUtil;
+
+import com.eanfang.base.network.holder.ContextHolder;
 import com.eanfang.biz.model.TemplateBean;
+import com.eanfang.util.ToastUtil;
 
 import net.eanfang.worker.ui.activity.im.CustomizeMessage;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
+
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
@@ -111,19 +115,18 @@ public class SendContactUtils {
             }
             //说明是一个空消息
             if (TextUtils.isEmpty(customizeMessage.getShareType())) {
-                ToastUtil.getInstance().showShort("发送失败");
+                ToastUtil.get().showToast(ContextHolder.getContext(), "发送失败");
                 return;
             }
             Message message = RongIM.getInstance().sendMessage(conversationType, id, customizeMessage, mPush, mPush, new RongIMClient.SendMessageCallback() {
                 @Override
                 public void onError(Integer integer, RongIMClient.ErrorCode errorCode) {
-                    ToastUtil.getInstance().showShort("发送失败");
+                    ToastUtil.get().showToast(ContextHolder.getContext(), "发送失败");
                 }
 
                 @Override
                 public void onSuccess(Integer integer) {
-
-                    ToastUtil.getInstance().showShort("发送成功");
+                    ToastUtil.get().showToast(ContextHolder.getContext(), "发送成功");
                 }
             });
         }

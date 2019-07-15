@@ -1,4 +1,4 @@
-package com.camera.util;
+package com.eanfang.util;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,14 +11,14 @@ import android.media.ExifInterface;
 import android.os.Build;
 import android.widget.ImageView;
 
-import com.camera.CameraApplication;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import cn.hutool.core.io.FileUtil;
 
 /**
  * Created by Mr.hou
@@ -297,23 +297,23 @@ public class BitmapUtil {
         return returnBm;
     }
 
-    /**
-     * 保存缓存图片
-     *
-     * @param bitmap
-     * @return
-     * @throws IOException
-     */
-    public static String saveBitmap(Bitmap bitmap) throws IOException {
-        File file = FileUtil.getSavePicPath(CameraApplication.getCommonLibApplication().getPackageName());
-        String filePath = file.getAbsolutePath();
-        FileOutputStream fOut = new FileOutputStream(file);
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, fOut);
-        fOut.flush();
-        fOut.close();
-        bitmap.recycle();
-        return filePath;
-    }
+//    /**
+//     * 保存缓存图片
+//     *
+//     * @param bitmap
+//     * @return
+//     * @throws IOException
+//     */
+//    public static String saveBitmap(Bitmap bitmap) throws IOException {
+//        File file = FileUtil.file(Config.VIDEO_STORAGE_DIR);
+//        String filePath = file.getAbsolutePath();
+//        FileOutputStream fOut = new FileOutputStream(file);
+//        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, fOut);
+//        fOut.flush();
+//        fOut.close();
+//        bitmap.recycle();
+//        return filePath;
+//    }
 
     /**
      * 保存缓存图片
@@ -385,8 +385,8 @@ public class BitmapUtil {
     }
 
     /*
-         * Bitmap → Drawable
-		 */
+     * Bitmap → Drawable
+     */
     @SuppressWarnings("deprecation")
     public static Drawable bitmap2Drawable(Bitmap bm) {
         if (bm == null) {

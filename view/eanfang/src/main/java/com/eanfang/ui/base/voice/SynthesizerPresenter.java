@@ -3,7 +3,7 @@ package com.eanfang.ui.base.voice;
 import android.content.Context;
 import android.media.AudioManager;
 
-import com.camera.util.LogUtil;
+import com.baidu.ocr.sdk.utils.LogUtil;
 import com.eanfang.base.BaseApplication;
 import com.eanfang.listener.MySynthesizerListener;
 import com.eanfang.util.StringUtils;
@@ -15,7 +15,7 @@ import com.iflytek.cloud.SpeechSynthesizer;
 /**
  * 描述：语音合成
  *
- * @author Guanluocang
+ * @author Guanluocang.
  * @date on 2018/7/3$  10:43$
  */
 public class SynthesizerPresenter extends MySynthesizerListener {
