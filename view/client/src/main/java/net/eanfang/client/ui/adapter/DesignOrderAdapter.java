@@ -4,9 +4,8 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.base.widget.customview.CircleImageView;
-import com.eanfang.config.Config;
 import com.eanfang.biz.model.DesignOrderListBean;
+import com.eanfang.config.Config;
 import com.eanfang.util.GetConstDataUtils;
 
 import net.eanfang.client.R;
@@ -32,7 +31,9 @@ public class DesignOrderAdapter extends BaseQuickAdapter<DesignOrderListBean.Lis
         } else {
             helper.getView(R.id.tv_order_read).setVisibility(View.GONE);
         }
-        if (item.getStatus() == 1) {
+        if (item.getStatus() == 0) {
+            helper.setText(R.id.tv_status, "待处理");
+        } else if (item.getStatus() == 1) {
             helper.setText(R.id.tv_status, "待接单");
             helper.addOnClickListener(R.id.tv_detail);
         } else if (item.getStatus() == 2) {

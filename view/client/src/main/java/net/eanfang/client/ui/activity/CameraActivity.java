@@ -261,16 +261,26 @@ public class CameraActivity extends BaseClienActivity implements AMapLocationLis
         AMapLocationClientOption mOption = new AMapLocationClientOption();
         //可选，设置定位模式，可选的模式有高精度、仅设备、仅网络。默认为高精度模式
         mOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-        mOption.setGpsFirst(true);//可选，设置是否gps优先，只在高精度模式下有效。默认关闭
-        mOption.setHttpTimeOut(30000);//可选，设置网络请求超时时间。默认为30秒。在仅设备模式下无效
-        mOption.setInterval(2000);//可选，设置定位间隔。默认为2秒
-        mOption.setNeedAddress(true);//可选，设置是否返回逆地理地址信息。默认是true
-        mOption.setOnceLocation(false);//可选，设置是否单次定位。默认是false
-        mOption.setOnceLocationLatest(false);//可选，设置是否等待wifi刷新，默认为false.如果设置为true,会自动变为单次定位，持续定位时不要使用
-        AMapLocationClientOption.setLocationProtocol(AMapLocationClientOption.AMapLocationProtocol.HTTP);//可选， 设置网络请求的协议。可选HTTP或者HTTPS。默认为HTTP
-        mOption.setSensorEnable(false);//可选，设置是否使用传感器。默认是false
-        mOption.setWifiScan(true); //可选，设置是否开启wifi扫描。默认为true，如果设置为false会同时停止主动刷新，停止以后完全依赖于系统刷新，定位位置可能存在误差
-        mOption.setLocationCacheEnable(true); //可选，设置是否使用缓存定位，默认为true
+        //可选，设置是否gps优先，只在高精度模式下有效。默认关闭
+        mOption.setGpsFirst(true);
+        //可选，设置网络请求超时时间。默认为30秒。在仅设备模式下无效
+        mOption.setHttpTimeOut(30000);
+        //可选，设置定位间隔。默认为2秒
+        mOption.setInterval(2000);
+        //可选，设置是否返回逆地理地址信息。默认是true
+        mOption.setNeedAddress(true);
+        //可选，设置是否单次定位。默认是false
+        mOption.setOnceLocation(false);
+        //可选，设置是否等待wifi刷新，默认为false.如果设置为true,会自动变为单次定位，持续定位时不要使用
+        mOption.setOnceLocationLatest(false);
+        //可选， 设置网络请求的协议。可选HTTP或者HTTPS。默认为HTTP
+        AMapLocationClientOption.setLocationProtocol(AMapLocationClientOption.AMapLocationProtocol.HTTP);
+        //可选，设置是否使用传感器。默认是false
+        mOption.setSensorEnable(false);
+        //可选，设置是否开启wifi扫描。默认为true，如果设置为false会同时停止主动刷新，停止以后完全依赖于系统刷新，定位位置可能存在误差
+        mOption.setWifiScan(true);
+        //可选，设置是否使用缓存定位，默认为true
+        mOption.setLocationCacheEnable(true);
         return mOption;
     }
 
@@ -431,20 +441,24 @@ public class CameraActivity extends BaseClienActivity implements AMapLocationLis
     public void onLocationChanged(AMapLocation amapLocation) {
         if (null != amapLocation) {
             StringBuffer sb = new StringBuffer();
-            sb.append(amapLocation.getProvince());//省信息
-            sb.append(amapLocation.getCity());//城市信息
-            sb.append(amapLocation.getDistrict());//城区信息
-            sb.append(amapLocation.getStreet());//街道信息
-            amapLocation.getStreetNum();//街道门牌号信息
-            sb.append(amapLocation.getAoiName());//获取当前定位点的AOI信息
-            sb.append(amapLocation.getBuildingId());//获取当前室内定位的建筑物Id
-            sb.append(amapLocation.getFloor());//获取当前室内定位的楼层
-//            LogUtils.e("amapSuccess", sb.toString());
-
+            //省信息
+            sb.append(amapLocation.getProvince());
+            //城市信息
+            sb.append(amapLocation.getCity());
+            //城区信息
+            sb.append(amapLocation.getDistrict());
+            //街道信息
+            sb.append(amapLocation.getStreet());
+            //街道门牌号信息
+            amapLocation.getStreetNum();
+            //获取当前定位点的AOI信息
+            sb.append(amapLocation.getAoiName());
+            //获取当前室内定位的建筑物Id
+            sb.append(amapLocation.getBuildingId());
+            //获取当前室内定位的楼层
+            sb.append(amapLocation.getFloor());
             address = sb.toString();
             tvLocationAddress.setText(address);
-            //获取定位时间
-//            time = GetDateUtils.dateToDateTimeString(GetDateUtils.getDate(amapLocation.getTime()));
             city_address = amapLocation.getCity();
             city_address.substring(0, 1);
             queryWeather(city_address);
@@ -492,22 +506,28 @@ public class CameraActivity extends BaseClienActivity implements AMapLocationLis
             case R.id.color_red:
                 color = Color.parseColor("#ff0000");
                 break;
-            case R.id.tv_repair://维修
+            //维修
+            case R.id.tv_repair:
                 selectProjectType = "维修";
                 break;
-            case R.id.tv_check://检查
+            //检查
+            case R.id.tv_check:
                 selectProjectType = "检查";
                 break;
-            case R.id.tv_task://任务
+            //任务
+            case R.id.tv_task:
                 selectProjectType = "任务";
                 break;
-            case R.id.tv_do://施工
+            //施工
+            case R.id.tv_do:
                 selectProjectType = "施工";
                 break;
-            case R.id.tv_accept://验收
+            //验收
+            case R.id.tv_accept:
                 selectProjectType = "验收";
                 break;
-            case R.id.tv_care://保养
+            //保养
+            case R.id.tv_care:
                 selectProjectType = "保养";
                 break;
             default:

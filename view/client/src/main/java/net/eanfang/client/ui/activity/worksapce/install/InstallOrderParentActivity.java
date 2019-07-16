@@ -2,6 +2,7 @@ package net.eanfang.client.ui.activity.worksapce.install;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -9,10 +10,13 @@ import android.widget.TextView;
 import com.eanfang.util.PermKit;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.eanfang.base.kit.V.v;
 
 public class InstallOrderParentActivity extends BaseClientActivity {
     @BindView(R.id.iv_left)
@@ -48,6 +52,12 @@ public class InstallOrderParentActivity extends BaseClientActivity {
         llMineAssignment.setOnClickListener(v -> jump("我创建的", 1));
         llMineAccept.setOnClickListener(v -> jump("我负责的", 2));
         llMineCompany.setOnClickListener(v -> jump("本公司的", 0));
+        String orgName = v(() -> (ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgName()));
+        if (("个人").equals(orgName)) {
+            llMineCompany.setVisibility(View.GONE);
+        } else {
+            llMineCompany.setVisibility(View.VISIBLE);
+        }
     }
 
     private void jump(String title, int type) {

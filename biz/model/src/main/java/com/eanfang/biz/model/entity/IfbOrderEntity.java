@@ -21,6 +21,10 @@ import lombok.Setter;
 @AllArgsConstructor
 public class IfbOrderEntity implements Serializable {
     /**
+     * id
+     */
+    private Long id;
+    /**
      * 招标编号
      */
     private String ifbNum;

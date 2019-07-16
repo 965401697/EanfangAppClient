@@ -33,8 +33,9 @@ public class DesignOrderAdapter extends BaseQuickAdapter<DesignOrderListBean.Lis
             helper.setText(R.id.tv_classfiy_name, "公司（" + item.getUserName() + "）");
         }
 
-
-        if (item.getStatus() == 1) {
+        if (item.getStatus() == 0) {
+            helper.setText(R.id.tv_status, "待处理");
+        } else if (item.getStatus() == 1) {
             helper.setText(R.id.tv_status, "待接单");
             helper.addOnClickListener(R.id.tv_detail);
         } else if (item.getStatus() == 2) {
