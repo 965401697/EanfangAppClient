@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alibaba.fastjson.JSON;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.kit.V;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.biz.model.FriendListBean;
 import com.eanfang.biz.model.entity.AccountEntity;
@@ -101,7 +102,7 @@ public class SearchStaffActivity extends BaseClientActivity {
 
     private void initData() {
         List<String> phoneList = new ArrayList<>();
-        if (mList.size() > 0) {
+        if (V.v(() ->mList.size() > 0)) {
             for (FriendListBean bean : mList) {
                 phoneList.add(bean.getMobile());
             }
