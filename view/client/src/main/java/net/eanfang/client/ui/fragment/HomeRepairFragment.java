@@ -38,7 +38,6 @@ import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
-import com.eanfang.util.UuidUtil;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.yaf.base.entity.RepairBugEntity;
 import com.yaf.base.entity.RepairOrderEntity;
@@ -55,6 +54,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author liangkailun
@@ -295,7 +295,7 @@ public class HomeRepairFragment extends BaseFragment {
         @Override
         public void onSuccess(List<LocalMedia> list) {
             GlideUtil.intoImageView(getActivity(), "file://" + list.get(0).getPath(), imgMomentAccident);
-            String objectKey = UuidUtil.getUUID() + ".png";
+            String objectKey = StrUtil.uuid() + ".png";
             //上传图片
             SDKManager.ossKit(getActivity()).asyncPutImage(objectKey, list.get(0).getPath(), (isSucess) -> {
                 mRepairBugEntity.setPictures(objectKey);
