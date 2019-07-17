@@ -27,7 +27,6 @@ import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.StringUtils;
-import com.eanfang.util.UuidUtil;
 import com.eanfang.biz.model.entity.OrgUnitEntity;
 import com.luck.picture.lib.entity.LocalMedia;
 
@@ -38,6 +37,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author guanluocang
@@ -132,7 +132,7 @@ public class AuthCompanyFirstActivity extends BaseWorkeActivity {
     IPictureCallBack iPictureCallBack = new IPictureCallBack() {
         @Override
         public void onSuccess(List<LocalMedia> list) {
-            String imgKey = "org/" + UuidUtil.getUUID() + ".png";
+            String imgKey = "org/" + StrUtil.uuid() + ".png";
             infoBean.setLicensePic(imgKey);
             GlideUtil.intoImageView(AuthCompanyFirstActivity.this, "file://" + list.get(0).getPath(), ivUpload);
             SDKManager.ossKit(AuthCompanyFirstActivity.this).asyncPutImage(imgKey, list.get(0).getPath(), (isSuccess) -> {

@@ -2,8 +2,10 @@ package net.eanfang.worker.ui.activity.worksapce.maintenance;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -24,9 +26,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.TemplateBean;
 import com.eanfang.ui.activity.SelectOAPresonActivity;
 import com.eanfang.ui.base.BaseEvent;
-import com.eanfang.util.ETimeUtils;
 import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.LocationUtil;
 import com.eanfang.util.PickerSelectUtil;
@@ -51,6 +51,8 @@ import java.util.Set;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.date.DateUnit;
+import cn.hutool.core.date.DateUtil;
 
 /**
  * 维保处理界面
@@ -467,10 +469,9 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
             if (mSignTime == null) {
                 confirmEntity.setWorkHour("0小时0分钟");
             } else {
-                Date finishDay = GetDateUtils.getDateNow();
-                long day = GetDateUtils.getTimeDiff(finishDay, mSignTime, "day");
-                long hours = GetDateUtils.getTimeDiff(finishDay, mSignTime, "hours");
-                long minutes = GetDateUtils.getTimeDiff(finishDay, mSignTime, "minutes");
+                long day = DateUtil.date().between(mSignTime, DateUnit.DAY);
+                long hours = DateUtil.date().between(mSignTime, DateUnit.HOUR);
+                long minutes = DateUtil.date().between(mSignTime, DateUnit.MINUTE);
                 if (day < 0) {
                     day = 0;
                 }
@@ -495,7 +496,7 @@ public class MaintenanceHandleActivity extends BaseWorkerActivity {
             confirmEntity.setSignOutCode(mAddressCode);
 //            confirmEntity.setSignOutLongitude(mSignOutLongitude + "");
 //            confirmEntity.setSignOutLatitude(mSignOutLatitude + "");
-            confirmEntity.setOverTime(GetDateUtils.getDate(ETimeUtils.getTimeByYearMonthDayHourMinSec(new Date(System.currentTimeMillis()))));
+            confirmEntity.setOverTime(DateUtil.date());
             jsonObject.put("confirmEntity", confirmEntity);
 
 

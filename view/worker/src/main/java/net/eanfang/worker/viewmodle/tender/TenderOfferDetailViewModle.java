@@ -14,7 +14,6 @@ import com.eanfang.biz.rds.base.BaseViewModel;
 import com.eanfang.biz.rds.sys.ds.impl.tender.TenderDs;
 import com.eanfang.biz.rds.sys.repo.tender.TenderRepo;
 import com.eanfang.config.Config;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.yaf.base.entity.WorkerEntity;
@@ -24,6 +23,7 @@ import net.eanfang.worker.ui.activity.worksapce.WorkDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.tender.TenderFindDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.tender.TenderOfferDetailActivity;
 
+import cn.hutool.core.date.DateUtil;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -69,7 +69,7 @@ public class TenderOfferDetailViewModle extends BaseViewModel {
         //类型
         tenderOfferDetailBinding.tvTenderType.setText(Config.get().getBaseNameByCode(taskPublishEntity.getBusinessOneCode(), 2));
         // 时间
-        tenderOfferDetailBinding.tvTenderTime.setText(GetDateUtils.dateToDateTimeString(taskPublishEntity.getCreateTime()));
+        tenderOfferDetailBinding.tvTenderTime.setText(DateUtil.date(taskPublishEntity.getCreateTime()).toString());
         //地点
         tenderOfferDetailBinding.tvTenderAddress.setText(taskPublishEntity.getProvince() + taskPublishEntity.getCity() + taskPublishEntity.getCounty());
         //工期

@@ -14,7 +14,6 @@ import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.PermKit;
@@ -29,6 +28,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.date.DateUtil;
 
 public class CooperationRelationDetailActivity extends BaseClientActivity {
 
@@ -81,8 +81,8 @@ public class CooperationRelationDetailActivity extends BaseClientActivity {
 
         queryEntry.getEquals().put("assigneeOrgId", String.valueOf(cooperationEntity.getAssigneeOrgId()));
         queryEntry.getEquals().put("ownerOrgId", String.valueOf(cooperationEntity.getOwnerOrgId()));
-        queryEntry.getEquals().put("beginTime", GetDateUtils.dateToFormatString(cooperationEntity.getBeginTime(), "yyyy.MM.dd"));
-        queryEntry.getEquals().put("endTime", GetDateUtils.dateToFormatString(cooperationEntity.getEndTime(), "yyyy.MM.dd"));
+        queryEntry.getEquals().put("beginTime", DateUtil.date(cooperationEntity.getBeginTime()).toString("yyyy.MM.dd"));
+        queryEntry.getEquals().put("endTime", DateUtil.date(cooperationEntity.getEndTime()).toString("yyyy.MM.dd"));
         queryEntry.getEquals().put("status", String.valueOf(cooperationEntity.getStatus()));
 
 
@@ -111,18 +111,18 @@ public class CooperationRelationDetailActivity extends BaseClientActivity {
         if (list.size() > 0) {
 
             companyName = list.get(0).getAssigneeOrg().getOrgName();
-            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + list.get(0).getAssigneeOrg().getOrgUnitEntity().getLogoPic()),ivCompanyLogo);
+            GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + list.get(0).getAssigneeOrg().getOrgUnitEntity().getLogoPic()), ivCompanyLogo);
             tvCompanyName.setText(companyName);
             if (!TextUtils.isEmpty(list.get(0).getAssigneeOrg().getOrgUnitEntity().getAreaCode())) {
                 tvAddress.setText(Config.get().getAddressByCode(list.get(0).getAssigneeOrg().getOrgUnitEntity().getAreaCode()) + list.get(0).getAssigneeOrg().getOrgUnitEntity().getOfficeAddress());
             }
 
-            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + list.get(0).getCreateUserEntity().getAccountEntity().getAvatar()),ivUserHeader);
+            GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + list.get(0).getCreateUserEntity().getAccountEntity().getAvatar()), ivUserHeader);
             tvName.setText(list.get(0).getCreateUserEntity().getAccountEntity().getRealName());
             tvPhone.setText(list.get(0).getCreateUserEntity().getAccountEntity().getMobile());
 
-            tvStartTime.setText(GetDateUtils.dateToFormatString(list.get(0).getBeginTime(), "yyyy.MM.dd"));
-            tvEndTime.setText(GetDateUtils.dateToFormatString(list.get(0).getEndTime(), "yyyy.MM.dd"));
+            tvStartTime.setText(DateUtil.date(list.get(0).getBeginTime()).toString("yyyy.MM.dd"));
+            tvEndTime.setText(DateUtil.date(list.get(0).getEndTime()).toString("yyyy.MM.dd"));
 
 
             List<String> mOsList = GetConstDataUtils.getCooperationTypeList();
@@ -165,7 +165,7 @@ public class CooperationRelationDetailActivity extends BaseClientActivity {
 
         if (cooperationEntity.getStatus() == 0) {
 
-            EanfangHttp.post(NewApiService.COOPERATION_AUDIT+"/1")
+            EanfangHttp.post(NewApiService.COOPERATION_AUDIT + "/1")
                     .upJson(array.toJSONString())
                     .execute(new EanfangCallback<com.alibaba.fastjson.JSONObject>(CooperationRelationDetailActivity.this, true, com.alibaba.fastjson.JSONObject.class) {
 

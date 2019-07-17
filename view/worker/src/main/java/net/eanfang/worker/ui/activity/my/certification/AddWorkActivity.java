@@ -16,7 +16,6 @@ import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.picture.PictureRecycleView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
@@ -37,6 +36,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.date.DateUtil;
 
 /**
  * 添加工作经历
@@ -144,8 +144,8 @@ public class AddWorkActivity extends BaseWorkeActivity {
         entity.setJob(etPosition.getText().toString().trim());
         entity.setWorkplace(etJobPosition.getText().toString().trim());
         if (!StringUtils.isEmpty(tvTime.getText().toString().trim())) {
-            entity.setBeginTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[0], "yyyy-MM-dd"));
-            entity.setEndTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[1], "yyyy-MM-dd"));
+            entity.setBeginTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[0], "yyyy-M-dd"));
+            entity.setEndTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[1], "yyyy-M-dd"));
         }
         entity.setJobIntro(etCertificate.getText().toString().trim());
         pic = PhotoUtils.getPhotoUrl("", selectList, uploadMap, false);
@@ -189,7 +189,7 @@ public class AddWorkActivity extends BaseWorkeActivity {
                         String startTime = String.format("%d-%d-%d", startYear, startMonthOfYear + 1, startDayOfMonth);
                         String endTime = String.format("%d-%d-%d", endYear, endMonthOfYear + 1, endDayOfMonth);
 
-                        if (GetDateUtils.getTimeStamp(startTime, "yyyy-MM-dd") > GetDateUtils.getTimeStamp(endTime, "yyyy-MM-dd")) {
+                        if (DateUtil.parse(startTime,"yyyy-M-dd").getTime()>DateUtil.parse(endTime,"yyyy-M-dd").getTime()) {
                             ToastUtil.get().showToast(AddWorkActivity.this, "开始时间不能大于结束时间");
 
                             return;

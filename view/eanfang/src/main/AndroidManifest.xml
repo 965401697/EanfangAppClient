@@ -55,6 +55,11 @@
         android:name=".base.BaseApplication"
         android:networkSecurityConfig="@xml/network_security_config"
         tools:ignore="UnusedAttribute">
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
         <activity
             android:name="com.photopicker.com.activity.BGAPhotoPreviewActivity"
             android:configChanges="keyboardHidden|orientation"

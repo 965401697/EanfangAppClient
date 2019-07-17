@@ -13,7 +13,7 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.FaultTotleBean;
-import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.DateKit;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.ToastUtil;
@@ -28,8 +28,11 @@ import java.util.Calendar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.date.DateField;
+import cn.hutool.core.date.DateUtil;
 
 public class FaultStatisticsListActivity extends BaseClientActivity implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
 
@@ -70,8 +73,8 @@ public class FaultStatisticsListActivity extends BaseClientActivity implements S
             }
         });
         //发挥昨天的23：59：59的时间
-        mEndTime = GetDateUtils.dateToDateString(GetDateUtils.lastDayEndDate(GetDateUtils.getDateNow()));
-        mStartTime = GetDateUtils.dateToDateString(GetDateUtils.lastDayEndDate(GetDateUtils.getDateNow()));
+        mEndTime = DateKit.get(DateUtil.date()).offset(DateField.DAY_OF_YEAR, -1).date.toDateStr();
+        mStartTime = DateKit.get(DateUtil.date()).offset(DateField.DAY_OF_YEAR, -1).date.toDateStr();
         mCheckedId = R.id.rb_yesterday;//初始化默认值
         initView();
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -82,20 +85,20 @@ public class FaultStatisticsListActivity extends BaseClientActivity implements S
                 if (checkedId == R.id.rb_yesterday) {
                     ((RadioButton) group.findViewById(R.id.rb_pick_day)).setText("开始时间-结束时间");
                     mCheckedId = checkedId;
-                    mEndTime = GetDateUtils.dateToDateString(GetDateUtils.lastDayEndDate(GetDateUtils.getDateNow()));
-                    mStartTime = GetDateUtils.dateToDateString(GetDateUtils.lastDayEndDate(GetDateUtils.getDateNow()));
+                    mEndTime = DateKit.get(DateUtil.date()).offset(DateField.DAY_OF_YEAR, -1).date.toDateStr();
+                    mStartTime = DateKit.get(DateUtil.date()).offset(DateField.DAY_OF_YEAR, -1).date.toDateStr();
                     refresh();
                 } else if (checkedId == R.id.rb_week) {
                     ((RadioButton) group.findViewById(R.id.rb_pick_day)).setText("开始时间-结束时间");
                     mCheckedId = checkedId;
-                    mEndTime = GetDateUtils.dateToDateString(GetDateUtils.getDateNow());
-                    mStartTime = GetDateUtils.dateToDateString(GetDateUtils.getLastWeek(GetDateUtils.dateToDateString(GetDateUtils.getDateNow())));
+                    mEndTime = DateUtil.date().toDateStr();
+                    mStartTime = DateKit.get(DateUtil.date()).offset(DateField.WEEK_OF_YEAR, -1).date.toDateStr();
                     refresh();
                 } else if (checkedId == R.id.rb_thirty_day) {
                     ((RadioButton) group.findViewById(R.id.rb_pick_day)).setText("开始时间-结束时间");
                     mCheckedId = checkedId;
-                    mEndTime = GetDateUtils.dateToDateString(GetDateUtils.getDateNow());
-                    mStartTime = GetDateUtils.dateToDateString(GetDateUtils.getLastMonth(GetDateUtils.dateToDateString(GetDateUtils.getDateNow())));
+                    mEndTime = DateUtil.date().toDateStr();
+                    mStartTime = DateKit.get(DateUtil.date()).offset(DateField.MONTH, -1).date.toDateStr();
                     refresh();
                 }
             }
@@ -117,7 +120,7 @@ public class FaultStatisticsListActivity extends BaseClientActivity implements S
                         String startTime = String.format("%d-%d-%d", startYear, startMonthOfYear + 1, startDayOfMonth);
                         String endTime = String.format("%d-%d-%d", endYear, endMonthOfYear + 1, endDayOfMonth);
 
-                        if (GetDateUtils.getTimeStamp(startTime, "yyyy-MM-dd") > GetDateUtils.getTimeStamp(endTime, "yyyy-MM-dd")) {
+                        if (DateUtil.parse(startTime, "yyyy-M-dd").getTime() > DateUtil.parse(endTime, "yyyy-M-dd").getTime()) {
                             ToastUtil.get().showToast(FaultStatisticsListActivity.this, "开始时间不能大于结束时间");
                             ((RadioButton) v).setChecked(true);
                             return;

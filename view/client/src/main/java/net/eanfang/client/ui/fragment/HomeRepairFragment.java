@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Environment;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -21,7 +20,6 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 
 import com.alibaba.fastjson.JSON;
-import com.bumptech.glide.Glide;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.IPictureCallBack;
@@ -33,7 +31,6 @@ import com.eanfang.biz.model.OrderCountBean;
 import com.eanfang.biz.model.SelectAddressItem;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
-import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.activity.SelectAddressActivity;
@@ -41,10 +38,7 @@ import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
-import com.eanfang.util.UuidUtil;
-import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.yaf.base.entity.RepairBugEntity;
 import com.yaf.base.entity.RepairOrderEntity;
 
@@ -55,15 +49,12 @@ import net.eanfang.client.ui.activity.worksapce.repair.SelectDeviceTypeActivity;
 
 import org.json.JSONObject;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-
-import static android.app.Activity.RESULT_OK;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author liangkailun
@@ -296,7 +287,7 @@ public class HomeRepairFragment extends BaseFragment {
         @Override
         public void onSuccess(List<LocalMedia> list) {
                 GlideUtil.intoImageView(getActivity(), "file://" + list.get(0).getPath(), imgMomentAccident);
-                String objectKey = UuidUtil.getUUID() + ".png";
+                String objectKey = StrUtil.uuid() + ".png";
                 //上传图片
                 SDKManager.ossKit(getActivity()).asyncPutImage(objectKey, list.get(0).getPath(), (isSucess) -> {
                     mRepairBugEntity.setPictures(objectKey);

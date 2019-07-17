@@ -486,7 +486,7 @@ public class AddTroubleAddPictureActivity extends BaseActivity {
     public void receivePath(TakeVdideoMode takeVdideoMode) {
         if (takeVdideoMode != null) {
             String image = takeVdideoMode.getMImagePath();
-            Bitmap mBitMap = PhotoUtils.getVideoThumbnail(image, 100, 100, MINI_KIND);
+            Bitmap mBitMap = PhotoUtils.getVideoBitmap(image);
             if (takeVdideoMode.getMType().equals("moment_addpicture")) {// //故障表象
                 rlThumbnailMoment.setVisibility(View.VISIBLE);
                 mUploadKey_moment = takeVdideoMode.getMKey();

@@ -20,7 +20,6 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.StringUtils;
-import com.eanfang.util.UuidUtil;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.yaf.base.entity.TechWorkerVerifyEntity;
 import com.eanfang.biz.model.entity.AccountEntity;
@@ -34,6 +33,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.util.StrUtil;
 
 public class CertificationActivity extends BaseWorkeActivity {
 
@@ -143,7 +143,7 @@ public class CertificationActivity extends BaseWorkeActivity {
         @Override
         public void onSuccess(List<LocalMedia> list) {
 
-            String imgKey = "account/" + UuidUtil.getUUID() + ".png";
+            String imgKey = "account/" + StrUtil.uuid() + ".png";
             mTechWorkerVerifyEntity.setAvatarPhoto(imgKey);
             GlideUtil.intoImageView(CertificationActivity.this, "file://" + list.get(0).getPath(), ivHeader);
 

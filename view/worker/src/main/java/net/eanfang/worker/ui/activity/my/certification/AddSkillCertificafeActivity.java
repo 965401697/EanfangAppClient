@@ -9,17 +9,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.lifecycle.ViewModel;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.BaseApplication;
 import com.eanfang.base.kit.SDKManager;
-import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.base.kit.picture.picture.PictureRecycleView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
@@ -29,7 +26,6 @@ import com.picker.common.util.DateUtils;
 import com.yaf.base.entity.QualificationCertificateEntity;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import java.util.ArrayList;
@@ -40,6 +36,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.date.DateUtil;
 
 public class AddSkillCertificafeActivity extends BaseWorkeActivity {
 
@@ -143,8 +140,8 @@ public class AddSkillCertificafeActivity extends BaseWorkeActivity {
         entity.setCertificateName(etCertificateName.getText().toString().trim());
         entity.setAwardOrg(etOrg.getText().toString().trim());
         entity.setAccId(BaseApplication.get().getAccId());
-        entity.setBeginTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[0], "yyyy-MM-dd"));
-        entity.setEndTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[1], "yyyy-MM-dd"));
+        entity.setBeginTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[0], "yyyy-M-dd"));
+        entity.setEndTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[1], "yyyy-M-dd"));
         entity.setCertificateNumber(etNum.getText().toString().trim());
         entity.setCertificatePics(pic);
 
@@ -204,7 +201,7 @@ public class AddSkillCertificafeActivity extends BaseWorkeActivity {
                         String textString = String.format("%d-%d-%d～%d-%d-%d", startYear, startMonthOfYear + 1, startDayOfMonth, endYear, endMonthOfYear + 1, endDayOfMonth);
                         String startTime = String.format("%d-%d-%d", startYear, startMonthOfYear + 1, startDayOfMonth);
                         String endTime = String.format("%d-%d-%d", endYear, endMonthOfYear + 1, endDayOfMonth);
-                        if (GetDateUtils.getTimeStamp(startTime, "yyyy-MM-dd") > GetDateUtils.getTimeStamp(endTime, "yyyy-MM-dd")) {
+                        if (DateUtil.parse(startTime,"yyyy-M-dd").getTime() > DateUtil.parse(endTime,"yyyy-M-dd").getTime()) {
                             ToastUtil.get().showToast(AddSkillCertificafeActivity.this, "开始时间不能大于结束时间");
                             return;
                         }

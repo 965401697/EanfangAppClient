@@ -24,7 +24,6 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.NumberUtil;
@@ -44,6 +43,8 @@ import net.eanfang.client.util.ImagePerviewUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import cn.hutool.core.date.DateUtil;
 
 /**
  * Created by MrHou
@@ -307,7 +308,7 @@ public class OrderDetailFragment extends BaseFragment {
                         hashMap.put("picUrl", bean.getBugEntityList().get(0).getPictures().split(",")[0]);
                     }
                     hashMap.put("orderNum", bean.getOrderNum());
-                    hashMap.put("creatTime", GetDateUtils.dateToDateTimeString(bean.getCreateTime()));
+                    hashMap.put("creatTime", DateUtil.date(bean.getCreateTime()).toString());
                     if (bean.getAssigneeUser() != null) {
                         hashMap.put("workerName", bean.getAssigneeUser().getAccountEntity().getRealName());
                     }
@@ -335,7 +336,7 @@ public class OrderDetailFragment extends BaseFragment {
 //                    tv_address.setText(V.v(() -> Config.get().getAddressByCode(bean.getPlaceCode()) + "\n" + bean.getAddress()));
                     tv_address.setText(V.v(() -> Config.get().getAddressByCode(bean.getPlaceCode()) + bean.getAddress()));
 //                    if (bean.getBookTime() != null) {
-//                        tv_time.setText(V.v(() -> Optional.ofNullable(GetDateUtils.dateToDateTimeString(bean.getBookTime())).orElse("--")));
+//                        tv_time.setText(V.v(() -> Optional.ofNullable(DateUtil.date(bean.getBookTime())).orElse("--")));
 //                    } else {
 //                        tv_time.setText("--");
 //                    }
@@ -363,7 +364,7 @@ public class OrderDetailFragment extends BaseFragment {
                         }
                         // 支付时间
                         if (bean.getPayLogEntity().getPayTime() != null) {
-                            mTvPayTime.setText(GetDateUtils.dateToDateTimeString(bean.getPayLogEntity().getPayTime()));
+                            mTvPayTime.setText(DateUtil.date(bean.getPayLogEntity().getPayTime()).toString());
                         }
                     } else {
                         llPay.setVisibility(View.GONE);
@@ -371,7 +372,7 @@ public class OrderDetailFragment extends BaseFragment {
                     repairContacts.setText(V.v(() -> bean.getRepairContacts()));
                     repairContactsPhone.setText(V.v(() -> bean.getRepairContactPhone()));
                     tv_number.setText(V.v(() -> bean.getOrderNum()));
-                    tv_feature_time.setText(V.v(() -> GetDateUtils.dateToDateTimeString(bean.getCreateTime())));
+                    tv_feature_time.setText(V.v(() -> DateUtil.date(bean.getCreateTime())).toString());
 
                     if (!TextUtils.isEmpty(bean.getProjectName())) {
                         tv_project_name.setText(bean.getProjectName());

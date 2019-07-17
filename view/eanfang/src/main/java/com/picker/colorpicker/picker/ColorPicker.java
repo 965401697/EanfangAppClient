@@ -14,11 +14,11 @@ import com.picker.colorpicker.widget.StrokeTextView;
 import com.picker.common.popup.ConfirmPopup;
 import com.picker.common.util.ConvertUtils;
 
-import java.util.Locale;
-
 import androidx.annotation.ColorInt;
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
+
+import java.util.Locale;
 
 
 /**

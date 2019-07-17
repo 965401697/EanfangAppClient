@@ -222,7 +222,7 @@ public class TakeApplyAddActivity extends BaseActivity implements SelectTimeDial
 //            @Override
 //            public void onTimeSelect(Date date, View v) {//选中事件回调
 //                // 这里回调过来的v,就是show()方法里面所添加的 View 参数，如果show的时候没有添加参数，v则为null
-//                tvDoorTime.setText(GetDateUtils.dateToDateTimeString(date));
+//                tvDoorTime.setText(DateUtil.date(date));
 //            }
 //        })
 //                .setTitleText("踏勘时间")

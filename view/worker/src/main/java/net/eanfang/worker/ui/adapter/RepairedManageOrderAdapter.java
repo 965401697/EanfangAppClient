@@ -7,7 +7,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.NumberUtil;
 import com.eanfang.util.StringUtils;
@@ -17,6 +16,8 @@ import com.yaf.base.entity.RepairOrderEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
+
+import cn.hutool.core.date.DateUtil;
 
 
 /**
@@ -74,7 +75,7 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
         } else {
             helper.setText(R.id.tv_order_id, "订单编号：");
         }
-        helper.setText(R.id.tv_create_time, "下单时间：" + GetDateUtils.dateToDateTimeString(item.getCreateTime()));
+        helper.setText(R.id.tv_create_time, "下单时间：" + DateUtil.date(item.getCreateTime()).toString());
         if (item.getArriveTimeLimit() != null) {
             helper.setText(R.id.tv_arriveTime, "到达时限：" + GetConstDataUtils.getArriveList().get(item.getArriveTimeLimit()));
         } else {

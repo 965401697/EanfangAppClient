@@ -2,8 +2,10 @@ package net.eanfang.worker.ui.activity.my.specialist;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.View;
 import android.widget.TextView;
 
@@ -26,7 +28,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-
+/**
+ * 已废弃
+ *
+ * @author jornl
+ * @date 2019-07-17 14:44:10
+ */
+@Deprecated
 public class SpecialistOwmHistoryActivity extends BaseWorkerActivity {
 
     @BindView(R.id.tv_add_education)
@@ -80,9 +88,9 @@ public class SpecialistOwmHistoryActivity extends BaseWorkerActivity {
 
 
     private void getData() {
-        JSONObject object=new JSONObject();
-        object .put("accId", String.valueOf(WorkerApplication.get().getAccId()));
-        object .put("type", "1");
+        JSONObject object = new JSONObject();
+        object.put("accId", String.valueOf(WorkerApplication.get().getAccId()));
+        object.put("type", "1");
 
         EanfangHttp.post(UserApi.GET_TECH_WORKER_EDUCATION_LIST)
                 .upJson(JsonUtils.obj2String(object))

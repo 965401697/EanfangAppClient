@@ -6,13 +6,14 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.base.kit.V;
 import com.yaf.base.entity.ShopMaintenanceOrderEntity;
 
 import net.eanfang.client.R;
+
+import cn.hutool.core.date.DateUtil;
 
 
 /**
@@ -45,7 +46,7 @@ public class MaintenanceListAdapter extends BaseQuickAdapter<ShopMaintenanceOrde
         if (item.getOrderNum() != null) {
             helper.setText(R.id.tv_order_id, "订单编号：" + item.getOrderNum());
         }
-        helper.setText(R.id.tv_plan_time, "开始时间：" + GetDateUtils.dateToDateTimeString(item.getBeginTime()));
+        helper.setText(R.id.tv_plan_time, "开始时间：" + DateUtil.date(item.getBeginTime()).toString());
 
         if (item.getPeriod() == 0) {
             helper.setText(R.id.tv_period, "维保周期：" + "周检");

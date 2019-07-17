@@ -2,8 +2,10 @@ package net.eanfang.worker.ui.activity.worksapce.contacts;
 
 import android.net.Uri;
 import android.os.Bundle;
+
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
@@ -21,7 +23,6 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
 import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
@@ -42,6 +43,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.date.DateUtil;
 
 public class CooperationAddActivity extends BaseWorkerActivity implements SelectTimeDialogFragment.SelectTimeListener {
 
@@ -95,14 +97,14 @@ public class CooperationAddActivity extends BaseWorkerActivity implements Select
     }
 
     private void initViews() {
-        GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + mBean.getCompanyEntity().getLogoPic()),ivCompanyLogo);
+        GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + mBean.getCompanyEntity().getLogoPic()), ivCompanyLogo);
         tvCompanyName.setText(TextUtils.isEmpty(mBean.getCompanyEntity().getName()) ? "" : mBean.getCompanyEntity().getName());
         if (!TextUtils.isEmpty(mBean.getCompanyEntity().getAreaCode())) {
             tvAddress.setText(Config.get().getAddressByCode(mBean.getCompanyEntity().getAreaCode()) + mBean.getCompanyEntity().getOfficeAddress());
         } else {
             tvAddress.setText("");
         }
-        GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + mBean.getAccountEntity().getAvatar()),ivUserHeader);
+        GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + mBean.getAccountEntity().getAvatar()), ivUserHeader);
         tvName.setText(TextUtils.isEmpty(mBean.getAccountEntity().getRealName()) ? "" : mBean.getAccountEntity().getRealName());
         tvPhone.setText(TextUtils.isEmpty(mBean.getAccountEntity().getMobile()) ? "" : mBean.getAccountEntity().getMobile());
 
@@ -164,8 +166,8 @@ public class CooperationAddActivity extends BaseWorkerActivity implements Select
                 bean.setOwnerTopCompanyId(WorkerApplication.get().getTopCompanyId());
                 bean.setOwnerOrgId(WorkerApplication.get().getCompanyId());
                 bean.setBusinessOneCode(Config.get().getBaseCodeByName(osCheckBox.getText().toString().trim(), 1, Constant.SYS_TYPE).get(0));
-                bean.setBeginTime(GetDateUtils.getYeanDate(tvStartTime.getText().toString().trim()));
-                bean.setEndTime(GetDateUtils.getYeanDate(tvEndTime.getText().toString().trim()));
+                bean.setBeginTime(DateUtil.parse(tvStartTime.getText().toString().trim()));
+                bean.setEndTime(DateUtil.parse(tvStartTime.getText().toString().trim()));
 
                 bean.setBusType(GetConstDataUtils.getCooperationTypeList().indexOf(businessCheckBox.getText().toString().trim()));
 

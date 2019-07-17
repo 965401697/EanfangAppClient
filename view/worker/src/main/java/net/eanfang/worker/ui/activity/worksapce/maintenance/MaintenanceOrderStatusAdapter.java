@@ -8,12 +8,13 @@ import android.widget.LinearLayout;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.biz.model.OrderProgressBean;
-import com.eanfang.util.GetDateUtils;
 import com.github.vipulasri.timelineview.TimelineView;
 
 import net.eanfang.worker.R;
 
 import java.util.List;
+
+import cn.hutool.core.date.DateUtil;
 
 /**
  * Created by O u r on 2018/7/16.
@@ -33,9 +34,9 @@ public class MaintenanceOrderStatusAdapter extends BaseQuickAdapter<OrderProgres
     @Override
     protected void convert(BaseViewHolder helper, OrderProgressBean item) {
         if (!TextUtils.isEmpty(item.getCreateTime())) {
-            helper.setText(R.id.tv_time, item.getCreateTime().substring(11))
-                    .setText(R.id.tv_date, item.getCreateTime().substring(5, 10))
-                    .setText(R.id.tv_weeks, GetDateUtils.dateToWeek(item.getCreateTime().substring(0, 10)));
+            helper.setText(R.id.tv_time, DateUtil.parse(item.getCreateTime()).toTimeStr())
+                    .setText(R.id.tv_date, DateUtil.parse(item.getCreateTime()).toDateStr())
+                    .setText(R.id.tv_weeks, DateUtil.parse(item.getCreateTime()).dayOfWeekEnum().toChinese());
         } else {
             helper.setText(R.id.tv_time, "")
                     .setText(R.id.tv_date, "")

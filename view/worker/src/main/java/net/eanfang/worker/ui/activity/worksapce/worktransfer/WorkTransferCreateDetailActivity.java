@@ -501,7 +501,7 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
             mVieoPath = takeVdideoMode.getMImagePath();
             mUploadKey = takeVdideoMode.getMKey();
             if (!StringUtils.isEmpty(mVieoPath)) {
-                GlideUtil.intoImageView(this,PhotoUtils.getVideoThumbnail(mVieoPath, 100, 100, MINI_KIND),ivTakevideo);
+                GlideUtil.intoImageView(this,PhotoUtils.getVideoBitmap(mVieoPath),ivTakevideo);
             }
             tvAddViedeo.setText("重新拍摄");
         }

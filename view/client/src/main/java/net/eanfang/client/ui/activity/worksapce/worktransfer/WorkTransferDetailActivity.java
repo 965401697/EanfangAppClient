@@ -17,7 +17,6 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.WorkTransferDetailBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 
@@ -37,6 +36,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.date.DateUtil;
 
 /**
  * @date on 2018/7/27  16:11
@@ -183,7 +183,7 @@ public class WorkTransferDetailActivity extends BaseActivity {
         String[] dataOne = bean.getCreateTime().split("-");
         String[] dateTwo = dataOne[2].split(" ");
         tvYear.setText(dataOne[0] + "-" + dataOne[1]);
-        tvWeek.setText(GetDateUtils.dateToWeek(dataOne[0] + "-" + dataOne[1] + "-" + dateTwo[0]));
+        tvWeek.setText(DateUtil.parse(bean.getCreateTime()).dayOfWeekEnum().toChinese());
         tvData.setText(dateTwo[0]);
         //单位名称
         tvCompanyName.setText(bean.getOwnerCompanyEntity().getOrgName());

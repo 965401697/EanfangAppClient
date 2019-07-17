@@ -30,7 +30,6 @@ import com.eanfang.biz.model.TemplateBean;
 import com.eanfang.util.DialogUtil;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.ToastUtil;
-import com.eanfang.util.UuidUtil;
 import com.eanfang.util.compound.CompoundHelper;
 import com.luck.picture.lib.entity.LocalMedia;
 
@@ -49,6 +48,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.util.StrUtil;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Group;
 
@@ -79,7 +79,7 @@ public class CreateGroupActivity extends BaseWorkeActivity {
 
             path = (String) message;
             if (!TextUtils.isEmpty(path)) {
-                imgKey = "im/group/" + UuidUtil.getUUID() + ".png";
+                imgKey = "im/group/" + StrUtil.uuid() + ".png";
                 dialog.dismiss();
                 //头像上传成功后  提交数据
                 SDKManager.ossKit(CreateGroupActivity.this).asyncPutImage(imgKey, path, (isSuccess) -> {
@@ -178,7 +178,7 @@ public class CreateGroupActivity extends BaseWorkeActivity {
     IPictureCallBack iPictureCallBack = new IPictureCallBack() {
         @Override
         public void onSuccess(List<LocalMedia> list) {
-            imgKey = "im/group/CUSTOM_" + UuidUtil.getUUID() + ".png";
+            imgKey = "im/group/CUSTOM_" + StrUtil.uuid() + ".png";
             locationUrl = "file://" +list.get(0).getPath();
             GlideUtil.intoImageView(CreateGroupActivity.this,"file://" + list.get(0).getPath(),ivGroupPic);
 

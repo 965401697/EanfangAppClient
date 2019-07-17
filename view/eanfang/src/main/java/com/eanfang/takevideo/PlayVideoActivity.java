@@ -7,21 +7,15 @@ import com.eanfang.R2;
 import com.eanfang.base.BaseApplication;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.ui.base.BaseActivity;
-import com.eanfang.util.FileUtils;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
-import com.eanfang.util.UuidUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 import cn.jzvd.JzvdStd;
-
-import static android.provider.MediaStore.Images.Thumbnails.MINI_KIND;
 
 /**
  * @author guanluocang
@@ -44,17 +38,12 @@ public class PlayVideoActivity extends BaseActivity {
      */
     private String mVideoPath = "";
 
-    /**
-     * 缩略图路径
-     */
-    private String mThumbnailName = "";
-
     private String mThumbnailPath = "";
 
     /**
      * 图片和视频公用一个UUID
      */
-    private String uploadKey = "biz/repair/video/" + UuidUtil.getUUID();
+    private String uploadKey = "biz/repair/video/" + StrUtil.uuid();
 
     /**
      * 拍摄 还是 播放
@@ -86,9 +75,7 @@ public class PlayVideoActivity extends BaseActivity {
             setRightVisible();
             // 获取第一帧
             if (!StringUtils.isEmpty(mVideoPath)) {
-//            PhotoUtils.getVideoThumbnail(mVideoPath, 100, 100, MINI_KIND);
-                mThumbnailName = "pic_addtrouble_" + new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-                mThumbnailPath = FileUtils.bitmapToFile(PhotoUtils.getVideoThumbnail(mVideoPath, 100, 100, MINI_KIND), mThumbnailName);
+                mThumbnailPath = PhotoUtils.getVideoFile(mVideoPath).getPath();
             }
         } else { // 播放视频
             setRightGone();
@@ -109,7 +96,7 @@ public class PlayVideoActivity extends BaseActivity {
      */
     private void doCommitThumbnail() {
         if (!StringUtils.isEmpty(mThumbnailPath)) {
-            SDKManager.ossKit(this).asyncPutImage(uploadKey + ".jpg",mThumbnailPath,(isSuccess) -> {
+            SDKManager.ossKit(this).asyncPutImage(uploadKey + ".jpg", mThumbnailPath, (isSuccess) -> {
                 // showToast("上传缩略图成功");
                 doCommitVideo();
             });
@@ -121,7 +108,7 @@ public class PlayVideoActivity extends BaseActivity {
      */
     private void doCommitVideo() {
         if (!StringUtils.isEmpty(mVideoPath)) {
-            SDKManager.ossKit(this).asyncPutVideo(uploadKey + ".mp4", mVideoPath,(isSuccess) -> {
+            SDKManager.ossKit(this).asyncPutVideo(uploadKey + ".mp4", mVideoPath, (isSuccess) -> {
                 //                    showToast("上传视频成功");
                 BaseApplication.get().closeActivity(TakeVideoActivity.class);
                 TakeVdideoMode takeVdideoMode = new TakeVdideoMode();

@@ -21,7 +21,6 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.WorkReportInfoBean;
 import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 
 import net.eanfang.worker.R;
@@ -33,6 +32,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.date.DateUtil;
 
 /**
  * 工资汇报详情
@@ -184,7 +184,7 @@ public class WorkReportDetailActivity extends BaseWorkerActivity {
                             tvType.setText(GetConstDataUtils.getWorkReportTypeList().get(bean.getType()));
                             tvDate.setText(bean.getCreateTime());
                             tvName.setText(bean.getCreateUser().getAccountEntity().getRealName());
-                            tvWeek.setText(GetDateUtils.dateToWeek(bean.getCreateTime()));
+                            tvWeek.setText(DateUtil.parse(bean.getCreateTime()).dayOfWeekEnum().toChinese());
 //                            tvReportRevPerson.setText(bean.getAssigneeUser().getAccountEntity().getRealName());
 //                            tvReportPhoneNumber.setText(bean.getAssigneeUser().getAccountEntity().getMobile());
                             for (int i = 0; i < bean.getWorkReportDetails().size(); i++) {

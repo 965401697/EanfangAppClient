@@ -13,13 +13,13 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.WorkTalkDetailBean;
 import com.eanfang.ui.base.BaseActivity;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 
 import net.eanfang.worker.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.date.DateUtil;
 
 /**
  * @author Guanluocang
@@ -92,7 +92,7 @@ public class WorkTalkDetailActivity extends BaseActivity {
     }
 
     private void initContent(WorkTalkDetailBean bean) {
-        GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + bean.getOwnerUserEntity().getAccountEntity().getAvatar()),ivReportHeader);
+        GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + bean.getOwnerUserEntity().getAccountEntity().getAvatar()), ivReportHeader);
         // 创建人
         tvTalkerName.setText(bean.getOwnerUserEntity().getAccountEntity().getRealName() + "(汇报人)");
         // 部门
@@ -101,7 +101,7 @@ public class WorkTalkDetailActivity extends BaseActivity {
         String[] dataOne = bean.getCreateTime().split("-");
         String[] dateTwo = dataOne[2].split(" ");
         tvYear.setText(dataOne[0] + "-" + dataOne[1]);
-        tvWeek.setText(GetDateUtils.dateToWeek(dataOne[0] + "-" + dataOne[1] + "-" + dateTwo[0]));
+        tvWeek.setText(DateUtil.parse(bean.getCreateTime()).dayOfWeekEnum().toChinese());
         tvData.setText(dateTwo[0]);
         //单位名称
         tvCompanyName.setText(bean.getOwnerCompanyEntity().getOrgName());

@@ -1,7 +1,6 @@
 package net.eanfang.client.ui.activity.worksapce.contacts;
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -31,16 +30,12 @@ import com.eanfang.util.GlideUtil;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
-import com.eanfang.util.UuidUtil;
-import com.jph.takephoto.model.TImage;
-import com.jph.takephoto.model.TResult;
 import com.eanfang.biz.model.entity.BaseDataEntity;
 import com.eanfang.biz.model.entity.OrgUnitEntity;
 import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
-import net.eanfang.client.ui.activity.im.GroupCreatActivity;
 import net.eanfang.client.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.client.ui.base.BaseClienActivity;
 import net.eanfang.client.ui.fragment.ContactsFragment;
@@ -51,6 +46,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * Created by guanluocang
@@ -181,7 +177,7 @@ public class AuthCompanySecondActivity extends BaseClienActivity {
     IPictureCallBack iPictureCallBack = new IPictureCallBack() {
         @Override
         public void onSuccess(List<LocalMedia> list) {
-            String imgKey = UuidUtil.getUUID() + ".png";
+            String imgKey = StrUtil.uuid() + ".png";
             infoBean.setLicensePic(imgKey);
             GlideUtil.intoImageView(AuthCompanySecondActivity.this, "file://" + list.get(0).getPath(), ivUpload);
             SDKManager.ossKit(AuthCompanySecondActivity.this).asyncPutImage(imgKey, list.get(0).getPath(), (isSuccess) -> {

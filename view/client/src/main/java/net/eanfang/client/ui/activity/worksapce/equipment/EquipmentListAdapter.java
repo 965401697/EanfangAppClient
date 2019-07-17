@@ -5,11 +5,12 @@ import android.net.Uri;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 import com.yaf.base.entity.CustDeviceEntity;
 
 import net.eanfang.client.R;
+
+import cn.hutool.core.date.DateUtil;
 
 /**
  * Created by O u r on 2018/6/20.
@@ -46,7 +47,7 @@ public class EquipmentListAdapter extends BaseQuickAdapter<CustDeviceEntity, Bas
 
         helper.setText(R.id.tv_position_num, item.getLocationNumber());
         helper.setText(R.id.tv_position, item.getLocation());
-        helper.setText(R.id.tv_setup_time, GetDateUtils.dateToFormatString(item.getInstallDate(), "yyyy-MM-dd"));
+        helper.setText(R.id.tv_setup_time, DateUtil.date(item.getInstallDate()).toDateStr());
         //1:保外 0：保内
         if (item.getWarrantyStatus() == 0) {
             helper.setText(R.id.tv_repair_status, "保内");

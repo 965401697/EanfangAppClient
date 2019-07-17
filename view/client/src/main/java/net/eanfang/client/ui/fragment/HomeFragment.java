@@ -23,7 +23,6 @@ import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseFragment;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
 import com.eanfang.witget.BannerView;
@@ -52,6 +51,8 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import cn.hutool.core.date.DateUtil;
 
 import static com.eanfang.base.kit.V.v;
 
@@ -151,7 +152,7 @@ public class HomeFragment extends BaseFragment {
                         findViewById(R.id.img_cancel).setOnClickListener(view -> {
                             Date date1 = new Date();
                             findViewById(R.id.ll_off_duty).setVisibility(View.GONE);
-                            CacheKit.get().put("offDuty", GetDateUtils.dateToDateTimeString(date1));
+                            CacheKit.get().put("offDuty", DateUtil.date(date1).toString());
                         });
                     } else {
                         findViewById(R.id.ll_off_duty).setVisibility(View.GONE);

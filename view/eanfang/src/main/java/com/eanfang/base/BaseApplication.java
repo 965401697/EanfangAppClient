@@ -14,6 +14,7 @@ import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.biz.model.entity.AccountEntity;
 import com.eanfang.biz.model.entity.OrgEntity;
 import com.eanfang.biz.model.entity.UserEntity;
+import com.eanfang.config.Config;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.facebook.imagepipeline.backends.okhttp3.OkHttpImagePipelineConfigFactory;
@@ -64,6 +65,8 @@ public class BaseApplication extends MultiDexApplication {
         initFresco();
         initOkGo();
 
+        Config.Cache.init();
+
         initConfig();
     }
 
@@ -78,19 +81,19 @@ public class BaseApplication extends MultiDexApplication {
         //相机助手
 //        CameraApplication.init(this, BuildConfig.DEBUG_MOD);
         //初始换tbs  debug模式 回调 正式模式不回调
-        QbSdk.initX5Environment(getApplicationContext(), !BuildConfig.DEBUG_MOD ? null : new QbSdk.PreInitCallback() {
-            @Override
-            public void onViewInitFinished(boolean arg0) {
-                //x5內核初始化完成的回调，为true表示x5内核加载成功，否则表示x5内核加载失败，会自动切换到系统内核。
-                Log.e("zzw", " onViewInitFinished is " + arg0);
-            }
-
-            @Override
-            public void onCoreInitFinished() {
-                Log.e("zzw", " onCoreInitFinished");
-            }
-
-        });
+//        QbSdk.initX5Environment(this, !BuildConfig.DEBUG_MOD ? null : new QbSdk.PreInitCallback() {
+//            @Override
+//            public void onViewInitFinished(boolean arg0) {
+//                //x5內核初始化完成的回调，为true表示x5内核加载成功，否则表示x5内核加载失败，会自动切换到系统内核。
+//                Log.e("zzw", " onViewInitFinished is " + arg0);
+//            }
+//
+//            @Override
+//            public void onCoreInitFinished() {
+//                Log.e("zzw", " onCoreInitFinished");
+//            }
+//
+//        });
 
         // 初始化讯飞
         // 注意： appid 必须和下载的SDK保持一致，否则会出现10407错误

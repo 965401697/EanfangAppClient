@@ -31,7 +31,6 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.security.SecurityLikeStatusBean;
 import com.eanfang.ui.base.BaseFragment;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
@@ -75,6 +74,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import cn.hutool.core.date.DateUtil;
 import q.rorbin.badgeview.QBadgeView;
 
 import static com.eanfang.base.kit.V.v;
@@ -591,15 +591,15 @@ public class HomeFragment extends BaseFragment {
                 }
 
                 if (noticeEntity.getNoticeType() == 22) {
-                    data.add(repairStr + "\r\n" + GetDateUtils.dateToDateTimeString(noticeEntity.getCreateTime()));
+                    data.add(repairStr + "\r\n" + DateUtil.date(noticeEntity.getCreateTime()).toString());
                 } else if (noticeEntity.getNoticeType() == 40) {
-                    data.add(installStr + "\r\n" + GetDateUtils.dateToDateTimeString(noticeEntity.getCreateTime()));
+                    data.add(installStr + "\r\n" + DateUtil.date(noticeEntity.getCreateTime()).toString());
                 } else if (noticeEntity.getNoticeType() == 42) {
-                    data.add(quoteStr + "\r\n" + GetDateUtils.dateToDateTimeString(noticeEntity.getCreateTime()));
+                    data.add(quoteStr + "\r\n" + DateUtil.date(noticeEntity.getCreateTime()).toString());
                 } else if (noticeEntity.getNoticeType() == 51) {
-                    data.add(designStr + "\r\n" + GetDateUtils.dateToDateTimeString(noticeEntity.getCreateTime()));
+                    data.add(designStr + "\r\n" + DateUtil.date(noticeEntity.getCreateTime()).toString());
                 } else if (noticeEntity.getNoticeType() == 62) {
-                    data.add(maintainStr + "\r\n" + GetDateUtils.dateToDateTimeString(noticeEntity.getCreateTime()));
+                    data.add(maintainStr + "\r\n" + DateUtil.date(noticeEntity.getCreateTime()).toString());
                 } else {
                     continue;
                 }

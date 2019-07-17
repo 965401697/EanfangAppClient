@@ -15,8 +15,8 @@ import com.eanfang.R2;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.CopyTvUtil;
-import com.eanfang.util.FileUtils;
 import com.eanfang.util.GlideUtil;
+import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.ChecksumException;
@@ -29,8 +29,6 @@ import com.google.zxing.qrcode.QRCodeReader;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -68,9 +66,6 @@ public class QrCodeShowActivity extends BaseActivity {
 
     private String mMessage = "";
 
-    // 保存地址
-
-    private String mSave = "";
 
     // 二维码地址
 
@@ -96,10 +91,8 @@ public class QrCodeShowActivity extends BaseActivity {
         }
         if (mMessage.equals("personal")) {
             tvQrcodeMessage.setText("进易安防app，扫一扫加我为好友");
-            mSave = "personal";
         } else if (mMessage.equals("group")) {
             tvQrcodeMessage.setText("进易安防app，扫一扫加入群聊");
-            mSave = "group";
         }
         if (!StringUtils.isEmpty(mQrcodeAddress)) {
             Log.d("QrCodeShowActivity_yh", "initView: " + Uri.parse(BuildConfig.OSS_SERVER + mQrcodeAddress));
@@ -137,7 +130,7 @@ public class QrCodeShowActivity extends BaseActivity {
     public void doSaveQRCode() {
         RxPerm.get(this).storagePerm((success) -> {
             if (!StringUtils.isEmpty(mQrcodeAddress)) {
-                String path = FileUtils.bitmapToFile(FileUtils.returnBitMap(BuildConfig.OSS_SERVER + mQrcodeAddress), new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + "_qrcode_" + mSave);
+                String path = PhotoUtils.downloadImg(mQrcodeAddress).getPath();
                 if (!StringUtils.isEmpty(path)) {
                     showToast(mTitle + "的易安防二维码已生成");
                 } else {

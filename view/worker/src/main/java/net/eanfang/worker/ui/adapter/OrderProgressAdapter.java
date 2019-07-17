@@ -7,12 +7,13 @@ import android.widget.LinearLayout;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.biz.model.OrderProgressBean;
-import com.eanfang.util.GetDateUtils;
 import com.github.vipulasri.timelineview.TimelineView;
 
 import net.eanfang.worker.R;
 
 import java.util.List;
+
+import cn.hutool.core.date.DateUtil;
 
 
 /**
@@ -33,9 +34,9 @@ public class OrderProgressAdapter extends BaseQuickAdapter<OrderProgressBean, Ba
 
     @Override
     protected void convert(BaseViewHolder helper, OrderProgressBean item) {
-        helper.setText(R.id.tv_time, item.getCreateTime().substring(11))
-                .setText(R.id.tv_date, item.getCreateTime().substring(5, 10))
-                .setText(R.id.tv_weeks, GetDateUtils.dateToWeek(item.getCreateTime().substring(0, 10)));
+        helper.setText(R.id.tv_time, DateUtil.parse(item.getCreateTime()).toTimeStr())
+                .setText(R.id.tv_date, DateUtil.parse(item.getCreateTime()).toDateStr())
+                .setText(R.id.tv_weeks, DateUtil.parse(item.getCreateTime()).dayOfWeekEnum().toChinese());
         timelineView = helper.getView(R.id.time_marker);
         mOrderFinish = helper.getView(R.id.ll_orderFinish);
         Drawable marker = mContext.getResources().getDrawable(R.drawable.ic_check_worker);

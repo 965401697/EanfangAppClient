@@ -16,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.eanfang.base.BaseActivity;
 import com.eanfang.biz.rds.base.LViewModelProviders;
-import com.eanfang.util.GetDateUtils;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
@@ -25,6 +24,8 @@ import net.eanfang.client.ui.activity.leave_post.bean.LeavePostHomeTopBean;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostHomeUnHandledAlertBean;
 import net.eanfang.client.ui.activity.leave_post.viewmodel.LeavePostHomeViewModel;
 import net.eanfang.client.ui.adapter.LeavePostHomeAdapter;
+
+import cn.hutool.core.date.DateUtil;
 
 /**
  * @author liangkailun
@@ -55,10 +56,10 @@ public class LeavePostHomeActivity extends BaseActivity {
         mBinding.tvPostManagement.setOnClickListener(view -> mLeavePostHomeViewModel.gotoManagePage(this));
         mBinding.tvCheckupHistory.setOnClickListener(view -> mLeavePostHomeViewModel.gotoHistoryPage(this));
         mLeavePostHomeAdapter.setOnItemClickListener((adapter, view, position) -> mLeavePostHomeViewModel.gotoLeavePostDetailPage(LeavePostHomeActivity.this, adapter, position));
-        mBinding.tvLeavePostChangeCount .setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-        mBinding.tvLeavePostAllWarn .setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-        mBinding.tvLeavePostWarnCount .setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-        mBinding.tvLeavePostPostCount .setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        mBinding.tvLeavePostChangeCount.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        mBinding.tvLeavePostAllWarn.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        mBinding.tvLeavePostWarnCount.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+        mBinding.tvLeavePostPostCount.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
     }
 
     @Override
@@ -78,8 +79,8 @@ public class LeavePostHomeActivity extends BaseActivity {
         LeavePostHomeUnHandledAlertBean.UnhandledAlertListBean unhandledAlertListBean = leavePostHomeUnHandledAlertBean.getUnhandledAlertList();
         String todoText = getString(R.string.text_leave_post_todo_count, leavePostHomeUnHandledAlertBean.getUnhandledAlertCount());
         SpannableString spannableString = new SpannableString(todoText);
-        spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#FF6419")), 8, todoText.length() , Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        AbsoluteSizeSpan span = new AbsoluteSizeSpan(18,true);
+        spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#FF6419")), 8, todoText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        AbsoluteSizeSpan span = new AbsoluteSizeSpan(18, true);
         spannableString.setSpan(span, 8, todoText.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
         mBinding.tvLeavePostTodoCount.setText(spannableString);
         if (unhandledAlertListBean.getCurrPage() == 1) {
@@ -108,7 +109,7 @@ public class LeavePostHomeActivity extends BaseActivity {
         } else {
             mBinding.tvLeavePostChangeCount.setText(String.valueOf(changeCount));
         }
-        mBinding.tvLeavePostDate.setText(String.format("%s\t\t%s\t\t%s", GetDateUtils.dateToTime(leavePostHomeBean.getNow()), leavePostHomeBean.getLunarDate(), GetDateUtils.dateToWeek(leavePostHomeBean.getNow())));
+        mBinding.tvLeavePostDate.setText(String.format("%s\t\t%s\t\t%s", DateUtil.parse(leavePostHomeBean.getNow()).toString("yyyy年MM月dd日"), leavePostHomeBean.getLunarDate(), DateUtil.parse(leavePostHomeBean.getNow()).dayOfWeekEnum().toChinese()));
     }
 
 

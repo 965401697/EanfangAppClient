@@ -648,7 +648,7 @@ public class AddNewCheckActivity extends BaseActivity implements SelectTimeDialo
                 if (ivTakevideoCheck.getVisibility() == View.INVISIBLE) {
                     ivTakevideoCheck.setVisibility(View.VISIBLE);
                 }
-                GlideUtil.intoImageView(this,PhotoUtils.getVideoThumbnail(mVieoPath, 100, 100, MINI_KIND),ivTakevideoCheck);
+                GlideUtil.intoImageView(this,PhotoUtils.getVideoBitmap(mVieoPath),ivTakevideoCheck);
             }
 
         }

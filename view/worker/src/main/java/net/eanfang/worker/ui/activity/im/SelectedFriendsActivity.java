@@ -20,7 +20,6 @@ import com.eanfang.biz.model.GroupDetailBean;
 import com.eanfang.biz.model.TemplateBean;
 
 import com.eanfang.util.ToastUtil;
-import com.eanfang.util.UuidUtil;
 import com.eanfang.util.compound.CompoundHelper;
 
 import net.eanfang.worker.R;
@@ -38,6 +37,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Group;
 
@@ -64,7 +64,7 @@ public class SelectedFriendsActivity extends BaseWorkerActivity {
             String path = (String) msg.obj;
 
             if (!TextUtils.isEmpty(path)) {
-                String inageKey = "im/group/" + UuidUtil.getUUID() + ".png";
+                String inageKey = "im/group/" + StrUtil.uuid() + ".png";
                 SDKManager.ossKit(SelectedFriendsActivity.this).asyncPutImage(inageKey, path, (isSuccess)->{
                     updataGroupInfo(mTitle, inageKey, "", "");
                 });

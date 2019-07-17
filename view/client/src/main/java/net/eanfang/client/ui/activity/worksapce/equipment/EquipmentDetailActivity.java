@@ -12,7 +12,6 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.yaf.base.entity.CustDeviceEntity;
@@ -28,6 +27,8 @@ import java.io.Serializable;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.date.DateUtil;
+
 //已提取
 public class EquipmentDetailActivity extends BaseClientActivity {
 
@@ -159,7 +160,7 @@ public class EquipmentDetailActivity extends BaseClientActivity {
 
         tvPosition.setText(bean.getLocation());
         tvPositionNum.setText(bean.getLocationNumber());
-        tvCreatetime.setText(GetDateUtils.dateToFormatString(bean.getInstallDate(), "yyyy-MM-dd"));
+        tvCreatetime.setText(DateUtil.date(bean.getInstallDate()).toDateStr());
         if (bean.getStatus() == 0) {
             tvEquipmentStatus.setText("出厂");
         } else if (bean.getStatus() == 1) {

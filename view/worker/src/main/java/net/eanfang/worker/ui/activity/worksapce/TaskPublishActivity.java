@@ -26,7 +26,6 @@ import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
 import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.PickerSelectUtil;
@@ -47,6 +46,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.date.DateUtil;
 
 /**
  * Created by MrHou
@@ -198,7 +198,7 @@ public class TaskPublishActivity extends BaseActivity implements SelectTimeDialo
         bean.setPictures(ursStr);
         String json = JSONObject.toJSONString(bean);
         if (uploadMap.size() != 0) {
-            SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
+            SDKManager.ossKit(this).asyncPutImages(uploadMap, (isSuccess) -> {
                 runOnUiThread(() -> {
                     doHttpSubmit(json);
                 });
@@ -259,12 +259,12 @@ public class TaskPublishActivity extends BaseActivity implements SelectTimeDialo
         //因为系统Calendar的月份是从0-11的,所以如果是调用Calendar的set方法来设置时间,月份的范围也要是从0-11
         Calendar selectedDate = Calendar.getInstance();
 
-        String currDateStr = GetDateUtils.dateToDateTimeString(GetDateUtils.getDateNow());
+        String currDateStr = DateUtil.date().toString();
 
         Calendar startDate = Calendar.getInstance();
         //startDate.set(2017, 5, 24);
         //修改预约时间选择限制，不能早过当前时间
-        startDate.set(GetDateUtils.getYear(currDateStr), GetDateUtils.getMonth(currDateStr), GetDateUtils.getDay(currDateStr), GetDateUtils.getHour(currDateStr), GetDateUtils.getMinute(currDateStr));
+        startDate.set(DateUtil.date().year(), DateUtil.date().month(), DateUtil.date().dayOfMonth(), DateUtil.date().hour(true), DateUtil.date().minute());
 
         Calendar endDate = Calendar.getInstance();
         endDate.set(2099, 11, 31);
@@ -273,7 +273,7 @@ public class TaskPublishActivity extends BaseActivity implements SelectTimeDialo
 //            @Override
 //            public void onTimeSelect(Date date, View v) {//选中事件回调
 //                // 这里回调过来的v,就是show()方法里面所添加的 View 参数，如果show的时候没有添加参数，v则为null
-//                tvLoginTime.setText(GetDateUtils.dateToDateTimeString(date));
+//                tvLoginTime.setText(DateUtil.date(date));
 //            }
 //        })
 //                .setTitleText("踏勘时间")

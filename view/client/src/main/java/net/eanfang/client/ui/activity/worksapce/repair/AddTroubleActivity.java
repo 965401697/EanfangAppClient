@@ -2,7 +2,6 @@ package net.eanfang.client.ui.activity.worksapce.repair;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -33,11 +32,9 @@ import com.eanfang.takevideo.TakeVdideoMode;
 import com.eanfang.takevideo.TakeVideoActivity;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.ConnectivityChangeUtil;
-import com.eanfang.util.FileUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
-import com.eanfang.util.UuidUtil;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.photopicker.com.activity.BGAPhotoPickerActivity;
 import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
@@ -66,8 +63,6 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static android.provider.MediaStore.Video.Thumbnails.MINI_KIND;
 
 /**
  * @author guanluocang
@@ -266,6 +261,7 @@ public class AddTroubleActivity extends BaseClienActivity {
     }
 
     private List<LocalMedia> selectList = new ArrayList<>();
+    private List<LocalMedia> videoList = new ArrayList<>();
 
     private void initRecycle() {
         pictureRecycler.addImage(listener);
@@ -274,57 +270,9 @@ public class AddTroubleActivity extends BaseClienActivity {
     PictureRecycleView.ImageListener listener = list -> selectList = list;
     PictureRecycleView.ImageListener videoListener = list -> videoList = list;
 
-    private List<LocalMedia> videoList = new ArrayList<>();
 
     private void initRecycleVideo() {
         videoRecycle.addVideo(videoListener);
-    }
-
-    /**
-     * 上传拍摄视频缩略图
-     */
-    /**
-     * 缩略图路径
-     */
-    private String mThumbnailName = "";
-
-    private String mThumbnailPath = "";
-    /**
-     * 图片和视频公用一个UUID
-     */
-    String uploadKey = "biz/repair/video/" + UuidUtil.getUUID();
-
-    private void doCommitThumbnail() {
-        if (videoList == null && videoList.size() == 0) {
-            return;
-        }
-        String mVideoPath = videoList.get(0).getPath();
-        if (!StringUtils.isEmpty(mVideoPath)) {
-//            PhotoUtils.getVideoThumbnail(mVideoPath, 100, 100, MINI_KIND);
-            mThumbnailName = "pic_addtrouble_" + new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-            mThumbnailPath = FileUtils.bitmapToFile(PhotoUtils.getVideoThumbnail(mVideoPath, 100, 100, MediaStore.Images.Thumbnails.MINI_KIND), mThumbnailName);
-        }
-        if (!StringUtils.isEmpty(mThumbnailPath)) {
-            SDKManager.ossKit(this).asyncPutImage(uploadKey + ".jpg", mThumbnailPath, (isSuccess) -> {
-                // showToast("上传缩略图成功");
-                doCommitVideo();
-            });
-        }
-    }
-
-    /**
-     * 进行上传视频
-     */
-    public void doCommitVideo() {
-        if (videoList == null && videoList.size() == 0) {
-            return;
-        }
-        String mVideoPath = videoList.get(0).getPath();
-        if (!StringUtils.isEmpty(mVideoPath)) {
-            SDKManager.ossKit(this).asyncPutVideo(uploadKey + ".mp4", mVideoPath, (isSuccess) -> {
-                //      showToast("上传视频成功");
-            });
-        }
     }
 
     /**
@@ -703,7 +651,7 @@ public class AddTroubleActivity extends BaseClienActivity {
             mVieoPath = takeVdideoMode.getMImagePath();
             mUploadKey = takeVdideoMode.getMKey();
             if (!StringUtils.isEmpty(mVieoPath)) {
-                ivThumbnail.setImageBitmap(PhotoUtils.getVideoThumbnail(mVieoPath, 100, 100, MINI_KIND));
+                ivThumbnail.setImageBitmap(PhotoUtils.getVideoBitmap(mVieoPath));
             }
         }
     }

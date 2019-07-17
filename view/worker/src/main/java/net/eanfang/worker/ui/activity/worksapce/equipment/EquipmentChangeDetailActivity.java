@@ -12,7 +12,6 @@ import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 import com.yaf.base.entity.CustDeviceChangeLogEntity;
 
@@ -21,6 +20,7 @@ import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.date.DateUtil;
 
 /**
  * 已提取相关内容
@@ -90,7 +90,7 @@ public class EquipmentChangeDetailActivity extends BaseWorkerActivity {
 
         tvPosition.setText(bean.getLocation());
         tvPositionNum.setText(bean.getLocationNumber());
-        tvCreatetime.setText(GetDateUtils.dateToFormatString(bean.getInstallDate(), "yyyy-MM-dd"));
+        tvCreatetime.setText(DateUtil.date(bean.getInstallDate()).toDateStr());
         if (bean.getStatus() == 0) {
             tvEquipmentStatus.setText("出厂");
         } else if (bean.getStatus() == 1) {

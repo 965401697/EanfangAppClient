@@ -4,7 +4,9 @@ import android.content.DialogInterface;
 import android.hardware.SensorManager;
 import android.media.AudioFormat;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AlertDialog;
+
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -211,11 +213,11 @@ public class TakeVideoActivity extends BaseActivity implements PLRecordStateList
         /**
          * 拍摄视频存储目录
          * */
-        recordSetting.setVideoCacheDir(Config.VIDEO_STORAGE_DIR);
+        recordSetting.setVideoCacheDir(Config.Cache.VIDEO_STORAGE_DIR);
         /**
          * 拍摄视频存储根目录
          * */
-        recordSetting.setVideoFilepath(Config.VIDEO_STORAGE_DIR + mVideoPahth + ".mp4");
+        recordSetting.setVideoFilepath(Config.Cache.VIDEO_STORAGE_DIR + mVideoPahth + ".mp4");
 
         mFaceBeautySetting = new PLFaceBeautySetting(1.0f, 0.5f, 0.5f);
 

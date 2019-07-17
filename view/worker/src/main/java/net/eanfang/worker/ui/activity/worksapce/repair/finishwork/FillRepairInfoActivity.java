@@ -4,10 +4,12 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -35,8 +37,6 @@ import com.eanfang.takevideo.TakeVdideoMode;
 import com.eanfang.takevideo.TakeVideoActivity;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.ui.base.voice.RecognitionManager;
-import com.eanfang.util.ETimeUtils;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.LocationUtil;
@@ -69,8 +69,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static android.provider.MediaStore.Video.Thumbnails.MINI_KIND;
+import cn.hutool.core.date.DateUnit;
+import cn.hutool.core.date.DateUtil;
 
 /**
  * Created by MrHou
@@ -372,7 +372,7 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
 
         // 遗留问题
         ivVoiceInputRemainQuestion.setOnClickListener((v) -> {
-             RxPerm.get(this).voicePerm((isSuccess)->{
+            RxPerm.get(this).voicePerm((isSuccess) -> {
                 RecognitionManager.getSingleton().startRecognitionWithDialog(FillRepairInfoActivity.this, etRemainQuestion);
             });
         });
@@ -506,12 +506,10 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
         bughandleConfirmEntity.setBusRepairOrderId(orderId);
 
         // 完成时间 维修工时  根据当前时间进行计算 并提交
-        bughandleConfirmEntity.setOverTime(GetDateUtils.getDate(ETimeUtils.getTimeByYearMonthDayHourMinSec(new Date(System.currentTimeMillis()))));
-//        Date finishDay = GetDateUtils.getDate(Calendar.YEAR + "", Calendar.MONTH + "", Calendar.DATE + "", Calendar.HOUR + "", Calendar.MINUTE + "", Calendar.SECOND + "");
-        Date finishDay = GetDateUtils.getDateNow();
-        long day = GetDateUtils.getTimeDiff(finishDay, bughandleConfirmEntity.getSingInTime(), "day");
-        long hours = GetDateUtils.getTimeDiff(finishDay, bughandleConfirmEntity.getSingInTime(), "hours");
-        long minutes = GetDateUtils.getTimeDiff(finishDay, bughandleConfirmEntity.getSingInTime(), "minutes");
+        bughandleConfirmEntity.setOverTime(DateUtil.date());
+        long day = DateUtil.date().between(bughandleConfirmEntity.getSingInTime(), DateUnit.DAY);
+        long hours = DateUtil.date().between(bughandleConfirmEntity.getSingInTime(), DateUnit.HOUR);
+        long minutes = DateUtil.date().between(bughandleConfirmEntity.getSingInTime(), DateUnit.MINUTE);
         if (day < 0) {
             day = 0;
         }
@@ -521,9 +519,10 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
         if (minutes < 0) {
             minutes = 0;
         }
-        if (GetDateUtils.dateToDateString(bughandleConfirmEntity.getSingInTime()) == null) {
-            bughandleConfirmEntity.setWorkHour("0小时0分钟");
-        } else {
+//        if (DateUtil.date(bughandleConfirmEntity.getSingInTime()) == null) {
+//            bughandleConfirmEntity.setWorkHour("0小时0分钟");
+//        } else
+        {
             bughandleConfirmEntity.setWorkHour((day * 24 + hours) + "小时" + minutes + "分钟");
         }
 
@@ -593,7 +592,7 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
     //提交完工
     private void submit() {
         if (uploadMap.size() != 0) {
-            SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
+            SDKManager.ossKit(this).asyncPutImages(uploadMap, (isSuccess) -> {
                 runOnUiThread(() -> {
                     //代表不需要挂单Z
                     String requestJson = JSONObject.toJSONString(bughandleConfirmEntity);
@@ -615,7 +614,7 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
     private void putUpOrder() {
 
         if (uploadMap.size() != 0) {
-            SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
+            SDKManager.ossKit(this).asyncPutImages(uploadMap, (isSuccess) -> {
                 Intent intent = new Intent(activity, PutUpOrderActivity.class);
                 intent.putExtra("bean", bughandleConfirmEntity);
                 intent.putExtra("companyName", companyName);
@@ -751,15 +750,15 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
             if (takeVdideoMode.getMType().equals("moment")) {// 电视正面照
                 rlThumbnailMoment.setVisibility(View.VISIBLE);
                 mUploadKey_moment = takeVdideoMode.getMKey();
-                ivThumbnailMoment.setImageBitmap(PhotoUtils.getVideoThumbnail(image, 100, 100, MINI_KIND));
+                ivThumbnailMoment.setImageBitmap(PhotoUtils.getVideoBitmap(image));
             } else if (takeVdideoMode.getMType().equals("monitor")) {
                 rlThumbnailMonitor.setVisibility(View.VISIBLE);
                 mUploadKey_monitor = takeVdideoMode.getMKey();
-                ivThumbnailMonitor.setImageBitmap(PhotoUtils.getVideoThumbnail(image, 100, 100, MINI_KIND));
+                ivThumbnailMonitor.setImageBitmap(PhotoUtils.getVideoBitmap(image));
             } else if (takeVdideoMode.getMType().equals("package")) {
                 rlThumbnailToolsPackage.setVisibility(View.VISIBLE);
                 mUploadKey_package = takeVdideoMode.getMKey();
-                ivThumbnailToolsPackage.setImageBitmap(PhotoUtils.getVideoThumbnail(image, 100, 100, MINI_KIND));
+                ivThumbnailToolsPackage.setImageBitmap(PhotoUtils.getVideoBitmap(image));
             }
 
         }

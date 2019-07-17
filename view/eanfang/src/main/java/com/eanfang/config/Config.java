@@ -10,9 +10,12 @@ import com.eanfang.biz.model.bean.ConstAllBean;
 import com.eanfang.biz.model.entity.BaseDataEntity;
 import com.eanfang.util.StringUtils;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import cn.hutool.core.io.FileUtil;
 
 
 /**
@@ -23,7 +26,82 @@ import java.util.List;
 public class Config {
     private static Config config = new Config();
 
-    public static final String VIDEO_STORAGE_DIR = Environment.getExternalStorageDirectory() + "/eanfang/";
+    static {
+        Cache.init();
+    }
+
+    /**
+     * 缓存相关
+     */
+    public static class Cache {
+        /**
+         * 缓存基础目录
+         */
+        static final String BASE_CACHE_DIR = Environment.getExternalStorageDirectory().getAbsolutePath() + "/eanfang/";
+        /**
+         * 视频缓存目录
+         */
+        public static final String VIDEO_STORAGE_DIR = BASE_CACHE_DIR + "/video/";
+        /**
+         * 视频缩略图
+         */
+        public static final String VIDEO_IMG_DIR = VIDEO_STORAGE_DIR + "/img/";
+
+        /**
+         * 图片缓存路径
+         */
+        public static final String IMG_STORAGE_DIR = BASE_CACHE_DIR + "/img/";
+
+        /**
+         * 音频路径
+         */
+        public static final String AUDIO_STORAGE_DIR = BASE_CACHE_DIR + "/audio/";
+        /**
+         * 日志路径
+         */
+
+        public static final String LOG_STORAGE_DIR = BASE_CACHE_DIR + "/log/";
+//        /**
+//         * 数据路径
+//         */
+//        public static final String DATA_STORAGE_DIR = BASE_CACHE_DIR + "/data/";
+        /**
+         * 下载路径
+         */
+        public static final String DOWNLOAD_STORAGE_DIR = BASE_CACHE_DIR + "/download/";
+
+        /**
+         * 初始化目录
+         */
+        public static void init() {
+            if (!FileUtil.exist(BASE_CACHE_DIR)) {
+                FileUtil.mkdir(BASE_CACHE_DIR);
+            }
+            if (!FileUtil.exist(VIDEO_STORAGE_DIR)) {
+                FileUtil.mkdir(VIDEO_STORAGE_DIR);
+            }
+            if (!FileUtil.exist(VIDEO_IMG_DIR)) {
+                FileUtil.mkdir(VIDEO_IMG_DIR);
+            }
+            if (!FileUtil.exist(IMG_STORAGE_DIR)) {
+                FileUtil.mkdir(IMG_STORAGE_DIR);
+            }
+
+            if (!FileUtil.exist(AUDIO_STORAGE_DIR)) {
+                FileUtil.mkdir(AUDIO_STORAGE_DIR);
+            }
+            if (!FileUtil.exist(LOG_STORAGE_DIR)) {
+                FileUtil.mkdir(LOG_STORAGE_DIR);
+            }
+//            if (!FileUtil.exist(DATA_STORAGE_DIR)) {
+//                FileUtil.mkdir(DATA_STORAGE_DIR);
+//            }
+            if (!FileUtil.exist(DOWNLOAD_STORAGE_DIR)) {
+                FileUtil.mkdir(DOWNLOAD_STORAGE_DIR);
+            }
+        }
+    }
+
     /**
      * 基础数据 分隔字符
      */

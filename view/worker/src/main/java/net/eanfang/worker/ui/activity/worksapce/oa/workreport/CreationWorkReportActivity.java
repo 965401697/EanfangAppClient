@@ -1062,7 +1062,7 @@ public class CreationWorkReportActivity extends BaseWorkerActivity {
             if (view.getVisibility() == View.INVISIBLE) {
                 view.setVisibility(View.VISIBLE);
             }
-            view.setImageBitmap(PhotoUtils.getVideoThumbnail(path, 100, 100, MINI_KIND));
+            view.setImageBitmap(PhotoUtils.getVideoBitmap(path));
         }
         relativeLayout.setVisibility(View.VISIBLE);
     }

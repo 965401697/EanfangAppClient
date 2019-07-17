@@ -2,8 +2,10 @@ package net.eanfang.worker.ui.activity.worksapce.tender;
 
 import android.net.Uri;
 import android.os.Bundle;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,7 +19,6 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.entity.IfbOrderEntity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.FileDisplayActivity;
-import com.eanfang.util.GetDateUtils;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.worktender.WorkTenderAdjunctAdapter;
@@ -29,6 +30,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.date.DateUtil;
 
 /**
  * @author guanluocang
@@ -164,18 +166,18 @@ public class WorkTenderDetailActivity extends BaseActivity {
         //项目地区
         tvProjectAddress.setText(Config.get().getAddressByCode(ifbOrderEntity.getProjectArea()));
         //发布时间
-        tvReleaseTime.setText(GetDateUtils.dateToDateTimeStringForChinse(ifbOrderEntity.getReleaseTime()));
+        tvReleaseTime.setText(DateUtil.date(ifbOrderEntity.getReleaseTime()).toString("yyyy年MM月dd日 HH:mm:ss"));
         //招标文件售价
         tvTenderFilePrice.setText(ifbOrderEntity.getIfbFilePrice() + "");
         //预算金额
         tvBudgetAmount.setText(ifbOrderEntity.getBudgetPrice() + "");
         //开标时间
-        tvBeginTime.setText(GetDateUtils.dateToDateTimeStringForChinse(ifbOrderEntity.getIfbOpenTime()));
+        tvBeginTime.setText(DateUtil.date(ifbOrderEntity.getReleaseTime()).toString("yyyy年MM月dd日 HH:mm:ss"));
         //开标地点
         tvBeginAddress.setText(ifbOrderEntity.getIfbOpenAddress());
         //获取招标文件时间
-        tvGetTenderFileTime.setText(GetDateUtils.dateToDateTimeStringForChinse(ifbOrderEntity.getIfbFileStartTime()) + "至\n" +
-                GetDateUtils.dateToDateTimeStringForChinse(ifbOrderEntity.getIfbFileEndTime()));
+        tvGetTenderFileTime.setText(DateUtil.date(ifbOrderEntity.getIfbFileStartTime()).toString("yyyy年MM月dd日 HH:mm:ss") + "至\n" +
+                DateUtil.date(ifbOrderEntity.getIfbFileEndTime()).toString("yyyy年MM月dd日 HH:mm:ss"));
         //获取招标文件地点
         tvGetTenderFileAddress.setText(ifbOrderEntity.getIfbFileAddress());
 

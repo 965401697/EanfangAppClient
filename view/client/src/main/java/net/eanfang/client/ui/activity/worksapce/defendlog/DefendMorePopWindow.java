@@ -12,11 +12,12 @@ import android.view.ViewGroup;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
-import com.eanfang.util.GetDateUtils;
 import com.yaf.base.entity.ProtectionLogEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.im.SelectIMContactActivity;
+
+import cn.hutool.core.date.DateUtil;
 
 /**
  * Created by O u r on 2018/7/26.
@@ -87,7 +88,7 @@ public class DefendMorePopWindow extends PopupWindow {
 
         bundle.putString("id", String.valueOf(bean.getId()));
         bundle.putString("orderNum", bean.getOrderNumber());
-        bundle.putString("creatTime", GetDateUtils.dateToDateTimeStringForChinse(bean.getCreateTime()));
+        bundle.putString("creatTime", DateUtil.date(bean.getCreateTime()).toString("yyyy年MM月dd日 HH:mm:ss"));
         bundle.putString("workerName", bean.getAssigneeUser().getAccountEntity().getRealName());
         bundle.putString("status", String.valueOf(bean.getStatus()));
         bundle.putString("shareType", "9");

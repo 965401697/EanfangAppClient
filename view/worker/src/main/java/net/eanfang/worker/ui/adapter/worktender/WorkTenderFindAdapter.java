@@ -5,10 +5,16 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.base.kit.V;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
 import com.eanfang.config.Config;
-import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.DateKit;
 import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
+
+import java.util.Calendar;
+
+import cn.hutool.core.date.DateField;
+import cn.hutool.core.date.DateUnit;
+import cn.hutool.core.date.DateUtil;
 
 /**
  * @author guanluocang
@@ -22,13 +28,13 @@ public class WorkTenderFindAdapter extends BaseQuickAdapter<TaskPublishEntity, B
 
     @Override
     protected void convert(BaseViewHolder helper, TaskPublishEntity item) {
-        String endTime = GetDateUtils.dateToDateTimeString(V.v(()->item.getEndTime()));
+        String endTime = DateUtil.date(item.getEndTime()).toString();
         //名称
         helper.setText(R.id.tv_tender_name, Config.get().getBusinessNameByCode(item.getSystemType(), 1));
         //类型
         helper.setText(R.id.tv_tender_type, Config.get().getBaseNameByCode(item.getBusinessOneCode(), 2));
         // 时间
-        helper.setText(R.id.tv_tender_time, GetDateUtils.dateToDateTimeString(item.getCreateTime()));
+        helper.setText(R.id.tv_tender_time, DateUtil.date(item.getCreateTime()).toString());
         //地点
         helper.setText(R.id.tv_tender_address, item.getProvince() + item.getCity() + item.getCounty());
         //工期
@@ -39,18 +45,24 @@ public class WorkTenderFindAdapter extends BaseQuickAdapter<TaskPublishEntity, B
         helper.setText(R.id.tv_tender_require, item.getLaborRequirements());
         //截止时间
         if (!StringUtils.isEmpty(endTime)) {
-            //剩余时间
-            long currentTime = System.currentTimeMillis() / 1000;
-            long remainTime = GetDateUtils.convertDateToSecond(endTime) - currentTime;
-            if (remainTime > 0) {
-                int oneDay = 24 * 60 * 60;
-                int day = (int) (remainTime / oneDay);
-                int oneHour = 60 * 60;
-                int hour = (int) ((remainTime % oneDay) / oneHour);
-                int oneMin = 60;
-                int min = (int) (((remainTime % oneDay) % oneHour)) / oneMin;
+            if (DateUtil.parse(endTime).getTime() - DateUtil.date().getTime() > 0) {
+                int day = (int) DateUtil.date().between(DateUtil.parse(endTime), DateUnit.DAY);
+                int hour = (int) DateUtil.date().between(DateKit.get(endTime).offset(DateField.DAY_OF_YEAR, -day).date, DateUnit.HOUR);
+                int min = (int) DateUtil.date().between(DateKit.get(endTime).offset(DateField.DAY_OF_YEAR, -day).offset(DateField.HOUR, -hour).date, DateUnit.MINUTE);
                 helper.setText(R.id.tv_cutoff_time, mContext.getString(R.string.text_tender_count_down, day, hour, min));
             }
+//            //剩余时间
+//            long currentTime = System.currentTimeMillis() / 1000;
+//            long remainTime = DateUtil.parse(endTime).getTime() - currentTime;
+//            if (remainTime > 0) {
+//                int oneDay = 24 * 60 * 60;
+//                int day = (int) (remainTime / oneDay);
+//                int oneHour = 60 * 60;
+//                int hour = (int) ((remainTime % oneDay) / oneHour);
+//                int oneMin = 60;
+//                int min = (int) (((remainTime % oneDay) % oneHour)) / oneMin;
+//                helper.setText(R.id.tv_cutoff_time, mContext.getString(R.string.text_tender_count_down, day, hour, min));
+//            }
         }
         helper.addOnClickListener(R.id.tv_offer);
     }

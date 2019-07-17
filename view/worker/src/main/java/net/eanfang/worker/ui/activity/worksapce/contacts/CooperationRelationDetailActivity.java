@@ -16,7 +16,6 @@ import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
@@ -30,6 +29,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.date.DateUtil;
 
 public class CooperationRelationDetailActivity extends BaseWorkerActivity {
 
@@ -81,8 +81,8 @@ public class CooperationRelationDetailActivity extends BaseWorkerActivity {
 
         queryEntry.getEquals().put("assigneeOrgId", String.valueOf(cooperationEntity.getAssigneeOrgId()));
         queryEntry.getEquals().put("ownerOrgId", String.valueOf(cooperationEntity.getOwnerOrgId()));
-        queryEntry.getEquals().put("beginTime", GetDateUtils.dateToFormatString(cooperationEntity.getBeginTime(), "yyyy.MM.dd"));
-        queryEntry.getEquals().put("endTime", GetDateUtils.dateToFormatString(cooperationEntity.getEndTime(), "yyyy.MM.dd"));
+        queryEntry.getEquals().put("beginTime", DateUtil.date(cooperationEntity.getBeginTime()).toString("yyyy.MM.dd"));
+        queryEntry.getEquals().put("endTime", DateUtil.date(cooperationEntity.getEndTime()).toString("yyyy.MM.dd"));
         queryEntry.getEquals().put("status", String.valueOf(cooperationEntity.getStatus()));
 
 
@@ -121,8 +121,8 @@ public class CooperationRelationDetailActivity extends BaseWorkerActivity {
             tvName.setText(list.get(0).getCreateUserEntity().getAccountEntity().getRealName());
             tvPhone.setText(list.get(0).getCreateUserEntity().getAccountEntity().getMobile());
 
-            tvStartTime.setText(GetDateUtils.dateToFormatString(list.get(0).getBeginTime(), "yyyy.MM.dd"));
-            tvEndTime.setText(GetDateUtils.dateToFormatString(list.get(0).getEndTime(), "yyyy.MM.dd"));
+            tvStartTime.setText(DateUtil.date(list.get(0).getBeginTime()).toString("yyyy.MM.dd"));
+            tvEndTime.setText(DateUtil.date(list.get(0).getEndTime()).toString("yyyy.MM.dd"));
 
 
             List<String> mOsList = GetConstDataUtils.getCooperationTypeList();

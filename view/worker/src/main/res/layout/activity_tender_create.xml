@@ -16,10 +16,6 @@
         <variable
             name="config"
             type="com.eanfang.config.Config" />
-
-        <variable
-            name="timeUtil"
-            type="com.eanfang.util.GetDateUtils" />
     </data>
 
     <LinearLayout

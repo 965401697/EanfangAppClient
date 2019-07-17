@@ -6,10 +6,10 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.R;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 import com.yaf.base.entity.CustDeviceChangeLogEntity;
 
+import cn.hutool.core.date.DateUtil;
 
 
 /**
@@ -30,7 +30,7 @@ public class EquipmentChangeListAdapter extends BaseQuickAdapter<CustDeviceChang
 
 
         helper.setText(R.id.tv_position_num, item.getLocationNumber());
-        helper.setText(R.id.tv_setup_time, GetDateUtils.dateToFormatString(item.getInstallDate(), "yyyy-MM-dd"));
+        helper.setText(R.id.tv_setup_time, DateUtil.date(item.getInstallDate()).toDateStr());
         helper.setText(R.id.tv_position, item.getLocation());
         //1:保外 0：保内
         if (item.getWarrantyStatus() == 0) {
