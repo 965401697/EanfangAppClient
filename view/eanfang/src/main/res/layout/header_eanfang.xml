@@ -50,8 +50,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:paddingStart="15dp"
-                android:paddingEnd="15dp"
+                android:paddingStart="@dimen/dimen_16"
+                android:paddingEnd="@dimen/dimen_30"
                 android:text=""
                 android:textColor="#fff"
                 android:textSize="@dimen/textSize_14" />

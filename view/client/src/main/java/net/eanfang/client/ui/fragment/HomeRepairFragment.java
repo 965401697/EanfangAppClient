@@ -38,6 +38,7 @@ import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
+import com.eanfang.util.UuidUtil;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.yaf.base.entity.RepairBugEntity;
 import com.yaf.base.entity.RepairOrderEntity;
@@ -54,7 +55,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import cn.hutool.core.util.StrUtil;
 
 /**
  * @author liangkailun
@@ -97,6 +97,8 @@ public class HomeRepairFragment extends BaseFragment {
     TextView mTvHomeRepairMore;
     @BindView(R.id.tv_commit_text)
     TextView mTvCommitText;
+    @BindView(R.id.view_empty)
+    View mViewEmpty;
     /**
      * 设备code 设备id
      */
@@ -154,6 +156,9 @@ public class HomeRepairFragment extends BaseFragment {
         if (mStatus != 0) {
             imgMomentAccident.setVisibility(View.GONE);
             mTvCommitText.setVisibility(View.GONE);
+            mViewEmpty.setVisibility(View.INVISIBLE);
+        } else {
+            mViewEmpty.setVisibility(View.GONE);
         }
         mEtHomeRepairSys.setCursorVisible(false);
         mEtHomeRepairSys.setFocusable(false);
@@ -245,6 +250,7 @@ public class HomeRepairFragment extends BaseFragment {
         }
 
     }
+
     @OnClick({R.id.et_home_repair_sys, R.id.et_home_repair_brand, R.id.btn_home_repair_commit, R.id.tv_home_repair_more, R.id.et_home_repair_describe, R.id.tv_home_repair_address, R.id.img_moment_accident})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -280,20 +286,23 @@ public class HomeRepairFragment extends BaseFragment {
                 break;
         }
     }
+
     private void accidentImage() {
         SDKManager.getPicture().create(this).takePhoto(iPictureCallBack);
     }
-    IPictureCallBack iPictureCallBack=new IPictureCallBack() {
+
+    IPictureCallBack iPictureCallBack = new IPictureCallBack() {
         @Override
         public void onSuccess(List<LocalMedia> list) {
-                GlideUtil.intoImageView(getActivity(), "file://" + list.get(0).getPath(), imgMomentAccident);
-                String objectKey = StrUtil.uuid() + ".png";
-                //上传图片
-                SDKManager.ossKit(getActivity()).asyncPutImage(objectKey, list.get(0).getPath(), (isSucess) -> {
-                    mRepairBugEntity.setPictures(objectKey);
-                });
+            GlideUtil.intoImageView(getActivity(), "file://" + list.get(0).getPath(), imgMomentAccident);
+            String objectKey = UuidUtil.getUUID() + ".png";
+            //上传图片
+            SDKManager.ossKit(getActivity()).asyncPutImage(objectKey, list.get(0).getPath(), (isSucess) -> {
+                mRepairBugEntity.setPictures(objectKey);
+            });
         }
     };
+
     private void doCommit() {
         if (mStatus == 0) {
             mRepairOrderEntity.setRepairWay(0);
@@ -320,11 +329,11 @@ public class HomeRepairFragment extends BaseFragment {
             mInstallOrderConfirmBean.setDescription(mEtHomeRepairDescribe.getText().toString());
             mInstallOrderConfirmBean.setConnectorPhone(ClientApplication.get().getAccount().getMobile());
             mInstallOrderConfirmBean.setConnector(ClientApplication.get().getAccount().getRealName());
-            if(StringUtils.isEmpty(mInstallOrderConfirmBean.getBusinessOneCode())){
+            if (StringUtils.isEmpty(mInstallOrderConfirmBean.getBusinessOneCode())) {
                 showToast("请选择系统类别");
                 return;
             }
-            if (StringUtils.isEmpty(mInstallOrderConfirmBean.getDetailPlace())){
+            if (StringUtils.isEmpty(mInstallOrderConfirmBean.getDetailPlace())) {
                 showToast("请选择位置");
                 return;
             }
@@ -335,11 +344,11 @@ public class HomeRepairFragment extends BaseFragment {
             mDesignOrderInfoBean.setRemarkInfo(mEtHomeRepairDescribe.getText().toString());
             mDesignOrderInfoBean.setContactPhone(ClientApplication.get().getAccount().getMobile());
             mDesignOrderInfoBean.setContactUser(ClientApplication.get().getAccount().getRealName());
-            if (StringUtils.isEmpty(mDesignOrderInfoBean.getBusinessOneCode())){
+            if (StringUtils.isEmpty(mDesignOrderInfoBean.getBusinessOneCode())) {
                 showToast("请选择系统类别");
                 return;
             }
-            if (StringUtils.isEmpty(mDesignOrderInfoBean.getDetailPlace())){
+            if (StringUtils.isEmpty(mDesignOrderInfoBean.getDetailPlace())) {
                 showToast("请选择位置");
                 return;
             }

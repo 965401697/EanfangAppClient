@@ -274,14 +274,17 @@ public class HomeFragment extends BaseFragment {
                 startActivity(new Intent(getActivity(), ExpertOnlineActivity.class));
             }
         });
+        findViewById(R.id.tv_lead_news).setOnClickListener(view -> {
+            showToast("暂未开通");
+        });
         //实时监控
         findViewById(R.id.tv_monitor).setOnClickListener(v -> JumpItent.jump(getActivity(), RealTimeMonitorActivity.class));
         //脱岗检测
         findViewById(R.id.tv_out_post).setOnClickListener(view -> {
             JSONObject jsonObject1 = CacheKit.get().get("subAccountInfoList", JSONObject.class);
-
             String value = jsonObject1.getString(String.valueOf(ClientApplication.get().getCompanyId()));
             if (!StringUtils.isEmpty(value)) {
+                ClientApplication.get().set("YingShiYunToken", value);
                 startActivity(new Intent(getActivity(), LeavePostHomeActivity.class));
             } else {
                 showToast(R.string.text_leave_post_no_open_toast);

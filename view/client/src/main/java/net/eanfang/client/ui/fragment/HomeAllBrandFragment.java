@@ -12,10 +12,14 @@ import com.eanfang.biz.model.bean.QueryEntry;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseFragment;
+import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.online.DividerItemDecoration;
 import net.eanfang.client.ui.adapter.HomeAllBrandAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -42,12 +46,26 @@ public class HomeAllBrandFragment extends BaseFragment {
 
     @Override
     protected void onLazyLoad() {
-        QueryEntry queryEntry = new QueryEntry();
-        EanfangHttp.post(NewApiService.HOME_ALL_BRAND).upJson(JSON.toJSONString(queryEntry)).execute(new EanfangCallback<AllBrandBean>(getActivity(), true, AllBrandBean.class, bean -> {
-            adapter.getData().clear();
-            adapter.setNewData(bean.getList());
-            adapter.loadMoreComplete();
-        }));
+        if (adapter.getData().size() <= 0) {
+            QueryEntry queryEntry = new QueryEntry();
+            EanfangHttp.post(NewApiService.HOME_ALL_BRAND).upJson(JSON.toJSONString(queryEntry)).execute(new EanfangCallback<AllBrandBean>(getActivity(), true, AllBrandBean.class, bean -> {
+                if (bean == null || bean.getList() == null || bean.getList().size() == 0) {
+                    return;
+                }
+                adapter.getData().clear();
+                ArrayList<AllBrandBean.ListBean> allBrands = new ArrayList<>();
+                for (AllBrandBean.ListBean listBean : bean.getList()) {
+                    if (!StringUtils.isEmpty(listBean.getRemarkInfo())) {
+                        allBrands.add(listBean);
+                        if (allBrands.size() == 8) {
+                            break;
+                        }
+                    }
+                }
+                adapter.setNewData(allBrands);
+                adapter.loadMoreComplete();
+            }));
+        }
     }
 
     @Override

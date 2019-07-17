@@ -25,11 +25,6 @@ public class HomeAllBrandAdapter extends BaseQuickAdapter<AllBrandBean.ListBean,
     }
 
     @Override
-    public int getItemCount() {
-        return 8;
-    }
-
-    @Override
     protected void convert(HomeAllBrandViewHolder helper, AllBrandBean.ListBean item) {
         Glide.with(mContext).load(BuildConfig.OSS_SERVER + item.getRemarkInfo()).into(helper.imgItemHomeAllBrand);
 
