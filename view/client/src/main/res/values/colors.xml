@@ -86,6 +86,6 @@
     <color name="color_leave_post_count_text">#009CFF</color>
     <color name="color_leave_post_home_Y_line">#CBCBCB</color>
     <color name="color_leave_post_ranking_btn_uncheck">#C7C7C7</color>
-    <color name="color_home_off_duty_bg">#FFDFCF</color>
-    <color name="color_home_off_duty_bg_out">#FFF7EE</color>
+    <color name="color_home_off_duty_bg">#FFF7EE</color>
+    <color name="color_home_off_duty_bg_out">#FFDFCF</color>
 </resources>

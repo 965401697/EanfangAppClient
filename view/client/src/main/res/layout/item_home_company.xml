@@ -203,45 +203,46 @@
         android:textColor="@color/color_home_company_address"
         android:textSize="15sp" />
 
-    <TextView
-        android:id="@+id/tv_home_company_consult"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_home_company_address"
-        android:layout_marginLeft="@dimen/dimen_46"
-        android:layout_marginTop="@dimen/dimen_48"
-        android:text="已有12394人咨询"
-        android:textColor="@color/color_home_company_install_bg"
-        android:textSize="12sp" />
-
-    <Button
-        android:id="@+id/btn_home_company_repair"
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_width="@dimen/dimen_186"
-        android:layout_height="@dimen/dimen_64"
-        android:layout_below="@id/tv_home_company_address"
-        android:layout_alignParentRight="true"
         android:layout_marginTop="@dimen/dimen_28"
-        android:layout_marginRight="@dimen/dimen_14"
-        android:background="@drawable/shape_bg_home_repair_commit"
-        android:text="我要修监控"
-        android:textColor="@color/white"
-        android:textSize="12sp" />
-
-    <Button
-        android:id="@+id/btn_home_company_install"
-        style="?android:attr/borderlessButtonStyle"
-        android:layout_width="@dimen/dimen_186"
-        android:layout_height="@dimen/dimen_64"
-        android:layout_below="@id/tv_home_company_address"
-        android:layout_marginTop="@dimen/dimen_28"
-        android:layout_marginRight="@dimen/dimen_18"
         android:layout_marginBottom="@dimen/dimen_24"
-        android:layout_toLeftOf="@id/btn_home_company_repair"
-        android:background="@drawable/shape_bg_home_company_install"
-        android:text="我要装监控"
-        android:textColor="@color/white"
-        android:textSize="12sp" />
+        android:gravity="center_vertical">
 
+        <TextView
+            android:id="@+id/tv_home_company_consult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_46"
+            android:text="已有12394人咨询"
+            android:layout_weight="1"
+            android:textColor="@color/color_home_company_install_bg"
+            android:textSize="12sp" />
+
+
+
+        <Button
+            android:id="@+id/btn_home_company_install"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="@dimen/dimen_186"
+            android:layout_height="@dimen/dimen_64"
+            android:background="@drawable/shape_bg_home_company_install"
+            android:text="我要装监控"
+            android:layout_marginRight="@dimen/dimen_20"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+        <Button
+            android:id="@+id/btn_home_company_repair"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="@dimen/dimen_186"
+            android:layout_height="@dimen/dimen_64"
+            android:background="@drawable/shape_bg_home_repair_commit"
+            android:text="我要修监控"
+            android:layout_marginRight="@dimen/dimen_16"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+    </LinearLayout>
 
 </RelativeLayout>
