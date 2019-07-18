@@ -14,7 +14,6 @@ import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.StringUtils;
-import com.eanfang.util.UuidUtil;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.yaf.base.entity.TechWorkerVerifyEntity;
 
@@ -25,6 +24,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 public class IdentityCardCertification extends BaseWorkeActivity {
     //身份证正面
@@ -97,7 +97,7 @@ public class IdentityCardCertification extends BaseWorkeActivity {
     IPictureCallBack iPictureCallBack = new IPictureCallBack() {
         @Override
         public void onSuccess(List<LocalMedia> list) {
-            String imgKey = UuidUtil.getUUID() + ".png";
+            String imgKey = StrUtil.uuid() + ".png";
             switch (state) {
                 // 身份证正面
                 case ID_CARD_FRONT:

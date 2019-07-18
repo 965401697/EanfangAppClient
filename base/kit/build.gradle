@@ -37,6 +37,7 @@ dependencies {
 
     implementation pkg.disklrucache
     implementation pkg.hutoolCore
+    implementation pkg.hutoolHttp
     implementation pkg.fastjson
     implementation pkg.aspectj
     implementation pkg.alipay

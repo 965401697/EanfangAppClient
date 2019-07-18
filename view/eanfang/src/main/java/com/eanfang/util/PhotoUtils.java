@@ -4,28 +4,37 @@ import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
 
 import com.eanfang.BuildConfig;
+import com.eanfang.base.kit.rx.RxPerm;
+import com.eanfang.base.network.holder.ContextHolder;
+import com.eanfang.config.Config;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.http.HttpUtil;
 
 /**
  * 照片相关的 工具类
  * Created by jornl on 2017/10/11.
  */
-
 public class PhotoUtils {
 
     /**
      * 获取 BGA控件中的 图片信息
      *
-     * @param uploadType
-     * @param mPhotosSnpl
-     * @param uploadMap
+     * @param uploadType  前缀
+     * @param mPhotosSnpl BGASortableNinePhotoLayout
+     * @param uploadMap   uploadMap
      * @param clean       是否清除map 重新计算
-     * @return
+     * @return String
      */
     public static String getPhotoUrl(String uploadType, BGASortableNinePhotoLayout mPhotosSnpl, Map<String, String> uploadMap, boolean clean) {
         if (uploadMap == null) {
@@ -34,12 +43,11 @@ public class PhotoUtils {
         if (clean) {
             uploadMap.clear();
         }
-//        List<String> urls = new ArrayList<>();
         StringBuilder urls = new StringBuilder();
 
         for (int i = 0; i < mPhotosSnpl.getData().size(); i++) {
             String path = mPhotosSnpl.getData().get(i);
-            String object = uploadType + UuidUtil.getUUID() + ".png";
+            String object = uploadType + StrUtil.uuid() + ".png";
             if (path == null || path.length() <= 0) {
                 continue;
             } else if (path.startsWith(BuildConfig.OSS_SERVER)) {
@@ -51,11 +59,19 @@ public class PhotoUtils {
             if (i < mPhotosSnpl.getData().size() - 1) {
                 urls.append(",");
             }
-//            urls.add(BuildConfig.OSS_SERVER + object);
         }
         return urls.toString();
     }
 
+    /**
+     * 获取  List<LocalMedia> 中的 图片信息
+     *
+     * @param uploadType 前缀
+     * @param selectList selectList
+     * @param uploadMap  uploadMap
+     * @param clean      是否清除map 重新计算
+     * @return String
+     */
     public static String getPhotoUrl(String uploadType, List<LocalMedia> selectList, Map<String, String> uploadMap, boolean clean) {
         if (uploadMap == null) {
             uploadMap = new HashMap<>();
@@ -63,12 +79,11 @@ public class PhotoUtils {
         if (clean) {
             uploadMap.clear();
         }
-//        List<String> urls = new ArrayList<>();
         StringBuilder urls = new StringBuilder();
 
-        for (int i = 0; i <selectList.size(); i++) {
-            String path =selectList.get(i).getPath();
-            String object = uploadType + UuidUtil.getUUID() + ".png";
+        for (int i = 0; i < selectList.size(); i++) {
+            String path = selectList.get(i).getPath();
+            String object = uploadType + StrUtil.uuid() + ".png";
             if (path == null || path.length() <= 0) {
                 continue;
             } else if (path.startsWith(BuildConfig.OSS_SERVER)) {
@@ -77,31 +92,38 @@ public class PhotoUtils {
                 uploadMap.put(object, path);
                 urls.append(object);
             }
-            if (i < selectList.size()- 1) {
+            if (i < selectList.size() - 1) {
                 urls.append(",");
             }
-//            urls.add(BuildConfig.OSS_SERVER + object);
         }
         return urls.toString();
     }
 
     /**
-     * 获取视频的缩略图
-     * 先通过ThumbnailUtils来创建一个视频的缩略图，然后再利用ThumbnailUtils来生成指定大小的缩略图。
-     * 如果想要的缩略图的宽和高都小于MICRO_KIND，则类型要使用MICRO_KIND作为kind的值，这样会节省内存。
+     * 获取视频的缩略图 Bitmap
      *
      * @param videoPath 视频的路径
-     * @param width     指定输出视频缩略图的宽度
-     * @param height    指定输出视频缩略图的高度度
-     * @param kind      参照MediaStore.Images(Video).Thumbnails类中的常量MINI_KIND和MICRO_KIND。
-     *                  其中，MINI_KIND: 512 x 384，MICRO_KIND: 96 x 96
      * @return 指定大小的视频缩略图
      */
-    public static Bitmap getVideoThumbnail(String videoPath, int width, int height, int kind) {
-        Bitmap bitmap = null;
+    public static Bitmap getVideoBitmap(String videoPath) {
+        Bitmap bitmap;
         MediaMetadataRetriever media = new MediaMetadataRetriever();
         media.setDataSource(videoPath);// videoPath 本地视频的路径
+
         bitmap = media.getFrameAtTime(1, MediaMetadataRetriever.OPTION_CLOSEST_SYNC);
+
+        File file = new File(Config.Cache.VIDEO_IMG_DIR + StrUtil.uuid() + ".jpg");
+        FileOutputStream out;
+        try {
+            out = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            out.flush();
+            out.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         // 获取视频的缩略图
 //        bitmap = ThumbnailUtils.createVideoThumbnail(videoPath, kind); //調用ThumbnailUtils類的靜態方法createVideoThumbnail獲取視頻的截圖；
 //        if(bitmap!= null){
@@ -111,4 +133,49 @@ public class PhotoUtils {
         return bitmap;
     }
 
+    /**
+     * 直接获取视频的缩略图 Bitmap
+     *
+     * @param videoPath videoPath
+     * @return File
+     */
+    public static File getVideoFile(String videoPath) {
+        Bitmap bitmap = getVideoBitmap(videoPath);
+        return bitmapToFile(bitmap);
+    }
+
+    /**
+     * Bitmap 转 file
+     *
+     * @param bitmap bitmap
+     * @return File
+     */
+    public static File bitmapToFile(Bitmap bitmap) {
+        File file = new File(Config.Cache.VIDEO_IMG_DIR + StrUtil.uuid() + ".jpg");
+        FileOutputStream out;
+        try {
+            out = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+            out.flush();
+            out.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return file;
+    }
+
+    /**
+     * 从oss服务器上下载图片到本地
+     *
+     * @param ossKey ossKey
+     * @return File
+     */
+    public static File downloadImg(String ossKey) {
+        String url = BuildConfig.OSS_SERVER + ossKey;
+        File file = new File(Config.Cache.IMG_STORAGE_DIR + StrUtil.uuid() + ".jpg");
+        HttpUtil.downloadFile(url, file);
+        return file;
+    }
 }

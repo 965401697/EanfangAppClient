@@ -6,13 +6,14 @@ import com.annimon.stream.Optional;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.base.kit.V;
 import com.yaf.base.entity.RepairFailureEntity;
 
 import net.eanfang.worker.R;
+
+import cn.hutool.core.date.DateUtil;
 
 
 /**
@@ -46,7 +47,7 @@ public class FaultRecordAdapter extends BaseQuickAdapter<RepairFailureEntity, Ba
         }
         helper.setText(R.id.tv_position_num, item.getLocationNumber());
         helper.setText(R.id.tv_position, item.getBugPosition());
-        helper.setText(R.id.tv_repairs_time, GetDateUtils.dateToDateTimeString(item.getCreateTime()));
+        helper.setText(R.id.tv_repairs_time, DateUtil.date(item.getCreateTime()).toString());
 
 
         if (item.getAssigneeOrgEntity() != null && item.getAssigneeOrgEntity().getBelongCompany() != null) {

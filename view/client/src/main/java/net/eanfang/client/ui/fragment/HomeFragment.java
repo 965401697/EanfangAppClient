@@ -23,7 +23,6 @@ import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseFragment;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
 import com.eanfang.witget.BannerView;
@@ -52,6 +51,8 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import cn.hutool.core.date.DateUtil;
 
 import static com.eanfang.base.kit.V.v;
 
@@ -151,7 +152,7 @@ public class HomeFragment extends BaseFragment {
                         findViewById(R.id.img_cancel).setOnClickListener(view -> {
                             Date date1 = new Date();
                             findViewById(R.id.ll_off_duty).setVisibility(View.GONE);
-                            CacheKit.get().put("offDuty", GetDateUtils.dateToDateTimeString(date1));
+                            CacheKit.get().put("offDuty", DateUtil.date(date1).toString());
                         });
                     } else {
                         findViewById(R.id.ll_off_duty).setVisibility(View.GONE);
@@ -273,14 +274,17 @@ public class HomeFragment extends BaseFragment {
                 startActivity(new Intent(getActivity(), ExpertOnlineActivity.class));
             }
         });
+        findViewById(R.id.tv_lead_news).setOnClickListener(view -> {
+            showToast("暂未开通");
+        });
         //实时监控
         findViewById(R.id.tv_monitor).setOnClickListener(v -> JumpItent.jump(getActivity(), RealTimeMonitorActivity.class));
         //脱岗检测
         findViewById(R.id.tv_out_post).setOnClickListener(view -> {
             JSONObject jsonObject1 = CacheKit.get().get("subAccountInfoList", JSONObject.class);
-
             String value = jsonObject1.getString(String.valueOf(ClientApplication.get().getCompanyId()));
             if (!StringUtils.isEmpty(value)) {
+                ClientApplication.get().set("YingShiYunToken", value);
                 startActivity(new Intent(getActivity(), LeavePostHomeActivity.class));
             } else {
                 showToast(R.string.text_leave_post_no_open_toast);
@@ -404,6 +408,13 @@ public class HomeFragment extends BaseFragment {
             mDesign = -1;
         }
         badgeView(R.id.tv_design, mDesign);
+
+        if (bean.getCommentNoRead() > 0 || bean.getNoReadCount() > 0) {
+            badgeView(R.id.tv_circle, bean.getCommentNoRead() + bean.getNoReadCount());
+        } else {
+            badgeView(R.id.tv_circle, -1);
+        }
+
         if (bean.getAlert() > 0) {
             badgeView(R.id.tv_out_post, bean.getAlert());
         } else {

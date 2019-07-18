@@ -18,7 +18,6 @@ import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseFragment;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.base.kit.V;
 import com.yaf.base.entity.ShopMaintenanceOrderEntity;
@@ -30,6 +29,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.hutool.core.date.DateUtil;
 
 /**
  * Created by O u r on 2018/7/16.
@@ -175,8 +175,8 @@ public class MaintenanceOrderDetailFragment extends BaseFragment {
             tvPeriodType.setText("维保类型：年检");
         }
 
-        tvPlanStart.setText("计划开始时间：" + GetDateUtils.dateToDateTimeString(orderEntity.getBeginTime()));
-        tvPlanEnd.setText("计划结束时间：" + GetDateUtils.dateToDateTimeString(orderEntity.getEndTime()));
+        tvPlanStart.setText("计划开始时间：" + DateUtil.date(orderEntity.getBeginTime()).toString());
+        tvPlanEnd.setText("计划结束时间：" + DateUtil.date(orderEntity.getEndTime()).toString());
 
 
         tvStandard.setText("维保标准：\r\n\t" + orderEntity.getStandard());

@@ -18,7 +18,6 @@ import com.eanfang.apiservice.RepairApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.StringUtils;
 import com.yaf.base.entity.BughandleConfirmEntity;
@@ -38,6 +37,7 @@ import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.date.DateUtil;
 
 
 /**
@@ -253,7 +253,7 @@ public class PutUpOrderActivity extends BaseWorkerActivity {
         tvNoHistory.setVisibility(View.GONE);
         GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + transferLogEntity.getOriginalUserEntity().getAccountEntity().getAvatar()),ivHeader);
         tvOrderNum.setText(transferLogEntity.getOrderNum() + "");
-        tvOrderTime.setText(GetDateUtils.dateToDateTimeString(transferLogEntity.getCreateTime()));
+        tvOrderTime.setText(DateUtil.date(transferLogEntity.getCreateTime()).toString());
         tvOrderReason.setText(GetConstDataUtils.getTransferCauseList().get(transferLogEntity.getCause()));
     }
 

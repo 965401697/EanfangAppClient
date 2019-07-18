@@ -2,7 +2,9 @@ package net.eanfang.worker.ui.activity.my.specialist;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.core.content.ContextCompat;
+
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -29,6 +31,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 已废弃
+ *
+ * @author jornl
+ * @date 2019-07-17 14:41:56
+ */
+@Deprecated
 public class SpecialistAuthListActivity extends BaseWorkerActivity {
 
     @BindView(R.id.tv_base_info)

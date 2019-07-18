@@ -345,7 +345,7 @@ public class AddTroubleActivity extends BaseWorkerActivity {
             mVieoPath = takeVdideoMode.getMImagePath();
             mUploadKey = takeVdideoMode.getMKey();
             if (!StringUtils.isEmpty(mVieoPath)) {
-                ivTakevideo.setImageBitmap(PhotoUtils.getVideoThumbnail(mVieoPath, 100, 100, MINI_KIND));
+                ivTakevideo.setImageBitmap(PhotoUtils.getVideoBitmap(mVieoPath));
             }
             tvAddViedeo.setText("重新拍摄");
         }

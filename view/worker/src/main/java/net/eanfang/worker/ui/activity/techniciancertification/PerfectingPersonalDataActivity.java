@@ -2,12 +2,7 @@ package net.eanfang.worker.ui.activity.techniciancertification;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.lifecycle.ViewModel;
-
 import android.util.Log;
 import android.view.View;
 import android.widget.CalendarView;
@@ -17,26 +12,26 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.lifecycle.ViewModel;
+
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.IPictureCallBack;
+import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.base.widget.customview.CircleImageView;
+import com.eanfang.biz.model.SelectAddressItem;
+import com.eanfang.biz.model.bean.LoginBean;
+import com.eanfang.biz.model.entity.AccountEntity;
+import com.eanfang.biz.model.entity.UserEntity;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.SelectAddressItem;
-import com.eanfang.biz.model.bean.LoginBean;
-
 import com.eanfang.ui.activity.SelectAddressActivity;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.StringUtils;
-import com.eanfang.util.UuidUtil;
-import com.eanfang.biz.model.entity.AccountEntity;
-import com.eanfang.biz.model.entity.UserEntity;
 import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.worker.R;
@@ -44,16 +39,25 @@ import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author WQ
  */
+
+/**
+ * 废弃
+ *
+ * @author jornl
+ * @date 2019年7月18日
+ */
+@Deprecated
 public class PerfectingPersonalDataActivity extends BaseWorkeActivity {
     @BindView(R.id.nc_et)
     EditText ncEt;
@@ -121,13 +125,14 @@ public class PerfectingPersonalDataActivity extends BaseWorkeActivity {
     IPictureCallBack iPictureCallBack = new IPictureCallBack() {
         @Override
         public void onSuccess(List<LocalMedia> list) {
-            String imgKey = "account/" + UuidUtil.getUUID() + "tx.png";
+            String imgKey = "account/" + StrUtil.uuid() + "tx.png";
             accountEntity.setAvatar(imgKey);
             GlideUtil.intoImageView(PerfectingPersonalDataActivity.this, "file://" + list.get(0).getPath(), ivHeader);
             SDKManager.ossKit(PerfectingPersonalDataActivity.this).asyncPutImage(imgKey, list.get(0).getPath(), (isSuccess) -> {
             });
         }
     };
+
     @Override
     public void initView() {
         setLeftBack(true);
@@ -177,7 +182,7 @@ public class PerfectingPersonalDataActivity extends BaseWorkeActivity {
         }
         if (accountEntity.getBirthday() != null) {
             date = accountEntity.getBirthday();
-            srEt.setText(new SimpleDateFormat("yyyy年MM月dd日").format(date));
+            srEt.setText(DateUtil.date(date).toString("yyyy年MM月dd日 HH:mm:ss"));
         }
         etCardId.setText(WorkerApplication.get().getLoginBean().getAccount().getIdCard());
         //0女1男
@@ -213,8 +218,8 @@ public class PerfectingPersonalDataActivity extends BaseWorkeActivity {
         View view = getLayoutInflater().inflate(R.layout.activity_dialog_date, null);
         CalendarView datePicker = view.findViewById(R.id.calendarView);
         datePicker.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
-            date = new GregorianCalendar(year, month, dayOfMonth).getTime();
-            srEt.setText(GetDateUtils.dateToDateString(date));
+            date = DateUtil.parse(year + "-" + month + "-" + dayOfMonth);
+            srEt.setText(DateUtil.date(date).toDateStr());
         });
         new AlertDialog.Builder(this).setView(view).setCancelable(false).setPositiveButton("确定", (dialogInterface, i) -> {
             dialogInterface.dismiss();

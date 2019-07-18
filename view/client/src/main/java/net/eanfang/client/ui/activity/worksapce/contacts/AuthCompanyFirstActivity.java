@@ -27,7 +27,6 @@ import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
-import com.eanfang.util.UuidUtil;
 import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.client.R;
@@ -38,6 +37,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * Created by guanluocang
@@ -171,7 +171,7 @@ public class AuthCompanyFirstActivity extends BaseClienActivity {
     IPictureCallBack iPictureCallBack = new IPictureCallBack() {
         @Override
         public void onSuccess(List<LocalMedia> list) {
-            String imgKey = UuidUtil.getUUID() + ".png";
+            String imgKey = StrUtil.uuid() + ".png";
             infoBean.setLogoPic(imgKey);
             GlideUtil.intoImageView(AuthCompanyFirstActivity.this, "file://" + list.get(0).getPath(), ivUploadlogo);
             SDKManager.ossKit(AuthCompanyFirstActivity.this).asyncPutImage(imgKey, list.get(0).getPath(), (isSuccess) -> {

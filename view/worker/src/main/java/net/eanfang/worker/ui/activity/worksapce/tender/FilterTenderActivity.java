@@ -17,7 +17,6 @@ import com.eanfang.base.BaseActivity;
 import com.eanfang.biz.model.bean.QueryEntry;
 import com.eanfang.biz.model.entity.BaseDataEntity;
 import com.eanfang.config.Config;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
@@ -30,9 +29,10 @@ import net.eanfang.worker.R;
 import net.eanfang.worker.databinding.ActivityFilterTenderBinding;
 import net.eanfang.worker.ui.activity.SelectAreaActivity;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
+
+import cn.hutool.core.date.DateUtil;
 
 /**
  * @author guanluocang
@@ -184,8 +184,8 @@ public class FilterTenderActivity extends BaseActivity {
                 break;
             case 2:
                 if (!StringUtils.isEmpty(mFilterTenderBinding.tvSelectTime.getText().toString())) {
-                    queryEntry.getGtEquals().put("createTime", (new SimpleDateFormat("yyyy-MM-dd").format(GetDateUtils.getTimeStamp(mFilterTenderBinding.tvSelectTime.getText().toString().trim().split("～")[0], "yyyy-MM-dd"))));
-                    queryEntry.getLtEquals().put("createTime", (new SimpleDateFormat("yyyy-MM-dd").format(GetDateUtils.getTimeStamp(mFilterTenderBinding.tvSelectTime.getText().toString().trim().split("～")[1], "yyyy-MM-dd"))));
+                    queryEntry.getGtEquals().put("createTime", DateUtil.parse(mFilterTenderBinding.tvSelectTime.getText().toString().trim().split("～")[0], "yyyy-M-dd").toDateStr());
+                    queryEntry.getLtEquals().put("createTime", DateUtil.parse(mFilterTenderBinding.tvSelectTime.getText().toString().trim().split("～")[1], "yyyy-M-dd").toDateStr());
                 }
                 if (checkList != null && checkList.size() > 0) {
                     queryEntry.getIsIn().put("systemType", checkList);
@@ -196,8 +196,8 @@ public class FilterTenderActivity extends BaseActivity {
                 break;
             case 3:
                 if (!StringUtils.isEmpty(mFilterTenderBinding.tvSelectTime.getText().toString())) {
-                    queryEntry.getGtEquals().put("startDate", (new SimpleDateFormat("yyyy-MM-dd").format(GetDateUtils.getTimeStamp(mFilterTenderBinding.tvSelectTime.getText().toString().trim().split("～")[0], "yyyy-MM-dd"))));
-                    queryEntry.getLtEquals().put("endDate", (new SimpleDateFormat("yyyy-MM-dd").format(GetDateUtils.getTimeStamp(mFilterTenderBinding.tvSelectTime.getText().toString().trim().split("～")[1], "yyyy-MM-dd"))));
+                    queryEntry.getGtEquals().put("startDate", DateUtil.parse(mFilterTenderBinding.tvSelectTime.getText().toString().trim().split("～")[0], "yyyy-M-dd").toDateStr());
+                    queryEntry.getLtEquals().put("endDate", DateUtil.parse(mFilterTenderBinding.tvSelectTime.getText().toString().trim().split("～")[1], "yyyy-M-dd").toDateStr());
                 }
                 if (checkList != null && checkList.size() > 0) {
                     queryEntry.getIsIn().put("systemType", checkList);
@@ -242,7 +242,7 @@ public class FilterTenderActivity extends BaseActivity {
                 String textString = String.format("%d-%d-%d～%d-%d-%d", startYear, startMonthOfYear + 1, startDayOfMonth, endYear, endMonthOfYear + 1, endDayOfMonth);
                 String startTime = String.format("%d-%d-%d", startYear, startMonthOfYear + 1, startDayOfMonth);
                 String endTime = String.format("%d-%d-%d", endYear, endMonthOfYear + 1, endDayOfMonth);
-                if (GetDateUtils.getTimeStamp(startTime, "yyyy-MM-dd") > GetDateUtils.getTimeStamp(endTime, "yyyy-MM-dd")) {
+                if (DateUtil.parse(startTime, "yyyy-M-dd").getTime() > DateUtil.parse(endTime, "yyyy-M-dd").getTime()) {
                     ToastUtil.get().showToast(FilterTenderActivity.this, "开始时间不能大于结束时间");
                     return;
                 }

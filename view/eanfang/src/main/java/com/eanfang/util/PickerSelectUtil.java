@@ -15,10 +15,13 @@ import com.picker.wheelpicker.widget.WheelView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import cn.hutool.core.date.DateUtil;
 
 /**
  * Created by Mr.hou
@@ -193,7 +196,7 @@ public class PickerSelectUtil {
         Calendar end = Calendar.getInstance();
         end.set(2099, 11, 31, 23, 59, 59);
         onYearMonthDayTimePicker(context, title, start, end, (year1, month1, day1, hour1, minute1, startSecond) -> {
-            String time = GetDateUtils.dateToDateTimeString(GetDateUtils.getDate(year1, month1, day1, hour1, minute1, startSecond));
+            String time = DateUtil.parse(year1 + "-" + month1 + "-" + day1 + " " + hour1 + "-" + minute1 + "-" + startSecond).toString();
             textView.setText(time);
         });
     }
@@ -204,7 +207,7 @@ public class PickerSelectUtil {
         Calendar end = Calendar.getInstance();
         end.set(2099, 11, 31, 23, 59, 59);
         onYearMonthDayTimePicker(context, title, start, end, (year1, month1, day1, hour1, minute1, startSecond) -> {
-            String time = GetDateUtils.dateToDateTimeString(GetDateUtils.getDate(year1, month1, day1, hour1, minute1, startSecond));
+            String time = DateUtil.parse(year1 + "-" + month1 + "-" + day1 + " " + hour1 + "-" + minute1 + "-" + startSecond).toString();
             textView.setText(time);
         });
     }
@@ -236,7 +239,7 @@ public class PickerSelectUtil {
         Calendar end = Calendar.getInstance();
         end.set(2099, 11, 31);
         onYearMonthDayPicker(context, title, start, end, (year1, month1, day1) -> {
-            String time = GetDateUtils.dateToDateString(GetDateUtils.getDate(year1, month1, day1, "0", "0", "0"));
+            String time = DateUtil.parseTime(year1 + "-" + month1 + "-" + day1).toDateStr();
             textView.setText(time);
         });
     }
@@ -247,7 +250,7 @@ public class PickerSelectUtil {
         Calendar end = Calendar.getInstance();
         end.set(2099, 11, 31);
         onYearMonthDayPicker(context, title, start, end, (year1, month1, day1) -> {
-            String time = GetDateUtils.dateToDateString(GetDateUtils.getDate(year1, month1, day1, "0", "0", "0"));
+            String time = DateUtil.parseTime(year1 + "-" + month1 + "-" + day1).toDateStr();
             textView.setText(time);
         });
     }

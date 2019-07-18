@@ -3,6 +3,7 @@ package com.eanfang.delegate;
 import android.os.Environment;
 import android.view.View;
 
+import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.ui.base.BaseActivityWithTakePhoto;
@@ -54,11 +55,10 @@ public class BGASortableDelegate implements
     }
 
 
-
     @Override
     public final void onClickAddNinePhotoItem(BGASortableNinePhotoLayout sortableNinePhotoLayout, View view, int position, ArrayList<String> models) {
         // 拍照后照片的存放目录，改成你自己拍照后要存放照片的目录。如果不传递该参数的话就没有拍照功能
-        File takePhotoDir = new File(Environment.getExternalStorageDirectory(), "EanfangPhotoData");
+        File takePhotoDir = new File(Config.Cache.IMG_STORAGE_DIR);
         if (activity != null) {
             PermissionUtils.get(activity).getCameraPermission(() -> {
                 activity.startActivityForResult(BGAPhotoPickerActivity.newIntent(activity, takePhotoDir, sortableNinePhotoLayout.getMaxItemCount() - sortableNinePhotoLayout.getItemCount(), null, false), codes.get(0));

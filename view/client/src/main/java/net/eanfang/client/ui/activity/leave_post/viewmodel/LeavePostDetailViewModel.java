@@ -7,11 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.biz.rds.base.BaseViewModel;
-import com.eanfang.util.GetDateUtils;
 
-import net.eanfang.client.databinding.ActivityAboutUsBinding;
-import net.eanfang.client.databinding.ActivityLeavePostAudioPlayBinding;
-import net.eanfang.client.ui.activity.leave_post.LeavePostAudioPlay;
 import net.eanfang.client.ui.activity.leave_post.LeavePostCheckDetailActivity;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostAlertInfoDetailBean;
 import net.eanfang.client.ui.activity.leave_post.ds.LeavePostDs;
@@ -21,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import cn.hutool.core.date.DateUtil;
 import lombok.Getter;
 
 /**
@@ -60,17 +57,17 @@ public class LeavePostDetailViewModel extends BaseViewModel {
                 leavePostAlertInfoData.setValue(leavePostAlertInfoDetailBean);
                 mKeyValueEventList.add(eventKeys[0] + leavePostAlertInfoDetailBean.getAlertName());
                 if (leavePostAlertInfoDetailBean.getStationsEntity() != null) {
-                mKeyValueEventList.add(eventKeys[1] + leavePostAlertInfoDetailBean.getStationsEntity().getStationName());
-                mKeyValueEventList.add(eventKeys[2] + leavePostAlertInfoDetailBean.getStationsEntity().getStationPlaceName());
-                mKeyValueEventList.add(eventKeys[3] + leavePostAlertInfoDetailBean.getStationsEntity().getStationCode());
+                    mKeyValueEventList.add(eventKeys[1] + leavePostAlertInfoDetailBean.getStationsEntity().getStationName());
+                    mKeyValueEventList.add(eventKeys[2] + leavePostAlertInfoDetailBean.getStationsEntity().getStationPlaceName());
+                    mKeyValueEventList.add(eventKeys[3] + leavePostAlertInfoDetailBean.getStationsEntity().getStationCode());
                 }
                 if (leavePostAlertInfoDetailBean.getDevicesEntity() != null) {
-                mKeyValueLeaveList.add(leaveKeys[0]+leavePostAlertInfoDetailBean.getDevicesEntity().getDeviceName());
+                    mKeyValueLeaveList.add(leaveKeys[0] + leavePostAlertInfoDetailBean.getDevicesEntity().getDeviceName());
                 }
-                mKeyValueLeaveList.add(leaveKeys[1] + GetDateUtils.dateToDateString(GetDateUtils.getDate(leavePostAlertInfoDetailBean.getAlertTime())));
-                mKeyValueLeaveList.add(leaveKeys[2] +leavePostAlertInfoDetailBean.getLeaveTime());
-                mKeyValueLeaveList.add(leaveKeys[3] +leavePostAlertInfoDetailBean.getBackTime());
-                mKeyValueLeaveList.add(leaveKeys[4] +leavePostAlertInfoDetailBean.getAbsencePeriod() + "min");
+                mKeyValueLeaveList.add(leaveKeys[1] + DateUtil.parse(leavePostAlertInfoDetailBean.getAlertTime()).toDateStr());
+                mKeyValueLeaveList.add(leaveKeys[2] + leavePostAlertInfoDetailBean.getLeaveTime());
+                mKeyValueLeaveList.add(leaveKeys[3] + leavePostAlertInfoDetailBean.getBackTime());
+                mKeyValueLeaveList.add(leaveKeys[4] + leavePostAlertInfoDetailBean.getAbsencePeriod() + "min");
             }
             leavePostAlertEventList.setValue(mKeyValueEventList);
             leavePostAlertLeaveList.setValue(mKeyValueLeaveList);

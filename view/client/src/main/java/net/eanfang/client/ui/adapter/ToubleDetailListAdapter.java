@@ -3,12 +3,13 @@ package net.eanfang.client.ui.adapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.GetDateUtils;
 import com.yaf.base.entity.BughandleConfirmEntity;
 
 import net.eanfang.client.R;
 
 import java.util.List;
+
+import cn.hutool.core.date.DateUtil;
 
 
 /**
@@ -43,10 +44,10 @@ public class ToubleDetailListAdapter extends BaseQuickAdapter<BughandleConfirmEn
         }
 
         if (item.getCreateTime() != null) {
-            helper.setText(R.id.tv_create_time, "创建时间：" + GetDateUtils.dateToDateString(item.getCreateTime()));
+            helper.setText(R.id.tv_create_time, "创建时间：" + DateUtil.date(item.getCreateTime()).toDateStr());
         }
         if (item.getOverTime() != null) {
-            helper.setText(R.id.tv_end_time, "完工时间：" + GetDateUtils.dateToDateString(item.getOverTime()));
+            helper.setText(R.id.tv_end_time, "完工时间：" + DateUtil.date(item.getOverTime()).toDateStr());
         }
 
         if (item.getLeftoverProblem() != null) {

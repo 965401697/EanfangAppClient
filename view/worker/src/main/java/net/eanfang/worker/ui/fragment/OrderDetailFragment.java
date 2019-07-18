@@ -22,7 +22,6 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.NumberUtil;
@@ -38,6 +37,8 @@ import net.eanfang.worker.util.ImagePerviewUtil;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import cn.hutool.core.date.DateUtil;
 
 /**
  * Created by MrHou
@@ -214,7 +215,7 @@ public class OrderDetailFragment extends BaseFragment {
                         hashMap.put("picUrl", bean.getBugEntityList().get(0).getPictures().split(",")[0]);
                     }
                     hashMap.put("orderNum", bean.getOrderNum());
-                    hashMap.put("creatTime", GetDateUtils.dateToDateTimeString(bean.getCreateTime()));
+                    hashMap.put("creatTime", DateUtil.date(bean.getCreateTime()).toString());
                     hashMap.put("workerName", V.v(() -> bean.getAssigneeUser().getAccountEntity().getRealName()));
                     hashMap.put("status", String.valueOf(bean.getStatus()));
                     hashMap.put("shareType", "1");
@@ -239,7 +240,7 @@ public class OrderDetailFragment extends BaseFragment {
                     // 订单状态
                     mOrderStatus = bean.getStatus();
                     tv_number.setText(bean.getOrderNum());
-                    tv_feature_time.setText(GetDateUtils.dateToDateTimeString(bean.getCreateTime()));
+                    tv_feature_time.setText(DateUtil.date(bean.getCreateTime()).toString());
 //                    tv_money.setText(bean.getTotalfee() + "");
 //                    tv_alipay.setText(bean.getPaytype());
                     //      获取：是否电话解决（0：未解决，1：已解决）
@@ -282,7 +283,7 @@ public class OrderDetailFragment extends BaseFragment {
                         }
                         // 支付时间
                         if (bean.getPayLogEntity().getPayTime() != null) {
-                            mTvPayTime.setText(GetDateUtils.dateToDateTimeString(bean.getPayLogEntity().getPayTime()));
+                            mTvPayTime.setText(DateUtil.date(bean.getPayLogEntity().getPayTime()).toString());
                         }
                     }
 //                    else {

@@ -5,7 +5,6 @@ import android.net.Uri;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.base.kit.V;
 import com.yaf.base.entity.RepairOrderEntity;
@@ -13,6 +12,8 @@ import com.yaf.base.entity.RepairOrderEntity;
 import net.eanfang.worker.R;
 
 import java.util.List;
+
+import cn.hutool.core.date.DateUtil;
 
 
 /**
@@ -38,19 +39,19 @@ public class OrderAdapter extends BaseQuickAdapter<RepairOrderEntity, BaseViewHo
             status = "待确认";
         }
 
-        helper.setText(R.id.tv_company, V.v(()->item.getOwnerOrg().getBelongCompany().getOrgName())
-                + "  (" + V.v(()->item.getOwnerUser().getAccountEntity().getRealName()) + ")");
+        helper.setText(R.id.tv_company, V.v(() -> item.getOwnerOrg().getBelongCompany().getOrgName())
+                + "  (" + V.v(() -> item.getOwnerUser().getAccountEntity().getRealName()) + ")");
         helper.setText(R.id.tv_state, status);
         helper.setText(R.id.tv_ordernum, item.getOrderNum());
         if (item.getBookTime() != null) {
-            helper.setText(R.id.tv_pretime, GetDateUtils.dateToDateString(item.getBookTime()));
+            helper.setText(R.id.tv_pretime, DateUtil.date(item.getBookTime()).toDateStr());
         }
-        helper.setText(R.id.tv_bugonename, GetDateUtils.dateToDateString(item.getCreateTime()));
+        helper.setText(R.id.tv_bugonename, DateUtil.date(item.getCreateTime()).toDateStr());
         //将业务类型的图片显示到列表
-        if (item.getFailureEntity()!=null) {
-            String[] urls = V.v(()->item.getFailureEntity().getPictures().split(","));
+        if (item.getFailureEntity() != null) {
+            String[] urls = V.v(() -> item.getFailureEntity().getPictures().split(","));
             //将业务类型的图片显示到列表
-            GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + urls[0]),helper.getView(R.id.sdv_pic));
+            GlideUtil.intoImageView(mContext, Uri.parse(BuildConfig.OSS_SERVER + urls[0]), helper.getView(R.id.sdv_pic));
         }
 
 

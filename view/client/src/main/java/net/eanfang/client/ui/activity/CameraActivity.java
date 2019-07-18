@@ -40,7 +40,6 @@ import com.eanfang.biz.model.SelectAddressItem;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.ConnectivityChangeUtil;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.StringUtils;
 import com.luck.picture.lib.entity.LocalMedia;
 
@@ -54,6 +53,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.date.DateUtil;
 
 
 /**
@@ -322,7 +322,7 @@ public class CameraActivity extends BaseClienActivity implements AMapLocationLis
         @Override
         public void onSuccess(List<LocalMedia> list) {
             //往图片绘制文字
-            time = GetDateUtils.dateToDateTimeString(GetDateUtils.getDateNow());
+            time = DateUtil.date().toString();
             String path = list.get(0).getPath();
             Bitmap waterBitmap = BitmapUtil.getBitmap(path);
             Bitmap watermarkBitmap = ImageUtil.createWaterMaskCenter(waterBitmap, waterBitmap);

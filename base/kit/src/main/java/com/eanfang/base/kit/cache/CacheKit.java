@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Objects;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.io.FileUtil;
+import okhttp3.Cache;
 
 
 /**
@@ -242,7 +244,8 @@ public class CacheKit extends LruCache<String, Object> {
         DateUtil.currentSeconds();
         String timeKey = key + "_seconds";
         this.clazz = Long.TYPE;
-        Long dueTime = (Long) super.get(timeKey);
+        Object obj = super.get(timeKey);
+        Long dueTime = obj != null ? Long.parseLong(obj + "") : null;
         //超时 清除
         if (dueTime != null && dueTime < DateUtil.currentSeconds()) {
             remove(key);
@@ -257,14 +260,19 @@ public class CacheKit extends LruCache<String, Object> {
      * @return File
      */
     public static File getDiskCacheDir(Context context) {
-        String cachePath;
-        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
-                || !Environment.isExternalStorageRemovable()) {
-            cachePath = Objects.requireNonNull(context.getExternalCacheDir()).getPath();
-        } else {
-            cachePath = context.getCacheDir().getPath();
+        String path = context.getExternalFilesDir(Environment.getDataDirectory().getAbsolutePath()).getAbsolutePath();
+        if (!FileUtil.exist(path)) {
+            FileUtil.mkdir(path);
         }
-        return new File(cachePath + File.separator);
+//        String cachePath;
+//        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
+//                || !Environment.isExternalStorageRemovable()) {
+//            cachePath = Objects.requireNonNull(context.getExternalCacheDir()).getPath();
+//        } else {
+//            cachePath = context.getCacheDir().getPath();
+//        }
+//        return new File(cachePath + File.separator);
+        return new File(path + File.separator);
     }
 
 }

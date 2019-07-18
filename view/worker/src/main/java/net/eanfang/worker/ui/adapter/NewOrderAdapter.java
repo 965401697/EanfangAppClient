@@ -7,10 +7,16 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.model.NewOrderBean;
-import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.DateKit;
 import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
+
+import java.util.Calendar;
+
+import cn.hutool.core.date.DateField;
+import cn.hutool.core.date.DateUnit;
+import cn.hutool.core.date.DateUtil;
 
 /**
  * @author liangkailun
@@ -58,20 +64,29 @@ public class NewOrderAdapter extends BaseQuickAdapter<NewOrderBean.ListBean, New
             helper.getTvNewOrdertimeRemaining().setVisibility(View.GONE);
         }
 
+
         if (!StringUtils.isEmpty(finishTime)) {
-            //剩余时间
-            long currentTime = System.currentTimeMillis() / 1000;
-            long remainTime = GetDateUtils.convertDateToSecond(finishTime) - currentTime;
-            if (remainTime > 0) {
-                int oneDay = 24 * 60 * 60;
-                int day = (int) (remainTime / oneDay);
-                int oneHour = 60 * 60;
-                int hour = (int) ((remainTime % oneDay) / oneHour);
-                int oneMin = 60;
-                int min = (int) (((remainTime % oneDay) % oneHour)) / oneMin;
+            if (DateUtil.parse(finishTime).getTime() - DateUtil.date().getTime() > 0) {
+                int day = (int) DateUtil.date().between(DateUtil.parse(item.getFinishTime()), DateUnit.DAY);
+                int hour = (int) DateUtil.date().between(DateKit.get(item.getFinishTime()).offset(DateField.DAY_OF_YEAR, -day).date, DateUnit.HOUR);
+                int min = (int) DateUtil.date().between(DateKit.get(item.getFinishTime()).offset(DateField.DAY_OF_YEAR, -day).offset(DateField.HOUR, -hour).date, DateUnit.MINUTE);
+
                 helper.getTvNewOrdertimeRemaining().setVisibility(View.VISIBLE);
                 helper.getTvNewOrdertimeRemaining().setText(mContext.getString(R.string.text_new_order_time_remaining, day, hour, min));
             }
+//            //剩余时间
+//            long currentTime = System.currentTimeMillis() / 1000;
+//            long remainTime = DateUtil.parse(finishTime).getTime() - currentTime;
+//            if (remainTime > 0) {
+//                int oneDay = 24 * 60 * 60;
+//                int day = (int) (remainTime / oneDay);
+//                int oneHour = 60 * 60;
+//                int hour = (int) ((remainTime % oneDay) / oneHour);
+//                int oneMin = 60;
+//                int min = (int) (((remainTime % oneDay) % oneHour)) / oneMin;
+//                helper.getTvNewOrdertimeRemaining().setVisibility(View.VISIBLE);
+//                helper.getTvNewOrdertimeRemaining().setText(mContext.getString(R.string.text_new_order_time_remaining, day, hour, min));
+//            }
         }
     }
 

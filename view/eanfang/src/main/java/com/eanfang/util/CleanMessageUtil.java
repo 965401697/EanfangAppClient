@@ -7,6 +7,9 @@ package com.eanfang.util;
 import android.content.Context;
 import android.os.Environment;
 
+import com.eanfang.base.BaseApplication;
+import com.eanfang.config.EanfangConst;
+
 import java.io.File;
 import java.math.BigDecimal;
 
@@ -18,7 +21,6 @@ public class CleanMessageUtil {
     /**
      * @param context
      * @return
-     * @throws Exception 获取当前缓存
      */
     public static String getTotalCacheSize(Context context) throws Exception {
         long cacheSize = getFolderSize(context.getCacheDir());
@@ -37,7 +39,10 @@ public class CleanMessageUtil {
         if (Environment.getExternalStorageState().equals(
                 Environment.MEDIA_MOUNTED)) {
             deleteDir(context.getExternalCacheDir());
+//            deleteDir(context.getExternalFilesDir(Environment.getDataDirectory().getAbsolutePath()));
         }
+        //删除融云 token
+        BaseApplication.get().remove(EanfangConst.RONG_YUN_TOKEN);
     }
 
     private static boolean deleteDir(File dir) {

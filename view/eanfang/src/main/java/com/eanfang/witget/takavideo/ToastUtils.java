@@ -3,6 +3,8 @@ package com.eanfang.witget.takavideo;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.eanfang.base.kit.rx.RxPerm;
+
 import static com.qiniu.pili.droid.shortvideo.PLErrorCode.ERROR_LOW_MEMORY;
 import static com.qiniu.pili.droid.shortvideo.PLErrorCode.ERROR_MULTI_CODEC_WRONG;
 import static com.qiniu.pili.droid.shortvideo.PLErrorCode.ERROR_MUXER_START_FAILED;
@@ -29,7 +31,7 @@ public class ToastUtils {
                 ToastUtils.s(context, "摄像头配置错误");
                 break;
             case ERROR_SETUP_MICROPHONE_FAILED:
-                ToastUtils.s(context, "麦克风配置错误");
+                ToastUtils.s(context, "请手动开启麦克风权限");
                 break;
             case ERROR_NO_VIDEO_TRACK:
                 ToastUtils.s(context, "该文件没有视频信息！");

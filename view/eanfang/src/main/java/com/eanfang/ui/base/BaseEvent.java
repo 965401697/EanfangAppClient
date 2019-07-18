@@ -1,9 +1,9 @@
 package com.eanfang.ui.base;
 
 
-import com.eanfang.util.GetDateUtils;
-
 import java.util.Date;
+
+import cn.hutool.core.date.DateUtil;
 
 
 /**
@@ -25,7 +25,7 @@ public class BaseEvent {
     private Date createDate;
 
     public BaseEvent() {
-        createDate = GetDateUtils.getDateNow();
+        createDate = DateUtil.date();
     }
 
     public int getEventId() {

@@ -14,7 +14,7 @@ import com.eanfang.biz.rds.base.BaseViewModel;
 import com.eanfang.biz.rds.sys.ds.impl.tender.TenderDs;
 import com.eanfang.biz.rds.sys.repo.tender.TenderRepo;
 import com.eanfang.config.Config;
-import com.eanfang.util.GetDateUtils;
+import com.eanfang.util.DateKit;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.StringUtils;
 import com.luck.picture.lib.entity.LocalMedia;
@@ -25,8 +25,12 @@ import net.eanfang.worker.ui.activity.my.UserHomeActivity;
 import net.eanfang.worker.ui.activity.worksapce.tender.TenderFindDetailActivity;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
+import cn.hutool.core.date.DateField;
+import cn.hutool.core.date.DateUnit;
+import cn.hutool.core.date.DateUtil;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -57,7 +61,7 @@ public class TenderFindDetailViewModle extends BaseViewModel {
         tenderRepo.doGetTenderDetail(mTendFindId.toString()).observe(lifecycleOwner, tenderBean -> {
             tenderLiveData.setValue(tenderBean);
             // 发布时间
-            tenderFindDetailBinding.tvTime.setText(GetDateUtils.dateToDateTimeString(tenderBean.getCreateTime()));
+            tenderFindDetailBinding.tvTime.setText(DateUtil.date(tenderBean.getCreateTime()).toString());
             // 头像
             GlideUtil.intoImageView(tenderFindDetailBinding.getRoot().getContext(), Uri.parse(BuildConfig.OSS_SERVER + tenderBean.getUserEntity().getAccountEntity().getAvatar()), tenderFindDetailBinding.ivHeader);
             //是否认证
@@ -73,7 +77,7 @@ public class TenderFindDetailViewModle extends BaseViewModel {
             // 系统类别
             tenderFindDetailBinding.tvSystemType.setText(Config.get().getBaseNameByCode(tenderBean.getSystemType(), 1));
             //开始时间
-            tenderFindDetailBinding.tvStartTime.setText(GetDateUtils.dateToDateString(tenderBean.getEndTime()));
+            tenderFindDetailBinding.tvStartTime.setText(DateUtil.date(tenderBean.getEndTime()).toDateStr());
             //预算
             tenderFindDetailBinding.tvBudget.setText(tenderBean.getBudget() + "元/" + tenderBean.getBudgetUnit());
             // 附件
@@ -82,22 +86,32 @@ public class TenderFindDetailViewModle extends BaseViewModel {
             tenderFindDetailBinding.rvSelectPic.isShow(false, mPicList);
 
             // 天  时  分
-            String endTime = GetDateUtils.dateToDateTimeString(tenderBean.getEndTime());
+            String endTime = DateUtil.date(tenderBean.getEndTime()).toString();
+
             if (!StringUtils.isEmpty(endTime)) {
-                //剩余时间
-                long currentTime = System.currentTimeMillis() / 1000;
-                long remainTime = GetDateUtils.convertDateToSecond(endTime) - currentTime;
-                if (remainTime > 0) {
-                    int oneDay = 24 * 60 * 60;
-                    int day = (int) (remainTime / oneDay);
-                    int oneHour = 60 * 60;
-                    int hour = (int) ((remainTime % oneDay) / oneHour);
-                    int oneMin = 60;
-                    int min = (int) (((remainTime % oneDay) % oneHour)) / oneMin;
+                if (DateUtil.parse(endTime).getTime() - DateUtil.date().getTime() > -0) {
+                    int day = (int) DateUtil.date().between(DateUtil.parse(endTime), DateUnit.DAY);
+                    int hour = (int) DateUtil.date().between(DateKit.get(endTime).offset(DateField.DAY_OF_YEAR, -day).date, DateUnit.HOUR);
+                    int min = (int) DateUtil.date().between(DateKit.get(endTime).offset(DateField.DAY_OF_YEAR, -day).offset(DateField.HOUR, -hour).date, DateUnit.MINUTE);
                     tenderFindDetailBinding.tvDay.setText(String.valueOf(day));
                     tenderFindDetailBinding.tvHour.setText(String.valueOf(hour));
                     tenderFindDetailBinding.tvMinute.setText(String.valueOf(min));
                 }
+
+//                //剩余时间
+//                long currentTime = System.currentTimeMillis() / 1000;
+//                long remainTime = DateUtil.parse(endTime).getTime() - currentTime;
+//                if (remainTime > 0) {
+//                    int oneDay = 24 * 60 * 60;
+//                    int day = (int) (remainTime / oneDay);
+//                    int oneHour = 60 * 60;
+//                    int hour = (int) ((remainTime % oneDay) / oneHour);
+//                    int oneMin = 60;
+//                    int min = (int) (((remainTime % oneDay) % oneHour)) / oneMin;
+//                    tenderFindDetailBinding.tvDay.setText(String.valueOf(day));
+//                    tenderFindDetailBinding.tvHour.setText(String.valueOf(hour));
+//                    tenderFindDetailBinding.tvMinute.setText(String.valueOf(min));
+//                }
             }
 
         });

@@ -9,7 +9,6 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.OrderProgressBean;
 import com.eanfang.ui.base.BaseFragment;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 
@@ -20,6 +19,8 @@ import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import cn.hutool.core.date.DateUtil;
 
 /**
  * Created by O u r on 2018/7/16.
@@ -88,9 +89,9 @@ public class MaintenanceOrderStatusFragment extends BaseFragment {
             if (bean.getNodeCode() != 0) {
                 list.add(bean);
             } else {
-                mTvTime.setText(bean.getCreateTime().substring(11));
-                mTvData.setText(bean.getCreateTime().substring(5, 10));
-                mTvWeek.setText(GetDateUtils.dateToWeek(bean.getCreateTime().substring(0, 10)));
+                mTvTime.setText(DateUtil.parse(bean.getCreateTime()).toTimeStr());
+                mTvData.setText(DateUtil.parse(bean.getCreateTime()).toDateStr());
+                mTvWeek.setText(DateUtil.parse(bean.getCreateTime()).dayOfWeekEnum().toChinese());
             }
         }
         if (list.size() > 0) {

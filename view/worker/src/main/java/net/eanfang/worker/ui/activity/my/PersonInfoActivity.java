@@ -33,12 +33,10 @@ import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.activity.SelectAddressActivity;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
-import com.eanfang.util.UuidUtil;
 import com.eanfang.util.contentsafe.ContentDefaultAuditing;
 import com.eanfang.util.contentsafe.ContentSecurityAuditUtil;
 import com.luck.picture.lib.entity.LocalMedia;
@@ -50,11 +48,12 @@ import net.eanfang.worker.ui.activity.worksapce.StateChangeActivity;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.UserInfo;
 
@@ -210,7 +209,7 @@ public class PersonInfoActivity extends BaseActivity {
     IPictureCallBack iPictureCallBack = new IPictureCallBack() {
         @Override
         public void onSuccess(List<LocalMedia> list) {
-            String imgKey = "account/" + UuidUtil.getUUID() + ".png";
+            String imgKey = "account/" + StrUtil.uuid() + ".png";
             GlideUtil.intoImageView(PersonInfoActivity.this, "file://" + list.get(0).getPath(), ivUpload);
             SDKManager.ossKit(PersonInfoActivity.this).asyncPutImage(imgKey, list.get(0).getPath(), (isSuccess) -> {
                 LoginBean entity = WorkerApplication.get().getLoginBean();
@@ -261,7 +260,7 @@ public class PersonInfoActivity extends BaseActivity {
         }
 
         if (accountEntity.getBirthday() != null) {
-            mTvBirthday.setText(GetDateUtils.dateToDateString(accountEntity.getBirthday()));
+            mTvBirthday.setText(DateUtil.date(accountEntity.getBirthday()).toDateStr());
         }
 
         if (accountEntity.getPersonalNote() != null) {
@@ -337,7 +336,9 @@ public class PersonInfoActivity extends BaseActivity {
         accountEntity.setGender(mIsMan ? 1 : 0);
         String address = etAddress.getText().toString().trim();
         accountEntity.setAddress(address);
-        accountEntity.setBirthday(GetDateUtils.getYeanDate(mTvBirthday.getText().toString()));
+        if (!StringUtils.isEmpty(mTvBirthday.getText())) {
+            accountEntity.setBirthday(DateUtil.parse(mTvBirthday.getText().toString()));
+        }
         accountEntity.setPersonalNote(mEtPersonalNote.getText().toString());
         if (!StringUtils.isEmpty(city) && !StringUtils.isEmpty(contry)) {
             accountEntity.setAreaCode(Config.get().getAreaCodeByName(city, contry));
@@ -431,7 +432,7 @@ public class PersonInfoActivity extends BaseActivity {
     private void setBirthday(View v) {
         Date date;
         if (!StringUtils.isEmpty(mTvBirthday.getText())) {
-            date = GetDateUtils.getYeanDate(mTvBirthday.getText().toString());
+            date = DateUtil.parse(mTvBirthday.getText().toString());
         } else {
             date = new Date();
         }
@@ -440,13 +441,7 @@ public class PersonInfoActivity extends BaseActivity {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                mTvBirthday.setText(GetDateUtils.dateToDateString(new GregorianCalendar
-                        (year, month, dayOfMonth).getTime()));
-            }
-        }, year, month, day);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, (view, year1, month1, dayOfMonth) -> mTvBirthday.setText(DateUtil.parse(year1 + "-" + month1 + "-" + dayOfMonth, "yyyy-M-dd").toDateStr()), year, month, day);
         datePickerDialog.show();
     }
 

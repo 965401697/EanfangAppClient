@@ -17,7 +17,6 @@ import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseEvent;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.LocationUtil;
 import com.eanfang.util.NumberUtil;
@@ -30,6 +29,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.date.DateUtil;
 
 import static com.amap.api.services.geocoder.GeocodeSearch.AMAP;
 
@@ -80,7 +80,7 @@ public class SignInActivity extends BaseWorkerActivity {
     private void initView() {
         setTitle("选择地址");
         setLeftBack();
-        tvTime.setText(GetDateUtils.dateToDateTimeStringForChinse(GetDateUtils.getDateNow()));
+        tvTime.setText(DateUtil.date().toString("yyyy年MM月dd日 HH:mm:ss"));
         String latitude = getIntent().getStringExtra("latitude");
         String longitude = getIntent().getStringExtra("longitude");
         orderId = getIntent().getLongExtra("orderId", 0);
@@ -91,7 +91,7 @@ public class SignInActivity extends BaseWorkerActivity {
 
     private void initMap() {
         locationUtil = LocationUtil.get(SignInActivity.this, mapView);
-        RxPerm.get(this).locationPerm((isSuccess)->{
+        RxPerm.get(this).locationPerm((isSuccess) -> {
             locationUtil.startOnce();
         });
         //禁止所有手势
@@ -201,7 +201,7 @@ public class SignInActivity extends BaseWorkerActivity {
     private void doHttp(Long orderId) {
 //        QueryEntry queryEntry = new QueryEntry();
 //        queryEntry.getEquals().put("orderId", orderId + "");
-//        queryEntry.getEquals().put("signInTime", GetDateUtils.dateToDateTimeString(GetDateUtils.getDateNow()));
+//        queryEntry.getEquals().put("signInTime", DateUtil.date().toString());
 //        queryEntry.getEquals().put("signLongitude", mLongitude + "");
 //        queryEntry.getEquals().put("signLatitude", mLatitude + "");
 //        queryEntry.getEquals().put("signScope", mSignScope);
@@ -210,7 +210,7 @@ public class SignInActivity extends BaseWorkerActivity {
 
         EanfangHttp.post(RepairApi.POST_FLOW_SIGNIN)
                 .params("orderId", orderId + "")
-                .params("signInTime", GetDateUtils.dateToDateTimeString(GetDateUtils.getDateNow()))
+                .params("signInTime", DateUtil.date().toString())
                 .params("signLongitude", mLongitude + "")
                 .params("signLatitude", mLatitude + "")
                 .params("signCode", Config.get().getAreaCodeByName(city, county))
@@ -235,7 +235,7 @@ public class SignInActivity extends BaseWorkerActivity {
     private void doMaintenanceHttp(Long orderId) {
 //        QueryEntry queryEntry = new QueryEntry();
 //        queryEntry.getEquals().put("orderId", orderId + "");
-//        queryEntry.getEquals().put("signInTime", GetDateUtils.dateToDateTimeString(GetDateUtils.getDateNow()));
+//        queryEntry.getEquals().put("signInTime", DateUtil.date().toString());
 //        queryEntry.getEquals().put("signLongitude", mLongitude + "");
 //        queryEntry.getEquals().put("signLatitude", mLatitude + "");
 //        queryEntry.getEquals().put("signScope", mSignScope);
@@ -244,7 +244,7 @@ public class SignInActivity extends BaseWorkerActivity {
 
         JSONObject object = new JSONObject();
         object.put("id", orderId + "");
-        object.put("signTime", GetDateUtils.dateToDateTimeString(GetDateUtils.getDateNow()));
+        object.put("signTime", DateUtil.date().toString());
         object.put("signLongitude", mLongitude + "");
         object.put("signLatitude", mLatitude + "");
         object.put("signScope", mSignScope);

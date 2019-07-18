@@ -14,7 +14,6 @@ import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 import com.yaf.base.entity.LogDetailsEntity;
 import com.yaf.base.entity.ProtectionLogEntity;
@@ -27,8 +26,10 @@ import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.date.DateUtil;
 
 public class DefendLogDetailActivity extends BaseClientActivity {
 
@@ -153,25 +154,24 @@ public class DefendLogDetailActivity extends BaseClientActivity {
                     protectionLogEntity = bean;
 
                     if (bean.getOwnerUser() != null && bean.getOwnerUser().getAccountEntity() != null) {
-                        GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + bean.getOwnerUser().getAccountEntity().getAvatar()),ivReportHeader);
+                        GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + bean.getOwnerUser().getAccountEntity().getAvatar()), ivReportHeader);
                         tvCompanyPhone.setText(bean.getOwnerUser().getAccountEntity().getMobile());
                         tvReportName.setText(bean.getOwnerUser().getAccountEntity().getRealName());
                     }
                     tvSection.setText(bean.getOwnerDepartment().getOrgName());
 
 
-                    String[] date = GetDateUtils.dateToDateString(bean.getCreateTime()).split("-");
+                    String[] date = DateUtil.date(bean.getCreateTime()).toDateStr().split("-");
                     tvYear.setText(date[0] + "-" + date[1]);
-                    tvWeek.setText(GetDateUtils.dateToWeek(GetDateUtils.dateToDateString(bean.getCreateTime())));
+                    tvWeek.setText(DateUtil.date(bean.getCreateTime()).dayOfWeekEnum().toChinese());
                     tvData.setText(date[2]);
 
                     tvCompanyName.setText(bean.getOwnerCompany().getOrgName());
                     tvAcceptPreson.setText(bean.getAssigneeUser().getAccountEntity().getRealName());
                     tvAcceptPhone.setText(bean.getAssigneeUser().getAccountEntity().getMobile());
 
-
-                    tvOpenTime.setText(GetDateUtils.dateToDateTimeString(bean.getOpenTime()));
-                    tvCloseTime.setText(GetDateUtils.dateToDateTimeString(bean.getCloseTime()));
+                    tvOpenTime.setText(DateUtil.date(bean.getOpenTime()).toString());
+                    tvCloseTime.setText(DateUtil.date(bean.getCloseTime()).toString());
 
                     long time = bean.getCloseTime().getTime() - bean.getOpenTime().getTime();
                     if (!TextUtils.isEmpty(formatTime(time))) {
@@ -204,8 +204,8 @@ public class DefendLogDetailActivity extends BaseClientActivity {
     }
 
     /*
-* 毫秒转化时分秒毫秒
-*/
+     * 毫秒转化时分秒毫秒
+     */
     public static String formatTime(Long ms) {
         Integer ss = 1000;
         Integer mi = ss * 60;
@@ -269,6 +269,7 @@ public class DefendLogDetailActivity extends BaseClientActivity {
         }
 
     }
+
     /**
      * 监听 返回键
      */

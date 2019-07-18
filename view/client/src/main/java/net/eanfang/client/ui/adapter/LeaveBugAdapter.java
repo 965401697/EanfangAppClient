@@ -6,7 +6,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 import com.yaf.base.entity.RepairFailureEntity;
 
@@ -14,6 +13,8 @@ import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
 
 import java.util.List;
+
+import cn.hutool.core.date.DateUtil;
 
 /**
  * Created by MrHou
@@ -38,14 +39,14 @@ public class LeaveBugAdapter extends BaseQuickAdapter<RepairFailureEntity, BaseV
         }
 
         helper.setText(R.id.tv_state, GetConstDataUtils.getBugDetailList().get(item.getStatus()));
-        helper.setText(R.id.tv_create_time, GetDateUtils.dateToDateString(item.getCreateTime()));
+        helper.setText(R.id.tv_create_time, DateUtil.date(item.getCreateTime()).toDateStr());
         helper.setText(R.id.tv_instrument, item.getDeviceName());
         helper.setText(R.id.tv_equipmentposition, item.getBugPosition());
         helper.setText(R.id.tv_description, item.getBugDescription());
         //将业务类型的图片显示到列表
-        if (item.getPictures()!=null){
+        if (item.getPictures() != null) {
             String[] urls = item.getPictures().split(",");
-            GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + urls[0]),helper.getView(R.id.sdv_pic));
+            GlideUtil.intoImageView(mContext, Uri.parse(BuildConfig.OSS_SERVER + urls[0]), helper.getView(R.id.sdv_pic));
         }
 
         helper.addOnClickListener(R.id.tv_select);

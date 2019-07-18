@@ -17,7 +17,6 @@ import com.eanfang.biz.model.RepairedOrderBean;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
@@ -37,6 +36,8 @@ import net.eanfang.worker.ui.activity.worksapce.TroubleDetalilListActivity;
 import net.eanfang.worker.ui.activity.worksapce.repair.SolveModeActivity;
 import net.eanfang.worker.ui.adapter.RepairedManageOrderAdapter;
 import net.eanfang.worker.ui.widget.FillAppointmentInfoRebookView;
+
+import cn.hutool.core.date.DateUtil;
 
 import static com.eanfang.config.EanfangConst.BOTTOM_REFRESH;
 import static com.eanfang.config.EanfangConst.TOP_REFRESH;
@@ -387,7 +388,7 @@ public class OrderListFragment extends BaseFragment implements
             //刷新已读未读
             ((RepairOrderEntity) adapter.getData().get(position)).setNewOrder(0);
             adapter.notifyItemChanged(position);
-            intent.putExtra("orderTime", GetDateUtils.dateToDateTimeString(((RepairOrderEntity) adapter.getData().get(position)).getCreateTime()));
+            intent.putExtra("orderTime", DateUtil.date(((RepairOrderEntity) adapter.getData().get(position)).getCreateTime()).toString());
             startActivity(intent);
         }
     };

@@ -2,13 +2,13 @@ package net.eanfang.worker.ui.activity.authentication;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.CalendarView;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,23 +30,23 @@ import com.eanfang.biz.model.ZdBusinessCertification;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseActivity;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.RecognizeService;
 import com.eanfang.util.StringUtils;
-import com.eanfang.util.UuidUtil;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.fragment.ContactsFragment;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author WQ
@@ -162,15 +162,29 @@ public class BusinessCertificationActivity extends BaseActivity {
     }
 
     private void setRq() {
-        View view = getLayoutInflater().inflate(R.layout.activity_dialog_date, null);
-        CalendarView datePicker = view.findViewById(R.id.calendarView);
-        datePicker.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
-            date = new GregorianCalendar(year, month, dayOfMonth).getTime();
-            clRqLrv.setText(GetDateUtils.dateToDateString(date));
-        });
-        new AlertDialog.Builder(this).setView(view).setCancelable(false).setPositiveButton("确定", (dialogInterface, i) -> {
-            dialogInterface.dismiss();
-        }).show();
+        Date date;
+        if (!StringUtils.isEmpty(clRqLrv.getText())) {
+            date = DateUtil.parse(clRqLrv.getText().toString());
+        } else {
+            date = new Date();
+        }
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, (view, year1, month1, dayOfMonth) -> clRqLrv.setText(DateUtil.parse(year1 + "-" + month1 + "-" + dayOfMonth, "yyyy-M-dd").toDateStr()), year, month, day);
+        datePickerDialog.show();
+
+//        View view = getLayoutInflater().inflate(R.layout.activity_dialog_date, null);
+//        CalendarView datePicker = view.findViewById(R.id.calendarView);
+//        datePicker.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
+//            date = DateUtil.parse(year + "-" + month + "-" + dayOfMonth);
+//            clRqLrv.setText(DateUtil.date(date).toDateStr());
+//        });
+//        new AlertDialog.Builder(this).setView(view).setCancelable(false).setPositiveButton("确定", (dialogInterface, i) -> {
+//            dialogInterface.dismiss();
+//        }).show();
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -179,6 +193,7 @@ public class BusinessCertificationActivity extends BaseActivity {
         status = getIntent().getIntExtra("status", 0);
         bizCertify = getIntent().getIntExtra("bizCertify", 0);
         clRqLrv.setOnClickListener(view -> setRq());
+        jzRqLrv.setOnClickListener(view -> setRq());
         initAccessToken();
         EanfangHttp.get(UserApi.GET_COMPANY_ORG_INFO + mOrgId).execute(new EanfangCallback<AuthCompanyBaseInfoBean>(this, true, AuthCompanyBaseInfoBean.class, (beans) -> {
             infoBean = beans;
@@ -282,7 +297,7 @@ public class BusinessCertificationActivity extends BaseActivity {
                     result -> {
                         String fileString = new File(getApplication().getFilesDir(), "pic.jpg").getAbsolutePath();
                         Bitmap bitmap = BitmapFactory.decodeFile(fileString);
-                        String imgKey = UuidUtil.getUUID() + ".jpg";
+                        String imgKey = StrUtil.uuid() + ".jpg";
                         SDKManager.ossKit(this).asyncPutImage(imgKey, fileString, (isSuccess) -> {
                         });
                         ivUploadlogo.setImageBitmap(bitmap);

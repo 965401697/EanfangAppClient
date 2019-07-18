@@ -27,11 +27,10 @@ import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.base.kit.rx.RxPerm;
+import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
-import com.eanfang.util.UuidUtil;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.yaf.base.entity.TechWorkerVerifyEntity;
 
@@ -40,12 +39,13 @@ import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import java.io.File;
-import java.text.ParseException;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author WQ
@@ -77,6 +77,7 @@ public class RealNameAuthenticationActivity extends BaseWorkeActivity {
         ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
     }
+
     @Override
     public void initView() {
         super.initView();
@@ -110,15 +111,19 @@ public class RealNameAuthenticationActivity extends BaseWorkeActivity {
         if (mTechWorkerVerifyEntity.getIdCardHand() != null) {
             GlideUtil.intoImageView(this, BuildConfig.OSS_SERVER + mTechWorkerVerifyEntity.getIdCardHand(), ivIdCardInHand);
         }
-        try {
-            if (mTechWorkerVerifyEntity.getIdCardNum() != null) {
-                idCardNum = mTechWorkerVerifyEntity.getIdCardNum();
-                if ((!mTechWorkerVerifyEntity.getIdCardNum().equals("暂无")) | (!mTechWorkerVerifyEntity.getIdCardNum().equals(""))) {
-                    sfzJjTv.setText("姓名：" + mTechWorkerVerifyEntity.getIdCardName() + "\n" + "性别：" + mTechWorkerVerifyEntity.getIdCardGender() + "\n" + "出生：" + GetDateUtils.strToDate(mTechWorkerVerifyEntity.getIdCardBirth()) + "\n" + "身份证号：" + mTechWorkerVerifyEntity.getIdCardNum());
-                }
+        if (mTechWorkerVerifyEntity.getIdCardNum() != null) {
+            idCardNum = mTechWorkerVerifyEntity.getIdCardNum();
+            //检验一下 身份证是否正确
+            recIDCard(IDCardParams.ID_CARD_SIDE_FRONT, PhotoUtils.downloadImg(mTechWorkerVerifyEntity.getIdCardFront()).getPath(), true);
+            recIDCard(IDCardParams.ID_CARD_SIDE_BACK, PhotoUtils.downloadImg(mTechWorkerVerifyEntity.getIdCardSide()).getPath(), true);
+            if ((!mTechWorkerVerifyEntity.getIdCardNum().equals("暂无")) | (!mTechWorkerVerifyEntity.getIdCardNum().equals(""))) {
+                StringBuilder sbd = new StringBuilder();
+                sbd.append("姓名：").append(mTechWorkerVerifyEntity.getIdCardName()).append("\n");
+                sbd.append("性别：").append(mTechWorkerVerifyEntity.getIdCardGender()).append("\n");
+                sbd.append("出生：").append(DateUtil.parse(mTechWorkerVerifyEntity.getIdCardBirth()).toDateStr()).append("\n");
+                sbd.append("身份证号：").append(mTechWorkerVerifyEntity.getIdCardNum()).append("\n");
+                sfzJjTv.setText(sbd.toString());
             }
-        } catch (ParseException e) {
-            e.printStackTrace();
         }
     }
 
@@ -130,11 +135,11 @@ public class RealNameAuthenticationActivity extends BaseWorkeActivity {
             return;
         }
         if (StringUtils.isEmpty(mTechWorkerVerifyEntity.getIdCardSide())) {
-            showToast("请添加身份证反面照");
+            showToast("请添加正确的身份证反面照");
             return;
         }
         if (StringUtils.isEmpty(mTechWorkerVerifyEntity.getIdCardHand())) {
-            showToast("请添加手持身份证照片");
+            showToast("请添加正确的手持身份证照片");
             return;
         }
 
@@ -188,7 +193,7 @@ public class RealNameAuthenticationActivity extends BaseWorkeActivity {
         }, getApplicationContext());
     }
 
-    private void recIDCard(String idCardSide, String filePath) {
+    private void recIDCard(String idCardSide, String filePath, boolean isCheck) {
         IDCardParams param = new IDCardParams();
         param.setImageFile(new File(filePath));
         param.setIdCardSide(idCardSide);
@@ -198,27 +203,53 @@ public class RealNameAuthenticationActivity extends BaseWorkeActivity {
             @SuppressLint("SetTextI18n")
             @Override
             public void onResult(IDCardResult result) {
-                if (result != null) {
-                    Log.d("recIDCard66", result.toString());
-                    String imgKey = UuidUtil.getUUID() + "idCl.jpg";
-                    if ((result.getIdNumber() != null) && (!result.getIdNumber().toString().equals(""))) {
-                        Log.d("recIDCard66888", result.toString());
-                        idCardNum = result.getIdNumber().toString();
-                        mTechWorkerVerifyEntity.setIdCardFront(imgKey);
-                        mTechWorkerVerifyEntity.setIdCardName(result.getName().toString());
-                        mTechWorkerVerifyEntity.setIdCardGender(result.getGender().toString());
-                        mTechWorkerVerifyEntity.setIdCardBirth(result.getBirthday().toString());
-                        mTechWorkerVerifyEntity.setIdCardBirth(result.getBirthday().toString());
-                        try {
-                            sfzJjTv.setText("姓名：" + result.getName() + "\n" + "性别：" + result.getGender() + "\n" + "出生：" + GetDateUtils.strToDate(result.getBirthday().toString()) + "\n" + "身份证号：" + result.getIdNumber());
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                        SDKManager.ossKit(RealNameAuthenticationActivity.this).asyncPutImage(imgKey, filePath, (isSuccess) -> {
-                        });
-                    } else {
-                        idCardNum = "";
+                if (result != null && !result.getImageStatus().equals("non_idcard")) {
+                    switch (result.getImageStatus()) {
+                        case "normal":
+                            String imgKey = null;
+                            if (!isCheck) {
+                                imgKey = StrUtil.uuid() + "idCl.jpg";
+                                SDKManager.ossKit(RealNameAuthenticationActivity.this).asyncPutImage(imgKey, filePath, (isSuccess) -> {
+                                });
+                            }
+                            if (result.getIdCardSide().equals("front")) {
+                                idCardNum = result.getIdNumber().toString();
+                                if (!isCheck) {
+                                    mTechWorkerVerifyEntity.setIdCardFront(imgKey);
+                                }
+                                mTechWorkerVerifyEntity.setIdCardName(result.getName().toString());
+                                mTechWorkerVerifyEntity.setIdCardGender(result.getGender().toString());
+                                mTechWorkerVerifyEntity.setIdCardBirth(result.getBirthday().toString());
+                                StringBuilder sbd = new StringBuilder();
+                                sbd.append("姓名：").append(result.getName()).append("\n");
+                                sbd.append("性别：").append(result.getGender()).append("\n");
+                                sbd.append("出生：").append(DateUtil.parse(result.getBirthday().toString(), "yyyyMMdd").toDateStr()).append("\n");
+                                sbd.append("身份证号：").append(result.getIdNumber()).append("\n");
+                                sfzJjTv.setText(sbd.toString());
+                            } else if (result.getIdCardSide().equals("back")) {
+                                if (!isCheck) {
+                                    mTechWorkerVerifyEntity.setIdCardSide(imgKey);
+                                }
+                            }
+                            return;
+                        case "reversed_side":
+                            showToast("身份证正反面颠倒,请重新上传");
+                            break;
+                        case "blurred":
+                            showToast("身份证模糊,请重新上传");
+                            break;
+                        case "other_type_card":
+                            showToast("请上传正确的身份证");
+                            break;
+                        default:
+                            showToast("请上传正确的身份证");
+                            break;
                     }
+                }
+                if (idCardSide.equals(IDCardParams.ID_CARD_SIDE_FRONT)) {
+                    idCardNum = "";
+                } else if (idCardSide.equals(IDCardParams.ID_CARD_SIDE_BACK)) {
+                    mTechWorkerVerifyEntity.setIdCardSide(null);
                 }
             }
 
@@ -248,13 +279,13 @@ public class RealNameAuthenticationActivity extends BaseWorkeActivity {
                 break;
             case R.id.iv_idCard_back:
                 RxPerm.get(this).cameraPerm((isSuccess) -> {
-                    state=ID_CARD_SIDE;
+                    state = ID_CARD_SIDE;
                     iv();
                 });
                 break;
             case R.id.iv_idCard_inHand:
                 RxPerm.get(this).cameraPerm((isSuccess) -> {
-                    state=ID_CARD_HAND;
+                    state = ID_CARD_HAND;
                     iv();
                 });
                 break;
@@ -269,28 +300,30 @@ public class RealNameAuthenticationActivity extends BaseWorkeActivity {
         SDKManager.getPicture().create(this).takePhoto(iPictureCallBack);
     }
 
-    IPictureCallBack iPictureCallBack = new IPictureCallBack() {
+    final IPictureCallBack iPictureCallBack = new IPictureCallBack() {
         @Override
         public void onSuccess(List<LocalMedia> list) {
-            String imgKey = UuidUtil.getUUID() + ".png";
+
             switch (state) {
                 case ID_CARD_FRONT:
                     GlideUtil.intoImageView(RealNameAuthenticationActivity.this, "file://" + list.get(0).getPath(), ivIdCardFront);
-                    recIDCard(IDCardParams.ID_CARD_SIDE_FRONT,  list.get(0).getPath());
+                    recIDCard(IDCardParams.ID_CARD_SIDE_FRONT, list.get(0).getPath(), false);
                     break;
                 case ID_CARD_SIDE:
-                    mTechWorkerVerifyEntity.setIdCardSide(imgKey);
                     GlideUtil.intoImageView(RealNameAuthenticationActivity.this, "file://" + list.get(0).getPath(), ivIdCardBack);
+                    recIDCard(IDCardParams.ID_CARD_SIDE_BACK, list.get(0).getPath(), false);
                     break;
                 case ID_CARD_HAND:
-                    mTechWorkerVerifyEntity.setIdCardHand(imgKey);
+                    String imgKey = StrUtil.uuid() + ".png";
                     GlideUtil.intoImageView(RealNameAuthenticationActivity.this, "file://" + list.get(0).getPath(), ivIdCardInHand);
+                    SDKManager.ossKit(RealNameAuthenticationActivity.this).asyncPutImage(imgKey, list.get(0).getPath(), (isSuccess) -> {
+                        mTechWorkerVerifyEntity.setIdCardHand(imgKey);
+                    });
                     break;
                 default:
             }
-            SDKManager.ossKit(RealNameAuthenticationActivity.this).asyncPutImage(imgKey, list.get(0).getPath(), (isSuccess) -> {
-            });
-            state=0;
+
+            state = 0;
         }
     };
 

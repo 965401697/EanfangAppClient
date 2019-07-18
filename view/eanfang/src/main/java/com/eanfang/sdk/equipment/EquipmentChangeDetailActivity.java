@@ -1,6 +1,5 @@
 package com.eanfang.sdk.equipment;
 
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -17,12 +16,12 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.sdk.equipment.adapter.EquipmentParamAdapter;
 import com.eanfang.ui.base.BaseActivity;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 import com.yaf.base.entity.CustDeviceChangeLogEntity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.date.DateUtil;
 
 public class EquipmentChangeDetailActivity extends BaseActivity {
 
@@ -88,7 +87,7 @@ public class EquipmentChangeDetailActivity extends BaseActivity {
 
         tvPosition.setText(bean.getLocation());
         tvPositionNum.setText(bean.getLocationNumber());
-        tvCreatetime.setText(GetDateUtils.dateToFormatString(bean.getInstallDate(), "yyyy-MM-dd"));
+        tvCreatetime.setText(DateUtil.date(bean.getInstallDate()).toDateStr());
         if (bean.getStatus() == 0) {
             tvEquipmentStatus.setText("出厂");
         } else if (bean.getStatus() == 1) {

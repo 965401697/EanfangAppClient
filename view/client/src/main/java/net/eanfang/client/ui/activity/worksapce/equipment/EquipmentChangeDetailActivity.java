@@ -9,7 +9,6 @@ import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 import com.yaf.base.entity.CustDeviceChangeLogEntity;
 
@@ -18,8 +17,11 @@ import net.eanfang.client.ui.base.BaseClientActivity;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.date.DateUtil;
+
 //已提取
 public class EquipmentChangeDetailActivity extends BaseClientActivity {
 
@@ -86,7 +88,7 @@ public class EquipmentChangeDetailActivity extends BaseClientActivity {
 
         tvPosition.setText(bean.getLocation());
         tvPositionNum.setText(bean.getLocationNumber());
-        tvCreatetime.setText(GetDateUtils.dateToFormatString(bean.getInstallDate(), "yyyy-MM-dd"));
+        tvCreatetime.setText(DateUtil.date(bean.getInstallDate()).toDateStr());
         if (bean.getStatus() == 0) {
             tvEquipmentStatus.setText("出厂");
         } else if (bean.getStatus() == 1) {
@@ -105,13 +107,13 @@ public class EquipmentChangeDetailActivity extends BaseClientActivity {
 
         if (bean.getChargeOrgEntity() != null) {
             tvSection.setText(bean.getChargeOrgEntity().getOrgName());
-        }else {
+        } else {
             tvSection.setText("无");
         }
 
         if (bean.getChargeUserEntity() != null && bean.getChargeUserEntity().getAccountEntity() != null) {
             tvPreson.setText(bean.getChargeUserEntity().getAccountEntity().getRealName());
-        }else {
+        } else {
             tvPreson.setText("无");
         }
 
@@ -128,11 +130,11 @@ public class EquipmentChangeDetailActivity extends BaseClientActivity {
         tvServicePerson.setText(bean.getRepairUser());
         String[] pictures = bean.getLocationPictures().split(",");
         if (pictures != null && pictures.length >= 1) {
-            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + pictures[0]),ivLocaleOne);
+            GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + pictures[0]), ivLocaleOne);
         } else if (pictures != null && pictures.length >= 2) {
-            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + pictures[1]),ivLocaleTwo);
+            GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + pictures[1]), ivLocaleTwo);
         } else if (pictures != null && pictures.length >= 3) {
-            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + pictures[2]),ivLoacleThree);
+            GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + pictures[2]), ivLoacleThree);
         }
 
         if (bean.getParams() != null && bean.getParams().size() > 0) {

@@ -295,7 +295,7 @@ public class SecurityCreateActivity extends BaseActivity {
                 if (ivShowVideo.getVisibility() == View.INVISIBLE) {
                     ivShowVideo.setVisibility(View.VISIBLE);
                 }
-                ivShowVideo.setImageBitmap(PhotoUtils.getVideoThumbnail(mVieoPath, 100, 100, MINI_KIND));
+                ivShowVideo.setImageBitmap(PhotoUtils.getVideoBitmap(mVieoPath));
             }
         }
     }

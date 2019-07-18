@@ -47,7 +47,7 @@ public class ClientApplication extends BaseApplication {
         initWxPay();
         initHttp();
         initBugly();
-        initYingShiYun();
+        //initYingShiYun();
 
     }
 
@@ -55,14 +55,14 @@ public class ClientApplication extends BaseApplication {
         SDKManager.getBugly().init(this, BuildConfig.BUGLY_CLIENT, HttpConfig.get().isDebug());
     }
 
-    private void initYingShiYun() {
-        //sdk日志开关，正式发布需要去掉
-        EZOpenSDK.showSDKLog(HttpConfig.get().isDebug());
-        //设置是否支持P2P取流,详见api
-        EZOpenSDK.enableP2P(false);
-        // APP_KEY
-        EZOpenSDK.initLib(this, EanfangConst.YING_SHI_YUN_APP_KEY);
-    }
+//    private void initYingShiYun() {
+//        //sdk日志开关，正式发布需要去掉
+//        EZOpenSDK.showSDKLog(HttpConfig.get().isDebug());
+//        //设置是否支持P2P取流,详见api
+//        EZOpenSDK.enableP2P(false);
+//        // APP_KEY
+//        EZOpenSDK.initLib(this, EanfangConst.YING_SHI_YUN_APP_KEY);
+//    }
 
 
     @Override

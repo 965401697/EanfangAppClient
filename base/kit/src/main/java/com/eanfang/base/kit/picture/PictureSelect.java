@@ -2,6 +2,7 @@ package com.eanfang.base.kit.picture;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Environment;
 
 import androidx.fragment.app.Fragment;
 
@@ -223,6 +224,7 @@ public class PictureSelect {
                 .imageFormat(imageFormat)
                 .enableCrop(crop)
                 .compress(compress)
+                .setOutputCameraPath(Environment.getExternalStorageDirectory() + "/eanfang/img/")
                 .synOrAsy(synOrAsy)
                 .glideOverride(widch, height)
                 .withAspectRatio(aspect_ratio_x, aspect_ratio_y)

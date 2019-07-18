@@ -22,7 +22,6 @@ import com.eanfang.biz.model.TemplateBean;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
 import com.eanfang.util.DialogUtil;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.yaf.base.entity.OpenShopLogEntity;
@@ -52,9 +51,11 @@ import java.util.Set;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.date.DateUtil;
 
 public class OpenShopLogWriteActivity extends BaseClientActivity implements SelectTimeDialogFragment.SelectTimeListener {
 
@@ -329,7 +330,7 @@ public class OpenShopLogWriteActivity extends BaseClientActivity implements Sele
             object.put("empEntryTime", tvStaffInTime.getText().toString().trim());
             object.put("empExitTime", tvStaffOutTime.getText().toString().trim());
 
-            if (GetDateUtils.getTimeStamp(tvStaffOutTime.getText().toString().trim(), "yyyy-MM-dd hh:mm:ss") <= GetDateUtils.getTimeStamp(tvStaffInTime.getText().toString().trim(), "yyyy-MM-dd hh:mm:ss")) {
+            if (DateUtil.parse(tvStaffOutTime.getText().toString().trim()).getTime() <= DateUtil.parse(tvStaffInTime.getText().toString().trim()).getTime()) {
                 Toast.makeText(this, "员工的退场时间不能小于进场时间", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -337,7 +338,7 @@ public class OpenShopLogWriteActivity extends BaseClientActivity implements Sele
             object.put("cusEntryTime", tvClientInTime.getText().toString().trim());
             object.put("cusExitTime", tvClientOutTime.getText().toString().trim());
 
-            if (GetDateUtils.getTimeStamp(tvClientOutTime.getText().toString().trim(), "yyyy-MM-dd hh:mm:ss") <= GetDateUtils.getTimeStamp(tvClientInTime.getText().toString().trim(), "yyyy-MM-dd hh:mm:ss")) {
+            if (DateUtil.parse(tvClientOutTime.getText().toString().trim()).getTime() <= DateUtil.parse(tvClientInTime.getText().toString().trim()).getTime()) {
                 Toast.makeText(this, "顾客的退场时间不能小于进场时间", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -345,7 +346,7 @@ public class OpenShopLogWriteActivity extends BaseClientActivity implements Sele
             object.put("recYardStaTime", tvOpenTime.getText().toString().trim());
             object.put("recYardEndTime", tvCloseTime.getText().toString().trim());
 
-            if (GetDateUtils.getTimeStamp(tvCloseTime.getText().toString().trim(), "yyyy-MM-dd hh:mm:ss") <= GetDateUtils.getTimeStamp(tvOpenTime.getText().toString().trim(), "yyyy-MM-dd hh:mm:ss")) {
+            if (DateUtil.parse(tvCloseTime.getText().toString().trim()).getTime() <= DateUtil.parse(tvOpenTime.getText().toString().trim()).getTime()) {
                 Toast.makeText(this, "收货区的关闭时间不能小于进场时间", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -413,7 +414,7 @@ public class OpenShopLogWriteActivity extends BaseClientActivity implements Sele
                     b.putString("id", String.valueOf(bean.getId()));
                     b.putString("orderNum", bean.getOrderNumber());
 
-                    b.putString("creatTime", GetDateUtils.dateToDateTimeStringForChinse(bean.getCreateTime()));
+                    b.putString("creatTime", DateUtil.date(bean.getCreateTime()).toString("yyyy年MM月dd日 HH:mm:ss"));
 //                    b.putString("workerName", tvDependPerson.getText().toString().trim());
                     b.putString("status", "0");
                     b.putString("shareType", "8");

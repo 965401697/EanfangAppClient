@@ -96,7 +96,7 @@
                     android:id="@+id/img_cancel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/icon_cancel"
+                    android:src="@drawable/icon_home_cancel_post_out"
                     android:layout_marginLeft="@dimen/dimen_26"
                     android:layout_marginRight="@dimen/dimen_24"
                     android:layout_gravity="center_vertical"/>

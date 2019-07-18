@@ -157,7 +157,7 @@ public class SettingActivity extends BaseClientActivity {
                     RongIM.getInstance().logout();//退出融云
                     PermKit.permList.clear();//清空权限
 //                    SharePreferenceUtil.get().clear();
-//                    CleanMessageUtil.clearAllCache(ClientApplication.get());
+                    CleanMessageUtil.clearAllCache(ClientApplication.get());
                     finishSelf();
                     startActivity(new Intent(SettingActivity.this, SplashActivity.class));
                     showToast("退出成功");

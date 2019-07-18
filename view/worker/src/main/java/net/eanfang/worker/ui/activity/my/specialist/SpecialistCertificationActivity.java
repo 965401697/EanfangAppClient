@@ -19,7 +19,6 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.StringUtils;
-import com.eanfang.util.UuidUtil;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.yaf.base.entity.ExpertsCertificationEntity;
 
@@ -32,8 +31,15 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.util.StrUtil;
 
-
+/**
+ * 已废弃
+ *
+ * @author jornl
+ * @date 2019-07-17 14:44:10
+ */
+@Deprecated
 public class SpecialistCertificationActivity extends BaseWorkeActivity {
 
 
@@ -125,9 +131,9 @@ public class SpecialistCertificationActivity extends BaseWorkeActivity {
     private void setOnClick() {
         llHeaders.setOnClickListener(v -> RxPerm.get(this).cameraPerm((isSuccess) -> headImage()));
     }
+
     /**
      * 图片选择 回调
-     *
      */
     private void headImage() {
         SDKManager.getPicture().create(this).takePhoto(iPictureCallBack);
@@ -136,7 +142,7 @@ public class SpecialistCertificationActivity extends BaseWorkeActivity {
     IPictureCallBack iPictureCallBack = new IPictureCallBack() {
         @Override
         public void onSuccess(List<LocalMedia> list) {
-            String imgKey = "account/" + UuidUtil.getUUID() + ".png";
+            String imgKey = "account/" + StrUtil.uuid() + ".png";
             mExpertsCertificationEntity.setAvatarPhoto(imgKey);
             GlideUtil.intoImageView(SpecialistCertificationActivity.this, "file://" + list.get(0).getPath(), ivHeader);
             SDKManager.ossKit(SpecialistCertificationActivity.this).asyncPutImage(imgKey, list.get(0).getPath(), (isSuccess) -> {

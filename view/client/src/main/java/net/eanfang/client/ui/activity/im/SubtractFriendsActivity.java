@@ -15,7 +15,6 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.GroupDetailBean;
 
 import com.eanfang.util.ToastUtil;
-import com.eanfang.util.UuidUtil;
 import com.eanfang.util.compound.CompoundHelper;
 
 import net.eanfang.client.R;
@@ -32,6 +31,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Group;
 
@@ -56,7 +56,7 @@ public class SubtractFriendsActivity extends BaseClientActivity {
             String path = (String) msg.obj;
 
             if (!TextUtils.isEmpty(path)) {
-                String inageKey = UuidUtil.getUUID() + ".png";
+                String inageKey = StrUtil.uuid() + ".png";
                 SDKManager.ossKit(SubtractFriendsActivity.this).asyncPutImage(inageKey, path,(isSuccess) -> {
                     updataGroupInfo(mTitle, inageKey, "", "");
                 });
