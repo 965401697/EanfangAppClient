@@ -25,7 +25,6 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.TemplateBean;
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.ui.base.BaseActivity;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
@@ -46,6 +45,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.date.DateUtil;
 
 /**
  * @author guanluocang
@@ -198,7 +198,7 @@ public class DealWithFirstActivity extends BaseActivity {
                             tvTime.setText(bean.getChangeDeadlineTime());
                             tvTitle.setText(bean.getTitle());
                             tvName.setText("接收人" + bean.getAssigneeUser().getAccountEntity().getRealName());
-                            tvWeek.setText(GetDateUtils.dateToWeek(bean.getCreateTime()));
+                            tvWeek.setText(DateUtil.parse(bean.getCreateTime()).dayOfWeekEnum().toChinese());
 
                             // 是否显示认领
                             if (bean.getAssigneeUserId().equals(WorkerApplication.get().getUserId()) && mOrderStatus == 0) {

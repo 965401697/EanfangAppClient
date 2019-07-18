@@ -30,11 +30,9 @@ import com.eanfang.biz.model.ZdBusinessCertification;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseActivity;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.RecognizeService;
 import com.eanfang.util.StringUtils;
-import com.eanfang.util.UuidUtil;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.fragment.ContactsFragment;
@@ -42,11 +40,12 @@ import net.eanfang.worker.ui.fragment.ContactsFragment;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author WQ
@@ -165,8 +164,8 @@ public class BusinessCertificationActivity extends BaseActivity {
         View view = getLayoutInflater().inflate(R.layout.activity_dialog_date, null);
         CalendarView datePicker = view.findViewById(R.id.calendarView);
         datePicker.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
-            date = new GregorianCalendar(year, month, dayOfMonth).getTime();
-            clRqLrv.setText(GetDateUtils.dateToDateString(date));
+            date = DateUtil.parse(year + "-" + month + "-" + dayOfMonth);
+            clRqLrv.setText(DateUtil.date(date).toDateStr());
         });
         new AlertDialog.Builder(this).setView(view).setCancelable(false).setPositiveButton("确定", (dialogInterface, i) -> {
             dialogInterface.dismiss();
@@ -282,7 +281,7 @@ public class BusinessCertificationActivity extends BaseActivity {
                     result -> {
                         String fileString = new File(getApplication().getFilesDir(), "pic.jpg").getAbsolutePath();
                         Bitmap bitmap = BitmapFactory.decodeFile(fileString);
-                        String imgKey = UuidUtil.getUUID() + ".jpg";
+                        String imgKey = StrUtil.uuid() + ".jpg";
                         SDKManager.ossKit(this).asyncPutImage(imgKey, fileString, (isSuccess) -> {
                         });
                         ivUploadlogo.setImageBitmap(bitmap);

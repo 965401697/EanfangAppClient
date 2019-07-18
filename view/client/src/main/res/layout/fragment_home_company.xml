@@ -7,7 +7,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rec_home_company"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_720"
+        android:layout_height="wrap_content"
         android:clipChildren="false" />
 
     <TextView

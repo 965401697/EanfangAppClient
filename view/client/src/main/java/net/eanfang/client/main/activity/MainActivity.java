@@ -49,7 +49,6 @@ import net.eanfang.client.ui.fragment.ContactsFragment;
 import net.eanfang.client.ui.fragment.HomeFragment;
 import net.eanfang.client.ui.fragment.MyFragment;
 import net.eanfang.client.ui.fragment.WorkspaceFragment;
-import net.eanfang.client.ui.receiver.ReceiverInit;
 
 import org.greenrobot.eventbus.Subscribe;
 
@@ -305,7 +304,7 @@ public class MainActivity extends BaseActivity {
         XGPushConfig.setMzPushAppId(MainActivity.this, MEIZU_APPID_CLIENT);
         XGPushConfig.setMzPushAppKey(MainActivity.this, MEIZU_APPKEY_CLIENT);
 //        ReceiverInit.getInstance().inits(MainActivity.this, BaseApplication.get().getAccount().getMobile());
-        ReceiverInit.getInstance().inits(MainActivity.this, ClientApplication.get().getLoginBean().getAccount().getMobile());
+//        ReceiverInit.getInstance().inits(MainActivity.this, ClientApplication.get().getLoginBean().getAccount().getMobile());
     }
 
     private void initData() {

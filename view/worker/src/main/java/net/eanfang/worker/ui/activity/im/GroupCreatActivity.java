@@ -20,7 +20,6 @@ import com.eanfang.biz.model.GroupCreatBean;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.ToastUtil;
-import com.eanfang.util.UuidUtil;
 import com.eanfang.util.compound.CompoundHelper;
 import com.luck.picture.lib.entity.LocalMedia;
 
@@ -38,6 +37,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.util.StrUtil;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Group;
 
@@ -60,7 +60,7 @@ public class GroupCreatActivity extends BaseWorkeActivity {
 
             if (!TextUtils.isEmpty(path)) {
                 GlideUtil.intoImageView(GroupCreatActivity.this, "file://" + path, ivIcon);
-                imgKey = "im/group/" + UuidUtil.getUUID() + ".png";
+                imgKey = "im/group/" + StrUtil.uuid() + ".png";
 
             }
 
@@ -157,7 +157,7 @@ public class GroupCreatActivity extends BaseWorkeActivity {
     IPictureCallBack iPictureCallBack = new IPictureCallBack() {
         @Override
         public void onSuccess(List<LocalMedia> list) {
-            imgKey = "im/group/" + UuidUtil.getUUID() + ".png";
+            imgKey = "im/group/" + StrUtil.uuid() + ".png";
             GlideUtil.intoImageView(GroupCreatActivity.this, "file://" + list.get(0).getPath(), ivIcon);
             SDKManager.ossKit(GroupCreatActivity.this).asyncPutImage(imgKey, list.get(0).getPath(),(isSuccess) -> {});
         }

@@ -17,7 +17,6 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.StringUtils;
-import com.eanfang.util.UuidUtil;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.yaf.base.entity.ExpertsCertificationEntity;
 
@@ -30,8 +29,15 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
-
+/**
+ * 已废弃
+ *
+ * @author jornl
+ * @date 2019-07-17 14:44:10
+ */
+@Deprecated
 public class SpecialistIdentityCardCertification extends BaseWorkeActivity {
     //身份证正面
     private final int ID_CARD_FRONT = 101;
@@ -98,7 +104,7 @@ public class SpecialistIdentityCardCertification extends BaseWorkeActivity {
     IPictureCallBack iPictureCallBack = new IPictureCallBack() {
         @Override
         public void onSuccess(List<LocalMedia> list) {
-            String imgKey = UuidUtil.getUUID() + ".png";
+            String imgKey = StrUtil.uuid() + ".png";
             switch (states) {
                 // 身份证正面
                 case ID_CARD_FRONT:
@@ -118,7 +124,7 @@ public class SpecialistIdentityCardCertification extends BaseWorkeActivity {
             }
             SDKManager.ossKit(SpecialistIdentityCardCertification.this).asyncPutImage(imgKey, list.get(0).getPath(), (isSuccess) -> {
             });
-            states=0;
+            states = 0;
         }
     };
 
@@ -164,7 +170,7 @@ public class SpecialistIdentityCardCertification extends BaseWorkeActivity {
     private void closeActivity() {
         WorkerApplication.get().closeActivity(SpecialistCertificationActivity.class);
         WorkerApplication.get().closeActivity(SpecialistIdentityCardCertification.class);
-       finish();
+        finish();
     }
 
 }

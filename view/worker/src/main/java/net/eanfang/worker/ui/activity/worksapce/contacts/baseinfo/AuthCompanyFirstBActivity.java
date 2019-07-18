@@ -20,7 +20,6 @@ import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.IPictureCallBack;
-import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
@@ -36,7 +35,6 @@ import com.eanfang.util.GlideUtil;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
-import com.eanfang.util.UuidUtil;
 import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.worker.R;
@@ -49,6 +47,7 @@ import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author WQ
@@ -165,7 +164,7 @@ public class AuthCompanyFirstBActivity extends BaseWorkeActivity {
     IPictureCallBack iPictureCallBack = new IPictureCallBack() {
         @Override
         public void onSuccess(List<LocalMedia> list) {
-            String imgKey = "org/" + UuidUtil.getUUID() + ".png";
+            String imgKey = "org/" + StrUtil.uuid() + ".png";
             infoBean.setLogoPic(imgKey);
             GlideUtil.intoImageView(AuthCompanyFirstBActivity.this, "file://" + list.get(0).getPath(), ivUpload2);
             SDKManager.ossKit(AuthCompanyFirstBActivity.this).asyncPutImage(imgKey, list.get(0).getPath(), (isSuccess) -> {

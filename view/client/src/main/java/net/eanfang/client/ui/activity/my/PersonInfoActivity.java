@@ -35,11 +35,9 @@ import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.biz.model.entity.AccountEntity;
 
 import com.eanfang.ui.activity.SelectAddressActivity;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.StringUtils;
-import com.eanfang.util.UuidUtil;
 import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.client.R;
@@ -48,11 +46,12 @@ import net.eanfang.client.ui.activity.worksapce.OwnDataHintActivity;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.UserInfo;
 
@@ -62,7 +61,7 @@ import io.rong.imlib.model.UserInfo;
  * Created by Administrator on 2017/3/15.
  */
 
-public class PersonInfoActivity extends BaseActivity  {
+public class PersonInfoActivity extends BaseActivity {
 
     private static final int SELECT_ADDRESS_CALL_BACK_CODE = 1;
     /**
@@ -151,7 +150,7 @@ public class PersonInfoActivity extends BaseActivity  {
      * 申请拍照权限
      */
     private void initPermission() {
-        RxPerm.get(this).cameraPerm((isSuccess)->{
+        RxPerm.get(this).cameraPerm((isSuccess) -> {
 
         });
     }
@@ -192,10 +191,11 @@ public class PersonInfoActivity extends BaseActivity  {
     private void headImage() {
         SDKManager.getPicture().create(this).takePhoto(iPictureCallBack);
     }
-    IPictureCallBack iPictureCallBack=new IPictureCallBack() {
+
+    IPictureCallBack iPictureCallBack = new IPictureCallBack() {
         @Override
         public void onSuccess(List<LocalMedia> list) {
-            String imgKey = "account/" + UuidUtil.getUUID() + ".png";
+            String imgKey = "account/" + StrUtil.uuid() + ".png";
             GlideUtil.intoImageView(PersonInfoActivity.this, "file://" + list.get(0).getPath(), ivUpload);
             SDKManager.ossKit(PersonInfoActivity.this).asyncPutImage(imgKey, list.get(0).getPath(), (isSuccess) -> {
                 LoginBean entity = ClientApplication.get().getLoginBean();
@@ -205,6 +205,7 @@ public class PersonInfoActivity extends BaseActivity  {
             });
         }
     };
+
     /**
      * 设置性别按钮的选中状态
      */
@@ -261,7 +262,7 @@ public class PersonInfoActivity extends BaseActivity  {
         }
         //生日
         if (accountEntity.getBirthday() != null) {
-            mTvBirthday.setText(GetDateUtils.dateToDateString(accountEntity.getBirthday()));
+            mTvBirthday.setText(DateUtil.date(accountEntity.getBirthday()).toDateStr());
         }
         //gender = 1表示男的
         mIsMan = accountEntity.getGender() == null
@@ -330,7 +331,7 @@ public class PersonInfoActivity extends BaseActivity  {
         accountEntity.setGender(mIsMan ? 1 : 0);
         String address = etAddress.getText().toString().trim();
         accountEntity.setAddress(address);
-        accountEntity.setBirthday(GetDateUtils.getYeanDate(mTvBirthday.getText().toString()));
+        accountEntity.setBirthday(DateUtil.parse(mTvBirthday.getText().toString()));
         accountEntity.setPersonalNote(mEtPersonalNote.getText().toString());
         if (!StringUtils.isEmpty(city) && !StringUtils.isEmpty(contry)) {
             accountEntity.setAreaCode(Config.get().getAreaCodeByName(city, contry));
@@ -408,7 +409,7 @@ public class PersonInfoActivity extends BaseActivity  {
     private void setBirthday(View v) {
         Date date;
         if (!StringUtils.isEmpty(mTvBirthday.getText())) {
-            date = GetDateUtils.getYeanDate(mTvBirthday.getText().toString());
+            date = DateUtil.parse(mTvBirthday.getText().toString());
         } else {
             date = new Date();
         }
@@ -420,8 +421,7 @@ public class PersonInfoActivity extends BaseActivity  {
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                mTvBirthday.setText(GetDateUtils.dateToDateString(new GregorianCalendar
-                        (year, month, dayOfMonth).getTime()));
+                mTvBirthday.setText(DateUtil.parse(year + "-" + month + "-" + dayOfMonth).toDateStr());
             }
         }, year, month, day);
         datePickerDialog.show();

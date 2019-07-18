@@ -7,7 +7,6 @@ import android.widget.ImageView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.base.kit.V;
@@ -16,6 +15,8 @@ import com.yaf.base.entity.ShopMaintenanceExamResultEntity;
 import net.eanfang.client.R;
 
 import androidx.annotation.RequiresApi;
+
+import cn.hutool.core.date.DateUtil;
 
 
 /**
@@ -56,7 +57,7 @@ public class MaintenanceHandeCheckAdapter extends BaseQuickAdapter<ShopMaintenan
             helper.setVisible(R.id.rl_delete, true);
         }
 
-        helper.setText(R.id.tv_date, GetDateUtils.dateToDateTimeString(item.getTime()));
+        helper.setText(R.id.tv_date, DateUtil.date(item.getTime()).toString());
         helper.setText(R.id.tv_question, "存在问题：" + item.getExistQuestions());
         helper.setText(R.id.tv_handle, "处理过程：" + item.getDisposeCourse());
         helper.setText(R.id.tv_notice, "备注信息：" + item.getInfo());

@@ -1,6 +1,5 @@
 package net.eanfang.worker.ui.activity.my.certification;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -10,18 +9,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.lifecycle.ViewModel;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSONObject;
-import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
-import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.base.kit.picture.picture.PictureRecycleView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
@@ -43,6 +38,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.date.DateUtil;
 
 /**
  * 教育经历
@@ -156,7 +152,7 @@ public class AddEducationHistoryActivity extends BaseWorkeActivity {
                         String textString = String.format("%d-%d-%d～%d-%d-%d", startYear, startMonthOfYear + 1, startDayOfMonth, endYear, endMonthOfYear + 1, endDayOfMonth);
                         String startTime = String.format("%d-%d-%d", startYear, startMonthOfYear + 1, startDayOfMonth);
                         String endTime = String.format("%d-%d-%d", endYear, endMonthOfYear + 1, endDayOfMonth);
-                        if (GetDateUtils.getTimeStamp(startTime, "yyyy-MM-dd") > GetDateUtils.getTimeStamp(endTime, "yyyy-MM-dd")) {
+                        if (DateUtil.parse(startTime,"yyyy-M-dd").getTime() > DateUtil.parse(endTime,"yyyy-M-dd").getTime()) {
                             ToastUtil.get().showToast(AddEducationHistoryActivity.this, "开始时间不能大于结束时间");
                             return;
                         }
@@ -205,8 +201,8 @@ public class AddEducationHistoryActivity extends BaseWorkeActivity {
         entity.setDiploma(GetConstDataUtils.getDiplomaList().indexOf(tvEducation.getText().toString().trim()));
         entity.setCertificateNumber(etNum.getText().toString().trim());
         if (!StringUtils.isEmpty(tvTime.getText().toString().trim())) {
-            entity.setBeginTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[0], "yyyy-MM-dd"));
-            entity.setEndTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[1], "yyyy-MM-dd"));
+            entity.setBeginTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[0], "yyyy-M-dd"));
+            entity.setEndTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[1], "yyyy-M-dd"));
         }
         pic = PhotoUtils.getPhotoUrl("", selectList, uploadMap, false);
         entity.setCertificatePics(pic);

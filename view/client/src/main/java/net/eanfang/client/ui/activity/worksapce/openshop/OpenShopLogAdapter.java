@@ -4,10 +4,11 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.util.GetDateUtils;
 import com.yaf.base.entity.OpenShopLogEntity;
 
 import net.eanfang.client.R;
+
+import cn.hutool.core.date.DateUtil;
 
 /**
  * Created by O u r on 2018/5/22.
@@ -41,7 +42,7 @@ public class OpenShopLogAdapter extends BaseQuickAdapter<OpenShopLogEntity, Base
 //            helper.setText(R.id.tv_state, "已读");
 //        }
         helper.setText(R.id.tv_order_id, item.getOrderNumber());
-        helper.setText(R.id.tv_create_time, GetDateUtils.dateToFormatString(item.getCreateTime(), "yyyy-MM-dd HH:mm:ss"));
+        helper.setText(R.id.tv_create_time, DateUtil.date(item.getCreateTime()).toString());
         helper.setText(R.id.tv_person_name, item.getAssigneeUser().getAccountEntity().getRealName());
         helper.setText(R.id.tv_preson_phone, item.getAssigneeUser().getAccountEntity().getMobile());
 

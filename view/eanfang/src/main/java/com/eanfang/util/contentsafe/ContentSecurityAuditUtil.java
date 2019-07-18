@@ -4,10 +4,12 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.base.BaseApplication;
+import com.eanfang.base.network.holder.ToastHolder;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.ContentSecruityBean;
 import com.eanfang.model.ContentSecruityTokenBean;
 import com.eanfang.util.StringUtils;
+import com.eanfang.util.ToastUtil;
 import com.okgo.callback.StringCallback;
 import com.okgo.model.Response;
 
@@ -86,16 +88,16 @@ public class ContentSecurityAuditUtil {
                         String body = response.body();
                         ContentSecruityBean bean = JSONObject.toJavaObject
                                 (JSONObject.parseObject(body), ContentSecruityBean.class);
-                        if (bean != null && bean.getResult() != null && bean.getResult().getSpam() == 1) {
+                        if (bean.getResult().getSpam() == 1) {
                             List<ContentSecruityBean.ResultBean.AuditBean> auditBeans = bean.getResult().getReject();
-                            for (ContentSecruityBean.ResultBean.AuditBean auditBean : auditBeans) {
-                                if (auditBean.getHit() != null && auditBean.getHit().size() > 0) {
-                                    if (mListener != null) {
-                                        mListener.auditingFail(auditBean.getHit().get(0));
-                                    }
-                                    break;
-                                }
+
+//                            for (ContentSecruityBean.ResultBean.AuditBean auditBean : auditBeans) {
+//                                if (auditBean.getHit() != null && auditBean.getHit().size() > 0) {
+                            if (mListener != null) {
+                                mListener.auditingFail(content);
                             }
+//                                }
+//                            }
                         } else {
                             if (mListener != null) {
                                 mListener.auditingSuccess();
@@ -110,14 +112,14 @@ public class ContentSecurityAuditUtil {
     /**
      * 对外暴露的审核方法
      *
-     * @param content 内容
+     * @param content  内容
      * @param listener 内容审核回调
      */
     public void toAuditing(String content, ContentAuditingListener listener) {
         this.mListener = listener;
         long currentTime = System.currentTimeMillis() / 1000;
         long saveTime = Long.valueOf(BaseApplication.get().get(SP_SAVE_TIME_KEY, 0));
-        String saveToken = (String) BaseApplication.get().get(SP_SAVE_TOKEN_KEY,String.class);
+        String saveToken = (String) BaseApplication.get().get(SP_SAVE_TOKEN_KEY, String.class);
         if (saveTime > currentTime && !StringUtils.isEmpty(saveToken)) {
             spamContent(saveToken, content);
         } else {

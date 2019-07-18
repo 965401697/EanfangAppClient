@@ -211,7 +211,7 @@ public class AddDealwithInfoActivity extends BaseWorkerActivity {
                 if (ivTakevideoWork.getVisibility() == View.INVISIBLE) {
                     ivTakevideoWork.setVisibility(View.VISIBLE);
                 }
-                GlideUtil.intoImageView(this,PhotoUtils.getVideoThumbnail(mVieoPath, 100, 100, MINI_KIND),ivTakevideoWork);
+                GlideUtil.intoImageView(this,PhotoUtils.getVideoBitmap(mVieoPath),ivTakevideoWork);
             }
         }
     }

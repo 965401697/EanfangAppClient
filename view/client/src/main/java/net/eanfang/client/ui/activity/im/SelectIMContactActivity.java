@@ -9,7 +9,6 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -28,7 +27,6 @@ import com.eanfang.biz.model.TemplateBean;
 import com.eanfang.util.DialogUtil;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.ToastUtil;
-import com.eanfang.util.UuidUtil;
 import com.eanfang.util.compound.CompoundHelper;
 import com.eanfang.biz.model.entity.OrgEntity;
 
@@ -53,6 +51,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
@@ -109,7 +108,7 @@ public class SelectIMContactActivity extends BaseClientActivity {
             } else {
                 path = (String) message;
                 if (!TextUtils.isEmpty(path)) {
-                    imgKey = "im/select/" + UuidUtil.getUUID() + ".png";
+                    imgKey = "im/select/" + StrUtil.uuid() + ".png";
                     creatGroup();
                 }
             }
@@ -123,7 +122,7 @@ public class SelectIMContactActivity extends BaseClientActivity {
             String path = (String) msg.obj;
 
             if (!TextUtils.isEmpty(path)) {
-                String inageKey = "im/group/" + UuidUtil.getUUID() + ".png";
+                String inageKey = "im/group/" + StrUtil.uuid() + ".png";
                 SDKManager.ossKit(SelectIMContactActivity.this).asyncPutImage(inageKey, path,(isSuccess) -> {
                     updataGroupInfo(mTitle, inageKey, "", "");
                 });

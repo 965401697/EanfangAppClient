@@ -1,7 +1,6 @@
 package net.eanfang.worker.ui.activity.worksapce.repair.seefaultdetail;
 
 import android.content.Intent;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.core.content.ContextCompat;
@@ -26,7 +25,6 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.TemplateBean;
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
@@ -50,6 +48,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.date.DateUtil;
 
 /**
  * Created by MrHou
@@ -440,7 +439,7 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
         tvNoHistory.setVisibility(View.GONE);
         GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + transferLogEntity.getOriginalUserEntity().getAccountEntity().getAvatar()),ivHeader);
         tvOrderNum.setText(transferLogEntity.getOrderNum() + "");
-        tvOrderTime.setText(GetDateUtils.dateToDateTimeString(transferLogEntity.getCreateTime()));
+        tvOrderTime.setText(DateUtil.date(transferLogEntity.getCreateTime()).toString());
         tvOrderReason.setText(GetConstDataUtils.getTransferCauseList().get(transferLogEntity.getCause()));
     }
 

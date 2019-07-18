@@ -4,9 +4,10 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.biz.model.entity.tender.TaskApplyEntity;
 import com.eanfang.config.Config;
-import com.eanfang.util.GetDateUtils;
 
 import net.eanfang.worker.R;
+
+import cn.hutool.core.date.DateUtil;
 
 /**
  * @author guanluocang
@@ -33,7 +34,7 @@ public class WorkTenderBidAdapter extends BaseQuickAdapter<TaskApplyEntity, Base
         //类型
         helper.setText(R.id.tv_tender_type, Config.get().getBaseNameByCode(item.getTaskPublishEntity().getBusinessOneCode(), 2));
         // 时间
-        helper.setText(R.id.tv_tender_time, GetDateUtils.dateToDateTimeString(item.getCreateTime()));
+        helper.setText(R.id.tv_tender_time, DateUtil.date(item.getCreateTime()).toString());
         // 订单编号
         helper.setText(R.id.tv_tender_number, item.getApplyNum());
         //招标单位

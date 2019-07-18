@@ -32,7 +32,6 @@ import com.eanfang.util.JumpItent;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
-import com.eanfang.util.UuidUtil;
 import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.worker.R;
@@ -48,6 +47,7 @@ import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * Created by MrHou
@@ -381,7 +381,7 @@ public class AuthWorkerInfoActivity extends BaseWorkeActivity {
         @Override
         public void onSuccess(List<LocalMedia> list) {
 
-            String imgKey = "account/"+UuidUtil.getUUID() + ".png";
+            String imgKey = "account/"+ StrUtil.uuid() + ".png";
             workerInfoBean.setAvatarPhoto(imgKey);
             GlideUtil.intoImageView(AuthWorkerInfoActivity.this,"file://" + list.get(0).getPath(),ivHeader);
             SDKManager.ossKit(AuthWorkerInfoActivity.this).asyncPutImage(imgKey, list.get(0).getPath(), (isSuccess) -> {});

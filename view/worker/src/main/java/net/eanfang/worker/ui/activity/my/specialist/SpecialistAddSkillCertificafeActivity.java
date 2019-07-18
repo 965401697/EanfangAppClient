@@ -1,6 +1,5 @@
 package net.eanfang.worker.ui.activity.my.specialist;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -11,14 +10,11 @@ import android.widget.TextView;
 import androidx.lifecycle.ViewModel;
 
 import com.alibaba.fastjson.JSONObject;
-import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.picture.PictureRecycleView;
-import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
@@ -39,6 +35,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.date.DateUtil;
 
 public class SpecialistAddSkillCertificafeActivity extends BaseWorkeActivity {
 
@@ -119,8 +116,8 @@ public class SpecialistAddSkillCertificafeActivity extends BaseWorkeActivity {
         entity.setCertificateName(etCertificateName.getText().toString().trim());
         entity.setAwardOrg(etOrg.getText().toString().trim());
         entity.setAccId(WorkerApplication.get().getAccId());
-        entity.setBeginTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[0], "yyyy-MM-dd"));
-        entity.setEndTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[1], "yyyy-MM-dd"));
+        entity.setBeginTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[0], "yyyy-M-dd"));
+        entity.setEndTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[1], "yyyy-M-dd"));
         entity.setCertificateLevel(etLevel.getText().toString().trim());
         entity.setCertificateNumber(etNum.getText().toString().trim());
         entity.setCertificatePics(pic);
@@ -190,7 +187,7 @@ public class SpecialistAddSkillCertificafeActivity extends BaseWorkeActivity {
                         String textString = String.format("%d-%d-%d～%d-%d-%d", startYear, startMonthOfYear + 1, startDayOfMonth, endYear, endMonthOfYear + 1, endDayOfMonth);
                         String startTime = String.format("%d-%d-%d", startYear, startMonthOfYear + 1, startDayOfMonth);
                         String endTime = String.format("%d-%d-%d", endYear, endMonthOfYear + 1, endDayOfMonth);
-                        if (GetDateUtils.getTimeStamp(startTime, "yyyy-MM-dd") > GetDateUtils.getTimeStamp(endTime, "yyyy-MM-dd")) {
+                        if (DateUtil.parse(startTime,"yyyy-M-dd").getTime()>DateUtil.parse(endTime,"yyyy-M-dd").getTime()) {
                             ToastUtil.get().showToast(SpecialistAddSkillCertificafeActivity.this, "开始时间不能大于结束时间");
                             return;
                         }

@@ -14,7 +14,6 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 import com.yaf.base.entity.OpenShopLogEntity;
 
@@ -24,6 +23,7 @@ import net.eanfang.client.ui.base.BaseClientActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.date.DateUtil;
 
 public class OpenShopLogDetailActivity extends BaseClientActivity {
 
@@ -112,9 +112,9 @@ public class OpenShopLogDetailActivity extends BaseClientActivity {
         tvSection.setText(bean.getOwnerDepartment().getOrgName());
 
 
-        String[] date = GetDateUtils.dateToDateString(bean.getCreateTime()).split("-");
+        String[] date = DateUtil.date(bean.getCreateTime()).toDateStr().split("-");
         tvYear.setText(date[0] + "-" + date[1]);
-        tvWeek.setText(GetDateUtils.dateToWeek(GetDateUtils.dateToDateString(bean.getCreateTime())));
+        tvWeek.setText(DateUtil.date(bean.getCreateTime()).dayOfWeekEnum().toChinese());
         tvData.setText(date[2]);
         long workTime = bean.getEmpExitTime().getTime() - bean.getEmpEntryTime().getTime();
         if (!TextUtils.isEmpty(formatTime(workTime))) {
@@ -139,12 +139,12 @@ public class OpenShopLogDetailActivity extends BaseClientActivity {
         tvCompanyName.setText(bean.getOwnerCompany().getOrgName());
         tvAcceptPreson.setText(bean.getAssigneeUser().getAccountEntity().getRealName());
         tvAcceptPhone.setText(bean.getAssigneeUser().getAccountEntity().getMobile());
-        tvStaffInTime.setText(GetDateUtils.dateToDateTimeString(bean.getEmpEntryTime()));
-        tvStaffOutTime.setText(GetDateUtils.dateToDateTimeString(bean.getEmpExitTime()));
-        tvClientInTime.setText(GetDateUtils.dateToDateTimeString(bean.getCusEntryTime()));
-        tvClientOutTime.setText(GetDateUtils.dateToDateTimeString(bean.getCusExitTime()));
-        tvOpenTime.setText(GetDateUtils.dateToDateTimeString(bean.getRecYardStaTime()));
-        tvCloseTime.setText(GetDateUtils.dateToDateTimeString(bean.getRecYardEndTime()));
+        tvStaffInTime.setText(DateUtil.date(bean.getEmpEntryTime()).toString());
+        tvStaffOutTime.setText(DateUtil.date(bean.getEmpExitTime()).toString());
+        tvClientInTime.setText(DateUtil.date(bean.getCusEntryTime()).toString());
+        tvClientOutTime.setText(DateUtil.date(bean.getCusExitTime()).toString());
+        tvOpenTime.setText(DateUtil.date(bean.getRecYardStaTime()).toString());
+        tvCloseTime.setText(DateUtil.date(bean.getRecYardEndTime()).toString());
 
         evFaultDescripte.setText(bean.getRemarkInfo());
     }
@@ -163,7 +163,7 @@ public class OpenShopLogDetailActivity extends BaseClientActivity {
 
                     bundle.putString("id", String.valueOf(bean.getId()));
                     bundle.putString("orderNum", bean.getOrderNumber());
-                    bundle.putString("creatTime", GetDateUtils.dateToDateTimeStringForChinse(bean.getCreateTime()));
+                    bundle.putString("creatTime", DateUtil.date(bean.getCreateTime()).toString("yyyy年MM月dd日 HH:mm:ss"));
                     bundle.putString("workerName", bean.getAssigneeUser().getAccountEntity().getRealName());
                     bundle.putString("status", String.valueOf(bean.getStatus()));
                     bundle.putString("shareType", "8");

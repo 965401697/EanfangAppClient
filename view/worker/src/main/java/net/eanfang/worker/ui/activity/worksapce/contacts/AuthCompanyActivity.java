@@ -35,7 +35,6 @@ import com.eanfang.util.PermKit;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.StringUtils;
-import com.eanfang.util.UuidUtil;
 import com.eanfang.biz.model.entity.BaseDataEntity;
 import com.luck.picture.lib.entity.LocalMedia;
 
@@ -47,6 +46,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * Created by MrHou
@@ -199,7 +199,7 @@ private int state=0;
     IPictureCallBack iPictureCallBack = new IPictureCallBack() {
         @Override
         public void onSuccess(List<LocalMedia> list) {
-            String imgKey = UuidUtil.getUUID() + ".png";
+            String imgKey = StrUtil.uuid() + ".png";
 
             if (state == LICENSE_CALLBACK_CODE) {
                 infoBean.setLicensePic(imgKey);

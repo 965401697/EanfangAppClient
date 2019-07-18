@@ -15,7 +15,6 @@ import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.WorkTaskInfoBean;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 
 import net.eanfang.client.R;
@@ -27,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.date.DateUtil;
 
 public class TaskDetailActivity extends BaseClientActivity {
 
@@ -106,7 +106,7 @@ public class TaskDetailActivity extends BaseClientActivity {
                             tvSection.setText(bean.getCreateOrg().getOrgName());
                             tvDate.setText(bean.getCreateTime());
                             tvName.setText(bean.getCreateUser().getAccountEntity().getRealName());
-                            tvWeek.setText(GetDateUtils.dateToWeek(bean.getCreateTime()));
+                            tvWeek.setText(DateUtil.parse(bean.getCreateTime()).dayOfWeekEnum().toChinese());
                             tvCheckTitle.setText(bean.getTitle());
 
                             for (int i = 0; i < bean.getWorkTaskDetails().size(); i++) {

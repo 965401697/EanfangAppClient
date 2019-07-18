@@ -24,7 +24,6 @@ import com.eanfang.biz.model.TemplateBean;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
 import com.eanfang.util.DialogUtil;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.yaf.base.entity.LogDetailsEntity;
@@ -54,8 +53,10 @@ import java.util.Set;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.date.DateUtil;
 
 public class DefendLogWriteActivity extends BaseClientActivity implements View.OnClickListener, SelectTimeDialogFragment.SelectTimeListener {
 
@@ -348,7 +349,7 @@ public class DefendLogWriteActivity extends BaseClientActivity implements View.O
         }
 
 
-        if (GetDateUtils.getTimeStamp(tvCloseTime.getText().toString().trim(), "yyyy-MM-dd hh:mm:ss") <= GetDateUtils.getTimeStamp(tvOpenTime.getText().toString().trim(), "yyyy-MM-dd hh:mm:ss")) {
+        if (DateUtil.parse(tvCloseTime.getText().toString().trim()).getTime() <= DateUtil.parse(tvOpenTime.getText().toString().trim()).getTime()) {
             Toast.makeText(this, "关闭时间不能小于开启时间", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -364,7 +365,7 @@ public class DefendLogWriteActivity extends BaseClientActivity implements View.O
             object.put("ownerTopCompanyId", ClientApplication.get().getTopCompanyId());
             object.put("ownerOrgCode", ClientApplication.get().getOrgCode());
 
-            object.put("createUserId",ClientApplication.get().getUserId());
+            object.put("createUserId", ClientApplication.get().getUserId());
             if (newPresonList.size() == 0) {
                 //工作协同默认值
                 object.put("assigneeUserId", ClientApplication.get().getUserId());
@@ -440,7 +441,7 @@ public class DefendLogWriteActivity extends BaseClientActivity implements View.O
                     b.putString("id", String.valueOf(bean.getId()));
                     b.putString("orderNum", bean.getOrderNumber());
 
-                    b.putString("creatTime", GetDateUtils.dateToDateTimeStringForChinse(bean.getCreateTime()));
+                    b.putString("creatTime", DateUtil.date(bean.getCreateTime()).toString("yyyy年MM月dd日 HH:mm:ss"));
 //                    b.putString("workerName", bean.getCreateTime());
                     b.putString("status", "0");
                     b.putString("shareType", "9");

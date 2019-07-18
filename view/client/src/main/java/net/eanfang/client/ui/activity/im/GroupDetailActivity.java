@@ -32,11 +32,8 @@ import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.ToastUtil;
-import com.eanfang.util.UuidUtil;
 import com.eanfang.witget.MyGridView;
 import com.eanfang.witget.SwitchButton;
-import com.jph.takephoto.model.TImage;
-import com.jph.takephoto.model.TResult;
 import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.client.R;
@@ -53,6 +50,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.util.StrUtil;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
@@ -364,7 +362,7 @@ public class GroupDetailActivity extends BaseClienActivity {
     IPictureCallBack iPictureCallBack = new IPictureCallBack() {
         @Override
         public void onSuccess(List<LocalMedia> list) {
-            headPortrait = "im/select/CUSTOM_" + UuidUtil.getUUID() + ".png";
+            headPortrait = "im/select/CUSTOM_" + StrUtil.uuid() + ".png";
             GlideUtil.intoImageView(GroupDetailActivity.this, "file://" + list.get(0).getPath(), groupHeader);
             SDKManager.ossKit(GroupDetailActivity.this).asyncPutImage(headPortrait, list.get(0).getPath(), (isSuccess) -> {
                 updataGroupInfo(title, headPortrait, "", "");

@@ -5,11 +5,12 @@ import android.graphics.Color;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.biz.model.NoticeEntity;
-import com.eanfang.util.GetDateUtils;
 
 import net.eanfang.worker.R;
 
 import java.util.List;
+
+import cn.hutool.core.date.DateUtil;
 
 
 /**
@@ -27,7 +28,7 @@ public class MessageListAdapter extends BaseQuickAdapter<NoticeEntity, BaseViewH
 
         helper.setText(R.id.tv_titles, item.getTitle());
         helper.setText(R.id.tv_content, item.getContent());
-        helper.setText(R.id.tv_detailTime, GetDateUtils.dateToDateTimeString(item.getCreateTime()));
+        helper.setText(R.id.tv_detailTime, DateUtil.date(item.getCreateTime()).toString());
 
         // 0 未读  1 已读
         if (item.getStatus() == 0) {

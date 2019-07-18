@@ -9,7 +9,6 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.OrderProgressBean;
 import com.eanfang.ui.base.BaseFragment;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
@@ -21,6 +20,8 @@ import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import cn.hutool.core.date.DateUtil;
 
 /**
  * Created by MrHou
@@ -74,9 +75,9 @@ public class OrderProgressFragment extends BaseFragment {
         mTvWeek = findViewById(R.id.tv_weeks);
         mTvTime = findViewById(R.id.tv_time);
         if (!StringUtils.isEmpty(mOrderTime)) {
-            mTvTime.setText(mOrderTime.substring(11));
-            mTvData.setText(mOrderTime.substring(5, 10));
-            mTvWeek.setText(GetDateUtils.dateToWeek(mOrderTime.substring(0, 10)));
+            mTvTime.setText(DateUtil.parse(mOrderTime).toTimeStr());
+            mTvData.setText(DateUtil.parse(mOrderTime).toDateStr());
+            mTvWeek.setText(DateUtil.parse(mOrderTime).dayOfWeekEnum().toChinese());
         }
     }
 

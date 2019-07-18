@@ -17,7 +17,6 @@ import com.eanfang.biz.model.GroupsBean;
 
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.ToastUtil;
-import com.eanfang.util.UuidUtil;
 import com.eanfang.util.compound.CompoundHelper;
 
 import net.eanfang.worker.R;
@@ -33,6 +32,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.util.StrUtil;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Group;
 
@@ -140,7 +140,7 @@ public class AddGroupActivity extends BaseWorkerActivity {
     private void join() {
         //把生成的图片 传到服务器 更新本地群组头像
         if (!TextUtils.isEmpty(mPath)) {
-            String inageKey = UuidUtil.getUUID() + ".png";
+            String inageKey = StrUtil.uuid() + ".png";
             SDKManager.ossKit(this).asyncPutImage(inageKey,mPath,(isSuccess) -> {
                 updataGroupInfo(mTitle, inageKey, "", "");
             });

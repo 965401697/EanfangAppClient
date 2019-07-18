@@ -258,7 +258,7 @@ public class SelectAddressActivity extends BaseActivity implements PoiSearch.OnP
     public void hideInput() {
         InputMethodManager imm = (InputMethodManager)
                 getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(SelectAddressActivity.this.getCurrentFocus().getWindowToken(), 0);
+        imm.hideSoftInputFromWindow(atvText.getWindowToken(), 0);
     }
 
     public void doSearchQuery(String keywords, LatLng latLng) {

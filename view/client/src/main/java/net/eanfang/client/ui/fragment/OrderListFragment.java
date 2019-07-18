@@ -14,7 +14,6 @@ import com.eanfang.biz.model.RepairedOrderBean;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.QueryEntry;
@@ -35,6 +34,8 @@ import java.util.Objects;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
+import cn.hutool.core.date.DateUtil;
 
 import static com.eanfang.config.EanfangConst.BOTTOM_REFRESH;
 import static com.eanfang.config.EanfangConst.TOP_REFRESH;
@@ -59,7 +60,7 @@ public class OrderListFragment extends BaseFragment implements
                 //刷新已读未读
                 ((RepairOrderEntity) adapter.getData().get(position)).setNewOrder(0);
                 adapter.notifyItemChanged(position);
-                intent.putExtra("orderTime", GetDateUtils.dateToDateTimeString(((RepairOrderEntity) adapter.getData().get(position)).getCreateTime()));
+                intent.putExtra("orderTime", DateUtil.date(((RepairOrderEntity) adapter.getData().get(position)).getCreateTime()).toString());
                 startActivity(intent);
             }
         }

@@ -15,7 +15,6 @@ import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.picture.PictureRecycleView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
@@ -36,6 +35,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.date.DateUtil;
 
 
 public class SpecialistAddWorkActivity extends BaseWorkeActivity {
@@ -116,8 +116,8 @@ public class SpecialistAddWorkActivity extends BaseWorkeActivity {
         entity.setCompanyName(etCompanyName.getText().toString().trim());
         entity.setJob(etPosition.getText().toString().trim());
         entity.setWorkplace(etJobPosition.getText().toString().trim());
-        entity.setBeginTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[0], "yyyy-MM-dd"));
-        entity.setEndTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[1], "yyyy-MM-dd"));
+        entity.setBeginTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[0], "yyyy-M-dd"));
+        entity.setEndTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[1], "yyyy-M-dd"));
         entity.setJobIntro(etCertificate.getText().toString().trim());
         entity.setCardPics(pic);
         entity.setType(1);
@@ -190,7 +190,7 @@ public class SpecialistAddWorkActivity extends BaseWorkeActivity {
                         String startTime = String.format("%d-%d-%d", startYear, startMonthOfYear + 1, startDayOfMonth);
                         String endTime = String.format("%d-%d-%d", endYear, endMonthOfYear + 1, endDayOfMonth);
 
-                        if (GetDateUtils.getTimeStamp(startTime, "yyyy-MM-dd") > GetDateUtils.getTimeStamp(endTime, "yyyy-MM-dd")) {
+                        if (DateUtil.parse(startTime,"yyyy-M-dd").getTime()>DateUtil.parse(endTime,"yyyy-M-dd").getTime()) {
                             ToastUtil.get().showToast(SpecialistAddWorkActivity.this, "开始时间不能大于结束时间");
 
                             return;

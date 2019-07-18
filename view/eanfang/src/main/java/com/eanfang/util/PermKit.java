@@ -1,6 +1,7 @@
 package com.eanfang.util;
 
 import android.content.Intent;
+
 import com.eanfang.base.BaseApplication;
 import com.eanfang.ui.activity.NoPermissionActivity;
 

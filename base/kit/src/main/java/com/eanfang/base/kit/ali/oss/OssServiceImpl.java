@@ -133,7 +133,7 @@ public class OssServiceImpl implements IOssService {
                     LoadKit.setText(loading, StrUtil.format("正在压缩图片 {}/{}", successCount.get(), objectMap.size()));
                     if (successCount.get() >= objectMap.size()) {
                         isCompress.setValue(true);
-                        LoadKit.setText(loading, "压缩成功");
+                        LoadKit.setText(loading, "上传中...");
                     }
                 });
     }

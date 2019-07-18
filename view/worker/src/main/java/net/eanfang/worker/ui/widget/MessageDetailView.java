@@ -6,12 +6,12 @@ import android.widget.TextView;
 
 import com.eanfang.biz.model.NoticeEntity;
 import com.eanfang.ui.base.BaseDialog;
-import com.eanfang.util.GetDateUtils;
 
 import net.eanfang.worker.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.date.DateUtil;
 
 /**
  * Created by MrHou
@@ -32,11 +32,13 @@ public class MessageDetailView extends BaseDialog {
     private NoticeEntity listBean;
     //回调函数
     private RefreshListener mRefreshListener;
+
     public MessageDetailView(Activity context, NoticeEntity listBean) {
         super(context);
         this.mContext = context;
         this.listBean = listBean;
     }
+
     public MessageDetailView(Activity context, NoticeEntity listBean, RefreshListener refreshListener) {
         super(context);
         this.mRefreshListener = refreshListener;
@@ -48,6 +50,7 @@ public class MessageDetailView extends BaseDialog {
     public interface RefreshListener {
         void refreshData();
     }
+
     @Override
     protected void initCustomView(Bundle savedInstanceState) {
         setContentView(R.layout.message_detail_view);
@@ -59,7 +62,7 @@ public class MessageDetailView extends BaseDialog {
         }
         tvMsgContent.setText("\n\t" + listBean.getContent() + "\r\n\t" + (extInfo != null ? extInfo : ""));
 
-        tvTime.setText(GetDateUtils.dateToDateTimeString(listBean.getCreateTime()));
+        tvTime.setText(DateUtil.date(listBean.getCreateTime()).toString());
     }
 
     @Override

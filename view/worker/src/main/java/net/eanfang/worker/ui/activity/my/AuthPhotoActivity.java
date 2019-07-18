@@ -17,7 +17,6 @@ import com.eanfang.biz.model.WorkerInfoBean;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
-import com.eanfang.util.UuidUtil;
 import com.luck.picture.lib.entity.LocalMedia;
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkeActivity;
@@ -28,6 +27,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author Guanluocang
@@ -170,7 +170,7 @@ public class AuthPhotoActivity extends BaseWorkeActivity {
     IPictureCallBack iPictureCallBack = new IPictureCallBack() {
         @Override
         public void onSuccess(List<LocalMedia> list) {
-            String imgKey = UuidUtil.getUUID() + ".png";
+            String imgKey = StrUtil.uuid() + ".png";
             if (front) {
                 workerInfoBean.setIdCardFront(imgKey);
                 GlideUtil.intoImageView(AuthPhotoActivity.this, "file://" + list.get(0).getPath(), ivIdCardFront);

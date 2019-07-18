@@ -28,8 +28,8 @@ import com.amap.api.services.weather.LocalWeatherLive;
 import com.amap.api.services.weather.LocalWeatherLiveResult;
 import com.amap.api.services.weather.WeatherSearch;
 import com.amap.api.services.weather.WeatherSearchQuery;
-import com.camera.util.BitmapUtil;
-import com.camera.util.ImageUtil;
+import com.eanfang.util.BitmapUtil;
+import com.eanfang.util.ImageUtil;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.V;
 import com.eanfang.base.kit.cache.CacheKit;
@@ -40,15 +40,12 @@ import com.eanfang.biz.model.SelectAddressItem;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.ConnectivityChangeUtil;
-import com.eanfang.util.GetDateUtils;
-import com.eanfang.util.GlideUtil;
 import com.eanfang.util.StringUtils;
 import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.base.BaseClienActivity;
-import net.eanfang.client.ui.base.BaseClientActivity;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -56,6 +53,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.date.DateUtil;
 
 
 /**
@@ -174,6 +172,7 @@ public class CameraActivity extends BaseClienActivity implements AMapLocationLis
         // 停止定位
         locationClient.stopLocation();
     }
+
     @Override
     public void initView() {
         super.initView();
@@ -313,7 +312,7 @@ public class CameraActivity extends BaseClienActivity implements AMapLocationLis
         @Override
         public void onSuccess(List<LocalMedia> list) {
             //往图片绘制文字
-            time = GetDateUtils.dateToDateTimeString(GetDateUtils.getDateNow());
+            time = DateUtil.date().toString();
             String path = list.get(0).getPath();
             Bitmap waterBitmap = BitmapUtil.getBitmap(path);
             Bitmap watermarkBitmap = ImageUtil.createWaterMaskCenter(waterBitmap, waterBitmap);
@@ -445,7 +444,7 @@ public class CameraActivity extends BaseClienActivity implements AMapLocationLis
             address = sb.toString();
             tvLocationAddress.setText(address);
             //获取定位时间
-//            time = GetDateUtils.dateToDateTimeString(GetDateUtils.getDate(amapLocation.getTime()));
+//            time = DateUtil.date(GetDateUtils.getDate(amapLocation.getTime()));
             city_address = amapLocation.getCity();
             city_address.substring(0, 1);
             queryWeather(city_address);

@@ -9,7 +9,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.NumberUtil;
 import com.eanfang.util.StringUtils;
@@ -19,6 +18,8 @@ import com.yaf.base.entity.RepairOrderEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
+
+import cn.hutool.core.date.DateUtil;
 
 
 /**
@@ -77,7 +78,7 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
         }
 
         helper.setText(R.id.tv_order_id, "单号：" + item.getOrderNum() + str);
-        helper.setText(R.id.tv_create_time, "下单时间：" + GetDateUtils.dateToDateTimeString(item.getCreateTime()));
+        helper.setText(R.id.tv_create_time, "下单时间：" + DateUtil.date(item.getCreateTime()).toString());
 
         if (item.getOwnerOrg() != null && item.getOwnerOrg().getBelongCompany() != null && ORG_NAME.equals(item.getOwnerOrg().getBelongCompany().getOrgName())) {
 

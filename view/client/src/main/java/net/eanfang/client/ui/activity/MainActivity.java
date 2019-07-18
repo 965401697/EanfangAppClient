@@ -72,6 +72,7 @@ import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.ButterKnife;
+import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.StrUtil;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
@@ -139,12 +140,12 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
         initXinGe();
         getBaseData();
         getConst();
-        RxPerm.get(this).storagePerm();
+        RxPerm.get(this).getAllPerm();
         initRongIm();
         initFragment();
         initUpdate();
         initView();
-        initYingShiYunData();
+        // initYingShiYunData();
         if (Config.get().getBaseDataBean() == null || Config.get().getConstBean() == null) {
             Dialog dialog = LoadKit.dialog(this, "正在初始化...");
             dialog.setCancelable(false);
@@ -179,18 +180,18 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
 
     }
 
-    private void initYingShiYunData() {
-        EanfangHttp.post(NewApiService.HOME_SUB_ACCOUNT_INFO_LIST).execute(new EanfangCallback<JSONObject>(this,false,JSONObject.class, bean -> {
-            JSONObject jsonObject = bean.getJSONObject("subAccountInfoList");
-            CacheKit.get().put("subAccountInfoList",jsonObject);
-            JSONObject jsonObject1= CacheKit.get().get("subAccountInfoList", JSONObject.class);
-
-            String value = jsonObject1.getString(String.valueOf(ClientApplication.get().getCompanyId()));
-//            if (!StringUtils.isEmpty(value)) {
-//                EZOpenSDK.getInstance().setAccessToken(value);
-//            }
-        }));
-    }
+//    private void initYingShiYunData() {
+//        EanfangHttp.post(NewApiService.HOME_SUB_ACCOUNT_INFO_LIST).execute(new EanfangCallback<JSONObject>(this,false,JSONObject.class, bean -> {
+//            JSONObject jsonObject = bean.getJSONObject("subAccountInfoList");
+//            CacheKit.get().put("subAccountInfoList",jsonObject);
+//            JSONObject jsonObject1= CacheKit.get().get("subAccountInfoList", JSONObject.class);
+//
+//            String value = jsonObject1.getString(String.valueOf(ClientApplication.get().getCompanyId()));
+////            if (!StringUtils.isEmpty(value)) {
+////                EZOpenSDK.getInstance().setAccessToken(value);
+////            }
+//        }));
+//    }
 
     /**
      * 初始化页面相关
@@ -321,16 +322,18 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
      * 初始化信鸽推送
      */
     public void initXinGe() {
-        // 打开第三方推送
-        SDKManager.getXGPush(MainActivity.this).enableOtherPush(true);
-        //开启信鸽日志输出
-        SDKManager.getXGPush(MainActivity.this).enableDebug(true);
-        SDKManager.getXGPush(MainActivity.this).setHuaweiDebug(true);
-        SDKManager.getXGPush(MainActivity.this).setMiPush(XIAOMI_APPID_CLIENT, XIAOMI_APPKEY_CLIENT);
-        SDKManager.getXGPush(MainActivity.this).setMzPush(MEIZU_APPID_CLIENT, MEIZU_APPKEY_CLIENT);
-        SDKManager.getXGPush(MainActivity.this).registerPush(BaseApplication.get().getAccount().getMobile());
+        ThreadUtil.execAsync(() -> {
+            // 打开第三方推送
+            SDKManager.getXGPush(MainActivity.this).enableOtherPush(true);
+            //开启信鸽日志输出
+            SDKManager.getXGPush(MainActivity.this).enableDebug(true);
+            SDKManager.getXGPush(MainActivity.this).setHuaweiDebug(true);
+            SDKManager.getXGPush(MainActivity.this).setMiPush(XIAOMI_APPID_CLIENT, XIAOMI_APPKEY_CLIENT);
+            SDKManager.getXGPush(MainActivity.this).setMzPush(MEIZU_APPID_CLIENT, MEIZU_APPKEY_CLIENT);
 
-        ReceiverInit.getInstance().inits(MainActivity.this, BaseApplication.get().getAccount().getMobile());
+//            SDKManager.getXGPush(MainActivity.this).registerPush(BaseApplication.get().getAccount().getMobile());
+            ReceiverInit.getInstance().inits(MainActivity.this, BaseApplication.get().getAccount().getMobile());
+        });
     }
 
 

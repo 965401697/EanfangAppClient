@@ -6,7 +6,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 
-import com.camera.util.LogUtil;
+import com.eanfang.base.kit.utils.LogUtil;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;

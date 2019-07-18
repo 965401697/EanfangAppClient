@@ -299,7 +299,7 @@ public class SecurityCreateActivity extends BaseActivity {
                 if (ivShowVideo.getVisibility() == View.INVISIBLE) {
                     ivShowVideo.setVisibility(View.VISIBLE);
                 }
-                GlideUtil.intoImageView(this,PhotoUtils.getVideoThumbnail(mVieoPath, 100, 100, MINI_KIND),ivShowVideo);
+                GlideUtil.intoImageView(this,PhotoUtils.getVideoBitmap(mVieoPath),ivShowVideo);
             }
         }
     }

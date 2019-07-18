@@ -4,9 +4,10 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
 import com.eanfang.config.Config;
-import com.eanfang.util.GetDateUtils;
 
 import net.eanfang.worker.R;
+
+import cn.hutool.core.date.DateUtil;
 
 /**
  * @author guanluocang
@@ -32,7 +33,7 @@ public class WorkTenderReleaseAdapter extends BaseQuickAdapter<TaskPublishEntity
         //类型
         helper.setText(R.id.tv_tender_type, Config.get().getBaseNameByCode(item.getBusinessOneCode(), 2));
         // 时间
-        helper.setText(R.id.tv_tender_time, GetDateUtils.dateToDateTimeString(item.getCreateTime()));
+        helper.setText(R.id.tv_tender_time, DateUtil.date(item.getCreateTime()).toString());
         //地点
         helper.setText(R.id.tv_tender_address, item.getProvince() + item.getCity() + item.getCounty());
         //工期

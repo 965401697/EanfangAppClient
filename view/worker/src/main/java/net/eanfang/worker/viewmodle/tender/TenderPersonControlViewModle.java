@@ -1,27 +1,17 @@
 package net.eanfang.worker.viewmodle.tender;
 
-import android.widget.DatePicker;
-
 import androidx.lifecycle.MutableLiveData;
 
 import com.eanfang.base.BaseApplication;
 import com.eanfang.biz.model.bean.PageBean;
 import com.eanfang.biz.model.bean.QueryEntry;
-import com.eanfang.biz.model.entity.IfbOrderEntity;
 import com.eanfang.biz.model.entity.tender.TaskApplyEntity;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
 import com.eanfang.biz.rds.base.BaseViewModel;
-import com.eanfang.biz.rds.sys.api.tender.TenderApi;
 import com.eanfang.biz.rds.sys.ds.impl.tender.TenderDs;
 import com.eanfang.biz.rds.sys.repo.tender.TenderRepo;
-import com.eanfang.util.GetDateUtils;
-import com.eanfang.util.ToastUtil;
-import com.picker.DoubleDatePickerDialog;
 
 import net.eanfang.worker.databinding.ActivityTenderPersonControlBinding;
-import net.eanfang.worker.ui.activity.my.certification.AddSkillCertificafeActivity;
-
-import java.util.Calendar;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -2,8 +2,10 @@ package net.eanfang.worker.ui.activity.my.specialist;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.View;
 
 import com.alibaba.fastjson.JSONObject;
@@ -26,7 +28,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-
+/**
+ * 已废弃
+ *
+ * @author jornl
+ * @date 2019-07-17 14:44:10
+ */
+@Deprecated
 public class SpecialistSkillCertificafeListActivity extends BaseWorkerActivity {
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
@@ -120,7 +128,7 @@ public class SpecialistSkillCertificafeListActivity extends BaseWorkerActivity {
                 intent.putExtra("go", "去添加个人经历");
                 intent.putExtra("desc", "如有疑问，请联系客服处理");
                 intent.putExtra("service", "客服热线：400-890-9280");
-                intent.putExtra("class",SpecialistOwmHistoryActivity.class);
+                intent.putExtra("class", SpecialistOwmHistoryActivity.class);
                 startActivity(intent);
                 endTransaction(true);
                 break;

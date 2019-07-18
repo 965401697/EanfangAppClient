@@ -8,12 +8,12 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.NoticeEntity;
 import com.eanfang.ui.base.BaseActivity;
-import com.eanfang.util.GetDateUtils;
 
 import net.eanfang.client.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.date.DateUtil;
 
 /**
  * @author Guanluocang
@@ -72,7 +72,7 @@ public class MessageDetailActivity extends BaseActivity {
                             extInfo = bean.getExtInfo().toString();
                         }
                         tvDetailContent.setText(bean.getContent() + "\r\n\t" + "\r\n\t" + (extInfo != null ? extInfo : ""));
-                        tvDetailTime.setText(GetDateUtils.dateToDateTimeString(bean.getCreateTime()));
+                        tvDetailTime.setText(DateUtil.date(bean.getCreateTime()).toString());
                     });
                 })));
     }

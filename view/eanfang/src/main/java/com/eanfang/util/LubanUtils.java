@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.annimon.stream.function.Consumer;
+import com.eanfang.config.Config;
 
 import java.io.File;
 import java.util.Arrays;
@@ -16,12 +17,10 @@ import top.zibin.luban.OnCompressListener;
 public class LubanUtils {
 
     public static void compress(Context context, List<String> urls, Consumer start, Consumer success, Consumer fail) {
-        String path = context.getFilesDir().getAbsolutePath() + "/tmp/img";
-        FileUtils.initDirectory(path);
         Luban.with(context)
                 .load(urls)                                   // 传人要压缩的图片列表
                 .ignoreBy(50)                                  // 忽略不压缩图片的大小
-                .setTargetDir(path)                             // 设置压缩后文件存储位置
+                .setTargetDir(Config.Cache.IMG_STORAGE_DIR)                             // 设置压缩后文件存储位置
                 .setCompressListener(new OnCompressListener() { //设置回调
                     @Override
                     public void onStart() {

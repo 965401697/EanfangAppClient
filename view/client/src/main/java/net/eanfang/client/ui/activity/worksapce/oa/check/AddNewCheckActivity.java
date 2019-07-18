@@ -69,6 +69,7 @@ import java.util.Set;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -354,7 +355,7 @@ public class AddNewCheckActivity extends BaseActivity implements SelectTimeDialo
         isTrue = true;//重置状态
 
         if (mUploadMap.size() != 0) {
-            SDKManager.ossKit(this).asyncPutImages(mUploadMap,(isSuccess) -> {
+            SDKManager.ossKit(this).asyncPutImages(mUploadMap, (isSuccess) -> {
                 runOnUiThread(() -> {
                     if (isTrue) {
                         initTaskData(detailsBean);
@@ -533,7 +534,7 @@ public class AddNewCheckActivity extends BaseActivity implements SelectTimeDialo
     }
 
     private void inputVoice(EditText editText) {
-         RxPerm.get(this).voicePerm((isSuccess)->{
+        RxPerm.get(this).voicePerm((isSuccess) -> {
             RecognitionManager.getSingleton().startRecognitionWithDialog(AddNewCheckActivity.this, editText);
         });
     }
@@ -643,7 +644,7 @@ public class AddNewCheckActivity extends BaseActivity implements SelectTimeDialo
                 if (ivTakevideoCheck.getVisibility() == View.INVISIBLE) {
                     ivTakevideoCheck.setVisibility(View.VISIBLE);
                 }
-                GlideUtil.intoImageView(this,PhotoUtils.getVideoThumbnail(mVieoPath, 100, 100, MINI_KIND),ivTakevideoCheck);
+                GlideUtil.intoImageView(this, PhotoUtils.getVideoBitmap(mVieoPath), ivTakevideoCheck);
             }
 
         }

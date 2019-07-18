@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
-import com.camera.util.LogUtil;
+import com.eanfang.base.kit.utils.LogUtil;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
@@ -27,8 +27,6 @@ import com.eanfang.biz.model.NoticeEntity;
 import com.eanfang.biz.model.NoticeListBean;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
-import com.tencent.android.tpush.XGPushClickedResult;
-import com.tencent.android.tpush.XGPushManager;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.MessageListAdapter;

@@ -29,7 +29,6 @@ import com.eanfang.biz.model.SignCountBean;
 import com.eanfang.biz.model.SigninBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.ConnectivityChangeUtil;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.ToastUtil;
@@ -41,6 +40,7 @@ import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.date.DateUtil;
 
 /**
  * Created by MrHou
@@ -111,7 +111,7 @@ public class SignActivity extends BaseActivity implements LocationSource, AMapLo
         tvSignHadTime.setText("你已经" + title);
         tvSignOrSignout.setText(title);
         tvSignName.setText(title);
-        textClock.setText(new SimpleDateFormat("yyyy年MM月dd日 HH:mm").format(new Date()));
+        textClock.setText(DateUtil.date().toString("yyyy年MM月dd日 HH:mm:ss"));
     }
 
     private void setClick() {
@@ -155,7 +155,7 @@ public class SignActivity extends BaseActivity implements LocationSource, AMapLo
         SigninBean signinBean = new SigninBean();
         signinBean.setLatitude(latitude + "");
         signinBean.setLongitude(longitude + "");
-        signinBean.setSignTime(GetDateUtils.dateToDateTimeString(new Date()));
+        signinBean.setSignTime(DateUtil.date().toString());
         signinBean.setDetailPlace(detailPlace);
         signinBean.setVisitorName(etVisitName.getText().toString().trim());
         signinBean.setZoneCode(Config.get().getAreaCodeByName(cityAddress, contry));

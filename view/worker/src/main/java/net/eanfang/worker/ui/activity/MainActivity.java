@@ -72,7 +72,6 @@ import net.eanfang.worker.ui.fragment.ContactsFragment;
 import net.eanfang.worker.ui.fragment.HomeFragment;
 import net.eanfang.worker.ui.fragment.MyFragment;
 import net.eanfang.worker.ui.fragment.WorkspaceFragment;
-import net.eanfang.worker.ui.receiver.ReceiverInit;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -144,7 +143,7 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
         getBaseData();
         getConst();
         submitLocation();
-        RxPerm.get(this).storagePerm();
+        RxPerm.get(this).getAllPerm();
         initRongIm();
         initFragment();
         initUpdate();
@@ -323,7 +322,7 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
         SDKManager.getXGPush(MainActivity.this).setMzPush(MEIZU_APPID_WORKER, MEIZU_APPKEY_WORKER);
         SDKManager.getXGPush(MainActivity.this).registerPush(BaseApplication.get().getAccount().getMobile());
 
-        ReceiverInit.getInstance().inits(MainActivity.this, BaseApplication.get().getAccount().getMobile());
+//        ReceiverInit.getInstance().inits(MainActivity.this, BaseApplication.get().getAccount().getMobile());
     }
 
     private void getBaseData() {

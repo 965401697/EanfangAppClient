@@ -202,7 +202,10 @@
         <activity
             android:name=".ui.activity.my.PersonInfoActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.eanfang.ui.activity.SelectAddressActivity" />
+        <activity
+            android:name="com.eanfang.ui.activity.SelectAddressActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".ui.activity.my.EvaluateActivity"
             android:screenOrientation="portrait" />
@@ -226,8 +229,8 @@
         <!-- 添加故障 -->
         <activity
             android:name=".ui.activity.worksapce.repair.AddTroubleActivity"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <!-- 设备点检 新建检查 -->
         <!-- 新建工作汇报 -->
         <activity

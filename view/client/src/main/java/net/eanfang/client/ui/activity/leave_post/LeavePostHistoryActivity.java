@@ -76,7 +76,7 @@ public class LeavePostHistoryActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (data != null && requestCode == RESULT_OK) {
+        if (data != null && resultCode == RESULT_OK) {
             mViewModel.setResultData(data);
         }
     }

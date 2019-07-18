@@ -30,11 +30,9 @@ import com.eanfang.biz.model.SelectAddressItem;
 import com.eanfang.biz.model.bean.LoginBean;
 
 import com.eanfang.ui.activity.SelectAddressActivity;
-import com.eanfang.util.GetDateUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.StringUtils;
-import com.eanfang.util.UuidUtil;
 import com.eanfang.biz.model.entity.AccountEntity;
 import com.eanfang.biz.model.entity.UserEntity;
 import com.luck.picture.lib.entity.LocalMedia;
@@ -44,12 +42,13 @@ import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author WQ
@@ -121,13 +120,14 @@ public class PerfectingPersonalDataActivity extends BaseWorkeActivity {
     IPictureCallBack iPictureCallBack = new IPictureCallBack() {
         @Override
         public void onSuccess(List<LocalMedia> list) {
-            String imgKey = "account/" + UuidUtil.getUUID() + "tx.png";
+            String imgKey = "account/" + StrUtil.uuid() + "tx.png";
             accountEntity.setAvatar(imgKey);
             GlideUtil.intoImageView(PerfectingPersonalDataActivity.this, "file://" + list.get(0).getPath(), ivHeader);
             SDKManager.ossKit(PerfectingPersonalDataActivity.this).asyncPutImage(imgKey, list.get(0).getPath(), (isSuccess) -> {
             });
         }
     };
+
     @Override
     public void initView() {
         setLeftBack(true);
@@ -177,7 +177,7 @@ public class PerfectingPersonalDataActivity extends BaseWorkeActivity {
         }
         if (accountEntity.getBirthday() != null) {
             date = accountEntity.getBirthday();
-            srEt.setText(new SimpleDateFormat("yyyy年MM月dd日").format(date));
+            srEt.setText(DateUtil.date(date).toString("yyyy年MM月dd日 HH:mm:ss"));
         }
         etCardId.setText(WorkerApplication.get().getLoginBean().getAccount().getIdCard());
         //0女1男
@@ -213,8 +213,8 @@ public class PerfectingPersonalDataActivity extends BaseWorkeActivity {
         View view = getLayoutInflater().inflate(R.layout.activity_dialog_date, null);
         CalendarView datePicker = view.findViewById(R.id.calendarView);
         datePicker.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
-            date = new GregorianCalendar(year, month, dayOfMonth).getTime();
-            srEt.setText(GetDateUtils.dateToDateString(date));
+            date = DateUtil.parse(year + "-" + month + "-" + dayOfMonth);
+            srEt.setText(DateUtil.date(date).toDateStr());
         });
         new AlertDialog.Builder(this).setView(view).setCancelable(false).setPositiveButton("确定", (dialogInterface, i) -> {
             dialogInterface.dismiss();
