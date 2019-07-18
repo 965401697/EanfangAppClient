@@ -20,10 +20,10 @@ android {
 
         buildConfigField("String", "IFLYTEK_APP_ID", cfg.iflytekAppId)
 
-        ndk {
-            // 设置支持的SO库架构
-            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
-        }
+//        ndk {
+//            // 设置支持的SO库架构
+//            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+//        }
         javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
     }
 
@@ -44,7 +44,7 @@ android {
         // 开发
         debug {
             buildConfigField("boolean", "DEBUG_MOD", cfg.debugMod)
-            buildConfigField("String", "API_HOST", cfg.proApiHost)
+            buildConfigField("String", "API_HOST", cfg.betaApiHost)
         }
         release {
             // 上线url
@@ -130,6 +130,7 @@ dependencies {
     api pkg.hutoolCore
     api pkg.hutoolHttp
     api pkg.fastjson
+//    api pkg.exifinterface
 
     //tools
     implementation pkg.luban
