@@ -4,9 +4,6 @@ import android.content.DialogInterface;
 import android.hardware.SensorManager;
 import android.media.AudioFormat;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AlertDialog;
-
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -16,8 +13,11 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
+
 import com.eanfang.R;
 import com.eanfang.R2;
+import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.config.Config;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
@@ -152,7 +152,12 @@ public class TakeVideoActivity extends BaseActivity implements PLRecordStateList
         ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
         initView();
-        initListener();
+        RxPerm.get(this).cameraPerm();
+        RxPerm.get(this).voicePerm((d) -> {
+            if (d) {
+                initListener();
+            }
+        });
     }
 
 
