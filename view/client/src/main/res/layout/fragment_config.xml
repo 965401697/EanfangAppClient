@@ -40,15 +40,16 @@
                             android:layout_centerVertical="true"
                             android:layout_marginRight="@dimen/dimen_32"
                             android:src="@mipmap/ic_worker_personal_setting" />
+
                         <ImageView
                             android:id="@+id/iv_personalQRCode"
                             android:layout_width="@dimen/dimen_44"
                             android:layout_height="@dimen/dimen_44"
+                            android:layout_centerVertical="true"
                             android:layout_marginLeft="@dimen/dimen_44"
                             android:layout_marginTop="@dimen/dimen_10"
-                            android:layout_toLeftOf="@id/iv_setting"
-                            android:layout_centerVertical="true"
                             android:layout_marginRight="@dimen/dimen_60"
+                            android:layout_toLeftOf="@id/iv_setting"
                             android:src="@mipmap/ic_personal_qrcode" />
 
                         <TextView
@@ -72,7 +73,6 @@
                             android:id="@+id/ll_user_header"
                             android:layout_width="@dimen/dimen_190"
                             android:layout_height="@dimen/dimen_190"
-                            android:background="@mipmap/ic_personal_head_back"
                             android:gravity="center">
 
 

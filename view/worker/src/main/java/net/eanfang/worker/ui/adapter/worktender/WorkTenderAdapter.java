@@ -49,6 +49,8 @@ public class WorkTenderAdapter extends BaseQuickAdapter<IfbOrderEntity, BaseView
                 int min = (int) DateUtil.date().between(DateKit.get(endTime).offset(DateField.DAY_OF_YEAR, -day).offset(DateField.HOUR, -hour).date, DateUnit.MINUTE);
 
                 helper.setText(R.id.tv_cutoff_time, mContext.getString(R.string.text_tender_count_down, day, hour, min));
+            } else {
+                helper.setText(R.id.tv_cutoff_time, "已过期");
             }
 //
 //            //剩余时间

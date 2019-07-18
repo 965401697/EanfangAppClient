@@ -2,6 +2,7 @@ package net.eanfang.client.ui.fragment;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,8 +15,10 @@ import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseFragment;
+import com.eanfang.util.JumpItent;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.worksapce.SelectWorkerActivity;
 import net.eanfang.client.ui.activity.worksapce.online.DividerItemDecoration;
 import net.eanfang.client.ui.adapter.FragmentHomeCompanyAdapter;
 
@@ -33,7 +36,13 @@ public class HomeCompanyFragment extends BaseFragment {
     private static final String PAGE_TYPE = "pageType";
     @BindView(R.id.rec_home_company)
     RecyclerView mRecHomeCompany;
+    @BindView(R.id.tv_home_company_more)
+    TextView mTvHomeComanyMore;
     private FragmentHomeCompanyAdapter adapter;
+    /**
+     * 0 安防公司
+     * 1 找技师
+     */
     private int mPageType;
 
     public static HomeCompanyFragment getInstance(int pageType) {
@@ -127,6 +136,16 @@ public class HomeCompanyFragment extends BaseFragment {
 
     @Override
     protected void setListener() {
-
+        /**
+         * 0 安防公司
+         * 1 找技师
+         */
+        mTvHomeComanyMore.setOnClickListener((v) -> {
+            if (mPageType == 0) {
+                JumpItent.jump(getActivity(), SelectWorkerActivity.class);
+            } else {
+                JumpItent.jump(getActivity(), SelectWorkerActivity.class);
+            }
+        });
     }
 }

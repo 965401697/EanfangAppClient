@@ -127,7 +127,7 @@ public class RxPerm {
      * @param success 成功回调
      */
     public void voicePerm(Consumer<Boolean> success) {
-        cameraPerm()
+        voicePerm()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(permission -> {
                     if (permission.granted) {
@@ -159,7 +159,7 @@ public class RxPerm {
      * @param success 成功回调
      */
     public void storagePerm(Consumer<Boolean> success) {
-        cameraPerm()
+        storagePerm()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(permission -> {
                     if (permission.granted) {
