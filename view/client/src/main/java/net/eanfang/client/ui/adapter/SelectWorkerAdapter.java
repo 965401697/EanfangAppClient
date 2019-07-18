@@ -30,17 +30,17 @@ public class SelectWorkerAdapter extends BaseQuickAdapter<WorkerEntity, BaseView
     protected void convert(BaseViewHolder helper, WorkerEntity item) {
         // 头像
         if (!StringUtils.isEmpty(item.getVerifyEntity().getAvatarPhoto())) {
-            GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + item.getVerifyEntity().getAvatarPhoto()),helper.getView(R.id.iv_header));
+            GlideUtil.intoImageView(mContext, Uri.parse(BuildConfig.OSS_SERVER + item.getVerifyEntity().getAvatarPhoto()), helper.getView(R.id.iv_header));
         }
         // 公司名称
         helper.setText(R.id.tv_companyName, item.getCompanyEntity().getOrgName());
         // 工作年限
-        helper.setText(R.id.tv_workTime, GetConstDataUtils.getWorkingYearList().get(item.getVerifyEntity().getWorkingYear())+"年");
+        helper.setText(R.id.tv_workTime, GetConstDataUtils.getWorkingYearList().get(item.getVerifyEntity().getWorkingYear()));
         //姓名
         helper.setText(R.id.tv_name, item.getAccountEntity().getRealName());
         if (item.getPublicPraise() != 0) {
             // 口碑
-            helper.setText(R.id.tv_koubei, String.valueOf(item.getPublicPraise())+"分");
+            helper.setText(R.id.tv_koubei, String.valueOf(item.getPublicPraise()) + "分");
         }
         if (item.getGoodRate() != 0) {
             // 好评率
@@ -48,6 +48,8 @@ public class SelectWorkerAdapter extends BaseQuickAdapter<WorkerEntity, BaseView
 
             //自动转换成百分比显示..
             helper.setText(R.id.tv_haopinglv, (SplitAndRound((item.getGoodRate() * 0.01), 2) + "%"));
+        } else {
+            helper.setText(R.id.tv_haopinglv, "0");
         }
         // 认证
         if (v(() -> item.getVerifyEntity().getStatus()) != null && item.getVerifyEntity().getStatus() == 2) {

@@ -45,7 +45,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dimen_14"
-                    android:src="@drawable/icon_worker_level" />
+                    android:src="@drawable/icon_worker_level"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/tv_workTime"
@@ -59,8 +60,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
+                    android:layout_marginStart="@dimen/dimen_20"
                     android:layout_weight="1"
-                    android:gravity="center"
+                    android:gravity="center|left"
                     android:orientation="horizontal">
 
                     <TextView
@@ -273,7 +275,7 @@
                         android:layout_height="wrap_content"
                         android:text="已有"
                         android:textColor="@color/roll_content"
-                        android:textSize="@dimen/textSize_12" />
+                        android:textSize="@dimen/textSize_11" />
 
                     <TextView
                         android:id="@+id/tv_consultation_count"
@@ -282,7 +284,7 @@
                         android:layout_marginLeft="@dimen/dimen_10"
                         android:text="7987"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/textSize_12" />
+                        android:textSize="@dimen/textSize_11" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -290,7 +292,7 @@
                         android:layout_marginLeft="@dimen/dimen_10"
                         android:text="人咨询"
                         android:textColor="@color/roll_content"
-                        android:textSize="@dimen/textSize_12" />
+                        android:textSize="@dimen/textSize_11" />
 
                 </LinearLayout>
 

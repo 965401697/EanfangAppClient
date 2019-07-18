@@ -70,7 +70,7 @@ public class FragmentHomeCompanyAdapter extends BaseQuickAdapter<HomeCompanyBean
 
     private SpannableString toSpanString(String text) {
         SpannableString spannableString = new SpannableString(text);
-        spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#666666")), 0, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#666666")), 0, 3, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         return spannableString;
     }
 

@@ -143,17 +143,18 @@
         android:layout_toRightOf="@id/img_home_company_logo"
         android:text="设：300"
         android:textColor="@color/color_home_company_rz1"
-        android:textSize="@dimen/textSize_13" />
+        android:textSize="@dimen/textSize_13"
+        android:visibility="gone" />
 
     <TextView
-        android:id="@+id/tv_home_company_rate"
+        android:id="@+id/tv_home_company_repair"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_home_company_worker_year"
         android:layout_marginLeft="@dimen/dimen_30"
         android:layout_marginTop="@dimen/dimen_18"
-        android:layout_toRightOf="@id/tv_home_company_design"
-        android:text="评：300"
+        android:layout_toRightOf="@id/tv_home_company_install"
+        android:text="维修：300"
         android:textColor="@color/color_home_company_rz1"
         android:textSize="@dimen/textSize_13" />
 
@@ -165,21 +166,22 @@
         android:layout_marginLeft="@dimen/dimen_30"
         android:layout_marginTop="@dimen/dimen_18"
         android:layout_toRightOf="@id/tv_home_company_rate"
-        android:text="施：300"
+        android:text="施工：300"
         android:textColor="@color/color_home_company_rz1"
         android:textSize="@dimen/textSize_13" />
 
     <TextView
-        android:id="@+id/tv_home_company_repair"
+        android:id="@+id/tv_home_company_rate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_home_company_worker_year"
         android:layout_marginLeft="@dimen/dimen_30"
         android:layout_marginTop="@dimen/dimen_18"
-        android:layout_toRightOf="@id/tv_home_company_install"
-        android:text="修：300"
+        android:layout_toRightOf="@id/tv_home_company_design"
+        android:text="评价：300"
         android:textColor="@color/color_home_company_rz1"
         android:textSize="@dimen/textSize_13" />
+F
 
     <TextView
         android:id="@+id/tv_home_company_address_name"
@@ -216,11 +218,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dimen_46"
-            android:text="已有12394人咨询"
             android:layout_weight="1"
+            android:text="已有12394人咨询"
             android:textColor="@color/color_home_company_install_bg"
             android:textSize="12sp" />
-
 
 
         <Button
@@ -228,19 +229,20 @@
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="@dimen/dimen_186"
             android:layout_height="@dimen/dimen_64"
+            android:layout_marginRight="@dimen/dimen_20"
             android:background="@drawable/shape_bg_home_company_install"
             android:text="我要装监控"
-            android:layout_marginRight="@dimen/dimen_20"
             android:textColor="@color/white"
             android:textSize="12sp" />
+
         <Button
             android:id="@+id/btn_home_company_repair"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="@dimen/dimen_186"
             android:layout_height="@dimen/dimen_64"
+            android:layout_marginRight="@dimen/dimen_16"
             android:background="@drawable/shape_bg_home_repair_commit"
             android:text="我要修监控"
-            android:layout_marginRight="@dimen/dimen_16"
             android:textColor="@color/white"
             android:textSize="12sp" />
     </LinearLayout>

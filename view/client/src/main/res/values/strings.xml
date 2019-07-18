@@ -59,10 +59,10 @@
     <string name="text_user_home_intro_default">这家伙很懒，没有留下任何内容</string>
 
     <string name="text_to_install_worker"><u>易安防技师端 >></u></string>
-    <string name="text_home_company_designCount">设：%1$d</string>
-    <string name="text_home_company_goodRateCount">评：%1$s</string>
-    <string name="text_home_company_installCount">施：%1$d</string>
-    <string name="text_home_company_repairCount">修：%1$d</string>
+    <string name="text_home_company_designCount">设计：%1$d</string>
+    <string name="text_home_company_goodRateCount">评价：%1$s</string>
+    <string name="text_home_company_installCount">施工：%1$d</string>
+    <string name="text_home_company_repairCount">维修：%1$d</string>
     <string name="text_home_company_worker_year">从业年限：%1$d年</string>
     <string name="text_home_company_level">等级：Lv%1$d</string>
     <string name="text_home_company_consultCount">已有\t%1$d\t人咨询</string>
