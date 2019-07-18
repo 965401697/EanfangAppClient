@@ -59,9 +59,9 @@
         tools:replace="android:name,android:theme,android:icon">
         <activity android:name=".ui.activity.worksapce.SelectCompanyActivity"></activity>
         <!-- 如果当前应用的TargetVersion>=28（Android 9.0），则必须在应用的AndroidManifest.xml文件中添加以下标签，否则sdk在运行过程中将可能出现崩溃问题（NoClassDefFoundError: Failed resolution of: Lorg/apache/http/impl/client/DefaultHttpClient）。 -->
-        <uses-library
-            android:name="org.apache.http.legacy"
-            android:required="false" />
+        <!--<uses-library-->
+            <!--android:name="org.apache.http.legacy"-->
+            <!--android:required="false" />-->
 
         <activity android:name=".ui.activity.worksapce.contacts.BusinessCertificationActivity" />
         <activity android:name=".ui.activity.worksapce.contacts.EnterpriseCertificationActivity" />
