@@ -57,8 +57,8 @@ public class SelectWorkerActivity extends BaseActivity implements OnTabSelectLis
     private RepairPersonalInfoEntity.ListBean repairPersonalInfoEntity;
     /**
      * 首页进入技师列表
-     *
-     * */
+     */
+    private boolean isFromHome = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,10 +77,11 @@ public class SelectWorkerActivity extends BaseActivity implements OnTabSelectLis
         businessIds = getIntent().getStringArrayListExtra("businessIds");
         mDoorFee = getIntent().getIntExtra("doorFee", 0);
         mOwnerOrgId = getIntent().getLongExtra("mOwnerOrgId", 0);
+        isFromHome = getIntent().getBooleanExtra("isHome", false);
         repairPersonalInfoEntity = (RepairPersonalInfoEntity.ListBean) getIntent().getSerializableExtra("topInfo");
 
 
-        mFragments.add(AllWorkerFragment.getInstance(toRepairBean, repairPersonalInfoEntity, businessIds, mDoorFee, mOwnerOrgId));
+        mFragments.add(AllWorkerFragment.getInstance(toRepairBean, repairPersonalInfoEntity, businessIds, mDoorFee, mOwnerOrgId,isFromHome));
         mFragments.add(CollectWorkerFragment.getInstance(toRepairBean, repairPersonalInfoEntity, businessIds, mDoorFee, mOwnerOrgId));
         mFragments.add(ServicedWorkerFragment.getInstance(toRepairBean, repairPersonalInfoEntity, businessIds, mDoorFee, mOwnerOrgId));
         View decorView = getWindow().getDecorView();
