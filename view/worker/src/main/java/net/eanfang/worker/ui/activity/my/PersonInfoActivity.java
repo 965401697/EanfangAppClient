@@ -336,7 +336,9 @@ public class PersonInfoActivity extends BaseActivity {
         accountEntity.setGender(mIsMan ? 1 : 0);
         String address = etAddress.getText().toString().trim();
         accountEntity.setAddress(address);
-        accountEntity.setBirthday(DateUtil.parse(mTvBirthday.getText().toString()));
+        if (!StringUtils.isEmpty(mTvBirthday.getText())) {
+            accountEntity.setBirthday(DateUtil.parse(mTvBirthday.getText().toString()));
+        }
         accountEntity.setPersonalNote(mEtPersonalNote.getText().toString());
         if (!StringUtils.isEmpty(city) && !StringUtils.isEmpty(contry)) {
             accountEntity.setAreaCode(Config.get().getAreaCodeByName(city, contry));
@@ -439,12 +441,7 @@ public class PersonInfoActivity extends BaseActivity {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                mTvBirthday.setText(DateUtil.parse(year + "-" + month + "-" + dayOfMonth).toDateStr());
-            }
-        }, year, month, day);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, (view, year1, month1, dayOfMonth) -> mTvBirthday.setText(DateUtil.parse(year1 + "-" + month1 + "-" + dayOfMonth, "yyyy-M-dd").toDateStr()), year, month, day);
         datePickerDialog.show();
     }
 

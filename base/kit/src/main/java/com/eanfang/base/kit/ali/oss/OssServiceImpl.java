@@ -94,7 +94,11 @@ public class OssServiceImpl implements IOssService {
         Flowable.fromIterable(objectMap.keySet())
                 .flatMap(key -> Flowable.just(key).map(fileKey -> {
                     PutObjectRequest put = getPutObjectRequest(fileKey, objectMap.get(fileKey));
-                    return oss.putObject(put);
+                    try {
+                        return oss.putObject(put);
+                    } catch (Exception e) {
+                        return null;
+                    }
                 }).subscribeOn(Schedulers.io()))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -103,6 +107,9 @@ public class OssServiceImpl implements IOssService {
                     if (result != null && result.getStatusCode() == 200) {
                         successCount.getAndIncrement();
                         LoadKit.setText(loading, StrUtil.format("正在上传 {}/{}", successCount.get(), objectMap.size()));
+                    } else {
+                        LoadKit.setText(loading, "上传失败，请重试");
+                        LoadKit.closeDialog(loading);
                     }
                     //全部上传成功
                     if (successCount.get() >= objectMap.size()) {

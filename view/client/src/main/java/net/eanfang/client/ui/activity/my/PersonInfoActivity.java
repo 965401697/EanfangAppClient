@@ -9,7 +9,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,22 +17,21 @@ import android.widget.TextView;
 import androidx.lifecycle.ViewModel;
 
 import com.alibaba.fastjson.JSONObject;
+import com.eanfang.BuildConfig;
+import com.eanfang.apiservice.NewApiService;
+import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.BaseActivity;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.base.widget.customview.CircleImageView;
-import com.eanfang.BuildConfig;
-import com.eanfang.apiservice.NewApiService;
-import com.eanfang.apiservice.UserApi;
+import com.eanfang.biz.model.SelectAddressItem;
+import com.eanfang.biz.model.bean.LoginBean;
+import com.eanfang.biz.model.entity.AccountEntity;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.MultiClickListener;
-import com.eanfang.biz.model.SelectAddressItem;
-import com.eanfang.biz.model.bean.LoginBean;
-import com.eanfang.biz.model.entity.AccountEntity;
-
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JsonUtils;
@@ -331,7 +329,9 @@ public class PersonInfoActivity extends BaseActivity {
         accountEntity.setGender(mIsMan ? 1 : 0);
         String address = etAddress.getText().toString().trim();
         accountEntity.setAddress(address);
-        accountEntity.setBirthday(DateUtil.parse(mTvBirthday.getText().toString()));
+        if (!StrUtil.isEmpty(mTvBirthday.getText().toString())) {
+            accountEntity.setBirthday(DateUtil.parse(mTvBirthday.getText().toString()));
+        }
         accountEntity.setPersonalNote(mEtPersonalNote.getText().toString());
         if (!StringUtils.isEmpty(city) && !StringUtils.isEmpty(contry)) {
             accountEntity.setAreaCode(Config.get().getAreaCodeByName(city, contry));
@@ -418,12 +418,7 @@ public class PersonInfoActivity extends BaseActivity {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                mTvBirthday.setText(DateUtil.parse(year + "-" + month + "-" + dayOfMonth).toDateStr());
-            }
-        }, year, month, day);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, (view, year1, month1, dayOfMonth) -> mTvBirthday.setText(DateUtil.parse(year1 + "-" + month1 + "-" + dayOfMonth, "yyyy-M-dd").toDateStr()), year, month, day);
         datePickerDialog.show();
     }
 

@@ -408,6 +408,13 @@ public class HomeFragment extends BaseFragment {
             mDesign = -1;
         }
         badgeView(R.id.tv_design, mDesign);
+
+        if (bean.getCommentNoRead() > 0 || bean.getNoReadCount() > 0) {
+            badgeView(R.id.tv_circle, bean.getCommentNoRead() + bean.getNoReadCount());
+        } else {
+            badgeView(R.id.tv_circle, -1);
+        }
+
         if (bean.getAlert() > 0) {
             badgeView(R.id.tv_out_post, bean.getAlert());
         } else {

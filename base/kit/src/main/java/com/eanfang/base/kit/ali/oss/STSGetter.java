@@ -5,21 +5,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.sdk.android.oss.common.auth.OSSFederationCredentialProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSFederationToken;
 import com.eanfang.base.kit.cache.CacheKit;
-import com.eanfang.base.network.RetrofitManagement;
 import com.eanfang.base.network.config.HttpConfig;
-import com.eanfang.base.network.model.BaseResponseBody;
-import com.zchu.rxcache.RxCache;
-import com.zchu.rxcache.data.CacheResult;
-import com.zchu.rxcache.stategy.CacheStrategy;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
-import cn.hutool.core.thread.ThreadUtil;
-import cn.hutool.core.util.StrUtil;
-import cn.hutool.http.HttpUtil;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
-import okhttp3.Call;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 
@@ -48,7 +38,9 @@ public class STSGetter extends OSSFederationCredentialProvider {
     public OSSFederationToken getFederationToken() {
         OssBean ossBean = CacheKit.get().get(STS_TOKEN_KEY, OssBean.class);
         if (ossBean == null || ossBean.getAccessKeyId() == null) {
-            OkHttpClient client = new OkHttpClient();
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .connectTimeout(60, TimeUnit.SECONDS)
+                    .readTimeout(30, TimeUnit.SECONDS).build();
             //创建请求对象
             Request request = new Request.Builder()
                     .url(HttpConfig.get().getApiUrl() + "/yaf_sys/oss/sts")

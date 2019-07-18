@@ -4,17 +4,16 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.base.BaseApplication;
-import com.eanfang.base.network.holder.ToastHolder;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.ContentSecruityBean;
 import com.eanfang.model.ContentSecruityTokenBean;
 import com.eanfang.util.StringUtils;
-import com.eanfang.util.ToastUtil;
 import com.okgo.callback.StringCallback;
 import com.okgo.model.Response;
 
-import java.io.IOException;
 import java.util.List;
+
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author liangkailun
@@ -79,6 +78,10 @@ public class ContentSecurityAuditUtil {
      * @param content 审核文字
      */
     private void spamContent(String token, String content) {
+        if (StrUtil.isEmpty(content)) {
+            mListener.auditingSuccess();
+            return;
+        }
         EanfangHttp.post(SPAN_URL)
                 .params(ACCESS_TOKEN_KEY, token)
                 .params(CONTENT_KEY, content)

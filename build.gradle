@@ -54,7 +54,7 @@ ext {
             //common config
             ossServer        : "\"https://oss.eanfang.net/\"",
             ossBucket        : "\"eanfang\"",
-            ossEndpoint      : "\"https://oss-cn-beijing.aliyuncs.com/\"",
+            ossEndpoint      : "\"https://oss-cn-beijing.aliyuncs.com\"",
             javaVersion      : JavaVersion.VERSION_1_8,
             debugMod         : "true",
 //            debugMod         : "false",

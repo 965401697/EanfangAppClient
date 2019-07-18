@@ -2,12 +2,7 @@ package net.eanfang.worker.ui.activity.techniciancertification;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AlertDialog;
-import androidx.lifecycle.ViewModel;
-
 import android.util.Log;
 import android.view.View;
 import android.widget.CalendarView;
@@ -17,24 +12,26 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.lifecycle.ViewModel;
+
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.IPictureCallBack;
+import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.base.widget.customview.CircleImageView;
+import com.eanfang.biz.model.SelectAddressItem;
+import com.eanfang.biz.model.bean.LoginBean;
+import com.eanfang.biz.model.entity.AccountEntity;
+import com.eanfang.biz.model.entity.UserEntity;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.SelectAddressItem;
-import com.eanfang.biz.model.bean.LoginBean;
-
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.StringUtils;
-import com.eanfang.biz.model.entity.AccountEntity;
-import com.eanfang.biz.model.entity.UserEntity;
 import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.worker.R;
@@ -53,6 +50,14 @@ import cn.hutool.core.util.StrUtil;
 /**
  * @author WQ
  */
+
+/**
+ * 废弃
+ *
+ * @author jornl
+ * @date 2019年7月18日
+ */
+@Deprecated
 public class PerfectingPersonalDataActivity extends BaseWorkeActivity {
     @BindView(R.id.nc_et)
     EditText ncEt;
