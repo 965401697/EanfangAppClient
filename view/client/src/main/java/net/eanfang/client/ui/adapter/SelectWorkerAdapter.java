@@ -35,12 +35,12 @@ public class SelectWorkerAdapter extends BaseQuickAdapter<WorkerEntity, BaseView
         // 公司名称
         helper.setText(R.id.tv_companyName, item.getCompanyEntity().getOrgName());
         // 工作年限
-        helper.setText(R.id.tv_workTime, GetConstDataUtils.getWorkingYearList().get(item.getVerifyEntity().getWorkingYear()));
+        helper.setText(R.id.tv_workTime, GetConstDataUtils.getWorkingYearList().get(item.getVerifyEntity().getWorkingYear())+"年");
         //姓名
         helper.setText(R.id.tv_name, item.getAccountEntity().getRealName());
         if (item.getPublicPraise() != 0) {
             // 口碑
-            helper.setText(R.id.tv_koubei, String.valueOf(item.getPublicPraise()));
+            helper.setText(R.id.tv_koubei, String.valueOf(item.getPublicPraise())+"分");
         }
         if (item.getGoodRate() != 0) {
             // 好评率
@@ -49,7 +49,7 @@ public class SelectWorkerAdapter extends BaseQuickAdapter<WorkerEntity, BaseView
             //自动转换成百分比显示..
             helper.setText(R.id.tv_haopinglv, (SplitAndRound((item.getGoodRate() * 0.01), 2) + "%"));
         }
-// 认证
+        // 认证
         if (v(() -> item.getVerifyEntity().getStatus()) != null && item.getVerifyEntity().getStatus() == 2) {
             helper.getView(R.id.tv_auth).setVisibility(View.VISIBLE);
         } else {
