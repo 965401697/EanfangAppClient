@@ -114,7 +114,7 @@ public interface LeavePostApi {
      * @return
      */
     @POST("/yaf_station/stationDetectAlerts/contactsList")
-    Observable<BaseResponseBody<LeavePostDeviceInfoBean>> contactsList(@Query("alertId") Long alertId);
+    Observable<BaseResponseBody<LeavePostDeviceInfoBean>> contactsList(@Query("alertId") int alertId);
 
     /**
      * 首页最新脱岗警报

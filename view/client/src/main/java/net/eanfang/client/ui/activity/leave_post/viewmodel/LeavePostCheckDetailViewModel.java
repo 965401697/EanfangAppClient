@@ -43,7 +43,7 @@ public class LeavePostCheckDetailViewModel extends BaseViewModel {
      *
      * @param alertId
      */
-    public void getContactsListData(Long alertId) {
+    public void getContactsListData(int alertId) {
         mLeavePostHomeRepo.contactsList(alertId).observe(lifecycleOwner, leavePostDeviceDetail::setValue);
     }
 

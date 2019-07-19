@@ -41,7 +41,7 @@ public class LeavePostCheckDetailActivity extends BaseActivity {
     /**
      * 报警id
      */
-    private long mAlertId;
+    private int mAlertId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,7 +53,7 @@ public class LeavePostCheckDetailActivity extends BaseActivity {
     protected void initView() {
         setLeftBack(true);
         mStationId = getIntent().getIntExtra("stationId", 0);
-        mAlertId = getIntent().getLongExtra("mAlertId", 0);
+        mAlertId = getIntent().getIntExtra("mAlertId", 0);
         showTopContent = getIntent().getBooleanExtra("isShowTopContent", true);
         if (showTopContent) {
             setTitle("图像查岗");
