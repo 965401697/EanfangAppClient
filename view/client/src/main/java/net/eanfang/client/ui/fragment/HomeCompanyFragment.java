@@ -18,6 +18,7 @@ import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JumpItent;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.worksapce.SelectCompanyActivity;
 import net.eanfang.client.ui.activity.worksapce.SelectWorkerActivity;
 import net.eanfang.client.ui.activity.worksapce.online.DividerItemDecoration;
 import net.eanfang.client.ui.adapter.FragmentHomeCompanyAdapter;
@@ -142,9 +143,11 @@ public class HomeCompanyFragment extends BaseFragment {
          */
         mTvHomeComanyMore.setOnClickListener((v) -> {
             if (mPageType == 0) {
-                JumpItent.jump(getActivity(), SelectWorkerActivity.class);
+                JumpItent.jump(getActivity(), SelectCompanyActivity.class);
             } else {
-                JumpItent.jump(getActivity(), SelectWorkerActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("isHome",true);
+                JumpItent.jump(getActivity(), SelectWorkerActivity.class,bundle);
             }
         });
     }

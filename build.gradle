@@ -48,16 +48,15 @@ ext {
             targetSdkVersion : 29,
             compileSdkVersion: 29,
             buildToolsVersion: "29.0.0",
-            versionName      : "3.0.3",
-            versionCode      : 19071201,
+            versionName      : "3.0.4",
+            versionCode      : 19071801,
 
             //common config
             ossServer        : "\"https://oss.eanfang.net/\"",
             ossBucket        : "\"eanfang\"",
             ossEndpoint      : "\"https://oss-cn-beijing.aliyuncs.com\"",
             javaVersion      : JavaVersion.VERSION_1_8,
-            debugMod         : "true",
-//            debugMod         : "false",
+            debugMod         : "false",
             localApiHost     : "\"http://192.168.0.104:8080\"",
             betaApiHost      : "\"http://api.beta.eanfang.net\"",
             proApiHost       : "\"https://api.eanfang.net\"",
@@ -132,6 +131,7 @@ ext {
             prolificinteractive  : "com.prolificinteractive:material-calendarview:1.4.3",
             pictureselector      : "com.github.LuckSiege.PictureSelector:picture_library:v2.2.3",
             loadsir              : "com.kingja.loadsir:loadsir:1.3.6",
+            exifinterface        : "com.android.support:exifinterface:28.0.0",
 
             //rx
             rxjava2              : "io.reactivex.rxjava2:rxjava:2.2.3",

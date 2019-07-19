@@ -16,7 +16,8 @@
 
         <include layout="@layout/layout_top_screen" />
 
-        <com.eanfang.swipefresh.SwipyRefreshLayout
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_fresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/dimen_14"
@@ -28,6 +29,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scrollbars="none" />
-        </com.eanfang.swipefresh.SwipyRefreshLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </LinearLayout>
 </layout>

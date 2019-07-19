@@ -148,9 +148,13 @@ public class ServicedWorkerFragment extends BaseFragment implements SwipeRefresh
         if (mQueryEntry == null) {
             mQueryEntry = new QueryEntry();
         }
-        mQueryEntry.getEquals().put("regionCode", toRepairBean.getPlaceCode());
+        if (toRepairBean != null) {
+            mQueryEntry.getEquals().put("regionCode", toRepairBean.getPlaceCode());
+        }
+        if (businessIds != null) {
+            mQueryEntry.getIsIn().put("businessId", Stream.of(businessIds).distinct().toList());
+        }
         mQueryEntry.getIsIn().put("serviceId", Arrays.asList(Config.get().getBaseIdByCode("2.1", 1, Constant.BIZ_TYPE) + ""));
-        mQueryEntry.getIsIn().put("businessId", Stream.of(businessIds).distinct().toList());
         mQueryEntry.getEquals().put("served", serviceId + "");
         mQueryEntry.setPage(mPage);
         mQueryEntry.setSize(10);

@@ -38,6 +38,8 @@ dependencies {
     api fileTree(include: ['*.jar'], dir: 'src/main/libs')
     implementation pkg.legacySupportV4
     implementation project(':lib:IMLib')
+
+    implementation pkg.exifinterface
 }
 
 //repositories {

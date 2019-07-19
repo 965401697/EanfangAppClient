@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -64,6 +65,8 @@ public class AllWorkerFragment extends BaseFragment implements SwipeRefreshLayou
     SwipeRefreshLayout swipreFresh;
     @BindView(R.id.rv_allWorker)
     RecyclerView rvAllWorker;
+    @BindView(R.id.btn_key_two)
+    Button btnKeyTwo;
 
 
     private RepairOrderEntity toRepairBean;
@@ -80,8 +83,12 @@ public class AllWorkerFragment extends BaseFragment implements SwipeRefreshLayou
      * 个人信息
      */
     RepairPersonalInfoEntity.ListBean repairPersonalInfoEntity;
+    /**
+     * 首页进入技师列表
+     */
+    private boolean isFromHome = false;
 
-    public static AllWorkerFragment getInstance(RepairOrderEntity toRepairBean, RepairPersonalInfoEntity.ListBean repairPersonalInfoEntity, ArrayList<String> businessIds, int doorfee, Long ownerOrgId) {
+    public static AllWorkerFragment getInstance(RepairOrderEntity toRepairBean, RepairPersonalInfoEntity.ListBean repairPersonalInfoEntity, ArrayList<String> businessIds, int doorfee, Long ownerOrgId, boolean isFromHome) {
         AllWorkerFragment allWorkerFragment = new AllWorkerFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("toRepairBean", toRepairBean);
@@ -89,6 +96,7 @@ public class AllWorkerFragment extends BaseFragment implements SwipeRefreshLayou
         bundle.putInt("doorFee", doorfee);
         bundle.putSerializable("topInfo", repairPersonalInfoEntity);
         bundle.putLong("mOwnerOrgId", ownerOrgId);
+        bundle.putBoolean("isFromHome", isFromHome);
         allWorkerFragment.setArguments(bundle);
         return allWorkerFragment;
     }
@@ -108,6 +116,9 @@ public class AllWorkerFragment extends BaseFragment implements SwipeRefreshLayou
         businessIds = bundle.getStringArrayList("bussinsList");
         mDoorFee = bundle.getInt("doorFee", 0);
         mOwnerOrgId = bundle.getLong("mOwnerOrgId", 0);
+        isFromHome = bundle.getBoolean("isFromHome", false);
+
+        btnKeyTwo.setVisibility(isFromHome ? View.GONE : View.VISIBLE);
     }
 
     @Override
@@ -120,6 +131,7 @@ public class AllWorkerFragment extends BaseFragment implements SwipeRefreshLayou
         swipreFresh.setOnRefreshListener(this);
         selectWorkerAdapter.setOnLoadMoreListener(this, rvAllWorker);
         rvAllWorker.setAdapter(selectWorkerAdapter);
+
     }
 
     @Override
@@ -150,9 +162,13 @@ public class AllWorkerFragment extends BaseFragment implements SwipeRefreshLayou
         if (mQueryEntry == null) {
             mQueryEntry = new QueryEntry();
         }
-        mQueryEntry.getEquals().put("regionCode", toRepairBean.getPlaceCode());
+        if (toRepairBean != null) {
+            mQueryEntry.getEquals().put("regionCode", toRepairBean.getPlaceCode());
+        }
+        if (businessIds != null) {
+            mQueryEntry.getIsIn().put("businessId", Stream.of(businessIds).distinct().toList());
+        }
         mQueryEntry.getIsIn().put("serviceId", Arrays.asList(Config.get().getBaseIdByCode("2.1", 1, Constant.BIZ_TYPE) + ""));
-        mQueryEntry.getIsIn().put("businessId", Stream.of(businessIds).distinct().toList());
         mQueryEntry.getEquals().put("served", serviceId + "");
         mQueryEntry.getEquals().put("collect", collectId + "");
         mQueryEntry.setPage(mPage);

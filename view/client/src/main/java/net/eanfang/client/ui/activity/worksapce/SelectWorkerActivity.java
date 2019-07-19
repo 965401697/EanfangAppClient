@@ -3,6 +3,11 @@ package net.eanfang.client.ui.activity.worksapce;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
 import com.eanfang.biz.model.reapair.RepairPersonalInfoEntity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.ViewFindUtils;
@@ -19,10 +24,6 @@ import net.eanfang.client.ui.fragment.selectworker.ServicedWorkerFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 import butterknife.ButterKnife;
 
 /**
@@ -54,6 +55,10 @@ public class SelectWorkerActivity extends BaseActivity implements OnTabSelectLis
      * 个人信息
      */
     private RepairPersonalInfoEntity.ListBean repairPersonalInfoEntity;
+    /**
+     * 首页进入技师列表
+     */
+    private boolean isFromHome = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,10 +77,11 @@ public class SelectWorkerActivity extends BaseActivity implements OnTabSelectLis
         businessIds = getIntent().getStringArrayListExtra("businessIds");
         mDoorFee = getIntent().getIntExtra("doorFee", 0);
         mOwnerOrgId = getIntent().getLongExtra("mOwnerOrgId", 0);
+        isFromHome = getIntent().getBooleanExtra("isHome", false);
         repairPersonalInfoEntity = (RepairPersonalInfoEntity.ListBean) getIntent().getSerializableExtra("topInfo");
 
 
-        mFragments.add(AllWorkerFragment.getInstance(toRepairBean, repairPersonalInfoEntity, businessIds, mDoorFee, mOwnerOrgId));
+        mFragments.add(AllWorkerFragment.getInstance(toRepairBean, repairPersonalInfoEntity, businessIds, mDoorFee, mOwnerOrgId,isFromHome));
         mFragments.add(CollectWorkerFragment.getInstance(toRepairBean, repairPersonalInfoEntity, businessIds, mDoorFee, mOwnerOrgId));
         mFragments.add(ServicedWorkerFragment.getInstance(toRepairBean, repairPersonalInfoEntity, businessIds, mDoorFee, mOwnerOrgId));
         View decorView = getWindow().getDecorView();
