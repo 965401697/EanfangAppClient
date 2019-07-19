@@ -9,6 +9,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.OrderProgressBean;
 import com.eanfang.ui.base.BaseFragment;
+import com.eanfang.util.DateKit;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 
@@ -91,7 +92,7 @@ public class MaintenanceOrderStatusFragment extends BaseFragment {
             } else {
                 mTvTime.setText(DateUtil.parse(bean.getCreateTime()).toTimeStr());
                 mTvData.setText(DateUtil.parse(bean.getCreateTime()).toDateStr());
-                mTvWeek.setText(DateUtil.parse(bean.getCreateTime()).dayOfWeekEnum().toChinese());
+                mTvWeek.setText(DateKit.get(bean.getCreateTime()).weekName());
             }
         }
         if (list.size() > 0) {

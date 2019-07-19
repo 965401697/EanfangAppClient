@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.biz.rds.base.BaseViewModel;
+import com.eanfang.util.DateKit;
 
 import net.eanfang.client.ui.activity.leave_post.LeavePostDetailActivity;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostHistoryDayBean;
@@ -67,7 +68,7 @@ public class LeavePostHistoryDetailViewModel extends BaseViewModel {
         ca.setTime(mDate);
         ca.add(Calendar.DAY_OF_MONTH, -1);
         historyDayData(ca.getTime(), mStationId);
-        date.setText(MessageFormat.format("{0}\t\t{1}", DateUtil.date(ca.getTime()).toString("yyyy年MM月dd日"), DateUtil.date(ca.getTime()).dayOfWeekEnum().toChinese()));
+        date.setText(MessageFormat.format("{0}\t\t{1}", DateUtil.date(ca.getTime()).toString("yyyy年MM月dd日"), DateKit.get(ca.getTime()).weekName()));
     }
 
     public void setNextDay(TextView date) {
@@ -78,6 +79,6 @@ public class LeavePostHistoryDetailViewModel extends BaseViewModel {
         ca.setTime(mDate);
         ca.add(Calendar.DAY_OF_MONTH, +1);
         historyDayData(ca.getTime(), mStationId);
-        date.setText(MessageFormat.format("{0}\t\t{1}", DateUtil.date(ca.getTime()).toString("yyyy年MM月dd日"), DateUtil.date(ca.getTime()).dayOfWeekEnum().toChinese()));
+        date.setText(MessageFormat.format("{0}\t\t{1}", DateUtil.date(ca.getTime()).toString("yyyy年MM月dd日"), DateKit.get(ca.getTime()).weekName()));
     }
 }

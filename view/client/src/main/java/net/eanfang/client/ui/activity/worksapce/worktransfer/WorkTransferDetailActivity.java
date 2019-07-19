@@ -16,6 +16,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.WorkTransferDetailBean;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.DateKit;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
@@ -183,7 +184,7 @@ public class WorkTransferDetailActivity extends BaseActivity {
         String[] dataOne = bean.getCreateTime().split("-");
         String[] dateTwo = dataOne[2].split(" ");
         tvYear.setText(dataOne[0] + "-" + dataOne[1]);
-        tvWeek.setText(DateUtil.parse(bean.getCreateTime()).dayOfWeekEnum().toChinese());
+        tvWeek.setText(DateKit.get(bean.getCreateTime()).weekName());
         tvData.setText(dateTwo[0]);
         //单位名称
         tvCompanyName.setText(bean.getOwnerCompanyEntity().getOrgName());

@@ -25,6 +25,7 @@ import com.eanfang.biz.model.TaskPublishBean;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
+import com.eanfang.util.DateKit;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PhotoUtils;
@@ -264,7 +265,7 @@ public class TaskPublishActivity extends BaseActivity implements SelectTimeDialo
         Calendar startDate = Calendar.getInstance();
         //startDate.set(2017, 5, 24);
         //修改预约时间选择限制，不能早过当前时间
-        startDate.set(DateUtil.date().year(), DateUtil.date().month(), DateUtil.date().dayOfMonth(), DateUtil.date().hour(true), DateUtil.date().minute());
+        startDate.set(DateKit.get().year(), DateKit.get().month(), DateKit.get().day(), DateKit.get().hour(), DateKit.get().minute());
 
         Calendar endDate = Calendar.getInstance();
         endDate.set(2099, 11, 31);
