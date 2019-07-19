@@ -36,7 +36,7 @@ import retrofit2.http.Query;
 public interface LeavePostApi {
 
     /**
-     * 脱岗检测首页上部分
+     * 脱岗监测首页上部分
      *
      * @param companyId 公司id
      * @return
@@ -45,7 +45,7 @@ public interface LeavePostApi {
     Observable<BaseResponseBody<LeavePostHomeTopBean>> homeData(@Query("companyId") Long companyId);
 
     /**
-     * 脱岗检测首页待处理
+     * 脱岗监测首页待处理
      *
      * @param queryEntry
      * @return
