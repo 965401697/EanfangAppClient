@@ -25,7 +25,7 @@ import lombok.Getter;
 /**
  * @author liangkailun
  * Date ：2019-06-24
- * Describe :脱岗检测首页
+ * Describe :脱岗监测首页
  */
 public class LeavePostHomeViewModel extends BaseViewModel {
     @Getter

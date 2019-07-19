@@ -210,7 +210,7 @@ public class LeavePostRepo extends BaseRepo<LeavePostDs> {
      *
      * @return
      */
-    public MutableLiveData<LeavePostDeviceInfoBean> contactsList(Long alertId) {
+    public MutableLiveData<LeavePostDeviceInfoBean> contactsList(int alertId) {
         MutableLiveData<LeavePostDeviceInfoBean> mutableLiveData = new MutableLiveData<>();
         remoteDataSource.contactsList(alertId, mutableLiveData::setValue);
         return mutableLiveData;
