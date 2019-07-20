@@ -279,7 +279,7 @@ public class HomeFragment extends BaseFragment {
         });
         //实时监控
         findViewById(R.id.tv_monitor).setOnClickListener(v -> JumpItent.jump(getActivity(), RealTimeMonitorActivity.class));
-        //脱岗检测
+        //脱岗监测
         findViewById(R.id.tv_out_post).setOnClickListener(view -> {
             JSONObject jsonObject1 = CacheKit.get().get("subAccountInfoList", JSONObject.class);
             String value = jsonObject1.getString(String.valueOf(ClientApplication.get().getCompanyId()));

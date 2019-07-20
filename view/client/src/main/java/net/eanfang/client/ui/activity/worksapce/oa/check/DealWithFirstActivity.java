@@ -21,6 +21,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.TemplateBean;
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.DateKit;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
@@ -196,7 +197,7 @@ public class DealWithFirstActivity extends BaseActivity {
                             tvTime.setText(bean.getChangeDeadlineTime());
                             tvTitle.setText(bean.getTitle());
                             tvName.setText("接收人" + bean.getAssigneeUser().getAccountEntity().getRealName());
-                            tvWeek.setText(DateUtil.parse(bean.getCreateTime()).dayOfWeekEnum().toChinese());
+                            tvWeek.setText(DateKit.get(bean.getCreateTime()).weekName());
                             // 是否显示认领
                             if (bean.getAssigneeUserId().equals(ClientApplication.get().getUserId()) && mOrderStatus == 0) {
                                 tvSub.setVisibility(View.VISIBLE);

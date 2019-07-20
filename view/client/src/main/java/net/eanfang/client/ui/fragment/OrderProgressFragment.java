@@ -9,6 +9,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.OrderProgressBean;
 import com.eanfang.ui.base.BaseFragment;
+import com.eanfang.util.DateKit;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
@@ -77,7 +78,7 @@ public class OrderProgressFragment extends BaseFragment {
         if (!StringUtils.isEmpty(mOrderTime)) {
             mTvTime.setText(DateUtil.parse(mOrderTime).toTimeStr());
             mTvData.setText(DateUtil.parse(mOrderTime).toDateStr());
-            mTvWeek.setText(DateUtil.parse(mOrderTime).dayOfWeekEnum().toChinese());
+            mTvWeek.setText(DateKit.get(mOrderTime).weekName());
         }
     }
 

@@ -11,7 +11,6 @@ import com.eanfang.biz.rds.base.BaseViewModel;
 
 import net.eanfang.client.databinding.ActivityLeavePostAlarmRankingBinding;
 import net.eanfang.client.ui.activity.leave_post.LeavePostHistoryDetailActivity;
-import net.eanfang.client.ui.activity.leave_post.LeavePostListActivity;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostAlertRankingListBean;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostDefaultRankingBean;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostDetailBean;
@@ -95,10 +94,10 @@ public class LeavePosAlarmAllViewModel extends BaseViewModel {
     }
 
     public void gotoAlertDetailPage(Activity activity, BaseQuickAdapter adapter, int position) {
-        LeavePostDefaultRankingBean bean = (LeavePostDefaultRankingBean) adapter.getData().get(position);
+        LeavePostDetailBean bean = (LeavePostDetailBean) adapter.getData().get(position);
         Intent intent = new Intent(activity, LeavePostHistoryDetailActivity.class);
         intent.putExtra("stationId", bean.getStationId());
-        intent.putExtra("date", bean.getDate());
+        intent.putExtra("date", bean.getTime());
         activity.startActivity(intent);
     }
 

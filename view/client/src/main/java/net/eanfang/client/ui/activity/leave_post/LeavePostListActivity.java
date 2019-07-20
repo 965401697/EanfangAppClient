@@ -50,7 +50,7 @@ public class LeavePostListActivity extends BaseActivity {
         mAdapter = new LeavePostDetailAdapter();
         mBinding.recLeavePostManage.setLayoutManager(new LinearLayoutManager(this));
         mAdapter.bindToRecyclerView(mBinding.recLeavePostManage);
-        mAdapter.setOnItemChildClickListener((adapter, view, position) -> mViewModel.gotoAlertDetailPage(LeavePostListActivity.this, adapter, position));
+        mAdapter.setOnItemClickListener((adapter, view, position) -> mViewModel.gotoAlertDetailPage(LeavePostListActivity.this, adapter, position));
         mAdapter.setOnLoadMoreListener(() -> mViewModel.loadMoreData(type), mBinding.recLeavePostManage);
 
     }

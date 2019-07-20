@@ -32,6 +32,10 @@ android {
             jniLibs.srcDirs = ['src/main/libs']
         }
     }
+    compileOptions {
+        sourceCompatibility = cfg.javaVersion
+        targetCompatibility = cfg.javaVersion
+    }
 }
 
 dependencies {

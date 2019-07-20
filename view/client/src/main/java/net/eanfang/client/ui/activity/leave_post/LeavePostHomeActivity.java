@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.eanfang.base.BaseActivity;
 import com.eanfang.biz.rds.base.LViewModelProviders;
+import com.eanfang.util.DateKit;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
@@ -109,7 +110,7 @@ public class LeavePostHomeActivity extends BaseActivity {
         } else {
             mBinding.tvLeavePostChangeCount.setText(String.valueOf(changeCount));
         }
-        mBinding.tvLeavePostDate.setText(String.format("%s\t\t%s\t\t%s", DateUtil.parse(leavePostHomeBean.getNow()).toString("yyyy年MM月dd日"), leavePostHomeBean.getLunarDate(), DateUtil.parse(leavePostHomeBean.getNow()).dayOfWeekEnum().toChinese()));
+        mBinding.tvLeavePostDate.setText(String.format("%s\t\t%s\t\t%s", DateUtil.parse(leavePostHomeBean.getNow()).toString("yyyy年MM月dd日"), leavePostHomeBean.getLunarDate(), DateKit.get(leavePostHomeBean.getNow()).weekName()));
     }
 
 

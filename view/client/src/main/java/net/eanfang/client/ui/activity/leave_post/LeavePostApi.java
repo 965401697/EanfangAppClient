@@ -36,7 +36,7 @@ import retrofit2.http.Query;
 public interface LeavePostApi {
 
     /**
-     * 脱岗检测首页上部分
+     * 脱岗监测首页上部分
      *
      * @param companyId 公司id
      * @return
@@ -45,7 +45,7 @@ public interface LeavePostApi {
     Observable<BaseResponseBody<LeavePostHomeTopBean>> homeData(@Query("companyId") Long companyId);
 
     /**
-     * 脱岗检测首页待处理
+     * 脱岗监测首页待处理
      *
      * @param queryEntry
      * @return
@@ -114,7 +114,7 @@ public interface LeavePostApi {
      * @return
      */
     @POST("/yaf_station/stationDetectAlerts/contactsList")
-    Observable<BaseResponseBody<LeavePostDeviceInfoBean>> contactsList(@Query("alertId") Long alertId);
+    Observable<BaseResponseBody<LeavePostDeviceInfoBean>> contactsList(@Query("alertId") int alertId);
 
     /**
      * 首页最新脱岗警报

@@ -160,7 +160,7 @@ public class BusinessCertificationActivity extends BaseActivity {
     private void setRq() {
 
         Date date;
-        if (!StringUtils.isEmpty(clRqLrv.getText())) {
+        if (!StringUtils.isEmpty(clRqLrv.getText()) && !"无".equals(clRqLrv.getText())) {
             date = DateUtil.parse(clRqLrv.getText().toString());
         } else {
             date = new Date();

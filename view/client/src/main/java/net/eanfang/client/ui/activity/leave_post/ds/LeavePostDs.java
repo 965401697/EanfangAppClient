@@ -193,7 +193,7 @@ public class LeavePostDs extends BaseRemoteDataSource {
      * @param alertId  查询时间
      * @param callback
      */
-    public void contactsList(Long alertId, RequestCallback<LeavePostDeviceInfoBean> callback) {
+    public void contactsList(int alertId, RequestCallback<LeavePostDeviceInfoBean> callback) {
         execute(getService(LeavePostApi.class).contactsList(alertId), callback);
     }
 }

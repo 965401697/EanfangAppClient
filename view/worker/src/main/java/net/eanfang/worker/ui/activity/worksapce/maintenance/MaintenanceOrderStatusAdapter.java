@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.biz.model.OrderProgressBean;
+import com.eanfang.util.DateKit;
 import com.github.vipulasri.timelineview.TimelineView;
 
 import net.eanfang.worker.R;
@@ -36,7 +37,7 @@ public class MaintenanceOrderStatusAdapter extends BaseQuickAdapter<OrderProgres
         if (!TextUtils.isEmpty(item.getCreateTime())) {
             helper.setText(R.id.tv_time, DateUtil.parse(item.getCreateTime()).toTimeStr())
                     .setText(R.id.tv_date, DateUtil.parse(item.getCreateTime()).toDateStr())
-                    .setText(R.id.tv_weeks, DateUtil.parse(item.getCreateTime()).dayOfWeekEnum().toChinese());
+                    .setText(R.id.tv_weeks, DateKit.get(item.getCreateTime()).weekName());
         } else {
             helper.setText(R.id.tv_time, "")
                     .setText(R.id.tv_date, "")

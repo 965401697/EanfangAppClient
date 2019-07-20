@@ -14,6 +14,7 @@ import com.eanfang.BuildConfig;
 import com.eanfang.base.BaseActivity;
 import com.eanfang.biz.rds.base.LViewModelProviders;
 import com.eanfang.config.Config;
+import com.eanfang.util.DateKit;
 import com.eanfang.util.GlideUtil;
 
 import net.eanfang.client.R;
@@ -49,7 +50,7 @@ public class LeavePostHistoryDetailActivity extends BaseActivity {
         int stationId = getIntent().getIntExtra("stationId", 0);
         String date = getIntent().getStringExtra("date");
         mViewModel.historyDayData(DateUtil.parse(date), String.valueOf(stationId));
-        mBinding.tvLeavePostHistoryDetailDate.setText(MessageFormat.format("{0}\t\t{1}", DateUtil.parse(date).toString("yyyy年MM月dd日"), DateUtil.parse(date).dayOfWeekEnum().toChinese()));
+        mBinding.tvLeavePostHistoryDetailDate.setText(MessageFormat.format("{0}\t\t{1}", DateUtil.parse(date).toString("yyyy年MM月dd日"), DateKit.get(date).weekName()));
         mBinding.imgLeavePostHistoryDetailLeft.setOnClickListener(view -> mViewModel.setLastDay(mBinding.tvLeavePostHistoryDetailDate));
         mBinding.imgLeavePostHistoryDetailRight.setOnClickListener(view -> mViewModel.setNextDay(mBinding.tvLeavePostHistoryDetailDate));
         mAdapter = new LeavePostHistoryDayAdapter(R.layout.item_leave_post_history_detail);

@@ -16,6 +16,7 @@ import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.WorkReportInfoBean;
+import com.eanfang.util.DateKit;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
 
@@ -29,6 +30,7 @@ import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.hutool.core.date.DateUtil;
@@ -176,13 +178,13 @@ public class WorkReportDetailActivity extends BaseClientActivity {
                             findList = new ArrayList<>();
                             planList = new ArrayList<>();
                             //头像
-                            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + bean.getCreateUser().getAccountEntity().getAvatar()),ivHeader);
+                            GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + bean.getCreateUser().getAccountEntity().getAvatar()), ivHeader);
                             tvCompany.setText(bean.getCreateCompany().getOrgName());
                             tvSection.setText(bean.getCreateOrg().getOrgName());
                             tvType.setText(GetConstDataUtils.getWorkReportTypeList().get(bean.getType()));
                             tvDate.setText(bean.getCreateTime());
                             tvName.setText(bean.getCreateUser().getAccountEntity().getRealName());
-                            tvWeek.setText(DateUtil.parse(bean.getCreateTime()).dayOfWeekEnum().toChinese());
+                            tvWeek.setText(DateKit.get(bean.getCreateTime()).weekName());
 //                            tvReportRevPerson.setText(bean.getAssigneeUser().getAccountEntity().getRealName());
 //                            tvReportPhoneNumber.setText(bean.getAssigneeUser().getAccountEntity().getMobile());
                             for (int i = 0; i < bean.getWorkReportDetails().size(); i++) {

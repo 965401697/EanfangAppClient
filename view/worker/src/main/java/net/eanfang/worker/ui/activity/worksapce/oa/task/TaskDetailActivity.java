@@ -19,6 +19,7 @@ import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.WorkTaskInfoBean;
+import com.eanfang.util.DateKit;
 import com.eanfang.util.GlideUtil;
 
 
@@ -108,7 +109,7 @@ public class TaskDetailActivity extends BaseWorkerActivity {
                             tvSection.setText(bean.getCreateOrg().getOrgName());
                             tvDate.setText(bean.getCreateTime());
                             tvName.setText(bean.getCreateUser().getAccountEntity().getRealName());
-                    tvWeek.setText(DateUtil.parse(bean.getCreateTime()).dayOfWeekEnum().toChinese());
+                    tvWeek.setText(DateKit.get(bean.getCreateTime()).weekName());
                             tvCheckTitle.setText(bean.getTitle());
 
                             for (int i = 0; i < bean.getWorkTaskDetails().size(); i++) {

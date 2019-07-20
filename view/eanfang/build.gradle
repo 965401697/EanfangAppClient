@@ -44,7 +44,7 @@ android {
         // 开发
         debug {
             buildConfigField("boolean", "DEBUG_MOD", cfg.debugMod)
-            buildConfigField("String", "API_HOST", cfg.betaApiHost)
+            buildConfigField("String", "API_HOST", cfg.proApiHost)
         }
         release {
             // 上线url
@@ -130,12 +130,11 @@ dependencies {
     api pkg.hutoolCore
     api pkg.hutoolHttp
     api pkg.fastjson
-//    api pkg.exifinterface
 
     //tools
     implementation pkg.luban
 
-    implementation pkg.update
+//    implementation pkg.update
     implementation pkg.pinyin4j
 
     //tencent
