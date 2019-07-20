@@ -173,8 +173,8 @@ public class HomeCompanyFragment extends BaseFragment {
                 JumpItent.jump(getActivity(), SelectCompanyActivity.class);
             } else {
                 Bundle bundle = new Bundle();
-                bundle.putBoolean("isHome",true);
-                JumpItent.jump(getActivity(), SelectWorkerActivity.class,bundle);
+                bundle.putBoolean("isHome", true);
+                JumpItent.jump(getActivity(), SelectWorkerActivity.class, bundle);
             }
         });
     }

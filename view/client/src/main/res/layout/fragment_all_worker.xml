@@ -6,6 +6,8 @@
     android:orientation="vertical"
     tools:context="net.eanfang.client.ui.fragment.selectworker.AllWorkerFragment">
 
+    <include layout="@layout/layout_top_screen" />
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipre_fresh"
         android:layout_width="match_parent"
@@ -19,8 +21,8 @@
                 android:id="@+id/rv_allWorker"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="gone"
-                android:scrollbars="none" />
+                android:scrollbars="none"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/ll_nodata"

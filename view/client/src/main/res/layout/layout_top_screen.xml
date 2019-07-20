@@ -1,119 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/color_white"
-    android:orientation="horizontal"
-    android:paddingStart="@dimen/dimen_20" >
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/dimen_30"
-        android:paddingBottom="@dimen/dimen_30"
-        android:text="热门排序"
-        android:textColor="@color/color_client_neworder"
-        android:textSize="@dimen/textSize_13" />
+    <data>
 
+    </data>
 
     <LinearLayout
-        android:id="@+id/ll_mouth"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
+        android:background="@color/color_white"
         android:orientation="horizontal"
-        android:paddingTop="@dimen/dimen_30"
-        android:paddingBottom="@dimen/dimen_30">
+        android:paddingStart="@dimen/dimen_20">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="口碑值"
+            android:paddingTop="@dimen/dimen_30"
+            android:paddingBottom="@dimen/dimen_30"
+            android:text="热门排序"
             android:textColor="@color/color_client_neworder"
             android:textSize="@dimen/textSize_13" />
 
-        <ImageView
-            android:id="@+id/iv_mouth"
-            android:layout_width="wrap_content"
+
+        <LinearLayout
+            android:id="@+id/ll_mouth"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dimen_10"
-            android:src="@mipmap/ic_client_screen_none" />
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/dimen_30"
+            android:paddingBottom="@dimen/dimen_30">
+
+            <TextView
+                android:id="@+id/tv_mouth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="口碑值"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_13" />
+
+            <ImageView
+                android:id="@+id/iv_mouth"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:src="@mipmap/ic_client_screen_none" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_praise"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/dimen_30"
+            android:paddingBottom="@dimen/dimen_30">
+
+            <TextView
+                android:id="@+id/tv_praise"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="好评率"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_13" />
+
+            <ImageView
+                android:id="@+id/iv_praise"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:src="@mipmap/ic_client_screen_none" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_repair"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/dimen_30"
+            android:paddingBottom="@dimen/dimen_30">
+
+            <TextView
+                android:id="@+id/tv_repair"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="维修量"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_13" />
+
+            <ImageView
+                android:id="@+id/iv_repair"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:src="@mipmap/ic_client_screen_none" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_construction"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/dimen_30"
+            android:paddingBottom="@dimen/dimen_30">
+
+            <TextView
+                android:id="@+id/tv_construction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="施工量"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_13" />
+
+            <ImageView
+                android:id="@+id/iv_construction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:src="@mipmap/ic_client_screen_none" />
+        </LinearLayout>
+
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ll_praise"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingTop="@dimen/dimen_30"
-        android:paddingBottom="@dimen/dimen_30">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="好评率"
-            android:textColor="@color/color_client_neworder"
-            android:textSize="@dimen/textSize_13" />
-
-        <ImageView
-            android:id="@+id/iv_praise"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dimen_10"
-            android:src="@mipmap/ic_client_screen_none" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ll_repair"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingTop="@dimen/dimen_30"
-        android:paddingBottom="@dimen/dimen_30">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="维修量"
-            android:textColor="@color/color_client_neworder"
-            android:textSize="@dimen/textSize_13" />
-
-        <ImageView
-            android:id="@+id/iv_repair"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dimen_10"
-            android:src="@mipmap/ic_client_screen_none" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ll_construction"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingTop="@dimen/dimen_30"
-        android:paddingBottom="@dimen/dimen_30">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="施工量"
-            android:textColor="@color/color_client_neworder"
-            android:textSize="@dimen/textSize_13" />
-
-        <ImageView
-            android:id="@+id/iv_construction"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dimen_10"
-            android:src="@mipmap/ic_client_screen_none" />
-    </LinearLayout>
-
-</LinearLayout>
+</layout>

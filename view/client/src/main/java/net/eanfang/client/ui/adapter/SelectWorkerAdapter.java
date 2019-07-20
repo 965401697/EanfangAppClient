@@ -38,6 +38,12 @@ public class SelectWorkerAdapter extends BaseQuickAdapter<WorkerEntity, BaseView
         helper.setText(R.id.tv_workTime, GetConstDataUtils.getWorkingYearList().get(item.getVerifyEntity().getWorkingYear()));
         //姓名
         helper.setText(R.id.tv_name, item.getAccountEntity().getRealName());
+        // 维修
+        helper.setText(R.id.tv_repair_count, item.getRepairCount() + "");
+        // 施工
+        helper.setText(R.id.tv_construction_count, item.getInstallNum() + "");
+        //评价
+        helper.setText(R.id.tv_evaluate_count, item.getEvaluateNum() + "");
         if (item.getPublicPraise() != 0) {
             // 口碑
             helper.setText(R.id.tv_koubei, String.valueOf(item.getPublicPraise()) + "分");

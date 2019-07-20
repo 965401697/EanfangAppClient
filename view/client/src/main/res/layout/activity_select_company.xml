@@ -12,9 +12,13 @@
         android:orientation="vertical"
         tools:context=".ui.activity.worksapce.SelectCompanyActivity">
 
-        <include layout="@layout/header" />
+        <include
+            android:id="@+id/header"
+            layout="@layout/header" />
 
-        <include layout="@layout/layout_top_screen" />
+        <include
+            android:id="@+id/include"
+            layout="@layout/layout_top_screen" />
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipe_fresh"

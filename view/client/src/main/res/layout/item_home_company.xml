@@ -153,7 +153,7 @@
         android:layout_below="@id/tv_home_company_worker_year"
         android:layout_marginLeft="@dimen/dimen_30"
         android:layout_marginTop="@dimen/dimen_18"
-        android:layout_toRightOf="@id/tv_home_company_install"
+        android:layout_toRightOf="@id/img_home_company_logo"
         android:text="维修：300"
         android:textColor="@color/color_home_company_rz1"
         android:textSize="@dimen/textSize_13" />
@@ -165,7 +165,7 @@
         android:layout_below="@id/tv_home_company_worker_year"
         android:layout_marginLeft="@dimen/dimen_30"
         android:layout_marginTop="@dimen/dimen_18"
-        android:layout_toRightOf="@id/tv_home_company_rate"
+        android:layout_toRightOf="@id/tv_home_company_repair"
         android:text="施工：300"
         android:textColor="@color/color_home_company_rz1"
         android:textSize="@dimen/textSize_13" />
@@ -177,11 +177,10 @@
         android:layout_below="@id/tv_home_company_worker_year"
         android:layout_marginLeft="@dimen/dimen_30"
         android:layout_marginTop="@dimen/dimen_18"
-        android:layout_toRightOf="@id/tv_home_company_design"
+        android:layout_toRightOf="@id/tv_home_company_install"
         android:text="评价：300"
         android:textColor="@color/color_home_company_rz1"
         android:textSize="@dimen/textSize_13" />
-F
 
     <TextView
         android:id="@+id/tv_home_company_address_name"
