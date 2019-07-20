@@ -49,7 +49,7 @@ public class FragmentHomeCompanyAdapter extends BaseQuickAdapter<HomeCompanyBean
             helper.tvHomeCompanyWorkerYear.setVisibility(View.VISIBLE);
             helper.tvHomeCompanyWorkerYear.setText(mContext.getString(R.string.text_home_company_worker_year, item.getPractitionerYears()));
             helper.tvHomeCompanyStatus.setVisibility(View.VISIBLE);
-            helper.tvHomeCompanyStatus.setText(mContext.getString(R.string.text_home_company_level, item.getLevel()));
+            helper.tvHomeCompanyStatus.setText(mContext.getString(R.string.text_home_company_level, item.getLevel() + 1));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 helper.tvHomeCompanyStatus.setTextColor(mContext.getColor(R.color.color_home_company_level));
             }

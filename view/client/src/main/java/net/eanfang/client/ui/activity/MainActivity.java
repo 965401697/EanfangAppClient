@@ -145,7 +145,7 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
         initFragment();
         initUpdate();
         initView();
-        // initYingShiYunData();
+         initYingShiYunData();
         if (Config.get().getBaseDataBean() == null || Config.get().getConstBean() == null) {
             Dialog dialog = LoadKit.dialog(this, "正在初始化...");
             dialog.setCancelable(false);
@@ -180,18 +180,15 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
 
     }
 
-//    private void initYingShiYunData() {
-//        EanfangHttp.post(NewApiService.HOME_SUB_ACCOUNT_INFO_LIST).execute(new EanfangCallback<JSONObject>(this,false,JSONObject.class, bean -> {
-//            JSONObject jsonObject = bean.getJSONObject("subAccountInfoList");
-//            CacheKit.get().put("subAccountInfoList",jsonObject);
-//            JSONObject jsonObject1= CacheKit.get().get("subAccountInfoList", JSONObject.class);
-//
-//            String value = jsonObject1.getString(String.valueOf(ClientApplication.get().getCompanyId()));
-////            if (!StringUtils.isEmpty(value)) {
-////                EZOpenSDK.getInstance().setAccessToken(value);
-////            }
-//        }));
-//    }
+    /**
+     * 存储脱岗监测token
+     */
+    private void initYingShiYunData() {
+        EanfangHttp.post(NewApiService.HOME_SUB_ACCOUNT_INFO_LIST).execute(new EanfangCallback<JSONObject>(this,false,JSONObject.class, bean -> {
+            JSONObject jsonObject = bean.getJSONObject("subAccountInfoList");
+            CacheKit.get().put("subAccountInfoList",jsonObject);
+        }));
+    }
 
     /**
      * 初始化页面相关

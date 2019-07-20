@@ -14,6 +14,7 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.util.DateKit;
 import com.eanfang.util.GlideUtil;
 import com.yaf.base.entity.OpenShopLogEntity;
 
@@ -114,7 +115,7 @@ public class OpenShopLogDetailActivity extends BaseClientActivity {
 
         String[] date = DateUtil.date(bean.getCreateTime()).toDateStr().split("-");
         tvYear.setText(date[0] + "-" + date[1]);
-        tvWeek.setText(DateUtil.date(bean.getCreateTime()).dayOfWeekEnum().toChinese());
+        tvWeek.setText(DateKit.get(bean.getCreateTime()).weekName());
         tvData.setText(date[2]);
         long workTime = bean.getEmpExitTime().getTime() - bean.getEmpEntryTime().getTime();
         if (!TextUtils.isEmpty(formatTime(workTime))) {

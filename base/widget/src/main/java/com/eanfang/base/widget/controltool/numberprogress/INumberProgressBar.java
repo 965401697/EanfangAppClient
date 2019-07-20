@@ -1,6 +1,5 @@
 package com.eanfang.base.widget.controltool.numberprogress;
 
-
 import com.vector.update_app.view.NumberProgressBar;
 
 /**

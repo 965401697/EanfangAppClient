@@ -20,6 +20,7 @@ import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.WorkReportInfoBean;
+import com.eanfang.util.DateKit;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
 
@@ -184,7 +185,7 @@ public class WorkReportDetailActivity extends BaseWorkerActivity {
                             tvType.setText(GetConstDataUtils.getWorkReportTypeList().get(bean.getType()));
                             tvDate.setText(bean.getCreateTime());
                             tvName.setText(bean.getCreateUser().getAccountEntity().getRealName());
-                            tvWeek.setText(DateUtil.parse(bean.getCreateTime()).dayOfWeekEnum().toChinese());
+                            tvWeek.setText(DateKit.get(bean.getCreateTime()).weekName());
 //                            tvReportRevPerson.setText(bean.getAssigneeUser().getAccountEntity().getRealName());
 //                            tvReportPhoneNumber.setText(bean.getAssigneeUser().getAccountEntity().getMobile());
                             for (int i = 0; i < bean.getWorkReportDetails().size(); i++) {
