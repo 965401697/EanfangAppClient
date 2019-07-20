@@ -8,8 +8,7 @@
     tools:context=".ui.activity.my.UserHomeActivity">
 
     <include
-        android:id="@+id/layout_user_home_head"
-        layout="@layout/header" />
+        layout="@layout/header_eanfang" />
 
     <LinearLayout
         android:id="@+id/ll_user_home_btn"
@@ -84,7 +83,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/ll_user_home_btn"
-        android:layout_below="@id/layout_user_home_head"
+        android:layout_below="@id/titles_bar"
         android:fillViewport="true">
 
         <LinearLayout
