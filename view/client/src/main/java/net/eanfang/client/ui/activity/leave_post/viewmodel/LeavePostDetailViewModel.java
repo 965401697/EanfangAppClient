@@ -9,7 +9,6 @@ import androidx.lifecycle.MutableLiveData;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.biz.rds.base.BaseViewModel;
 
-import net.eanfang.client.ui.activity.leave_post.ImagesLook;
 import net.eanfang.client.ui.activity.leave_post.LeavePostCheckDetailActivity;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostAlertInfoDetailBean;
 import net.eanfang.client.ui.activity.leave_post.ds.LeavePostDs;
@@ -94,13 +93,14 @@ public class LeavePostDetailViewModel extends BaseViewModel {
 
     /**
      * 查看图片页面
+     *
      * @param activity
      * @param adapter
      * @param view
      * @param position
      */
     public void lookImage(Activity activity, BaseQuickAdapter adapter, View view, int position) {
-        ImagesLook.getInstance().show(activity, view, (ArrayList<String>) adapter.getData(), position);
+//        ImagesLook.getInstance().show(activity, view, (ArrayList<String>) adapter.getData(), position);
 
     }
 }

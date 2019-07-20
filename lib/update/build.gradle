@@ -1,8 +1,4 @@
-/*
- * Copyright (C) 2017 Baidu, Inc. All Rights Reserved.
- */
 apply plugin: 'com.android.library'
-
 android {
     compileSdkVersion cfg.compileSdkVersion
     buildToolsVersion cfg.buildToolsVersion
@@ -12,7 +8,6 @@ android {
         versionCode cfg.versionCode
         versionName cfg.versionName
     }
-
     buildTypes {
         release {
             minifyEnabled false
@@ -26,11 +21,11 @@ android {
 }
 
 dependencies {
-//    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-//        exclude group: 'com.android.support', module: 'support-annotations'
-//    })
-
-    implementation pkg.appcompat
-//    testCompile 'junit:junit:4.12'
-    implementation files('libs/license.jar')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation pkg.legacySupportV4
+//    implementation 'org.jetbrains:annotations-java5:17.0'
 }
+repositories {
+    mavenCentral()
+}
+

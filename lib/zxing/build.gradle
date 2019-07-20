@@ -38,6 +38,7 @@ android {
         sourceCompatibility cfg.javaVersion
         targetCompatibility cfg.javaVersion
     }
+    buildToolsVersion = cfg.buildToolsVersion
 
 }
 

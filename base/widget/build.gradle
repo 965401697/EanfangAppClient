@@ -18,6 +18,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility = cfg.javaVersion
+        targetCompatibility = cfg.javaVersion
+    }
 
 }
 
@@ -32,5 +36,6 @@ dependencies {
     api pkg.timelineview
     api pkg.flowlayout
     api pkg.prolificinteractive
-    implementation pkg.update
+    compile project(path: ':lib:update')
+//    implementation pkg.update
 }

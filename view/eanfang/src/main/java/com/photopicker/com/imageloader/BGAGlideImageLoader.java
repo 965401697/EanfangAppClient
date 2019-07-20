@@ -18,6 +18,7 @@ package com.photopicker.com.imageloader;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+
 import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -58,6 +59,7 @@ public class BGAGlideImageLoader extends BGAImageLoader {
                 .error(failResId)
                 .placeholder(loadingResId)
                 .override(width, height)
+                .fitCenter()
                 .dontAnimate();
         Glide.with(activity).load(finalPath).apply(options).listener(new RequestListener<Drawable>() {
             @Override
@@ -85,6 +87,7 @@ public class BGAGlideImageLoader extends BGAImageLoader {
                     delegate.onSuccess(finalPath, resource);
                 }
             }
+
             @Override
             public void onLoadFailed(@Nullable Drawable errorDrawable) {
                 super.onLoadFailed(errorDrawable);

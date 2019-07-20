@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion cfg.compileSdkVersion
 
 
     defaultConfig {
@@ -20,6 +20,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility = cfg.javaVersion
+        targetCompatibility = cfg.javaVersion
+    }
+    buildToolsVersion = cfg.buildToolsVersion
 }
 
 dependencies {
