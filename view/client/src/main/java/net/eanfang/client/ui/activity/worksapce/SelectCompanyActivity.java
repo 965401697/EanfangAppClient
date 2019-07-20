@@ -13,11 +13,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.base.BaseActivity;
-import com.eanfang.base.BaseApplication;
 import com.eanfang.biz.model.CompanyBean;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.yaf.base.entity.BaseDataEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.databinding.ActivitySelectCompanyBinding;
@@ -61,6 +59,8 @@ public class SelectCompanyActivity extends BaseActivity implements SwipeRefreshL
     private String mOrderByType = "";
     private String mOrderByValue = "";
 
+    private int mAreaId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         activitySelectCompanyBinding = DataBindingUtil.setContentView(this, R.layout.activity_select_company);
@@ -93,10 +93,11 @@ public class SelectCompanyActivity extends BaseActivity implements SwipeRefreshL
     }
 
     private void initData(String mOrderByType, String mOrderByValue) {
+        mAreaId = getIntent().getIntExtra("areaId", 0);
         EanfangHttp.post(NewApiService.HOME_COMPANY_LIST)
                 .params("page", page)
                 .params("size", 10)
-                .params("areaId", )
+                .params("areaId", mAreaId)
                 .params(mOrderByType, mOrderByValue)
                 .execute(new EanfangCallback<CompanyBean>(this, true, CompanyBean.class) {
                     @Override

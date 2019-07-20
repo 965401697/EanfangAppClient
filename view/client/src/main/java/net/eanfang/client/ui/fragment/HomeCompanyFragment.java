@@ -170,7 +170,9 @@ public class HomeCompanyFragment extends BaseFragment {
          */
         mTvHomeComanyMore.setOnClickListener((v) -> {
             if (mPageType == 0) {
-                JumpItent.jump(getActivity(), SelectCompanyActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("areaId",mAreaId);
+                JumpItent.jump(getActivity(), SelectCompanyActivity.class,bundle);
             } else {
                 Bundle bundle = new Bundle();
                 bundle.putBoolean("isHome", true);
