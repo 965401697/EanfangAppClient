@@ -12,11 +12,9 @@ import com.eanfang.base.network.kit.VoKit;
 
 import java.io.File;
 import java.util.List;
-import java.util.Objects;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.FileUtil;
-import okhttp3.Cache;
 
 
 /**
@@ -28,6 +26,7 @@ import okhttp3.Cache;
 public class CacheKit extends LruCache<String, Object> {
     private static final String COM_EANFANG_BIZ_MODEL_VO = "com.eanfang.biz.model.vo";
     private static DisCacheKit disCacheKit;
+    private static SpCacheKit spCacheKit;
     private static CacheKit cacheKit;
     private Class clazz;
 
@@ -48,6 +47,7 @@ public class CacheKit extends LruCache<String, Object> {
                 if (cacheKit == null) {
                     cacheKit = new CacheKit(100);
                     disCacheKit = DisCacheKit.get(ApkUtils.getAppVersionCode(context), getDiskCacheDir(context));
+                    spCacheKit = SpCacheKit.get(context);
                 }
             }
         }
@@ -71,26 +71,28 @@ public class CacheKit extends LruCache<String, Object> {
      * getInt
      *
      * @param key key
+     * @param def def
      * @return Integer
      */
-    public Integer getInt(String key) {
+    public Integer getInt(String key, Integer def) {
         checkDue(key);
-        this.clazz = Integer.TYPE;
+        this.clazz = Integer.class;
         Object obj = super.get(key);
-        return obj != null ? Integer.parseInt(obj.toString()) : null;
+        return obj != null ? Integer.parseInt(obj.toString()) : def;
     }
 
     /**
      * getLong
      *
      * @param key key
+     * @param def def
      * @return Long
      */
-    public Long getLong(String key) {
+    public Long getLong(String key, Long def) {
         checkDue(key);
-        this.clazz = Long.TYPE;
+        this.clazz = Long.class;
         Object obj = super.get(key);
-        return obj != null ? Long.parseLong(obj.toString()) : null;
+        return obj != null ? Long.parseLong(obj.toString()) : def;
     }
 
     /**
@@ -100,9 +102,9 @@ public class CacheKit extends LruCache<String, Object> {
      * @param def default
      * @return Boolean
      */
-    public Boolean getBool(String key, boolean def) {
+    public Boolean getBool(String key, Boolean def) {
         checkDue(key);
-        this.clazz = Boolean.TYPE;
+        this.clazz = Boolean.class;
         Object obj = super.get(key);
         return obj != null ? Boolean.parseBoolean(obj.toString()) : def;
     }
@@ -137,33 +139,23 @@ public class CacheKit extends LruCache<String, Object> {
         return (List<T>) super.get(key);
     }
 
-    /**
-     * 判断是否是客户端 临时使用
-     * 2019-05-05 14:24:15
-     *
-     * @return boolean
-     */
-    public boolean isClient() {
-        return "client".equals(getStr("APP_TYPE"));
-    }
-
     @Nullable
     @Override
     public Object put(@NonNull String key, @NonNull Object value) {
-        return this.put(key, value, true, null);
+        return this.put(key, value, CacheMod.Disk, null);
     }
 
     /**
      * 是否磁盘缓存
      *
-     * @param key    key
-     * @param value  value
-     * @param isDisk rue缓存磁盘，false不缓存磁盘
+     * @param key   key
+     * @param value value
+     * @param mod   缓存模式
      * @return Object
      */
     @Nullable
-    public Object put(@NonNull String key, @NonNull Object value, boolean isDisk) {
-        return this.put(key, value, isDisk, null);
+    public Object put(@NonNull String key, @NonNull Object value, CacheMod mod) {
+        return this.put(key, value, mod, null);
     }
 
     /**
@@ -172,37 +164,45 @@ public class CacheKit extends LruCache<String, Object> {
      * @param key   key
      * @param value value
      * @param due   due过期时间 秒单位
-     * @return
+     * @return Object
      */
     public Object put(@NonNull String key, @NonNull Object value, Integer due) {
-        return this.put(key, value, true, due);
+        return this.put(key, value, CacheMod.Disk, due);
     }
 
     /**
      * 缓存值
      *
-     * @param key    key
-     * @param value  value
-     * @param isDisk true缓存磁盘，false不缓存磁盘
-     * @param due    失效时间 秒为单位
+     * @param key   key
+     * @param value value
+     * @param mod   true缓存磁盘，false不缓存磁盘
+     * @param due   失效时间 秒为单位
      * @return Object
      */
-    public Object put(@NonNull String key, @NonNull Object value, boolean isDisk, Integer due) {
+    public Object put(@NonNull String key, @NonNull Object value, CacheMod mod, Integer due) {
         if (due != null) {
             String timeKey = key + "_seconds";
             disCacheKit.put(timeKey, DateUtil.currentSeconds() + due);
             super.put(timeKey, DateUtil.currentSeconds() + due);
         }
-        if (!isDisk) {
+        if (mod.equals(CacheMod.Memory)) {
             return super.put(key, value);
-        } else {
+        }
+        if (mod.equals(CacheMod.Disk) || mod.equals(CacheMod.All)) {
             if (value.getClass().getName().contains(COM_EANFANG_BIZ_MODEL_VO)) {
                 JSONObject jsonValue = VoKit.vo2Json(value);
                 disCacheKit.put(key, jsonValue);
             } else {
                 disCacheKit.put(key, value);
             }
-
+        }
+        if (mod.equals(CacheMod.SharePref) || mod.equals(CacheMod.All)) {
+            if (value.getClass().getName().contains(COM_EANFANG_BIZ_MODEL_VO)) {
+                JSONObject jsonValue = VoKit.vo2Json(value);
+                spCacheKit.set(key, jsonValue);
+            } else {
+                spCacheKit.set(key, value);
+            }
         }
         return super.put(key, value);
     }
@@ -211,11 +211,13 @@ public class CacheKit extends LruCache<String, Object> {
     @Override
     public Object remove(@NonNull String key) {
         disCacheKit.remove(key);
+        spCacheKit.remove(key);
         return super.remove(key);
     }
 
     public void clear() {
         disCacheKit.delete();
+        spCacheKit.clear();
         super.evictAll();
     }
 
@@ -232,6 +234,10 @@ public class CacheKit extends LruCache<String, Object> {
         if (obj != null || key.contains("_seconds")) {
             return obj;
         }
+        obj = spCacheKit.get(key, clazz);
+        if (obj != null) {
+            return obj;
+        }
         return disCacheKit.getArr(key, this.clazz);
     }
 
@@ -243,7 +249,7 @@ public class CacheKit extends LruCache<String, Object> {
     private void checkDue(String key) {
         DateUtil.currentSeconds();
         String timeKey = key + "_seconds";
-        this.clazz = Long.TYPE;
+        this.clazz = Long.class;
         Object obj = super.get(timeKey);
         Long dueTime = obj != null ? Long.parseLong(obj + "") : null;
         //超时 清除
@@ -260,10 +266,17 @@ public class CacheKit extends LruCache<String, Object> {
      * @return File
      */
     public static File getDiskCacheDir(Context context) {
-        String path = context.getExternalFilesDir(Environment.getDataDirectory().getAbsolutePath()).getAbsolutePath();
+        String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/eanfang/data";
         if (!FileUtil.exist(path)) {
             FileUtil.mkdir(path);
         }
+        if (!FileUtil.exist(path)) {
+            path = context.getExternalFilesDir(Environment.getDataDirectory().getAbsolutePath()).getAbsolutePath();
+            if (!FileUtil.exist(path)) {
+                FileUtil.mkdir(path);
+            }
+        }
+
 //        String cachePath;
 //        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
 //                || !Environment.isExternalStorageRemovable()) {

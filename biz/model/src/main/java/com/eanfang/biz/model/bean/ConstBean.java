@@ -1,5 +1,6 @@
 package com.eanfang.biz.model.bean;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -8,7 +9,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ConstBean {
+public class ConstBean implements Serializable {
     private Map<String, List<String>> Const;
     private Map<String, List<String>> WorkReportConstant;
     private Map<String, List<String>> RepairConstant;
@@ -23,5 +24,4 @@ public class ConstBean {
     private Map<String, List<String>> NoticeConst;
     private Map<String, List<String>> OAConst;
     private Map<String, List<String>> ExchangeLogConstant;
-
 }

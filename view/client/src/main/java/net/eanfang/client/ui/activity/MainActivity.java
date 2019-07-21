@@ -2,7 +2,6 @@ package net.eanfang.client.ui.activity;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,14 +16,13 @@ import android.widget.Toast;
 import androidx.fragment.app.FragmentTabHost;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.BaseApplication;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.cache.CacheKit;
-import com.eanfang.base.kit.loading.LoadKit;
+import com.eanfang.base.kit.cache.CacheMod;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.biz.model.AllMessageBean;
 import com.eanfang.biz.model.GroupDetailBean;
@@ -46,8 +44,6 @@ import com.eanfang.util.JumpItent;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UpdateAppManager;
-import com.google.gson.JsonArray;
-import com.videogo.openapi.EZOpenSDK;
 import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.client.R;
@@ -69,15 +65,14 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.concurrent.TimeUnit;
 
 import butterknife.ButterKnife;
+import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.thread.ThreadUtil;
-import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.util.ObjectUtil;
 import io.reactivex.Observable;
-import io.reactivex.Observer;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.manager.IUnReadMessageObserver;
@@ -145,38 +140,38 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
         initFragment();
         initUpdate();
         initView();
-         initYingShiYunData();
-        if (Config.get().getBaseDataBean() == null || Config.get().getConstBean() == null) {
-            Dialog dialog = LoadKit.dialog(this, "正在初始化...");
-            dialog.setCancelable(false);
-            dialog.show();
-            Observable.interval(0, 1, TimeUnit.SECONDS)
-                    .take(10)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .map(count -> 10 - count)
-                    .subscribe(new Observer<Long>() {
-                        @Override
-                        public void onSubscribe(Disposable d) {
-
-                        }
-
-                        @Override
-                        public void onNext(Long d) {
-                            LoadKit.setText(dialog, StrUtil.format("正在初始化({})", d.toString()));
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                        }
-
-                        @Override
-                        public void onComplete() {
-                            dialog.setCancelable(true);
-                            dialog.dismiss();
-                        }
-                    });
-        }
+        initYingShiYunData();
+//        if (Config.get().getBaseDataBean() == null || Config.get().getConstBean() == null) {
+//            Dialog dialog = LoadKit.dialog(this, "正在初始化...");
+//            dialog.setCancelable(false);
+//            dialog.show();
+//            Observable.interval(0, 1, TimeUnit.SECONDS)
+//                    .take(10)
+//                    .subscribeOn(Schedulers.io())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .map(count -> 10 - count)
+//                    .subscribe(new Observer<Long>() {
+//                        @Override
+//                        public void onSubscribe(Disposable d) {
+//
+//                        }
+//
+//                        @Override
+//                        public void onNext(Long d) {
+//                            LoadKit.setText(dialog, StrUtil.format("正在初始化({})", d.toString()));
+//                        }
+//
+//                        @Override
+//                        public void onError(Throwable e) {
+//                        }
+//
+//                        @Override
+//                        public void onComplete() {
+//                            dialog.setCancelable(true);
+//                            dialog.dismiss();
+//                        }
+//                    });
+//        }
 
     }
 
@@ -184,9 +179,9 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
      * 存储脱岗监测token
      */
     private void initYingShiYunData() {
-        EanfangHttp.post(NewApiService.HOME_SUB_ACCOUNT_INFO_LIST).execute(new EanfangCallback<JSONObject>(this,false,JSONObject.class, bean -> {
+        EanfangHttp.post(NewApiService.HOME_SUB_ACCOUNT_INFO_LIST).execute(new EanfangCallback<JSONObject>(this, false, JSONObject.class, bean -> {
             JSONObject jsonObject = bean.getJSONObject("subAccountInfoList");
-            CacheKit.get().put("subAccountInfoList",jsonObject);
+            CacheKit.get().put("subAccountInfoList", jsonObject);
         }));
     }
 
@@ -243,7 +238,7 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
         if (!CacheKit.get().getBool(IS_UPDATE_TAG, false)) {
             //app更新
             UpdateAppManager.update(this, false);
-            CacheKit.get().put(IS_UPDATE_TAG, true, false);
+            CacheKit.get().put(IS_UPDATE_TAG, true, CacheMod.Memory);
         }
     }
 
@@ -295,24 +290,66 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
     }
 
     private void getBaseData() {
-        String md5 = Config.get().getBaseDataBean() != null ? Config.get().getBaseDataBean().getMD5() : "0";
-        mainRepo.getBaseData(md5).observe(this, (bean) -> {
-            if (bean != null) {
-                ClientApplication.get().set(BaseDataBean.class.getName(), bean);
+        Observable.create((ObservableOnSubscribe<String>) emitter -> {
+            String md5 = Config.get().getBaseDataBean() != null ? Config.get().getBaseDataBean().getMD5() : "0";
+            if (md5.equals("0")) {
+                byte[] bytes = IoUtil.readBytes(this.getResources().openRawResource(com.eanfang.R.raw.basedata));
+                if (bytes != null) {
+                    BaseDataBean baseDataBean = ObjectUtil.unserialize(bytes);
+                    CacheKit.get().put(BaseDataBean.class.getName(), baseDataBean);
+                    md5 = baseDataBean.getMD5();
+                }
             }
-        });
+            emitter.onNext(md5);
+            emitter.onComplete();
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(md5 -> {
+                    mainRepo.getBaseData(md5).observe(this, (bean) -> {
+                        if (bean != null) {
+                            CacheKit.get().put(BaseDataBean.class.getName(), bean);
+                        }
+                    });
+                });
+//        String md5 = Config.get().getBaseDataBean() != null ? Config.get().getBaseDataBean().getMD5() : "0";
+//        mainRepo.getBaseData(md5).observe(this, (bean) -> {
+//            if (bean != null) {
+//                ClientApplication.get().set(BaseDataBean.class.getName(), bean);
+//            }
+//        });
     }
 
     /**
      * 请求静态常量
      */
     private void getConst() {
-        String md5 = Config.get().getConstBean() != null ? Config.get().getConstBean().getMD5() : "0";
-        mainRepo.getConstData(md5).observe(this, (bean) -> {
-            if (bean != null) {
-                ClientApplication.get().set(ConstAllBean.class.getName(), bean);
+        Observable.create((ObservableOnSubscribe<String>) emitter -> {
+            String md5 = Config.get().getConstBean() != null ? Config.get().getConstBean().getMD5() : "0";
+            if (md5.equals("0")) {
+                byte[] bytes = IoUtil.readBytes(this.getResources().openRawResource(com.eanfang.R.raw.constdata));
+                if (bytes != null) {
+                    ConstAllBean constAllBean = ObjectUtil.unserialize(bytes);
+                    CacheKit.get().put(ConstAllBean.class.getName(), constAllBean);
+                    md5 = constAllBean.getMD5();
+                }
             }
-        });
+            emitter.onNext(md5);
+            emitter.onComplete();
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(md5 -> {
+                    mainRepo.getConstData(md5).observe(this, (bean) -> {
+                        if (bean != null) {
+                            CacheKit.get().put(ConstAllBean.class.getName(), bean);
+                        }
+                    });
+                });
+
+//        mainRepo.getConstData(md5).observe(this, (bean) -> {
+//            if (bean != null) {
+//                ClientApplication.get().set(ConstAllBean.class.getName(), bean);
+//            }
+//        });
     }
 
     /**

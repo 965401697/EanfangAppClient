@@ -21,12 +21,12 @@ public class MainDs extends BaseRemoteDataSource implements IMainDs {
 
     @Override
     public void getBaseData(String md5, RequestCallback<BaseDataBean> callback) {
-        execute(getService(MainApi.class).getBaseData(md5), callback, new CacheModel().setClazz(MainApi.class).setMethod("getBaseData").setValues(md5).setCacheStrategy(CacheStrategy.firstCacheTimeout(1000 * 60 * 60 * 24)));
+        execute(getService(MainApi.class).getBaseData(md5), callback);
     }
 
     @Override
     public void getConstData(String md5, RequestCallback<ConstAllBean> callback) {
-        execute(getService(MainApi.class).getConstData(md5), callback, new CacheModel().setClazz(MainApi.class).setMethod("getConstData").setValues(md5).setCacheStrategy(CacheStrategy.firstCacheTimeout(1000 * 60 * 60 * 24)));
+        execute(getService(MainApi.class).getConstData(md5), callback);
     }
 
     @Override

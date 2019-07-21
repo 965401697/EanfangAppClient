@@ -28,6 +28,8 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation pkg.appcompat
+    implementation project(path: ':lib:update')
+
     api pkg.badgeview
     api pkg.flycoRoundView
     api pkg.flycoTabLayout
@@ -36,6 +38,6 @@ dependencies {
     api pkg.timelineview
     api pkg.flowlayout
     api pkg.prolificinteractive
-    compile project(path: ':lib:update')
+
 //    implementation pkg.update
 }

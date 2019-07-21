@@ -19,6 +19,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.kit.cache.CacheKit;
+import com.eanfang.base.kit.cache.CacheMod;
 import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.base.widget.customview.CircleImageView;
@@ -286,7 +288,7 @@ public class PerfectingPersonalDataActivity extends BaseWorkeActivity {
             AccountEntity accountEntity1 = user.getAccount();
             accountEntity1.setNickName(ncE);
             user.setAccount(accountEntity1);
-            WorkerApplication.get().set(LoginBean.class.getName(), user);
+            CacheKit.get().put(LoginBean.class.getName(), user, CacheMod.All);
             Intent intent = new Intent(this, RealNameAuthenticationActivity.class);
             intent.putExtra("statusB", statusB);
             startActivity(intent);

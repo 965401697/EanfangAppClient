@@ -13,16 +13,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.http.EanfangCallback;
-import com.eanfang.http.EanfangHttp;
+import com.eanfang.base.kit.cache.CacheKit;
+import com.eanfang.base.kit.cache.CacheMod;
+import com.eanfang.base.network.config.HttpConfig;
 import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.biz.model.entity.OrgEntity;
-import com.eanfang.base.network.config.HttpConfig;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.PermKit;
 import com.picker.common.util.ScreenUtils;
 
 import net.eanfang.client.R;
-import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.adapter.SwitchCompanyListAdapter;
 
 import java.util.List;
@@ -92,10 +93,11 @@ public class CompanyListView extends PopupWindow {
                 .execute(new EanfangCallback<LoginBean>(mContext, false, LoginBean.class, (bean) -> {
                     if (bean != null) {
                         PermKit.permList.clear();
-                        ClientApplication.get().remove(LoginBean.class.getName());
-                        ClientApplication.get().set(LoginBean.class.getName(), bean);
-                        EanfangHttp.setToken(ClientApplication.get().getLoginBean().getToken());
-                        HttpConfig.get().setToken(ClientApplication.get().getLoginBean().getToken());
+
+                        CacheKit.get().put(LoginBean.class.getName(), bean, CacheMod.All);
+                        HttpConfig.get().setToken(bean.getToken());
+
+                        EanfangHttp.setToken(bean.getToken());
                         EanfangHttp.setClient();
                         String companyName = null;
                         dismiss();

@@ -9,7 +9,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,6 +21,8 @@ import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.BaseActivity;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.kit.cache.CacheKit;
+import com.eanfang.base.kit.cache.CacheMod;
 import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.base.widget.customview.CircleImageView;
@@ -360,7 +361,7 @@ public class PersonInfoActivity extends BaseActivity {
                         LoginBean user = WorkerApplication.get().getLoginBean();
                         user.setAccount(mAccountEntity);
 
-                        WorkerApplication.get().set(LoginBean.class.getName(), user);
+                        CacheKit.get().put(LoginBean.class.getName(), bean, CacheMod.All);
 
                         UserInfo userInfo;
                         if (!StringUtils.isEmpty(path)) {

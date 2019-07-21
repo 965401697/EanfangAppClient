@@ -4,6 +4,8 @@ package com.eanfang.util;
  * Created by 0 u r on 2018/4/3.
  */
 
+import androidx.annotation.NonNull;
+
 import com.okgo.OkGo;
 import com.okgo.callback.StringCallback;
 import com.okgo.model.Progress;
@@ -12,8 +14,6 @@ import com.vector.update_app.HttpManager;
 
 import java.io.File;
 import java.util.Map;
-
-import androidx.annotation.NonNull;
 
 public class OkGoUpdateHttpUtil implements HttpManager {
     /**

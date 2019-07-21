@@ -13,6 +13,8 @@ import androidx.viewpager.widget.ViewPager;
 import com.eanfang.R;
 import com.eanfang.base.BaseActivity;
 import com.eanfang.base.BaseApplication;
+import com.eanfang.base.kit.cache.CacheKit;
+import com.eanfang.base.kit.cache.CacheMod;
 import com.eanfang.base.network.config.HttpConfig;
 import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.biz.rds.base.LViewModelProviders;
@@ -81,7 +83,7 @@ public class LoginActivity extends BaseActivity {
 
     //登录成功的回调
     private void handlerLogin(LoginBean loginBean) {
-        BaseApplication.get().set(LoginBean.class.getName(), loginBean);
+        CacheKit.get().put(LoginBean.class.getName(), loginBean, CacheMod.All);
         //老版的 兼容考虑
         EanfangHttp.setToken(loginBean.getToken());
         HttpConfig.get().setToken(loginBean.getToken());

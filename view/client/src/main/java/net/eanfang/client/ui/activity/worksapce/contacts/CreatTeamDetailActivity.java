@@ -7,12 +7,14 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.kit.cache.CacheKit;
+import com.eanfang.base.kit.cache.CacheMod;
+import com.eanfang.base.network.config.HttpConfig;
+import com.eanfang.biz.model.bean.LoginBean;
+import com.eanfang.biz.model.entity.OrgUnitEntity;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.bean.LoginBean;
-import com.eanfang.base.network.config.HttpConfig;
 import com.eanfang.sys.activity.LoginActivity;
-import com.eanfang.biz.model.entity.OrgUnitEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
@@ -71,8 +73,7 @@ public class CreatTeamDetailActivity extends BaseClientActivity {
 
                     mOrgid = companyid;
 
-                    ClientApplication.get().remove(LoginBean.class.getName());
-                    ClientApplication.get().set(LoginBean.class.getName(), bean);
+                    CacheKit.get().put(LoginBean.class.getName(), bean, CacheMod.All);
 
                     EanfangHttp.setToken(ClientApplication.get().getLoginBean().getToken());
                     HttpConfig.get().setToken(ClientApplication.get().getLoginBean().getToken());
@@ -87,9 +88,7 @@ public class CreatTeamDetailActivity extends BaseClientActivity {
                     @Override
                     public void onSuccess(Object bean) {
                         super.onSuccess(bean);
-                        LoginBean loginBean = (LoginBean) bean;
-                        ClientApplication.get().set(LoginBean.class.getName(),loginBean);
-
+                        CacheKit.get().put(LoginBean.class.getName(), bean, CacheMod.All);
 
                         startActivity(new Intent(CreatTeamDetailActivity.this, CreatTeamStatusHintActivity.class).
                                 putExtra("orgName", mName).putExtra("orgid", mOrgid));

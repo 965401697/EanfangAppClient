@@ -14,11 +14,13 @@ import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.http.EanfangCallback;
-import com.eanfang.http.EanfangHttp;
+import com.eanfang.base.kit.cache.CacheKit;
+import com.eanfang.base.kit.cache.CacheMod;
+import com.eanfang.base.network.config.HttpConfig;
 import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.biz.model.entity.OrgEntity;
-import com.eanfang.base.network.config.HttpConfig;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.PermKit;
 import com.eanfang.witget.takavideo.ToastUtils;
 import com.picker.common.util.ScreenUtils;
@@ -102,10 +104,9 @@ public class CompanyListView extends PopupWindow {
                 .execute(new EanfangCallback<LoginBean>(mContext, false, LoginBean.class, (bean) -> {
                     if (bean != null) {
                         PermKit.permList.clear();
-                        WorkerApplication.get().remove(LoginBean.class.getName());
-                        WorkerApplication.get().set(LoginBean.class.getName(),bean);
+                        CacheKit.get().put(LoginBean.class.getName(), bean, CacheMod.All);
                         EanfangHttp.setToken(bean.getToken());
-                        HttpConfig.get().setToken(WorkerApplication.get().getLoginBean().getToken());
+                        HttpConfig.get().setToken(bean.getToken());
                         EanfangHttp.setWorker();
                         String companyName = null;
                         dismiss();

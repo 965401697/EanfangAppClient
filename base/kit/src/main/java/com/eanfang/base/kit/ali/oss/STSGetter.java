@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.sdk.android.oss.common.auth.OSSFederationCredentialProvider;
 import com.alibaba.sdk.android.oss.common.auth.OSSFederationToken;
 import com.eanfang.base.kit.cache.CacheKit;
+import com.eanfang.base.kit.cache.CacheMod;
 import com.eanfang.base.network.config.HttpConfig;
 
 import java.io.IOException;
@@ -57,7 +58,7 @@ public class STSGetter extends OSSFederationCredentialProvider {
             }
             JSONObject object = JSON.parseObject(json);
             ossBean = object.getJSONObject("data").toJavaObject(OssBean.class);
-            CacheKit.get().put(STS_TOKEN_KEY, ossBean, false, 60 * 5);
+            CacheKit.get().put(STS_TOKEN_KEY, ossBean, CacheMod.Memory, 60 * 5);
         }
         String ak = ossBean.getAccessKeyId();
         String sk = ossBean.getAccessKeySecret();

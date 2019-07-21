@@ -18,6 +18,8 @@ import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.kit.cache.CacheKit;
+import com.eanfang.base.kit.cache.CacheMod;
 import com.eanfang.base.network.config.HttpConfig;
 import com.eanfang.biz.model.OrganizationBean;
 import com.eanfang.biz.model.bean.LoginBean;
@@ -378,10 +380,9 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
                 .execute(new EanfangCallback<LoginBean>(getActivity(), false, LoginBean.class, (bean) -> {
                     if (bean != null) {
                         PermKit.permList.clear();
-                        WorkerApplication.get().remove(LoginBean.class.getName());
-                        WorkerApplication.get().set(LoginBean.class.getName(), bean);
-                        EanfangHttp.setToken(WorkerApplication.get().getLoginBean().getToken());
-                        HttpConfig.get().setToken(WorkerApplication.get().getLoginBean().getToken());
+                        CacheKit.get().put(LoginBean.class.getName(), bean, CacheMod.All);
+                        EanfangHttp.setToken(bean.getToken());
+                        HttpConfig.get().setToken(bean.getToken());
                         EanfangHttp.setClient();
                     }
                 }));

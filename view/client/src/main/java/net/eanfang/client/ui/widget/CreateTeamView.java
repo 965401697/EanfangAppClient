@@ -10,16 +10,17 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.http.EanfangCallback;
-import com.eanfang.http.EanfangHttp;
+import com.eanfang.base.kit.cache.CacheKit;
+import com.eanfang.base.kit.cache.CacheMod;
+import com.eanfang.base.network.config.HttpConfig;
 import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.biz.model.entity.OrgUnitEntity;
-import com.eanfang.base.network.config.HttpConfig;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
 import com.eanfang.sys.activity.LoginActivity;
 import com.eanfang.ui.base.BaseDialog;
 
 import net.eanfang.client.R;
-import net.eanfang.client.base.ClientApplication;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -93,11 +94,9 @@ public class CreateTeamView extends BaseDialog {
         EanfangHttp.get(NewApiService.SWITCH_COMPANY_ALL_LIST)
                 .params("companyId", companyid)
                 .execute(new EanfangCallback<LoginBean>(mContext, true, LoginBean.class, (bean) -> {
-                    ClientApplication.get().remove(LoginBean.class.getName());
-                    ClientApplication.get().set(LoginBean.class.getName(), bean);
-
-                    EanfangHttp.setToken(ClientApplication.get().getLoginBean().getToken());
-                    HttpConfig.get().setToken(ClientApplication.get().getLoginBean().getToken());
+                    CacheKit.get().put(LoginBean.class.getName(), bean, CacheMod.All);
+                    HttpConfig.get().setToken(bean.getToken());
+                    EanfangHttp.setToken(bean.getToken());
                     EanfangHttp.setClient();
                     dismiss();
                 }));
@@ -109,9 +108,7 @@ public class CreateTeamView extends BaseDialog {
                     @Override
                     public void onSuccess(Object bean) {
                         super.onSuccess(bean);
-                        LoginBean loginBean = (LoginBean) bean;
-                        ClientApplication.get().set(LoginBean.class.getName(), loginBean);
-
+                        CacheKit.get().put(LoginBean.class.getName(), bean, CacheMod.All);
                     }
 
                     @Override

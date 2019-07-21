@@ -17,6 +17,7 @@ import com.baozi.treerecyclerview.item.TreeItemGroup;
 import com.eanfang.R;
 import com.eanfang.base.BaseApplication;
 import com.eanfang.base.kit.cache.CacheKit;
+import com.eanfang.base.network.config.HttpConfig;
 import com.eanfang.biz.model.SectionBean;
 import com.eanfang.ui.activity.SelectPresonActivity;
 
@@ -70,7 +71,7 @@ public class OrgTwoLevelItem extends TreeItemGroup<SectionBean> {
         }
 
         try {
-            if (CacheKit.get().isClient()) {
+            if (HttpConfig.get().isClient()) {
                 viewHolder.getView(R.id.cb_checked).setBackground(ContextCompat.getDrawable(viewHolder.getImageView(R.id.iv_select).getContext(), R.drawable.selector_single_checked_client));
 
             } else {

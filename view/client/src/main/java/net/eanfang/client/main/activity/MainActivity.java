@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModel;
 import com.eanfang.base.BaseActivity;
 import com.eanfang.base.BaseApplication;
 import com.eanfang.base.kit.cache.CacheKit;
+import com.eanfang.base.kit.cache.CacheMod;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.base.widget.controltool.ControlToolView;
 import com.eanfang.biz.model.AllMessageBean;
@@ -283,7 +284,7 @@ public class MainActivity extends BaseActivity {
         if (!CacheKit.get().getBool(IS_UPDATE_TAG, false)) {
             //app更新
             UpdateAppManager.update(this, false);
-            CacheKit.get().put(IS_UPDATE_TAG, true, false);
+            CacheKit.get().put(IS_UPDATE_TAG, true, CacheMod.Memory);
         }
     }
 

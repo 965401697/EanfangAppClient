@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.base.BaseApplication;
+import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.ContentSecruityBean;
 import com.eanfang.model.ContentSecruityTokenBean;
@@ -121,8 +122,8 @@ public class ContentSecurityAuditUtil {
     public void toAuditing(String content, ContentAuditingListener listener) {
         this.mListener = listener;
         long currentTime = System.currentTimeMillis() / 1000;
-        long saveTime = Long.valueOf(BaseApplication.get().get(SP_SAVE_TIME_KEY, 0));
-        String saveToken = (String) BaseApplication.get().get(SP_SAVE_TOKEN_KEY, String.class);
+        long saveTime = CacheKit.get().getLong(SP_SAVE_TIME_KEY, 0L);
+        String saveToken = CacheKit.get().getStr(SP_SAVE_TOKEN_KEY);
         if (saveTime > currentTime && !StringUtils.isEmpty(saveToken)) {
             spamContent(saveToken, content);
         } else {

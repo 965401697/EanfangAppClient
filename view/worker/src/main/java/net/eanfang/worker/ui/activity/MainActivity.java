@@ -26,7 +26,7 @@ import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.BaseApplication;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.cache.CacheKit;
-import com.eanfang.base.kit.loading.LoadKit;
+import com.eanfang.base.kit.cache.CacheMod;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.base.widget.controltool.ControlToolView;
 import com.eanfang.biz.model.AllMessageBean;
@@ -79,15 +79,14 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import butterknife.ButterKnife;
+import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.thread.ThreadUtil;
-import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.util.ObjectUtil;
 import io.reactivex.Observable;
-import io.reactivex.Observer;
+import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.manager.IUnReadMessageObserver;
@@ -149,37 +148,37 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
         initUpdate();
         initView();
         initMaintainNotice();
-        if (Config.get().getBaseDataBean() == null || Config.get().getConstBean() == null) {
-            Dialog dialog = LoadKit.dialog(this, "正在初始化...");
-            dialog.setCancelable(false);
-            dialog.show();
-            Observable.interval(0, 1, TimeUnit.SECONDS)
-                    .take(10)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .map(count -> 10 - count)
-                    .subscribe(new Observer<Long>() {
-                        @Override
-                        public void onSubscribe(Disposable d) {
-
-                        }
-
-                        @Override
-                        public void onNext(Long d) {
-                            LoadKit.setText(dialog, StrUtil.format("正在初始化({})", d.toString()));
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                        }
-
-                        @Override
-                        public void onComplete() {
-                            dialog.setCancelable(true);
-                            dialog.dismiss();
-                        }
-                    });
-        }
+//        if (Config.get().getBaseDataBean() == null || Config.get().getConstBean() == null) {
+//            Dialog dialog = LoadKit.dialog(this, "正在初始化...");
+//            dialog.setCancelable(false);
+//            dialog.show();
+//            Observable.interval(0, 1, TimeUnit.SECONDS)
+//                    .take(10)
+//                    .subscribeOn(Schedulers.io())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .map(count -> 10 - count)
+//                    .subscribe(new Observer<Long>() {
+//                        @Override
+//                        public void onSubscribe(Disposable d) {
+//
+//                        }
+//
+//                        @Override
+//                        public void onNext(Long d) {
+//                            LoadKit.setText(dialog, StrUtil.format("正在初始化({})", d.toString()));
+//                        }
+//
+//                        @Override
+//                        public void onError(Throwable e) {
+//                        }
+//
+//                        @Override
+//                        public void onComplete() {
+//                            dialog.setCancelable(true);
+//                            dialog.dismiss();
+//                        }
+//                    });
+//        }
 
     }
 
@@ -263,7 +262,7 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
         if (!CacheKit.get().getBool(IS_UPDATE_TAG, false)) {
             //app更新
             UpdateAppManager.update(this, false);
-            CacheKit.get().put(IS_UPDATE_TAG, true, false);
+            CacheKit.get().put(IS_UPDATE_TAG, true, CacheMod.Memory);
         }
     }
 
@@ -326,54 +325,92 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
     }
 
     private void getBaseData() {
-        String md5 = Config.get().getBaseDataBean() != null ? Config.get().getBaseDataBean().getMD5() : "0";
-        mainRepo.getBaseData(md5).observe(this, (bean) -> {
-            if (bean != null) {
-                WorkerApplication.get().set(BaseDataBean.class.getName(), bean);
-                if (WorkerApplication.get().get(Constant.COUNTRY_AREA_LIST, BaseDataEntity.class) == null) {
-                    saveArea(bean);
+        Observable.create((ObservableOnSubscribe<String>) emitter -> {
+            String md5 = Config.get().getBaseDataBean() != null ? Config.get().getBaseDataBean().getMD5() : "0";
+            if (md5.equals("0")) {
+                byte[] bytes = IoUtil.readBytes(this.getResources().openRawResource(com.eanfang.R.raw.basedata));
+                if (bytes != null) {
+                    BaseDataBean baseDataBean = ObjectUtil.unserialize(bytes);
+                    CacheKit.get().put(BaseDataBean.class.getName(), baseDataBean);
+                    md5 = baseDataBean.getMD5();
+                    saveArea(baseDataBean);
                 }
             }
-        });
+            emitter.onNext(md5);
+            emitter.onComplete();
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(md5 -> {
+                    mainRepo.getBaseData(md5).observe(this, (bean) -> {
+                        if (bean != null) {
+                            CacheKit.get().put(BaseDataBean.class.getName(), bean);
+                        }
+                    });
+                });
+//        String md5 = Config.get().getBaseDataBean() != null ? Config.get().getBaseDataBean().getMD5() : "0";
+//        mainRepo.getBaseData(md5).observe(this, (bean) -> {
+//            if (bean != null) {
+//                ClientApplication.get().set(BaseDataBean.class.getName(), bean);
+//            }
+//        });
     }
 
     /**
      * 请求静态常量
      */
     private void getConst() {
-        String md5 = Config.get().getConstBean() != null ? Config.get().getConstBean().getMD5() : "0";
-        mainRepo.getConstData(md5).observe(this, (bean) -> {
-            if (bean != null) {
-                WorkerApplication.get().set(ConstAllBean.class.getName(), bean);
+        Observable.create((ObservableOnSubscribe<String>) emitter -> {
+            String md5 = Config.get().getConstBean() != null ? Config.get().getConstBean().getMD5() : "0";
+            if (md5.equals("0")) {
+                byte[] bytes = IoUtil.readBytes(this.getResources().openRawResource(com.eanfang.R.raw.constdata));
+                if (bytes != null) {
+                    ConstAllBean constAllBean = ObjectUtil.unserialize(bytes);
+                    CacheKit.get().put(ConstAllBean.class.getName(), constAllBean);
+                    md5 = constAllBean.getMD5();
+                }
             }
-        });
+            emitter.onNext(md5);
+            emitter.onComplete();
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(md5 -> {
+                    mainRepo.getConstData(md5).observe(this, (bean) -> {
+                        if (bean != null) {
+                            CacheKit.get().put(ConstAllBean.class.getName(), bean);
+                        }
+                    });
+                });
+
+//        mainRepo.getConstData(md5).observe(this, (bean) -> {
+//            if (bean != null) {
+//                ClientApplication.get().set(ConstAllBean.class.getName(), bean);
+//            }
+//        });
     }
 
     private void saveArea(BaseDataBean dataBean) {
-        ThreadUtil.execute(() -> {
-            BaseDataEntity entity = new BaseDataEntity();
-            //获得全部 地区数据
-            List<BaseDataEntity> allAreaList = Stream.of(dataBean.getData()).filter(bean -> bean.getDataType().equals(Constant.AREA) && !bean.getDataCode().equals(Constant.AREA + "")).toList();
-            for (int i = 0; i < allAreaList.size(); i++) {
-                BaseDataEntity provinceEntity = allAreaList.get(i);
-                //处理当前省下的所有市
-                List<BaseDataEntity> cityList = Stream.of(allAreaList).filter(bean -> bean.getParentId() != null
-                        && bean.getParentId().equals(provinceEntity.getDataId())).toList();
-                //查询出来后，移除，以增加效率
-                allAreaList.removeAll(cityList);
-                for (int j = 0; j < cityList.size(); j++) {
-                    BaseDataEntity cityEntity = cityList.get(j);
-                    //处理当前市下所有区县
-                    List<BaseDataEntity> countyList = Stream.of(allAreaList).filter(bean -> bean.getParentId() != null
-                            && bean.getParentId().equals(cityEntity.getDataId())).toList();
-                    allAreaList.removeAll(countyList);
-                    cityEntity.setChildren(countyList);
-                }
-                provinceEntity.setChildren(cityList);
+        BaseDataEntity entity = new BaseDataEntity();
+        //获得全部 地区数据
+        List<BaseDataEntity> allAreaList = Stream.of(dataBean.getData()).filter(bean -> bean.getDataType().equals(Constant.AREA) && !bean.getDataCode().equals(Constant.AREA + "")).toList();
+        for (int i = 0; i < allAreaList.size(); i++) {
+            BaseDataEntity provinceEntity = allAreaList.get(i);
+            //处理当前省下的所有市
+            List<BaseDataEntity> cityList = Stream.of(allAreaList).filter(bean -> bean.getParentId() != null
+                    && bean.getParentId().equals(provinceEntity.getDataId())).toList();
+            //查询出来后，移除，以增加效率
+            allAreaList.removeAll(cityList);
+            for (int j = 0; j < cityList.size(); j++) {
+                BaseDataEntity cityEntity = cityList.get(j);
+                //处理当前市下所有区县
+                List<BaseDataEntity> countyList = Stream.of(allAreaList).filter(bean -> bean.getParentId() != null
+                        && bean.getParentId().equals(cityEntity.getDataId())).toList();
+                allAreaList.removeAll(countyList);
+                cityEntity.setChildren(countyList);
             }
-            entity.setChildren(allAreaList);
-            WorkerApplication.get().set(Constant.COUNTRY_AREA_LIST, entity);
-        });
+            provinceEntity.setChildren(cityList);
+        }
+        entity.setChildren(allAreaList);
+        CacheKit.get().put(Constant.COUNTRY_AREA_LIST, entity);
     }
 
 

@@ -1,6 +1,8 @@
 package com.eanfang.takevideo;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.ActivityInfo;
 import android.hardware.SensorManager;
 import android.media.AudioFormat;
 import android.os.Bundle;
@@ -21,7 +23,6 @@ import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.config.Config;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.ObjectUtil;
 import com.eanfang.util.StringUtils;
 import com.eanfang.witget.takavideo.CustomProgressDialog;
 import com.eanfang.witget.takavideo.FocusIndicator;
@@ -316,7 +317,7 @@ public class TakeVideoActivity extends BaseActivity implements PLRecordStateList
         mOrientationListener = new OrientationEventListener(this, SensorManager.SENSOR_DELAY_NORMAL) {
             @Override
             public void onOrientationChanged(int orientation) {
-                int rotation = ObjectUtil.getScreenRotation(TakeVideoActivity.this, orientation);
+                int rotation = getScreenRotation(TakeVideoActivity.this, orientation);
                 if (!recordProgressbar.isRecorded() && !mSectionBegan) {
                     videoEncodeSetting.setRotationInMetadata(rotation);
                 }
@@ -325,7 +326,21 @@ public class TakeVideoActivity extends BaseActivity implements PLRecordStateList
         if (mOrientationListener.canDetectOrientation()) {
             mOrientationListener.enable();
         }
+    }
 
+    private int getScreenRotation(Context context, int orientation) {
+        int screenRotation = 0;
+        boolean isPortraitScreen = context.getResources().getConfiguration().orientation == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+        if (orientation >= 315 || orientation < 45) {
+            screenRotation = isPortraitScreen ? 0 : 90;
+        } else if (orientation < 135) {
+            screenRotation = isPortraitScreen ? 90 : 180;
+        } else if (orientation < 225) {
+            screenRotation = isPortraitScreen ? 180 : 270;
+        } else {
+            screenRotation = isPortraitScreen ? 270 : 0;
+        }
+        return screenRotation;
     }
 
     /**

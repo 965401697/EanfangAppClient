@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.cache.CacheKit;
+import com.eanfang.base.kit.cache.CacheMod;
 import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -75,7 +76,7 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
     //加载引导页
     void firstUse() {
         new GuideUtil().init(this, findViewById(R.id.layout), drawables_worker, this);
-        CacheKit.get().put(SHOWGUID, false);
+        CacheKit.get().put(SHOWGUID, false, CacheMod.All);
     }
 
     /**
@@ -87,7 +88,7 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
                     @Override
                     public void onSuccess(LoginBean bean) {
                         if (bean != null && !StringUtils.isEmpty(bean.getToken())) {
-                            WorkerApplication.get().set(LoginBean.class.getName(), bean);
+                            CacheKit.get().put(LoginBean.class.getName(), bean, CacheMod.All);
                             goMain();
                         } else {
                             goLogin();
@@ -113,7 +114,7 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
             //加载引导
             if (CacheKit.get().getBool(GUID, true)) {
                 startActivity(new Intent(this, GuideActivity.class));
-                CacheKit.get().put(GUID, false);
+                CacheKit.get().put(GUID, false, CacheMod.All);
                 finishSelf();
             } else {
                 goMain();

@@ -61,12 +61,12 @@ public class BaseApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         appContext = this;
-        Leaves.INSTANCE.init(this);
-        initFresco();
-        initOkGo();
 
         Config.Cache.init();
 
+        Leaves.INSTANCE.init(this);
+        initFresco();
+        initOkGo();
         initConfig();
     }
 
@@ -81,19 +81,19 @@ public class BaseApplication extends MultiDexApplication {
         //相机助手
 //        CameraApplication.init(this, BuildConfig.DEBUG_MOD);
         //初始换tbs  debug模式 回调 正式模式不回调
-//        QbSdk.initX5Environment(this, !BuildConfig.DEBUG_MOD ? null : new QbSdk.PreInitCallback() {
-//            @Override
-//            public void onViewInitFinished(boolean arg0) {
-//                //x5內核初始化完成的回调，为true表示x5内核加载成功，否则表示x5内核加载失败，会自动切换到系统内核。
-//                Log.e("zzw", " onViewInitFinished is " + arg0);
-//            }
-//
-//            @Override
-//            public void onCoreInitFinished() {
-//                Log.e("zzw", " onCoreInitFinished");
-//            }
-//
-//        });
+        QbSdk.initX5Environment(this, !BuildConfig.DEBUG_MOD ? null : new QbSdk.PreInitCallback() {
+            @Override
+            public void onViewInitFinished(boolean arg0) {
+                //x5內核初始化完成的回调，为true表示x5内核加载成功，否则表示x5内核加载失败，会自动切换到系统内核。
+                Log.e("zzw", " onViewInitFinished is " + arg0);
+            }
+
+            @Override
+            public void onCoreInitFinished() {
+                Log.e("zzw", " onCoreInitFinished");
+            }
+
+        });
 
         // 初始化讯飞
         // 注意： appid 必须和下载的SDK保持一致，否则会出现10407错误
@@ -246,7 +246,7 @@ public class BaseApplication extends MultiDexApplication {
      * @param key   key
      * @param value value
      */
-
+    @Deprecated
     public void set(String key, Object value) {
         CacheKit.get().put(key, value);
     }
@@ -258,6 +258,7 @@ public class BaseApplication extends MultiDexApplication {
      * @param defaultValue defaultValue
      * @return String
      */
+    @Deprecated
     public String get(String key, Object defaultValue) {
         String s = CacheKit.get().getStr(key);
         return s != null ? s : defaultValue.toString();
@@ -271,6 +272,7 @@ public class BaseApplication extends MultiDexApplication {
      * @param <T>   T
      * @return Object
      */
+    @Deprecated
     public <T> T get(String key, Class<T> clazz) {
         return CacheKit.get().get(key, clazz);
     }
@@ -280,10 +282,12 @@ public class BaseApplication extends MultiDexApplication {
      *
      * @param key key
      */
+    @Deprecated
     public void remove(String key) {
         CacheKit.get().remove(key);
     }
 
+    @Deprecated
     public void clear() {
         CacheKit.get().clear();
     }

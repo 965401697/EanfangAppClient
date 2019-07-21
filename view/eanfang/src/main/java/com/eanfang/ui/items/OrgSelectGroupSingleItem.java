@@ -14,6 +14,7 @@ import com.baozi.treerecyclerview.item.TreeItem;
 import com.baozi.treerecyclerview.item.TreeItemGroup;
 import com.eanfang.R;
 import com.eanfang.base.kit.cache.CacheKit;
+import com.eanfang.base.network.config.HttpConfig;
 import com.eanfang.biz.model.TemplateBean;
 
 import java.util.List;
@@ -41,7 +42,7 @@ public class OrgSelectGroupSingleItem extends TreeItemGroup<TemplateBean> {
 
         viewHolder.getView(R.id.cb_all_checked).setVisibility(View.INVISIBLE);
         try {
-            if (CacheKit.get().isClient()) {
+            if (HttpConfig.get().isClient()) {
                 viewHolder.getView(R.id.cb_all_checked).setBackground(ContextCompat.getDrawable(viewHolder.getImageView(R.id.iv_select).getContext(), R.drawable.selector_single_checked_client));
 
             } else {
