@@ -115,7 +115,6 @@ public class PersonInfoActivity extends BaseActivity {
     @BindView(R.id.btn_woman)
     Button mBtnWoman;
     private String path;
-    private boolean isUploadHead = false;
 
     private LoginBean loginBean;
     private String mAreaCode;
@@ -235,13 +234,11 @@ public class PersonInfoActivity extends BaseActivity {
         }
         AccountEntity accountEntity = infoBackBean.getAccount();
         if (!StringUtils.isEmpty(accountEntity.getAvatar())) {
-            isUploadHead = true;
             path = accountEntity.getAvatar();
             GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + accountEntity.getAvatar()), ivUpload);
             setHeaderShow(true);
         } else {
             setHeaderShow(false);
-            isUploadHead = false;
         }
         // 昵称
         if (accountEntity.getNickName() != null && !DEFAULT_NAME.equals(accountEntity.getNickName())) {
@@ -285,7 +282,7 @@ public class PersonInfoActivity extends BaseActivity {
      */
     private boolean checkInfo() {
         //如果为空，则代表头像
-        if (!isUploadHead || StringUtils.isEmpty(path)) {
+        if (StringUtils.isEmpty(path)) {
             showToast("请上传头像");
             return false;
         }

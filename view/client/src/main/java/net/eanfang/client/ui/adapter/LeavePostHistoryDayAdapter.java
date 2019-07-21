@@ -8,6 +8,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostHistoryDayBean;
@@ -40,8 +41,19 @@ public class LeavePostHistoryDayAdapter extends BaseQuickAdapter<LeavePostHistor
             helper.imgItemLeavePostHistoryDetailLineBottom.setVisibility(View.GONE);
         }
         helper.tvItemLeavePostHistoryDetailName.setText(item.getAlertName());
-
-        helper.tvItemLeavePostHistoryDetailDate.setText(MessageFormat.format("{0}\t-\t{1}", DateUtil.parse(item.getLeaveTime()).toString("HH:mm"), DateUtil.parse(item.getBackTime()).toString("HH:mm")));
+        String leaveTime = item.getLeaveTime();
+        if (!StringUtils.isEmpty(leaveTime)) {
+            leaveTime = DateUtil.parse(leaveTime).toString("HH:mm");
+        } else {
+            leaveTime = "";
+        }
+        String backTime = item.getBackTime();
+        if (!StringUtils.isEmpty(backTime)) {
+            backTime = DateUtil.parse(backTime).toString("HH:mm");
+        } else {
+            backTime = "";
+        }
+        helper.tvItemLeavePostHistoryDetailDate.setText(MessageFormat.format("{0}\t-\t{1}",leaveTime , backTime));
         int hour = 60;
         helper.imgItemLeavePostHistoryDetailBar.post(() -> {
             int height = helper.imgItemLeavePostHistoryDetailBar.getHeight();
