@@ -22,6 +22,8 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.BaseActivity;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.kit.cache.CacheKit;
+import com.eanfang.base.kit.cache.CacheMod;
 import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.base.widget.customview.CircleImageView;
@@ -351,7 +353,7 @@ public class PersonInfoActivity extends BaseActivity {
                         if (!StringUtils.isEmpty(tvNickname.getText().toString().trim())) {
                             user.getAccount().setNickName(tvNickname.getText().toString().trim());
                         }
-                        ClientApplication.get().set(LoginBean.class.getName(), user);
+                        CacheKit.get().put(LoginBean.class.getName(), user, CacheMod.All);
 
                         UserInfo userInfo;
                         if (!StringUtils.isEmpty(path)) {

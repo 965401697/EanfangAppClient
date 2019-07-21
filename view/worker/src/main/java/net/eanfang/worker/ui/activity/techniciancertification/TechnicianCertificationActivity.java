@@ -99,7 +99,9 @@ public class TechnicianCertificationActivity extends BaseActivity {
     }
 
     private void initData() {
-        EanfangHttp.post(UserApi.POST_WORKER_AUTH_STATUS_B).params("accId", WorkerApplication.get().getAccId()).execute(new EanfangCallback<AuthStatusBean>(this, true, AuthStatusBean.class, (bean) -> {
+        EanfangHttp.post(UserApi.POST_WORKER_AUTH_STATUS_B)
+                .params("accId", WorkerApplication.get().getAccId())
+                .execute(new EanfangCallback<AuthStatusBean>(this, true, AuthStatusBean.class, (bean) -> {
             verify = bean.getVerify();
             realVerify = bean.getRealVerify();
             if (verify == STATE_SUCCESS) {

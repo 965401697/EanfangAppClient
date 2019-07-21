@@ -361,7 +361,7 @@ public class PersonInfoActivity extends BaseActivity {
                         LoginBean user = WorkerApplication.get().getLoginBean();
                         user.setAccount(mAccountEntity);
 
-                        CacheKit.get().put(LoginBean.class.getName(), bean, CacheMod.All);
+                        CacheKit.get().put(LoginBean.class.getName(), user, CacheMod.All);
 
                         UserInfo userInfo;
                         if (!StringUtils.isEmpty(path)) {
