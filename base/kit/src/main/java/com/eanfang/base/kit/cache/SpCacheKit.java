@@ -51,6 +51,9 @@ class SpCacheKit {
     }
 
     public <T> Object get(String key, Class<T> clazz) {
+        if (!sp.contains(key)) {
+            return null;
+        }
 //        String str = getString(key, "");
         if (clazz.getName().equals(Boolean.class.getName())) {
             return sp.getBoolean(key, false);

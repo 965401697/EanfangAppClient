@@ -25,9 +25,9 @@ import cn.hutool.core.io.FileUtil;
 public class Config {
     private static Config config = new Config();
 
-//    static {
-//        Cache.init();
-//    }
+    static {
+        Cache.init();
+    }
 
     /**
      * 缓存相关
@@ -63,7 +63,7 @@ public class Config {
         //        /**
 //         * 数据路径
 //         */
-        public static final String DATA_STORAGE_DIR = BASE_CACHE_DIR + "/data/";
+//        public static final String DATA_STORAGE_DIR = BASE_CACHE_DIR + "/data/";
         /**
          * 下载路径
          */
@@ -92,9 +92,9 @@ public class Config {
             if (!FileUtil.exist(LOG_STORAGE_DIR)) {
                 FileUtil.mkdir(LOG_STORAGE_DIR);
             }
-            if (!FileUtil.exist(DATA_STORAGE_DIR)) {
-                FileUtil.mkdir(DATA_STORAGE_DIR);
-            }
+//            if (!FileUtil.exist(DATA_STORAGE_DIR)) {
+////                FileUtil.mkdir(DATA_STORAGE_DIR);
+////            }
             if (!FileUtil.exist(DOWNLOAD_STORAGE_DIR)) {
                 FileUtil.mkdir(DOWNLOAD_STORAGE_DIR);
             }
