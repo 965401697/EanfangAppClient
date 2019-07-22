@@ -266,25 +266,11 @@ public class CacheKit extends LruCache<String, Object> {
      * @return File
      */
     public static File getDiskCacheDir(Context context) {
-        String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/eanfang/data";
+        String path = context.getExternalFilesDir(Environment.getDataDirectory().getAbsolutePath()).getAbsolutePath();
         if (!FileUtil.exist(path)) {
             FileUtil.mkdir(path);
         }
-        if (!FileUtil.exist(path)) {
-            path = context.getExternalFilesDir(Environment.getDataDirectory().getAbsolutePath()).getAbsolutePath();
-            if (!FileUtil.exist(path)) {
-                FileUtil.mkdir(path);
-            }
-        }
 
-//        String cachePath;
-//        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())
-//                || !Environment.isExternalStorageRemovable()) {
-//            cachePath = Objects.requireNonNull(context.getExternalCacheDir()).getPath();
-//        } else {
-//            cachePath = context.getCacheDir().getPath();
-//        }
-//        return new File(cachePath + File.separator);
         return new File(path + File.separator);
     }
 
