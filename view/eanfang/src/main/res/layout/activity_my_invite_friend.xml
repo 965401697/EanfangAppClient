@@ -7,15 +7,14 @@
     android:layout_height="match_parent">
 
     <include
-        android:id="@+id/layout_header"
-        layout="@layout/header" />
+        layout="@layout/header_eanfang" />
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@drawable/bg_invite_friend"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_header"
+        app:layout_constraintTop_toBottomOf="@id/titles_bar"
         app:layout_constraintVertical_bias="0.0"
         tools:layout_editor_absoluteX="-163dp" />
 

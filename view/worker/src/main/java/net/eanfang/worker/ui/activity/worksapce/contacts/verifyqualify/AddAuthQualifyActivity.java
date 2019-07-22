@@ -106,6 +106,7 @@ public class AddAuthQualifyActivity extends BaseWorkeActivity implements SelectT
 
     @Override
     public void initView() {
+        setLeftBack(true);
         isAuth = getIntent().getStringExtra("isAuth");
         mOrgId = getIntent().getLongExtra("orgid", 0);
         aptitudeCertificateEntity = (AptitudeCertificateEntity) getIntent().getSerializableExtra("bean");

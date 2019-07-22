@@ -478,26 +478,6 @@
                     android:layout_marginTop="@dimen/dimen_40"
                     android:orientation="horizontal">
 
-                    <com.photopicker.com.widget.BGASortableNinePhotoLayout
-                        android:id="@+id/snpl_moment_add_photos"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen_30"
-                        android:visibility="gone"
-                        app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
-                        app:bga_snpl_deleteDrawableOverlapQuarter="false"
-                        app:bga_snpl_editable="true"
-                        app:bga_snpl_itemCornerRadius="0dp"
-                        app:bga_snpl_itemSpanCount="3"
-                        app:bga_snpl_itemWhiteSpacing="10dp"
-                        app:bga_snpl_itemWidth="@dimen/dimen_100"
-                        app:bga_snpl_maxItemCount="3"
-                        app:bga_snpl_otherWhiteSpacing="100dp"
-                        app:bga_snpl_placeholderDrawable="@mipmap/ic_nodata"
-                        app:bga_snpl_plusDrawable="@mipmap/ic_pic_add"
-                        app:bga_snpl_plusEnable="true"
-                        app:bga_snpl_sortable="true" />
-
                     <com.eanfang.base.kit.picture.picture.PictureRecycleView
                         android:id="@+id/picture_recycler"
                         android:layout_width="wrap_content"
@@ -524,14 +504,6 @@
                             android:layout_centerInParent="true"
                             android:src="@mipmap/ic_play_video" />
                     </RelativeLayout>
-
-                    <ImageView
-                        android:id="@+id/iv_add_video"
-                        android:layout_width="@dimen/dimen_100"
-                        android:layout_height="@dimen/dimen_100"
-                        android:layout_marginLeft="@dimen/dimen_20"
-                        android:src="@mipmap/ic_add_video"
-                        android:visibility="gone" />
 
                     <com.eanfang.base.kit.picture.picture.PictureRecycleView
                         android:id="@+id/video_recycle"

@@ -133,6 +133,7 @@
 
                 <androidx.appcompat.widget.AppCompatCheckBox
                     android:id="@+id/cb"
+                    android:enabled="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="@={loginVo.legalCk}" />
