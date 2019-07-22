@@ -10,7 +10,6 @@ import androidx.annotation.Nullable;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.base.BaseApplication;
 import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.base.kit.cache.CacheMod;
 import com.eanfang.biz.model.bean.LoginBean;
@@ -48,7 +47,7 @@ public class SplashActivity extends BaseClientActivity implements GuideUtil.OnCa
     }
 
     private void init() {
-        if (BaseApplication.get().getUser() == null && CacheKit.get().getBool(SHOWGUID, true)) {
+        if (ClientApplication.get().getLoginBean() == null && CacheKit.get().getBool(SHOWGUID, true)) {
             firstUse();
             return;
         }
