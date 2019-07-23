@@ -47,7 +47,7 @@ public class SplashActivity extends BaseClientActivity implements GuideUtil.OnCa
     }
 
     private void init() {
-        if (CacheKit.get().getBool(SHOWGUID, true)) {
+        if (ClientApplication.get().getLoginBean() == null && CacheKit.get().getBool(SHOWGUID, true)) {
             firstUse();
             return;
         }

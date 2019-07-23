@@ -344,6 +344,8 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
                     mainRepo.getBaseData(md5).observe(this, (bean) -> {
                         if (bean != null) {
                             CacheKit.get().put(BaseDataBean.class.getName(), bean);
+                            Config.get().cleanBaseDataBean();
+                            Config.get().getBaseDataBean();
                         }
                     });
                 });
@@ -377,6 +379,8 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
                     mainRepo.getConstData(md5).observe(this, (bean) -> {
                         if (bean != null) {
                             CacheKit.get().put(ConstAllBean.class.getName(), bean);
+                            Config.get().cleanConstBean();
+                            Config.get().getConstBean();
                         }
                     });
                 });

@@ -131,8 +131,6 @@ public class AddTroubleActivity extends BaseClienActivity {
      */
     @BindView(R.id.tv_faultNum)
     TextView tvFaultNum;
-    @BindView(R.id.snpl_moment_add_photos)
-    BGASortableNinePhotoLayout snplMomentAddPhotos;
     /**
      * 故障详细描述
      */
@@ -487,16 +485,17 @@ public class AddTroubleActivity extends BaseClienActivity {
         etDeviceLocationNum.setText("");
         tvFaultDescripte.setText("");
         evFaultDescripte.setText("");
-        snplMomentAddPhotos.getData().clear();
-        snplMomentAddPhotos.removeAllViews();
-        rlThumbnail.setVisibility(View.GONE);
+        selectList.clear();
+        pictureRecycler.setList(selectList);
+        videoList.clear();
+        videoRecycle.setList(videoList);
         etDeviceLocationNum.setFocusable(true);
         etDeviceLocation.setFocusable(true);
         llDeviceBrand.setClickable(true);
 
     }
 
-    @OnClick({R.id.ll_faultDeviceName, R.id.ll_deviceBrand, R.id.ll_devicesModel, R.id.ll_faultInfo, R.id.ll_scan, R.id.iv_add_video, R.id.iv_input_voice,
+    @OnClick({R.id.ll_faultDeviceName, R.id.ll_deviceBrand, R.id.ll_devicesModel, R.id.ll_faultInfo, R.id.ll_scan, R.id.iv_input_voice,
             R.id.iv_thumbnail})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -554,12 +553,6 @@ public class AddTroubleActivity extends BaseClienActivity {
             case R.id.ll_scan:
                 startActivity(new Intent(AddTroubleActivity.this, ScanCodeActivity.class).putExtra("from", EanfangConst.QR_CLIENT));
                 break;
-            // 拍摄视频
-            case R.id.iv_add_video:
-                Bundle bundle = new Bundle();
-                bundle.putString("videoPath", "addtrouble_" + new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-                JumpItent.jump(AddTroubleActivity.this, TakeVideoActivity.class, bundle);
-                break;
             case R.id.iv_input_voice:
                 RxPerm.get(this).voicePerm((isSuccess) -> {
                     RecognitionManager.getSingleton().startRecognitionWithDialog(AddTroubleActivity.this, evFaultDescripte);
@@ -583,11 +576,7 @@ public class AddTroubleActivity extends BaseClienActivity {
         if (data == null) {
             return;
         }
-        if (resultCode == RESULT_OK && requestCode == BGASortableDelegate.REQUEST_CODE_CHOOSE_PHOTO) {
-            snplMomentAddPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
-        } else if (requestCode == BGASortableDelegate.REQUEST_CODE_CHOOSE_PHOTO) {
-            snplMomentAddPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
-        } else if (requestCode == REQUEST_FAULTDEVICEINFO && resultCode == RESULT_DATACODE) {
+        if (requestCode == REQUEST_FAULTDEVICEINFO && resultCode == RESULT_DATACODE) {
             // 选择故障设备
             dataCode = data.getStringExtra("dataCode");
             businessOneCode = data.getStringExtra("businessOneCode");

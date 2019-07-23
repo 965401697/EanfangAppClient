@@ -48,15 +48,15 @@ ext {
             targetSdkVersion : 29,
             compileSdkVersion: 29,
             buildToolsVersion: "29.0.0",
-            versionName      : "3.0.2",
-            versionCode      : 19061801,
+            versionName      : "3.0.6",
+            versionCode      : 19072301,
 
             //common config
             ossServer        : "\"https://oss.eanfang.net/\"",
             ossBucket        : "\"eanfang\"",
             ossEndpoint      : "\"https://oss-cn-beijing.aliyuncs.com\"",
             javaVersion      : JavaVersion.VERSION_1_8,
-            debugMod         : "true",
+            debugMod         : "false",
             localApiHost     : "\"http://192.168.0.104:8080\"",
             betaApiHost      : "\"http://api.beta.eanfang.net\"",
             proApiHost       : "\"https://api.eanfang.net\"",

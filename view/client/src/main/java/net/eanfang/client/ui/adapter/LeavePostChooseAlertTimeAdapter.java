@@ -24,6 +24,8 @@ public class LeavePostChooseAlertTimeAdapter extends BaseQuickAdapter<String, Ba
     protected void convert(BaseViewHolder helper, String item) {
         helper.setText(R.id.tv_text, item);
         ((RadioButton)helper.getView(R.id.checkbox_alert)).setChecked(item.equals(mAlertTime));
+        helper.setVisible(R.id.checkbox_alert,item.equals(mAlertTime));
+        helper.setVisible(R.id.view_line, mData.indexOf(item) != getItemCount() - 1);
     }
 
 }

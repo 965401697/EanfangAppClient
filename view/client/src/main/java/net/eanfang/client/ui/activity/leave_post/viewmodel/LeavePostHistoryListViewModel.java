@@ -52,6 +52,7 @@ public class LeavePostHistoryListViewModel extends BaseViewModel {
         QueryEntry queryEntry = new QueryEntry();
         queryEntry.setSize(10);
         queryEntry.setPage(mCurrentPage);
+        queryEntry.getOrderBy().put("alertTime", "DESC");
         queryEntry.getEquals().put("companyId", String.valueOf(companyId));
         if (mStationId > 0) {
             queryEntry.getEquals().put("stationId", String.valueOf(mStationId));

@@ -49,7 +49,7 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
     }
 
     private void init() {
-        if (CacheKit.get().getBool(SHOWGUID, true)) {
+        if (WorkerApplication.get().getLoginBean() == null && CacheKit.get().getBool(SHOWGUID, true)) {
             firstUse();
             return;
         }

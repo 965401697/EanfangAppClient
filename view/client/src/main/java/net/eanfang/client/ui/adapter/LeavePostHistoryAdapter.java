@@ -29,9 +29,7 @@ public class LeavePostHistoryAdapter extends BaseQuickAdapter<LeavePostAlertHist
         }
         helper.itemLeavePostHistoryName.setText(mContext.getString(R.string.text_leave_post_history_alert_name, item.getAlertName()));
         helper.itemLeavePostHistoryDate.setText(item.getAlertTime());
-        if (item.getStationsEntity() != null) {
-            helper.itemLeavePostHistoryPosition.setText(mContext.getString(R.string.text_leave_post_detail_position, item.getStationsEntity().getStationArea()));
-        }
+        helper.itemLeavePostHistoryPosition.setText(mContext.getString(R.string.text_leave_post_detail_position, item.getStationsEntity() != null ? item.getStationsEntity().getStationArea() : ""));
         helper.imgLeavePostHistoryRz.setSelected(item.getStatus() == 1);
     }
 
