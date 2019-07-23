@@ -3,18 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:gravity="center_horizontal">
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="120dp"
         android:layout_height="115dp"
         android:padding="@dimen/dimen_20">
+
         <ImageView
             android:id="@+id/iv_rightIcon"
-            android:layout_centerHorizontal="true"
             android:layout_width="@dimen/dimen_100"
             android:layout_height="@dimen/dimen_100"
+            android:layout_centerHorizontal="true"
+            android:scaleType="fitXY"
             android:src="@mipmap/ic_nodata" />
 
         <TextView
@@ -30,8 +32,8 @@
             android:id="@+id/check_true_t"
             android:layout_width="@dimen/dimen_38"
             android:layout_height="@dimen/dimen_38"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
             android:layout_marginLeft="@dimen/dimen_20"
             android:src="@drawable/check_true" />
     </RelativeLayout>

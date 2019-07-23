@@ -190,6 +190,9 @@ public class SecurityCircleImageLayout extends ViewGroup {
             ImageView imageView = new ImageView(getContext());
             GlideUtil.intoImageView(context,Uri.parse(BuildConfig.OSS_SERVER + imageUrls.get(i)),imageView);
             addView(imageView);
+            imageView.setOnClickListener((v)->{
+
+            });
         }
     }
 }

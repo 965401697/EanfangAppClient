@@ -16,9 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
-import com.eanfang.config.Config;
 import com.eanfang.biz.model.entity.BaseDataEntity;
-import com.eanfang.swipefresh.SwipyRefreshLayout;
+import com.eanfang.config.Config;
 import com.eanfang.ui.base.BaseActivity;
 
 import net.eanfang.client.R;
@@ -38,8 +37,7 @@ import butterknife.ButterKnife;
  * @decision 选择设备类别
  * 已提取设备类别相关内容
  */
-public class SelectDeviceTypeActivity extends BaseActivity implements
-        SwipyRefreshLayout.OnRefreshListener, View.OnClickListener {
+public class SelectDeviceTypeActivity extends BaseActivity {
 
     private static final int RESULT_DATACODE = 200;
     @BindView(R.id.et_search)
@@ -48,13 +46,12 @@ public class SelectDeviceTypeActivity extends BaseActivity implements
     ListView lvDeviceTypeLeft;
     @BindView(R.id.rv_deviceTypeRight)
     RecyclerView rvDeviceTypeRight;
-    //    @BindView(R.id.sp_deviceRight)
-//    SwipyRefreshLayout spDeviceRight;
-    @BindView(R.id.tv_noInfo)
-    TextView tvNoInfo;
     @BindView(R.id.tv_go)
     TextView tvGo;
+
     private int i = 0;
+    private List<BaseDataEntity> mBaseOneDataList = new ArrayList<>();
+    private List<BaseDataEntity> mBaseThreeDataList = new ArrayList<>();
     private List<BaseDataEntity> leftDataList = new ArrayList<>();
     private List<BaseDataEntity> rightDataList = new ArrayList<>();
 
@@ -63,43 +60,23 @@ public class SelectDeviceTypeActivity extends BaseActivity implements
     private RepairDeviceTypeLeftAdapter deviceTypeLeftAdapter;
     private RepairDeviceTypeRightAdapter deviceTypeRightAdapter;
 
-    private Integer mLeftId = 0;
-    private boolean mFlag = false;//搜索的adapter的点击事件 从集合取数据
+    private String mLeftId;
+    /**
+     * 搜索的adapter的点击事件 从集合取数据
+     */
+    private boolean mFlag = false;
+
     private GridLayoutManager gridLayoutManager;
+
+    private int mType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_select_device_type);
         ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
-        Intent intent = getIntent();
-        int type = intent.getIntExtra("type", 1);
-        if (type == 0) {
-            lvDeviceTypeLeft.setVisibility(View.GONE);
-            initView();
+        initView();
 
-            setTitle("选择设备类型");
-            initData();
-            rvDeviceTypeRight.addItemDecoration(new DividerItemDecoration(this));
-            tvGo.setOnClickListener(this);
-            rvDeviceTypeRight.addOnItemTouchListener(new OnItemClickListener() {
-                @Override
-                public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                    i++;
-                    if (i % 2 == 1) {
-                        deviceTypeRightAdapter.getViewByPosition(rvDeviceTypeRight, position, R.id.check_true_t).setVisibility(View.VISIBLE);
-                    } else {
-                        deviceTypeRightAdapter.getViewByPosition(rvDeviceTypeRight, position, R.id.check_true_t).setVisibility(View.GONE);
-                    }
-                }
-            });
-
-        } else {
-            tvGo.setVisibility(View.GONE);
-            initView();
-            initData();
-            initListener();
-        }
     }
 
 
@@ -109,8 +86,47 @@ public class SelectDeviceTypeActivity extends BaseActivity implements
      */
     private void initView() {
         setLeftBack();
-        setTitle("设备类别");
+        mType = getIntent().getIntExtra("type", 1);
+        if (mType == 0) {
+            setTitle("选择设备类型");
+            lvDeviceTypeLeft.setVisibility(View.GONE);
+        } else {
+            tvGo.setVisibility(View.GONE);
+            setTitle("设备类别");
+        }
+        gridLayoutManager = new GridLayoutManager(this, 3);
+        rvDeviceTypeRight.setLayoutManager(gridLayoutManager);
+        rvDeviceTypeRight.addItemDecoration(new DividerItemDecoration(this));
+        deviceTypeRightAdapter = new RepairDeviceTypeRightAdapter();
+        deviceTypeRightAdapter.bindToRecyclerView(rvDeviceTypeRight);
 
+        mBaseOneDataList = Config.get().getBusinessList(1);
+        mBaseThreeDataList = Config.get().getBusinessList(3);
+
+        initData();
+        initListener();
+    }
+
+    public List<BaseDataEntity> doSelectRightList(String code) {
+        List mList = Stream.of(mBaseThreeDataList).filter(bean -> bean.getDataCode().contains(code)).toList();
+        return mList;
+    }
+
+    private void initData() {
+        // 左边类型List
+        leftDataList = mBaseOneDataList;
+        // 右边List
+        rightDataList = doSelectRightList(mBaseOneDataList.get(0).getDataCode());
+        deviceTypeLeftAdapter = new RepairDeviceTypeLeftAdapter(SelectDeviceTypeActivity.this, leftDataList);
+
+        lvDeviceTypeLeft.setAdapter(deviceTypeLeftAdapter);
+        deviceTypeLeftAdapter.setSelectedPosition(0);
+        deviceTypeLeftAdapter.notifyDataSetChanged();
+        deviceTypeRightAdapter.setNewData(rightDataList);
+
+    }
+
+    private void initListener() {
         etSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -127,8 +143,7 @@ public class SelectDeviceTypeActivity extends BaseActivity implements
                             searchRightDataList.add(data);
                         }
                     }
-                    deviceTypeRightAdapter = new RepairDeviceTypeRightAdapter(R.layout.layout_repair_device_right, searchRightDataList);
-                    rvDeviceTypeRight.setAdapter(deviceTypeRightAdapter);
+                    deviceTypeRightAdapter.setNewData(searchRightDataList);
                 }
             }
 
@@ -138,43 +153,30 @@ public class SelectDeviceTypeActivity extends BaseActivity implements
 
             }
         });
-    }
-
-    private void initData() {
-
-        gridLayoutManager = new GridLayoutManager(this, 3);
-        rvDeviceTypeRight.setLayoutManager(gridLayoutManager);
-        rvDeviceTypeRight.setNestedScrollingEnabled(false);
-
-
-        // 左边类型List
-        leftDataList = Config.get().getBusinessList(1);
-        // 右边List
-        rightDataList = doSelectRightList(leftDataList.get(0).getDataId());
-        deviceTypeLeftAdapter = new RepairDeviceTypeLeftAdapter(SelectDeviceTypeActivity.this, leftDataList);
-        lvDeviceTypeLeft.setAdapter(deviceTypeLeftAdapter);
-        deviceTypeLeftAdapter.setSelectedPosition(0);
-        deviceTypeLeftAdapter.notifyDataSetChanged();
-        getData();
-
-    }
-
-    private void initListener() {
         rvDeviceTypeRight.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Intent intent = new Intent();
-                if (!mFlag) {
-                    intent.putExtra("dataCode", rightDataList.get(position).getDataCode());
-                    String businessOneCode = Config.get().getBaseCodeByLevel(rightDataList.get(position).getDataCode(), 1);
-                    intent.putExtra("businessOneCode", businessOneCode);
+                if (mType == 0) {
+                    i++;
+                    if (i % 2 == 1) {
+                        deviceTypeRightAdapter.getViewByPosition(rvDeviceTypeRight, position, R.id.check_true_t).setVisibility(View.VISIBLE);
+                    } else {
+                        deviceTypeRightAdapter.getViewByPosition(rvDeviceTypeRight, position, R.id.check_true_t).setVisibility(View.GONE);
+                    }
                 } else {
-                    intent.putExtra("dataCode", searchRightDataList.get(position).getDataCode());
-                    String businessOneCode = Config.get().getBaseCodeByLevel(searchRightDataList.get(position).getDataCode(), 1);
-                    intent.putExtra("businessOneCode", businessOneCode);
+                    Intent intent = new Intent();
+                    if (!mFlag) {
+                        intent.putExtra("dataCode", rightDataList.get(position).getDataCode());
+                        String businessOneCode = Config.get().getBaseCodeByLevel(rightDataList.get(position).getDataCode(), 1);
+                        intent.putExtra("businessOneCode", businessOneCode);
+                    } else {
+                        intent.putExtra("dataCode", searchRightDataList.get(position).getDataCode());
+                        String businessOneCode = Config.get().getBaseCodeByLevel(searchRightDataList.get(position).getDataCode(), 1);
+                        intent.putExtra("businessOneCode", businessOneCode);
+                    }
+                    setResult(RESULT_DATACODE, intent);
+                    finishSelf();
                 }
-                setResult(RESULT_DATACODE, intent);
-                finishSelf();
             }
         });
 
@@ -184,42 +186,19 @@ public class SelectDeviceTypeActivity extends BaseActivity implements
                 mFlag = false;
                 deviceTypeLeftAdapter.setSelectedPosition(i);
                 deviceTypeLeftAdapter.notifyDataSetChanged();
-                mLeftId = leftDataList.get(i).getDataId();
+                mLeftId = leftDataList.get(i).getDataCode();
                 rightDataList = doSelectRightList(mLeftId);
                 //切换置空
+                rvDeviceTypeRight.scrollToPosition(0);
                 etSearch.setText("");
-                getData();
             }
+        });
+
+        tvGo.setOnClickListener((v) -> {
+            Intent intent = new Intent(SelectDeviceTypeActivity.this, FaultLibraryActivity.class);
+            intent.putExtra("GZK", 3);
+            startActivity(intent);
         });
     }
 
-    @Override
-    public void onRefresh(int index) {
-        doSelectRightList(mLeftId);
-    }
-
-    @Override
-    public void onLoad(int index) {
-
-    }
-
-    public void getData() {
-
-        deviceTypeRightAdapter = new RepairDeviceTypeRightAdapter(R.layout.layout_repair_device_right, rightDataList);
-        rvDeviceTypeRight.setAdapter(deviceTypeRightAdapter);
-    }
-
-    public List<BaseDataEntity> doSelectRightList(Integer id) {
-        List<BaseDataEntity> middleList = Stream.of(Config.get().getBusinessList(2)).filter(bean -> bean.getParentId().intValue() == id).toList();
-        List rightList = Stream.of(Config.get().getBusinessList(3))
-                .filter(bean -> Stream.of(middleList).map(middle -> middle.getDataId()).toList().contains(bean.getParentId().intValue())).toList();
-        return rightList;
-    }
-
-    @Override
-    public void onClick(View v) {
-        Intent intent = new Intent(SelectDeviceTypeActivity.this, FaultLibraryActivity.class);
-        intent.putExtra("GZK", 3);
-        startActivity(intent);
-    }
 }

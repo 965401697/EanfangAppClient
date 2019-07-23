@@ -73,6 +73,7 @@ public class MessageNotificationActivity extends BaseActivity {
     }
 
     private void initView() {
+        setLeftBack();
         qBadgeViewCam.bindTarget(findViewById(R.id.tv_official))
                 .setBadgeBackgroundColor(0xFFFF0000)
                 .setBadgePadding(2, true)
