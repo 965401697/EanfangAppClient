@@ -28,7 +28,6 @@ import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.base.kit.cache.CacheMod;
 import com.eanfang.base.kit.rx.RxPerm;
-import com.eanfang.base.widget.controltool.ControlToolView;
 import com.eanfang.biz.model.AllMessageBean;
 import com.eanfang.biz.model.GroupDetailBean;
 import com.eanfang.biz.model.NoticeEntity;
@@ -95,6 +94,7 @@ import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.UserInfo;
 import io.rong.message.TextMessage;
+import q.rorbin.badgeview.QBadgeView;
 
 import static com.eanfang.config.EanfangConst.MEIZU_APPID_WORKER;
 import static com.eanfang.config.EanfangConst.MEIZU_APPKEY_WORKER;
@@ -126,6 +126,13 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
      */
     private int mTotalCount = 0;
     private MainRepo mainRepo;
+
+    /**
+     * 底部消息数量
+     */
+    private QBadgeView qBadgeViewHome = new QBadgeView(WorkerApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewContact = new QBadgeView(WorkerApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewWork = new QBadgeView(WorkerApplication.get().getApplicationContext());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -565,7 +572,7 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
     }
 
     private void doChange(int mContactNum, int nums) {
-        badgeView(R.id.tab_contact, mContactNum);
+        qBadgeViewContact.setBadgeNumber(mContactNum);
         BadgeUtil.setBadgeCount(MainActivity.this, nums, R.drawable.client_logo);
     }
 
@@ -781,18 +788,29 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
 //                }
 //            }, 3 * 1000);
 
-        badgeView(R.id.tab_home, mHome);
-        badgeView(R.id.tab_contact, mAllCount);
-        badgeView(R.id.tab_work, mWork);
+        qBadgeViewHome.bindTarget(findViewById(R.id.tab_home))
+                .setBadgeNumber(mHome)
+                .setBadgeBackgroundColor(0xFFFF0000)
+                .setBadgePadding(2, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setGravityOffset(0, 3, true)
+                .setBadgeTextSize(11, true);
+        qBadgeViewContact.bindTarget(findViewById(R.id.tab_contact))
+                .setBadgeNumber(mAllCount)
+                .setBadgeBackgroundColor(0xFFFF0000)
+                .setBadgePadding(2, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setGravityOffset(0, 3, true)
+                .setBadgeTextSize(11, true);
+        qBadgeViewWork.bindTarget(findViewById(R.id.tab_work))
+                .setBadgeNumber(mWork)
+                .setBadgeBackgroundColor(0xFFFF0000)
+                .setBadgePadding(2, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setGravityOffset(0, 3, true)
+                .setBadgeTextSize(11, true);
     }
 
-    private void badgeView(int id, int number) {
-        ControlToolView.getBadge(WorkerApplication.get().getApplicationContext())
-                .setTargetView(findViewById(id))
-                .setBadgeNum(number)
-                .badge();
-
-    }
 
     public String onNoConatac() {
         return mStatus;
