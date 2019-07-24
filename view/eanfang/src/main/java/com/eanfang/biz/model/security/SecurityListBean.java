@@ -144,7 +144,7 @@ public class SecurityListBean implements Serializable {
 
                 @Override
                 public CharSequence formatCharSequence() {
-                    return String.format(USER_FORMART, accountEntityBean.getUserId());
+                    return String.format(USER_FORMART, accountEntityBean.getAccId());
                 }
             }
         }

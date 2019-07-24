@@ -755,8 +755,8 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
     }
 
     @Override
-    public void onAtClik(Long mUserId) {
-        UserHomeActivity.startActivityForUid(this, mUserId);
+    public void onAtClik(Long accId) {
+        UserHomeActivity.startActivityForAccId(this, String.valueOf(accId));
     }
 
     /**

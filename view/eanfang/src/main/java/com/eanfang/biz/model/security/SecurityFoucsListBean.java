@@ -104,7 +104,11 @@ public class SecurityFoucsListBean implements Serializable {
 
                 @Override
                 public CharSequence formatCharSequence() {
-                    return String.format(USER_FORMART, accountEntityBean.getUserId());
+                    Long accId = -1L;
+                    if (accountEntity != null){
+                        accId = accountEntity.getAccId();
+                    }
+                    return String.format(USER_FORMART, String.valueOf(accId));
                 }
             }
         }
