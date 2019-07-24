@@ -4,6 +4,7 @@
 
 package com.eanfang.util;
 
+import android.app.Activity;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 
@@ -45,7 +46,7 @@ public class LocationUtil implements AMap.OnMarkerClickListener,
     public GeocodeSearch geocoderSearch;
     public boolean isSearchMove;
     public onChanged onChanged;
-    private BaseActivity activity;
+    private Activity activity;
     private MapView mMapView;
     private Marker mGPSMarker;
     /**

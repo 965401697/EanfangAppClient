@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.biz.model.VideoBean;
 import com.eanfang.util.ToastUtil;
@@ -17,8 +20,6 @@ import net.eanfang.client.ui.base.BaseClientActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.rong.imkit.RongIM;
@@ -144,8 +145,8 @@ public class VideoSelectedActivity extends BaseClientActivity {
         // 视频其他信息的查询条件
         String[] mediaColumns = {MediaStore.Video.Media._ID,
                 MediaStore.Video.Media.DATA, MediaStore.Video.Media.DURATION};
-
-        Cursor cursor = context.getContentResolver().query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, mediaColumns, null, null, null);
+        Cursor cursor = null;
+        cursor = context.getContentResolver().query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, mediaColumns, null, null, MediaStore.Video.Media.DEFAULT_SORT_ORDER);
 
         if (cursor == null) {
             return sysVideoList;
@@ -153,15 +154,10 @@ public class VideoSelectedActivity extends BaseClientActivity {
         if (cursor.moveToFirst()) {
             do {
                 VideoBean videoBean = new VideoBean();
-                int id = cursor.getInt(cursor
-                        .getColumnIndex(MediaStore.Video.Media._ID));
-                Cursor thumbCursor = context.getContentResolver().query(
-                        MediaStore.Video.Thumbnails.EXTERNAL_CONTENT_URI,
-                        thumbColumns, MediaStore.Video.Thumbnails.VIDEO_ID
-                                + "=" + id, null, null);
+                int id = cursor.getInt(cursor.getColumnIndex(MediaStore.Video.Media._ID));
+                Cursor thumbCursor = context.getContentResolver().query(MediaStore.Video.Thumbnails.EXTERNAL_CONTENT_URI, thumbColumns, MediaStore.Video.Thumbnails.VIDEO_ID + "=" + id, null, null);
                 if (thumbCursor.moveToFirst()) {
-                    videoBean.setPath(thumbCursor.getString(thumbCursor
-                            .getColumnIndex(MediaStore.Video.Thumbnails.DATA)));
+                    videoBean.setPath(thumbCursor.getString(thumbCursor.getColumnIndex(MediaStore.Video.Thumbnails.DATA)));
                 }
                 videoBean.setName(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media
                         .DATA)));

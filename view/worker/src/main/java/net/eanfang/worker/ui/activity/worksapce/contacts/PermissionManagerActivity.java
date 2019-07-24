@@ -2,14 +2,15 @@ package net.eanfang.worker.ui.activity.worksapce.contacts;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -19,12 +20,12 @@ import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.widget.customview.CircleImageView;
-import com.eanfang.config.Config;
-import com.eanfang.http.EanfangCallback;
-import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.RoleBean;
 import com.eanfang.biz.model.TemplateBean;
 import com.eanfang.biz.model.device.User;
+import com.eanfang.config.Config;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.activity.SelectOAPresonActivity;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.ToastUtil;
@@ -75,7 +76,6 @@ public class PermissionManagerActivity extends BaseWorkerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_permission_manager);
         ButterKnife.bind(this);
-        super.onCreate(savedInstanceState);
         setTitle("权限管理");
         setLeftBack();
 
@@ -96,7 +96,7 @@ public class PermissionManagerActivity extends BaseWorkerActivity {
         switch (view.getId()) {
             case R.id.rl_checked_staff:
             case R.id.ll_select_staff:
-               jumpSelectOAPresonAc();
+                jumpSelectOAPresonAc();
                 break;
 
 //            case R.id.ll_role:
@@ -109,11 +109,12 @@ public class PermissionManagerActivity extends BaseWorkerActivity {
         }
     }
 
-    private void jumpSelectOAPresonAc(){
+    private void jumpSelectOAPresonAc() {
         Intent intent = new Intent(this, SelectOAPresonActivity.class);
         intent.putExtra("isRadio", "isRadio");
         startActivity(intent);
     }
+
     private void subMermission() {
         if (TextUtils.isEmpty(departmentId)) {
             ToastUtil.get().showToast(this, "员工不能为空");
@@ -157,7 +158,7 @@ public class PermissionManagerActivity extends BaseWorkerActivity {
             EanfangHttp.get(UserApi.POST_USER_INFO + mBean.getId())
                     .execute(new EanfangCallback<User>(this, true, User.class, (b) -> {
 
-                        GlideUtil.intoImageView(PermissionManagerActivity.this,BuildConfig.OSS_SERVER + b.getAvatar(),ivUserHeader);
+                        GlideUtil.intoImageView(PermissionManagerActivity.this, BuildConfig.OSS_SERVER + b.getAvatar(), ivUserHeader);
                         tvNamePhone.setText(b.getRealName() + "(" + b.getMobile() + ")");
                         if (!TextUtils.isEmpty(b.getAreaCode())) {
                             tvAddress.setText(Config.get().getAddressByCode(b.getAreaCode()) + b.getAddress());

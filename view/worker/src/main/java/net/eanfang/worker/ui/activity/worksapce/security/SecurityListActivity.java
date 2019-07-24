@@ -2,12 +2,13 @@ package net.eanfang.worker.ui.activity.worksapce.security;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+
+import com.eanfang.base.widget.controltool.ControlToolView;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
 import com.flyco.tablayout.SlidingTabLayout;
@@ -22,7 +23,6 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import q.rorbin.badgeview.QBadgeView;
 
 import static net.eanfang.worker.ui.fragment.SecurityHotFragment.REFRESH_ITEM;
 
@@ -47,7 +47,6 @@ public class SecurityListActivity extends BaseActivity {
     private final int FILTRATE_TYPE_CODE = 101;
 
     private int mSecurityNum;
-    private QBadgeView qBadgeViewMaintain = new QBadgeView(WorkerApplication.get().getApplicationContext());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,17 +71,11 @@ public class SecurityListActivity extends BaseActivity {
 
         vpSecurityList.setCurrentItem(0);
 
+        badgeView(R.id.tv_right, mSecurityNum);
+
         setRightTitleOnClickListener((v) -> {
             JumpItent.jump(SecurityListActivity.this, SecurityPersonalActivity.class, REQUEST_LIST);
         });
-
-        qBadgeViewMaintain.bindTarget(findViewById(R.id.tv_right))
-                .setBadgeNumber(mSecurityNum)
-                .setBadgeBackgroundColor(0xFFFF0000)
-                .setBadgePadding(3, true)
-                .setBadgeGravity(Gravity.END | Gravity.TOP)
-                .setGravityOffset(0, 6, true)
-                .setBadgeTextSize(11, true);
     }
 
     @OnClick(R.id.iv_create)
@@ -130,8 +123,18 @@ public class SecurityListActivity extends BaseActivity {
         } else if (resultCode == RESULT_OK && requestCode == REQUEST_LIST) {
             // list 回来更新数量
             mSecurityNum = data.getIntExtra("mSecurityNum", 0);
-            qBadgeViewMaintain.setBadgeNumber(mSecurityNum);
+            badgeView(R.id.tv_right, mSecurityNum);
         }
+    }
+
+    private void badgeView(int id, int number) {
+        ControlToolView.getBadge(WorkerApplication.get().getApplicationContext())
+                .setTargetView(findViewById(id))
+                .setPadding(3)
+                .setOffset(0, 6)
+                .setBadgeNum(number)
+                .badge();
+
     }
 
 }

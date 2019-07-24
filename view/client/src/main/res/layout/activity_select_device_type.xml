@@ -12,10 +12,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_110"
-        android:paddingBottom="@dimen/dimen_22"
         android:paddingLeft="@dimen/dimen_36"
+        android:paddingTop="@dimen/dimen_22"
         android:paddingRight="@dimen/dimen_36"
-        android:paddingTop="@dimen/dimen_22">
+        android:paddingBottom="@dimen/dimen_22">
 
         <EditText
             android:id="@+id/et_search"
@@ -45,13 +45,7 @@
             android:scrollbars="none" />
 
         <View style="@style/style_common_line_vertical_gray" />
-        <!--<com.eanfang.swipefresh.SwipyRefreshLayout-->
-        <!--android:id="@+id/sp_deviceRight"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_weight="11"-->
-        <!--android:background="@color/color_white"-->
-        <!--android:visibility="visible">-->
+
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -64,6 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_15"
                 android:scrollbars="none" />
+
             <TextView
                 android:id="@+id/tv_go"
                 android:layout_width="match_parent"
@@ -78,9 +73,6 @@
                 android:textColor="@color/color_white"
                 android:textSize="@dimen/textSize_13" />
         </RelativeLayout>
-
-
-        <!--</com.eanfang.swipefresh.SwipyRefreshLayout>-->
 
         <TextView
             android:id="@+id/tv_noInfo"

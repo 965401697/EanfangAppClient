@@ -63,16 +63,17 @@ public class MessageNotificationActivity extends BaseActivity {
         setContentView(R.layout.activity_message_notification);
         ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
-        init();
         initView();
-        initData();
     }
 
-    private void initData() {
+    @Override
+    protected void onResume() {
+        super.onResume();
         doHttpNoticeCount();
     }
 
     private void initView() {
+        setLeftBack();
         qBadgeViewCam.bindTarget(findViewById(R.id.tv_official))
                 .setBadgeBackgroundColor(0xFFFF0000)
                 .setBadgePadding(2, true)
@@ -91,10 +92,6 @@ public class MessageNotificationActivity extends BaseActivity {
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(0, 0, true)
                 .setBadgeTextSize(11, true);
-    }
-
-    private void init() {
-        setLeftBack();
     }
 
     @OnClick({R.id.ll_official, R.id.ll_system_notice, R.id.ll_msg_list})
@@ -150,9 +147,9 @@ public class MessageNotificationActivity extends BaseActivity {
 
     private void initCmpCount(Integer cam) {
         if (cam > 0) {
-            ((TextView)findViewById(R.id.tv_official_info)).setText("新通知");
+            ((TextView) findViewById(R.id.tv_official_info)).setText("新通知");
         } else {
-            ((TextView)findViewById(R.id.tv_official_info)).setText("没有新通知");
+            ((TextView) findViewById(R.id.tv_official_info)).setText("没有新通知");
         }
         qBadgeViewCam.setBadgeNumber(cam);
     }

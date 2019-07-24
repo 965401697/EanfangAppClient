@@ -422,15 +422,12 @@ public class HomeFragment extends BaseFragment {
         }
 
         // @我的和评论未读
-//        if (bean.getCommentNoRead() + bean.getNoReadCount() > 0) {
-//            mSecurityNum = bean.getCommentNoRead() + bean.getNoReadCount();
-//            badgeView(R.id.tv_circle, mSecurityNum);
-//            mTvSecurityNewMessage.setText(bean.getCommentNoRead() + bean.getNoReadCount() + "");
-//            rlSecurityNewMessage.setVisibility(View.VISIBLE);
-//        } else {
-//            mSecurityNum = 0;
-//            rlSecurityNewMessage.setVisibility(View.GONE);
-//        }
+        if (bean.getCommentNoRead() + bean.getNoReadCount() > 0) {
+            mSecurityNum = bean.getCommentNoRead() + bean.getNoReadCount();
+            badgeView(R.id.tv_circle, mSecurityNum);
+        } else {
+            mSecurityNum = 0;
+        }
         /**
          * 底部红点更新
          * */
