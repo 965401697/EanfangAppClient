@@ -88,7 +88,7 @@ import static com.eanfang.base.kit.V.v;
  * @desc 首页
  */
 
-public class HomeFragment extends BaseFragment {
+public class HomeFragment extends BaseFragment implements SecurityListAdapter.OnPhotoClickListener {
 
     private BannerView bannerView;
     //头部标题
@@ -263,7 +263,7 @@ public class HomeFragment extends BaseFragment {
      * 安防圈
      */
     private void initSecurity() {
-        securityListAdapter = new SecurityListAdapter(false);
+        securityListAdapter = new SecurityListAdapter(false, this);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), RecyclerView.VERTICAL, false);
         rvSecurity.setLayoutManager(layoutManager);
         rvSecurity.setNestedScrollingEnabled(false);
@@ -455,12 +455,6 @@ public class HomeFragment extends BaseFragment {
             switch (view.getId()) {
                 case R.id.ll_comments:
                     doJump(position, true);
-                    break;
-                case R.id.ll_pic:
-                    picList.clear();
-                    pics = securityListAdapter.getData().get(position).getSpcImg().split(",");
-                    picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> BuildConfig.OSS_SERVER + (url)).toList());
-                    ImagePerviewUtil.perviewImage(getActivity(), picList);
                     break;
                 case R.id.ll_like:
                     doLike(position, securityListAdapter.getData().get(position));
@@ -731,6 +725,17 @@ public class HomeFragment extends BaseFragment {
         public Fragment getItem(int position) {
             return mFragments.get(position);
         }
+    }
+
+    /**
+     * 照片点击事件
+     */
+    @Override
+    public void onPhotoClick(int position, int mWhich) {
+        picList.clear();
+        pics = securityListAdapter.getData().get(position).getSpcImg().split(",");
+        picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> BuildConfig.OSS_SERVER + (url)).toList());
+        ImagePerviewUtil.perviewImage(getActivity(), picList, mWhich);
     }
 }
 

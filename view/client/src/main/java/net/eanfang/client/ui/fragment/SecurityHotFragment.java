@@ -2,18 +2,19 @@ package net.eanfang.client.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.http.EanfangCallback;
-import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.security.SecurityFoucsBean;
 import com.eanfang.biz.model.security.SecurityLikeBean;
 import com.eanfang.biz.model.security.SecurityListBean;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.security.SecurityLikeStatusBean;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
@@ -34,7 +35,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 
-public class SecurityHotFragment extends TemplateItemListFragment {
+public class SecurityHotFragment extends TemplateItemListFragment implements  SecurityListAdapter.OnPhotoClickListener  {
 
     private String mTitle;
     private QueryEntry mQueryEntry;
@@ -71,15 +72,8 @@ public class SecurityHotFragment extends TemplateItemListFragment {
                 case R.id.ll_comments:
                     doJump(position, true);
                     break;
-
                 case R.id.ll_share:
                     doShare(securityListAdapter.getData().get(position));
-                    break;
-                case R.id.ll_pic:
-                    picList.clear();
-                    pics = securityListAdapter.getData().get(position).getSpcImg().split(",");
-                    picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> BuildConfig.OSS_SERVER + (url)).toList());
-                    ImagePerviewUtil.perviewImage(getActivity(), picList);
                     break;
                 case R.id.ll_question:
                 case R.id.rl_video:
@@ -113,7 +107,7 @@ public class SecurityHotFragment extends TemplateItemListFragment {
 
     @Override
     protected void initAdapter() {
-        securityListAdapter = new SecurityListAdapter(ClientApplication.get().getApplicationContext(), false);
+        securityListAdapter = new SecurityListAdapter(ClientApplication.get().getApplicationContext(), false,this);
         RecyclerView.RecycledViewPool pool = mRecyclerView.getRecycledViewPool();
         pool.setMaxRecycledViews(0, 10);
         mRecyclerView.setRecycledViewPool(pool);
@@ -346,5 +340,14 @@ public class SecurityHotFragment extends TemplateItemListFragment {
         }
     }
 
-
+    /**
+     * 照片点击事件
+     */
+    @Override
+    public void onPhotoClick(int position,int mWhich) {
+        picList.clear();
+        pics = securityListAdapter.getData().get(position).getSpcImg().split(",");
+        picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> BuildConfig.OSS_SERVER + (url)).toList());
+        ImagePerviewUtil.perviewImage(getActivity(), picList,mWhich);
+    }
 }

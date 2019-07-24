@@ -38,8 +38,7 @@
                         android:id="@+id/iv_seucrity_header"
                         android:layout_width="@dimen/dimen_80"
                         android:layout_height="@dimen/dimen_80"
-                        android:src="@mipmap/ic_nodata"
-                         />
+                        android:src="@mipmap/ic_nodata" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -99,10 +98,10 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:background="@drawable/shape_add_staff_name"
-                    android:paddingBottom="@dimen/dimen_16"
                     android:paddingLeft="@dimen/dimen_24"
-                    android:paddingRight="@dimen/dimen_24"
                     android:paddingTop="@dimen/dimen_16"
+                    android:paddingRight="@dimen/dimen_24"
+                    android:paddingBottom="@dimen/dimen_16"
                     android:text="+关注"
                     android:textColor="@color/white"
                     android:textSize="@dimen/textSize_12"
@@ -148,19 +147,11 @@
                     android:src="@mipmap/ic_play_video" />
             </RelativeLayout>
 
-            <com.eanfang.witget.CustomLinearLayout
-                android:id="@+id/ll_pic"
-                android:layout_width="match_parent"
+            <com.eanfang.witget.SecurityCircleImageLayout
+                android:id="@+id/securityImageLayout"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_20"
-                android:orientation="horizontal">
-
-                <com.eanfang.witget.SecurityCircleImageLayout
-                    android:id="@+id/securityImageLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_10" />
-            </com.eanfang.witget.CustomLinearLayout>
+                android:layout_marginTop="@dimen/dimen_10" />
 
             <LinearLayout
                 android:id="@+id/ll_question"
@@ -249,8 +240,8 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:paddingBottom="@dimen/dimen_20"
-                android:paddingTop="@dimen/dimen_20">
+                android:paddingTop="@dimen/dimen_20"
+                android:paddingBottom="@dimen/dimen_20">
 
                 <ImageView
                     android:id="@+id/iv_like"
@@ -276,8 +267,8 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:paddingBottom="@dimen/dimen_20"
-                android:paddingTop="@dimen/dimen_20">
+                android:paddingTop="@dimen/dimen_20"
+                android:paddingBottom="@dimen/dimen_20">
 
                 <ImageView
                     android:id="@+id/iv_comment"
@@ -302,8 +293,8 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:paddingBottom="@dimen/dimen_20"
-                android:paddingTop="@dimen/dimen_20">
+                android:paddingTop="@dimen/dimen_20"
+                android:paddingBottom="@dimen/dimen_20">
 
                 <ImageView
                     android:id="@+id/iv_share"
@@ -322,10 +313,10 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen_16"
         android:background="@drawable/bg_security_unread_back"
-        android:paddingBottom="@dimen/dimen_6"
         android:paddingLeft="@dimen/dimen_14"
-        android:paddingRight="@dimen/dimen_14"
         android:paddingTop="@dimen/dimen_6"
+        android:paddingRight="@dimen/dimen_14"
+        android:paddingBottom="@dimen/dimen_6"
         android:text="未读"
         android:textColor="@color/color_white"
         android:textSize="@dimen/textSize_11"
