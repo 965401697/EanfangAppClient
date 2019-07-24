@@ -273,7 +273,7 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
             queryEntry.getEquals().put("likeAccId", WorkerApplication.get().getAccId() + "");
         } else if (mAbout.equals(mType)) {
             mUrl = NewApiService.SERCURITY_ABOUT_LIST;
-            queryEntry.getLike().put("atUserId", WorkerApplication.get().getUserId() + "");
+            queryEntry.getLike().put("atUserId", WorkerApplication.get().getAccId() + "");
         }
         EanfangHttp.post(mUrl)
                 .upJson(JsonUtils.obj2String(queryEntry))
