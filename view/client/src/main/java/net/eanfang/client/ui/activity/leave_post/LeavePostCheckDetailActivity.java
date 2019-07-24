@@ -8,7 +8,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.BuildConfig;
 import com.eanfang.base.BaseActivity;
 import com.eanfang.biz.rds.base.LViewModelProviders;
@@ -19,6 +18,7 @@ import net.eanfang.client.databinding.ActivityLeavePostCheckDetailBinding;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostDeviceInfoBean;
 import net.eanfang.client.ui.activity.leave_post.viewmodel.LeavePostCheckDetailViewModel;
 import net.eanfang.client.ui.adapter.LeavePostCheckDetailAdapter;
+import net.eanfang.client.util.ImagePerviewUtil;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -33,6 +33,7 @@ public class LeavePostCheckDetailActivity extends BaseActivity {
     private LeavePostCheckDetailViewModel mViewModel;
     private LeavePostCheckDetailAdapter mAdapter;
     private boolean showTopContent;
+    private String mUrlImg;
     /**
      * 岗位id
      */
@@ -68,14 +69,14 @@ public class LeavePostCheckDetailActivity extends BaseActivity {
             mViewModel.getContactsListData(mAlertId);
         }
         mAdapter = new LeavePostCheckDetailAdapter();
-        mAdapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                mViewModel.callToPerson(LeavePostCheckDetailActivity.this, adapter, position);
-            }
-        });
+        mAdapter.setOnItemChildClickListener((adapter, view, position) -> mViewModel.callToPerson(LeavePostCheckDetailActivity.this, adapter, position));
         mBinding.recLeavePostCheckDetailPerson.setLayoutManager(new LinearLayoutManager(this));
         mAdapter.bindToRecyclerView(mBinding.recLeavePostCheckDetailPerson);
+        mBinding.imgLeavePostCheckDetail.setOnClickListener(view -> {
+            ArrayList<String> arrayList = new ArrayList<>();
+            arrayList.add(mUrlImg);
+            ImagePerviewUtil.perviewImage(LeavePostCheckDetailActivity.this, arrayList, 0);
+        });
     }
 
     @Override
@@ -90,8 +91,9 @@ public class LeavePostCheckDetailActivity extends BaseActivity {
             return;
         }
         if (showTopContent) {
-            mBinding.tvLeavePostCheckDetailTitle.setText(MessageFormat.format("{0}\t({1})\t{2}", leavePostDeviceInfoBean.getStationName(), leavePostDeviceInfoBean.getStationCode(), leavePostDeviceInfoBean.getDeviceEntity().getDeviceNameX()));
-            GlideUtil.intoImageView(this, BuildConfig.OSS_SERVER + leavePostDeviceInfoBean.getDeviceEntity().getLivePic(), mBinding.imgLeavePostCheckDetail);
+            mBinding.tvLeavePostCheckDetailTitle.setText(MessageFormat.format("{0}\t({1})\t{2}", leavePostDeviceInfoBean.getStationName(), leavePostDeviceInfoBean.getStationCode(), leavePostDeviceInfoBean.getDeviceEntity().getDeviceName()));
+            mUrlImg = BuildConfig.OSS_SERVER + leavePostDeviceInfoBean.getDeviceEntity().getLivePic();
+            GlideUtil.intoImageView(this, mUrlImg, mBinding.imgLeavePostCheckDetail);
         }
 
         ArrayList<LeavePostDeviceInfoBean.ChargeStaffListBean> beans = new ArrayList<>(leavePostDeviceInfoBean.getChargeStaffList());
@@ -103,7 +105,7 @@ public class LeavePostCheckDetailActivity extends BaseActivity {
             LeavePostDeviceInfoBean.ChargeStaffListBean bean2 = new LeavePostDeviceInfoBean.ChargeStaffListBean();
             bean2.setType(0);
             bean2.setTitle("值班人");
-            beans.add(leavePostDeviceInfoBean.getChargeStaffList().size(), bean2);
+            beans.add(leavePostDeviceInfoBean.getChargeStaffList().size() + 1, bean2);
             beans.addAll(leavePostDeviceInfoBean.getDutyStaffList());
         }
         mAdapter.setNewData(beans);

@@ -2,18 +2,20 @@ package net.eanfang.client.ui.activity.leave_post.viewmodel;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.view.View;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.eanfang.BuildConfig;
 import com.eanfang.biz.rds.base.BaseViewModel;
+import com.eanfang.util.StringUtils;
 
-import net.eanfang.client.ui.activity.leave_post.ImagesLook;
 import net.eanfang.client.ui.activity.leave_post.LeavePostCheckDetailActivity;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostAlertInfoDetailBean;
 import net.eanfang.client.ui.activity.leave_post.ds.LeavePostDs;
 import net.eanfang.client.ui.activity.leave_post.repo.LeavePostRepo;
+import net.eanfang.client.util.ImagePerviewUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,8 +69,8 @@ public class LeavePostDetailViewModel extends BaseViewModel {
                     mKeyValueLeaveList.add(leaveKeys[0] + leavePostAlertInfoDetailBean.getDevicesEntity().getDeviceName());
                 }
                 mKeyValueLeaveList.add(leaveKeys[1] + DateUtil.parse(leavePostAlertInfoDetailBean.getAlertTime()).toDateStr());
-                mKeyValueLeaveList.add(leaveKeys[2] + leavePostAlertInfoDetailBean.getLeaveTime());
-                mKeyValueLeaveList.add(leaveKeys[3] + leavePostAlertInfoDetailBean.getBackTime());
+                mKeyValueLeaveList.add(leaveKeys[2] + (StringUtils.isEmpty(leavePostAlertInfoDetailBean.getLeaveTime()) ? "" : leavePostAlertInfoDetailBean.getLeaveTime()));
+                mKeyValueLeaveList.add(leaveKeys[3] + (StringUtils.isEmpty(leavePostAlertInfoDetailBean.getBackTime()) ? "" : leavePostAlertInfoDetailBean.getBackTime()));
                 mKeyValueLeaveList.add(leaveKeys[4] + leavePostAlertInfoDetailBean.getAbsencePeriod() + "min");
             }
             leavePostAlertEventList.setValue(mKeyValueEventList);
@@ -97,11 +99,10 @@ public class LeavePostDetailViewModel extends BaseViewModel {
      *
      * @param activity
      * @param adapter
-     * @param view
      * @param position
      */
-    public void lookImage(Activity activity, BaseQuickAdapter adapter, View view, int position) {
-        ImagesLook.getInstance().show(activity, view, (ArrayList<String>) adapter.getData(), position);
-
+    public void lookImage(Activity activity, BaseQuickAdapter adapter, int position) {
+        ArrayList<String> arrayList = new ArrayList<String>(Stream.of((ArrayList<String>)adapter.getData()).map(url -> BuildConfig.OSS_SERVER + (url)).toList());
+        ImagePerviewUtil.perviewImage(activity, arrayList , position);
     }
 }

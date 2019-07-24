@@ -50,7 +50,6 @@ public class LeavePostDeviceInfoBean {
 
     private String createTime;
     private String createUserId;
-    private DeviceEntityBean deviceEntityX;
     private int imgHeight;
     private int imgWidth;
     private int imgX;
@@ -60,8 +59,6 @@ public class LeavePostDeviceInfoBean {
     private String topCompanyId;
     private String updateTime;
     private String updateUserId;
-    private List<?> chargeStaffListX;
-    private List<?> dutyStaffListX;
 
 
     @NoArgsConstructor
@@ -126,17 +123,17 @@ public class LeavePostDeviceInfoBean {
 
         private String beginDate;
         private int belongTo;
-        private String companyIdX;
+        private String companyId;
         private String createTime;
         private String createUserId;
-        private int detectIdX;
-        private int deviceIdX;
-        private String deviceNameX;
+        private int detectId;
+        private int deviceId;
+        private String deviceName;
         private String endDate;
         private int isInUse;
         private String livePic;
         private String orgName;
-        private int statusX;
+        private int status;
         private String topCompanyId;
         private String updateTime;
         private String updateUserId;

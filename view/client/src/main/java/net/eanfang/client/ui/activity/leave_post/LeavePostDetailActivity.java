@@ -1,7 +1,6 @@
 package net.eanfang.client.ui.activity.leave_post;
 
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
@@ -64,9 +63,9 @@ public class LeavePostDetailActivity extends BaseActivity {
         mImageAdapter.bindToRecyclerView(mBinding.recLeavePostDetailImg);
         mVideoAdapter.bindToRecyclerView(mBinding.recLeavePostDetailAudio);
         mImageAdapter.setOnItemClickListener((adapter, view, position) ->
-                mViewModel.lookImage(LeavePostDetailActivity.this, adapter, view, position));
+                mViewModel.lookImage(LeavePostDetailActivity.this, adapter, position));
         mVideoAdapter.setOnItemClickListener((adapter, view, position) ->
-                mViewModel.lookImage(LeavePostDetailActivity.this, adapter, view, position));
+                mViewModel.lookImage(LeavePostDetailActivity.this, adapter, position));
     }
 
     @Override
