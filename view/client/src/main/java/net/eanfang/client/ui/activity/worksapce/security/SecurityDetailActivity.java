@@ -23,20 +23,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.alibaba.fastjson.JSONObject;
-import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.base.kit.V;
+import com.eanfang.base.kit.picture.picture.PictureRecycleView;
 import com.eanfang.base.widget.customview.CircleImageView;
-import com.eanfang.delegate.BGASortableDelegate;
-import com.eanfang.dialog.TrueFalseDialog;
-import com.eanfang.http.EanfangCallback;
-import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.security.SecurityCommentBean;
 import com.eanfang.biz.model.security.SecurityDetailBean;
 import com.eanfang.biz.model.security.SecurityFoucsBean;
 import com.eanfang.biz.model.security.SecurityLikeBean;
 import com.eanfang.biz.model.security.SecurityListBean;
+import com.eanfang.dialog.TrueFalseDialog;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.security.SecurityLikeStatusBean;
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.ui.base.BaseActivity;
@@ -46,7 +46,6 @@ import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.QueryEntry;
 import com.eanfang.util.StringUtils;
-import com.eanfang.base.kit.V;
 import com.eanfang.util.contentsafe.ContentDefaultAuditing;
 import com.eanfang.util.contentsafe.ContentSecurityAuditUtil;
 import com.eanfang.witget.DefaultPopWindow;
@@ -54,7 +53,7 @@ import com.eanfang.witget.mentionedittext.edit.util.FormatRangeManager;
 import com.eanfang.witget.mentionedittext.text.MentionTextView;
 import com.eanfang.witget.mentionedittext.text.listener.Parser;
 import com.eanfang.witget.mentionedittext.util.SecurityItemUtil;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
+import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
@@ -64,7 +63,6 @@ import net.eanfang.client.ui.adapter.security.SecurityCommentAdapter;
 import net.eanfang.client.ui.widget.GeneralSDialog;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -94,8 +92,6 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
     TextView tvCompany;
     @BindView(R.id.tv_isFocus)
     TextView tvIsFocus;
-    @BindView(R.id.snpl_pic)
-    BGASortableNinePhotoLayout snplPic;
     @BindView(R.id.iv_like)
     ImageView ivLike;
     @BindView(R.id.iv_comment)
@@ -138,9 +134,11 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
     MentionTextView tvContent;
     @BindView(R.id.swipe_fresh)
     SwipeRefreshLayout swipeFresh;
+    @BindView(R.id.picture_recycler)
+    PictureRecycleView pictureRecycler;
 
     private SecurityDetailBean.SpcListBean securityDetailBean;
-    private ArrayList<String> picList = new ArrayList<>();
+    private List<LocalMedia> picList = new ArrayList<>();
     private Long mId;
 
     private SecurityCommentAdapter securityCommentAdapter;
@@ -191,7 +189,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
 
     /**
      * 是否回复
-     * */
+     */
     private boolean isReply = false;
 
     @Override
@@ -335,7 +333,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
                                 tvReadCount.setText(bean.getSpcList().getReadCount() + "");
                                 tvCommentCount.setText(bean.getSpcList().getCommentCount() + "");
                             }
-                            if (isClickCommont && isFirstCome &&!isReply) {
+                            if (isClickCommont && isFirstCome && !isReply) {
                                 ShowKeyboard();
                             } else {
                                 hideKeyboard();
@@ -381,7 +379,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         // 发布人
         tvName.setText(V.v(() -> securityDetailBean.getAccountEntity().getRealName()));
         // 头像
-        GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + V.v(() -> securityDetailBean.getAccountEntity().getAvatar())),ivSeucrityHeader);
+        GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + V.v(() -> securityDetailBean.getAccountEntity().getAvatar())), ivSeucrityHeader);
         // 公司名称
         tvCompany.setText(securityDetailBean.getPublisherOrg().getOrgName());
         //发布的内容
@@ -443,26 +441,22 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         } else {
             ivLike.setImageResource(R.mipmap.ic_worker_security_like_unpressed);
         }
-        snplPic.setData(null);
         if (!StringUtils.isEmpty(securityDetailBean.getSpcImg())) {
-            snplPic.setVisibility(View.VISIBLE);
-            String[] pics = securityDetailBean.getSpcImg().split(",");
-            picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
-
-            snplPic.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO, REQUEST_CODE_CHOOSE_PHOTO_two));
-            snplPic.setData(picList);
-            snplPic.setEditable(false);
+            pictureRecycler.setVisibility(View.VISIBLE);
+            picList = pictureRecycler.setData(securityDetailBean.getSpcImg());
+            pictureRecycler.showImagev(picList, listener);
         } else {
-            snplPic.setVisibility(View.GONE);
+            pictureRecycler.setVisibility(View.GONE);
         }
         if (!StringUtils.isEmpty(securityDetailBean.getSpcVideo())) {
             rlVideo.setVisibility(View.VISIBLE);
-            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + securityDetailBean.getSpcVideo() + ".jpg"),ivShowVideo);
+            GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + securityDetailBean.getSpcVideo() + ".jpg"), ivShowVideo);
         } else {
             rlVideo.setVisibility(View.GONE);
         }
     }
 
+    PictureRecycleView.ImageListener listener = list -> picList = list;
 
     @OnClick({R.id.ll_like, R.id.ll_comments, R.id.ll_share, R.id.tv_send, R.id.tv_isFocus, R.id.iv_seucrity_header, R.id.rl_video})
     public void onViewClicked(View view) {

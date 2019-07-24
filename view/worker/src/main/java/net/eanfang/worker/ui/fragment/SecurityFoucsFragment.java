@@ -35,7 +35,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 
-public class SecurityFoucsFragment extends TemplateItemListFragment {
+public class SecurityFoucsFragment extends TemplateItemListFragment implements SecurityListAdapter.OnPhotoClickListener {
 
     private String mTitle;
 
@@ -59,7 +59,7 @@ public class SecurityFoucsFragment extends TemplateItemListFragment {
 
     @Override
     protected void initAdapter() {
-        securityListAdapter = new SecurityListAdapter( false);
+        securityListAdapter = new SecurityListAdapter(false, this);
         RecyclerView.RecycledViewPool pool = mRecyclerView.getRecycledViewPool();
         pool.setMaxRecycledViews(0, 10);
         mRecyclerView.setRecycledViewPool(pool);
@@ -77,12 +77,6 @@ public class SecurityFoucsFragment extends TemplateItemListFragment {
                     break;
                 case R.id.ll_share:
                     doShare(securityListAdapter.getData().get(position));
-                    break;
-                case R.id.ll_pic:
-                    picList.clear();
-                    pics = securityListAdapter.getData().get(position).getSpcImg().split(",");
-                    picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> BuildConfig.OSS_SERVER + (url)).toList());
-                    ImagePerviewUtil.perviewImage(getActivity(), picList);
                     break;
                 case R.id.ll_question:
                 case R.id.rl_video:
@@ -125,7 +119,7 @@ public class SecurityFoucsFragment extends TemplateItemListFragment {
          * */
         if (listBean.getLikeStatus() == 0) {
             listBean.setLikeStatus(1);
-            listBean.setLikesCount(listBean.getLikesCount() );
+            listBean.setLikesCount(listBean.getLikesCount());
             securityLikeBean.setLikeStatus("1");
         } else {
             listBean.setLikeStatus(0);
@@ -286,5 +280,16 @@ public class SecurityFoucsFragment extends TemplateItemListFragment {
     @Override
     protected ViewModel initViewModel() {
         return null;
+    }
+
+    /**
+     * 照片点击事件
+     */
+    @Override
+    public void onPhotoClick(int position,int mWhich) {
+        picList.clear();
+        pics = securityListAdapter.getData().get(position).getSpcImg().split(",");
+        picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> BuildConfig.OSS_SERVER + (url)).toList());
+        ImagePerviewUtil.perviewImage(getActivity(), picList, mWhich);
     }
 }

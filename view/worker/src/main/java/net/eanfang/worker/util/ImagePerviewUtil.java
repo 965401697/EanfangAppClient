@@ -19,4 +19,9 @@ public class ImagePerviewUtil {
         context.startActivity(intent);
     }
 
+    public static void perviewImage(Context context, ArrayList<String> images, int currentPosition) {
+        Intent intent = MyBGAPhotoPickerPreviewActivity.newIntent(context, images.size(), images, images, currentPosition, false);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
 }

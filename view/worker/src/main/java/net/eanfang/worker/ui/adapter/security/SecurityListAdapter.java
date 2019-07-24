@@ -9,12 +9,12 @@ import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
+import com.eanfang.base.kit.V;
 import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.biz.model.security.SecurityListBean;
 import com.eanfang.util.ETimeUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.StringUtils;
-import com.eanfang.base.kit.V;
 import com.eanfang.witget.SecurityCircleImageLayout;
 import com.eanfang.witget.mentionedittext.edit.util.FormatRangeManager;
 import com.eanfang.witget.mentionedittext.text.MentionTextView;
@@ -40,9 +40,12 @@ public class SecurityListAdapter extends BaseQuickAdapter<SecurityListBean.ListB
     private Parser mTagParser = new Parser();
     protected FormatRangeManager mRangeManager = new FormatRangeManager();
 
-    public SecurityListAdapter( boolean isUnRead) {
+    private OnPhotoClickListener onPhotoClickListener;
+
+    public SecurityListAdapter(boolean isUnRead, OnPhotoClickListener mPhotoClickListener) {
         super(R.layout.layout_security_item);
         this.mIsUnRead = isUnRead;
+        this.onPhotoClickListener = mPhotoClickListener;
     }
 
     @Override
@@ -137,7 +140,7 @@ public class SecurityListAdapter extends BaseQuickAdapter<SecurityListBean.ListB
          * */
         if (!StringUtils.isEmpty(item.getSpcVideo())) {
             helper.getView(R.id.rl_video).setVisibility(View.VISIBLE);
-            GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER +item.getSpcVideo() + ".jpg"),ivShowVideo);
+            GlideUtil.intoImageView(mContext, Uri.parse(BuildConfig.OSS_SERVER + item.getSpcVideo() + ".jpg"), ivShowVideo);
         } else {
             helper.getView(R.id.rl_video).setVisibility(View.GONE);
         }
@@ -152,9 +155,19 @@ public class SecurityListAdapter extends BaseQuickAdapter<SecurityListBean.ListB
         helper.addOnClickListener(R.id.tv_isFocus);
         helper.addOnClickListener(R.id.ll_like);
         helper.addOnClickListener(R.id.ll_comments);
-        helper.addOnClickListener(R.id.ll_pic);
         helper.addOnClickListener(R.id.iv_share);
         helper.addOnClickListener(R.id.ll_question);
+        securityImageLayout.setOnPhotoClickListener((position -> {
+            onPhotoClickListener.onPhotoClick(helper.getAdapterPosition(), position);
+        }));
     }
 
+    public interface OnPhotoClickListener {
+        /**
+         * 图片点击事件
+         *
+         * @param position
+         */
+        void onPhotoClick(int position, int mWhich);
+    }
 }

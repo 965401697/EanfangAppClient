@@ -14,11 +14,11 @@ import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.http.EanfangCallback;
-import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.security.SecurityFoucsBean;
 import com.eanfang.biz.model.security.SecurityFoucsListBean;
 import com.eanfang.biz.model.security.SecurityListBean;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
@@ -46,7 +46,7 @@ import butterknife.ButterKnife;
  * @description 安防圈点赞列表
  */
 
-public class SecurityPersonalPublicListActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
+public class SecurityPersonalPublicListActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener, SecurityListAdapter.OnPhotoClickListener  {
 
     public static final int REFRESH_ITEM = 1011;
     @BindView(R.id.rv_security)
@@ -126,9 +126,9 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
          * 点赞不需要已读未读
          * */
         if (mLike.equals(mType)) {
-            securityListAdapter = new SecurityListAdapter(ClientApplication.get().getApplicationContext(), false);
+            securityListAdapter = new SecurityListAdapter(ClientApplication.get().getApplicationContext(), false,  this);
         } else {
-            securityListAdapter = new SecurityListAdapter(ClientApplication.get().getApplicationContext(), true);
+            securityListAdapter = new SecurityListAdapter(ClientApplication.get().getApplicationContext(), true, this);
         }
         securityListAdapter.bindToRecyclerView(rvSecurity);
         securityListAdapter.setOnLoadMoreListener(this, rvSecurity);
@@ -142,12 +142,6 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
                     break;
                 case R.id.ll_share:
                     doShare(securityListAdapter.getData().get(position));
-                    break;
-                case R.id.ll_pic:
-                    picList.clear();
-                    pics = securityListAdapter.getData().get(position).getSpcImg().split(",");
-                    picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> BuildConfig.OSS_SERVER + (url)).toList());
-                    ImagePerviewUtil.perviewImage(SecurityPersonalPublicListActivity.this, picList);
                     break;
                 case R.id.tv_isFocus:
                 case R.id.ll_like:
@@ -463,5 +457,15 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
                 rvSecurity.setVisibility(View.GONE);
             }
         }
+    }
+    /**
+     * 照片点击事件
+     */
+    @Override
+    public void onPhotoClick(int position,int mWhich) {
+        picList.clear();
+        pics = securityListAdapter.getData().get(position).getSpcImg().split(",");
+        picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> BuildConfig.OSS_SERVER + (url)).toList());
+        ImagePerviewUtil.perviewImage(this, picList,mWhich);
     }
 }

@@ -2,22 +2,20 @@ package net.eanfang.worker.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.View;
 
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
-
-import com.eanfang.http.EanfangCallback;
-import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.security.SecurityFoucsBean;
 import com.eanfang.biz.model.security.SecurityLikeBean;
 import com.eanfang.biz.model.security.SecurityListBean;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
 import com.eanfang.model.security.SecurityLikeStatusBean;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
@@ -37,7 +35,7 @@ import net.eanfang.worker.util.ImagePerviewUtil;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class SecurityHotFragment extends TemplateItemListFragment {
+public class SecurityHotFragment extends TemplateItemListFragment implements SecurityListAdapter.OnPhotoClickListener {
 
     private String mTitle;
     private QueryEntry mQueryEntry;
@@ -75,12 +73,6 @@ public class SecurityHotFragment extends TemplateItemListFragment {
                 case R.id.ll_share:
                     doShare(securityListAdapter.getData().get(position));
                     break;
-                case R.id.ll_pic:
-                    picList.clear();
-                    pics = securityListAdapter.getData().get(position).getSpcImg().split(",");
-                    picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> BuildConfig.OSS_SERVER + (url)).toList());
-                    ImagePerviewUtil.perviewImage(getActivity(), picList);
-                    break;
                 case R.id.ll_question:
                 case R.id.rl_video:
                     doJump(position, false);
@@ -112,7 +104,7 @@ public class SecurityHotFragment extends TemplateItemListFragment {
 
     @Override
     protected void initAdapter() {
-        securityListAdapter = new SecurityListAdapter( false);
+        securityListAdapter = new SecurityListAdapter(false, this);
         RecyclerView.RecycledViewPool pool = mRecyclerView.getRecycledViewPool();
         pool.setMaxRecycledViews(0, 10);
         mRecyclerView.setRecycledViewPool(pool);
@@ -342,5 +334,16 @@ public class SecurityHotFragment extends TemplateItemListFragment {
     @Override
     protected ViewModel initViewModel() {
         return null;
+    }
+
+    /**
+     * 照片点击事件
+     */
+    @Override
+    public void onPhotoClick(int position,int mWhich) {
+        picList.clear();
+        pics = securityListAdapter.getData().get(position).getSpcImg().split(",");
+        picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> BuildConfig.OSS_SERVER + (url)).toList());
+        ImagePerviewUtil.perviewImage(getActivity(), picList, mWhich);
     }
 }

@@ -46,7 +46,7 @@ import butterknife.ButterKnife;
  * @description 安防圈点赞列表
  */
 
-public class SecurityPersonalPublicListActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
+public class SecurityPersonalPublicListActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener, SecurityListAdapter.OnPhotoClickListener {
 
     public static final int REFRESH_ITEM = 1011;
     @BindView(R.id.rv_security)
@@ -122,9 +122,9 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
          * 点赞不需要已读未读
          * */
         if (mLike.equals(mType)) {
-            securityListAdapter = new SecurityListAdapter( false);
+            securityListAdapter = new SecurityListAdapter(false, this);
         } else {
-            securityListAdapter = new SecurityListAdapter(true);
+            securityListAdapter = new SecurityListAdapter(true, this);
         }
         securityListAdapter.bindToRecyclerView(rvSecurity);
         securityListAdapter.setOnLoadMoreListener(this, rvSecurity);
@@ -138,12 +138,6 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
                     break;
                 case R.id.ll_share:
                     doShare(securityListAdapter.getData().get(position));
-                    break;
-                case R.id.ll_pic:
-                    picList.clear();
-                    pics = securityListAdapter.getData().get(position).getSpcImg().split(",");
-                    picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> BuildConfig.OSS_SERVER + (url)).toList());
-                    ImagePerviewUtil.perviewImage(SecurityPersonalPublicListActivity.this, picList);
                     break;
                 case R.id.tv_isFocus:
                 case R.id.ll_like:
@@ -177,7 +171,7 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
      * 关注人的列表
      */
     public void initFoucsAdapter() {
-        securityFoucsListAdapter = new SecurityFoucsListAdapter( isCreate);
+        securityFoucsListAdapter = new SecurityFoucsListAdapter(isCreate);
         securityFoucsListAdapter.bindToRecyclerView(rvSecurity);
         securityFoucsListAdapter.setOnLoadMoreListener(this, rvSecurity);
         securityFoucsListAdapter.setOnItemChildClickListener((adapter, view, position) -> {
@@ -457,5 +451,16 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
                 rvSecurity.setVisibility(View.GONE);
             }
         }
+    }
+
+    /**
+     * 照片点击事件
+     */
+    @Override
+    public void onPhotoClick(int position,int mWhich) {
+        picList.clear();
+        pics = securityListAdapter.getData().get(position).getSpcImg().split(",");
+        picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> BuildConfig.OSS_SERVER + (url)).toList());
+        ImagePerviewUtil.perviewImage(this, picList,mWhich);
     }
 }

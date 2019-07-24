@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.eanfang.BuildConfig;
+import com.eanfang.listener.OnSecurityPhotoClickListener;
 import com.eanfang.util.GlideUtil;
 
 import java.util.List;
@@ -44,20 +45,22 @@ public class SecurityCircleImageLayout extends ViewGroup {
     private int mItemHeight;
     private Context context;
 
+    private OnSecurityPhotoClickListener securityPhotoClickListener;
+
 
     public SecurityCircleImageLayout(Context context) {
         this(context, null);
-        this.context=context;
+        this.context = context;
     }
 
     public SecurityCircleImageLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
-        this.context=context;
+        this.context = context;
     }
 
     public SecurityCircleImageLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        this.context=context;
+        this.context = context;
         mSpacing = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, DEFAULT_SPACING,
                 context.getResources().getDisplayMetrics());
     }
@@ -177,7 +180,6 @@ public class SecurityCircleImageLayout extends ViewGroup {
      */
     public void setImageUrls(final List<String> imageUrls) {
         removeAllViews();
-
         int count = imageUrls.size();
         if (count == 1) {
             //一般在url中会有宽高 可以算出宽高比
@@ -188,11 +190,19 @@ public class SecurityCircleImageLayout extends ViewGroup {
         }
         for (int i = 0; i < imageUrls.size(); i++) {
             ImageView imageView = new ImageView(getContext());
-            GlideUtil.intoImageView(context,Uri.parse(BuildConfig.OSS_SERVER + imageUrls.get(i)),imageView);
+            GlideUtil.intoImageView(context, Uri.parse(BuildConfig.OSS_SERVER + imageUrls.get(i)), imageView);
             addView(imageView);
-            imageView.setOnClickListener((v)->{
-
+            int position = i;
+            imageView.setOnClickListener((v) -> {
+                if (securityPhotoClickListener != null) {
+                    securityPhotoClickListener.onPhotoClick(position);
+                }
             });
         }
     }
+
+    public void setOnPhotoClickListener(OnSecurityPhotoClickListener clickListener) {
+        this.securityPhotoClickListener = clickListener;
+    }
+
 }
