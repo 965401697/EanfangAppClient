@@ -16,12 +16,11 @@ import android.widget.RelativeLayout;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.biz.model.security.SecurityCreateBean;
+import com.eanfang.biz.model.security.SecurityFoucsListBean;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.security.SecurityCreateBean;
-import com.eanfang.biz.model.security.SecurityFoucsListBean;
-
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.takevideo.TakeVdideoMode;
 import com.eanfang.takevideo.TakeVideoActivity;
@@ -51,8 +50,6 @@ import java.util.HashMap;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static android.provider.MediaStore.Video.Thumbnails.MINI_KIND;
 
 /**
  * @author guanluocang
@@ -144,7 +141,7 @@ public class SecurityCreateActivity extends BaseActivity {
                         Bundle bundle_foucus = new Bundle();
                         bundle_foucus.putString("type", "foucs");
                         bundle_foucus.putBoolean("create", true);
-                        JumpItent.jump(SecurityCreateActivity.this, SecurityPersonalPublicListActivity.class, bundle_foucus, REQUEST_CODE_CHOOSE_VIDEO);
+                        JumpItent.jump(SecurityCreateActivity.this, SecurityPersonalPublicListActivity.class, bundle_foucus, REQUEST_CODE_ABOUT);
                         etContent.getText().delete(selectionStart - 1, selectionStart);
                     }
                 }

@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.biz.model.VideoBean;
+import com.eanfang.takevideo.PlayVideoActivity;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.client.R;
@@ -22,6 +24,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.io.FileUtil;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.IRongCallback;
 import io.rong.imlib.RongIMClient;
@@ -38,6 +41,11 @@ public class VideoSelectedActivity extends BaseClientActivity {
     private String mTargetId;
     private Conversation.ConversationType mConversationType;
 
+    /**
+     * 其他地方选择视频
+     */
+    private String mType = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_video_selected);
@@ -48,8 +56,13 @@ public class VideoSelectedActivity extends BaseClientActivity {
         setLeftBack();
         mTargetId = getIntent().getStringExtra("targetId");
         mConversationType = (Conversation.ConversationType) getIntent().getSerializableExtra("conversationType");
+        mType = getIntent().getStringExtra("type");
 
-        setRightTitle("发送");
+        if (("addSecurity").equals(mType)) {
+            setRightTitle("确定");
+        } else {
+            setRightTitle("发送");
+        }
         setRightTitleOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,25 +85,39 @@ public class VideoSelectedActivity extends BaseClientActivity {
 
                 if (view.getId() == R.id.cb_checked) {
                     VideoBean bean = (VideoBean) adapter.getData().get(position);
-
-                    if (bean.getFlag() == 0) {
-                        if (pathList.size() >= 9) {
-                            ToastUtil.get().showToast(VideoSelectedActivity.this, "最高只能选择9个视频文件");
+                    // 安防圈 添加视频
+                    if (("addSecurity").equals(mType)) {
+                        if (bean.getFlag() == 0) {
+                            if (pathList.size() >= 1) {
+                                ToastUtil.get().showToast(VideoSelectedActivity.this, "最多只能选择1个视频文件");
+                            } else {
+                                bean.setFlag(1);
+                                pathList.add(bean.getName());
+                            }
                         } else {
-                            bean.setFlag(1);
-                            pathList.add(bean.getName());
+                            bean.setFlag(0);
+                            pathList.remove(bean.getName());
                         }
                     } else {
-                        bean.setFlag(0);
-                        pathList.remove(bean.getName());
-                    }
+                        if (bean.getFlag() == 0) {
+                            if (pathList.size() >= 9) {
+                                ToastUtil.get().showToast(VideoSelectedActivity.this, "最高只能选择9个视频文件");
+                            } else {
+                                bean.setFlag(1);
+                                pathList.add(bean.getName());
+                            }
+                        } else {
+                            bean.setFlag(0);
+                            pathList.remove(bean.getName());
+                        }
 
-                    if (pathList.size() == 0) {
-                        setRightTitle("发送");
-                    } else {
-                        setRightTitle("发送(" + pathList.size() + "/9)");
-                    }
+                        if (pathList.size() == 0) {
+                            setRightTitle("发送");
+                        } else {
+                            setRightTitle("发送(" + pathList.size() + "/9)");
+                        }
 
+                    }
 
                     adapter.notifyItemChanged(position);
                 }
@@ -103,35 +130,45 @@ public class VideoSelectedActivity extends BaseClientActivity {
             ToastUtil.get().showToast(this, "必须选择一个视频文件");
             return;
         }
-        for (String s : pathList) {
-            FileMessage fileMessage = FileMessage.obtain(Uri.parse("file://" + s));
-            Message message = Message.obtain(mTargetId, mConversationType, fileMessage);
-            RongIM.getInstance().sendMediaMessage(message, null, null, new IRongCallback.ISendMediaMessageCallback() {
-                @Override
-                public void onProgress(Message message, int i) {
+        /**
+         * 安防圈 添加视频
+         * */
+        if (("addSecurity").equals(mType)) {
+            Bundle bundle = new Bundle();
+            bundle.putString("videoPath", pathList.get(0));
+            bundle.putBoolean("isTake", true);
+            JumpItent.jump(VideoSelectedActivity.this, PlayVideoActivity.class, bundle);
+        } else {
+            for (String s : pathList) {
+                FileMessage fileMessage = FileMessage.obtain(Uri.parse("file://" + s));
+                Message message = Message.obtain(mTargetId, mConversationType, fileMessage);
+                RongIM.getInstance().sendMediaMessage(message, null, null, new IRongCallback.ISendMediaMessageCallback() {
+                    @Override
+                    public void onProgress(Message message, int i) {
 
-                }
+                    }
 
-                @Override
-                public void onCanceled(Message message) {
+                    @Override
+                    public void onCanceled(Message message) {
 
-                }
+                    }
 
-                @Override
-                public void onAttached(Message message) {
+                    @Override
+                    public void onAttached(Message message) {
 
-                }
+                    }
 
-                @Override
-                public void onSuccess(Message message) {
+                    @Override
+                    public void onSuccess(Message message) {
 
-                }
+                    }
 
-                @Override
-                public void onError(Message message, RongIMClient.ErrorCode errorCode) {
+                    @Override
+                    public void onError(Message message, RongIMClient.ErrorCode errorCode) {
 
-                }
-            });
+                    }
+                });
+            }
         }
         VideoSelectedActivity.this.finish();
     }
@@ -139,34 +176,38 @@ public class VideoSelectedActivity extends BaseClientActivity {
 
     private List<VideoBean> getList(Context context) {
         List<VideoBean> sysVideoList = new ArrayList<>();
-        // MediaStore.Video.Thumbnails.DATA:视频缩略图的文件路径
-        String[] thumbColumns = {MediaStore.Video.Thumbnails.DATA,
-                MediaStore.Video.Thumbnails.VIDEO_ID};
-        // 视频其他信息的查询条件
-        String[] mediaColumns = {MediaStore.Video.Media._ID,
-                MediaStore.Video.Media.DATA, MediaStore.Video.Media.DURATION};
-        Cursor cursor = null;
-        cursor = context.getContentResolver().query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, mediaColumns, null, null, MediaStore.Video.Media.DEFAULT_SORT_ORDER);
-
-        if (cursor == null) {
-            return sysVideoList;
-        }
-        if (cursor.moveToFirst()) {
-            do {
-                VideoBean videoBean = new VideoBean();
-                int id = cursor.getInt(cursor.getColumnIndex(MediaStore.Video.Media._ID));
-                Cursor thumbCursor = context.getContentResolver().query(MediaStore.Video.Thumbnails.EXTERNAL_CONTENT_URI, thumbColumns, MediaStore.Video.Thumbnails.VIDEO_ID + "=" + id, null, null);
-                if (thumbCursor.moveToFirst()) {
-                    videoBean.setPath(thumbCursor.getString(thumbCursor.getColumnIndex(MediaStore.Video.Thumbnails.DATA)));
+        Cursor c = null;
+        try {
+            c = context.getContentResolver().query(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, null, null, null, MediaStore.Video.Media.DEFAULT_SORT_ORDER);
+            while (c.moveToNext()) {
+                // 路径
+                String path = c.getString(c.getColumnIndexOrThrow(MediaStore.Video.Media.DATA));
+                if (!FileUtil.exist(path)) {
+                    continue;
                 }
-                videoBean.setName(cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media
-                        .DATA)));
-//                path = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Video.Media
-//                        .DATA));
-//                info.setFileSize(cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Video
-//                        .Media.DURATION)));
+                // 视频的id
+                int id = c.getInt(c.getColumnIndexOrThrow(MediaStore.Video.Media._ID));
+                // 视频名称
+                String name = c.getString(c.getColumnIndexOrThrow(MediaStore.Video.Media.DISPLAY_NAME));
+                //分辨率
+                String resolution = c.getString(c.getColumnIndexOrThrow(MediaStore.Video.Media.RESOLUTION));
+                // 大小
+                long size = c.getLong(c.getColumnIndexOrThrow(MediaStore.Video.Media.SIZE));
+                // 时长
+                long duration = c.getLong(c.getColumnIndexOrThrow(MediaStore.Video.Media.DURATION));
+                //修改时间
+                long date = c.getLong(c.getColumnIndexOrThrow(MediaStore.Video.Media.DATE_MODIFIED));
+                VideoBean videoBean = new VideoBean();
+                videoBean.setPath(path);
+                videoBean.setName(path);
                 sysVideoList.add(videoBean);
-            } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (c != null) {
+                c.close();
+            }
         }
         return sysVideoList;
     }
