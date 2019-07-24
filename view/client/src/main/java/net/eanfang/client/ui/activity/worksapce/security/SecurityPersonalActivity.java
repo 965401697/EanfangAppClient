@@ -53,7 +53,7 @@ import q.rorbin.badgeview.QBadgeView;
  * @description 安防圈个人中心
  */
 
-public class SecurityPersonalActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
+public class SecurityPersonalActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener, SecurityListAdapter.OnPhotoClickListener {
 
     @BindView(R.id.iv_head)
     CircleImageView ivHead;
@@ -138,7 +138,7 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
             llSecuritypersonal.setVisibility(View.VISIBLE);
             tvSecuirtypersonal.setText("我的动态");
         }
-        securityListAdapter = new SecurityListAdapter(ClientApplication.get().getApplicationContext(), false);
+        securityListAdapter = new SecurityListAdapter(ClientApplication.get().getApplicationContext(), false,  this);
         securityListAdapter.bindToRecyclerView(rvSecurity);
 
         rvSecurity.setLayoutManager(new LinearLayoutManager(this));
@@ -169,12 +169,6 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
                     break;
                 case R.id.ll_share:
                     doShare(securityListAdapter.getData().get(position));
-                    break;
-                case R.id.ll_pic:
-                    picList.clear();
-                    pics = securityListAdapter.getData().get(position).getSpcImg().split(",");
-                    picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> BuildConfig.OSS_SERVER + (url)).toList());
-                    ImagePerviewUtil.perviewImage(SecurityPersonalActivity.this, picList);
                     break;
                 case R.id.tv_isFocus:
                 case R.id.ll_like:
@@ -273,6 +267,12 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
                     GlideUtil.intoImageView(SecurityPersonalActivity.this,
                             Uri.parse(BuildConfig.OSS_SERVER + bean.getUserEntity().getAccountEntity().getAvatar()), ivHead);
                     tvName.setText(bean.getUserEntity().getAccountEntity().getRealName());
+                    // 0 未认证 1 认证
+                    if (bean.getUserEntity().getWorkerEntity().getVerifyStatus() == 0) {
+                        ivCertifi.setVisibility(View.GONE);
+                    } else {
+                        ivCertifi.setVisibility(View.VISIBLE);
+                    }
                     //粉丝数
                     tvFansCount.setText(bean.getAsFollowerCount() + "");
                     //关注数
@@ -422,5 +422,16 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
         }
         return super.onKeyDown(keyCode, event);
 
+    }
+
+    /**
+     * 照片点击事件
+     */
+    @Override
+    public void onPhotoClick(int position,int mWhich) {
+        picList.clear();
+        pics = securityListAdapter.getData().get(position).getSpcImg().split(",");
+        picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> BuildConfig.OSS_SERVER + (url)).toList());
+        ImagePerviewUtil.perviewImage(this, picList,mWhich);
     }
 }
