@@ -1,5 +1,6 @@
 package net.eanfang.client.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -16,10 +17,10 @@ import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.online.DividerItemDecoration;
+import net.eanfang.client.ui.activity.worksapce.repair.QuickRepairActivity;
 import net.eanfang.client.ui.adapter.HomeAllBrandAdapter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 
@@ -74,6 +75,13 @@ public class HomeAllBrandFragment extends BaseFragment {
         mRecHomeAllBrand.addItemDecoration(new DividerItemDecoration(getContext()));
         adapter = new HomeAllBrandAdapter();
         adapter.bindToRecyclerView(mRecHomeAllBrand);
+        adapter.setOnItemClickListener((adapter, view, position) -> {
+            AllBrandBean.ListBean bean = (AllBrandBean.ListBean) adapter.getData().get(position);
+            Intent intent = new Intent(getActivity(), QuickRepairActivity.class);
+            intent.putExtra("deviceBrandName", bean.getDataName());
+            intent.putExtra("dataCode", bean.getDataCode());
+            startActivity(intent);
+        });
     }
 
     @Override

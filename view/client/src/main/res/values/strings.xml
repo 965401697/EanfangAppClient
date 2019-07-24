@@ -63,7 +63,7 @@
     <string name="text_home_company_goodRateCount">评价：%1$s</string>
     <string name="text_home_company_installCount">施工：%1$d</string>
     <string name="text_home_company_repairCount">维修：%1$d</string>
-    <string name="text_home_company_worker_year">从业年限：</string>
+    <string name="text_home_company_worker_year">从业年限：%1$s</string>
     <string name="text_home_company_level">等级：Lv%1$d</string>
     <string name="text_home_company_consultCount">已有\t%1$d\t人咨询</string>
     <string name="text_home_repair_count">已有\t%1$d\t人 报装/报修</string>

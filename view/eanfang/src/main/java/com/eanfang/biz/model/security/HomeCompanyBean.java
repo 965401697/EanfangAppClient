@@ -57,4 +57,14 @@ public class HomeCompanyBean {
      */
     private int pageType;
 
+    /**
+     * 跳转详情页需要的id 找技师是workerId
+     */
+    private int id;
+
+    /**
+     * userId
+     */
+    private String companyUserId;
+
 }

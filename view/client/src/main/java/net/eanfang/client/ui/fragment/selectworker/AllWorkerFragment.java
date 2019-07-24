@@ -296,6 +296,7 @@ public class AllWorkerFragment extends BaseFragment implements SwipeRefreshLayou
         payLogEntity.setAssigneeUserId(orderEntity.getOwnerUserId());
         payLogEntity.setAssigneeOrgCode(orderEntity.getOwnerOrgCode());
         payLogEntity.setAssigneeTopCompanyId(orderEntity.getOwnerTopCompanyId());
+        payLogEntity.setPayPrice(mDoorFee);
 
         //查询上门费
         payLogEntity.setOriginPrice(mDoorFee);

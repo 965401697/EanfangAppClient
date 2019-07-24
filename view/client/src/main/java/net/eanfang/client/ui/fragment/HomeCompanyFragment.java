@@ -1,5 +1,6 @@
 package net.eanfang.client.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -22,6 +23,7 @@ import com.eanfang.util.JumpItent;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.SelectCompanyActivity;
 import net.eanfang.client.ui.activity.worksapce.SelectWorkerActivity;
+import net.eanfang.client.ui.activity.worksapce.WorkerDetailActivity;
 import net.eanfang.client.ui.activity.worksapce.online.DividerItemDecoration;
 import net.eanfang.client.ui.adapter.FragmentHomeCompanyAdapter;
 
@@ -112,6 +114,14 @@ public class HomeCompanyFragment extends BaseFragment {
                 adapter.setNewData(homeCompanyBeans);
             }));
         } else {
+            adapter.setOnItemClickListener((adapter, view, position) -> {
+                HomeCompanyBean homeCompanyBean = (HomeCompanyBean) adapter.getData().get(position);
+                Intent intent = new Intent(getActivity(), WorkerDetailActivity.class);
+                intent.putExtra("companyUserId", homeCompanyBean.getCompanyUserId());
+                intent.putExtra("workerId", String.valueOf(homeCompanyBean.getId()));
+                intent.putExtra("doorFee", 0);
+                startActivity(intent);
+            });
             EanfangHttp.post(NewApiService.HOME_WORKER_LIST).params("page", "1").params("size", "2").params("areaId", areaId).execute(new EanfangCallback<HomeWorkerBean>(getActivity(), true, HomeWorkerBean.class, bean -> {
                 boolean toRequestNew = !mIsRequestOne && (bean.getList() == null || bean.getList().size() == 0);
                 if (toRequestNew) {
@@ -123,18 +133,7 @@ public class HomeCompanyFragment extends BaseFragment {
                 adapter.getData().clear();
                 ArrayList<HomeCompanyBean> homeCompanyBeans = new ArrayList<>();
                 for (HomeWorkerBean.ListBean companyBean : bean.getList()) {
-                    HomeCompanyBean homeCompanyBean = new HomeCompanyBean();
-                    homeCompanyBean.setAreaCode(companyBean.getPlaceCode());
-                    homeCompanyBean.setDesignCount(companyBean.getDesignNum());
-                    homeCompanyBean.setGoodRate(companyBean.getGoodRate());
-                    homeCompanyBean.setInstallCount(companyBean.getInstallNum());
-                    homeCompanyBean.setLogoPic(companyBean.getAccountEntity().getAvatar());
-                    homeCompanyBean.setName(companyBean.getAccountEntity().getRealName());
-                    homeCompanyBean.setRepairCount(companyBean.getRepairCount());
-                    homeCompanyBean.setLevel(companyBean.getVerifyEntity().getWorkingLevel());
-                    homeCompanyBean.setPractitionerYears(companyBean.getVerifyEntity().getWorkingYear());
-                    homeCompanyBean.setPageType(1);
-                    homeCompanyBeans.add(homeCompanyBean);
+                    homeCompanyBeans.add(companyBean.getHomeCompanyBean());
                 }
                 adapter.setNewData(homeCompanyBeans);
             }));

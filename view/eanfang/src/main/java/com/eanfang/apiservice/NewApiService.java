@@ -804,23 +804,7 @@ public interface NewApiService {
      * 全部品牌
      */
     String HOME_ALL_BRAND = BASE_URL + "/yaf_sys/withdrawalsrecord/baseList";
-    /**
-     * 快速报修
-     */
-    String HOME_QUICK_REPAIR = BASE_URL + "/yaf_site/siteRepairOrder/create";
-    /**
-     * 快速报装
-     */
-    String HOME_QUICK_INSTALL = BASE_URL + "/yaf_site/siteInstallOrder/create";
-    /**
-     * 免费设计
-     */
-    String HOME_FREE_DESIGN = BASE_URL + "/yaf_site/freeDesign/create";
 
-    /**
-     * 订单数量
-     */
-    String HOME_OREDER_COUNT = BASE_URL + "/yaf_sys/notice/count/user/orderNum";
     /**
      * 最新岗位报警
      */

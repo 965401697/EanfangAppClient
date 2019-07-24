@@ -15,6 +15,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.biz.model.security.HomeCompanyBean;
 import com.eanfang.config.Config;
+import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
 
 import net.eanfang.client.R;
@@ -47,7 +48,7 @@ public class FragmentHomeCompanyAdapter extends BaseQuickAdapter<HomeCompanyBean
             helper.imgRz.setImageResource(R.drawable.icon_worker_level);
             helper.llHomeCompany.setVisibility(View.GONE);
             helper.tvHomeCompanyWorkerYear.setVisibility(View.VISIBLE);
-            helper.tvHomeCompanyWorkerYear.setText(mContext.getString(R.string.text_home_company_worker_year, item.getPractitionerYears()));
+            helper.tvHomeCompanyWorkerYear.setText(mContext.getString(R.string.text_home_company_worker_year, GetConstDataUtils.getWorkingYearList().get(item.getPractitionerYears())));
             helper.tvHomeCompanyStatus.setVisibility(View.VISIBLE);
             helper.tvHomeCompanyStatus.setText(mContext.getString(R.string.text_home_company_level, item.getLevel() + 1));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

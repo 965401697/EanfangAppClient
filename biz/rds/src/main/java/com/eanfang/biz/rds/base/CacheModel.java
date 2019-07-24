@@ -41,9 +41,11 @@ public class CacheModel {
     public String getKey() {
         StringBuilder sbd = new StringBuilder();
         sbd.append(clazz.getSimpleName()).append(":").append(method).append(":");
-        for (Object value : values) {
-            if (value != null) {
-                sbd.append(JSON.toJSONString(value)).append(":");
+        if (values != null && values.length != 0) {
+            for (Object value : values) {
+                if (value != null) {
+                    sbd.append(JSON.toJSONString(value)).append(":");
+                }
             }
         }
         return sbd.toString();
