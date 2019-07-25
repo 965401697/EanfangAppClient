@@ -1,6 +1,7 @@
 package net.eanfang.client.ui.activity.leave_post.bean;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import lombok.Data;
@@ -17,6 +18,8 @@ public class LeavePostHistoryDayBean implements Serializable {
 
     private StationBean station;
     private List<AlertListBean> alertList;
+    private Date nextAlertDate;
+    private Date lastAlertDate;
     /**
      * 报警数量
      */

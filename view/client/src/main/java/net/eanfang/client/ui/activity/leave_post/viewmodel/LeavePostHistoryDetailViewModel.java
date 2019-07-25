@@ -18,7 +18,6 @@ import net.eanfang.client.ui.activity.leave_post.repo.LeavePostRepo;
 
 
 import java.text.MessageFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 import cn.hutool.core.date.DateUtil;
@@ -64,21 +63,23 @@ public class LeavePostHistoryDetailViewModel extends BaseViewModel {
     }
 
     public void setLastDay(TextView date) {
-        Calendar ca = Calendar.getInstance();
-        ca.setTime(mDate);
-        ca.add(Calendar.DAY_OF_MONTH, -1);
-        historyDayData(ca.getTime(), mStationId);
-        date.setText(MessageFormat.format("{0}\t\t{1}", DateUtil.date(ca.getTime()).toString("yyyy年MM月dd日"), DateKit.get(ca.getTime()).weekName()));
+        LeavePostHistoryDayBean dayBean = historyDayData.getValue();
+        if (dayBean != null && dayBean.getLastAlertDate() != null) {
+            historyDayData(dayBean.getLastAlertDate(), mStationId);
+            date.setText(MessageFormat.format("{0}\t\t{1}", DateUtil.date(dayBean.getLastAlertDate()).toString("yyyy年MM月dd日"), DateKit.get(dayBean.getLastAlertDate()).weekName()));
+        } else {
+            showToast("最后一条数据了");
+        }
+
     }
 
     public void setNextDay(TextView date) {
-        Calendar ca = Calendar.getInstance();
-        if (DateUtil.date(mDate).toDateStr().equals(DateUtil.date().toDateStr())) {
-            return;
+        LeavePostHistoryDayBean dayBean = historyDayData.getValue();
+        if (dayBean != null && dayBean.getNextAlertDate() != null) {
+            historyDayData(dayBean.getNextAlertDate(), mStationId);
+            date.setText(MessageFormat.format("{0}\t\t{1}", DateUtil.date(dayBean.getNextAlertDate()).toString("yyyy年MM月dd日"), DateKit.get(dayBean.getNextAlertDate()).weekName()));
+        } else {
+            showToast("最后一条数据了");
         }
-        ca.setTime(mDate);
-        ca.add(Calendar.DAY_OF_MONTH, +1);
-        historyDayData(ca.getTime(), mStationId);
-        date.setText(MessageFormat.format("{0}\t\t{1}", DateUtil.date(ca.getTime()).toString("yyyy年MM月dd日"), DateKit.get(ca.getTime()).weekName()));
     }
 }
