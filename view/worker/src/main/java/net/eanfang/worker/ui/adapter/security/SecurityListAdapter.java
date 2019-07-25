@@ -157,6 +157,7 @@ public class SecurityListAdapter extends BaseQuickAdapter<SecurityListBean.ListB
         helper.addOnClickListener(R.id.ll_comments);
         helper.addOnClickListener(R.id.iv_share);
         helper.addOnClickListener(R.id.ll_question);
+        helper.addOnClickListener(R.id.rl_content);
         securityImageLayout.setOnPhotoClickListener((position -> {
             onPhotoClickListener.onPhotoClick(helper.getAdapterPosition(), position);
         }));

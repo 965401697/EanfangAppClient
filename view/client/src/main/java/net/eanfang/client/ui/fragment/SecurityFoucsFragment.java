@@ -34,7 +34,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 
 
-public class SecurityFoucsFragment extends TemplateItemListFragment  implements  SecurityListAdapter.OnPhotoClickListener  {
+public class SecurityFoucsFragment extends TemplateItemListFragment implements SecurityListAdapter.OnPhotoClickListener {
 
     private String mTitle;
 
@@ -83,6 +83,7 @@ public class SecurityFoucsFragment extends TemplateItemListFragment  implements 
                 case R.id.ll_share:
                     doShare(securityListAdapter.getData().get(position));
                     break;
+                case R.id.rl_content:
                 case R.id.ll_question:
                 case R.id.rl_video:
                     doJump(position, false);
@@ -280,15 +281,16 @@ public class SecurityFoucsFragment extends TemplateItemListFragment  implements 
             }
         }
     }
+
     /**
      * 照片点击事件
      */
     @Override
-    public void onPhotoClick(int position,int mWhich) {
+    public void onPhotoClick(int position, int mWhich) {
         picList.clear();
         pics = securityListAdapter.getData().get(position).getSpcImg().split(",");
         picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> BuildConfig.OSS_SERVER + (url)).toList());
-        ImagePerviewUtil.perviewImage(getActivity(), picList,mWhich);
+        ImagePerviewUtil.perviewImage(getActivity(), picList, mWhich);
     }
 
 

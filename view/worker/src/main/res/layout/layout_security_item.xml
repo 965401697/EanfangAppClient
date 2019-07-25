@@ -108,16 +108,23 @@
                     android:visibility="gone" />
             </RelativeLayout>
 
-            <com.eanfang.witget.mentionedittext.text.MentionTextView
-                android:id="@+id/tv_content"
+            <com.eanfang.witget.CustomRelativeLayout
+                android:id="@+id/rl_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_18"
-                android:ellipsize="end"
-                android:maxLines="3"
-                android:scrollbars="none"
-                android:textColor="@color/color_client_neworder"
-                android:textSize="@dimen/textSize_15" />
+                android:layout_marginTop="@dimen/dimen_18">
+
+                <com.eanfang.witget.mentionedittext.text.MentionTextView
+                    android:id="@+id/tv_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_18"
+                    android:ellipsize="end"
+                    android:maxLines="3"
+                    android:scrollbars="none"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_15" />
+            </com.eanfang.witget.CustomRelativeLayout>
 
             <RelativeLayout
                 android:id="@+id/rl_video"

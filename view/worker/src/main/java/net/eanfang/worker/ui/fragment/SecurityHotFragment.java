@@ -75,6 +75,7 @@ public class SecurityHotFragment extends TemplateItemListFragment implements Sec
                     break;
                 case R.id.ll_question:
                 case R.id.rl_video:
+                case R.id.rl_content:
                     doJump(position, false);
                     break;
                 default:
@@ -340,7 +341,7 @@ public class SecurityHotFragment extends TemplateItemListFragment implements Sec
      * 照片点击事件
      */
     @Override
-    public void onPhotoClick(int position,int mWhich) {
+    public void onPhotoClick(int position, int mWhich) {
         picList.clear();
         pics = securityListAdapter.getData().get(position).getSpcImg().split(",");
         picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> BuildConfig.OSS_SERVER + (url)).toList());

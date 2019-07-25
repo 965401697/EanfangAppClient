@@ -35,7 +35,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 
-public class SecurityHotFragment extends TemplateItemListFragment implements  SecurityListAdapter.OnPhotoClickListener  {
+public class SecurityHotFragment extends TemplateItemListFragment implements SecurityListAdapter.OnPhotoClickListener {
 
     private String mTitle;
     private QueryEntry mQueryEntry;
@@ -75,6 +75,7 @@ public class SecurityHotFragment extends TemplateItemListFragment implements  Se
                 case R.id.ll_share:
                     doShare(securityListAdapter.getData().get(position));
                     break;
+                case R.id.rl_content:
                 case R.id.ll_question:
                 case R.id.rl_video:
                     doJump(position, false);
@@ -107,7 +108,7 @@ public class SecurityHotFragment extends TemplateItemListFragment implements  Se
 
     @Override
     protected void initAdapter() {
-        securityListAdapter = new SecurityListAdapter(ClientApplication.get().getApplicationContext(), false,this);
+        securityListAdapter = new SecurityListAdapter(ClientApplication.get().getApplicationContext(), false, this);
         RecyclerView.RecycledViewPool pool = mRecyclerView.getRecycledViewPool();
         pool.setMaxRecycledViews(0, 10);
         mRecyclerView.setRecycledViewPool(pool);
@@ -344,10 +345,10 @@ public class SecurityHotFragment extends TemplateItemListFragment implements  Se
      * 照片点击事件
      */
     @Override
-    public void onPhotoClick(int position,int mWhich) {
+    public void onPhotoClick(int position, int mWhich) {
         picList.clear();
         pics = securityListAdapter.getData().get(position).getSpcImg().split(",");
         picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> BuildConfig.OSS_SERVER + (url)).toList());
-        ImagePerviewUtil.perviewImage(getActivity(), picList,mWhich);
+        ImagePerviewUtil.perviewImage(getActivity(), picList, mWhich);
     }
 }

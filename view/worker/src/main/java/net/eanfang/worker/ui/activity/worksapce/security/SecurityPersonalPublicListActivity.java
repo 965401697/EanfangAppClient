@@ -143,6 +143,7 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
                 case R.id.ll_like:
                 case R.id.ll_question:
                 case R.id.rl_video:
+                case R.id.rl_content:
                     doJump(position, false);
                     break;
                 default:
@@ -457,10 +458,10 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
      * 照片点击事件
      */
     @Override
-    public void onPhotoClick(int position,int mWhich) {
+    public void onPhotoClick(int position, int mWhich) {
         picList.clear();
         pics = securityListAdapter.getData().get(position).getSpcImg().split(",");
         picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> BuildConfig.OSS_SERVER + (url)).toList());
-        ImagePerviewUtil.perviewImage(this, picList,mWhich);
+        ImagePerviewUtil.perviewImage(this, picList, mWhich);
     }
 }

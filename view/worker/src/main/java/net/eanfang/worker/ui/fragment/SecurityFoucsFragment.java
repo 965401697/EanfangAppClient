@@ -80,6 +80,7 @@ public class SecurityFoucsFragment extends TemplateItemListFragment implements S
                     break;
                 case R.id.ll_question:
                 case R.id.rl_video:
+                case R.id.rl_content:
                     doJump(position, false);
                     break;
                 default:

@@ -135,7 +135,7 @@ public class SecurityListActivity extends BaseActivity {
         } else if (resultCode == RESULT_OK && requestCode == REQUEST_LIST) {
             // list 回来更新数量
             mSecurityNum = data.getIntExtra("mSecurityNum", 0);
-            qBadgeViewMaintain.setBadgeNumber(mSecurityNum);
+            badgeView(R.id.tv_right, mSecurityNum);
         }
     }
 

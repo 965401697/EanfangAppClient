@@ -463,6 +463,7 @@ public class HomeFragment extends BaseFragment implements SecurityListAdapter.On
                 case R.id.iv_share:
                 case R.id.ll_question:
                 case R.id.rl_video:
+                case R.id.rl_content:
                     doJump(position, false);
                     break;
                 default:
