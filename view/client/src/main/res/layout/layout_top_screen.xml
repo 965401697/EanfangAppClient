@@ -9,17 +9,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/color_white"
-        android:orientation="horizontal"
-        android:paddingStart="@dimen/dimen_20">
+        android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/ll_hot"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal"
             android:paddingTop="@dimen/dimen_30"
-            android:paddingBottom="@dimen/dimen_30"
-            android:text="热门排序"
-            android:textColor="@color/color_client_neworder"
-            android:textSize="@dimen/textSize_13" />
+            android:paddingBottom="@dimen/dimen_30">
+
+            <TextView
+                android:id="@+id/tv_hot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="热门排序"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_13" />
+
+            <ImageView
+                android:id="@+id/iv_hot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dimen_10"
+                android:src="@mipmap/ic_client_screen_none"
+                android:visibility="gone" />
+        </LinearLayout>
 
 
         <LinearLayout
