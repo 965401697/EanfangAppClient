@@ -43,7 +43,7 @@ public interface RepairApi {
     /**
      * 5.报修筛选技师
      */
-    String GET_REPAIR_SEARCH = BuildConfig.API_HOST + "/yaf_shop/worker/search";
+    String GET_REPAIR_SEARCH = BuildConfig.API_HOST + "/yaf_shop/worker/searchV3";
 
     /**
      * 6.查看技师详情
@@ -170,7 +170,7 @@ public interface RepairApi {
      * 29.查看技师详情
      */
     String CK_JS_DETAIL = BuildConfig.API_HOST + "/yaf_sys/techworkerverify/techWorkerDetails";
-   /**
+    /**
      * 29.查看报修单的故障处理详情
      */
     String GET_BUGHANDLE_DETAIL = BuildConfig.API_HOST + "/yaf_repair/bughandle/detail";

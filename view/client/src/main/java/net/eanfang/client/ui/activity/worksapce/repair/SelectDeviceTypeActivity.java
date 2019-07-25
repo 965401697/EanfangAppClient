@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -31,13 +32,16 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.eanfang.config.EanfangConst.BOTTOM_REFRESH;
+import static com.eanfang.config.EanfangConst.TOP_REFRESH;
+
 /**
  * @author Guanluocang
  * @date on 2018/5/4  15:55
  * @decision 选择设备类别
  * 已提取设备类别相关内容
  */
-public class SelectDeviceTypeActivity extends BaseActivity {
+public class SelectDeviceTypeActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
 
     private static final int RESULT_DATACODE = 200;
     @BindView(R.id.et_search)
@@ -48,6 +52,8 @@ public class SelectDeviceTypeActivity extends BaseActivity {
     RecyclerView rvDeviceTypeRight;
     @BindView(R.id.tv_go)
     TextView tvGo;
+    @BindView(R.id.swipe_fresh)
+    SwipeRefreshLayout swipeFresh;
 
     private int i = 0;
     private List<BaseDataEntity> mBaseOneDataList = new ArrayList<>();
@@ -69,6 +75,8 @@ public class SelectDeviceTypeActivity extends BaseActivity {
     private GridLayoutManager gridLayoutManager;
 
     private int mType;
+    private int mPage = 1;
+    private final static int mSize = 21;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +107,8 @@ public class SelectDeviceTypeActivity extends BaseActivity {
         rvDeviceTypeRight.addItemDecoration(new DividerItemDecoration(this));
         deviceTypeRightAdapter = new RepairDeviceTypeRightAdapter();
         deviceTypeRightAdapter.bindToRecyclerView(rvDeviceTypeRight);
+        swipeFresh.setOnRefreshListener(this);
+        deviceTypeRightAdapter.setOnLoadMoreListener(this, rvDeviceTypeRight);
 
         mBaseOneDataList = Config.get().getBusinessList(1);
         mBaseThreeDataList = Config.get().getBusinessList(3);
@@ -107,23 +117,41 @@ public class SelectDeviceTypeActivity extends BaseActivity {
         initListener();
     }
 
-    public List<BaseDataEntity> doSelectRightList(String code) {
-        List mList = Stream.of(mBaseThreeDataList).filter(bean -> bean.getDataCode().contains(code)).toList();
-        return mList;
-    }
-
     private void initData() {
         // 左边类型List
         leftDataList = mBaseOneDataList;
-        // 右边List
-        rightDataList = doSelectRightList(mBaseOneDataList.get(0).getDataCode());
+        mLeftId = mBaseOneDataList.get(0).getDataCode();
         deviceTypeLeftAdapter = new RepairDeviceTypeLeftAdapter(SelectDeviceTypeActivity.this, leftDataList);
-
         lvDeviceTypeLeft.setAdapter(deviceTypeLeftAdapter);
         deviceTypeLeftAdapter.setSelectedPosition(0);
         deviceTypeLeftAdapter.notifyDataSetChanged();
-        deviceTypeRightAdapter.setNewData(rightDataList);
 
+        doGetDeviceData();
+
+    }
+
+    public void doGetDeviceData() {
+        int skip = (mPage - 1) * mSize;
+        if (mPage == 1) {
+            rightDataList = Stream.of(mBaseThreeDataList).filter(bean -> bean.getDataCode().startsWith(mLeftId)).limit(mSize).toList();
+        } else {
+            rightDataList = Stream.of(mBaseThreeDataList).filter(bean -> bean.getDataCode().startsWith(mLeftId)).skip(skip).limit(mSize).toList();
+        }
+        if (mPage == 1) {
+            deviceTypeRightAdapter.getData().clear();
+            deviceTypeRightAdapter.setNewData(rightDataList);
+            swipeFresh.setRefreshing(false);
+            deviceTypeRightAdapter.loadMoreComplete();
+            if (rightDataList.size() < mSize) {
+                deviceTypeRightAdapter.loadMoreEnd();
+            }
+        } else {
+            deviceTypeRightAdapter.addData(rightDataList);
+            deviceTypeRightAdapter.loadMoreComplete();
+            if (rightDataList.size() < mSize) {
+                deviceTypeRightAdapter.loadMoreEnd();
+            }
+        }
     }
 
     private void initListener() {
@@ -187,9 +215,8 @@ public class SelectDeviceTypeActivity extends BaseActivity {
                 deviceTypeLeftAdapter.setSelectedPosition(i);
                 deviceTypeLeftAdapter.notifyDataSetChanged();
                 mLeftId = leftDataList.get(i).getDataCode();
-                rightDataList = doSelectRightList(mLeftId);
-                //切换置空
-                rvDeviceTypeRight.scrollToPosition(0);
+                mPage = 1;
+                doGetDeviceData();
                 etSearch.setText("");
             }
         });
@@ -201,4 +228,36 @@ public class SelectDeviceTypeActivity extends BaseActivity {
         });
     }
 
+    /**
+     * 下拉刷新
+     */
+    @Override
+    public void onRefresh() {
+        dataOption(TOP_REFRESH);
+    }
+
+    /**
+     * 加载更多
+     */
+    @Override
+    public void onLoadMoreRequested() {
+        dataOption(BOTTOM_REFRESH);
+    }
+
+    private void dataOption(int option) {
+        switch (option) {
+            case TOP_REFRESH:
+                //下拉刷新
+                mPage = 1;
+                doGetDeviceData();
+                break;
+            case BOTTOM_REFRESH:
+                //上拉加载更多
+                mPage++;
+                doGetDeviceData();
+                break;
+            default:
+                break;
+        }
+    }
 }

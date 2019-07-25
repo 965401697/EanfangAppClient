@@ -84,7 +84,9 @@ public class SelectCompanyActivity extends BaseActivity implements SwipeRefreshL
         mScreenTitleList.add(activitySelectCompanyBinding.include.tvPraise);
         mScreenTitleList.add(activitySelectCompanyBinding.include.tvRepair);
         mScreenTitleList.add(activitySelectCompanyBinding.include.tvConstruction);
+        mScreenTitleList.add(activitySelectCompanyBinding.include.tvHot);
 
+        mScreenIconList.add(activitySelectCompanyBinding.include.ivHot);
         mScreenIconList.add(activitySelectCompanyBinding.include.ivMouth);
         mScreenIconList.add(activitySelectCompanyBinding.include.ivPraise);
         mScreenIconList.add(activitySelectCompanyBinding.include.ivRepair);
@@ -140,6 +142,10 @@ public class SelectCompanyActivity extends BaseActivity implements SwipeRefreshL
     }
 
     private void initListener() {
+        // 热门排序
+        activitySelectCompanyBinding.include.llHot.setOnClickListener((v) -> {
+            doChangetState("hot");
+        });
         //口碑
         activitySelectCompanyBinding.include.llMouth.setOnClickListener((v) -> {
             doChangetState("mouth");
@@ -160,6 +166,10 @@ public class SelectCompanyActivity extends BaseActivity implements SwipeRefreshL
 
     private void doChangetState(String mType) {
         switch (mType) {
+            //热门
+            case "hot":
+                doUpdataTextColor("orderByOne", "hot", activitySelectCompanyBinding.include.tvHot, activitySelectCompanyBinding.include.ivHot);
+                break;
             //口碑
             case "mouth":
                 doUpdataTextColor("orderByTwo", "mouth", activitySelectCompanyBinding.include.tvMouth, activitySelectCompanyBinding.include.ivMouth);
@@ -189,6 +199,7 @@ public class SelectCompanyActivity extends BaseActivity implements SwipeRefreshL
      */
     private void doUpdataTextColor(String orderByType, String clickType, TextView textView, ImageView imageView) {
         mOrderByType = orderByType;
+        page = 1;
         // 判断文字
         for (TextView mTextViews : mScreenTitleList) {
             // 变黄
@@ -201,27 +212,34 @@ public class SelectCompanyActivity extends BaseActivity implements SwipeRefreshL
         }
         //判断图片
         for (ImageView mImageViews : mScreenIconList) {
-            if (mImageViews.equals(imageView)) {
-                if (clickType.equals(mClickType)) {
-                    if (mScreenIconUp) {
+            // 热门 desc
+            if (imageView.equals(activitySelectCompanyBinding.include.ivHot)) {
+                initData(mOrderByType, "desc");
+                mImageViews.setImageResource(R.mipmap.ic_client_screen_none);
+            } else {
+                if (mImageViews.equals(imageView)) {
+                    if (clickType.equals(mClickType)) {
+                        if (mScreenIconUp) {
+                            mScreenIconUp = false;
+                            mOrderByValue = "asc";
+                            mImageViews.setImageResource(R.mipmap.ic_client_screen_up);
+                        } else {
+                            mScreenIconUp = true;
+                            mOrderByValue = "desc";
+                            mImageViews.setImageResource(R.mipmap.ic_client_screen_down);
+                        }
+                    } else {
+                        mClickType = clickType;
                         mScreenIconUp = false;
                         mOrderByValue = "asc";
                         mImageViews.setImageResource(R.mipmap.ic_client_screen_up);
-                    } else {
-                        mScreenIconUp = true;
-                        mOrderByValue = "desc";
-                        mImageViews.setImageResource(R.mipmap.ic_client_screen_down);
                     }
+                    initData(mOrderByType, mOrderByValue);
                 } else {
-                    mClickType = clickType;
-                    mScreenIconUp = false;
-                    mOrderByValue = "asc";
-                    mImageViews.setImageResource(R.mipmap.ic_client_screen_up);
+                    mImageViews.setImageResource(R.mipmap.ic_client_screen_none);
                 }
-                initData(mOrderByType, mOrderByValue);
-            } else {
-                mImageViews.setImageResource(R.mipmap.ic_client_screen_none);
             }
+
         }
 
     }
