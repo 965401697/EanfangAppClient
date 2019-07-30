@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.LocationManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -28,8 +31,6 @@ import com.amap.api.services.weather.LocalWeatherLive;
 import com.amap.api.services.weather.LocalWeatherLiveResult;
 import com.amap.api.services.weather.WeatherSearch;
 import com.amap.api.services.weather.WeatherSearchQuery;
-import com.eanfang.util.BitmapUtil;
-import com.eanfang.util.ImageUtil;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.V;
 import com.eanfang.base.kit.cache.CacheKit;
@@ -39,7 +40,10 @@ import com.eanfang.biz.model.CameraBean;
 import com.eanfang.biz.model.SelectAddressItem;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.voice.RecognitionManager;
+import com.eanfang.util.BitmapUtil;
 import com.eanfang.util.ConnectivityChangeUtil;
+import com.eanfang.util.GlideUtil;
+import com.eanfang.util.ImageUtil;
 import com.eanfang.util.StringUtils;
 import com.luck.picture.lib.entity.LocalMedia;
 
@@ -104,6 +108,8 @@ public class CameraActivity extends BaseClienActivity implements AMapLocationLis
     WeatherSearchQuery query;
     WeatherSearch search;
     LocalWeatherLive weatherlive;
+    @BindView(R.id.start_take_photo)
+    ImageView startTakePhoto;
     private String time, weather, city_address;
     private String project_name;
     private String region_name;
@@ -203,6 +209,9 @@ public class CameraActivity extends BaseClienActivity implements AMapLocationLis
             tvLocationAddress.setVisibility(View.GONE);
         }
 
+        startTakePhoto.setOnClickListener((v) -> {
+            startTakePhoto();
+        });
     }
 
     /**
@@ -304,18 +313,18 @@ public class CameraActivity extends BaseClienActivity implements AMapLocationLis
     /**
      * 开始拍照
      */
-    public void startTakePhoto(View v) {
+    public void startTakePhoto() {
+        if (!checkCameraData()) {
+            return;
+        }
         RxPerm.get(this).cameraPerm((isSuccess) -> {
-            if (!checkCameraData()) {
-                return;
-            }
             setData();
             imageV();
         });
     }
 
     private void imageV() {
-        SDKManager.getPicture().create(this).takeCamera(iPictureCallBack);
+        SDKManager.getPicture().create(CameraActivity.this).takeCamera(iPictureCallBack);
     }
 
     IPictureCallBack iPictureCallBack = new IPictureCallBack() {
@@ -324,15 +333,25 @@ public class CameraActivity extends BaseClienActivity implements AMapLocationLis
             //往图片绘制文字
             time = DateUtil.date().toString();
             String path = list.get(0).getPath();
-            Bitmap waterBitmap = BitmapUtil.getBitmap(path);
-            Bitmap watermarkBitmap = ImageUtil.createWaterMaskCenter(waterBitmap, waterBitmap);
-            if (ConnectivityChangeUtil.isNetConnected(CameraActivity.this) == true) {
-                String netAddress = tvLocationAddress.getText().toString();
-                drawBitmap(path, watermarkBitmap, netAddress, time);
-            } else {
-                String address = etAddress.getText().toString().trim();
-                drawBitmap(path, watermarkBitmap, address, time);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (!Settings.System.canWrite(CameraActivity.this)) {
+                    Intent intent = new Intent(android.provider.Settings.ACTION_MANAGE_WRITE_SETTINGS);
+                    intent.setData(Uri.parse("package:" + CameraActivity.this.getPackageName()));
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    CameraActivity.this.startActivity(intent);
+                } else {
+                    Bitmap waterBitmap = BitmapUtil.getBitmap(path);
+                    Bitmap watermarkBitmap = ImageUtil.createWaterMaskCenter(waterBitmap, waterBitmap);
+                    if (ConnectivityChangeUtil.isNetConnected(CameraActivity.this) == true) {
+                        String netAddress = tvLocationAddress.getText().toString();
+                        drawBitmap(path, watermarkBitmap, netAddress, time);
+                    } else {
+                        String address = etAddress.getText().toString().trim();
+                        drawBitmap(path, watermarkBitmap, address, time);
+                    }
+                }
             }
+
         }
     };
 
@@ -425,9 +444,9 @@ public class CameraActivity extends BaseClienActivity implements AMapLocationLis
         String mContent = "时间：" + time + "\n" + "天气：" + weather + "\n" + "创建者:" +
                 creatUser + "\n" + "类型：" + project_type + "\n" + "名称：" + project_name + "\n" + "部位/区域：" + region_name + "\n" + "内容：" + project_content + "\n" +
                 "地址：" + lAddress;
-        Bitmap textBitmap = ImageUtil.drawTextToRightBottom(this, watermarkBitmap, mContent, 40, color, 5, 500);
-        showTakePhotoImg.setImageBitmap(textBitmap);
+        Bitmap textBitmap = ImageUtil.drawTextToRightBottom(this, watermarkBitmap, mContent, 60, color, 5, 700);
         flCamera.setVisibility(View.VISIBLE);
+        GlideUtil.intoImageView(CameraActivity.this, textBitmap, showTakePhotoImg);
         try {
             //保存图片
             BitmapUtil.saveImage(textBitmap, path);
@@ -484,6 +503,7 @@ public class CameraActivity extends BaseClienActivity implements AMapLocationLis
                                 + weatherlive.getTemperature() + "°"
                                 + weatherlive.getWindDirection() + "风 "
                                 + weatherlive.getWindPower() + "级";
+                        locationClient.stopLocation();
                     }
                 }
             }

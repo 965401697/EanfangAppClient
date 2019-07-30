@@ -229,7 +229,7 @@ public class HomeFragment extends BaseFragment {
 
         fragments.clear();
         fragments.add(HomeCompanyFragment.getInstance(0));
-        fragments.add(HomeCompanyFragment.getInstance(1));
+        fragments.add(HomeWorkerFragment.getInstance(1));
 
         mAdapter = new MyPagerAdapter(titles, fragments);
         vpDataStatis.setAdapter(mAdapter);

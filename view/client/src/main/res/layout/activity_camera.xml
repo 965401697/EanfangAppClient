@@ -30,7 +30,7 @@
             android:id="@+id/showTakePhotoImg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center" />
+            android:scaleType="fitCenter"  />
     </LinearLayout>
 
     <include layout="@layout/header_eanfang" />
@@ -52,8 +52,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_40"
-                android:layout_marginRight="@dimen/dimen_40"
                 android:layout_marginTop="@dimen/dimen_32"
+                android:layout_marginRight="@dimen/dimen_40"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -103,8 +103,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_40"
-                android:layout_marginRight="@dimen/dimen_40"
                 android:layout_marginTop="@dimen/dimen_32"
+                android:layout_marginRight="@dimen/dimen_40"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -153,8 +153,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_40"
-                android:layout_marginRight="@dimen/dimen_40"
                 android:layout_marginTop="@dimen/dimen_32"
+                android:layout_marginRight="@dimen/dimen_40"
                 android:background="@drawable/bg_ll_selctor"
                 android:orientation="horizontal">
 
@@ -182,8 +182,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_40"
-                android:layout_marginRight="@dimen/dimen_40"
                 android:layout_marginTop="@dimen/dimen_32"
+                android:layout_marginRight="@dimen/dimen_40"
                 android:layout_weight="1"
                 android:background="@drawable/bg_camera_input_back"
                 android:hint="请输入项目内容(30字以内)"
@@ -197,8 +197,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_40"
-                android:layout_marginRight="@dimen/dimen_40"
                 android:layout_marginTop="@dimen/dimen_32"
+                android:layout_marginRight="@dimen/dimen_40"
                 android:background="@drawable/bg_ll_selctor"
                 android:orientation="horizontal">
 
@@ -221,8 +221,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:drawablePadding="@dimen/dimen_14"
                     android:drawableRight="@mipmap/ic_camera_select_otheraddress"
+                    android:drawablePadding="@dimen/dimen_14"
                     android:gravity="right|center_vertical"
                     android:onClick="selectOtherAddress"
                     android:text="选择其他地址"
@@ -236,8 +236,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_40"
-                android:layout_marginRight="@dimen/dimen_40"
                 android:layout_marginTop="@dimen/dimen_32"
+                android:layout_marginRight="@dimen/dimen_40"
                 android:background="@drawable/bg_camera_input_back"
                 android:drawableLeft="@mipmap/ic_camera_location"
                 android:drawablePadding="@dimen/dimen_20"
@@ -250,8 +250,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_40"
-                android:layout_marginRight="@dimen/dimen_40"
                 android:layout_marginTop="@dimen/dimen_32"
+                android:layout_marginRight="@dimen/dimen_40"
                 android:background="@drawable/bg_camera_input_back"
                 android:hint="请手动输入地址"
                 android:maxLength="30"
@@ -267,8 +267,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_40"
-                android:layout_marginRight="@dimen/dimen_40"
                 android:layout_marginTop="@dimen/dimen_32"
+                android:layout_marginRight="@dimen/dimen_40"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -329,8 +329,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_40"
-                android:layout_marginRight="@dimen/dimen_40"
                 android:layout_marginTop="@dimen/dimen_32"
+                android:layout_marginRight="@dimen/dimen_40"
                 android:background="@drawable/bg_ll_selctor"
                 android:orientation="vertical">
 
@@ -442,7 +442,6 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
-                android:onClick="startTakePhoto"
                 android:src="@mipmap/ic_client_camera" />
 
         </LinearLayout>

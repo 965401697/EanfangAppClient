@@ -2,10 +2,9 @@ package com.eanfang.base.kit.picture;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Environment;
+import android.os.Build;
 
 import androidx.fragment.app.Fragment;
-
 
 import com.eanfang.base.kit.R;
 import com.luck.picture.lib.PictureSelectionModel;
@@ -28,7 +27,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class PictureSelect {
-
+    /**
+     * 图片存储目录
+     */
+    private String BASE_DCIM = "";
     /**
      * 全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
      */
@@ -206,6 +208,11 @@ public class PictureSelect {
     }
 
     private void imageChoose() {
+        if (Build.BRAND.equals("Xiaomi")) {
+            BASE_DCIM = "/DCIM/Camera/";
+        } else {  // Meizu 、Oppo
+            BASE_DCIM = "/DCIM/";
+        }
         PictureSelectionModel pictureSelectionModel;
         if (!openCamera) {
             pictureSelectionModel = pictureSelector.openGallery(chooseMode);
@@ -222,9 +229,9 @@ public class PictureSelect {
                 .previewImage(preview_img)
                 .isCamera(isCamera)
                 .imageFormat(imageFormat)
-                .enableCrop(crop)
                 .compress(compress)
-                .setOutputCameraPath(Environment.getExternalStorageDirectory() + "/eanfang/img/")
+                .enableCrop(crop)
+                .setOutputCameraPath(BASE_DCIM)
                 .synOrAsy(synOrAsy)
                 .glideOverride(widch, height)
                 .withAspectRatio(aspect_ratio_x, aspect_ratio_y)

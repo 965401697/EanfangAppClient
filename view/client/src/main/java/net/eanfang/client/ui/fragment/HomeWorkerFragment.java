@@ -1,5 +1,6 @@
 package net.eanfang.client.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
@@ -7,7 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.biz.model.CompanyBean;
+import com.eanfang.biz.model.HomeWorkerBean;
 import com.eanfang.biz.model.security.HomeCompanyBean;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
@@ -19,7 +20,8 @@ import com.eanfang.util.LocationUtil;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.MainActivity;
-import net.eanfang.client.ui.activity.worksapce.SelectCompanyActivity;
+import net.eanfang.client.ui.activity.worksapce.SelectWorkerActivity;
+import net.eanfang.client.ui.activity.worksapce.WorkerDetailActivity;
 import net.eanfang.client.ui.activity.worksapce.online.DividerItemDecoration;
 import net.eanfang.client.ui.adapter.FragmentHomeCompanyAdapter;
 
@@ -31,9 +33,9 @@ import cn.hutool.core.thread.ThreadUtil;
 /**
  * @author liangkailun
  * Date ：2019-06-18
- * Describe :安防公司、找技师页面
+ * Describe :找技师页面
  */
-public class HomeCompanyFragment extends BaseFragment {
+public class HomeWorkerFragment extends BaseFragment {
     private static final String PAGE_TYPE = "pageType";
     @BindView(R.id.rec_home_company)
     RecyclerView mRecHomeCompany;
@@ -48,8 +50,8 @@ public class HomeCompanyFragment extends BaseFragment {
     private int mCityId = 102;
     private int mProvinceId;
 
-    public static HomeCompanyFragment getInstance(int pageType) {
-        HomeCompanyFragment homeCompanyFragment = new HomeCompanyFragment();
+    public static HomeWorkerFragment getInstance(int pageType) {
+        HomeWorkerFragment homeCompanyFragment = new HomeWorkerFragment();
         Bundle arguments = new Bundle();
         arguments.putInt(PAGE_TYPE, pageType);
         homeCompanyFragment.setArguments(arguments);
@@ -68,6 +70,7 @@ public class HomeCompanyFragment extends BaseFragment {
         }
     }
 
+
     @Override
     protected void onLazyLoad() {
         getLocation();
@@ -81,7 +84,15 @@ public class HomeCompanyFragment extends BaseFragment {
      * 请求数据
      */
     private void initListData(int areaId) {
-        EanfangHttp.post(NewApiService.HOME_COMPANY_LIST).params("page", "1").params("size", "2").params("areaId", areaId).execute(new EanfangCallback<CompanyBean>(getActivity(), true, CompanyBean.class, bean -> {
+        adapter.setOnItemClickListener((adapter, view, position) -> {
+            HomeCompanyBean homeCompanyBean = (HomeCompanyBean) adapter.getData().get(position);
+            Intent intent = new Intent(getActivity(), WorkerDetailActivity.class);
+            intent.putExtra("companyUserId", homeCompanyBean.getCompanyUserId());
+            intent.putExtra("workerId", String.valueOf(homeCompanyBean.getId()));
+            intent.putExtra("doorFee", 0);
+            startActivity(intent);
+        });
+        EanfangHttp.post(NewApiService.HOME_WORKER_LIST).params("page", "1").params("size", "2").params("areaId", areaId).execute(new EanfangCallback<HomeWorkerBean>(getActivity(), true, HomeWorkerBean.class, bean -> {
             boolean toRequestNew = (bean.getList() == null || bean.getList().size() == 0);
             if (toRequestNew) {
                 initListData(mProvinceId);
@@ -89,18 +100,8 @@ public class HomeCompanyFragment extends BaseFragment {
             }
             adapter.getData().clear();
             ArrayList<HomeCompanyBean> homeCompanyBeans = new ArrayList<>();
-            for (CompanyBean.ListBean companyBean : bean.getList()) {
-                HomeCompanyBean homeCompanyBean = new HomeCompanyBean();
-                homeCompanyBean.setAreaCode(companyBean.getCompanyEntity().getAreaCode());
-                homeCompanyBean.setDesignCount(companyBean.getDesignCount());
-                homeCompanyBean.setGoodRate(companyBean.getGoodRate());
-                homeCompanyBean.setInstallCount(companyBean.getInstallCount());
-                homeCompanyBean.setLogoPic(companyBean.getCompanyEntity().getLogoPic());
-                homeCompanyBean.setName(companyBean.getCompanyEntity().getName());
-                homeCompanyBean.setRepairCount(companyBean.getRepairCount());
-                homeCompanyBean.setStatus(companyBean.getCompanyEntity().getStatus());
-                homeCompanyBean.setPageType(0);
-                homeCompanyBeans.add(homeCompanyBean);
+            for (HomeWorkerBean.ListBean companyBean : bean.getList()) {
+                homeCompanyBeans.add(companyBean.getHomeCompanyBean());
             }
             adapter.setNewData(homeCompanyBeans);
         }));
@@ -108,13 +109,10 @@ public class HomeCompanyFragment extends BaseFragment {
 
     @Override
     protected void initView() {
-
         mRecHomeCompany.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecHomeCompany.addItemDecoration(new DividerItemDecoration(getContext()));
-
         adapter = new FragmentHomeCompanyAdapter();
         adapter.bindToRecyclerView(mRecHomeCompany);
-
     }
 
     @Override
@@ -125,8 +123,8 @@ public class HomeCompanyFragment extends BaseFragment {
          */
         mTvHomeComanyMore.setOnClickListener((v) -> {
             Bundle bundle = new Bundle();
-            bundle.putInt("areaId", mCityId);
-            JumpItent.jump(getActivity(), SelectCompanyActivity.class, bundle);
+            bundle.putBoolean("isHome", true);
+            JumpItent.jump(getActivity(), SelectWorkerActivity.class, bundle);
         });
     }
 

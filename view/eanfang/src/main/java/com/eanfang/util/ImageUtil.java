@@ -195,17 +195,18 @@ public class ImageUtil {
     private static Bitmap drawTextToBitmap(Context context, Bitmap bitmap, String text,
                                            TextPaint paint, Rect bounds, int paddingLeft, int paddingTop) {
         Bitmap.Config bitmapConfig = bitmap.getConfig();
-
-        paint.setDither(true); // 获取跟清晰的图像采样
-        paint.setFilterBitmap(true);// 过滤一些
+        // 获取跟清晰的图像采样
+        paint.setDither(true);
+        // 过滤一些
+        paint.setFilterBitmap(true);
         if (bitmapConfig == null) {
             bitmapConfig = Bitmap.Config.ARGB_8888;
         }
-        bitmap = bitmap.copy(bitmapConfig, true);
+        Bitmap mBitmap = bitmap.copy(bitmapConfig, true);
 
 
-        Canvas canvas = new Canvas(bitmap);
-        StaticLayout staticLayout2 = new StaticLayout(text, paint, bitmap.getWidth(),
+        Canvas canvas = new Canvas(mBitmap);
+        StaticLayout staticLayout2 = new StaticLayout(text, paint, mBitmap.getWidth(),
                 Layout.Alignment.ALIGN_NORMAL, 1.0F, 0.0F, true);
 
         canvas.translate(0, paddingTop);
@@ -213,7 +214,7 @@ public class ImageUtil {
         canvas.save();
         canvas.restore();
 //        canvas.drawText(text, paddingLeft, paddingTop, paint);
-        return bitmap;
+        return mBitmap;
     }
 
     /**

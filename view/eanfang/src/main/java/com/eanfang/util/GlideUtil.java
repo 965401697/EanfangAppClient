@@ -10,8 +10,6 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.eanfang.R;
 
-import java.io.File;
-
 public class GlideUtil {
 
     public static void intoImageView(Context context, Uri uri, ImageView imageView) {
@@ -51,7 +49,8 @@ public class GlideUtil {
     private static RequestOptions getOptions() {
         RequestOptions options = new RequestOptions()
                 .centerCrop()
-                .placeholder(R.mipmap.ic_nodata)
+                .fitCenter()
+                .dontAnimate()
                 .error(R.mipmap.ic_nodata);
         return options;
     }
