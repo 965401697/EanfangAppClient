@@ -50,7 +50,7 @@ public class RxPerm {
      * @return Observable<Permission>
      */
     public Observable<Permission> locationPerm() {
-        return rxPermissions.requestEach(
+        return rxPermissions.requestEachCombined(
                 Manifest.permission.ACCESS_COARSE_LOCATION,
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.READ_PHONE_STATE
@@ -83,7 +83,7 @@ public class RxPerm {
      * @return Observable<Permission>
      */
     public Observable<Permission> cameraPerm() {
-        return rxPermissions.requestEach(
+        return rxPermissions.requestEachCombined(
                 Manifest.permission.CAMERA,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
         );
@@ -116,7 +116,7 @@ public class RxPerm {
      * @return Observable<Permission>
      */
     public Observable<Permission> voicePerm() {
-        return rxPermissions.requestEach(
+        return rxPermissions.requestEachCombined(
                 Manifest.permission.RECORD_AUDIO
         );
     }
@@ -147,7 +147,7 @@ public class RxPerm {
      * @return Observable<Permission>
      */
     public Observable<Permission> storagePerm() {
-        return rxPermissions.requestEach(
+        return rxPermissions.requestEachCombined(
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
         );
@@ -179,7 +179,7 @@ public class RxPerm {
      * @return Observable<Permission>
      */
     public Observable<Permission> contactsPerm() {
-        return rxPermissions.requestEach(
+        return rxPermissions.requestEachCombined(
                 Manifest.permission.READ_CONTACTS
         );
     }
