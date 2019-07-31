@@ -22,15 +22,14 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.TemplateBean;
+import com.eanfang.biz.model.bean.TemplateBean;
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.DateKit;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.StringUtils;
-import com.yaf.base.entity.WorkInspectDetailEntity;
-import com.yaf.base.entity.WorkInspectEntity;
+import com.eanfang.biz.model.entity.WorkInspectDetailEntity;
+import com.eanfang.biz.model.entity.WorkInspectEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
@@ -46,7 +45,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author guanluocang
@@ -220,7 +219,7 @@ public class DealWithFirstActivity extends BaseActivity {
                                 tvRemark.setText(bean.getWorkInpectDetailDispose().getRemarkInfo());
                                 // }
                                 //协同人员
-                                if (!StringUtils.isEmpty(bean.getWorkInpectDetailDispose().getCollaborativeUser())) {
+                                if (!StrUtil.isEmpty(bean.getWorkInpectDetailDispose().getCollaborativeUser())) {
                                     setTeam(bean.getWorkInpectDetailDispose().getCollaborativeUser());
                                     recyclerView.setVisibility(View.VISIBLE);
                                 } else {
@@ -228,7 +227,7 @@ public class DealWithFirstActivity extends BaseActivity {
                                     recyclerView.setVisibility(View.GONE);
                                 }
                                 // mp4 地址
-                                if (!StringUtils.isEmpty(bean.getWorkInpectDetailDispose().getMp4Path())) {
+                                if (!StrUtil.isEmpty(bean.getWorkInpectDetailDispose().getMp4Path())) {
                                     setMp4(bean.getWorkInpectDetailDispose().getMp4Path());
                                     rlThumbnail.setVisibility(View.VISIBLE);
                                 } else {
@@ -236,7 +235,7 @@ public class DealWithFirstActivity extends BaseActivity {
                                     rlThumbnail.setVisibility(View.GONE);
                                 }
                                 // 附件
-                                if (!StringUtils.isEmpty(bean.getWorkInpectDetailDispose().getPictures())) {
+                                if (!StrUtil.isEmpty(bean.getWorkInpectDetailDispose().getPictures())) {
                                     setPhoto(bean.getWorkInpectDetailDispose().getPictures());
                                 } else {
                                     tvAdjunct.setText("照片：无");

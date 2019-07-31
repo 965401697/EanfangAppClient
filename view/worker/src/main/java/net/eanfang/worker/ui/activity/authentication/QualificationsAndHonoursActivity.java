@@ -13,13 +13,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.AptitudeCertificateBean;
-import com.eanfang.biz.model.HonorCerticificateListBean;
+import com.eanfang.biz.model.bean.AptitudeCertificateBean;
+import com.eanfang.biz.model.bean.HonorCerticificateListBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.QueryEntry;
-import com.yaf.base.entity.HonorCertificateEntity;
+import com.eanfang.biz.model.QueryEntry;
+import com.eanfang.biz.model.entity.HonorCertificateEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.my.certification.AddCertificationActivity;

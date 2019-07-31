@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.SgZzNlBean;
+import com.eanfang.biz.model.bean.SgZzNlBean;
 import com.eanfang.ui.base.BaseActivity;
 
 import net.eanfang.worker.R;

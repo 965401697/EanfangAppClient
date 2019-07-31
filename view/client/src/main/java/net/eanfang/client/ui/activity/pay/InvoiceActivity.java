@@ -9,9 +9,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.eanfang.util.StringUtils;
-import com.yaf.base.entity.InvoiceEntity;
-import com.yaf.base.entity.ReceiveAddressEntity;
+import com.eanfang.biz.model.entity.InvoiceEntity;
+import com.eanfang.biz.model.entity.ReceiveAddressEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
@@ -19,6 +18,7 @@ import net.eanfang.client.ui.base.BaseClientActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.util.StrUtil;
 
 public class InvoiceActivity extends BaseClientActivity {
 
@@ -194,11 +194,11 @@ public class InvoiceActivity extends BaseClientActivity {
             return false;
         }
 
-        if (StringUtils.isEmpty(etCompany.getText().toString().trim())) {
+        if (StrUtil.isEmpty(etCompany.getText().toString().trim())) {
             showToast("请填写公司名称");
             return false;
         }
-        if (StringUtils.isEmpty(etNumber.getText().toString().trim())) {
+        if (StrUtil.isEmpty(etNumber.getText().toString().trim())) {
             showToast("请填写税号");
             return false;
         }
@@ -206,19 +206,19 @@ public class InvoiceActivity extends BaseClientActivity {
     }
 
     private boolean checkProInfo() {
-        if (StringUtils.isEmpty(etAddress.getText().toString().trim())) {
+        if (StrUtil.isEmpty(etAddress.getText().toString().trim())) {
             showToast("请填写单位地址");
             return false;
         }
-        if (StringUtils.isEmpty(etPhone.getText().toString().trim())) {
+        if (StrUtil.isEmpty(etPhone.getText().toString().trim())) {
             showToast("请填写单位座机");
             return false;
         }
-        if (StringUtils.isEmpty(etBank.getText().toString().trim())) {
+        if (StrUtil.isEmpty(etBank.getText().toString().trim())) {
             showToast("请填写开户行");
             return false;
         }
-        if (StringUtils.isEmpty(etBankNumber.getText().toString().trim())) {
+        if (StrUtil.isEmpty(etBankNumber.getText().toString().trim())) {
             showToast("请填写银行账号");
             return false;
         }

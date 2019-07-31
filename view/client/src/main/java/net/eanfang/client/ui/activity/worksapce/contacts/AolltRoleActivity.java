@@ -9,7 +9,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.RoleBean;
+import com.eanfang.biz.model.bean.RoleBean;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.client.R;

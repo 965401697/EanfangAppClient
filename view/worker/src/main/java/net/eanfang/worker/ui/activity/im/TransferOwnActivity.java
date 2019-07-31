@@ -8,9 +8,9 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.biz.model.entity.SysGroupUserEntity;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.GroupDetailBean;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.worker.R;
@@ -68,9 +68,9 @@ public class TransferOwnActivity extends BaseWorkerActivity {
         //查找群内成员
         EanfangHttp.post(UserApi.POST_GROUP_NUM)
                 .params("groupId", mGroupId)
-                .execute(new EanfangCallback<GroupDetailBean.ListBean>(this, true, GroupDetailBean.ListBean.class, true, (list) -> {
+                .execute(new EanfangCallback<SysGroupUserEntity>(this, true, SysGroupUserEntity.class, true, (list) -> {
                     if (list.size() > 0) {
-                        ArrayList<GroupDetailBean.ListBean> friendListBeanArrayList = new ArrayList<>();
+                        ArrayList<SysGroupUserEntity> friendListBeanArrayList = new ArrayList<>();
                         for (int i = 0; i < list.size(); i++) {
 
 
@@ -87,11 +87,11 @@ public class TransferOwnActivity extends BaseWorkerActivity {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, final View view, int position) {
                 if (view.getId() == R.id.rb_checked) {
-                    GroupDetailBean.ListBean bean = ( GroupDetailBean.ListBean) adapter.getData().get(position);
+                    SysGroupUserEntity bean = ( SysGroupUserEntity) adapter.getData().get(position);
 
                     if (mOldPosition == -1) {
                         mOldPosition = position;
-                        ownId = bean.getAccId();
+                        ownId = bean.getAccId().toString();
                         bean.setFlag(1);
                         return;
                     }
@@ -101,9 +101,9 @@ public class TransferOwnActivity extends BaseWorkerActivity {
                         ownId = "";
                         bean.setFlag(0);
                     } else {
-                        ((GroupDetailBean.ListBean) adapter.getData().get(mOldPosition)).setFlag(0);
+                        ((SysGroupUserEntity) adapter.getData().get(mOldPosition)).setFlag(0);
                         mOldPosition = position;
-                        ownId = bean.getAccId();
+                        ownId = bean.getAccId().toString();
                         bean.setFlag(1);
                     }
                     adapter.notifyDataSetChanged();

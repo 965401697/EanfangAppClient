@@ -63,29 +63,6 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
 
-        <activity
-            android:name="com.photopicker.com.activity.BGAPhotoPreviewActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:theme="@style/BGAPPTheme"
-            android:windowSoftInputMode="stateAlwaysHidden" />
-
-        <!-- 图片选择界面 -->
-        <activity
-            android:name="com.photopicker.com.activity.BGAPhotoPickerActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:theme="@style/BGAPPTheme"
-            android:windowSoftInputMode="stateAlwaysHidden" />
-
-        <!-- 图片选择预览界面 -->
-        <activity
-            android:name="com.photopicker.com.activity.BGAPhotoPickerPreviewActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:theme="@style/BGAPPTheme"
-            android:windowSoftInputMode="stateAlwaysHidden" />
-
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.fileprovider"

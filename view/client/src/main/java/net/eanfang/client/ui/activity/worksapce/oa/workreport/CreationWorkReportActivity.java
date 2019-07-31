@@ -23,13 +23,14 @@ import com.alibaba.fastjson.JSON;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.kit.loading.LoadKit;
 import com.eanfang.base.kit.rx.RxPerm;
-import com.eanfang.biz.model.GroupDetailBean;
-import com.eanfang.biz.model.Message;
-import com.eanfang.biz.model.TemplateBean;
-import com.eanfang.biz.model.WorkAddReportBean;
-import com.eanfang.biz.model.WorkReportInfoBean;
-import com.eanfang.biz.model.device.User;
+import com.eanfang.biz.model.bean.GroupDetailBean;
+import com.eanfang.biz.model.bean.Message;
+import com.eanfang.biz.model.bean.TemplateBean;
+import com.eanfang.biz.model.bean.WorkAddReportBean;
+import com.eanfang.biz.model.bean.WorkReportInfoBean;
+import com.eanfang.biz.model.bean.device.User;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
@@ -38,16 +39,11 @@ import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.takevideo.TakeVdideoMode;
 import com.eanfang.takevideo.TakeVideoActivity;
 import com.eanfang.ui.base.voice.RecognitionManager;
-import com.eanfang.util.DialogUtil;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.PickerSelectUtil;
-import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
-import com.photopicker.com.activity.BGAPhotoPickerActivity;
-import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
@@ -70,8 +66,10 @@ import java.util.Set;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static android.provider.MediaStore.Video.Thumbnails.MINI_KIND;
+import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
+import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerPreviewActivity;
+import cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * 创建工作汇报
@@ -558,23 +556,23 @@ public class CreationWorkReportActivity extends BaseClientActivity {
 
         switch (requestCode) {
             case REQUEST_CODE_CHOOSE_PHOTO_1:
-                snplPhotosWork.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                snplPhotosWork.addMoreData(BGAPhotoPickerActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_CHOOSE_PHOTO_2:
-                snplPhotosQuestion.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                snplPhotosQuestion.addMoreData(BGAPhotoPickerActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_CHOOSE_PHOTO_3:
-                snplPhotosPlan.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                snplPhotosPlan.addMoreData(BGAPhotoPickerActivity.getSelectedPhotos(data));
                 break;
 
             case REQUEST_CODE_PHOTO_PREVIEW_1:
-                snplPhotosWork.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                snplPhotosWork.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_PHOTO_PREVIEW_2:
-                snplPhotosQuestion.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                snplPhotosQuestion.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_PHOTO_PREVIEW_3:
-                snplPhotosPlan.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                snplPhotosPlan.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
                 break;
             default:
                 break;
@@ -1007,7 +1005,7 @@ public class CreationWorkReportActivity extends BaseClientActivity {
                         b.putString("shareType", "3");
                         b.putString("creatReleaseTime", bean.getCreateTime());
 
-                        new SendContactUtils(b, handler, groupList, DialogUtil.createLoadingDialog(CreationWorkReportActivity.this), "工作汇报").send();
+                        new SendContactUtils(b, handler, groupList, LoadKit.dialog(CreationWorkReportActivity.this), "工作汇报").send();
 
 
                     });
@@ -1047,7 +1045,7 @@ public class CreationWorkReportActivity extends BaseClientActivity {
             this.mPlanUploadKey = key;
             this.mPlanVieoPath = path;
         }
-        if (!StringUtils.isEmpty(path)) {
+        if (!StrUtil.isEmpty(path)) {
             if (view.getVisibility() == View.INVISIBLE) {
                 view.setVisibility(View.VISIBLE);
             }

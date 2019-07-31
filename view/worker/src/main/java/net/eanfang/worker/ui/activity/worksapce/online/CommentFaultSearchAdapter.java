@@ -1,17 +1,14 @@
 package net.eanfang.worker.ui.activity.worksapce.online;
 
 import android.net.Uri;
-import android.text.TextUtils;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.util.GlideUtil;
-import com.yaf.base.entity.AskQuestionsListBean;
+import com.eanfang.biz.model.bean.AskQuestionsListBean;
 
 import net.eanfang.worker.R;
-
-import java.util.List;
 
 /**
  * Created by Our on 2019/1/26.

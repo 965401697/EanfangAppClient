@@ -8,10 +8,13 @@ import android.content.Context;
 import android.os.Environment;
 
 import com.eanfang.base.BaseApplication;
+import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.config.EanfangConst;
 
 import java.io.File;
 import java.math.BigDecimal;
+
+import cn.hutool.core.io.FileUtil;
 
 /**
  * 清除缓存
@@ -22,7 +25,7 @@ public class CleanMessageUtil {
      * @param context
      * @return
      */
-    public static String getTotalCacheSize(Context context) throws Exception {
+    public static String getTotalCacheSize(Context context) {
         long cacheSize = getFolderSize(context.getCacheDir());
         if (Environment.getExternalStorageState().equals(
                 Environment.MEDIA_MOUNTED)) {
@@ -39,10 +42,10 @@ public class CleanMessageUtil {
         if (Environment.getExternalStorageState().equals(
                 Environment.MEDIA_MOUNTED)) {
             deleteDir(context.getExternalCacheDir());
-//            deleteDir(context.getExternalFilesDir(Environment.getDataDirectory().getAbsolutePath()));
+            deleteDir(context.getExternalFilesDir(Environment.getDataDirectory().getAbsolutePath()));
         }
         //删除融云 token
-        BaseApplication.get().remove(EanfangConst.RONG_YUN_TOKEN);
+        CacheKit.get().remove(EanfangConst.RONG_YUN_TOKEN);
     }
 
     private static boolean deleteDir(File dir) {
@@ -58,7 +61,6 @@ public class CleanMessageUtil {
                     }
                 }
             }
-
         }
         if (dir == null) {
             return true;

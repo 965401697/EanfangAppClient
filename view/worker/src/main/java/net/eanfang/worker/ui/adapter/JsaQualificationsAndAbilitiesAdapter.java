@@ -10,10 +10,11 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.base.kit.V;
-import com.picker.common.util.DateUtils;
-import com.yaf.base.entity.QualificationCertificateEntity;
+import com.eanfang.biz.model.entity.QualificationCertificateEntity;
 
 import net.eanfang.worker.R;
+
+import cn.qqtheme.framework.util.DateUtils;
 
 /**
  * @author guanluocang

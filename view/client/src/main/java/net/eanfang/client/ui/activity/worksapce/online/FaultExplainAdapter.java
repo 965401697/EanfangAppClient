@@ -8,7 +8,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.base.kit.V;
 import com.eanfang.util.GlideUtil;
-import com.yaf.base.entity.AnswerListWithQuestionBean;
+import com.eanfang.biz.model.bean.AnswerListWithQuestionBean;
 
 import net.eanfang.client.R;
 

@@ -9,10 +9,10 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.security.SecurityCommentListBean;
+import com.eanfang.bean.security.SecurityCommentListBean;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.QueryEntry;
+import com.eanfang.biz.model.QueryEntry;
 
 import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.security.SecurityDetailActivity;

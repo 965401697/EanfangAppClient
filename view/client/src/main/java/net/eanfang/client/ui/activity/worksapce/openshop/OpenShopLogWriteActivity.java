@@ -15,16 +15,15 @@ import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.kit.loading.LoadKit;
+import com.eanfang.biz.model.bean.GroupDetailBean;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.GroupDetailBean;
-import com.eanfang.biz.model.TemplateBean;
+import com.eanfang.biz.model.bean.TemplateBean;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
-import com.eanfang.util.DialogUtil;
-import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
-import com.yaf.base.entity.OpenShopLogEntity;
+import com.eanfang.biz.model.entity.OpenShopLogEntity;
 import com.eanfang.biz.model.entity.UserEntity;
 
 import net.eanfang.client.R;
@@ -56,6 +55,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 
 public class OpenShopLogWriteActivity extends BaseClientActivity implements SelectTimeDialogFragment.SelectTimeListener {
 
@@ -420,7 +420,7 @@ public class OpenShopLogWriteActivity extends BaseClientActivity implements Sele
                     b.putString("shareType", "8");
 
 
-                    new SendContactUtils(b, handler, newGroupList, DialogUtil.createLoadingDialog(OpenShopLogWriteActivity.this), "开店日志").send();
+                    new SendContactUtils(b, handler, newGroupList, LoadKit.dialog(OpenShopLogWriteActivity.this), "开店日志").send();
 
                 }));
     }
@@ -565,7 +565,7 @@ public class OpenShopLogWriteActivity extends BaseClientActivity implements Sele
 
     @Override
     public void getData(String time) {
-        if (StringUtils.isEmpty(time) || " ".equals(time)) {
+        if (StrUtil.isEmpty(time) || " ".equals(time)) {
             currentTextView.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
         } else {
             currentTextView.setText(time);

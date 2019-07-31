@@ -13,10 +13,9 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
-import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.EvaluateWorkerBean;
+import com.eanfang.biz.model.bean.EvaluateWorkerBean;
 import com.eanfang.util.GlideUtil;
 
 import net.eanfang.client.R;

@@ -21,7 +21,7 @@
         android:padding="@dimen/dimen_40"
         android:textSize="@dimen/textSize_15" />
 
-    <com.photopicker.com.widget.BGASortableNinePhotoLayout
+    <cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout
         android:id="@+id/snpl_photos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

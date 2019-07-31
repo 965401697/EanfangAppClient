@@ -7,12 +7,11 @@
     android:gravity="center_vertical"
     android:orientation="horizontal"
     android:padding="@dimen/bga_pp_size_level2">
-    <!--cn.bingoogolapple.photopicker.widget.BGAImageView-->
-    <com.photopicker.com.widget.BGAImageView
+    <cn.bingoogolapple.photopicker.widget.BGAImageView
         android:id="@+id/iv_item_photo_folder_photo"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_marginRight="@dimen/bga_pp_size_level2"
+        android:layout_marginEnd="@dimen/bga_pp_size_level2"
         android:scaleType="centerCrop"
         android:src="@drawable/bga_pp_ic_holder_dark" />
 

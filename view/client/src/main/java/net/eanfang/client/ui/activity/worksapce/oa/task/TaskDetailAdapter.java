@@ -9,12 +9,11 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.eanfang.biz.model.TemplateBean;
-import com.eanfang.biz.model.WorkTaskInfoBean;
+import com.eanfang.biz.model.bean.TemplateBean;
+import com.eanfang.biz.model.bean.WorkTaskInfoBean;
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.maintenance.MaintenanceTeamAdapter;
@@ -25,6 +24,8 @@ import java.util.List;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import cn.hutool.core.util.StrUtil;
 
 /**
  * Created by O u r on 2018/10/19.
@@ -160,7 +161,7 @@ public class TaskDetailAdapter extends BaseMultiItemQuickAdapter<WorkTaskInfoBea
 
 
     private void initPic(BaseViewHolder helper, WorkTaskInfoBean.WorkTaskDetailsBean item) {
-        if (!StringUtils.isEmpty(item.getPictures())) {
+        if (!StrUtil.isEmpty(item.getPictures())) {
             String[] urls = item.getPictures().split(",");
             helper.setText(R.id.tv_adjunct, "照片：");
             helper.setVisible(R.id.ll_pic, true);

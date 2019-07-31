@@ -23,6 +23,7 @@ import net.eanfang.client.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author guanluocang
@@ -69,7 +70,7 @@ public class SetPasswordActivity extends BaseActivity {
     private boolean isCheckInfo() {
         mPassword = etPassword.getText().toString().trim();
         mConfirmPassword = etComfirmPassword.getText().toString().trim();
-        if (StringUtils.isEmpty(mPassword)) {
+        if (StrUtil.isEmpty(mPassword)) {
             showToast("请输入密码");
             return false;
         }
@@ -81,7 +82,7 @@ public class SetPasswordActivity extends BaseActivity {
             showToast("密码至少包含一个字母和数字");
             return false;
         }
-        if (StringUtils.isEmpty(mConfirmPassword)) {
+        if (StrUtil.isEmpty(mConfirmPassword)) {
             showToast("确认密码不能为空");
             return false;
         }

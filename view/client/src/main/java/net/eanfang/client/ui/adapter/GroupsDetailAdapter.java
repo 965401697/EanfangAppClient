@@ -10,7 +10,8 @@ import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.base.widget.customview.CircleImageView;
-import com.eanfang.biz.model.GroupDetailBean;
+import com.eanfang.biz.model.bean.GroupDetailBean;
+import com.eanfang.biz.model.entity.SysGroupUserEntity;
 import com.eanfang.util.GlideUtil;
 
 import net.eanfang.client.R;
@@ -22,11 +23,11 @@ import java.util.ArrayList;
  */
 public class GroupsDetailAdapter extends BaseAdapter {
 
-    private ArrayList<GroupDetailBean.ListBean> mList;
+    private ArrayList<SysGroupUserEntity> mList;
     private boolean mIsOwn;//是不是群主
     private Context mContext;
 
-    public GroupsDetailAdapter(Context context, ArrayList<GroupDetailBean.ListBean> list, boolean isOwn) {
+    public GroupsDetailAdapter(Context context, ArrayList<SysGroupUserEntity> list, boolean isOwn) {
 
         this.mList = list;
         this.mIsOwn = isOwn;

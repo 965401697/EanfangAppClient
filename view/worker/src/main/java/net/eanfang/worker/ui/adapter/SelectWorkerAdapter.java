@@ -7,13 +7,15 @@ import android.widget.ImageView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
+import com.eanfang.biz.model.entity.WorkerEntity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.StringUtils;
-import com.yaf.base.entity.WorkerEntity;
+
 import net.eanfang.worker.R;
 
 import java.util.List;
+
+import cn.hutool.core.util.StrUtil;
 
 import static com.eanfang.base.kit.V.v;
 
@@ -38,7 +40,7 @@ public class SelectWorkerAdapter extends BaseQuickAdapter<WorkerEntity, BaseView
     protected void convert(BaseViewHolder helper, WorkerEntity item) {
         // 头像
         ImageView iv_header = helper.getView(R.id.iv_header);
-        if (!StringUtils.isEmpty(item.getAccountEntity().getAvatar())) {
+        if (!StrUtil.isEmpty(item.getAccountEntity().getAvatar())) {
             GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + item.getAccountEntity().getAvatar()),iv_header);
         }
         // 公司名称

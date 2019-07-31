@@ -4,7 +4,7 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.yaf.base.entity.OpenShopLogEntity;
+import com.eanfang.biz.model.entity.OpenShopLogEntity;
 
 import net.eanfang.client.R;
 

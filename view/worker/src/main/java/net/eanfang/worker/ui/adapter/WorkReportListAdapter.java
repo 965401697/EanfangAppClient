@@ -7,12 +7,13 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.base.widget.customview.CircleImageView;
-import com.eanfang.biz.model.WorkReportListBean;
+import com.eanfang.biz.model.bean.WorkReportListBean;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
+
+import cn.hutool.core.util.StrUtil;
 
 /**
  * Created by Mr.hou
@@ -61,7 +62,7 @@ public class WorkReportListAdapter extends BaseQuickAdapter<WorkReportListBean.L
 //            helper.getView(R.id.tv_read_ns).setVisibility(View.INVISIBLE);
 //        }
         CircleImageView head_pic = helper.getView(R.id.img_head);
-        if (!StringUtils.isEmpty(item.getWorkReportDetail().getPictures())) {
+        if (!StrUtil.isEmpty(item.getWorkReportDetail().getPictures())) {
             String[] urls = item.getWorkReportDetail().getPictures().split(",");
             GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + urls[0]),head_pic);
         } else {

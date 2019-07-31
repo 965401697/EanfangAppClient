@@ -16,7 +16,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.base.widget.customview.CircleImageView;
-import com.eanfang.biz.model.CooperationSearchBean;
+import com.eanfang.biz.model.bean.CooperationSearchBean;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
@@ -24,9 +24,8 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
-import com.yaf.base.entity.CooperationEntity;
+import com.eanfang.biz.model.entity.CooperationEntity;
 import com.eanfang.biz.model.entity.BaseDataEntity;
 
 import net.eanfang.worker.R;
@@ -44,6 +43,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 
 public class CooperationAddActivity extends BaseWorkerActivity implements SelectTimeDialogFragment.SelectTimeListener {
 
@@ -244,7 +244,7 @@ public class CooperationAddActivity extends BaseWorkerActivity implements Select
 
     @Override
     public void getData(String time) {
-        if (StringUtils.isEmpty(time) || " ".equals(time)) {
+        if (StrUtil.isEmpty(time) || " ".equals(time)) {
             currentTextView.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
         } else {
             currentTextView.setText(time);

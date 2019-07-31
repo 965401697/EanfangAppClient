@@ -19,7 +19,7 @@ import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.WorkReportInfoBean;
+import com.eanfang.biz.model.bean.WorkReportInfoBean;
 import com.eanfang.util.DateKit;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
@@ -33,7 +33,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.hutool.core.date.DateUtil;
 
 /**
  * 工资汇报详情

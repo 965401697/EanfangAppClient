@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Objects;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 import lombok.Getter;
 
 /**
@@ -69,8 +70,8 @@ public class LeavePostDetailViewModel extends BaseViewModel {
                     mKeyValueLeaveList.add(leaveKeys[0] + leavePostAlertInfoDetailBean.getDevicesEntity().getDeviceName());
                 }
                 mKeyValueLeaveList.add(leaveKeys[1] + DateUtil.parse(leavePostAlertInfoDetailBean.getAlertTime()).toDateStr());
-                mKeyValueLeaveList.add(leaveKeys[2] + (StringUtils.isEmpty(leavePostAlertInfoDetailBean.getLeaveTime()) ? "" : leavePostAlertInfoDetailBean.getLeaveTime()));
-                mKeyValueLeaveList.add(leaveKeys[3] + (StringUtils.isEmpty(leavePostAlertInfoDetailBean.getBackTime()) ? "" : leavePostAlertInfoDetailBean.getBackTime()));
+                mKeyValueLeaveList.add(leaveKeys[2] + (StrUtil.isEmpty(leavePostAlertInfoDetailBean.getLeaveTime()) ? "" : leavePostAlertInfoDetailBean.getLeaveTime()));
+                mKeyValueLeaveList.add(leaveKeys[3] + (StrUtil.isEmpty(leavePostAlertInfoDetailBean.getBackTime()) ? "" : leavePostAlertInfoDetailBean.getBackTime()));
                 mKeyValueLeaveList.add(leaveKeys[4] + leavePostAlertInfoDetailBean.getAbsencePeriod() + "min");
             }
             leavePostAlertEventList.setValue(mKeyValueEventList);

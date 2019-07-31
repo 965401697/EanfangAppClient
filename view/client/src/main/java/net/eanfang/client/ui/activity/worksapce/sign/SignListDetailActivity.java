@@ -19,11 +19,9 @@ import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
 import com.eanfang.config.Config;
 import com.eanfang.delegate.BGASortableDelegate;
-import com.eanfang.biz.model.SignListBean;
+import com.eanfang.biz.model.bean.SignListBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.NumberUtil;
-import com.eanfang.util.StringUtils;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.client.R;
 
@@ -33,6 +31,8 @@ import java.util.Arrays;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * Created by MrHou
@@ -123,7 +123,7 @@ public class SignListDetailActivity extends BaseActivity {
             tvRemark.setVisibility(View.GONE);
         }
 
-        if (StringUtils.isValid(listBean.getPictures())) {
+        if (StrUtil.isNotBlank(listBean.getPictures())) {
             String[] friontPic = listBean.getPictures().split(",");
             imageList.addAll(Stream.of(Arrays.asList(friontPic)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
         }

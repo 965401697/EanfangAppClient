@@ -12,11 +12,10 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.eanfang.biz.model.entity.BughandleParamEntity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PickerSelectUtil;
-import com.eanfang.util.StringUtils;
-import com.yaf.base.entity.BughandleParamEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.repair.AddParamAdapter;
@@ -27,6 +26,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author Guanluocang
@@ -90,7 +90,7 @@ public class DeviceParameterActivity extends BaseActivity {
         tvFinish.setOnClickListener((v) -> {
             String content = etInputContent.getText().toString().trim();
             String name = tvDeviceParamName.getText().toString().trim();
-            if (!StringUtils.isEmpty(content) && !StringUtils.isEmpty(name)) {
+            if (!StrUtil.isEmpty(content) && !StrUtil.isEmpty(name)) {
                 BughandleParamEntity param = new BughandleParamEntity();
                 param.setParamValue(content);
                 param.setParamName(name);

@@ -25,8 +25,8 @@ import com.eanfang.apiservice.UserApi;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.SignCountBean;
-import com.eanfang.biz.model.SigninBean;
+import com.eanfang.biz.model.bean.SignCountBean;
+import com.eanfang.biz.model.bean.SigninBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.ConnectivityChangeUtil;
 import com.eanfang.util.JumpItent;
@@ -34,9 +34,6 @@ import com.eanfang.util.PermKit;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.client.R;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

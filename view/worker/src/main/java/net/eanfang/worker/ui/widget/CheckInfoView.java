@@ -9,15 +9,15 @@ import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.config.Config;
-import com.eanfang.biz.model.WorkAddCheckBean;
+import com.eanfang.biz.model.bean.WorkAddCheckBean;
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * Created by MrHou
@@ -75,7 +75,7 @@ public class CheckInfoView extends BaseDialog {
 //        tvTwoName.setText(bean.getBusinessTwo());
 //        tvThreeName.setText(bean.getBusinessThree());
         etInputCheckContent.setText(bean.getInfo());
-        if (!StringUtils.isEmpty(bean.getPictures())) {
+        if (!StrUtil.isEmpty(bean.getPictures())) {
             String[] urls = bean.getPictures().split(",");
 
             if (urls.length>=1) {

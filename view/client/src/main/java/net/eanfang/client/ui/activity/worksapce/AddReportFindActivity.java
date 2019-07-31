@@ -13,8 +13,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.listener.MultiClickListener;
-import com.eanfang.biz.model.TemplateBean;
-import com.eanfang.biz.model.WorkAddReportBean;
+import com.eanfang.biz.model.bean.TemplateBean;
+import com.eanfang.biz.model.bean.WorkAddReportBean;
 
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.takevideo.TakeVdideoMode;
@@ -25,10 +25,6 @@ import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.PhotoUtils;
-import com.eanfang.util.StringUtils;
-import com.photopicker.com.activity.BGAPhotoPickerActivity;
-import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.maintenance.MaintenanceTeamAdapter;
@@ -47,11 +43,14 @@ import java.util.Set;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static android.provider.MediaStore.Video.Thumbnails.MINI_KIND;
+import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
+import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerPreviewActivity;
+import cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout;
+import cn.hutool.core.util.StrUtil;
 
 
 /**
@@ -170,7 +169,7 @@ public class AddReportFindActivity extends BaseClientActivity {
         // 短视频
         bean.setMp4_path(mUploadKey);
         if (uploadMap.size() != 0) {
-            SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
+            SDKManager.ossKit(this).asyncPutImages(uploadMap, (isSuccess) -> {
                 runOnUiThread(() -> {
                     submitSuccess();
                 });
@@ -194,14 +193,14 @@ public class AddReportFindActivity extends BaseClientActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == BGASortableDelegate.REQUEST_CODE_CHOOSE_PHOTO) {
-            snplMomentAddPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+            snplMomentAddPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedPhotos(data));
         } else if (requestCode == BGASortableDelegate.REQUEST_CODE_PHOTO_PREVIEW) {
-            snplMomentAddPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+            snplMomentAddPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
         }
     }
 
     private void inputVoice(EditText editText) {
-         RxPerm.get(this).voicePerm((isSuccess)->{
+        RxPerm.get(this).voicePerm((isSuccess) -> {
             RecognitionManager.getSingleton().startRecognitionWithDialog(AddReportFindActivity.this, editText);
         });
     }
@@ -258,8 +257,8 @@ public class AddReportFindActivity extends BaseClientActivity {
             rlThumbnail.setVisibility(View.VISIBLE);
             mVieoPath = takeVdideoMode.getMImagePath();
             mUploadKey = takeVdideoMode.getMKey();
-            if (!StringUtils.isEmpty(mVieoPath)) {
-                GlideUtil.intoImageView(this,PhotoUtils.getVideoBitmap(mVieoPath),ivTakevideo);
+            if (!StrUtil.isEmpty(mVieoPath)) {
+                GlideUtil.intoImageView(this, PhotoUtils.getVideoBitmap(mVieoPath), ivTakevideo);
             }
             tvAddViedeo.setText("重新拍摄");
         }

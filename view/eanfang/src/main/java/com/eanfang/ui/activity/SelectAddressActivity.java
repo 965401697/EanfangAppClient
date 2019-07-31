@@ -28,17 +28,17 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.R;
 import com.eanfang.R2;
 import com.eanfang.base.kit.rx.RxPerm;
-import com.eanfang.biz.model.SelectAddressItem;
+import com.eanfang.biz.model.bean.SelectAddressItem;
 import com.eanfang.config.Constant;
 import com.eanfang.ui.adapter.SelectAddressAdapter;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.LocationUtil;
-import com.eanfang.util.StringUtils;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 import static com.amap.api.services.geocoder.GeocodeSearch.AMAP;
 
@@ -127,7 +127,7 @@ public class SelectAddressActivity extends BaseActivity implements PoiSearch.OnP
         @Override
         public void handleMessage(Message msg) {
             String keyword = atvText.getText().toString().trim();
-            if (!StringUtils.isEmpty(keyword)) {
+            if (!StrUtil.isEmpty(keyword)) {
                 //搜索请求
                 isSearch = true;
 //                textChangeSearch(keyword);

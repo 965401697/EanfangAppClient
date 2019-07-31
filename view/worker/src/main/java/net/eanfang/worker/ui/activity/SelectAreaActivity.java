@@ -8,8 +8,8 @@ import androidx.lifecycle.ViewModel;
 
 import com.eanfang.base.BaseActivity;
 import com.eanfang.base.kit.cache.CacheKit;
-import com.eanfang.biz.model.GrantChange;
-import com.eanfang.biz.model.SystypeBean;
+import com.eanfang.biz.model.bean.GrantChange;
+import com.eanfang.biz.model.bean.SystypeBean;
 import com.eanfang.biz.model.entity.BaseDataEntity;
 import com.eanfang.config.Constant;
 

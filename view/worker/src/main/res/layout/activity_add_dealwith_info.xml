@@ -145,7 +145,7 @@
                             android:src="@mipmap/ic_play_video" />
                     </RelativeLayout>
 
-                    <com.photopicker.com.widget.BGASortableNinePhotoLayout
+                    <cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout
                         android:id="@+id/snpl_photos_work"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

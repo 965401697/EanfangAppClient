@@ -11,16 +11,26 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.eanfang.base.kit.R;
+import com.wang.avi.AVLoadingIndicatorView;
+
+import cn.hutool.core.util.StrUtil;
 
 class DialogLoading {
 
     static Dialog createLoadingDialog(Context context, String msg) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View v = inflater.inflate(R.layout.dialog_loading, null);// 得到加载view
-        LinearLayout layout = v
-                .findViewById(R.id.dialog_loading_view);// 加载布局
+        LinearLayout layout = v.findViewById(R.id.dialog_loading_view);// 加载布局
         TextView tipTextView = v.findViewById(R.id.tipTextView);// 提示文字
-        tipTextView.setText(msg);// 设置加载信息
+        AVLoadingIndicatorView avlView = v.findViewById(R.id.avi);
+
+        //没有文字 隐藏
+        if (!StrUtil.isEmpty(msg)) {
+            tipTextView.setVisibility(View.VISIBLE);
+            tipTextView.setText(msg);// 设置加载信息
+        } else {
+            tipTextView.setVisibility(View.GONE);
+        }
 
         Dialog loadingDialog = new Dialog(context, R.style.MyDialogStyle);// 创建自定义样式dialog
         loadingDialog.setCancelable(true); // 是否可以按“返回键”消失
@@ -39,6 +49,10 @@ class DialogLoading {
         window.setGravity(Gravity.CENTER);
         window.setAttributes(lp);
         window.setWindowAnimations(R.style.PopWindowAnimStyle);
+
+        loadingDialog.setOnShowListener((listener) -> avlView.show());
+//        loadingDialog.setOnDismissListener((listener) -> avlView.hide());
+
         return loadingDialog;
     }
 

@@ -6,8 +6,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.EditText;
 
-import com.eanfang.util.JsonParser;
+import com.eanfang.sdk.msc.MSCManager;
 import com.eanfang.util.ToastUtil;
+import com.google.gson.JsonParser;
 import com.iflytek.cloud.ErrorCode;
 import com.iflytek.cloud.InitListener;
 import com.iflytek.cloud.RecognizerListener;
@@ -198,7 +199,7 @@ public class RecognitionManager {
             resultJson += recognizerResult.getResultString() + "]";
         }
         if (!isLast) {
-            result = JsonParser.parseIatResult(recognizerResult.getResultString());
+            result = MSCManager.parseIatResult(recognizerResult.getResultString());
             if (listen == null) {
                 content += result;
                 editText.setText(content + "");

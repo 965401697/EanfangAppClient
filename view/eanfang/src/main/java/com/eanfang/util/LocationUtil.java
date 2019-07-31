@@ -29,6 +29,8 @@ import com.amap.api.services.geocoder.RegeocodeResult;
 import com.eanfang.R;
 import com.eanfang.ui.base.BaseActivity;
 
+import cn.hutool.core.util.StrUtil;
+
 /**
  * @author Mr.hou
  * Created at 2017/3/2
@@ -314,7 +316,7 @@ public class LocationUtil implements AMap.OnMarkerClickListener,
 
     @Override
     public void onGeocodeSearched(GeocodeResult geocodeResult, int i) {
-        if (StringUtils.isEmpty(curCityCode)) {
+        if (StrUtil.isEmpty(curCityCode)) {
             mGPSMarker.setSnippet(geocodeResult.getGeocodeQuery().getLocationName());
         }
         if (geocodeResult.getGeocodeAddressList() != null && geocodeResult.getGeocodeAddressList().size() > 0) {

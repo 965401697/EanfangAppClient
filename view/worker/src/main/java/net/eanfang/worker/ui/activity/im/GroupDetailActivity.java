@@ -20,11 +20,12 @@ import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.base.widget.customview.CircleImageView;
+import com.eanfang.biz.model.bean.GroupDetailBean;
+import com.eanfang.biz.model.entity.SysGroupUserEntity;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.GroupDetailBean;
 
 import com.eanfang.ui.activity.QrCodeShowActivity;
 import com.eanfang.ui.base.BaseActivity;
@@ -94,9 +95,9 @@ public class GroupDetailActivity extends BaseWorkeActivity {
     /**
      * 全部成员
      */
-    private ArrayList<GroupDetailBean.ListBean> friendListBeanArrayList = new ArrayList<>();
-    private ArrayList<GroupDetailBean.ListBean> temp = new ArrayList<>();
-    private ArrayList<GroupDetailBean.ListBean> mList = new ArrayList<>();
+    private ArrayList<SysGroupUserEntity> friendListBeanArrayList = new ArrayList<>();
+    private ArrayList<SysGroupUserEntity> temp = new ArrayList<>();
+    private ArrayList<SysGroupUserEntity> mList = new ArrayList<>();
     private String title;
     private String headPortrait;
     private String qrCode;
@@ -159,7 +160,7 @@ public class GroupDetailActivity extends BaseWorkeActivity {
                     }
 
 
-                    mList = (ArrayList<GroupDetailBean.ListBean>) bean.getList();
+                    mList = (ArrayList<SysGroupUserEntity>) bean.getList();
 
                     if (String.valueOf(WorkerApplication.get().getAccId()).equals(bean.getGroup().getCreateUser())) {
                         isOwner = true;
@@ -204,7 +205,7 @@ public class GroupDetailActivity extends BaseWorkeActivity {
                         if (bean.getList().size() > 0) {
 
                             // TODO: 2018/11/21 待优化  用原生的recyclerview.adapter的 getCount();返回
-                            GroupDetailBean.ListBean b = new GroupDetailBean.ListBean();//填充数据
+                            SysGroupUserEntity b = new SysGroupUserEntity();//填充数据
 
                             if (isOwner) {
                                 temp.add(b);
@@ -647,7 +648,7 @@ public class GroupDetailActivity extends BaseWorkeActivity {
      * @param status
      */
     private void shuttpAll(int status) {
-        for (GroupDetailBean.ListBean b : friendListBeanArrayList) {
+        for (SysGroupUserEntity b : friendListBeanArrayList) {
             if (status == 1) {
                 b.setStatus(1);
             } else {
@@ -675,7 +676,7 @@ public class GroupDetailActivity extends BaseWorkeActivity {
                 initData();
             } else if (requestCode == UPDATA_GROUP_SHUTUP_MBER) {
                 friendListBeanArrayList.clear();
-                ArrayList<GroupDetailBean.ListBean> list = (ArrayList<GroupDetailBean.ListBean>) data.getSerializableExtra("list");
+                ArrayList<SysGroupUserEntity> list = (ArrayList<SysGroupUserEntity>) data.getSerializableExtra("list");
                 if (list != null) {
                     friendListBeanArrayList.addAll(list);
                 }

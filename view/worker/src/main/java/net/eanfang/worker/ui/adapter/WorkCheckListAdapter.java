@@ -8,11 +8,12 @@ import android.widget.ImageView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.eanfang.biz.model.WorkCheckListBean;
+import com.eanfang.biz.model.bean.WorkCheckListBean;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
+
+import cn.hutool.core.util.StrUtil;
 
 
 /**
@@ -68,7 +69,7 @@ public class WorkCheckListAdapter extends BaseQuickAdapter<WorkCheckListBean.Lis
 
         ImageView head_pic = helper.getView(R.id.img_head);
         if (item.getWorkInspectDetail() != null) {
-            if (!StringUtils.isEmpty(item.getWorkInspectDetail().getPictures())) {
+            if (!StrUtil.isEmpty(item.getWorkInspectDetail().getPictures())) {
                 String[] urls = item.getWorkInspectDetail().getPictures().split(",");
                 GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + urls[0]),head_pic);
             } else {

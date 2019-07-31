@@ -21,10 +21,8 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
 import com.eanfang.util.PhotoUtils;
-import com.eanfang.util.StringUtils;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.picker.common.util.DateUtils;
-import com.yaf.base.entity.AptitudeCertificateEntity;
+import com.eanfang.biz.model.entity.AptitudeCertificateEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkeActivity;
@@ -40,6 +38,8 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.util.StrUtil;
+import cn.qqtheme.framework.util.DateUtils;
 
 /**
  * @author guanluocang
@@ -176,33 +176,33 @@ public class AddAuthQualifyActivity extends BaseWorkeActivity implements SelectT
         String mBeginTime = tvBeginTime.getText().toString().trim();
         String mEndTime = tvEndTime.getText().toString().trim();
 
-        if (StringUtils.isEmpty(mCertificateName)) {
+        if (StrUtil.isEmpty(mCertificateName)) {
             showToast("请输入证书名称");
             return;
         }
-        if (StringUtils.isEmpty(mOrg)) {
+        if (StrUtil.isEmpty(mOrg)) {
             showToast("请输入发证机构");
             return;
         }
-        if (StringUtils.isEmpty(mLevel)) {
+        if (StrUtil.isEmpty(mLevel)) {
             showToast("请输入资质等级");
             return;
         }
-        if (StringUtils.isEmpty(mNum)) {
+        if (StrUtil.isEmpty(mNum)) {
             showToast("请输入证书编号");
             return;
         }
-        if (StringUtils.isEmpty(mBeginTime)) {
+        if (StrUtil.isEmpty(mBeginTime)) {
             showToast("请输入开始时间");
             return;
         }
-        if (StringUtils.isEmpty(mEndTime)) {
+        if (StrUtil.isEmpty(mEndTime)) {
             showToast("请输入结束时间");
             return;
         }
 
         pic = PhotoUtils.getPhotoUrl("", selectList, uploadMap, false);
-        if (StringUtils.isEmpty(pic)) {
+        if (StrUtil.isEmpty(pic)) {
             showToast("请输入证书照片");
             return;
         }
@@ -284,13 +284,13 @@ public class AddAuthQualifyActivity extends BaseWorkeActivity implements SelectT
     @Override
     public void getData(String time) {
         if (isBegin) {
-            if (StringUtils.isEmpty(time) || " ".equals(time)) {
+            if (StrUtil.isEmpty(time) || " ".equals(time)) {
                 tvBeginTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
             } else {
                 tvBeginTime.setText(time);
             }
         } else {
-            if (StringUtils.isEmpty(time) || " ".equals(time)) {
+            if (StrUtil.isEmpty(time) || " ".equals(time)) {
                 tvEndTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
             } else {
                 tvEndTime.setText(time);

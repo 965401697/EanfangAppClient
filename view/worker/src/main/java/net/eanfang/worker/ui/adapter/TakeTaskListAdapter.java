@@ -2,7 +2,7 @@ package net.eanfang.worker.ui.adapter;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.biz.model.TakeTaskListBean;
+import com.eanfang.biz.model.bean.TakeTaskListBean;
 import com.eanfang.util.GlideUtil;
 
 import net.eanfang.worker.R;

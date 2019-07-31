@@ -11,11 +11,10 @@ import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.picture.picture.PictureRecycleView;
 import com.eanfang.base.widget.customview.CircleImageView;
-import com.eanfang.biz.model.WorkerInfoBean;
+import com.eanfang.biz.model.bean.WorkerInfoBean;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.StringUtils;
 import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.worker.R;
@@ -27,6 +26,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 public class CertificationInfoActivity extends BaseWorkerActivity {
 
@@ -88,10 +88,10 @@ public class CertificationInfoActivity extends BaseWorkerActivity {
         String contactName = WorkerApplication.get().getLoginBean().getAccount().getRealName();
         String mobile = WorkerApplication.get().getLoginBean().getAccount().getMobile();
 
-        if (!StringUtils.isEmpty(contactName)) {
+        if (!StrUtil.isEmpty(contactName)) {
             tvContactName.setText(contactName);
         }
-        if (!StringUtils.isEmpty(mobile)) {
+        if (!StrUtil.isEmpty(mobile)) {
             tvContactPhone.setText(mobile);
         }
         etCardId.setFocusable(false);

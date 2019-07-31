@@ -15,7 +15,7 @@ import com.alibaba.fastjson.JSONPObject;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.BusinessManagementData;
+import com.eanfang.biz.model.bean.BusinessManagementData;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.PermKit;
 

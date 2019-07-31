@@ -8,7 +8,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.R;
-import com.eanfang.biz.model.GroupsBean;
+import com.eanfang.biz.model.bean.GroupsBean;
 import com.eanfang.util.GlideUtil;
 
 

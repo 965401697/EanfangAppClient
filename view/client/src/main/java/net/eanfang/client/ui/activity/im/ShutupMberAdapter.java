@@ -7,8 +7,8 @@ import android.widget.RadioButton;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.eanfang.base.widget.customview.CircleImageView;
-import com.eanfang.biz.model.GroupDetailBean;
+import com.eanfang.biz.model.bean.GroupDetailBean;
+import com.eanfang.biz.model.entity.SysGroupUserEntity;
 import com.eanfang.util.GlideUtil;
 
 import net.eanfang.client.R;
@@ -17,7 +17,7 @@ import net.eanfang.client.R;
  * Created by O u r on 2018/5/10.
  */
 
-public class ShutupMberAdapter extends BaseQuickAdapter<GroupDetailBean.ListBean, BaseViewHolder> {
+public class ShutupMberAdapter extends BaseQuickAdapter<SysGroupUserEntity, BaseViewHolder> {
     private Context context;
 
     public ShutupMberAdapter(Context context, int layoutResId) {
@@ -26,7 +26,7 @@ public class ShutupMberAdapter extends BaseQuickAdapter<GroupDetailBean.ListBean
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, GroupDetailBean.ListBean item) {
+    protected void convert(BaseViewHolder helper, SysGroupUserEntity item) {
 
         if (item.getStatus() == 0) {
             ((RadioButton) helper.getView(R.id.rb_checked)).setChecked(false);

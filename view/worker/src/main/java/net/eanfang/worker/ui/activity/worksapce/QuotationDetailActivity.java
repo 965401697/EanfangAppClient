@@ -12,11 +12,10 @@ import android.widget.TextView;
 import com.annimon.stream.Stream;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
-import com.eanfang.biz.model.QuotationBean;
+import com.eanfang.biz.model.bean.QuotationBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PickerSelectUtil;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.DeviceParamAdapter;
@@ -24,6 +23,8 @@ import net.eanfang.worker.ui.widget.InputNameAndValueView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.hutool.core.util.StrUtil;
 
 /**
  * Created by MrHou
@@ -98,7 +99,7 @@ public class QuotationDetailActivity extends BaseActivity {
         //故障设备类别
         rl_device_type.setOnClickListener((v) -> {
             String busOneCode = Config.get().getBusinessCodeByName(tv_business_type.getText().toString().trim(), 1);
-            if (StringUtils.isEmpty(busOneCode)) {
+            if (StrUtil.isEmpty(busOneCode)) {
                 showToast("请先选择系统类别");
                 return;
             }
@@ -111,7 +112,7 @@ public class QuotationDetailActivity extends BaseActivity {
         //故障设备名称
         rl_device_name.setOnClickListener((v) -> {
             String busTwoCode = Config.get().getBusinessCodeByName(tv_device_type.getText().toString().trim(), 2);
-            if (StringUtils.isEmpty(busTwoCode)) {
+            if (StrUtil.isEmpty(busTwoCode)) {
                 showToast("请先选择设备类别");
                 return;
             }
@@ -200,11 +201,11 @@ public class QuotationDetailActivity extends BaseActivity {
             return false;
         }
 
-        if (StringUtils.isEmpty(tv_unit.getText().toString().trim())) {
+        if (StrUtil.isEmpty(tv_unit.getText().toString().trim())) {
             showToast("请选择单位");
             return false;
         }
-        if (StringUtils.isEmpty(et_amount.getText().toString().trim())) {
+        if (StrUtil.isEmpty(et_amount.getText().toString().trim())) {
             showToast("请输入数量");
             return false;
         }
@@ -212,7 +213,7 @@ public class QuotationDetailActivity extends BaseActivity {
             showToast("数量超过最大值9999");
             return false;
         }
-        if (StringUtils.isEmpty(et_price.getText().toString().trim())) {
+        if (StrUtil.isEmpty(et_price.getText().toString().trim())) {
             showToast("请输入单价");
             return false;
         }

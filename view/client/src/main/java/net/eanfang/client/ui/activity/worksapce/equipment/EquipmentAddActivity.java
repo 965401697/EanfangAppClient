@@ -14,9 +14,9 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.EquipmentBean;
+import com.eanfang.biz.model.bean.EquipmentBean;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.util.QueryEntry;
+import com.eanfang.biz.model.QueryEntry;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;

@@ -17,9 +17,8 @@ import com.eanfang.apiservice.UserApi;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.FriendListBean;
-import com.eanfang.biz.model.device.User;
-import com.eanfang.util.StringUtils;
+import com.eanfang.biz.model.bean.FriendListBean;
+import com.eanfang.biz.model.bean.device.User;
 import com.eanfang.util.ToastUtil;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -43,6 +42,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.util.StrUtil;
 
 public class AddFriendActivity extends BaseClientActivity {
 
@@ -82,7 +82,7 @@ public class AddFriendActivity extends BaseClientActivity {
             llInput.setVisibility(View.GONE);
         }
 
-        if (!StringUtils.isEmpty(mAccountId)) {
+        if (!StrUtil.isEmpty(mAccountId)) {
             llInput.setVisibility(View.GONE);
             initIdData(mAccountId);
         }

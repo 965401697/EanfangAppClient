@@ -8,13 +8,13 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.eanfang.biz.model.reapair.RepairPersonalInfoEntity;
+import com.eanfang.biz.model.entity.RepairOrderEntity;
+import com.eanfang.biz.model.entity.RepairPersonalInfoEntity;
+import com.eanfang.biz.model.entity.WorkerEntity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.ViewFindUtils;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.flyco.tablayout.listener.OnTabSelectListener;
-import com.yaf.base.entity.RepairOrderEntity;
-import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.fragment.selectworker.AllWorkerFragment;

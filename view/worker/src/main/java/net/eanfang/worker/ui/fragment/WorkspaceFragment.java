@@ -18,7 +18,7 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.AllMessageBean;
+import com.eanfang.biz.model.bean.AllMessageBean;
 import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.biz.model.entity.OrgEntity;
 import com.eanfang.ui.activity.kpbs.KPBSActivity;
@@ -26,7 +26,6 @@ import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.LocationUtil;
 import com.eanfang.util.PermKit;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
@@ -52,6 +51,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import cn.hutool.core.util.StrUtil;
 import q.rorbin.badgeview.QBadgeView;
 
 import static com.eanfang.base.kit.V.v;
@@ -172,7 +172,7 @@ public class WorkspaceFragment extends BaseFragment {
     private void getLocation() {
         LocationUtil.location((MainActivity) getActivity(), (location) -> {
             LoginBean user = WorkerApplication.get().getLoginBean();
-            if (user == null || StringUtils.isEmpty(user.getToken())) {
+            if (user == null || StrUtil.isEmpty(user.getToken())) {
                 return;
             }
             longitude = location.getLongitude();// 116
@@ -190,7 +190,7 @@ public class WorkspaceFragment extends BaseFragment {
                 && bean.getOrgUnitEntity().getLogoPic() != null
                 && bean.getOrgUnitEntity().getOrgId().equals(defaultOrgid)).map(be -> v(() -> be.getOrgUnitEntity().getLogoPic())).toList();
         String imgUrl = v(() -> defaultPic.get(0));
-        if (!StringUtils.isEmpty(imgUrl)) {
+        if (!StrUtil.isEmpty(imgUrl)) {
             GlideUtil.intoImageView(getActivity(),Uri.parse(BuildConfig.OSS_SERVER + imgUrl),ivUserHeader);
         }
     }

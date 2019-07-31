@@ -10,19 +10,20 @@ import com.chad.library.adapter.base.BaseMultiItemQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.config.Config;
-import com.eanfang.biz.model.WorkAddCheckBean;
-import com.eanfang.biz.model.WorkAddReportBean;
-import com.eanfang.biz.model.WorkTaskInfoBean;
+import com.eanfang.biz.model.bean.WorkAddCheckBean;
+import com.eanfang.biz.model.bean.WorkAddReportBean;
+import com.eanfang.biz.model.bean.WorkTaskInfoBean;
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.R;
 import net.eanfang.client.util.ImagePerviewUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.hutool.core.util.StrUtil;
 
 /**
  * Created by O u r on 2018/10/19.
@@ -118,7 +119,7 @@ public class CheckAdapter extends BaseMultiItemQuickAdapter<WorkAddCheckBean.Wor
 
 
     private void initPic(BaseViewHolder helper, WorkAddCheckBean.WorkInspectDetailsBean item) {
-        if (!StringUtils.isEmpty(item.getPictures())) {
+        if (!StrUtil.isEmpty(item.getPictures())) {
             String[] urls = item.getPictures().split(",");
             helper.setText(R.id.tv_adjunct, "照片：");
             helper.setVisible(R.id.ll_pic, true);

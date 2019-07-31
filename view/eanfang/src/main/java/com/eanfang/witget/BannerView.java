@@ -134,27 +134,24 @@ public class BannerView extends FrameLayout {
 
             }
         });
-        mViewPager.setOnTouchListener(new OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                switch (event.getAction()){
-                    case MotionEvent.ACTION_DOWN:
-                        if (mBannerHandler != null) {
-                            if (mBannerHandler.hasMessages(MSG_LOOP)) {
-                                mBannerHandler.removeMessages(MSG_LOOP);
-                            }
+        mViewPager.setOnTouchListener((v, event) -> {
+            switch (event.getAction()){
+                case MotionEvent.ACTION_DOWN:
+                    if (mBannerHandler != null) {
+                        if (mBannerHandler.hasMessages(MSG_LOOP)) {
+                            mBannerHandler.removeMessages(MSG_LOOP);
                         }
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        if (mBannerHandler != null) {
-                            mBannerHandler.sendEmptyMessageDelayed(MSG_LOOP, LOOP_INTERVAL);
-                        }
-                        break;
-                    default:
-                        break;
-                }
-                return false;
+                    }
+                    break;
+                case MotionEvent.ACTION_UP:
+                    if (mBannerHandler != null) {
+                        mBannerHandler.sendEmptyMessageDelayed(MSG_LOOP, LOOP_INTERVAL);
+                    }
+                    break;
+                default:
+                    break;
             }
+            return false;
         });
     }
 

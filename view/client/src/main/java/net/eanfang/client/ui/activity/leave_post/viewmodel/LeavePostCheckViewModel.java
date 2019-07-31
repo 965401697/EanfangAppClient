@@ -18,6 +18,7 @@ import net.eanfang.client.ui.activity.leave_post.repo.LeavePostRepo;
 
 import java.util.Objects;
 
+import cn.hutool.core.util.StrUtil;
 import lombok.Getter;
 
 /**
@@ -43,7 +44,7 @@ public class LeavePostCheckViewModel extends BaseViewModel {
         mStationPlaceName = stationPlaceName;
         QueryEntry queryEntry = new QueryEntry();
         queryEntry.getEquals().put("companyId", String.valueOf(companyId));
-        if (!StringUtils.isEmpty(stationPlaceName)) {
+        if (!StrUtil.isEmpty(stationPlaceName)) {
             queryEntry.getLike().put("stationName", stationPlaceName);
         }
         queryEntry.setPage(currentPage);

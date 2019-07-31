@@ -9,14 +9,14 @@ import androidx.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.R;
-import com.eanfang.biz.model.OrderProgressBean;
+import com.eanfang.biz.model.bean.OrderProgressBean;
 import com.eanfang.util.DateKit;
-import com.eanfang.util.StringUtils;
 import com.github.vipulasri.timelineview.TimelineView;
 
 import java.util.List;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 
 public class OrderStateAdapter extends BaseQuickAdapter<OrderProgressBean, BaseViewHolder> {
     private TimelineView timelineView;
@@ -49,7 +49,7 @@ public class OrderStateAdapter extends BaseQuickAdapter<OrderProgressBean, BaseV
                 timelineView.setMarker(unmarker);
             }
         }
-        if (!StringUtils.isEmpty(item.getNodeInfo())) {
+        if (!StrUtil.isEmpty(item.getNodeInfo())) {
             tempText = "(" + item.getNodeInfo() + ")";
         } else {
             tempText = "";

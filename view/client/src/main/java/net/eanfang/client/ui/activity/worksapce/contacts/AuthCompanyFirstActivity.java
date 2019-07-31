@@ -17,8 +17,8 @@ import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.base.kit.rx.RxPerm;
-import com.eanfang.biz.model.AuthCompanyBaseInfoBean;
-import com.eanfang.biz.model.SelectAddressItem;
+import com.eanfang.biz.model.bean.AuthCompanyBaseInfoBean;
+import com.eanfang.biz.model.bean.SelectAddressItem;
 import com.eanfang.biz.model.entity.OrgUnitEntity;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
@@ -26,7 +26,6 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.StringUtils;
 import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.client.R;
@@ -130,10 +129,10 @@ public class AuthCompanyFirstActivity extends BaseClienActivity {
             if (byNetBean.getOfficeAddress() != null) {
                 etDetailOfficeAddress.setText(byNetBean.getOfficeAddress());
             }
-            if (!StringUtils.isEmpty(byNetBean.getAreaCode())) {
+            if (!StrUtil.isEmpty(byNetBean.getAreaCode())) {
                 tvOfficeAddress.setText(Config.get().getAddressByCode(byNetBean.getAreaCode()));
             }
-            if (!StringUtils.isEmpty(byNetBean.getLogoPic())) {
+            if (!StrUtil.isEmpty(byNetBean.getLogoPic())) {
                 GlideUtil.intoImageView(this, BuildConfig.OSS_SERVER + byNetBean.getLogoPic(), ivUploadlogo);
                 infoBean.setLogoPic(byNetBean.getLogoPic());
             }
@@ -199,16 +198,16 @@ public class AuthCompanyFirstActivity extends BaseClienActivity {
      * 进行字段的约束判断
      */
     public void doVerify() {
-        if (StringUtils.isEmpty(etCompany.getText().toString().trim())) {
+        if (StrUtil.isEmpty(etCompany.getText().toString().trim())) {
             showToast("请输入单位名称");
             return;
-        } else if (StringUtils.isEmpty(etDetailOfficeAddress.getText().toString().trim())) {
+        } else if (StrUtil.isEmpty(etDetailOfficeAddress.getText().toString().trim())) {
             showToast("请输入办公地址");
             return;
-        } else if (StringUtils.isEmpty(etLegalPersion.getText().toString().trim())) {
+        } else if (StrUtil.isEmpty(etLegalPersion.getText().toString().trim())) {
             showToast("请输入法人代表");
             return;
-        } else if (StringUtils.isEmpty(etDesc.getText().toString().trim())) {
+        } else if (StrUtil.isEmpty(etDesc.getText().toString().trim())) {
             showToast("请输入单位简介");
             return;
         } else {
@@ -230,7 +229,7 @@ public class AuthCompanyFirstActivity extends BaseClienActivity {
         infoBean.setIntro(etDesc.getText().toString().trim());
         infoBean.setScale(byNetBean.getScale());
         infoBean.setOfficeAddress(etDetailOfficeAddress.getText().toString().trim());
-        if (!StringUtils.isEmpty(itemcity) && !StringUtils.isEmpty(itemzone)) {
+        if (!StrUtil.isEmpty(itemcity) && !StrUtil.isEmpty(itemzone)) {
             infoBean.setAreaCode(Config.get().getAreaCodeByName(itemcity, itemzone));
         } else {
             infoBean.setAreaCode(byNetBean.getAreaCode());

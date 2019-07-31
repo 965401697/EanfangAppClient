@@ -17,8 +17,8 @@ import com.baozi.treerecyclerview.item.TreeItemGroup;
 import com.eanfang.R;
 import com.eanfang.base.BaseApplication;
 import com.eanfang.base.network.config.HttpConfig;
-import com.eanfang.biz.model.OrganizationBean;
-import com.eanfang.biz.model.SectionBean;
+import com.eanfang.biz.model.bean.OrganizationBean;
+import com.eanfang.biz.model.bean.SectionBean;
 import com.eanfang.ui.activity.SelectPresonActivity;
 
 import java.util.List;

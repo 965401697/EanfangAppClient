@@ -15,6 +15,7 @@ import java.util.Calendar;
 import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author guanluocang
@@ -44,7 +45,7 @@ public class WorkTenderFindAdapter extends BaseQuickAdapter<TaskPublishEntity, B
         // 用工要求
         helper.setText(R.id.tv_tender_require, item.getLaborRequirements());
         //截止时间
-        if (!StringUtils.isEmpty(endTime)) {
+        if (!StrUtil.isEmpty(endTime)) {
             if (DateUtil.parse(endTime).getTime() - DateUtil.date().getTime() > 0) {
                 int day = (int) DateUtil.date().between(DateUtil.parse(endTime), DateUnit.DAY);
                 int hour = (int) DateUtil.date().between(DateKit.get(endTime).offset(DateField.DAY_OF_YEAR, -day).date, DateUnit.HOUR);

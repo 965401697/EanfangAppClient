@@ -4,14 +4,14 @@ import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.eanfang.biz.model.QuotationBean;
+import com.eanfang.biz.model.bean.QuotationBean;
 import com.eanfang.ui.base.BaseActivity;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * Created by MrHou
@@ -69,24 +69,24 @@ public class QuotationServicesActivity extends BaseActivity {
     public boolean checkInfo() {
 
 
-        if (StringUtils.isEmpty(etServiceName.getText().toString().trim())) {
+        if (StrUtil.isEmpty(etServiceName.getText().toString().trim())) {
             showToast("请输入服务名");
             return false;
         }
-        if (StringUtils.isEmpty(etServiceContent.getText().toString().trim())) {
+        if (StrUtil.isEmpty(etServiceContent.getText().toString().trim())) {
             showToast("请输入服务内容");
             return false;
         }
 
-        if (StringUtils.isEmpty(etServicePrice.getText().toString().trim())) {
+        if (StrUtil.isEmpty(etServicePrice.getText().toString().trim())) {
             showToast("请输入服务价格");
             return false;
         }
-        if (StringUtils.isEmpty(etServiceTimes.getText().toString().trim())) {
+        if (StrUtil.isEmpty(etServiceTimes.getText().toString().trim())) {
             showToast("请输入服务次数");
             return false;
         }
-        if (StringUtils.isEmpty(etServiceValue.getText().toString().trim())) {
+        if (StrUtil.isEmpty(etServiceValue.getText().toString().trim())) {
             showToast("请输入服务标准");
             return false;
         }

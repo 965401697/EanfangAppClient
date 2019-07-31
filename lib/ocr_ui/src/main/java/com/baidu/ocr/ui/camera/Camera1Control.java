@@ -28,7 +28,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * 5.0以下相机API的封装。
  */
-@SuppressWarnings("deprecation")
 public class Camera1Control implements ICameraControl {
 
     private int displayOrientation = 0;
@@ -290,7 +289,7 @@ public class Camera1Control implements ICameraControl {
         }
     }
 
-    Camera.PreviewCallback previewCallback = new Camera.PreviewCallback() {
+    private Camera.PreviewCallback previewCallback = new Camera.PreviewCallback() {
         @Override
         public void onPreviewFrame(final byte[] data, Camera camera) {
             // 扫描成功阻止打开新线程处理

@@ -152,7 +152,7 @@
                         android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_14" />
 
-                    <com.photopicker.com.widget.BGASortableNinePhotoLayout
+                    <cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout
                         android:id="@+id/snpl_impower"
                         android:layout_width="@dimen/dimen_144"
                         android:layout_height="@dimen/dimen_144"
@@ -277,7 +277,7 @@
                     android:layout_marginLeft="@dimen/dimen_30"
                     android:text="培训认定文件" />
 
-                <com.photopicker.com.widget.BGASortableNinePhotoLayout
+                <cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout
                     android:id="@+id/snpl_pic"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

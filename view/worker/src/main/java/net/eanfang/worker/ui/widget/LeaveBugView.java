@@ -10,14 +10,14 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.biz.model.entity.RepairFailureEntity;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.LeaveBugBean;
+import com.eanfang.biz.model.bean.LeaveBugBean;
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.util.QueryEntry;
-import com.yaf.base.entity.RepairFailureEntity;
+import com.eanfang.biz.model.QueryEntry;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.repair.seefaultdetail.PsTroubleDetailActivity;

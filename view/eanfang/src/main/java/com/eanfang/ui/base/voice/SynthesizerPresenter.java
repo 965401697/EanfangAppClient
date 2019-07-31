@@ -12,6 +12,8 @@ import com.iflytek.cloud.InitListener;
 import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechSynthesizer;
 
+import cn.hutool.core.util.StrUtil;
+
 /**
  * 描述：语音合成
  *
@@ -86,7 +88,7 @@ public class SynthesizerPresenter extends MySynthesizerListener {
      */
 
     public void buildTts(String answer) {
-        if (!StringUtils.isEmpty(answer)) {
+        if (!StrUtil.isEmpty(answer)) {
             doAnswer(answer);
         }
     }

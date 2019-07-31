@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.biz.model.entity.BughandleDetailEntity;
 import com.eanfang.config.Constant;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
@@ -19,11 +20,6 @@ import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.StringUtils;
-import com.photopicker.com.activity.BGAPhotoPickerActivity;
-import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
-import com.yaf.base.entity.BughandleDetailEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.adapter.LookMaterialAdapter;
@@ -33,6 +29,10 @@ import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
+import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerPreviewActivity;
+import cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author Guanluocang
@@ -183,21 +183,21 @@ public class TroubleDetailLookPhotoActivity extends BaseActivity {
         /**
          * 故障表象 （3张）
          */
-        if (!StringUtils.isEmpty(bughandleDetailEntity.getPresentation_mp4_path())) {
+        if (!StrUtil.isEmpty(bughandleDetailEntity.getPresentation_mp4_path())) {
             rlThumbnailMoment.setVisibility(View.VISIBLE);
             GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + bughandleDetailEntity.getPresentation_mp4_path() + ".jpg"), ivThumbnailMoment);
         }
         /**
          * 工具及蓝布 （3张）
          */
-        if (!StringUtils.isEmpty(bughandleDetailEntity.getTool_mp4_path())) {
+        if (!StrUtil.isEmpty(bughandleDetailEntity.getTool_mp4_path())) {
             rlThumbnailMonitor.setVisibility(View.VISIBLE);
             GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + bughandleDetailEntity.getTool_mp4_path() + ".jpg"), ivThumbnailMonitor);
         }
         /**
          * 故障点照片 （3张）
          */
-        if (!StringUtils.isEmpty(bughandleDetailEntity.getPoint_mp4_path())) {
+        if (!StrUtil.isEmpty(bughandleDetailEntity.getPoint_mp4_path())) {
 
             {
                 rlThumbnailToolsPackage.setVisibility(View.VISIBLE);
@@ -206,21 +206,21 @@ public class TroubleDetailLookPhotoActivity extends BaseActivity {
             /**
              * 处理后现场 （3张）
              */
-            if (!StringUtils.isEmpty(bughandleDetailEntity.getAfter_handle_mp4_path())) {
+            if (!StrUtil.isEmpty(bughandleDetailEntity.getAfter_handle_mp4_path())) {
                 rlThumbnailAfter.setVisibility(View.VISIBLE);
                 GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + bughandleDetailEntity.getAfter_handle_mp4_path() + ".jpg"), ivThumbnailAfter);
             }
             /**
              * 设备回装 （3张）
              */
-            if (!StringUtils.isEmpty(bughandleDetailEntity.getDevice_return_install_mp4_path())) {
+            if (!StrUtil.isEmpty(bughandleDetailEntity.getDevice_return_install_mp4_path())) {
                 rlThumbnailMachine.setVisibility(View.VISIBLE);
                 GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + bughandleDetailEntity.getDevice_return_install_mp4_path() + ".jpg"), ivThumbnailMachine);
             }
             /**
              * 故障恢复后表象 （3张）
              */
-            if (!StringUtils.isEmpty(bughandleDetailEntity.getRestore_mp4_path())) {
+            if (!StrUtil.isEmpty(bughandleDetailEntity.getRestore_mp4_path())) {
                 rlThumbnailFailure.setVisibility(View.VISIBLE);
                 GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + bughandleDetailEntity.getRestore_mp4_path() + ".jpg"), ivThumbnailFailure);
 
@@ -286,37 +286,37 @@ public class TroubleDetailLookPhotoActivity extends BaseActivity {
     private void initImgUrlList() {
 
         //故障表象照片
-        if (StringUtils.isValid(bughandleDetailEntity.getPresentationPictures())) {
+        if (StrUtil.isNotBlank(bughandleDetailEntity.getPresentationPictures())) {
             snpl_moment_add_photos.setVisibility(View.VISIBLE);
             String[] prePic = bughandleDetailEntity.getPresentationPictures().split(Constant.IMG_SPLIT);
             picList1.addAll(Stream.of(Arrays.asList(prePic)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
         }
         //工具及蓝布照片
-        if (StringUtils.isValid(bughandleDetailEntity.getToolPictures())) {
+        if (StrUtil.isNotBlank(bughandleDetailEntity.getToolPictures())) {
             snpl_monitor_add_photos.setVisibility(View.VISIBLE);
             String[] toolPic = bughandleDetailEntity.getToolPictures().split(Constant.IMG_SPLIT);
             picList2.addAll(Stream.of(Arrays.asList(toolPic)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
         }
         //故障点照片
-        if (StringUtils.isValid(bughandleDetailEntity.getPointPictures())) {
+        if (StrUtil.isNotBlank(bughandleDetailEntity.getPointPictures())) {
             snpl_tools_package_add_photos.setVisibility(View.VISIBLE);
             String[] ponitPic = bughandleDetailEntity.getPointPictures().split(Constant.IMG_SPLIT);
             picList3.addAll(Stream.of(Arrays.asList(ponitPic)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
         }
         //处理后现场照片
-        if (StringUtils.isValid(bughandleDetailEntity.getAfterHandlePictures())) {
+        if (StrUtil.isNotBlank(bughandleDetailEntity.getAfterHandlePictures())) {
             snpl_after_processing_locale.setVisibility(View.VISIBLE);
             String[] afterHandlePic = bughandleDetailEntity.getAfterHandlePictures().split(Constant.IMG_SPLIT);
             picList4.addAll(Stream.of(Arrays.asList(afterHandlePic)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
         }
         //设备回装照片
-        if (StringUtils.isValid(bughandleDetailEntity.getDeviceReturnInstallPictures())) {
+        if (StrUtil.isNotBlank(bughandleDetailEntity.getDeviceReturnInstallPictures())) {
             snpl_machine_fit_back.setVisibility(View.VISIBLE);
             String[] returnInstallPic = bughandleDetailEntity.getDeviceReturnInstallPictures().split(Constant.IMG_SPLIT);
             picList5.addAll(Stream.of(Arrays.asList(returnInstallPic)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
         }
         //故障恢复后表象照片
-        if (StringUtils.isValid(bughandleDetailEntity.getRestorePictures())) {
+        if (StrUtil.isNotBlank(bughandleDetailEntity.getRestorePictures())) {
             snpl_failure_recover_phenomena.setVisibility(View.VISIBLE);
             String[] restorePic = bughandleDetailEntity.getRestorePictures().split(Constant.IMG_SPLIT);
             picList6.addAll(Stream.of(Arrays.asList(restorePic)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
@@ -357,41 +357,41 @@ public class TroubleDetailLookPhotoActivity extends BaseActivity {
         }
         switch (requestCode) {
             case REQUEST_CODE_CHOOSE_PHOTO_1:
-                snpl_moment_add_photos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                snpl_moment_add_photos.addMoreData(BGAPhotoPickerActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_CHOOSE_PHOTO_2:
-                snpl_monitor_add_photos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                snpl_monitor_add_photos.addMoreData(BGAPhotoPickerActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_CHOOSE_PHOTO_3:
-                snpl_tools_package_add_photos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                snpl_tools_package_add_photos.addMoreData(BGAPhotoPickerActivity.getSelectedPhotos(data));
                 break;
             //2017年7月21日
             case REQUEST_CODE_CHOOSE_PHOTO_4:
-                snpl_after_processing_locale.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                snpl_after_processing_locale.addMoreData(BGAPhotoPickerActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_CHOOSE_PHOTO_5:
-                snpl_machine_fit_back.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                snpl_machine_fit_back.addMoreData(BGAPhotoPickerActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_CHOOSE_PHOTO_6:
-                snpl_failure_recover_phenomena.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                snpl_failure_recover_phenomena.addMoreData(BGAPhotoPickerActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_PHOTO_PREVIEW_1:
-                snpl_moment_add_photos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                snpl_moment_add_photos.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_PHOTO_PREVIEW_2:
-                snpl_monitor_add_photos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                snpl_monitor_add_photos.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_PHOTO_PREVIEW_3:
-                snpl_tools_package_add_photos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                snpl_tools_package_add_photos.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_PHOTO_PREVIEW_4:
-                snpl_after_processing_locale.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                snpl_after_processing_locale.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_PHOTO_PREVIEW_5:
-                snpl_machine_fit_back.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                snpl_machine_fit_back.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_PHOTO_PREVIEW_6:
-                snpl_failure_recover_phenomena.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                snpl_failure_recover_phenomena.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
                 break;
 //            case 10009:
 //                FillRepairInfoBean.BughandledetaillistBean.BughandledetailmateriallistBean bugBean = (FillRepairInfoBean.BughandledetaillistBean.BughandledetailmateriallistBean) data.getSerializableExtra("bean");

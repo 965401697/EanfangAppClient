@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.eanfang.biz.model.VideoBean;
+import com.eanfang.biz.model.bean.VideoBean;
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.ToastUtil;

@@ -8,15 +8,15 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.StringUtils;
 import com.eanfang.base.kit.V;
-import com.yaf.base.entity.ShopMaintenanceExamResultEntity;
+import com.eanfang.biz.model.entity.ShopMaintenanceExamResultEntity;
 
 import net.eanfang.client.R;
 
 import androidx.annotation.RequiresApi;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 
 
 /**
@@ -37,7 +37,7 @@ public class MaintenanceHandeCheckAdapter extends BaseQuickAdapter<ShopMaintenan
     protected void convert(BaseViewHolder helper, ShopMaintenanceExamResultEntity item) {
         //        将业务类型的图片显示到列表
         String imgUrl = V.v(() -> item.getPicture().split(",")[0]);
-        if (!StringUtils.isEmpty(imgUrl) && imgUrl.length() > 10) {
+        if (!StrUtil.isEmpty(imgUrl) && imgUrl.length() > 10) {
             GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + imgUrl),helper.getView(R.id.iv_upload));
         } else {
             GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER ),helper.getView(R.id.iv_upload));

@@ -19,12 +19,10 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.PickerSelectUtil;
-import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.picker.DoubleDatePickerDialog;
-import com.picker.common.util.DateUtils;
-import com.yaf.base.entity.EducationExperienceEntity;
+import com.eanfang.util.DoubleDatePickerDialog;
+import com.eanfang.biz.model.entity.EducationExperienceEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
@@ -39,6 +37,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
+import cn.qqtheme.framework.util.DateUtils;
 
 /**
  * 教育经历
@@ -200,7 +200,7 @@ public class AddEducationHistoryActivity extends BaseWorkeActivity {
         entity.setScore(chengJi.getText().toString().trim());
         entity.setDiploma(GetConstDataUtils.getDiplomaList().indexOf(tvEducation.getText().toString().trim()));
         entity.setCertificateNumber(etNum.getText().toString().trim());
-        if (!StringUtils.isEmpty(tvTime.getText().toString().trim())) {
+        if (!StrUtil.isEmpty(tvTime.getText().toString().trim())) {
             entity.setBeginTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[0], "yyyy-M-dd"));
             entity.setEndTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[1], "yyyy-M-dd"));
         }

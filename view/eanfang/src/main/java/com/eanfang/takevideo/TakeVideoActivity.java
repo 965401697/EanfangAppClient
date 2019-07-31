@@ -44,6 +44,7 @@ import java.util.Stack;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author guanluocang
@@ -171,7 +172,7 @@ public class TakeVideoActivity extends BaseActivity implements PLRecordStateList
 
         mVideoPahth = getIntent().getStringExtra("videoPath");
         mWorkType = getIntent().getStringExtra("worker_add");
-        if (StringUtils.isEmpty(mVideoPahth)) {
+        if (StrUtil.isEmpty(mVideoPahth)) {
             showToast("视频拍摄路径为空");
             finishSelf();
             return;

@@ -25,13 +25,12 @@ import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.WorkerInfoBean;
+import com.eanfang.biz.model.bean.WorkerInfoBean;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.PickerSelectUtil;
-import com.eanfang.util.StringUtils;
 import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.worker.R;
@@ -248,10 +247,10 @@ public class AuthWorkerInfoActivity extends BaseWorkeActivity {
     private void fillData() {
         String contactName = WorkerApplication.get().getLoginBean().getAccount().getRealName();
         String mobile = WorkerApplication.get().getLoginBean().getAccount().getMobile();
-        if (!StringUtils.isEmpty(contactName)) {
+        if (!StrUtil.isEmpty(contactName)) {
             tvContactName.setText(contactName);
         }
-        if (!StringUtils.isEmpty(mobile)) {
+        if (!StrUtil.isEmpty(mobile)) {
             tvContactPhone.setText(mobile);
         }
         if (workerInfoBean != null) {
@@ -270,14 +269,14 @@ public class AuthWorkerInfoActivity extends BaseWorkeActivity {
             if (workerInfoBean.getPayType() >= 0) {
                 tvPayType.setText(GetConstDataUtils.getPayTypeList().get(workerInfoBean.getPayType()));
             }
-            if (!StringUtils.isEmpty(workerInfoBean.getPayAccount())) {
+            if (!StrUtil.isEmpty(workerInfoBean.getPayAccount())) {
                 etPayAccount.setText(workerInfoBean.getPayAccount());
             }
 
-            if (!StringUtils.isEmpty(workerInfoBean.getAvatarPhoto())) {
+            if (!StrUtil.isEmpty(workerInfoBean.getAvatarPhoto())) {
                 GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + workerInfoBean.getAvatarPhoto()),ivHeader);
             }
-            if (!StringUtils.isEmpty(workerInfoBean.getIntro())) {
+            if (!StrUtil.isEmpty(workerInfoBean.getIntro())) {
                 etIntro.setText(workerInfoBean.getIntro());
             }
         }
@@ -290,39 +289,39 @@ public class AuthWorkerInfoActivity extends BaseWorkeActivity {
         String mUrgentPhone = etUrgentPhone.getText().toString().trim();
         String mEtIntro = etIntro.getText().toString().trim();
 
-        if (StringUtils.isEmpty(workerInfoBean.getAvatarPhoto())) {
+        if (StrUtil.isEmpty(workerInfoBean.getAvatarPhoto())) {
             showToast("请选择技师头像");
             return;
-        } else if (StringUtils.isEmpty(workerInfoBean.getAvatarPhoto())) {
+        } else if (StrUtil.isEmpty(workerInfoBean.getAvatarPhoto())) {
             workerInfoBean.setAvatarPhoto(workerInfoBean.getAvatarPhoto());
         }
 
-        if (StringUtils.isEmpty(mUrgentName)) {
+        if (StrUtil.isEmpty(mUrgentName)) {
             showToast("请输入紧急联系人");
             return;
         }
-        if (StringUtils.isEmpty(mUrgentPhone)) {
+        if (StrUtil.isEmpty(mUrgentPhone)) {
             showToast("请输入紧急联系人电话");
             return;
         }
-        if (StringUtils.isEmpty(mPayAccount)) {
+        if (StrUtil.isEmpty(mPayAccount)) {
             showToast("请输入支付账户");
             return;
         }
-        if (StringUtils.isEmpty(mEtIntro)) {
+        if (StrUtil.isEmpty(mEtIntro)) {
             showToast("请填写个人简介");
             return;
         }
 
-        if (StringUtils.isEmpty(workerInfoBean.getIdCardFront())) {
+        if (StrUtil.isEmpty(workerInfoBean.getIdCardFront())) {
             showToast("请添加身份证正面照");
             return;
         }
-        if (StringUtils.isEmpty(workerInfoBean.getIdCardHand())) {
+        if (StrUtil.isEmpty(workerInfoBean.getIdCardHand())) {
             showToast("请添加手持身份证照片");
             return;
         }
-        if (StringUtils.isEmpty(workerInfoBean.getIdCardSide())) {
+        if (StrUtil.isEmpty(workerInfoBean.getIdCardSide())) {
             showToast("请添加身份证反面照");
             return;
         }

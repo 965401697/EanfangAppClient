@@ -5,16 +5,16 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.eanfang.biz.model.QuotationBean;
+import com.eanfang.biz.model.bean.QuotationBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PickerSelectUtil;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * Created by MrHou
@@ -81,11 +81,11 @@ public class QuotationPartsActivity extends BaseActivity {
     public boolean checkInfo() {
 
 
-        if (StringUtils.isEmpty(etPartsName.getText().toString().trim())) {
+        if (StrUtil.isEmpty(etPartsName.getText().toString().trim())) {
             showToast("请输入配件名称");
             return false;
         }
-        if (StringUtils.isEmpty(etAmount.getText().toString().trim())) {
+        if (StrUtil.isEmpty(etAmount.getText().toString().trim())) {
             showToast("请输入数量");
             return false;
         }
@@ -93,11 +93,11 @@ public class QuotationPartsActivity extends BaseActivity {
             showToast("请先选择单位");
             return false;
         }
-        if (StringUtils.isEmpty(etPrice.getText().toString().trim())) {
+        if (StrUtil.isEmpty(etPrice.getText().toString().trim())) {
             showToast("请输入价钱");
             return false;
         }
-        if (StringUtils.isEmpty(etPartSpeciication.getText().toString().trim())) {
+        if (StrUtil.isEmpty(etPartSpeciication.getText().toString().trim())) {
             showToast("请输入配件规格");
             return false;
         }

@@ -18,9 +18,8 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.base.kit.rx.RxPerm;
-import com.eanfang.util.StringUtils;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.yaf.base.entity.ExpertsCertificationEntity;
+import com.eanfang.biz.model.entity.ExpertsCertificationEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
@@ -101,10 +100,10 @@ public class SpecialistCertificationActivity extends BaseWorkeActivity {
         String contactName = WorkerApplication.get().getLoginBean().getAccount().getRealName();
         String mobile = WorkerApplication.get().getLoginBean().getAccount().getMobile();
 
-        if (!StringUtils.isEmpty(contactName)) {
+        if (!StrUtil.isEmpty(contactName)) {
             tvContactName.setText(contactName);
         }
-        if (!StringUtils.isEmpty(mobile)) {
+        if (!StrUtil.isEmpty(mobile)) {
             tvContactPhone.setText(mobile);
         }
         etCardId.setText(WorkerApplication.get().getLoginBean().getAccount().getIdCard());
@@ -120,10 +119,10 @@ public class SpecialistCertificationActivity extends BaseWorkeActivity {
     private void initViews() {
         String contactName = WorkerApplication.get().getLoginBean().getAccount().getRealName();
         String mobile = WorkerApplication.get().getLoginBean().getAccount().getMobile();
-        if (!StringUtils.isEmpty(contactName)) {
+        if (!StrUtil.isEmpty(contactName)) {
             tvContactName.setText(contactName);
         }
-        if (!StringUtils.isEmpty(mobile)) {
+        if (!StrUtil.isEmpty(mobile)) {
             tvContactPhone.setText(mobile);
         }
     }
@@ -156,16 +155,16 @@ public class SpecialistCertificationActivity extends BaseWorkeActivity {
         String cardId = etCardId.getText().toString().trim();
         String info = etIntro.getText().toString().trim();
 
-        if (StringUtils.isEmpty(mExpertsCertificationEntity.getAvatarPhoto())) {
+        if (StrUtil.isEmpty(mExpertsCertificationEntity.getAvatarPhoto())) {
             showToast("请选择技师头像");
             return;
         }
 
-        if (StringUtils.isEmpty(cardId)) {
+        if (StrUtil.isEmpty(cardId)) {
             showToast("请输入身份证号");
             return;
         }
-        if (StringUtils.isEmpty(info)) {
+        if (StrUtil.isEmpty(info)) {
             showToast("请输入个人简介");
             return;
         }

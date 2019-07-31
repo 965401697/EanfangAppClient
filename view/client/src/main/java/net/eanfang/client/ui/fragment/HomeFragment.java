@@ -17,14 +17,13 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.base.widget.controltool.ControlToolView;
-import com.eanfang.biz.model.AllMessageBean;
-import com.eanfang.biz.model.datastatistics.HomeDatastisticeBean;
+import com.eanfang.biz.model.bean.AllMessageBean;
+import com.eanfang.biz.model.bean.datastatistics.HomeDatastisticeBean;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.StringUtils;
 import com.eanfang.witget.BannerView;
 import com.eanfang.witget.HomeScanPopWindow;
 import com.flyco.tablayout.SlidingTabLayout;
@@ -53,6 +52,7 @@ import java.util.Date;
 import java.util.List;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 
 import static com.eanfang.base.kit.V.v;
 
@@ -283,7 +283,7 @@ public class HomeFragment extends BaseFragment {
         findViewById(R.id.tv_out_post).setOnClickListener(view -> {
             JSONObject jsonObject1 = CacheKit.get().get("subAccountInfoList", JSONObject.class);
             String value = jsonObject1 != null ? jsonObject1.getString(String.valueOf(ClientApplication.get().getCompanyId())) : null;
-            if (!StringUtils.isEmpty(value)) {
+            if (!StrUtil.isEmpty(value)) {
                 ClientApplication.get().set("YingShiYunToken", value);
                 startActivity(new Intent(getActivity(), LeavePostHomeActivity.class));
             } else {

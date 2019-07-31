@@ -19,9 +19,8 @@ import com.eanfang.base.kit.picture.picture.PictureRecycleView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.PhotoUtils;
-import com.eanfang.util.StringUtils;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.yaf.base.entity.TechWorkerVerifyEntity;
+import com.eanfang.biz.model.entity.TechWorkerVerifyEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
@@ -37,6 +36,7 @@ import java.util.regex.Pattern;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.util.StrUtil;
 
 public class OtherDataActivity extends BaseWorkeActivity {
 
@@ -85,19 +85,19 @@ public class OtherDataActivity extends BaseWorkeActivity {
     }
 
     private void fillData() {
-        if (StringUtils.isEmpty(mTechWorkerVerifyEntity.geteMail()) | mTechWorkerVerifyEntity.geteMail() == null) {
+        if (StrUtil.isEmpty(mTechWorkerVerifyEntity.geteMail()) | mTechWorkerVerifyEntity.geteMail() == null) {
 
         } else {
             yxEt.setText(mTechWorkerVerifyEntity.geteMail());
         }
-        if (StringUtils.isEmpty(mTechWorkerVerifyEntity.getContactName()) | mTechWorkerVerifyEntity.getContactName() == null) {
+        if (StrUtil.isEmpty(mTechWorkerVerifyEntity.getContactName()) | mTechWorkerVerifyEntity.getContactName() == null) {
 
         } else {
             etUrgentName.setText(mTechWorkerVerifyEntity.getContactName());
         }
         etUrgentPhone.setText(mTechWorkerVerifyEntity.getContactPhone());
 
-        if (!StringUtils.isEmpty(mTechWorkerVerifyEntity.getCrimePic())) {
+        if (!StrUtil.isEmpty(mTechWorkerVerifyEntity.getCrimePic())) {
             picList_crim=recycleviewCrim.setData(mTechWorkerVerifyEntity.getCrimePic());
             recycleviewCrim.showImagev(picList_crim,listener_crim);
             recycleviewCrim.isShow(true,picList_crim);
@@ -105,7 +105,7 @@ public class OtherDataActivity extends BaseWorkeActivity {
             recycleviewCrim.addImagev(listener_crim);
         }
 
-        if (!StringUtils.isEmpty(mTechWorkerVerifyEntity.getAccidentPics())) {
+        if (!StrUtil.isEmpty(mTechWorkerVerifyEntity.getAccidentPics())) {
             picList_accident=recycleviewAccident.setData(mTechWorkerVerifyEntity.getAccidentPics());
             recycleviewAccident.showImagev(picList_accident,listener_accident);
             recycleviewAccident.isShow(true,picList_accident);
@@ -130,7 +130,7 @@ public class OtherDataActivity extends BaseWorkeActivity {
             showToast("请输入正确的电子邮箱");
             return;
         }
-        if (StringUtils.isEmpty(mUrgentName)) {
+        if (StrUtil.isEmpty(mUrgentName)) {
             showToast("请输入紧急联系人");
             return;
         }

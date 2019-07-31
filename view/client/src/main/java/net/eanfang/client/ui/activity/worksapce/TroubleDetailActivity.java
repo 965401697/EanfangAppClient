@@ -16,20 +16,18 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.biz.model.entity.BughandleDetailEntity;
+import com.eanfang.biz.model.entity.TransferLogEntity;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.TemplateBean;
+import com.eanfang.biz.model.bean.TemplateBean;
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.StringUtils;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
-import com.yaf.base.entity.BughandleConfirmEntity;
-import com.yaf.base.entity.BughandleDetailEntity;
-import com.yaf.base.entity.TransferLogEntity;
+import com.eanfang.biz.model.entity.BughandleConfirmEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.im.SelectIMContactActivity;
@@ -48,7 +46,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * Created by MrHou
@@ -323,10 +323,10 @@ public class TroubleDetailActivity extends BaseClientActivity {
         /**
          *电视机墙正面照 拍摄视频
          * */
-        if (!StringUtils.isEmpty(bughandleConfirmEntity.getFront_mp4_path())) {
+        if (!StrUtil.isEmpty(bughandleConfirmEntity.getFront_mp4_path())) {
             rlThumbnailMoment.setVisibility(View.VISIBLE);
             GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + bughandleConfirmEntity.getFront_mp4_path() + ".jpg"),ivThumbnailMoment);
-            if (!StringUtils.isValid(bughandleConfirmEntity.getFrontPictures())) {
+            if (!StrUtil.isNotBlank(bughandleConfirmEntity.getFrontPictures())) {
                 snpl_moment_add_photos.setVisibility(View.GONE);
             }
         } else {
@@ -341,9 +341,9 @@ public class TroubleDetailActivity extends BaseClientActivity {
         /**
          *电视机墙背面照 拍摄视频
          * */
-        if (!StringUtils.isEmpty(bughandleConfirmEntity.getReverse_side_mp4_path())) {
+        if (!StrUtil.isEmpty(bughandleConfirmEntity.getReverse_side_mp4_path())) {
             rlThumbnailMonitor.setVisibility(View.VISIBLE);
-            if (!StringUtils.isValid(bughandleConfirmEntity.getReverseSidePictures())) {
+            if (!StrUtil.isNotBlank(bughandleConfirmEntity.getReverseSidePictures())) {
                 snpl_monitor_add_photos.setVisibility(View.GONE);
             }
             GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + bughandleConfirmEntity.getReverse_side_mp4_path() + ".jpg"),ivThumbnailMonitor);
@@ -359,10 +359,10 @@ public class TroubleDetailActivity extends BaseClientActivity {
         /**
          *机柜照 拍摄视频
          * */
-        if (!StringUtils.isEmpty(bughandleConfirmEntity.getEquipment_cabinet_mp4_path())) {
+        if (!StrUtil.isEmpty(bughandleConfirmEntity.getEquipment_cabinet_mp4_path())) {
             rlThumbnailToolsPackage.setVisibility(View.VISIBLE);
             GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + bughandleConfirmEntity.getEquipment_cabinet_mp4_path() + ".jpg"),ivThumbnailToolsPackage);
-            if (!StringUtils.isValid(bughandleConfirmEntity.getEquipmentCabinetPictures())) {
+            if (!StrUtil.isNotBlank(bughandleConfirmEntity.getEquipmentCabinetPictures())) {
                 snpl_tools_package_add_photos.setVisibility(View.GONE);
             }
         } else {

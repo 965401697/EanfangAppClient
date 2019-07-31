@@ -822,7 +822,7 @@
                         android:textColor="@color/roll_content"
                         android:textSize="@dimen/textSize_12" />
 
-                    <com.daimajia.numberprogressbar.DaiMaJiaNumberProgressBar
+                    <com.daimajia.numberprogressbar.NumberProgressBar
                         android:id="@+id/iv_haopinglv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

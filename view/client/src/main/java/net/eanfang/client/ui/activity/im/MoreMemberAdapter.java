@@ -6,7 +6,8 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.eanfang.biz.model.GroupDetailBean;
+import com.eanfang.biz.model.bean.GroupDetailBean;
+import com.eanfang.biz.model.entity.AccountEntity;
 import com.eanfang.util.GlideUtil;
 
 import net.eanfang.client.R;
@@ -18,7 +19,7 @@ import net.eanfang.client.R;
  * @QQ: 373946991
  * @Description: 全部群组成员的adapter
  */
-public class MoreMemberAdapter extends BaseQuickAdapter<GroupDetailBean.ListBean.AccountEntityBean, BaseViewHolder> {
+public class MoreMemberAdapter extends BaseQuickAdapter<AccountEntity, BaseViewHolder> {
 
     private Context context;
     public MoreMemberAdapter(Context context,int layoutResId) {
@@ -27,7 +28,7 @@ public class MoreMemberAdapter extends BaseQuickAdapter<GroupDetailBean.ListBean
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, GroupDetailBean.ListBean.AccountEntityBean item) {
+    protected void convert(BaseViewHolder helper, AccountEntity item) {
         GlideUtil.intoImageView(context,BuildConfig.OSS_SERVER + item.getAvatar(),helper.getView(R.id.iv_friend_header));
         //根据position获取首字母作为目录catalog
         String catalog = item.getFirstLetter();

@@ -16,11 +16,11 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.PageUtils;
+import com.eanfang.biz.model.bean.PageUtils;
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.util.QueryEntry;
-import com.yaf.base.entity.BughandleConfirmEntity;
+import com.eanfang.biz.model.QueryEntry;
+import com.eanfang.biz.model.entity.BughandleConfirmEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.repair.seefaultdetail.PsTroubleDetailActivity;

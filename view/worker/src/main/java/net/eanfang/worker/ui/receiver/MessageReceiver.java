@@ -18,6 +18,8 @@ import com.tencent.android.tpush.XGPushRegisterResult;
 import com.tencent.android.tpush.XGPushShowedResult;
 import com.tencent.android.tpush.XGPushTextMessage;
 
+import cn.hutool.core.util.StrUtil;
+
 /**
  * Created by MrHou
  *
@@ -45,9 +47,9 @@ public class MessageReceiver extends XGPushBaseReceiver {
         Var.get("ContactListFragment.messageCount").setVar(Var.get("ContactListFragment.messageCount").getVar() + 1);
 
         JSONObject jsonObject = JSON.parseObject(notifiShowedRlt.getCustomContent());
-        if (!StringUtils.isEmpty(jsonObject.toJSONString())) {
+        if (!StrUtil.isEmpty(jsonObject.toJSONString())) {
             System.err.println("---------------------jsonObject:" + jsonObject.toJSONString());
-            if (jsonObject.containsKey("audio") && !StringUtils.isEmpty(jsonObject.getString("audio"))) {
+            if (jsonObject.containsKey("audio") && !StrUtil.isEmpty(jsonObject.getString("audio"))) {
                 boolean isOpen = CacheKit.get().getBool("XGNoticeVoice", true);
                 if (isOpen) {
                     SynthesizerPresenter.getInstance().start(jsonObject.getString("audio"));

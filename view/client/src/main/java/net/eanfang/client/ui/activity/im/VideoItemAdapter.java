@@ -6,7 +6,7 @@ import android.widget.CheckBox;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.biz.model.VideoBean;
+import com.eanfang.biz.model.bean.VideoBean;
 import com.eanfang.util.GlideUtil;
 
 import net.eanfang.client.R;

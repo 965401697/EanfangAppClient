@@ -11,18 +11,16 @@ import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.biz.model.security.SecurityFoucsBean;
-import com.eanfang.biz.model.security.SecurityLikeBean;
-import com.eanfang.biz.model.security.SecurityListBean;
+import com.eanfang.bean.security.SecurityFoucsBean;
+import com.eanfang.bean.security.SecurityLikeBean;
+import com.eanfang.bean.security.SecurityListBean;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.security.SecurityLikeStatusBean;
+import com.eanfang.bean.security.SecurityLikeStatusBean;
+import com.eanfang.util.BGASpaceItemDecoration;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.QueryEntry;
-import com.eanfang.util.StringUtils;
-import com.photopicker.com.imageloader.BGARVOnScrollListener;
-import com.photopicker.com.util.BGASpaceItemDecoration;
+import com.eanfang.biz.model.QueryEntry;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
@@ -34,6 +32,9 @@ import net.eanfang.worker.util.ImagePerviewUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import cn.bingoogolapple.photopicker.imageloader.BGARVOnScrollListener;
+import cn.hutool.core.util.StrUtil;
 
 public class SecurityHotFragment extends TemplateItemListFragment implements SecurityListAdapter.OnPhotoClickListener {
 
@@ -199,7 +200,7 @@ public class SecurityHotFragment extends TemplateItemListFragment implements Sec
 
             bundle.putString("id", String.valueOf(listBean.getSpcId()));
             bundle.putString("orderNum", listBean.getPublisherOrg().getOrgName());
-            if (!StringUtils.isEmpty(listBean.getSpcImg())) {
+            if (!StrUtil.isEmpty(listBean.getSpcImg())) {
                 bundle.putString("picUrl", listBean.getSpcImg().split(",")[0]);
             }
             bundle.putString("creatTime", listBean.getSpcContent());

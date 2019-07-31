@@ -102,7 +102,7 @@
             android:layout_marginLeft="@dimen/dimen_40"
             android:layout_marginRight="@dimen/dimen_40"
             android:orientation="horizontal">
-            <com.photopicker.com.widget.BGASortableNinePhotoLayout
+            <cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout
                 android:id="@+id/snpl_pic"
                 android:layout_marginLeft="@dimen/dimen_40"
                 android:layout_marginRight="@dimen/dimen_40"

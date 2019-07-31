@@ -16,8 +16,19 @@ import cn.hutool.core.util.StrUtil;
 
 public class LoadKit {
 
-    public static Dialog dialog() {
-        return dialog(null, null);
+//    public static Dialog dialog() {
+//        return dialog(null, null);
+//    }
+
+    /**
+     * 获取一个弹窗loading实例
+     * 默认提示文字   加载中...
+     *
+     * @param context context
+     * @return Dialog
+     */
+    public static Dialog dialog(Context context) {
+        return DialogLoading.createLoadingDialog(context != null ? context : ContextHolder.getContext(), "加载中...");
     }
 
     /**
@@ -28,7 +39,7 @@ public class LoadKit {
      * @return Dialog
      */
     public static Dialog dialog(Context context, String msg) {
-        return DialogLoading.createLoadingDialog(context != null ? context : ContextHolder.getContext(), StrUtil.isNotEmpty(msg) ? msg : "加载中...");
+        return DialogLoading.createLoadingDialog(context != null ? context : ContextHolder.getContext(), msg);
     }
 
     /**

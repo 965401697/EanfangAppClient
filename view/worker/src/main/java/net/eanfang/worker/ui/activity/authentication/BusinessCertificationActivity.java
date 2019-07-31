@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,14 +24,13 @@ import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.widget.customview.LtReView;
-import com.eanfang.biz.model.AuthCompanyBaseInfoBean;
-import com.eanfang.biz.model.ZdBusinessCertification;
+import com.eanfang.biz.model.bean.AuthCompanyBaseInfoBean;
+import com.eanfang.biz.model.bean.ZdBusinessCertification;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.RecognizeService;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.fragment.ContactsFragment;
@@ -114,19 +112,19 @@ public class BusinessCertificationActivity extends BaseActivity {
             showToast("请上传正确的营业执照");
         } else if ("".equals(infoBean.getLicensePic()) || infoBean.getLicensePic() == null) {
             showToast("请点击加号,上传营业执照");
-        } else if (StringUtils.isEmpty(dwMcLrv.getText().toString().trim())) {
+        } else if (StrUtil.isEmpty(dwMcLrv.getText().toString().trim())) {
             showToast("请输入单位名称");
-        } else if (StringUtils.isEmpty(nshString)) {
+        } else if (StrUtil.isEmpty(nshString)) {
             showToast("纳税人识别号");
-        } else if (StringUtils.isEmpty(zcDzLrv.getText().toString().trim())) {
+        } else if (StrUtil.isEmpty(zcDzLrv.getText().toString().trim())) {
             showToast("请输入注册地址");
-        } else if (StringUtils.isEmpty(frDbLrv.getText().toString().trim())) {
+        } else if (StrUtil.isEmpty(frDbLrv.getText().toString().trim())) {
             showToast("请输入法人代表");
-        } else if (StringUtils.isEmpty(zcZjLrv.getText().toString().trim())) {
+        } else if (StrUtil.isEmpty(zcZjLrv.getText().toString().trim())) {
             showToast("请输入注册资金");
-        } else if (StringUtils.isEmpty(clRqLrv.getText().toString().trim())) {
+        } else if (StrUtil.isEmpty(clRqLrv.getText().toString().trim())) {
             showToast("请选择成立日期");
-        } else if (StringUtils.isEmpty(jzRqLrv.getText().toString().trim())) {
+        } else if (StrUtil.isEmpty(jzRqLrv.getText().toString().trim())) {
             showToast("营业截至日期");
         } else if (!nshLength.contains(nshString.length())) {
             showToast("纳税人识别号有误");
@@ -163,7 +161,7 @@ public class BusinessCertificationActivity extends BaseActivity {
 
     private void setRq() {
         Date date;
-        if (!StringUtils.isEmpty(clRqLrv.getText())) {
+        if (!StrUtil.isEmpty(clRqLrv.getText())) {
             date = DateUtil.parse(clRqLrv.getText().toString());
         } else {
             date = new Date();

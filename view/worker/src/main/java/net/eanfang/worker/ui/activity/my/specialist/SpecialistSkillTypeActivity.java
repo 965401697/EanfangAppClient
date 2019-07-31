@@ -19,16 +19,13 @@ import com.eanfang.config.Config;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.ExpertVerifySkillBean;
-import com.eanfang.biz.model.GrantChange;
+import com.eanfang.biz.model.bean.ExpertVerifySkillBean;
+import com.eanfang.biz.model.bean.GrantChange;
 import com.eanfang.biz.model.entity.BaseDataEntity;
 
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PhotoUtils;
-import com.eanfang.util.StringUtils;
-import com.photopicker.com.activity.BGAPhotoPickerActivity;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
-import com.yaf.base.entity.ExpertsCertificationEntity;
+import com.eanfang.biz.model.entity.ExpertsCertificationEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
@@ -45,6 +42,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
+import cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout;
+import cn.hutool.core.util.StrUtil;
 
 
 public class SpecialistSkillTypeActivity extends BaseWorkerActivity {
@@ -185,12 +185,12 @@ public class SpecialistSkillTypeActivity extends BaseWorkerActivity {
 
     private void doVerify() {
         if (llFactory.getVisibility() == View.VISIBLE) {
-            if (StringUtils.isEmpty(etFactoryName.getText().toString().trim())) {
+            if (StrUtil.isEmpty(etFactoryName.getText().toString().trim())) {
                 showToast("请输入厂商名称");
                 return;
             }
             impowerUrl = PhotoUtils.getPhotoUrl("", snplImpower, uploadMap, false);
-            if (StringUtils.isEmpty(impowerUrl)) {
+            if (StrUtil.isEmpty(impowerUrl)) {
                 showToast("请选择授权书");
                 return;
             }
@@ -292,7 +292,7 @@ public class SpecialistSkillTypeActivity extends BaseWorkerActivity {
 
         switch (requestCode) {
             case IMPOWER_PHOTO_CHOSE:
-                snplImpower.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                snplImpower.addMoreData(BGAPhotoPickerActivity.getSelectedPhotos(data));
                 break;
             default:
         }

@@ -5,11 +5,12 @@ import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.biz.model.FaultListBean;
+import com.eanfang.biz.model.bean.FaultListBean;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
+
+import cn.hutool.core.util.StrUtil;
 
 
 /**
@@ -27,7 +28,7 @@ public class FaultLibraryAdapter extends BaseQuickAdapter<FaultListBean.ListBean
     @Override
     protected void convert(BaseViewHolder helper, FaultListBean.ListBean item) {
         ImageView imagev = helper.getView(R.id.iv_faultPic);
-        if (!StringUtils.isEmpty(item.getPictures())) {
+        if (!StrUtil.isEmpty(item.getPictures())) {
             String[] imgs = item.getPictures().split(",");
             GlideUtil.intoImageView(mContext,Uri.parse(com.eanfang.BuildConfig.OSS_SERVER  + imgs[0]),imagev);
         }

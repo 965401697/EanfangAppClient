@@ -16,7 +16,7 @@
 
         <attr name="progress_text_offset" format="dimension"/>
 
-        <attr name="progress_text_visibility" format="enum">
+        <attr name="progress_text_visibility_update" format="enum">
             <enum name="visible" value="0"/>
             <enum name="invisible" value="1"/>
         </attr>

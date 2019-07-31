@@ -22,6 +22,7 @@ import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author liangkailun
@@ -108,8 +109,8 @@ public class CashOurActivity extends BaseActivity {
     }
 
     private boolean checkDateFail() {
-        return StringUtils.isEmpty(mEtCode.getText())
-                || StringUtils.isEmpty(mEtRealName.getText())
-                || StringUtils.isEmpty(mEtPhoneNumber.getText());
+        return StrUtil.isEmpty(mEtCode.getText())
+                || StrUtil.isEmpty(mEtRealName.getText())
+                || StrUtil.isEmpty(mEtPhoneNumber.getText());
     }
 }

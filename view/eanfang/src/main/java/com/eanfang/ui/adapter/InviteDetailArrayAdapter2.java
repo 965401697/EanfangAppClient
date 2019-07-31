@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.eanfang.R;
-import com.eanfang.model.InviteDetailBean;
+import com.eanfang.biz.model.bean.InviteDetailBean;
 
 import java.util.List;
 

@@ -4,7 +4,7 @@ import android.os.Bundle;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.yaf.base.entity.CustDeviceParamEntity;
+import com.eanfang.biz.model.entity.CustDeviceParamEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;

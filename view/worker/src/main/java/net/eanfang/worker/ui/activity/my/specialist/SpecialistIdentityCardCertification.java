@@ -16,9 +16,8 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.base.kit.rx.RxPerm;
-import com.eanfang.util.StringUtils;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.yaf.base.entity.ExpertsCertificationEntity;
+import com.eanfang.biz.model.entity.ExpertsCertificationEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
@@ -138,15 +137,15 @@ public class SpecialistIdentityCardCertification extends BaseWorkeActivity {
      * 保存照片
      */
     private void doSave() {
-        if (StringUtils.isEmpty(mExpertsCertificationEntity.getIdCardFront())) {
+        if (StrUtil.isEmpty(mExpertsCertificationEntity.getIdCardFront())) {
             showToast("请添加身份证正面照");
             return;
         }
-        if (StringUtils.isEmpty(mExpertsCertificationEntity.getIdCardHand())) {
+        if (StrUtil.isEmpty(mExpertsCertificationEntity.getIdCardHand())) {
             showToast("请添加手持身份证照片");
             return;
         }
-        if (StringUtils.isEmpty(mExpertsCertificationEntity.getIdCardSide())) {
+        if (StrUtil.isEmpty(mExpertsCertificationEntity.getIdCardSide())) {
             showToast("请添加身份证反面照");
             return;
         }

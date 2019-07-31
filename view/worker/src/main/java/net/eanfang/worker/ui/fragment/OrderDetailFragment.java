@@ -16,6 +16,8 @@ import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.base.kit.V;
+import com.eanfang.biz.model.entity.RepairBugEntity;
+import com.eanfang.biz.model.entity.RepairOrderEntity;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -26,8 +28,6 @@ import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.NumberUtil;
 import com.eanfang.util.PermKit;
-import com.yaf.base.entity.RepairBugEntity;
-import com.yaf.base.entity.RepairOrderEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.repair.FaultDetailActivity;

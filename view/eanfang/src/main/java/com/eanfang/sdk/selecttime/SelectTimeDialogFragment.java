@@ -21,6 +21,7 @@ import java.util.Date;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author guanluocang
@@ -117,7 +118,7 @@ public class SelectTimeDialogFragment extends DialogFragment implements OnDateSe
     public DialogInterface.OnClickListener onClickListener = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialogInterface, int i) {
-            if (StringUtils.isEmpty(mCalendarTime)) {
+            if (StrUtil.isEmpty(mCalendarTime)) {
                 mCalendarTime = (new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
             }
             int hour = timePicker.getCurrentHour();

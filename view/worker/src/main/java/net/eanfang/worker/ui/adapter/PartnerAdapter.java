@@ -2,7 +2,7 @@ package net.eanfang.worker.ui.adapter;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.biz.model.PartnerBean;
+import com.eanfang.biz.model.bean.PartnerBean;
 
 import net.eanfang.worker.R;
 

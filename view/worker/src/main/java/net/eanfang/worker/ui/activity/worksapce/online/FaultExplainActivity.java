@@ -19,9 +19,7 @@ import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.StringUtils;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
-import com.yaf.base.entity.AnswerListWithQuestionBean;
+import com.eanfang.biz.model.bean.AnswerListWithQuestionBean;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
@@ -33,6 +31,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * 故障解答
@@ -217,7 +217,7 @@ public class FaultExplainActivity extends BaseWorkerActivity {
                             tvMajor.setText("系统:" + bean.getQuestion().getBusinessName() + "      品牌:" + bean.getQuestion().getModelName());
                             //snplPhotos.setDelegate(new BGASortableDelegate(this));
                             tvDesc.setText(bean.getQuestion().getQuestionContent());
-                            if (!StringUtils.isEmpty(bean.getQuestion().getQuestionPics())) {
+                            if (!StrUtil.isEmpty(bean.getQuestion().getQuestionPics())) {
                                 String[] pics = bean.getQuestion().getQuestionPics().split(",");
                                 picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
                                 snplPic.setDelegate(new BGASortableDelegate(FaultExplainActivity.this, REQUEST_CODE_CHOOSE_PHOTO, REQUEST_CODE_CHOOSE_PHOTO_two));

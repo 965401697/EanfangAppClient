@@ -30,6 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.hutool.core.util.StrUtil;
 import lombok.Getter;
 
 /**
@@ -90,12 +91,12 @@ public class TenderCommitViewModle extends BaseViewModel {
      * 完善资料
      */
     public boolean doCheckInfo() {
-        if (StringUtils.isEmpty(tenderCommitBinding.tvBudget.getText())) {
+        if (StrUtil.isEmpty(tenderCommitBinding.tvBudget.getText())) {
             showToast("请填写预期预算");
             return false;
         }
 
-        if (StringUtils.isEmpty(tenderCommitBinding.etPlan.getText())) {
+        if (StrUtil.isEmpty(tenderCommitBinding.etPlan.getText())) {
             showToast("请填写施工方案");
             return false;
         }

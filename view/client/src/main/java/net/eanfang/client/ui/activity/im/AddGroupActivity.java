@@ -10,10 +10,11 @@ import android.widget.TextView;
 
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.biz.model.bean.GroupDetailBean;
+import com.eanfang.biz.model.entity.SysGroupUserEntity;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.GroupDetailBean;
-import com.eanfang.biz.model.GroupsBean;
+import com.eanfang.biz.model.bean.GroupsBean;
 
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.ToastUtil;
@@ -119,7 +120,7 @@ public class AddGroupActivity extends BaseClientActivity {
                         return;
                     }
 
-                    for (GroupDetailBean.ListBean b : bean.getList()) {
+                    for (SysGroupUserEntity b : bean.getList()) {
                         mUserIconList.add(b.getAccountEntity().getAvatar());
                     }
 

@@ -271,6 +271,8 @@ public class CacheKit extends LruCache<String, Object> {
             FileUtil.mkdir(path);
         }
 
+        String oldPath = context.getExternalFilesDir(Environment.getDataDirectory().getAbsolutePath()).getAbsolutePath();
+
         return new File(path + File.separator);
     }
 

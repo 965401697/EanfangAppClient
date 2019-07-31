@@ -29,10 +29,9 @@ import androidx.core.content.ContextCompat;
 import com.eanfang.R;
 import com.eanfang.base.BaseApplication;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.kit.loading.LoadKit;
 import com.eanfang.base.network.config.HttpConfig;
 import com.eanfang.biz.model.bean.LoginBean;
-import com.eanfang.util.DialogUtil;
-import com.eanfang.util.PermissionUtils;
 import com.eanfang.util.ToastUtil;
 import com.jaeger.library.StatusBarUtil;
 import com.luck.picture.lib.config.PictureConfig;
@@ -51,7 +50,6 @@ public class BaseActivity extends AppCompatActivity implements
         IBase, ActivityCompat.OnRequestPermissionsResultCallback {
 
     public Dialog loadingDialog;
-    private PermissionUtils.PermissionsCallBack permissionsCallBack;
     private ImageView iv_left;
     private ExitListenerReceiver exitre;
 
@@ -69,40 +67,6 @@ public class BaseActivity extends AppCompatActivity implements
 
     protected boolean isClient() {
         return getApp() == 0;
-    }
-
-    //Android6.0申请权限的回调方法
-    @Deprecated
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            // requestCode即所声明的权限获取码，在checkSelfPermission时传入
-            case PermissionUtils.PermissionsCallBack.callBackCode:
-                if (grantResults == null || grantResults.length <= 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    // 没有获取到权限，做特殊处理
-                    runOnUiThread(() -> {
-                        Toast.makeText(getApplicationContext(), "获取权限失败，请手动开启", Toast.LENGTH_SHORT).show();
-                    });
-                } else {
-
-                    try {
-                        // 获取到权限，作相应处理
-                        permissionsCallBack.callBack();
-                    } catch (NullPointerException e) {
-
-                    }
-
-                }
-                break;
-            default:
-                break;
-        }
-    }
-
-    @Deprecated
-    public void setPermissionsCallBack(PermissionUtils.PermissionsCallBack permissionsCallBack) {
-        this.permissionsCallBack = permissionsCallBack;
     }
 
     @Override
@@ -125,7 +89,7 @@ public class BaseActivity extends AppCompatActivity implements
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
-        loadingDialog = DialogUtil.createLoadingDialog(this);
+        loadingDialog = LoadKit.dialog(this);
         RegListener();
 
         // 如果已开启事务将当前activity加入事务队列
@@ -396,6 +360,7 @@ public class BaseActivity extends AppCompatActivity implements
             ((Activity) context).finish();
         }
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

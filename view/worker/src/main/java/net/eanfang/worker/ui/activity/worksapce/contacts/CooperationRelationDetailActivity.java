@@ -18,8 +18,8 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.util.QueryEntry;
-import com.yaf.base.entity.CooperationEntity;
+import com.eanfang.biz.model.QueryEntry;
+import com.eanfang.biz.model.entity.CooperationEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;

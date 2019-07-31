@@ -29,22 +29,22 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.base.kit.V;
 import com.eanfang.base.kit.picture.picture.PictureRecycleView;
 import com.eanfang.base.widget.customview.CircleImageView;
-import com.eanfang.biz.model.security.SecurityCommentBean;
-import com.eanfang.biz.model.security.SecurityDetailBean;
-import com.eanfang.biz.model.security.SecurityFoucsBean;
-import com.eanfang.biz.model.security.SecurityLikeBean;
-import com.eanfang.biz.model.security.SecurityListBean;
+import com.eanfang.bean.security.SecurityCommentBean;
+import com.eanfang.bean.security.SecurityDetailBean;
+import com.eanfang.bean.security.SecurityFoucsBean;
+import com.eanfang.bean.security.SecurityLikeBean;
+import com.eanfang.bean.security.SecurityListBean;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.security.SecurityLikeStatusBean;
+import com.eanfang.bean.security.SecurityLikeStatusBean;
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.ETimeUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.QueryEntry;
+import com.eanfang.biz.model.QueryEntry;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.contentsafe.ContentDefaultAuditing;
 import com.eanfang.util.contentsafe.ContentSecurityAuditUtil;
@@ -68,6 +68,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author guanluocang
@@ -441,14 +442,14 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
         } else {
             ivLike.setImageResource(R.mipmap.ic_worker_security_like_unpressed);
         }
-        if (!StringUtils.isEmpty(securityDetailBean.getSpcImg())) {
+        if (!StrUtil.isEmpty(securityDetailBean.getSpcImg())) {
             pictureRecycler.setVisibility(View.VISIBLE);
             picList = pictureRecycler.setData(securityDetailBean.getSpcImg());
             pictureRecycler.showImagev(picList, listener);
         } else {
             pictureRecycler.setVisibility(View.GONE);
         }
-        if (!StringUtils.isEmpty(securityDetailBean.getSpcVideo())) {
+        if (!StrUtil.isEmpty(securityDetailBean.getSpcVideo())) {
             rlVideo.setVisibility(View.VISIBLE);
             GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + securityDetailBean.getSpcVideo() + ".jpg"), ivShowVideo);
         } else {
@@ -472,7 +473,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
                 break;
             case R.id.tv_send:
                 String content = etInput.getText().toString().trim();
-                if (StringUtils.isEmpty(content)) {
+                if (StrUtil.isEmpty(content)) {
                     showToast("请输入评论内容");
                     return;
                 }
@@ -560,7 +561,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
 
             bundle.putString("id", String.valueOf(securityDetailBean.getSpcId()));
             bundle.putString("orderNum", securityDetailBean.getPublisherOrg().getOrgName());
-            if (!StringUtils.isEmpty(securityDetailBean.getSpcImg())) {
+            if (!StrUtil.isEmpty(securityDetailBean.getSpcImg())) {
                 bundle.putString("picUrl", securityDetailBean.getSpcImg().split(",")[0]);
             }
             bundle.putString("creatTime", securityDetailBean.getSpcContent());

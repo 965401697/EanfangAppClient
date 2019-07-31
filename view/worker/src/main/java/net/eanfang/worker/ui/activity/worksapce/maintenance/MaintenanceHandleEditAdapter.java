@@ -10,7 +10,7 @@ import com.eanfang.BuildConfig;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.util.GlideUtil;
-import com.yaf.base.entity.ShopMaintenanceExamDeviceEntity;
+import com.eanfang.biz.model.entity.ShopMaintenanceExamDeviceEntity;
 
 import net.eanfang.worker.R;
 

@@ -34,12 +34,11 @@ import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.base.kit.rx.RxPerm;
-import com.eanfang.biz.model.CameraBean;
-import com.eanfang.biz.model.SelectAddressItem;
+import com.eanfang.biz.model.bean.CameraBean;
+import com.eanfang.biz.model.bean.SelectAddressItem;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.ConnectivityChangeUtil;
-import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.base.kit.V;
 import com.eanfang.witget.CustomRadioGroup;
@@ -56,6 +55,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 
 
 /**
@@ -193,7 +193,7 @@ public class CameraActivity extends BaseWorkeActivity implements AMapLocationLis
 
         //创建者
         creatUser = V.v(() -> WorkerApplication.get().getLoginBean().getAccount().getRealName());
-        if (StringUtils.isEmpty(creatUser)) {
+        if (StrUtil.isEmpty(creatUser)) {
             creatUser = "--";
         }
 

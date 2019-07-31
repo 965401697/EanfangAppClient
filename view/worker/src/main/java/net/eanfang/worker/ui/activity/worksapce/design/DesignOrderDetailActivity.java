@@ -4,10 +4,10 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.biz.model.bean.DesignOrderInfoBean;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.DesignOrderInfoBean;
 import com.eanfang.util.GetConstDataUtils;
 
 import net.eanfang.worker.R;

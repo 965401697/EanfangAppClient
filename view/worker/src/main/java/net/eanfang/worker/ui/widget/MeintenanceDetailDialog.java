@@ -9,16 +9,16 @@ import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.config.Config;
-import com.eanfang.biz.model.MainHistoryDetailBean;
+import com.eanfang.biz.model.bean.MainHistoryDetailBean;
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * Created by Mr.hou
@@ -95,7 +95,7 @@ public class MeintenanceDetailDialog extends BaseDialog {
         etMaintenanceMeasures.setText(bean.getSolution());
         etReasonAnalysis.setText(bean.getCause());
 
-        if (!StringUtils.isEmpty(bean.getPictures())) {
+        if (!StrUtil.isEmpty(bean.getPictures())) {
             String[] urls = bean.getPictures().split(",");
 
             if (urls.length >= 1) {

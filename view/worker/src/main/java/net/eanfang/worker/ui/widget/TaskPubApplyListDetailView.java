@@ -11,15 +11,15 @@ import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.TaskPubApplyListDetailBean;
+import com.eanfang.biz.model.bean.TaskPubApplyListDetailBean;
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * Created by MrHou
@@ -91,7 +91,7 @@ public class TaskPubApplyListDetailView extends BaseDialog {
         etTimeLimit.setText(bean.getPredictTime()+"");
         tvBudget.setText(bean.getProjectQuote() + "");
         etNeedDesc.setText(bean.getDescription());
-        if (!StringUtils.isEmpty(bean.getPictures())) {
+        if (!StrUtil.isEmpty(bean.getPictures())) {
             String[] urls = bean.getPictures().split(",");
 
             if (urls.length>=1) {

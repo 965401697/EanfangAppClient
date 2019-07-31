@@ -6,7 +6,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.util.GlideUtil;
-import com.yaf.base.entity.AnswerListWithQuestionBean;
+import com.eanfang.biz.model.bean.AnswerListWithQuestionBean;
 
 import net.eanfang.worker.R;
 

@@ -17,13 +17,12 @@ import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.MultiClickListener;
-import com.eanfang.biz.model.SelectAddressItem;
-import com.eanfang.biz.model.reapair.RepairPersonalInfoEntity;
+import com.eanfang.biz.model.bean.SelectAddressItem;
+import com.eanfang.biz.model.entity.RepairPersonalInfoEntity;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
@@ -32,6 +31,8 @@ import net.eanfang.client.ui.widget.CommonView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.lang.Validator;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author guanluocang
@@ -159,34 +160,34 @@ public class RepairInfoEditActivity extends BaseActivity implements RadioGroup.O
      */
     private boolean checkInfo() {
 
-        if (StringUtils.isEmpty(etCompanyName.getText().toString().trim())) {
+        if (StrUtil.isEmpty(etCompanyName.getText().toString().trim())) {
             showToast("请选择单位名称");
             return false;
         }
-        if (StringUtils.isEmpty(tvAddress.getText().toString().trim())) {
+        if (StrUtil.isEmpty(tvAddress.getText().toString().trim())) {
             showToast("请选择地址");
             return false;
         }
         String placeCode = Config.get().getAreaCodeByName(city, county);
-        if (StringUtils.isEmpty(placeCode)) {
+        if (StrUtil.isEmpty(placeCode)) {
             showToast("请重新选择地址");
             return false;
         }
-        if (StringUtils.isEmpty(Config.get().getBaseIdByCode(placeCode, 3, Constant.AREA) + "")) {
+        if (StrUtil.isEmpty(Config.get().getBaseIdByCode(placeCode, 3, Constant.AREA) + "")) {
             showToast("请重新选择地址");
             return false;
         }
 
-        if (StringUtils.isEmpty(etName.getText().toString().trim())) {
+        if (StrUtil.isEmpty(etName.getText().toString().trim())) {
             showToast("请输入联系人姓名");
             return false;
         }
-        if (StringUtils.isEmpty(etPhone.getText().toString().trim())) {
+        if (StrUtil.isEmpty(etPhone.getText().toString().trim())) {
             showToast("请输入电话");
             return false;
         }
         //电话号码是否符合格式
-        if (!StringUtils.isMobileString(etPhone.getText().toString().trim())) {
+        if (!Validator.isMobile(etPhone.getText().toString().trim())) {
             showToast("请输入正确手机号");
             return false;
         }
@@ -205,7 +206,7 @@ public class RepairInfoEditActivity extends BaseActivity implements RadioGroup.O
         repairPersonalInfoEntity.setConmpanyName(etCompanyName.getText().toString().trim());
         repairPersonalInfoEntity.setGender(mSex);
         repairPersonalInfoEntity.setAddress(tvAddressDetail.getText().toString().trim());
-        if (!StringUtils.isEmpty(mType)) {
+        if (!StrUtil.isEmpty(mType)) {
             repairPersonalInfoEntity.setSelectAddress(mType);
         }
         return repairPersonalInfoEntity;
@@ -277,7 +278,7 @@ public class RepairInfoEditActivity extends BaseActivity implements RadioGroup.O
             rbHome.setChecked(false);
             rbCompany.setChecked(true);
             rbAdd.setChecked(false);
-        } else if (!StringUtils.isEmpty(repairPersonalInfoEntity.getSelectAddress())) {
+        } else if (!StrUtil.isEmpty(repairPersonalInfoEntity.getSelectAddress())) {
             rbHome.setChecked(false);
             rbCompany.setChecked(false);
             rbAdd.setChecked(true);

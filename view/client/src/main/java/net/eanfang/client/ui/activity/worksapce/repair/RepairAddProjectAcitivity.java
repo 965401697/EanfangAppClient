@@ -12,6 +12,7 @@ import net.eanfang.client.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author guanluocang
@@ -39,7 +40,7 @@ public class RepairAddProjectAcitivity extends BaseActivity {
 
         findViewById(R.id.tv_add).setOnClickListener(v -> {
             String projectName = etInputProjectName.getText().toString().trim();
-            if (!StringUtils.isEmpty(projectName)) {
+            if (!StrUtil.isEmpty(projectName)) {
                 Intent intent = new Intent();
                 intent.putExtra("projectName", projectName);
                 setResult(Activity.RESULT_OK, intent);

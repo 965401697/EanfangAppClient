@@ -2,12 +2,13 @@ package net.eanfang.client.ui.adapter;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.util.StringUtils;
-import com.yaf.base.entity.BughandleParamEntity;
+import com.eanfang.biz.model.entity.BughandleParamEntity;
 
 import net.eanfang.client.R;
 
 import java.util.ArrayList;
+
+import cn.hutool.core.util.StrUtil;
 
 
 /**
@@ -25,7 +26,7 @@ public class LookParamAdapter extends BaseQuickAdapter<BughandleParamEntity, Bas
     @Override
     protected void convert(BaseViewHolder helper, final BughandleParamEntity item) {
         helper.setText(R.id.tv_param, item.getParamName());
-        if (StringUtils.isValid(item.getParamValue())) {
+        if (StrUtil.isNotBlank(item.getParamValue())) {
             helper.setText(R.id.et_param, item.getParamValue());
         }
     }

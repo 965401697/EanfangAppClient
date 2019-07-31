@@ -11,13 +11,12 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.eanfang.biz.model.SectionBean;
-import com.eanfang.biz.model.TemplateBean;
+import com.eanfang.biz.model.bean.SectionBean;
+import com.eanfang.biz.model.bean.TemplateBean;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
-import com.eanfang.util.QueryEntry;
-import com.eanfang.util.StringUtils;
+import com.eanfang.biz.model.QueryEntry;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.oa.workreport.OAPersonAdaptet;
@@ -34,6 +33,7 @@ import java.util.Set;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.util.StrUtil;
 
 
 /**
@@ -134,7 +134,7 @@ public class SignFiltrateActivity extends BaseActivity implements RadioGroup.OnC
         if (mSignStatus != 100) {
             queryEntry.getEquals().put("status", mSignStatus + "");
         }
-        if (!StringUtils.isEmpty(mOrgCode)) {
+        if (!StrUtil.isEmpty(mOrgCode)) {
             queryEntry.getEquals().put("createOrgCode", mOrgCode);
         }
         if (whoList.size() != 0) {
@@ -155,11 +155,11 @@ public class SignFiltrateActivity extends BaseActivity implements RadioGroup.OnC
             }
         }
         // 开始时间
-        if (!StringUtils.isEmpty(tvSignInTime.getText().toString().trim())) {
+        if (!StrUtil.isEmpty(tvSignInTime.getText().toString().trim())) {
             queryEntry.getGtEquals().put("beginTime", tvSignInTime.getText().toString().trim());
         }
         // 结束时间
-        if (!StringUtils.isEmpty(tvSignOutTime.getText().toString().trim())) {
+        if (!StrUtil.isEmpty(tvSignOutTime.getText().toString().trim())) {
             queryEntry.getLtEquals().put("endTime", tvSignOutTime.getText().toString().trim());
         }
 
@@ -233,7 +233,7 @@ public class SignFiltrateActivity extends BaseActivity implements RadioGroup.OnC
 
     @Override
     public void getData(String time) {
-        if (StringUtils.isEmpty(time) || " ".equals(time)) {
+        if (StrUtil.isEmpty(time) || " ".equals(time)) {
             currentTextView.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
         } else {
             currentTextView.setText(time);

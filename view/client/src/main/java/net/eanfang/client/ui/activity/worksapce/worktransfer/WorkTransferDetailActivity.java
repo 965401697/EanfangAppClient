@@ -14,7 +14,7 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.WorkTransferDetailBean;
+import com.eanfang.biz.model.bean.WorkTransferDetailBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.DateKit;
 import com.eanfang.util.GetConstDataUtils;
@@ -37,7 +37,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.hutool.core.date.DateUtil;
 
 /**
  * @date on 2018/7/27  16:11

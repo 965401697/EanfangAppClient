@@ -14,7 +14,7 @@ import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.device.User;
+import com.eanfang.biz.model.bean.device.User;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.ToastUtil;
 

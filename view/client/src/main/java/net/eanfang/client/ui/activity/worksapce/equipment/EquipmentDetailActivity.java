@@ -14,7 +14,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
-import com.yaf.base.entity.CustDeviceEntity;
+import com.eanfang.biz.model.entity.CustDeviceEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.repair.AddTroubleActivity;

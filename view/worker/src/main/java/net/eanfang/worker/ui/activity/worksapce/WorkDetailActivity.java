@@ -20,21 +20,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.daimajia.numberprogressbar.DaiMaJiaNumberProgressBar;
+import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.base.widget.customview.CircleImageView;
+import com.eanfang.biz.model.entity.RepairOrderEntity;
+import com.eanfang.biz.model.entity.WorkerEntity;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.StringUtils;
 import com.eanfang.witget.ArcProgressView;
 import com.eanfang.witget.CustomRadioGroup;
-import com.yaf.base.entity.RepairOrderEntity;
-import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.WorkDetailHonorAdapter;
@@ -46,6 +45,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 
 import static com.eanfang.base.kit.V.v;
@@ -84,7 +84,7 @@ public class WorkDetailActivity extends BaseActivity {
     @BindView(R.id.rv_list1)
     RecyclerView rvList1;
     @BindView(R.id.iv_haopinglv)
-    DaiMaJiaNumberProgressBar ivHaopinglv;
+    NumberProgressBar ivHaopinglv;
     @BindView(R.id.tv_haopinglv)
     TextView tvHaopinglv;
     @BindView(R.id.rb_star1)
@@ -328,7 +328,7 @@ public class WorkDetailActivity extends BaseActivity {
             workerName = bean.getAccountEntity().getRealName();
             comapnyName = bean.getCompanyEntity().getOrgName();
             tvRealname.setText(bean.getAccountEntity().getRealName());
-            if (!StringUtils.isEmpty(bean.getAccountEntity().getAreaCode())) {
+            if (!StrUtil.isEmpty(bean.getAccountEntity().getAreaCode())) {
                 String region = Config.get().getAddressByCode(bean.getAccountEntity().getAreaCode());
                 tvAddress.setText((region != null ? (region + "\r\n") : "") + bean.getAccountEntity().getAddress());
             }

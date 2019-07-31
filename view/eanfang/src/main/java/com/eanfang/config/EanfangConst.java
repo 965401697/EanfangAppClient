@@ -63,7 +63,6 @@ public interface EanfangConst {
      * 融云的token
      * {@link STR}
      */
-    @Deprecated
     String RONG_YUN_TOKEN = "rong_yun_token";
     /**
      * 融云的群组id

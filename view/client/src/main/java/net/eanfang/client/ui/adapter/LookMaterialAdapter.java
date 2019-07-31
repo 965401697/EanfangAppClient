@@ -2,10 +2,10 @@ package net.eanfang.client.ui.adapter;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.eanfang.biz.model.bean.ZjZgBean;
+import com.eanfang.biz.model.entity.BughandleUseDeviceEntity;
 import com.eanfang.config.Config;
-import com.yaf.base.entity.BughandleUseDeviceEntity;
 
-import net.eanfang.client.BuildConfig;
 import net.eanfang.client.R;
 
 import java.util.List;

@@ -10,16 +10,15 @@ import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.biz.model.security.SecurityLikeBean;
-import com.eanfang.biz.model.security.SecurityListBean;
+import com.eanfang.bean.security.SecurityLikeBean;
+import com.eanfang.bean.security.SecurityListBean;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.security.SecurityLikeStatusBean;
+import com.eanfang.bean.security.SecurityLikeStatusBean;
+import com.eanfang.util.BGASpaceItemDecoration;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.QueryEntry;
-import com.eanfang.util.StringUtils;
-import com.photopicker.com.util.BGASpaceItemDecoration;
+import com.eanfang.biz.model.QueryEntry;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
@@ -32,6 +31,8 @@ import net.eanfang.client.util.ImagePerviewUtil;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+
+import cn.hutool.core.util.StrUtil;
 
 
 public class SecurityFoucsFragment extends TemplateItemListFragment implements SecurityListAdapter.OnPhotoClickListener {
@@ -64,7 +65,7 @@ public class SecurityFoucsFragment extends TemplateItemListFragment implements S
 
     @Override
     protected void initAdapter() {
-        securityListAdapter = new SecurityListAdapter(ClientApplication.get().getApplicationContext(), false, (SecurityListAdapter.OnPhotoClickListener) this);
+        securityListAdapter = new SecurityListAdapter(ClientApplication.get().getApplicationContext(), false, this);
         RecyclerView.RecycledViewPool pool = mRecyclerView.getRecycledViewPool();
         pool.setMaxRecycledViews(0, 10);
         mRecyclerView.setRecycledViewPool(pool);
@@ -157,7 +158,7 @@ public class SecurityFoucsFragment extends TemplateItemListFragment implements S
 
             bundle.putString("id", String.valueOf(listBean.getSpcId()));
             bundle.putString("orderNum", listBean.getPublisherOrg().getOrgName());
-            if (!StringUtils.isEmpty(listBean.getSpcImg())) {
+            if (!StrUtil.isEmpty(listBean.getSpcImg())) {
                 bundle.putString("picUrl", listBean.getSpcImg().split(",")[0]);
             }
             bundle.putString("creatTime", listBean.getSpcContent());

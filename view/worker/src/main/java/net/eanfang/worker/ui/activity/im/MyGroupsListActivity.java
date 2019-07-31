@@ -10,8 +10,8 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.GroupsBean;
-import com.eanfang.biz.model.TemplateBean;
+import com.eanfang.biz.model.bean.GroupsBean;
+import com.eanfang.biz.model.bean.TemplateBean;
 import com.eanfang.util.Cn2Spell;
 import com.eanfang.witget.SideBar;
 

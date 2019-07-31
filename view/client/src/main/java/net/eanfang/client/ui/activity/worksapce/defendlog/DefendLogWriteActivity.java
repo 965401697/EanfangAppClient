@@ -17,17 +17,16 @@ import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.kit.loading.LoadKit;
+import com.eanfang.biz.model.bean.GroupDetailBean;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.GroupDetailBean;
-import com.eanfang.biz.model.TemplateBean;
+import com.eanfang.biz.model.bean.TemplateBean;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
-import com.eanfang.util.DialogUtil;
-import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
-import com.yaf.base.entity.LogDetailsEntity;
-import com.yaf.base.entity.ProtectionLogEntity;
+import com.eanfang.biz.model.entity.LogDetailsEntity;
+import com.eanfang.biz.model.entity.ProtectionLogEntity;
 import com.eanfang.biz.model.entity.UserEntity;
 
 import net.eanfang.client.R;
@@ -57,6 +56,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 
 public class DefendLogWriteActivity extends BaseClientActivity implements View.OnClickListener, SelectTimeDialogFragment.SelectTimeListener {
 
@@ -447,7 +447,7 @@ public class DefendLogWriteActivity extends BaseClientActivity implements View.O
                     b.putString("shareType", "9");
 
 
-                    new SendContactUtils(b, handler, newGroupList, DialogUtil.createLoadingDialog(DefendLogWriteActivity.this), "布防日志").send();
+                    new SendContactUtils(b, handler, newGroupList, LoadKit.dialog(DefendLogWriteActivity.this), "布防日志").send();
                 }));
     }
 
@@ -571,7 +571,7 @@ public class DefendLogWriteActivity extends BaseClientActivity implements View.O
 
     @Override
     public void getData(String time) {
-        if (StringUtils.isEmpty(time) || " ".equals(time)) {
+        if (StrUtil.isEmpty(time) || " ".equals(time)) {
             currentTextView.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
         } else {
             currentTextView.setText(time);

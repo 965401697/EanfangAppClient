@@ -12,18 +12,17 @@ import androidx.lifecycle.ViewModel;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.base.BaseActivity;
+import com.eanfang.biz.model.entity.WorkerEntity;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.StringUtils;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.ResultPoint;
 import com.journeyapps.barcodescanner.BarcodeCallback;
 import com.journeyapps.barcodescanner.BarcodeResult;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
 import com.journeyapps.barcodescanner.DefaultDecoderFactory;
-import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
@@ -37,6 +36,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.regex.Pattern;
+
+import cn.hutool.core.util.StrUtil;
 
 import static com.eanfang.util.StringUtils.getValueByName;
 
@@ -81,7 +82,7 @@ public class ScanCodeActivity extends BaseActivity {
         mFromWhere = getIntent().getStringExtra("from");
         mAddFriend = getIntent().getStringExtra(EanfangConst.QR_ADD_FRIEND);
         mScanType = getIntent().getStringExtra("scanType");
-        if (!StringUtils.isEmpty(mScanType)) {
+        if (!StrUtil.isEmpty(mScanType)) {
             if (mScanType.equals("scan_device")) {// 扫码设备
                 barcodeScannerView.setStatusText(getResources().getString(R.string.zxing_device));
             } else if (mScanType.equals("scan_login")) {//扫码登录
@@ -98,7 +99,7 @@ public class ScanCodeActivity extends BaseActivity {
         public void barcodeResult(BarcodeResult result) {
             barcodeScannerView.pause();
             String resultString = result.getText();
-            if (StringUtils.isEmpty(resultString)) {
+            if (StrUtil.isEmpty(resultString)) {
                 return;
             }
             if (resultString.equals("")) {

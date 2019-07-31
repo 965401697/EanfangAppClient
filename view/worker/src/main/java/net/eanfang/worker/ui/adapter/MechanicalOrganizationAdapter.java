@@ -7,7 +7,7 @@ import android.widget.EditText;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.biz.model.JxSbZzNlListBean;
+import com.eanfang.biz.model.bean.JxSbZzNlListBean;
 
 import net.eanfang.worker.R;
 

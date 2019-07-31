@@ -12,9 +12,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.MainHistoryBean;
+import com.eanfang.biz.model.bean.MainHistoryBean;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.util.QueryEntry;
+import com.eanfang.biz.model.QueryEntry;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.MainAdapter;

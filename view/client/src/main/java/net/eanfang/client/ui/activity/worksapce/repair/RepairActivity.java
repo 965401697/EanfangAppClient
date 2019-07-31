@@ -14,23 +14,22 @@ import android.widget.TextView;
 import com.annimon.stream.Stream;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.biz.model.entity.RepairBugEntity;
+import com.eanfang.biz.model.entity.RepairOrderEntity;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.MultiClickListener;
-import com.eanfang.biz.model.RepairOpenAreaBean;
+import com.eanfang.biz.model.bean.RepairOpenAreaBean;
 import com.eanfang.biz.model.bean.LoginBean;
-import com.eanfang.biz.model.reapair.RepairPersonalInfoEntity;
+import com.eanfang.biz.model.entity.RepairPersonalInfoEntity;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.base.kit.rx.RxPerm;
-import com.eanfang.util.QueryEntry;
-import com.eanfang.util.StringUtils;
-import com.yaf.base.entity.RepairBugEntity;
-import com.yaf.base.entity.RepairOrderEntity;
+import com.eanfang.biz.model.QueryEntry;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
@@ -45,6 +44,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author admin
@@ -193,7 +193,7 @@ public class RepairActivity extends BaseClientActivity {
      */
     private boolean checkInfo() {
 
-        if (StringUtils.isEmpty(tvTime.getText().toString().trim())) {
+        if (StrUtil.isEmpty(tvTime.getText().toString().trim())) {
             showToast("请选择到达时限");
             return false;
         }
@@ -214,7 +214,7 @@ public class RepairActivity extends BaseClientActivity {
         bean.setRepairCompany(repairPersonalInfoEntity.getConmpanyName());
         bean.setProjectId(mProjectId);
         bean.setProjectName(tvProjectName.getText().toString().trim());
-        if (!StringUtils.isEmpty(etNotice.getText().toString().trim())) {
+        if (!StrUtil.isEmpty(etNotice.getText().toString().trim())) {
             bean.setRemarkInfo(etNotice.getText().toString().trim());
         }
         bean.setRepairContactPhone(repairPersonalInfoEntity.getPhone());
@@ -243,7 +243,7 @@ public class RepairActivity extends BaseClientActivity {
         repairOrderEntity.setRepairCompany(repairPersonalInfoEntity.getConmpanyName());
         repairOrderEntity.setProjectId(mProjectId);
         repairOrderEntity.setProjectName(tvProjectName.getText().toString().trim());
-        if (!StringUtils.isEmpty(etNotice.getText().toString().trim())) {
+        if (!StrUtil.isEmpty(etNotice.getText().toString().trim())) {
             repairOrderEntity.setRemarkInfo(etNotice.getText().toString().trim());
         }
         repairOrderEntity.setRepairContactPhone(repairPersonalInfoEntity.getPhone());
@@ -312,13 +312,13 @@ public class RepairActivity extends BaseClientActivity {
             return false;
         }
         if (user.getAccount().getDefaultUser().getCompanyId() > 0) {
-            if (StringUtils.isEmpty(tvProjectName.getText().toString().trim())) {
+            if (StrUtil.isEmpty(tvProjectName.getText().toString().trim())) {
                 showToast("请填写项目名称");
                 return false;
             }
         }
 
-        if (StringUtils.isEmpty(tvTime.getText().toString().trim())) {
+        if (StrUtil.isEmpty(tvTime.getText().toString().trim())) {
             showToast("请选择到达时限");
             return false;
         }
@@ -343,7 +343,7 @@ public class RepairActivity extends BaseClientActivity {
                      * */
                     if (bean.getStatus() == 1) {
                         // 扫码已经选择完技师 ，直接确认
-                        if (!StringUtils.isEmpty(isScan) && isScan.equals("scaning")) {
+                        if (!StrUtil.isEmpty(isScan) && isScan.equals("scaning")) {
                             Intent intent_scan = new Intent(RepairActivity.this, OrderConfirmActivity.class);
                             intent_scan.putExtra("topInfo", repairPersonalInfoEntity);
                             intent_scan.putExtra("bean", doQrFillBean());
@@ -404,7 +404,7 @@ public class RepairActivity extends BaseClientActivity {
         // 电话
         tvPhone.setText(bean.getPhone());
         // 单位
-        if (!StringUtils.isEmpty(bean.getSelectAddress())) {
+        if (!StrUtil.isEmpty(bean.getSelectAddress())) {
             tvHomeType.setText("[" + bean.getSelectAddress() + "]");
         }
         tvHomeAddress.setText(bean.getConmpanyName());

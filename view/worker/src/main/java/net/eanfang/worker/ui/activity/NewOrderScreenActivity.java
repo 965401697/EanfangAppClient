@@ -12,7 +12,7 @@ import com.alibaba.fastjson.JSON;
 import com.eanfang.biz.model.entity.BaseDataEntity;
 import com.eanfang.config.Config;
 import com.eanfang.ui.base.BaseActivity;
-import com.eanfang.util.QueryEntry;
+import com.eanfang.biz.model.QueryEntry;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.NewOrderScreenAdapter;

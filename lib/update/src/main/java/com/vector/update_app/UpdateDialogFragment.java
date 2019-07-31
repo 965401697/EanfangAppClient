@@ -39,7 +39,7 @@ import com.vector.update_app.service.DownloadService;
 import com.vector.update_app.utils.AppUpdateUtils;
 import com.vector.update_app.utils.ColorUtil;
 import com.vector.update_app.utils.DrawableUtil;
-import com.vector.update_app.view.NumberProgressBar;
+import com.vector.update_app.view.UpdateNumberProgressBar;
 
 import java.io.File;
 
@@ -54,7 +54,7 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
     private TextView mContentTextView;
     private Button mUpdateOkButton;
     private UpdateAppBean mUpdateApp;
-    private NumberProgressBar mNumberProgressBar;
+    private UpdateNumberProgressBar mUpdateNumberProgressBar;
     private ImageView mIvClose;
     private TextView mTitleTextView;
     /**
@@ -163,7 +163,7 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
         //更新按钮
         mUpdateOkButton = view.findViewById(R.id.btn_ok);
         //进度条
-        mNumberProgressBar = view.findViewById(R.id.npb);
+        mUpdateNumberProgressBar = view.findViewById(R.id.npb);
         //关闭按钮
         mIvClose = view.findViewById(R.id.iv_close);
         //关闭按钮+线 的整个布局
@@ -270,8 +270,8 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
     private void setDialogTheme(int color, int topResId) {
         mTopIv.setImageResource(topResId);
         mUpdateOkButton.setBackgroundDrawable(DrawableUtil.getDrawable(AppUpdateUtils.dip2px(4, getActivity()), color));
-        mNumberProgressBar.setProgressTextColor(color);
-        mNumberProgressBar.setReachedBarColor(color);
+        mUpdateNumberProgressBar.setProgressTextColor(color);
+        mUpdateNumberProgressBar.setReachedBarColor(color);
         //随背景颜色变化
         mUpdateOkButton.setTextColor(ColorUtil.isTextColorDark(color) ? Color.BLACK : Color.WHITE);
     }
@@ -385,7 +385,7 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
                 @Override
                 public void onStart() {
                     if (!UpdateDialogFragment.this.isRemoving()) {
-                        mNumberProgressBar.setVisibility(View.VISIBLE);
+                        mUpdateNumberProgressBar.setVisibility(View.VISIBLE);
                         mUpdateOkButton.setVisibility(View.GONE);
                     }
                 }
@@ -393,8 +393,8 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
                 @Override
                 public void onProgress(float progress, long totalSize) {
                     if (!UpdateDialogFragment.this.isRemoving()) {
-                        mNumberProgressBar.setProgress(Math.round(progress * 100));
-                        mNumberProgressBar.setMax(100);
+                        mUpdateNumberProgressBar.setProgress(Math.round(progress * 100));
+                        mUpdateNumberProgressBar.setMax(100);
                     }
                 }
 
@@ -446,7 +446,7 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
     }
 
     private void showInstallBtn(final File file) {
-        mNumberProgressBar.setVisibility(View.GONE);
+        mUpdateNumberProgressBar.setVisibility(View.GONE);
         mUpdateOkButton.setText("安装");
         mUpdateOkButton.setVisibility(View.VISIBLE);
         mUpdateOkButton.setOnClickListener(new View.OnClickListener() {

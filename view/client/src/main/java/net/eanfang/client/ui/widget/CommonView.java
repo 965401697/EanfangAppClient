@@ -13,6 +13,7 @@ import net.eanfang.client.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author guanluocang
@@ -73,7 +74,7 @@ public class CommonView extends BaseDialog {
 
     public String doSetContent() {
         String mContens = etInputCompany.getText().toString().trim();
-        if (StringUtils.isEmpty(mContens)) {
+        if (StrUtil.isEmpty(mContens)) {
             dismiss();
             return null;
         }

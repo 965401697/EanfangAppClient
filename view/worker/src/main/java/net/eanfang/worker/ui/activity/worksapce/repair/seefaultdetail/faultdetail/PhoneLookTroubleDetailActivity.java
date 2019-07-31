@@ -15,15 +15,15 @@ import com.annimon.stream.Optional;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.biz.model.bean.ZjZgBean;
+import com.eanfang.biz.model.entity.BughandleDetailEntity;
+import com.eanfang.biz.model.entity.BughandleParamEntity;
+import com.eanfang.biz.model.entity.BughandleUseDeviceEntity;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.StringUtils;
-import com.yaf.base.entity.BughandleDetailEntity;
-import com.yaf.base.entity.BughandleParamEntity;
-import com.yaf.base.entity.BughandleUseDeviceEntity;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -39,6 +39,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 import static com.eanfang.base.kit.V.v;
 
@@ -147,7 +148,7 @@ public class PhoneLookTroubleDetailActivity extends BaseWorkerActivity {
 
 
         if (bughandleDetailEntity.getFailureEntity() != null) {
-            if (StringUtils.isValid(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode())) {
+            if (StrUtil.isNotBlank(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode())) {
                 String bugOne = Config.get().getBusinessNameByCode(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode(), 1);
                 String bugTwo = Config.get().getBusinessNameByCode(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode(), 2);
                 String bugThree = Config.get().getBusinessNameByCode(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode(), 3);
@@ -176,7 +177,7 @@ public class PhoneLookTroubleDetailActivity extends BaseWorkerActivity {
             }
         }
         //故障位置
-        if (StringUtils.isValid(bughandleDetailEntity.getFailureEntity().getBugPosition())) {
+        if (StrUtil.isNotBlank(bughandleDetailEntity.getFailureEntity().getBugPosition())) {
             tvDeviceLocation.setText(bughandleDetailEntity.getFailureEntity().getBugPosition());
         }
         //维修结论

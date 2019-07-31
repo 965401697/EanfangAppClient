@@ -10,7 +10,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.base.widget.customview.CircleImageView;
-import com.eanfang.biz.model.security.SecurityDetailBean;
+import com.eanfang.bean.security.SecurityDetailBean;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.base.kit.V;
 

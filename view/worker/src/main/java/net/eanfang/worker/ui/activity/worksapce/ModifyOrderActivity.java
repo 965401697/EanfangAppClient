@@ -9,9 +9,9 @@ import android.widget.TextView;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.RepairedOrderBean;
+import com.eanfang.biz.model.bean.RepairedOrderBean;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.util.QueryEntry;
+import com.eanfang.biz.model.QueryEntry;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;

@@ -20,11 +20,10 @@ import com.eanfang.base.BaseApplication;
 import com.eanfang.dialog.ActiveRuleDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.InviteHistoryBean;
-import com.eanfang.model.RewardPerson;
+import com.eanfang.biz.model.bean.InviteHistoryBean;
+import com.eanfang.biz.model.bean.RewardPerson;
 import com.eanfang.ui.base.BaseActivity;
-import com.eanfang.util.QueryEntry;
-import com.eanfang.util.StringUtils;
+import com.eanfang.biz.model.QueryEntry;
 import com.eanfang.witget.RollTextView;
 
 import java.util.ArrayList;
@@ -32,6 +31,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 
 /**
@@ -171,7 +171,7 @@ public class InviteFriendActivity extends BaseActivity {
             View view = View.inflate(this, R.layout.item_invite_friend_scroll, null);
             TextView title = view.findViewById(R.id.tv_invite_friend_scroll);
             String realName = rewardPerson.getList().get(i).getRealName();
-            if (!StringUtils.isEmpty(realName)) {
+            if (!StrUtil.isEmpty(realName)) {
                 if (realName.length() > 2) {
                     title.setText(getResources().getString(R.string.text_invite_all_reward_person,
                             realName.substring(0, 1) + "*" + realName.substring(2), rewardPerson.getList().get(i).getWithdrawalMoney()));

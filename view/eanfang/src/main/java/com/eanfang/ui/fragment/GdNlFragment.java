@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.eanfang.R;
-import com.eanfang.biz.model.SecurityCompanyDetailsBean;
+import com.eanfang.biz.model.bean.SecurityCompanyDetailsBean;
 import com.eanfang.ui.adapter.GdNlAdapter;
 import com.eanfang.ui.adapter.GdNlBAdapter;
 import com.eanfang.ui.base.BaseFragment;

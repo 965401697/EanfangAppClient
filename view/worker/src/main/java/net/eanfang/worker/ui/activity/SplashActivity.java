@@ -24,6 +24,8 @@ import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.GuideActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
+import cn.hutool.core.util.StrUtil;
+
 
 /**
  * @author jornl
@@ -87,7 +89,7 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
                 .execute(new EanfangCallback<LoginBean>(this, false, LoginBean.class) {
                     @Override
                     public void onSuccess(LoginBean bean) {
-                        if (bean != null && !StringUtils.isEmpty(bean.getToken())) {
+                        if (bean != null && !StrUtil.isEmpty(bean.getToken())) {
                             CacheKit.get().put(LoginBean.class.getName(), bean, CacheMod.All);
                             goMain();
                         } else {

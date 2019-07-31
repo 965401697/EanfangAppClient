@@ -10,7 +10,7 @@ import android.view.View;
 
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
-import com.eanfang.biz.model.RepairedOrderBean;
+import com.eanfang.biz.model.bean.RepairedOrderBean;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.ViewFindUtils;
 import com.flyco.tablayout.SlidingTabLayout;

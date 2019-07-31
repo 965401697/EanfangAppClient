@@ -12,14 +12,13 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.biz.model.entity.BughandleDetailEntity;
 import com.eanfang.config.Constant;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.CallUtils;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
-import com.yaf.base.entity.BughandleConfirmEntity;
-import com.yaf.base.entity.BughandleDetailEntity;
+import com.eanfang.biz.model.entity.BughandleConfirmEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.im.SelectIMContactActivity;
@@ -33,6 +32,8 @@ import java.util.List;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout;
 
 /**
  * Created by MrHou

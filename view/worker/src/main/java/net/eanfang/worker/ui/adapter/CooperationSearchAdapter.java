@@ -6,7 +6,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.config.Config;
-import com.eanfang.biz.model.CooperationSearchBean;
+import com.eanfang.biz.model.bean.CooperationSearchBean;
 import com.eanfang.util.GlideUtil;
 
 import net.eanfang.worker.R;

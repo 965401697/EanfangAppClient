@@ -20,6 +20,5 @@ public class CallUtils {
 //        }
         Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + phoneNumber));
         mContext.startActivity(intent);
-        return;
     }
 }

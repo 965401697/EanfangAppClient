@@ -18,9 +18,8 @@ import com.eanfang.biz.model.bean.QueryEntry;
 import com.eanfang.biz.model.entity.BaseDataEntity;
 import com.eanfang.config.Config;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
-import com.picker.DoubleDatePickerDialog;
+import com.eanfang.util.DoubleDatePickerDialog;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -33,6 +32,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author guanluocang
@@ -183,7 +183,7 @@ public class FilterTenderActivity extends BaseActivity {
                 }
                 break;
             case 2:
-                if (!StringUtils.isEmpty(mFilterTenderBinding.tvSelectTime.getText().toString())) {
+                if (!StrUtil.isEmpty(mFilterTenderBinding.tvSelectTime.getText().toString())) {
                     queryEntry.getGtEquals().put("createTime", DateUtil.parse(mFilterTenderBinding.tvSelectTime.getText().toString().trim().split("～")[0], "yyyy-M-dd").toDateStr());
                     queryEntry.getLtEquals().put("createTime", DateUtil.parse(mFilterTenderBinding.tvSelectTime.getText().toString().trim().split("～")[1], "yyyy-M-dd").toDateStr());
                 }
@@ -195,7 +195,7 @@ public class FilterTenderActivity extends BaseActivity {
                 }
                 break;
             case 3:
-                if (!StringUtils.isEmpty(mFilterTenderBinding.tvSelectTime.getText().toString())) {
+                if (!StrUtil.isEmpty(mFilterTenderBinding.tvSelectTime.getText().toString())) {
                     queryEntry.getGtEquals().put("startDate", DateUtil.parse(mFilterTenderBinding.tvSelectTime.getText().toString().trim().split("～")[0], "yyyy-M-dd").toDateStr());
                     queryEntry.getLtEquals().put("endDate", DateUtil.parse(mFilterTenderBinding.tvSelectTime.getText().toString().trim().split("～")[1], "yyyy-M-dd").toDateStr());
                 }

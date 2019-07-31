@@ -2,7 +2,7 @@ package net.eanfang.client.ui.activity.worksapce;
 
 import android.os.Bundle;
 
-import com.eanfang.biz.model.PayOrderListBean;
+import com.eanfang.biz.model.bean.PayOrderListBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GetConstDataUtils;
 import com.flyco.tablayout.SlidingTabLayout;

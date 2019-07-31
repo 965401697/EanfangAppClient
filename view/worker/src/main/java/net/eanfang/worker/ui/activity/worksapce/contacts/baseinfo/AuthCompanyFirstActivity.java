@@ -19,14 +19,13 @@ import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.AuthCompanyBaseInfoBean;
-import com.eanfang.biz.model.SelectAddressItem;
+import com.eanfang.biz.model.bean.AuthCompanyBaseInfoBean;
+import com.eanfang.biz.model.bean.SelectAddressItem;
 
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.base.kit.rx.RxPerm;
-import com.eanfang.util.StringUtils;
 import com.eanfang.biz.model.entity.OrgUnitEntity;
 import com.luck.picture.lib.entity.LocalMedia;
 
@@ -152,19 +151,19 @@ public class AuthCompanyFirstActivity extends BaseWorkeActivity {
      * 进行字段的约束判断
      */
     public void doVerify() {
-        if (StringUtils.isEmpty(etCompany.getText().toString().trim())) {
+        if (StrUtil.isEmpty(etCompany.getText().toString().trim())) {
             showToast("请输入单位名称");
             return;
-        } else if (StringUtils.isEmpty(edCompanyNumber.getText().toString().trim())) {
+        } else if (StrUtil.isEmpty(edCompanyNumber.getText().toString().trim())) {
             showToast("请输入营业执照号码");
             return;
-        } else if (StringUtils.isEmpty(etMoney.getText().toString().trim())) {
+        } else if (StrUtil.isEmpty(etMoney.getText().toString().trim())) {
             showToast("请输入注册资本");
             return;
-        } else if (StringUtils.isEmpty(etDetailOfficeAddress.getText().toString().trim())) {
+        } else if (StrUtil.isEmpty(etDetailOfficeAddress.getText().toString().trim())) {
             showToast("请输入办公地址");
             return;
-        } else if (StringUtils.isEmpty(etLegalPersion.getText().toString().trim())) {
+        } else if (StrUtil.isEmpty(etLegalPersion.getText().toString().trim())) {
             showToast("请输入法人代表");
             return;
         } else {
@@ -181,7 +180,7 @@ public class AuthCompanyFirstActivity extends BaseWorkeActivity {
         infoBean.setTelPhone(etPhone.getText().toString().trim());
         infoBean.setOfficeAddress(etDetailOfficeAddress.getText().toString().trim());
         infoBean.setBizCertify(1);
-        if (!StringUtils.isEmpty(itemcity) && !StringUtils.isEmpty(itemzone)) {
+        if (!StrUtil.isEmpty(itemcity) && !StrUtil.isEmpty(itemzone)) {
             infoBean.setAreaCode(Config.get().getAreaCodeByName(itemcity, itemzone));
         }
 //        if (infoBean.getAdminUserId() == null) {
@@ -232,7 +231,7 @@ public class AuthCompanyFirstActivity extends BaseWorkeActivity {
             if (infoBean.getAreaCode() != null) {
                 tvOfficeAddress.setText(Config.get().getAddressByCode(infoBean.getAreaCode()));
             }
-            if (!StringUtils.isEmpty(infoBean.getLicensePic())) {
+            if (!StrUtil.isEmpty(infoBean.getLicensePic())) {
                 GlideUtil.intoImageView(this, BuildConfig.OSS_SERVER + infoBean.getLicensePic(), ivUpload);
                 infoBean.setLicensePic(infoBean.getLicensePic());
             }

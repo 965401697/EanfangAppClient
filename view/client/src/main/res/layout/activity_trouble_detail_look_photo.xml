@@ -47,7 +47,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <com.photopicker.com.widget.BGASortableNinePhotoLayout
+                        <cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout
                             android:id="@+id/snpl_moment_add_photos"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -122,7 +122,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <com.photopicker.com.widget.BGASortableNinePhotoLayout
+                        <cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout
                             android:id="@+id/snpl_monitor_add_photos"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -196,7 +196,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <com.photopicker.com.widget.BGASortableNinePhotoLayout
+                        <cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout
                             android:id="@+id/snpl_tools_package_add_photos"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -270,7 +270,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <com.photopicker.com.widget.BGASortableNinePhotoLayout
+                        <cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout
                             android:id="@+id/snpl_after_processing_locale"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -344,7 +344,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <com.photopicker.com.widget.BGASortableNinePhotoLayout
+                        <cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout
                             android:id="@+id/snpl_machine_fit_back"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -418,7 +418,7 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <com.photopicker.com.widget.BGASortableNinePhotoLayout
+                        <cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout
                             android:id="@+id/snpl_failure_recover_phenomena"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

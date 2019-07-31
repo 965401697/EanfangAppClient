@@ -13,7 +13,7 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GlideUtil;
-import com.yaf.base.entity.CustDeviceChangeLogEntity;
+import com.eanfang.biz.model.entity.CustDeviceChangeLogEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;

@@ -24,11 +24,12 @@ import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.base.kit.cache.CacheMod;
 import com.eanfang.base.kit.rx.RxPerm;
-import com.eanfang.biz.model.AllMessageBean;
-import com.eanfang.biz.model.GroupDetailBean;
+import com.eanfang.biz.model.bean.AllMessageBean;
 import com.eanfang.biz.model.bean.BaseDataBean;
 import com.eanfang.biz.model.bean.ConstAllBean;
-import com.eanfang.biz.model.device.User;
+import com.eanfang.biz.model.bean.GroupDetailBean;
+import com.eanfang.biz.model.bean.device.User;
+import com.eanfang.biz.model.entity.WorkerEntity;
 import com.eanfang.biz.rds.base.BaseViewModel;
 import com.eanfang.biz.rds.sys.ds.impl.MainDs;
 import com.eanfang.biz.rds.sys.repo.MainRepo;
@@ -41,10 +42,8 @@ import com.eanfang.util.BadgeUtil;
 import com.eanfang.util.CleanMessageUtil;
 import com.eanfang.util.ContactUtil;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UpdateAppManager;
-import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
@@ -70,6 +69,7 @@ import butterknife.ButterKnife;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -686,7 +686,7 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
         Uri uri = intent.getData();
         int mType;
         if (uri != null) {
-            if (!StringUtils.isEmpty(uri.getQueryParameter("type"))) {
+            if (!StrUtil.isEmpty(uri.getQueryParameter("type"))) {
                 mType = Integer.parseInt(uri.getQueryParameter("type"));
                 if (mType == 2) {
                     // 打开messagelistactivity

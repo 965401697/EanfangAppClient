@@ -31,6 +31,7 @@ import java.util.List;
 import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -88,7 +89,7 @@ public class TenderFindDetailViewModle extends BaseViewModel {
             // 天  时  分
             String endTime = DateUtil.date(tenderBean.getEndTime()).toString();
 
-            if (!StringUtils.isEmpty(endTime)) {
+            if (!StrUtil.isEmpty(endTime)) {
                 if (DateUtil.parse(endTime).getTime() - DateUtil.date().getTime() > -0) {
                     int day = (int) DateUtil.date().between(DateUtil.parse(endTime), DateUnit.DAY);
                     int hour = (int) DateUtil.date().between(DateKit.get(endTime).offset(DateField.DAY_OF_YEAR, -day).date, DateUnit.HOUR);
@@ -133,7 +134,7 @@ public class TenderFindDetailViewModle extends BaseViewModel {
 
         bundle.putString("id", String.valueOf(tenderLiveData.getValue().getId()));
         bundle.putString("orderNum", tenderLiveData.getValue().getPublishCompanyName());
-        if (!StringUtils.isEmpty(tenderLiveData.getValue().getPictures())) {
+        if (!StrUtil.isEmpty(tenderLiveData.getValue().getPictures())) {
             bundle.putString("picUrl", tenderLiveData.getValue().getPictures().split(",")[0]);
         }
         bundle.putString("creatTime", tenderLiveData.getValue().getLaborRequirements());

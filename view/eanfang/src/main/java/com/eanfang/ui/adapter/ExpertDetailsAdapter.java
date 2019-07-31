@@ -3,7 +3,7 @@ package com.eanfang.ui.adapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.R;
-import com.eanfang.biz.model.ExpertDetailsBean;
+import com.eanfang.biz.model.bean.ExpertDetailsBean;
 import com.eanfang.util.GlideUtil;
 
 /**

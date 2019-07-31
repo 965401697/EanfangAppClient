@@ -20,52 +20,18 @@ public class ETimeUtils {
     private final static long year = 12 * month;// 年
 
     /**
-     * 获取年月日 时分秒
-     */
-    public static String getTimeByYearMonthDayHourMinSec(Date date) {//可根据需要自行截取数据显示
-        /*SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return format.format(date);*/
-        return DateUtil.formatDateTime(date);
-    }
-
-//    /**
-//     * 获取年月日
-//     */
-//    public static String getTimeByYearMonthDayHourMinSec(Date date) {//可根据需要自行截取数据显示
-//        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        return format.format(date);
-//    }
-
-    /**
-     * 获取年月日
-     */
-    public static String getTimeByYearMonthDay(Date date) {//可根据需要自行截取数据显示
-        /*SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        return format.format(date);*/
-        return DateUtil.formatDate(date);
-    }
-
-    /**
-     * 获取时分秒
-     */
-    public static String getTimeByHourMinSec(Date date) {
-        /*SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
-        return format.format(date);*/
-        return DateUtil.formatTime(date);
-    }
-
-    /**
      * 返回文字描述的日期
      *
      * @param date
      * @return
      */
     public static String getTimeFormatText(Date date) {
+
         if (date == null) {
             return null;
         }
 //        long diff = new Date().getTime() - date.getTime();
-        long diff = DateUtil.date().getTime()- date.getTime();
+        long diff = DateUtil.date().getTime() - date.getTime();
         long r = 0;
         if (diff > year) {
             r = (diff / year);

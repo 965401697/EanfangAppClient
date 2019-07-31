@@ -16,8 +16,8 @@ import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.AddWorkInspectDetailBean;
-import com.eanfang.biz.model.TemplateBean;
+import com.eanfang.biz.model.bean.AddWorkInspectDetailBean;
+import com.eanfang.biz.model.bean.TemplateBean;
 
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.takevideo.TakeVdideoMode;
@@ -26,11 +26,7 @@ import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PhotoUtils;
-import com.eanfang.util.StringUtils;
-import com.photopicker.com.activity.BGAPhotoPickerActivity;
-import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
-import com.yaf.base.entity.WorkInspectEntity;
+import com.eanfang.biz.model.entity.WorkInspectEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
@@ -54,8 +50,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static android.provider.MediaStore.Video.Thumbnails.MINI_KIND;
+import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
+import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerPreviewActivity;
+import cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author guanluocang
@@ -189,10 +187,10 @@ public class AddDealwithInfoActivity extends BaseClientActivity {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
             case REQUEST_CODE_CHOOSE_PHOTO_1:
-                snplPhotosWork.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                snplPhotosWork.addMoreData(BGAPhotoPickerActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_PHOTO_PREVIEW_1:
-                snplPhotosWork.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                snplPhotosWork.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
                 break;
             default:
                 break;
@@ -205,7 +203,7 @@ public class AddDealwithInfoActivity extends BaseClientActivity {
             rlThumbnailWork.setVisibility(View.VISIBLE);
             mVieoPath = takeVdideoMode.getMImagePath();
             mUploadKey = takeVdideoMode.getMKey();
-            if (!StringUtils.isEmpty(mVieoPath)) {
+            if (!StrUtil.isEmpty(mVieoPath)) {
 
                 if (ivTakevideoWork.getVisibility() == View.INVISIBLE) {
                     ivTakevideoWork.setVisibility(View.VISIBLE);

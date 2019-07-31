@@ -9,8 +9,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.picture.PictureRecycleView;
-import com.eanfang.biz.model.Message;
-import com.eanfang.biz.model.TakeApplyAddBean;
+import com.eanfang.biz.model.bean.Message;
+import com.eanfang.biz.model.bean.TakeApplyAddBean;
 import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -20,7 +20,6 @@ import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.PickerSelectUtil;
-import com.eanfang.util.StringUtils;
 import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.worker.R;
@@ -35,6 +34,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * Created by MrHou
@@ -102,13 +102,13 @@ public class TakeApplyAddActivity extends BaseActivity implements SelectTimeDial
 
         LoginBean user = WorkerApplication.get().getLoginBean();
         String name = "";
-        if (StringUtils.isEmpty(user.getAccount().getDefaultUser().getCompanyEntity().getOrgName())) {
+        if (StrUtil.isEmpty(user.getAccount().getDefaultUser().getCompanyEntity().getOrgName())) {
             name = user.getAccount().getRealName();
         } else {
             name = user.getAccount().getDefaultUser().getCompanyEntity().getOrgName();
         }
         //如果公司名称为空 则取当前登陆人的公司
-        if (StringUtils.isEmpty(etApplyCompany.getText())) {
+        if (StrUtil.isEmpty(etApplyCompany.getText())) {
             etApplyCompany.setText(name);
         }
         etContract.setText(user.getAccount().getRealName());
@@ -236,7 +236,7 @@ public class TakeApplyAddActivity extends BaseActivity implements SelectTimeDial
     }
     @Override
     public void getData(String time) {
-        if (StringUtils.isEmpty(time) || " ".equals(time)) {
+        if (StrUtil.isEmpty(time) || " ".equals(time)) {
             tvDoorTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
         } else {
             tvDoorTime.setText(time);

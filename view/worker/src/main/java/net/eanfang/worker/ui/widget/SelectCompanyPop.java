@@ -13,12 +13,13 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.eanfang.util.ViewHolder;
-import com.picker.common.util.ScreenUtils;
+import com.eanfang.util.ViewFindUtils;
 
 import net.eanfang.worker.R;
 
 import java.util.List;
+
+import cn.qqtheme.framework.util.ScreenUtils;
 
 /**
  * Created by admin on 2018/5/15.
@@ -80,7 +81,7 @@ public class SelectCompanyPop extends PopupWindow {
             if (view == null) {
                 view = LayoutInflater.from(context).inflate(R.layout.layout_data_select_item, viewGroup, false);
             }
-            TextView tvName = ViewHolder.get(view, R.id.tv_typeName);
+            TextView tvName = ViewFindUtils.find(view, R.id.tv_typeName);
             tvName.setText(list.get(i));
             return view;
         }

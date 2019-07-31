@@ -8,7 +8,6 @@ import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.base.network.holder.ContextHolder;
 import com.eanfang.config.Config;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -18,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HttpUtil;
 

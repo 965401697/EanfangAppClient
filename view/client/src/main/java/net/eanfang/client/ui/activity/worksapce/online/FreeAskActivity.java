@@ -17,21 +17,16 @@ import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.picture.PictureRecycleView;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
-import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PhotoUtils;
-import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.contentsafe.ContentDefaultAuditing;
 import com.eanfang.util.contentsafe.ContentSecurityAuditUtil;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.photopicker.com.activity.BGAPhotoPickerActivity;
-import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
-import com.yaf.base.entity.AskQuestionsEntity;
-import com.yaf.base.entity.CustDeviceEntity;
+import com.eanfang.biz.model.entity.AskQuestionsEntity;
+import com.eanfang.biz.model.entity.CustDeviceEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
@@ -39,7 +34,6 @@ import net.eanfang.client.ui.activity.worksapce.repair.DeviceBrandActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.FaultLibraryActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.SelectDeviceTypeActivity;
 import net.eanfang.client.ui.base.BaseClienActivity;
-import net.eanfang.client.ui.base.BaseClientActivity;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -50,6 +44,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * 免费提问
@@ -118,7 +113,7 @@ public class FreeAskActivity extends BaseClienActivity {
                 break;
             case R.id.ll_deviceBrand:
                 String busOneCode = Config.get().getBaseCodeByName(Config.get().getBusinessNameByCode(dataCode, 1), 1, Constant.MODEL).get(0);
-                if (StringUtils.isEmpty(busOneCode)) {
+                if (StrUtil.isEmpty(busOneCode)) {
                     showToast("请先选择故障设备");
                     return;
                 }
@@ -127,7 +122,7 @@ public class FreeAskActivity extends BaseClienActivity {
                 JumpItent.jump(FreeAskActivity.this, DeviceBrandActivity.class, bundle_device, REQUEST_DEVICE_BRAND_CODE);
                 break;
             case R.id.ll_faultInfo:
-                if (!StringUtils.isEmpty(dataCode)) {
+                if (!StrUtil.isEmpty(dataCode)) {
                     Bundle bundle = new Bundle();
                     bundle.putString("businessOneCode", businessOneCode);
                     JumpItent.jump(FreeAskActivity.this, FaultLibraryActivity.class, bundle, REQUEST_FAULTDESINFO);
@@ -188,7 +183,7 @@ public class FreeAskActivity extends BaseClienActivity {
             finish();*/
         }
 
-//        if (StringUtils.isEmpty(accidentPic)) {
+//        if (StrUtil.isEmpty(accidentPic)) {
 //            showToast("请添加现场照片");
 //            return false;
 //        }

@@ -8,7 +8,7 @@
 //import BaseDialog;
 //import com.eanfang.http.EanfangCallback;
 //import com.eanfang.http.EanfangHttp;
-//import com.eanfang.biz.model.PayOrderListBean;
+//import com.eanfang.biz.model.bean.PayOrderListBean;
 //
 //import net.eanfang.client.R;
 //import com.eanfang.apiservice.ApiService;

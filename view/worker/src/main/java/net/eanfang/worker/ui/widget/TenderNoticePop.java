@@ -15,10 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 
-import com.picker.common.util.ScreenUtils;
 
 import net.eanfang.worker.R;
 

@@ -18,9 +18,9 @@ import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.bean.LoginBean;
-import com.eanfang.biz.model.Message;
-import com.eanfang.biz.model.SelectAddressItem;
-import com.eanfang.biz.model.TaskPublishBean;
+import com.eanfang.biz.model.bean.Message;
+import com.eanfang.biz.model.bean.SelectAddressItem;
+import com.eanfang.biz.model.bean.TaskPublishBean;
 
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.BaseActivity;
@@ -30,11 +30,7 @@ import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.PickerSelectUtil;
-import com.eanfang.util.StringUtils;
 import com.eanfang.base.kit.V;
-import com.photopicker.com.activity.BGAPhotoPickerActivity;
-import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
@@ -47,7 +43,11 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
+import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerPreviewActivity;
+import cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * Created by MrHou
@@ -135,13 +135,13 @@ public class TaskPublishActivity extends BaseActivity implements SelectTimeDialo
     private void initData() {
         LoginBean user = WorkerApplication.get().getLoginBean();
         String name = "";
-        if (StringUtils.isEmpty(user.getAccount().getDefaultUser().getCompanyEntity().getOrgName())) {
+        if (StrUtil.isEmpty(user.getAccount().getDefaultUser().getCompanyEntity().getOrgName())) {
             name = user.getAccount().getRealName();
         } else {
             name = user.getAccount().getDefaultUser().getCompanyEntity().getOrgName();
         }
         //如果公司名称为空 则取当前登陆人的公司
-        if (StringUtils.isEmpty(etTaskCompany.getText())) {
+        if (StrUtil.isEmpty(etTaskCompany.getText())) {
             etTaskCompany.setText(name);
         }
         etTaskUname.setText(user.getAccount().getRealName());
@@ -235,10 +235,10 @@ public class TaskPublishActivity extends BaseActivity implements SelectTimeDialo
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == BGASortableDelegate.REQUEST_CODE_CHOOSE_PHOTO) {
-            mPhotosSnpl.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+            mPhotosSnpl.addMoreData(BGAPhotoPickerActivity.getSelectedPhotos(data));
 //            }
         } else if (requestCode == BGASortableDelegate.REQUEST_CODE_PHOTO_PREVIEW) {
-            mPhotosSnpl.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+            mPhotosSnpl.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
         } else if (requestCode == ADDRESS_CALLBACK_CODE) {
             if (data == null || data.getExtras().size() <= 0) {
                 return;
@@ -289,7 +289,7 @@ public class TaskPublishActivity extends BaseActivity implements SelectTimeDialo
 
     @Override
     public void getData(String time) {
-        if (StringUtils.isEmpty(time) || " ".equals(time)) {
+        if (StrUtil.isEmpty(time) || " ".equals(time)) {
             tvLoginTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
         } else {
             tvLoginTime.setText(time);

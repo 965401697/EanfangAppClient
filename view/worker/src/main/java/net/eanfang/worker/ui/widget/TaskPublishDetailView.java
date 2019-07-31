@@ -10,17 +10,17 @@ import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.config.Config;
-import com.eanfang.biz.model.MineTaskListBean;
+import com.eanfang.biz.model.bean.MineTaskListBean;
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.TakeApplyAddActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * Created by MrHou
@@ -116,7 +116,7 @@ public class TaskPublishDetailView extends BaseDialog {
         tvBudget.setText(GetConstDataUtils.getBudgetList().get(listBean.getBudget()));
         tvLoginTime.setText(listBean.getToDoorTime());
         etDesc.setText(listBean.getDescription());
-        if (!StringUtils.isEmpty(listBean.getPictures())) {
+        if (!StrUtil.isEmpty(listBean.getPictures())) {
             String[] urls = listBean.getPictures().split(",");
 
             if (urls.length >= 1) {

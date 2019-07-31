@@ -2,7 +2,7 @@ package net.eanfang.client.ui.activity.worksapce.install;
 
 import android.os.Bundle;
 
-import com.eanfang.biz.model.WorkspaceInstallBean;
+import com.eanfang.biz.model.bean.WorkspaceInstallBean;
 import com.eanfang.util.GetConstDataUtils;
 import com.flyco.tablayout.SlidingTabLayout;
 

@@ -4,7 +4,7 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.biz.model.WorkTalkListBean;
+import com.eanfang.biz.model.bean.WorkTalkListBean;
 
 import net.eanfang.worker.R;
 

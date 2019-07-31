@@ -27,6 +27,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author guanluocang
@@ -123,7 +124,7 @@ public class DeviceBrandActivity extends BaseActivity {
         @Override
         public void handleMessage(Message msg) {
             String keyword = atvText.getText().toString().trim();
-            if (!StringUtils.isEmpty(keyword)) {
+            if (!StrUtil.isEmpty(keyword)) {
 
                 List<String> mFindList = Stream.of(mDeviceBrandList).filter(title -> title.contains(keyword)).toList();
                 deviceBrandAdapter.setNewData(mFindList);

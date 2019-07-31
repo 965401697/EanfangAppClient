@@ -142,6 +142,7 @@ public class AccountEntity implements Serializable, Cloneable {
      * 技师认证 0是1否
      */
     private int realVerify;
+
     /**
      * 用户信息是否发生改变（注意：调用此方法调用者的值会发生改变）
      *
@@ -171,4 +172,7 @@ public class AccountEntity implements Serializable, Cloneable {
         }
         return false;
     }
+
+    private String firstLetter; // 拼音的首字母
+    private String pinyin; // 姓名对应的拼音
 }

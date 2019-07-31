@@ -13,8 +13,8 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.util.QueryEntry;
-import com.yaf.base.entity.CooperationEntity;
+import com.eanfang.biz.model.QueryEntry;
+import com.eanfang.biz.model.entity.CooperationEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;

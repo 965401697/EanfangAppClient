@@ -2,11 +2,12 @@ package net.eanfang.client.ui.adapter.security;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.biz.model.security.SecurityCommentListBean;
-import com.eanfang.util.StringUtils;
+import com.eanfang.bean.security.SecurityCommentListBean;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
+
+import cn.hutool.core.util.StrUtil;
 
 
 /**
@@ -30,7 +31,7 @@ public class SecurityCommentListAdapter extends BaseQuickAdapter<SecurityComment
         } else {
             helper.setText(R.id.tv_comment, item.getAccountEntity().getRealName() + "：" + item.getCommentsEntity().getCommentsContent());
         }
-        if (StringUtils.isEmpty(item.getSpcContent())) {
+        if (StrUtil.isEmpty(item.getSpcContent())) {
             helper.setText(R.id.tv_content, "[图片]");
         } else {
             helper.setText(R.id.tv_content, item.getSpcContent());

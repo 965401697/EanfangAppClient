@@ -22,6 +22,11 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Optional;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.biz.model.bean.ZjZgBean;
+import com.eanfang.biz.model.entity.BughandleDetailEntity;
+import com.eanfang.biz.model.entity.BughandleParamEntity;
+import com.eanfang.biz.model.entity.BughandleUseDeviceEntity;
+import com.eanfang.biz.model.entity.RepairFailureEntity;
 import com.eanfang.config.Config;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
@@ -30,11 +35,6 @@ import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.base.kit.rx.RxPerm;
-import com.eanfang.util.StringUtils;
-import com.yaf.base.entity.BughandleDetailEntity;
-import com.yaf.base.entity.BughandleParamEntity;
-import com.yaf.base.entity.BughandleUseDeviceEntity;
-import com.yaf.base.entity.RepairFailureEntity;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -56,6 +56,7 @@ import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * Created by MrHou
@@ -415,7 +416,7 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
 
     public void fillData() {
 
-        if (StringUtils.isValid(failureEntity.getBusinessThreeCode())) {
+        if (StrUtil.isNotBlank(failureEntity.getBusinessThreeCode())) {
             String bugOne = Config.get().getBusinessNameByCode(failureEntity.getBusinessThreeCode(), 1);
             String bugTwo = Config.get().getBusinessNameByCode(failureEntity.getBusinessThreeCode(), 2);
             String bugThree = Config.get().getBusinessNameByCode(failureEntity.getBusinessThreeCode(), 3);
@@ -539,23 +540,23 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
 
 
     private boolean checkData() {
-        if (StringUtils.isEmpty(etTroubleDesc.getText().toString().trim())) {
+        if (StrUtil.isEmpty(etTroubleDesc.getText().toString().trim())) {
             showToast("请输入故障描述");
             return false;
         }
-        if (StringUtils.isEmpty(etTroubleSketch.getText().toString().trim())) {
+        if (StrUtil.isEmpty(etTroubleSketch.getText().toString().trim())) {
             showToast("请输入故障简述");
             return false;
         }
-        if (StringUtils.isEmpty(etTroubleReason.getText().toString().trim())) {
+        if (StrUtil.isEmpty(etTroubleReason.getText().toString().trim())) {
             showToast("请输入原因");
             return false;
         }
-        if (StringUtils.isEmpty(etTroublePoint.getText().toString().trim())) {
+        if (StrUtil.isEmpty(etTroublePoint.getText().toString().trim())) {
             showToast("请输入过程方法");
             return false;
         }
-        if (StringUtils.isEmpty(etTroubleDeal.getText().toString().trim())) {
+        if (StrUtil.isEmpty(etTroubleDeal.getText().toString().trim())) {
             showToast("请输入处理措施");
             return false;
         }
@@ -567,19 +568,19 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
             showToast("请选择修复方式");
             return false;
         }
-        if (StringUtils.isEmpty(etTroubleUseAdvace.getText().toString().trim())) {
+        if (StrUtil.isEmpty(etTroubleUseAdvace.getText().toString().trim())) {
             showToast("请输入使用建议");
             return false;
         }
-        if (StringUtils.isEmpty(detailEntity.getPresentationPictures())) {
+        if (StrUtil.isEmpty(detailEntity.getPresentationPictures())) {
             showToast("请添加现场照片");
             return false;
         }
-        if (StringUtils.isEmpty(detailEntity.getPointPictures())) {
+        if (StrUtil.isEmpty(detailEntity.getPointPictures())) {
             showToast("请添加现场照片");
             return false;
         }
-        if (StringUtils.isEmpty(detailEntity.getRestorePictures())) {
+        if (StrUtil.isEmpty(detailEntity.getRestorePictures())) {
             showToast("请添加现场照片");
             return false;
         }

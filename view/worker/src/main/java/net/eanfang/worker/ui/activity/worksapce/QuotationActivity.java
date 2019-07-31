@@ -19,9 +19,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.biz.model.Message;
-import com.eanfang.biz.model.QuotationBean;
-import com.eanfang.biz.model.SelectAddressItem;
+import com.eanfang.biz.model.bean.Message;
+import com.eanfang.biz.model.bean.QuotationBean;
+import com.eanfang.biz.model.bean.SelectAddressItem;
 import com.eanfang.biz.model.entity.UserEntity;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
@@ -31,7 +31,6 @@ import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PickerSelectUtil;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
@@ -41,6 +40,8 @@ import net.eanfang.worker.ui.adapter.QuotationServiceAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.hutool.core.util.StrUtil;
 
 /**
  * Created by MrHou
@@ -222,22 +223,22 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
     }
 
     private boolean checkInfo(boolean check) {
-        if (StringUtils.isEmpty(et_client_company_name_wr.getText().toString().trim())) {
+        if (StrUtil.isEmpty(et_client_company_name_wr.getText().toString().trim())) {
             showToast("请填写用户名称");
             return false;
         }
 
-        if (StringUtils.isEmpty(et_project_name.getText().toString().trim())) {
+        if (StrUtil.isEmpty(et_project_name.getText().toString().trim())) {
             showToast("请填写项目名称");
             return false;
         }
 
-        if (StringUtils.isEmpty(tv_address.getText().toString().trim())) {
+        if (StrUtil.isEmpty(tv_address.getText().toString().trim())) {
             showToast("请填写地址名称");
             return false;
         }
 
-        if (radioLeader.isChecked() && StringUtils.isEmpty(et_contract.getText().toString().trim())) {
+        if (radioLeader.isChecked() && StrUtil.isEmpty(et_contract.getText().toString().trim())) {
             showToast("请选择联系人");
             return false;
         }
@@ -260,7 +261,7 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
 
     private void postCommit() {
         if (radioClient.isChecked()) {
-            if (StringUtils.isEmpty(orderID)) {
+            if (StrUtil.isEmpty(orderID)) {
                 showToast("汇报给客户需要关联订单");
                 return;
             }
@@ -331,7 +332,7 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
                 bean.setZone_code(code);
                 bean.setZone_id(Long.valueOf(Config.get().getBaseIdByCode(code, 2, Constant.AREA)));
                 if (radioClient.isChecked() == true) {
-                    if (StringUtils.isEmpty(orderID)) {
+                    if (StrUtil.isEmpty(orderID)) {
                         return;
                     }
                     tv_relate_order.setText(orderID);
@@ -401,7 +402,7 @@ public class QuotationActivity extends BaseActivity implements RadioGroup.OnChec
         switch (checkedId) {
             case R.id.rb_client:
                 radioClient.setChecked(true);
-                if (StringUtils.isEmpty(orderID)) {
+                if (StrUtil.isEmpty(orderID)) {
                     return;
                 }
                 tv_relate_order.setText(orderID);

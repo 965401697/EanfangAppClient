@@ -8,7 +8,7 @@ import com.baozi.treerecyclerview.factory.ItemHelperFactory;
 import com.baozi.treerecyclerview.item.TreeItem;
 import com.baozi.treerecyclerview.item.TreeSelectItemGroup;
 import com.eanfang.R;
-import com.eanfang.biz.model.TemplateBean;
+import com.eanfang.biz.model.bean.TemplateBean;
 
 import java.util.List;
 

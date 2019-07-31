@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.biz.model.bean.PageBean;
+import com.eanfang.biz.model.entity.WorkerEntity;
 import com.eanfang.biz.model.entity.tender.TaskApplyEntity;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
 import com.eanfang.biz.rds.base.BaseViewModel;
@@ -16,7 +17,6 @@ import com.eanfang.biz.rds.sys.repo.tender.TenderRepo;
 import com.eanfang.config.Config;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
-import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.worker.databinding.ActivityTenderOfferDetailBinding;
 import net.eanfang.worker.ui.activity.worksapce.WorkDetailActivity;

@@ -27,6 +27,7 @@ import net.eanfang.client.ui.activity.my.SettingActivity;
 import net.eanfang.client.ui.widget.InviteView;
 
 import butterknife.BindView;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * Created by MrHou
@@ -97,11 +98,11 @@ public class MyFragment extends BaseFragment {
 
     public void initDatas() {
         LoginBean user = ClientApplication.get().getLoginBean();
-        if (!StringUtils.isEmpty(user.getAccount().getNickName())) {
+        if (!StrUtil.isEmpty(user.getAccount().getNickName())) {
             tv_user_name.setText(user.getAccount().getNickName());
         }
 
-        if (!StringUtils.isEmpty(user.getAccount().getAvatar())) {
+        if (!StrUtil.isEmpty(user.getAccount().getAvatar())) {
             GlideUtil.intoImageView(getActivity(), Uri.parse(BuildConfig.OSS_SERVER + user.getAccount().getAvatar()), ivUserHeader);
         }
 

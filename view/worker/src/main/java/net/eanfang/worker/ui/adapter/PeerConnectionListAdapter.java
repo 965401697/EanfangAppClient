@@ -2,7 +2,7 @@ package net.eanfang.worker.ui.adapter;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.BuildConfig;
-import com.eanfang.biz.model.PeerConnectionDataBean;
+import com.eanfang.biz.model.bean.PeerConnectionDataBean;
 import com.eanfang.biz.model.entity.OrgEntity;
 import com.eanfang.util.GlideUtil;
 

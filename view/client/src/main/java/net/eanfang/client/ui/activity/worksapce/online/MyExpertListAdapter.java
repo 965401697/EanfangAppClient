@@ -8,7 +8,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.util.GlideUtil;
-import com.yaf.base.entity.CommonFaultListBeanEntity;
+import com.eanfang.biz.model.entity.CommonFaultListBeanEntity;
 
 import net.eanfang.client.R;
 

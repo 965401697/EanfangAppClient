@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.eanfang.util.ViewHolder;
+import com.eanfang.util.ViewFindUtils;
 import com.eanfang.biz.model.entity.BaseDataEntity;
 
 
@@ -60,8 +60,8 @@ public class RepairDeviceTypeLeftAdapter extends BaseAdapter {
             convertView = inflater.inflate(R.layout.layout_repair_device_left, parent, false);
         }
 
-        View view_selected = ViewHolder.get(convertView, R.id.view_selected);
-        TextView tvName = ViewHolder.get(convertView, R.id.tv_name);
+        View view_selected = ViewFindUtils.find(convertView, R.id.view_selected);
+        TextView tvName = ViewFindUtils.find(convertView, R.id.tv_name);
         tvName.setText(list.get(position).getDataName());
 
         if (selectedPosition == position) {

@@ -16,7 +16,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GlideUtil;
-import com.yaf.base.entity.CustDeviceEntity;
+import com.eanfang.biz.model.entity.CustDeviceEntity;
 
 
 import java.io.Serializable;

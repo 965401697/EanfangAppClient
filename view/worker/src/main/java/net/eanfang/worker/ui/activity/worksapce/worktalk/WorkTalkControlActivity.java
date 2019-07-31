@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
-import com.eanfang.util.QueryEntry;
+import com.eanfang.biz.model.QueryEntry;
 import com.flyco.tablayout.SlidingTabLayout;
 
 import net.eanfang.worker.R;

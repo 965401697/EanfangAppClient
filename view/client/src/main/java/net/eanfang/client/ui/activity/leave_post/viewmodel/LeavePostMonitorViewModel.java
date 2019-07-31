@@ -21,6 +21,7 @@ import net.eanfang.client.ui.activity.leave_post.repo.LeavePostRepo;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.hutool.core.util.StrUtil;
 import lombok.Getter;
 
 /**
@@ -54,7 +55,7 @@ public class LeavePostMonitorViewModel extends BaseViewModel {
         queryEntry.getNotEquals().put("status", "2");
         queryEntry.getOrderBy().put("isInUse", "ASC");
         queryEntry.getOrderBy().put("createTime", "DESC");
-        if (!StringUtils.isEmpty(deviceName)){
+        if (!StrUtil.isEmpty(deviceName)){
             queryEntry.getLike().put("deviceName", deviceName);
         }
         queryEntry.setSize(10);

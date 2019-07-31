@@ -21,7 +21,7 @@ import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.base.kit.cache.CacheMod;
 import com.eanfang.base.network.config.HttpConfig;
-import com.eanfang.biz.model.OrganizationBean;
+import com.eanfang.biz.model.bean.OrganizationBean;
 import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.biz.model.entity.OrgEntity;
 import com.eanfang.http.EanfangCallback;

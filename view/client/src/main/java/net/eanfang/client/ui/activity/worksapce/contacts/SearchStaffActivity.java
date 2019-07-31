@@ -17,7 +17,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.V;
 import com.eanfang.base.kit.rx.RxPerm;
-import com.eanfang.biz.model.FriendListBean;
+import com.eanfang.biz.model.bean.FriendListBean;
 import com.eanfang.biz.model.entity.AccountEntity;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;

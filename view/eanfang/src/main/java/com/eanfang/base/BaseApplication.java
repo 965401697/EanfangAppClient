@@ -19,16 +19,14 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.facebook.imagepipeline.backends.okhttp3.OkHttpImagePipelineConfigFactory;
 import com.facebook.imagepipeline.core.ImagePipelineConfig;
-import com.okgo.OkGo;
-import com.okgo.cache.CacheEntity;
-import com.okgo.cache.CacheMode;
-import com.okgo.cookie.CookieJarImpl;
-import com.okgo.cookie.store.DBCookieStore;
-import com.okgo.https.HttpsUtils;
-import com.okgo.interceptor.HttpLoggingInterceptor;
-import com.okgo.model.HttpHeaders;
-import com.photopicker.com.imageloader.BGAGlideImageLoader;
-import com.photopicker.com.imageloader.BGAImage;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.cache.CacheEntity;
+import com.lzy.okgo.cache.CacheMode;
+import com.lzy.okgo.cookie.CookieJarImpl;
+import com.lzy.okgo.cookie.store.DBCookieStore;
+import com.lzy.okgo.https.HttpsUtils;
+import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
+import com.lzy.okgo.model.HttpHeaders;
 import com.tencent.smtt.sdk.QbSdk;
 
 import java.util.ArrayList;
@@ -36,6 +34,8 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
+import cn.bingoogolapple.photopicker.imageloader.BGAGlideImageLoader;
+import cn.bingoogolapple.photopicker.imageloader.BGAImage;
 import okhttp3.OkHttpClient;
 
 /**

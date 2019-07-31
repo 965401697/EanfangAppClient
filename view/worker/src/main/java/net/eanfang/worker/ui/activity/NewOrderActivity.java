@@ -12,10 +12,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.NewOrderBean;
+import com.eanfang.biz.model.bean.NewOrderBean;
 import com.eanfang.ui.base.BaseActivity;
-import com.eanfang.util.QueryEntry;
-import com.eanfang.util.StringUtils;
+import com.eanfang.biz.model.QueryEntry;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
@@ -30,6 +29,8 @@ import net.eanfang.worker.ui.widget.InstallCtrlItemView;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author liangkailun
@@ -65,7 +66,7 @@ public class NewOrderActivity extends BaseActivity {
         setContentView(R.layout.activity_new_order);
         super.onCreate(savedInstanceState);
         String queryEntry = getIntent().getStringExtra("query");
-        if (StringUtils.isEmpty(queryEntry)) {
+        if (StrUtil.isEmpty(queryEntry)) {
             mQueryEntry = new QueryEntry();
         } else {
             mQueryEntry = JSONObject.toJavaObject(JSONObject.parseObject(queryEntry), QueryEntry.class);

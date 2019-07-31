@@ -16,7 +16,7 @@ import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.GroupCreatBean;
+import com.eanfang.biz.model.bean.GroupCreatBean;
 
 import com.eanfang.util.GlideUtil;
 import com.eanfang.base.kit.rx.RxPerm;

@@ -17,12 +17,12 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.FaultTotleBean;
+import com.eanfang.biz.model.bean.FaultTotleBean;
 import com.eanfang.util.DateKit;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.util.QueryEntry;
+import com.eanfang.biz.model.QueryEntry;
 import com.eanfang.util.ToastUtil;
-import com.picker.DoubleDatePickerDialog;
+import com.eanfang.util.DoubleDatePickerDialog;
 
 
 import net.eanfang.worker.R;

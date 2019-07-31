@@ -3,7 +3,7 @@ package com.eanfang.sdk.equipment.adapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.R;
-import com.yaf.base.entity.CustDeviceParamEntity;
+import com.eanfang.biz.model.entity.CustDeviceParamEntity;
 
 
 /**

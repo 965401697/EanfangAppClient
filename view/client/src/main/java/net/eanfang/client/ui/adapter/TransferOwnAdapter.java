@@ -6,7 +6,8 @@ import android.widget.RadioButton;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.eanfang.biz.model.GroupDetailBean;
+import com.eanfang.biz.model.bean.GroupDetailBean;
+import com.eanfang.biz.model.entity.SysGroupUserEntity;
 import com.eanfang.util.GlideUtil;
 
 import net.eanfang.client.R;
@@ -15,13 +16,13 @@ import net.eanfang.client.R;
  * Created by O u r on 2018/4/26.
  */
 
-public class TransferOwnAdapter extends BaseQuickAdapter<GroupDetailBean.ListBean, BaseViewHolder> {
+public class TransferOwnAdapter extends BaseQuickAdapter<SysGroupUserEntity, BaseViewHolder> {
     public TransferOwnAdapter(int layoutResId) {
         super(layoutResId);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, GroupDetailBean.ListBean item) {
+    protected void convert(BaseViewHolder helper, SysGroupUserEntity item) {
 
         if (item.getFlag() == 0) {
             ((RadioButton) helper.getView(R.id.rb_checked)).setChecked(false);

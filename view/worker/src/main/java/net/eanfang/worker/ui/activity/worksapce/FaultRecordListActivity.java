@@ -18,14 +18,14 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.biz.model.FaultListsBean;
+import com.eanfang.biz.model.bean.FaultListsBean;
+import com.eanfang.biz.model.entity.RepairFailureEntity;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.PermKit;
-import com.eanfang.util.QueryEntry;
+import com.eanfang.biz.model.QueryEntry;
 import com.eanfang.util.ToastUtil;
-import com.yaf.base.entity.RepairFailureEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.FaultRecordAdapter;

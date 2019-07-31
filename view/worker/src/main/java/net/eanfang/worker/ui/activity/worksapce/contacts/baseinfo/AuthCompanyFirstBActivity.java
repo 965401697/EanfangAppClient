@@ -24,8 +24,8 @@ import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.AuthCompanyBaseInfoBean;
-import com.eanfang.biz.model.SelectAddressItem;
+import com.eanfang.biz.model.bean.AuthCompanyBaseInfoBean;
+import com.eanfang.biz.model.bean.SelectAddressItem;
 import com.eanfang.biz.model.entity.BaseDataEntity;
 import com.eanfang.biz.model.entity.OrgUnitEntity;
 
@@ -34,7 +34,6 @@ import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.PickerSelectUtil;
-import com.eanfang.util.StringUtils;
 import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.worker.R;
@@ -193,15 +192,15 @@ public class AuthCompanyFirstBActivity extends BaseWorkeActivity {
     }
 
     public void doVerify() {
-        if (StringUtils.isEmpty(etCompany.getText().toString().trim())) {
+        if (StrUtil.isEmpty(etCompany.getText().toString().trim())) {
             showToast("请输入单位名称");
             return;
         }
-        if (StringUtils.isEmpty(tvType.getText().toString().trim())) {
+        if (StrUtil.isEmpty(tvType.getText().toString().trim())) {
             showToast("请选择行业类型");
             return;
         }
-        if (StringUtils.isEmpty(etDetailOfficeAddress.getText().toString().trim())) {
+        if (StrUtil.isEmpty(etDetailOfficeAddress.getText().toString().trim())) {
             showToast("请输入办公地址");
             return;
         }
@@ -209,11 +208,11 @@ public class AuthCompanyFirstBActivity extends BaseWorkeActivity {
             showToast("请输入正确的电子邮箱");
             return;
         }
-        if (StringUtils.isEmpty(etPhone.getText().toString().trim())) {
+        if (StrUtil.isEmpty(etPhone.getText().toString().trim())) {
             showToast("请输入单位电话");
             return;
         }
-        if (StringUtils.isEmpty(etDesc.getText().toString().trim())) {
+        if (StrUtil.isEmpty(etDesc.getText().toString().trim())) {
             showToast("请输入公司简介");
             return;
         } else {
@@ -227,10 +226,10 @@ public class AuthCompanyFirstBActivity extends BaseWorkeActivity {
         infoBean.setOrgId(orgid);
         infoBean.setTelPhone(etPhone.getText().toString().trim());
         infoBean.setOfficeAddress(etDetailOfficeAddress.getText().toString().trim());
-        if (!StringUtils.isEmpty(itemcity) && !StringUtils.isEmpty(itemzone)) {
+        if (!StrUtil.isEmpty(itemcity) && !StrUtil.isEmpty(itemzone)) {
             infoBean.setAreaCode(Config.get().getAreaCodeByName(itemcity, itemzone));
         }
-        if (!StringUtils.isEmpty(secondTraed)) {
+        if (!StrUtil.isEmpty(secondTraed)) {
             infoBean.setTradeTypeCode(Config.get().getBaseCodeByName(secondTraed, 2, Constant.INDUSTRY).get(0));
         }
         // 公司规模
@@ -273,7 +272,7 @@ public class AuthCompanyFirstBActivity extends BaseWorkeActivity {
             if (infoBean.getIntro() != null) {
                 etDesc.setText(infoBean.getIntro());
             }
-            if (!StringUtils.isEmpty(infoBean.getLogoPic())) {
+            if (!StrUtil.isEmpty(infoBean.getLogoPic())) {
                 GlideUtil.intoImageView(this, BuildConfig.OSS_SERVER + infoBean.getLogoPic(), ivUpload2);
                 infoBean.setLogoPic(infoBean.getLogoPic());
             }

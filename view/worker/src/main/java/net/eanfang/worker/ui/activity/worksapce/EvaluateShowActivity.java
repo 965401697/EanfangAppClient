@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
-import com.eanfang.biz.model.EvaluateBean;
+import com.eanfang.biz.model.bean.EvaluateBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.base.kit.V;

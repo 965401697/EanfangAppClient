@@ -3,7 +3,7 @@ package net.eanfang.client.ui.activity.worksapce.defendlog;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.util.GetConstDataUtils;
-import com.yaf.base.entity.LogDetailsEntity;
+import com.eanfang.biz.model.entity.LogDetailsEntity;
 
 import net.eanfang.client.R;
 

@@ -7,7 +7,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.R;
-import com.eanfang.biz.model.SecurityCompanyDetailsBean;
+import com.eanfang.biz.model.bean.SecurityCompanyDetailsBean;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.base.kit.V;
 

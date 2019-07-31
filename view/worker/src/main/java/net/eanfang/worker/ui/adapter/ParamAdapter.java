@@ -6,12 +6,13 @@ import android.widget.EditText;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.util.StringUtils;
-import com.yaf.base.entity.BughandleParamEntity;
+import com.eanfang.biz.model.entity.BughandleParamEntity;
 
 import net.eanfang.worker.R;
 
 import java.util.List;
+
+import cn.hutool.core.util.StrUtil;
 
 
 /**
@@ -29,7 +30,7 @@ public class ParamAdapter extends BaseQuickAdapter<BughandleParamEntity, BaseVie
     @Override
     protected void convert(BaseViewHolder helper, final BughandleParamEntity item) {
         helper.setText(R.id.tv_param, item.getParamName());
-        if (StringUtils.isValid(item.getParamValue())) {
+        if (StrUtil.isNotBlank(item.getParamValue())) {
             helper.setText(R.id.et_param, item.getParamValue());
         }
         EditText et_param = helper.getView(R.id.et_param);
@@ -47,7 +48,7 @@ public class ParamAdapter extends BaseQuickAdapter<BughandleParamEntity, BaseVie
             @Override
             public void afterTextChanged(Editable s) {
                 item.setParamValue(s.toString());
-//                if (!StringUtils.isEmpty(s.toString())) {
+//                if (!StrUtil.isEmpty(s.toString())) {
 //
 //                } else {
 //                    item.setParamName(null);

@@ -9,18 +9,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
-import com.eanfang.biz.model.WorkTaskInfoBean;
+import com.eanfang.biz.model.bean.WorkTaskInfoBean;
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * Created by MrHou
@@ -100,7 +100,7 @@ public class LookTaskInfoView extends BaseDialog {
         etWorker.setText(detailBean.getJoinPerson());
         etStandard.setText(detailBean.getCriterion());
         etGoal.setText(detailBean.getPurpose());
-        if (!StringUtils.isEmpty(detailBean.getPictures())) {
+        if (!StrUtil.isEmpty(detailBean.getPictures())) {
             String[] urls = detailBean.getPictures().split(",");
 
             if (urls.length >= 1) {
@@ -123,7 +123,7 @@ public class LookTaskInfoView extends BaseDialog {
                 ivPic3.setVisibility(View.GONE);
             }
         }
-        if (!StringUtils.isEmpty(detailBean.getMp4_path())) {
+        if (!StrUtil.isEmpty(detailBean.getMp4_path())) {
             rlThumbnail.setVisibility(View.VISIBLE);
             GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + detailBean.getMp4_path() + ".jpg"),ivTakevideo);
         }
@@ -143,17 +143,17 @@ public class LookTaskInfoView extends BaseDialog {
 //        ArrayList<String> picList = new ArrayList<String>();
 //        switch (v.getId()) {
 //            case R.id.iv_pic1:
-//                if (!StringUtils.isEmpty(detailBean.getPic1())) {
+//                if (!StrUtil.isEmpty(detailBean.getPic1())) {
 //                    picList.add(detailBean.getPic1());
 //                }
 //                break;
 //            case R.id.iv_pic2:
-//                if (!StringUtils.isEmpty(detailBean.getPic2())) {
+//                if (!StrUtil.isEmpty(detailBean.getPic2())) {
 //                    picList.add(detailBean.getPic2());
 //                }
 //                break;
 //            case R.id.iv_pic3:
-//                if (!StringUtils.isEmpty(detailBean.getPic3())) {
+//                if (!StrUtil.isEmpty(detailBean.getPic3())) {
 //                    picList.add(detailBean.getPic3());
 //                }
 //                break;

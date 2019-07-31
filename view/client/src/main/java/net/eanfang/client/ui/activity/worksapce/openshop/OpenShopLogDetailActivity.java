@@ -16,7 +16,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.DateKit;
 import com.eanfang.util.GlideUtil;
-import com.yaf.base.entity.OpenShopLogEntity;
+import com.eanfang.biz.model.entity.OpenShopLogEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.im.SelectIMContactActivity;

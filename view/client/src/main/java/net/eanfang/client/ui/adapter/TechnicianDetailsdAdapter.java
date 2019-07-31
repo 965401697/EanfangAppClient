@@ -6,7 +6,7 @@ import android.text.TextUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.eanfang.biz.model.TechnicianDetailsBean;
+import com.eanfang.biz.model.bean.TechnicianDetailsBean;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.base.kit.V;
 

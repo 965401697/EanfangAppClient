@@ -5,8 +5,8 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.eanfang.biz.model.entity.BughandleParamEntity;
 import com.eanfang.ui.base.BaseActivity;
-import com.yaf.base.entity.BughandleParamEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.LookParamAdapter;

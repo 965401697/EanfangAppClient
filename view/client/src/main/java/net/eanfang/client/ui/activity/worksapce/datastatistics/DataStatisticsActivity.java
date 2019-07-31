@@ -17,12 +17,11 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.datastatistics.DataStatisticsBean;
-import com.eanfang.biz.model.datastatistics.DataStatisticsCompany;
+import com.eanfang.biz.model.bean.datastatistics.DataStatisticsBean;
+import com.eanfang.biz.model.bean.datastatistics.DataStatisticsCompany;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.util.QueryEntry;
-import com.eanfang.util.StringUtils;
+import com.eanfang.biz.model.QueryEntry;
 import com.eanfang.witget.DataSelectPopWindow;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
@@ -48,6 +47,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author Guanluocang
@@ -264,7 +264,7 @@ public class DataStatisticsActivity extends BaseActivity implements RadioGroup.O
      */
     public void doGetData(String businessCode, Long compangId) {
         QueryEntry queryEntry = new QueryEntry();
-        if (!StringUtils.isEmpty(businessCode)) {
+        if (!StrUtil.isEmpty(businessCode)) {
             queryEntry.getEquals().put("bussinessCode", businessCode);
         }
         queryEntry.getEquals().put("shopCompanyId", compangId + "");

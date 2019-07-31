@@ -11,7 +11,7 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.WorkTalkDetailBean;
+import com.eanfang.biz.model.bean.WorkTalkDetailBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.DateKit;
 import com.eanfang.util.GlideUtil;
@@ -20,7 +20,6 @@ import net.eanfang.client.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.hutool.core.date.DateUtil;
 
 /**
  * @author Guanluocang

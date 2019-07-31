@@ -15,13 +15,12 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.biz.model.entity.TransferLogEntity;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.StringUtils;
-import com.yaf.base.entity.BughandleConfirmEntity;
-import com.yaf.base.entity.TransferLogEntity;
+import com.eanfang.biz.model.entity.BughandleConfirmEntity;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -38,6 +37,7 @@ import java.util.Set;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 
 
 /**
@@ -166,7 +166,7 @@ public class PutUpOrderActivity extends BaseWorkerActivity {
             showToast("请选择原因");
             return;
         }
-        if (StringUtils.isEmpty(etRemarks.getText().toString().trim())) {
+        if (StrUtil.isEmpty(etRemarks.getText().toString().trim())) {
             showToast("请输入原因描述");
             return;
         }

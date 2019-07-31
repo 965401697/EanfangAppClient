@@ -1,7 +1,7 @@
 package com.eanfang.base.widget.controltool.numberprogress;
 
 
-import com.vector.update_app.view.NumberProgressBar;
+import com.vector.update_app.view.UpdateNumberProgressBar;
 
 /**
  * created by wtt
@@ -10,7 +10,7 @@ import com.vector.update_app.view.NumberProgressBar;
  */
 public class NumProgressManager implements INumberProgressBar {
     @Override
-    public void setProgress(NumberProgressBar numberProgressBar, int progress) {
-        numberProgressBar.setProgress(progress);
+    public void setProgress(UpdateNumberProgressBar updateNumberProgressBar, int progress) {
+        updateNumberProgressBar.setProgress(progress);
     }
 }

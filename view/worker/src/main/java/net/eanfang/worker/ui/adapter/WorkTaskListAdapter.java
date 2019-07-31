@@ -5,11 +5,12 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.eanfang.biz.model.WorkTaskListBean;
+import com.eanfang.biz.model.bean.WorkTaskListBean;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
+
+import cn.hutool.core.util.StrUtil;
 
 import static com.eanfang.base.kit.V.v;
 
@@ -66,7 +67,7 @@ public class WorkTaskListAdapter extends BaseQuickAdapter<WorkTaskListBean.ListB
         helper.setText(R.id.tv_pub_time, "发布时间    " + v(() -> item.getCreateTime()));
         helper.setText(R.id.tv_pub_person, "发布人        " + v(() -> item.getCreateUser().getAccountEntity().getRealName()));
 
-        if (item.getWorkTaskDetail().getPictures() != null && !StringUtils.isEmpty(item.getWorkTaskDetail().getPictures())) {
+        if (item.getWorkTaskDetail().getPictures() != null && !StrUtil.isEmpty(item.getWorkTaskDetail().getPictures())) {
             String[] urls = item.getWorkTaskDetail().getPictures().split(",");
             GlideUtil.intoImageView(mContext,BuildConfig.OSS_SERVER + urls[0], helper.getView(R.id.img_head));
         } else {

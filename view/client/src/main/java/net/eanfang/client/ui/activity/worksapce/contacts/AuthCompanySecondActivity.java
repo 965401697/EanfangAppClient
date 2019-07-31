@@ -22,14 +22,13 @@ import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.AuthCompanyBaseInfoBean;
-import com.eanfang.biz.model.Message;
+import com.eanfang.biz.model.bean.AuthCompanyBaseInfoBean;
+import com.eanfang.biz.model.bean.Message;
 
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.PickerSelectUtil;
-import com.eanfang.util.StringUtils;
 import com.eanfang.biz.model.entity.BaseDataEntity;
 import com.eanfang.biz.model.entity.OrgUnitEntity;
 import com.luck.picture.lib.entity.LocalMedia;
@@ -132,7 +131,7 @@ public class AuthCompanySecondActivity extends BaseClienActivity {
             if (byNetBean.getScale() >= 0) {
                 tvCompanyScale.setText(GetConstDataUtils.getOrgUnitScaleList().get(byNetBean.getScale()));
             }
-            if (!StringUtils.isEmpty(byNetBean.getLicensePic())) {
+            if (!StrUtil.isEmpty(byNetBean.getLicensePic())) {
                 GlideUtil.intoImageView(this, BuildConfig.OSS_SERVER + byNetBean.getLicensePic(), ivUpload);
                 infoBean.setLicensePic(byNetBean.getLicensePic());
             }
@@ -189,13 +188,13 @@ public class AuthCompanySecondActivity extends BaseClienActivity {
      * 进行字段的约束判断
      */
     public void doVerify() {
-        if (StringUtils.isEmpty(edCompanyNumber.getText().toString().trim())) {
+        if (StrUtil.isEmpty(edCompanyNumber.getText().toString().trim())) {
             showToast("请输入营业执照号码");
             return;
-        } else if (StringUtils.isEmpty(etMoney.getText().toString().trim())) {
+        } else if (StrUtil.isEmpty(etMoney.getText().toString().trim())) {
             showToast("请输入注册资本");
             return;
-        } else if (StringUtils.isEmpty(tvType.getText().toString().trim())) {
+        } else if (StrUtil.isEmpty(tvType.getText().toString().trim())) {
             showToast("请选择行业类型");
             return;
         } else {
@@ -225,7 +224,7 @@ public class AuthCompanySecondActivity extends BaseClienActivity {
      */
     private void setData() {
         // 行业类型
-        if (!StringUtils.isEmpty(secondTraed)) {
+        if (!StrUtil.isEmpty(secondTraed)) {
             infoBean.setTradeTypeCode(Config.get().getBaseCodeByName(secondTraed, 2, Constant.INDUSTRY).get(0));
         }
         // 公司规模

@@ -21,13 +21,13 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
-import com.eanfang.biz.model.GroupCreatBean;
-import com.eanfang.biz.model.GroupDetailBean;
-import com.eanfang.biz.model.TemplateBean;
+import com.eanfang.base.kit.loading.LoadKit;
+import com.eanfang.biz.model.bean.GroupCreatBean;
+import com.eanfang.biz.model.bean.TemplateBean;
 import com.eanfang.biz.model.entity.OrgEntity;
+import com.eanfang.biz.model.entity.SysGroupUserEntity;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.util.DialogUtil;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.compound.CompoundHelper;
@@ -83,7 +83,7 @@ public class SelectIMContactActivity extends BaseWorkerActivity {
     private String path;
     private String groupName;
 
-    private ArrayList<GroupDetailBean.ListBean> mFriendListBeanArrayList;
+    private ArrayList<SysGroupUserEntity> mFriendListBeanArrayList;
     private String mGroupId;
     private String mRYGroupId;
     private String mTitle;
@@ -141,7 +141,7 @@ public class SelectIMContactActivity extends BaseWorkerActivity {
         supprotToolbar();
         setTitle("选择联系人");
 
-        dialog = DialogUtil.createLoadingDialog(SelectIMContactActivity.this);
+        dialog = LoadKit.dialog(SelectIMContactActivity.this);
 
         bundle = getIntent().getExtras();
 
@@ -158,7 +158,7 @@ public class SelectIMContactActivity extends BaseWorkerActivity {
             setRightTitle("添加");
             findViewById(R.id.rl_my_group).setVisibility(View.GONE);
             mGroupId = getIntent().getStringExtra("groupId");
-            mFriendListBeanArrayList = (ArrayList<GroupDetailBean.ListBean>) getIntent().getSerializableExtra("list");
+            mFriendListBeanArrayList = (ArrayList<SysGroupUserEntity>) getIntent().getSerializableExtra("list");
             mRYGroupId = getIntent().getStringExtra("ryGroupId");
             mTitle = getIntent().getStringExtra("title");
             //是否是合成的头像
@@ -563,9 +563,9 @@ public class SelectIMContactActivity extends BaseWorkerActivity {
         }
         // TODO: 2018/10/9  待优化
         List<String> idList = new ArrayList<>();
-        for (GroupDetailBean.ListBean bean : mFriendListBeanArrayList) {
+        for (SysGroupUserEntity bean : mFriendListBeanArrayList) {
             mUserIconList.add(bean.getAccountEntity().getAvatar());
-            idList.add(bean.getAccId());
+            idList.add(bean.getAccId().toString());
         }
 
         for (TemplateBean.Preson p : newPresonList) {

@@ -61,7 +61,7 @@ public class AppUpdateUtils {
     @NonNull
     public static String getApkName(UpdateAppBean updateAppBean) {
         String apkUrl = updateAppBean.getApkFileUrl();
-        String appName = apkUrl.substring(apkUrl.lastIndexOf("/") + 1, apkUrl.length());
+        String appName = apkUrl.substring(apkUrl.lastIndexOf("/") + 1);
         if (!appName.endsWith(".apk")) {
             appName = "temp.apk";
         }

@@ -6,12 +6,13 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
+import com.eanfang.biz.model.entity.WorkerEntity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.StringUtils;
-import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.client.R;
+
+import cn.hutool.core.util.StrUtil;
 
 import static com.eanfang.base.kit.V.v;
 
@@ -29,7 +30,7 @@ public class SelectWorkerAdapter extends BaseQuickAdapter<WorkerEntity, BaseView
     @Override
     protected void convert(BaseViewHolder helper, WorkerEntity item) {
         // 头像
-        if (!StringUtils.isEmpty(item.getVerifyEntity().getAvatarPhoto())) {
+        if (!StrUtil.isEmpty(item.getVerifyEntity().getAvatarPhoto())) {
             GlideUtil.intoImageView(mContext, Uri.parse(BuildConfig.OSS_SERVER + item.getVerifyEntity().getAvatarPhoto()), helper.getView(R.id.iv_header));
         }
         // 公司名称
@@ -49,7 +50,7 @@ public class SelectWorkerAdapter extends BaseQuickAdapter<WorkerEntity, BaseView
         helper.setText(R.id.tv_consultation_count, consultCount + "");
         if (item.getPublicPraise() != 0) {
             // 口碑
-            helper.setText(R.id.tv_koubei, String.valueOf(item.getPublicPraise()) + "分");
+            helper.setText(R.id.tv_koubei, item.getPublicPraise() + "分");
         }
         if (item.getGoodRate() != 0) {
             // 好评率

@@ -11,10 +11,9 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.base.kit.V;
 import com.eanfang.base.widget.customview.CircleImageView;
-import com.eanfang.biz.model.security.SecurityListBean;
+import com.eanfang.bean.security.SecurityListBean;
 import com.eanfang.util.ETimeUtils;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.StringUtils;
 import com.eanfang.witget.SecurityCircleImageLayout;
 import com.eanfang.witget.mentionedittext.edit.util.FormatRangeManager;
 import com.eanfang.witget.mentionedittext.text.MentionTextView;
@@ -25,6 +24,8 @@ import net.eanfang.client.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author guanluocang
@@ -128,7 +129,7 @@ public class SecurityListAdapter extends BaseQuickAdapter<SecurityListBean.ListB
         helper.setText(R.id.tv_readCount, item.getReadCount() + "");
         picList.clear();
         pics = null;
-        if (!StringUtils.isEmpty(item.getSpcImg())) {
+        if (!StrUtil.isEmpty(item.getSpcImg())) {
             securityImageLayout.setVisibility(View.VISIBLE);
             pics = item.getSpcImg().split(",");
             picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> (url)).toList());
@@ -139,7 +140,7 @@ public class SecurityListAdapter extends BaseQuickAdapter<SecurityListBean.ListB
         /**
          *視頻缩略图
          * */
-        if (!StringUtils.isEmpty(item.getSpcVideo())) {
+        if (!StrUtil.isEmpty(item.getSpcVideo())) {
             helper.getView(R.id.rl_video).setVisibility(View.VISIBLE);
             GlideUtil.intoImageView(mContext, Uri.parse(BuildConfig.OSS_SERVER + V.v(() -> item.getSpcVideo() + ".jpg")), ivShowVideo);
         } else {

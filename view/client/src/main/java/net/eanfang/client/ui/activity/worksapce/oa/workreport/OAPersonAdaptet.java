@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.base.widget.customview.CircleImageView;
-import com.eanfang.biz.model.TemplateBean;
+import com.eanfang.biz.model.bean.TemplateBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.base.kit.V;

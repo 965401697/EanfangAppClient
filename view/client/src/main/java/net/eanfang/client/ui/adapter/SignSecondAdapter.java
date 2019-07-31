@@ -4,7 +4,7 @@ import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.biz.model.SignListBean;
+import com.eanfang.biz.model.bean.SignListBean;
 import com.eanfang.config.Config;
 
 import net.eanfang.client.R;

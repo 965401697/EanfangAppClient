@@ -13,7 +13,7 @@ import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.delegate.BGASortableDelegate;
-import com.eanfang.biz.model.WorkTransferDetailBean;
+import com.eanfang.biz.model.bean.WorkTransferDetailBean;
 
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.takevideo.TakeVdideoMode;
@@ -25,10 +25,6 @@ import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.PhotoUtils;
-import com.eanfang.util.StringUtils;
-import com.photopicker.com.activity.BGAPhotoPickerActivity;
-import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.widget.WorkTrancferCreateSelectClassListView;
@@ -44,8 +40,10 @@ import java.util.HashMap;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static android.provider.MediaStore.Video.Thumbnails.MINI_KIND;
+import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
+import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerPreviewActivity;
+import cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author Guanluocang
@@ -218,19 +216,19 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
         String mDescribe = etInputDescribe.getText().toString().trim();
         // 备注信息
         String mNote = etInputNote.getText().toString().trim();
-        if (StringUtils.isEmpty(mContent)) {
+        if (StrUtil.isEmpty(mContent)) {
             showToast("请输入交接内容");
             return;
         }
-        if (StringUtils.isEmpty(mStatus)) {
+        if (StrUtil.isEmpty(mStatus)) {
             showToast("请输入当前状态");
             return;
         }
-        if (StringUtils.isEmpty(mDescribe)) {
+        if (StrUtil.isEmpty(mDescribe)) {
             showToast("请输入详细说明");
             return;
         }
-        if (StringUtils.isEmpty(mNote)) {
+        if (StrUtil.isEmpty(mNote)) {
             showToast("请输入备注信息");
             return;
         }
@@ -318,10 +316,10 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
         }
         switch (requestCode) {
             case REQUEST_CODE_CHOOSE_PHOTO_1:
-                snplMomentAddPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                snplMomentAddPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_PHOTO_PREVIEW_1:
-                snplMomentAddPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                snplMomentAddPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
                 break;
         }
     }
@@ -354,7 +352,7 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
             etInputNote.setFocusable(false);
             rlConfirm.setVisibility(View.GONE);
             ivSelectStatus.setVisibility(View.GONE);
-            if (!StringUtils.isEmpty(changeGoodDetail.getPicture())) {
+            if (!StrUtil.isEmpty(changeGoodDetail.getPicture())) {
                 snplMomentAddPhotos.setVisibility(View.VISIBLE);
                 String[] invoicesPic = changeGoodDetail.getPicture().split(",");
                 picList4.addAll(Stream.of(Arrays.asList(invoicesPic)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
@@ -364,7 +362,7 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
             snplMomentAddPhotos.setData(picList4);
             snplMomentAddPhotos.setEditable(false);
             snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this));
-            if (!StringUtils.isEmpty(changeGoodDetail.getMp4_path())) {
+            if (!StrUtil.isEmpty(changeGoodDetail.getMp4_path())) {
                 rlThumbnail.setVisibility(View.VISIBLE);
                 GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + changeGoodDetail.getMp4_path() + ".jpg"),ivTakevideo);
                 mVieoPath = BuildConfig.OSS_SERVER + changeGoodDetail.getMp4_path() + ".mp4";
@@ -380,7 +378,7 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
             etInputNote.setFocusable(false);
             rlConfirm.setVisibility(View.GONE);
             ivSelectStatus.setVisibility(View.GONE);
-            if (!StringUtils.isEmpty(finishDetail.getPicture())) {
+            if (!StrUtil.isEmpty(finishDetail.getPicture())) {
                 snplMomentAddPhotos.setVisibility(View.VISIBLE);
                 String[] invoicesPic = finishDetail.getPicture().split(",");
                 picList4.addAll(Stream.of(Arrays.asList(invoicesPic)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
@@ -390,7 +388,7 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
             snplMomentAddPhotos.setData(picList4);
             snplMomentAddPhotos.setEditable(false);
             snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this));
-            if (!StringUtils.isEmpty(finishDetail.getMp4_path())) {
+            if (!StrUtil.isEmpty(finishDetail.getMp4_path())) {
                 rlThumbnail.setVisibility(View.VISIBLE);
                 GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + finishDetail.getMp4_path() + ".jpg"),ivTakevideo);
                 mVieoPath = BuildConfig.OSS_SERVER + finishDetail.getMp4_path() + ".mp4";
@@ -406,7 +404,7 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
             etInputNote.setFocusable(false);
             rlConfirm.setVisibility(View.GONE);
             ivSelectStatus.setVisibility(View.GONE);
-            if (!StringUtils.isEmpty(unFinishDetail.getPicture())) {
+            if (!StrUtil.isEmpty(unFinishDetail.getPicture())) {
                 snplMomentAddPhotos.setVisibility(View.VISIBLE);
                 String[] invoicesPic = unFinishDetail.getPicture().split(",");
                 picList4.addAll(Stream.of(Arrays.asList(invoicesPic)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
@@ -416,7 +414,7 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
             snplMomentAddPhotos.setData(picList4);
             snplMomentAddPhotos.setEditable(false);
             snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this));
-            if (!StringUtils.isEmpty(unFinishDetail.getMp4_path())) {
+            if (!StrUtil.isEmpty(unFinishDetail.getMp4_path())) {
                 rlThumbnail.setVisibility(View.VISIBLE);
                 GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + unFinishDetail.getMp4_path() + ".jpg"),ivTakevideo);
                 mVieoPath = BuildConfig.OSS_SERVER + unFinishDetail.getMp4_path() + ".mp4";
@@ -432,7 +430,7 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
             etInputNote.setFocusable(false);
             rlConfirm.setVisibility(View.GONE);
             ivSelectStatus.setVisibility(View.GONE);
-            if (!StringUtils.isEmpty(followThingDetail.getPicture())) {
+            if (!StrUtil.isEmpty(followThingDetail.getPicture())) {
                 snplMomentAddPhotos.setVisibility(View.VISIBLE);
                 String[] invoicesPic = followThingDetail.getPicture().split(",");
                 picList4.addAll(Stream.of(Arrays.asList(invoicesPic)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
@@ -442,7 +440,7 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
             snplMomentAddPhotos.setData(picList4);
             snplMomentAddPhotos.setEditable(false);
             snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this));
-            if (!StringUtils.isEmpty(followThingDetail.getMp4_path())) {
+            if (!StrUtil.isEmpty(followThingDetail.getMp4_path())) {
                 rlThumbnail.setVisibility(View.VISIBLE);
                 GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + followThingDetail.getMp4_path() + ".jpg"),ivTakevideo);
                 mVieoPath = BuildConfig.OSS_SERVER + followThingDetail.getMp4_path() + ".mp4";
@@ -458,7 +456,7 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
             etInputNote.setFocusable(false);
             rlConfirm.setVisibility(View.GONE);
             ivSelectStatus.setVisibility(View.GONE);
-            if (!StringUtils.isEmpty(attentionDetail.getPicture())) {
+            if (!StrUtil.isEmpty(attentionDetail.getPicture())) {
                 snplMomentAddPhotos.setVisibility(View.VISIBLE);
                 String[] invoicesPic = attentionDetail.getPicture().split(",");
                 picList4.addAll(Stream.of(Arrays.asList(invoicesPic)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
@@ -468,7 +466,7 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
             snplMomentAddPhotos.setData(picList4);
             snplMomentAddPhotos.setEditable(false);
             snplMomentAddPhotos.setDelegate(new BGASortableDelegate(this));
-            if (!StringUtils.isEmpty(attentionDetail.getMp4_path())) {
+            if (!StrUtil.isEmpty(attentionDetail.getMp4_path())) {
                 rlThumbnail.setVisibility(View.VISIBLE);
                 GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + attentionDetail.getMp4_path() + ".jpg"),ivTakevideo);
                 mVieoPath = BuildConfig.OSS_SERVER + attentionDetail.getMp4_path() + ".mp4";
@@ -501,7 +499,7 @@ public class WorkTransferCreateDetailActivity extends BaseActivity {
             rlThumbnail.setVisibility(View.VISIBLE);
             mVieoPath = takeVdideoMode.getMImagePath();
             mUploadKey = takeVdideoMode.getMKey();
-            if (!StringUtils.isEmpty(mVieoPath)) {
+            if (!StrUtil.isEmpty(mVieoPath)) {
                 GlideUtil.intoImageView(this,PhotoUtils.getVideoBitmap(mVieoPath),ivTakevideo);
             }
             tvAddViedeo.setText("重新拍摄");

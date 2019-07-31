@@ -6,14 +6,15 @@ import android.widget.ImageView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
+import com.eanfang.biz.model.entity.RepairBugEntity;
 import com.eanfang.config.Config;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.StringUtils;
-import com.yaf.base.entity.RepairBugEntity;
 
 import net.eanfang.client.R;
 
 import java.util.List;
+
+import cn.hutool.core.util.StrUtil;
 
 
 /**
@@ -41,7 +42,7 @@ public class RepairOrderConfirmAdapter extends BaseQuickAdapter<RepairBugEntity,
                 .setText(R.id.tv_devicesHistory, "")
                 .setText(R.id.tv_desc, item.getBugDescription() != null ? item.getBugDescription() : "");
         ImageView draweeView = helper.getView(R.id.iv_pic);
-        if (!StringUtils.isEmpty(item.getPictures())) {
+        if (!StrUtil.isEmpty(item.getPictures())) {
 //            Log.e("fresco", item.getPictures());
             GlideUtil.intoImageView(mContext,BuildConfig.OSS_SERVER + Uri.parse(item.getPictures().split(",")[0]),draweeView);
             helper.addOnClickListener(R.id.ll_item);

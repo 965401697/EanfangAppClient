@@ -6,7 +6,7 @@ import android.os.Handler;
 import android.text.TextUtils;
 
 import com.eanfang.base.network.holder.ContextHolder;
-import com.eanfang.biz.model.TemplateBean;
+import com.eanfang.biz.model.bean.TemplateBean;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.worker.ui.activity.im.CustomizeMessage;

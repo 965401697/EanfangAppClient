@@ -4,7 +4,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.base.widget.customview.SuperTextView;
 import com.eanfang.R;
-import com.eanfang.biz.model.SecurityCompanyDetailsBean;
+import com.eanfang.biz.model.bean.SecurityCompanyDetailsBean;
 
 
 

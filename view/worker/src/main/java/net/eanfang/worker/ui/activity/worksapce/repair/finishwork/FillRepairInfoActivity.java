@@ -25,7 +25,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.rx.RxPerm;
-import com.eanfang.biz.model.TemplateBean;
+import com.eanfang.biz.model.bean.TemplateBean;
+import com.eanfang.biz.model.entity.BughandleDetailEntity;
+import com.eanfang.biz.model.entity.RepairFailureEntity;
 import com.eanfang.config.Config;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.dialog.TrueFalseDialog;
@@ -40,14 +42,8 @@ import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.LocationUtil;
 import com.eanfang.util.PhotoUtils;
-import com.eanfang.util.QueryEntry;
-import com.eanfang.util.StringUtils;
-import com.photopicker.com.activity.BGAPhotoPickerActivity;
-import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
-import com.yaf.base.entity.BughandleConfirmEntity;
-import com.yaf.base.entity.BughandleDetailEntity;
-import com.yaf.base.entity.RepairFailureEntity;
+import com.eanfang.biz.model.QueryEntry;
+import com.eanfang.biz.model.entity.BughandleConfirmEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.PutUpOrderActivity;
@@ -67,8 +63,12 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
+import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerPreviewActivity;
+import cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout;
 import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * Created by MrHou
@@ -479,14 +479,14 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
     private boolean checkInfo() {
 
         String remainQuestion = etRemainQuestion.getText().toString().trim();
-        if (StringUtils.isEmpty(remainQuestion)) {
+        if (StrUtil.isEmpty(remainQuestion)) {
             showToast("请填写遗留问题");
             return false;
         }
         if (DetailEntityList != null && DetailEntityList.size() > 0) {
             //增加限制，需要先完善故障处理 在提交
             for (int i = 0; i < DetailEntityList.size(); i++) {
-                if (StringUtils.isEmpty(DetailEntityList.get(i).getCheckProcess())) {
+                if (StrUtil.isEmpty(DetailEntityList.get(i).getCheckProcess())) {
                     showToast("请完善第" + (i + 1) + "条故障处理明细");
                     return false;
                 }
@@ -655,29 +655,29 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
         }
         switch (requestCode) {
             case REQUEST_CODE_CHOOSE_PHOTO_1:
-                snplMomentAddPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                snplMomentAddPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_CHOOSE_PHOTO_2:
-                snplMonitorAddPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                snplMonitorAddPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_CHOOSE_PHOTO_3:
-                snplToolsPackageAddPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                snplToolsPackageAddPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_CHOOSE_PHOTO_4:
-                snplFormPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                snplFormPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_PHOTO_PREVIEW_1:
-                snplMomentAddPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                snplMomentAddPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_PHOTO_PREVIEW_2:
-                snplMonitorAddPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                snplMonitorAddPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_PHOTO_PREVIEW_3:
-                snplToolsPackageAddPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                snplToolsPackageAddPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
                 break;
 
             case REQUEST_CODE_PHOTO_PREVIEW_4:
-                snplFormPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                snplFormPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
                 break;
             // 完善故障明细
             case REQUEST_CODE_UPDATE_TROUBLE:

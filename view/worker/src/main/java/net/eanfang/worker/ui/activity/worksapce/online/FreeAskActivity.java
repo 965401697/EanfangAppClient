@@ -22,13 +22,12 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PhotoUtils;
-import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.contentsafe.ContentDefaultAuditing;
 import com.eanfang.util.contentsafe.ContentSecurityAuditUtil;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.yaf.base.entity.AskQuestionsEntity;
-import com.yaf.base.entity.CustDeviceEntity;
+import com.eanfang.biz.model.entity.AskQuestionsEntity;
+import com.eanfang.biz.model.entity.CustDeviceEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
@@ -46,6 +45,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * 免费提问
@@ -114,7 +114,7 @@ public class FreeAskActivity extends BaseWorkeActivity {
                 break;
             case R.id.ll_deviceBrand:
                 String busOneCode = Config.get().getBaseCodeByName(Config.get().getBusinessNameByCode(dataCode, 1), 1, Constant.MODEL).get(0);
-                if (StringUtils.isEmpty(busOneCode)) {
+                if (StrUtil.isEmpty(busOneCode)) {
                     showToast("请先选择故障设备");
                     return;
                 }
@@ -123,7 +123,7 @@ public class FreeAskActivity extends BaseWorkeActivity {
                 JumpItent.jump(FreeAskActivity.this, DeviceBrandActivity.class, bundle_device, REQUEST_DEVICE_BRAND_CODE);
                 break;
             case R.id.ll_faultInfo:
-                if (!StringUtils.isEmpty(dataCode)) {
+                if (!StrUtil.isEmpty(dataCode)) {
                     Bundle bundle = new Bundle();
                     bundle.putString("businessOneCode", businessOneCode);
                     JumpItent.jump(FreeAskActivity.this, FaultLibraryActivity.class, bundle, REQUEST_FAULTDESINFO);
@@ -187,7 +187,7 @@ public class FreeAskActivity extends BaseWorkeActivity {
             finish();*/
         }
 
-//        if (StringUtils.isEmpty(accidentPic)) {
+//        if (StrUtil.isEmpty(accidentPic)) {
 //            showToast("请添加现场照片");
 //            return false;
 //        }

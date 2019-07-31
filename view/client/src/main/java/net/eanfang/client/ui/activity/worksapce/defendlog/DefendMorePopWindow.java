@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 
-import com.yaf.base.entity.ProtectionLogEntity;
+import com.eanfang.biz.model.entity.ProtectionLogEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.im.SelectIMContactActivity;

@@ -12,15 +12,14 @@ import androidx.lifecycle.ViewModel;
 import com.eanfang.BuildConfig;
 import com.eanfang.base.BaseActivity;
 import com.eanfang.base.BaseApplication;
-import com.eanfang.biz.model.Message;
-import com.eanfang.biz.model.SelectAddressItem;
+import com.eanfang.biz.model.bean.Message;
+import com.eanfang.biz.model.bean.SelectAddressItem;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
 import com.eanfang.biz.rds.base.LViewModelProviders;
 import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.databinding.ActivityTenderCreateBinding;
@@ -30,6 +29,7 @@ import net.eanfang.worker.viewmodle.tender.TenderCreateViewModle;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import cn.hutool.core.util.StrUtil;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
@@ -145,7 +145,7 @@ public class TenderCreateActivity extends BaseActivity implements SelectTimeDial
 
     @Override
     public void getData(String time) {
-        if (StringUtils.isEmpty(time) || "".equals(time)) {
+        if (StrUtil.isEmpty(time) || "".equals(time)) {
             mTenderCreateBinding.tvStartTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
         } else {
             mTenderCreateBinding.tvStartTime.setText(time);

@@ -13,7 +13,7 @@ import com.alibaba.fastjson.JSONPObject;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.BaseApplication;
-import com.eanfang.biz.model.AuthStatusBean;
+import com.eanfang.biz.model.bean.AuthStatusBean;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;

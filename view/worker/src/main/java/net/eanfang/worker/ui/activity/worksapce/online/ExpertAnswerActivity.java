@@ -22,8 +22,6 @@ import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.StringUtils;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
@@ -34,6 +32,8 @@ import java.util.Arrays;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout;
+import cn.hutool.core.util.StrUtil;
 
 public class ExpertAnswerActivity extends BaseWorkerActivity {
     private static final int REQUEST_CODE_CHOOSE_PHOTO = 1;
@@ -160,7 +160,7 @@ public class ExpertAnswerActivity extends BaseWorkerActivity {
                             tvExpertName.setText(bean.getAnswerInfo().getAccountEntity().getNickName());
                             tvMajor.setVisibility(View.GONE);
                         }
-                        if (!StringUtils.isEmpty(bean.getAnswerInfo().getAnswerPics())) {
+                        if (!StrUtil.isEmpty(bean.getAnswerInfo().getAnswerPics())) {
                             String[] pics = bean.getAnswerInfo().getAnswerPics().split(",");
                             picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
                             snplPic.setDelegate(new BGASortableDelegate(ExpertAnswerActivity.this, REQUEST_CODE_CHOOSE_PHOTO, REQUEST_CODE_CHOOSE_PHOTO_two));

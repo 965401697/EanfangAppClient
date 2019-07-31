@@ -17,12 +17,10 @@ import com.eanfang.base.kit.picture.picture.PictureRecycleView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.PhotoUtils;
-import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.picker.DoubleDatePickerDialog;
-import com.picker.common.util.DateUtils;
-import com.yaf.base.entity.JobExperienceEntity;
+import com.eanfang.util.DoubleDatePickerDialog;
+import com.eanfang.biz.model.entity.JobExperienceEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
@@ -37,6 +35,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
+import cn.qqtheme.framework.util.DateUtils;
 
 /**
  * 添加工作经历
@@ -143,7 +143,7 @@ public class AddWorkActivity extends BaseWorkeActivity {
         entity.setCompanyName(etCompanyName.getText().toString().trim());
         entity.setJob(etPosition.getText().toString().trim());
         entity.setWorkplace(etJobPosition.getText().toString().trim());
-        if (!StringUtils.isEmpty(tvTime.getText().toString().trim())) {
+        if (!StrUtil.isEmpty(tvTime.getText().toString().trim())) {
             entity.setBeginTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[0], "yyyy-M-dd"));
             entity.setEndTime(DateUtils.parseDate(tvTime.getText().toString().trim().split("～")[1], "yyyy-M-dd"));
         }

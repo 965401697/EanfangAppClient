@@ -25,16 +25,15 @@ import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.ali.alipay.IALiPayCallBack;
+import com.eanfang.biz.model.entity.PayLogEntity;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.WXPayBean;
+import com.eanfang.biz.model.bean.WXPayBean;
 import com.eanfang.util.MessageUtil;
-import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.tencent.mm.opensdk.modelpay.PayReq;
-import com.yaf.base.entity.InvoiceEntity;
-import com.yaf.base.entity.PayLogEntity;
+import com.eanfang.biz.model.entity.InvoiceEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
@@ -49,6 +48,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.util.StrUtil;
 
 public class NewPayActivity extends BaseClientActivity implements View.OnClickListener {
 
@@ -307,7 +307,7 @@ public class NewPayActivity extends BaseClientActivity implements View.OnClickLi
 
     public void doVaiCoupons() {
         String coupon = etCoupon.getText().toString().trim();
-        if (StringUtils.isEmpty(coupon)) {
+        if (StrUtil.isEmpty(coupon)) {
             showToast("请输入优惠码");
             return;
         }

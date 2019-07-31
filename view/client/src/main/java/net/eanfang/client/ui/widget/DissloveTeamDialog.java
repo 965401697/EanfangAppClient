@@ -20,6 +20,7 @@ import net.eanfang.client.base.ClientApplication;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author guanluocang
@@ -83,7 +84,7 @@ public class DissloveTeamDialog extends BaseDialog {
 
     private void doDisslove() {
         String password = etPassword.getText().toString().trim();
-        if (StringUtils.isEmpty(password)) {
+        if (StrUtil.isEmpty(password)) {
             showToast("密码不能为空");
             return;
         }

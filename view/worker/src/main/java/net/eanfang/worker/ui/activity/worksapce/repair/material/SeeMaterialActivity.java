@@ -3,9 +3,10 @@ package net.eanfang.worker.ui.activity.worksapce.repair.material;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.eanfang.biz.model.bean.ZjZgBean;
+import com.eanfang.biz.model.entity.BughandleUseDeviceEntity;
 import com.eanfang.config.Config;
 import com.eanfang.ui.base.BaseActivity;
-import com.yaf.base.entity.BughandleUseDeviceEntity;
 
 import net.eanfang.worker.R;
 

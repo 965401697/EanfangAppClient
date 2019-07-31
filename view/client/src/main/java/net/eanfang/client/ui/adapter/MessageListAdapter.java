@@ -4,7 +4,7 @@ import android.graphics.Color;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.biz.model.NoticeEntity;
+import com.eanfang.biz.model.entity.NoticeEntity;
 
 import net.eanfang.client.R;
 

@@ -10,11 +10,10 @@ import android.widget.TextView;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.WorkCompanyListBean;
+import com.eanfang.biz.model.bean.WorkCompanyListBean;
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.util.QueryEntry;
-import com.eanfang.util.StringUtils;
+import com.eanfang.biz.model.QueryEntry;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.SearchCompanyAdapter;
@@ -25,6 +24,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * Created by MrHou
@@ -72,7 +72,7 @@ public class SearchCompanyListView extends BaseDialog {
         tvSearch.setOnClickListener((v) -> {
             //处理绑定公司搜索时的bug
             String searchPhone = etSearchphone.getText().toString().trim();
-            if (StringUtils.isEmpty(searchPhone)) {
+            if (StrUtil.isEmpty(searchPhone)) {
                 showToast("搜索内容不能为空");
                 return;
             }

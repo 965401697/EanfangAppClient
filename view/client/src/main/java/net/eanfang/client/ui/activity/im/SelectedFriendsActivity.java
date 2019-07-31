@@ -11,11 +11,12 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.biz.model.bean.GroupDetailBean;
+import com.eanfang.biz.model.entity.SysGroupUserEntity;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.FriendListBean;
-import com.eanfang.biz.model.GroupDetailBean;
-import com.eanfang.biz.model.TemplateBean;
+import com.eanfang.biz.model.bean.FriendListBean;
+import com.eanfang.biz.model.bean.TemplateBean;
 
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.compound.CompoundHelper;
@@ -51,7 +52,7 @@ public class SelectedFriendsActivity extends BaseClientActivity {
     private FriendListBean mCurrentBean;
 
     private int mFlag;
-    private ArrayList<GroupDetailBean.ListBean> mFriendListBeanArrayList;
+    private ArrayList<SysGroupUserEntity> mFriendListBeanArrayList;
     private String mGroupId;
     private String mRYGroupId;
     private String mTitle;
@@ -100,7 +101,7 @@ public class SelectedFriendsActivity extends BaseClientActivity {
         } else if (flag == 2) {
             setRightTitle("确定");
             mGroupId = getIntent().getStringExtra("groupId");
-            mFriendListBeanArrayList = (ArrayList<GroupDetailBean.ListBean>) getIntent().getSerializableExtra("list");
+            mFriendListBeanArrayList = (ArrayList<SysGroupUserEntity>) getIntent().getSerializableExtra("list");
             mRYGroupId = getIntent().getStringExtra("ryGroupId");
             mTitle = getIntent().getStringExtra("title");
         } else {
@@ -186,7 +187,7 @@ public class SelectedFriendsActivity extends BaseClientActivity {
             return;
         }
 
-        for (GroupDetailBean.ListBean bean : mFriendListBeanArrayList) {
+        for (SysGroupUserEntity bean : mFriendListBeanArrayList) {
             mUserIconList.add(bean.getAccountEntity().getAvatar());
         }
         mUserIconList.add(ClientApplication.get().getLoginBean().getAccount().getAvatar());

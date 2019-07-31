@@ -10,7 +10,7 @@ import androidx.lifecycle.ViewModel;
 import com.eanfang.BuildConfig;
 import com.eanfang.base.BaseActivity;
 import com.eanfang.base.BaseApplication;
-import com.eanfang.biz.model.Message;
+import com.eanfang.biz.model.bean.Message;
 import com.eanfang.biz.model.entity.tender.TaskApplyEntity;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
 import com.eanfang.biz.rds.base.LViewModelProviders;

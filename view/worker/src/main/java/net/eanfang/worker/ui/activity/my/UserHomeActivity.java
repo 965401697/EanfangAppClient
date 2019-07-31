@@ -21,13 +21,12 @@ import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.UserHomePageBean;
+import com.eanfang.biz.model.bean.UserHomePageBean;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.witget.DefaultPopWindow;
-import com.okgo.request.base.Request;
+import com.lzy.okgo.request.base.Request;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
@@ -43,6 +42,7 @@ import java.text.MessageFormat;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
@@ -255,7 +255,7 @@ public class UserHomeActivity extends BaseWorkerActivity {
 
     private void initData(String accId, String userId) {
         EanfangHttp.post(UserApi.USER_HOME_PAGE)
-                .params(!StringUtils.isEmpty(accId) ? "accId" : "userId", !StringUtils.isEmpty(accId) ? accId : userId)
+                .params(!StrUtil.isEmpty(accId) ? "accId" : "userId", !StrUtil.isEmpty(accId) ? accId : userId)
                 .execute(new EanfangCallback<UserHomePageBean>(UserHomeActivity.this, true, UserHomePageBean.class, bean -> {
                     if (bean == null) {
                         return;
@@ -282,10 +282,10 @@ public class UserHomeActivity extends BaseWorkerActivity {
                         GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + accountBean.getAvatar()),mImgUserHeader);
                         mTvNickname.setText(accountBean.getNickName());
                         mTvNickname.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-                        if (!StringUtils.isEmpty(accountBean.getRealName())) {
+                        if (!StrUtil.isEmpty(accountBean.getRealName())) {
                             mTvUserInfo.setVisibility(View.VISIBLE);
                             String sex = accountBean.getGender() == 0 ? "女" : "男";
-                            if (StringUtils.isEmpty(accountBean.getBirthMonthDay())) {
+                            if (StrUtil.isEmpty(accountBean.getBirthMonthDay())) {
                                 mTvUserInfo.setText(
                                         MessageFormat.format("{0} · {1}", accountBean.getRealName(), sex));
                             } else {
@@ -295,14 +295,14 @@ public class UserHomeActivity extends BaseWorkerActivity {
                         } else {
                             mTvUserInfo.setVisibility(View.INVISIBLE);
                         }
-                        if (!StringUtils.isEmpty(accountBean.getAreaInfo())) {
+                        if (!StrUtil.isEmpty(accountBean.getAreaInfo())) {
                             mTvPositionLocation.setVisibility(View.VISIBLE);
                             mTvPositionLocation.setText(accountBean.getAreaInfo());
                         } else {
                             mTvPositionLocation.setVisibility(View.INVISIBLE);
                         }
                         String intro = accountBean.getPersonalNote();
-                        if (!StringUtils.isEmpty(intro)) {
+                        if (!StrUtil.isEmpty(intro)) {
                             mTvIntro.setText(intro.length() > 18
                                     ? intro.substring(0, 16) + "..." : intro);
                         } else {

@@ -3,7 +3,7 @@ package net.eanfang.client.ui.adapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.util.GetConstDataUtils;
-import com.yaf.base.entity.BughandleConfirmEntity;
+import com.eanfang.biz.model.entity.BughandleConfirmEntity;
 
 import net.eanfang.client.R;
 

@@ -16,6 +16,7 @@ import net.eanfang.client.ui.activity.leave_post.bean.LeavePostHistoryDayBean;
 import java.text.MessageFormat;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 
 
 /**
@@ -42,13 +43,13 @@ public class LeavePostHistoryDayAdapter extends BaseQuickAdapter<LeavePostHistor
         }
         helper.tvItemLeavePostHistoryDetailName.setText(item.getAlertName());
         String leaveTime = item.getLeaveTime();
-        if (!StringUtils.isEmpty(leaveTime)) {
+        if (!StrUtil.isEmpty(leaveTime)) {
             leaveTime = DateUtil.parse(leaveTime).toString("HH:mm");
         } else {
             leaveTime = "";
         }
         String backTime = item.getBackTime();
-        if (!StringUtils.isEmpty(backTime)) {
+        if (!StrUtil.isEmpty(backTime)) {
             backTime = DateUtil.parse(backTime).toString("HH:mm");
         } else {
             backTime = "";

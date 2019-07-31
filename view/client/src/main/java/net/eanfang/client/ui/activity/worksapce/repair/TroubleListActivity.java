@@ -10,10 +10,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
+import com.eanfang.biz.model.entity.RepairBugEntity;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
-import com.yaf.base.entity.RepairBugEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.adapter.ToRepairAdapter;

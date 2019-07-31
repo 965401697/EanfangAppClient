@@ -4,19 +4,19 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.biz.model.entity.BughandleDetailEntity;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.StringUtils;
-import com.yaf.base.entity.BughandleDetailEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * Created by MrHou
@@ -84,35 +84,35 @@ public class PhoneLookTroubleDetailActivity extends BaseClientActivity /*impleme
             tvTroubleTitle.setText(Config.get().getBusinessNameByCode(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode(), 3));
         }
 //        //故障设备
-//        if (StringUtils.isValid(bughandleDetailEntity.getInstrument())) {
+//        if (StrUtil.isNotBlank(bughandleDetailEntity.getInstrument())) {
 //            tv_trouble_device.setText(bean.getInstrument());
 //        }
 //        //品牌型号
-//        if (StringUtils.isValid(bean.getModelnum())) {
+//        if (StrUtil.isNotBlank(bean.getModelnum())) {
 //            tv_brand_model.setText(bean.getModelnum());
 //        }
 //        //设备编号
-//        if (StringUtils.isValid(bean.getEquipmentcode())) {
+//        if (StrUtil.isNotBlank(bean.getEquipmentcode())) {
 //            tv_device_no.setText(bean.getEquipmentcode());
 //        }
         //故障位置
-        if (StringUtils.isValid(bughandleDetailEntity.getFailureEntity().getBugPosition())) {
+        if (StrUtil.isNotBlank(bughandleDetailEntity.getFailureEntity().getBugPosition())) {
             tvDeviceLocation.setText(bughandleDetailEntity.getFailureEntity().getBugPosition());
         }
         //故障描述
-        if (StringUtils.isValid(bughandleDetailEntity.getFailureEntity().getBugDescription())) {
+        if (StrUtil.isNotBlank(bughandleDetailEntity.getFailureEntity().getBugDescription())) {
             etTroubleDesc.setText(bughandleDetailEntity.getFailureEntity().getBugDescription());
         }
         //检查方法
-        if (StringUtils.isValid(bughandleDetailEntity.getCheckProcess())) {
+        if (StrUtil.isNotBlank(bughandleDetailEntity.getCheckProcess())) {
             etTroublePoint.setText(bughandleDetailEntity.getCheckProcess());
         }
         //故障原因
-        if (StringUtils.isValid(bughandleDetailEntity.getCause())) {
+        if (StrUtil.isNotBlank(bughandleDetailEntity.getCause())) {
             etTroubleReason.setText(bughandleDetailEntity.getCause());
         }
         //故障处理
-        if (StringUtils.isValid(bughandleDetailEntity.getHandle())) {
+        if (StrUtil.isNotBlank(bughandleDetailEntity.getHandle())) {
             etTroubleDeal.setText(bughandleDetailEntity.getHandle());
         }
         //维修结论

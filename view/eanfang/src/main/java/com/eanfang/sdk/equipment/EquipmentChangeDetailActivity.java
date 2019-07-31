@@ -17,7 +17,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.sdk.equipment.adapter.EquipmentParamAdapter;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GlideUtil;
-import com.yaf.base.entity.CustDeviceChangeLogEntity;
+import com.eanfang.biz.model.entity.CustDeviceChangeLogEntity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -4,10 +4,11 @@ import android.text.TextUtils;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.picker.common.util.DateUtils;
-import com.yaf.base.entity.JobExperienceEntity;
+import com.eanfang.biz.model.entity.JobExperienceEntity;
 
 import net.eanfang.worker.R;
+
+import cn.qqtheme.framework.util.DateUtils;
 
 /**
  * @author guanluocang

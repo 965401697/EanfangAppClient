@@ -1,5 +1,7 @@
 package com.eanfang.ui.activity;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -8,16 +10,17 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.R;
 import com.eanfang.R2;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.ui.base.BaseActivity;
-import com.eanfang.util.CopyTvUtil;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
+import com.eanfang.util.ToastUtil;
 import com.google.zxing.BinaryBitmap;
 import com.google.zxing.ChecksumException;
 import com.google.zxing.FormatException;
@@ -33,6 +36,7 @@ import java.io.InputStream;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.util.StrUtil;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -86,7 +90,7 @@ public class QrCodeShowActivity extends BaseActivity {
         mMessage = getIntent().getStringExtra("qrcodeMessage");
         mQrcodeAddress = getIntent().getStringExtra("qrcodeAddress");
 
-        if (!StringUtils.isEmpty(mTitle)) {
+        if (!StrUtil.isEmpty(mTitle)) {
             tvQrcodeTitle.setText(mTitle);
         }
         if (mMessage.equals("personal")) {
@@ -94,7 +98,7 @@ public class QrCodeShowActivity extends BaseActivity {
         } else if (mMessage.equals("group")) {
             tvQrcodeMessage.setText("进易安防app，扫一扫加入群聊");
         }
-        if (!StringUtils.isEmpty(mQrcodeAddress)) {
+        if (!StrUtil.isEmpty(mQrcodeAddress)) {
             Log.d("QrCodeShowActivity_yh", "initView: " + Uri.parse(BuildConfig.OSS_SERVER + mQrcodeAddress));
             GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + mQrcodeAddress), ivQrcode);
             initData();
@@ -129,9 +133,9 @@ public class QrCodeShowActivity extends BaseActivity {
 
     public void doSaveQRCode() {
         RxPerm.get(this).storagePerm((success) -> {
-            if (!StringUtils.isEmpty(mQrcodeAddress)) {
+            if (!StrUtil.isEmpty(mQrcodeAddress)) {
                 String path = PhotoUtils.downloadImg(mQrcodeAddress).getPath();
-                if (!StringUtils.isEmpty(path)) {
+                if (!StrUtil.isEmpty(path)) {
                     showToast(mTitle + "的易安防二维码已生成");
                 } else {
                     showToast("图片无效");
@@ -166,7 +170,10 @@ public class QrCodeShowActivity extends BaseActivity {
 
     @OnClick(R2.id.lj_tv)
     public void onClick() {
-        new CopyTvUtil(getApplicationContext(), ljTv, ljTvString).init();
+        ljTvString = ljTv.getText().toString();
+        ClipData myClip = ClipData.newPlainText("text", ljTvString);
+        ((ClipboardManager) this.getSystemService(CLIPBOARD_SERVICE)).setPrimaryClip(myClip);
+        ToastUtil.get().showToast(this, "已复制完成:" + ljTvString);
     }
 
 }

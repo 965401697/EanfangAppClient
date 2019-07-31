@@ -38,37 +38,6 @@ public class CustomizeMessage extends MessageContent {
         }
     };
 
-    @Override
-    public byte[] encode() {
-        JSONObject jsonObj = new JSONObject();
-
-        try {
-            jsonObj.put("orderId", this.getOrderId());
-            jsonObj.put("status", this.getStatus());
-            jsonObj.put("orderNum", this.getOrderNum());
-            jsonObj.put("creatTime", this.getCreatTime());
-            jsonObj.put("creatReleaseTime", this.getCreatReleaseTime());
-            jsonObj.put("workerName", this.getWorkerName());
-            jsonObj.put("picUrl", this.getPicUrl());
-            jsonObj.put("shareType", this.getShareType());
-
-        } catch (JSONException var4) {
-            io.rong.common.RLog.e("TextMessage", "JSONException " + var4.getMessage());
-        }
-
-        try {
-            return jsonObj.toString().getBytes("UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-
-    public CustomizeMessage() {
-
-    }
-
     public CustomizeMessage(byte[] data) throws UnsupportedEncodingException {
         String jsonStr = null;
 
@@ -104,6 +73,37 @@ public class CustomizeMessage extends MessageContent {
             io.rong.common.RLog.e("TextMessage", "JSONException " + var4.getMessage());
         }
 
+    }
+
+
+    public CustomizeMessage() {
+
+    }
+
+    @Override
+    public byte[] encode() {
+        JSONObject jsonObj = new JSONObject();
+
+        try {
+            jsonObj.put("orderId", this.getOrderId());
+            jsonObj.put("status", this.getStatus());
+            jsonObj.put("orderNum", this.getOrderNum());
+            jsonObj.put("creatTime", this.getCreatTime());
+            jsonObj.put("creatReleaseTime", this.getCreatReleaseTime());
+            jsonObj.put("workerName", this.getWorkerName());
+            jsonObj.put("picUrl", this.getPicUrl());
+            jsonObj.put("shareType", this.getShareType());
+
+        } catch (JSONException var4) {
+            io.rong.common.RLog.e("TextMessage", "JSONException " + var4.getMessage());
+        }
+
+        try {
+            return jsonObj.toString().getBytes("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 

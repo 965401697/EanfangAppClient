@@ -13,15 +13,15 @@ import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.CompanyPagesData;
+import com.eanfang.biz.model.bean.CompanyPagesData;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 import static com.eanfang.apiservice.NewApiService.COMPANY_SECURITY_HOMEPAGE;
 
@@ -77,7 +77,7 @@ public class CompanyPagesActivity extends BaseActivity {
     }
 
     private void setData(CompanyPagesData data) {
-        if (!StringUtils.isEmpty(data.getAreaCode())) {
+        if (!StrUtil.isEmpty(data.getAreaCode())) {
             bgDzTv.setRightString(Config.get().getAddressByCode(data.getAreaCode()));
         } else {
             bgDzTv.setRightString("");
@@ -121,7 +121,7 @@ public class CompanyPagesActivity extends BaseActivity {
                 break;
             default:
         }
-        if (!StringUtils.isEmpty(data.getTradeTypeCode())) {
+        if (!StrUtil.isEmpty(data.getTradeTypeCode())) {
             hyLxTv.setRightString(Config.get().getBaseNameByCode(Constant.INDUSTRY, data.getTradeTypeCode(), 2));
         } else {
             hyLxTv.setRightString("");

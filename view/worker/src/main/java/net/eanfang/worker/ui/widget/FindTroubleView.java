@@ -8,15 +8,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
-import com.eanfang.biz.model.WorkAddReportBean;
+import com.eanfang.biz.model.bean.WorkAddReportBean;
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * Created by MrHou
@@ -66,7 +66,7 @@ public class FindTroubleView extends BaseDialog {
         tvLookCompleteContent.setText(detailBean.getField1());
         tvLookCompletePerson.setText(detailBean.getField2());
         tvLookCompleteHandle.setText(detailBean.getField3());
-        if (!StringUtils.isEmpty(detailBean.getPictures())) {
+        if (!StrUtil.isEmpty(detailBean.getPictures())) {
             String[] urls = detailBean.getPictures().split(",");
 
             if (urls.length>=1) {

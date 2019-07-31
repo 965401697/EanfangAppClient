@@ -19,6 +19,7 @@ import net.eanfang.client.ui.activity.leave_post.repo.LeavePostRepo;
 
 import java.util.Objects;
 
+import cn.hutool.core.util.StrUtil;
 import lombok.Getter;
 
 /**
@@ -57,7 +58,7 @@ public class LeavePostHistoryListViewModel extends BaseViewModel {
         if (mStationId > 0) {
             queryEntry.getEquals().put("stationId", String.valueOf(mStationId));
         }
-        if (!StringUtils.isEmpty(mPlaceName)) {
+        if (!StrUtil.isEmpty(mPlaceName)) {
             queryEntry.getEquals().put("placeName", mPlaceName);
         }
         if (mStatus >= 0) {

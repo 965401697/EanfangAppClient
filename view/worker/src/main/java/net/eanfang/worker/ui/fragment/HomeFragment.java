@@ -22,25 +22,24 @@ import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.V;
-import com.eanfang.biz.model.AllMessageBean;
-import com.eanfang.biz.model.NoticeEntity;
-import com.eanfang.biz.model.security.SecurityLikeBean;
-import com.eanfang.biz.model.security.SecurityListBean;
+import com.eanfang.biz.model.bean.AllMessageBean;
+import com.eanfang.biz.model.entity.NoticeEntity;
+import com.eanfang.bean.security.SecurityLikeBean;
+import com.eanfang.bean.security.SecurityListBean;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.security.SecurityLikeStatusBean;
+import com.eanfang.bean.security.SecurityLikeStatusBean;
 import com.eanfang.ui.base.BaseFragment;
+import com.eanfang.util.BGASpaceItemDecoration;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
-import com.eanfang.util.QueryEntry;
-import com.eanfang.util.StringUtils;
+import com.eanfang.biz.model.QueryEntry;
 import com.eanfang.witget.BannerView;
 import com.eanfang.witget.HomeScanPopWindow;
 import com.eanfang.witget.RollTextView;
 import com.flyco.tablayout.SlidingTabLayout;
-import com.photopicker.com.util.BGASpaceItemDecoration;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
@@ -75,6 +74,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 import q.rorbin.badgeview.QBadgeView;
 
 import static com.eanfang.base.kit.V.v;
@@ -581,7 +581,7 @@ public class HomeFragment extends BaseFragment implements SecurityListAdapter.On
                 NoticeEntity noticeEntity = list.get(i);
 
                 String realName = V.v(() -> noticeEntity.getReciveAccEntity().getRealName());
-                if (StringUtils.isEmpty(realName)) {
+                if (StrUtil.isEmpty(realName)) {
                     continue;
                 }
 

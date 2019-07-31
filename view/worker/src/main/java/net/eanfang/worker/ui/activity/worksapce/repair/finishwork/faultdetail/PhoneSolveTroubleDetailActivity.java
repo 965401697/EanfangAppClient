@@ -20,6 +20,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Optional;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.base.kit.rx.RxPerm;
+import com.eanfang.biz.model.bean.ZjZgBean;
+import com.eanfang.biz.model.entity.BughandleDetailEntity;
+import com.eanfang.biz.model.entity.BughandleParamEntity;
+import com.eanfang.biz.model.entity.BughandleUseDeviceEntity;
+import com.eanfang.biz.model.entity.RepairFailureEntity;
 import com.eanfang.config.Config;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
@@ -27,11 +32,6 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.StringUtils;
-import com.yaf.base.entity.BughandleDetailEntity;
-import com.yaf.base.entity.BughandleParamEntity;
-import com.yaf.base.entity.BughandleUseDeviceEntity;
-import com.yaf.base.entity.RepairFailureEntity;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -47,6 +47,7 @@ import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * Created by MrHou
@@ -357,7 +358,7 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
             bughandleDetailEntity.setUseDeviceEntityList(list);
         }
 
-        if (StringUtils.isValid(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode())) {
+        if (StrUtil.isNotBlank(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode())) {
             String bugOne = Config.get().getBusinessNameByCode(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode(), 1);
             String bugTwo = Config.get().getBusinessNameByCode(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode(), 2);
             String bugThree = Config.get().getBusinessNameByCode(bughandleDetailEntity.getFailureEntity().getBusinessThreeCode(), 3);
@@ -416,23 +417,23 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
     }
 
     private boolean checkData() {
-        if (StringUtils.isEmpty(etTroubleDesc.getText().toString().trim())) {
+        if (StrUtil.isEmpty(etTroubleDesc.getText().toString().trim())) {
             showToast("请输入故障简述");
             return false;
         }
-        if (StringUtils.isEmpty(etTroubleReason.getText().toString().trim())) {
+        if (StrUtil.isEmpty(etTroubleReason.getText().toString().trim())) {
             showToast("请输入原因判断");
             return false;
         }
-        if (StringUtils.isEmpty(etTroublePoint.getText().toString().trim())) {
+        if (StrUtil.isEmpty(etTroublePoint.getText().toString().trim())) {
             showToast("请输入 过程和方法");
             return false;
         }
-        if (StringUtils.isEmpty(etTroubleDeal.getText().toString().trim())) {
+        if (StrUtil.isEmpty(etTroubleDeal.getText().toString().trim())) {
             showToast("请输入处理方法");
             return false;
         }
-        if (StringUtils.isEmpty(etTroubleUseAdvace.getText().toString().trim())) {
+        if (StrUtil.isEmpty(etTroubleUseAdvace.getText().toString().trim())) {
             showToast("请输入使用建议");
             return false;
         }

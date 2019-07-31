@@ -21,15 +21,15 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.biz.model.security.SecurityCommentBean;
-import com.eanfang.biz.model.security.SecurityDetailBean;
+import com.eanfang.bean.security.SecurityCommentBean;
+import com.eanfang.bean.security.SecurityDetailBean;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.security.SecurityCommentDetailBean;
+import com.eanfang.bean.security.SecurityCommentDetailBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.util.QueryEntry;
+import com.eanfang.biz.model.QueryEntry;
 import com.eanfang.util.StringUtils;
 import com.eanfang.base.kit.V;
 
@@ -47,6 +47,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.util.StrUtil;
 
 
 /**
@@ -339,7 +340,7 @@ public class SecurityCommentDetailActivity extends BaseActivity implements
 
     private void doSend() {
         String mComments = etInput.getText().toString().trim();
-        if (StringUtils.isEmpty(mComments)) {
+        if (StrUtil.isEmpty(mComments)) {
             showToast("请输入评论内容");
             return;
         }

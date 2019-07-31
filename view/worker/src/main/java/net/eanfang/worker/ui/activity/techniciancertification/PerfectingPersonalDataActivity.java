@@ -24,7 +24,7 @@ import com.eanfang.base.kit.cache.CacheMod;
 import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.base.widget.customview.CircleImageView;
-import com.eanfang.biz.model.SelectAddressItem;
+import com.eanfang.biz.model.bean.SelectAddressItem;
 import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.biz.model.entity.AccountEntity;
 import com.eanfang.biz.model.entity.UserEntity;
@@ -33,7 +33,6 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.StringUtils;
 import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.worker.R;
@@ -160,10 +159,10 @@ public class PerfectingPersonalDataActivity extends BaseWorkeActivity {
     private void fillData() {
         GlideUtil.intoImageView(this, BuildConfig.OSS_SERVER + accountEntity.getAvatar(), ivHeader);
         String contactName = WorkerApplication.get().getLoginBean().getAccount().getRealName();
-        if ((!StringUtils.isEmpty(contactName)) & (!contactName.contains("易安防")) & (!contactName.contains("匿名用户"))) {
+        if ((!StrUtil.isEmpty(contactName)) & (!contactName.contains("易安防")) & (!contactName.contains("匿名用户"))) {
             tvContactName.setText(contactName);
         }
-        if (!StringUtils.isEmpty(accountEntity.getNickName())) {
+        if (!StrUtil.isEmpty(accountEntity.getNickName())) {
             ncEt.setText(accountEntity.getNickName());
         }
         if (accountEntity.getAreaCode() != null) {
@@ -236,35 +235,35 @@ public class PerfectingPersonalDataActivity extends BaseWorkeActivity {
         String dqDzEtS = dqDzEt.getText().toString().trim();
         String srEts = srEt.getText().toString().trim();
         String tvContactNames = tvContactName.getText().toString().trim();
-        if (StringUtils.isEmpty(accountEntity.getAvatar())) {
+        if (StrUtil.isEmpty(accountEntity.getAvatar())) {
             showToast("请选择技师头像");
             return;
         }
-        if (StringUtils.isEmpty(ncE)) {
+        if (StrUtil.isEmpty(ncE)) {
             showToast("请输入昵称");
             return;
         }
-        if (StringUtils.isEmpty(areaCode)) {
+        if (StrUtil.isEmpty(areaCode)) {
             showToast("请选择当前城市");
             return;
         }
-        if (StringUtils.isEmpty(dqDzEtS)) {
+        if (StrUtil.isEmpty(dqDzEtS)) {
             showToast("请输入当前地址");
             return;
         }
-        if (StringUtils.isEmpty(cardId)) {
+        if (StrUtil.isEmpty(cardId)) {
             showToast("请输入身份证号");
             return;
         }
-        if (StringUtils.isEmpty(tvContactNames)) {
+        if (StrUtil.isEmpty(tvContactNames)) {
             showToast("请输入真实姓名");
             return;
         }
-        if (StringUtils.isEmpty(srEts)) {
+        if (StrUtil.isEmpty(srEts)) {
             showToast("请输入生日");
             return;
         }
-        if (StringUtils.isEmpty(info)) {
+        if (StrUtil.isEmpty(info)) {
             showToast("请输入个人简介");
             return;
         }

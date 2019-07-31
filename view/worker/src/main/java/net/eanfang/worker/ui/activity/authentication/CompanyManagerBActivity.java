@@ -21,7 +21,7 @@ import android.widget.TextView;
 import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.BusinessManagementData;
+import com.eanfang.biz.model.bean.BusinessManagementData;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;

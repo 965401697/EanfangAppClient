@@ -8,15 +8,15 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.device.MaintenanceOrderListBean;
+import com.eanfang.biz.model.bean.device.MaintenanceOrderListBean;
 import com.eanfang.ui.base.BaseEvent;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.PermKit;
-import com.eanfang.util.QueryEntry;
+import com.eanfang.biz.model.QueryEntry;
 import com.eanfang.base.kit.V;
-import com.yaf.base.entity.ShopMaintenanceOrderEntity;
+import com.eanfang.biz.model.entity.ShopMaintenanceOrderEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;

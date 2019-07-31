@@ -12,8 +12,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.eanfang.base.BaseActivity;
-import com.eanfang.biz.model.SelectAddressItem;
-import com.eanfang.biz.model.TemplateBean;
+import com.eanfang.biz.model.bean.SelectAddressItem;
+import com.eanfang.biz.model.bean.TemplateBean;
 import com.eanfang.biz.rds.base.LViewModelProviders;
 import com.eanfang.config.Config;
 
@@ -100,7 +100,7 @@ public class LeavePostAddPostActivity extends BaseActivity {
         });
         mAdapter.bindToRecyclerView(mBinding.recLeavePostDetailInfo);
 //        mBinding.switchBtnLeavePostAddPostStatus.setOnClickListener((view) -> {
-//            if (StringUtils.isEmpty(mBinding.tvLeavePostAddPostDevice.getText().toString())) {
+//            if (StrUtil.isEmpty(mBinding.tvLeavePostAddPostDevice.getText().toString())) {
 //                showToast("请先选择绑定设备");
 //            }
 //        });

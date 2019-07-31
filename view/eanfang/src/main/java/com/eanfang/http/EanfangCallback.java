@@ -12,20 +12,21 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.base.BaseApplication;
-import com.eanfang.config.ErrorCodeConst;
 import com.eanfang.base.kit.loading.LoadKit;
+import com.eanfang.config.ErrorCodeConst;
 import com.eanfang.ui.activity.NoPermissionActivity;
-import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
-import com.eanfang.util.Var;
-import com.okgo.callback.StringCallback;
-import com.okgo.model.Response;
-import com.okgo.request.base.Request;
+import com.lzy.okgo.callback.Callback;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
+import com.lzy.okgo.request.base.Request;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.lang.reflect.Type;
 import java.util.List;
+
+import cn.hutool.core.util.StrUtil;
 
 import static com.eanfang.config.ErrorCodeConst.MISSING_LOGIN;
 
@@ -39,7 +40,7 @@ import static com.eanfang.config.ErrorCodeConst.MISSING_LOGIN;
  *
  * @param <T>
  */
-public class EanfangCallback<T> extends StringCallback {
+public class EanfangCallback<T> extends StringCallback implements Callback<String> {
 
     /**
      * 加载弹窗
@@ -56,25 +57,12 @@ public class EanfangCallback<T> extends StringCallback {
 
     private ISuccessArray<T> iSuccessArray;
 
-    /**
-     * 实现接口 必须加泛型
-     *
-     * @param activity
-     */
-    // TODO: 2017/12/7 废弃
-//    public EanfangCallback(Activity activity, boolean showDialog) {
-//        this.activity = activity;
-//        if (showDialog) {
-//            loadingDialog = DialogUtil.createLoadingDialog(activity);
-//        }
-//    }
     public EanfangCallback(Activity activity, boolean showDialog, Class clazz, ISuccess<T> iSuccess) {
         this.activity = activity;
         this.clazz = clazz;
         this.iSuccess = iSuccess;
         if (showDialog) {
-            //loadingDialog = DialogUtil.createLoadingDialog(activity);
-            loadingDialog = LoadKit.dialog(activity, null);
+            loadingDialog = LoadKit.dialog(activity);
         }
     }
 
@@ -83,8 +71,7 @@ public class EanfangCallback<T> extends StringCallback {
         this.clazz = clazz;
         this.iSuccessArray = iSuccess;
         if (showDialog) {
-            //loadingDialog = DialogUtil.createLoadingDialog(activity);
-            loadingDialog = LoadKit.dialog(activity, null);
+            loadingDialog = LoadKit.dialog(activity);
         }
     }
 
@@ -97,8 +84,7 @@ public class EanfangCallback<T> extends StringCallback {
         this.activity = activity;
         this.type = type;
         if (showDialog) {
-            // loadingDialog = DialogUtil.createLoadingDialog(activity);
-            loadingDialog = LoadKit.dialog(activity, null);
+            loadingDialog = LoadKit.dialog(activity);
         }
     }
 
@@ -111,20 +97,7 @@ public class EanfangCallback<T> extends StringCallback {
         this.activity = activity;
         this.clazz = clazz;
         if (showDialog) {
-            //loadingDialog = DialogUtil.createLoadingDialog(activity);
-            loadingDialog = LoadKit.dialog(activity, null);
-        }
-    }
-
-    /**
-     * 请求开始
-     *
-     * @param request
-     */
-    @Override
-    public final void onStart(Request<String, ? extends Request> request) {
-        if (loadingDialog != null && !loadingDialog.isShowing()) {
-            loadingDialog.show();
+            loadingDialog = LoadKit.dialog(activity);
         }
     }
 
@@ -139,9 +112,17 @@ public class EanfangCallback<T> extends StringCallback {
     }
 
     @Override
+    public void onStart(Request<String, ? extends Request> request) {
+        super.onStart(request);
+        if (loadingDialog != null && !loadingDialog.isShowing()) {
+            loadingDialog.show();
+        }
+    }
+
+    @Override
     public final void onSuccess(Response<String> response) {
         try {
-            if (StringUtils.isEmpty(response.toString()) || StringUtils.isEmpty(response.body())) {
+            if (StrUtil.isEmpty(response.toString()) || StrUtil.isEmpty(response.body())) {
                 onServerError("服务器无响应");
                 return;
             }
@@ -245,147 +226,18 @@ public class EanfangCallback<T> extends StringCallback {
     }
 
 
-    private void updateNoticeCount(JSONObject resultJson) {
-        String classMainName = "MainActivity.initMessageCount";
-        String classMyName = "ContactListFragment.messageCount";
-        int mainActivityCount = Var.get(classMainName).getVar();
-        int myFragmentCount = Var.get(classMyName).getVar();
-        int noticeCount = resultJson.getInteger("noticeCount");
-        if (mainActivityCount != noticeCount) {
-            Var.get(classMainName).setVar(noticeCount);
-        }
-        if (myFragmentCount != noticeCount) {
-            Var.get(classMyName).setVar(noticeCount);
-        }
-    }
-
-    //EventBus 解决方案
-//    /*** @param response
-//     */
-//    @Override
-//    public final void onSuccess(Response<String> response) {
-//
-//        EventBus.getDefault().register(this);
-//        try {
-//            if (StringUtils.isEmpty(response.toString()) || StringUtils.isEmpty(response.body())) {
-//                onServerError("服务器无响应");
-//                return;
-//            }
-//
-//            new Thread(() -> {
-//                //获得响应json
-//                JSONObject resultJson = null;
-//                Class<T> clazz = getClazz();
-//                //指定date类型自动格式化
-//                JSON.DEFFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm";
-//
-//                resultJson = JsonUtils.str2JSON(response.body());
-//                Integer code = -100;
-//                String message = null;
-//                JSONObject resultObject = null;
-//                JSONArray resultArray = null;
-//                String resultString = null;
-//                if (resultJson.containsKey("code")) {
-//                    code = resultJson.getInteger("code");
-//                }
-//                if (resultJson.containsKey("message")) {
-//                    message = resultJson.getString("message");
-//                }
-//                if (resultJson.containsKey("noticeCount")) {
-//                    String classMainName = "MainActivity.initMessageCount";
-//                    String classMyName = "ContactListFragment.messageCount";
-//                    int mainActivityCount = Var.get(classMainName).getVar();
-//                    int myFragmentCount = Var.get(classMyName).getVar();
-//                    int noticeCount = resultJson.getInteger("noticeCount");
-//                    if (mainActivityCount != noticeCount) {
-//                        Var.get(classMainName).setVar(noticeCount);
-//                    }
-//                    if (myFragmentCount != noticeCount) {
-//                        Var.get(classMyName).setVar(noticeCount);
-//                    }
-//                }
-//                if (resultJson.containsKey("data")) {
-//                    if (clazz.getName().contains("String")) {
-//                        resultString = resultJson.get("data").toString();
-//                    } else if (resultJson.get("data") instanceof JSONArray) {
-//                        resultArray = resultJson.getJSONArray("data");
-//                    } else if (resultJson.get("data") instanceof JSONObject) {
-//                        resultObject = resultJson.getJSONObject("data");
-//                    } else {
-//                        resultString = resultJson.get("data").toString();
-//                    }
-//                }
-//
-//                T result = null;
-//                List<T> list = new ArrayList();
-//                if (code == ErrorCodeConst.REQUEST_SUCCESS) {
-//                    if (resultArray != null) {
-//                        for (int i = 0; i < resultArray.size(); i++) {
-//                            list.add(JSONObject.parseObject(resultArray.getString(i), clazz));
-//                        }
-//                    } else if (resultObject != null) {
-//                        result = JSONObject.parseObject(resultObject.toJSONString(), clazz);
-//                    } else {
-//                        result = (T) resultString;
-//                    }
-//                }
-//
-//                JSONObject jsonObject = new JSONObject();
-//                jsonObject.put("code", code);
-//                jsonObject.put("message", message);
-//                if (result != null) {
-//                    jsonObject.put("data", result);
-//                } else if (list != null && !list.isEmpty()) {
-//                    jsonObject.put("data", list);
-//                }
-//                EventBus.getDefault().post(jsonObject);
-//            }).start();
-//        } catch (JSONException e) {
-//            e.printStackTrace();
+//    private void updateNoticeCount(JSONObject resultJson) {
+//        String classMainName = "MainActivity.initMessageCount";
+//        String classMyName = "ContactListFragment.messageCount";
+//        int mainActivityCount = Var.get(classMainName).getVar();
+//        int myFragmentCount = Var.get(classMyName).getVar();
+//        int noticeCount = resultJson.getInteger("noticeCount");
+//        if (mainActivityCount != noticeCount) {
+//            Var.get(classMainName).setVar(noticeCount);
 //        }
-//    }
-//    @Subscribe
-//    public synchronized void onEvent(JSONObject jsonObject) {
-//        Integer code = jsonObject.getInteger("code");
-//        String message = jsonObject.getString("message");
-//        Object data = jsonObject.get("data");
-//
-//        activity.runOnUiThread(() -> {
-//            /* Do something */
-//            switch (code) {
-//                //请求成功 回调 success
-//                case ErrorCodeConst.REQUEST_SUCCESS:
-//                    if (data instanceof List) {
-//                        onSuccessArray((List<T>) data);
-//                    } else {
-//                        onSuccess((T) data);
-//                    }
-//                    break;
-//                //服务端无数据 回调
-//                case ErrorCodeConst.REQUEST_NO_DATA:
-//                    onNoData(message);
-//                    break;
-//                //请求缺少参数 回调
-//                case ErrorCodeConst.MISSING_PARAMETER:
-//                    onMissParam(message);
-//                    break;
-//                //服务端异常 回调
-//                case ErrorCodeConst.SERVICE_ERROR:
-//                    onServerError(message);
-//                    break;
-//                case ErrorCodeConst.REQUEST_COMMIT_AGAIN:
-//                    break;
-//                case MISSING_LOGIN:
-//                    onFail(code, message, null);
-//                    //taoken 过期  只弹出toast 没跳转登录页面
-////                    onMissingLogin();
-//                    break;
-//                default:
-//                    onFail(code, message, null);
-//                    break;
-//            }
-//        });
-//        EventBus.getDefault().unregister(this);
+//        if (myFragmentCount != noticeCount) {
+//            Var.get(classMyName).setVar(noticeCount);
+//        }
 //    }
 
     /**
@@ -438,7 +290,7 @@ public class EanfangCallback<T> extends StringCallback {
      * 无数据 调用
      */
     public void onNoData(String message) {
-        if (StringUtils.isEmpty(message)) {
+        if (StrUtil.isEmpty(message)) {
             message = "没有数据啦";
         }
         ToastUtil.get().showToast(this.activity, message);
@@ -448,7 +300,7 @@ public class EanfangCallback<T> extends StringCallback {
      * 缺少参数 调用
      */
     public void onMissParam(String message) {
-        if (!StringUtils.isEmpty(message)) {
+        if (!StrUtil.isEmpty(message)) {
             ToastUtil.get().showToast(this.activity, message);
         } else {
             ToastUtil.get().showToast(this.activity, "缺少请求参数，请返回后重试");
@@ -461,7 +313,7 @@ public class EanfangCallback<T> extends StringCallback {
      * @param message
      */
     public void onServerError(String message) {
-        if (!StringUtils.isEmpty(message)) {
+        if (!StrUtil.isEmpty(message)) {
             ToastUtil.get().showToast(this.activity, message);
         } else {
             ToastUtil.get().showToast(this.activity, "哎呀，服务器好像罢工了");
@@ -491,16 +343,6 @@ public class EanfangCallback<T> extends StringCallback {
         } else {
             return JSONObject.class;
         }
-// else {
-//            Type genType = getClass().getGenericSuperclass();
-//            Type type = ((ParameterizedType) genType).getActualTypeArguments()[0];
-//            if (((Class) type).getName().equals(JSONObject.class.getName())) {
-//                return JSONObject.class;
-//            } else {
-//                return ((Class<T>) type);
-//            }
-//        }
-
     }
 
     /**

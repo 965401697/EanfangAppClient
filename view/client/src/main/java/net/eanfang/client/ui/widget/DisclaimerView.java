@@ -11,6 +11,7 @@ import net.eanfang.client.R;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,7 +56,7 @@ public class DisclaimerView extends BaseDialog {
             byte[] buffer = new byte[size];
             is.read(buffer);
             is.close();
-            disclaimerText = new String(buffer, "UTF-8");
+            disclaimerText = new String(buffer, StandardCharsets.UTF_8);
         } catch (IOException e1) {
             e1.printStackTrace();
         }

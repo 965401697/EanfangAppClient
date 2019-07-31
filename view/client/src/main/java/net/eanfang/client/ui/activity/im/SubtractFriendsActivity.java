@@ -10,9 +10,10 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.biz.model.bean.GroupDetailBean;
+import com.eanfang.biz.model.entity.SysGroupUserEntity;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.GroupDetailBean;
 
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.compound.CompoundHelper;
@@ -41,12 +42,12 @@ public class SubtractFriendsActivity extends BaseClientActivity {
     RecyclerView recyclerView;
     private GroupFriendsAdapter mGroupFriendsAdapter;
 
-    private ArrayList<GroupDetailBean.ListBean> mFriendListBeanArrayList;
+    private ArrayList<SysGroupUserEntity> mFriendListBeanArrayList;
     private String mGroupId;
     private String mRYGroupId;
     private String mTitle;
     private ArrayList<String> mUserIdList = new ArrayList<String>();
-    private ArrayList<GroupDetailBean.ListBean> mSubUserIconList = new ArrayList<GroupDetailBean.ListBean>();
+    private ArrayList<SysGroupUserEntity> mSubUserIconList = new ArrayList<>();
 
     private boolean isCompound;
     Handler handler = new Handler() {
@@ -66,7 +67,7 @@ public class SubtractFriendsActivity extends BaseClientActivity {
 
         }
     };
-    private ArrayList<GroupDetailBean.ListBean> mList;
+    private ArrayList<SysGroupUserEntity> mList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_subtract_friends);
@@ -75,7 +76,7 @@ public class SubtractFriendsActivity extends BaseClientActivity {
         setTitle("群组移除好友");
         setRightTitle("确定");
         setLeftBack();
-        mFriendListBeanArrayList = (ArrayList<GroupDetailBean.ListBean>) getIntent().getSerializableExtra("list");
+        mFriendListBeanArrayList = (ArrayList<SysGroupUserEntity>) getIntent().getSerializableExtra("list");
         mGroupId = getIntent().getStringExtra("groupId");
         mRYGroupId = getIntent().getStringExtra("ryGroupId");
         mTitle = getIntent().getStringExtra("title");
@@ -97,7 +98,7 @@ public class SubtractFriendsActivity extends BaseClientActivity {
         mGroupFriendsAdapter = new GroupFriendsAdapter(this,R.layout.item_friend_list);//标志位 就是为了显示checkbox
         mGroupFriendsAdapter.bindToRecyclerView(recyclerView);
         mList = new ArrayList<>();
-        for (GroupDetailBean.ListBean bean : mFriendListBeanArrayList) {
+        for (SysGroupUserEntity bean : mFriendListBeanArrayList) {
             if (!bean.getAccId().equals(String.valueOf(ClientApplication.get().getAccId()))) {
                 mList.add(bean);//自己不能删除自己
             }
@@ -129,7 +130,7 @@ public class SubtractFriendsActivity extends BaseClientActivity {
 
         mFriendListBeanArrayList.removeAll(mSubUserIconList);
 
-        for (GroupDetailBean.ListBean bean : mFriendListBeanArrayList) {
+        for (SysGroupUserEntity bean : mFriendListBeanArrayList) {
             list.add(bean.getAccountEntity().getAvatar());
         }
 
@@ -162,7 +163,7 @@ public class SubtractFriendsActivity extends BaseClientActivity {
                 //创建群组选着好友
                 if (view.getId() == R.id.cb_checked) {
 
-                    GroupDetailBean.ListBean bean = (GroupDetailBean.ListBean) adapter.getData().get(position);
+                    SysGroupUserEntity bean = (SysGroupUserEntity) adapter.getData().get(position);
                     if (bean.getFlag() == 1) {
                         //移除
                         mUserIdList.remove(bean.getAccId());
@@ -170,7 +171,7 @@ public class SubtractFriendsActivity extends BaseClientActivity {
                         bean.setFlag(0);
 
                     } else {
-                        mUserIdList.add(bean.getAccId());
+                        mUserIdList.add(bean.getAccId().toString());
                         mSubUserIconList.add(bean);
                         bean.setFlag(1);
                     }

@@ -7,13 +7,13 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.OpenShopLogBean;
+import com.eanfang.biz.model.bean.OpenShopLogBean;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
-import com.eanfang.util.QueryEntry;
-import com.yaf.base.entity.OpenShopLogEntity;
+import com.eanfang.biz.model.QueryEntry;
+import com.eanfang.biz.model.entity.OpenShopLogEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;

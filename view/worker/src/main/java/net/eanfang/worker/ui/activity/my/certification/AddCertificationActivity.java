@@ -21,11 +21,9 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
 import com.eanfang.util.PhotoUtils;
-import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.picker.common.util.DateUtils;
-import com.yaf.base.entity.HonorCertificateEntity;
+import com.eanfang.biz.model.entity.HonorCertificateEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
@@ -42,6 +40,8 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.util.StrUtil;
+import cn.qqtheme.framework.util.DateUtils;
 
 /**
  * @author guanluocang
@@ -236,7 +236,7 @@ public class AddCertificationActivity extends BaseWorkeActivity implements Selec
 
     @Override
     public void getData(String time) {
-        if (StringUtils.isEmpty(time) || " ".equals(time)) {
+        if (StrUtil.isEmpty(time) || " ".equals(time)) {
             tvTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
         } else {
             tvTime.setText(time);

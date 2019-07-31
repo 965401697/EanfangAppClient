@@ -12,8 +12,8 @@
 //
 //import com.alibaba.fastjson.JSONObject;
 //import com.chad.library.adapter.base.BaseQuickAdapter;
-//import com.eanfang.biz.model.CompanyDetailBean;
-//import com.eanfang.biz.model.InstallOrderConfirmBean;
+//import com.eanfang.biz.model.bean.CompanyDetailBean;
+//import com.eanfang.biz.model.bean.InstallOrderConfirmBean;
 //import com.eanfang.util.StringUtils;
 
 //
@@ -260,12 +260,12 @@
 //        }
 //        //iv_header.setImageURI(companyDetailBean.getLogopic());
 //        tv_name.setText(companyDetailBean.getCompanyname());
-//        if (StringUtils.isEmpty(companyDetailBean.getGoodpercent())) {
+//        if (StrUtil.isEmpty(companyDetailBean.getGoodpercent())) {
 //            tv_haopinglv.setText("100%");
 //        } else {
 //            tv_haopinglv.setText(Double.parseDouble(companyDetailBean.getGoodpercent()) * 100 + "%");
 //        }
-//        if (StringUtils.isEmpty(companyDetailBean.getPraise())) {
+//        if (StrUtil.isEmpty(companyDetailBean.getPraise())) {
 //            tv_koubei.setText("5.0分");
 //        } else {
 //            tv_koubei.setText(companyDetailBean.getPraise());
@@ -285,33 +285,33 @@
 //
 //        //companyDetailBean.
 //
-//        if (!StringUtils.isEmpty(companyDetailBean.getLicencepic())) {
+//        if (!StrUtil.isEmpty(companyDetailBean.getLicencepic())) {
 //            iv_license.setImageURI(Uri.parse(companyDetailBean.getLicencepic()));
 //        }
 //
-//        if (!StringUtils.isEmpty(companyDetailBean.getZizhipic1())) {
+//        if (!StrUtil.isEmpty(companyDetailBean.getZizhipic1())) {
 //            iv_zizhi1.setImageURI(Uri.parse(companyDetailBean.getZizhipic1()));
 //        } else {
 //            iv_zizhi1.setVisibility(View.GONE);
 //        }
 //
-//        if (!StringUtils.isEmpty(companyDetailBean.getZizhipic2())) {
+//        if (!StrUtil.isEmpty(companyDetailBean.getZizhipic2())) {
 //            iv_zizhi2.setImageURI(Uri.parse(companyDetailBean.getZizhipic2()));
 //        } else {
 //            iv_zizhi2.setVisibility(View.GONE);
 //        }
 //
-//        if (!StringUtils.isEmpty(companyDetailBean.getHonorpic1())) {
+//        if (!StrUtil.isEmpty(companyDetailBean.getHonorpic1())) {
 //            honor1.setImageURI(companyDetailBean.getHonorpic1());
 //        } else {
 //            honor1.setVisibility(View.GONE);
 //        }
-//        if (!StringUtils.isEmpty(companyDetailBean.getHonorpic2())) {
+//        if (!StrUtil.isEmpty(companyDetailBean.getHonorpic2())) {
 //            iv_honor2.setImageURI(companyDetailBean.getHonorpic2());
 //        } else {
 //            iv_honor2.setVisibility(View.GONE);
 //        }
-//        if (!StringUtils.isEmpty(companyDetailBean.getHonorpic3())) {
+//        if (!StrUtil.isEmpty(companyDetailBean.getHonorpic3())) {
 //            iv_honor3.setImageURI(companyDetailBean.getHonorpic3());
 //        } else {
 //            iv_honor3.setVisibility(View.GONE);

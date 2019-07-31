@@ -13,9 +13,8 @@ import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.base.kit.rx.RxPerm;
-import com.eanfang.util.StringUtils;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.yaf.base.entity.TechWorkerVerifyEntity;
+import com.eanfang.biz.model.entity.TechWorkerVerifyEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkeActivity;
@@ -130,15 +129,15 @@ public class IdentityCardCertification extends BaseWorkeActivity {
      * 保存照片
      */
     private void doSave() {
-        if (StringUtils.isEmpty(mTechWorkerVerifyEntity.getIdCardFront())) {
+        if (StrUtil.isEmpty(mTechWorkerVerifyEntity.getIdCardFront())) {
             showToast("请添加身份证正面照");
             return;
         }
-        if (StringUtils.isEmpty(mTechWorkerVerifyEntity.getIdCardHand())) {
+        if (StrUtil.isEmpty(mTechWorkerVerifyEntity.getIdCardHand())) {
             showToast("请添加手持身份证照片");
             return;
         }
-        if (StringUtils.isEmpty(mTechWorkerVerifyEntity.getIdCardSide())) {
+        if (StrUtil.isEmpty(mTechWorkerVerifyEntity.getIdCardSide())) {
             showToast("请添加身份证反面照");
             return;
         }

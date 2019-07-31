@@ -16,14 +16,14 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.R;
 import com.eanfang.R2;
 import com.eanfang.apiservice.RepairApi;
-import com.eanfang.biz.model.FaultListBean;
+import com.eanfang.biz.model.bean.FaultListBean;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.sdk.equipment.adapter.FaultLibraryAdapter;
 import com.eanfang.swipefresh.SwipyRefreshLayout;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.util.QueryEntry;
+import com.eanfang.biz.model.QueryEntry;
 import com.eanfang.util.ToastUtil;
 
 

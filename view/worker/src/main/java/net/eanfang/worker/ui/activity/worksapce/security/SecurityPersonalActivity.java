@@ -22,15 +22,14 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.security.SecurityListBean;
-import com.eanfang.biz.model.security.SecurityPersonalTopBean;
+import com.eanfang.bean.security.SecurityListBean;
+import com.eanfang.bean.security.SecurityPersonalTopBean;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.BGASpaceItemDecoration;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.QueryEntry;
-import com.eanfang.util.StringUtils;
-import com.photopicker.com.util.BGASpaceItemDecoration;
+import com.eanfang.biz.model.QueryEntry;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
@@ -45,6 +44,7 @@ import java.util.Arrays;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.util.StrUtil;
 import q.rorbin.badgeview.QBadgeView;
 
 /**
@@ -230,7 +230,7 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
 
             bundle.putString("id", String.valueOf(listBean.getSpcId()));
             bundle.putString("orderNum", listBean.getPublisherOrg().getOrgName());
-            if (!StringUtils.isEmpty(listBean.getSpcImg())) {
+            if (!StrUtil.isEmpty(listBean.getSpcImg())) {
                 bundle.putString("picUrl", listBean.getSpcImg().split(",")[0]);
             }
             bundle.putString("creatTime", listBean.getSpcContent());

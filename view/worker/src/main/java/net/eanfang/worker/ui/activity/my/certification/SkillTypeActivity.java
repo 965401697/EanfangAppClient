@@ -14,13 +14,12 @@ import com.eanfang.apiservice.UserApi;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.GrantChange;
-import com.eanfang.biz.model.WorkerVerifySkillBean;
+import com.eanfang.biz.model.bean.GrantChange;
+import com.eanfang.biz.model.bean.WorkerVerifySkillBean;
 import com.eanfang.biz.model.entity.BaseDataEntity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PickerSelectUtil;
-import com.eanfang.util.StringUtils;
-import com.yaf.base.entity.TechWorkerVerifyEntity;
+import com.eanfang.biz.model.entity.TechWorkerVerifyEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
@@ -34,6 +33,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * 技能资质
@@ -116,7 +116,7 @@ public class SkillTypeActivity extends BaseWorkerActivity {
 
         Log.i("mYear++mAbility", mYear + "++");
 
-        if (StringUtils.isEmpty(mYear)) {
+        if (StrUtil.isEmpty(mYear)) {
             showToast("请选择从业年限");
             return;
         }

@@ -11,12 +11,6 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.photopicker.com.activity.BGAPPToolbarActivity;
-import com.photopicker.com.adapter.BGAPhotoPageAdapter;
-import com.photopicker.com.util.BGAPhotoPickerUtil;
-import com.photopicker.com.widget.BGAHackyViewPager;
-import com.photopicker.photoview.PhotoViewAttacher;
-
 import net.eanfang.client.R;
 
 import java.util.ArrayList;
@@ -24,7 +18,13 @@ import java.util.ArrayList;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.ViewPropertyAnimatorListenerAdapter;
 import androidx.viewpager.widget.ViewPager;
+
 import cn.bingoogolapple.baseadapter.BGAOnNoDoubleClickListener;
+import cn.bingoogolapple.photopicker.activity.BGAPPToolbarActivity;
+import cn.bingoogolapple.photopicker.adapter.BGAPhotoPageAdapter;
+import cn.bingoogolapple.photopicker.util.BGAPhotoPickerUtil;
+import cn.bingoogolapple.photopicker.widget.BGAHackyViewPager;
+import uk.co.senab.photoview.PhotoViewAttacher;
 
 
 /**
@@ -103,9 +103,9 @@ public class MyBGAPhotoPickerPreviewActivity extends BGAPPToolbarActivity implem
     @Override
     protected void initView(Bundle savedInstanceState) {
         setNoLinearContentView(R.layout.my_bga_pp_activity_photo_picker_preview);
-        mContentHvp = getViewById(R.id.hvp_photo_picker_preview_content);
-        mChooseRl = getViewById(R.id.rl_photo_picker_preview_choose);
-        mChooseTv = getViewById(R.id.tv_photo_picker_preview_choose);
+        mContentHvp = findViewById(R.id.hvp_photo_picker_preview_content);
+        mChooseRl = findViewById(R.id.rl_photo_picker_preview_choose);
+        mChooseTv = findViewById(R.id.tv_photo_picker_preview_choose);
     }
 
     @Override
@@ -176,7 +176,7 @@ public class MyBGAPhotoPickerPreviewActivity extends BGAPPToolbarActivity implem
         mTopRightBtnText = getString(R.string.bga_pp_confirm);
 
 
-        mPhotoPageAdapter = new BGAPhotoPageAdapter(this, this, previewImages);
+        mPhotoPageAdapter = new BGAPhotoPageAdapter(this, previewImages);
         mContentHvp.setAdapter(mPhotoPageAdapter);
         mContentHvp.setCurrentItem(currentPosition);
 

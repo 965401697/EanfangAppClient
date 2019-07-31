@@ -11,9 +11,9 @@ import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.util.QueryEntry;
-import com.yaf.base.entity.InvoiceEntity;
-import com.yaf.base.entity.ReceiveAddressEntity;
+import com.eanfang.biz.model.QueryEntry;
+import com.eanfang.biz.model.entity.InvoiceEntity;
+import com.eanfang.biz.model.entity.ReceiveAddressEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;

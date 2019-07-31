@@ -11,9 +11,9 @@ import android.widget.Button;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.PeerConnectionDataBean;
+import com.eanfang.biz.model.bean.PeerConnectionDataBean;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.util.QueryEntry;
+import com.eanfang.biz.model.QueryEntry;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.my.UserHomeActivity;

@@ -19,15 +19,15 @@ import android.widget.TextView;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.kit.loading.LoadKit;
 import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.GroupCreatBean;
-import com.eanfang.biz.model.TemplateBean;
+import com.eanfang.biz.model.bean.GroupCreatBean;
+import com.eanfang.biz.model.bean.TemplateBean;
 
-import com.eanfang.util.DialogUtil;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.compound.CompoundHelper;
@@ -165,7 +165,7 @@ public class CreateGroupActivity extends BaseWorkeActivity {
                 }
             }
         });
-        dialog = DialogUtil.createLoadingDialog(this);
+        dialog = LoadKit.dialog(this);
     }
 
     @OnClick(R.id.ll_header)

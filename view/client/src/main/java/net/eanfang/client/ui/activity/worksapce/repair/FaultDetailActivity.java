@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
+import com.eanfang.biz.model.entity.RepairBugEntity;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.delegate.BGASortableDelegate;
@@ -18,9 +19,6 @@ import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.StringUtils;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
-import com.yaf.base.entity.RepairBugEntity;
 
 import net.eanfang.client.R;
 
@@ -29,6 +27,8 @@ import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author Guanluocang
@@ -118,7 +118,7 @@ public class FaultDetailActivity extends BaseActivity {
         // 故障描述
         tvFaultDescripte.setText(repairBugEntity.getBugDescription());
 
-        if (!StringUtils.isEmpty(repairBugEntity.getMp4_path())) {
+        if (!StrUtil.isEmpty(repairBugEntity.getMp4_path())) {
             rlThumbnail.setVisibility(View.VISIBLE);
             GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + repairBugEntity.getMp4_path() + ".jpg"),ivThumbnail);
         } else {
@@ -134,7 +134,7 @@ public class FaultDetailActivity extends BaseActivity {
 
     private void initNinePhoto() {
         //修改小bug 图片读取问题
-        if (StringUtils.isValid(repairBugEntity.getPictures())) {
+        if (StrUtil.isNotBlank(repairBugEntity.getPictures())) {
             String[] prePic = repairBugEntity.getPictures().split(Constant.IMG_SPLIT);
             picList1.addAll(Stream.of(Arrays.asList(prePic)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
         }

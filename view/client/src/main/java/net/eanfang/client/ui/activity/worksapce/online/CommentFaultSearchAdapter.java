@@ -2,12 +2,11 @@ package net.eanfang.client.ui.activity.worksapce.online;
 
 import android.net.Uri;
 
-import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.util.GlideUtil;
-import com.yaf.base.entity.AskQuestionsListBean;
+import com.eanfang.biz.model.bean.AskQuestionsListBean;
 
 import net.eanfang.client.R;
 

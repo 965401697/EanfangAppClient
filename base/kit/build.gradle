@@ -42,6 +42,8 @@ dependencies {
     implementation pkg.aspectj
     implementation pkg.alipay
 
+    implementation pkg.loading
+
     api pkg.loadsir
     api pkg.pictureselector
 

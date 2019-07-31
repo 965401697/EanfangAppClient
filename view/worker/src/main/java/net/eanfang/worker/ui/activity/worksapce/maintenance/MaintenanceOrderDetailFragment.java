@@ -20,7 +20,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.base.kit.V;
-import com.yaf.base.entity.ShopMaintenanceOrderEntity;
+import com.eanfang.biz.model.entity.ShopMaintenanceOrderEntity;
 
 import net.eanfang.worker.R;
 

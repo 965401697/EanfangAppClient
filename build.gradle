@@ -8,7 +8,6 @@ buildscript {
         classpath 'com.android.tools.build:gradle:3.4.2'
         classpath 'com.jakewharton:butterknife-gradle-plugin:10.1.0'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0'
-        classpath 'com.jakewharton.hugo:hugo-plugin:1.2.1'
         classpath 'com.hujiang.aspectjx:gradle-android-plugin-aspectjx:2.0.5'
     }
 }
@@ -56,7 +55,7 @@ ext {
             ossBucket        : "\"eanfang\"",
             ossEndpoint      : "\"https://oss-cn-beijing.aliyuncs.com\"",
             javaVersion      : JavaVersion.VERSION_1_8,
-            debugMod         : "false",
+            debugMod         : "true",
             localApiHost     : "\"http://192.168.0.104:8080\"",
             betaApiHost      : "\"http://api.beta.eanfang.net\"",
             proApiHost       : "\"https://api.eanfang.net\"",
@@ -96,6 +95,7 @@ ext {
             appcompat            : "androidx.appcompat:appcompat:1.0.2",
             multidex             : "androidx.multidex:multidex:2.0.1",
             okhttp3              : "com.facebook.fresco:imagepipeline-okhttp3:0.12.0",
+            okgo3                : "com.lzy.net:okgo:3.0.4",
             retrofit2            : "com.squareup.retrofit2:retrofit:2.5.0",
             adapterRxjava2       : "com.squareup.retrofit2:adapter-rxjava2:2.4.0",
             interceptor3         : "com.squareup.okhttp3:logging-interceptor:3.12.0",
@@ -118,7 +118,10 @@ ext {
 
             //component
             recyclerview         : "androidx.recyclerview:recyclerview:1.0.0",
+
             bgaBaseadapter       : "cn.bingoogolapple:bga-baseadapter:1.2.8@aar",
+            photopicker          : "cn.bingoogolapple:bga-photopicker:1.2.8",
+
             takephoto            : "com.jph.takephoto:takephoto_library:4.0.3",
             cymChad              : "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.34",
             badgeview            : "q.rorbin:badgeview:1.1.3",
@@ -132,6 +135,9 @@ ext {
             pictureselector      : "com.github.LuckSiege.PictureSelector:picture_library:v2.2.3",
             loadsir              : "com.kingja.loadsir:loadsir:1.3.6",
             exifinterface        : "com.android.support:exifinterface:28.0.0",
+            loading              : 'com.wang.avi:library:2.1.3',
+            calendarPicker       : "com.github.gzu-liyujiang.AndroidPicker:WheelPicker:1.5.6",
+            numberprogressbar    : "com.daimajia.numberprogressbar:library:1.4@aar",
 
             //rx
             rxjava2              : "io.reactivex.rxjava2:rxjava:2.2.3",

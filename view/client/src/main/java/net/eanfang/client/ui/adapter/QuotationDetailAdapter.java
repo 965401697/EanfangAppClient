@@ -3,7 +3,7 @@ package net.eanfang.client.ui.adapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.config.Config;
-import com.eanfang.biz.model.QuotationBean;
+import com.eanfang.biz.model.bean.QuotationBean;
 
 import net.eanfang.client.R;
 

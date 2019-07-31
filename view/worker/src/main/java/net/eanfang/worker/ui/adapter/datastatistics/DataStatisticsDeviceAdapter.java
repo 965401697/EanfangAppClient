@@ -12,7 +12,7 @@ import com.eanfang.BuildConfig;
 import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
-import com.eanfang.biz.model.datastatistics.DataStatisticsBean;
+import com.eanfang.biz.model.bean.datastatistics.DataStatisticsBean;
 import com.eanfang.util.GlideUtil;
 
 import net.eanfang.worker.R;

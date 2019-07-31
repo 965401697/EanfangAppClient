@@ -6,9 +6,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.eanfang.biz.model.bean.ZjZgBean;
+import com.eanfang.biz.model.entity.BughandleUseDeviceEntity;
 import com.eanfang.config.Config;
 import com.eanfang.ui.base.BaseDialog;
-import com.yaf.base.entity.BughandleUseDeviceEntity;
 
 import net.eanfang.client.R;
 

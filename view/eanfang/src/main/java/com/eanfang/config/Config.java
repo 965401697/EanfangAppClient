@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.util.StrUtil;
 
 
 /**
@@ -129,7 +130,7 @@ public class Config {
         if (constBean == null) {
             synchronized (Config.class) {
                 if (constBean == null) {
-                    constBean = (ConstAllBean) BaseApplication.get().get(ConstAllBean.class.getName(), ConstAllBean.class);
+                    constBean = BaseApplication.get().get(ConstAllBean.class.getName(), ConstAllBean.class);
                 }
             }
         }
@@ -144,7 +145,7 @@ public class Config {
         if (baseDataBean == null) {
             synchronized (Config.class) {
                 if (baseDataBean == null) {
-                    baseDataBean = (BaseDataBean) BaseApplication.get().get(BaseDataBean.class.getName(), BaseDataBean.class);
+                    baseDataBean = BaseApplication.get().get(BaseDataBean.class.getName(), BaseDataBean.class);
                 }
             }
         }
@@ -307,7 +308,7 @@ public class Config {
      * @return
      */
     public String getServiceNameByCode(String code) {
-        if (StringUtils.isEmpty(code)) {
+        if (StrUtil.isEmpty(code)) {
             return null;
         }
         return getBaseNameByCode(code, Constant.BIZ_TYPE);
@@ -456,7 +457,7 @@ public class Config {
      * @return
      */
     public String getAddressByCode(String code) {
-        return Stream.of(getAreaNameByCode(code)).filter(name -> !StringUtils.isEmpty(name)).collect(Collectors.joining("-"));
+        return Stream.of(getAreaNameByCode(code)).filter(name -> !StrUtil.isEmpty(name)).collect(Collectors.joining("-"));
     }
 
     /**
@@ -480,7 +481,7 @@ public class Config {
      */
     public String getBaseNameByCode(int type, String code, int level) {
         //code 长度验证
-        if (StringUtils.isEmpty(code) || code.split(BASE_CODE_SPLIT_STR).length <= level) {
+        if (StrUtil.isEmpty(code) || code.split(BASE_CODE_SPLIT_STR).length <= level) {
             return null;
         }
         List codeList = Arrays.asList(code.split(BASE_CODE_SPLIT_STR));
@@ -496,7 +497,7 @@ public class Config {
      * @return
      */
     public String getBaseNameByCode(String code, int type) {
-        if (StringUtils.isEmpty(code)) {
+        if (StrUtil.isEmpty(code)) {
             return null;
         }
         return Stream.of(getDataListByType(type)).filter(bean -> bean.getDataType() == type && bean.getDataCode().equals(code)).map(bean -> bean.getDataName() + "").findFirst().orElseGet(() -> null);
@@ -525,7 +526,7 @@ public class Config {
      * @return
      */
     public List<String> getBaseCodeByName(String name, int level, int type) {
-        if (StringUtils.isEmpty(name)) {
+        if (StrUtil.isEmpty(name)) {
             return Arrays.asList("");
         }
         return Stream.of(getDataListByType(type)).filter(bean -> bean.getDataType() == type && (level + 1) == bean.getLevel() && bean.getDataName().equals(name))
@@ -581,7 +582,7 @@ public class Config {
      * @return
      */
     public Integer getBaseIdByCode(String code, int level, int type) {
-        if (StringUtils.isEmpty(code)) {
+        if (StrUtil.isEmpty(code)) {
             return null;
         }
         return Stream.of(getDataListByType(type)).filter(bean -> bean.getDataType() == type && code.startsWith(bean.getDataCode()) && bean.getLevel() == (level + 1)).

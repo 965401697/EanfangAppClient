@@ -37,5 +37,10 @@ dependencies {
     api pkg.databindingRuntime
     implementation pkg.glide
 
+    implementation pkg.cymChad
+    implementation pkg.treeRecyclerView
+
+    api pkg.fastjson
+
 
 }

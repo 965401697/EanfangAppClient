@@ -21,6 +21,7 @@ import net.eanfang.client.ui.activity.leave_post.repo.LeavePostRepo;
 import java.util.Arrays;
 import java.util.Objects;
 
+import cn.hutool.core.util.StrUtil;
 import lombok.Getter;
 
 /**
@@ -89,7 +90,7 @@ public class LeavePostScreenViewModel extends BaseViewModel {
      */
     public void gotoChoosePage(Activity activity, int chooseType) {
         mChooseType = chooseType;
-        if (chooseType == 1 && StringUtils.isEmpty(mBinding.tvLeavePostScreenArea.getText())) {
+        if (chooseType == 1 && StrUtil.isEmpty(mBinding.tvLeavePostScreenArea.getText())) {
             showToast("请先选择地区");
             return;
         }

@@ -16,16 +16,16 @@ import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.AuthCompanyBaseInfoBean;
+import com.eanfang.biz.model.bean.AuthCompanyBaseInfoBean;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * Created by MrHou
@@ -154,16 +154,16 @@ public class AuthCompanyDataActivity extends BaseWorkeActivity {
             if (byNetBean.getAreaCode() != null) {
                 tvOfficeAddress.setText(Config.get().getAddressByCode(byNetBean.getAreaCode()));
             }
-            if (!StringUtils.isEmpty(byNetBean.getLogoPic())) {
+            if (!StrUtil.isEmpty(byNetBean.getLogoPic())) {
                 GlideUtil.intoImageView(this,BuildConfig.OSS_SERVER + byNetBean.getLogoPic(),ivUpload2);
                 byNetBean.setLogoPic(byNetBean.getLogoPic());
             }
-            if (!StringUtils.isEmpty(byNetBean.getLicensePic())) {
+            if (!StrUtil.isEmpty(byNetBean.getLicensePic())) {
                 GlideUtil.intoImageView(this,BuildConfig.OSS_SERVER + byNetBean.getLicensePic(),ivUpload);
 
                 byNetBean.setLicensePic(byNetBean.getLicensePic());
             }
-            if (!StringUtils.isEmpty(byNetBean.getName())) {
+            if (!StrUtil.isEmpty(byNetBean.getName())) {
                 etCompany.setText(byNetBean.getName());
             }
         }

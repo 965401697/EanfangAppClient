@@ -7,7 +7,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.R;
 import com.eanfang.util.GlideUtil;
-import com.yaf.base.entity.CustDeviceEntity;
+import com.eanfang.biz.model.entity.CustDeviceEntity;
 
 import cn.hutool.core.date.DateUtil;
 

@@ -4,7 +4,7 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.biz.model.DesignOrderListBean;
+import com.eanfang.biz.model.bean.DesignOrderListBean;
 import com.eanfang.config.Config;
 import com.eanfang.util.GetConstDataUtils;
 
@@ -48,7 +48,7 @@ public class DesignOrderAdapter extends BaseQuickAdapter<DesignOrderListBean.Lis
         helper.setText(R.id.tv_business_one, "业务：" + Config.get().getBusinessNameByCode(item.getBusinessOneCode(), 1));
         helper.setText(R.id.tv_plan_limit, "工期：" + GetConstDataUtils.getPredictList().get(item.getPredictTime()));
 //        CircleImageView head_pic = helper.getView(R.id.img_head);
-//        if (!StringUtils.isEmpty(item.getPic1())) {
+//        if (!StrUtil.isEmpty(item.getPic1())) {
 //            head_pic.setImageURI(Uri.parse(item.getPic1()));
 //        }
 

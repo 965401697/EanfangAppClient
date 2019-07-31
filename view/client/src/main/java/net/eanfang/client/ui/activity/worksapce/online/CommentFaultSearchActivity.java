@@ -14,8 +14,8 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.util.QueryEntry;
-import com.yaf.base.entity.AskQuestionsListBean;
+import com.eanfang.biz.model.QueryEntry;
+import com.eanfang.biz.model.bean.AskQuestionsListBean;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;

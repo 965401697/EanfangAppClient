@@ -16,12 +16,10 @@ import com.eanfang.base.kit.picture.picture.PictureRecycleView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.PhotoUtils;
-import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.picker.DoubleDatePickerDialog;
-import com.picker.common.util.DateUtils;
-import com.yaf.base.entity.JobExperienceEntity;
+import com.eanfang.util.DoubleDatePickerDialog;
+import com.eanfang.biz.model.entity.JobExperienceEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
@@ -36,6 +34,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
+import cn.qqtheme.framework.util.DateUtils;
 
 
 public class SpecialistAddWorkActivity extends BaseWorkeActivity {
@@ -163,7 +163,7 @@ public class SpecialistAddWorkActivity extends BaseWorkeActivity {
         }
 
         pic = PhotoUtils.getPhotoUrl("", picList_certificate, uploadMap, false);
-        if (StringUtils.isEmpty(pic)) {
+        if (StrUtil.isEmpty(pic)) {
             showToast("请添加名牌或者工牌照片");
             return true;
         }

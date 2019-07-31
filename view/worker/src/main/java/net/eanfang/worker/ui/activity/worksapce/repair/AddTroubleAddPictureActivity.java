@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.biz.model.entity.BughandleDetailEntity;
 import com.eanfang.delegate.BGASortableDelegate;
 
 import com.eanfang.takevideo.TakeVdideoMode;
@@ -18,11 +19,6 @@ import com.eanfang.takevideo.TakeVideoActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PhotoUtils;
-import com.eanfang.util.StringUtils;
-import com.photopicker.com.activity.BGAPhotoPickerActivity;
-import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
-import com.yaf.base.entity.BughandleDetailEntity;
 
 import net.eanfang.worker.R;
 
@@ -36,8 +32,10 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static android.provider.MediaStore.Video.Thumbnails.MINI_KIND;
+import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
+import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerPreviewActivity;
+import cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author Guanluocang
@@ -284,7 +282,7 @@ public class AddTroubleAddPictureActivity extends BaseActivity {
     private void doSubmitData() {
         //故障表象 （3张）
         String presentationPic = PhotoUtils.getPhotoUrl("biz/repair/bughandle/", snplMomentAddPhotos, uploadMap, false);
-        if (StringUtils.isEmpty(presentationPic)) {
+        if (StrUtil.isEmpty(presentationPic)) {
             showToast("请选择故障表象照片");
             return;
         }
@@ -292,7 +290,7 @@ public class AddTroubleAddPictureActivity extends BaseActivity {
         detailEntity.setPresentation_mp4_path(mUploadKey_moment);
         //故障点照片 （3张）
         String pointPic = PhotoUtils.getPhotoUrl("biz/repair/bughandle/", snplToolsPackageAddPhotos, uploadMap, false);
-        if (StringUtils.isEmpty(pointPic)) {
+        if (StrUtil.isEmpty(pointPic)) {
             showToast("请选择故障点照片");
             return;
         }
@@ -300,7 +298,7 @@ public class AddTroubleAddPictureActivity extends BaseActivity {
         detailEntity.setPoint_mp4_path(mUploadKey_tools_package);
         //恢复后表象 （3张）
         String restorePic = PhotoUtils.getPhotoUrl("biz/repair/bughandle/", snplFailureRecoverPhenomena, uploadMap, false);
-        if (StringUtils.isEmpty(restorePic)) {
+        if (StrUtil.isEmpty(restorePic)) {
             showToast("请选择恢复后表象照片");
             return;
         }
@@ -361,40 +359,40 @@ public class AddTroubleAddPictureActivity extends BaseActivity {
         }
         switch (requestCode) {
             case REQUEST_CODE_CHOOSE_PHOTO_1:
-                snplMomentAddPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                snplMomentAddPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_CHOOSE_PHOTO_2:
-                snplMonitorAddPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                snplMonitorAddPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_CHOOSE_PHOTO_3:
-                snplToolsPackageAddPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                snplToolsPackageAddPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_CHOOSE_PHOTO_4:
-                snplAfterProcessingLocale.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                snplAfterProcessingLocale.addMoreData(BGAPhotoPickerActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_CHOOSE_PHOTO_5:
-                snplMachineFitBack.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                snplMachineFitBack.addMoreData(BGAPhotoPickerActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_CHOOSE_PHOTO_6:
-                snplFailureRecoverPhenomena.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                snplFailureRecoverPhenomena.addMoreData(BGAPhotoPickerActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_PHOTO_PREVIEW_1:
-                snplMomentAddPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                snplMomentAddPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_PHOTO_PREVIEW_2:
-                snplMonitorAddPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                snplMonitorAddPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_PHOTO_PREVIEW_3:
-                snplToolsPackageAddPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                snplToolsPackageAddPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_PHOTO_PREVIEW_4:
-                snplAfterProcessingLocale.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                snplAfterProcessingLocale.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_PHOTO_PREVIEW_5:
-                snplMachineFitBack.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                snplMachineFitBack.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_PHOTO_PREVIEW_6:
-                snplFailureRecoverPhenomena.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                snplFailureRecoverPhenomena.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
                 break;
             default:
                 break;
@@ -406,7 +404,7 @@ public class AddTroubleAddPictureActivity extends BaseActivity {
      */
     private void initImgUrlList() {
         //修改小bug 图片读取问题
-        if (!StringUtils.isEmpty(detailEntity.getPresentationPictures())) {
+        if (!StrUtil.isEmpty(detailEntity.getPresentationPictures())) {
             String[] presentationPic = detailEntity.getPresentationPictures().split(",");
             if (presentationPic.length >= 1) {
                 picList1.add(BuildConfig.OSS_SERVER + presentationPic[0]);
@@ -419,7 +417,7 @@ public class AddTroubleAddPictureActivity extends BaseActivity {
             }
         }
 
-        if (!StringUtils.isEmpty(detailEntity.getToolPictures())) {
+        if (!StrUtil.isEmpty(detailEntity.getToolPictures())) {
             String[] toolPic = detailEntity.getToolPictures().split(",");
             if (toolPic.length >= 1) {
                 picList2.add(BuildConfig.OSS_SERVER + toolPic[0]);
@@ -431,7 +429,7 @@ public class AddTroubleAddPictureActivity extends BaseActivity {
                 picList2.add(BuildConfig.OSS_SERVER + toolPic[2]);
             }
         }
-        if (!StringUtils.isEmpty(detailEntity.getPointPictures())) {
+        if (!StrUtil.isEmpty(detailEntity.getPointPictures())) {
             String[] pointPic = detailEntity.getPointPictures().split(",");
             if (pointPic.length >= 1) {
                 picList3.add(BuildConfig.OSS_SERVER + pointPic[0]);
@@ -443,7 +441,7 @@ public class AddTroubleAddPictureActivity extends BaseActivity {
                 picList3.add(BuildConfig.OSS_SERVER + pointPic[2]);
             }
         }
-        if (!StringUtils.isEmpty(detailEntity.getAfterHandlePictures())) {
+        if (!StrUtil.isEmpty(detailEntity.getAfterHandlePictures())) {
             String[] afterHandlePic = detailEntity.getAfterHandlePictures().split(",");
             if (afterHandlePic.length >= 1) {
                 picList4.add(BuildConfig.OSS_SERVER + afterHandlePic[0]);
@@ -455,7 +453,7 @@ public class AddTroubleAddPictureActivity extends BaseActivity {
                 picList4.add(BuildConfig.OSS_SERVER + afterHandlePic[2]);
             }
         }
-        if (!StringUtils.isEmpty(detailEntity.getDeviceReturnInstallPictures())) {
+        if (!StrUtil.isEmpty(detailEntity.getDeviceReturnInstallPictures())) {
             String[] deviceReturnInstallPic = detailEntity.getDeviceReturnInstallPictures().split(",");
             if (deviceReturnInstallPic.length >= 1) {
                 picList5.add(BuildConfig.OSS_SERVER + deviceReturnInstallPic[0]);
@@ -467,7 +465,7 @@ public class AddTroubleAddPictureActivity extends BaseActivity {
                 picList5.add(BuildConfig.OSS_SERVER + deviceReturnInstallPic[2]);
             }
         }
-        if (!StringUtils.isEmpty(detailEntity.getRestorePictures())) {
+        if (!StrUtil.isEmpty(detailEntity.getRestorePictures())) {
             String[] restorePic = detailEntity.getRestorePictures().split(",");
             if (restorePic.length >= 1) {
                 picList6.add(BuildConfig.OSS_SERVER + restorePic[0]);

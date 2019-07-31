@@ -19,12 +19,11 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.datastatistics.DataInstallBean;
-import com.eanfang.biz.model.datastatistics.DataStatisticsCompany;
+import com.eanfang.biz.model.bean.datastatistics.DataInstallBean;
+import com.eanfang.biz.model.bean.datastatistics.DataStatisticsCompany;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.util.QueryEntry;
-import com.eanfang.util.StringUtils;
+import com.eanfang.biz.model.QueryEntry;
 import com.eanfang.witget.DataSelectPopWindow;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
@@ -45,6 +44,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author guanluocang
@@ -226,7 +226,7 @@ public class DataInstallActivity extends BaseActivity implements RadioGroup.OnCh
      */
     public void doGetData(String businessCode, Long compangId) {
         QueryEntry queryEntry = new QueryEntry();
-        if (!StringUtils.isEmpty(businessCode)) {
+        if (!StrUtil.isEmpty(businessCode)) {
             queryEntry.getEquals().put("businessOneCode", businessCode);
         }
         queryEntry.getEquals().put("shopCompanyId", compangId + "");

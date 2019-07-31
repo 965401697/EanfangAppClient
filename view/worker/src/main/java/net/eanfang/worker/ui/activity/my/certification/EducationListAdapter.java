@@ -8,10 +8,11 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.base.kit.V;
-import com.picker.common.util.DateUtils;
-import com.yaf.base.entity.EducationExperienceEntity;
+import com.eanfang.biz.model.entity.EducationExperienceEntity;
 
 import net.eanfang.worker.R;
+
+import cn.qqtheme.framework.util.DateUtils;
 
 /**
  * Created by O u r on 2018/10/16.

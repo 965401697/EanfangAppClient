@@ -6,14 +6,14 @@ import com.annimon.stream.Optional;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
+import com.eanfang.biz.model.entity.RepairFailureEntity;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.StringUtils;
 import com.eanfang.base.kit.V;
-import com.yaf.base.entity.RepairFailureEntity;
 
 import net.eanfang.worker.R;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 
 
 /**
@@ -30,7 +30,7 @@ public class FaultRecordAdapter extends BaseQuickAdapter<RepairFailureEntity, Ba
 
         //将业务类型的图片显示到列表
         String imgUrl = V.v(() -> item.getPictures().split(",")[0]);
-        if (!StringUtils.isEmpty(imgUrl) && imgUrl.length() > 10) {
+        if (!StrUtil.isEmpty(imgUrl) && imgUrl.length() > 10) {
             GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + imgUrl),helper.getView(R.id.iv_fault_pic));
         } else {
             GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER),helper.getView(R.id.iv_fault_pic));

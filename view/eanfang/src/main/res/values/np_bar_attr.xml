@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="DaiMaJiaNumberProgressBar">
+    <declare-styleable name="UpdateNumberProgressBar">
         <attr name="progress_current" format="integer" />
         <attr name="progress_max" format="integer" />
 

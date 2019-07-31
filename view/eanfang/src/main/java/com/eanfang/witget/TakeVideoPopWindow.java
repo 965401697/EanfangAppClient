@@ -12,7 +12,8 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.eanfang.R;
-import com.picker.common.util.ScreenUtils;
+
+import cn.qqtheme.framework.util.ScreenUtils;
 
 
 /**

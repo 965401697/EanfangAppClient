@@ -11,12 +11,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
-import com.eanfang.biz.model.WorkReportInfoBean;
+import com.eanfang.biz.model.bean.WorkReportInfoBean;
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.util.ImagePerviewUtil;
@@ -25,6 +24,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * Created by guanluocang
@@ -96,7 +96,7 @@ public class LookReportCompleteInfoView extends BaseDialog {
         tvLookCompleteReason.setText(detailsBean.getField4());
         tvLookCompleteHandle.setText(detailsBean.getField5());
 
-        if (!StringUtils.isEmpty(detailsBean.getPictures())) {
+        if (!StrUtil.isEmpty(detailsBean.getPictures())) {
             String[] urls = detailsBean.getPictures().split(",");
 
             if (urls.length >= 1) {
@@ -146,7 +146,7 @@ public class LookReportCompleteInfoView extends BaseDialog {
         }
         ivPic3.setVisibility(View.GONE);
 
-        if (!StringUtils.isEmpty(detailsBean.getMp4_path())) {
+        if (!StrUtil.isEmpty(detailsBean.getMp4_path())) {
             rlThumbnail.setVisibility(View.VISIBLE);
             GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + detailsBean.getMp4_path() + ".jpg"),ivTakevideo);
         }

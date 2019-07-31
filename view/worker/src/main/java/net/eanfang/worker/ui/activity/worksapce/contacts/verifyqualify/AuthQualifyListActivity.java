@@ -11,13 +11,13 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.AptitudeCertificateBean;
-import com.eanfang.biz.model.Message;
+import com.eanfang.biz.model.bean.AptitudeCertificateBean;
+import com.eanfang.biz.model.bean.Message;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.QueryEntry;
-import com.yaf.base.entity.AptitudeCertificateEntity;
+import com.eanfang.biz.model.QueryEntry;
+import com.eanfang.biz.model.entity.AptitudeCertificateEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;

@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.EditText;
 
-import com.eanfang.util.JsonParser;
 import com.eanfang.util.ToastUtil;
+import com.google.gson.JsonParser;
 import com.iflytek.cloud.ErrorCode;
 import com.iflytek.cloud.InitListener;
 import com.iflytek.cloud.RecognizerListener;
@@ -18,6 +18,10 @@ import com.iflytek.cloud.SpeechUtility;
 import com.iflytek.cloud.ui.RecognizerDialog;
 import com.iflytek.cloud.ui.RecognizerDialogListener;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
 public class MSCManager implements IMSC {
     private Context context;
     private EditText editText;
@@ -26,12 +30,13 @@ public class MSCManager implements IMSC {
     private static MSCManager mscManager;
     private SpeechRecognizer mIat;
 
-    public static MSCManager getInstance(){
-        if(mscManager==null){
-            mscManager=new MSCManager();
+    public static MSCManager getInstance() {
+        if (mscManager == null) {
+            mscManager = new MSCManager();
         }
         return mscManager;
     }
+
     @Override
     public void init(Context context, String appid) {
         this.context = context;
@@ -42,7 +47,7 @@ public class MSCManager implements IMSC {
     }
 
     @Override
-    public void startRecognitionWithDialog(Context mContext,EditText mEditText) {
+    public void startRecognitionWithDialog(Context mContext, EditText mEditText) {
         this.editText = mEditText;
         // ②初始化有交互动画的语音识别器
         iatDialog = new RecognizerDialog(mContext, mInitListener);
@@ -53,7 +58,7 @@ public class MSCManager implements IMSC {
     }
 
     @Override
-    public void startRecognitionWithDialog(Context mContext,onRecognitionListen listen) {
+    public void startRecognitionWithDialog(Context mContext, onRecognitionListen listen) {
         this.listen = listen;
         // ②初始化有交互动画的语音识别器
         iatDialog = new RecognizerDialog(mContext, mInitListener);
@@ -121,7 +126,7 @@ public class MSCManager implements IMSC {
             resultJson += recognizerResult.getResultString() + "]";
         }
         if (!isLast) {
-            result = JsonParser.parseIatResult(recognizerResult.getResultString());
+            result = parseIatResult(recognizerResult.getResultString());
             if (listen == null) {
                 content += result;
                 editText.setText(content + "");
@@ -196,5 +201,31 @@ public class MSCManager implements IMSC {
         } else {
             Log.d(TAG, "closeRecognitionDialog,iatDialog=null");
         }
+    }
+
+
+    public static String parseIatResult(String json) {
+        StringBuffer ret = new StringBuffer();
+        try {
+            JSONTokener tokener = new JSONTokener(json);
+            JSONObject joResult = new JSONObject(tokener);
+
+            JSONArray words = joResult.getJSONArray("ws");
+            for (int i = 0; i < words.length(); i++) {
+                // 转写结果词，默认使用第一个结果
+                JSONArray items = words.getJSONObject(i).getJSONArray("cw");
+                JSONObject obj = items.getJSONObject(0);
+                ret.append(obj.getString("w"));
+//				如果需要多候选结果，解析数组其他字段
+//				for(int j = 0; j < items.length(); j++)
+//				{
+//					JSONObject obj = items.getJSONObject(j);
+//					ret.append(obj.getString("w"));
+//				}
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ret.toString();
     }
 }

@@ -6,10 +6,10 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.DesignOrderListBean;
+import com.eanfang.biz.model.bean.DesignOrderListBean;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.PermKit;
-import com.eanfang.util.QueryEntry;
+import com.eanfang.biz.model.QueryEntry;
 
 import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.worksapce.DesignOrderListActivity;

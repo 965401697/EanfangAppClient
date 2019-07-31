@@ -8,16 +8,17 @@ import android.widget.ImageView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
+import com.eanfang.biz.model.entity.RepairBugEntity;
 import com.eanfang.config.Config;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.StringUtils;
-import com.yaf.base.entity.RepairBugEntity;
 
 import net.eanfang.client.R;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.List;
+
+import cn.hutool.core.util.StrUtil;
 
 /**
  * 确认订单中的adapter
@@ -65,7 +66,7 @@ public class OrderConfirmAdapter extends BaseQuickAdapter<RepairBugEntity, BaseV
         helper.setText(R.id.tv_deviceNumber, item.getLocationNumber());
 
         ImageView draweeView = helper.getView(R.id.iv_pic);
-        if (!StringUtils.isEmpty(item.getPictures())) {
+        if (!StrUtil.isEmpty(item.getPictures())) {
             String[] urls = item.getPictures().split(",");
             GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + urls[0]),draweeView);
             helper.addOnClickListener(R.id.ll_item);

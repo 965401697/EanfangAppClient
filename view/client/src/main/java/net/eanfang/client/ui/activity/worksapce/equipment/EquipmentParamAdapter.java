@@ -2,7 +2,7 @@ package net.eanfang.client.ui.activity.worksapce.equipment;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.yaf.base.entity.CustDeviceParamEntity;
+import com.eanfang.biz.model.entity.CustDeviceParamEntity;
 
 import net.eanfang.client.R;
 

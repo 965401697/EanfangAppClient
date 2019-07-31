@@ -28,14 +28,15 @@ import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.base.kit.cache.CacheMod;
 import com.eanfang.base.kit.rx.RxPerm;
-import com.eanfang.biz.model.AllMessageBean;
-import com.eanfang.biz.model.GroupDetailBean;
-import com.eanfang.biz.model.NoticeEntity;
+import com.eanfang.biz.model.bean.AllMessageBean;
+import com.eanfang.biz.model.bean.GroupDetailBean;
+import com.eanfang.biz.model.entity.NoticeEntity;
 import com.eanfang.biz.model.bean.BaseDataBean;
 import com.eanfang.biz.model.bean.ConstAllBean;
 import com.eanfang.biz.model.bean.LoginBean;
-import com.eanfang.biz.model.device.User;
+import com.eanfang.biz.model.bean.device.User;
 import com.eanfang.biz.model.entity.BaseDataEntity;
+import com.eanfang.biz.model.entity.WorkerEntity;
 import com.eanfang.biz.rds.base.BaseViewModel;
 import com.eanfang.biz.rds.sys.ds.impl.MainDs;
 import com.eanfang.biz.rds.sys.repo.MainRepo;
@@ -52,12 +53,9 @@ import com.eanfang.util.ContactUtil;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.LocationUtil;
-import com.eanfang.util.QueryEntry;
-import com.eanfang.util.StringUtils;
+import com.eanfang.biz.model.QueryEntry;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UpdateAppManager;
-import com.picker.common.util.ScreenUtils;
-import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
@@ -83,6 +81,8 @@ import butterknife.ButterKnife;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.ObjectUtil;
+import cn.hutool.core.util.StrUtil;
+import cn.qqtheme.framework.util.ScreenUtils;
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -245,7 +245,7 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
         ThreadUtil.excAsync(() -> {
             LocationUtil.location(this, (location) -> {
                 LoginBean user = WorkerApplication.get().getLoginBean();
-                if (user == null || StringUtils.isEmpty(user.getToken())) {
+                if (user == null || StrUtil.isEmpty(user.getToken())) {
                     return;
                 }
                 WorkerEntity workerEntity = new WorkerEntity();
@@ -731,7 +731,7 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
         Uri uri = intent.getData();
         int mType;
         if (uri != null) {
-            if (!StringUtils.isEmpty(uri.getQueryParameter("type"))) {
+            if (!StrUtil.isEmpty(uri.getQueryParameter("type"))) {
                 mType = Integer.parseInt(uri.getQueryParameter("type"));
                 if (mType == 2) {
                     // 打开messagelistactivity

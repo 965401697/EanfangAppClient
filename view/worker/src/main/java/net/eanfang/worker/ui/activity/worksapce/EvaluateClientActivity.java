@@ -16,7 +16,7 @@ import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.EvaluateWorkerBean;
+import com.eanfang.biz.model.bean.EvaluateWorkerBean;
 import com.eanfang.util.GlideUtil;
 
 import net.eanfang.worker.R;

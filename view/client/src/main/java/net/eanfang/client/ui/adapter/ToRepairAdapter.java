@@ -5,14 +5,15 @@ import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.eanfang.biz.model.entity.RepairBugEntity;
 import com.eanfang.config.Config;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.StringUtils;
-import com.yaf.base.entity.RepairBugEntity;
 
 import net.eanfang.client.R;
 
 import java.util.List;
+
+import cn.hutool.core.util.StrUtil;
 
 
 /**
@@ -40,7 +41,7 @@ public class ToRepairAdapter extends BaseQuickAdapter<RepairBugEntity, BaseViewH
         helper.setText(R.id.tv_devicesAdress, item.getBugPosition());
         helper.addOnClickListener(R.id.tv_delete);
         ImageView faultPic = helper.getView(R.id.iv_faultImg);
-        if (!StringUtils.isEmpty(item.getPictures())) {
+        if (!StrUtil.isEmpty(item.getPictures())) {
             String[] imgs = item.getPictures().split(",");
             GlideUtil.intoImageView(mContext,Uri.parse(com.eanfang.BuildConfig.OSS_SERVER + imgs[0]),faultPic);
         }

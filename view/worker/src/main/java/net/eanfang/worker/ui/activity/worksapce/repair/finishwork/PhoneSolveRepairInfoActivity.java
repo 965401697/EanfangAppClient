@@ -24,6 +24,8 @@ import com.eanfang.apiservice.RepairApi;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.picture.PictureRecycleView;
 import com.eanfang.base.kit.rx.RxPerm;
+import com.eanfang.biz.model.entity.BughandleDetailEntity;
+import com.eanfang.biz.model.entity.RepairFailureEntity;
 import com.eanfang.config.Config;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
@@ -33,12 +35,9 @@ import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.LocationUtil;
 import com.eanfang.util.PhotoUtils;
-import com.eanfang.util.QueryEntry;
-import com.eanfang.util.StringUtils;
+import com.eanfang.biz.model.QueryEntry;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.yaf.base.entity.BughandleConfirmEntity;
-import com.yaf.base.entity.BughandleDetailEntity;
-import com.yaf.base.entity.RepairFailureEntity;
+import com.eanfang.biz.model.entity.BughandleConfirmEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.QuotationDetailActivity;
@@ -55,6 +54,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * Created by MrHou
@@ -277,7 +277,7 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
     private boolean checkInfo() {
 
         String remainQuestion = et_remain_question.getText().toString().trim();
-        if (StringUtils.isEmpty(remainQuestion)) {
+        if (StrUtil.isEmpty(remainQuestion)) {
             showToast("请填写遗留问题");
             return false;
         }
@@ -285,7 +285,7 @@ public class PhoneSolveRepairInfoActivity extends BaseWorkerActivity {
         if (bughandleConfirmEntity.getDetailEntityList() != null) {
             //增加限制，需要先完善故障处理 在提交
             for (int i = 0; i < bughandleConfirmEntity.getDetailEntityList().size(); i++) {
-                if (StringUtils.isEmpty(bughandleConfirmEntity.getDetailEntityList().get(i).getCheckProcess())) {
+                if (StrUtil.isEmpty(bughandleConfirmEntity.getDetailEntityList().get(i).getCheckProcess())) {
                     showToast("请完善第" + (i + 1) + "条故障处理明细");
                     return false;
                 }

@@ -14,9 +14,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.EducationListBean;
+import com.eanfang.biz.model.bean.EducationListBean;
 import com.eanfang.util.JsonUtils;
-import com.yaf.base.entity.EducationExperienceEntity;
+import com.eanfang.biz.model.entity.EducationExperienceEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;

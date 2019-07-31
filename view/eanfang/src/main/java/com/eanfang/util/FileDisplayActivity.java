@@ -29,6 +29,7 @@ import com.eanfang.ui.base.BaseActivity;
 import com.tencent.smtt.sdk.TbsReaderView;
 
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 import java.text.DecimalFormat;
 
 import butterknife.BindView;
@@ -88,12 +89,9 @@ public class FileDisplayActivity extends BaseActivity implements TbsReaderView.R
                         .setTitle("温馨提示:")
                         .setMessage("该文件的暂时无法查看")
                         .setCancelable(false)
-                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface arg0, int arg1) {
-                                finishSelf();
-                                return;
-                            }
+                        .setPositiveButton("确定", (arg0, arg1) -> {
+                            finishSelf();
+                            return;
                         }).create().show();
             }
             startDownload();
@@ -116,7 +114,7 @@ public class FileDisplayActivity extends BaseActivity implements TbsReaderView.R
             } else {
                 byte[] b;
                 try {
-                    b = String.valueOf(c).getBytes("UTF-8");
+                    b = String.valueOf(c).getBytes(StandardCharsets.UTF_8);
                 } catch (Exception ex) {
                     System.out.println(ex);
                     b = new byte[0];

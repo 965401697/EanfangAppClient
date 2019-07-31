@@ -6,12 +6,12 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.eanfang.base.kit.V;
-import com.eanfang.biz.model.FriendListBean;
+import com.eanfang.biz.model.bean.FriendListBean;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.R;
+
+import cn.hutool.core.util.StrUtil;
 
 
 /**
@@ -35,7 +35,7 @@ public class AddStaffAdapter extends BaseQuickAdapter<FriendListBean, BaseViewHo
         } else {
             helper.setVisible(R.id.iv_friend_title, true);
 
-            if (!StringUtils.isEmpty(item.getRealName())) {
+            if (!StrUtil.isEmpty(item.getRealName())) {
                 helper.setText(R.id.iv_friend_title, item.getRealName().length() > 2 ?
                         item.getRealName().substring(item.getRealName().length() - 2) :
                         item.getRealName());

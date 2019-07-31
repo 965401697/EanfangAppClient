@@ -14,14 +14,13 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.base.BaseApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.AccountMailBean;
+import com.eanfang.biz.model.bean.AccountMailBean;
 
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.util.StrUtil;
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -84,6 +83,7 @@ public class ContactUtil {
         AccountMailBean mailBean = new AccountMailBean();
         AccountMailBean.AccountMailListBean listBean = new AccountMailBean.AccountMailListBean();
         AccountMailBean.AccountEntityBean bean = new AccountMailBean.AccountEntityBean();
+        bean.setAccId(BaseApplication.get().getAccId());
         ArrayList<AccountMailBean.AccountMailListBean.EntityListBean> contacts = new ArrayList();
         Cursor cursor = context.getContentResolver().query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null);
         if (cursor != null) {

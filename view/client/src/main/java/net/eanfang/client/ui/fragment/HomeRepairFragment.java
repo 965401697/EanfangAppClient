@@ -23,12 +23,11 @@ import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.base.kit.utils.GlideUtil;
 import com.eanfang.biz.model.bean.OrderCountBean;
-import com.eanfang.biz.model.SelectAddressItem;
+import com.eanfang.biz.model.bean.SelectAddressItem;
 import com.eanfang.biz.rds.base.LViewModelProviders;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.ui.activity.SelectAddressActivity;
-import com.eanfang.util.StringUtils;
 import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.client.R;
@@ -110,7 +109,7 @@ public class HomeRepairFragment extends BaseFragment {
             mStatus = getArguments().getInt(STATUS, 0);
             String deviceBrandName = getArguments().getString(DEVICE_BRAND_NAME);
             String brandDataCode = getArguments().getString(BRAND_DATA_CODE);
-            if (!StringUtils.isEmpty(deviceBrandName)) {
+            if (!StrUtil.isEmpty(deviceBrandName)) {
                 mBinding.etHomeRepairBrand.setText(deviceBrandName);
                 mViewModel.setBrandData(deviceBrandName);
                 String name = Config.get().getModelNameByCode(brandDataCode, 1);
@@ -163,7 +162,7 @@ public class HomeRepairFragment extends BaseFragment {
         });
         mBinding.etHomeRepairBrand.setOnClickListener(view -> {
             String busOneCode = Config.get().getBaseCodeByName(Config.get().getBusinessNameByCode(dataCode, 1), 1, Constant.MODEL).get(0);
-            if (StringUtils.isEmpty(busOneCode)) {
+            if (StrUtil.isEmpty(busOneCode)) {
                 showToast("请先选择故障设备");
                 return;
             }

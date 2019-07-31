@@ -14,7 +14,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.eanfang.R;
-import com.eanfang.util.ViewHolder;
+import com.eanfang.util.ViewFindUtils;
 import com.eanfang.biz.model.entity.BaseDataEntity;
 
 import java.util.List;
@@ -86,7 +86,7 @@ public class DataSelectPopWindow extends PopupWindow {
             if (view == null) {
                 view = LayoutInflater.from(context).inflate(R.layout.layout_data_select_item, viewGroup, false);
             }
-            TextView tvName = ViewHolder.get(view, R.id.tv_typeName);
+            TextView tvName = ViewFindUtils.find(view, R.id.tv_typeName);
             tvName.setText(list.get(i).getDataName());
             return view;
         }

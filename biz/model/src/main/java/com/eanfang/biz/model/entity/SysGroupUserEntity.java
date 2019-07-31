@@ -1,6 +1,7 @@
 package com.eanfang.biz.model.entity;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Date;
 
 import lombok.Getter;
@@ -24,9 +25,8 @@ public class SysGroupUserEntity implements Serializable {
     private Long groupId;
     private Long accId;
     private Date createTime;
-
+    private int flag;
     private Integer status;
-
     private AccountEntity accountEntity;
 
 }

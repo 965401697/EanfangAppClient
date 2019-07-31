@@ -4,14 +4,14 @@ import android.content.Context;
 import android.net.Uri;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.biz.model.FaultListBean;
+import com.eanfang.biz.model.bean.FaultListBean;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.R;
+
+import cn.hutool.core.util.StrUtil;
 
 /**
  * 描述：
@@ -30,7 +30,7 @@ public class FaultLibraryAdapter extends BaseQuickAdapter<FaultListBean.ListBean
     @Override
     protected void convert(BaseViewHolder helper, FaultListBean.ListBean item) {
         ImageView imageView = helper.getView(R.id.iv_faultPic);
-        if (!StringUtils.isEmpty(item.getPictures())) {
+        if (!StrUtil.isEmpty(item.getPictures())) {
             String[] imgs = item.getPictures().split(",");
             GlideUtil.intoImageView(context,Uri.parse(com.eanfang.BuildConfig.OSS_SERVER  + imgs[0]),imageView);
         }

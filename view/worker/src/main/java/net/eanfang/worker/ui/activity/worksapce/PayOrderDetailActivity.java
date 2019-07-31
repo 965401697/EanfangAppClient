@@ -14,7 +14,7 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.QuotationBean;
+import com.eanfang.biz.model.bean.QuotationBean;
 import com.eanfang.ui.base.BaseActivity;
 
 import net.eanfang.worker.R;

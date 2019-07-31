@@ -15,17 +15,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextSwitcher;
 
-import com.eanfang.R;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+
+import com.eanfang.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -132,7 +132,6 @@ public class GuideUtil {
             float scrollXOffset = page.getWidth() * parallaxCoefficient;
 
             ViewGroup pageViewWrapper = (ViewGroup) page;
-            @SuppressWarnings("SuspiciousMethodCalls")
             int[] layer = mLayoutViewIdsMap.get(pageViewWrapper.getChildAt(0).getId());
             if (layer == null) {
                 return;

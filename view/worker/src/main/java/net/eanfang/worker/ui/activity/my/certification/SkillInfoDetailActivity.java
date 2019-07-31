@@ -12,12 +12,12 @@ import com.eanfang.apiservice.UserApi;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.QualifyCertificafeListBean;
-import com.eanfang.biz.model.WorkerVerifySkillBean;
+import com.eanfang.biz.model.bean.QualifyCertificafeListBean;
+import com.eanfang.biz.model.bean.WorkerVerifySkillBean;
 import com.eanfang.biz.model.entity.BaseDataEntity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.util.QueryEntry;
+import com.eanfang.biz.model.QueryEntry;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;

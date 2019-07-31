@@ -8,15 +8,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
-import com.eanfang.biz.model.WorkAddReportBean;
+import com.eanfang.biz.model.bean.WorkAddReportBean;
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * Created by MrHou
@@ -74,7 +74,7 @@ public class CompleteWorkView extends BaseDialog {
         tvLookCompleteReason.setText(detailBean.getField4());
         tvLookCompleteHandle.setText(detailBean.getField5());
 
-        if (!StringUtils.isEmpty(detailBean.getPictures())) {
+        if (!StrUtil.isEmpty(detailBean.getPictures())) {
             String[] urls = detailBean.getPictures().split(",");
 
             if (urls.length>=1) {

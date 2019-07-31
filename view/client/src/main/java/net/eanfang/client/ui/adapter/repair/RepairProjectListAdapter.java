@@ -2,7 +2,7 @@ package net.eanfang.client.ui.adapter.repair;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.yaf.base.entity.ProjectEntity;
+import com.eanfang.biz.model.entity.ProjectEntity;
 
 import net.eanfang.client.R;
 

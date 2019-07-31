@@ -283,7 +283,7 @@
                     </RelativeLayout>
 
 
-                    <com.photopicker.com.widget.BGASortableNinePhotoLayout
+                    <cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout
                         android:id="@+id/snpl_photos_plan"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

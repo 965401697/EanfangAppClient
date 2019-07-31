@@ -14,8 +14,8 @@ import com.eanfang.config.Config;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.GrantChange;
-import com.eanfang.biz.model.SystypeBean;
+import com.eanfang.biz.model.bean.GrantChange;
+import com.eanfang.biz.model.bean.SystypeBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.biz.model.entity.BaseDataEntity;
 
@@ -80,7 +80,7 @@ public class AuthWorkerAreaActivity extends BaseActivity {
 //        EanfangHttp.get(NewApiService.GET_BASE_DATA_CACHE_TREE + "0")
 //                .tag(this)
 //                .execute(new EanfangCallback<String>(this, true, String.class, (str) -> {
-//                    if (!StringUtils.isEmpty(str) && !str.contains(Constant.NO_UPDATE)) {
+//                    if (!StrUtil.isEmpty(str) && !str.contains(Constant.NO_UPDATE)) {
 //                        BaseDataBean newDate = JSONObject.parseObject(str, BaseDataBean.class);
 //                        areaListBean = Stream.of(newDate.getData()).filter(bean -> bean.getDataCode().equals("3")).toList().get(0).getChildren();
 //                        initData();

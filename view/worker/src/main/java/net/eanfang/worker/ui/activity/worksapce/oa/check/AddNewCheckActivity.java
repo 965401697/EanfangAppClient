@@ -22,17 +22,18 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.kit.loading.LoadKit;
 import com.eanfang.base.kit.rx.RxPerm;
+import com.eanfang.biz.model.bean.GroupDetailBean;
 import com.eanfang.biz.model.entity.UserEntity;
 import com.eanfang.config.Config;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.GroupDetailBean;
-import com.eanfang.biz.model.Message;
-import com.eanfang.biz.model.TemplateBean;
-import com.eanfang.biz.model.WorkAddCheckBean;
+import com.eanfang.biz.model.bean.Message;
+import com.eanfang.biz.model.bean.TemplateBean;
+import com.eanfang.biz.model.bean.WorkAddCheckBean;
 
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.takevideo.TakeVdideoMode;
@@ -40,16 +41,11 @@ import com.eanfang.takevideo.TakeVideoActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
-import com.eanfang.util.DialogUtil;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PhotoUtils;
-import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
-import com.photopicker.com.activity.BGAPhotoPickerActivity;
-import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
-import com.yaf.base.entity.WorkInspectEntity;
+import com.eanfang.biz.model.entity.WorkInspectEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
@@ -73,8 +69,10 @@ import java.util.Set;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static android.provider.MediaStore.Video.Thumbnails.MINI_KIND;
+import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
+import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerPreviewActivity;
+import cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author guanluocang
@@ -475,7 +473,7 @@ public class AddNewCheckActivity extends BaseActivity implements SelectTimeDialo
                         b.putString("status", "0");
                         b.putString("shareType", "5");
 
-                        new SendContactUtils(b, handler, groupList, DialogUtil.createLoadingDialog(AddNewCheckActivity.this), "设备检点").send();
+                        new SendContactUtils(b, handler, groupList, LoadKit.dialog(AddNewCheckActivity.this), "设备检点").send();
 
 
                     });
@@ -586,7 +584,7 @@ public class AddNewCheckActivity extends BaseActivity implements SelectTimeDialo
      */
     @Override
     public void getData(String time) {
-        if (StringUtils.isEmpty(time) || " ".equals(time)) {
+        if (StrUtil.isEmpty(time) || " ".equals(time)) {
             tvUpdateTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
         } else {
             tvUpdateTime.setText(time);
@@ -625,12 +623,12 @@ public class AddNewCheckActivity extends BaseActivity implements SelectTimeDialo
 
         switch (requestCode) {
             case REQUEST_CODE_CHOOSE_PHOTO_1:
-                snplPhotosWork.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                snplPhotosWork.addMoreData(BGAPhotoPickerActivity.getSelectedPhotos(data));
                 break;
 
 
             case REQUEST_CODE_PHOTO_PREVIEW_1:
-                snplPhotosWork.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                snplPhotosWork.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
                 break;
             default:
                 break;
@@ -643,7 +641,7 @@ public class AddNewCheckActivity extends BaseActivity implements SelectTimeDialo
             rlThumbnailCheck.setVisibility(View.VISIBLE);
             mVieoPath = takeVdideoMode.getMImagePath();
             mUploadKey = takeVdideoMode.getMKey();
-            if (!StringUtils.isEmpty(mVieoPath)) {
+            if (!StrUtil.isEmpty(mVieoPath)) {
 
                 if (ivTakevideoCheck.getVisibility() == View.INVISIBLE) {
                     ivTakevideoCheck.setVisibility(View.VISIBLE);

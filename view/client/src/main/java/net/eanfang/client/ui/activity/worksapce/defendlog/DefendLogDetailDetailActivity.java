@@ -12,8 +12,8 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.DateKit;
 import com.eanfang.util.GlideUtil;
-import com.yaf.base.entity.LogDetailsEntity;
-import com.yaf.base.entity.ProtectionLogEntity;
+import com.eanfang.biz.model.entity.LogDetailsEntity;
+import com.eanfang.biz.model.entity.ProtectionLogEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;

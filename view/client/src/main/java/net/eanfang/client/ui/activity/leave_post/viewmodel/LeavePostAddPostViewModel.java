@@ -5,13 +5,12 @@ import android.content.Intent;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.eanfang.biz.model.SelectAddressItem;
-import com.eanfang.biz.model.TemplateBean;
+import com.eanfang.biz.model.bean.SelectAddressItem;
+import com.eanfang.biz.model.bean.TemplateBean;
 import com.eanfang.biz.model.entity.AccountEntity;
 import com.eanfang.biz.rds.base.BaseViewModel;
 import com.eanfang.config.Config;
 import com.eanfang.ui.activity.SelectAddressActivity;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.databinding.ActivityLeavePostAddPostBinding;
 import net.eanfang.client.ui.activity.leave_post.LeavePostCheckListActivity;
@@ -25,6 +24,7 @@ import net.eanfang.client.ui.activity.leave_post.repo.LeavePostRepo;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.hutool.core.util.StrUtil;
 import lombok.Getter;
 
 /**
@@ -90,7 +90,7 @@ public class LeavePostAddPostViewModel extends BaseViewModel {
             mListInfo.add(infos[1] + leavePostDeviceInfoBean.getStationArea());
             mListInfo.add(infos[2] + leavePostDeviceInfoBean.getStationCode());
             mListInfo.add(infos[3] + Config.get().getAddressByCode(leavePostDeviceInfoBean.getStationPlaceCode()));
-            mListInfo.add(infos[4] + (StringUtils.isEmpty(leavePostDeviceInfoBean.getDeviceName()) ? "" : leavePostDeviceInfoBean.getDeviceName()));
+            mListInfo.add(infos[4] + (StrUtil.isEmpty(leavePostDeviceInfoBean.getDeviceName()) ? "" : leavePostDeviceInfoBean.getDeviceName()));
             mListInfo.add(infos[5] + leavePostDeviceInfoBean.getIntervalLength() + "分钟");
             mListInfo.add(infos[6] + (leavePostDeviceInfoBean.getStatus() == 0 ? "未开启" : "已启用"));
             leavePostInfo.setValue(mListInfo);
@@ -139,19 +139,19 @@ public class LeavePostAddPostViewModel extends BaseViewModel {
     }
 
     private boolean checkoutInfo(ActivityLeavePostAddPostBinding binding) {
-        if (StringUtils.isEmpty(binding.edtLeavePostAddPostName.getText().toString().trim())) {
+        if (StrUtil.isEmpty(binding.edtLeavePostAddPostName.getText().toString().trim())) {
             showToast("请填写岗位名称！");
             return false;
-        } else if (StringUtils.isEmpty(binding.edtLeavePostAddPostPosition.getText().toString().trim())) {
+        } else if (StrUtil.isEmpty(binding.edtLeavePostAddPostPosition.getText().toString().trim())) {
             showToast("请填写岗位位置！");
             return false;
-        } else if (StringUtils.isEmpty(binding.tvLeavePostAddPostArea.getText().toString().trim())) {
+        } else if (StrUtil.isEmpty(binding.tvLeavePostAddPostArea.getText().toString().trim())) {
             showToast("请选择岗位区域！");
             return false;
-        } else if (StringUtils.isEmpty(binding.edtLeavePostAddPostNumber.getText().toString().trim())) {
+        } else if (StrUtil.isEmpty(binding.edtLeavePostAddPostNumber.getText().toString().trim())) {
             showToast("请填写岗位编码！");
             return false;
-        } else if (StringUtils.isEmpty(binding.tvLeavePostAddPostTime.getText().toString().trim())) {
+        } else if (StrUtil.isEmpty(binding.tvLeavePostAddPostTime.getText().toString().trim())) {
             showToast("请选择阀值时间！");
             return false;
         } else if (mChargeStaffListBeans.size() == 0 || mDutyStaffListBeans.size() == 0) {

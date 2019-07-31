@@ -20,16 +20,15 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.biz.model.AllMessageBean;
-import com.eanfang.biz.model.GroupDetailBean;
-import com.eanfang.biz.model.GroupsBean;
-import com.eanfang.biz.model.device.User;
+import com.eanfang.biz.model.bean.AllMessageBean;
+import com.eanfang.biz.model.bean.GroupDetailBean;
+import com.eanfang.biz.model.bean.GroupsBean;
+import com.eanfang.biz.model.bean.device.User;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.NetBroadcastReceiver;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
@@ -47,6 +46,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+import cn.hutool.core.util.StrUtil;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.model.UIConversation;
 import io.rong.imlib.RongIMClient;
@@ -56,7 +56,6 @@ import io.rong.imlib.model.UserInfo;
 import q.rorbin.badgeview.QBadgeView;
 
 import static android.app.Activity.RESULT_CANCELED;
-import static com.okgo.utils.HttpUtils.runOnUiThread;
 
 /**
  * Created by MrHou
@@ -255,8 +254,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
                 if (isInteger(s)) {
                     setUserInfo(s);
                 } else {
-                    runOnUiThread(() -> {
-
+                    getActivity().runOnUiThread(() -> {
                         EanfangHttp.post(UserApi.POST_GROUP_DETAIL_RY)
                                 .params("ryGroupId", s)
                                 .execute(new EanfangCallback<GroupDetailBean>(getActivity(), true, GroupDetailBean.class, (bean) -> {
@@ -296,7 +294,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
 
 //        ((MainActivity) getActivity()).getIMUnreadMessageCount();
         String mStatus = ((MainActivity) getActivity()).onNoConatac();
-        if (StringUtils.isEmpty(mStatus)) {
+        if (StrUtil.isEmpty(mStatus)) {
             view.findViewById(R.id.rl_no_contact).setVisibility(View.GONE);
         } else {
             view.findViewById(R.id.rl_no_contact).setVisibility(View.VISIBLE);
@@ -452,7 +450,7 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
     public void onChangeListener(boolean status) {
         this.isNetWork = status;
         if (isNetConnect()) {
-            if (StringUtils.isEmpty(mStatus)) {
+            if (StrUtil.isEmpty(mStatus)) {
                 view.findViewById(R.id.rl_no_contact).setVisibility(View.GONE);
             } else {
                 view.findViewById(R.id.rl_no_contact).setVisibility(View.VISIBLE);

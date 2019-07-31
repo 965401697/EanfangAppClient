@@ -9,7 +9,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.FriendListBean;
+import com.eanfang.biz.model.bean.FriendListBean;
 import com.eanfang.util.Cn2Spell;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.witget.SideBar;

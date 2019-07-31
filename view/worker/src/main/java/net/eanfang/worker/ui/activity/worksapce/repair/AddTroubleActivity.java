@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.biz.model.entity.RepairFailureEntity;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.delegate.BGASortableDelegate;
@@ -25,12 +26,7 @@ import com.eanfang.takevideo.TakeVdideoMode;
 import com.eanfang.takevideo.TakeVideoActivity;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PhotoUtils;
-import com.eanfang.util.StringUtils;
-import com.photopicker.com.activity.BGAPhotoPickerActivity;
-import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
-import com.yaf.base.entity.CustDeviceEntity;
-import com.yaf.base.entity.RepairFailureEntity;
+import com.eanfang.biz.model.entity.CustDeviceEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
@@ -48,8 +44,10 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static android.provider.MediaStore.Video.Thumbnails.MINI_KIND;
+import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
+import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerPreviewActivity;
+import cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * Created by MrHou
@@ -194,7 +192,7 @@ public class AddTroubleActivity extends BaseWorkerActivity {
         bean.setBusRepairOrderId(orderId);
 
         if (uploadMap.size() != 0) {
-            SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
+            SDKManager.ossKit(this).asyncPutImages(uploadMap, (isSuccess) -> {
                 commit(JSON.toJSONString(bean));
             });
         } else {
@@ -221,9 +219,9 @@ public class AddTroubleActivity extends BaseWorkerActivity {
             return;
         }
         if (resultCode == RESULT_OK && requestCode == BGASortableDelegate.REQUEST_CODE_CHOOSE_PHOTO) {
-            snplMomentAddPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+            snplMomentAddPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedPhotos(data));
         } else if (requestCode == BGASortableDelegate.REQUEST_CODE_CHOOSE_PHOTO) {
-            snplMomentAddPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+            snplMomentAddPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
         } else if (requestCode == REQUEST_FAULTDEVICEINFO && resultCode == RESULT_DATACODE) {
             dataCode = data.getStringExtra("dataCode");
             businessOneCode = data.getStringExtra("businessOneCode");
@@ -251,7 +249,7 @@ public class AddTroubleActivity extends BaseWorkerActivity {
 
 //            bean.setMaintenanceStatus(custDeviceEntity.getWarrantyStatus());
 //            bean.setRepairCount(custDeviceEntity.getDeviceVersion());
-        }else if (resultCode == RESULT_DEVICE_BRAND_CODE && requestCode == REQUEST_DEVICE_BRAND_CODE) {// 设备品牌
+        } else if (resultCode == RESULT_DEVICE_BRAND_CODE && requestCode == REQUEST_DEVICE_BRAND_CODE) {// 设备品牌
             tvDeviceBrand.setText(data.getStringExtra("deviceBrandName"));
         }
     }
@@ -309,7 +307,7 @@ public class AddTroubleActivity extends BaseWorkerActivity {
             // 故障设备品牌
             case R.id.ll_deviceBrand:
                 String busOneCode = Config.get().getBaseCodeByName(Config.get().getBusinessNameByCode(dataCode, 1), 1, Constant.MODEL).get(0);
-                if (StringUtils.isEmpty(busOneCode)) {
+                if (StrUtil.isEmpty(busOneCode)) {
                     showToast("请先选择故障设备");
                     return;
                 }
@@ -325,7 +323,7 @@ public class AddTroubleActivity extends BaseWorkerActivity {
                 break;
             // 故障简述
             case R.id.ll_faultInfo:
-                if (!StringUtils.isEmpty(dataCode)) {
+                if (!StrUtil.isEmpty(dataCode)) {
                     Bundle bundle = new Bundle();
                     bundle.putString("businessOneCode", businessOneCode);
                     JumpItent.jump(AddTroubleActivity.this, FaultLibraryActivity.class, bundle, REQUEST_FAULTDESINFO);
@@ -344,7 +342,7 @@ public class AddTroubleActivity extends BaseWorkerActivity {
             rlThumbnail.setVisibility(View.VISIBLE);
             mVieoPath = takeVdideoMode.getMImagePath();
             mUploadKey = takeVdideoMode.getMKey();
-            if (!StringUtils.isEmpty(mVieoPath)) {
+            if (!StrUtil.isEmpty(mVieoPath)) {
                 ivTakevideo.setImageBitmap(PhotoUtils.getVideoBitmap(mVieoPath));
             }
             tvAddViedeo.setText("重新拍摄");

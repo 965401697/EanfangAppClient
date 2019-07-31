@@ -5,7 +5,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.biz.model.datastatistics.DataInstallBean;
+import com.eanfang.biz.model.bean.datastatistics.DataInstallBean;
 
 import net.eanfang.worker.R;
 

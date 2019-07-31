@@ -14,7 +14,7 @@ import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.WorkspaceInstallDetailBean;
+import com.eanfang.biz.model.bean.WorkspaceInstallDetailBean;
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;

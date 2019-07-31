@@ -16,10 +16,9 @@ import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.SelectAddressItem;
+import com.eanfang.biz.model.bean.SelectAddressItem;
 import com.eanfang.ui.activity.SelectAddressActivity;
-import com.eanfang.util.StringUtils;
-import com.yaf.base.entity.ReceiveAddressEntity;
+import com.eanfang.biz.model.entity.ReceiveAddressEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
@@ -28,6 +27,7 @@ import net.eanfang.client.ui.base.BaseClientActivity;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.util.StrUtil;
 
 public class AddAddressActivity extends BaseClientActivity {
 
@@ -89,11 +89,11 @@ public class AddAddressActivity extends BaseClientActivity {
     }
 
     private boolean checkInfo() {
-        if (StringUtils.isEmpty(etName.getText().toString().trim())) {
+        if (StrUtil.isEmpty(etName.getText().toString().trim())) {
             showToast("请填写姓名");
             return false;
         }
-        if (StringUtils.isEmpty(etMobilePhone.getText().toString().trim())) {
+        if (StrUtil.isEmpty(etMobilePhone.getText().toString().trim())) {
             showToast("请填写电话");
             return false;
         }
@@ -104,11 +104,11 @@ public class AddAddressActivity extends BaseClientActivity {
         }
 
 
-        if (StringUtils.isEmpty(tvAddress.getText().toString().trim())) {
+        if (StrUtil.isEmpty(tvAddress.getText().toString().trim())) {
             showToast("请选择住址");
             return false;
         }
-        if (StringUtils.isEmpty(etDetailAddress.getText().toString().trim())) {
+        if (StrUtil.isEmpty(etDetailAddress.getText().toString().trim())) {
             showToast("请填写详细地址");
             return false;
         }

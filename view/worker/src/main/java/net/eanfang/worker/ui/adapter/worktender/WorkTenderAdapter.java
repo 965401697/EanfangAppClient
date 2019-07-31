@@ -16,6 +16,7 @@ import java.util.Calendar;
 import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author guanluocang
@@ -42,7 +43,7 @@ public class WorkTenderAdapter extends BaseQuickAdapter<IfbOrderEntity, BaseView
         //发布时间
         helper.setText(R.id.tv_tender_update_time, DateUtil.date(item.getReleaseTime()).toString());
         //截止时间
-        if (!StringUtils.isEmpty(endTime)) {
+        if (!StrUtil.isEmpty(endTime)) {
             if (DateUtil.parse(endTime).getTime() - DateUtil.date().getTime() > 0) {
                 int day = (int) DateUtil.date().between(DateUtil.parse(endTime), DateUnit.DAY);
                 int hour = (int) DateUtil.date().between(DateKit.get(endTime).offset(DateField.DAY_OF_YEAR, -day).date, DateUnit.HOUR);

@@ -2,9 +2,11 @@ package com.eanfang.http;
 
 import com.eanfang.base.BaseApplication;
 import com.eanfang.util.StringUtils;
-import com.okgo.OkGo;
-import com.okgo.request.GetRequest;
-import com.okgo.request.PostRequest;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.request.GetRequest;
+import com.lzy.okgo.request.PostRequest;
+
+import cn.hutool.core.util.StrUtil;
 
 /**
  * Created by jornl on 2017/8/30.
@@ -67,7 +69,7 @@ public class EanfangHttp {
     }
 
     public static OkGo setToken(String token) {
-        if (StringUtils.isEmpty(token)) {
+        if (StrUtil.isEmpty(token)) {
             getHttp().getCommonHeaders().remove("YAF-Token");
         } else {
             getHttp().getCommonHeaders().put("YAF-Token", token);

@@ -25,13 +25,6 @@ public class PermKit {
 
 
     public static PermKit get() {
-//        if (permKit == null) {
-//            synchronized (PermKit.class) {
-//                if (permKit == null) {
-//                    permKit = new PermKit();
-//                }
-//            }
-//        }
         return permKit;
     }
 

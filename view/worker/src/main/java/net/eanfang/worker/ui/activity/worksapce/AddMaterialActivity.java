@@ -10,18 +10,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.annimon.stream.Stream;
+import com.eanfang.biz.model.bean.ZjZgBean;
+import com.eanfang.biz.model.entity.BughandleUseDeviceEntity;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.PickerSelectUtil;
-import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
-import com.yaf.base.entity.BughandleUseDeviceEntity;
 
 import net.eanfang.worker.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * Created by MrHou
@@ -74,7 +75,7 @@ public class AddMaterialActivity extends BaseActivity {
 
 
     private void showBusinessSmallType() {
-        if (StringUtils.isEmpty(bugOneCode)) {
+        if (StrUtil.isEmpty(bugOneCode)) {
             showToast("请先选择系统类别");
             return;
         }
@@ -88,7 +89,7 @@ public class AddMaterialActivity extends BaseActivity {
 
     private void showEquipmentName() {
         String busTwoCode = Config.get().getBusinessCodeByName(tvBusiness.getText().toString().trim(), 2);
-        if (StringUtils.isEmpty(busTwoCode)) {
+        if (StrUtil.isEmpty(busTwoCode)) {
             showToast("请先选择设备类别");
             return;
         }
@@ -101,7 +102,7 @@ public class AddMaterialActivity extends BaseActivity {
     private void showModel() {
         String busOneName = Config.get().getBusinessNameByCode(bugOneCode, 1);
         String modelOne = Config.get().getBaseCodeByName(busOneName, 1, Constant.MODEL).get(0);
-        if (StringUtils.isEmpty(modelOne)) {
+        if (StrUtil.isEmpty(modelOne)) {
             showToast("请先选择系统类别");
             return;
         }

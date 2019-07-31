@@ -30,9 +30,8 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.PhotoUtils;
-import com.eanfang.util.StringUtils;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.yaf.base.entity.TechWorkerVerifyEntity;
+import com.eanfang.biz.model.entity.TechWorkerVerifyEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
@@ -130,15 +129,15 @@ public class RealNameAuthenticationActivity extends BaseWorkeActivity {
     private String idCardNum = "";
 
     private void doSave() {
-        if (StringUtils.isEmpty(idCardNum)) {
+        if (StrUtil.isEmpty(idCardNum)) {
             showToast("请添加正确的身份证正面照");
             return;
         }
-        if (StringUtils.isEmpty(mTechWorkerVerifyEntity.getIdCardSide())) {
+        if (StrUtil.isEmpty(mTechWorkerVerifyEntity.getIdCardSide())) {
             showToast("请添加正确的身份证反面照");
             return;
         }
-        if (StringUtils.isEmpty(mTechWorkerVerifyEntity.getIdCardHand())) {
+        if (StrUtil.isEmpty(mTechWorkerVerifyEntity.getIdCardHand())) {
             showToast("请添加正确的手持身份证照片");
             return;
         }

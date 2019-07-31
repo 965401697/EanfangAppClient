@@ -9,7 +9,7 @@ import android.text.style.ForegroundColorSpan;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.eanfang.biz.model.CompanyBean;
+import com.eanfang.biz.model.bean.CompanyBean;
 import com.eanfang.config.Config;
 import com.eanfang.util.GlideUtil;
 
@@ -29,8 +29,8 @@ public class SelectCompanyAdapter extends BaseQuickAdapter<CompanyBean.ListBean,
     @Override
     protected void convert(BaseViewHolder helper, CompanyBean.ListBean item) {
         helper.setImageResource(R.id.img_rz, R.drawable.icon_company_rz);
-        helper.setGone(R.id.tv_home_company_status, item.getCompanyEntity().getStatus() == 2 ? true : false);
-        helper.setGone(R.id.img_rz, item.getCompanyEntity().getStatus() == 2 ? true : false);
+        helper.setGone(R.id.tv_home_company_status, item.getCompanyEntity().getStatus() == 2);
+        helper.setGone(R.id.img_rz, item.getCompanyEntity().getStatus() == 2);
         helper.setText(R.id.tv_home_company_status, "已认证");
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

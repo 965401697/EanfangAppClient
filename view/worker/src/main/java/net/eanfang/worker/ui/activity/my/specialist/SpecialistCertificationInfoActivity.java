@@ -13,8 +13,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.entity.AccountEntity;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.StringUtils;
-import com.yaf.base.entity.ExpertsCertificationEntity;
+import com.eanfang.biz.model.entity.ExpertsCertificationEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
@@ -22,6 +21,7 @@ import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 
 public class SpecialistCertificationInfoActivity extends BaseWorkerActivity {
@@ -77,10 +77,10 @@ public class SpecialistCertificationInfoActivity extends BaseWorkerActivity {
         String contactName =accountEntity .getRealName();
         String mobile = accountEntity.getMobile();
 
-        if (!StringUtils.isEmpty(contactName)) {
+        if (!StrUtil.isEmpty(contactName)) {
             tvContactName.setText(contactName);
         }
-        if (!StringUtils.isEmpty(mobile)) {
+        if (!StrUtil.isEmpty(mobile)) {
             tvContactPhone.setText(mobile);
         }
         AccountEntity accountEntity1=WorkerApplication.get().getAccount();

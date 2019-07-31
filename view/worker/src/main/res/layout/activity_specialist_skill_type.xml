@@ -250,7 +250,7 @@
                         android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_14" />
 
-                    <com.photopicker.com.widget.BGASortableNinePhotoLayout
+                    <cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout
                         android:id="@+id/snpl_impower"
                         android:layout_width="@dimen/dimen_144"
                         android:layout_height="@dimen/dimen_144"

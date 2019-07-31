@@ -11,10 +11,10 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.OuterListBean;
+import com.eanfang.biz.model.bean.OuterListBean;
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.util.QueryEntry;
+import com.eanfang.biz.model.QueryEntry;
 import com.eanfang.biz.model.entity.UserEntity;
 
 import net.eanfang.client.R;

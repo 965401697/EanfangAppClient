@@ -13,10 +13,9 @@ import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.base.kit.picture.picture.PictureRecycleView;
 import com.eanfang.base.kit.rx.RxPerm;
-import com.eanfang.biz.model.WorkerInfoBean;
+import com.eanfang.biz.model.bean.WorkerInfoBean;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.PhotoUtils;
-import com.eanfang.util.StringUtils;
 import com.luck.picture.lib.entity.LocalMedia;
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkeActivity;
@@ -114,13 +113,13 @@ public class AuthPhotoActivity extends BaseWorkeActivity {
     private void initData() {
         initImgUrlList();
 
-        if (!StringUtils.isEmpty(workerInfoBean.getIdCardFront())) {
+        if (!StrUtil.isEmpty(workerInfoBean.getIdCardFront())) {
             GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + workerInfoBean.getIdCardFront()), ivIdCardFront);
         }
-        if (!StringUtils.isEmpty(workerInfoBean.getIdCardSide())) {
+        if (!StrUtil.isEmpty(workerInfoBean.getIdCardSide())) {
             GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + workerInfoBean.getIdCardSide()), ivIdCardBack);
         }
-        if (!StringUtils.isEmpty(workerInfoBean.getIdCardHand())) {
+        if (!StrUtil.isEmpty(workerInfoBean.getIdCardHand())) {
             GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + workerInfoBean.getIdCardHand()), ivIdCardInHand);
         }
     }
@@ -195,27 +194,27 @@ public class AuthPhotoActivity extends BaseWorkeActivity {
      * 保存照片
      */
     private void doSave() {
-        if (StringUtils.isEmpty(workerInfoBean.getIdCardFront())) {
+        if (StrUtil.isEmpty(workerInfoBean.getIdCardFront())) {
             showToast("请添加身份证正面照");
             return;
         }
-        if (StringUtils.isEmpty(workerInfoBean.getIdCardHand())) {
+        if (StrUtil.isEmpty(workerInfoBean.getIdCardHand())) {
             showToast("请添加手持身份证照片");
             return;
         }
-        if (StringUtils.isEmpty(workerInfoBean.getIdCardSide())) {
+        if (StrUtil.isEmpty(workerInfoBean.getIdCardSide())) {
             showToast("请添加身份证反面照");
             return;
         }
         String accidentPic = PhotoUtils.getPhotoUrl("account/verify/", picList_accident, uploadMap, false);
-//        if (StringUtils.isEmpty(accidentPic)) {
+//        if (StrUtil.isEmpty(accidentPic)) {
 //            showToast("请添加保险照");
 //            return;
 //        }
         workerInfoBean.setAccidentPics(accidentPic);
 
         String crimePic = PhotoUtils.getPhotoUrl("account/verify/", picList_crim, uploadMap, false);
-//        if (StringUtils.isEmpty(crimePic)) {
+//        if (StrUtil.isEmpty(crimePic)) {
 //            showToast("请添加犯罪照");
 //            return;
 //        }
@@ -248,13 +247,13 @@ public class AuthPhotoActivity extends BaseWorkeActivity {
      */
     private void initImgUrlList() {
         // 保险照
-        if (!StringUtils.isEmpty(workerInfoBean.getAccidentPics())) {
+        if (!StrUtil.isEmpty(workerInfoBean.getAccidentPics())) {
             picList_accident = recycleviewAccident.setData(workerInfoBean.getAccidentPics());
             recycleviewAccident.showImagev(picList_accident, listener_accident);
             recycleviewAccident.isShow(true, picList_accident);
         }
         // 犯罪照
-        if (!StringUtils.isEmpty(workerInfoBean.getCrimePic())) {
+        if (!StrUtil.isEmpty(workerInfoBean.getCrimePic())) {
             picList_crim = recycleviewCrim.setData(workerInfoBean.getCrimePic());
             recycleviewCrim.showImagev(picList_crim, listener_crim);
             recycleviewCrim.isShow(true, picList_crim);

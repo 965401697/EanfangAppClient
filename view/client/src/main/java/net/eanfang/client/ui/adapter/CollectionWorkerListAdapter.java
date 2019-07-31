@@ -6,12 +6,13 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.eanfang.biz.model.CollectionWorkerListBean;
+import com.eanfang.biz.model.bean.CollectionWorkerListBean;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.R;
+
+import cn.hutool.core.util.StrUtil;
 
 import static com.eanfang.base.kit.V.v;
 
@@ -29,7 +30,7 @@ public class CollectionWorkerListAdapter extends BaseQuickAdapter<CollectionWork
 
     @Override
     protected void convert(BaseViewHolder helper, CollectionWorkerListBean.ListBean item) {
-        if (!StringUtils.isEmpty(item.getAssigneeUserEntity().getAccountEntity().getAvatar())) {
+        if (!StrUtil.isEmpty(item.getAssigneeUserEntity().getAccountEntity().getAvatar())) {
             GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + item.getAssigneeUserEntity().getAccountEntity().getAvatar()),
                     helper.getView(R.id.iv_header));
         }

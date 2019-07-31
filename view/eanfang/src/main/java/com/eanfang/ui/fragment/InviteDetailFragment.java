@@ -15,11 +15,10 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.base.BaseApplication;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.InviteDetailBean;
-import com.eanfang.model.InviteDetailBean2;
+import com.eanfang.biz.model.bean.InviteDetailBean;
 import com.eanfang.ui.adapter.InviteDetailArrayAdapter;
 import com.eanfang.ui.base.BaseFragment;
-import com.eanfang.util.QueryEntry;
+import com.eanfang.biz.model.QueryEntry;
 
 import java.util.ArrayList;
 
@@ -118,9 +117,9 @@ public class InviteDetailFragment extends BaseFragment {
             queryEntry.setPage(mCurrPage);
             EanfangHttp.post(NewApiService.CATEGORY_LIST)
                     .upJson(JSON.toJSONString(queryEntry))
-                    .execute(new EanfangCallback<InviteDetailBean2>(getActivity(), true, InviteDetailBean2.class, bean -> {
+                    .execute(new EanfangCallback<InviteDetailBean>(getActivity(), true, InviteDetailBean.class, bean -> {
                         ArrayList<InviteDetailBean.ListBean> listBeans = new ArrayList<>();
-                        for (InviteDetailBean2.ListBean listBean1 : bean.getList()) {
+                        for (InviteDetailBean.ListBean listBean1 : bean.getList()) {
                             InviteDetailBean.ListBean listBean = new InviteDetailBean.ListBean();
                             listBean.setAccountPhone(listBean1.getInviteMobile());
                             listBean.setWithdrawalMoney(listBean1.getBountyAmount());

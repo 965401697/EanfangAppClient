@@ -16,12 +16,10 @@ import com.eanfang.config.Config;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.ExpertVerifySkillBean;
+import com.eanfang.biz.model.bean.ExpertVerifySkillBean;
 import com.eanfang.biz.model.entity.BaseDataEntity;
 import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.StringUtils;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
-import com.yaf.base.entity.ZjZgBean;
+import com.eanfang.biz.model.bean.ZjZgBean;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
@@ -35,6 +33,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout;
+import cn.hutool.core.util.StrUtil;
 
 
 public class SpecialistSkillInfoDetailActivity extends BaseWorkerActivity {
@@ -134,7 +134,7 @@ public class SpecialistSkillInfoDetailActivity extends BaseWorkerActivity {
         if (mExpertVerifySkillBean.getExpertVerify().getApproveType() == 1) {
             llFactory.setVisibility(View.VISIBLE);
             etFactoryName.setText(mExpertVerifySkillBean.getExpertVerify().getBrandName());
-            List<String> list = new ArrayList<String>();
+            ArrayList<String> list = new ArrayList<>();
             list.add(BuildConfig.OSS_SERVER + mExpertVerifySkillBean.getExpertVerify().getImpowerUrl());
             snplImpower.setDeleteDrawableResId(0);
             snplImpower.setData(list);
@@ -161,7 +161,9 @@ public class SpecialistSkillInfoDetailActivity extends BaseWorkerActivity {
 
 
     }
+
     private ArrayList<String> picList = new ArrayList<>();
+
     private void getData() {
         EanfangHttp.post(UserApi.TECH_WORKER_LIST_QUALIFY_C).execute(new EanfangCallback<ZjZgBean>(this, true, ZjZgBean.class) {
             @Override
@@ -170,7 +172,7 @@ public class SpecialistSkillInfoDetailActivity extends BaseWorkerActivity {
 
                 } else {
                     snplPic.setData(null);
-                    if (!StringUtils.isEmpty(bean.getVerifyPicUrl())) {
+                    if (!StrUtil.isEmpty(bean.getVerifyPicUrl())) {
                         String[] pics = bean.getVerifyPicUrl().split(",");
                         picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
                         snplPic.setDelegate(new BGASortableDelegate(SpecialistSkillInfoDetailActivity.this, 1, 1));

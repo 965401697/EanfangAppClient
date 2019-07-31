@@ -2,7 +2,7 @@ package net.eanfang.client.ui.adapter.datastatistics;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.biz.model.datastatistics.DataStatisticsCompany;
+import com.eanfang.biz.model.bean.datastatistics.DataStatisticsCompany;
 
 import net.eanfang.client.R;
 

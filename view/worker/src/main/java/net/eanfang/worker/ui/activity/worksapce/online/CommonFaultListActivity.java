@@ -17,8 +17,8 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.util.QueryEntry;
-import com.yaf.base.entity.CommonFaultListBeanEntity;
+import com.eanfang.biz.model.QueryEntry;
+import com.eanfang.biz.model.entity.CommonFaultListBeanEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;

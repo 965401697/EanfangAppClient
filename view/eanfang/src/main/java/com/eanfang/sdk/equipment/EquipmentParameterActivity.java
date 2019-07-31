@@ -9,7 +9,7 @@ import com.eanfang.R;
 import com.eanfang.R2;
 import com.eanfang.sdk.equipment.adapter.EquipmentParamAdapter;
 import com.eanfang.ui.base.BaseActivity;
-import com.yaf.base.entity.CustDeviceParamEntity;
+import com.eanfang.biz.model.entity.CustDeviceParamEntity;
 
 import java.util.List;
 

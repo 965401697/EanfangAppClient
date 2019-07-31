@@ -6,7 +6,7 @@ import android.widget.RadioButton;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.eanfang.biz.model.GroupDetailBean;
+import com.eanfang.biz.model.entity.SysGroupUserEntity;
 import com.eanfang.util.GlideUtil;
 
 import net.eanfang.worker.R;
@@ -15,13 +15,13 @@ import net.eanfang.worker.R;
  * Created by O u r on 2018/5/10.
  */
 
-public class ShutupMberAdapter extends BaseQuickAdapter<GroupDetailBean.ListBean, BaseViewHolder> {
+public class ShutupMberAdapter extends BaseQuickAdapter<SysGroupUserEntity, BaseViewHolder> {
     public ShutupMberAdapter(int layoutResId) {
         super(layoutResId);
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, GroupDetailBean.ListBean item) {
+    protected void convert(BaseViewHolder helper, SysGroupUserEntity item) {
 
         if (item.getStatus() == 0) {
             ((RadioButton) helper.getView(R.id.rb_checked)).setChecked(false);

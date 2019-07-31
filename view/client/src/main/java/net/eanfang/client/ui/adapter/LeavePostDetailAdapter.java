@@ -19,6 +19,8 @@ import com.eanfang.util.StringUtils;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostDetailBean;
 
+import cn.hutool.core.util.StrUtil;
+
 
 /**
  * @author liangkailun
@@ -38,7 +40,7 @@ public class LeavePostDetailAdapter extends BaseQuickAdapter<LeavePostDetailBean
         }
         GlideUtil.intoImageView(mContext, BuildConfig.OSS_SERVER + item.getImg(), helper.imgItemLeavePostManageDetail);
         helper.tvItemLeavePostManageDetailName.setText(mContext.getString(R.string.text_leave_post_detail_post_name, item.getName()));
-        String area = StringUtils.isEmpty(Config.get().getAddressByCode(item.getAreaCode())) ?  item.getAreaCode() : Config.get().getAddressByCode(item.getAreaCode());
+        String area = StrUtil.isEmpty(Config.get().getAddressByCode(item.getAreaCode())) ?  item.getAreaCode() : Config.get().getAddressByCode(item.getAreaCode());
         helper.tvItemLeavePostManageDetailArea.setText(mContext.getString(R.string.text_leave_post_detail_area, area));
         if (item.getPageType() == 0) {
             helper.tvItemLeavePostManageDetailPosition.setText(mContext.getString(R.string.text_leave_post_detail_position, item.getPosition()));

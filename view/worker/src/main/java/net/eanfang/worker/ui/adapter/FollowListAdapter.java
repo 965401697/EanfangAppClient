@@ -4,10 +4,10 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.BuildConfig;
-import com.eanfang.biz.model.FollowDataBean;
+import com.eanfang.biz.model.bean.FollowDataBean;
 import com.eanfang.biz.model.entity.AccountEntity;
+import com.eanfang.biz.model.entity.WorkerEntity;
 import com.eanfang.util.GlideUtil;
-import com.yaf.base.entity.WorkerEntity;
 import com.eanfang.biz.model.entity.OrgEntity;
 import com.eanfang.biz.model.entity.UserEntity;
 

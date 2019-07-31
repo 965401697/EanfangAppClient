@@ -5,6 +5,8 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.R;
 import com.eanfang.util.StringUtils;
 
+import cn.hutool.core.util.StrUtil;
+
 
 /**
  * @author guanluocang
@@ -20,7 +22,7 @@ public class DeviceBrandAdapter extends BaseQuickAdapter<String, BaseViewHolder>
 
     @Override
     protected void convert(BaseViewHolder helper, String item) {
-        if (!StringUtils.isEmpty(item)) {
+        if (!StrUtil.isEmpty(item)) {
             helper.setText(R.id.tv_item, item);
         }
     }

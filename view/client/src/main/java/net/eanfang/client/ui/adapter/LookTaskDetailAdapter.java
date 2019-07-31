@@ -2,7 +2,7 @@ package net.eanfang.client.ui.adapter;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.biz.model.WorkTaskInfoBean;
+import com.eanfang.biz.model.bean.WorkTaskInfoBean;
 
 import net.eanfang.client.R;
 

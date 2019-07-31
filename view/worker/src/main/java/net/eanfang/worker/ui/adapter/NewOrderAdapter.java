@@ -6,17 +6,15 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
-import com.eanfang.model.NewOrderBean;
+import com.eanfang.biz.model.bean.NewOrderBean;
 import com.eanfang.util.DateKit;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
-
-import java.util.Calendar;
 
 import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author liangkailun
@@ -65,7 +63,7 @@ public class NewOrderAdapter extends BaseQuickAdapter<NewOrderBean.ListBean, New
         }
 
 
-        if (!StringUtils.isEmpty(finishTime)) {
+        if (!StrUtil.isEmpty(finishTime)) {
             if (DateUtil.parse(finishTime).getTime() - DateUtil.date().getTime() > 0) {
                 int day = (int) DateUtil.date().between(DateUtil.parse(item.getFinishTime()), DateUnit.DAY);
                 int hour = (int) DateUtil.date().between(DateKit.get(item.getFinishTime()).offset(DateField.DAY_OF_YEAR, -day).date, DateUnit.HOUR);
@@ -98,7 +96,7 @@ public class NewOrderAdapter extends BaseQuickAdapter<NewOrderBean.ListBean, New
      * @param stringRes
      */
     private void toShow(TextView textView, String text, int stringRes) {
-        if (StringUtils.isEmpty(text)) {
+        if (StrUtil.isEmpty(text)) {
             textView.setVisibility(View.GONE);
             return;
         }

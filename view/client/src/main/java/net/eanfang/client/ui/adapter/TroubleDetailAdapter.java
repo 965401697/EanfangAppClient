@@ -5,16 +5,16 @@ import android.net.Uri;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
+import com.eanfang.biz.model.entity.BughandleDetailEntity;
 import com.eanfang.config.Config;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.StringUtils;
 import com.eanfang.base.kit.V;
-
-import com.yaf.base.entity.BughandleDetailEntity;
 
 import net.eanfang.client.R;
 
 import java.util.List;
+
+import cn.hutool.core.util.StrUtil;
 
 import static com.eanfang.base.kit.V.v;
 
@@ -57,7 +57,7 @@ public class TroubleDetailAdapter extends BaseQuickAdapter<BughandleDetailEntity
         helper.setText(R.id.tv_devicesAdress, v(() -> item.getFailureEntity().getBugPosition()));
         //将业务类型的图片显示到列表
         String imgUrl = V.v(() -> item.getFailureEntity().getPictures().split(",")[0]);
-        if (!StringUtils.isEmpty(imgUrl) && imgUrl.length() > 10) {
+        if (!StrUtil.isEmpty(imgUrl) && imgUrl.length() > 10) {
             GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + imgUrl),helper.getView(R.id.iv_faultImg));
         }
 

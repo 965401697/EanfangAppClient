@@ -16,14 +16,14 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.R;
 import com.eanfang.R2;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.biz.model.OrganizationBean;
-import com.eanfang.biz.model.SectionBean;
+import com.eanfang.base.kit.loading.LoadKit;
+import com.eanfang.biz.model.bean.OrganizationBean;
+import com.eanfang.biz.model.bean.SectionBean;
 import com.eanfang.biz.model.entity.UserEntity;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.TemplateBean;
+import com.eanfang.biz.model.bean.TemplateBean;
 import com.eanfang.ui.base.BaseActivity;
-import com.eanfang.util.DialogUtil;
 
 
 import org.greenrobot.eventbus.EventBus;
@@ -104,7 +104,7 @@ public class CreateGroupOrganizationActivity extends BaseActivity {
             mDataList = (List<TemplateBean.Preson>) bundle.getSerializable("list");
         }
 
-        mLoadingDialog = DialogUtil.createLoadingDialog(this);
+        mLoadingDialog = LoadKit.dialog(this);
 
         getData();
     }

@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <com.photopicker.com.widget.BGASortableNinePhotoLayout
+                <cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout
                     android:id="@+id/snpl_tv_photo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -87,7 +87,7 @@
                 android:orientation="vertical"
                 android:padding="@dimen/dimen_30">
 
-                <com.photopicker.com.widget.BGASortableNinePhotoLayout
+                <cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout
                     android:id="@+id/snpl_operating_photo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -132,7 +132,7 @@
                 android:orientation="vertical"
                 android:padding="@dimen/dimen_30">
 
-                <com.photopicker.com.widget.BGASortableNinePhotoLayout
+                <cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout
                     android:id="@+id/snpl_box_photo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

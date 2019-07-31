@@ -4,7 +4,7 @@ import android.net.Uri;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.BuildConfig;
-import com.eanfang.biz.model.UserHomePageBean;
+import com.eanfang.biz.model.bean.UserHomePageBean;
 import com.eanfang.util.GlideUtil;
 
 import net.eanfang.client.ui.adapter.viewholder.UserHomePageViewHolder;

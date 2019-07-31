@@ -8,9 +8,9 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.biz.model.entity.SysGroupUserEntity;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.GroupDetailBean;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.worker.R;
@@ -30,7 +30,7 @@ public class GroupShutupMberActivity extends BaseWorkerActivity {
     private ShutupMberAdapter mShutupMberAdapter;
 
 
-    private ArrayList<GroupDetailBean.ListBean> mFriendListBeanArrayList;
+    private ArrayList<SysGroupUserEntity> mFriendListBeanArrayList;
     private String mGroupId;
 
 
@@ -51,7 +51,7 @@ public class GroupShutupMberActivity extends BaseWorkerActivity {
             }
         });
 
-        mFriendListBeanArrayList = (ArrayList<GroupDetailBean.ListBean>) getIntent().getSerializableExtra("list");
+        mFriendListBeanArrayList = (ArrayList<SysGroupUserEntity>) getIntent().getSerializableExtra("list");
         mGroupId = getIntent().getStringExtra("groupId");
 
         initViews();
@@ -68,12 +68,12 @@ public class GroupShutupMberActivity extends BaseWorkerActivity {
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, final View view, int position) {
                 if (view.getId() == R.id.rb_checked) {
-                    GroupDetailBean.ListBean bean = (GroupDetailBean.ListBean) adapter.getData().get(position);
+                    SysGroupUserEntity bean = (SysGroupUserEntity) adapter.getData().get(position);
                     if (bean.getStatus() == 0) {
-                        shutupOne(bean.getAccId());
+                        shutupOne(bean.getAccId().toString());
                         bean.setStatus(1);
                     } else {
-                        offShutupOne(bean.getAccId());
+                        offShutupOne(bean.getAccId().toString());
                         bean.setStatus(0);
                     }
                     mShutupMberAdapter.notifyItemChanged(position);

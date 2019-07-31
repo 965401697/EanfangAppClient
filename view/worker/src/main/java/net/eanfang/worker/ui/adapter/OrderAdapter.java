@@ -5,9 +5,9 @@ import android.net.Uri;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
+import com.eanfang.biz.model.entity.RepairOrderEntity;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.base.kit.V;
-import com.yaf.base.entity.RepairOrderEntity;
 
 import net.eanfang.worker.R;
 

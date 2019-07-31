@@ -7,9 +7,7 @@ import android.widget.LinearLayout;
 import com.eanfang.BuildConfig;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.util.GetConstDataUtils;
-import com.eanfang.util.StringUtils;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
-import com.yaf.base.entity.ShopMaintenanceExamResultEntity;
+import com.eanfang.biz.model.entity.ShopMaintenanceExamResultEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;
@@ -18,6 +16,8 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout;
+import cn.hutool.core.util.StrUtil;
 
 public class MaintenanceAddCheckResultShowActivity extends BaseClientActivity {
 
@@ -75,7 +75,7 @@ public class MaintenanceAddCheckResultShowActivity extends BaseClientActivity {
      */
     private void initImgUrlList() {
         //修改小bug 图片读取问题
-        if (!StringUtils.isEmpty(examResultEntity.getPicture())) {
+        if (!StrUtil.isEmpty(examResultEntity.getPicture())) {
             String[] presentationPic = examResultEntity.getPicture().split(",");
             if (presentationPic.length >= 1) {
                 picList.add(BuildConfig.OSS_SERVER + presentationPic[0]);

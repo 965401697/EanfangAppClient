@@ -5,7 +5,7 @@ import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.R;
-import com.eanfang.model.InviteDetailBean;
+import com.eanfang.biz.model.bean.InviteDetailBean;
 import com.eanfang.ui.viewHolder.InviteDetailViewHolder;
 
 /**

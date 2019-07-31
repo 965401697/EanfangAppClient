@@ -23,7 +23,6 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.PermKit;
 import com.eanfang.witget.takavideo.ToastUtils;
-import com.picker.common.util.ScreenUtils;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
@@ -31,6 +30,8 @@ import net.eanfang.worker.ui.adapter.SwitchCompanyListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.qqtheme.framework.util.ScreenUtils;
 
 /**
  * Created by MrHou

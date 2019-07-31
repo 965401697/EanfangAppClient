@@ -7,8 +7,6 @@ import com.eanfang.base.kit.SDKManager;
 import com.eanfang.delegate.BGASortableDelegate;
 
 import com.eanfang.util.PhotoUtils;
-import com.eanfang.util.StringUtils;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
@@ -18,6 +16,8 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * 我来回答
@@ -50,7 +50,7 @@ public class IAnswerActivity extends BaseWorkerActivity {
 
     private void sub() {
         String pic = PhotoUtils.getPhotoUrl("", snplPhotos, uploadMap, false);
-        if (StringUtils.isEmpty(pic)) {
+        if (StrUtil.isEmpty(pic)) {
             showToast("请添加名牌或者工牌照片");
         }
         SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {

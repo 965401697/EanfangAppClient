@@ -6,7 +6,7 @@ import android.text.TextUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.eanfang.biz.model.ExpertListBean;
+import com.eanfang.biz.model.bean.ExpertListBean;
 import com.eanfang.util.GlideUtil;
 
 import net.eanfang.worker.R;

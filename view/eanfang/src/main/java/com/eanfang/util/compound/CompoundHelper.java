@@ -15,7 +15,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.eanfang.BuildConfig;
-import com.eanfang.biz.model.GroupDetailBean;
+import com.eanfang.biz.model.bean.GroupDetailBean;
+import com.eanfang.biz.model.entity.SysGroupUserEntity;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -66,7 +67,7 @@ public class CompoundHelper {
 
         num = bean.getList().size();
 
-        for (GroupDetailBean.ListBean b : bean.getList()) {
+        for (SysGroupUserEntity b : bean.getList()) {
 
             //生成图片
             Glide.with(context).asBitmap().load(BuildConfig.OSS_SERVER + b.getAccountEntity().getAvatar()).into(new SimpleTarget<Bitmap>() {
@@ -139,7 +140,7 @@ public class CompoundHelper {
             } else {
                 imgUrl = BuildConfig.OSS_SERVER + b;
             }
-            SimpleTarget<Bitmap> simpleTarget=new SimpleTarget<Bitmap>() {
+            SimpleTarget<Bitmap> simpleTarget = new SimpleTarget<Bitmap>() {
                 @Override
                 public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition transition) {
 
@@ -233,7 +234,7 @@ public class CompoundHelper {
                 }
             };
             //生成图片
-            Glide.with(context).asBitmap().load(imgUrl).into( simpleTarget);
+            Glide.with(context).asBitmap().load(imgUrl).into(simpleTarget);
 
         }
     }

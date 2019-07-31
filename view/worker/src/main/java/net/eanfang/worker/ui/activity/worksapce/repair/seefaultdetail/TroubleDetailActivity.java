@@ -19,21 +19,17 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.biz.model.entity.BughandleDetailEntity;
+import com.eanfang.biz.model.entity.TransferLogEntity;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.TemplateBean;
+import com.eanfang.biz.model.bean.TemplateBean;
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.StringUtils;
-import com.photopicker.com.activity.BGAPhotoPickerActivity;
-import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
-import com.yaf.base.entity.BughandleConfirmEntity;
-import com.yaf.base.entity.BughandleDetailEntity;
-import com.yaf.base.entity.TransferLogEntity;
+import com.eanfang.biz.model.entity.BughandleConfirmEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.im.SelectIMContactActivity;
@@ -48,7 +44,11 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
+import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerPreviewActivity;
+import cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * Created by MrHou
@@ -313,10 +313,10 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
         /**
          *电视机墙正面照 拍摄视频
          * */
-        if (!StringUtils.isEmpty(bughandleConfirmEntity.getFront_mp4_path())) {
+        if (!StrUtil.isEmpty(bughandleConfirmEntity.getFront_mp4_path())) {
             rlThumbnailMoment.setVisibility(View.VISIBLE);
             GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + bughandleConfirmEntity.getFront_mp4_path() + ".jpg"),ivThumbnailMoment);
-            if (!StringUtils.isValid(bughandleConfirmEntity.getFrontPictures())) {
+            if (!StrUtil.isNotBlank(bughandleConfirmEntity.getFrontPictures())) {
                 snplMomentAddPhotos.setVisibility(View.GONE);
             }
         } else {
@@ -331,9 +331,9 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
         /**
          *电视机墙背面照 拍摄视频
          * */
-        if (!StringUtils.isEmpty(bughandleConfirmEntity.getReverse_side_mp4_path())) {
+        if (!StrUtil.isEmpty(bughandleConfirmEntity.getReverse_side_mp4_path())) {
             rlThumbnailMonitor.setVisibility(View.VISIBLE);
-            if (!StringUtils.isValid(bughandleConfirmEntity.getReverseSidePictures())) {
+            if (!StrUtil.isNotBlank(bughandleConfirmEntity.getReverseSidePictures())) {
                 snplMonitorAddPhotos.setVisibility(View.GONE);
             }
             GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + bughandleConfirmEntity.getReverse_side_mp4_path() + ".jpg"),ivThumbnailMonitor);
@@ -349,10 +349,10 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
         /**
          *机柜照 拍摄视频
          * */
-        if (!StringUtils.isEmpty(bughandleConfirmEntity.getEquipment_cabinet_mp4_path())) {
+        if (!StrUtil.isEmpty(bughandleConfirmEntity.getEquipment_cabinet_mp4_path())) {
             rlThumbnailToolsPackage.setVisibility(View.VISIBLE);
             GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + bughandleConfirmEntity.getEquipment_cabinet_mp4_path() + ".jpg"),ivThumbnailToolsPackage);
-            if (!StringUtils.isValid(bughandleConfirmEntity.getEquipmentCabinetPictures())) {
+            if (!StrUtil.isNotBlank(bughandleConfirmEntity.getEquipmentCabinetPictures())) {
                 snplToolsPackageAddPhotos.setVisibility(View.GONE);
             }
         } else {
@@ -370,21 +370,21 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
 
     private void initImageList(BughandleConfirmEntity bughandleConfirmEntity) {
 
-        if (StringUtils.isValid(bughandleConfirmEntity.getFrontPictures())) {
+        if (StrUtil.isNotBlank(bughandleConfirmEntity.getFrontPictures())) {
             String[] friontPic = bughandleConfirmEntity.getFrontPictures().split(",");
             picList1.addAll(Stream.of(Arrays.asList(friontPic)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
         }
-        if (StringUtils.isValid(bughandleConfirmEntity.getReverseSidePictures())) {
+        if (StrUtil.isNotBlank(bughandleConfirmEntity.getReverseSidePictures())) {
             String[] reversePic = bughandleConfirmEntity.getReverseSidePictures().split(",");
             picList2.addAll(Stream.of(Arrays.asList(reversePic)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
         }
 
-        if (StringUtils.isValid(bughandleConfirmEntity.getEquipmentCabinetPictures())) {
+        if (StrUtil.isNotBlank(bughandleConfirmEntity.getEquipmentCabinetPictures())) {
             String[] equipmentPic = bughandleConfirmEntity.getEquipmentCabinetPictures().split(",");
             picList3.addAll(Stream.of(Arrays.asList(equipmentPic)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
         }
 
-        if (StringUtils.isValid(bughandleConfirmEntity.getInvoicesPictures())) {
+        if (StrUtil.isNotBlank(bughandleConfirmEntity.getInvoicesPictures())) {
             String[] invoicesPic = bughandleConfirmEntity.getInvoicesPictures().split(",");
             picList4.addAll(Stream.of(Arrays.asList(invoicesPic)).map(url -> (BuildConfig.OSS_SERVER + url)).toList());
         }
@@ -451,28 +451,28 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
         }
         switch (requestCode) {
             case REQUEST_CODE_CHOOSE_PHOTO_1:
-                snplMomentAddPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                snplMomentAddPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_CHOOSE_PHOTO_2:
-                snplMonitorAddPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                snplMonitorAddPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_CHOOSE_PHOTO_3:
-                snplToolsPackageAddPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                snplToolsPackageAddPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_CHOOSE_PHOTO_4:
-                snplFormPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                snplFormPhotos.addMoreData(BGAPhotoPickerActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_PHOTO_PREVIEW_1:
-                snplMomentAddPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                snplMomentAddPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_PHOTO_PREVIEW_2:
-                snplMonitorAddPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                snplMonitorAddPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_PHOTO_PREVIEW_3:
-                snplToolsPackageAddPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                snplToolsPackageAddPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_PHOTO_PREVIEW_4:
-                snplFormPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                snplFormPhotos.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
                 break;
             default:
                 break;

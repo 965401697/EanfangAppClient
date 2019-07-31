@@ -1,7 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.jakewharton.butterknife'
 apply plugin: 'android-aspectjx'
-//apply plugin: 'com.jakewharton.hugo'
 
 android {
     compileSdkVersion cfg.compileSdkVersion
@@ -44,7 +43,7 @@ android {
         // 开发
         debug {
             buildConfigField("boolean", "DEBUG_MOD", cfg.debugMod)
-            buildConfigField("String", "API_HOST", cfg.betaApiHost)
+            buildConfigField("String", "API_HOST", cfg.proApiHost)
         }
         release {
             // 上线url
@@ -89,8 +88,11 @@ dependencies {
     implementation pkg.legacySupportV4
     implementation pkg.appcompat
     implementation pkg.okhttp3
+
+
     implementation pkg.multidex
     implementation pkg.glide
+
 
     //butterknife
     implementation pkg.butterknife
@@ -109,11 +111,14 @@ dependencies {
     api pkg.aliyunOss
     api pkg.material
     api pkg.cardview
+    api pkg.calendarPicker
+    api pkg.numberprogressbar
 
 
     //component
     api pkg.recyclerview
     api pkg.bgaBaseadapter
+    api pkg.photopicker
     api pkg.takephoto
     api pkg.cymChad
     api pkg.treeRecyclerView
@@ -130,7 +135,8 @@ dependencies {
 
     api pkg.hutoolCore
     api pkg.hutoolHttp
-    api pkg.fastjson
+    api pkg.okgo3
+//    api pkg.fastjson
 
     //tools
     implementation pkg.luban

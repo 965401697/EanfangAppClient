@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.eanfang.util.PermKit;
-import com.eanfang.util.QueryEntry;
+import com.eanfang.biz.model.QueryEntry;
 import com.flyco.tablayout.SlidingTabLayout;
 
 import net.eanfang.client.R;

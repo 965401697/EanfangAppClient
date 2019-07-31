@@ -6,13 +6,13 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.base.widget.customview.CircleImageView;
-import com.eanfang.biz.model.EvaluateBean;
+import com.eanfang.biz.model.bean.EvaluateBean;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.StringUtils;
 import com.eanfang.base.kit.V;
 
 import net.eanfang.worker.R;
 
+import cn.hutool.core.util.StrUtil;
 import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 
 /**
@@ -40,7 +40,7 @@ public class EvaluateAdapter extends BaseQuickAdapter<EvaluateBean.ListBean, Bas
          * give  给出的评价 owner 被评价人
          * */
         if (mTag.equals("receive")) {
-            if (!StringUtils.isEmpty(V.v(()->item.getCreateUser().getAccountEntity().getAvatar()))) {
+            if (!StrUtil.isEmpty(V.v(()->item.getCreateUser().getAccountEntity().getAvatar()))) {
                 GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + item.getCreateUser().getAccountEntity().getAvatar()),iv_header);
             }
             totalStar = item.getItem1() + item.getItem2() +
@@ -49,7 +49,7 @@ public class EvaluateAdapter extends BaseQuickAdapter<EvaluateBean.ListBean, Bas
             helper.setText(R.id.tv_name,V.v(()-> item.getCreateUser().getAccountEntity().getRealName()))
                     .setText(R.id.tv_time, item.getCreateTime());
         } else {
-            if (!StringUtils.isEmpty(V.v(()->item.getCreateUser().getAccountEntity().getAvatar()))) {
+            if (!StrUtil.isEmpty(V.v(()->item.getCreateUser().getAccountEntity().getAvatar()))) {
                 GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + V.v(()->item.getOwnerUser().getAccountEntity().getAvatar())),iv_header);
             }
             totalStar = item.getItem1() + item.getItem2() +

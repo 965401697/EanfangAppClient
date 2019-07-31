@@ -86,7 +86,7 @@
             android:textColorHint="@color/color_bottom"
             android:textSize="@dimen/textSize_15" />
 
-        <com.photopicker.com.widget.BGASortableNinePhotoLayout
+        <cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout
             android:id="@+id/snpl_moment_add_photos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

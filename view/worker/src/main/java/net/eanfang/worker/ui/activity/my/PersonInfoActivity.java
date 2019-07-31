@@ -26,8 +26,8 @@ import com.eanfang.base.kit.cache.CacheMod;
 import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.base.widget.customview.CircleImageView;
-import com.eanfang.biz.model.Message;
-import com.eanfang.biz.model.SelectAddressItem;
+import com.eanfang.biz.model.bean.Message;
+import com.eanfang.biz.model.bean.SelectAddressItem;
 import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.biz.model.entity.AccountEntity;
 import com.eanfang.config.Config;
@@ -37,7 +37,6 @@ import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.StringUtils;
 import com.eanfang.util.contentsafe.ContentDefaultAuditing;
 import com.eanfang.util.contentsafe.ContentSecurityAuditUtil;
 import com.luck.picture.lib.entity.LocalMedia;
@@ -242,7 +241,7 @@ public class PersonInfoActivity extends BaseActivity {
             return;
         }
         AccountEntity accountEntity = infoBackBean.getAccount();
-        if (!StringUtils.isEmpty(accountEntity.getAvatar())) {
+        if (!StrUtil.isEmpty(accountEntity.getAvatar())) {
             isUploadHead = true;
             path = accountEntity.getAvatar();
             GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + accountEntity.getAvatar()), ivUpload);
@@ -277,7 +276,7 @@ public class PersonInfoActivity extends BaseActivity {
         if (address != null) {
             etAddress.setText(address);
         }
-        if (!StringUtils.isEmpty(accountEntity.getAreaCode())) {
+        if (!StrUtil.isEmpty(accountEntity.getAreaCode())) {
             mAreaCode = accountEntity.getAreaCode();
             tvArea.setText(Config.get().getAddressByCode(accountEntity.getAreaCode()));
         }
@@ -293,7 +292,7 @@ public class PersonInfoActivity extends BaseActivity {
      */
     private boolean checkInfo() {
         //如果为空，则代表头像
-        if (!isUploadHead || StringUtils.isEmpty(path)) {
+        if (!isUploadHead || StrUtil.isEmpty(path)) {
             showToast("请上传头像");
             return false;
         }
@@ -309,7 +308,7 @@ public class PersonInfoActivity extends BaseActivity {
             return false;
         }
 
-        if (StringUtils.isEmpty(city) && StringUtils.isEmpty(loginBean.getAccount().getAreaCode())) {
+        if (StrUtil.isEmpty(city) && StrUtil.isEmpty(loginBean.getAccount().getAreaCode())) {
             showToast("请选择所在城市");
             return false;
         }
@@ -330,18 +329,18 @@ public class PersonInfoActivity extends BaseActivity {
         AccountEntity accountEntity = new AccountEntity();
         accountEntity.setAvatar(path);
         String realName = etRealname.getText().toString().trim();
-        accountEntity.setRealName(StringUtils.isEmpty(realName) ?
+        accountEntity.setRealName(StrUtil.isEmpty(realName) ?
                 tvNickname.getText().toString().trim() : realName);
         // 昵称
         accountEntity.setNickName(tvNickname.getText().toString().trim());
         accountEntity.setGender(mIsMan ? 1 : 0);
         String address = etAddress.getText().toString().trim();
         accountEntity.setAddress(address);
-        if (!StringUtils.isEmpty(mTvBirthday.getText())) {
+        if (!StrUtil.isEmpty(mTvBirthday.getText())) {
             accountEntity.setBirthday(DateUtil.parse(mTvBirthday.getText().toString()));
         }
         accountEntity.setPersonalNote(mEtPersonalNote.getText().toString());
-        if (!StringUtils.isEmpty(city) && !StringUtils.isEmpty(contry)) {
+        if (!StrUtil.isEmpty(city) && !StrUtil.isEmpty(contry)) {
             accountEntity.setAreaCode(Config.get().getAreaCodeByName(city, contry));
         } else {
             accountEntity.setAreaCode(mAreaCode);
@@ -364,7 +363,7 @@ public class PersonInfoActivity extends BaseActivity {
                         CacheKit.get().put(LoginBean.class.getName(), user, CacheMod.All);
 
                         UserInfo userInfo;
-                        if (!StringUtils.isEmpty(path)) {
+                        if (!StrUtil.isEmpty(path)) {
                             //刷新个人融云的信息
                             userInfo = new UserInfo(String.valueOf(WorkerApplication.get().getAccId()), tvNickname.getText().toString().trim(), Uri.parse(BuildConfig.OSS_SERVER + path));
                         } else {
@@ -432,7 +431,7 @@ public class PersonInfoActivity extends BaseActivity {
      */
     private void setBirthday(View v) {
         Date date;
-        if (!StringUtils.isEmpty(mTvBirthday.getText())) {
+        if (!StrUtil.isEmpty(mTvBirthday.getText())) {
             date = DateUtil.parse(mTvBirthday.getText().toString());
         } else {
             date = new Date();

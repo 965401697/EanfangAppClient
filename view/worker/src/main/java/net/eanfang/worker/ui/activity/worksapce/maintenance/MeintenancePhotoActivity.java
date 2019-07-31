@@ -10,11 +10,7 @@ import com.eanfang.base.kit.SDKManager;
 import com.eanfang.delegate.BGASortableDelegate;
 
 import com.eanfang.util.PhotoUtils;
-import com.eanfang.util.StringUtils;
-import com.photopicker.com.activity.BGAPhotoPickerActivity;
-import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
-import com.yaf.base.entity.ShopBughandleMaintenanceConfirmEntity;
+import com.eanfang.biz.model.entity.ShopBughandleMaintenanceConfirmEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
@@ -25,6 +21,10 @@ import java.util.HashMap;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
+import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerPreviewActivity;
+import cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout;
+import cn.hutool.core.util.StrUtil;
 
 public class MeintenancePhotoActivity extends BaseWorkerActivity {
 
@@ -115,24 +115,24 @@ public class MeintenancePhotoActivity extends BaseWorkerActivity {
     private void doSubmitData() {
 
         String tvPhoto = PhotoUtils.getPhotoUrl("biz/maintain/", snplTvPhoto, uploadMap, false);
-        if (StringUtils.isEmpty(tvPhoto)) {
+        if (StrUtil.isEmpty(tvPhoto)) {
             showToast("请选择电视墙正面照片");
             return;
         }
 
         String operatingPhoto = PhotoUtils.getPhotoUrl("biz/maintain/", snplOperatingPhoto, uploadMap, false);
-        if (StringUtils.isEmpty(operatingPhoto)) {
+        if (StrUtil.isEmpty(operatingPhoto)) {
             showToast("请选操作台背面照片");
             return;
         }
 
         String boxPhoto = PhotoUtils.getPhotoUrl("biz/maintain/", snplBoxPhoto, uploadMap, false);
-        if (StringUtils.isEmpty(boxPhoto)) {
+        if (StrUtil.isEmpty(boxPhoto)) {
             showToast("请选择机柜照片");
             return;
         }
         String invoicesPhoto = PhotoUtils.getPhotoUrl("biz/maintain/", snplInvoicesPhoto, uploadMap, false);
-        if (StringUtils.isEmpty(invoicesPhoto)) {
+        if (StrUtil.isEmpty(invoicesPhoto)) {
             showToast("请选择单据照片");
             return;
         }
@@ -175,29 +175,29 @@ public class MeintenancePhotoActivity extends BaseWorkerActivity {
         }
         switch (requestCode) {
             case REQUEST_CODE_CHOOSE_PHOTO_1:
-                snplTvPhoto.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                snplTvPhoto.addMoreData(BGAPhotoPickerActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_CHOOSE_PHOTO_2:
-                snplOperatingPhoto.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                snplOperatingPhoto.addMoreData(BGAPhotoPickerActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_CHOOSE_PHOTO_3:
-                snplBoxPhoto.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                snplBoxPhoto.addMoreData(BGAPhotoPickerActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_CHOOSE_PHOTO_4:
-                snplInvoicesPhoto.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                snplInvoicesPhoto.addMoreData(BGAPhotoPickerActivity.getSelectedPhotos(data));
                 break;
 
             case REQUEST_CODE_PHOTO_PREVIEW_1:
-                snplTvPhoto.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                snplTvPhoto.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_PHOTO_PREVIEW_2:
-                snplOperatingPhoto.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                snplOperatingPhoto.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_PHOTO_PREVIEW_3:
-                snplBoxPhoto.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                snplBoxPhoto.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_PHOTO_PREVIEW_4:
-                snplInvoicesPhoto.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                snplInvoicesPhoto.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
                 break;
             default:
                 break;
@@ -209,7 +209,7 @@ public class MeintenancePhotoActivity extends BaseWorkerActivity {
      */
     private void initImgUrlList() {
         //修改小bug 图片读取问题
-        if (!StringUtils.isEmpty(confirmEntity.getFrontPictures())) {
+        if (!StrUtil.isEmpty(confirmEntity.getFrontPictures())) {
             String[] presentationPic = confirmEntity.getFrontPictures().split(",");
             if (presentationPic.length >= 1) {
                 picList1.add(BuildConfig.OSS_SERVER + presentationPic[0]);
@@ -222,7 +222,7 @@ public class MeintenancePhotoActivity extends BaseWorkerActivity {
             }
         }
 
-        if (!StringUtils.isEmpty(confirmEntity.getReverseSidePictures())) {
+        if (!StrUtil.isEmpty(confirmEntity.getReverseSidePictures())) {
             String[] presentationPic = confirmEntity.getReverseSidePictures().split(",");
             if (presentationPic.length >= 1) {
                 picList2.add(BuildConfig.OSS_SERVER + presentationPic[0]);
@@ -235,7 +235,7 @@ public class MeintenancePhotoActivity extends BaseWorkerActivity {
             }
         }
 
-        if (!StringUtils.isEmpty(confirmEntity.getEquipmentCabinetPictures())) {
+        if (!StrUtil.isEmpty(confirmEntity.getEquipmentCabinetPictures())) {
             String[] presentationPic = confirmEntity.getEquipmentCabinetPictures().split(",");
             if (presentationPic.length >= 1) {
                 picList3.add(BuildConfig.OSS_SERVER + presentationPic[0]);

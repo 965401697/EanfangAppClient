@@ -23,6 +23,7 @@ import net.eanfang.client.ui.adapter.HomeAllBrandAdapter;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author liangkailun
@@ -56,7 +57,7 @@ public class HomeAllBrandFragment extends BaseFragment {
                 adapter.getData().clear();
                 ArrayList<AllBrandBean.ListBean> allBrands = new ArrayList<>();
                 for (AllBrandBean.ListBean listBean : bean.getList()) {
-                    if (!StringUtils.isEmpty(listBean.getRemarkInfo())) {
+                    if (!StrUtil.isEmpty(listBean.getRemarkInfo())) {
                         allBrands.add(listBean);
                         if (allBrands.size() == 8) {
                             break;

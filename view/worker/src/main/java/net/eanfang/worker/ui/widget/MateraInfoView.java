@@ -6,9 +6,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.eanfang.biz.model.bean.ZjZgBean;
+import com.eanfang.biz.model.entity.BughandleUseDeviceEntity;
 import com.eanfang.config.Config;
 import com.eanfang.ui.base.BaseDialog;
-import com.yaf.base.entity.BughandleUseDeviceEntity;
 
 import net.eanfang.worker.R;
 
@@ -44,7 +45,7 @@ public class MateraInfoView extends BaseDialog {
     private Activity mContext;
     private BughandleUseDeviceEntity bughandleUseDeviceEntity;
 
-    public MateraInfoView(Activity context, boolean isfull, BughandleUseDeviceEntity bughandleUseDeviceEntity) {
+    public MateraInfoView(Activity context, boolean isfull,BughandleUseDeviceEntity bughandleUseDeviceEntity) {
         super(context, isfull);
         this.mContext = context;
         this.bughandleUseDeviceEntity = bughandleUseDeviceEntity;

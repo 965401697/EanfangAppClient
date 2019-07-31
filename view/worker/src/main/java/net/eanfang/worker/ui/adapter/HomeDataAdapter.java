@@ -4,7 +4,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.biz.model.datastatistics.HomeDatastisticeBean;
+import com.eanfang.biz.model.bean.datastatistics.HomeDatastisticeBean;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.base.kit.V;
 

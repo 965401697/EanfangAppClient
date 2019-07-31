@@ -5,7 +5,7 @@ import android.widget.ImageView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.config.Config;
-import com.eanfang.biz.model.FaultTotleBean;
+import com.eanfang.biz.model.bean.FaultTotleBean;
 
 import net.eanfang.client.R;
 

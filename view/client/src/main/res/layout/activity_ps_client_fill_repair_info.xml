@@ -69,7 +69,7 @@
                         android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_15" />
 
-                    <com.photopicker.com.widget.BGASortableNinePhotoLayout
+                    <cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout
                         android:id="@+id/snpl_form_photos"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

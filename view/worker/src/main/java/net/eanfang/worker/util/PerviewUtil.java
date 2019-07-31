@@ -6,6 +6,8 @@ import com.eanfang.util.StringUtils;
 
 import java.util.ArrayList;
 
+import cn.hutool.core.util.StrUtil;
+
 /**
  * Created by Mr.hou
  *
@@ -17,7 +19,7 @@ import java.util.ArrayList;
 public class PerviewUtil {
     public static void perviewImageUitl(String url, Context activity) {
         ArrayList<String> images = new ArrayList<String>();
-        if (StringUtils.isEmpty(url)) {
+        if (StrUtil.isEmpty(url)) {
             return;
         }
         images.add(url);

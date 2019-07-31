@@ -19,18 +19,17 @@ import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.kit.loading.LoadKit;
+import com.eanfang.biz.model.bean.GroupDetailBean;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.GroupDetailBean;
-import com.eanfang.biz.model.TemplateBean;
-import com.eanfang.biz.model.WorkTalkDetailBean;
-import com.eanfang.biz.model.WorkTransferDetailBean;
+import com.eanfang.biz.model.bean.TemplateBean;
+import com.eanfang.biz.model.bean.WorkTalkDetailBean;
+import com.eanfang.biz.model.bean.WorkTransferDetailBean;
 import com.eanfang.ui.activity.SelectOAPresonActivity;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.ui.base.BaseActivity;
-import com.eanfang.util.DialogUtil;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.worker.R;
@@ -52,6 +51,7 @@ import java.util.Set;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author Guanluocang
@@ -341,7 +341,7 @@ public class WorkTalkCreateActivity extends BaseActivity {
                     b.putString("shareType", "7");
 
 
-                    new SendContactUtils(b, handler, newGroupList, DialogUtil.createLoadingDialog(WorkTalkCreateActivity.this), "面谈员工").send();
+                    new SendContactUtils(b, handler, newGroupList, LoadKit.dialog(WorkTalkCreateActivity.this), "面谈员工").send();
                 }));
     }
 
@@ -429,14 +429,14 @@ public class WorkTalkCreateActivity extends BaseActivity {
 
     public boolean doCheckInfo() {
         try {
-            if (StringUtils.isEmpty(mUserId + "")) {
+            if (StrUtil.isEmpty(mUserId + "")) {
                 showToast("用户id为空");
                 return false;
             } else {
                 workTalkDetailBean.setOwnerUserId(mUserId + "");
             }
 
-            if (StringUtils.isEmpty(mCompanyId + "")) {
+            if (StrUtil.isEmpty(mCompanyId + "")) {
                 showToast("公司id为空");
                 return false;
             } else {
@@ -444,13 +444,13 @@ public class WorkTalkCreateActivity extends BaseActivity {
                 workTalkDetailBean.setOwnerTopCompanyId(mTopCompanyId + "");
                 workTalkDetailBean.setOwnerOrgCode(mDepartmentId);
             }
-            if (StringUtils.isEmpty(tvTalkObject.getText().toString().trim()) && StringUtils.isEmpty(mTalkId)) {
+            if (StrUtil.isEmpty(tvTalkObject.getText().toString().trim()) && StrUtil.isEmpty(mTalkId)) {
                 showToast("请选择面谈对象");
                 return false;
             } else {
                 workTalkDetailBean.setWorkerUserId(mTalkId);
             }
-//            if (StringUtils.isEmpty(tvReceiverName.getText().toString().trim()) && StringUtils.isEmpty(mReceiverId)) {
+//            if (StrUtil.isEmpty(tvReceiverName.getText().toString().trim()) && StrUtil.isEmpty(mReceiverId)) {
 //                showToast("请选择接收人");
 //                return false;
 //            } else {
@@ -477,37 +477,37 @@ public class WorkTalkCreateActivity extends BaseActivity {
                 workTalkDetailBean.setAssigneeTopCompanyId(String.valueOf(WorkerApplication.get().getTopCompanyId()));
             }
 
-            if (!StringUtils.isEmpty(etWrokTalkOne.getText().toString().trim())) {
+            if (!StrUtil.isEmpty(etWrokTalkOne.getText().toString().trim())) {
                 workTalkDetailBean.setQuestion1(etWrokTalkOne.getText().toString().trim());
             }
-            if (!StringUtils.isEmpty(etWrokTalkTwo.getText().toString().trim())) {
+            if (!StrUtil.isEmpty(etWrokTalkTwo.getText().toString().trim())) {
                 workTalkDetailBean.setQuestion2(etWrokTalkTwo.getText().toString().trim());
             }
-            if (!StringUtils.isEmpty(etWrokTalkThree.getText().toString().trim())) {
+            if (!StrUtil.isEmpty(etWrokTalkThree.getText().toString().trim())) {
                 workTalkDetailBean.setQuestion3(etWrokTalkThree.getText().toString().trim());
             }
-            if (!StringUtils.isEmpty(etWrokTalkFour.getText().toString().trim())) {
+            if (!StrUtil.isEmpty(etWrokTalkFour.getText().toString().trim())) {
                 workTalkDetailBean.setQuestion4(etWrokTalkFour.getText().toString().trim());
             }
-            if (!StringUtils.isEmpty(etWrokTalkFive.getText().toString().trim())) {
+            if (!StrUtil.isEmpty(etWrokTalkFive.getText().toString().trim())) {
                 workTalkDetailBean.setQuestion5(etWrokTalkFive.getText().toString().trim());
             }
-            if (!StringUtils.isEmpty(etWrokTalkSix.getText().toString().trim())) {
+            if (!StrUtil.isEmpty(etWrokTalkSix.getText().toString().trim())) {
                 workTalkDetailBean.setQuestion6(etWrokTalkSix.getText().toString().trim());
             }
-            if (!StringUtils.isEmpty(etWrokTalkSeven.getText().toString().trim())) {
+            if (!StrUtil.isEmpty(etWrokTalkSeven.getText().toString().trim())) {
                 workTalkDetailBean.setQuestion7(etWrokTalkSeven.getText().toString().trim());
             }
-            if (!StringUtils.isEmpty(etWrokTalkEight.getText().toString().trim())) {
+            if (!StrUtil.isEmpty(etWrokTalkEight.getText().toString().trim())) {
                 workTalkDetailBean.setQuestion8(etWrokTalkEight.getText().toString().trim());
             }
-            if (!StringUtils.isEmpty(etWrokTalkNine.getText().toString().trim())) {
+            if (!StrUtil.isEmpty(etWrokTalkNine.getText().toString().trim())) {
                 workTalkDetailBean.setQuestion9(etWrokTalkNine.getText().toString().trim());
             }
-            if (!StringUtils.isEmpty(etWrokTalkTen.getText().toString().trim())) {
+            if (!StrUtil.isEmpty(etWrokTalkTen.getText().toString().trim())) {
                 workTalkDetailBean.setQuestion10(etWrokTalkTen.getText().toString().trim());
             }
-            if (!StringUtils.isEmpty(etWrokTalkEleven.getText().toString().trim())) {
+            if (!StrUtil.isEmpty(etWrokTalkEleven.getText().toString().trim())) {
                 workTalkDetailBean.setQuestion11(etWrokTalkEleven.getText().toString().trim());
             }
 

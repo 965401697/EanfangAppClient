@@ -190,7 +190,7 @@
                     android:paddingRight="@dimen/dimen_40"
                     android:visibility="visible">
 
-                    <com.photopicker.com.widget.BGASortableNinePhotoLayout
+                    <cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout
                         android:id="@+id/snpl_moment_photos"
                         android:layout_width="wrap_content"
                         android:layout_height="@dimen/dimen_200"

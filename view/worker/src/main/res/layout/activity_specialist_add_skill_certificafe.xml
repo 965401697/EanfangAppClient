@@ -205,7 +205,7 @@
                 android:orientation="horizontal"
                 android:padding="@dimen/dimen_30">
 
-                <com.photopicker.com.widget.BGASortableNinePhotoLayout
+                <cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout
                     android:visibility="gone"
                     android:id="@+id/snpl_moment_accident"
                     android:layout_width="wrap_content"

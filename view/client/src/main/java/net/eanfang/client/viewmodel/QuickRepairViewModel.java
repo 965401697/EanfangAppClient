@@ -6,8 +6,8 @@ import android.widget.EditText;
 import androidx.lifecycle.MutableLiveData;
 
 import com.eanfang.base.kit.rx.RxPerm;
-import com.eanfang.biz.model.InstallOrderConfirmBean;
-import com.eanfang.biz.model.SelectAddressItem;
+import com.eanfang.biz.model.bean.InstallOrderConfirmBean;
+import com.eanfang.biz.model.bean.SelectAddressItem;
 import com.eanfang.biz.model.bean.DesignOrderInfoBean;
 import com.eanfang.biz.model.bean.OrderCountBean;
 import com.eanfang.biz.model.entity.RepairBugEntity;
@@ -18,7 +18,6 @@ import com.eanfang.biz.rds.sys.repo.QuickRepairRepo;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.ui.base.voice.RecognitionManager;
-import com.eanfang.util.StringUtils;
 
 
 import net.eanfang.client.base.ClientApplication;
@@ -28,6 +27,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import cn.hutool.core.util.StrUtil;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -118,15 +118,15 @@ public class QuickRepairViewModel extends BaseViewModel {
             mRepairOrderEntity.setRepairContacts(ClientApplication.get().getAccount().getRealName());
             mRepairBugEntity.setBugDescription(mBinding.etHomeRepairDescribe.getText().toString());
             mRepairOrderEntity.setRepairContactPhone(ClientApplication.get().getAccount().getMobile());
-            if (StringUtils.isEmpty(mRepairBugEntity.getBusinessThreeCode())) {
+            if (StrUtil.isEmpty(mRepairBugEntity.getBusinessThreeCode())) {
                 showToast("请选择系统类别");
                 return;
             }
-            if (StringUtils.isEmpty(mRepairOrderEntity.getAddress())) {
+            if (StrUtil.isEmpty(mRepairOrderEntity.getAddress())) {
                 showToast("请选择位置");
                 return;
             }
-            if (StringUtils.isEmpty(mRepairBugEntity.getModelCode())) {
+            if (StrUtil.isEmpty(mRepairBugEntity.getModelCode())) {
                 showToast("请选择品牌");
                 return;
             }
@@ -135,11 +135,11 @@ public class QuickRepairViewModel extends BaseViewModel {
             mInstallOrderConfirmBean.setDescription(mBinding.etHomeRepairDescribe.getText().toString());
             mInstallOrderConfirmBean.setConnectorPhone(ClientApplication.get().getAccount().getMobile());
             mInstallOrderConfirmBean.setConnector(ClientApplication.get().getAccount().getRealName());
-            if (StringUtils.isEmpty(mInstallOrderConfirmBean.getBusinessOneCode())) {
+            if (StrUtil.isEmpty(mInstallOrderConfirmBean.getBusinessOneCode())) {
                 showToast("请选择系统类别");
                 return;
             }
-            if (StringUtils.isEmpty(mInstallOrderConfirmBean.getDetailPlace())) {
+            if (StrUtil.isEmpty(mInstallOrderConfirmBean.getDetailPlace())) {
                 showToast("请选择位置");
                 return;
             }
@@ -148,11 +148,11 @@ public class QuickRepairViewModel extends BaseViewModel {
             mDesignOrderInfoBean.setRemarkInfo(mBinding.etHomeRepairDescribe.getText().toString());
             mDesignOrderInfoBean.setContactPhone(ClientApplication.get().getAccount().getMobile());
             mDesignOrderInfoBean.setContactUser(ClientApplication.get().getAccount().getRealName());
-            if (StringUtils.isEmpty(mDesignOrderInfoBean.getBusinessOneCode())) {
+            if (StrUtil.isEmpty(mDesignOrderInfoBean.getBusinessOneCode())) {
                 showToast("请选择系统类别");
                 return;
             }
-            if (StringUtils.isEmpty(mDesignOrderInfoBean.getDetailPlace())) {
+            if (StrUtil.isEmpty(mDesignOrderInfoBean.getDetailPlace())) {
                 showToast("请选择位置");
                 return;
             }

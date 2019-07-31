@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.annimon.stream.Stream;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.picture.PictureRecycleView;
-import com.eanfang.biz.model.MaintenanceBean;
+import com.eanfang.biz.model.bean.MaintenanceBean;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.listener.MultiClickListener;
@@ -18,7 +18,6 @@ import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.NumberUtil;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.PickerSelectUtil;
-import com.eanfang.util.StringUtils;
 import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.worker.R;
@@ -31,6 +30,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * 添加维修保养详情页面
@@ -64,6 +64,7 @@ public class AddMaintenanceDetailActivity extends BaseWorkerActivity {
     private TextView tv_commit;
     private Map<String, String> uploadMap = new HashMap<>();
     private List<LocalMedia> selectList = new ArrayList<>();
+    PictureRecycleView.ImageListener listener = list -> selectList = list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +99,6 @@ public class AddMaintenanceDetailActivity extends BaseWorkerActivity {
         tv_commit = findViewById(R.id.tv_commit);
         pictureRecycler.addImagev(listener);
     }
-    PictureRecycleView.ImageListener listener = list -> selectList = list;
 
     private void registerListener() {
         rl_business_type.setOnClickListener((v) -> {
@@ -111,7 +111,7 @@ public class AddMaintenanceDetailActivity extends BaseWorkerActivity {
         });
         rl_device_type.setOnClickListener((v) -> {
             String busOneCode = Config.get().getBusinessCodeByName(tv_business_type.getText().toString().trim(), 1);
-            if (StringUtils.isEmpty(busOneCode)) {
+            if (StrUtil.isEmpty(busOneCode)) {
                 showToast("请先选择业务类别");
                 return;
             }
@@ -123,7 +123,7 @@ public class AddMaintenanceDetailActivity extends BaseWorkerActivity {
         });
         rl_device_name.setOnClickListener((v) -> {
             String busTwoCode = Config.get().getBusinessCodeByName(tv_device_type.getText().toString().trim(), 2);
-            if (StringUtils.isEmpty(busTwoCode)) {
+            if (StrUtil.isEmpty(busTwoCode)) {
                 showToast("请先选择设备类别");
                 return;
             }
@@ -135,7 +135,7 @@ public class AddMaintenanceDetailActivity extends BaseWorkerActivity {
 
         rl_brand_model.setOnClickListener((v) -> {
             String busOneCode = Config.get().getBaseCodeByName(tv_business_type.getText().toString().trim(), 1, Constant.MODEL).get(0);
-            if (StringUtils.isEmpty(busOneCode)) {
+            if (StrUtil.isEmpty(busOneCode)) {
                 showToast("请先选择业务类别");
                 return;
             }

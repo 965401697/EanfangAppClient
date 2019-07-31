@@ -2,13 +2,16 @@ package net.eanfang.worker.ui.activity.im;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.eanfang.biz.model.entity.AccountEntity;
+import com.eanfang.biz.model.entity.SysGroupUserEntity;
 import com.eanfang.config.EanfangConst;
-import com.eanfang.biz.model.GroupDetailBean;
 import com.eanfang.util.Cn2Spell;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.witget.SideBar;
@@ -39,7 +42,7 @@ public class GroupMoreMemberActivity extends BaseWorkerActivity {
     @BindView(R.id.side_bar)
     SideBar sideBar;
 
-    private List<GroupDetailBean.ListBean> mList;
+    private List<SysGroupUserEntity> mList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +52,7 @@ public class GroupMoreMemberActivity extends BaseWorkerActivity {
         super.onCreate(savedInstanceState);
         setTitle("群组成员");
         setLeftBack();
-        mList = (ArrayList<GroupDetailBean.ListBean>) getIntent().getSerializableExtra("list");
+        mList = (ArrayList<SysGroupUserEntity>) getIntent().getSerializableExtra("list");
         initViews();
         initData();
     }
@@ -60,9 +63,9 @@ public class GroupMoreMemberActivity extends BaseWorkerActivity {
 
         if (mList.size() > 0) {
 
-            List<GroupDetailBean.ListBean.AccountEntityBean> list = new ArrayList<>(mList.size());
+            List<AccountEntity> list = new ArrayList<>(mList.size());
 
-            for (GroupDetailBean.ListBean bean : mList) {
+            for (SysGroupUserEntity bean : mList) {
                 // 根据姓名获取拼音
                 bean.getAccountEntity().setPinyin(bean.getAccountEntity().getNickName());
                 bean.getAccountEntity().setFirstLetter(Cn2Spell.getPinYin(bean.getAccountEntity().getNickName()).substring(0, 1).toUpperCase()); // 获取拼音首字母并转成大写
@@ -73,9 +76,21 @@ public class GroupMoreMemberActivity extends BaseWorkerActivity {
                 list.add(bean.getAccountEntity());
             }
 
-            List<GroupDetailBean.ListBean.AccountEntityBean> groupMemberList = list;
+            List<AccountEntity> groupMemberList = list;
 
-            Collections.sort(groupMemberList, new GroupDetailBean.ListBean.AccountEntityBean());
+            Collections.sort(groupMemberList, (o1, o2) -> {
+                if (o1 == null || o1.getFirstLetter() == null || o2 == null || o2.getFirstLetter() == null) {
+                    return -1;
+                }
+                //这里主要是用来对数据里面的数据根据ABCDEFG...来排序
+                if ("#".equals(o2.getFirstLetter())) {
+                    return -1;
+                } else if ("#".equals(o1.getFirstLetter())) {
+                    return 1;
+                } else {
+                    return o1.getFirstLetter().compareTo(o2.getFirstLetter());
+                }
+            });
 
             mMoreMemberAdapter.setNewData(groupMemberList);
         }
@@ -89,7 +104,7 @@ public class GroupMoreMemberActivity extends BaseWorkerActivity {
         mMoreMemberAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                GroupDetailBean.ListBean.AccountEntityBean bean = (GroupDetailBean.ListBean.AccountEntityBean) adapter.getData().get(position);
+                AccountEntity bean = (AccountEntity) adapter.getData().get(position);
                 if (!bean.getAccId().equals(String.valueOf(WorkerApplication.get().getAccId()))) {
                     Intent intent = new Intent(GroupMoreMemberActivity.this, IMPresonInfoActivity.class);
                     intent.putExtra(EanfangConst.RONG_YUN_ID, bean.getAccId());

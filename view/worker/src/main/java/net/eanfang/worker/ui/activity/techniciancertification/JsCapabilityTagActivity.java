@@ -9,8 +9,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.JsCapabilityTagListBean;
-import com.eanfang.biz.model.PostAllTagListBean;
+import com.eanfang.biz.model.bean.JsCapabilityTagListBean;
+import com.eanfang.biz.model.bean.PostAllTagListBean;
 import com.eanfang.ui.base.BaseActivity;
 
 import net.eanfang.worker.R;

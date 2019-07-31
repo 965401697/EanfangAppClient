@@ -24,6 +24,8 @@ import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.lang.Validator;
+import cn.hutool.core.util.StrUtil;
 import io.rong.imkit.RongIM;
 
 /**
@@ -73,7 +75,7 @@ public class ChangePhoneActivity extends BaseActivity {
         rlConfirm.setOnClickListener(new MultiClickListener(this, this::isCheckInfo, this::doSubmit));
         llYanzheng.setOnClickListener(v -> {
             mMobile = etPhone.getText().toString().trim();
-            if (StringUtils.isEmpty(mMobile)) {
+            if (StrUtil.isEmpty(mMobile)) {
                 showToast("请输入手机号");
                 return;
             }
@@ -135,16 +137,16 @@ public class ChangePhoneActivity extends BaseActivity {
         mMobile = etPhone.getText().toString().trim();
         mVerify = etYanzheng.getText().toString().trim();
 
-        if (StringUtils.isEmpty(mMobile)) {
+        if (StrUtil.isEmpty(mMobile)) {
             showToast("请输入手机号");
             return false;
         }
-        if (StringUtils.isEmpty(mVerify)) {
+        if (StrUtil.isEmpty(mVerify)) {
             showToast("请输入验证码");
             return false;
         }
         //电话号码是否符合格式
-        if (!StringUtils.isMobileString(mMobile)) {
+        if (!Validator.isMobile(mMobile)) {
             showToast("请输入正确手机号");
             return false;
         }

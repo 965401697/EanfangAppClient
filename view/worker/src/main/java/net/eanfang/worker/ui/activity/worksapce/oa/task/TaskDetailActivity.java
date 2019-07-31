@@ -18,7 +18,7 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.WorkTaskInfoBean;
+import com.eanfang.biz.model.bean.WorkTaskInfoBean;
 import com.eanfang.util.DateKit;
 import com.eanfang.util.GlideUtil;
 
@@ -29,7 +29,6 @@ import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cn.hutool.core.date.DateUtil;
 
 public class TaskDetailActivity extends BaseWorkerActivity {
 

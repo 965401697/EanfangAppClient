@@ -74,7 +74,7 @@
                 android:textSize="14sp"
                 android:visibility="gone"/>
 
-            <com.vector.update_app.view.NumberProgressBar
+            <com.vector.update_app.view.UpdateNumberProgressBar
                 android:id="@+id/npb"
                 style="@style/UpdateAppNumberProgressBar_Red"
                 android:paddingBottom="10dp"

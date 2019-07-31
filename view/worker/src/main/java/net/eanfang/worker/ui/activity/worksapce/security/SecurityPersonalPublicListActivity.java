@@ -16,15 +16,14 @@ import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.security.SecurityFoucsBean;
-import com.eanfang.biz.model.security.SecurityFoucsListBean;
-import com.eanfang.biz.model.security.SecurityListBean;
+import com.eanfang.bean.security.SecurityFoucsBean;
+import com.eanfang.bean.security.SecurityFoucsListBean;
+import com.eanfang.bean.security.SecurityListBean;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.BGASpaceItemDecoration;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.QueryEntry;
-import com.eanfang.util.StringUtils;
-import com.photopicker.com.util.BGASpaceItemDecoration;
+import com.eanfang.biz.model.QueryEntry;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
@@ -39,6 +38,7 @@ import java.util.Arrays;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author guanluocang
@@ -243,7 +243,7 @@ public class SecurityPersonalPublicListActivity extends BaseActivity implements 
 
             bundle.putString("id", String.valueOf(listBean.getSpcId()));
             bundle.putString("orderNum", listBean.getPublisherOrg().getOrgName());
-            if (!StringUtils.isEmpty(listBean.getSpcImg())) {
+            if (!StrUtil.isEmpty(listBean.getSpcImg())) {
                 bundle.putString("picUrl", listBean.getSpcImg().split(",")[0]);
             }
             bundle.putString("creatTime", listBean.getSpcContent());

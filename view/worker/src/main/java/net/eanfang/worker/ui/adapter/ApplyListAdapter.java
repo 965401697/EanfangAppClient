@@ -6,12 +6,13 @@ import android.widget.ImageView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.eanfang.biz.model.ApplyTaskListBean;
+import com.eanfang.biz.model.bean.ApplyTaskListBean;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
+
+import cn.hutool.core.util.StrUtil;
 
 
 /**
@@ -38,7 +39,7 @@ public class ApplyListAdapter extends BaseQuickAdapter<ApplyTaskListBean.ListBea
         helper.setText(R.id.tv_count_money, item.getProjectQuote() + "");
 
         ImageView sdv_pic = helper.getView(R.id.sdv_pic);
-        if (!StringUtils.isEmpty(item.getPictures())) {
+        if (!StrUtil.isEmpty(item.getPictures())) {
             String[] urls = item.getPictures().split(",");
             GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + urls[0]),sdv_pic);
         }

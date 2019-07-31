@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.eanfang.R;
-import com.eanfang.biz.model.OrderProgressBean;
+import com.eanfang.biz.model.bean.OrderProgressBean;
 
 import java.util.ArrayList;
 import java.util.List;

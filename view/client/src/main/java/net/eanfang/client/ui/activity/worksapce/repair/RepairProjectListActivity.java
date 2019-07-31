@@ -12,12 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.ProjectListBean;
+import com.eanfang.biz.model.bean.ProjectListBean;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.QueryEntry;
-import com.yaf.base.entity.ProjectEntity;
+import com.eanfang.biz.model.QueryEntry;
+import com.eanfang.biz.model.entity.ProjectEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.adapter.repair.RepairProjectListAdapter;

@@ -1,6 +1,6 @@
 package com.eanfang.base.widget.controltool.numberprogress;
 
-import com.vector.update_app.view.NumberProgressBar;
+import com.vector.update_app.view.UpdateNumberProgressBar;
 
 /**
  * created by wtt
@@ -8,5 +8,5 @@ import com.vector.update_app.view.NumberProgressBar;
  * summary:
  */
 public interface INumberProgressBar {
-    void setProgress(NumberProgressBar numberProgressBar, int progress);
+    void setProgress(UpdateNumberProgressBar updateNumberProgressBar, int progress);
 }

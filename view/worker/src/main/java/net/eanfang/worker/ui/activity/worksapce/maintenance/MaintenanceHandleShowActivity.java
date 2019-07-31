@@ -16,9 +16,9 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GetConstDataUtils;
-import com.yaf.base.entity.ShopMaintenanceExamDeviceEntity;
-import com.yaf.base.entity.ShopMaintenanceExamResultEntity;
-import com.yaf.base.entity.ShopMaintenanceOrderEntity;
+import com.eanfang.biz.model.entity.ShopMaintenanceExamDeviceEntity;
+import com.eanfang.biz.model.entity.ShopMaintenanceExamResultEntity;
+import com.eanfang.biz.model.entity.ShopMaintenanceOrderEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;

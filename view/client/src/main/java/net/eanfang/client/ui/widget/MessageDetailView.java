@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.eanfang.biz.model.NoticeEntity;
+import com.eanfang.biz.model.entity.NoticeEntity;
 import com.eanfang.ui.base.BaseDialog;
 
 import net.eanfang.client.R;

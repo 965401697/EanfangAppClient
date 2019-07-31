@@ -12,7 +12,7 @@ import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.PickerSelectUtil;
-import com.yaf.base.entity.LogDetailsEntity;
+import com.eanfang.biz.model.entity.LogDetailsEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;

@@ -16,8 +16,8 @@ import android.widget.RelativeLayout;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.base.kit.SDKManager;
-import com.eanfang.biz.model.security.SecurityCreateBean;
-import com.eanfang.biz.model.security.SecurityFoucsListBean;
+import com.eanfang.bean.security.SecurityCreateBean;
+import com.eanfang.bean.security.SecurityFoucsListBean;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -33,9 +33,6 @@ import com.eanfang.util.contentsafe.ContentDefaultAuditing;
 import com.eanfang.util.contentsafe.ContentSecurityAuditUtil;
 import com.eanfang.witget.TakeVideoPopWindow;
 import com.eanfang.witget.mentionedittext.edit.MentionEditText;
-import com.photopicker.com.activity.BGAPhotoPickerActivity;
-import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.im.VideoSelectedActivity;
@@ -50,6 +47,10 @@ import java.util.HashMap;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
+import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerPreviewActivity;
+import cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author guanluocang
@@ -163,7 +164,7 @@ public class SecurityCreateActivity extends BaseActivity {
         mAtUserId = StringUtils.getSecurityId(etContent.getFormatCharSequence().toString());
         String mContent = etContent.getText().toString().trim();
         mPic = PhotoUtils.getPhotoUrl("sercurity/", snplAddPhoto, uploadMap, false);
-        if (!StringUtils.isEmpty(mContent) || !StringUtils.isEmpty(mPic)) {
+        if (!StrUtil.isEmpty(mContent) || !StrUtil.isEmpty(mPic)) {
 
             ContentSecurityAuditUtil.getInstance().toAuditing(mContent, new ContentDefaultAuditing(SecurityCreateActivity.this) {
                 @Override
@@ -173,7 +174,7 @@ public class SecurityCreateActivity extends BaseActivity {
                     securityCreateBean.setSpcVideo(mUploadKey);
                     securityCreateBean.setAtUserId(mAtUserId.toString());
                     if (uploadMap.size() != 0) {
-                        SDKManager.ossKit(SecurityCreateActivity.this).asyncPutImages(uploadMap,(isSuccess) -> {
+                        SDKManager.ossKit(SecurityCreateActivity.this).asyncPutImages(uploadMap, (isSuccess) -> {
                             runOnUiThread(() -> {
                                 doSubmit();
                             });
@@ -205,10 +206,10 @@ public class SecurityCreateActivity extends BaseActivity {
         }
         switch (requestCode) {
             case REQUEST_CODE_CHOOSE_CERTIFICATE:
-                snplAddPhoto.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                snplAddPhoto.addMoreData(BGAPhotoPickerActivity.getSelectedPhotos(data));
                 break;
             case REQUEST_CODE_PHOTO_CERTIFICATE:
-                snplAddPhoto.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                snplAddPhoto.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
                 break;
             //相册选取视频
             case REQUEST_CODE_CHOOSE_VIDEO:
@@ -292,11 +293,11 @@ public class SecurityCreateActivity extends BaseActivity {
             rlVideo.setVisibility(View.VISIBLE);
             mVieoPath = takeVdideoMode.getMImagePath();
             mUploadKey = takeVdideoMode.getMKey();
-            if (!StringUtils.isEmpty(mVieoPath)) {
+            if (!StrUtil.isEmpty(mVieoPath)) {
                 if (ivShowVideo.getVisibility() == View.INVISIBLE) {
                     ivShowVideo.setVisibility(View.VISIBLE);
                 }
-                GlideUtil.intoImageView(this,PhotoUtils.getVideoBitmap(mVieoPath),ivShowVideo);
+                GlideUtil.intoImageView(this, PhotoUtils.getVideoBitmap(mVieoPath), ivShowVideo);
             }
         }
     }

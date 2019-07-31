@@ -1,6 +1,6 @@
 package net.eanfang.client.ui.activity.leave_post.bean;
 
-import com.eanfang.biz.model.TemplateBean;
+import com.eanfang.biz.model.bean.TemplateBean;
 import com.eanfang.biz.model.entity.AccountEntity;
 
 import java.util.List;

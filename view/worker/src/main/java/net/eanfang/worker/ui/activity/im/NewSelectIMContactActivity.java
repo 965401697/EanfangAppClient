@@ -6,8 +6,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -20,13 +22,13 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.kit.loading.LoadKit;
+import com.eanfang.biz.model.entity.SysGroupUserEntity;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.GroupCreatBean;
-import com.eanfang.biz.model.GroupDetailBean;
-import com.eanfang.biz.model.TemplateBean;
+import com.eanfang.biz.model.bean.GroupCreatBean;
+import com.eanfang.biz.model.bean.TemplateBean;
 
-import com.eanfang.util.DialogUtil;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.compound.CompoundHelper;
@@ -79,7 +81,7 @@ public class NewSelectIMContactActivity extends BaseWorkerActivity {
     private String path;
     private String groupName;
 
-    private ArrayList<GroupDetailBean.ListBean> mFriendListBeanArrayList;
+    private ArrayList<SysGroupUserEntity> mFriendListBeanArrayList;
     private String mGroupId;
     private String mRYGroupId;
     private String mTitle;
@@ -119,7 +121,7 @@ public class NewSelectIMContactActivity extends BaseWorkerActivity {
 
             if (!TextUtils.isEmpty(path)) {
                 String inageKey = "im/group/" + StrUtil.uuid() + ".png";
-                SDKManager.ossKit(NewSelectIMContactActivity.this).asyncPutImage(inageKey, path,(isSuccess)->{
+                SDKManager.ossKit(NewSelectIMContactActivity.this).asyncPutImage(inageKey, path, (isSuccess) -> {
                     updataGroupInfo(mTitle, inageKey, "", "");
                 });
             }
@@ -139,7 +141,7 @@ public class NewSelectIMContactActivity extends BaseWorkerActivity {
         supprotToolbar();
         setTitle("选择联系人");
         startTransaction(true);
-        dialog = DialogUtil.createLoadingDialog(NewSelectIMContactActivity.this);
+        dialog = LoadKit.dialog(NewSelectIMContactActivity.this);
 
         bundle = getIntent().getExtras();
 
@@ -161,7 +163,7 @@ public class NewSelectIMContactActivity extends BaseWorkerActivity {
             setRightTitle("添加");
             findViewById(R.id.rl_my_group).setVisibility(View.GONE);
             mGroupId = getIntent().getStringExtra("groupId");
-            mFriendListBeanArrayList = (ArrayList<GroupDetailBean.ListBean>) getIntent().getSerializableExtra("list");
+            mFriendListBeanArrayList = (ArrayList<SysGroupUserEntity>) getIntent().getSerializableExtra("list");
             mRYGroupId = getIntent().getStringExtra("ryGroupId");
             mTitle = getIntent().getStringExtra("title");
 
@@ -398,9 +400,9 @@ public class NewSelectIMContactActivity extends BaseWorkerActivity {
         @Override
         protected void convert(BaseViewHolder helper, TemplateBean.Preson item) {
             if (item.getProtraivat().startsWith("http")) {
-                GlideUtil.intoImageView(mContext,Uri.parse(item.getProtraivat()),helper.getView(R.id.iv_user_header));
+                GlideUtil.intoImageView(mContext, Uri.parse(item.getProtraivat()), helper.getView(R.id.iv_user_header));
             } else {
-                GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + item.getProtraivat()), helper.getView(R.id.iv_user_header));
+                GlideUtil.intoImageView(mContext, Uri.parse(BuildConfig.OSS_SERVER + item.getProtraivat()), helper.getView(R.id.iv_user_header));
             }
         }
     }
@@ -554,7 +556,7 @@ public class NewSelectIMContactActivity extends BaseWorkerActivity {
         }
 
         //头像上传成功后  提交数据
-        SDKManager.ossKit(NewSelectIMContactActivity.this).asyncPutImage(imgKey, path,(isSuccess)->{
+        SDKManager.ossKit(NewSelectIMContactActivity.this).asyncPutImage(imgKey, path, (isSuccess) -> {
             //创建群组
             EanfangHttp.post(UserApi.POST_CREAT_GROUP)
                     .upJson(jsonObject)
@@ -594,9 +596,9 @@ public class NewSelectIMContactActivity extends BaseWorkerActivity {
         }
         // TODO: 2018/10/9  待优化
         List<String> idList = new ArrayList<>();
-        for (GroupDetailBean.ListBean bean : mFriendListBeanArrayList) {
+        for (SysGroupUserEntity bean : mFriendListBeanArrayList) {
             mUserIconList.add(bean.getAccountEntity().getAvatar());
-            idList.add(bean.getAccId());
+            idList.add(bean.getAccId().toString());
         }
 
         for (TemplateBean.Preson p : newPresonList) {

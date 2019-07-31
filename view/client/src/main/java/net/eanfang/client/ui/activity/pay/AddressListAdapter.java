@@ -4,7 +4,7 @@ import android.widget.CheckBox;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.yaf.base.entity.ReceiveAddressEntity;
+import com.eanfang.biz.model.entity.ReceiveAddressEntity;
 
 import net.eanfang.client.R;
 

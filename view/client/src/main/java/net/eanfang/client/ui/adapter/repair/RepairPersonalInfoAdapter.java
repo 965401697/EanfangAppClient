@@ -4,13 +4,14 @@ import android.widget.CheckBox;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.biz.model.reapair.RepairPersonalInfoEntity;
-import com.eanfang.util.StringUtils;
+import com.eanfang.biz.model.entity.RepairPersonalInfoEntity;
 
 import net.eanfang.client.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author guanluocang
@@ -47,7 +48,7 @@ public class RepairPersonalInfoAdapter extends BaseQuickAdapter<RepairPersonalIn
         // 电话
         helper.setText(R.id.tv_phone, item.getPhone());
         // 单位
-        if (!StringUtils.isEmpty(item.getSelectAddress())) {
+        if (!StrUtil.isEmpty(item.getSelectAddress())) {
             helper.setText(R.id.tv_home_type, "[" + item.getSelectAddress() + "]");
         }
         helper.setText(R.id.tv_home_address, item.getConmpanyName());

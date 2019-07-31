@@ -2,7 +2,7 @@ package net.eanfang.worker.ui.adapter;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.biz.model.WorkAddCheckBean;
+import com.eanfang.biz.model.bean.WorkAddCheckBean;
 
 import net.eanfang.worker.R;
 

@@ -13,18 +13,16 @@ import com.eanfang.R;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.base.BaseActivity;
 import com.eanfang.base.BaseApplication;
+import com.eanfang.biz.model.entity.WorkerEntity;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.util.JumpItent;
-import com.eanfang.util.StringUtils;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.ResultPoint;
 import com.journeyapps.barcodescanner.BarcodeCallback;
 import com.journeyapps.barcodescanner.BarcodeResult;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
 import com.journeyapps.barcodescanner.DefaultDecoderFactory;
-import com.yaf.base.entity.WorkerEntity;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -32,6 +30,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.regex.Pattern;
+
+import cn.hutool.core.util.StrUtil;
 
 import static com.eanfang.util.StringUtils.getValueByName;
 
@@ -77,7 +77,7 @@ public class ScanCodeActivity extends BaseActivity {
         barcodeScannerView = findViewById(R.id.zxing_barcode_scanner);
         Collection<BarcodeFormat> formats = Arrays.asList(BarcodeFormat.QR_CODE, BarcodeFormat.CODE_39);
         barcodeScannerView.getBarcodeView().setDecoderFactory(new DefaultDecoderFactory(formats));
-        if (!StringUtils.isEmpty(mScanType)) {
+        if (!StrUtil.isEmpty(mScanType)) {
             // 扫码设备
             if (mScanType.equals("scan_device")) {
                 barcodeScannerView.setStatusText(getResources().getString(R.string.zxing_device));
@@ -102,7 +102,7 @@ public class ScanCodeActivity extends BaseActivity {
         public void barcodeResult(BarcodeResult result) {
             barcodeScannerView.pause();
             String resultString = result.getText();
-            if (StringUtils.isEmpty(resultString)) {
+            if (StrUtil.isEmpty(resultString)) {
                 return;
             }
             if (resultString.equals("")) {

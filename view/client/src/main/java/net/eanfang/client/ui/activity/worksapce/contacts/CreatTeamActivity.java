@@ -13,9 +13,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.OrgUnitListBean;
+import com.eanfang.biz.model.bean.OrgUnitListBean;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.util.QueryEntry;
+import com.eanfang.biz.model.QueryEntry;
 import com.eanfang.biz.model.entity.OrgUnitEntity;
 
 import net.eanfang.client.R;

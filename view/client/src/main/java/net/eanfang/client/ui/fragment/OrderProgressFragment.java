@@ -7,12 +7,11 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.OrderProgressBean;
+import com.eanfang.biz.model.bean.OrderProgressBean;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.DateKit;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.util.QueryEntry;
-import com.eanfang.util.StringUtils;
+import com.eanfang.biz.model.QueryEntry;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.adapter.OrderProgressAdapter;
@@ -23,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * Created by MrHou
@@ -75,7 +75,7 @@ public class OrderProgressFragment extends BaseFragment {
         mTvData = findViewById(R.id.tv_date);
         mTvWeek = findViewById(R.id.tv_weeks);
         mTvTime = findViewById(R.id.tv_time);
-        if (!StringUtils.isEmpty(mOrderTime)) {
+        if (!StrUtil.isEmpty(mOrderTime)) {
             mTvTime.setText(DateUtil.parse(mOrderTime).toTimeStr());
             mTvData.setText(DateUtil.parse(mOrderTime).toDateStr());
             mTvWeek.setText(DateKit.get(mOrderTime).weekName());

@@ -4,14 +4,15 @@ import android.net.Uri;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.biz.model.CollectionCompanyListBean;
+import com.eanfang.biz.model.bean.CollectionCompanyListBean;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.StringUtils;
 
 
 import net.eanfang.client.R;
 
 import java.util.List;
+
+import cn.hutool.core.util.StrUtil;
 
 
 /**
@@ -26,14 +27,14 @@ public class CollectionCompanyListAdapter extends BaseQuickAdapter<CollectionCom
 
     @Override
     protected void convert(BaseViewHolder helper, CollectionCompanyListBean.AllBean item) {
-        if (!StringUtils.isEmpty(item.getLogopic())) {
+        if (!StrUtil.isEmpty(item.getLogopic())) {
             GlideUtil.intoImageView(mContext,Uri.parse(item.getLogopic()),helper.getView(R.id.iv_header));
         }
         helper.setText(R.id.tv_name, item.getCompanyname());
-        if (!StringUtils.isEmpty(item.getPraise())) {
+        if (!StrUtil.isEmpty(item.getPraise())) {
             helper.setText(R.id.tv_koubei, item.getPraise() + "分");
         }
-        if (!StringUtils.isEmpty(item.getGoodpercent())) {
+        if (!StrUtil.isEmpty(item.getGoodpercent())) {
             helper.setText(R.id.tv_haopinglv, Double.parseDouble(item.getGoodpercent()) * 100 + "%");
         }
     }

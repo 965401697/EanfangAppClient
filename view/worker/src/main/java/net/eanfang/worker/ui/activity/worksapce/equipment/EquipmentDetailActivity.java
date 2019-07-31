@@ -14,9 +14,9 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
-import com.yaf.base.entity.CustDeviceEntity;
-import com.yaf.base.entity.ShopMaintenanceExamDeviceEntity;
-import com.yaf.base.entity.ShopMaintenanceOrderEntity;
+import com.eanfang.biz.model.entity.CustDeviceEntity;
+import com.eanfang.biz.model.entity.ShopMaintenanceExamDeviceEntity;
+import com.eanfang.biz.model.entity.ShopMaintenanceOrderEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.maintenance.MaintenanceAddCheckResultActivity;

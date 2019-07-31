@@ -19,14 +19,13 @@ import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.AddDesignOrderBean;
+import com.eanfang.biz.model.bean.AddDesignOrderBean;
 import com.eanfang.biz.model.bean.LoginBean;
-import com.eanfang.biz.model.Message;
-import com.eanfang.biz.model.SelectAddressItem;
+import com.eanfang.biz.model.bean.Message;
+import com.eanfang.biz.model.bean.SelectAddressItem;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PickerSelectUtil;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
@@ -36,6 +35,7 @@ import androidx.appcompat.app.AlertDialog;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * Created by MrHou
@@ -150,13 +150,13 @@ public class DesignActivity extends BaseClientActivity {
     private void initData() {
         LoginBean user = ClientApplication.get().getLoginBean();
         String name = "";
-        if (StringUtils.isEmpty(user.getAccount().getDefaultUser().getCompanyEntity().getOrgName())) {
+        if (StrUtil.isEmpty(user.getAccount().getDefaultUser().getCompanyEntity().getOrgName())) {
             name = user.getAccount().getRealName();
         } else {
             name = user.getAccount().getDefaultUser().getCompanyEntity().getOrgName();
         }
         //如果公司名称为空 则取当前登陆人的公司
-        if (StringUtils.isEmpty(et_user_name.getText())) {
+        if (StrUtil.isEmpty(et_user_name.getText())) {
             et_user_name.setText(name);
             et_receive_user_name.setText(user.getAccount().getRealName());
             et_receive_phone.setText(user.getAccount().getMobile());

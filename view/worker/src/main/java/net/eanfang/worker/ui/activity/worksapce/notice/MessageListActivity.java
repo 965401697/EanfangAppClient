@@ -23,10 +23,10 @@ import com.eanfang.base.kit.tencent.xingepush.IXGPushClickedResult;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.NoticeEntity;
-import com.eanfang.biz.model.NoticeListBean;
+import com.eanfang.biz.model.entity.NoticeEntity;
+import com.eanfang.biz.model.bean.NoticeListBean;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.util.QueryEntry;
+import com.eanfang.biz.model.QueryEntry;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.MessageListAdapter;

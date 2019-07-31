@@ -8,14 +8,15 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.biz.model.TemplateBean;
-import com.eanfang.biz.model.device.User;
+import com.eanfang.biz.model.bean.TemplateBean;
+import com.eanfang.biz.model.bean.device.User;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
+
+import cn.hutool.core.util.StrUtil;
 
 /**
  * Created by O u r on 2018/11/15.
@@ -31,7 +32,7 @@ public class OrganizationPersonAdapter extends BaseQuickAdapter<TemplateBean.Pre
 
     @Override
     protected void convert(BaseViewHolder helper, TemplateBean.Preson item) {
-        if (StringUtils.isEmpty(item.getName())) {
+        if (StrUtil.isEmpty(item.getName())) {
             EanfangHttp.get(UserApi.POST_USER_INFO + item.getId())
                     .execute(new EanfangCallback<User>((Activity) mContext, false, User.class, (bean) -> {
                         if (bean != null) {

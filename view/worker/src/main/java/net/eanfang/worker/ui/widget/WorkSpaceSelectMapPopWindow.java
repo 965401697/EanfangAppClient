@@ -10,9 +10,10 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.PopupWindow;
 
-import com.picker.common.util.ScreenUtils;
 
 import net.eanfang.worker.R;
+
+import cn.qqtheme.framework.util.ScreenUtils;
 
 /**
  * @author Guanluocang

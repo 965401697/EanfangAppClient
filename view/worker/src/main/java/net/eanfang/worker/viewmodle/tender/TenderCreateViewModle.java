@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Map;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 import lombok.Getter;
 
 /**
@@ -142,36 +143,36 @@ public class TenderCreateViewModle extends BaseViewModel {
      * 完善资料
      */
     public boolean doCheckInfo() {
-        if (StringUtils.isEmpty(mTenderCreateBinding.tvProjectAddress.getText())) {
+        if (StrUtil.isEmpty(mTenderCreateBinding.tvProjectAddress.getText())) {
             showToast("请选择地址");
             return false;
         }
 
-        if (StringUtils.isEmpty(mTenderCreateBinding.tvBusinessType.getText())) {
+        if (StrUtil.isEmpty(mTenderCreateBinding.tvBusinessType.getText())) {
             showToast("请选择业务类型");
             return false;
         }
-        if (StringUtils.isEmpty(mTenderCreateBinding.tvSystemType.getText())) {
+        if (StrUtil.isEmpty(mTenderCreateBinding.tvSystemType.getText())) {
             showToast("请选择系统类别");
             return false;
         }
-        if (StringUtils.isEmpty(mTenderCreateBinding.tvStartTime.getText())) {
+        if (StrUtil.isEmpty(mTenderCreateBinding.tvStartTime.getText())) {
             showToast("请选择开始时间");
             return false;
         }
-        if (StringUtils.isEmpty(mTenderCreateBinding.etPredictTime.getText())) {
+        if (StrUtil.isEmpty(mTenderCreateBinding.etPredictTime.getText())) {
             showToast("请填写预期工期");
             return false;
         }
-        if (StringUtils.isEmpty(mTenderCreateBinding.tvBudget.getText())) {
+        if (StrUtil.isEmpty(mTenderCreateBinding.tvBudget.getText())) {
             showToast("请填写预期预算");
             return false;
         }
-        if (StringUtils.isEmpty(mTenderCreateBinding.etEnvironment.getText())) {
+        if (StrUtil.isEmpty(mTenderCreateBinding.etEnvironment.getText())) {
             showToast("请填写环境描述");
             return false;
         }
-        if (StringUtils.isEmpty(mTenderCreateBinding.etRequire.getText())) {
+        if (StrUtil.isEmpty(mTenderCreateBinding.etRequire.getText())) {
             showToast("请填写用工要求");
             return false;
         }

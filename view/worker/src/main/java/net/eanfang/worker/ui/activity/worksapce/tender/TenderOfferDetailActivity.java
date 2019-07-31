@@ -10,11 +10,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.eanfang.base.BaseActivity;
 import com.eanfang.biz.model.bean.PageBean;
+import com.eanfang.biz.model.entity.WorkerEntity;
 import com.eanfang.biz.model.entity.tender.TaskApplyEntity;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
 import com.eanfang.biz.rds.base.LViewModelProviders;
 import com.eanfang.util.JumpItent;
-import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.databinding.ActivityTenderOfferDetailBinding;

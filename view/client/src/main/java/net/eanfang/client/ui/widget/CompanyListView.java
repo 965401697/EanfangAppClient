@@ -21,12 +21,13 @@ import com.eanfang.biz.model.entity.OrgEntity;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.PermKit;
-import com.picker.common.util.ScreenUtils;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.adapter.SwitchCompanyListAdapter;
 
 import java.util.List;
+
+import cn.qqtheme.framework.util.ScreenUtils;
 
 /**
  * Created by MrHou

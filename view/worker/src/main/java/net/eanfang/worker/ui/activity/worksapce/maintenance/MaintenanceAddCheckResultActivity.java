@@ -15,18 +15,13 @@ import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.PickerSelectUtil;
-import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
-import com.photopicker.com.activity.BGAPhotoPickerActivity;
-import com.photopicker.com.activity.BGAPhotoPickerPreviewActivity;
-import com.photopicker.com.widget.BGASortableNinePhotoLayout;
-import com.yaf.base.entity.ShopMaintenanceExamDeviceEntity;
-import com.yaf.base.entity.ShopMaintenanceExamResultEntity;
+import com.eanfang.biz.model.entity.ShopMaintenanceExamDeviceEntity;
+import com.eanfang.biz.model.entity.ShopMaintenanceExamResultEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -34,6 +29,10 @@ import java.util.HashMap;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerActivity;
+import cn.bingoogolapple.photopicker.activity.BGAPhotoPickerPreviewActivity;
+import cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout;
+import cn.hutool.core.util.StrUtil;
 
 public class MaintenanceAddCheckResultActivity extends BaseWorkerActivity {
 
@@ -178,11 +177,11 @@ public class MaintenanceAddCheckResultActivity extends BaseWorkerActivity {
         }
         switch (requestCode) {
             case REQUEST_CODE_CHOOSE_PHOTO_1:
-                snplPhoto.addMoreData(BGAPhotoPickerActivity.getSelectedImages(data));
+                snplPhoto.addMoreData(BGAPhotoPickerActivity.getSelectedPhotos(data));
                 break;
 
             case REQUEST_CODE_PHOTO_PREVIEW_1:
-                snplPhoto.setData(BGAPhotoPickerPreviewActivity.getSelectedImages(data));
+                snplPhoto.setData(BGAPhotoPickerPreviewActivity.getSelectedPhotos(data));
                 break;
 
             default:
@@ -208,7 +207,7 @@ public class MaintenanceAddCheckResultActivity extends BaseWorkerActivity {
             return false;
         }
         checkResultPhoto = PhotoUtils.getPhotoUrl("biz/maintain/", snplPhoto, uploadMap, false);
-        if (StringUtils.isEmpty(checkResultPhoto)) {
+        if (StrUtil.isEmpty(checkResultPhoto)) {
             showToast("请选择照片");
             return false;
         }
@@ -222,7 +221,7 @@ public class MaintenanceAddCheckResultActivity extends BaseWorkerActivity {
      */
     private void initImgUrlList() {
         //修改小bug 图片读取问题
-        if (!StringUtils.isEmpty(examResultEntity.getPicture())) {
+        if (!StrUtil.isEmpty(examResultEntity.getPicture())) {
             String[] presentationPic = examResultEntity.getPicture().split(",");
             if (presentationPic.length >= 1) {
                 picList.add(BuildConfig.OSS_SERVER + presentationPic[0]);

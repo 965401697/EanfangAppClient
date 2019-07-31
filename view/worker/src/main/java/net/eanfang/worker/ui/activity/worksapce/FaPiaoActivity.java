@@ -11,14 +11,15 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.eanfang.biz.model.PuPiaoBean;
-import com.eanfang.biz.model.SelectAddressItem;
-import com.eanfang.biz.model.ZhuanPiaoBean;
+import com.eanfang.biz.model.bean.PuPiaoBean;
+import com.eanfang.biz.model.bean.SelectAddressItem;
+import com.eanfang.biz.model.bean.ZhuanPiaoBean;
 import com.eanfang.ui.activity.SelectAddressActivity;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
+
+import cn.hutool.core.util.StrUtil;
 
 /**
  * 填写发票
@@ -66,27 +67,27 @@ public class FaPiaoActivity extends BaseWorkerActivity {
                 }
                 String json = "";
                 if (rb_normal.isChecked()) {
-                    if (StringUtils.isEmpty(et_head.getText().toString().trim())) {
+                    if (StrUtil.isEmpty(et_head.getText().toString().trim())) {
                         showToast("请填写发票抬头");
                         return;
                     }
-                    if (StringUtils.isEmpty(et_name.getText().toString().trim())) {
+                    if (StrUtil.isEmpty(et_name.getText().toString().trim())) {
                         showToast("请填写姓名");
                         return;
                     }
-                    if (StringUtils.isEmpty(et_mobile_phone.getText().toString().trim())) {
+                    if (StrUtil.isEmpty(et_mobile_phone.getText().toString().trim())) {
                         showToast("请填写电话");
                         return;
                     }
-                    if (StringUtils.isEmpty(tv_address.getText().toString().trim())) {
+                    if (StrUtil.isEmpty(tv_address.getText().toString().trim())) {
                         showToast("请选择住址");
                         return;
                     }
-                    if (StringUtils.isEmpty(et_detail_address.getText().toString().trim())) {
+                    if (StrUtil.isEmpty(et_detail_address.getText().toString().trim())) {
                         showToast("请填写详细地址");
                         return;
                     }
-                    if (StringUtils.isEmpty(et_number_normal.getText().toString().trim())) {
+                    if (StrUtil.isEmpty(et_number_normal.getText().toString().trim())) {
                         showToast("请填写税号");
                         return;
                     }
@@ -103,43 +104,43 @@ public class FaPiaoActivity extends BaseWorkerActivity {
                     json = JSON.toJSONString(puPiaoBean);
                 }
                 if (rb_pro.isChecked()) {
-                    if (StringUtils.isEmpty(et_company.getText().toString().trim())) {
+                    if (StrUtil.isEmpty(et_company.getText().toString().trim())) {
                         showToast("请填写公司名称");
                         return;
                     }
-                    if (StringUtils.isEmpty(et_number.getText().toString().trim())) {
+                    if (StrUtil.isEmpty(et_number.getText().toString().trim())) {
                         showToast("请填写税号");
                         return;
                     }
-                    if (StringUtils.isEmpty(et_address.getText().toString().trim())) {
+                    if (StrUtil.isEmpty(et_address.getText().toString().trim())) {
                         showToast("请填写单位地址");
                         return;
                     }
-                    if (StringUtils.isEmpty(et_phone.getText().toString().trim())) {
+                    if (StrUtil.isEmpty(et_phone.getText().toString().trim())) {
                         showToast("请填写单位座机");
                         return;
                     }
-                    if (StringUtils.isEmpty(et_bank.getText().toString().trim())) {
+                    if (StrUtil.isEmpty(et_bank.getText().toString().trim())) {
                         showToast("请填写开户行");
                         return;
                     }
-                    if (StringUtils.isEmpty(et_bank_number.getText().toString().trim())) {
+                    if (StrUtil.isEmpty(et_bank_number.getText().toString().trim())) {
                         showToast("请填写银行账号");
                         return;
                     }
-                    if (StringUtils.isEmpty(et_name.getText().toString().trim())) {
+                    if (StrUtil.isEmpty(et_name.getText().toString().trim())) {
                         showToast("请填写姓名");
                         return;
                     }
-                    if (StringUtils.isEmpty(et_mobile_phone.getText().toString().trim())) {
+                    if (StrUtil.isEmpty(et_mobile_phone.getText().toString().trim())) {
                         showToast("请填写电话");
                         return;
                     }
-                    if (StringUtils.isEmpty(tv_address.getText().toString().trim())) {
+                    if (StrUtil.isEmpty(tv_address.getText().toString().trim())) {
                         showToast("请选择住址");
                         return;
                     }
-                    if (StringUtils.isEmpty(et_detail_address.getText().toString().trim())) {
+                    if (StrUtil.isEmpty(et_detail_address.getText().toString().trim())) {
                         showToast("请填写详细地址");
                         return;
                     }

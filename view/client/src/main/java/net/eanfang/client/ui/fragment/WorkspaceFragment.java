@@ -15,7 +15,7 @@ import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.biz.model.AllMessageBean;
+import com.eanfang.biz.model.bean.AllMessageBean;
 import com.eanfang.biz.model.entity.OrgEntity;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -25,7 +25,6 @@ import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
@@ -54,6 +53,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import cn.hutool.core.util.StrUtil;
 import q.rorbin.badgeview.QBadgeView;
 
 import static com.eanfang.base.kit.V.v;
@@ -202,7 +202,7 @@ public class WorkspaceFragment extends BaseFragment {
                 && bean.getOrgUnitEntity().getLogoPic() != null
                 && bean.getOrgUnitEntity().getOrgId().equals(defaultOrgid)).map(be -> v(() -> be.getOrgUnitEntity().getLogoPic())).toList();
         String imgUrl = v(() -> defaultPic.get(0));
-        if (!StringUtils.isEmpty(imgUrl)) {
+        if (!StrUtil.isEmpty(imgUrl)) {
             GlideUtil.intoImageView(getActivity(),Uri.parse(BuildConfig.OSS_SERVER + imgUrl),ivUserHeader);
         }
 

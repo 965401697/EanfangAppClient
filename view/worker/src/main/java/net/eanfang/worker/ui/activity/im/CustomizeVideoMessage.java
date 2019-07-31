@@ -51,33 +51,6 @@ public class CustomizeVideoMessage extends MessageContent {
         return null;
     }
 
-
-    public CustomizeVideoMessage() {
-
-    }
-
-    public CustomizeVideoMessage(byte[] data) {
-        String jsonStr = null;
-        try {
-            jsonStr = new String(data, "UTF-8");
-            JSONObject jsonObj = new JSONObject(jsonStr);
-            if (jsonObj.has("mp4Path")) {
-                this.setMp4Path(jsonObj.optString("mp4Path"));
-            }
-            if (jsonObj.has("imgUrl")) {
-                this.setImgUrl(jsonObj.optString("imgUrl"));
-            }
-
-
-        } catch (JSONException var4) {
-            io.rong.common.RLog.e("CustomizeVideoMessage", "JSONException " + var4.getMessage());
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-
     public int describeContents() {
         return 0;
     }
@@ -90,10 +63,11 @@ public class CustomizeVideoMessage extends MessageContent {
     }
 
     public CustomizeVideoMessage(Parcel in) {
-
         this.setMp4Path(ParcelUtils.readFromParcel(in));
         this.setImgUrl(ParcelUtils.readFromParcel(in));
+    }
 
+    public CustomizeVideoMessage() {
 
     }
 

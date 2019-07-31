@@ -6,11 +6,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.eanfang.base.BaseApplication;
 import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.model.ContentSecruityBean;
-import com.eanfang.model.ContentSecruityTokenBean;
-import com.eanfang.util.StringUtils;
-import com.okgo.callback.StringCallback;
-import com.okgo.model.Response;
+import com.eanfang.biz.model.bean.ContentSecruityBean;
+import com.eanfang.biz.model.bean.ContentSecruityTokenBean;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 
 import java.util.List;
 
@@ -124,7 +123,7 @@ public class ContentSecurityAuditUtil {
         long currentTime = System.currentTimeMillis() / 1000;
         long saveTime = CacheKit.get().getLong(SP_SAVE_TIME_KEY, 0L);
         String saveToken = CacheKit.get().getStr(SP_SAVE_TOKEN_KEY);
-        if (saveTime > currentTime && !StringUtils.isEmpty(saveToken)) {
+        if (saveTime > currentTime && !StrUtil.isEmpty(saveToken)) {
             spamContent(saveToken, content);
         } else {
             getToken(content);

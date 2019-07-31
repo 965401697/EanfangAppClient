@@ -15,8 +15,8 @@ import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.BaseApplication;
 import com.eanfang.base.widget.customview.CircleImageView;
-import com.eanfang.biz.model.SpecialistAuthStatusBean;
 import com.eanfang.biz.model.bean.LoginBean;
+import com.eanfang.biz.model.bean.SpecialistAuthStatusBean;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
@@ -26,7 +26,6 @@ import com.eanfang.ui.activity.QrCodeShowActivity;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.worker.R;
@@ -43,6 +42,7 @@ import net.eanfang.worker.ui.widget.InviteView;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.hutool.core.util.StrUtil;
 
 
 /**
@@ -225,11 +225,11 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
 
     public void initDatas() {
         LoginBean user = WorkerApplication.get().getLoginBean();
-        if (!StringUtils.isEmpty(user.getAccount().getNickName())) {
+        if (!StrUtil.isEmpty(user.getAccount().getNickName())) {
             tvUserName.setText(user.getAccount().getNickName());
         }
 
-        if (!StringUtils.isEmpty(user.getAccount().getAvatar())) {
+        if (!StrUtil.isEmpty(user.getAccount().getAvatar())) {
             GlideUtil.intoImageView(getActivity(), Uri.parse(BuildConfig.OSS_SERVER + user.getAccount().getAvatar()), ivHeader);
         }
         if (workerStatus == 0) {
@@ -252,7 +252,7 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
         // 技师未认证，提示完善个人资料
 
         String realName = WorkerApplication.get().getLoginBean().getAccount().getRealName();
-        if (StringUtils.isEmpty(realName) || "待提供".equals(realName)) {
+        if (StrUtil.isEmpty(realName) || "待提供".equals(realName)) {
             showToast("请先完善个人资料");
         } else {
             JumpItent.jump(getActivity(), NewAuthListActivity.class);
@@ -263,7 +263,7 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
     private void doExpertWorkAuth() {
         // 技师未认证，提示完善个人资料
         String realName = WorkerApplication.get().getLoginBean().getAccount().getRealName();
-        if (StringUtils.isEmpty(realName) || "待提供".equals(realName)) {
+        if (StrUtil.isEmpty(realName) || "待提供".equals(realName)) {
             showToast("请先完善个人资料");
         } else {
             JumpItent.jump(getActivity(), SpecialistAuthListActivity.class);
@@ -368,7 +368,7 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
     private void doWorkAuthB() {
         // 技师未认证，提示完善个人资料
         String realName = WorkerApplication.get().getLoginBean().getAccount().getRealName();
-        if (StringUtils.isEmpty(realName) || "待提供".equals(realName)) {
+        if (StrUtil.isEmpty(realName) || "待提供".equals(realName)) {
             showToast("请先完善个人资料");
         } else {
             JumpItent.jump(getActivity(), TechnicianCertificationActivity.class);

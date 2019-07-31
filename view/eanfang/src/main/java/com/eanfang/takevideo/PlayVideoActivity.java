@@ -74,7 +74,7 @@ public class PlayVideoActivity extends BaseActivity {
         if (isTake) {
             setRightVisible();
             // 获取第一帧
-            if (!StringUtils.isEmpty(mVideoPath)) {
+            if (!StrUtil.isEmpty(mVideoPath)) {
                 mThumbnailPath = PhotoUtils.getVideoFile(mVideoPath).getPath();
             }
         } else { // 播放视频
@@ -95,7 +95,7 @@ public class PlayVideoActivity extends BaseActivity {
      * 上传拍摄视频缩略图
      */
     private void doCommitThumbnail() {
-        if (!StringUtils.isEmpty(mThumbnailPath)) {
+        if (!StrUtil.isEmpty(mThumbnailPath)) {
             SDKManager.ossKit(this).asyncPutImage(uploadKey + ".jpg", mThumbnailPath, (isSuccess) -> {
                 // showToast("上传缩略图成功");
                 doCommitVideo();
@@ -107,7 +107,7 @@ public class PlayVideoActivity extends BaseActivity {
      * 进行上传视频
      */
     private void doCommitVideo() {
-        if (!StringUtils.isEmpty(mVideoPath)) {
+        if (!StrUtil.isEmpty(mVideoPath)) {
             SDKManager.ossKit(this).asyncPutVideo(uploadKey + ".mp4", mVideoPath, (isSuccess) -> {
                 //                    showToast("上传视频成功");
                 BaseApplication.get().closeActivity(TakeVideoActivity.class);

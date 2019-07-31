@@ -9,18 +9,18 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
-import com.eanfang.biz.model.WorkTaskInfoBean;
+import com.eanfang.biz.model.bean.WorkTaskInfoBean;
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 import static com.eanfang.base.kit.V.v;
 
@@ -101,7 +101,7 @@ public class LookTaskInfoView extends BaseDialog {
         etWorker.setText(v(() -> detailBean.getJoinPerson()));
         etStandard.setText(v(() -> detailBean.getCriterion()));
         etGoal.setText(v(() -> detailBean.getPurpose()));
-        if (!StringUtils.isEmpty(detailBean.getPictures())) {
+        if (!StrUtil.isEmpty(detailBean.getPictures())) {
             String[] urls = detailBean.getPictures().split(",");
 
             if (urls.length >= 1) {
@@ -125,7 +125,7 @@ public class LookTaskInfoView extends BaseDialog {
             }
         }
 
-        if (!StringUtils.isEmpty(detailBean.getMp4_path())) {
+        if (!StrUtil.isEmpty(detailBean.getMp4_path())) {
             rlThumbnail.setVisibility(View.VISIBLE);
             GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + detailBean.getMp4_path() + ".jpg"),ivTakevideo);
         }

@@ -25,8 +25,8 @@ import com.eanfang.config.Constant;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.AuthCompanyBaseInfoBean;
-import com.eanfang.biz.model.SelectAddressItem;
+import com.eanfang.biz.model.bean.AuthCompanyBaseInfoBean;
+import com.eanfang.biz.model.bean.SelectAddressItem;
 
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.util.GetConstDataUtils;
@@ -34,7 +34,6 @@ import com.eanfang.util.GlideUtil;
 import com.eanfang.util.PermKit;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.PickerSelectUtil;
-import com.eanfang.util.StringUtils;
 import com.eanfang.biz.model.entity.BaseDataEntity;
 import com.luck.picture.lib.entity.LocalMedia;
 
@@ -241,25 +240,25 @@ private int state=0;
      * 进行字段的约束判断
      */
     public void doVerify() {
-        if (StringUtils.isEmpty(etCompany.getText().toString().trim())) {
+        if (StrUtil.isEmpty(etCompany.getText().toString().trim())) {
             showToast("请输入单位名称");
             return;
-        } else if (StringUtils.isEmpty(edCompanyNumber.getText().toString().trim())) {
+        } else if (StrUtil.isEmpty(edCompanyNumber.getText().toString().trim())) {
             showToast("请输入营业执照号码");
             return;
-        } else if (StringUtils.isEmpty(etMoney.getText().toString().trim())) {
+        } else if (StrUtil.isEmpty(etMoney.getText().toString().trim())) {
             showToast("请输入注册资本");
             return;
-        } else if (StringUtils.isEmpty(etDetailOfficeAddress.getText().toString().trim())) {
+        } else if (StrUtil.isEmpty(etDetailOfficeAddress.getText().toString().trim())) {
             showToast("请输入办公地址");
             return;
-        } else if (StringUtils.isEmpty(tvType.getText().toString().trim())) {
+        } else if (StrUtil.isEmpty(tvType.getText().toString().trim())) {
             showToast("请选择行业类型");
             return;
-        } else if (StringUtils.isEmpty(etLegalPersion.getText().toString().trim())) {
+        } else if (StrUtil.isEmpty(etLegalPersion.getText().toString().trim())) {
             showToast("请输入法人代表");
             return;
-        } else if (StringUtils.isEmpty(etDesc.getText().toString().trim())) {
+        } else if (StrUtil.isEmpty(etDesc.getText().toString().trim())) {
             showToast("请输入单位简介");
             return;
         } else {
@@ -355,11 +354,11 @@ private int state=0;
             if (byNetBean.getAreaCode() != null) {
                 tvOfficeAddress.setText(Config.get().getAddressByCode(byNetBean.getAreaCode()));
             }
-            if (!StringUtils.isEmpty(byNetBean.getLogoPic())) {
+            if (!StrUtil.isEmpty(byNetBean.getLogoPic())) {
                 GlideUtil.intoImageView(this,BuildConfig.OSS_SERVER + byNetBean.getLogoPic(),ivUpload2);
                 infoBean.setLogoPic(byNetBean.getLogoPic());
             }
-            if (!StringUtils.isEmpty(byNetBean.getLicensePic())) {
+            if (!StrUtil.isEmpty(byNetBean.getLicensePic())) {
                 GlideUtil.intoImageView(this,BuildConfig.OSS_SERVER + byNetBean.getLicensePic(),ivUpload);
                 infoBean.setLicensePic(byNetBean.getLicensePic());
             }

@@ -22,24 +22,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.daimajia.numberprogressbar.DaiMaJiaNumberProgressBar;
+import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.base.widget.customview.CircleImageView;
-import com.eanfang.biz.model.reapair.RepairPersonalInfoEntity;
+import com.eanfang.biz.model.entity.RepairOrderEntity;
+import com.eanfang.biz.model.entity.RepairPersonalInfoEntity;
+import com.eanfang.biz.model.entity.WorkerEntity;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.util.QueryEntry;
-import com.eanfang.util.StringUtils;
+import com.eanfang.biz.model.QueryEntry;
 import com.eanfang.witget.ArcProgressView;
 import com.eanfang.witget.CustomRadioGroup;
-import com.yaf.base.entity.RepairOrderEntity;
-import com.yaf.base.entity.WorkerEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
@@ -54,6 +53,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 
 import static com.eanfang.base.kit.V.v;
@@ -93,7 +93,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
     @BindView(R.id.rv_list1)
     RecyclerView rvList1;
     @BindView(R.id.iv_haopinglv)
-    DaiMaJiaNumberProgressBar ivHaopinglv;
+    NumberProgressBar ivHaopinglv;
     @BindView(R.id.tv_haopinglv)
     TextView tvHaopinglv;
     @BindView(R.id.rb_star1)
@@ -284,7 +284,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
         tvSelect.setOnClickListener((v) -> {
             // 扫码进入
             if (isComeIn) {
-                if (StringUtils.isEmpty(companyUserId) || companyUserId.equals("0")) {
+                if (StrUtil.isEmpty(companyUserId) || companyUserId.equals("0")) {
                     showToast("当前技师缺少公司，无法报修。");
                     return;
                 }
@@ -436,16 +436,16 @@ public class WorkerDetailActivity extends BaseClientActivity {
         jsonObject.put("assigneeId", companyUserId);
         jsonObject.put("ownerId", ClientApplication.get().getUserId());
         jsonObject.put("type", 0);
-        if (!StringUtils.isEmpty(detailsBean.getCompanyEntity().getCompanyId().toString())) {
+        if (!StrUtil.isEmpty(detailsBean.getCompanyEntity().getCompanyId().toString())) {
             jsonObject.put("owner_company_id", ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyId());
         }
-        if (!StringUtils.isEmpty(detailsBean.getCompanyEntity().getCompanyId().toString())) {
+        if (!StrUtil.isEmpty(detailsBean.getCompanyEntity().getCompanyId().toString())) {
             jsonObject.put("owner_top_company_id", ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getTopCompanyId());
         }
-        if (!StringUtils.isEmpty(detailsBean.getCompanyEntity().getCompanyId().toString())) {
+        if (!StrUtil.isEmpty(detailsBean.getCompanyEntity().getCompanyId().toString())) {
             jsonObject.put("assignee_top_company_id", detailsBean.getCompanyEntity().getTopCompanyId());
         }
-        if (!StringUtils.isEmpty(detailsBean.getCompanyEntity().getCompanyId().toString())) {
+        if (!StrUtil.isEmpty(detailsBean.getCompanyEntity().getCompanyId().toString())) {
             jsonObject.put("assignee_company_id", detailsBean.getCompanyEntity().getCompanyId());
         }
         EanfangHttp.post(RepairApi.GET_COLLECT_ADD)
@@ -487,7 +487,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
             workerName = bean.getAccountEntity().getRealName();
             comapnyName = bean.getCompanyEntity().getOrgName();
             tvRealname.setText(bean.getAccountEntity().getRealName());
-            if (!StringUtils.isEmpty(bean.getAccountEntity().getAreaCode())) {
+            if (!StrUtil.isEmpty(bean.getAccountEntity().getAreaCode())) {
                 String region = Config.get().getAddressByCode(bean.getAccountEntity().getAreaCode());
                 tvAddress.setText((region != null ? (region + "\r\n") : "") + bean.getAccountEntity().getAddress());
             }

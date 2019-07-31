@@ -15,18 +15,17 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.kit.loading.LoadKit;
+import com.eanfang.biz.model.bean.GroupDetailBean;
 import com.eanfang.biz.model.entity.UserEntity;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.GroupDetailBean;
-import com.eanfang.biz.model.TemplateBean;
-import com.eanfang.biz.model.WorkTransferDetailBean;
+import com.eanfang.biz.model.bean.TemplateBean;
+import com.eanfang.biz.model.bean.WorkTransferDetailBean;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.ui.base.BaseActivity;
-import com.eanfang.util.DialogUtil;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JumpItent;
-import com.eanfang.util.StringUtils;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.client.R;
@@ -58,6 +57,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author Guanluocang
@@ -591,7 +591,7 @@ public class WorkTransferCreateActivity extends BaseActivity {
                     b.putString("shareType", "6");
 
 
-                    new SendContactUtils(b, handler, newGroupList, DialogUtil.createLoadingDialog(WorkTransferCreateActivity.this), "交接班").send();
+                    new SendContactUtils(b, handler, newGroupList, LoadKit.dialog(WorkTransferCreateActivity.this), "交接班").send();
                 }));
     }
 
@@ -667,14 +667,14 @@ public class WorkTransferCreateActivity extends BaseActivity {
 
     public boolean doCheckInfo() {
         try {
-            if (StringUtils.isEmpty(mUserId + "")) {
+            if (StrUtil.isEmpty(mUserId + "")) {
                 showToast("用户id为空");
                 return false;
             } else {
                 workTransferDetailBean.setOwnerUserId(mUserId + "");
             }
 
-            if (StringUtils.isEmpty(mCompanyId + "")) {
+            if (StrUtil.isEmpty(mCompanyId + "")) {
                 showToast("公司id为空");
                 return false;
             } else {
@@ -683,14 +683,14 @@ public class WorkTransferCreateActivity extends BaseActivity {
                 // 创建人顶级公司Id
                 workTransferDetailBean.setOwnerTopCompanyId(mTopCompanyId + "");
             }
-            if (StringUtils.isEmpty(mCompanyId + "")) {
+            if (StrUtil.isEmpty(mCompanyId + "")) {
                 showToast("部门id为空");
                 return false;
             } else {
                 // 创建人部门编码
                 workTransferDetailBean.setOwnerOrgCode(mDepartmentId);
             }
-//            if (StringUtils.isEmpty(tvReceiverName.getText().toString().trim()) && StringUtils.isEmpty(mReceiverId)) {
+//            if (StrUtil.isEmpty(tvReceiverName.getText().toString().trim()) && StrUtil.isEmpty(mReceiverId)) {
 //                showToast("请选择接收人");
 //                return false;
 //            } else {

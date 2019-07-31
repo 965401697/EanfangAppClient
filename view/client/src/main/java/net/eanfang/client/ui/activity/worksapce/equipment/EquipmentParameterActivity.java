@@ -2,7 +2,7 @@ package net.eanfang.client.ui.activity.worksapce.equipment;
 
 import android.os.Bundle;
 
-import com.yaf.base.entity.CustDeviceParamEntity;
+import com.eanfang.biz.model.entity.CustDeviceParamEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.base.BaseClientActivity;

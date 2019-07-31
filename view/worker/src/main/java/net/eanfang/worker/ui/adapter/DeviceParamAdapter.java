@@ -2,12 +2,13 @@ package net.eanfang.worker.ui.adapter;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.biz.model.QuotationBean;
-import com.eanfang.util.StringUtils;
+import com.eanfang.biz.model.bean.QuotationBean;
 
 import net.eanfang.worker.R;
 
 import java.util.ArrayList;
+
+import cn.hutool.core.util.StrUtil;
 
 
 /**
@@ -24,11 +25,11 @@ public class DeviceParamAdapter extends BaseQuickAdapter<QuotationBean.QuoteDevi
 
     @Override
     protected void convert(BaseViewHolder helper, final QuotationBean.QuoteDevicesBean.ParamsBean item) {
-        if (StringUtils.isValid(item.getParamName())) {
+        if (StrUtil.isNotBlank(item.getParamName())) {
             helper.setText(R.id.et_param_name, item.getParamName());
         }
 
-        if (StringUtils.isValid(item.getParamValue())) {
+        if (StrUtil.isNotBlank(item.getParamValue())) {
             helper.setText(R.id.et_param_value, item.getParamValue());
         }
         helper.setVisible(R.id.tv_delete, false);
