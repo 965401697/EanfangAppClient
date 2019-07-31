@@ -22,18 +22,18 @@ import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.biz.model.QueryEntry;
 import com.eanfang.biz.model.bean.Message;
 import com.eanfang.biz.model.entity.PayLogEntity;
 import com.eanfang.biz.model.entity.RepairOrderEntity;
 import com.eanfang.biz.model.entity.RepairPersonalInfoEntity;
-import com.eanfang.biz.model.entity.WorkerEntity;
+import com.eanfang.biz.model.entity.SelectWorkEntitity;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.biz.model.QueryEntry;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
@@ -345,20 +345,20 @@ public class AllWorkerFragment extends BaseFragment implements SwipeRefreshLayou
         mQueryEntry.getEquals().put("userId", ClientApplication.get().getUserId() + "");
         EanfangHttp.post(RepairApi.GET_REPAIR_SEARCH)
                 .upJson(JsonUtils.obj2String(mQueryEntry))
-                .execute(new EanfangCallback<WorkerEntity>(getActivity(), true, WorkerEntity.class, true, new EanfangCallback.ISuccessArray<WorkerEntity>() {
+                .execute(new EanfangCallback<SelectWorkEntitity>(getActivity(), true, SelectWorkEntitity.class) {
                     @Override
-                    public void success(List<WorkerEntity> bean) {
+                    public void onSuccess(SelectWorkEntitity bean) {
                         if (mPage == 1) {
                             selectWorkerAdapter.getData().clear();
-                            selectWorkerAdapter.setNewData(bean);
+                            selectWorkerAdapter.setNewData(bean.getList());
                             swipreFresh.setRefreshing(false);
                             selectWorkerAdapter.loadMoreComplete();
-                            if (bean.size() < 10) {
+                            if (bean.getList().size() < 10) {
                                 selectWorkerAdapter.loadMoreEnd();
                                 //释放对象
                                 mQueryEntry = null;
                             }
-                            if (bean.size() > 0) {
+                            if (bean.getList().size() > 0) {
                                 rvAllWorker.setVisibility(View.VISIBLE);
                                 llNodata.setVisibility(View.GONE);
                             } else {
@@ -367,15 +367,14 @@ public class AllWorkerFragment extends BaseFragment implements SwipeRefreshLayou
                             }
                             rvAllWorker.scrollToPosition(0);
                         } else {
-                            selectWorkerAdapter.addData(bean);
+                            selectWorkerAdapter.addData(bean.getList());
                             selectWorkerAdapter.loadMoreComplete();
-                            if (bean.size() < 10) {
+                            if (bean.getList().size() < 10) {
                                 selectWorkerAdapter.loadMoreEnd();
                             }
                         }
                     }
 
-                }) {
                     @Override
                     public void onCommitAgain() {
                         swipreFresh.setRefreshing(false);
@@ -392,6 +391,7 @@ public class AllWorkerFragment extends BaseFragment implements SwipeRefreshLayou
                     public void onNoData(String message) {
                         swipreFresh.setRefreshing(false);
                     }
+
                 });
     }
 

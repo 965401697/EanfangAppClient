@@ -1,7 +1,6 @@
 package net.eanfang.worker.ui.widget;
 
 import android.os.Bundle;
-import androidx.appcompat.widget.AppCompatRadioButton;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -9,13 +8,14 @@ import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.AppCompatRadioButton;
+
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
-import com.eanfang.util.StringUtils;
+import com.eanfang.ui.base.BaseActivity;
 
 import net.eanfang.worker.R;
 

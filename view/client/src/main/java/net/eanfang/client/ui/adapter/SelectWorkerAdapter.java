@@ -6,7 +6,7 @@ import android.view.View;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.eanfang.biz.model.entity.WorkerEntity;
+import com.eanfang.biz.model.entity.SelectWorkEntitity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
 
@@ -20,7 +20,7 @@ import static com.eanfang.base.kit.V.v;
  * Created by admin on 2018/4/27.
  */
 
-public class SelectWorkerAdapter extends BaseQuickAdapter<WorkerEntity, BaseViewHolder> {
+public class SelectWorkerAdapter extends BaseQuickAdapter<SelectWorkEntitity.ListBean, BaseViewHolder> {
 
 
     public SelectWorkerAdapter() {
@@ -28,7 +28,7 @@ public class SelectWorkerAdapter extends BaseQuickAdapter<WorkerEntity, BaseView
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, WorkerEntity item) {
+    protected void convert(BaseViewHolder helper, SelectWorkEntitity.ListBean item) {
         // 头像
         if (!StrUtil.isEmpty(item.getVerifyEntity().getAvatarPhoto())) {
             GlideUtil.intoImageView(mContext, Uri.parse(BuildConfig.OSS_SERVER + item.getVerifyEntity().getAvatarPhoto()), helper.getView(R.id.iv_header));

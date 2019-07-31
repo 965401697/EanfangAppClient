@@ -7,10 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.biz.model.CompanyBean;
-import com.eanfang.biz.model.security.HomeCompanyBean;
 import com.eanfang.biz.model.bean.CompanyBean;
-import com.eanfang.biz.model.bean.HomeWorkerBean;
 import com.eanfang.biz.model.bean.HomeCompanyBean;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;

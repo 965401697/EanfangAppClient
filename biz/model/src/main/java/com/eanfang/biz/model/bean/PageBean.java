@@ -3,7 +3,9 @@ package com.eanfang.biz.model.bean;
 import java.io.Serializable;
 import java.util.List;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -13,6 +15,8 @@ import lombok.Setter;
  */
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class PageBean<T> implements Serializable {
     private Integer currPage;
     private Integer pageSize;

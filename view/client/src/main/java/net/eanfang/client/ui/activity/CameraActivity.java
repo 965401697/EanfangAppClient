@@ -36,15 +36,14 @@ import com.eanfang.base.kit.V;
 import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.base.kit.rx.RxPerm;
-import com.eanfang.biz.model.CameraBean;
-import com.eanfang.biz.model.SelectAddressItem;
+import com.eanfang.biz.model.bean.CameraBean;
+import com.eanfang.biz.model.bean.SelectAddressItem;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.BitmapUtil;
 import com.eanfang.util.ConnectivityChangeUtil;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.ImageUtil;
-import com.eanfang.util.StringUtils;
 import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.client.R;
@@ -58,6 +57,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 
 
 /**
@@ -198,7 +198,7 @@ public class CameraActivity extends BaseClienActivity implements AMapLocationLis
 
         //创建者
         creatUser = V.v(() -> ClientApplication.get().getLoginBean().getAccount().getRealName());
-        if (StringUtils.isEmpty(creatUser)) {
+        if (StrUtil.isEmpty(creatUser)) {
             creatUser = "--";
         }
         if (ConnectivityChangeUtil.isNetConnected(this) == true) {
