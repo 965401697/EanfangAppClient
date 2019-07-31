@@ -3,6 +3,7 @@ package com.eanfang.util;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -12,38 +13,81 @@ import com.eanfang.R;
 
 public class GlideUtil {
 
+    private static String TAG = "GlideUtil";
+
+    public GlideUtil() {
+    }
+
+    private static class GlideLoadUtilsHolder {
+        private final static GlideUtil INSTANCE = new GlideUtil();
+    }
+
+    public static GlideUtil getInstance() {
+        return GlideLoadUtilsHolder.INSTANCE;
+    }
+
     public static void intoImageView(Context context, Uri uri, ImageView imageView) {
-        Glide.with(context).load(uri).apply(getOptions()).into(imageView);
+        if (context != null) {
+            Glide.with(context).load(uri).apply(getOptions()).into(imageView);
+        } else {
+            Log.e(TAG, "context is null");
+        }
     }
 
     public static void intoImageView(Context context, Uri uri, ImageView imageView, int roundingRadius) {
-        Glide.with(context).load(uri).apply(getOptions(roundingRadius)).into(imageView);
+        if (context != null) {
+            Glide.with(context).load(uri).apply(getOptions(roundingRadius)).into(imageView);
+        } else {
+            Log.e(TAG, "context is null");
+        }
     }
 
     public static void intoImageView(Context context, String path, ImageView imageView) {
-        Glide.with(context).load(path).apply(getOptions()).into(imageView);
+        if (context != null) {
+            Glide.with(context).load(path).apply(getOptions()).into(imageView);
+        } else {
+            Log.e(TAG, "context is null");
+        }
     }
 
     public static void intoImageView(Context context, String path, ImageView imageView, int roundingRadius) {
-        Glide.with(context).load(path).apply(getOptions(roundingRadius)).into(imageView);
+        if (context != null) {
+            Glide.with(context).load(path).apply(getOptions(roundingRadius)).into(imageView);
+        } else {
+            Log.e(TAG, "context is null");
+        }
     }
 
     public static void intoImageView(Context context, Bitmap path, ImageView imageView) {
-        Glide.with(context).load(path).apply(getOptions()).into(imageView);
+        if (context != null) {
+            Glide.with(context).load(path).apply(getOptions()).into(imageView);
+        } else {
+            Log.e(TAG, "context is null");
+        }
     }
 
     public static void intoImageView(Context context, Bitmap path, ImageView imageView, int roundingRadius) {
-        Glide.with(context).load(path).apply(getOptions(roundingRadius)).into(imageView);
+        if (context != null) {
+            Glide.with(context).load(path).apply(getOptions(roundingRadius)).into(imageView);
+        } else {
+            Log.e(TAG, "context is null");
+        }
     }
 
     public static void intoImageView(Context context, int path, ImageView imageView) {
-
-        Glide.with(context).load(path).apply(getOptions()).into(imageView);
+        if (context != null) {
+            Glide.with(context).load(path).apply(getOptions()).into(imageView);
+        } else {
+            Log.e(TAG, "context is null");
+        }
     }
 
     public static void intoImageView(Context context, int path, ImageView imageView, int roundingRadius) {
-
-        Glide.with(context).load(path).apply(getOptions(roundingRadius)).into(imageView);
+        if (context != null) {
+            Glide.with(context).load(path).apply(getOptions(roundingRadius)).into(imageView);
+        } else {
+            Log.e(TAG, "context is null");
+        }
     }
 
     private static RequestOptions getOptions() {
