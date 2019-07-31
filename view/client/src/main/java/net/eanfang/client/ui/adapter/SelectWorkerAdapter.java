@@ -44,6 +44,9 @@ public class SelectWorkerAdapter extends BaseQuickAdapter<WorkerEntity, BaseView
         helper.setText(R.id.tv_construction_count, item.getInstallNum() + "");
         //评价
         helper.setText(R.id.tv_evaluate_count, item.getEvaluateNum() + "");
+        int consultCount = item.getDesignNum() + item.getInstallNum() + item.getRepairCount();
+        // 咨询
+        helper.setText(R.id.tv_consultation_count, consultCount + "");
         if (item.getPublicPraise() != 0) {
             // 口碑
             helper.setText(R.id.tv_koubei, String.valueOf(item.getPublicPraise()) + "分");

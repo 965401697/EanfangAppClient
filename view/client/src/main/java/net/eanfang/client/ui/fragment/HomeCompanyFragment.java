@@ -74,7 +74,6 @@ public class HomeCompanyFragment extends BaseFragment {
         if (adapter == null) {
             return;
         }
-//        initListData(mCityId);
     }
 
     /**
@@ -140,13 +139,10 @@ public class HomeCompanyFragment extends BaseFragment {
                 String code = Config.get().getAreaCodeByName(location.getCity(), location.getDistrict());
                 int cityId = Config.get().getBaseIdByCode(code, 2, Constant.AREA);
                 mProvinceId = Config.get().getBaseIdByCode(code, 1, Constant.AREA);
-                mCityId = 179;
-                mProvinceId = 137;
                 if (cityId != 0 && mCityId != cityId) {
-//                    mCityId = cityId;
-                    mCityId = 179;
-                    initListData(mCityId);
+                    mCityId = cityId;
                 }
+                initListData(mCityId);
             });
         }, false);
     }
