@@ -73,10 +73,18 @@
                             android:id="@+id/ll_user_header"
                             android:layout_width="@dimen/dimen_190"
                             android:layout_height="@dimen/dimen_190"
-                            android:gravity="center">
-
+                            android:gravity="center"
+                            android:orientation="vertical">
 
                             <include layout="@layout/layout_headview" />
+
+                            <TextView
+                                android:id="@+id/tv_write_personnel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/text_edit_personal_info"
+                                android:textColor="@color/white"
+                                android:textSize="12sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -162,18 +170,7 @@
                             </LinearLayout>
                         </LinearLayout>
 
-                        <TextView
-                            android:id="@+id/tv_write_personnel"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_below="@id/ll_msg"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginTop="@dimen/dimen_10"
-                            android:layout_marginRight="@dimen/dimen_30"
-                            android:gravity="center"
-                            android:text="@string/text_edit_personal_info"
-                            android:textColor="@color/white"
-                            android:textSize="12sp" />
+
                     </RelativeLayout>
 
                 </LinearLayout>
