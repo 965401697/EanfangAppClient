@@ -18,8 +18,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import cn.hutool.core.io.FileUtil;
-
 /**
  * Created by Mr.hou
  *
@@ -53,8 +51,15 @@ public class BitmapUtil {
      * @throws FileNotFoundException
      */
     public static void saveImage(Bitmap bitmap, String outPath) throws FileNotFoundException {
-        FileOutputStream os = new FileOutputStream(outPath);
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os);
+        try {
+            compressByQuality(bitmap, outPath, 1024);
+            bitmap.recycle();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//        FileOutputStream os = new FileOutputStream(outPath);
+//        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os);
+//        bitmap.recycle();
     }
 
     public static int getBitmapBytes(Bitmap bitmap) {

@@ -203,8 +203,7 @@ public class ImageUtil {
             bitmapConfig = Bitmap.Config.ARGB_8888;
         }
         Bitmap mBitmap = bitmap.copy(bitmapConfig, true);
-
-
+        bitmap.recycle();
         Canvas canvas = new Canvas(mBitmap);
         StaticLayout staticLayout2 = new StaticLayout(text, paint, mBitmap.getWidth(),
                 Layout.Alignment.ALIGN_NORMAL, 1.0F, 0.0F, true);
