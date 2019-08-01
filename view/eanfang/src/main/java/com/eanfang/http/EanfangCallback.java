@@ -177,7 +177,8 @@ public class EanfangCallback<T> extends StringCallback implements Callback<Strin
                             onSuccess(resultObject.toJavaObject(clazz));
                         } catch (Exception e) {
 //                            e.printStackTrace();
-                            this.onSuccess((T) null);
+                            ToastUtil.get().showToast(activity, e.getMessage());
+//                            this.onSuccess((T) null);
                         }
                     } else {
 //                        result = (T) resultString;
