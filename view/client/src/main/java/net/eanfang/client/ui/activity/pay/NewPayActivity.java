@@ -394,6 +394,7 @@ public class NewPayActivity extends BaseClientActivity implements View.OnClickLi
             public void onSuccess() {
                 // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
                 ToastUtil.get().showToast(getApplicationContext(), "支付成功");
+                subInvoice();
             }
 
             @Override
@@ -485,14 +486,14 @@ public class NewPayActivity extends BaseClientActivity implements View.OnClickLi
     public void subInvoice() {
 
         if (!cbInvoice.isChecked()) {
-            if (mPayType == 1) {//支付宝支付 优惠券支付
+            if (mPayType == 0) {//支付宝支付 优惠券支付
                 ClientApplication.get().closeActivity(NewPayActivity.class);
                 Intent intent = new Intent(NewPayActivity.this, StateChangeActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("message", MessageUtil.paySuccess());
                 intent.putExtras(bundle);
                 startActivity(intent);
-            } else if (mPayType == 0) {
+            } else if (mPayType == 1) {
                 //微信支付
                 endTransaction(true);
             }
