@@ -28,9 +28,8 @@ import com.amap.api.services.weather.LocalWeatherLive;
 import com.amap.api.services.weather.LocalWeatherLiveResult;
 import com.amap.api.services.weather.WeatherSearch;
 import com.amap.api.services.weather.WeatherSearchQuery;
-import com.eanfang.util.BitmapUtil;
-import com.eanfang.util.ImageUtil;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.kit.V;
 import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.base.kit.rx.RxPerm;
@@ -38,25 +37,30 @@ import com.eanfang.biz.model.bean.CameraBean;
 import com.eanfang.biz.model.bean.SelectAddressItem;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.ui.base.voice.RecognitionManager;
+import com.eanfang.util.BitmapUtil;
 import com.eanfang.util.ConnectivityChangeUtil;
-import com.eanfang.util.ToastUtil;
-import com.eanfang.base.kit.V;
-import com.eanfang.witget.CustomRadioGroup;
+import com.eanfang.util.GlideUtil;
+import com.eanfang.util.ImageUtil;
 import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
-import java.io.FileNotFoundException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
-
+import io.reactivex.Observable;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by Mr.hou
@@ -98,15 +102,18 @@ public class CameraActivity extends BaseWorkeActivity implements AMapLocationLis
     @BindView(R.id.tv_task)
     RadioButton tvTask;
     @BindView(R.id.rg_type)
-    CustomRadioGroup rgType;
+    RadioGroup rgType;
     @BindView(R.id.et_address)
     EditText etAddress;
+    @BindView(R.id.tv_location_address)
+    TextView tvLocationAddress;
     WeatherSearchQuery query;
     WeatherSearch search;
     LocalWeatherLive weatherlive;
-    @BindView(R.id.tv_location_address)
-    TextView tvLocationAddress;
-    private CameraBean cameraBean;
+    @BindView(R.id.start_take_photo)
+    ImageView startTakePhoto;
+    @BindView(R.id.tv_waiting)
+    TextView tvWaiting;
     private String time, weather, city_address;
     private String project_name;
     private String region_name;
@@ -115,10 +122,14 @@ public class CameraActivity extends BaseWorkeActivity implements AMapLocationLis
     private String address;
     private String creatUser;
     private int color = Color.parseColor("#ffffff");
+    private CameraBean cameraBean;
     //项目类型
     private String selectProjectType = "维修";
     private AMapLocationClient locationClient = null;
     private AMapLocationClientOption locationOption = null;
+
+    private Bitmap waterBitmap;
+    private Bitmap textBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,8 +185,10 @@ public class CameraActivity extends BaseWorkeActivity implements AMapLocationLis
         // 停止定位
         locationClient.stopLocation();
     }
+
     @Override
     public void initView() {
+        super.initView();
         setTitle("专业相机");
         setLeftBack(true);
         initGPS();
@@ -190,13 +203,11 @@ public class CameraActivity extends BaseWorkeActivity implements AMapLocationLis
         //项目类型
         project_type = selectProjectType;
 
-
         //创建者
         creatUser = V.v(() -> WorkerApplication.get().getLoginBean().getAccount().getRealName());
         if (StrUtil.isEmpty(creatUser)) {
             creatUser = "--";
         }
-
         if (ConnectivityChangeUtil.isNetConnected(this) == true) {
             etAddress.setVisibility(View.GONE);
             tvLocationAddress.setVisibility(View.VISIBLE);
@@ -204,6 +215,10 @@ public class CameraActivity extends BaseWorkeActivity implements AMapLocationLis
             etAddress.setVisibility(View.VISIBLE);
             tvLocationAddress.setVisibility(View.GONE);
         }
+
+        startTakePhoto.setOnClickListener((v) -> {
+            startTakePhoto();
+        });
     }
 
     /**
@@ -224,12 +239,19 @@ public class CameraActivity extends BaseWorkeActivity implements AMapLocationLis
      * 取出本地数据
      */
     private void getData() {
-        cameraBean = CacheKit.get().get(CameraBean.class.getName(), CameraBean.class);
-        if (cameraBean != null) {
-            etProjectName.setText(cameraBean.getProjectName());
-            etProjectConment.setText(cameraBean.getProjectContent());
-            etRegionName.setText(cameraBean.getLocalPosition());
-            etAddress.setText(cameraBean.getLocalAddress());
+        try {
+//            if (SharePreferenceUtil.get().get(CameraBean.class.getName(), CameraBean.class) != null) {
+            cameraBean = CacheKit.get().get(CameraBean.class.getName(), CameraBean.class);
+            if (cameraBean != null) {
+                etProjectName.setText(cameraBean.getProjectName());
+                etProjectConment.setText(cameraBean.getProjectContent());
+                etRegionName.setText(cameraBean.getLocalPosition());
+                etAddress.setText(cameraBean.getLocalAddress());
+            }
+
+//            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -241,10 +263,10 @@ public class CameraActivity extends BaseWorkeActivity implements AMapLocationLis
         LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
         // 判断GPS模块是否开启，如果没有则开启
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            ToastUtil.get().showToast(this, "请打开GPS,定位更准确");
+            showToast("请打开GPS,定位更准确");
         }
         if (ConnectivityChangeUtil.isNetConnected(this) == false) {
-            ToastUtil.get().showToast(this, "没有网络，请检查网络");
+            showToast("没有网络，请检查网络");
         }
     }
 
@@ -253,17 +275,28 @@ public class CameraActivity extends BaseWorkeActivity implements AMapLocationLis
      */
     private AMapLocationClientOption getDefaultOption() {
         AMapLocationClientOption mOption = new AMapLocationClientOption();
-        mOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);//可选，设置定位模式，可选的模式有高精度、仅设备、仅网络。默认为高精度模式
-        mOption.setGpsFirst(true);//可选，设置是否gps优先，只在高精度模式下有效。默认关闭
-        mOption.setHttpTimeOut(30000);//可选，设置网络请求超时时间。默认为30秒。在仅设备模式下无效
-        mOption.setInterval(2000);//可选，设置定位间隔。默认为2秒
-        mOption.setNeedAddress(true);//可选，设置是否返回逆地理地址信息。默认是true
-        mOption.setOnceLocation(false);//可选，设置是否单次定位。默认是false
-        mOption.setOnceLocationLatest(false);//可选，设置是否等待wifi刷新，默认为false.如果设置为true,会自动变为单次定位，持续定位时不要使用
-        AMapLocationClientOption.setLocationProtocol(AMapLocationClientOption.AMapLocationProtocol.HTTP);//可选， 设置网络请求的协议。可选HTTP或者HTTPS。默认为HTTP
-        mOption.setSensorEnable(false);//可选，设置是否使用传感器。默认是false
-        mOption.setWifiScan(true); //可选，设置是否开启wifi扫描。默认为true，如果设置为false会同时停止主动刷新，停止以后完全依赖于系统刷新，定位位置可能存在误差
-        mOption.setLocationCacheEnable(true); //可选，设置是否使用缓存定位，默认为true
+        //可选，设置定位模式，可选的模式有高精度、仅设备、仅网络。默认为高精度模式
+        mOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
+        //可选，设置是否gps优先，只在高精度模式下有效。默认关闭
+        mOption.setGpsFirst(true);
+        //可选，设置网络请求超时时间。默认为30秒。在仅设备模式下无效
+        mOption.setHttpTimeOut(30000);
+        //可选，设置定位间隔。默认为2秒
+        mOption.setInterval(2000);
+        //可选，设置是否返回逆地理地址信息。默认是true
+        mOption.setNeedAddress(true);
+        //可选，设置是否单次定位。默认是false
+        mOption.setOnceLocation(false);
+        //可选，设置是否等待wifi刷新，默认为false.如果设置为true,会自动变为单次定位，持续定位时不要使用
+        mOption.setOnceLocationLatest(false);
+        //可选， 设置网络请求的协议。可选HTTP或者HTTPS。默认为HTTP
+        AMapLocationClientOption.setLocationProtocol(AMapLocationClientOption.AMapLocationProtocol.HTTP);
+        //可选，设置是否使用传感器。默认是false
+        mOption.setSensorEnable(false);
+        //可选，设置是否开启wifi扫描。默认为true，如果设置为false会同时停止主动刷新，停止以后完全依赖于系统刷新，定位位置可能存在误差
+        mOption.setWifiScan(true);
+        //可选，设置是否使用缓存定位，默认为true
+        mOption.setLocationCacheEnable(true);
         return mOption;
     }
 
@@ -282,87 +315,119 @@ public class CameraActivity extends BaseWorkeActivity implements AMapLocationLis
      */
     public void backTakePhoto(View v) {
         flCamera.setVisibility(View.GONE);
+        if (!waterBitmap.isRecycled()) {
+            waterBitmap.recycle();
+        }
+        if (!textBitmap.isRecycled()) {
+            textBitmap.recycle();
+        }
     }
 
     /**
      * 开始拍照
      */
-    public void startTakePhoto(View v) {
-        RxPerm.get(this).cameraPerm((isSuccess)->{
-            if (!checkCameraData(true)) {
-                return;
-            }
+    public void startTakePhoto() {
+        if (!checkCameraData()) {
+            return;
+        }
+        RxPerm.get(this).cameraPerm((isSuccess) -> {
             setData();
             imageV();
         });
     }
+
     private void imageV() {
-        SDKManager.getPicture().create(this).takeCamera(iPictureCallBack);
+        SDKManager.getPicture().create(CameraActivity.this).takeCamera(iPictureCallBack);
     }
 
     IPictureCallBack iPictureCallBack = new IPictureCallBack() {
         @Override
         public void onSuccess(List<LocalMedia> list) {
-            //往图片绘制文字
+            /**
+             * 往图片绘制文字
+             * */
+            startTakePhoto.setVisibility(View.GONE);
             time = DateUtil.date().toString();
             String path = list.get(0).getPath();
-            Bitmap waterBitmap = BitmapUtil.getBitmap(path);
-            Bitmap watermarkBitmap = ImageUtil.createWaterMaskCenter(waterBitmap, waterBitmap);
-
+            waterBitmap = BitmapUtil.getBitmap(list.get(0).getPath());
+//            Bitmap watermarkBitmap = ImageUtil.createWaterMaskCenter(waterBitmap, waterBitmap);
             if (ConnectivityChangeUtil.isNetConnected(CameraActivity.this) == true) {
                 String netAddress = tvLocationAddress.getText().toString();
-                drawBitmap(path, watermarkBitmap, netAddress, time);
+                drawBitmap(path, waterBitmap, netAddress, time);
             } else {
                 String address = etAddress.getText().toString().trim();
-                drawBitmap(path, watermarkBitmap, address, time);
+                drawBitmap(path, waterBitmap, address, time);
             }
+
         }
     };
 
     /**
+     * 绘制水印
+     */
+    private void drawBitmap(String path, Bitmap watermarkBitmap, String lAddress, String time) {
+        String mContent = "时间：" + time + "\n" + "天气：" + weather + "\n" + "创建者:" +
+                creatUser + "\n" + "类型：" + project_type + "\n" + "名称：" + project_name + "\n" + "部位/区域：" + region_name + "\n" + "内容：" + project_content + "\n" +
+                "地址：" + lAddress;
+        textBitmap = ImageUtil.drawTextToRightBottom(this, watermarkBitmap, mContent, 60, color, 5, 700);
+        flCamera.setVisibility(View.VISIBLE);
+        GlideUtil.intoImageView(CameraActivity.this, textBitmap, showTakePhotoImg);
+//        保存图片
+        Observable.create((ObservableOnSubscribe<Boolean>) emitter -> {
+            emitter.onNext(BitmapUtil.saveLubanImage(textBitmap, path));
+            emitter.onComplete();
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(result -> {
+
+                });
+    }
+
+    /**
      * 检查有没有输入属性
      */
-    private boolean checkCameraData(boolean check) {
-        if (check) {
-            //项目名称
-            project_name = etProjectName.getText().toString().trim();
-            if (TextUtils.isEmpty(project_name)) {
-                showToast("请输入项目名称");
-                return false;
-            }
-
-            //部位名称
-            region_name = etRegionName.getText().toString().trim();
-            if (TextUtils.isEmpty(region_name)) {
-                showToast("请输入部位名称/区域名称");
-                return false;
-            }
-
-            //字体颜色
-            if (color == 0) {
-                showToast("请选择字体颜色");
-                return false;
-            }
-
-            //项目类型
-            project_type = selectProjectType;
-            if (TextUtils.isEmpty(project_type)) {
-                showToast("请选择项目类型");
-                return false;
-            }
-
-            //项目内容
-            project_content = etProjectConment.getText().toString().trim();
-
-            if (TextUtils.isEmpty(project_content)) {
-                showToast("请输入项目内容");
-                return false;
-            }
+    private boolean checkCameraData() {
+        //项目名称
+        project_name = etProjectName.getText().toString().trim();
+        if (TextUtils.isEmpty(project_name)) {
+            showToast("请输入项目名称");
+            return false;
         }
+
+        //部位名称
+        region_name = etRegionName.getText().toString().trim();
+        if (TextUtils.isEmpty(region_name)) {
+            showToast("请输入部位名称/区域名称");
+            return false;
+        }
+
+        //字体颜色
+        if (color == 0) {
+            showToast("请选择字体颜色");
+            return false;
+        }
+
+        //项目类型
+        project_type = selectProjectType;
+        if (TextUtils.isEmpty(project_type)) {
+            showToast("请选择项目类型");
+            return false;
+        }
+
+        //项目内容
+        project_content = etProjectConment.getText().toString().trim();
+        if (TextUtils.isEmpty(project_content)) {
+            showToast("请输入项目内容");
+            return false;
+        }
+
         return true;
 
     }
 
+    /**
+     * 存储
+     */
     private void setData() {
         cameraBean = new CameraBean();
         cameraBean.setLocalPosition(V.v(() -> etRegionName.getText().toString()));
@@ -385,6 +450,7 @@ public class CameraActivity extends BaseWorkeActivity implements AMapLocationLis
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (data == null) {
+            startTakePhoto.setVisibility(View.VISIBLE);
             return;//当回掉无数据时，保持app正常
         }
         switch (requestCode) {
@@ -394,28 +460,9 @@ public class CameraActivity extends BaseWorkeActivity implements AMapLocationLis
                 address = item.getCity() + item.getAddress() + item.getName();
                 //将选择的地址 取 显示值
                 tvLocationAddress.setText(address);
-
                 break;
             default:
                 break;
-        }
-    }
-
-    /**
-     * 绘制水印
-     */
-    private void drawBitmap(String path, Bitmap watermarkBitmap, String lAddress, String time) {
-        String mContent = "时间：" + time + "\n" + "天气：" + weather + "\n" + "创建者:" +
-                creatUser + "\n" + "类型：" + project_type + "\n" + "名称：" + project_name + "\n" + "部位/区域：" + region_name + "\n" + "内容：" + project_content + "\n" +
-                "地址：" + lAddress;
-        Bitmap textBitmap = ImageUtil.drawTextToRightBottom(this, watermarkBitmap, mContent, 40, color, 5, 500);
-        showTakePhotoImg.setImageBitmap(textBitmap);
-        flCamera.setVisibility(View.VISIBLE);
-        try {
-            //保存图片
-            BitmapUtil.saveImage(textBitmap, path);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         }
     }
 
@@ -424,20 +471,24 @@ public class CameraActivity extends BaseWorkeActivity implements AMapLocationLis
     public void onLocationChanged(AMapLocation amapLocation) {
         if (null != amapLocation) {
             StringBuffer sb = new StringBuffer();
-            sb.append(amapLocation.getProvince());//省信息
-            sb.append(amapLocation.getCity());//城市信息
-            sb.append(amapLocation.getDistrict());//城区信息
-            sb.append(amapLocation.getStreet());//街道信息
-            amapLocation.getStreetNum();//街道门牌号信息
-            sb.append(amapLocation.getAoiName());//获取当前定位点的AOI信息
-            sb.append(amapLocation.getBuildingId());//获取当前室内定位的建筑物Id
-            sb.append(amapLocation.getFloor());//获取当前室内定位的楼层
-//            LogUtils.e("amapSuccess", sb.toString());
-
+            //省信息
+            sb.append(amapLocation.getProvince());
+            //城市信息
+            sb.append(amapLocation.getCity());
+            //城区信息
+            sb.append(amapLocation.getDistrict());
+            //街道信息
+            sb.append(amapLocation.getStreet());
+            //街道门牌号信息
+            amapLocation.getStreetNum();
+            //获取当前定位点的AOI信息
+            sb.append(amapLocation.getAoiName());
+            //获取当前室内定位的建筑物Id
+            sb.append(amapLocation.getBuildingId());
+            //获取当前室内定位的楼层
+            sb.append(amapLocation.getFloor());
             address = sb.toString();
             tvLocationAddress.setText(address);
-            //获取定位时间
-//            time = DateUtil.date(GetDateUtils.getDate(amapLocation.getTime()));
             city_address = amapLocation.getCity();
             city_address.substring(0, 1);
             queryWeather(city_address);
@@ -463,6 +514,7 @@ public class CameraActivity extends BaseWorkeActivity implements AMapLocationLis
                                 + weatherlive.getTemperature() + "°"
                                 + weatherlive.getWindDirection() + "风 "
                                 + weatherlive.getWindPower() + "级";
+                        locationClient.stopLocation();
                     }
                 }
             }
@@ -485,22 +537,28 @@ public class CameraActivity extends BaseWorkeActivity implements AMapLocationLis
             case R.id.color_red:
                 color = Color.parseColor("#ff0000");
                 break;
-            case R.id.tv_repair://维修
+            //维修
+            case R.id.tv_repair:
                 selectProjectType = "维修";
                 break;
-            case R.id.tv_check://检查
+            //检查
+            case R.id.tv_check:
                 selectProjectType = "检查";
                 break;
-            case R.id.tv_task://任务
+            //任务
+            case R.id.tv_task:
                 selectProjectType = "任务";
                 break;
-            case R.id.tv_do://施工
+            //施工
+            case R.id.tv_do:
                 selectProjectType = "施工";
                 break;
-            case R.id.tv_accept://验收
+            //验收
+            case R.id.tv_accept:
                 selectProjectType = "验收";
                 break;
-            case R.id.tv_care://保养
+            //保养
+            case R.id.tv_care:
                 selectProjectType = "保养";
                 break;
             default:
@@ -514,6 +572,8 @@ public class CameraActivity extends BaseWorkeActivity implements AMapLocationLis
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (flCamera.getVisibility() == View.VISIBLE) {
                 flCamera.setVisibility(View.GONE);
+                tvWaiting.setVisibility(View.VISIBLE);
+                doCountDown();
             } else {
                 finish();
             }
@@ -538,9 +598,39 @@ public class CameraActivity extends BaseWorkeActivity implements AMapLocationLis
     }
 
     private void inputVoice(EditText editText) {
-        RxPerm.get(this).voicePerm((isSuccess)->{
+        RxPerm.get(this).voicePerm((isSuccess) -> {
             RecognitionManager.getSingleton().startRecognitionWithDialog(CameraActivity.this, editText);
         });
+    }
+
+    public void doCountDown() {
+        Observable.interval(0, 1, TimeUnit.SECONDS)
+                .take(3)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(count -> 3 - count)
+                .subscribe(new Observer<Long>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Long aLong) {
+                        tvWaiting.setText("正在保存,请稍候(" + aLong + ")秒");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        tvWaiting.setVisibility(View.GONE);
+                        startTakePhoto.setVisibility(View.VISIBLE);
+                    }
+                });
     }
 }
 

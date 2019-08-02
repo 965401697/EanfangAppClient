@@ -53,6 +53,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author Guanluocang
@@ -138,8 +139,9 @@ public class AllWorkerFragment extends BaseFragment implements SwipeRefreshLayou
      */
     private String mOrderByType = "";
     private String mOrderByValue = "";
+    private String mAreaCode;
 
-    public static AllWorkerFragment getInstance(RepairOrderEntity toRepairBean, RepairPersonalInfoEntity.ListBean repairPersonalInfoEntity, ArrayList<String> businessIds, int doorfee, Long ownerOrgId, boolean isFromHome) {
+    public static AllWorkerFragment getInstance(RepairOrderEntity toRepairBean, RepairPersonalInfoEntity.ListBean repairPersonalInfoEntity, ArrayList<String> businessIds, int doorfee, Long ownerOrgId, boolean isFromHome, String areaCode) {
         AllWorkerFragment allWorkerFragment = new AllWorkerFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("toRepairBean", toRepairBean);
@@ -148,6 +150,7 @@ public class AllWorkerFragment extends BaseFragment implements SwipeRefreshLayou
         bundle.putSerializable("topInfo", repairPersonalInfoEntity);
         bundle.putLong("mOwnerOrgId", ownerOrgId);
         bundle.putBoolean("isFromHome", isFromHome);
+        bundle.putString("mAreaCode", areaCode);
         allWorkerFragment.setArguments(bundle);
         return allWorkerFragment;
     }
@@ -167,6 +170,7 @@ public class AllWorkerFragment extends BaseFragment implements SwipeRefreshLayou
         mDoorFee = bundle.getInt("doorFee", 0);
         mOwnerOrgId = bundle.getLong("mOwnerOrgId", 0);
         isFromHome = bundle.getBoolean("isFromHome", false);
+        mAreaCode = bundle.getString("mAreaCode");
 
         btnKeyTwo.setVisibility(isFromHome ? View.GONE : View.VISIBLE);
 
@@ -327,6 +331,8 @@ public class AllWorkerFragment extends BaseFragment implements SwipeRefreshLayou
         }
         if (toRepairBean != null) {
             mQueryEntry.getEquals().put("regionCode", toRepairBean.getPlaceCode());
+        } else if (!StrUtil.isEmpty(mAreaCode)) {
+            mQueryEntry.getEquals().put("regionCode", mAreaCode);
         }
         if (businessIds != null) {
             mQueryEntry.getIsIn().put("businessId", Stream.of(businessIds).distinct().toList());
