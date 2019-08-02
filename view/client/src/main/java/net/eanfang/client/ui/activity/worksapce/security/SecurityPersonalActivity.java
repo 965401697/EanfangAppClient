@@ -22,6 +22,7 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.bean.security.SecurityListBean;
 import com.eanfang.bean.security.SecurityPersonalTopBean;
+import com.eanfang.biz.model.QueryEntry;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseActivity;
@@ -29,7 +30,6 @@ import com.eanfang.util.BGASpaceItemDecoration;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
-import com.eanfang.biz.model.QueryEntry;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
@@ -264,14 +264,15 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
         EanfangHttp.post(url)
                 .upJson(JsonUtils.obj2String(queryEntry1))
                 .execute(new EanfangCallback<SecurityPersonalTopBean>(SecurityPersonalActivity.this, true, SecurityPersonalTopBean.class, bean -> {
-                    GlideUtil.intoImageView(SecurityPersonalActivity.this,
-                            Uri.parse(BuildConfig.OSS_SERVER + bean.getUserEntity().getAccountEntity().getAvatar()), ivHead);
+                    GlideUtil.intoImageView(SecurityPersonalActivity.this, Uri.parse(BuildConfig.OSS_SERVER + bean.getUserEntity().getAccountEntity().getAvatar()), ivHead);
                     tvName.setText(bean.getUserEntity().getAccountEntity().getRealName());
                     // 0 未认证 1 认证
-                    if (bean.getUserEntity().getWorkerEntity().getVerifyStatus() == 0) {
-                        ivCertifi.setVisibility(View.GONE);
-                    } else {
-                        ivCertifi.setVisibility(View.VISIBLE);
+                    if (bean.getUserEntity().getWorkerEntity().getVerifyStatus() != null) {
+                        if (bean.getUserEntity().getWorkerEntity().getVerifyStatus() == 0) {
+                            ivCertifi.setVisibility(View.GONE);
+                        } else {
+                            ivCertifi.setVisibility(View.VISIBLE);
+                        }
                     }
                     //粉丝数
                     tvFansCount.setText(bean.getAsFollowerCount() + "");

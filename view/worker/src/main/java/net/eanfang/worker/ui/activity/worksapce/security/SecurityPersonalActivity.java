@@ -270,10 +270,12 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
                     GlideUtil.intoImageView(SecurityPersonalActivity.this, Uri.parse(BuildConfig.OSS_SERVER + bean.getUserEntity().getAccountEntity().getAvatar()), ivHead);
                     tvName.setText(bean.getUserEntity().getAccountEntity().getRealName());
                     // 0 未认证 1 认证
-                    if (bean.getUserEntity().getWorkerEntity().getVerifyStatus() == 0) {
-                        ivCertifi.setVisibility(View.GONE);
-                    } else {
-                        ivCertifi.setVisibility(View.VISIBLE);
+                    if (bean.getUserEntity().getWorkerEntity().getVerifyStatus() != null) {
+                        if (bean.getUserEntity().getWorkerEntity().getVerifyStatus() == 0) {
+                            ivCertifi.setVisibility(View.GONE);
+                        } else {
+                            ivCertifi.setVisibility(View.VISIBLE);
+                        }
                     }
                     //粉丝数
                     tvFansCount.setText(bean.getAsFollowerCount() + "");
@@ -430,7 +432,7 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
      * 照片点击事件
      */
     @Override
-    public void onPhotoClick(int position,int mWhich) {
+    public void onPhotoClick(int position, int mWhich) {
         picList.clear();
         pics = securityListAdapter.getData().get(position).getSpcImg().split(",");
         picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> BuildConfig.OSS_SERVER + (url)).toList());

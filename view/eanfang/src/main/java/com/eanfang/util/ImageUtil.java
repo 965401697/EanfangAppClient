@@ -43,14 +43,15 @@ public class ImageUtil {
         }
         int width = src.getWidth();
         int height = src.getHeight();
-        //创建一个bitmap
-        Bitmap newb = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);// 创建一个新的和SRC长度宽度一样的位图
+        // 创建一个新的和SRC长度宽度一样的位图
+        Bitmap newb = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
         //将该图片作为画布
         Canvas canvas = new Canvas(newb);
         //在画布 0，0坐标上开始绘制原始图片
         canvas.drawBitmap(src, 0, 0, null);
         //在画布上绘制水印图片
         canvas.drawBitmap(watermark, paddingLeft, paddingTop, null);
+        watermark.recycle();
         // 保存
         canvas.save();
         // 存储
@@ -119,9 +120,7 @@ public class ImageUtil {
      * @return
      */
     public static Bitmap createWaterMaskCenter(Bitmap src, Bitmap watermark) {
-        return createWaterMaskBitmap(src, watermark,
-                (src.getWidth() - watermark.getWidth()) / 2,
-                (src.getHeight() - watermark.getHeight()) / 2);
+        return createWaterMaskBitmap(src, watermark, (src.getWidth() - watermark.getWidth()) / 2, (src.getHeight() - watermark.getHeight()) / 2);
     }
 
     /**
@@ -200,11 +199,9 @@ public class ImageUtil {
         // 过滤一些
         paint.setFilterBitmap(true);
         if (bitmapConfig == null) {
-            bitmapConfig = Bitmap.Config.ARGB_8888;
+            bitmapConfig = Bitmap.Config.RGB_565;
         }
         Bitmap mBitmap = bitmap.copy(bitmapConfig, true);
-
-
         Canvas canvas = new Canvas(mBitmap);
         StaticLayout staticLayout2 = new StaticLayout(text, paint, mBitmap.getWidth(),
                 Layout.Alignment.ALIGN_NORMAL, 1.0F, 0.0F, true);
@@ -213,7 +210,9 @@ public class ImageUtil {
         staticLayout2.draw(canvas);
         canvas.save();
         canvas.restore();
+        bitmap.recycle();
 //        canvas.drawText(text, paddingLeft, paddingTop, paint);
+
         return mBitmap;
     }
 

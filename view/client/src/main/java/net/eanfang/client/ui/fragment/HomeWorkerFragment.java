@@ -36,7 +36,6 @@ import cn.hutool.core.thread.ThreadUtil;
  * Describe :找技师页面
  */
 public class HomeWorkerFragment extends BaseFragment {
-    private static final String PAGE_TYPE = "pageType";
     @BindView(R.id.rec_home_company)
     RecyclerView mRecHomeCompany;
     @BindView(R.id.tv_home_company_more)
@@ -46,14 +45,13 @@ public class HomeWorkerFragment extends BaseFragment {
      * 0 安防公司
      * 1 找技师
      */
-    private int mPageType;
     private int mCityId = 102;
     private int mProvinceId;
+    private String mAreaCode = "";
 
     public static HomeWorkerFragment getInstance(int pageType) {
         HomeWorkerFragment homeCompanyFragment = new HomeWorkerFragment();
         Bundle arguments = new Bundle();
-        arguments.putInt(PAGE_TYPE, pageType);
         homeCompanyFragment.setArguments(arguments);
         return homeCompanyFragment;
     }
@@ -65,9 +63,6 @@ public class HomeWorkerFragment extends BaseFragment {
 
     @Override
     protected void initData(Bundle arguments) {
-        if (arguments != null) {
-            mPageType = arguments.getInt(PAGE_TYPE, 0);
-        }
     }
 
 
@@ -123,6 +118,7 @@ public class HomeWorkerFragment extends BaseFragment {
         mTvHomeComanyMore.setOnClickListener((v) -> {
             Bundle bundle = new Bundle();
             bundle.putBoolean("isHome", true);
+            bundle.putString("mAreaCode", mAreaCode);
             JumpItent.jump(getActivity(), SelectWorkerActivity.class, bundle);
         });
     }
@@ -136,6 +132,7 @@ public class HomeWorkerFragment extends BaseFragment {
             LocationUtil.location((MainActivity) getActivity(), (location) -> {
                 String code = Config.get().getAreaCodeByName(location.getCity(), location.getDistrict());
                 int cityId = Config.get().getBaseIdByCode(code, 2, Constant.AREA);
+                mAreaCode = code;
                 mProvinceId = Config.get().getBaseIdByCode(code, 1, Constant.AREA);
                 if (cityId != 0 && mCityId != cityId) {
                     mCityId = cityId;

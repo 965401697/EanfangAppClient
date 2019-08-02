@@ -18,8 +18,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import cn.hutool.core.io.FileUtil;
-
 /**
  * Created by Mr.hou
  *
@@ -28,6 +26,7 @@ import cn.hutool.core.io.FileUtil;
  */
 
 public class BitmapUtil {
+
     /**
      * 通过图片路径获取Bitmap
      *
@@ -53,8 +52,25 @@ public class BitmapUtil {
      * @throws FileNotFoundException
      */
     public static void saveImage(Bitmap bitmap, String outPath) throws FileNotFoundException {
-        FileOutputStream os = new FileOutputStream(outPath);
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os);
+        try {
+            compressByQuality(bitmap, outPath, 1024 * 3);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+//        FileOutputStream os = new FileOutputStream(outPath);
+//        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, os);
+//        bitmap.recycle();
+
+    }
+
+    public static boolean saveLubanImage(Bitmap bitmap, String outPath) throws FileNotFoundException {
+        try {
+            compressByQuality(bitmap, outPath, 1024 * 4);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 
     public static int getBitmapBytes(Bitmap bitmap) {
@@ -149,7 +165,6 @@ public class BitmapUtil {
         return bitmap;
     }
 
-
     /**
      * 通过Bitmap生成缩略图，并保存图片（按分辨率压缩）
      *
@@ -195,18 +210,20 @@ public class BitmapUtil {
      * @throws IOException
      */
     public static void compressByQuality(Bitmap image, String outPath, int maxSize) throws IOException {
-
         ByteArrayOutputStream os = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG, 100, os);
         int options = 90;
-        image.compress(Bitmap.CompressFormat.JPEG, options, os);
+        // 循环判断如果压缩后图片是否大于100kb maxSize,大于继续压
         while (os.toByteArray().length / 1024 > maxSize) {
             os.reset();
-            options -= 10;
             image.compress(Bitmap.CompressFormat.JPEG, options, os);
+            options -= 10;
         }
-        ByteArrayInputStream isBm = new ByteArrayInputStream(os.toByteArray());// 把压缩后的数据baos存放到ByteArrayInputStream中
-        Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);// 把ByteArrayInputStream数据生成图片
-        saveBitmap(bitmap, outPath);
+        // 把压缩后的数据baos存放到ByteArrayInputStream中
+        ByteArrayInputStream isBm = new ByteArrayInputStream(os.toByteArray());
+        // 把ByteArrayInputStream数据生成图片
+        Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);
+        saveBitmaps(bitmap, outPath);
     }
 
     /**
@@ -329,6 +346,44 @@ public class BitmapUtil {
         fOut.close();
         bitmap.recycle();
         return path;
+    }
+
+    private static void saveBitmaps(Bitmap bm, String filePath) {
+        Bitmap mBitmap = getRotateBM(bm, filePath);
+        File file = new File(filePath);
+        if (file.exists()) {
+            try {
+                file.createNewFile();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            file.createNewFile();
+            FileOutputStream fos = new FileOutputStream(file);
+            mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            fos.flush();
+            fos.close();
+            mBitmap.recycle();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static Bitmap getRotateBM(Bitmap bm, String path) {
+        int degree = getPhotoDegree(path);
+        if (degree != 0) {
+            Matrix matrix = new Matrix();
+            matrix.postRotate(degree);
+            Bitmap mBitmap = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), matrix, true);
+            return mBitmap;
+        } else {
+            return bm;
+        }
+
     }
 
     /**

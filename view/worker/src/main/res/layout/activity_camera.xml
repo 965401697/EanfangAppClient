@@ -53,8 +53,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_40"
-                android:layout_marginRight="@dimen/dimen_40"
                 android:layout_marginTop="@dimen/dimen_32"
+                android:layout_marginRight="@dimen/dimen_40"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -104,8 +104,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_40"
-                android:layout_marginRight="@dimen/dimen_40"
                 android:layout_marginTop="@dimen/dimen_32"
+                android:layout_marginRight="@dimen/dimen_40"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -154,15 +154,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_40"
-                android:layout_marginRight="@dimen/dimen_40"
                 android:layout_marginTop="@dimen/dimen_32"
+                android:layout_marginRight="@dimen/dimen_40"
                 android:background="@drawable/bg_ll_selctor"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="0dp"
-                    android:layout_weight="1"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:text="工程内容(*)"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/textSize_15" />
@@ -183,8 +183,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_40"
-                android:layout_marginRight="@dimen/dimen_40"
                 android:layout_marginTop="@dimen/dimen_32"
+                android:layout_marginRight="@dimen/dimen_40"
                 android:layout_weight="1"
                 android:background="@drawable/bg_camera_input_back"
                 android:hint="请输入项目内容(30字以内)"
@@ -198,8 +198,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_40"
-                android:layout_marginRight="@dimen/dimen_40"
                 android:layout_marginTop="@dimen/dimen_32"
+                android:layout_marginRight="@dimen/dimen_40"
                 android:background="@drawable/bg_ll_selctor"
                 android:orientation="horizontal">
 
@@ -222,8 +222,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:drawablePadding="@dimen/dimen_14"
                     android:drawableRight="@mipmap/ic_camera_select_otheraddress"
+                    android:drawablePadding="@dimen/dimen_14"
                     android:gravity="right|center_vertical"
                     android:onClick="selectOtherAddress"
                     android:text="选择其他地址"
@@ -237,8 +237,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_40"
-                android:layout_marginRight="@dimen/dimen_40"
                 android:layout_marginTop="@dimen/dimen_32"
+                android:layout_marginRight="@dimen/dimen_40"
                 android:background="@drawable/bg_camera_input_back"
                 android:drawableLeft="@mipmap/ic_camera_location"
                 android:drawablePadding="@dimen/dimen_20"
@@ -251,8 +251,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_40"
-                android:layout_marginRight="@dimen/dimen_40"
                 android:layout_marginTop="@dimen/dimen_32"
+                android:layout_marginRight="@dimen/dimen_40"
                 android:background="@drawable/bg_camera_input_back"
                 android:hint="请手动输入地址"
                 android:maxLength="30"
@@ -269,8 +269,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_40"
-                android:layout_marginRight="@dimen/dimen_40"
                 android:layout_marginTop="@dimen/dimen_32"
+                android:layout_marginRight="@dimen/dimen_40"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -303,8 +303,8 @@
                         android:background="@drawable/select_camera_back"
                         android:button="@null"
                         android:checked="true"
-                        android:text="白色"
                         android:gravity="center"
+                        android:text="白色"
                         android:textColor="@drawable/select_camera_text_back"
                         android:textSize="12sp" />
 
@@ -331,8 +331,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/dimen_40"
-                android:layout_marginRight="@dimen/dimen_40"
                 android:layout_marginTop="@dimen/dimen_32"
+                android:layout_marginRight="@dimen/dimen_40"
                 android:background="@drawable/bg_ll_selctor"
                 android:orientation="vertical">
 
@@ -440,15 +440,31 @@
             </LinearLayout>
 
 
-            <ImageView
-                android:id="@+id/start_take_photo"
-                android:layout_width="@dimen/dimen_200"
-                android:layout_height="@dimen/dimen_200"
-                android:layout_gravity="center"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="20dp"
-                android:onClick="startTakePhoto"
-                android:src="@mipmap/ic_worker_takephoto" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_waiting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="@dimen/dimen_40"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_15"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/start_take_photo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/dimen_200"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/dimen_40"
+                    android:layout_marginBottom="20dp"
+                    android:src="@mipmap/ic_client_camera"
+                    android:visibility="visible" />
+            </RelativeLayout>
 
         </LinearLayout>
 

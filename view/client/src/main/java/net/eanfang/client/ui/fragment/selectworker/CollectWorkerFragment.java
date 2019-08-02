@@ -48,6 +48,7 @@ import java.util.Arrays;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author Guanluocang
@@ -76,8 +77,9 @@ public class CollectWorkerFragment extends BaseFragment implements SwipeRefreshL
      * 个人信息
      */
     RepairPersonalInfoEntity.ListBean repairPersonalInfoEntity;
+    private String mAreaCode;
 
-    public static CollectWorkerFragment getInstance(RepairOrderEntity toRepairBean, RepairPersonalInfoEntity.ListBean repairPersonalInfoEntity, ArrayList<String> businessIds, int doorfee, Long ownerOrgId) {
+    public static CollectWorkerFragment getInstance(RepairOrderEntity toRepairBean, RepairPersonalInfoEntity.ListBean repairPersonalInfoEntity, ArrayList<String> businessIds, int doorfee, Long ownerOrgId, String areaCode) {
         CollectWorkerFragment collectWorkerFragment = new CollectWorkerFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("toRepairBean", toRepairBean);
@@ -85,6 +87,7 @@ public class CollectWorkerFragment extends BaseFragment implements SwipeRefreshL
         bundle.putInt("doorFee", doorfee);
         bundle.putSerializable("topInfo", repairPersonalInfoEntity);
         bundle.putLong("mOwnerOrgId", ownerOrgId);
+        bundle.putString("mAreaCode", areaCode);
         collectWorkerFragment.setArguments(bundle);
         return collectWorkerFragment;
     }
@@ -102,6 +105,7 @@ public class CollectWorkerFragment extends BaseFragment implements SwipeRefreshL
         businessIds = bundle.getStringArrayList("bussinsList");
         mDoorFee = bundle.getInt("doorFee", 0);
         mOwnerOrgId = bundle.getLong("mOwnerOrgId", 0);
+        mAreaCode = bundle.getString("mAreaCode");
 
     }
 
@@ -148,6 +152,8 @@ public class CollectWorkerFragment extends BaseFragment implements SwipeRefreshL
         }
         if (toRepairBean != null) {
             mQueryEntry.getEquals().put("regionCode", toRepairBean.getPlaceCode());
+        } else if (!StrUtil.isEmpty(mAreaCode)) {
+            mQueryEntry.getEquals().put("regionCode", mAreaCode);
         }
         if (businessIds != null) {
             mQueryEntry.getIsIn().put("businessId", Stream.of(businessIds).distinct().toList());
@@ -163,7 +169,7 @@ public class CollectWorkerFragment extends BaseFragment implements SwipeRefreshL
         mQueryEntry.getEquals().put("userId", ClientApplication.get().getUserId() + "");
         EanfangHttp.post(RepairApi.GET_REPAIR_SEARCH)
                 .upJson(JsonUtils.obj2String(mQueryEntry))
-                .execute(new EanfangCallback<SelectWorkEntitity>(getActivity(), true, SelectWorkEntitity.class ) {
+                .execute(new EanfangCallback<SelectWorkEntitity>(getActivity(), true, SelectWorkEntitity.class) {
                     @Override
                     public void onSuccess(SelectWorkEntitity bean) {
                         if (mPage == 1) {

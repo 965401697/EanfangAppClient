@@ -5,10 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.LocationManager;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
@@ -50,14 +47,20 @@ import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.base.BaseClienActivity;
 
-import java.io.FileNotFoundException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
+import io.reactivex.Observable;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 
 /**
@@ -110,6 +113,8 @@ public class CameraActivity extends BaseClienActivity implements AMapLocationLis
     LocalWeatherLive weatherlive;
     @BindView(R.id.start_take_photo)
     ImageView startTakePhoto;
+    @BindView(R.id.tv_waiting)
+    TextView tvWaiting;
     private String time, weather, city_address;
     private String project_name;
     private String region_name;
@@ -123,6 +128,9 @@ public class CameraActivity extends BaseClienActivity implements AMapLocationLis
     private String selectProjectType = "维修";
     private AMapLocationClient locationClient = null;
     private AMapLocationClientOption locationOption = null;
+
+    private Bitmap waterBitmap;
+    private Bitmap textBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -308,6 +316,12 @@ public class CameraActivity extends BaseClienActivity implements AMapLocationLis
      */
     public void backTakePhoto(View v) {
         flCamera.setVisibility(View.GONE);
+        if (!waterBitmap.isRecycled()) {
+            waterBitmap.recycle();
+        }
+        if (!textBitmap.isRecycled()) {
+            textBitmap.recycle();
+        }
     }
 
     /**
@@ -330,30 +344,45 @@ public class CameraActivity extends BaseClienActivity implements AMapLocationLis
     IPictureCallBack iPictureCallBack = new IPictureCallBack() {
         @Override
         public void onSuccess(List<LocalMedia> list) {
-            //往图片绘制文字
+            /**
+             * 往图片绘制文字
+             * */
+            startTakePhoto.setVisibility(View.GONE);
             time = DateUtil.date().toString();
             String path = list.get(0).getPath();
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                if (!Settings.System.canWrite(CameraActivity.this)) {
-                    Intent intent = new Intent(android.provider.Settings.ACTION_MANAGE_WRITE_SETTINGS);
-                    intent.setData(Uri.parse("package:" + CameraActivity.this.getPackageName()));
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    CameraActivity.this.startActivity(intent);
-                } else {
-                    Bitmap waterBitmap = BitmapUtil.getBitmap(path);
-                    Bitmap watermarkBitmap = ImageUtil.createWaterMaskCenter(waterBitmap, waterBitmap);
-                    if (ConnectivityChangeUtil.isNetConnected(CameraActivity.this) == true) {
-                        String netAddress = tvLocationAddress.getText().toString();
-                        drawBitmap(path, watermarkBitmap, netAddress, time);
-                    } else {
-                        String address = etAddress.getText().toString().trim();
-                        drawBitmap(path, watermarkBitmap, address, time);
-                    }
-                }
+            waterBitmap = BitmapUtil.getBitmap(list.get(0).getPath());
+//            Bitmap watermarkBitmap = ImageUtil.createWaterMaskCenter(waterBitmap, waterBitmap);
+            if (ConnectivityChangeUtil.isNetConnected(CameraActivity.this) == true) {
+                String netAddress = tvLocationAddress.getText().toString();
+                drawBitmap(path, waterBitmap, netAddress, time);
+            } else {
+                String address = etAddress.getText().toString().trim();
+                drawBitmap(path, waterBitmap, address, time);
             }
 
         }
     };
+
+    /**
+     * 绘制水印
+     */
+    private void drawBitmap(String path, Bitmap watermarkBitmap, String lAddress, String time) {
+        String mContent = "时间：" + time + "\n" + "天气：" + weather + "\n" + "创建者:" +
+                creatUser + "\n" + "类型：" + project_type + "\n" + "名称：" + project_name + "\n" + "部位/区域：" + region_name + "\n" + "内容：" + project_content + "\n" +
+                "地址：" + lAddress;
+        textBitmap = ImageUtil.drawTextToRightBottom(this, watermarkBitmap, mContent, 60, color, 5, 700);
+        flCamera.setVisibility(View.VISIBLE);
+        GlideUtil.intoImageView(CameraActivity.this, textBitmap, showTakePhotoImg);
+//        保存图片
+        Observable.create((ObservableOnSubscribe<Boolean>) emitter -> {
+            emitter.onNext(BitmapUtil.saveLubanImage(textBitmap, path));
+            emitter.onComplete();
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(result -> {
+
+                });
+    }
 
     /**
      * 检查有没有输入属性
@@ -422,6 +451,7 @@ public class CameraActivity extends BaseClienActivity implements AMapLocationLis
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (data == null) {
+            startTakePhoto.setVisibility(View.VISIBLE);
             return;//当回掉无数据时，保持app正常
         }
         switch (requestCode) {
@@ -437,24 +467,6 @@ public class CameraActivity extends BaseClienActivity implements AMapLocationLis
         }
     }
 
-    /**
-     * 绘制水印
-     */
-    private void drawBitmap(String path, Bitmap watermarkBitmap, String lAddress, String time) {
-        String mContent = "时间：" + time + "\n" + "天气：" + weather + "\n" + "创建者:" +
-                creatUser + "\n" + "类型：" + project_type + "\n" + "名称：" + project_name + "\n" + "部位/区域：" + region_name + "\n" + "内容：" + project_content + "\n" +
-                "地址：" + lAddress;
-        Bitmap textBitmap = ImageUtil.drawTextToRightBottom(this, watermarkBitmap, mContent, 60, color, 5, 700);
-        flCamera.setVisibility(View.VISIBLE);
-        GlideUtil.intoImageView(CameraActivity.this, textBitmap, showTakePhotoImg);
-        try {
-            //保存图片
-            BitmapUtil.saveImage(textBitmap, path);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-    }
 
     @Override
     public void onLocationChanged(AMapLocation amapLocation) {
@@ -561,6 +573,8 @@ public class CameraActivity extends BaseClienActivity implements AMapLocationLis
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (flCamera.getVisibility() == View.VISIBLE) {
                 flCamera.setVisibility(View.GONE);
+                tvWaiting.setVisibility(View.VISIBLE);
+                doCountDown();
             } else {
                 finish();
             }
@@ -588,6 +602,36 @@ public class CameraActivity extends BaseClienActivity implements AMapLocationLis
         RxPerm.get(this).voicePerm((isSuccess) -> {
             RecognitionManager.getSingleton().startRecognitionWithDialog(CameraActivity.this, editText);
         });
+    }
+
+    public void doCountDown() {
+        Observable.interval(0, 1, TimeUnit.SECONDS)
+                .take(3)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(count -> 3 - count)
+                .subscribe(new Observer<Long>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Long aLong) {
+                        tvWaiting.setText("正在保存,请稍候(" + aLong + ")秒");
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        tvWaiting.setVisibility(View.GONE);
+                        startTakePhoto.setVisibility(View.VISIBLE);
+                    }
+                });
     }
 }
 
