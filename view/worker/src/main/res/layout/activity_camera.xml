@@ -442,7 +442,8 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/dimen_20">
 
                 <TextView
                     android:id="@+id/tv_waiting"
@@ -450,6 +451,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:layout_marginTop="@dimen/dimen_40"
+                    android:text="正在保存,请稍候...."
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_15"
                     android:visibility="gone" />
@@ -462,7 +464,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/dimen_40"
                     android:layout_marginBottom="20dp"
-                    android:src="@mipmap/ic_client_camera"
+                    android:src="@mipmap/ic_worker_takephoto"
                     android:visibility="visible" />
             </RelativeLayout>
 

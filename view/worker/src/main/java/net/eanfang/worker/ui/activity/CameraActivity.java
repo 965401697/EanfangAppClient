@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -48,7 +49,6 @@ import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,9 +57,7 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -350,7 +348,6 @@ public class CameraActivity extends BaseWorkeActivity implements AMapLocationLis
             time = DateUtil.date().toString();
             String path = list.get(0).getPath();
             waterBitmap = BitmapUtil.getBitmap(list.get(0).getPath());
-//            Bitmap watermarkBitmap = ImageUtil.createWaterMaskCenter(waterBitmap, waterBitmap);
             if (ConnectivityChangeUtil.isNetConnected(CameraActivity.this) == true) {
                 String netAddress = tvLocationAddress.getText().toString();
                 drawBitmap(path, waterBitmap, netAddress, time);
@@ -369,17 +366,19 @@ public class CameraActivity extends BaseWorkeActivity implements AMapLocationLis
         String mContent = "时间：" + time + "\n" + "天气：" + weather + "\n" + "创建者:" +
                 creatUser + "\n" + "类型：" + project_type + "\n" + "名称：" + project_name + "\n" + "部位/区域：" + region_name + "\n" + "内容：" + project_content + "\n" +
                 "地址：" + lAddress;
-        textBitmap = ImageUtil.drawTextToRightBottom(this, watermarkBitmap, mContent, 60, color, 5, 700);
+        textBitmap = ImageUtil.drawTextToRightBottom(this, watermarkBitmap, mContent, 40, color, 5, 500);
         flCamera.setVisibility(View.VISIBLE);
         GlideUtil.intoImageView(CameraActivity.this, textBitmap, showTakePhotoImg);
 //        保存图片
         Observable.create((ObservableOnSubscribe<Boolean>) emitter -> {
-            emitter.onNext(BitmapUtil.saveLubanImage(textBitmap, path));
+            emitter.onNext(BitmapUtil.saveLubanImage( textBitmap, path));
             emitter.onComplete();
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(result -> {
-
+                    tvWaiting.setVisibility(View.GONE);
+                    startTakePhoto.setVisibility(View.VISIBLE);
+                    Log.e("GG", "baoc wanle ");
                 });
     }
 
@@ -572,8 +571,6 @@ public class CameraActivity extends BaseWorkeActivity implements AMapLocationLis
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if (flCamera.getVisibility() == View.VISIBLE) {
                 flCamera.setVisibility(View.GONE);
-                tvWaiting.setVisibility(View.VISIBLE);
-                doCountDown();
             } else {
                 finish();
             }
@@ -603,35 +600,6 @@ public class CameraActivity extends BaseWorkeActivity implements AMapLocationLis
         });
     }
 
-    public void doCountDown() {
-        Observable.interval(0, 1, TimeUnit.SECONDS)
-                .take(3)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .map(count -> 3 - count)
-                .subscribe(new Observer<Long>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-
-                    }
-
-                    @Override
-                    public void onNext(Long aLong) {
-                        tvWaiting.setText("正在保存,请稍候(" + aLong + ")秒");
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        tvWaiting.setVisibility(View.GONE);
-                        startTakePhoto.setVisibility(View.VISIBLE);
-                    }
-                });
-    }
 }
 
 

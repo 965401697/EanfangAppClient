@@ -58,7 +58,7 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
             helper.setText(R.id.tv_real_name, item.getOwnerUser().getAccountEntity().getRealName());
         } else {
             helper.setText(R.id.tv_company_name, "个人客户");
-            if (item.getOwnerUser() == null||item.getOwnerUser().getAccountEntity() == null) {
+            if (item.getOwnerUser() == null || item.getOwnerUser().getAccountEntity() == null) {
                 helper.setText(R.id.tv_real_name, "");
             } else {
                 helper.setText(R.id.tv_real_name, item.getOwnerUser().getAccountEntity().getRealName());
@@ -81,7 +81,11 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
         } else {
             helper.setText(R.id.tv_arriveTime, "到达时限： 0 ");
         }
-        helper.setText(R.id.tv_state, GetConstDataUtils.getRepairStatus().get(item.getStatus()));
+        if (item.getStatus() == 6) {
+            helper.setText(R.id.tv_state, "订单取消");
+        } else {
+            helper.setText(R.id.tv_state, GetConstDataUtils.getRepairStatus().get(item.getStatus()));
+        }
 
         //订单金额
         if (item.getOwnerOrg() != null && item.getOwnerOrg().getBelongCompany() != null && OEG_NAME.equals(item.getOwnerOrg().getBelongCompany().getOrgName())) {
@@ -115,9 +119,9 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
         //将业务类型的图片显示到列表
         String imgUrl = V.v(() -> item.getFailureEntity().getPictures().split(",")[0]);
         if (!StrUtil.isEmpty(imgUrl) && imgUrl.length() > DEFAULT_URL_LENGTH) {
-            GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + imgUrl),helper.getView(R.id.iv_upload));
+            GlideUtil.intoImageView(mContext, Uri.parse(BuildConfig.OSS_SERVER + imgUrl), helper.getView(R.id.iv_upload));
         } else {
-            GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER),helper.getView(R.id.iv_upload));
+            GlideUtil.intoImageView(mContext, Uri.parse(BuildConfig.OSS_SERVER), helper.getView(R.id.iv_upload));
         }
         helper.addOnClickListener(R.id.tv_do_first);
         helper.addOnClickListener(R.id.tv_do_second);

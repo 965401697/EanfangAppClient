@@ -32,6 +32,7 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
      * 请求地址的最短长度
      */
     private static final int LESS_URL_LENGTH = 10;
+
     public RepairedManageOrderAdapter() {
         super(R.layout.item_workspace_order_list);
 
@@ -99,8 +100,11 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
             helper.setVisible(R.id.tv_total, false);
         }
 
-
-        helper.setText(R.id.tv_state, GetConstDataUtils.getRepairStatus().get(item.getStatus()));
+        if (item.getStatus() == 6) {
+            helper.setText(R.id.tv_state, "订单取消");
+        } else {
+            helper.setText(R.id.tv_state, GetConstDataUtils.getRepairStatus().get(item.getStatus()));
+        }
         helper.setText(R.id.tv_do_first, orderOerationEntity.getOperationLeft());
         helper.setText(R.id.tv_do_second, orderOerationEntity.getOperationRight());
         helper.setGone(R.id.tv_do_first, orderOerationEntity.isShowOperationLeft());
@@ -116,9 +120,9 @@ public class RepairedManageOrderAdapter extends BaseQuickAdapter<RepairOrderEnti
         //将业务类型的图片显示到列表
         String imgUrl = V.v(() -> item.getFailureEntity().getPictures().split(",")[0]);
         if (!StrUtil.isEmpty(imgUrl) && imgUrl.length() > LESS_URL_LENGTH) {
-            GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + imgUrl),helper.getView(R.id.iv_upload));
+            GlideUtil.intoImageView(mContext, Uri.parse(BuildConfig.OSS_SERVER + imgUrl), helper.getView(R.id.iv_upload));
         } else {
-            GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + ""),helper.getView(R.id.iv_upload));
+            GlideUtil.intoImageView(mContext, Uri.parse(BuildConfig.OSS_SERVER + ""), helper.getView(R.id.iv_upload));
         }
         helper.addOnClickListener(R.id.tv_do_first);
         helper.addOnClickListener(R.id.tv_do_second);

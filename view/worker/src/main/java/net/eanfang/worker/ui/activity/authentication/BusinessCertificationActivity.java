@@ -66,7 +66,7 @@ public class BusinessCertificationActivity extends BaseActivity {
     @BindView(R.id.cl_rq_lrv)
     TextView clRqLrv;
     @BindView(R.id.jz_rq_lrv)
-    LtReView jzRqLrv;
+    TextView jzRqLrv;
     private AlertDialog.Builder alertDialog;
     private boolean hasGotToken = false;
     private static final int REQUEST_CODE_BUSINESS_LICENSE = 123;
@@ -159,10 +159,10 @@ public class BusinessCertificationActivity extends BaseActivity {
         }));
     }
 
-    private void setRq() {
+    private void setRq(TextView textView) {
         Date date;
-        if (!StrUtil.isEmpty(clRqLrv.getText())) {
-            date = DateUtil.parse(clRqLrv.getText().toString());
+        if (!StrUtil.isEmpty(textView.getText())) {
+            date = DateUtil.parse(textView.getText().toString());
         } else {
             date = new Date();
         }
@@ -171,18 +171,9 @@ public class BusinessCertificationActivity extends BaseActivity {
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this, (view, year1, month1, dayOfMonth) -> clRqLrv.setText(DateUtil.parse(year1 + "-" + month1 + "-" + dayOfMonth, "yyyy-M-dd").toDateStr()), year, month, day);
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, (view, year1, month1, dayOfMonth) -> textView.setText(DateUtil.parse(year1 + "-" + month1 + "-" + dayOfMonth, "yyyy-M-dd").toDateStr()), year, month, day);
         datePickerDialog.show();
 
-//        View view = getLayoutInflater().inflate(R.layout.activity_dialog_date, null);
-//        CalendarView datePicker = view.findViewById(R.id.calendarView);
-//        datePicker.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
-//            date = DateUtil.parse(year + "-" + month + "-" + dayOfMonth);
-//            clRqLrv.setText(DateUtil.date(date).toDateStr());
-//        });
-//        new AlertDialog.Builder(this).setView(view).setCancelable(false).setPositiveButton("确定", (dialogInterface, i) -> {
-//            dialogInterface.dismiss();
-//        }).show();
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -190,8 +181,8 @@ public class BusinessCertificationActivity extends BaseActivity {
         mOrgId = getIntent().getLongExtra("mOrgId", 0);
         status = getIntent().getIntExtra("status", 0);
         bizCertify = getIntent().getIntExtra("bizCertify", 0);
-        clRqLrv.setOnClickListener(view -> setRq());
-        jzRqLrv.setOnClickListener(view -> setRq());
+        clRqLrv.setOnClickListener(view -> setRq(clRqLrv));
+        jzRqLrv.setOnClickListener(view -> setRq(jzRqLrv));
         initAccessToken();
         EanfangHttp.get(UserApi.GET_COMPANY_ORG_INFO + mOrgId).execute(new EanfangCallback<AuthCompanyBaseInfoBean>(this, true, AuthCompanyBaseInfoBean.class, (beans) -> {
             infoBean = beans;

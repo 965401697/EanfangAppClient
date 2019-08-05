@@ -9,6 +9,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
 import android.os.Build;
+import android.os.Environment;
 import android.widget.ImageView;
 
 import java.io.ByteArrayInputStream;
@@ -18,6 +19,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import cn.hutool.core.date.DateUtil;
+
 /**
  * Created by Mr.hou
  *
@@ -26,6 +29,11 @@ import java.io.IOException;
  */
 
 public class BitmapUtil {
+
+    /**
+     * 图片存储目录
+     */
+    private static String BASE_DCIM = null;
 
     /**
      * 通过图片路径获取Bitmap
@@ -38,7 +46,7 @@ public class BitmapUtil {
         newOpts.inJustDecodeBounds = false;
         newOpts.inPurgeable = true;
         newOpts.inInputShareable = true;
-        newOpts.inSampleSize = 1;
+        newOpts.inSampleSize = 2;
         newOpts.inPreferredConfig = Bitmap.Config.RGB_565;
         return BitmapFactory.decodeFile(imgPath, newOpts);
     }
@@ -64,9 +72,9 @@ public class BitmapUtil {
 
     }
 
-    public static boolean saveLubanImage(Bitmap bitmap, String outPath) throws FileNotFoundException {
+    public static boolean saveLubanImage( Bitmap bitmap, String outPath) throws FileNotFoundException {
         try {
-            compressByQuality(bitmap, outPath, 1024 * 4);
+            compressByQuality(bitmap, outPath, 1024 * 2);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -349,8 +357,23 @@ public class BitmapUtil {
     }
 
     private static void saveBitmaps(Bitmap bm, String filePath) {
+        BASE_DCIM = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getAbsolutePath();
+        String mPath = DateUtil.today() + DateUtil.currentSeconds() + ".png";
+        if (Build.BRAND.equals("Xiaomi")) {
+            BASE_DCIM = BASE_DCIM + "/Camera/";
+        } else {  // Meizu 、Oppo
+            BASE_DCIM = BASE_DCIM + "/DCIM/";
+        }
+        // 声明文件对象
+        File file = null;
+        // 声明输出流
+        FileOutputStream outStream = null;
         Bitmap mBitmap = getRotateBM(bm, filePath);
-        File file = new File(filePath);
+        File mFile = new File(filePath);
+        if (mFile.exists()) {
+            mFile.delete();
+        }
+        file = new File(BASE_DCIM + mPath);
         if (file.exists()) {
             try {
                 file.createNewFile();
@@ -361,11 +384,18 @@ public class BitmapUtil {
         }
         try {
             file.createNewFile();
-            FileOutputStream fos = new FileOutputStream(file);
-            mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-            fos.flush();
-            fos.close();
-            mBitmap.recycle();
+            outStream = new FileOutputStream(file);
+            mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
+            outStream.flush();
+            outStream.close();
+            if (mBitmap != null && !mBitmap.isRecycled()) {
+                mBitmap.recycle();
+                mBitmap = null;
+            }
+            if (bm != null && !bm.isRecycled()) {
+                bm.recycle();
+                bm = null;
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

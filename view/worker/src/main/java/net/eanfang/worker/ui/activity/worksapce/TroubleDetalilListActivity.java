@@ -3,24 +3,25 @@ package net.eanfang.worker.ui.activity.worksapce;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.biz.model.QueryEntry;
+import com.eanfang.biz.model.bean.PageUtils;
+import com.eanfang.biz.model.entity.BughandleConfirmEntity;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.bean.PageUtils;
 import com.eanfang.ui.base.BaseDialog;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.biz.model.QueryEntry;
-import com.eanfang.biz.model.entity.BughandleConfirmEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.repair.seefaultdetail.PsTroubleDetailActivity;
@@ -30,7 +31,6 @@ import net.eanfang.worker.ui.adapter.ToubleDetailListAdapter;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by MrHou
@@ -64,9 +64,9 @@ public class TroubleDetalilListActivity extends BaseDialog {
 
     @Override
     protected void initCustomView(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_trouble_list_detail);
-        ButterKnife.bind(this);
-        initView();
+//        setContentView(R.layout.activity_trouble_list_detail);
+//        ButterKnife.bind(this);
+//        initView();
         initData();
     }
 
@@ -75,7 +75,7 @@ public class TroubleDetalilListActivity extends BaseDialog {
         queryEntry.getEquals().put("busRepairOrderId", busRepairOrderId + "");
         EanfangHttp.post(RepairApi.POST_BUGHANDLE_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<PageUtils<JSONObject>>(mContext, true, PageUtils.class, (list) -> {
+                .execute(new EanfangCallback<PageUtils<JSONObject>>(mContext, false, PageUtils.class, (list) -> {
                     mDataList = JSONArray.parseArray(JSONArray.toJSONString(list.getList()), BughandleConfirmEntity.class);
                     if (mDataList.size() == 1) {
                         dismiss();
