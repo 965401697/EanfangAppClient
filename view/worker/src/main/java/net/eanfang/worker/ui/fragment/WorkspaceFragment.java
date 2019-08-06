@@ -376,6 +376,9 @@ public class WorkspaceFragment extends BaseFragment {
         });
         //面谈员工
         findViewById(R.id.tv_work_talk).setOnClickListener((v) -> {
+            if (!PermKit.get().getFaceToWorkerCreatePrem()) {
+                return;
+            }
             Intent intent = new Intent(getActivity(), WorkTalkControlActivity.class);
             startActivity(intent);
         });

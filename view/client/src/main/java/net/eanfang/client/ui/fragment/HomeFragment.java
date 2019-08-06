@@ -2,6 +2,7 @@ package net.eanfang.client.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -16,7 +17,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.cache.CacheKit;
-import com.eanfang.base.widget.controltool.ControlToolView;
 import com.eanfang.biz.model.bean.AllMessageBean;
 import com.eanfang.biz.model.bean.datastatistics.HomeDatastisticeBean;
 import com.eanfang.config.EanfangConst;
@@ -53,6 +53,7 @@ import java.util.List;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
+import q.rorbin.badgeview.QBadgeView;
 
 import static com.eanfang.base.kit.V.v;
 
@@ -86,8 +87,13 @@ public class HomeFragment extends BaseFragment {
     private int mRepair = 0;
     private int mDesign = 0;
     private int mInstall = 0;
-    //    private TextView mTvSecurityNewMessage;
-//    private RelativeLayout rlSecurityNewMessage;
+    private int mAlert = 0;
+    private QBadgeView qBadgeViewReapir = new QBadgeView(ClientApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewInstall = new QBadgeView(ClientApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewDesign = new QBadgeView(ClientApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewAlert = new QBadgeView(ClientApplication.get().getApplicationContext());
+    private QBadgeView qBadgeViewCircle = new QBadgeView(ClientApplication.get().getApplicationContext());
+
     private int mSecurityNum;
 
     @Override
@@ -391,58 +397,73 @@ public class HomeFragment extends BaseFragment {
         if (bean.getRepair() > 0) {
             mRepair = bean.getRepair();
         } else {
-            mRepair = -1;
+            mRepair = 0;
         }
-        badgeView(R.id.tv_reparir, mRepair);
+        qBadgeViewReapir.bindTarget(findViewById(R.id.tv_reparir))
+                .setBadgeNumber(mRepair)
+                .setBadgeBackgroundColor(0xFFFF0000)
+                .setBadgePadding(2, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setGravityOffset(11, 0, true)
+                .setBadgeTextSize(11, true);
         // 报装
         if (bean.getInstall() > 0) {
             mInstall = bean.getInstall();
         } else {
-            mInstall = -1;
+            mInstall = 0;
         }
-        badgeView(R.id.tv_install, mInstall);
+        qBadgeViewInstall.bindTarget(findViewById(R.id.tv_install))
+                .setBadgeNumber(mInstall)
+                .setBadgeBackgroundColor(0xFFFF0000)
+                .setBadgePadding(2, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setGravityOffset(11, 0, true)
+                .setBadgeTextSize(11, true);
         //设计
         if (bean.getDesign() > 0) {
             mDesign = bean.getDesign();
         } else {
-            mDesign = -1;
+            mDesign = 0;
         }
-        badgeView(R.id.tv_design, mDesign);
-
-        if (bean.getCommentNoRead() > 0 || bean.getNoReadCount() > 0) {
-            badgeView(R.id.tv_circle, bean.getCommentNoRead() + bean.getNoReadCount());
-        } else {
-            badgeView(R.id.tv_circle, -1);
-        }
-
+        qBadgeViewDesign.bindTarget(findViewById(R.id.tv_design))
+                .setBadgeNumber(mDesign)
+                .setBadgeBackgroundColor(0xFFFF0000)
+                .setBadgePadding(2, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setGravityOffset(11, 0, true)
+                .setBadgeTextSize(11, true);
+        // 脱岗监测
         if (bean.getAlert() > 0) {
-            badgeView(R.id.tv_out_post, bean.getAlert());
+            mAlert = bean.getAlert();
         } else {
-            badgeView(R.id.tv_out_post, -1);
+            mAlert = 0;
         }
-
+        qBadgeViewAlert.bindTarget(findViewById(R.id.tv_out_post))
+                .setBadgeNumber(mAlert)
+                .setBadgeBackgroundColor(0xFFFF0000)
+                .setBadgePadding(2, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setGravityOffset(11, 0, true)
+                .setBadgeTextSize(11, true);
         // @我的和评论未读
         if (bean.getCommentNoRead() + bean.getNoReadCount() > 0) {
             mSecurityNum = bean.getCommentNoRead() + bean.getNoReadCount();
-            badgeView(R.id.tv_circle, mSecurityNum);
         } else {
             mSecurityNum = 0;
         }
+        qBadgeViewCircle.bindTarget(findViewById(R.id.tv_circle))
+                .setBadgeNumber(mSecurityNum)
+                .setBadgeBackgroundColor(0xFFFF0000)
+                .setBadgePadding(2, true)
+                .setBadgeGravity(Gravity.END | Gravity.TOP)
+                .setGravityOffset(11, 0, true)
+                .setBadgeTextSize(11, true);
         /**
          * 底部红点更新
          * */
         EventBus.getDefault().post(bean);
     }
 
-    private void badgeView(int id, int number) {
-        ControlToolView.getBadge(ClientApplication.get().getApplicationContext())
-                .setTargetView(findViewById(id))
-                .setPadding(number == -1 ? 0 : 5)
-                .setOffset(11, 0)
-                .setBadgeNum(number)
-                .badge();
-
-    }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
         private final String[] titles;

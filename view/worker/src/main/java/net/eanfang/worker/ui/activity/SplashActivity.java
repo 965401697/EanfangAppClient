@@ -17,7 +17,6 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.sys.activity.LoginActivity;
 import com.eanfang.util.GuideUtil;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
@@ -34,7 +33,7 @@ import cn.hutool.core.util.StrUtil;
 public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCallback {
     public static final String SHOWGUID = "showguid";
     public static final String GUID = "guid";
-    int[] drawables_worker = {R.mipmap.ic_work_splash_one, R.mipmap.ic_work_splash_two, R.mipmap.ic_work_splash_three, R.mipmap.ic_work_splash_end};
+    int[] drawables_worker = {R.mipmap.ic_work_splash_one, R.mipmap.ic_splash_two, R.mipmap.ic_work_splash_three, R.mipmap.ic_work_splash_end};
 
 
     @Override

@@ -35,7 +35,8 @@ import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.pay.NewPayActivity;
 import net.eanfang.client.ui.activity.worksapce.EvaluateWorkerActivity;
-import net.eanfang.client.ui.activity.worksapce.TroubleDetalilListActivity;
+import net.eanfang.client.ui.activity.worksapce.PsTroubleDetailActivity;
+import net.eanfang.client.ui.activity.worksapce.TroubleDetailActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.FaultDetailActivity;
 import net.eanfang.client.ui.adapter.OrderConfirmAdapter;
 import net.eanfang.client.util.ImagePerviewUtil;
@@ -201,7 +202,7 @@ public class OrderDetailFragment extends BaseFragment {
         tvBottomRight.setOnClickListener((v) -> {
             if (mOrderStatus == 4) {// 确认完工
                 if (doCompare(mOwnerUserId, mUserId)) {
-                    new TroubleDetalilListActivity(getActivity(), true, mItemId, mIsPhoneSolve, "待确认", false).show();
+                    doJumpTroubleDetail("待确认", mItemId, mIsPhoneSolve);
                 }
 
             } else if (mOrderStatus == 5) {//立即评价
@@ -217,7 +218,7 @@ public class OrderDetailFragment extends BaseFragment {
         // 查看完工报告
         tv_bottomLeft.setOnClickListener((v) -> {
             if (doCompare(mOwnerUserId, mUserId)) {
-                new TroubleDetalilListActivity(getActivity(), true, mItemId, mIsPhoneSolve, "完成", false).show();
+                doJumpTroubleDetail("完成", mItemId, mIsPhoneSolve);
             }
         });
 
@@ -445,4 +446,17 @@ public class OrderDetailFragment extends BaseFragment {
         return false;
     }
 
+    private void doJumpTroubleDetail(String mStatus, Long busRepairOrderId, Integer isPhoneSolve) {
+        Bundle bundle = new Bundle();
+        bundle.putLong("busRepairOrderId", busRepairOrderId);
+        bundle.putString("status", mStatus);
+        bundle.putBoolean("isVisible", false);
+        if (isPhoneSolve == 0) {
+            // 电话未解决
+            JumpItent.jump(getActivity(), TroubleDetailActivity.class, bundle);
+        } else {
+            // 电话解决
+            JumpItent.jump(getActivity(), PsTroubleDetailActivity.class, bundle);
+        }
+    }
 }

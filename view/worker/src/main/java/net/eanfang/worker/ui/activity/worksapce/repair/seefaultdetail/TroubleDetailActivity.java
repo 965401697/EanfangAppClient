@@ -3,33 +3,39 @@ package net.eanfang.worker.ui.activity.worksapce.repair.seefaultdetail;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.biz.model.QueryEntry;
+import com.eanfang.biz.model.bean.PageUtils;
+import com.eanfang.biz.model.bean.TemplateBean;
+import com.eanfang.biz.model.entity.BughandleConfirmEntity;
 import com.eanfang.biz.model.entity.BughandleDetailEntity;
 import com.eanfang.biz.model.entity.TransferLogEntity;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.bean.TemplateBean;
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
+import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
-import com.eanfang.biz.model.entity.BughandleConfirmEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.im.SelectIMContactActivity;
@@ -164,20 +170,22 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
     //聊天分享的必要参数
     Bundle bundle = new Bundle();
 
+    private List<BughandleConfirmEntity> mTroubleDataList;
     /**
      * 协同人员
      */
     private MaintenanceTeamAdapter teamAdapter;
     private List<TemplateBean.Preson> presonList = new ArrayList<>();
+    private Long busRepairOrderId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_client_fill_repair_info);
         ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
+        busRepairOrderId = getIntent().getLongExtra("busRepairOrderId", 0);
         initView();
-        initData();
-
+        initNewData();
         if (!getIntent().getBooleanExtra("isVisible", false)) {
             setRightTitle("分享");
             setRightTitleOnClickListener(new View.OnClickListener() {
@@ -209,6 +217,22 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
             });
         }
 
+    }
+
+    private void initNewData() {
+        QueryEntry queryEntry = new QueryEntry();
+        queryEntry.getEquals().put("busRepairOrderId", busRepairOrderId + "");
+        EanfangHttp.post(RepairApi.POST_BUGHANDLE_LIST)
+                .upJson(JsonUtils.obj2String(queryEntry))
+                .execute(new EanfangCallback<PageUtils<JSONObject>>(TroubleDetailActivity.this, false, PageUtils.class, (list) -> {
+                    mTroubleDataList = JSONArray.parseArray(JSONArray.toJSONString(list.getList()), BughandleConfirmEntity.class);
+                    if (mTroubleDataList.size() == 1) {
+                        id = mTroubleDataList.get(0).getId();
+                        initData();
+                    } else if (mTroubleDataList.size() == 0) {
+                        showToast("暂无数据");
+                    }
+                }));
     }
 
     private void initData() {
@@ -315,7 +339,7 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
          * */
         if (!StrUtil.isEmpty(bughandleConfirmEntity.getFront_mp4_path())) {
             rlThumbnailMoment.setVisibility(View.VISIBLE);
-            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + bughandleConfirmEntity.getFront_mp4_path() + ".jpg"),ivThumbnailMoment);
+            GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + bughandleConfirmEntity.getFront_mp4_path() + ".jpg"), ivThumbnailMoment);
             if (!StrUtil.isNotBlank(bughandleConfirmEntity.getFrontPictures())) {
                 snplMomentAddPhotos.setVisibility(View.GONE);
             }
@@ -336,7 +360,7 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
             if (!StrUtil.isNotBlank(bughandleConfirmEntity.getReverseSidePictures())) {
                 snplMonitorAddPhotos.setVisibility(View.GONE);
             }
-            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + bughandleConfirmEntity.getReverse_side_mp4_path() + ".jpg"),ivThumbnailMonitor);
+            GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + bughandleConfirmEntity.getReverse_side_mp4_path() + ".jpg"), ivThumbnailMonitor);
         } else {
             rlThumbnailMonitor.setVisibility(View.GONE);
         }
@@ -351,7 +375,7 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
          * */
         if (!StrUtil.isEmpty(bughandleConfirmEntity.getEquipment_cabinet_mp4_path())) {
             rlThumbnailToolsPackage.setVisibility(View.VISIBLE);
-            GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + bughandleConfirmEntity.getEquipment_cabinet_mp4_path() + ".jpg"),ivThumbnailToolsPackage);
+            GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + bughandleConfirmEntity.getEquipment_cabinet_mp4_path() + ".jpg"), ivThumbnailToolsPackage);
             if (!StrUtil.isNotBlank(bughandleConfirmEntity.getEquipmentCabinetPictures())) {
                 snplToolsPackageAddPhotos.setVisibility(View.GONE);
             }
@@ -437,7 +461,7 @@ public class TroubleDetailActivity extends BaseWorkerActivity {
         }
         llHang.setVisibility(View.VISIBLE);
         tvNoHistory.setVisibility(View.GONE);
-        GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + transferLogEntity.getOriginalUserEntity().getAccountEntity().getAvatar()),ivHeader);
+        GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + transferLogEntity.getOriginalUserEntity().getAccountEntity().getAvatar()), ivHeader);
         tvOrderNum.setText(transferLogEntity.getOrderNum() + "");
         tvOrderTime.setText(DateUtil.date(transferLogEntity.getCreateTime()).toString());
         tvOrderReason.setText(GetConstDataUtils.getTransferCauseList().get(transferLogEntity.getCause()));

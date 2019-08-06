@@ -9,15 +9,20 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.base.kit.picture.picture.PictureRecycleView;
+import com.eanfang.biz.model.QueryEntry;
+import com.eanfang.biz.model.bean.PageUtils;
+import com.eanfang.biz.model.entity.BughandleConfirmEntity;
 import com.eanfang.biz.model.entity.BughandleDetailEntity;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.util.JsonUtils;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.eanfang.biz.model.entity.BughandleConfirmEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.im.SelectIMContactActivity;
@@ -71,6 +76,8 @@ public class PsTroubleDetailActivity extends BaseWorkerActivity /*implements Vie
      * 单据照片 (3张)
      */
     private List<LocalMedia> picList4 = new ArrayList<>();
+    private List<BughandleConfirmEntity> mTroubleDataList;
+    private Long busRepairOrderId;
 
     //聊天分享的必要参数
     Bundle bundle = new Bundle();
@@ -81,9 +88,9 @@ public class PsTroubleDetailActivity extends BaseWorkerActivity /*implements Vie
         setContentView(R.layout.activity_ps_client_fill_repair_info);
         ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
+        busRepairOrderId = getIntent().getLongExtra("busRepairOrderId", 0);
         initView();
-        initData();
-
+        initNewData();
         if (!getIntent().getBooleanExtra("isVisible", false)) {
             setRightTitle("分享");
             setRightTitleOnClickListener(new View.OnClickListener() {
@@ -117,6 +124,22 @@ public class PsTroubleDetailActivity extends BaseWorkerActivity /*implements Vie
         id = getIntent().getLongExtra("orderId", 0);
     }
 
+    private void initNewData() {
+        QueryEntry queryEntry = new QueryEntry();
+        queryEntry.getEquals().put("busRepairOrderId", busRepairOrderId + "");
+        EanfangHttp.post(RepairApi.POST_BUGHANDLE_LIST)
+                .upJson(JsonUtils.obj2String(queryEntry))
+                .execute(new EanfangCallback<PageUtils<JSONObject>>(PsTroubleDetailActivity.this, true, PageUtils.class, (list) -> {
+                    mTroubleDataList = JSONArray.parseArray(JSONArray.toJSONString(list.getList()), BughandleConfirmEntity.class);
+                    if (mTroubleDataList.size() == 1) {
+                        id = mTroubleDataList.get(0).getId();
+                        initData();
+                    } else if (mTroubleDataList.size() == 0) {
+                        showToast("暂无数据");
+                    }
+                }));
+    }
+
     private void initData() {
         EanfangHttp.get(RepairApi.GET_BUGHANDLE_DETAIL)
                 .params("id", id)
@@ -131,7 +154,7 @@ public class PsTroubleDetailActivity extends BaseWorkerActivity /*implements Vie
         tvRemainQuestion.setText(bughandleConfirmEntity.getLeftoverProblem());
         initAdapter();
         if (bughandleConfirmEntity.getInvoicesPictures() != null) {
-            picList4=pictureRecycler.setData(bughandleConfirmEntity.getInvoicesPictures());
+            picList4 = pictureRecycler.setData(bughandleConfirmEntity.getInvoicesPictures());
         }
         initNinePhoto();
     }
@@ -149,6 +172,7 @@ public class PsTroubleDetailActivity extends BaseWorkerActivity /*implements Vie
     private void initNinePhoto() {
         pictureRecycler.showImagev(picList4, listener);
     }
+
     PictureRecycleView.ImageListener listener = list -> picList4 = list;
 }
 

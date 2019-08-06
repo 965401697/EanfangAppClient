@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
@@ -19,14 +20,16 @@ import com.eanfang.BuildConfig;
 import com.eanfang.config.Constant;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
+import com.eanfang.util.JumpItent;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.OrderDetailActivity;
-import net.eanfang.worker.ui.activity.worksapce.TroubleDetalilListActivity;
 import net.eanfang.worker.ui.activity.worksapce.oa.check.DealWithFirstActivity;
 import net.eanfang.worker.ui.activity.worksapce.oa.task.TaskDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.oa.workreport.WorkReportDetailActivity;
+import net.eanfang.worker.ui.activity.worksapce.repair.seefaultdetail.PsTroubleDetailActivity;
+import net.eanfang.worker.ui.activity.worksapce.repair.seefaultdetail.TroubleDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.security.SecurityDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.tender.TenderFindDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.worktalk.WorkTalkDetailActivity;
@@ -203,7 +206,7 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
             intent.putExtra("isVisible", true);
             view.getContext().startActivity(intent);
         } else if (customizeMessage.getShareType().equals("2")) {
-            new TroubleDetalilListActivity((Activity) view.getContext(), true, Long.parseLong(customizeMessage.getOrderId()), Integer.parseInt(customizeMessage.getStatus()), true).show();
+            doJumpTroubleDetail(view.getContext(), "完成", Long.parseLong(customizeMessage.getOrderId()), Integer.parseInt(customizeMessage.getStatus()));
         } else if (customizeMessage.getShareType().equals("3")) {
 //            customizeMessage.setStatus("1");//点击标志位已读
             view.getContext().startActivity(new Intent(view.getContext(), WorkReportDetailActivity.class).putExtra("id", Long.parseLong(customizeMessage.getOrderId())));
@@ -241,5 +244,19 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
         holder.mTime = view.findViewById(R.id.tv_time);
         view.setTag(holder);
         return view;
+    }
+
+    private void doJumpTroubleDetail(Context contxt, String mStatus, Long busRepairOrderId, Integer isPhoneSolve) {
+        Bundle bundle = new Bundle();
+        bundle.putLong("busRepairOrderId", busRepairOrderId);
+        bundle.putString("status", mStatus);
+        bundle.putBoolean("isVisible", false);
+        if (isPhoneSolve == 0) {
+            // 电话未解决
+            JumpItent.jump((Activity) contxt, TroubleDetailActivity.class, bundle);
+        } else {
+            // 电话解决
+            JumpItent.jump((Activity) contxt, PsTroubleDetailActivity.class, bundle);
+        }
     }
 }

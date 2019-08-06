@@ -619,9 +619,9 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
         // 首页小红点的显示
         int mHome = 0;
         if (bean.getRepair() > 0 || bean.getInstall() > 0 || bean.getDesign() > 0
-                || bean.getNoReadCount() > 0 || bean.getCommentNoRead() > 0 || bean.getAlert() > 0) {
+                || bean.getNoReadCount() > 0 || bean.getCommentNoRead() > 0 || bean.getAlert() > 0 || bean.getCommentNoRead() > 0) {
             //首页气泡 暂时去掉安防圈评论未读数量  + bean.getCommentNoRead();
-            mHome = bean.getRepair() + bean.getInstall() + bean.getDesign() + bean.getNoReadCount() + bean.getAlert();
+            mHome = bean.getRepair() + bean.getInstall() + bean.getDesign() + bean.getNoReadCount() + bean.getAlert() + bean.getCommentNoRead();
         } else {
             mHome = 0;
         }

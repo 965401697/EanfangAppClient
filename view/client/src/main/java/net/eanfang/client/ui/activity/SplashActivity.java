@@ -17,7 +17,6 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.sys.activity.LoginActivity;
 import com.eanfang.util.GuideUtil;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
@@ -33,7 +32,7 @@ import cn.hutool.core.util.StrUtil;
 public class SplashActivity extends BaseClientActivity implements GuideUtil.OnCallback {
     public static final String SHOWGUID = "showguid";
     public static final String GUID = "guid";
-    int[] drawables_client = {R.mipmap.ic_client_splash_one, R.mipmap.ic_client_splash_two, R.mipmap.ic_client_splash_three, R.mipmap.ic_client_splash_end};
+    int[] drawables_client = {R.mipmap.ic_client_splash_one, R.mipmap.ic_splash_two, R.mipmap.ic_client_splash_three, R.mipmap.ic_client_splash_end};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

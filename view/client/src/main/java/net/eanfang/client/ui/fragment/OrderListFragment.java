@@ -4,36 +4,38 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.biz.model.QueryEntry;
+import com.eanfang.biz.model.bean.RepairedOrderBean;
 import com.eanfang.biz.model.entity.RepairOrderEntity;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.bean.RepairedOrderBean;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
-import com.eanfang.biz.model.QueryEntry;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.pay.NewPayActivity;
 import net.eanfang.client.ui.activity.worksapce.EvaluateWorkerActivity;
 import net.eanfang.client.ui.activity.worksapce.OrderDetailActivity;
-import net.eanfang.client.ui.activity.worksapce.TroubleDetalilListActivity;
+import net.eanfang.client.ui.activity.worksapce.PsTroubleDetailActivity;
+import net.eanfang.client.ui.activity.worksapce.TroubleDetailActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.RepairCtrlActivity;
 import net.eanfang.client.ui.adapter.RepairedManageOrderAdapter;
 import net.eanfang.client.ui.interfaces.OnDataReceivedListener;
 
 import java.util.Objects;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import cn.hutool.core.date.DateUtil;
 
@@ -168,10 +170,10 @@ public class OrderListFragment extends BaseFragment implements
                         CallUtils.call(getActivity(), item.getOwnerUser().getAccountEntity().getMobile());
                         break;
                     case R.id.tv_do_second:
-                        new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), "待确认", false).show();
+                        doJumpTroubleDetail("待确认", item.getId(), item.getIsPhoneSolve());
                         break;
                     case R.id.tv_finish:
-                        new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), "完成", false).show();
+                        doJumpTroubleDetail("完成", item.getId(), item.getIsPhoneSolve());
                         break;
                     default:
                         break;
@@ -188,7 +190,7 @@ public class OrderListFragment extends BaseFragment implements
 //                            return;
 //                        }
                         //if (doCompare(item.getOwnerUserId(), mUseId)) {
-                        new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), "完成", false).show();
+                        doJumpTroubleDetail("完成", item.getId(), item.getIsPhoneSolve());
                         //}
                         break;
                     case R.id.tv_do_second:
@@ -246,6 +248,20 @@ public class OrderListFragment extends BaseFragment implements
     @Override
     protected void setListener() {
 
+    }
+
+    private void doJumpTroubleDetail(String mStatus, Long busRepairOrderId, Integer isPhoneSolve) {
+        Bundle bundle = new Bundle();
+        bundle.putLong("busRepairOrderId", busRepairOrderId);
+        bundle.putString("status", mStatus);
+        bundle.putBoolean("isVisible", false);
+        if (isPhoneSolve == 0) {
+            // 电话未解决
+            JumpItent.jump(getActivity(), TroubleDetailActivity.class, bundle);
+        } else {
+            // 电话解决
+            JumpItent.jump(getActivity(), PsTroubleDetailActivity.class, bundle);
+        }
     }
 
 

@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,6 +47,7 @@ import net.eanfang.client.ui.adapter.SelectWorkerAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -64,6 +68,36 @@ public class CollectWorkerFragment extends BaseFragment implements SwipeRefreshL
     @BindView(R.id.swipre_fresh)
     SwipeRefreshLayout swipreFresh;
     Unbinder unbinder;
+    @BindView(R.id.tv_hot)
+    TextView tvHot;
+    @BindView(R.id.iv_hot)
+    ImageView ivHot;
+    @BindView(R.id.ll_hot)
+    LinearLayout llHot;
+    @BindView(R.id.tv_mouth)
+    TextView tvMouth;
+    @BindView(R.id.iv_mouth)
+    ImageView ivMouth;
+    @BindView(R.id.ll_mouth)
+    LinearLayout llMouth;
+    @BindView(R.id.tv_praise)
+    TextView tvPraise;
+    @BindView(R.id.iv_praise)
+    ImageView ivPraise;
+    @BindView(R.id.ll_praise)
+    LinearLayout llPraise;
+    @BindView(R.id.tv_repair)
+    TextView tvRepair;
+    @BindView(R.id.iv_repair)
+    ImageView ivRepair;
+    @BindView(R.id.ll_repair)
+    LinearLayout llRepair;
+    @BindView(R.id.tv_construction)
+    TextView tvConstruction;
+    @BindView(R.id.iv_construction)
+    ImageView ivConstruction;
+    @BindView(R.id.ll_construction)
+    LinearLayout llConstruction;
 
     private RepairOrderEntity toRepairBean;
     private ArrayList<String> businessIds = new ArrayList<>();
@@ -78,6 +112,24 @@ public class CollectWorkerFragment extends BaseFragment implements SwipeRefreshL
      */
     RepairPersonalInfoEntity.ListBean repairPersonalInfoEntity;
     private String mAreaCode;
+
+    /**
+     * title 文字
+     */
+    private List<TextView> mScreenTitleList = new ArrayList<>();
+    /**
+     * title 图片
+     */
+    private List<ImageView> mScreenIconList = new ArrayList<>();
+    private boolean mScreenIconUp = true;
+    private String mClickType = "mouth";
+
+    /**
+     * 排序 参数
+     * 排序 值
+     */
+    private String mOrderByType = "";
+    private String mOrderByValue = "";
 
     public static CollectWorkerFragment getInstance(RepairOrderEntity toRepairBean, RepairPersonalInfoEntity.ListBean repairPersonalInfoEntity, ArrayList<String> businessIds, int doorfee, Long ownerOrgId, String areaCode) {
         CollectWorkerFragment collectWorkerFragment = new CollectWorkerFragment();
@@ -106,7 +158,17 @@ public class CollectWorkerFragment extends BaseFragment implements SwipeRefreshL
         mDoorFee = bundle.getInt("doorFee", 0);
         mOwnerOrgId = bundle.getLong("mOwnerOrgId", 0);
         mAreaCode = bundle.getString("mAreaCode");
+        mScreenTitleList.add(tvMouth);
+        mScreenTitleList.add(tvPraise);
+        mScreenTitleList.add(tvRepair);
+        mScreenTitleList.add(tvConstruction);
+        mScreenTitleList.add(tvHot);
 
+        mScreenIconList.add(ivHot);
+        mScreenIconList.add(ivMouth);
+        mScreenIconList.add(ivPraise);
+        mScreenIconList.add(ivRepair);
+        mScreenIconList.add(ivConstruction);
     }
 
     @Override
@@ -136,17 +198,117 @@ public class CollectWorkerFragment extends BaseFragment implements SwipeRefreshL
                 startActivity(intent);
             }
         });
+        // 热门排序
+        llHot.setOnClickListener((v) -> {
+            doChangetState("hot");
+        });
+        //口碑
+        llMouth.setOnClickListener((v) -> {
+            doChangetState("mouth");
+        });
+        // 评价
+        llPraise.setOnClickListener((v) -> {
+            doChangetState("praise");
+        });
+        // 维修
+        llRepair.setOnClickListener((v) -> {
+            doChangetState("repair");
+        });
+        // 施工
+        llConstruction.setOnClickListener((v) -> {
+            doChangetState("construction");
+        });
+    }
+
+    private void doChangetState(String mType) {
+        switch (mType) {
+            //热门
+            case "hot":
+                doUpdataTextColor("weight", "hot", tvHot, ivHot);
+                break;
+            //口碑
+            case "mouth":
+                doUpdataTextColor("publicPraise", "mouth", tvMouth, ivMouth);
+                break;
+            // 评价
+            case "praise":
+                doUpdataTextColor("goodRate", "praise", tvPraise, ivPraise);
+                break;
+            // 维修
+            case "repair":
+                doUpdataTextColor("repairCount", "repair", tvRepair, ivRepair);
+                break;
+            // 施工
+            case "construction":
+                doUpdataTextColor("installNum", "construction", tvConstruction, ivConstruction);
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+     * @param orderByType 接口排序条件 two three four five
+     * @param clickType   点击类型 口碑 评价 报修 施工
+     * @param textView
+     * @param imageView
+     */
+    private void doUpdataTextColor(String orderByType, String clickType, TextView textView, ImageView imageView) {
+        mOrderByType = orderByType;
+        mPage = 1;
+        // 判断文字
+        for (TextView mTextViews : mScreenTitleList) {
+            // 变黄
+            if (textView.equals(mTextViews)) {
+                mTextViews.setTextColor(ContextCompat.getColor(getActivity(), R.color.color_home_company_install_bg));
+            } else {
+                // 变黑
+                mTextViews.setTextColor(ContextCompat.getColor(getActivity(), R.color.color_client_neworder));
+            }
+        }
+        //判断图片
+        for (ImageView mImageViews : mScreenIconList) {
+            // 热门 desc
+            if (imageView.equals(ivHot)) {
+                initWorker(mOrderByType, "desc");
+                mImageViews.setImageResource(R.mipmap.ic_client_screen_none);
+            } else {
+                if (mImageViews.equals(imageView)) {
+                    if (clickType.equals(mClickType)) {
+                        if (mScreenIconUp) {
+                            mScreenIconUp = false;
+                            mOrderByValue = "asc";
+                            mImageViews.setImageResource(R.mipmap.ic_client_screen_up);
+                        } else {
+                            mScreenIconUp = true;
+                            mOrderByValue = "desc";
+                            mImageViews.setImageResource(R.mipmap.ic_client_screen_down);
+                        }
+                    } else {
+                        mClickType = clickType;
+                        mScreenIconUp = false;
+                        mOrderByValue = "asc";
+                        mImageViews.setImageResource(R.mipmap.ic_client_screen_up);
+                    }
+                    initWorker(mOrderByType, mOrderByValue);
+                } else {
+                    mImageViews.setImageResource(R.mipmap.ic_client_screen_none);
+                }
+            }
+
+        }
+
     }
 
     @Override
     protected void onLazyLoad() {
         super.onLazyLoad();
         // 获取全部技师
-        initWorker(0, 1);
+        initWorker("", "");
     }
 
     //加载技师
-    private void initWorker(int serviceId, int collectId) {
+    private void initWorker(String mOrderByType, String mOrderByValue) {
         if (mQueryEntry == null) {
             mQueryEntry = new QueryEntry();
         }
@@ -159,8 +321,11 @@ public class CollectWorkerFragment extends BaseFragment implements SwipeRefreshL
             mQueryEntry.getIsIn().put("businessId", Stream.of(businessIds).distinct().toList());
         }
         mQueryEntry.getIsIn().put("serviceId", Arrays.asList(Config.get().getBaseIdByCode("2.1", 1, Constant.BIZ_TYPE) + ""));
-        mQueryEntry.getEquals().put("served", serviceId + "");
-        mQueryEntry.getEquals().put("collect", collectId + "");
+        mQueryEntry.getEquals().put("served", 0 + "");
+        mQueryEntry.getEquals().put("collect", 1 + "");
+
+        mQueryEntry.getOrderBy().clear();
+        mQueryEntry.getOrderBy().put(mOrderByType, mOrderByValue);
         mQueryEntry.setPage(mPage);
         mQueryEntry.setSize(10);
         if (mOwnerOrgId != 0) {
@@ -224,7 +389,7 @@ public class CollectWorkerFragment extends BaseFragment implements SwipeRefreshL
     public void onRefresh() {
         mQueryEntry = null;
         mPage = 1;
-        initWorker(0, 1);
+        initWorker(mOrderByType, mOrderByValue);
     }
 
 
@@ -234,7 +399,7 @@ public class CollectWorkerFragment extends BaseFragment implements SwipeRefreshL
     @Override
     public void onLoadMoreRequested() {
         mPage++;
-        initWorker(0, 1);
+        initWorker(mOrderByType, mOrderByValue);
     }
 
     private void submitSuccess(/*OrderReturnBean bean*/) {

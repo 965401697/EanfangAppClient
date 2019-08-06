@@ -9,24 +9,26 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.biz.model.QueryEntry;
+import com.eanfang.biz.model.bean.FaultListsBean;
 import com.eanfang.biz.model.entity.RepairFailureEntity;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.bean.FaultListsBean;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
-import com.eanfang.biz.model.QueryEntry;
 import com.eanfang.util.ToastUtil;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.adapter.FaultRecordAdapter;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -102,9 +104,7 @@ public class FaultRecordListActivity extends BaseClientActivity implements Swipe
                 } else if (bean.getRepairOrderEntity().getStatus() == 5) {
                     status = "待确认";
                 }
-
-                new TroubleDetalilListActivity(FaultRecordListActivity.this, true, bean.getBusRepairOrderId(), isPhoneSolve, status, false).show();
-
+                doJumpTroubleDetail(status, bean.getBusRepairOrderId(), isPhoneSolve);
             }
         });
         mSwipeRefreshLayout.setRefreshing(true);
@@ -266,6 +266,20 @@ public class FaultRecordListActivity extends BaseClientActivity implements Swipe
                         mSwipeRefreshLayout.setRefreshing(false);
                     }
                 });
+    }
+
+    private void doJumpTroubleDetail(String mStatus, Long busRepairOrderId, Integer isPhoneSolve) {
+        Bundle bundle = new Bundle();
+        bundle.putLong("busRepairOrderId", busRepairOrderId);
+        bundle.putString("status", mStatus);
+        bundle.putBoolean("isVisible", false);
+        if (isPhoneSolve == 0) {
+            // 电话未解决
+            JumpItent.jump(FaultRecordListActivity.this, TroubleDetailActivity.class, bundle);
+        } else {
+            // 电话解决
+            JumpItent.jump(FaultRecordListActivity.this, PsTroubleDetailActivity.class, bundle);
+        }
     }
 }
 

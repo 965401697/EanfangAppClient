@@ -2,38 +2,40 @@ package net.eanfang.worker.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.base.kit.V;
+import com.eanfang.biz.model.QueryEntry;
+import com.eanfang.biz.model.bean.RepairedOrderBean;
 import com.eanfang.biz.model.entity.RepairOrderEntity;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.bean.RepairedOrderBean;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
-import com.eanfang.biz.model.QueryEntry;
-import com.eanfang.base.kit.V;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.EvaluateClientActivity;
-import net.eanfang.worker.ui.activity.worksapce.repair.finishwork.FillRepairInfoActivity;
 import net.eanfang.worker.ui.activity.worksapce.OrderDetailActivity;
-import net.eanfang.worker.ui.activity.worksapce.repair.finishwork.PhoneSolveRepairInfoActivity;
-import net.eanfang.worker.ui.activity.worksapce.repair.RepairCtrlActivity;
 import net.eanfang.worker.ui.activity.worksapce.SignInActivity;
-import net.eanfang.worker.ui.activity.worksapce.TroubleDetalilListActivity;
+import net.eanfang.worker.ui.activity.worksapce.repair.RepairCtrlActivity;
 import net.eanfang.worker.ui.activity.worksapce.repair.SolveModeActivity;
+import net.eanfang.worker.ui.activity.worksapce.repair.finishwork.FillRepairInfoActivity;
+import net.eanfang.worker.ui.activity.worksapce.repair.finishwork.PhoneSolveRepairInfoActivity;
+import net.eanfang.worker.ui.activity.worksapce.repair.seefaultdetail.PsTroubleDetailActivity;
+import net.eanfang.worker.ui.activity.worksapce.repair.seefaultdetail.TroubleDetailActivity;
 import net.eanfang.worker.ui.adapter.RepairedManageOrderAdapter;
 import net.eanfang.worker.ui.widget.FillAppointmentInfoRebookView;
 
@@ -197,7 +199,7 @@ public class OrderListFragment extends BaseFragment implements
                         CallUtils.call(getActivity(), V.v(() -> item.getAssigneeUser().getAccountEntity().getMobile()));
                         break;
                     case R.id.tv_do_second:
-                        new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), false).show();
+                        doJumpTroubleDetail(item.getId(), item.getIsPhoneSolve());
                         break;
                     default:
                         break;
@@ -209,7 +211,7 @@ public class OrderListFragment extends BaseFragment implements
 
                     case R.id.tv_do_first:
                         //查看故障处理
-                        new TroubleDetalilListActivity(getActivity(), true, item.getId(), item.getIsPhoneSolve(), false).show();
+                        doJumpTroubleDetail(item.getId(), item.getIsPhoneSolve());
                         break;
                     case R.id.tv_do_second:
 //                        if (!item.getAssigneeUserId().equals(WorkerApplication.get().getUserId())) {
@@ -246,6 +248,19 @@ public class OrderListFragment extends BaseFragment implements
     @Override
     protected void initData(Bundle arguments) {
 
+    }
+
+    private void doJumpTroubleDetail(Long busRepairOrderId, Integer isPhoneSolve) {
+        Bundle bundle = new Bundle();
+        bundle.putLong("busRepairOrderId", busRepairOrderId);
+        bundle.putBoolean("isVisible", false);
+        if (isPhoneSolve == 0) {
+            // 电话未解决
+            JumpItent.jump(getActivity(), TroubleDetailActivity.class, bundle);
+        } else {
+            // 电话解决
+            JumpItent.jump(getActivity(), PsTroubleDetailActivity.class, bundle);
+        }
     }
 
     protected void getData() {
