@@ -22,20 +22,20 @@ import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.V;
+import com.eanfang.bean.security.SecurityLikeBean;
+import com.eanfang.bean.security.SecurityLikeStatusBean;
+import com.eanfang.bean.security.SecurityListBean;
+import com.eanfang.biz.model.QueryEntry;
 import com.eanfang.biz.model.bean.AllMessageBean;
 import com.eanfang.biz.model.entity.NoticeEntity;
-import com.eanfang.bean.security.SecurityLikeBean;
-import com.eanfang.bean.security.SecurityListBean;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.bean.security.SecurityLikeStatusBean;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.BGASpaceItemDecoration;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
-import com.eanfang.biz.model.QueryEntry;
 import com.eanfang.witget.BannerView;
 import com.eanfang.witget.HomeScanPopWindow;
 import com.eanfang.witget.RollTextView;
@@ -50,6 +50,7 @@ import net.eanfang.worker.ui.activity.worksapce.MineTaskPublishListSendParentAct
 import net.eanfang.worker.ui.activity.worksapce.OfferAndPayOrderParentActivity;
 import net.eanfang.worker.ui.activity.worksapce.TakeTaskListActivity;
 import net.eanfang.worker.ui.activity.worksapce.WebActivity;
+import net.eanfang.worker.ui.activity.worksapce.datastatistics.DataStaticsticsListActivity;
 import net.eanfang.worker.ui.activity.worksapce.design.DesignActivity;
 import net.eanfang.worker.ui.activity.worksapce.maintenance.MaintenanceActivity;
 import net.eanfang.worker.ui.activity.worksapce.online.ExpertOnlineActivity;
@@ -526,7 +527,7 @@ public class HomeFragment extends BaseFragment implements SecurityListAdapter.On
 
     private void initCount() {
         rlAllData.setOnClickListener((v) -> {
-//            startActivity(new Intent(getActivity(), DataStaticsticsListActivity.class));
+            startActivity(new Intent(getActivity(), DataStaticsticsListActivity.class));
         });
     }
 

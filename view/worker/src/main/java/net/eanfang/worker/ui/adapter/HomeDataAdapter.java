@@ -24,30 +24,37 @@ public class HomeDataAdapter extends BaseQuickAdapter<HomeDatastisticeBean.Group
         helper.setText(R.id.tv_repair_num, item.getNum() + "");
         if ("已修复".equals(V.v(() -> GetConstDataUtils.getHomeRepairStatuslList().get(Integer.parseInt(item.getType()))))) {
             helper.setText(R.id.tv_repair_type, V.v(() -> GetConstDataUtils.getHomeRepairStatuslList().get(Integer.parseInt(item.getType()))));
-            helper.setBackgroundRes(R.id.rl_back_data, R.drawable.bg_home_data_one);
+            setBackground(helper, R.drawable.bg_home_data_one);
             ((TextView) helper.getView(R.id.tv_repair_num)).setTextColor(helper.getConvertView().getResources().getColor(R.color.color_home_data_text_one));
             ((TextView) helper.getView(R.id.tv_repair_type)).setTextColor(helper.getConvertView().getResources().getColor(R.color.color_home_data_text_one));
         } else if ("维修中".equals(V.v(() -> GetConstDataUtils.getHomeRepairStatuslList().get(Integer.parseInt(item.getType()))))) {
             helper.setText(R.id.tv_repair_type, V.v(() -> GetConstDataUtils.getHomeRepairStatuslList().get(Integer.parseInt(item.getType()))));
-            helper.setBackgroundRes(R.id.rl_back_data, R.drawable.bg_home_data_two);
+            setBackground(helper, R.drawable.bg_home_data_two);
             ((TextView) helper.getView(R.id.tv_repair_num)).setTextColor(helper.getConvertView().getResources().getColor(R.color.colorPrimary));
             ((TextView) helper.getView(R.id.tv_repair_type)).setTextColor(helper.getConvertView().getResources().getColor(R.color.colorPrimary));
         } else if ("报废".equals(V.v(() -> GetConstDataUtils.getHomeRepairStatuslList().get(Integer.parseInt(item.getType()))))) {
             helper.setText(R.id.tv_repair_type, V.v(() -> GetConstDataUtils.getHomeRepairStatuslList().get(Integer.parseInt(item.getType()))));
-            helper.setBackgroundRes(R.id.rl_back_data, R.drawable.bg_home_data_four);
+            setBackground(helper, R.drawable.bg_home_data_four);
             ((TextView) helper.getView(R.id.tv_repair_num)).setTextColor(helper.getConvertView().getResources().getColor(R.color.roll_content));
             ((TextView) helper.getView(R.id.tv_repair_type)).setTextColor(helper.getConvertView().getResources().getColor(R.color.roll_content));
         } else if ("5".equals(item.getType())) {
             helper.setText(R.id.tv_repair_type, V.v(() -> GetConstDataUtils.getHomeRepairStatuslList().get(Integer.parseInt(item.getType()))));
             helper.setText(R.id.tv_repair_type, "待处理");
-            helper.setBackgroundRes(R.id.rl_back_data, R.drawable.bg_home_data_three);
+            setBackground(helper, R.drawable.bg_home_data_three);
             ((TextView) helper.getView(R.id.tv_repair_num)).setTextColor(helper.getConvertView().getResources().getColor(R.color.color_home_data_text_three));
             ((TextView) helper.getView(R.id.tv_repair_type)).setTextColor(helper.getConvertView().getResources().getColor(R.color.color_home_data_text_three));
         } else {
             helper.setText(R.id.tv_repair_type, V.v(() -> GetConstDataUtils.getHomeRepairStatuslList().get(Integer.parseInt(item.getType()))));
-            helper.setBackgroundRes(R.id.rl_back_data, R.drawable.bg_home_data_four);
+            setBackground(helper, R.drawable.bg_home_data_four);
             ((TextView) helper.getView(R.id.tv_repair_num)).setTextColor(helper.getConvertView().getResources().getColor(R.color.roll_content));
             ((TextView) helper.getView(R.id.tv_repair_type)).setTextColor(helper.getConvertView().getResources().getColor(R.color.roll_content));
         }
+    }
+
+    private void setBackground(BaseViewHolder helper, int backgroundRes) {
+        if (helper.getView(R.id.rl_back_data) == null) {
+            return;
+        }
+        helper.setBackgroundRes(R.id.rl_back_data, backgroundRes);
     }
 }
