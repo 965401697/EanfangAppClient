@@ -446,7 +446,7 @@ public interface NewApiService {
      * 模糊查询故障记录列表
      * post
      */
-    String FAULT_RECORD_LIST = BASE_URL + "/yaf_repair/failure/record/list ";
+    String FAULT_RECORD_LIST = BASE_URL + "/yaf_repair/failure/record/list";
     /**
      * 故障记录列表
      * post

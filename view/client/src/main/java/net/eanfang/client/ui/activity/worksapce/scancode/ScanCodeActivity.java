@@ -16,6 +16,7 @@ import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.JumpItent;
+import com.eanfang.util.PermKit;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.ResultPoint;
 import com.journeyapps.barcodescanner.BarcodeCallback;
@@ -161,6 +162,9 @@ public class ScanCodeActivity extends BaseActivity {
                 startActivity(intent);
                 finish();
             } else if (resultString.contains("qr?uid=")) {
+                if (!PermKit.get().getDeviceArchiveDetailPerm()) {
+                    return;
+                }
                 // 扫描设备 查看设备详情 并报修
                 Bundle bundle = new Bundle();
                 bundle.putString("id", getValueByName(result.getText(), "uid"));

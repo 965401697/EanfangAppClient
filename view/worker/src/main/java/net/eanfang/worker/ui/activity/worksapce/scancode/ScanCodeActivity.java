@@ -17,6 +17,7 @@ import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.JumpItent;
+import com.eanfang.util.PermKit;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.ResultPoint;
 import com.journeyapps.barcodescanner.BarcodeCallback;
@@ -150,6 +151,9 @@ public class ScanCodeActivity extends BaseActivity {
                 startActivity(intent);
                 finish();
             } else if (resultString.contains("qr?uid=")) {// 扫描设备
+                if (!PermKit.get().getDeviceArchiveDetailPerm()) {
+                    return;
+                }
                 String deviceId = getValueByName(result.getText(), "uid");
                 String assigneeCompanyId = getValueByName(result.getText(), "assigneeCompanyId");
                 String businessOneCode = getValueByName(result.getText(), "businessOneCode");

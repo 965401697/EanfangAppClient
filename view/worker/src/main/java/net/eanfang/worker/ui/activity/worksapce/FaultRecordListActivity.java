@@ -230,30 +230,25 @@ public class FaultRecordListActivity extends BaseWorkerActivity implements Swipe
 
     private void searchData(String locationNum) {
         QueryEntry queryEntry = new QueryEntry();
+        queryEntry.setSize(10);
+        queryEntry.setPage(mPage);
         queryEntry.getLike().put("locationNumber", locationNum);
 
         EanfangHttp.post(NewApiService.FAULT_RECORD_LIST)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<FaultListsBean>(this, false, FaultListsBean.class) {
+                .execute(new EanfangCallback<FaultListsBean>(this, true, FaultListsBean.class) {
                     @Override
                     public void onSuccess(FaultListsBean bean) {
-
-
                         mAdapter.getData().clear();
                         mAdapter.setNewData(bean.getList());
                         mSwipeRefreshLayout.setRefreshing(false);
                         mAdapter.loadMoreComplete();
-
                         mAdapter.loadMoreEnd();
-
-
                         if (bean.getList().size() > 0) {
                             mTvNoData.setVisibility(View.GONE);
                         } else {
                             mTvNoData.setVisibility(View.VISIBLE);
                         }
-
-
                     }
 
                     @Override
@@ -265,7 +260,6 @@ public class FaultRecordListActivity extends BaseWorkerActivity implements Swipe
                         } else {
                             mTvNoData.setVisibility(View.GONE);
                         }
-
                     }
 
                     @Override
@@ -280,11 +274,12 @@ public class FaultRecordListActivity extends BaseWorkerActivity implements Swipe
         @Override
         public void handleMessage(Message msg) {
             String message = etSearch.getText().toString().trim();
+            mPage = 1;
             searchData(message);
         }
     };
 
-    private void doJumpTroubleDetail( Long busRepairOrderId, Integer isPhoneSolve) {
+    private void doJumpTroubleDetail(Long busRepairOrderId, Integer isPhoneSolve) {
         Bundle bundle = new Bundle();
         bundle.putLong("busRepairOrderId", busRepairOrderId);
         bundle.putBoolean("isVisible", false);
