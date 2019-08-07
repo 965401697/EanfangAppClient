@@ -2,6 +2,8 @@ package net.eanfang.worker.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
+import android.view.MotionEvent;
 import android.view.View;
 
 import androidx.lifecycle.ViewModel;
@@ -347,5 +349,11 @@ public class SecurityHotFragment extends TemplateItemListFragment implements Sec
         pics = securityListAdapter.getData().get(position).getSpcImg().split(",");
         picList.addAll(Stream.of(Arrays.asList(pics)).map(url -> BuildConfig.OSS_SERVER + (url)).toList());
         ImagePerviewUtil.perviewImage(getActivity(), picList, mWhich);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mRecyclerView.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(), SystemClock.uptimeMillis(), MotionEvent.ACTION_CANCEL, 0F, 0F, 0));
     }
 }

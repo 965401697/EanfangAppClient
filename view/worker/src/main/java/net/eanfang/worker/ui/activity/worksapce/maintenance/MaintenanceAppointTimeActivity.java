@@ -2,7 +2,6 @@ package net.eanfang.worker.ui.activity.worksapce.maintenance;
 
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -11,11 +10,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.ui.base.BaseEvent;
-import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
@@ -106,7 +104,6 @@ public class MaintenanceAppointTimeActivity extends BaseActivity implements Sele
                         EventBus.getDefault().post(new BaseEvent());//刷新item
 
                     }
-           Log.d("电话回访，电话预约上门时间b", finalUrl +"\n"+JsonUtils.obj2String(object)+"\n"+bean.toString());
 
                     finishSelf();
                     WorkerApplication.get().closeActivity(MaintenanceAppointTimeActivity.class);

@@ -92,7 +92,7 @@ public class DataStaticsticsListActivity extends BaseActivity {
         tvReapirTotal.setText(bean.getAll() + "");
         tvInstallTotal.setText(bean.getInstall().getNum() + "");
         tvDesitnTotal.setText(bean.getDesign().getNum() + "");
-        homeDataAdapter = new HomeDataAdapter(R.layout.layout_home_data);
+        homeDataAdapter = new HomeDataAdapter(R.layout.layout_data_item_list);
         rvData.setAdapter(homeDataAdapter);
         homeDataAdapter.bindToRecyclerView(rvData);
         homeDataAdapter.setNewData(clientDataList);
