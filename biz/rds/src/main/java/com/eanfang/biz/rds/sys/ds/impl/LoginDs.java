@@ -29,6 +29,15 @@ public class LoginDs extends BaseRemoteDataSource implements ILoginDs {
         //这是一个网络缓存的 demo，缓存登录接口信息，1小时内使用相同账号密码的登录会直接获取缓存
 //        execute(getService(LoginApi.class).loginVerify(userName, code), callback, new CacheModel().setCacheStrategy(CacheStrategy.firstCacheTimeout(1000 * 60 * 60)).setClazz(LoginApi.class).setMethod("loginVerify").setValues(userName, code));
         execute(getService(LoginApi.class).loginVerify(userName, code), callback);
+    }
 
+    @Override
+    public void loginToken(RequestCallback<LoginBean> callback) {
+        execute(getService(LoginApi.class).loginToken(), callback);
+    }
+
+    @Override
+    public void logout(RequestCallback<Object> callback) {
+        execute(getService(LoginApi.class).logout(), callback);
     }
 }

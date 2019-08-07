@@ -26,4 +26,7 @@ public interface IViewModelAction {
 
     MutableLiveData<BaseActionEvent> getActionLiveData();
 
+    MutableLiveData<BaseActionEvent> getErrorLiveData();
+
+
 }

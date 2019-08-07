@@ -25,6 +25,7 @@ import cn.hutool.core.io.FileUtil;
 @SuppressWarnings("unchecked")
 public class CacheKit extends LruCache<String, Object> {
     private static final String COM_EANFANG_BIZ_MODEL_VO = "com.eanfang.biz.model.vo";
+
     private static DisCacheKit disCacheKit;
     private static SpCacheKit spCacheKit;
     private static CacheKit cacheKit;
@@ -185,9 +186,9 @@ public class CacheKit extends LruCache<String, Object> {
             disCacheKit.put(timeKey, DateUtil.currentSeconds() + due);
             super.put(timeKey, DateUtil.currentSeconds() + due);
         }
-        if (mod.equals(CacheMod.Memory)) {
-            return super.put(key, value);
-        }
+//        if (mod.equals(CacheMod.Memory)) {
+//            return super.put(key, value);
+//        }
         if (mod.equals(CacheMod.Disk) || mod.equals(CacheMod.All)) {
             if (value.getClass().getName().contains(COM_EANFANG_BIZ_MODEL_VO)) {
                 JSONObject jsonValue = VoKit.vo2Json(value);

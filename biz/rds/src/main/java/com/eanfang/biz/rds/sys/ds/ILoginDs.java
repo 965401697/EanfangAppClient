@@ -1,9 +1,9 @@
 package com.eanfang.biz.rds.sys.ds;
 
 
+import com.eanfang.base.network.callback.RequestCallback;
 import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.biz.model.vo.LoginVo;
-import com.eanfang.base.network.callback.RequestCallback;
 
 /**
  * 登录相关接口
@@ -34,4 +34,18 @@ public interface ILoginDs {
      * @param callback callback
      */
     void loginVerify(String userName, String code, RequestCallback<LoginBean> callback);
+
+    /**
+     * token 登录
+     *
+     * @param callback callback
+     */
+    void loginToken(RequestCallback<LoginBean> callback);
+
+    /**
+     * 退出登录
+     *
+     * @param callback callback
+     */
+    void logout(RequestCallback<Object> callback);
 }

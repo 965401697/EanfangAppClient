@@ -23,7 +23,7 @@ class DialogLoading {
         LinearLayout layout = v.findViewById(R.id.dialog_loading_view);// 加载布局
         TextView tipTextView = v.findViewById(R.id.tipTextView);// 提示文字
         AVLoadingIndicatorView avlView = v.findViewById(R.id.avi);
-
+        avlView.show();
         //没有文字 隐藏
         if (!StrUtil.isEmpty(msg)) {
             tipTextView.setVisibility(View.VISIBLE);
@@ -50,7 +50,7 @@ class DialogLoading {
         window.setAttributes(lp);
         window.setWindowAnimations(R.style.PopWindowAnimStyle);
 
-        loadingDialog.setOnShowListener((listener) -> avlView.show());
+//        loadingDialog.setOnShowListener((listener) -> avlView.show());
 //        loadingDialog.setOnDismissListener((listener) -> avlView.hide());
 
         return loadingDialog;

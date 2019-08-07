@@ -14,11 +14,9 @@ import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.biz.model.entity.AccountEntity;
 import com.eanfang.biz.model.entity.OrgEntity;
 import com.eanfang.biz.model.entity.UserEntity;
-import com.eanfang.config.Config;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.facebook.imagepipeline.backends.okhttp3.OkHttpImagePipelineConfigFactory;
-import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheEntity;
 import com.lzy.okgo.cache.CacheMode;
@@ -36,6 +34,7 @@ import java.util.logging.Level;
 
 import cn.bingoogolapple.photopicker.imageloader.BGAGlideImageLoader;
 import cn.bingoogolapple.photopicker.imageloader.BGAImage;
+import cn.hutool.core.thread.ThreadUtil;
 import okhttp3.OkHttpClient;
 
 /**
@@ -43,31 +42,24 @@ import okhttp3.OkHttpClient;
  * @date 2019-04-17 18:11:04
  */
 public class BaseApplication extends MultiDexApplication {
-    /*
-     * 初始化TAG
-     * */
-    private static String TAG = BaseApplication.class.getName();
 
     private static BaseApplication appContext;
 
     /*Activity堆*/
     private List<Activity> activityStack = new ArrayList<>();
-//    /**
-//     * 存储地域
-//     */
-//    public BaseDataEntity sSaveArea;
 
     @Override
     public void onCreate() {
         super.onCreate();
         appContext = this;
 
-        Config.Cache.init();
-
         Leaves.INSTANCE.init(this);
-        initFresco();
-        initOkGo();
-        initConfig();
+
+        ThreadUtil.execAsync(() -> {
+            initConfig();
+            initFresco();
+            initOkGo();
+        });
     }
 
 
@@ -147,7 +139,6 @@ public class BaseApplication extends MultiDexApplication {
                 .addCommonHeaders(headers);
         //全局公共参数
         EanfangHttp.setHttp(http);
-
     }
 
     //--------------------------------------------------初始化部分----------------------------------------------------
@@ -159,13 +150,13 @@ public class BaseApplication extends MultiDexApplication {
     @Deprecated
     private void initFresco() {
         OkHttpClient mOkHttpClient = new OkHttpClient();
-        ImagePipelineConfig frescoConfig = OkHttpImagePipelineConfigFactory.newBuilder(this, mOkHttpClient).build();
-//        Fresco.initialize(this, frescoConfig);
+        OkHttpImagePipelineConfigFactory.newBuilder(this, mOkHttpClient).build();
     }
 
     public static BaseApplication get() {
         return appContext;
     }
+
 
     //---------------------------------------------------activity处理-------------------------------------------------
 

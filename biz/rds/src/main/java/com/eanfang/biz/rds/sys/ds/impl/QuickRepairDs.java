@@ -29,7 +29,7 @@ public class QuickRepairDs extends BaseRemoteDataSource {
      * 订单数量
      */
     public void getRepairCount(RequestCallback<OrderCountBean> callback) {
-        execute(getService(QuickRepairApi.class).getRepairCount(new QueryEntry()), callback, new CacheModel().setCacheStrategy(CacheStrategy.firstCacheTimeout(1000 * 60 * 60)).setClazz(QuickRepairApi.class).setMethod("getRepairCount"));
+        execute(getService(QuickRepairApi.class).getRepairCount(new QueryEntry()), callback, new CacheModel().setCacheStrategy(CacheStrategy.firstCacheTimeoutSync(1000 * 60 * 60)).setClazz(QuickRepairApi.class).setMethod("getRepairCount"));
     }
 
     /**

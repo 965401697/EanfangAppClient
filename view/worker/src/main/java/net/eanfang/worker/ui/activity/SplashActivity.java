@@ -7,9 +7,12 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModel;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.BaseActivity;
+import com.eanfang.base.kit.aop.annotation.BugLog;
 import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.base.kit.cache.CacheMod;
 import com.eanfang.biz.model.bean.LoginBean;
@@ -21,8 +24,8 @@ import com.eanfang.util.GuideUtil;
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.GuideActivity;
-import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
+import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.StrUtil;
 
 
@@ -30,7 +33,7 @@ import cn.hutool.core.util.StrUtil;
  * @author jornl
  * @date 2019-07-09
  */
-public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCallback {
+public class SplashActivity extends BaseActivity implements GuideUtil.OnCallback {
     public static final String SHOWGUID = "showguid";
     public static final String GUID = "guid";
     int[] drawables_worker = {R.mipmap.ic_work_splash_one, R.mipmap.ic_splash_two, R.mipmap.ic_work_splash_three, R.mipmap.ic_work_splash_end};
@@ -49,16 +52,23 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
         init();
     }
 
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
+    }
+
     private void init() {
         if (WorkerApplication.get().getLoginBean() == null && CacheKit.get().getBool(SHOWGUID, true)) {
             firstUse();
             return;
         }
+
         //没有登录信息
         if (WorkerApplication.get().getLoginBean() == null) {
             goLogin();
             return;
         }
+
         //有网 token登录
         if (isConnected()) {
             loginByToken();
@@ -69,8 +79,8 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
     }
 
     private void goMain() {
-        startActivity(new Intent(this, MainActivity.class));
-        finishSelf();
+        startActivity(MainActivity.class);
+        finish();
     }
 
 
@@ -84,12 +94,15 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
      * token 登陆 验证
      */
     public void loginByToken() {
+
         EanfangHttp.get(UserApi.GET_USER_INFO)
                 .execute(new EanfangCallback<LoginBean>(this, false, LoginBean.class) {
                     @Override
                     public void onSuccess(LoginBean bean) {
                         if (bean != null && !StrUtil.isEmpty(bean.getToken())) {
-                            CacheKit.get().put(LoginBean.class.getName(), bean, CacheMod.All);
+                            ThreadUtil.execAsync(() -> {
+                                CacheKit.get().put(LoginBean.class.getName(), bean, CacheMod.All);
+                            });
                             goMain();
                         } else {
                             goLogin();
@@ -116,7 +129,7 @@ public class SplashActivity extends BaseWorkerActivity implements GuideUtil.OnCa
             if (CacheKit.get().getBool(GUID, true)) {
                 startActivity(new Intent(this, GuideActivity.class));
                 CacheKit.get().put(GUID, false, CacheMod.All);
-                finishSelf();
+                finish();
             } else {
                 goMain();
             }

@@ -1,10 +1,13 @@
 package com.eanfang.biz.rds.base;
 
+import androidx.lifecycle.MutableLiveData;
+
 import com.eanfang.base.kit.utils.TypeToken;
 import com.eanfang.base.network.RetrofitManagement;
 import com.eanfang.base.network.callback.RequestCallback;
 import com.eanfang.base.network.callback.RequestMultiplyCallback;
 import com.eanfang.base.network.config.HttpConfig;
+import com.eanfang.base.network.event.BaseActionEvent;
 import com.eanfang.base.network.model.BaseResponseBody;
 import com.zchu.rxcache.RxCache;
 import com.zchu.rxcache.data.CacheResult;
@@ -35,6 +38,15 @@ public abstract class BaseRemoteDataSource {
         this.baseViewModel = baseViewModel;
     }
 
+
+    MutableLiveData<BaseActionEvent> errorLiveData() {
+        return baseViewModel.getErrorLiveData();
+    }
+
+    void showError(boolean isShow) {
+        baseViewModel.setShowError(isShow);
+    }
+
     protected <T> T getService(Class<T> clz) {
         return RetrofitManagement.getInstance().getService(clz, HttpConfig.get().getApiUrl());
     }
@@ -44,7 +56,7 @@ public abstract class BaseRemoteDataSource {
     }
 
     private <T> ObservableTransformer<BaseResponseBody<T>, Object> applySchedulers(Class<T> clazz) {
-        return RetrofitManagement.getInstance().applySchedulers(baseViewModel.getActionLiveData(), clazz);
+        return RetrofitManagement.getInstance().applySchedulers(baseViewModel.getActionLiveData(), baseViewModel.getErrorLiveData(), clazz);
     }
 
     protected <T> void execute(Observable observable, RequestCallback<T> callback) {

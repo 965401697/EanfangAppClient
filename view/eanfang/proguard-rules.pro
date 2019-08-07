@@ -82,7 +82,7 @@
 -keep class com.tencent.bigdata.** {* ;}
 
  #华为推送
--ignorewarning
+#-ignorewarning
 -keepattributes *Annotation*
 -keepattributes Exceptions
 -keepattributes InnerClasses
@@ -274,4 +274,4 @@
 -dontwarn com.mob.**
 -dontwarn **.R$*
 #---------------------------sharesdk----------------------------
--ignorewarnings
+#-ignorewarnings

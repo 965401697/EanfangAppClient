@@ -132,47 +132,17 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
     }
 
     private void init() {
-        initXinGe();
-        getBaseData();
-        getConst();
+        ThreadUtil.execAsync(() -> {
+            initXinGe();
+            getBaseData();
+            getConst();
+            initRongIm();
+            initUpdate();
+            initYingShiYunData();
+        });
         RxPerm.get(this).getAllPerm();
-        initRongIm();
         initFragment();
-        initUpdate();
         initView();
-        initYingShiYunData();
-//        if (Config.get().getBaseDataBean() == null || Config.get().getConstBean() == null) {
-//            Dialog dialog = LoadKit.dialog(this, "正在初始化...");
-//            dialog.setCancelable(false);
-//            dialog.show();
-//            Observable.interval(0, 1, TimeUnit.SECONDS)
-//                    .take(10)
-//                    .subscribeOn(Schedulers.io())
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                    .map(count -> 10 - count)
-//                    .subscribe(new Observer<Long>() {
-//                        @Override
-//                        public void onSubscribe(Disposable d) {
-//
-//                        }
-//
-//                        @Override
-//                        public void onNext(Long d) {
-//                            LoadKit.setText(dialog, StrUtil.format("正在初始化({})", d.toString()));
-//                        }
-//
-//                        @Override
-//                        public void onError(Throwable e) {
-//                        }
-//
-//                        @Override
-//                        public void onComplete() {
-//                            dialog.setCancelable(true);
-//                            dialog.dismiss();
-//                        }
-//                    });
-//        }
-
     }
 
     /**

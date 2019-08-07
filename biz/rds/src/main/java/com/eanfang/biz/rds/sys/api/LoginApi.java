@@ -1,8 +1,8 @@
 package com.eanfang.biz.rds.sys.api;
 
+import com.eanfang.base.network.model.BaseResponseBody;
 import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.biz.model.vo.LoginVo;
-import com.eanfang.base.network.model.BaseResponseBody;
 
 import io.reactivex.Observable;
 import retrofit2.http.Body;
@@ -30,7 +30,7 @@ public interface LoginApi {
      * 发送验证码
      *
      * @param phone phone
-     * @return
+     * @return LoginBean
      */
     @GET("/yaf_sys/account/sendverify")
     Observable<BaseResponseBody<String>> verifyCode(@Query("mobile") String phone);
@@ -40,8 +40,26 @@ public interface LoginApi {
      *
      * @param userName userName
      * @param code     code
-     * @return
+     * @return LoginBean
      */
     @POST("/yaf_sys/sys/login_verify")
     Observable<BaseResponseBody<LoginBean>> loginVerify(@Query("mobile") String userName, @Query("verifycode") String code);
+
+
+    /**
+     * token登录
+     *
+     * @return LoginBean
+     */
+    @GET("/yaf_sys/sys/userinfo")
+    Observable<BaseResponseBody<LoginBean>> loginToken();
+
+    /**
+     * 退出登录
+     *
+     * @return ok
+     */
+    @GET("/yaf_sys/sys/logout")
+    Observable<BaseResponseBody<Object>> logout();
+
 }

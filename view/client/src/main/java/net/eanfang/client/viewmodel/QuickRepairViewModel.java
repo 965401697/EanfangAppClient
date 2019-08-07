@@ -5,11 +5,12 @@ import android.widget.EditText;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.base.kit.rx.RxPerm;
-import com.eanfang.biz.model.bean.InstallOrderConfirmBean;
-import com.eanfang.biz.model.bean.SelectAddressItem;
 import com.eanfang.biz.model.bean.DesignOrderInfoBean;
+import com.eanfang.biz.model.bean.InstallOrderConfirmBean;
 import com.eanfang.biz.model.bean.OrderCountBean;
+import com.eanfang.biz.model.bean.SelectAddressItem;
 import com.eanfang.biz.model.entity.RepairBugEntity;
 import com.eanfang.biz.model.entity.RepairOrderEntity;
 import com.eanfang.biz.rds.base.BaseViewModel;
@@ -18,7 +19,6 @@ import com.eanfang.biz.rds.sys.repo.QuickRepairRepo;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.ui.base.voice.RecognitionManager;
-
 
 import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.databinding.FragmentHomeRepairBinding;
@@ -76,7 +76,15 @@ public class QuickRepairViewModel extends BaseViewModel {
      * 获取报修人数
      */
     public void getRepairCount() {
-        mQuickRepairRepo.getRepairCount().observe(lifecycleOwner, mOrderNum::setValue);
+        OrderCountBean orderCount = CacheKit.get().get(OrderCountBean.class.getName(), OrderCountBean.class);
+        if (orderCount == null) {
+            mQuickRepairRepo.getRepairCount().observe(lifecycleOwner, (bean) -> {
+                CacheKit.get().put(OrderCountBean.class.getName(), bean, 1000 * 60 * 60);
+                mOrderNum.setValue(bean);
+            });
+        } else {
+            mOrderNum.setValue(orderCount);
+        }
     }
 
     /**

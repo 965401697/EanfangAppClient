@@ -1,7 +1,6 @@
 package com.eanfang.http;
 
 import com.eanfang.base.BaseApplication;
-import com.eanfang.util.StringUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.request.GetRequest;
 import com.lzy.okgo.request.PostRequest;
@@ -44,7 +43,7 @@ public class EanfangHttp {
 
     public static OkGo getHttp() {
         if (http == null) {
-            synchronized (http) {
+            synchronized (EanfangHttp.class) {
                 if (http == null) {
                     BaseApplication.get().initOkGo();
                 }

@@ -32,10 +32,11 @@
     </style>
 
     <style name="launch_theme" parent="@style/BaseTheme">
-        <!--<item name="android:windowBackground">@color/title_bar_color</item>-->
         <item name="android:windowBackground">@mipmap/ic_app_launch</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowFullscreen">true</item>
+        <!--<item name="android:windowFullscreen">true</item>-->
+        <!--<item name="android:windowIsTranslucent">true</item>-->
     </style>
 
     <style name="dialog" parent="@android:style/Theme.Dialog">

@@ -49,12 +49,12 @@
 
 
     <!-- Base application theme. -->
-    <style name="BaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Actionbar color -->
-        <item name="colorPrimary">@color/title_bar_color</item>
-        <!--Status bar color-->
-        <item name="android:windowBackground">@color/window_background</item>
-    </style>
+    <!--<style name="BaseTheme" parent="Theme.AppCompat.Light.NoActionBar">-->
+        <!--&lt;!&ndash; Actionbar color &ndash;&gt;-->
+        <!--<item name="colorPrimary">@color/title_bar_color</item>-->
+        <!--&lt;!&ndash;Status bar color&ndash;&gt;-->
+        <!--<item name="android:windowBackground">@color/window_background</item>-->
+    <!--</style>-->
     <!-- Base application theme. -->
     <!--<style name="AppTheme" parent="@style/BaseTheme">-->
     <!--&lt;!&ndash; Customize your theme here. &ndash;&gt;-->
@@ -80,12 +80,12 @@
         <item name="android:progressDrawable">@color/title_bar_color</item>
     </style>
 
-    <style name="launch_theme" parent="@style/BaseTheme">
-        <!--<item name="android:windowBackground">@color/title_bar_color</item>-->
-        <item name="android:windowBackground">@mipmap/ic_app_launch</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowFullscreen">true</item>
-    </style>
+    <!--<style name="launch_theme" parent="@style/BaseTheme">-->
+        <!--&lt;!&ndash;<item name="android:windowBackground">@color/title_bar_color</item>&ndash;&gt;-->
+        <!--<item name="android:windowBackground">@mipmap/ic_app_launch</item>-->
+        <!--<item name="android:windowContentOverlay">@null</item>-->
+        <!--<item name="android:windowFullscreen">true</item>-->
+    <!--</style>-->
 
 
     <style name="Translucent_NoTitle" parent="@android:style/Theme">

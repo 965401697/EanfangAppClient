@@ -95,7 +95,7 @@ public enum RetrofitManagement {
                 .build();
     }
 
-    public <T> ObservableTransformer<BaseResponseBody<T>, Object> applySchedulers(MutableLiveData<BaseActionEvent> actionLiveData, Class<T> clazz) {
+    public <T> ObservableTransformer<BaseResponseBody<T>, Object> applySchedulers(MutableLiveData<BaseActionEvent> actionLiveData, MutableLiveData<BaseActionEvent> errorLiveData, Class<T> clazz) {
         return observable -> observable.subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -112,24 +112,31 @@ public enum RetrofitManagement {
                             return createData(new Optional(result.getData()));
                         case HttpCode.CODE_UNKNOWN:
                             actionLiveData.setValue(new BaseActionEvent(BaseActionEvent.SERVER_ERROR));
+                            errorLiveData.setValue(new BaseActionEvent(BaseActionEvent.SERVER_ERROR));
                             throw new ServerResultException(result.getCode(), result.getMessage());
                         case HttpCode.CODE_TOKEN_INVALID:
                             actionLiveData.setValue(new BaseActionEvent(BaseActionEvent.TOKEN_ERROR));
+                            errorLiveData.setValue(new BaseActionEvent(BaseActionEvent.TOKEN_ERROR));
                             throw new TokenInvalidException();
                         case HttpCode.CODE_ACCOUNT_INVALID:
                             throw new AccountInvalidException();
                         case HttpCode.CODE_PERMISSION_INVALID:
                             actionLiveData.setValue(new BaseActionEvent(BaseActionEvent.PERMISSION_ERROR));
+                            errorLiveData.setValue(new BaseActionEvent(BaseActionEvent.PERMISSION_ERROR));
                             break;
                         case HttpCode.CODE_PARAMETER_INVALID:
                             actionLiveData.setValue(new BaseActionEvent(BaseActionEvent.PARAM_ERROR));
+                            errorLiveData.setValue(new BaseActionEvent(BaseActionEvent.PARAM_ERROR));
                             throw new ParameterInvalidException();
                         case HttpCode.CODE_FROM_INVALID:
                             throw new RequestFromException();
                         case HttpCode.CODE_RESULT_INVALID:
                             actionLiveData.setValue(new BaseActionEvent(BaseActionEvent.EMPTY_DATA));
+                            errorLiveData.setValue(new BaseActionEvent(BaseActionEvent.EMPTY_DATA));
                             break;
                         default:
+                            actionLiveData.setValue(new BaseActionEvent(BaseActionEvent.SERVER_ERROR));
+                            errorLiveData.setValue(new BaseActionEvent(BaseActionEvent.SERVER_ERROR));
                             throw new ServerResultException(result.getCode(), result.getMessage());
                     }
                     return createData(new Optional(null));

@@ -23,6 +23,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.eanfang.R;
+import com.eanfang.base.kit.aop.annotation.BugLog;
 
 import java.util.ArrayList;
 import java.util.List;
