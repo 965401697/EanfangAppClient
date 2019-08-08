@@ -143,17 +143,6 @@ public class SettingActivity extends BaseActivity {
                         signout();
                     }
                 });
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//        builder.setMessage("退出后将无法查看数据，您确定退出吗？");
-//        builder.setTitle("");
-//        builder.setPositiveButton("确定", (dialog, which) -> {
-//            signout();
-//            dialog.dismiss();
-//        });
-//        builder.setNegativeButton("取消", (dialog, which) -> {
-//            dialog.dismiss();
-//        });
-//        builder.create().show();
     }
 
     private void signout() {
@@ -179,28 +168,6 @@ public class SettingActivity extends BaseActivity {
             startActivity(new Intent(SettingActivity.this, SplashActivity.class));
             BaseApplication.get().closeActivity(MainActivity.class);
         });
-//        EanfangHttp.get(UserApi.APP_LOGOUT)
-//                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
-//                    XGPushManager.delAccount(SettingActivity.this, BaseApplication.get().getAccount().getMobile(), new XGIOperateCallback() {
-//                        @Override
-//                        public void onSuccess(Object o, int i) {
-//
-//                        }
-//
-//                        @Override
-//                        public void onFail(Object o, int i, String s) {
-//
-//                        }
-//                    });
-//                    RongIM.getInstance().logout();//退出融云
-//                    PermKit.permList.clear();//清空权限
-//                    CacheKit.get().remove(LoginBean.class.getName());
-//                    CleanMessageUtil.clearAllCache(ClientApplication.get());
-//                    finishSelf();
-//                    startActivity(new Intent(SettingActivity.this, SplashActivity.class));
-////                    showToast("退出成功");
-//                    BaseApplication.get().closeActivity(MainActivity.class);
-//                }));
     }
 
 

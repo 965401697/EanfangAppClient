@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModel;
@@ -23,7 +24,14 @@ import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.worksapce.GuideActivity;
 
+import java.util.concurrent.TimeUnit;
+
 import cn.hutool.core.util.StrUtil;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * @author jornl
@@ -34,6 +42,11 @@ public class SplashActivity extends BaseActivity implements GuideUtil.OnCallback
     public static final String GUID = "guid";
     int[] drawables_client = {R.mipmap.ic_client_splash_one, R.mipmap.ic_splash_two, R.mipmap.ic_client_splash_three, R.mipmap.ic_client_splash_end};
     private LoginRepo loginRepo;
+    private TextView tv;
+    //是否点击跳过
+    private boolean isSkip = false;
+    //是否执行了token登录
+    private boolean isLogin = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_splash);
@@ -44,9 +57,52 @@ public class SplashActivity extends BaseActivity implements GuideUtil.OnCallback
             finish();
             return;
         }
-        loginRepo = new LoginRepo(new LoginDs(new BaseViewModel()));
 
+        loginRepo = new LoginRepo(new LoginDs(new BaseViewModel()));
+        tv = findViewById(R.id.tv_countDown);
+        tv.setOnClickListener((v) -> {
+            isSkip = true;
+            tv.setText("加载中...");
+            loginByToken();
+        });
         init();
+    }
+
+    private void beginCountDown() {
+        Observable.interval(0, 1, TimeUnit.SECONDS)
+                .take(5)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(count -> 5 - count)
+                .subscribe(new Observer<Long>() {
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Long aLong) {
+                        if (!isSkip) {
+                            tv.setText(StrUtil.format("跳过({})", aLong));
+                            if (aLong == 3) {
+                                loginByToken();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        if (!isSkip) {
+                            tv.setText("加载中...");
+                        }
+                    }
+                });
     }
 
     @Override
@@ -64,13 +120,12 @@ public class SplashActivity extends BaseActivity implements GuideUtil.OnCallback
             goLogin();
             return;
         }
-        //有网 token登录
-        if (isConnected()) {
-            loginByToken();
-        } else {
-            //没网 进首页
+        if (!isConnected()) {
             goMain();
+            return;
         }
+        beginCountDown();
+
     }
 
     private void goMain() {
@@ -87,7 +142,11 @@ public class SplashActivity extends BaseActivity implements GuideUtil.OnCallback
     /**
      * token 登陆 验证
      */
-    public void loginByToken() {
+    public synchronized void loginByToken() {
+        if (isLogin) {
+            return;
+        }
+        isLogin = true;
         loginRepo.loginToken().observe(this, (bean) -> {
             if (bean != null && !StrUtil.isEmpty(bean.getToken())) {
                 CacheKit.get().put(LoginBean.class.getName(), bean, CacheMod.All);
@@ -99,24 +158,6 @@ public class SplashActivity extends BaseActivity implements GuideUtil.OnCallback
         loginRepo.onError("loginByToken").observe(this, (bean) -> {
             goLogin();
         });
-
-//        EanfangHttp.get(UserApi.GET_USER_INFO)
-//                .execute(new EanfangCallback<LoginBean>(this, false, LoginBean.class) {
-//                    @Override
-//                    public void onSuccess(LoginBean bean) {
-//                        if (bean != null && !StrUtil.isEmpty(bean.getToken())) {
-//                            CacheKit.get().put(LoginBean.class.getName(), bean, CacheMod.All);
-//                            goMain();
-//                        } else {
-//                            goLogin();
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onFail(Integer code, String message, JSONObject jsonObject) {
-//                        goLogin();
-//                    }
-//                });
 
     }
 

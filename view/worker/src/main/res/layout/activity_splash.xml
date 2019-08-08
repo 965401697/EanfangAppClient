@@ -8,6 +8,21 @@
         android:id="@+id/image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        />
+        android:background="@mipmap/ic_app_launch"
+        android:scaleType="fitXY" />
+
+    <TextView
+        android:id="@+id/tv_countDown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="@dimen/dimen_60"
+        android:layout_marginEnd="@dimen/dimen_30"
+        android:background="#40000000"
+        android:padding="@dimen/dimen_6"
+        android:paddingStart="@dimen/dimen_10"
+        android:paddingEnd="@dimen/dimen_10"
+        android:text=""
+        android:textColor="@android:color/white"
+        android:textSize="14sp" />
 </FrameLayout>

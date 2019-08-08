@@ -5,19 +5,18 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModel;
 
-import com.alibaba.fastjson.JSONObject;
-import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.BaseActivity;
-import com.eanfang.base.kit.aop.annotation.BugLog;
 import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.base.kit.cache.CacheMod;
 import com.eanfang.biz.model.bean.LoginBean;
-import com.eanfang.http.EanfangCallback;
-import com.eanfang.http.EanfangHttp;
+import com.eanfang.biz.rds.base.BaseViewModel;
+import com.eanfang.biz.rds.sys.ds.impl.LoginDs;
+import com.eanfang.biz.rds.sys.repo.LoginRepo;
 import com.eanfang.sys.activity.LoginActivity;
 import com.eanfang.util.GuideUtil;
 
@@ -25,8 +24,14 @@ import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.GuideActivity;
 
-import cn.hutool.core.thread.ThreadUtil;
+import java.util.concurrent.TimeUnit;
+
 import cn.hutool.core.util.StrUtil;
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 
 /**
@@ -37,7 +42,12 @@ public class SplashActivity extends BaseActivity implements GuideUtil.OnCallback
     public static final String SHOWGUID = "showguid";
     public static final String GUID = "guid";
     int[] drawables_worker = {R.mipmap.ic_work_splash_one, R.mipmap.ic_splash_two, R.mipmap.ic_work_splash_three, R.mipmap.ic_work_splash_end};
-
+    private LoginRepo loginRepo;
+    private TextView tv;
+    //是否跳过
+    private boolean isSkip = false;
+    //是否执行了token登录
+    private boolean isLogin = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +59,13 @@ public class SplashActivity extends BaseActivity implements GuideUtil.OnCallback
             finish();
             return;
         }
+        loginRepo = new LoginRepo(new LoginDs(new BaseViewModel()));
+        tv = findViewById(R.id.tv_countDown);
+        tv.setOnClickListener((v) -> {
+            isSkip = true;
+            tv.setText("加载中...");
+            loginByToken();
+        });
         init();
     }
 
@@ -56,6 +73,44 @@ public class SplashActivity extends BaseActivity implements GuideUtil.OnCallback
     protected ViewModel initViewModel() {
         return null;
     }
+
+    private void beginCountDown() {
+        Observable.interval(0, 1, TimeUnit.SECONDS)
+                .take(5)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .map(count -> 5 - count)
+                .subscribe(new Observer<Long>() {
+
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(Long aLong) {
+                        if (!isSkip) {
+                            tv.setText(StrUtil.format("跳过({})", aLong));
+                            if (aLong == 3) {
+                                loginByToken();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        if (!isSkip) {
+                            tv.setText("加载中...");
+                        }
+                    }
+                });
+    }
+
 
     private void init() {
         if (WorkerApplication.get().getLoginBean() == null && CacheKit.get().getBool(SHOWGUID, true)) {
@@ -69,13 +124,12 @@ public class SplashActivity extends BaseActivity implements GuideUtil.OnCallback
             return;
         }
 
-        //有网 token登录
-        if (isConnected()) {
-            loginByToken();
-        } else {
-            //没网 进首页
+        if (!isConnected()) {
             goMain();
+            return;
         }
+        beginCountDown();
+
     }
 
     private void goMain() {
@@ -93,27 +147,22 @@ public class SplashActivity extends BaseActivity implements GuideUtil.OnCallback
     /**
      * token 登陆 验证
      */
-    public void loginByToken() {
-
-        EanfangHttp.get(UserApi.GET_USER_INFO)
-                .execute(new EanfangCallback<LoginBean>(this, false, LoginBean.class) {
-                    @Override
-                    public void onSuccess(LoginBean bean) {
-                        if (bean != null && !StrUtil.isEmpty(bean.getToken())) {
-                            ThreadUtil.execAsync(() -> {
-                                CacheKit.get().put(LoginBean.class.getName(), bean, CacheMod.All);
-                            });
-                            goMain();
-                        } else {
-                            goLogin();
-                        }
-                    }
-
-                    @Override
-                    public void onFail(Integer code, String message, JSONObject jsonObject) {
-                        goLogin();
-                    }
-                });
+    public synchronized void loginByToken() {
+        if (isLogin) {
+            return;
+        }
+        isLogin = true;
+        loginRepo.loginToken().observe(this, (bean) -> {
+            if (bean != null && !StrUtil.isEmpty(bean.getToken())) {
+                CacheKit.get().put(LoginBean.class.getName(), bean, CacheMod.All);
+                goMain();
+            } else {
+                goLogin();
+            }
+        });
+        loginRepo.onError("loginByToken").observe(this, (bean) -> {
+            goLogin();
+        });
     }
 
     @Override
