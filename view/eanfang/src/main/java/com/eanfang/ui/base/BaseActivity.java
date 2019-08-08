@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
@@ -19,7 +18,6 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -49,7 +47,7 @@ import java.util.ArrayList;
 public class BaseActivity extends AppCompatActivity implements
         IBase, ActivityCompat.OnRequestPermissionsResultCallback {
 
-    public Dialog loadingDialog;
+    public static Dialog loadingDialog;
     private ImageView iv_left;
     private ExitListenerReceiver exitre;
 

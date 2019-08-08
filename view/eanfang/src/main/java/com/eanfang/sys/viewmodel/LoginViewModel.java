@@ -11,7 +11,6 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.MutableLiveData;
 
 import com.eanfang.R;
-import com.eanfang.base.kit.aop.annotation.BugLog;
 import com.eanfang.base.kit.aop.annotation.SingleClick;
 import com.eanfang.base.kit.rx.RxDialog;
 import com.eanfang.biz.model.bean.LoginBean;
@@ -172,7 +171,6 @@ public class LoginViewModel extends BaseViewModel {
     @SuppressLint("CheckResult")
     @SuppressWarnings("unchecked")
     @SingleClick
-    @BugLog
     public void readClick(View view, int type) {
         RxDialog dialog;
         if (type == 0) {

@@ -17,15 +17,15 @@ public interface UserApi {
     /**
      * 登录
      */
-    String APP_LOGIN = BuildConfig.API_HOST + "/yaf_sys/sys/login";
+//    String APP_LOGIN = BuildConfig.API_HOST + "/yaf_sys/sys/login";
     /**
      * 注册
      */
-    String APP_REGISTER = BuildConfig.API_HOST + "/yaf_sys/account/register/";
+//    String APP_REGISTER = BuildConfig.API_HOST + "/yaf_sys/account/register/";
     /**
      * 验证码登录
      */
-    String APP_LOGIN_VERIFY = BuildConfig.API_HOST + "/yaf_sys/sys/login_verify";
+//    String APP_LOGIN_VERIFY = BuildConfig.API_HOST + "/yaf_sys/sys/login_verify";
     /**
      * 退出
      */

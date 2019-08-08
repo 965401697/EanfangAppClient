@@ -16,7 +16,6 @@
     <color name="color_gray">#cccccc</color>
     <color name="white">#ffffff</color>
     <color name="colorPrimary">#FF7C26</color>
-    <color name="transparent_gray">#f8f8f8</color>
     <color name="transparent">#00000000</color>
 
     <color name="colorPrimaryDark">#FF7C26</color>
@@ -26,7 +25,7 @@
     <!--<color name="colorPrimaryDark">#303F9F</color>-->
     <color name="title_bar_color">#FF7C26</color>
     <color name="title_zyr_color">#FB973B</color>
-    <color name="window_background">#f0f0f0</color>
+    <!--<color name="window_background">#f0f0f0</color>-->
     <color name="client">#2c88cb</color>
     <color name="font_color">#8b8b8b</color>
     <color name="font_dark_color">#313131</color>

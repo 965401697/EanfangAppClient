@@ -25,17 +25,19 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.BaseApplication;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.base.kit.aop.annotation.BugLog;
 import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.base.kit.cache.CacheMod;
 import com.eanfang.base.kit.rx.RxPerm;
+import com.eanfang.biz.model.QueryEntry;
 import com.eanfang.biz.model.bean.AllMessageBean;
-import com.eanfang.biz.model.bean.GroupDetailBean;
-import com.eanfang.biz.model.entity.NoticeEntity;
 import com.eanfang.biz.model.bean.BaseDataBean;
 import com.eanfang.biz.model.bean.ConstAllBean;
+import com.eanfang.biz.model.bean.GroupDetailBean;
 import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.biz.model.bean.device.User;
 import com.eanfang.biz.model.entity.BaseDataEntity;
+import com.eanfang.biz.model.entity.NoticeEntity;
 import com.eanfang.biz.model.entity.WorkerEntity;
 import com.eanfang.biz.rds.base.BaseViewModel;
 import com.eanfang.biz.rds.sys.ds.impl.MainDs;
@@ -53,7 +55,6 @@ import com.eanfang.util.ContactUtil;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.LocationUtil;
-import com.eanfang.biz.model.QueryEntry;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UpdateAppManager;
 
@@ -145,47 +146,23 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
     }
 
     private void init() {
-        initXinGe();
-        getBaseData();
-        getConst();
-        submitLocation();
+        ThreadUtil.execAsync(this::initXinGe);
+
+        ThreadUtil.execAsync(this::getBaseData);
+        ThreadUtil.execAsync(this::getConst);
+        ThreadUtil.execAsync(this::submitLocation);
+        ThreadUtil.execAsync(this::initRongIm);
+        ThreadUtil.execAsync(this::initUpdate);
+//        initXinGe();
+//        getBaseData();
+//        getConst();
+//        submitLocation();
         RxPerm.get(this).getAllPerm();
-        initRongIm();
+//        initRongIm();
         initFragment();
-        initUpdate();
+//        initUpdate();
         initView();
         initMaintainNotice();
-//        if (Config.get().getBaseDataBean() == null || Config.get().getConstBean() == null) {
-//            Dialog dialog = LoadKit.dialog(this, "正在初始化...");
-//            dialog.setCancelable(false);
-//            dialog.show();
-//            Observable.interval(0, 1, TimeUnit.SECONDS)
-//                    .take(10)
-//                    .subscribeOn(Schedulers.io())
-//                    .observeOn(AndroidSchedulers.mainThread())
-//                    .map(count -> 10 - count)
-//                    .subscribe(new Observer<Long>() {
-//                        @Override
-//                        public void onSubscribe(Disposable d) {
-//
-//                        }
-//
-//                        @Override
-//                        public void onNext(Long d) {
-//                            LoadKit.setText(dialog, StrUtil.format("正在初始化({})", d.toString()));
-//                        }
-//
-//                        @Override
-//                        public void onError(Throwable e) {
-//                        }
-//
-//                        @Override
-//                        public void onComplete() {
-//                            dialog.setCancelable(true);
-//                            dialog.dismiss();
-//                        }
-//                    });
-//        }
 
     }
 

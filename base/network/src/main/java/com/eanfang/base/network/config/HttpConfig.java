@@ -60,6 +60,15 @@ public class HttpConfig {
     }
 
     /**
+     * 是否初始化了
+     *
+     * @return true 初始化了   false没有
+     */
+    public static boolean hasInit() {
+        return config != null;
+    }
+
+    /**
      * @return 客户端0，技师端1
      */
     public int getApp() {

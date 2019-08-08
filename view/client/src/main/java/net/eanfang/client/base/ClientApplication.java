@@ -12,7 +12,6 @@ import com.eanfang.http.EanfangHttp;
 import com.mob.MobSDK;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
-import com.videogo.openapi.EZOpenSDK;
 
 import net.eanfang.client.BuildConfig;
 import net.eanfang.client.ui.activity.im.CustomizeMessage;
@@ -22,6 +21,7 @@ import net.eanfang.client.ui.activity.im.CustomizeVideoMessageItemProvider;
 import net.eanfang.client.ui.activity.im.MyConversationClickListener;
 import net.eanfang.client.ui.activity.im.SampleExtensionModule;
 
+import cn.hutool.core.thread.ThreadUtil;
 import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
@@ -43,33 +43,24 @@ public class ClientApplication extends BaseApplication {
     public void onCreate() {
         super.onCreate();
 
-        initRongIM();
-        initWxPay();
-        initHttp();
-        initBugly();
-        //initYingShiYun();
+        ThreadUtil.execAsync(() -> {
+            initRongIM();
+            initWxPay();
+            initHttp();
+            initBugly();
+        });
 
+        CacheKit.init(this).put("APP_TYPE", BuildConfig.APP_TYPE);
     }
 
     private void initBugly() {
         SDKManager.getBugly().init(this, BuildConfig.BUGLY_CLIENT, HttpConfig.get().isDebug());
     }
 
-//    private void initYingShiYun() {
-//        //sdk日志开关，正式发布需要去掉
-//        EZOpenSDK.showSDKLog(HttpConfig.get().isDebug());
-//        //设置是否支持P2P取流,详见api
-//        EZOpenSDK.enableP2P(false);
-//        // APP_KEY
-//        EZOpenSDK.initLib(this, EanfangConst.YING_SHI_YUN_APP_KEY);
-//    }
-
-
     @Override
     protected void initConfig() {
         super.initConfig();
         LoadKit.initLoadSir();
-        CacheKit.init(this).put("APP_TYPE", BuildConfig.APP_TYPE);
         MobSDK.init(this, BuildConfig.MOB_CLIENT_APPID, BuildConfig.MOB_CLIENT_APPKEY);
     }
 

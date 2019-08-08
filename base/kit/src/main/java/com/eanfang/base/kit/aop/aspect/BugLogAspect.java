@@ -1,5 +1,6 @@
 package com.eanfang.base.kit.aop.aspect;
 
+import android.content.Context;
 import android.view.View;
 
 import com.alibaba.fastjson.JSON;
@@ -37,7 +38,7 @@ public class BugLogAspect {
      */
     @Around(value = "methodAnnotated()", argNames = "joinPoint")
     public void aroundJoinPoint(ProceedingJoinPoint joinPoint) throws Throwable {
-        if (!HttpConfig.get().isDebug()) {
+        if (HttpConfig.hasInit() && !HttpConfig.get().isDebug()) {
             joinPoint.proceed();
             return;
         }
@@ -64,7 +65,7 @@ public class BugLogAspect {
         StringBuilder paramStr = new StringBuilder();
         if (paramArr != null) {
             for (int i = 0; i < paramArr.length; i++) {
-                if (paramArr[i] instanceof View) {
+                if (paramArr[i] instanceof View || paramArr[i] instanceof Context) {
                     paramStr.append("┣参数").append(i + 1).append("：").append(paramArr[i].toString()).append("\n");
                 } else {
                     paramStr.append("┣参数").append(i + 1).append("：").append(JSON.toJSONString(paramArr[i])).append("\n");

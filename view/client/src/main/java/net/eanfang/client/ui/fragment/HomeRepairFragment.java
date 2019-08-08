@@ -163,7 +163,7 @@ public class HomeRepairFragment extends BaseFragment {
         mBinding.etHomeRepairBrand.setOnClickListener(view -> {
             String busOneCode = Config.get().getBaseCodeByName(Config.get().getBusinessNameByCode(dataCode, 1), 1, Constant.MODEL).get(0);
             if (StrUtil.isEmpty(busOneCode)) {
-                showToast("请先选择故障设备");
+                showToast("请先选择系统类别");
                 return;
             }
             Bundle bundleDevice = new Bundle();

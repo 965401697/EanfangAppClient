@@ -1,20 +1,22 @@
 package net.eanfang.worker.ui.activity.my;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AlertDialog;
+import androidx.lifecycle.ViewModel;
 
-import com.alibaba.fastjson.JSONObject;
-import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.BaseActivity;
 import com.eanfang.base.BaseApplication;
 import com.eanfang.base.kit.cache.CacheKit;
-import com.eanfang.http.EanfangCallback;
-import com.eanfang.http.EanfangHttp;
+import com.eanfang.base.kit.rx.RxDialog;
+import com.eanfang.biz.model.bean.LoginBean;
+import com.eanfang.biz.rds.base.BaseViewModel;
+import com.eanfang.biz.rds.sys.ds.impl.LoginDs;
+import com.eanfang.biz.rds.sys.repo.LoginRepo;
 import com.eanfang.util.CleanMessageUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
@@ -29,7 +31,6 @@ import net.eanfang.worker.ui.activity.MainActivity;
 import net.eanfang.worker.ui.activity.SplashActivity;
 import net.eanfang.worker.ui.activity.worksapce.setting.ChangePhoneActivity;
 import net.eanfang.worker.ui.activity.worksapce.setting.UpdatePasswordActivity;
-import net.eanfang.worker.ui.base.BaseWorkerActivity;
 import net.eanfang.worker.ui.widget.AboutUsView;
 import net.eanfang.worker.ui.widget.MessageStateView;
 
@@ -43,7 +44,7 @@ import io.rong.imkit.RongIM;
  * Created by Administrator on 2017/3/15.
  */
 
-public class SettingActivity extends BaseWorkerActivity {
+public class SettingActivity extends BaseActivity {
 
     @BindView(R.id.ll_about_us)
     LinearLayout ll_about_us;
@@ -63,6 +64,9 @@ public class SettingActivity extends BaseWorkerActivity {
     @BindView(R.id.sb_voice)
     SwitchButton sbVoice;
 
+    private LoginRepo loginRepo;
+    private BaseViewModel viewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_setting);
@@ -74,10 +78,16 @@ public class SettingActivity extends BaseWorkerActivity {
             e.printStackTrace();
         }
         initView();
+        loginRepo = new LoginRepo(new LoginDs(viewModel));
     }
 
-    private void initView() {
-        setLeftBack();
+    @Override
+    protected ViewModel initViewModel() {
+        return viewModel = new BaseViewModel();
+    }
+
+    protected void initView() {
+        super.initView();
         setTitle("设置");
         //修改密码
         llUpdataPassword.setOnClickListener(v -> {
@@ -112,43 +122,45 @@ public class SettingActivity extends BaseWorkerActivity {
     /**
      * 是否放弃修改
      */
+    @SuppressLint("unchecked")
     private void logout() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("退出后将无法查看数据，您确定退出吗？");
-        builder.setTitle("");
-        builder.setPositiveButton("确定", (dialog, which) -> {
-            signout();
-            dialog.dismiss();
-        });
-        builder.setNegativeButton("取消", (dialog, which) -> {
-            dialog.dismiss();
-        });
-        builder.create().show();
+        new RxDialog(this)
+                .setTitle("提示")
+                .setMessage("退出后将无法查看数据，您确定退出吗？")
+                .setPositiveText("确定")
+                .setNegativeText("取消")
+                .dialogToObservable()
+                .subscribe(code -> {
+                    if (code.equals(RxDialog.POSITIVE)) {
+                        signout();
+                    }
+                });
+
     }
 
     private void signout() {
-        EanfangHttp.get(UserApi.APP_LOGOUT)
-                .execute(new EanfangCallback<JSONObject>(this, true, JSONObject.class, (bean) -> {
-                    XGPushManager.delAccount(SettingActivity.this, WorkerApplication.get().getLoginBean().getAccount().getMobile(), new XGIOperateCallback() {
-                        @Override
-                        public void onSuccess(Object o, int i) {
-                            Log.e("GG", "信鸽退出Success");
-                        }
+        loginRepo.logout().observe(SettingActivity.this, (d) -> {
+            XGPushManager.delAccount(SettingActivity.this, BaseApplication.get().getAccount().getMobile(), new XGIOperateCallback() {
+                @Override
+                public void onSuccess(Object o, int i) {
 
-                        @Override
-                        public void onFail(Object o, int i, String s) {
-                            Log.e("GG", "信鸽退出Fail");
-                        }
-                    });
-                    RongIM.getInstance().logout();//退出融云
-                    PermKit.permList.clear();//清空权限
-                    CleanMessageUtil.clearAllCache(WorkerApplication.get());
-//                    SharePreferenceUtil.get().clear();
-                    finishSelf();
-                    startActivity(new Intent(SettingActivity.this, SplashActivity.class));
-                    showToast("退出成功");
-                    BaseApplication.get().closeActivity(MainActivity.class);
-                }));
+                }
+
+                @Override
+                public void onFail(Object o, int i, String s) {
+
+                }
+            });
+            //退出融云
+            RongIM.getInstance().logout();
+            //清空权限
+            PermKit.permList.clear();
+            CleanMessageUtil.clearAllCache(WorkerApplication.get());
+            CacheKit.get().remove(LoginBean.class.getName());
+            finish();
+            startActivity(new Intent(SettingActivity.this, SplashActivity.class));
+            BaseApplication.get().closeActivity(MainActivity.class);
+        });
     }
 
 }

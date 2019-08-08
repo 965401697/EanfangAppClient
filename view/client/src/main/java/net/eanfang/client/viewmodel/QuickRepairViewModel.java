@@ -6,6 +6,7 @@ import android.widget.EditText;
 import androidx.lifecycle.MutableLiveData;
 
 import com.eanfang.base.BaseApplication;
+import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.biz.model.bean.DesignOrderInfoBean;
 import com.eanfang.biz.model.bean.InstallOrderConfirmBean;
@@ -76,7 +77,15 @@ public class QuickRepairViewModel extends BaseViewModel {
      * 获取报修人数
      */
     public void getRepairCount() {
-        mQuickRepairRepo.getRepairCount().observe(lifecycleOwner, mOrderNum::setValue);
+        OrderCountBean orderCount = CacheKit.get().get(OrderCountBean.class.getName(), OrderCountBean.class);
+        if (orderCount == null) {
+            mQuickRepairRepo.getRepairCount().observe(lifecycleOwner, (bean) -> {
+                CacheKit.get().put(OrderCountBean.class.getName(), bean, 1000 * 60 * 60);
+                mOrderNum.setValue(bean);
+            });
+        } else {
+            mOrderNum.setValue(orderCount);
+        }
     }
 
     /**

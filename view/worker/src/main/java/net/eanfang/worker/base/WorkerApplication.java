@@ -1,5 +1,6 @@
 package net.eanfang.worker.base;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.eanfang.base.BaseApplication;
@@ -18,6 +19,7 @@ import net.eanfang.worker.ui.activity.im.CustomizeVideoMessageItemProvider;
 import net.eanfang.worker.ui.activity.im.MyConversationClickListener;
 import net.eanfang.worker.ui.activity.im.SampleExtensionModule;
 
+import cn.hutool.core.thread.ThreadUtil;
 import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
@@ -27,12 +29,65 @@ import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
 
 public class WorkerApplication extends BaseApplication {
 
+    /**
+     * 获取融云token
+     *
+     * @param token
+     */
+    public static void connect(String token) {
+        ThreadUtil.execAsync(() -> {
+            RongIM.connect(token, !BuildConfig.DEBUG_MOD ? null : new RongIMClient.ConnectCallback() {
+
+                /**
+                 * Token 错误。可以从下面两点检查 1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token
+                 * 2.  token 对应的 appKey 和工程里设置的 appKey 是否一致
+                 */
+                @Override
+                public void onTokenIncorrect() {
+                    Log.d("zzw", "融云登录onTokenIncorrect");
+                }
+
+                /**
+                 * 连接融云成功
+                 *
+                 * @param userid 当前 token 对应的用户 id
+                 */
+                @Override
+                public void onSuccess(String userid) {
+
+                    Log.d("zzw", "融云登录onSuccess" + userid);
+                }
+
+                /**
+                 * 连接融云失败
+                 *
+                 * @param errorCode 错误码，可到官网 查看错误码对应的注释
+                 */
+                @Override
+                public void onError(RongIMClient.ErrorCode errorCode) {
+                    Log.d("zzw", "--融云登录onError" + errorCode);
+                }
+            });
+        });
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
-        initRongIM();
-        initHttp();
-        initBugly();
+
+        ThreadUtil.execAsync(() -> {
+            initRongIM();
+            initHttp();
+            initBugly();
+        });
+
+        CacheKit.init(this).put("APP_TYPE", BuildConfig.APP_TYPE);
+    }
+
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
     }
 
     private void initBugly() {
@@ -43,7 +98,7 @@ public class WorkerApplication extends BaseApplication {
     protected void initConfig() {
         super.initConfig();
         LoadKit.initLoadSir();
-        CacheKit.init(this).put("APP_TYPE", BuildConfig.APP_TYPE);
+
         MobSDK.init(this, BuildConfig.MOB_WORKER_APPID, BuildConfig.MOB_WORKER_APPKEY);
     }
 
@@ -59,12 +114,10 @@ public class WorkerApplication extends BaseApplication {
                 BuildConfig.DEBUG_MOD,
                 BuildConfig.VERSION_CODE
         );
-
         EanfangHttp.setWorker();
-        if (BaseApplication.get().getUser() != null) {
-            EanfangHttp.setToken(BaseApplication.get().getLoginBean().getToken());
-            HttpConfig.get().setToken(BaseApplication.get().getLoginBean().getToken());
-        }
+        EanfangHttp.setToken(BaseApplication.get().getLoginBean().getToken());
+        HttpConfig.get().setToken(BaseApplication.get().getLoginBean().getToken());
+
     }
 
     /**
@@ -94,45 +147,6 @@ public class WorkerApplication extends BaseApplication {
             };
             RongIM.getInstance().setReadReceiptConversationTypeList(types);
 
-        }
-    }
-
-    /**
-     * 获取融云token
-     *
-     * @param token
-     */
-    public static void connect(String token) {
-
-        RongIM.connect(token, !BuildConfig.DEBUG_MOD ? null : new RongIMClient.ConnectCallback() {
-
-            /**
-             * Token 错误。可以从下面两点检查 1.  Token 是否过期，如果过期您需要向 App Server 重新请求一个新的 Token
-             *                  2.  token 对应的 appKey 和工程里设置的 appKey 是否一致
-             */
-            @Override
-            public void onTokenIncorrect() {
-                Log.d("zzw", "融云登录onTokenIncorrect");
             }
-
-            /**
-             * 连接融云成功
-             * @param userid 当前 token 对应的用户 id
-             */
-            @Override
-            public void onSuccess(String userid) {
-
-                Log.d("zzw", "融云登录onSuccess" + userid);
-            }
-
-            /**
-             * 连接融云失败
-             * @param errorCode 错误码，可到官网 查看错误码对应的注释
-             */
-            @Override
-            public void onError(RongIMClient.ErrorCode errorCode) {
-                Log.d("zzw", "--融云登录onError" + errorCode);
-            }
-        });
     }
 }

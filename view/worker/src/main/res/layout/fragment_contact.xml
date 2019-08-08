@@ -312,6 +312,15 @@
 
                     </RelativeLayout>
 
+                    <ImageView
+                        android:id="@+id/iv_join"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:background="#FDB789"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/worker_join_def_company"
+                        android:visibility="gone" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rev_list"
