@@ -91,7 +91,7 @@ public class SplashActivity extends BaseActivity implements GuideUtil.OnCallback
                     public void onNext(Long aLong) {
                         if (!isSkip) {
                             tv.setText(StrUtil.format("跳过({})", aLong));
-                            if (aLong == 3) {
+                            if (aLong == 3 && !isLogin) {
                                 loginByToken();
                             }
                         }
