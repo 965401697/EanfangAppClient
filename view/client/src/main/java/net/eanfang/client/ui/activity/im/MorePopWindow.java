@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.contacts.CreatTeamActivity;
+import net.eanfang.client.ui.widget.StartMessageView;
 
 
 /**
@@ -21,6 +22,7 @@ import net.eanfang.client.ui.activity.worksapce.contacts.CreatTeamActivity;
 
 public class MorePopWindow extends PopupWindow {
     private final int CREAT_TEAM_CODE = 49;
+
     @SuppressLint("InflateParams")
     public MorePopWindow(final Activity context, boolean isVisable) {
         LayoutInflater inflater = (LayoutInflater) context
@@ -80,8 +82,8 @@ public class MorePopWindow extends PopupWindow {
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(new Intent(context, MyFriendsListActivity.class));
-                context.startActivity(intent);
+                new StartMessageView(context, true).show();
+                MorePopWindow.this.dismiss();
                 MorePopWindow.this.dismiss();
             }
 

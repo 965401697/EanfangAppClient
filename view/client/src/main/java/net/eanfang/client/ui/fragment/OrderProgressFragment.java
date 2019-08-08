@@ -3,23 +3,23 @@ package net.eanfang.client.ui.fragment;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.biz.model.QueryEntry;
+import com.eanfang.biz.model.bean.OrderProgressBean;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.bean.OrderProgressBean;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.DateKit;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.biz.model.QueryEntry;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.adapter.OrderProgressAdapter;
 
 import java.util.List;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
@@ -78,7 +78,7 @@ public class OrderProgressFragment extends BaseFragment {
         if (!StrUtil.isEmpty(mOrderTime)) {
             mTvTime.setText(DateUtil.parse(mOrderTime).toTimeStr());
             mTvData.setText(DateUtil.parse(mOrderTime).toDateStr());
-            mTvWeek.setText(DateKit.get(mOrderTime).weekName());
+            mTvWeek.setText("(" + DateKit.get(mOrderTime).weekName() + ")");
         }
     }
 

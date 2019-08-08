@@ -5,11 +5,12 @@ import android.widget.EditText;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.eanfang.base.BaseApplication;
 import com.eanfang.base.kit.rx.RxPerm;
-import com.eanfang.biz.model.bean.InstallOrderConfirmBean;
-import com.eanfang.biz.model.bean.SelectAddressItem;
 import com.eanfang.biz.model.bean.DesignOrderInfoBean;
+import com.eanfang.biz.model.bean.InstallOrderConfirmBean;
 import com.eanfang.biz.model.bean.OrderCountBean;
+import com.eanfang.biz.model.bean.SelectAddressItem;
 import com.eanfang.biz.model.entity.RepairBugEntity;
 import com.eanfang.biz.model.entity.RepairOrderEntity;
 import com.eanfang.biz.rds.base.BaseViewModel;
@@ -18,7 +19,6 @@ import com.eanfang.biz.rds.sys.repo.QuickRepairRepo;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.ui.base.voice.RecognitionManager;
-
 
 import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.databinding.FragmentHomeRepairBinding;
@@ -114,7 +114,8 @@ public class QuickRepairViewModel extends BaseViewModel {
     public void toCommit(int status) {
         if (status == 0) {
             mRepairOrderEntity.setRepairWay(0);
-            mRepairOrderEntity.setOwnerCompanyId(0L);
+            mRepairOrderEntity.setOwnerCompanyId(BaseApplication.get().getCompanyId() != 0 ? BaseApplication.get().getCompanyId() : 0);
+            mRepairOrderEntity.setOwnerTopCompanyId(BaseApplication.get().getTopCompanyId() != 0 ? BaseApplication.get().getTopCompanyId() : 0);
             mRepairOrderEntity.setRepairContacts(ClientApplication.get().getAccount().getRealName());
             mRepairBugEntity.setBugDescription(mBinding.etHomeRepairDescribe.getText().toString());
             mRepairOrderEntity.setRepairContactPhone(ClientApplication.get().getAccount().getMobile());

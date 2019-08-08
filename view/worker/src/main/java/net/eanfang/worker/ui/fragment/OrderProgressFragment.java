@@ -1,20 +1,21 @@
 package net.eanfang.worker.ui.fragment;
 
 import android.os.Bundle;
+import android.widget.TextView;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.widget.TextView;
 
 import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.biz.model.QueryEntry;
+import com.eanfang.biz.model.bean.OrderProgressBean;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.bean.OrderProgressBean;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.DateKit;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.biz.model.QueryEntry;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.OrderProgressAdapter;
@@ -78,7 +79,7 @@ public class OrderProgressFragment extends BaseFragment {
         if (!StrUtil.isEmpty(mOrderTime)) {
             mTvTime.setText(DateUtil.parse(mOrderTime).toTimeStr());
             mTvData.setText(DateUtil.parse(mOrderTime).toDateStr());
-            mTvWeek.setText(DateKit.get(mOrderTime).weekName());
+            mTvWeek.setText("(" + DateKit.get(mOrderTime).weekName() + ")");
         }
     }
 

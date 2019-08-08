@@ -37,7 +37,7 @@ public class OrderProgressAdapter extends BaseQuickAdapter<OrderProgressBean, Ba
     protected void convert(BaseViewHolder helper, OrderProgressBean item) {
         helper.setText(R.id.tv_time, DateUtil.parse(item.getCreateTime()).toTimeStr())
                 .setText(R.id.tv_date, DateUtil.parse(item.getCreateTime()).toDateStr())
-                .setText(R.id.tv_weeks, DateKit.get(item.getCreateTime()).weekName());
+                .setText(R.id.tv_weeks, "(" + DateKit.get(item.getCreateTime()).weekName() + ")");
         timelineView = helper.getView(R.id.time_marker);
         mOrderFinish = helper.getView(R.id.ll_orderFinish);
         Drawable marker = mContext.getResources().getDrawable(R.drawable.ic_check_worker);

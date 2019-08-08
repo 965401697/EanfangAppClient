@@ -202,7 +202,6 @@ public class AddTroubleActivity extends BaseClienActivity {
      * 扫码查看设备 报修
      */
     private CustDeviceEntity mDeviceBean;
-    private String isScan = "";
 
     /**
      * 视频上传key

@@ -27,6 +27,7 @@ import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.base.widget.customview.CircleImageView;
+import com.eanfang.biz.model.QueryEntry;
 import com.eanfang.biz.model.entity.RepairOrderEntity;
 import com.eanfang.biz.model.entity.RepairPersonalInfoEntity;
 import com.eanfang.biz.model.entity.WorkerEntity;
@@ -36,13 +37,12 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.biz.model.QueryEntry;
 import com.eanfang.witget.ArcProgressView;
 import com.eanfang.witget.CustomRadioGroup;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
-import net.eanfang.client.ui.activity.worksapce.repair.RepairActivity;
+import net.eanfang.client.ui.activity.worksapce.repair.AddTroubleActivity;
 import net.eanfang.client.ui.adapter.WorkDetailHonorAdapter;
 import net.eanfang.client.ui.adapter.WorkDetailQualificationAdapter;
 import net.eanfang.client.ui.adapter.WorkerDetailAdapter;
@@ -313,9 +313,12 @@ public class WorkerDetailActivity extends BaseClientActivity {
             Intent intent;
             // 直接进入报修页面
             if (isComeIn) {
-                intent = new Intent(WorkerDetailActivity.this, RepairActivity.class);
+                intent = new Intent(WorkerDetailActivity.this, AddTroubleActivity.class);
                 intent.putExtra("qrcode", "scaning");
                 intent.putExtra("repairbean", mScanRepairBean);
+                intent.putExtra("headUrl", headUrl);
+                intent.putExtra("workName", workerName);
+                intent.putExtra("companyName", comapnyName);
             } else {
                 intent = new Intent(WorkerDetailActivity.this, OrderConfirmActivity.class);
                 intent.putExtra("topInfo", repairPersonalInfoEntity);
@@ -332,7 +335,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
         llArea.setOnClickListener((v) -> {
 
             if (mDataList1.isEmpty()) {
-                showToast("稍等一下，我还没准备好。");
+                showToast("暂无服务区域");
                 return;
             }
             if (rvList1.getVisibility() == View.VISIBLE) {

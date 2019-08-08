@@ -28,7 +28,8 @@ public class HomeAllBusinessTypeFragment extends BaseFragment {
             "电视监控", "防盗报警", "公共报警", "停车场", "门禁一卡通", "可视对讲", "EAS", "公共广播"
     };
     private int[] mImgRes = new int[]{
-            R.drawable.ic_business_type1, R.drawable.ic_business_type2, R.drawable.ic_business_type3, R.drawable.ic_business_type4, R.drawable.ic_business_type5, R.drawable.ic_business_type6, R.drawable.ic_business_type7, R.drawable.ic_business_type8
+            R.drawable.ic_business_type1, R.drawable.ic_business_type2, R.drawable.ic_business_type3, R.drawable.ic_business_type4,
+            R.drawable.ic_business_type5, R.drawable.ic_business_type6, R.drawable.ic_business_type7, R.drawable.ic_business_type8
     };
 
     @Override

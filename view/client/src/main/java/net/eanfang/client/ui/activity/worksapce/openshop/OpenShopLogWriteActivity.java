@@ -11,20 +11,23 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.loading.LoadKit;
 import com.eanfang.biz.model.bean.GroupDetailBean;
-import com.eanfang.http.EanfangCallback;
-import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.bean.TemplateBean;
-import com.eanfang.ui.activity.SelectOrganizationActivity;
-import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
-import com.eanfang.util.ToastUtil;
 import com.eanfang.biz.model.entity.OpenShopLogEntity;
 import com.eanfang.biz.model.entity.UserEntity;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
+import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
+import com.eanfang.ui.activity.SelectOrganizationActivity;
+import com.eanfang.util.ToastUtil;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
@@ -47,9 +50,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -385,10 +385,9 @@ public class OpenShopLogWriteActivity extends BaseClientActivity implements Sele
         EanfangHttp.post(NewApiService.OA_SUB_OPEN_SHOP)
                 .upJson(object)
                 .execute(new EanfangCallback<OpenShopLogEntity>(this, true, OpenShopLogEntity.class, (bean) -> {
-
+                    EventBus.getDefault().post("addOpenShopSuccess");
                     //分享
                     if (newPresonList.size() == 0 && newGroupList.size() == 0) {
-                        EventBus.getDefault().post("addOpenShopSuccess");
                         finishSelf();
                         return;
                     }
