@@ -21,6 +21,17 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.hutool.core.date.DateField;
+
+import net.eanfang.worker.R;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 
@@ -91,7 +102,7 @@ public class RepairAppointTimeActivity extends BaseActivity implements SelectTim
 //                .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<JSONObject>(RepairAppointTimeActivity.this, true, JSONObject.class, (bean) -> {
 
-                    Log.d("电话回访，电话预约上门时间a",RepairApi.POST_FLOW_SCREENING+"\n"+"orderId: "+orderId+"\n"+"solve: "+solve+"\n"+"bookTime: "+bookTime+"\n");
+                    Log.d("电话回访，电话预约上门时间a", RepairApi.POST_FLOW_SCREENING + "\n" + "orderId: " + orderId + "\n" + "solve: " + solve + "\n" + "bookTime: " + bookTime + "\n");
                     showToast("预约成功");
                     setResult(RESULT_OK);
                     finishSelf();
@@ -124,4 +135,5 @@ public class RepairAppointTimeActivity extends BaseActivity implements SelectTim
             tvDoorTime.setText(time);
         }
     }
+
 }

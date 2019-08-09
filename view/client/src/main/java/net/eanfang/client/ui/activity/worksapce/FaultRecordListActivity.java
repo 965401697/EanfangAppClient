@@ -223,6 +223,8 @@ public class FaultRecordListActivity extends BaseClientActivity implements Swipe
 
     private void searchData(String locationNum) {
         QueryEntry queryEntry = new QueryEntry();
+        queryEntry.setSize(10);
+        queryEntry.setPage(mPage);
         queryEntry.getLike().put("locationNumber", locationNum);
 
         EanfangHttp.post(NewApiService.FAULT_RECORD_LIST)

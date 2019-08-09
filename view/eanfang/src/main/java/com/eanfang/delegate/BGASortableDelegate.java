@@ -2,7 +2,6 @@ package com.eanfang.delegate;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Environment;
 import android.view.View;
 
 import com.eanfang.base.kit.rx.RxPerm;
@@ -50,7 +49,6 @@ public class BGASortableDelegate implements BGASortableNinePhotoLayout.Delegate 
                 Intent intent = builder.cameraFileDir(takePhotoDir)
                         .maxChooseCount(sortableNinePhotoLayout.getMaxItemCount() - sortableNinePhotoLayout.getItemCount())
                         .pauseOnScroll(false)
-                        .selectedPhotos(models)
                         .build();
                 activity.startActivityForResult(intent, codes.get(0));
             });

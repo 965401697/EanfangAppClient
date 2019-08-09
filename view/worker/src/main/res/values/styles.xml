@@ -147,8 +147,8 @@
 
     <style name="NoStatusStyle" parent="AppTheme">
         <item name="android:windowTranslucentStatus" tools:ignore="NewApi">true</item>    <!--状态栏为透明,如果设置为false，则没有黑色条盖住，见下图对比-->
-        <item name="android:windowTranslucentNavigation" tools:ignore="NewApi">true</item> <!--导航栏为透明-->
-        <item name="android:statusBarColor" tools:ignore="NewApi">@android:color/transparent</item>
+        <!--<item name="android:windowTranslucentNavigation" tools:ignore="NewApi">true</item> &lt;!&ndash;导航栏为透明&ndash;&gt;-->
+        <!--<item name="android:statusBarColor" tools:ignore="NewApi">@android:color/transparent</item>-->
     </style>
 </resources>
 

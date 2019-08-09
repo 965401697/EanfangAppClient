@@ -7,6 +7,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.alibaba.fastjson.JSONPObject;
@@ -58,6 +59,7 @@ public class TechnicianCertificationActivity extends BaseActivity {
         setContentView(R.layout.activity_technician_certification);
         ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         initView();
     }
 
@@ -102,13 +104,13 @@ public class TechnicianCertificationActivity extends BaseActivity {
         EanfangHttp.post(UserApi.POST_WORKER_AUTH_STATUS_B)
                 .params("accId", WorkerApplication.get().getAccId())
                 .execute(new EanfangCallback<AuthStatusBean>(this, true, AuthStatusBean.class, (bean) -> {
-            verify = bean.getVerify();
-            realVerify = bean.getRealVerify();
-            if (verify == STATE_SUCCESS) {
-                setRightTitle("重新认证");
-            }
-            mAuthStatusBean = bean;
-        }));
+                    verify = bean.getVerify();
+                    realVerify = bean.getRealVerify();
+                    if (verify == STATE_SUCCESS) {
+                        setRightTitle("重新认证");
+                    }
+                    mAuthStatusBean = bean;
+                }));
     }
 
 

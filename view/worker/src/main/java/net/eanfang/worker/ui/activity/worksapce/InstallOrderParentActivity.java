@@ -10,11 +10,13 @@ import android.widget.TextView;
 import com.eanfang.util.PermKit;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.worksapce.InstallOrderListActivity;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.eanfang.base.kit.V.v;
 
 public class InstallOrderParentActivity extends BaseWorkerActivity {
     @BindView(R.id.iv_left)
@@ -46,6 +48,12 @@ public class InstallOrderParentActivity extends BaseWorkerActivity {
         llMineAccept.setVisibility(View.VISIBLE);
         llMineAccept.setOnClickListener(v -> jump("我负责的", 0));
         llMineCompany.setOnClickListener(v -> jump("本公司的", 1));
+        String orgName = v(() -> (WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgName()));
+        if (("个人").equals(orgName)) {
+            llMineCompany.setVisibility(View.GONE);
+        } else {
+            llMineCompany.setVisibility(View.VISIBLE);
+        }
     }
 
     private void jump(String title, int type) {

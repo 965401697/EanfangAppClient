@@ -92,7 +92,7 @@ public class FillAppointmentInfoRebookView extends BaseActivity implements Radio
                 doHttp(null);
             }
         });
-        llDoorTime.setOnClickListener(v -> new SelectTimeDialogFragment().show(getSupportFragmentManager(), R.string.app_name + ""));
+        llDoorTime.setOnClickListener(v -> SelectTimeDialogFragment.getInstance().show(getSupportFragmentManager(), R.string.app_name + ""));
     }
 
     /**
