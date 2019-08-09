@@ -447,6 +447,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
             rlVideo.setVisibility(View.GONE);
         }
     }
+
     PictureRecycleView.ImageListener listener = list -> picList = list;
 
     @OnClick({R.id.ll_like, R.id.ll_comments, R.id.ll_share, R.id.tv_send, R.id.tv_isFocus, R.id.iv_seucrity_header, R.id.rl_video})
@@ -741,7 +742,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
 
     @Override
     public void onAtClik(Long mUserId) {
-        UserHomeActivity.startActivityForUid(this, mUserId);
+        UserHomeActivity.startActivityForAccId(this, String.valueOf(mUserId));
     }
 
     /**

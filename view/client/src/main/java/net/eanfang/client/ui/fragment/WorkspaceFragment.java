@@ -177,9 +177,9 @@ public class WorkspaceFragment extends BaseFragment {
                             tvCompanyName.setText(name);
                         }
                         if (url != null) {
-                            GlideUtil.intoImageView(getActivity(),Uri.parse(BuildConfig.OSS_SERVER + url),ivUserHeader);
+                            GlideUtil.intoImageView(getActivity(), Uri.parse(BuildConfig.OSS_SERVER + url), ivUserHeader);
                         } else {
-                            GlideUtil.intoImageView(getActivity(),"",ivUserHeader);
+                            GlideUtil.intoImageView(getActivity(), "", ivUserHeader);
                         }
                         selectCompanyPop.dismiss();
                         doHttpOrderNums();
@@ -196,7 +196,7 @@ public class WorkspaceFragment extends BaseFragment {
     }
 
     private void setLogpic() {
-        AccountEntity accountEntity=ClientApplication.get().getLoginBean().getAccount();
+        AccountEntity accountEntity = ClientApplication.get().getLoginBean().getAccount();
         List<OrgEntity> orgUnitEntityList = new ArrayList<>(accountEntity.getBelongCompanys());
         Long defaultOrgid = accountEntity.getDefaultUser().getCompanyEntity().getOrgId();
         List<String> defaultPic = Stream.of(orgUnitEntityList).filter(bean -> bean.getOrgUnitEntity() != null
@@ -204,7 +204,7 @@ public class WorkspaceFragment extends BaseFragment {
                 && bean.getOrgUnitEntity().getOrgId().equals(defaultOrgid)).map(be -> v(() -> be.getOrgUnitEntity().getLogoPic())).toList();
         String imgUrl = v(() -> defaultPic.get(0));
         if (!StrUtil.isEmpty(imgUrl)) {
-            GlideUtil.intoImageView(getActivity(),Uri.parse(BuildConfig.OSS_SERVER + imgUrl),ivUserHeader);
+            GlideUtil.intoImageView(getActivity(), Uri.parse(BuildConfig.OSS_SERVER + imgUrl), ivUserHeader);
         }
 
     }
@@ -341,6 +341,9 @@ public class WorkspaceFragment extends BaseFragment {
         //开店日志
         findViewById(R.id.tv_shop_log).setOnClickListener((v) -> {
 //            new OpenShopLogView(getActivity(), true).show();
+            if (!PermKit.get().getOpenShopListPrem()) {
+                return;
+            }
             Intent intent = new Intent(getActivity(), OpenShopLogParentActivity.class);
             startActivity(intent);
         });
@@ -348,6 +351,9 @@ public class WorkspaceFragment extends BaseFragment {
         //布防日志
         findViewById(R.id.tv_defend_log).setOnClickListener((v) -> {
 //            new DefendLogView(getActivity(), true).show();
+            if (!PermKit.get().getProtectionListPrem()) {
+                return;
+            }
             Intent intent = new Intent(getActivity(), DefendLogParentActivity.class);
             startActivity(intent);
         });
@@ -371,11 +377,17 @@ public class WorkspaceFragment extends BaseFragment {
         });
         //交接班
         findViewById(R.id.tv_work_transfer).setOnClickListener((v) -> {
+            if (!PermKit.get().getExchangeListPrem()) {
+                return;
+            }
             Intent intent = new Intent(getActivity(), WorkTransferControlActivity.class);
             startActivity(intent);
         });
         //面谈员工
         findViewById(R.id.tv_work_talk).setOnClickListener((v) -> {
+            if (!PermKit.get().getFaceToWorkerListPrem()) {
+                return;
+            }
             Intent intent = new Intent(getActivity(), WorkTalkControlActivity.class);
             startActivity(intent);
         });

@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.contacts.CreatTeamActivity;
+import net.eanfang.worker.ui.widget.StartMessageView;
 
 
 /**
@@ -80,8 +81,7 @@ public class MorePopWindow extends PopupWindow {
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(new Intent(context, MyFriendsListActivity.class));
-                context.startActivity(intent);
+                new StartMessageView(context,true).show();
                 MorePopWindow.this.dismiss();
             }
 

@@ -191,7 +191,7 @@ public class WorkspaceFragment extends BaseFragment {
                 && bean.getOrgUnitEntity().getOrgId().equals(defaultOrgid)).map(be -> v(() -> be.getOrgUnitEntity().getLogoPic())).toList();
         String imgUrl = v(() -> defaultPic.get(0));
         if (!StrUtil.isEmpty(imgUrl)) {
-            GlideUtil.intoImageView(getActivity(),Uri.parse(BuildConfig.OSS_SERVER + imgUrl),ivUserHeader);
+            GlideUtil.intoImageView(getActivity(), Uri.parse(BuildConfig.OSS_SERVER + imgUrl), ivUserHeader);
         }
     }
 
@@ -243,9 +243,9 @@ public class WorkspaceFragment extends BaseFragment {
                             tvCompanyName.setText(name);
                         }
                         if (url != null) {
-                            GlideUtil.intoImageView(getActivity(),Uri.parse(BuildConfig.OSS_SERVER + url),ivUserHeader);
+                            GlideUtil.intoImageView(getActivity(), Uri.parse(BuildConfig.OSS_SERVER + url), ivUserHeader);
                         } else {
-                            GlideUtil.intoImageView(getActivity(),"",ivUserHeader);
+                            GlideUtil.intoImageView(getActivity(), "", ivUserHeader);
                         }
                         selectCompanyPop.dismiss();
                         doHttpOrderNums();
@@ -366,7 +366,7 @@ public class WorkspaceFragment extends BaseFragment {
 
         //设备库
         findViewById(R.id.tv_work_library).setOnClickListener((v) -> {
-            if (!PermKit.get().getExchangeListPrem()) {
+            if (!PermKit.get().getDeviceArchiveListPerm()) {
                 return;
             }
             if (workerApprove()) {
@@ -376,7 +376,7 @@ public class WorkspaceFragment extends BaseFragment {
         });
         //面谈员工
         findViewById(R.id.tv_work_talk).setOnClickListener((v) -> {
-            if (!PermKit.get().getFaceToWorkerCreatePrem()) {
+            if (!PermKit.get().getFaceToWorkerListPrem()) {
                 return;
             }
             Intent intent = new Intent(getActivity(), WorkTalkControlActivity.class);
@@ -385,6 +385,9 @@ public class WorkspaceFragment extends BaseFragment {
 
         //交接班
         findViewById(R.id.tv_work_transfer).setOnClickListener((v) -> {
+            if (!PermKit.get().getExchangeListPrem()) {
+                return;
+            }
             Intent intent = new Intent(getActivity(), WorkTransferControlActivity.class);
             startActivity(intent);
         });

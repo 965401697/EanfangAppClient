@@ -5,6 +5,7 @@ import android.widget.EditText;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.eanfang.base.BaseApplication;
 import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.biz.model.bean.DesignOrderInfoBean;
@@ -122,7 +123,8 @@ public class QuickRepairViewModel extends BaseViewModel {
     public void toCommit(int status) {
         if (status == 0) {
             mRepairOrderEntity.setRepairWay(0);
-            mRepairOrderEntity.setOwnerCompanyId(0L);
+            mRepairOrderEntity.setOwnerCompanyId(BaseApplication.get().getCompanyId() != 0 ? BaseApplication.get().getCompanyId() : 0);
+            mRepairOrderEntity.setOwnerTopCompanyId(BaseApplication.get().getTopCompanyId() != 0 ? BaseApplication.get().getTopCompanyId() : 0);
             mRepairOrderEntity.setRepairContacts(ClientApplication.get().getAccount().getRealName());
             mRepairBugEntity.setBugDescription(mBinding.etHomeRepairDescribe.getText().toString());
             mRepairOrderEntity.setRepairContactPhone(ClientApplication.get().getAccount().getMobile());

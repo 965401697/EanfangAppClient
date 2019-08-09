@@ -9,6 +9,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -17,11 +22,11 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.loading.LoadKit;
 import com.eanfang.biz.model.bean.GroupDetailBean;
+import com.eanfang.biz.model.bean.TemplateBean;
+import com.eanfang.biz.model.bean.WorkTransferDetailBean;
 import com.eanfang.biz.model.entity.UserEntity;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.bean.TemplateBean;
-import com.eanfang.biz.model.bean.WorkTransferDetailBean;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GetConstDataUtils;
@@ -50,10 +55,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -211,11 +212,11 @@ public class WorkTransferCreateActivity extends BaseActivity {
     private void initView() {
         setLeftBack();
         setTitle("交接班");
-        UserEntity userEntity=ClientApplication.get().getLoginBean().getAccount().getDefaultUser();
-        mUserId =userEntity .getUserId();
+        UserEntity userEntity = ClientApplication.get().getLoginBean().getAccount().getDefaultUser();
+        mUserId = userEntity.getUserId();
         mCompanyId = userEntity.getCompanyEntity().getOrgId();
         mTopCompanyId = userEntity.getCompanyEntity().getTopCompanyId();
-        mDepartmentId =userEntity.getCompanyEntity().getOrgCode();
+        mDepartmentId = userEntity.getCompanyEntity().getOrgCode();
         tvCompanyName.setText(userEntity.getCompanyEntity().getOrgName());
         if (userEntity.getDepartmentEntity() != null) {
             tvDepartmentName.setText(userEntity.getDepartmentEntity().getOrgName());
@@ -550,11 +551,10 @@ public class WorkTransferCreateActivity extends BaseActivity {
         EanfangHttp.post(NewApiService.WORK_TRANSFER_ADD)
                 .upJson(JSONObject.toJSONString(workTransferDetailBean))
                 .execute(new EanfangCallback<WorkTransferDetailBean>(WorkTransferCreateActivity.this, true, WorkTransferDetailBean.class, (bean) -> {
-
+                    EventBus.getDefault().post("addTransferSuccess");
                     //分享
                     if (newPresonList.size() == 0 && newGroupList.size() == 0) {
                         showToast("添加完毕");
-                        EventBus.getDefault().post("addTransferSuccess");
                         finishSelf();
                         return;
                     }

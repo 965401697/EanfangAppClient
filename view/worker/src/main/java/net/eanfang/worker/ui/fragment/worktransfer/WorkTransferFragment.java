@@ -217,7 +217,7 @@ public class WorkTransferFragment extends TemplateItemListFragment {
 
     @Subscribe
     public void onEvent(String createSuccess) {
-        if (createSuccess.equals("addTransferSuccess")) {
+        if (createSuccess.equals("addWorkTransferSuccess")) {
             mQueryEntry = null;
             mPage = 1;
             getData();

@@ -246,7 +246,7 @@ public class WorkDetailActivity extends BaseActivity {
         llArea.setOnClickListener((v) -> {
 
             if (mDataList1.isEmpty()) {
-                showToast("稍等一下，我还没准备好。");
+                showToast("暂无服务区域");
                 return;
             }
             if (rvList1.getVisibility() == View.VISIBLE) {

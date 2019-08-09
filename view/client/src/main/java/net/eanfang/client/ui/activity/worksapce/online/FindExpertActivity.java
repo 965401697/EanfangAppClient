@@ -7,16 +7,19 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.biz.model.bean.ExpertVerifySkillBean;
+import com.eanfang.biz.model.bean.GrantChange;
+import com.eanfang.biz.model.entity.BaseDataEntity;
+import com.eanfang.biz.model.entity.ExpertsCertificationEntity;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.bean.ExpertVerifySkillBean;
-import com.eanfang.biz.model.bean.GrantChange;
-import com.eanfang.biz.model.entity.ExpertsCertificationEntity;
-import com.eanfang.biz.model.entity.BaseDataEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
@@ -31,8 +34,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -158,7 +159,7 @@ public class FindExpertActivity extends BaseClientActivity implements View.OnCli
 
         EanfangHttp.post(UserApi.EXPERT_DETAIL_VERIFY)
                 .params("accId", String.valueOf(ClientApplication.get().getAccId()))
-                .execute(new EanfangCallback<ExpertVerifySkillBean>(this, true, ExpertVerifySkillBean.class, (ExpertVerifySkillBean bean) -> {
+                .execute(new EanfangCallback<ExpertVerifySkillBean>(this, true, ExpertVerifySkillBean.class, bean -> {
                     if (bean != null) {
                         List<BaseDataEntity> SystemBusinessList = bean.getBaseData2userList();
                         // 系统类别

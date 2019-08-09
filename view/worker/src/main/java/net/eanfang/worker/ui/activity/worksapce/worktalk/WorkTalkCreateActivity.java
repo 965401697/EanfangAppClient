@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -14,6 +12,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -21,11 +22,11 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.loading.LoadKit;
 import com.eanfang.biz.model.bean.GroupDetailBean;
-import com.eanfang.http.EanfangCallback;
-import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.bean.TemplateBean;
 import com.eanfang.biz.model.bean.WorkTalkDetailBean;
 import com.eanfang.biz.model.bean.WorkTransferDetailBean;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.activity.SelectOAPresonActivity;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.ui.base.BaseActivity;
@@ -302,9 +303,9 @@ public class WorkTalkCreateActivity extends BaseActivity {
                 .upJson(JSONObject.toJSONString(workTalkDetailBean))
                 .execute(new EanfangCallback<WorkTalkDetailBean>(WorkTalkCreateActivity.this, true, WorkTalkDetailBean.class, (bean) -> {
                     //分享
+                    EventBus.getDefault().post("addTalkSuccess");
                     if (newPresonList.size() == 0 && newGroupList.size() == 0) {
                         showToast("添加完毕");
-                        EventBus.getDefault().post("addTalkSuccess");
                         finishSelf();
                         return;
                     }

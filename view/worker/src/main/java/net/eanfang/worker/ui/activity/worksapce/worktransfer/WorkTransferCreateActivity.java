@@ -3,15 +3,16 @@ package net.eanfang.worker.ui.activity.worksapce.worktransfer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
@@ -21,11 +22,11 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.loading.LoadKit;
 import com.eanfang.biz.model.bean.GroupDetailBean;
+import com.eanfang.biz.model.bean.TemplateBean;
+import com.eanfang.biz.model.bean.WorkTransferDetailBean;
 import com.eanfang.biz.model.entity.UserEntity;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.bean.TemplateBean;
-import com.eanfang.biz.model.bean.WorkTransferDetailBean;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GetConstDataUtils;
@@ -211,7 +212,7 @@ public class WorkTransferCreateActivity extends BaseActivity {
     private void initView() {
         setLeftBack();
         setTitle("交接班");
-        UserEntity userEntity= WorkerApplication.get().getLoginBean().getAccount().getDefaultUser();
+        UserEntity userEntity = WorkerApplication.get().getLoginBean().getAccount().getDefaultUser();
         mUserId = userEntity.getUserId();
         mCompanyId = userEntity.getCompanyEntity().getOrgId();
         mTopCompanyId = userEntity.getCompanyEntity().getTopCompanyId();
@@ -555,9 +556,9 @@ public class WorkTransferCreateActivity extends BaseActivity {
                 .execute(new EanfangCallback<WorkTransferDetailBean>(WorkTransferCreateActivity.this, true, WorkTransferDetailBean.class, (bean) -> {
 
                     //分享
+                    EventBus.getDefault().post("addWorkTransferSuccess");
                     if (newPresonList.size() == 0 && newGroupList.size() == 0) {
                         showToast("添加完毕");
-                        EventBus.getDefault().post("addTransferSuccess");
                         finishSelf();
                         return;
                     }

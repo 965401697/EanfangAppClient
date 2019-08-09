@@ -10,6 +10,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
@@ -19,15 +23,15 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.loading.LoadKit;
 import com.eanfang.biz.model.bean.GroupDetailBean;
-import com.eanfang.http.EanfangCallback;
-import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.bean.TemplateBean;
-import com.eanfang.ui.activity.SelectOrganizationActivity;
-import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
-import com.eanfang.util.ToastUtil;
 import com.eanfang.biz.model.entity.LogDetailsEntity;
 import com.eanfang.biz.model.entity.ProtectionLogEntity;
 import com.eanfang.biz.model.entity.UserEntity;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
+import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
+import com.eanfang.ui.activity.SelectOrganizationActivity;
+import com.eanfang.util.ToastUtil;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
@@ -48,10 +52,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -413,10 +413,9 @@ public class DefendLogWriteActivity extends BaseClientActivity implements View.O
         EanfangHttp.post(NewApiService.OA_SUB_DEFEND_LOG)
                 .upJson(object.toJSONString())
                 .execute(new EanfangCallback<ProtectionLogEntity>(DefendLogWriteActivity.this, true, ProtectionLogEntity.class, bean -> {
-
+                    EventBus.getDefault().post("addDefendLogSuccess");
                     //分享
                     if (newPresonList.size() == 0 && newGroupList.size() == 0) {
-                        EventBus.getDefault().post("addDefendLogSuccess");
                         finishSelf();
                         return;
                     }
