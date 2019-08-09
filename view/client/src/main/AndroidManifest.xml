@@ -210,11 +210,9 @@
         <activity
             android:name=".ui.activity.worksapce.repair.RepairCtrlActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.activity.pay.PayActivity" />
         <activity
             android:name=".ui.activity.worksapce.StateChangeActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.activity.worksapce.FaPiaoActivity" />
         <activity
             android:name=".ui.activity.worksapce.WorkReportListActivity"
             android:screenOrientation="portrait" />

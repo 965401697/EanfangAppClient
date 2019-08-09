@@ -14,18 +14,18 @@ import androidx.lifecycle.ViewModel;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.BaseActivity;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.V;
 import com.eanfang.base.kit.picture.picture.PictureRecycleView;
+import com.eanfang.biz.model.entity.AptitudeCertificateEntity;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
 import com.eanfang.util.PhotoUtils;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.eanfang.biz.model.entity.AptitudeCertificateEntity;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -47,7 +47,7 @@ import cn.qqtheme.framework.util.DateUtils;
  * @description 添加资质证书
  */
 
-public class AddAuthQualifyActivity extends BaseWorkeActivity implements SelectTimeDialogFragment.SelectTimeListener {
+public class AddAuthQualifyActivity extends BaseActivity implements SelectTimeDialogFragment.SelectTimeListener {
 
     // 证书名称
 
@@ -106,7 +106,9 @@ public class AddAuthQualifyActivity extends BaseWorkeActivity implements SelectT
 
     @Override
     public void initView() {
+        super.initView();
         setLeftBack(true);
+        setRightClick(true);
         isAuth = getIntent().getStringExtra("isAuth");
         mOrgId = getIntent().getLongExtra("orgid", 0);
         aptitudeCertificateEntity = (AptitudeCertificateEntity) getIntent().getSerializableExtra("bean");

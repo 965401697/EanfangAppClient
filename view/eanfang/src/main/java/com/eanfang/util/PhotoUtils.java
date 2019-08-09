@@ -4,9 +4,15 @@ import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
 
 import com.eanfang.BuildConfig;
-import com.eanfang.base.kit.rx.RxPerm;
-import com.eanfang.base.network.holder.ContextHolder;
 import com.eanfang.config.Config;
+import com.google.zxing.BinaryBitmap;
+import com.google.zxing.ChecksumException;
+import com.google.zxing.FormatException;
+import com.google.zxing.NotFoundException;
+import com.google.zxing.RGBLuminanceSource;
+import com.google.zxing.Result;
+import com.google.zxing.common.GlobalHistogramBinarizer;
+import com.google.zxing.qrcode.QRCodeReader;
 import com.luck.picture.lib.entity.LocalMedia;
 
 import java.io.File;
@@ -170,12 +176,41 @@ public class PhotoUtils {
      * 从oss服务器上下载图片到本地
      *
      * @param ossKey ossKey
-     * @return File
+     * @return getPath
      */
-    public static File downloadImg(String ossKey) {
+    public static String downloadImg(String ossKey) {
+        if (StrUtil.isEmpty(ossKey)) {
+            return null;
+        }
         String url = BuildConfig.OSS_SERVER + ossKey;
         File file = new File(Config.Cache.IMG_STORAGE_DIR + StrUtil.uuid() + ".jpg");
         HttpUtil.downloadFile(url, file);
-        return file;
+        return file.getPath();
+    }
+
+    /**
+     * 二维码识别解析结果
+     *
+     * @param bitmap
+     * @return
+     */
+    public static Result parseInfoFromBitmap(Bitmap bitmap) {
+        int[] pixels = new int[bitmap.getWidth() * bitmap.getHeight()];
+        bitmap.getPixels(pixels, 0, bitmap.getWidth(), 0, 0, bitmap.getWidth(), bitmap.getHeight());
+        RGBLuminanceSource source = new RGBLuminanceSource(bitmap.getWidth(), bitmap.getHeight(), pixels);
+        GlobalHistogramBinarizer binarizer = new GlobalHistogramBinarizer(source);
+        BinaryBitmap image = new BinaryBitmap(binarizer);
+        Result result;
+        try {
+            result = new QRCodeReader().decode(image);
+            return result;
+        } catch (NotFoundException e) {
+            e.printStackTrace();
+        } catch (ChecksumException e) {
+            e.printStackTrace();
+        } catch (FormatException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

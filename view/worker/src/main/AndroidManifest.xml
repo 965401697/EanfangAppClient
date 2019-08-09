@@ -1008,7 +1008,6 @@
             <!-- <data android:scheme="wx5e7969853addd542" /> -->
             <!-- </intent-filter> -->
         </activity>
-        <activity android:name=".ui.activity.my.specialist.SpecialistAuthListActivity" />
         <activity android:name=".ui.activity.my.specialist.SpecialistCertificationActivity" />
         <activity android:name=".ui.activity.my.specialist.SpecialistIdentityCardCertification" />
         <activity android:name=".ui.activity.my.specialist.SpecialistCertificateListActivity" />

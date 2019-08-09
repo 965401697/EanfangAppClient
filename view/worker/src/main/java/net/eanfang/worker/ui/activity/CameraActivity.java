@@ -29,6 +29,7 @@ import com.amap.api.services.weather.LocalWeatherLive;
 import com.amap.api.services.weather.LocalWeatherLiveResult;
 import com.amap.api.services.weather.WeatherSearch;
 import com.amap.api.services.weather.WeatherSearchQuery;
+import com.eanfang.base.BaseActivity;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.V;
 import com.eanfang.base.kit.cache.CacheKit;
@@ -46,7 +47,6 @@ import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
-import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import java.util.List;
 
@@ -68,7 +68,7 @@ import io.reactivex.schedulers.Schedulers;
  * @desc 相机助手
  */
 
-public class CameraActivity extends BaseWorkeActivity implements AMapLocationListener, RadioGroup.OnCheckedChangeListener {
+public class CameraActivity extends BaseActivity implements AMapLocationListener, RadioGroup.OnCheckedChangeListener {
     //选择其他地址回调 code
     private final int REPAIR_ADDRESS_CALLBACK_CODE = 1;
     @BindView(R.id.et_project_name)

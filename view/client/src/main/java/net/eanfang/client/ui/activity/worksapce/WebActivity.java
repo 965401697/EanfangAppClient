@@ -1,17 +1,14 @@
 package net.eanfang.client.ui.activity.worksapce;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.DownloadListener;
 import android.webkit.JsPromptResult;
 import android.webkit.JsResult;
 import android.webkit.SslErrorHandler;
@@ -26,10 +23,12 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.lifecycle.ViewModel;
+
+import com.eanfang.base.BaseActivity;
 import com.eanfang.util.ConnectivityChangeUtil;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.base.BaseClientActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -44,20 +43,17 @@ import static android.view.KeyEvent.KEYCODE_BACK;
  * @desc 加载webview使用
  */
 
-public class WebActivity extends BaseClientActivity {
-    private static final String APP_CACAHE_DIRNAME = "webview.db";
+public class WebActivity extends BaseActivity {
+
     @BindView(R.id.web_content)
     FrameLayout mRootLayout;
     WebView mWebView;
-    @BindView(R.id.ll_loading)
-    LinearLayout llLoading;
     @BindView(R.id.ll_check_net)
     LinearLayout llCheckNet;
     @BindView(R.id.ll_refresh)
     LinearLayout llRefresh;
     @BindView(R.id.ll_error_view)
     LinearLayout llErrorView;
-//    Map extraHeaders = new HashMap();
     private boolean mLastLoadFailed = false;
     private String urls, title;
 
@@ -68,26 +64,18 @@ public class WebActivity extends BaseClientActivity {
         super.onCreate(savedInstanceState);
         urls = getIntent().getStringExtra("url");
         title = getIntent().getStringExtra("title");
-//        extraHeaders.put("YAF-Token", ClientApplication.get().getLoginBean().getToken());
         //添加webView到布局中
         addWebViewToLayout();
-
-        //set webView Setting
         setWebView();
-
-        //set webView Client
         setWebClient();
-
-        //set webView chrome
         setWebViewChromeClient();
-        //load web
         loadUrl(urls);
         initCheck();
 
     }
 
     private void initCheck() {
-        setLeftBack();
+        setLeftBack(true);
         setTitle(title);
         if (ConnectivityChangeUtil.isNetConnected(WebActivity.this) == false) {
             llErrorView.setVisibility(View.VISIBLE);
@@ -165,11 +153,8 @@ public class WebActivity extends BaseClientActivity {
         webSettings.setLoadsImagesAutomatically(true); //支持自动加载图片
         webSettings.setDefaultTextEncodingName("utf-8");//设置编码格式q
 
-        mWebView.setDownloadListener(new DownloadListener() {
-            @Override
-            public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
-                //网页中触发下载动作
-            }
+        mWebView.setDownloadListener((url, userAgent, contentDisposition, mimetype, contentLength) -> {
+            //网页中触发下载动作
         });
 
     }
@@ -180,22 +165,13 @@ public class WebActivity extends BaseClientActivity {
     void setWebClient() {
         mWebView.setWebViewClient(new WebViewClient() {
 
-            //拦截页面中的url加载,21以下的
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                if (resolveShouldLoadLogic(url)) {
-                    return true;
-                }
                 return super.shouldOverrideUrlLoading(view, url);
             }
 
-            //拦截页面中的url加载,21以上的
-            @TargetApi(21)
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-                if (resolveShouldLoadLogic(request.getUrl().toString())) {
-                    return true;
-                }
                 return super.shouldOverrideUrlLoading(view, request);
             }
 
@@ -203,18 +179,14 @@ public class WebActivity extends BaseClientActivity {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
-                if (!mLastLoadFailed) {
-                    llLoading.setVisibility(View.VISIBLE);
-                }
+                startLoading();
             }
 
             //页面加载完成
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                if (!mLastLoadFailed) {
-                    llLoading.setVisibility(View.GONE);
-                }
+                dismissLoading();
 
             }
 
@@ -241,22 +213,19 @@ public class WebActivity extends BaseClientActivity {
                 return super.shouldInterceptRequest(view, request);
             }
 
-            //页面加载出现错误,23以下的
             @Override
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
                 super.onReceivedError(view, errorCode, description, failingUrl);
                 mLastLoadFailed = true;
-                llLoading.setVisibility(View.GONE);
+                dismissLoading();
 
             }
 
-            //页面加载出现错误,23以上的
-            @TargetApi(23)
             @Override
             public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
                 super.onReceivedError(view, request, error);
                 mLastLoadFailed = true;
-                llLoading.setVisibility(View.GONE);
+                dismissLoading();
             }
 
             //https错误
@@ -264,28 +233,9 @@ public class WebActivity extends BaseClientActivity {
             public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
                 super.onReceivedSslError(view, handler, error);
                 mLastLoadFailed = true;
-                llLoading.setVisibility(View.GONE);
+                dismissLoading();
             }
         });
-    }
-
-    /**
-     * js与web交互2
-     * 通过 shouldOverrideUrlLoading 与 js交互
-     */
-    private boolean resolveShouldLoadLogic(String url) {
-        Uri uri = Uri.parse(url);
-        //解析协议
-        if (uri.getScheme().equals("js")) {
-            if (uri.getAuthority().equals("Authority")) {
-                //你还可以继续接续参数
-                //Set<String> collection = uri.getQueryParameterNames();
-                Toast.makeText(WebActivity.this, "JS 2方法回调到web了", Toast.LENGTH_SHORT).show();
-
-            }
-            return true;
-        }
-        return false;
     }
 
     /**
@@ -330,36 +280,12 @@ public class WebActivity extends BaseClientActivity {
             //是否支持页面中的js输入弹出框
             @Override
             public boolean onJsPrompt(WebView view, String url, String message, String defaultValue, JsPromptResult result) {
-                /**
-                 * 有时候，为了安全考虑，js的参数回调，会通过这类地方回调回来，然后不弹出框。
-                 */
-                if (resolveJSPrompt(message)) {
-                    return true;
-                }
-                return super.onJsPrompt(view, url, message, defaultValue, result);
 
+                return super.onJsPrompt(view, url, message, defaultValue, result);
             }
         });
     }
 
-    /**
-     * js与web交互3
-     * 通过 onJsPrompt 与 js交互
-     */
-    private boolean resolveJSPrompt(String message) {
-        Uri uri = Uri.parse(message);
-        if (uri.getScheme().equals("js")) {
-            if (uri.getAuthority().equals("Authority")) {
-
-                //Set<String> collection = uri.getQueryParameterNames();
-                //参数result:代表消息框的返回值(输入值)
-                //result.confirm("JS 3方法回调到web");
-                Toast.makeText(WebActivity.this, "JS 3方法回调到web了", Toast.LENGTH_SHORT).show();
-            }
-            return true;
-        }
-        return false;
-    }
 
     /**
      * 加载url
@@ -396,6 +322,11 @@ public class WebActivity extends BaseClientActivity {
     public void onDestroy() {
         mWebView.destroy();
         super.onDestroy();
+    }
+
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
     }
 
 }

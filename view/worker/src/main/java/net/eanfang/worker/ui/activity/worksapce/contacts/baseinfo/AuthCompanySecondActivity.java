@@ -15,6 +15,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.BaseActivity;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.config.Config;
@@ -36,7 +37,6 @@ import com.luck.picture.lib.entity.LocalMedia;
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.StateChangeActivity;
-import net.eanfang.worker.ui.base.BaseWorkeActivity;
 import net.eanfang.worker.ui.fragment.ContactsFragment;
 
 import java.util.List;
@@ -50,7 +50,7 @@ import cn.hutool.core.util.StrUtil;
  * @data 2018/10/17
  * @description 公司认证 基本资料 第二步
  */
-public class AuthCompanySecondActivity extends BaseWorkeActivity {
+public class AuthCompanySecondActivity extends BaseActivity {
 
     /**
      * 公司LOGO take photo 回调 code

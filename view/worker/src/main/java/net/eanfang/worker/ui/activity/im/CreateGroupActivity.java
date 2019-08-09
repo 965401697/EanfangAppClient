@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.BaseActivity;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.loading.LoadKit;
 import com.eanfang.base.kit.picture.IPictureCallBack;
@@ -36,7 +37,6 @@ import com.luck.picture.lib.entity.LocalMedia;
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.oa.workreport.OAPersonAdaptet;
-import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -52,7 +52,7 @@ import cn.hutool.core.util.StrUtil;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Group;
 
-public class CreateGroupActivity extends BaseWorkeActivity {
+public class CreateGroupActivity extends BaseActivity {
 
     private final int HEAD_PHOTO = 100;
     @BindView(R.id.iv_group_pic)

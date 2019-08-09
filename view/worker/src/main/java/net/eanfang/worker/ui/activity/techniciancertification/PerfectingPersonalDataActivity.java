@@ -18,6 +18,7 @@ import androidx.lifecycle.ViewModel;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.BaseActivity;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.base.kit.cache.CacheMod;
@@ -37,7 +38,6 @@ import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
-import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import java.util.Date;
 import java.util.List;
@@ -59,7 +59,7 @@ import cn.hutool.core.util.StrUtil;
  * @date 2019年7月18日
  */
 @Deprecated
-public class PerfectingPersonalDataActivity extends BaseWorkeActivity {
+public class PerfectingPersonalDataActivity extends BaseActivity {
     @BindView(R.id.nc_et)
     EditText ncEt;
     @BindView(R.id.dq_dz_tv)

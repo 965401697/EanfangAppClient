@@ -187,14 +187,14 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
                 .setBadgePadding(3, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(15, 0, true)
-                .setBadgeTextSize(11, true);
+                .setBadgeTextSize(10, true);
 
         qBadgeViewAbout.bindTarget(findViewById(R.id.tv_aboutme))
                 .setBadgeBackgroundColor(0xFFFF0000)
                 .setBadgePadding(3, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(15, 0, true)
-                .setBadgeTextSize(11, true);
+                .setBadgeTextSize(10, true);
 
         setLeftBack((v) -> {
             Bundle bundle = new Bundle();

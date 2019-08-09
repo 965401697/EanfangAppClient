@@ -12,21 +12,21 @@ import androidx.lifecycle.ViewModel;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.BaseActivity;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.picture.PictureRecycleView;
+import com.eanfang.biz.model.entity.EducationExperienceEntity;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.util.DoubleDatePickerDialog;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.PickerSelectUtil;
 import com.eanfang.util.ToastUtil;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.eanfang.util.DoubleDatePickerDialog;
-import com.eanfang.biz.model.entity.EducationExperienceEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
-import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -43,7 +43,7 @@ import cn.qqtheme.framework.util.DateUtils;
 /**
  * 教育经历
  */
-public class AddEducationHistoryActivity extends BaseWorkeActivity {
+public class AddEducationHistoryActivity extends BaseActivity {
 
     @BindView(R.id.et_school_name)
     EditText etSchoolName;
@@ -80,10 +80,18 @@ public class AddEducationHistoryActivity extends BaseWorkeActivity {
         setContentView(R.layout.activity_education_history);
         ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
+    }
+
+    PictureRecycleView.ImageListener listener = list -> selectList = list;
+
+    @Override
+    protected void initView() {
+        super.initView();
         setTitle("添加教育培训");
         setLeftBack(true);
-        bean = (EducationExperienceEntity) getIntent().getSerializableExtra("bean");
+        setRightClick(true);
         setRightTitleOnClickListener(view -> setData());
+        bean = (EducationExperienceEntity) getIntent().getSerializableExtra("bean");
         if (bean != null) {
             setTitle("教育培训");
             setRightTitle("编辑");
@@ -97,7 +105,6 @@ public class AddEducationHistoryActivity extends BaseWorkeActivity {
                         recycleview.isShow(true, selectList);
                         setRightTitleOnClickListener(view1 -> setData());
                     }
-
             );
         } else {
             setTitle("教育培训");
@@ -106,8 +113,6 @@ public class AddEducationHistoryActivity extends BaseWorkeActivity {
             recycleview.addImagev(listener);
         }
     }
-
-    PictureRecycleView.ImageListener listener = list -> selectList = list;
 
     @Override
     protected ViewModel initViewModel() {

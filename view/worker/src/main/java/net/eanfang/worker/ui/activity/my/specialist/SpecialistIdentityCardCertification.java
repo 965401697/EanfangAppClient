@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.BaseActivity;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.http.EanfangCallback;
@@ -22,7 +23,6 @@ import com.eanfang.biz.model.entity.ExpertsCertificationEntity;
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.OwnDataHintActivity;
-import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import java.util.List;
 
@@ -37,7 +37,7 @@ import cn.hutool.core.util.StrUtil;
  * @date 2019-07-17 14:44:10
  */
 @Deprecated
-public class SpecialistIdentityCardCertification extends BaseWorkeActivity {
+public class SpecialistIdentityCardCertification extends BaseActivity {
     //身份证正面
     private final int ID_CARD_FRONT = 101;
     // 身份证反面

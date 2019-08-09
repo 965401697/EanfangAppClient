@@ -77,7 +77,7 @@
 
     <LinearLayout
         android:id="@+id/ll_orderFinish"
-        android:layout_width="@dimen/dimen_65"
+        android:layout_width="@dimen/dimen_45"
         android:layout_height="@dimen/dimen_130"
         android:layout_marginLeft="@dimen/dimen_20"
         android:gravity="center"

@@ -1,25 +1,28 @@
 package net.eanfang.client.ui.activity.worksapce.maintenance;
 
-import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.lifecycle.ViewModel;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.annimon.stream.Stream;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.base.BaseFragment;
+import com.eanfang.biz.model.QueryEntry;
+import com.eanfang.biz.model.bean.OrderProgressBean;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.bean.OrderProgressBean;
-import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.DateKit;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.biz.model.QueryEntry;
 
 import net.eanfang.client.R;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import cn.hutool.core.date.DateUtil;
 
@@ -41,15 +44,21 @@ public class MaintenanceOrderStatusFragment extends BaseFragment {
         return f;
     }
 
-
     @Override
-    protected int setLayoutResouceId() {
-        return R.layout.fragment_maintenance_order_status;
+    protected View initView(LayoutInflater inflater, ViewGroup container) {
+        if (mRootView == null) {
+            mRootView = inflater.inflate(R.layout.fragment_maintenance_order_status, container, false);
+            initView();
+            initData();
+        }
+        ViewGroup parent = (ViewGroup) mRootView.getParent();
+        if (parent != null) {
+            parent.removeView(mRootView);
+        }
+        return mRootView;
     }
 
-
-    @Override
-    protected void initData(Bundle arguments) {
+    protected void initData() {
         QueryEntry queryEntry = new QueryEntry();
         queryEntry.getEquals().put("orderId", String.valueOf(mId));
         EanfangHttp.post(NewApiService.MAINTENANCE_DETAIL_STATUS)
@@ -63,7 +72,6 @@ public class MaintenanceOrderStatusFragment extends BaseFragment {
 
     }
 
-    @Override
     protected void initView() {
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -77,22 +85,17 @@ public class MaintenanceOrderStatusFragment extends BaseFragment {
 //        }
     }
 
-    @Override
-    protected void setListener() {
-
-    }
-
     private void initAdapter() {
 
         List<OrderProgressBean> list = new ArrayList<>();
 
         for (OrderProgressBean bean : mDataList) {
-            if (bean.getNodeCode() != 0) {
-                list.add(bean);
-            } else {
+            if (bean.getNodeCode() == 0 || bean.getNodeCode() == 1) {
                 mTvTime.setText(DateUtil.parse(bean.getCreateTime()).toTimeStr());
-                mTvData.setText(DateUtil.parse(bean.getCreateTime()).toDateStr());
+                mTvData.setText(DateUtil.parse(bean.getCreateTime()).toString("MM-dd"));
                 mTvWeek.setText(DateKit.get(bean.getCreateTime()).weekName());
+            } else {
+                list.add(bean);
             }
         }
         if (list.size() > 0) {
@@ -100,5 +103,11 @@ public class MaintenanceOrderStatusFragment extends BaseFragment {
             mRecyclerView.setAdapter(orderProgressAdapter);
         }
     }
+
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
+    }
+
 
 }

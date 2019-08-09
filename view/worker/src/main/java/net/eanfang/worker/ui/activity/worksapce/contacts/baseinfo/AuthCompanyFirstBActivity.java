@@ -18,6 +18,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.BaseActivity;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.config.Config;
@@ -38,7 +39,6 @@ import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.authentication.SubmitSuccessfullyQyActivity;
-import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -51,7 +51,7 @@ import cn.hutool.core.util.StrUtil;
 /**
  * @author WQ
  */
-public class AuthCompanyFirstBActivity extends BaseWorkeActivity {
+public class AuthCompanyFirstBActivity extends BaseActivity {
     /**
      * 地址回掉code
      */

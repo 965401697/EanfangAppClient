@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.BaseActivity;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.picture.PictureRecycleView;
 import com.eanfang.http.EanfangCallback;
@@ -23,7 +24,6 @@ import com.eanfang.biz.model.entity.JobExperienceEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
-import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -38,7 +38,7 @@ import cn.hutool.core.util.StrUtil;
 import cn.qqtheme.framework.util.DateUtils;
 
 
-public class SpecialistAddWorkActivity extends BaseWorkeActivity {
+public class SpecialistAddWorkActivity extends BaseActivity {
 
     @BindView(R.id.et_company_name)
     EditText etCompanyName;

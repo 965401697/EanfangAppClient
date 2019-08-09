@@ -16,14 +16,14 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
 import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.util.DateKit;
 
 import net.eanfang.worker.R;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.date.DateField;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 
 /**
@@ -127,9 +127,14 @@ public class FillAppointmentInfoRebookView extends BaseActivity implements Radio
 
     @Override
     public void getData(String time) {
+
         if (StrUtil.isEmpty(time) || " ".equals(time)) {
-            tvIndoorTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+            tvIndoorTime.setText(DateUtil.date().toString());
         } else {
+            if (DateUtil.parse(time).getTime() < DateKit.get().offset(DateField.MINUTE, 30).date.getTime()) {
+                showToast("预约时间不能小于30分钟");
+                return;
+            }
             tvIndoorTime.setText(time);
         }
     }

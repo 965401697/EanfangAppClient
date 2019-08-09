@@ -15,17 +15,16 @@ import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.biz.model.bean.ExpertVerifySkillBean;
+import com.eanfang.biz.model.bean.GrantChange;
+import com.eanfang.biz.model.entity.BaseDataEntity;
+import com.eanfang.biz.model.entity.ExpertsCertificationEntity;
 import com.eanfang.config.Config;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.bean.ExpertVerifySkillBean;
-import com.eanfang.biz.model.bean.GrantChange;
-import com.eanfang.biz.model.entity.BaseDataEntity;
-
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PhotoUtils;
-import com.eanfang.biz.model.entity.ExpertsCertificationEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;

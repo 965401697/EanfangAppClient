@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import androidx.lifecycle.ViewModel;
 
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.BaseActivity;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.http.EanfangCallback;
@@ -25,7 +26,6 @@ import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
-import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,7 +41,7 @@ import cn.hutool.core.util.StrUtil;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Group;
 
-public class GroupCreatActivity extends BaseWorkeActivity {
+public class GroupCreatActivity extends BaseActivity {
 
     @BindView(R.id.et_group_name)
     EditText etGroupName;

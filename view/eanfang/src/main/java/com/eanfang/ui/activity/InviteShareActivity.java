@@ -5,33 +5,14 @@ import android.content.ClipboardManager;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
-import com.eanfang.BuildConfig;
 import com.eanfang.R;
 import com.eanfang.base.BaseApplication;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
-import com.google.zxing.BinaryBitmap;
-import com.google.zxing.ChecksumException;
-import com.google.zxing.FormatException;
-import com.google.zxing.NotFoundException;
-import com.google.zxing.RGBLuminanceSource;
-import com.google.zxing.Result;
-import com.google.zxing.common.GlobalHistogramBinarizer;
-import com.google.zxing.qrcode.QRCodeReader;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 
 /**
@@ -43,8 +24,6 @@ public class InviteShareActivity extends BaseActivity {
     private ClipboardManager myClipboard;
     private ClipData myClip;
     private String mCopyText;
-
-    String uri = BuildConfig.OSS_SERVER + BaseApplication.get().getLoginBean().getAccount().getQrCode();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,51 +63,12 @@ public class InviteShareActivity extends BaseActivity {
     }
 
     private void initData() {
-        OkHttpClient okHttpClient = new OkHttpClient();
-        Request request = new Request.Builder().url(uri).build();
-        okHttpClient.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) {
-                InputStream inputStream = response.body().byteStream();
-                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                runOnUiThread(() -> {
-                    Result result = parseInfoFromBitmap(bitmap);
-                    if (result != null) {
-                        mCopyText = result.getText();
-                    }
-                });
-
-            }
-        });
-    }
-
-    public Result parseInfoFromBitmap(Bitmap bitmap) {
-        int[] pixels = new int[bitmap.getWidth() * bitmap.getHeight()];
-        bitmap.getPixels(pixels, 0, bitmap.getWidth(), 0, 0, bitmap.getWidth(), bitmap.getHeight());
-        RGBLuminanceSource source = new RGBLuminanceSource(bitmap.getWidth(), bitmap.getHeight(), pixels);
-        GlobalHistogramBinarizer binarizer = new GlobalHistogramBinarizer(source);
-        BinaryBitmap image = new BinaryBitmap(binarizer);
-        Result result = null;
-        try {
-            result = new QRCodeReader().decode(image);
-            return result;
-        } catch (NotFoundException e) {
-            e.printStackTrace();
-        } catch (ChecksumException e) {
-            e.printStackTrace();
-        } catch (FormatException e) {
-            e.printStackTrace();
-        }
-        return null;
+        mCopyText = BaseApplication.get().getQrCode();
     }
 
     private void shareToWx(int type) {
         if (isWeixinAvilible()) {
-            Class clz = null;
+            Class clz;
             try {
                 clz = Class.forName(getApplication().getPackageName() + ".wxapi.WXEntryActivity");
                 Intent intent = new Intent(this, clz);

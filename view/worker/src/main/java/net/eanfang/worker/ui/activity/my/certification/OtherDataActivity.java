@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.BaseActivity;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.picture.PictureRecycleView;
 import com.eanfang.http.EanfangCallback;
@@ -25,7 +26,6 @@ import com.eanfang.biz.model.entity.TechWorkerVerifyEntity;
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.techniciancertification.SubmitSuccessfullyJsActivity;
-import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,7 +38,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.hutool.core.util.StrUtil;
 
-public class OtherDataActivity extends BaseWorkeActivity {
+public class OtherDataActivity extends BaseActivity {
 
     @BindView(R.id.et_urgent_name)
     EditText etUrgentName;

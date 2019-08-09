@@ -15,12 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.eanfang.base.kit.utils.LogUtil;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.base.kit.V;
+import com.eanfang.base.kit.utils.LogUtil;
 import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.biz.model.bean.Message;
 import com.eanfang.biz.model.entity.PayLogEntity;
@@ -48,6 +48,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 import static com.eanfang.base.kit.V.v;
 
@@ -151,7 +152,9 @@ public class OrderConfirmActivity extends BaseClientActivity {
         // 电话
         tvPhone.setText(repairPersonalInfoEntity.getPhone());
         // 单位
-        tvHomeType.setText("[" + repairPersonalInfoEntity.getSelectAddress() + "]");
+        if (!StrUtil.isEmpty(repairPersonalInfoEntity.getSelectAddress())) {
+            tvHomeType.setText(StrUtil.format("[{}]", repairPersonalInfoEntity.getSelectAddress()));
+        }
         tvHomeAddress.setText(repairPersonalInfoEntity.getConmpanyName());
         // 地址
         tvAddress.setText(repairPersonalInfoEntity.getAddress());

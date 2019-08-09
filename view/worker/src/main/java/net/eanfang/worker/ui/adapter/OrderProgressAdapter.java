@@ -36,7 +36,7 @@ public class OrderProgressAdapter extends BaseQuickAdapter<OrderProgressBean, Ba
     @Override
     protected void convert(BaseViewHolder helper, OrderProgressBean item) {
         helper.setText(R.id.tv_time, DateUtil.parse(item.getCreateTime()).toTimeStr())
-                .setText(R.id.tv_date, DateUtil.parse(item.getCreateTime()).toDateStr())
+                .setText(R.id.tv_date, DateUtil.parse(item.getCreateTime()).toString("MM-dd"))
                 .setText(R.id.tv_weeks, DateKit.get(item.getCreateTime()).weekName());
         timelineView = helper.getView(R.id.time_marker);
         mOrderFinish = helper.getView(R.id.ll_orderFinish);

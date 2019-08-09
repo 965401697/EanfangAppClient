@@ -405,7 +405,7 @@ public class HomeFragment extends BaseFragment {
                 .setBadgePadding(2, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(11, 0, true)
-                .setBadgeTextSize(11, true);
+                .setBadgeTextSize(10, true);
         // 报装
         if (bean.getInstall() > 0) {
             mInstall = bean.getInstall();
@@ -418,7 +418,7 @@ public class HomeFragment extends BaseFragment {
                 .setBadgePadding(2, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(11, 0, true)
-                .setBadgeTextSize(11, true);
+                .setBadgeTextSize(10, true);
         //设计
         if (bean.getDesign() > 0) {
             mDesign = bean.getDesign();
@@ -431,7 +431,7 @@ public class HomeFragment extends BaseFragment {
                 .setBadgePadding(2, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(11, 0, true)
-                .setBadgeTextSize(11, true);
+                .setBadgeTextSize(10, true);
         // 脱岗监测
         if (bean.getAlert() > 0) {
             mAlert = bean.getAlert();
@@ -444,7 +444,7 @@ public class HomeFragment extends BaseFragment {
                 .setBadgePadding(2, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(11, 0, true)
-                .setBadgeTextSize(11, true);
+                .setBadgeTextSize(10, true);
         // @我的和评论未读
         if (bean.getCommentNoRead() + bean.getNoReadCount() > 0) {
             mSecurityNum = bean.getCommentNoRead() + bean.getNoReadCount();
@@ -457,7 +457,7 @@ public class HomeFragment extends BaseFragment {
                 .setBadgePadding(2, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(11, 0, true)
-                .setBadgeTextSize(11, true);
+                .setBadgeTextSize(10, true);
         /**
          * 底部红点更新
          * */

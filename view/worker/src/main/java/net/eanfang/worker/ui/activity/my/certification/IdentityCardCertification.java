@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.lifecycle.ViewModel;
 
+import com.eanfang.base.BaseActivity;
 import com.eanfang.base.kit.SDKManager;
 
 import com.eanfang.base.kit.picture.IPictureCallBack;
@@ -17,7 +18,6 @@ import com.luck.picture.lib.entity.LocalMedia;
 import com.eanfang.biz.model.entity.TechWorkerVerifyEntity;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.hutool.core.util.StrUtil;
 
-public class IdentityCardCertification extends BaseWorkeActivity {
+public class IdentityCardCertification extends BaseActivity {
     //身份证正面
     private final int ID_CARD_FRONT = 101;
     // 身份证反面

@@ -2,16 +2,18 @@ package net.eanfang.worker.ui.activity.techniciancertification;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+
+import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.http.EanfangCallback;
-import com.eanfang.http.EanfangHttp;
+import com.eanfang.base.BaseActivity;
 import com.eanfang.biz.model.bean.JsCapabilityTagListBean;
 import com.eanfang.biz.model.bean.PostAllTagListBean;
-import com.eanfang.ui.base.BaseActivity;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
@@ -45,8 +47,15 @@ public class JsCapabilityTagActivity extends BaseActivity {
         initData();
     }
 
-    private void initView() {
-        setLeftBack();
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
+    }
+
+    @Override
+    protected void initView() {
+        setLeftBack(true);
+        setRightClick(true);
         setTitle("能力标签");
         recyclerView.setLayoutManager(new StaggeredGridLayoutManager(4, StaggeredGridLayoutManager.VERTICAL));
         recyclerView.setNestedScrollingEnabled(false);

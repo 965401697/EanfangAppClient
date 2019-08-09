@@ -13,6 +13,7 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.ui.base.BaseEvent;
+import com.eanfang.util.DateKit;
 import com.eanfang.util.JsonUtils;
 
 import net.eanfang.worker.R;
@@ -20,13 +21,13 @@ import net.eanfang.worker.base.WorkerApplication;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.date.DateField;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 
 /**
@@ -185,8 +186,12 @@ public class MaintenanceAppointTimeActivity extends BaseActivity implements Sele
     @Override
     public void getData(String time) {
         if (StrUtil.isEmpty(time) || " ".equals(time)) {
-            tvDoorTime.setText(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+            tvDoorTime.setText(DateUtil.date().toString());
         } else {
+            if (DateUtil.parse(time).getTime() < DateKit.get().offset(DateField.MINUTE, 30).date.getTime()) {
+                showToast("预约时间不能小于30分钟");
+                return;
+            }
             tvDoorTime.setText(time);
         }
     }

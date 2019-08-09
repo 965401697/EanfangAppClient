@@ -14,20 +14,19 @@ import androidx.lifecycle.ViewModel;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.BaseActivity;
 import com.eanfang.base.kit.SDKManager;
-
 import com.eanfang.base.kit.picture.picture.PictureRecycleView;
+import com.eanfang.biz.model.entity.HonorCertificateEntity;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.ToastUtil;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.eanfang.biz.model.entity.HonorCertificateEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
-import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -49,7 +48,7 @@ import cn.qqtheme.framework.util.DateUtils;
  * @description 添加荣誉证书
  */
 
-public class AddCertificationActivity extends BaseWorkeActivity implements SelectTimeDialogFragment.SelectTimeListener {
+public class AddCertificationActivity extends BaseActivity implements SelectTimeDialogFragment.SelectTimeListener {
 
     @BindView(R.id.et_name)
     EditText etName;
@@ -90,15 +89,18 @@ public class AddCertificationActivity extends BaseWorkeActivity implements Selec
         return null;
     }
 
+    @Override
     public void initView() {
+        super.initView();
         setLeftBack(true);
+        setRightClick(true);
         isCompany = getIntent().getStringExtra("role");
         orgid = getIntent().getLongExtra("orgid", 0);
         bean = (HonorCertificateEntity) getIntent().getSerializableExtra("bean");
         doSelectYearMonthDay();
         setRightTitleOnClickListener(view -> setData());
         if (bean != null) {
-            setTitle("荣誉");
+            setTitle("荣誉证书");
             setRightTitle("编辑");
             setZhiDu(false);
             fillData();
@@ -114,7 +116,7 @@ public class AddCertificationActivity extends BaseWorkeActivity implements Selec
             );
         } else {
             setRightTitle("保存");
-            setTitle("荣誉");
+            setTitle("荣誉证书");
             tvSave.setVisibility(View.GONE);
             recycleview.addImagev(listener);
         }

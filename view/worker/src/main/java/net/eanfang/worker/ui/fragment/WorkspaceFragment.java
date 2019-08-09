@@ -151,21 +151,21 @@ public class WorkspaceFragment extends BaseFragment {
                 .setBadgePadding(5, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(11, 0, true)
-                .setBadgeTextSize(11, true);
+                .setBadgeTextSize(10, true);
         // 任务
         qBadgeViewTask.bindTarget(findViewById(R.id.tv_work_task))
                 .setBadgeBackgroundColor(0xFFFF0000)
                 .setBadgePadding(5, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(11, 0, true)
-                .setBadgeTextSize(11, true);
+                .setBadgeTextSize(10, true);
         //检查
         qBadgeViewInspect.bindTarget(findViewById(R.id.tv_work_inspect))
                 .setBadgeBackgroundColor(0xFFFF0000)
                 .setBadgePadding(5, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(11, 0, true)
-                .setBadgeTextSize(11, true);
+                .setBadgeTextSize(10, true);
     }
 
     // 获取当前定位

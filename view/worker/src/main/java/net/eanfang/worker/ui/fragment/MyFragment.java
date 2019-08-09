@@ -34,7 +34,6 @@ import net.eanfang.worker.ui.activity.my.EvaluateActivity;
 import net.eanfang.worker.ui.activity.my.PersonInfoActivity;
 import net.eanfang.worker.ui.activity.my.SettingActivity;
 import net.eanfang.worker.ui.activity.my.certification.NewAuthListActivity;
-import net.eanfang.worker.ui.activity.my.specialist.SpecialistAuthListActivity;
 import net.eanfang.worker.ui.activity.my.specialist.SpecialistSkillInfoDetailActivity;
 import net.eanfang.worker.ui.activity.my.specialist.SpecialistSkillTypeActivity;
 import net.eanfang.worker.ui.activity.techniciancertification.TechnicianCertificationActivity;
@@ -73,10 +72,6 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
     RelativeLayout rlWorkerVerfity;
     @BindView(R.id.tv_verfity_status)
     TextView tvVerfiy;
-    @BindView(R.id.tv_expert_verfity_status)
-    TextView tvExpertVerfiy;
-    @BindView(R.id.rl_expert_verfity)
-    RelativeLayout rlExpertVerfity;
     @BindView(R.id.tv_verfity_status_b)
     TextView tvVerfiyb;
     @BindView(R.id.tv_expert_verfity_status_b)
@@ -141,16 +136,12 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
         }
         //status 0草稿1认证中2认证通过3认证拒绝
         if (e == 0) {
-            tvExpertVerfiy.setText("专家未认证，待认证");
             tvExpertVerfiyb.setText("专家未认证，待认证");
         } else if (e == 1) {
-            tvExpertVerfiy.setText("认证中");
             tvExpertVerfiyb.setText("认证中");
         } else if (e == 2) {
-            tvExpertVerfiy.setText("已认证");
             tvExpertVerfiyb.setText("已认证");
         } else if (e == 3) {
-            tvExpertVerfiy.setText("认证失败，请重新认证");
             tvExpertVerfiyb.setText("认证失败，请重新认证");
         }
         rlWorkerVerfity.setOnClickListener((v) -> {
@@ -160,9 +151,6 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
             doWorkAuthB();
         });
 
-        rlExpertVerfity.setOnClickListener((v) -> {
-            JumpItent.jump(getActivity(), SpecialistAuthListActivity.class);
-        });
         rlExpertVerfityB.setOnClickListener((v) -> {
 
             if (t == 2) {
@@ -260,16 +248,6 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
         }
     }
 
-    private void doExpertWorkAuth() {
-        // 技师未认证，提示完善个人资料
-        String realName = WorkerApplication.get().getLoginBean().getAccount().getRealName();
-        if (StrUtil.isEmpty(realName) || "待提供".equals(realName)) {
-            showToast("请先完善个人资料");
-        } else {
-            JumpItent.jump(getActivity(), SpecialistAuthListActivity.class);
-        }
-    }
-
 
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, int i) {
@@ -296,7 +274,7 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
 //        PrefUtils.setString("status", status);
     }
 
-    @OnClick({R.id.iv_setting, R.id.iv_user_header, R.id.rl_worker_verfity, R.id.rl_expert_verfity, R.id.rl_ivite, R.id.iv_personalQRCode,
+    @OnClick({R.id.iv_setting, R.id.iv_user_header, R.id.rl_worker_verfity, R.id.rl_ivite, R.id.iv_personalQRCode,
             R.id.rl_evaluate, R.id.rl_worker_verfity_b, R.id.rl_expert_verfity_b, R.id.img_invite})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -309,9 +287,6 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
                 break;
             case R.id.rl_worker_verfity:
                 doWorkAuth();
-                break;
-            case R.id.rl_expert_verfity:
-                JumpItent.jump(getActivity(), SpecialistAuthListActivity.class);
                 break;
             case R.id.rl_ivite:
                 //邀请

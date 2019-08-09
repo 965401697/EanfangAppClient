@@ -18,6 +18,7 @@ import com.annimon.stream.Stream;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.BaseActivity;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.config.Config;
@@ -39,7 +40,6 @@ import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
-import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import java.util.List;
 
@@ -55,7 +55,7 @@ import cn.hutool.core.util.StrUtil;
  * @desc 安防公司认证
  */
 
-public class AuthCompanyActivity extends BaseWorkeActivity {
+public class AuthCompanyActivity extends BaseActivity {
     /**
      * 营业执照 take photo回调 code
      */

@@ -203,28 +203,28 @@ public class HomeFragment extends BaseFragment implements SecurityListAdapter.On
                 .setBadgePadding(5, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(11, 0, true)
-                .setBadgeTextSize(11, true);
+                .setBadgeTextSize(10, true);
         // 报装
         qBadgeViewInstall.bindTarget(findViewById(R.id.tv_install_order))
                 .setBadgeBackgroundColor(0xFFFF0000)
                 .setBadgePadding(5, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(11, 0, true)
-                .setBadgeTextSize(11, true);
+                .setBadgeTextSize(10, true);
         //设计
         qBadgeViewDesign.bindTarget(findViewById(R.id.tv_design_order))
                 .setBadgeBackgroundColor(0xFFFF0000)
                 .setBadgePadding(5, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(11, 0, true)
-                .setBadgeTextSize(11, true);
+                .setBadgeTextSize(10, true);
         //维保
         qBadgeViewMaintain.bindTarget(findViewById(R.id.tv_maintain_order))
                 .setBadgeBackgroundColor(0xFFFF0000)
                 .setBadgePadding(5, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(11, 0, true)
-                .setBadgeTextSize(11, true);
+                .setBadgeTextSize(10, true);
         /**
          * 报价
          * */
@@ -233,7 +233,7 @@ public class HomeFragment extends BaseFragment implements SecurityListAdapter.On
                 .setBadgePadding(5, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(11, 0, true)
-                .setBadgeTextSize(11, true);
+                .setBadgeTextSize(10, true);
     }
 
     private void initWait() {

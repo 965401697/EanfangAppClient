@@ -1,25 +1,28 @@
 package net.eanfang.client.ui.fragment;
 
-import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.lifecycle.ViewModel;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.base.BaseFragment;
+import com.eanfang.biz.model.QueryEntry;
+import com.eanfang.biz.model.bean.OrderProgressBean;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.bean.OrderProgressBean;
-import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.DateKit;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.biz.model.QueryEntry;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.adapter.OrderProgressAdapter;
 
 import java.util.List;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
@@ -50,12 +53,20 @@ public class OrderProgressFragment extends BaseFragment {
     }
 
     @Override
-    protected int setLayoutResouceId() {
-        return R.layout.activity_order_progress;
+    protected View initView(LayoutInflater inflater, ViewGroup container) {
+        if (mRootView == null) {
+            mRootView = inflater.inflate(R.layout.activity_order_progress, container, false);
+            initView();
+            initData();
+        }
+        ViewGroup parent = (ViewGroup) mRootView.getParent();
+        if (parent != null) {
+            parent.removeView(mRootView);
+        }
+        return mRootView;
     }
 
-    @Override
-    protected void initData(Bundle arguments) {
+    protected void initData() {
         QueryEntry queryEntry = new QueryEntry();
         queryEntry.getEquals().put("orderId", ordernum + "");
         EanfangHttp.post(RepairApi.GET_REPAIR_FLOW)
@@ -68,7 +79,6 @@ public class OrderProgressFragment extends BaseFragment {
 
     }
 
-    @Override
     protected void initView() {
         mRecyclerView = findViewById(R.id.recyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -77,20 +87,21 @@ public class OrderProgressFragment extends BaseFragment {
         mTvTime = findViewById(R.id.tv_time);
         if (!StrUtil.isEmpty(mOrderTime)) {
             mTvTime.setText(DateUtil.parse(mOrderTime).toTimeStr());
-            mTvData.setText(DateUtil.parse(mOrderTime).toDateStr());
+            mTvData.setText(DateUtil.parse(mOrderTime).toString("MM-dd"));
             mTvWeek.setText(DateKit.get(mOrderTime).weekName());
         }
-    }
-
-    @Override
-    protected void setListener() {
-
     }
 
     private void initAdapter() {
         BaseQuickAdapter orderProgressAdapter = new OrderProgressAdapter(R.layout.item_order_progress, mDataList);
         mRecyclerView.setAdapter(orderProgressAdapter);
     }
+
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
+    }
+
 
 }
 

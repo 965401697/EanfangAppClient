@@ -2,14 +2,15 @@ package net.eanfang.worker.ui.activity.worksapce;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.PopupWindow;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import com.eanfang.util.ViewFindUtils;
 import com.eanfang.witget.SharePopWindow;
@@ -71,12 +72,7 @@ public class OrderDetailActivity extends BaseWorkerActivity implements OnTabSele
         //分享按钮是是否隐藏
         isVisible = getIntent().getBooleanExtra("isVisible", false);
         sharePopWindow = new SharePopWindow(this, pictureSelectItemsOnClick);
-        sharePopWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                sharePopWindow.backgroundAlpha(1.0f);
-            }
-        });
+        sharePopWindow.setOnDismissListener(() -> sharePopWindow.backgroundAlpha(1.0f));
         mFragments.add(OrderDetailFragment.getInstance(id));
         mFragments.add(OrderProgressFragment.getInstance(id, mOrderTime));
         View decorView = getWindow().getDecorView();
@@ -96,13 +92,10 @@ public class OrderDetailActivity extends BaseWorkerActivity implements OnTabSele
 
         if (!isVisible) {
             setRightTitle("分享");
-            setRightTitleOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    //分享聊天
-                    sharePopWindow.showAtLocation(OrderDetailActivity.this.findViewById(R.id.ll_share), Gravity.BOTTOM, 0, 0);
-                    sharePopWindow.backgroundAlpha(0.5f);
-                }
+            setRightTitleOnClickListener(v -> {
+                //分享聊天
+                sharePopWindow.showAtLocation(OrderDetailActivity.this.findViewById(R.id.ll_share), Gravity.BOTTOM, 0, 0);
+                sharePopWindow.backgroundAlpha(0.5f);
             });
         }
     }

@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModel;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.BaseActivity;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.picture.PictureRecycleView;
 import com.eanfang.config.Config;
@@ -34,7 +35,6 @@ import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.activity.worksapce.repair.DeviceBrandActivity;
 import net.eanfang.worker.ui.activity.worksapce.repair.FaultLibraryActivity;
 import net.eanfang.worker.ui.activity.worksapce.repair.SelectDeviceTypeActivity;
-import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -50,7 +50,7 @@ import cn.hutool.core.util.StrUtil;
 /**
  * 免费提问
  */
-public class FreeAskActivity extends BaseWorkeActivity {
+public class FreeAskActivity extends BaseActivity {
 
     // 设备信息 RequestCode
     private static final int REQUEST_FAULTDEVICEINFO = 100;

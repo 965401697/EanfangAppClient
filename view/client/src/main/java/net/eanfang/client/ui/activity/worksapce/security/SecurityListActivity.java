@@ -86,7 +86,7 @@ public class SecurityListActivity extends BaseActivity {
                 .setBadgePadding(3, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(0, 6, true)
-                .setBadgeTextSize(11, true);
+                .setBadgeTextSize(10, true);
     }
 
     @OnClick(R.id.iv_create)

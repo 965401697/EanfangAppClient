@@ -22,20 +22,19 @@ import com.baidu.ocr.ui.camera.CameraNativeHelper;
 import com.baidu.ocr.ui.camera.CameraView;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.BaseActivity;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.IPictureCallBack;
+import com.eanfang.base.kit.rx.RxPerm;
+import com.eanfang.biz.model.entity.TechWorkerVerifyEntity;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-
 import com.eanfang.util.GlideUtil;
-import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.PhotoUtils;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.eanfang.biz.model.entity.TechWorkerVerifyEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
-import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import java.io.File;
 import java.util.List;
@@ -49,7 +48,7 @@ import cn.hutool.core.util.StrUtil;
 /**
  * @author WQ
  */
-public class RealNameAuthenticationActivity extends BaseWorkeActivity {
+public class RealNameAuthenticationActivity extends BaseActivity {
 
     @BindView(R.id.iv_idCard_front)
     ImageView ivIdCardFront;
@@ -113,8 +112,8 @@ public class RealNameAuthenticationActivity extends BaseWorkeActivity {
         if (mTechWorkerVerifyEntity.getIdCardNum() != null) {
             idCardNum = mTechWorkerVerifyEntity.getIdCardNum();
             //检验一下 身份证是否正确
-            recIDCard(IDCardParams.ID_CARD_SIDE_FRONT, PhotoUtils.downloadImg(mTechWorkerVerifyEntity.getIdCardFront()).getPath(), true);
-            recIDCard(IDCardParams.ID_CARD_SIDE_BACK, PhotoUtils.downloadImg(mTechWorkerVerifyEntity.getIdCardSide()).getPath(), true);
+            recIDCard(IDCardParams.ID_CARD_SIDE_FRONT, PhotoUtils.downloadImg(mTechWorkerVerifyEntity.getIdCardFront()), true);
+            recIDCard(IDCardParams.ID_CARD_SIDE_BACK, PhotoUtils.downloadImg(mTechWorkerVerifyEntity.getIdCardSide()), true);
             if ((!mTechWorkerVerifyEntity.getIdCardNum().equals("暂无")) | (!mTechWorkerVerifyEntity.getIdCardNum().equals(""))) {
                 StringBuilder sbd = new StringBuilder();
                 sbd.append("姓名：").append(mTechWorkerVerifyEntity.getIdCardName()).append("\n");
@@ -193,6 +192,9 @@ public class RealNameAuthenticationActivity extends BaseWorkeActivity {
     }
 
     private void recIDCard(String idCardSide, String filePath, boolean isCheck) {
+        if (StrUtil.isEmpty(filePath)) {
+            return;
+        }
         IDCardParams param = new IDCardParams();
         param.setImageFile(new File(filePath));
         param.setIdCardSide(idCardSide);

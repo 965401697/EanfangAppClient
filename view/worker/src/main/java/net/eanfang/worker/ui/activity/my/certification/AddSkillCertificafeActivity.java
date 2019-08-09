@@ -12,19 +12,19 @@ import androidx.lifecycle.ViewModel;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.BaseActivity;
 import com.eanfang.base.BaseApplication;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.picture.PictureRecycleView;
+import com.eanfang.biz.model.entity.QualificationCertificateEntity;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.util.DoubleDatePickerDialog;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.ToastUtil;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.eanfang.util.DoubleDatePickerDialog;
-import com.eanfang.biz.model.entity.QualificationCertificateEntity;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -38,7 +38,7 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.qqtheme.framework.util.DateUtils;
 
-public class AddSkillCertificafeActivity extends BaseWorkeActivity {
+public class AddSkillCertificafeActivity extends BaseActivity {
 
     @BindView(R.id.et_certificate_name)
     EditText etCertificateName;
@@ -73,9 +73,17 @@ public class AddSkillCertificafeActivity extends BaseWorkeActivity {
         setContentView(R.layout.activity_add_skill_certificafe);
         ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
+    }
+
+    PictureRecycleView.ImageListener listener = list -> selectList = list;
+
+    @Override
+    protected void initView() {
+        super.initView();
         setLeftBack(true);
-        bean = (QualificationCertificateEntity) getIntent().getSerializableExtra("bean");
+        setRightClick(true);
         setRightTitleOnClickListener(view -> setData());
+        bean = (QualificationCertificateEntity) getIntent().getSerializableExtra("bean");
         if (bean != null) {
             setTitle("资质证书");
             setRightTitle("编辑");
@@ -98,8 +106,6 @@ public class AddSkillCertificafeActivity extends BaseWorkeActivity {
             pictureRecycler.addImagev(listener);
         }
     }
-
-    PictureRecycleView.ImageListener listener = list -> selectList = list;
 
     @Override
     protected ViewModel initViewModel() {

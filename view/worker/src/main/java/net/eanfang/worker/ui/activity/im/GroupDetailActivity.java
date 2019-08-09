@@ -40,7 +40,6 @@ import com.luck.picture.lib.entity.LocalMedia;
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.adapter.GroupsDetailAdapter;
-import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -58,7 +57,7 @@ import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Group;
 
 
-public class GroupDetailActivity extends BaseWorkeActivity {
+public class GroupDetailActivity extends com.eanfang.base.BaseActivity {
 
     @BindView(R.id.grid_view)
     MyGridView gridView;

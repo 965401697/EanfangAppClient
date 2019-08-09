@@ -1,6 +1,8 @@
 package com.eanfang.base;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.StrictMode;
 import android.util.Log;
 
@@ -16,7 +18,9 @@ import com.eanfang.biz.model.entity.OrgEntity;
 import com.eanfang.biz.model.entity.UserEntity;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.voice.RecognitionManager;
+import com.eanfang.util.PhotoUtils;
 import com.facebook.imagepipeline.backends.okhttp3.OkHttpImagePipelineConfigFactory;
+import com.google.zxing.Result;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheEntity;
 import com.lzy.okgo.cache.CacheMode;
@@ -35,6 +39,7 @@ import java.util.logging.Level;
 import cn.bingoogolapple.photopicker.imageloader.BGAGlideImageLoader;
 import cn.bingoogolapple.photopicker.imageloader.BGAImage;
 import cn.hutool.core.thread.ThreadUtil;
+import cn.hutool.core.util.StrUtil;
 import okhttp3.OkHttpClient;
 
 /**
@@ -43,6 +48,7 @@ import okhttp3.OkHttpClient;
  */
 public class BaseApplication extends MultiDexApplication {
 
+    public static final String ACCOUNT_QR_CODE = "ACCOUNT_QR_CODE";
     private static BaseApplication appContext;
 
     /*Activity堆*/
@@ -380,5 +386,25 @@ public class BaseApplication extends MultiDexApplication {
      */
     public AccountEntity getAccount() {
         return V.v(() -> getLoginBean().getAccount());
+    }
+
+    /**
+     * 获取用户的 二维码数据
+     *
+     * @return String
+     */
+    public String getQrCode() {
+        String code = CacheKit.get().getStr(ACCOUNT_QR_CODE);
+        if (!StrUtil.isEmpty(code)) {
+            return code;
+        }
+        String path = PhotoUtils.downloadImg(BaseApplication.get().getAccount().getQrCode());
+        Bitmap bitmap = BitmapFactory.decodeFile(path);
+        Result result = PhotoUtils.parseInfoFromBitmap(bitmap);
+        if (result != null) {
+            CacheKit.get().put(ACCOUNT_QR_CODE, result.getText());
+            return result.getText();
+        }
+        return null;
     }
 }

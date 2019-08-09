@@ -54,25 +54,13 @@ public class SpecialistSkillCertificafeListActivity extends BaseWorkerActivity {
     }
 
     private void initViews() {
-
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new QualificationAdapter();
         adapter.bindToRecyclerView(recyclerView);
 
-        adapter.setOnItemChildClickListener(new BaseQuickAdapter.OnItemChildClickListener() {
-            @Override
-            public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
-                delete(adapter, position);
-            }
-        });
+        adapter.setOnItemChildClickListener((adapter, view, position) -> delete(adapter, position));
 
-        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                startActivityForResult(new Intent(SpecialistSkillCertificafeListActivity.this, SpecialistAddSkillCertificafeActivity.class).putExtra("bean", (QualificationCertificateEntity) adapter.getData().get(position)), ADD_EDUCATION_CODE);
-            }
-        });
+        adapter.setOnItemClickListener((adapter, view, position) -> startActivityForResult(new Intent(SpecialistSkillCertificafeListActivity.this, SpecialistAddSkillCertificafeActivity.class).putExtra("bean", (QualificationCertificateEntity) adapter.getData().get(position)), ADD_EDUCATION_CODE));
 
         getData();
     }

@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.lifecycle.ViewModel;
 
 import com.eanfang.BuildConfig;
+import com.eanfang.base.BaseActivity;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.base.kit.picture.picture.PictureRecycleView;
@@ -18,7 +19,6 @@ import com.eanfang.util.GlideUtil;
 import com.eanfang.util.PhotoUtils;
 import com.luck.picture.lib.entity.LocalMedia;
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,7 +34,7 @@ import cn.hutool.core.util.StrUtil;
  * @decision 技师认证 上传照片
  */
 @Deprecated
-public class AuthPhotoActivity extends BaseWorkeActivity {
+public class AuthPhotoActivity extends BaseActivity {
 
 
     private final static int RESULT_ADD_PHOTO = 200;

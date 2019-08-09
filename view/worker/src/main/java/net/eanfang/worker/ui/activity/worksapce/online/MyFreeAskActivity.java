@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.lifecycle.ViewModel;
 
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.base.BaseActivity;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.picture.PictureRecycleView;
 import com.eanfang.http.EanfangCallback;
@@ -22,7 +23,6 @@ import com.eanfang.util.contentsafe.ContentSecurityAuditUtil;
 import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,7 +32,7 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MyFreeAskActivity extends BaseWorkeActivity implements View.OnClickListener {
+public class MyFreeAskActivity extends BaseActivity implements View.OnClickListener {
 
     @BindView(R.id.iv_left)
     ImageView ivLeft;

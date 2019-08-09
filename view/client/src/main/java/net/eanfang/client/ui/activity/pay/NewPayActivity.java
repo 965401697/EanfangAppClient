@@ -10,36 +10,35 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.base.BaseActivity;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.ali.alipay.IALiPayCallBack;
+import com.eanfang.biz.model.bean.WXPayBean;
+import com.eanfang.biz.model.entity.InvoiceEntity;
 import com.eanfang.biz.model.entity.PayLogEntity;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.bean.WXPayBean;
 import com.eanfang.util.MessageUtil;
 import com.eanfang.util.ToastUtil;
 import com.tencent.mm.opensdk.modelpay.PayReq;
-import com.eanfang.biz.model.entity.InvoiceEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.worksapce.OrderConfirmActivity;
 import net.eanfang.client.ui.activity.worksapce.StateChangeActivity;
-import net.eanfang.client.ui.base.BaseClientActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,10 +49,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.hutool.core.util.StrUtil;
 
-public class NewPayActivity extends BaseClientActivity implements View.OnClickListener {
+public class NewPayActivity extends BaseActivity {
 
-    public static final int INVOICE_SUCCESS = 47329;
-    public static final int INVOICE_CALL_BACK = 3001;
     private static final int SDK_PAY_FLAG = 123456;
 
     @BindView(R.id.tv_edit_invoice)
@@ -139,14 +136,11 @@ public class NewPayActivity extends BaseClientActivity implements View.OnClickLi
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_pay1);
+        setContentView(R.layout.activity_pay);
         ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
         setTitle("支付");
-        setLeftBack();
         initData();
-        startTransaction(true);
-        tvOutlinePay.setOnClickListener(this);
     }
 
 
@@ -154,15 +148,11 @@ public class NewPayActivity extends BaseClientActivity implements View.OnClickLi
         Intent intent = getIntent();
         payLogEntity = (PayLogEntity) intent.getSerializableExtra("payLogEntity");
 
-//        getInvoiceInfo();
-
         if (payLogEntity == null) {
             showToast("参数错误,请重试");
-            finishSelf();
+            finish();
             return;
         }
-
-//        calcPrice();
 
         MoneyAdapter moneyAdapter = new MoneyAdapter(R.layout.item_money);
         List<MoneyBean> list = new ArrayList<>();
@@ -185,43 +175,36 @@ public class NewPayActivity extends BaseClientActivity implements View.OnClickLi
         cbWeixinPay.setChecked(true);
         tvWx.setTextColor(getResources().getColor(R.color.color_service_title));
 
-        cbInvoice.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    if (mInvoiceEntity == null) {
-                        ll.setVisibility(View.VISIBLE);
-                    } else {
-
-                        tvEditInvoice.setText("修改发票信息");
-                        tvInvoiceName.setText(mInvoiceEntity.getTitle());
-
-                        ll.setVisibility(View.VISIBLE);
-                        tvInvoiceName.setVisibility(View.VISIBLE);
-                    }
+        cbInvoice.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                if (mInvoiceEntity == null) {
+                    ll.setVisibility(View.VISIBLE);
                 } else {
-                    ll.setVisibility(View.GONE);
-                    tvInvoiceName.setVisibility(View.GONE);
+
+                    tvEditInvoice.setText("修改发票信息");
+                    tvInvoiceName.setText(mInvoiceEntity.getTitle());
+
+                    ll.setVisibility(View.VISIBLE);
+                    tvInvoiceName.setVisibility(View.VISIBLE);
                 }
+            } else {
+                ll.setVisibility(View.GONE);
+                tvInvoiceName.setVisibility(View.GONE);
             }
         });
 
         // 获取优惠券焦点
-        etCoupon.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    // 获得焦点
-                    mPayType = 3;
-                    cbCoupon.setChecked(mPayType == 3);
-                    cbAlipay.setChecked(!(mPayType == 3));
-                    cbWeixinPay.setChecked(!(mPayType == 3));
-                    tvZfb.setTextColor(getResources().getColor(R.color.color_client_neworder));
-                    tvWx.setTextColor(getResources().getColor(R.color.color_client_neworder));
-                    tvCoupon.setTextColor(getResources().getColor(R.color.color_service_title));
-                    tvPrice.setText(0 + "");
-                }
+        etCoupon.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                // 获得焦点
+                mPayType = 3;
+                cbCoupon.setChecked(mPayType == 3);
+                cbAlipay.setChecked(!(mPayType == 3));
+                cbWeixinPay.setChecked(!(mPayType == 3));
+                tvZfb.setTextColor(getResources().getColor(R.color.color_client_neworder));
+                tvWx.setTextColor(getResources().getColor(R.color.color_client_neworder));
+                tvCoupon.setTextColor(getResources().getColor(R.color.color_service_title));
+                tvPrice.setText(0 + "");
             }
         });
 
@@ -248,7 +231,7 @@ public class NewPayActivity extends BaseClientActivity implements View.OnClickLi
                 tvCoupon.setTextColor(getResources().getColor(R.color.color_client_neworder));
                 etCoupon.setVisibility(View.GONE);
                 tvPrice.setText(mPayPrice);
-                doGoneCoupon();
+//                doGoneCoupon();
                 break;
             case R.id.ll_alipay:
                 mPayType = 0;
@@ -260,17 +243,17 @@ public class NewPayActivity extends BaseClientActivity implements View.OnClickLi
                 tvCoupon.setTextColor(getResources().getColor(R.color.color_client_neworder));
                 tvPrice.setText(mPayPrice);
                 etCoupon.setVisibility(View.GONE);
-                doGoneCoupon();
+//                doGoneCoupon();
                 break;
 
             case R.id.tv_outline_pay:
-                ClientApplication.get().closeActivity(OrderConfirmActivity.class);
                 Intent intent = new Intent(NewPayActivity.this, StateChangeActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("message", MessageUtil.payLatter());
                 intent.putExtras(bundle);
                 startActivity(intent);
-                finishSelf();
+                ClientApplication.get().closeActivity(OrderConfirmActivity.class);
+                finish();
                 break;
             case R.id.tv_pay:
                 if (mPayType == 0) {
@@ -495,7 +478,6 @@ public class NewPayActivity extends BaseClientActivity implements View.OnClickLi
                 startActivity(intent);
             } else if (mPayType == 1) {
                 //微信支付
-                endTransaction(true);
             }
             return;
         }
@@ -514,7 +496,6 @@ public class NewPayActivity extends BaseClientActivity implements View.OnClickLi
                             startActivity(intent);
                         } else if (mPayType == 0) {
                             //微信支付
-                            endTransaction(true);
                         }
                     }
 
@@ -551,15 +532,6 @@ public class NewPayActivity extends BaseClientActivity implements View.OnClickLi
         return "";
     }
 
-    @OnClick(R.id.tv_outline_pay)
-    public void onViewClicked() {
-    }
-
-    @Override
-    public void onClick(View v) {
-        finish();
-    }
-
     class MoneyBean {
         public float money;
         public String title;
@@ -571,13 +543,18 @@ public class NewPayActivity extends BaseClientActivity implements View.OnClickLi
         transactionActivities.remove(this);
     }
 
-    /**
-     * 取消优惠码输入焦点
-     */
-    public void doGoneCoupon() {
-        etCoupon.clearFocus();//取消焦点
-        ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
-                .hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);//关闭输入法
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
     }
+//
+//    /**
+//     * 取消优惠码输入焦点
+//     */
+//    public void doGoneCoupon() {
+//        etCoupon.clearFocus();//取消焦点
+//        ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
+//                .hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);//关闭输入法
+//    }
 }
 

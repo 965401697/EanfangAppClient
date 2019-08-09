@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModel;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.BaseActivity;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
@@ -21,7 +22,6 @@ import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,7 +35,7 @@ import cn.hutool.core.util.StrUtil;
  * @desc 安防公司认证 完善基本资料
  */
 
-public class AuthCompanyDataActivity extends BaseWorkeActivity {
+public class AuthCompanyDataActivity extends BaseActivity {
 
     @BindView(R.id.iv_upload)
     ImageView ivUpload;

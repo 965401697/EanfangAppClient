@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
@@ -11,15 +12,15 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.annimon.stream.Stream;
-import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.biz.model.bean.AllMessageBean;
+import com.eanfang.biz.model.entity.AccountEntity;
 import com.eanfang.biz.model.entity.OrgEntity;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.entity.AccountEntity;
 import com.eanfang.ui.activity.kpbs.KPBSActivity;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.GlideUtil;
@@ -132,21 +133,21 @@ public class WorkspaceFragment extends BaseFragment {
                 .setBadgePadding(5, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(11, 0, true)
-                .setBadgeTextSize(11, true);
+                .setBadgeTextSize(10, true);
         // 任务
         qBadgeViewTask.bindTarget(findViewById(R.id.tv_work_task))
                 .setBadgeBackgroundColor(0xFFFF0000)
                 .setBadgePadding(5, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(11, 0, true)
-                .setBadgeTextSize(11, true);
+                .setBadgeTextSize(10, true);
         //检查
         qBadgeViewInspect.bindTarget(findViewById(R.id.tv_work_inspect))
                 .setBadgeBackgroundColor(0xFFFF0000)
                 .setBadgePadding(5, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(11, 0, true)
-                .setBadgeTextSize(11, true);
+                .setBadgeTextSize(10, true);
 
     }
 
@@ -282,16 +283,17 @@ public class WorkspaceFragment extends BaseFragment {
                     .putExtra("title", "京东安防"));
         });
         //专家解答
-        findViewById(R.id.tv_work_answer).setOnClickListener(v -> JumpItent.jump(getActivity(), NoContentActivity.class));
+        View.OnClickListener onClickListener = v -> JumpItent.jump(getActivity(), NoContentActivity.class);
+        findViewById(R.id.tv_work_answer).setOnClickListener(onClickListener);
         //行业知识
         findViewById(R.id.tv_work_knowledge).setOnClickListener(v ->
                 startActivity(new Intent(getActivity(), WebActivity.class)
                         .putExtra("url", "http://www.1anfang.com/news")
                         .putExtra("title", "行业知识")));
         //变更记录
-        findViewById(R.id.tv_work_change).setOnClickListener(v -> JumpItent.jump(getActivity(), NoContentActivity.class));
+        findViewById(R.id.tv_work_change).setOnClickListener(onClickListener);
         //在线文档
-        findViewById(R.id.tv_work_file).setOnClickListener(v -> JumpItent.jump(getActivity(), NoContentActivity.class));
+        findViewById(R.id.tv_work_file).setOnClickListener(onClickListener);
 
     }
 

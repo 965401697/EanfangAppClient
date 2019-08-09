@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.lifecycle.ViewModel;
 
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.BaseActivity;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.base.widget.customview.CircleImageView;
@@ -23,7 +24,6 @@ import com.eanfang.biz.model.entity.ExpertsCertificationEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
-import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import java.util.List;
 
@@ -39,7 +39,7 @@ import cn.hutool.core.util.StrUtil;
  * @date 2019-07-17 14:44:10
  */
 @Deprecated
-public class SpecialistCertificationActivity extends BaseWorkeActivity {
+public class SpecialistCertificationActivity extends BaseActivity {
 
 
     @BindView(R.id.ll_headers)

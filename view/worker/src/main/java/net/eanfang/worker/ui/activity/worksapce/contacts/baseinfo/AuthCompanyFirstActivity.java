@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModel;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.BaseActivity;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.config.Config;
@@ -30,7 +31,6 @@ import com.eanfang.biz.model.entity.OrgUnitEntity;
 import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import java.util.List;
 
@@ -44,7 +44,7 @@ import cn.hutool.core.util.StrUtil;
  * @description 公司认证 基本资料 第一步
  */
 
-public class AuthCompanyFirstActivity extends BaseWorkeActivity {
+public class AuthCompanyFirstActivity extends BaseActivity {
 
     /**
      * 地址回掉code

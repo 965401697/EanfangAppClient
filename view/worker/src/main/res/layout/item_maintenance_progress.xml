@@ -9,13 +9,13 @@
 
 
     <LinearLayout
-        android:layout_width="@dimen/dimen_200"
+        android:layout_width="@dimen/dimen_220"
         android:layout_height="match_parent"
         android:gravity="bottom"
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
@@ -67,7 +67,7 @@
 
     <com.github.vipulasri.timelineview.TimelineView
         android:id="@+id/time_marker"
-        android:layout_width="@dimen/dimen_65"
+        android:layout_width="@dimen/dimen_45"
         android:layout_height="match_parent"
         android:layout_marginLeft="@dimen/dimen_20"
         android:visibility="visible"
@@ -78,7 +78,7 @@
 
     <LinearLayout
         android:id="@+id/ll_orderFinish"
-        android:layout_width="@dimen/dimen_65"
+        android:layout_width="@dimen/dimen_45"
         android:layout_height="@dimen/dimen_130"
         android:layout_marginLeft="@dimen/dimen_20"
         android:gravity="center"

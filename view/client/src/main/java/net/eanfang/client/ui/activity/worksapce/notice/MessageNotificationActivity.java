@@ -79,19 +79,19 @@ public class MessageNotificationActivity extends BaseActivity {
                 .setBadgePadding(2, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(0, 0, true)
-                .setBadgeTextSize(11, true);
+                .setBadgeTextSize(10, true);
         qBadgeViewBiz.bindTarget(findViewById(R.id.tv_bus_msg))
                 .setBadgeBackgroundColor(0xFFFF0000)
                 .setBadgePadding(2, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(0, 0, true)
-                .setBadgeTextSize(11, true);
+                .setBadgeTextSize(10, true);
         qBadgeViewSys.bindTarget(findViewById(R.id.tv_sys_msg))
                 .setBadgeBackgroundColor(0xFFFF0000)
                 .setBadgePadding(2, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(0, 0, true)
-                .setBadgeTextSize(11, true);
+                .setBadgeTextSize(10, true);
     }
 
     @OnClick({R.id.ll_official, R.id.ll_system_notice, R.id.ll_msg_list})

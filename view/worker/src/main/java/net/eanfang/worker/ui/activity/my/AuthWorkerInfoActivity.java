@@ -19,6 +19,7 @@ import com.alibaba.fastjson.JSONPObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.BaseActivity;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.IPictureCallBack;
 import com.eanfang.base.widget.customview.CircleImageView;
@@ -35,7 +36,6 @@ import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
-import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,7 +56,7 @@ import cn.hutool.core.util.StrUtil;
  * @desc 技师认证 填写个人资料 照片 等
  */
 @Deprecated
-public class AuthWorkerInfoActivity extends BaseWorkeActivity {
+public class AuthWorkerInfoActivity extends BaseActivity {
 
 
     private final static int RESULT_ADD_PHOTO = 200;

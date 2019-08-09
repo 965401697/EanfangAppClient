@@ -36,7 +36,7 @@ public class MaintenanceOrderStatusAdapter extends BaseQuickAdapter<OrderProgres
     protected void convert(BaseViewHolder helper, OrderProgressBean item) {
         if (!TextUtils.isEmpty(item.getCreateTime())) {
             helper.setText(R.id.tv_time, DateUtil.parse(item.getCreateTime()).toTimeStr())
-                    .setText(R.id.tv_date, DateUtil.parse(item.getCreateTime()).toDateStr())
+                    .setText(R.id.tv_date, DateUtil.parse(item.getCreateTime()).toString("MM-dd"))
                     .setText(R.id.tv_weeks, DateKit.get(item.getCreateTime()).weekName());
         } else {
             helper.setText(R.id.tv_time, "")

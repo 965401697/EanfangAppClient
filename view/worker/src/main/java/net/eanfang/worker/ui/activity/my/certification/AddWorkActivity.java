@@ -12,19 +12,19 @@ import androidx.lifecycle.ViewModel;
 
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.BaseActivity;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.picture.PictureRecycleView;
+import com.eanfang.biz.model.entity.JobExperienceEntity;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.util.DoubleDatePickerDialog;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.ToastUtil;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.eanfang.util.DoubleDatePickerDialog;
-import com.eanfang.biz.model.entity.JobExperienceEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
-import net.eanfang.worker.ui.base.BaseWorkeActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -41,7 +41,7 @@ import cn.qqtheme.framework.util.DateUtils;
 /**
  * 添加工作经历
  */
-public class AddWorkActivity extends BaseWorkeActivity {
+public class AddWorkActivity extends BaseActivity {
 
     @BindView(R.id.et_company_name)
     EditText etCompanyName;
@@ -73,9 +73,17 @@ public class AddWorkActivity extends BaseWorkeActivity {
         setContentView(R.layout.activity_add_work);
         ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
+    }
+
+    PictureRecycleView.ImageListener listener = list -> selectList = list;
+
+    @Override
+    protected void initView() {
+        super.initView();
         setLeftBack(true);
-        bean = (JobExperienceEntity) getIntent().getSerializableExtra("bean");
+        setRightClick(true);
         setRightTitleOnClickListener(view -> setData());
+        bean = (JobExperienceEntity) getIntent().getSerializableExtra("bean");
         if (bean != null) {
             setTitle("工作经历");
             setRightTitle("编辑");
@@ -98,8 +106,6 @@ public class AddWorkActivity extends BaseWorkeActivity {
             pictureRecycler.addImagev(listener);
         }
     }
-
-    PictureRecycleView.ImageListener listener = list -> selectList = list;
 
     @Override
     protected ViewModel initViewModel() {

@@ -612,21 +612,21 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
                 .setBadgePadding(2, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(0, 3, true)
-                .setBadgeTextSize(11, true);
+                .setBadgeTextSize(10, true);
         qBadgeViewContact.bindTarget(findViewById(R.id.tab_contact))
                 .setBadgeNumber(mAllCount)
                 .setBadgeBackgroundColor(0xFFFF0000)
                 .setBadgePadding(2, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(0, 3, true)
-                .setBadgeTextSize(11, true);
+                .setBadgeTextSize(10, true);
         qBadgeViewWork.bindTarget(findViewById(R.id.tab_work))
                 .setBadgeNumber(mWork)
                 .setBadgeBackgroundColor(0xFFFF0000)
                 .setBadgePadding(2, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(0, 3, true)
-                .setBadgeTextSize(11, true);
+                .setBadgeTextSize(10, true);
     }
 
 
