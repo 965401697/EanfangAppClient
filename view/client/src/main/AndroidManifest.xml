@@ -60,8 +60,8 @@
         <activity android:name=".ui.activity.worksapce.SelectCompanyActivity"></activity>
         <!-- 如果当前应用的TargetVersion>=28（Android 9.0），则必须在应用的AndroidManifest.xml文件中添加以下标签，否则sdk在运行过程中将可能出现崩溃问题（NoClassDefFoundError: Failed resolution of: Lorg/apache/http/impl/client/DefaultHttpClient）。 -->
         <!--<uses-library-->
-            <!--android:name="org.apache.http.legacy"-->
-            <!--android:required="false" />-->
+        <!--android:name="org.apache.http.legacy"-->
+        <!--android:required="false" />-->
 
         <activity android:name=".ui.activity.worksapce.contacts.BusinessCertificationActivity" />
         <activity android:name=".ui.activity.worksapce.contacts.EnterpriseCertificationActivity" />
@@ -291,7 +291,8 @@
         <activity android:name=".ui.activity.worksapce.ConstansActivity" />
         <activity
             android:name=".ui.activity.worksapce.contacts.AuthCompanyDataActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".ui.activity.worksapce.WebActivity"
             android:screenOrientation="portrait" />
@@ -923,15 +924,15 @@
                 android:value="androidhwext:style/Theme.Emui.Translucent" />
         </activity> <!-- 解决华为移动服务升级问题的透明界面（必须声明） -->
         <!--<activity-->
-            <!--android:name="com.huawei.android.hms.agent.common.HMSAgentActivity"-->
-            <!--android:configChanges="orientation|locale|screenSize|layoutDirection|fontScale"-->
-            <!--android:excludeFromRecents="true"-->
-            <!--android:exported="false"-->
-            <!--android:hardwareAccelerated="true"-->
-            <!--android:theme="@android:style/Theme.Translucent">-->
-            <!--<meta-data-->
-                <!--android:name="hwc-theme"-->
-                <!--android:value="androidhwext:style/Theme.Emui.Translucent" />-->
+        <!--android:name="com.huawei.android.hms.agent.common.HMSAgentActivity"-->
+        <!--android:configChanges="orientation|locale|screenSize|layoutDirection|fontScale"-->
+        <!--android:excludeFromRecents="true"-->
+        <!--android:exported="false"-->
+        <!--android:hardwareAccelerated="true"-->
+        <!--android:theme="@android:style/Theme.Translucent">-->
+        <!--<meta-data-->
+        <!--android:name="hwc-theme"-->
+        <!--android:value="androidhwext:style/Theme.Emui.Translucent" />-->
         <!--</activity>-->
 
         <activity

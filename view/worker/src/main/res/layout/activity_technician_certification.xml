@@ -1,111 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/NoStatusStyle"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    style="@style/NoStatusStyle"
     android:background="@color/color_contact_line_gray"
     android:orientation="vertical">
 
-    <include layout="@layout/header_eanfang" />
-
-    <ImageView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:scaleType="fitXY"
-        android:src="@mipmap/qyrz_wsxx" />
+        android:orientation="vertical">
 
-    <net.eanfang.worker.ui.widget.WQLeftRightClickTextView
-        android:id="@+id/sm_rz_wq_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:clickable="true"
-        android:drawablePadding="@dimen/dimen_30"
-        android:gravity="left"
-        android:padding="@dimen/dimen_30"
-        android:text="实名认证"
-        android:textSize="14sp"
-        app:tvImageHeight="@dimen/app_sy_wq_tv_lr_size"
-        app:tvImageWidth="@dimen/app_sy_wq_tv_lr_size"
-        app:tvLeftImage="@mipmap/smrz_iv"
-        app:tvRightImage="@mipmap/jtriv" />
+        <include layout="@layout/header_eanfang" />
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_2" />
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:src="@mipmap/qyrz_wsxx" />
 
-    <net.eanfang.worker.ui.widget.WQLeftRightClickTextView
-        android:id="@+id/fw_rz_wq_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:clickable="true"
-        android:drawablePadding="@dimen/dimen_30"
-        android:gravity="left"
-        android:padding="@dimen/dimen_30"
-        android:text="服务认证"
-        android:textSize="14sp"
-        app:tvImageHeight="@dimen/app_sy_wq_tv_lr_size"
-        app:tvImageWidth="@dimen/app_sy_wq_tv_lr_size"
-        app:tvLeftImage="@mipmap/fw_qyrz"
-        app:tvRightImage="@mipmap/jtriv" />
+        <net.eanfang.worker.ui.widget.WQLeftRightClickTextView
+            android:id="@+id/sm_rz_wq_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:clickable="true"
+            android:drawablePadding="@dimen/dimen_30"
+            android:gravity="left"
+            android:padding="@dimen/dimen_30"
+            android:text="实名认证"
+            android:textSize="14sp"
+            app:tvImageHeight="@dimen/app_sy_wq_tv_lr_size"
+            app:tvImageWidth="@dimen/app_sy_wq_tv_lr_size"
+            app:tvLeftImage="@mipmap/smrz_iv"
+            app:tvRightImage="@mipmap/jtriv" />
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_2" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_2" />
 
-    <net.eanfang.worker.ui.widget.WQLeftRightClickTextView
-        android:id="@+id/bz_xx_wq_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:clickable="true"
-        android:drawablePadding="@dimen/dimen_30"
-        android:gravity="left"
-        android:padding="@dimen/dimen_30"
-        android:text="保障信息"
-        android:textColor="#333333"
-        android:textSize="14sp"
-        app:tvImageHeight="@dimen/app_sy_wq_tv_lr_size"
-        app:tvImageWidth="@dimen/app_sy_wq_tv_lr_size"
-        app:tvLeftImage="@mipmap/gd_qyrz"
-        app:tvRightImage="@mipmap/jtriv" />
+        <net.eanfang.worker.ui.widget.WQLeftRightClickTextView
+            android:id="@+id/fw_rz_wq_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:clickable="true"
+            android:drawablePadding="@dimen/dimen_30"
+            android:gravity="left"
+            android:padding="@dimen/dimen_30"
+            android:text="服务认证"
+            android:textSize="14sp"
+            app:tvImageHeight="@dimen/app_sy_wq_tv_lr_size"
+            app:tvImageWidth="@dimen/app_sy_wq_tv_lr_size"
+            app:tvLeftImage="@mipmap/fw_qyrz"
+            app:tvRightImage="@mipmap/jtriv" />
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_2" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_2" />
 
-    <net.eanfang.worker.ui.widget.WQLeftRightClickTextView
-        android:id="@+id/zz_nl_wq_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:clickable="true"
-        android:drawablePadding="@dimen/dimen_30"
-        android:gravity="left"
-        android:padding="@dimen/dimen_30"
-        android:textColor="#333333"
-        android:text="资质与能力"
-        android:textSize="14sp"
-        app:tvImageHeight="@dimen/app_sy_wq_tv_lr_size"
-        app:tvImageWidth="@dimen/app_sy_wq_tv_lr_size"
-        app:tvLeftImage="@mipmap/ry_qyrz"
-        app:tvRightImage="@mipmap/jtriv" />
+        <net.eanfang.worker.ui.widget.WQLeftRightClickTextView
+            android:id="@+id/bz_xx_wq_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:clickable="true"
+            android:drawablePadding="@dimen/dimen_30"
+            android:gravity="left"
+            android:padding="@dimen/dimen_30"
+            android:text="保障信息"
+            android:textColor="#333333"
+            android:textSize="14sp"
+            app:tvImageHeight="@dimen/app_sy_wq_tv_lr_size"
+            app:tvImageWidth="@dimen/app_sy_wq_tv_lr_size"
+            app:tvLeftImage="@mipmap/gd_qyrz"
+            app:tvRightImage="@mipmap/jtriv" />
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_2" />
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_2" />
 
-    <Space
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        <net.eanfang.worker.ui.widget.WQLeftRightClickTextView
+            android:id="@+id/zz_nl_wq_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:clickable="true"
+            android:drawablePadding="@dimen/dimen_30"
+            android:gravity="left"
+            android:padding="@dimen/dimen_30"
+            android:text="资质与能力"
+            android:textColor="#333333"
+            android:textSize="14sp"
+            app:tvImageHeight="@dimen/app_sy_wq_tv_lr_size"
+            app:tvImageWidth="@dimen/app_sy_wq_tv_lr_size"
+            app:tvLeftImage="@mipmap/ry_qyrz"
+            app:tvRightImage="@mipmap/jtriv" />
+
+
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/js_rz_gg_iv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:scaleType="fitXY"
         android:src="@mipmap/jsrz_banner" />
-</LinearLayout>
+</RelativeLayout>

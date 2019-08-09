@@ -3,16 +3,26 @@ package net.eanfang.worker.ui.activity.worksapce.maintenance;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.eanfang.util.PermKit;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static com.eanfang.base.kit.V.v;
+
 public class MaintenanceActivity extends BaseWorkerActivity {
+
+    @BindView(R.id.iv_section)
+    ImageView ivSection;
+    @BindView(R.id.iv_company)
+    ImageView ivCompany;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +31,14 @@ public class MaintenanceActivity extends BaseWorkerActivity {
         super.onCreate(savedInstanceState);
         setTitle("维保管控");
         setLeftBack();
+        String orgName = v(() -> (WorkerApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgName()));
+        if (("个人").equals(orgName)) {
+            ivSection.setVisibility(View.GONE);
+            ivCompany.setVisibility(View.GONE);
+        } else {
+            ivSection.setVisibility(View.VISIBLE);
+            ivCompany.setVisibility(View.VISIBLE);
+        }
     }
 
     @OnClick({R.id.iv_own, R.id.iv_section, R.id.iv_company})

@@ -116,9 +116,11 @@ public class PutUpOrderActivity extends BaseWorkerActivity {
 
     private void initData() {
         bughandleConfirmEntity = (BughandleConfirmEntity) getIntent().getSerializableExtra("bean");
-        transferLogEntityHistory = bughandleConfirmEntity.getTransferLogEntity();
+        if (bughandleConfirmEntity != null) {
+            transferLogEntityHistory = bughandleConfirmEntity.getTransferLogEntity();
+            getHistory(transferLogEntityHistory);
+        }
         addReapirResultMode(GetConstDataUtils.getTransferCauseList());
-        getHistory(transferLogEntityHistory);
 
         llToWorker.setOnClickListener((v) -> {
             Intent intent = new Intent(PutUpOrderActivity.this, PutUpSelectWorkerActivity.class);
@@ -251,7 +253,7 @@ public class PutUpOrderActivity extends BaseWorkerActivity {
         }
         llHang.setVisibility(View.VISIBLE);
         tvNoHistory.setVisibility(View.GONE);
-        GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + transferLogEntity.getOriginalUserEntity().getAccountEntity().getAvatar()),ivHeader);
+        GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + transferLogEntity.getOriginalUserEntity().getAccountEntity().getAvatar()), ivHeader);
         tvOrderNum.setText(transferLogEntity.getOrderNum() + "");
         tvOrderTime.setText(DateUtil.date(transferLogEntity.getCreateTime()).toString());
         tvOrderReason.setText(GetConstDataUtils.getTransferCauseList().get(transferLogEntity.getCause()));

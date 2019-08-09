@@ -613,24 +613,23 @@ public class FillRepairInfoActivity extends BaseWorkerActivity {
 
         if (uploadMap.size() != 0) {
             SDKManager.ossKit(this).asyncPutImages(uploadMap, (isSuccess) -> {
-                Intent intent = new Intent(activity, PutUpOrderActivity.class);
-                intent.putExtra("bean", bughandleConfirmEntity);
-                intent.putExtra("companyName", companyName);
-                intent.putExtra("companyId", companyId);
-                intent.putExtra("businessId", (ArrayList<String>) businessIdLis);
-                intent.putExtra("orderId", bughandleConfirmEntity.getBusRepairOrderId());
-                startActivity(intent);
+                doJumpValue();
             });
             return;
         }
-        Intent intent = new Intent(this, PutUpOrderActivity.class);
-        intent.putExtra("bean", bughandleConfirmEntity);
-//        intent.putExtra("workerId", workerId);
-        intent.putExtra("companyName", companyName);
-        intent.putExtra("companyId", companyId);
-        intent.putStringArrayListExtra("businessId", (ArrayList<String>) businessIdLis);
-        intent.putExtra("orderId", bughandleConfirmEntity.getBusRepairOrderId());
-        startActivity(intent);
+        doJumpValue();
+
+    }
+
+    public void doJumpValue() {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("bean", bughandleConfirmEntity);
+        bundle.putString("companyName", companyName);
+        bundle.putLong("companyId", companyId);
+        bundle.putLong("orderId", bughandleConfirmEntity.getBusRepairOrderId());
+        bundle.putStringArrayList("businessId", (ArrayList<String>) businessIdLis);
+        JumpItent.jump(FillRepairInfoActivity.this, PutUpOrderActivity.class, bundle);
+
     }
 
     /**

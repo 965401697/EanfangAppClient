@@ -109,7 +109,8 @@
         <activity android:name=".ui.activity.techniciancertification.SubmitSuccessfullyJsActivity" />
         <activity android:name=".ui.activity.techniciancertification.RealNameAuthenticationActivity" />
         <!--<activity android:name=".ui.activity.techniciancertification.PerfectingPersonalDataActivity" />-->
-        <activity android:name=".ui.activity.techniciancertification.TechnicianCertificationActivity" />
+        <activity android:name=".ui.activity.techniciancertification.TechnicianCertificationActivity"
+            android:theme="@style/NoStatusStyle"/>
         <activity android:name=".ui.activity.authentication.MechanicalOrganizationActivity" />
         <activity android:name=".ui.activity.authentication.MoreCapabilityActivity" />
         <activity android:name=".ui.activity.authentication.QualificationsAndHonoursActivity" />

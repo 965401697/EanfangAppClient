@@ -1,8 +1,10 @@
 package net.eanfang.worker.ui.activity.techniciancertification;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,20 +20,20 @@ import com.baidu.ocr.sdk.exception.OCRError;
 import com.baidu.ocr.sdk.model.AccessToken;
 import com.baidu.ocr.sdk.model.IDCardParams;
 import com.baidu.ocr.sdk.model.IDCardResult;
+import com.baidu.ocr.ui.camera.CameraActivity;
 import com.baidu.ocr.ui.camera.CameraNativeHelper;
 import com.baidu.ocr.ui.camera.CameraView;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.IPictureCallBack;
+import com.eanfang.base.kit.rx.RxPerm;
+import com.eanfang.biz.model.entity.TechWorkerVerifyEntity;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-
 import com.eanfang.util.GlideUtil;
-import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.PhotoUtils;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.eanfang.biz.model.entity.TechWorkerVerifyEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
@@ -265,15 +267,15 @@ public class RealNameAuthenticationActivity extends BaseWorkeActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_idCard_front:
-               /* Intent intent = new Intent(this, CameraActivity.class);
-                intent.putExtra(CameraActivity.KEY_OUTPUT_FILE_PATH, FileUtil.getSaveFile(getApplication()).getAbsolutePath());
-                intent.putExtra(CameraActivity.KEY_NATIVE_ENABLE, true);
-                intent.putExtra(CameraActivity.KEY_NATIVE_MANUAL, true);
-                intent.putExtra(CameraActivity.KEY_CONTENT_TYPE, CameraActivity.CONTENT_TYPE_ID_CARD_FRONT);
-                startActivityForResult(intent, ID_CARD_FRONT);*/
                 RxPerm.get(this).cameraPerm((isSuccess) -> {
                     state = ID_CARD_FRONT;
-                    iv();
+                    Intent intent = new Intent(this, CameraActivity.class);
+                    intent.putExtra(CameraActivity.KEY_OUTPUT_FILE_PATH, FileUtil.getSaveFile(getApplication()).getAbsolutePath());
+                    intent.putExtra(CameraActivity.KEY_NATIVE_ENABLE, true);
+                    intent.putExtra(CameraActivity.KEY_NATIVE_MANUAL, true);
+                    intent.putExtra(CameraActivity.KEY_CONTENT_TYPE, CameraActivity.CONTENT_TYPE_ID_CARD_FRONT);
+                    startActivityForResult(intent, ID_CARD_FRONT);
+//                    iv();
                 });
                 break;
             case R.id.iv_idCard_back:
@@ -344,6 +346,21 @@ public class RealNameAuthenticationActivity extends BaseWorkeActivity {
         public static File getSaveFile(Context context) {
             File file = new File(context.getFilesDir(), nem + "idCl.jpg");
             return file;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == ID_CARD_FRONT && resultCode == Activity.RESULT_OK) {
+            if (data != null) {
+                String contentType = data.getStringExtra(CameraActivity.KEY_CONTENT_TYPE);
+                String filePath = FileUtil.getSaveFile(getApplicationContext()).getAbsolutePath();
+                ivIdCardFront.setImageURI(Uri.parse("file://" + filePath));
+                Log.d("recIDCard669", "onActivityResult: " + filePath);
+                nem++;
+                recIDCard(IDCardParams.ID_CARD_SIDE_FRONT, filePath, false);
+            }
         }
     }
 }

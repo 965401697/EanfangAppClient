@@ -297,7 +297,7 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
     }
 
     @OnClick({R.id.iv_setting, R.id.iv_user_header, R.id.rl_worker_verfity, R.id.rl_expert_verfity, R.id.rl_ivite, R.id.iv_personalQRCode,
-            R.id.rl_evaluate, R.id.rl_worker_verfity_b, R.id.rl_expert_verfity_b, R.id.img_invite})
+            R.id.rl_evaluate, R.id.rl_worker_verfity_b, R.id.rl_expert_verfity_b, R.id.img_invite, R.id.tv_editPersonalInfo})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_setting:
@@ -305,6 +305,7 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
                 startActivity(new Intent(getActivity(), SettingActivity.class));
                 break;
             case R.id.iv_user_header:
+            case R.id.tv_editPersonalInfo:
                 PersonInfoActivity.jumpToActivity(getActivity());
                 break;
             case R.id.rl_worker_verfity:

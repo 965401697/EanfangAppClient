@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -34,6 +33,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
+                    android:text="asdSadfs啊是的发"
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_18" />
             </RelativeLayout>
@@ -49,9 +49,8 @@
 
                 <ImageView
                     android:id="@+id/iv_qrcode"
-                    android:layout_width="@dimen/dimen_400"
-                    android:layout_height="@dimen/dimen_400"
-                    android:layout_centerInParent="true"
+                    android:layout_width="@dimen/dimen_350"
+                    android:layout_height="@dimen/dimen_350"
                     android:layout_gravity="center_horizontal"
                     android:src="@drawable/bga_pp_ic_holder_dark" />
 
@@ -60,24 +59,23 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/iv_qrcode"
-                    android:layout_marginTop="@dimen/dimen_30"
                     android:gravity="center"
-                    android:padding="@dimen/dimen_20"
+                    android:padding="@dimen/dimen_30"
                     android:text="点击复制链接"
                     android:textColor="#03A9F4" />
 
                 <View
                     style="@style/style_common_line_gray"
-                    android:layout_marginTop="@dimen/dimen_30" />
+                    android:layout_marginTop="@dimen/dimen_20" />
 
                 <TextView
                     android:id="@+id/tv_qrcode_message"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center"
-                    android:paddingBottom="@dimen/dimen_20"
+                    android:padding="@dimen/dimen_30"
                     android:text="添加好友"
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_13" />
@@ -92,7 +90,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="27dp"
             android:background="@mipmap/ic_qrcode_back_save">
 
             <TextView

@@ -11,12 +11,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
-import com.eanfang.util.StringUtils;
+import com.eanfang.ui.base.BaseActivity;
 
 import net.eanfang.worker.R;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -24,6 +24,7 @@ import java.util.Date;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 
 /**
@@ -73,6 +74,10 @@ public class RepairAppointTimeActivity extends BaseActivity implements SelectTim
                 showToast("预约时间不能为空");
                 return;
             }
+            if (!isDateOneBigger(contract_door,DateUtil.now() )) {
+                showToast("预约时间必须大于当前时间");
+                return;
+            }
             doHttp(0, contract_door + " " + contract_specific);
         });
     }
@@ -93,7 +98,7 @@ public class RepairAppointTimeActivity extends BaseActivity implements SelectTim
 //                .upJson(JsonUtils.obj2String(queryEntry))
                 .execute(new EanfangCallback<JSONObject>(RepairAppointTimeActivity.this, true, JSONObject.class, (bean) -> {
 
-                    Log.d("电话回访，电话预约上门时间a",RepairApi.POST_FLOW_SCREENING+"\n"+"orderId: "+orderId+"\n"+"solve: "+solve+"\n"+"bookTime: "+bookTime+"\n");
+                    Log.d("电话回访，电话预约上门时间a", RepairApi.POST_FLOW_SCREENING + "\n" + "orderId: " + orderId + "\n" + "solve: " + solve + "\n" + "bookTime: " + bookTime + "\n");
                     showToast("预约成功");
                     setResult(RESULT_OK);
                     finishSelf();
@@ -179,5 +184,24 @@ public class RepairAppointTimeActivity extends BaseActivity implements SelectTim
         } else {
             tvDoorTime.setText(time);
         }
+    }
+
+    public static boolean isDateOneBigger(String str1, String str2) {
+        boolean isBigger = false;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date dt1 = null;
+        Date dt2 = null;
+        try {
+            dt1 = sdf.parse(str1);
+            dt2 = sdf.parse(str2);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if (dt1.getTime() > dt2.getTime()) {
+            isBigger = true;
+        } else if (dt1.getTime() < dt2.getTime()) {
+            isBigger = false;
+        }
+        return isBigger;
     }
 }

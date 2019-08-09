@@ -9,8 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TimePicker;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
+
 import com.eanfang.R;
-import com.eanfang.util.StringUtils;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
@@ -18,8 +20,6 @@ import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import androidx.annotation.NonNull;
-import androidx.fragment.app.DialogFragment;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 
@@ -90,12 +90,20 @@ public class SelectTimeDialogFragment extends DialogFragment implements OnDateSe
         if (args != null) {
             mTag = args.getString("name");
         }
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.fragment_select_time_dialog, null);
+        initView(view);
+        alertDialog.setView(view);
+        alertDialog.setPositiveButton("确定", onClickListener);
+        return alertDialog.create();
 
+    }
+
+    private void initView(View view) {
         MaterialCalendarView widget = view.findViewById(R.id.calendarView);
-
         timePicker = view.findViewById(R.id.timepicker);
+
         //是否使用24小时制
         timePicker.setIs24HourView(true);
         TimeListener times = new TimeListener();
@@ -107,12 +115,6 @@ public class SelectTimeDialogFragment extends DialogFragment implements OnDateSe
             timePicker.setVisibility(View.GONE);
         }
         mCalendarTime = "";
-        return new AlertDialog.Builder(getActivity())
-                .setTitle("")
-                .setView(view)
-                .setPositiveButton("确定", onClickListener)
-                .create();
-
     }
 
     public DialogInterface.OnClickListener onClickListener = new DialogInterface.OnClickListener() {
