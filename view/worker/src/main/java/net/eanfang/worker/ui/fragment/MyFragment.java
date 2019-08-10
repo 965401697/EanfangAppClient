@@ -274,7 +274,7 @@ public class MyFragment extends BaseFragment implements RadioGroup.OnCheckedChan
 //        PrefUtils.setString("status", status);
     }
 
-    @OnClick({R.id.iv_setting, R.id.iv_user_header, R.id.rl_worker_verfity, R.id.rl_expert_verfity, R.id.rl_ivite, R.id.iv_personalQRCode,
+    @OnClick({R.id.iv_setting, R.id.iv_user_header, R.id.rl_worker_verfity, R.id.rl_ivite, R.id.iv_personalQRCode,
             R.id.rl_evaluate, R.id.rl_worker_verfity_b, R.id.rl_expert_verfity_b, R.id.img_invite, R.id.tv_editPersonalInfo})
     public void onViewClicked(View view) {
         switch (view.getId()) {
