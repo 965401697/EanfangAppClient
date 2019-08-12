@@ -100,14 +100,14 @@ public class QuickRepairViewModel extends BaseViewModel {
     /**
      * 快速报装
      *
-     * @param designOrderInfoBean
+     * @param installOrderConfirmBean
      */
-    private void createInstallOrder(DesignOrderInfoBean designOrderInfoBean) {
-        mQuickRepairRepo.createInstallOrder(designOrderInfoBean).observe(lifecycleOwner, mCreateRepair::setValue);
+    private void createInstallOrder(InstallOrderConfirmBean installOrderConfirmBean) {
+        mQuickRepairRepo.createInstallOrder(installOrderConfirmBean).observe(lifecycleOwner, mCreateRepair::setValue);
     }
 
     /**
-     * 快速报装
+     * 快速设计
      *
      * @param designOrderInfoBean
      */
@@ -125,6 +125,7 @@ public class QuickRepairViewModel extends BaseViewModel {
             mRepairOrderEntity.setRepairWay(0);
             mRepairOrderEntity.setOwnerCompanyId(BaseApplication.get().getCompanyId() != 0 ? BaseApplication.get().getCompanyId() : 0);
             mRepairOrderEntity.setOwnerTopCompanyId(BaseApplication.get().getTopCompanyId() != 0 ? BaseApplication.get().getTopCompanyId() : 0);
+            mRepairOrderEntity.setOwnerOrgCode(BaseApplication.get().getOrgCode() != null ? BaseApplication.get().getOrgCode() : 0 + "");
             mRepairOrderEntity.setRepairContacts(ClientApplication.get().getAccount().getRealName());
             mRepairBugEntity.setBugDescription(mBinding.etHomeRepairDescribe.getText().toString());
             mRepairOrderEntity.setRepairContactPhone(ClientApplication.get().getAccount().getMobile());
@@ -142,6 +143,7 @@ public class QuickRepairViewModel extends BaseViewModel {
             }
             createRepairOrder(mRepairOrderEntity);
         } else if (status == 1) {
+            mInstallOrderConfirmBean.setClientCompanyName(BaseApplication.get().getAccount().getDefaultUser().getCompanyEntity().getOrgName());
             mInstallOrderConfirmBean.setDescription(mBinding.etHomeRepairDescribe.getText().toString());
             mInstallOrderConfirmBean.setConnectorPhone(ClientApplication.get().getAccount().getMobile());
             mInstallOrderConfirmBean.setConnector(ClientApplication.get().getAccount().getRealName());
@@ -153,9 +155,11 @@ public class QuickRepairViewModel extends BaseViewModel {
                 showToast("请选择位置");
                 return;
             }
-            createInstallOrder(mDesignOrderInfoBean);
+            createInstallOrder(mInstallOrderConfirmBean);
         } else {
-            mDesignOrderInfoBean.setRemarkInfo(mBinding.etHomeRepairDescribe.getText().toString());
+            mDesignOrderInfoBean.setCreateCompanyId(BaseApplication.get().getCompanyId() != 0 ? BaseApplication.get().getCompanyId() : 0);
+            mDesignOrderInfoBean.setCreateTopCompanyId(BaseApplication.get().getTopCompanyId() != 0 ? BaseApplication.get().getTopCompanyId() : 0);
+            mDesignOrderInfoBean.setCreateOrgCode(BaseApplication.get().getOrgCode() != null ? BaseApplication.get().getOrgCode() : 0 + "");
             mDesignOrderInfoBean.setContactPhone(ClientApplication.get().getAccount().getMobile());
             mDesignOrderInfoBean.setContactUser(ClientApplication.get().getAccount().getRealName());
             if (StrUtil.isEmpty(mDesignOrderInfoBean.getBusinessOneCode())) {

@@ -155,7 +155,8 @@ public class SettingActivity extends BaseActivity {
             RongIM.getInstance().logout();
             //清空权限
             PermKit.permList.clear();
-            CleanMessageUtil.clearAllCache(WorkerApplication.get());
+            // 切换账号后 立即技师认证  地区为空
+//            CleanMessageUtil.clearAllCache(WorkerApplication.get());
             CacheKit.get().remove(LoginBean.class.getName());
             finish();
             startActivity(new Intent(SettingActivity.this, SplashActivity.class));

@@ -19,6 +19,6 @@ public interface ContactsApi {
      *
      * @return LoginBean
      */
-    @POST("/yaf_sys/staff/joinSystemCompany")
+    @POST("/yaf_sys/sys/joinSystemCompany")
     Observable<BaseResponseBody<LoginBean>> joinDefCompany();
 }

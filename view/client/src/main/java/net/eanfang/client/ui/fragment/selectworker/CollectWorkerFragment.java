@@ -40,6 +40,7 @@ import net.eanfang.client.ui.activity.pay.NewPayActivity;
 import net.eanfang.client.ui.activity.worksapce.SelectWorkerActivity;
 import net.eanfang.client.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.client.ui.activity.worksapce.WorkerDetailActivity;
+import net.eanfang.client.ui.activity.worksapce.repair.AddTroubleActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.RepairActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.RepairTypeActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.TroubleListActivity;
@@ -453,11 +454,11 @@ public class CollectWorkerFragment extends BaseFragment implements SwipeRefreshL
     }
 
     private void closeActivity() {
-        ClientApplication.get().closeActivity(TroubleListActivity.class);
         ClientApplication.get().closeActivity(RepairTypeActivity.class);
         ClientApplication.get().closeActivity(RepairActivity.class);
+        ClientApplication.get().closeActivity(AddTroubleActivity.class);
+        ClientApplication.get().closeActivity(TroubleListActivity.class);
         ClientApplication.get().closeActivity(SelectWorkerActivity.class);
-        finishSelf();
     }
 
     @Override

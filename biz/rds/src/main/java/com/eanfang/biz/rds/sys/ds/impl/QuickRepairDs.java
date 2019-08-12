@@ -2,6 +2,7 @@ package com.eanfang.biz.rds.sys.ds.impl;
 
 import com.eanfang.base.network.callback.RequestCallback;
 import com.eanfang.biz.model.bean.DesignOrderInfoBean;
+import com.eanfang.biz.model.bean.InstallOrderConfirmBean;
 import com.eanfang.biz.model.bean.OrderCountBean;
 import com.eanfang.biz.model.bean.QueryEntry;
 import com.eanfang.biz.model.entity.RepairOrderEntity;
@@ -34,22 +35,27 @@ public class QuickRepairDs extends BaseRemoteDataSource {
 
     /**
      * 报修订单
+     *
      * @param repairOrderEntity
      * @param callback
      */
     public void createRepairOrder(RepairOrderEntity repairOrderEntity, RequestCallback<JSONObject> callback) {
         execute(getService(QuickRepairApi.class).createRepairOrder(repairOrderEntity), callback);
     }
+
     /**
-     * 报修订单
-     * @param designOrderInfoBean
+     * 报装订单
+     *
+     * @param installOrderConfirmBean
      * @param callback
      */
-    public void createInstallOrder(DesignOrderInfoBean designOrderInfoBean, RequestCallback<JSONObject> callback) {
-        execute(getService(QuickRepairApi.class).createInstallOrder(designOrderInfoBean), callback);
+    public void createInstallOrder(InstallOrderConfirmBean installOrderConfirmBean, RequestCallback<JSONObject> callback) {
+        execute(getService(QuickRepairApi.class).createInstallOrder(installOrderConfirmBean), callback);
     }
+
     /**
      * 免费设计
+     *
      * @param designOrderInfoBean
      * @param callback
      */

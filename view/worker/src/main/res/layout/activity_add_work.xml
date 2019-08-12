@@ -219,7 +219,7 @@
                     <com.eanfang.base.kit.picture.picture.PictureRecycleView
                         android:id="@+id/picture_recycler"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="@dimen/dimen_200">
 
                     </com.eanfang.base.kit.picture.picture.PictureRecycleView>
                 </LinearLayout>

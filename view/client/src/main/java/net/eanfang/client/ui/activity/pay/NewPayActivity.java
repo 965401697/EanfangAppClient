@@ -37,7 +37,6 @@ import com.tencent.mm.opensdk.modelpay.PayReq;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
-import net.eanfang.client.ui.activity.worksapce.OrderConfirmActivity;
 import net.eanfang.client.ui.activity.worksapce.StateChangeActivity;
 
 import java.util.ArrayList;
@@ -252,7 +251,6 @@ public class NewPayActivity extends BaseActivity {
                 bundle.putSerializable("message", MessageUtil.payLatter());
                 intent.putExtras(bundle);
                 startActivity(intent);
-                ClientApplication.get().closeActivity(OrderConfirmActivity.class);
                 finish();
                 break;
             case R.id.tv_pay:

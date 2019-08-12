@@ -16,6 +16,7 @@ import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.adapter.ToRepairAdapter;
 
 import java.io.Serializable;
@@ -130,6 +131,7 @@ public class TroubleListActivity extends BaseActivity {
      */
     private void giveUp() {
         new TrueFalseDialog(this, "系统提示", "是否放弃报修？", () -> {
+            ClientApplication.get().closeActivity(RepairTypeActivity.class);
             finish();
         }).showDialog();
     }

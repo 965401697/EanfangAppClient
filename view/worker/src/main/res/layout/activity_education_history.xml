@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,248 +7,266 @@
     android:orientation="vertical"
     tools:context="net.eanfang.worker.ui.activity.my.certification.AddEducationHistoryActivity">
 
-    <LinearLayout
+    <include layout="@layout/header_eanfang" />
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <include layout="@layout/header_eanfang" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="46dp"
-            android:gravity="center_vertical"
-            android:background="@color/white"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/dimen_36"
-            android:paddingTop="@dimen/dimen_20"
-            android:paddingRight="@dimen/dimen_34"
-            android:paddingBottom="@dimen/dimen_20">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="专业或培训内容"
-                android:drawableLeft="@mipmap/ic_must_input"
-                android:drawablePadding="@dimen/dimen_4"
-                android:textColor="@color/color_client_neworder"
-                android:textSize="@dimen/textSize_14" />
-
-            <EditText
-                android:id="@+id/et_major"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
-                android:layout_weight="1"
-                android:background="@null"
-                android:gravity="right|center_vertical"
-                android:hint="请输入"
-                android:maxLength="11"
-                android:textColor="@color/color_bottom"
-                android:textSize="@dimen/textSize_13" />
-        </LinearLayout>
-
-        <View style="@style/style_common_line_gray" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="46dp"
-            android:gravity="center_vertical"
-            android:background="@color/white"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/dimen_36"
-            android:paddingTop="@dimen/dimen_20"
-            android:paddingRight="@dimen/dimen_34"
-            android:paddingBottom="@dimen/dimen_20">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="证书编号"
-                android:textColor="@color/color_client_neworder"
-                android:textSize="@dimen/textSize_14" />
-
-            <EditText
-                android:id="@+id/et_num"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
-                android:layout_weight="1"
-                android:background="@null"
-                android:gravity="right|center_vertical"
-                android:hint="请输入"
-                android:inputType="number"
-                android:maxLength="11"
-                android:textColor="@color/color_bottom"
-                android:textSize="@dimen/textSize_13" />
-        </LinearLayout>
-
-        <View style="@style/style_common_line_gray" />
-        <LinearLayout
-            android:id="@+id/ll_education"
-            android:layout_width="match_parent"
-            android:layout_height="46dp"
-            android:gravity="center_vertical"
-            android:background="@color/white"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/dimen_36"
-            android:paddingTop="@dimen/dimen_20"
-            android:paddingRight="@dimen/dimen_34"
-            android:paddingBottom="@dimen/dimen_20">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="学位或级别"
-                android:textColor="@color/color_client_neworder"
-                android:textSize="@dimen/textSize_14" />
-
-            <TextView
-                android:id="@+id/tv_education"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
-                android:layout_weight="1"
-                android:background="@null"
-                android:drawableRight="@mipmap/arrow_down"
-                android:drawablePadding="@dimen/dimen_14"
-                android:gravity="right|center_vertical"
-                android:text=""
-                android:textColor="@color/color_bottom"
-                android:textSize="@dimen/textSize_13" />
-        </LinearLayout>
-
-        <View style="@style/style_common_line_gray" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="46dp"
-            android:gravity="center_vertical"
-            android:background="@color/white"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/dimen_36"
-            android:paddingTop="@dimen/dimen_20"
-            android:paddingRight="@dimen/dimen_34"
-            android:paddingBottom="@dimen/dimen_20">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="学校/培训机构"
-                android:textColor="@color/color_client_neworder"
-                android:textSize="@dimen/textSize_14" />
-
-            <EditText
-                android:id="@+id/et_school_name"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
-                android:layout_weight="1"
-                android:background="@null"
-                android:gravity="right|center_vertical"
-                android:hint="请输入"
-                android:maxLength="11"
-                android:textColor="@color/color_bottom"
-                android:textSize="@dimen/textSize_13" />
-        </LinearLayout>
-
-        <View style="@style/style_common_line_gray" />
-
-        <LinearLayout
-            android:id="@+id/ll_date"
-            android:layout_width="match_parent"
-            android:layout_height="46dp"
-            android:gravity="center_vertical"
-            android:background="@color/white"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/dimen_36"
-            android:paddingTop="@dimen/dimen_20"
-            android:paddingRight="@dimen/dimen_34"
-            android:paddingBottom="@dimen/dimen_20">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="起止时间"
-                android:textColor="@color/color_client_neworder"
-                android:textSize="@dimen/textSize_14" />
-
-            <TextView
-                android:id="@+id/tv_time"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
-                android:layout_weight="1"
-                android:drawableEnd="@mipmap/rliv"
-                android:drawablePadding="@dimen/dimen_14"
-                android:gravity="right|center_vertical"
-                android:textColor="@color/color_bottom"
-                android:textSize="@dimen/textSize_13" />
-        </LinearLayout>
-
-        <View style="@style/style_common_line_gray" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="46dp"
-            android:gravity="center_vertical"
-            android:background="@color/white"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/dimen_36"
-            android:paddingTop="@dimen/dimen_20"
-            android:paddingRight="@dimen/dimen_34"
-            android:paddingBottom="@dimen/dimen_20">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="成绩"
-                android:textColor="@color/color_client_neworder"
-                android:textSize="@dimen/textSize_14" />
-
-            <EditText
-                android:id="@+id/cheng_ji"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
-                android:layout_weight="1"
-                android:background="@null"
-                android:gravity="right|center_vertical"
-                android:hint="请输入"
-                android:textColor="@color/color_bottom"
-                android:textSize="@dimen/textSize_13" />
-        </LinearLayout>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dimen_16"
-            android:background="@color/color_white"
             android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="3dp"
-                android:padding="@dimen/dimen_30"
-                android:text="证书"
-                android:textColor="@color/color_client_neworder"
-                android:textSize="@dimen/textSize_15" />
-
-            <View style="@style/style_common_line_gray" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_margin="@dimen/dimen_30"
-                >
-                <com.eanfang.base.kit.picture.picture.PictureRecycleView
-                    android:id="@+id/recycleview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                </com.eanfang.base.kit.picture.picture.PictureRecycleView>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/dimen_36"
+                    android:paddingTop="@dimen/dimen_20"
+                    android:paddingRight="@dimen/dimen_34"
+                    android:paddingBottom="@dimen/dimen_20">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@mipmap/ic_must_input"
+                        android:drawablePadding="@dimen/dimen_4"
+                        android:text="专业或培训内容"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_14" />
+
+                    <EditText
+                        android:id="@+id/et_major"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="right|center_vertical"
+                        android:hint="请输入"
+                        android:maxLength="11"
+                        android:textColor="@color/color_bottom"
+                        android:textSize="@dimen/textSize_13" />
+                </LinearLayout>
+
+                <View style="@style/style_common_line_gray" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/dimen_36"
+                    android:paddingTop="@dimen/dimen_20"
+                    android:paddingRight="@dimen/dimen_34"
+                    android:paddingBottom="@dimen/dimen_20">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="证书编号"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_14" />
+
+                    <EditText
+                        android:id="@+id/et_num"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="right|center_vertical"
+                        android:hint="请输入"
+                        android:inputType="number"
+                        android:maxLength="11"
+                        android:textColor="@color/color_bottom"
+                        android:textSize="@dimen/textSize_13" />
+                </LinearLayout>
+
+                <View style="@style/style_common_line_gray" />
+
+                <LinearLayout
+                    android:id="@+id/ll_education"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/dimen_36"
+                    android:paddingTop="@dimen/dimen_20"
+                    android:paddingRight="@dimen/dimen_34"
+                    android:paddingBottom="@dimen/dimen_20">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="学位或级别"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_14" />
+
+                    <TextView
+                        android:id="@+id/tv_education"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:drawableRight="@mipmap/arrow_down"
+                        android:drawablePadding="@dimen/dimen_14"
+                        android:gravity="right|center_vertical"
+                        android:text=""
+                        android:textColor="@color/color_bottom"
+                        android:textSize="@dimen/textSize_13" />
+                </LinearLayout>
+
+                <View style="@style/style_common_line_gray" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/dimen_36"
+                    android:paddingTop="@dimen/dimen_20"
+                    android:paddingRight="@dimen/dimen_34"
+                    android:paddingBottom="@dimen/dimen_20">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="学校/培训机构"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_14" />
+
+                    <EditText
+                        android:id="@+id/et_school_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="right|center_vertical"
+                        android:hint="请输入"
+                        android:maxLength="11"
+                        android:textColor="@color/color_bottom"
+                        android:textSize="@dimen/textSize_13" />
+                </LinearLayout>
+
+                <View style="@style/style_common_line_gray" />
+
+                <LinearLayout
+                    android:id="@+id/ll_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/dimen_36"
+                    android:paddingTop="@dimen/dimen_20"
+                    android:paddingRight="@dimen/dimen_34"
+                    android:paddingBottom="@dimen/dimen_20">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="起止时间"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_14" />
+
+                    <TextView
+                        android:id="@+id/tv_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1"
+                        android:drawableEnd="@mipmap/rliv"
+                        android:drawablePadding="@dimen/dimen_14"
+                        android:gravity="right|center_vertical"
+                        android:textColor="@color/color_bottom"
+                        android:textSize="@dimen/textSize_13" />
+                </LinearLayout>
+
+                <View style="@style/style_common_line_gray" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/dimen_36"
+                    android:paddingTop="@dimen/dimen_20"
+                    android:paddingRight="@dimen/dimen_34"
+                    android:paddingBottom="@dimen/dimen_20">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="成绩"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_14" />
+
+                    <EditText
+                        android:id="@+id/cheng_ji"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:gravity="right|center_vertical"
+                        android:hint="请输入"
+                        android:textColor="@color/color_bottom"
+                        android:textSize="@dimen/textSize_13" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_16"
+                    android:background="@color/color_white"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="3dp"
+                        android:padding="@dimen/dimen_30"
+                        android:text="证书"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_15" />
+
+                    <View style="@style/style_common_line_gray" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dimen_30"
+                        android:orientation="horizontal">
+
+                        <com.eanfang.base.kit.picture.picture.PictureRecycleView
+                            android:id="@+id/recycleview"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                        </com.eanfang.base.kit.picture.picture.PictureRecycleView>
+                    </LinearLayout>
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
     <TextView
         android:id="@+id/tv_save"
@@ -265,4 +283,4 @@
         android:textSize="@dimen/textSize_14"
         android:visibility="gone" />
 
-</RelativeLayout>
+</LinearLayout>

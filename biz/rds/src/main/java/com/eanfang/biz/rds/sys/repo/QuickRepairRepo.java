@@ -3,12 +3,10 @@ package com.eanfang.biz.rds.sys.repo;
 import androidx.lifecycle.MutableLiveData;
 
 import com.eanfang.biz.model.bean.DesignOrderInfoBean;
+import com.eanfang.biz.model.bean.InstallOrderConfirmBean;
 import com.eanfang.biz.model.bean.OrderCountBean;
 import com.eanfang.biz.model.entity.RepairOrderEntity;
 import com.eanfang.biz.rds.base.BaseRepo;
-
-
-
 import com.eanfang.biz.rds.sys.ds.impl.QuickRepairDs;
 
 import org.json.JSONObject;
@@ -46,12 +44,12 @@ public class QuickRepairRepo extends BaseRepo<QuickRepairDs> {
     }
     /**
      * 报修订单
-     * @param designOrderInfoBean
+     * @param installOrderConfirmBean
      * @return
      */
-    public MutableLiveData<JSONObject> createInstallOrder(DesignOrderInfoBean designOrderInfoBean) {
+    public MutableLiveData<JSONObject> createInstallOrder(InstallOrderConfirmBean installOrderConfirmBean) {
         MutableLiveData<JSONObject> mutableLiveData = new MutableLiveData<>();
-        remoteDataSource.createInstallOrder(designOrderInfoBean, mutableLiveData::setValue);
+        remoteDataSource.createInstallOrder(installOrderConfirmBean, mutableLiveData::setValue);
         return mutableLiveData;
     }
 

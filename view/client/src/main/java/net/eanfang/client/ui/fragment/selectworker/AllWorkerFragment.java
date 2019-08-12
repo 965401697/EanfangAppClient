@@ -41,8 +41,10 @@ import net.eanfang.client.ui.activity.pay.NewPayActivity;
 import net.eanfang.client.ui.activity.worksapce.SelectWorkerActivity;
 import net.eanfang.client.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.client.ui.activity.worksapce.WorkerDetailActivity;
+import net.eanfang.client.ui.activity.worksapce.repair.AddTroubleActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.RepairActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.RepairTypeActivity;
+import net.eanfang.client.ui.activity.worksapce.repair.TroubleListActivity;
 import net.eanfang.client.ui.adapter.SelectWorkerAdapter;
 
 import java.util.ArrayList;
@@ -432,6 +434,7 @@ public class AllWorkerFragment extends BaseFragment implements SwipeRefreshLayou
                     if (Constant.RepairStatus.CREATED.v == bean.getStatus().intValue()) {
                         payment(bean);
                     } else {
+                        // 一键报修
                         submitSuccess();
                     }
                 }));
@@ -450,9 +453,8 @@ public class AllWorkerFragment extends BaseFragment implements SwipeRefreshLayou
         bundle.putSerializable("message", message);
         intent.putExtras(bundle);
         startActivity(intent);
-//        closeActivity();
+        closeActivity();
         finishSelf();
-
     }
 
     /**
@@ -488,8 +490,9 @@ public class AllWorkerFragment extends BaseFragment implements SwipeRefreshLayou
     private void closeActivity() {
         ClientApplication.get().closeActivity(RepairTypeActivity.class);
         ClientApplication.get().closeActivity(RepairActivity.class);
+        ClientApplication.get().closeActivity(AddTroubleActivity.class);
+        ClientApplication.get().closeActivity(TroubleListActivity.class);
         ClientApplication.get().closeActivity(SelectWorkerActivity.class);
-        finishSelf();
     }
 
     @Override

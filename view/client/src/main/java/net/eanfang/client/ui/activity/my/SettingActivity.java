@@ -163,7 +163,8 @@ public class SettingActivity extends BaseActivity {
             //清空权限
             PermKit.permList.clear();
             CacheKit.get().remove(LoginBean.class.getName());
-            CleanMessageUtil.clearAllCache(ClientApplication.get());
+            // 切换账号后 立即技师认证  地区为空
+//            CleanMessageUtil.clearAllCache(ClientApplication.get());
             finish();
             startActivity(new Intent(SettingActivity.this, SplashActivity.class));
             BaseApplication.get().closeActivity(MainActivity.class);

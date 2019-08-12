@@ -2,6 +2,7 @@ package com.eanfang.biz.rds.sys.api;
 
 import com.eanfang.base.network.model.BaseResponseBody;
 import com.eanfang.biz.model.bean.DesignOrderInfoBean;
+import com.eanfang.biz.model.bean.InstallOrderConfirmBean;
 import com.eanfang.biz.model.bean.OrderCountBean;
 import com.eanfang.biz.model.bean.QueryEntry;
 import com.eanfang.biz.model.entity.RepairOrderEntity;
@@ -17,10 +18,11 @@ import retrofit2.http.POST;
  * Date ：2019-07-24
  * Describe :
  */
-public interface QuickRepairApi{
+public interface QuickRepairApi {
 
     /**
      * 订单数量
+     *
      * @param queryEntry
      * @return
      */
@@ -29,6 +31,7 @@ public interface QuickRepairApi{
 
     /**
      * 报修订单
+     *
      * @param repairOrderEntity
      * @return
      */
@@ -37,13 +40,16 @@ public interface QuickRepairApi{
 
     /**
      * 快速报装
-     * @param designOrderInfoBean
+     *
+     * @param installOrderConfirmBean
      * @return
      */
     @POST("/yaf_site/siteInstallOrder/create")
-    Observable<BaseResponseBody<JSONObject>> createInstallOrder(@Body DesignOrderInfoBean designOrderInfoBean);
+    Observable<BaseResponseBody<JSONObject>> createInstallOrder(@Body InstallOrderConfirmBean installOrderConfirmBean);
+
     /**
      * 免费设计
+     *
      * @param designOrderInfoBean
      * @return
      */

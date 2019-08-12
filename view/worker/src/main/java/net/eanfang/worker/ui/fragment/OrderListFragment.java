@@ -182,7 +182,12 @@ public class OrderListFragment extends BaseFragment implements
                         }
                         intent.putExtra("orderId", item.getId());
                         intent.putExtra("workerUserId", item.getAssigneeUser().getUserId());
-                        intent.putExtra("companyName", item.getOwnerOrg().getBelongCompany().getOrgName());
+                        if (item.getOwnerOrg() != null) {
+                            intent.putExtra("companyName", item.getOwnerOrg().getBelongCompany().getOrgName());
+                        } else {
+                            intent.putExtra("companyName", "个人");
+                        }
+
                         intent.putExtra("phoneSolve", item.getIsPhoneSolve());
                         intent.putExtra("companyUid", item.getAssigneeOrg().getCompanyId());
                         intent.putExtra("clientCompanyUid", item.getOwnerCompanyId());
