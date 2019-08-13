@@ -27,14 +27,14 @@ public class SecurityCommentListAdapter extends BaseQuickAdapter<SecurityComment
     @Override
     protected void convert(BaseViewHolder helper, SecurityCommentListBean.ListBean item) {
         if (item.getAccountEntity().getAccId().equals(WorkerApplication.get().getAccId())) {
-            helper.setText(R.id.tv_comment, "我：" + item.getCommentsEntity().getCommentsContent());
+            helper.setText(R.id.tv_comment, "我：" + item.getCommentsContent());
         } else {
-            helper.setText(R.id.tv_comment, item.getAccountEntity().getRealName() + "：" + item.getCommentsEntity().getCommentsContent());
+            helper.setText(R.id.tv_comment, item.getAccountEntity().getRealName() + "：" + item.getCommentsContent());
         }
-        if (StrUtil.isEmpty(item.getSpcContent())) {
+        if (StrUtil.isEmpty(item.getAskSpCircleEntity().getSpcContent())) {
             helper.setText(R.id.tv_content, "[图片]");
         } else {
-            helper.setText(R.id.tv_content, item.getSpcContent());
+            helper.setText(R.id.tv_content, item.getAskSpCircleEntity().getSpcContent());
         }
         if (item.getReadStatus() == 0 && mIsUnRead) {
             helper.setVisible(R.id.tv_unread, true);

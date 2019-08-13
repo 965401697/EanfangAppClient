@@ -9,7 +9,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.eanfang.base.widget.controltool.ControlToolView;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.JumpItent;
 import com.flyco.tablayout.SlidingTabLayout;
@@ -74,8 +73,6 @@ public class SecurityListActivity extends BaseActivity {
 
         vpSecurityList.setCurrentItem(0);
 
-        badgeView(R.id.tv_right, mSecurityNum);
-
         setRightTitleOnClickListener((v) -> {
             JumpItent.jump(SecurityListActivity.this, SecurityPersonalActivity.class, REQUEST_LIST);
         });
@@ -87,6 +84,7 @@ public class SecurityListActivity extends BaseActivity {
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(0, 6, true)
                 .setBadgeTextSize(10, true);
+        qBadgeViewMaintain.setBadgeNumber(mSecurityNum);
     }
 
     @OnClick(R.id.iv_create)
@@ -135,18 +133,9 @@ public class SecurityListActivity extends BaseActivity {
         } else if (resultCode == RESULT_OK && requestCode == REQUEST_LIST) {
             // list 回来更新数量
             mSecurityNum = data.getIntExtra("mSecurityNum", 0);
-            badgeView(R.id.tv_right, mSecurityNum);
+            qBadgeViewMaintain.setBadgeNumber(mSecurityNum);
         }
     }
 
-    private void badgeView(int id, int number) {
-        ControlToolView.getBadge(ClientApplication.get().getApplicationContext())
-                .setTargetView(findViewById(id))
-                .setPadding(3)
-                .setOffset(0, 6)
-                .setBadgeNum(number)
-                .badge();
-
-    }
 
 }

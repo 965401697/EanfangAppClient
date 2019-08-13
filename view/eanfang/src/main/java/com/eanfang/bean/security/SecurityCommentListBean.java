@@ -1,7 +1,6 @@
 package com.eanfang.bean.security;
 
 import com.eanfang.biz.model.entity.AccountEntity;
-import com.eanfang.biz.model.entity.WorkerEntity;
 
 import java.io.Serializable;
 import java.util.List;
@@ -29,41 +28,24 @@ public class SecurityCommentListBean implements Serializable {
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class ListBean implements Serializable{
+    public static class ListBean implements Serializable {
 
         private AccountEntity accountEntity;
-        private CommentsEntityBean commentsEntity;
+        private CommentsEntityBean askSpCircleEntity;
         private String createTime;
-        private PublisherUserBean publisherUser;
-        private String spcContent;
+        private String commentsContent;
         private int readStatus;
-        private int spcId;
-        private int type;
-        private WorkerEntity workerEntity;
+
 
         @Getter
         @Setter
         @NoArgsConstructor
         @AllArgsConstructor
-        public static class CommentsEntityBean implements Serializable{
-
-            private String commentsContent;
+        public static class CommentsEntityBean implements Serializable {
             private String createTime;
+            private String spcContent;
+            private int spcId;
             private int type;
-        }
-
-        @Getter
-        @Setter
-        @NoArgsConstructor
-        @AllArgsConstructor
-        public static class PublisherUserBean implements Serializable{
-
-            private String accId;
-            private boolean companyAdmin;
-            private String createTime;
-            private boolean superAdmin;
-            private boolean sysAdmin;
-
         }
 
     }

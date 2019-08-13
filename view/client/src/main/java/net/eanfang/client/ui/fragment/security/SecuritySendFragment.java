@@ -54,7 +54,7 @@ public class SecuritySendFragment extends TemplateItemListFragment {
 
     public void doJump(int position, boolean isCommon) {
         Bundle bundle = new Bundle();
-        bundle.putLong("spcId", securityCommentListAdapter.getData().get(position).getSpcId());
+        bundle.putLong("spcId", securityCommentListAdapter.getData().get(position).getAskSpCircleEntity().getSpcId());
         bundle.putBoolean("isCommon", isCommon);
         JumpItent.jump(getActivity(), SecurityDetailActivity.class, bundle);
     }

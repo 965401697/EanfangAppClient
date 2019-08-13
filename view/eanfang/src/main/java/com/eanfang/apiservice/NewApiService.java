@@ -720,7 +720,7 @@ public interface NewApiService {
     /**
      * 安防圈评论列表
      */
-    String SERCURITY_COMMENT_LIST = BASE_URL + "/yaf_spc/spcircle/commentList";
+    String SERCURITY_COMMENT_LIST = BASE_URL + "/yaf_spc/spcircle/commentsList";
     /**
      * 安防圈点赞列表
      */
