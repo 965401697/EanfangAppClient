@@ -44,13 +44,16 @@ public class RepairTypeActivity extends BaseActivity {
         });
     }
 
-    @OnClick({R.id.iv_repairNew})
+    @OnClick({R.id.iv_repairNew, R.id.tv_repairPhone})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_repairNew:
                 if (PermKit.get().getRepairCreatePerm()) {
                     JumpItent.jump(RepairTypeActivity.this, AddTroubleActivity.class);
                 }
+                break;
+            case R.id.tv_repairPhone:
+                JumpItent.jump(RepairTypeActivity.this, RepairPhoneActivity.class);
                 break;
             default:
                 break;

@@ -1,9 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.activity.worksapce.repair.RepairPhoneActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <include layout="@layout/header_eanfang" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_450">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_400"
+            android:background="@mipmap/ic_repair_phone_back" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="@dimen/dimen_24"
+            android:layout_marginEnd="@dimen/dimen_24"
+            android:background="@drawable/bg_cancle"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/text_repair_personalinfo"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_15" />
+
+            </LinearLayout>
+
+            <View style="@style/style_common_line_gray" />
+
+            <include layout="@layout/layout_repair_personal_info_top" />
+
+            <LinearLayout
+                android:id="@+id/ll_noPersonalInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/dimen_30"
+                android:paddingBottom="@dimen/dimen_30"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="暂无，直接创建"
+                    android:textColor="@color/color_bottom"
+                    android:textSize="@dimen/textSize_15" />
+
+                <TextView
+                    android:id="@+id/tv_createPersonalInfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_40"
+                    android:background="@drawable/shape_bg_sure"
+                    android:gravity="center"
+                    android:paddingLeft="@dimen/dimen_70"
+                    android:paddingTop="@dimen/dimen_30"
+                    android:paddingRight="@dimen/dimen_70"
+                    android:paddingBottom="@dimen/dimen_30"
+                    android:text="创建用户信息"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/textSize_15" />
+            </LinearLayout>
+
+            <View style="@style/style_common_line_gray" />
+
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_24"
+        android:layout_marginTop="@dimen/dimen_60"
+        android:layout_marginEnd="@dimen/dimen_24"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="合作公司"
+            android:textColor="@color/color_client_neworder"
+            android:textSize="@dimen/textSize_15" />
+    </LinearLayout>
+
+</LinearLayout>

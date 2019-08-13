@@ -76,8 +76,6 @@ public class RepairActivity extends BaseClientActivity {
     EditText etNotice;
     @BindView(R.id.ll_personalInfoTop)
     LinearLayout llPersonalInfoTop;
-    @BindView(R.id.tv_createPersonalInfo)
-    TextView tvCreatePersonalInfo;
     @BindView(R.id.ll_noPersonalInfo)
     LinearLayout llNoPersonalInfo;
     @BindView(R.id.tv_name)
