@@ -12,7 +12,7 @@ import com.eanfang.util.JumpItent;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.online.DividerItemDecoration;
-import net.eanfang.client.ui.activity.worksapce.online.ManufacturerAfterSaleActivity;
+import net.eanfang.client.ui.activity.worksapce.online.SystemTypeActivity;
 import net.eanfang.client.ui.adapter.HomeAllBusinessTypeAdapter;
 
 import java.util.ArrayList;
