@@ -17,6 +17,7 @@ import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.biz.rds.base.BaseViewModel;
 import com.eanfang.biz.rds.sys.ds.impl.LoginDs;
 import com.eanfang.biz.rds.sys.repo.LoginRepo;
+import com.eanfang.config.EanfangConst;
 import com.eanfang.util.CleanMessageUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
@@ -157,6 +158,7 @@ public class SettingActivity extends BaseActivity {
             PermKit.permList.clear();
             // 切换账号后 立即技师认证  地区为空
 //            CleanMessageUtil.clearAllCache(WorkerApplication.get());
+            CacheKit.get().remove(EanfangConst.RONG_YUN_TOKEN);
             CacheKit.get().remove(LoginBean.class.getName());
             finish();
             startActivity(new Intent(SettingActivity.this, SplashActivity.class));

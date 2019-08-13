@@ -17,6 +17,7 @@ import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.biz.rds.base.BaseViewModel;
 import com.eanfang.biz.rds.sys.ds.impl.LoginDs;
 import com.eanfang.biz.rds.sys.repo.LoginRepo;
+import com.eanfang.config.EanfangConst;
 import com.eanfang.util.CleanMessageUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
@@ -148,16 +149,16 @@ public class SettingActivity extends BaseActivity {
     private void signout() {
         loginRepo.logout().observe(SettingActivity.this, (d) -> {
             XGPushManager.delAccount(SettingActivity.this, BaseApplication.get().getAccount().getMobile(), new XGIOperateCallback() {
-                        @Override
-                        public void onSuccess(Object o, int i) {
+                @Override
+                public void onSuccess(Object o, int i) {
 
-                        }
+                }
 
-                        @Override
-                        public void onFail(Object o, int i, String s) {
+                @Override
+                public void onFail(Object o, int i, String s) {
 
-                        }
-                    });
+                }
+            });
             //退出融云
             RongIM.getInstance().logout();
             //清空权限
@@ -165,6 +166,7 @@ public class SettingActivity extends BaseActivity {
             CacheKit.get().remove(LoginBean.class.getName());
             // 切换账号后 立即技师认证  地区为空
 //            CleanMessageUtil.clearAllCache(ClientApplication.get());
+            CacheKit.get().remove(EanfangConst.RONG_YUN_TOKEN);
             finish();
             startActivity(new Intent(SettingActivity.this, SplashActivity.class));
             BaseApplication.get().closeActivity(MainActivity.class);

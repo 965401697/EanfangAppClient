@@ -124,6 +124,7 @@ public class AddAuthQualifyActivity extends BaseActivity implements SelectTimeDi
             setRightTitleOnClickListener(view -> {
                         setRightTitle("保存");
                         setZhiDu(true);
+                        recycleview.isShow(true, selectList);
                         setRightTitleOnClickListener(view1 -> doVerify());
                     }
             );

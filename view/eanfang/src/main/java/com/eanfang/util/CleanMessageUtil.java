@@ -7,14 +7,8 @@ package com.eanfang.util;
 import android.content.Context;
 import android.os.Environment;
 
-import com.eanfang.base.BaseApplication;
-import com.eanfang.base.kit.cache.CacheKit;
-import com.eanfang.config.EanfangConst;
-
 import java.io.File;
 import java.math.BigDecimal;
-
-import cn.hutool.core.io.FileUtil;
 
 /**
  * 清除缓存
@@ -44,8 +38,8 @@ public class CleanMessageUtil {
             deleteDir(context.getExternalCacheDir());
             deleteDir(context.getExternalFilesDir(Environment.getDataDirectory().getAbsolutePath()));
         }
-        //删除融云 token
-        CacheKit.get().remove(EanfangConst.RONG_YUN_TOKEN);
+        //删除融云 token (在setting 退出登录中进行 )
+//        CacheKit.get().remove(EanfangConst.RONG_YUN_TOKEN);
     }
 
     private static boolean deleteDir(File dir) {
