@@ -2,6 +2,7 @@ package net.eanfang.client.ui.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,10 +14,11 @@ import com.eanfang.biz.model.bean.QueryEntry;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseFragment;
-import com.eanfang.util.StringUtils;
+import com.eanfang.util.JumpItent;
 
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.online.DividerItemDecoration;
+import net.eanfang.client.ui.activity.worksapce.online.ManufacturerAfterSaleActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.QuickRepairActivity;
 import net.eanfang.client.ui.adapter.HomeAllBrandAdapter;
 
@@ -34,6 +36,8 @@ public class HomeAllBrandFragment extends BaseFragment {
 
     @BindView(R.id.rec_home_all_brand)
     RecyclerView mRecHomeAllBrand;
+    @BindView(R.id.tv_allBrand)
+    TextView tvAllBrand;
     private HomeAllBrandAdapter adapter;
 
     @Override
@@ -87,6 +91,11 @@ public class HomeAllBrandFragment extends BaseFragment {
 
     @Override
     protected void setListener() {
-
+        tvAllBrand.setOnClickListener((view) -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("from", "home");
+            JumpItent.jump(getActivity(), ManufacturerAfterSaleActivity.class, bundle);
+        });
     }
+
 }

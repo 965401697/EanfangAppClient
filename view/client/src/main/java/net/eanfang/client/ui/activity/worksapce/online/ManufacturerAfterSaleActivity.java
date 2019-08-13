@@ -6,6 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.config.Config;
@@ -15,9 +19,6 @@ import net.eanfang.client.ui.base.BaseClientActivity;
 
 import java.io.Serializable;
 
-import androidx.core.widget.NestedScrollView;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -33,6 +34,8 @@ public class ManufacturerAfterSaleActivity extends BaseClientActivity implements
     private GridLayoutManager gridLayoutManager;
     private ManufacturerAfterSaleAdapter manufacturerAfterSaleAdapter;
     private static final int RESULT_DATACODE = 200;
+    private String mFrom;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_manufacturer_after_sale);
@@ -40,6 +43,7 @@ public class ManufacturerAfterSaleActivity extends BaseClientActivity implements
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
         int find = intent.getIntExtra("find", 0);
+        mFrom = intent.getStringExtra("from");
 
         //2.声名gridview布局方式  第二个参数代表是3列的网格视图 (垂直滑动的情况下, 如果是水平滑动就代表3行)
         gridLayoutManager = new GridLayoutManager(ManufacturerAfterSaleActivity.this, 2);
@@ -57,10 +61,13 @@ public class ManufacturerAfterSaleActivity extends BaseClientActivity implements
             manufacturerAfterSaleAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                    if (mFrom.equals("home")) {
+                        return;
+                    }
                     SharedPreferences sp = getSharedPreferences("basis", MODE_PRIVATE);
                     SharedPreferences.Editor edit = sp.edit();
-                    edit.putString("DataName",manufacturerAfterSaleAdapter.getData().get(position).getDataName());
-                    edit.putInt("DataId",manufacturerAfterSaleAdapter.getData().get(position).getDataId());
+                    edit.putString("DataName", manufacturerAfterSaleAdapter.getData().get(position).getDataName());
+                    edit.putInt("DataId", manufacturerAfterSaleAdapter.getData().get(position).getDataId());
                     edit.commit();
                     finish();
                 }
@@ -85,6 +92,9 @@ public class ManufacturerAfterSaleActivity extends BaseClientActivity implements
         manufacturerAfterSaleAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                if (mFrom.equals("home")) {
+                    return;
+                }
                 Intent intent = new Intent(ManufacturerAfterSaleActivity.this, ExpertListActivity.class);
                 intent.putExtra("brand", (Serializable) adapter.getData().get(position));
                 startActivity(intent);

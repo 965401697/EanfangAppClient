@@ -4,16 +4,19 @@
     android:layout_height="wrap_content"
     android:background="@color/white"
     android:orientation="vertical">
-<androidx.recyclerview.widget.RecyclerView
-    android:id="@+id/rec_home_all_brand"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:clipChildren="false"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rec_home_all_brand"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipChildren="false" />
+
     <TextView
+        android:id="@+id/tv_allBrand"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_86"
-        android:text="查看全部 >>"
         android:gravity="center"
+        android:text="查看全部 >>"
         android:textColor="@color/color_home_more_data"
-        android:textSize="11sp"/>
+        android:textSize="11sp" />
 </LinearLayout>

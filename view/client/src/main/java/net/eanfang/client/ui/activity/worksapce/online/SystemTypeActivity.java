@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.config.Config;
 
@@ -12,8 +15,6 @@ import net.eanfang.client.ui.base.BaseClientActivity;
 
 import java.io.Serializable;
 
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -21,6 +22,7 @@ public class SystemTypeActivity extends BaseClientActivity {
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
+    private String mFrom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +44,7 @@ public class SystemTypeActivity extends BaseClientActivity {
         recyclerView.setLayoutManager(gridLayoutManager); //设置分割线
         recyclerView.addItemDecoration(new DividerItemDecoration(this));
         systemTypeAdapter.bindToRecyclerView(recyclerView);
-
+        mFrom = getIntent().getStringExtra("from");
         systemTypeAdapter.setNewData(Config.get().getBusinessList(1));
 
         systemTypeAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -51,6 +53,9 @@ public class SystemTypeActivity extends BaseClientActivity {
                 systemTypeAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                        if (mFrom.equals("home")) {
+                            return;
+                        }
                         Intent intent = new Intent(SystemTypeActivity.this, ExpertListActivity.class);
                         intent.putExtra("brand", (Serializable) adapter.getData().get(position));
                         startActivity(intent);
