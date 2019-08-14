@@ -7,7 +7,6 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.alibaba.fastjson.JSONPObject;
@@ -59,7 +58,7 @@ public class TechnicianCertificationActivity extends BaseActivity {
         setContentView(R.layout.activity_technician_certification);
         ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+//        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         initView();
     }
 

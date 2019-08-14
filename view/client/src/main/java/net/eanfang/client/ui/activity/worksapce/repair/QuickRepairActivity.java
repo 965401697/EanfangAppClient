@@ -25,6 +25,7 @@ import java.util.List;
 public class QuickRepairActivity extends BaseActivity {
 
     private ActivityQuickRepairBinding mBinding;
+
     @Override
     protected ViewModel initViewModel() {
         return null;
@@ -42,13 +43,14 @@ public class QuickRepairActivity extends BaseActivity {
         setLeftBack(true);
         String deviceName = getIntent().getStringExtra("deviceBrandName");
         String brandName = getIntent().getStringExtra("dataCode");
+        String systemName = getIntent().getStringExtra("systemName");
         setTitle("报修/报装/设计");
         List<Fragment> fragments = new ArrayList<>();
         String[] titles = {"我要报修", "我要报装", "免费设计"};
         fragments.clear();
-        fragments.add(HomeRepairFragment.getInstance(0, deviceName,brandName));
-        fragments.add(HomeRepairFragment.getInstance(1, deviceName,brandName));
-        fragments.add(HomeRepairFragment.getInstance(2, deviceName,brandName));
+        fragments.add(HomeRepairFragment.getInstance(0, deviceName, brandName, systemName));
+        fragments.add(HomeRepairFragment.getInstance(1, deviceName, brandName, systemName));
+        fragments.add(HomeRepairFragment.getInstance(2, deviceName, brandName, systemName));
         mBinding.vpQuickRepair.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
@@ -65,7 +67,6 @@ public class QuickRepairActivity extends BaseActivity {
         mBinding.vpQuickRepair.setScanScroll(false);
         mBinding.tlQuickRepair.setCurrentTab(0);
     }
-
 
 
 }

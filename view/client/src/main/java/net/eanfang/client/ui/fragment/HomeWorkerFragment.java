@@ -23,6 +23,7 @@ import net.eanfang.client.ui.activity.MainActivity;
 import net.eanfang.client.ui.activity.worksapce.SelectWorkerActivity;
 import net.eanfang.client.ui.activity.worksapce.WorkerDetailActivity;
 import net.eanfang.client.ui.activity.worksapce.online.DividerItemDecoration;
+import net.eanfang.client.ui.activity.worksapce.repair.QuickRepairActivity;
 import net.eanfang.client.ui.adapter.FragmentHomeCompanyAdapter;
 
 import java.util.ArrayList;
@@ -78,14 +79,6 @@ public class HomeWorkerFragment extends BaseFragment {
      * 请求数据
      */
     private void initListData(int areaId) {
-        adapter.setOnItemClickListener((adapter, view, position) -> {
-            HomeCompanyBean homeCompanyBean = (HomeCompanyBean) adapter.getData().get(position);
-            Intent intent = new Intent(getActivity(), WorkerDetailActivity.class);
-            intent.putExtra("companyUserId", homeCompanyBean.getCompanyUserId());
-            intent.putExtra("workerId", String.valueOf(homeCompanyBean.getId()));
-            intent.putExtra("doorFee", 0);
-            startActivity(intent);
-        });
         EanfangHttp.post(NewApiService.HOME_WORKER_LIST).params("page", "1").params("size", "2").params("areaId", areaId).execute(new EanfangCallback<HomeWorkerBean>(getActivity(), true, HomeWorkerBean.class, bean -> {
             boolean toRequestNew = (bean.getList() == null || bean.getList().size() == 0);
             if (toRequestNew) {
@@ -111,6 +104,39 @@ public class HomeWorkerFragment extends BaseFragment {
 
     @Override
     protected void setListener() {
+        adapter.setOnItemClickListener((adapter, view, position) -> {
+            HomeCompanyBean homeCompanyBean = (HomeCompanyBean) adapter.getData().get(position);
+            Intent intent = new Intent(getActivity(), WorkerDetailActivity.class);
+            intent.putExtra("companyUserId", homeCompanyBean.getCompanyUserId());
+            intent.putExtra("workerId", String.valueOf(homeCompanyBean.getId()));
+            intent.putExtra("doorFee", 0);
+            startActivity(intent);
+        });
+
+        adapter.setOnItemChildClickListener(((adapter1, view, position) -> {
+            switch (view.getId()) {
+                case R.id.btn_home_company_install:
+                    Bundle bundle_install = new Bundle();
+                    bundle_install.putString("type", "install");
+                    bundle_install.putString("assigneeUserId", adapter.getData().get(position).get);
+                    bundle_install.putString("assigneeCompanyId", "install");
+                    bundle_install.putString("assigneeTopCompanyId", "install");
+                    bundle_install.putString("assigneeOrgCode", "install");
+                    JumpItent.jump(getActivity(), QuickRepairActivity.class, bundle_install);
+                    break;
+                case R.id.btn_home_company_repair:
+                    Bundle bundle_repair = new Bundle();
+                    bundle_repair.putString("type", "repair");
+                    bundle_repair.putString("assigneeUserId", "install");
+                    bundle_repair.putString("assigneeCompanyId", "install");
+                    bundle_repair.putString("assigneeTopCompanyId", "install");
+                    bundle_repair.putString("assigneeOrgCode", "install");
+                    JumpItent.jump(getActivity(), QuickRepairActivity.class, bundle_repair);
+                    break;
+                default:
+                    break;
+            }
+        }));
         /**
          * 0 安防公司
          * 1 找技师

@@ -12,9 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.eanfang.biz.model.entity.BaseDataEntity;
 import com.eanfang.config.Config;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.worksapce.repair.QuickRepairActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
 import java.io.Serializable;
@@ -73,7 +75,12 @@ public class ManufacturerAfterSaleActivity extends BaseClientActivity implements
                 }
             });
         } else {
-            setTitle("厂商售后");
+            if (mFrom.equals("home")) {
+                setTitle("全部品牌");
+            } else {
+                setTitle("厂商售后");
+            }
+
             setLeftBack();
             initView();
         }
@@ -93,11 +100,17 @@ public class ManufacturerAfterSaleActivity extends BaseClientActivity implements
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if (mFrom.equals("home")) {
-                    return;
+                    BaseDataEntity bean = (BaseDataEntity) adapter.getData().get(position);
+                    Intent intent = new Intent(ManufacturerAfterSaleActivity.this, QuickRepairActivity.class);
+                    intent.putExtra("deviceBrandName", bean.getDataName());
+                    intent.putExtra("dataCode", bean.getDataCode());
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(ManufacturerAfterSaleActivity.this, ExpertListActivity.class);
+                    intent.putExtra("brand", (Serializable) adapter.getData().get(position));
+                    startActivity(intent);
                 }
-                Intent intent = new Intent(ManufacturerAfterSaleActivity.this, ExpertListActivity.class);
-                intent.putExtra("brand", (Serializable) adapter.getData().get(position));
-                startActivity(intent);
+
             }
         });
     }

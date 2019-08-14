@@ -199,7 +199,7 @@ public class SecurityPersonalActivity extends BaseActivity implements SwipeRefre
         setLeftBack((v) -> {
             Bundle bundle = new Bundle();
             bundle.putInt("mSecurityNum", mSecurityNum);
-            setResult(RESULT_OK, new Intent());
+            setResult(RESULT_OK, new Intent().putExtras(bundle));
             finishSelf();
         });
     }

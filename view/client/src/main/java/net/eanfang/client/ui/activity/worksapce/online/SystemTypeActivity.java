@@ -29,12 +29,17 @@ public class SystemTypeActivity extends BaseClientActivity {
         setContentView(R.layout.activity_system_type);
         ButterKnife.bind(this);
         super.onCreate(savedInstanceState);
-        setTitle("系统类别");
-        setLeftBack();
         initView();
     }
 
     private void initView() {
+        mFrom = getIntent().getStringExtra("from");
+        if (mFrom.equals("home")) {
+            setTitle("全部业务");
+        } else {
+            setTitle("系统类别");
+        }
+        setLeftBack();
         //2.声名gridview布局方式  第二个参数代表是3列的网格视图 (垂直滑动的情况下, 如果是水平滑动就代表3行)
         GridLayoutManager gridLayoutManager = new GridLayoutManager(SystemTypeActivity.this, 2);
         //3.给GridLayoutManager设置滑动的方向
@@ -44,7 +49,7 @@ public class SystemTypeActivity extends BaseClientActivity {
         recyclerView.setLayoutManager(gridLayoutManager); //设置分割线
         recyclerView.addItemDecoration(new DividerItemDecoration(this));
         systemTypeAdapter.bindToRecyclerView(recyclerView);
-        mFrom = getIntent().getStringExtra("from");
+
         systemTypeAdapter.setNewData(Config.get().getBusinessList(1));
 
         systemTypeAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
@@ -55,10 +60,12 @@ public class SystemTypeActivity extends BaseClientActivity {
                     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                         if (mFrom.equals("home")) {
                             return;
+                        } else {
+                            Intent intent = new Intent(SystemTypeActivity.this, ExpertListActivity.class);
+                            intent.putExtra("brand", (Serializable) adapter.getData().get(position));
+                            startActivity(intent);
                         }
-                        Intent intent = new Intent(SystemTypeActivity.this, ExpertListActivity.class);
-                        intent.putExtra("brand", (Serializable) adapter.getData().get(position));
-                        startActivity(intent);
+
                     }
                 });
             }

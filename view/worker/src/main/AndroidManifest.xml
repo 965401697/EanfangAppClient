@@ -109,8 +109,7 @@
         <activity android:name=".ui.activity.techniciancertification.SubmitSuccessfullyJsActivity" />
         <activity android:name=".ui.activity.techniciancertification.RealNameAuthenticationActivity" />
         <!--<activity android:name=".ui.activity.techniciancertification.PerfectingPersonalDataActivity" />-->
-        <activity android:name=".ui.activity.techniciancertification.TechnicianCertificationActivity"
-            android:theme="@style/NoStatusStyle"/>
+        <activity android:name=".ui.activity.techniciancertification.TechnicianCertificationActivity" />
         <activity android:name=".ui.activity.authentication.MechanicalOrganizationActivity" />
         <activity android:name=".ui.activity.authentication.MoreCapabilityActivity" />
         <activity android:name=".ui.activity.authentication.QualificationsAndHonoursActivity" />
@@ -204,8 +203,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.eanfang.ui.activity.SelectAddressActivity"
-            android:windowSoftInputMode="stateAlwaysHidden"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".ui.activity.my.EvaluateActivity"
             android:screenOrientation="portrait" />

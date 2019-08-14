@@ -53,6 +53,7 @@ public class HomeRepairFragment extends BaseFragment {
     private static final String STATUS = "status";
     private static final String DEVICE_BRAND_NAME = "deviceBrandName";
     private static final String BRAND_DATA_CODE = "dataCode";
+    private static final String SYSTEM_NAME = "systemName";
     private static final int SELECT_ADDRESS_CALL_BACK_CODE = 1;
     /**
      * 设备信息 RequestCode
@@ -74,13 +75,16 @@ public class HomeRepairFragment extends BaseFragment {
     private String dataCode = "";
     private int mStatus;
 
+    private String mSystemName;
 
-    public static Fragment getInstance(int status, String deviceBrandName, String brandName) {
+
+    public static Fragment getInstance(int status, String deviceBrandName, String brandName, String systemName) {
         HomeRepairFragment fragment = new HomeRepairFragment();
         Bundle arguments = new Bundle();
         arguments.putInt(STATUS, status);
         arguments.putString(DEVICE_BRAND_NAME, deviceBrandName);
         arguments.putString(BRAND_DATA_CODE, brandName);
+        arguments.putString(SYSTEM_NAME, systemName);
         fragment.setArguments(arguments);
         return fragment;
     }
@@ -111,14 +115,24 @@ public class HomeRepairFragment extends BaseFragment {
             mStatus = getArguments().getInt(STATUS, 0);
             String deviceBrandName = getArguments().getString(DEVICE_BRAND_NAME);
             String brandDataCode = getArguments().getString(BRAND_DATA_CODE);
+            mSystemName = getArguments().getString(SYSTEM_NAME);
+            // 全部品牌报修
             if (!StrUtil.isEmpty(deviceBrandName)) {
-                mBinding.etHomeRepairBrand.setText(deviceBrandName);
-                mViewModel.setBrandData(deviceBrandName);
                 String name = Config.get().getModelNameByCode(brandDataCode, 1);
                 mBinding.etHomeRepairSys.setText(name);
                 String businessOneCode = Config.get().getBusinessCodeByName(name, 1);
                 mViewModel.setSysData(businessOneCode);
+                mBinding.etHomeRepairBrand.setText(deviceBrandName);
+                mViewModel.setBrandData(deviceBrandName);
+            } else {// 全部业务报修
+                //设备库
+                String businessOneCode = Config.get().getBusinessCodeByName(mSystemName, 1);
+                dataCode = businessOneCode;
+                mBinding.etHomeRepairSys.setText(mSystemName);
+                mBinding.etHomeRepairBrand.setText(null);
+                mViewModel.setSysData(businessOneCode);
             }
+
         }
         mBinding.setStatus(mStatus);
         if (mStatus != 0) {

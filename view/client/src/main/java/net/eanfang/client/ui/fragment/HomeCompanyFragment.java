@@ -80,7 +80,11 @@ public class HomeCompanyFragment extends BaseFragment {
      * 请求数据
      */
     private void initListData(int areaId) {
-        EanfangHttp.post(NewApiService.HOME_COMPANY_LIST).params("page", "1").params("size", "2").params("areaId", areaId).execute(new EanfangCallback<CompanyBean>(getActivity(), true, CompanyBean.class, bean -> {
+        EanfangHttp.post(NewApiService.HOME_COMPANY_LIST)
+                .params("page", "1")
+                .params("size", "2")
+                .params("areaId", areaId)
+                .execute(new EanfangCallback<CompanyBean>(getActivity(), true, CompanyBean.class, bean -> {
             boolean toRequestNew = (bean.getList() == null || bean.getList().size() == 0);
             if (toRequestNew) {
                 initListData(mProvinceId);

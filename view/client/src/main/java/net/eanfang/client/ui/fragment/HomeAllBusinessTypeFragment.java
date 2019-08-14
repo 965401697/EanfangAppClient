@@ -13,6 +13,7 @@ import com.eanfang.util.JumpItent;
 import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.worksapce.online.DividerItemDecoration;
 import net.eanfang.client.ui.activity.worksapce.online.SystemTypeActivity;
+import net.eanfang.client.ui.activity.worksapce.repair.QuickRepairActivity;
 import net.eanfang.client.ui.adapter.HomeAllBusinessTypeAdapter;
 
 import java.util.ArrayList;
@@ -61,6 +62,13 @@ public class HomeAllBusinessTypeFragment extends BaseFragment {
         HomeAllBusinessTypeAdapter adapter = new HomeAllBusinessTypeAdapter();
         adapter.bindToRecyclerView(mRecHomeAllBusiness);
         adapter.setNewData(businessTypeBeanArrayList);
+
+        adapter.setOnItemClickListener((adapter1, view, position) -> {
+            BusinessTypeBean bean = (BusinessTypeBean) adapter.getData().get(position);
+            Bundle bundle = new Bundle();
+            bundle.putString("systemName", bean.getTypeName());
+            JumpItent.jump(getActivity(), QuickRepairActivity.class, bundle);
+        });
     }
 
     @Override
