@@ -77,6 +77,8 @@ public class OtherDataActivity extends BaseActivity {
                 fillData();
             }
         }));
+        recycleviewCrim.addImagev(listener_crim);
+        recycleviewAccident.addImagev(listener_accident);
     }
 
     @Override
@@ -98,21 +100,22 @@ public class OtherDataActivity extends BaseActivity {
         etUrgentPhone.setText(mTechWorkerVerifyEntity.getContactPhone());
 
         if (!StrUtil.isEmpty(mTechWorkerVerifyEntity.getCrimePic())) {
-            picList_crim=recycleviewCrim.setData(mTechWorkerVerifyEntity.getCrimePic());
-            recycleviewCrim.showImagev(picList_crim,listener_crim);
-            recycleviewCrim.isShow(true,picList_crim);
-        }else{
+            picList_crim = recycleviewCrim.setData(mTechWorkerVerifyEntity.getCrimePic());
+            recycleviewCrim.showImagev(picList_crim, listener_crim);
+            recycleviewCrim.isShow(true, picList_crim);
+        } else {
             recycleviewCrim.addImagev(listener_crim);
         }
 
         if (!StrUtil.isEmpty(mTechWorkerVerifyEntity.getAccidentPics())) {
-            picList_accident=recycleviewAccident.setData(mTechWorkerVerifyEntity.getAccidentPics());
-            recycleviewAccident.showImagev(picList_accident,listener_accident);
-            recycleviewAccident.isShow(true,picList_accident);
-        }else{
+            picList_accident = recycleviewAccident.setData(mTechWorkerVerifyEntity.getAccidentPics());
+            recycleviewAccident.showImagev(picList_accident, listener_accident);
+            recycleviewAccident.isShow(true, picList_accident);
+        } else {
             recycleviewAccident.addImagev(listener_accident);
         }
     }
+
     PictureRecycleView.ImageListener listener_crim = list -> picList_crim = list;
     PictureRecycleView.ImageListener listener_accident = list -> picList_accident = list;
 

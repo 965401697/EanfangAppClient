@@ -28,10 +28,12 @@ import com.eanfang.biz.rds.base.LViewModelProviders;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.ui.activity.SelectAddressActivity;
+import com.eanfang.util.JumpItent;
 import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.client.R;
 import net.eanfang.client.databinding.FragmentHomeRepairBinding;
+import net.eanfang.client.ui.activity.worksapce.repair.AddTroubleActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.DeviceBrandActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.SelectDeviceTypeActivity;
 import net.eanfang.client.viewmodel.QuickRepairViewModel;
@@ -179,6 +181,9 @@ public class HomeRepairFragment extends BaseFragment {
             RxPerm.get(getActivity()).cameraPerm((isSuccess) -> {
                 accidentImage();
             });
+        });
+        mBinding.tvHomeRepairMore.setOnClickListener((view) -> {
+            JumpItent.jump(getActivity(), AddTroubleActivity.class);
         });
     }
 

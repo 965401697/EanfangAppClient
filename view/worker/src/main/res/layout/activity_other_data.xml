@@ -17,7 +17,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
 
@@ -35,9 +35,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="电子邮箱"
                     android:drawableLeft="@mipmap/ic_must_input"
                     android:drawablePadding="@dimen/dimen_4"
+                    android:text="电子邮箱"
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_14" />
 
@@ -69,9 +69,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="紧急联系人"
                     android:drawableLeft="@mipmap/ic_must_input"
                     android:drawablePadding="@dimen/dimen_4"
+                    android:text="紧急联系人"
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_14" />
 
@@ -104,9 +104,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="紧急联系人手机"
                     android:drawableLeft="@mipmap/ic_must_input"
                     android:drawablePadding="@dimen/dimen_4"
+                    android:text="紧急联系人手机"
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_14" />
 
@@ -133,16 +133,16 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/ts_lr_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:drawableLeft="@mipmap/ic_must_input"
+                    android:drawableRight="@mipmap/ts_wh"
+                    android:drawablePadding="@dimen/dimen_4"
                     android:padding="@dimen/dimen_30"
                     android:text="上传无犯罪记录证明"
-                    android:drawableLeft="@mipmap/ic_must_input"
-                    android:drawablePadding="@dimen/dimen_4"
-                    android:id="@+id/ts_lr_tv"
                     android:textColor="@color/color_client_neworder"
-                    android:textSize="@dimen/textSize_14"
-                    android:drawableRight="@mipmap/ts_wh"/>
+                    android:textSize="@dimen/textSize_14" />
 
                 <View style="@style/style_common_line_gray" />
 
@@ -151,10 +151,11 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:padding="@dimen/dimen_30">
+
                     <com.eanfang.base.kit.picture.picture.PictureRecycleView
                         android:id="@+id/recycleview_crim"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -168,10 +169,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:padding="@dimen/dimen_30"
-                    android:text="上传保险状况"
                     android:drawableLeft="@mipmap/ic_must_input"
                     android:drawablePadding="@dimen/dimen_4"
+                    android:padding="@dimen/dimen_30"
+                    android:text="上传保险状况"
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_14" />
 
@@ -186,7 +187,7 @@
                     <com.eanfang.base.kit.picture.picture.PictureRecycleView
                         android:id="@+id/recycleview_accident"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
 
 

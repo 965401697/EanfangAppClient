@@ -141,6 +141,7 @@
             android:layout_marginTop="@dimen/dimen_20"
             android:layout_marginBottom="@dimen/dimen_20"
             android:gravity="center"
+            android:padding="@dimen/dimen_20"
             android:text="精准报修，快速高效 去试试 >>"
             android:textColor="@color/color_main_header_bg"
             android:textSize="12sp" />

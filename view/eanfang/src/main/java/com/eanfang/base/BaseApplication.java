@@ -308,7 +308,7 @@ public class BaseApplication extends MultiDexApplication {
     }
 
     /**
-     * 取缓存 getUserId
+     * 取缓存 getUserIdspcircle/details
      *
      * @return getUserId
      */
