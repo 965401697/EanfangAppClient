@@ -130,11 +130,11 @@ public class QuickRepairViewModel extends BaseViewModel {
             mRepairBugEntity.setBugDescription(mBinding.etHomeRepairDescribe.getText().toString());
             mRepairOrderEntity.setRepairContactPhone(ClientApplication.get().getAccount().getMobile());
             // 技师id
-            mRepairOrderEntity.setAssigneeUserId();
+//            mRepairOrderEntity.setAssigneeUserId();
             // 安防公司 id
-            mRepairOrderEntity.setAssigneeCompanyId();
-            mRepairOrderEntity.setAssigneeTopCompanyId();
-            mRepairOrderEntity.setAssigneeOrgCode();
+//            mRepairOrderEntity.setAssigneeCompanyId();
+//            mRepairOrderEntity.setAssigneeTopCompanyId();
+//            mRepairOrderEntity.setAssigneeOrgCode();
             if (StrUtil.isEmpty(mRepairBugEntity.getBusinessThreeCode())) {
                 showToast("请选择系统类别");
                 return;

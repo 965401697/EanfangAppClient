@@ -118,7 +118,7 @@ public class HomeWorkerFragment extends BaseFragment {
                 case R.id.btn_home_company_install:
                     Bundle bundle_install = new Bundle();
                     bundle_install.putString("type", "install");
-                    bundle_install.putString("assigneeUserId", adapter.getData().get(position).get);
+//                    bundle_install.putString("assigneeUserId", adapter.getData().get(position).get);
                     bundle_install.putString("assigneeCompanyId", "install");
                     bundle_install.putString("assigneeTopCompanyId", "install");
                     bundle_install.putString("assigneeOrgCode", "install");
