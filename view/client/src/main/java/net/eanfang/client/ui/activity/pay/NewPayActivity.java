@@ -96,6 +96,7 @@ public class NewPayActivity extends BaseActivity {
     private Handler mHandler;
     private InvoiceEntity mInvoiceEntity;
     private final int INVOCIE_REQUEST_CODE = 1;//发票的code
+    private String mFrom = "";
 
     {
         mHandler = new Handler() {
@@ -146,7 +147,7 @@ public class NewPayActivity extends BaseActivity {
     private void initData() {
         Intent intent = getIntent();
         payLogEntity = (PayLogEntity) intent.getSerializableExtra("payLogEntity");
-
+        mFrom = intent.getStringExtra("from");
         if (payLogEntity == null) {
             showToast("参数错误,请重试");
             finish();
@@ -246,11 +247,13 @@ public class NewPayActivity extends BaseActivity {
                 break;
 
             case R.id.tv_outline_pay:
-                Intent intent = new Intent(NewPayActivity.this, StateChangeActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("message", MessageUtil.payLatter());
-                intent.putExtras(bundle);
-                startActivity(intent);
+                if (!StrUtil.isEmpty(mFrom) && mFrom.equals("orderConfirm")) {
+                    Intent intent = new Intent(NewPayActivity.this, StateChangeActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("message", MessageUtil.payLatter());
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                }
                 finish();
                 break;
             case R.id.tv_pay:
@@ -282,6 +285,8 @@ public class NewPayActivity extends BaseActivity {
                 tvWx.setTextColor(getResources().getColor(R.color.color_client_neworder));
                 tvCoupon.setTextColor(getResources().getColor(R.color.color_service_title));
                 tvPrice.setText(0 + "");
+                break;
+            default:
                 break;
         }
     }
@@ -476,6 +481,12 @@ public class NewPayActivity extends BaseActivity {
                 startActivity(intent);
             } else if (mPayType == 1) {
                 //微信支付
+                ClientApplication.get().closeActivity(NewPayActivity.class);
+                Intent intent_wx = new Intent(NewPayActivity.this, StateChangeActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("message", MessageUtil.paySuccess());
+                intent_wx.putExtras(bundle);
+                startActivity(intent_wx);
             }
             return;
         }
@@ -554,5 +565,6 @@ public class NewPayActivity extends BaseActivity {
 //        ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE))
 //                .hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);//关闭输入法
 //    }
+
 }
 

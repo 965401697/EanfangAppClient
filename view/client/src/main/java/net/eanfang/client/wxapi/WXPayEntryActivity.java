@@ -11,8 +11,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.eanfang.config.EanfangConst;
+import com.eanfang.base.BaseApplication;
 import com.eanfang.base.kit.SDKManager;
+import com.eanfang.config.EanfangConst;
 import com.eanfang.ui.base.BaseActivity;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
@@ -34,11 +35,12 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         iwxapi = SDKManager.getWXPay().createWXAPI(this, EanfangConst.WX_APPID_CLIENT);
         iwxapi.handleIntent(getIntent(), this);
+        super.onCreate(savedInstanceState);
 
     }
+
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -60,11 +62,8 @@ public class WXPayEntryActivity extends BaseActivity implements IWXAPIEventHandl
             switch (baseResp.errCode) {
                 case 0:
                     Toast.makeText(WXPayEntryActivity.this, "支付成功", Toast.LENGTH_SHORT).show();
-                    for (Activity a : transactionActivities) {
-                        if (a instanceof NewPayActivity) {
-                            ((NewPayActivity) a).subInvoice();
-                        }
-                    }
+                    Activity activity = BaseApplication.get().isExustebceActivity(NewPayActivity.class);
+                    ((NewPayActivity) activity).subInvoice();
                     finish();
                     break;
                 case -1:

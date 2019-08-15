@@ -1,8 +1,10 @@
 package net.eanfang.client.ui.activity.worksapce.repair;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -15,10 +17,13 @@ import androidx.lifecycle.ViewModel;
 
 import com.alibaba.fastjson.JSON;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.base.BaseApplication;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.V;
 import com.eanfang.base.kit.picture.picture.PictureRecycleView;
 import com.eanfang.base.kit.rx.RxPerm;
+import com.eanfang.biz.model.entity.CooperationEntity;
+import com.eanfang.biz.model.entity.CustDeviceEntity;
 import com.eanfang.biz.model.entity.RepairBugEntity;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
@@ -35,8 +40,6 @@ import com.eanfang.util.JumpItent;
 import com.eanfang.util.PhotoUtils;
 import com.eanfang.util.StringUtils;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.eanfang.biz.model.entity.CooperationEntity;
-import com.eanfang.biz.model.entity.CustDeviceEntity;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;

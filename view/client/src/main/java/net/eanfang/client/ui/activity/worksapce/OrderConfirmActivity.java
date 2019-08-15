@@ -301,6 +301,7 @@ public class OrderConfirmActivity extends BaseClientActivity {
                     LogUtil.e(TAG, "支付记录执行成功");
 //                    Intent intent = new Intent(OrderConfirmActivity.this, PayActivity.class);
                     Intent intent = new Intent(OrderConfirmActivity.this, NewPayActivity.class);
+                    intent.putExtra("from","orderConfirm");
                     intent.putExtra("payLogEntity", payLogEntity);
                     startActivity(intent);
                     closeActivity();

@@ -212,6 +212,12 @@ public class ScanCodeActivity extends BaseActivity {
                         Log.e("GG", "失败");
                         finish();
                     }
+
+                    @Override
+                    public void onServerError(String message) {
+                        super.onServerError(message);
+                        finish();
+                    }
                 });
     }
 

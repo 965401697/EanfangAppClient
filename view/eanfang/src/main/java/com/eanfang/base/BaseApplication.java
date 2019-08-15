@@ -234,6 +234,14 @@ public class BaseApplication extends MultiDexApplication {
         return activityStack.size();
     }
 
+    public Activity isExustebceActivity(final  Class<? extends Activity> mActivity){
+        for (Activity activity : activityStack) {
+            if(activity.getClass().getName().equals(mActivity.getName())){
+                return activity;
+            }
+        }
+        return null;
+    }
 
     //---------------------------------------------------缓存部分---------------------------------------------
 
