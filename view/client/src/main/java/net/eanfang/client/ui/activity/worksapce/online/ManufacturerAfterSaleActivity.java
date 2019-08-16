@@ -23,6 +23,7 @@ import java.io.Serializable;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 
 public class ManufacturerAfterSaleActivity extends BaseClientActivity implements View.OnClickListener {
@@ -36,7 +37,7 @@ public class ManufacturerAfterSaleActivity extends BaseClientActivity implements
     private GridLayoutManager gridLayoutManager;
     private ManufacturerAfterSaleAdapter manufacturerAfterSaleAdapter;
     private static final int RESULT_DATACODE = 200;
-    private String mFrom;
+    private String mFrom = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +76,7 @@ public class ManufacturerAfterSaleActivity extends BaseClientActivity implements
                 }
             });
         } else {
-            if (mFrom.equals("home")) {
+            if (!StrUtil.isEmpty(mFrom) && mFrom.equals("home")) {
                 setTitle("全部品牌");
             } else {
                 setTitle("厂商售后");

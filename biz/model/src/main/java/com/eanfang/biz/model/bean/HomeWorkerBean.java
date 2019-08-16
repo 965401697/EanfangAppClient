@@ -1,5 +1,7 @@
 package com.eanfang.biz.model.bean;
 
+import com.eanfang.biz.model.entity.OrgEntity;
+
 import java.util.List;
 
 import lombok.Data;
@@ -26,7 +28,7 @@ public class HomeWorkerBean {
 
         private String accId;
         private AccountEntityBean accountEntity;
-        private CompanyEntityBean companyEntity;
+        private OrgEntity companyEntity;
         private String companyUserId;
         private int designNum;
         private int evaluateNum;
@@ -50,7 +52,7 @@ public class HomeWorkerBean {
         private String verifyId;
         private HomeCompanyBean mHomeCompanyBean;
 
-        public HomeCompanyBean getHomeCompanyBean(){
+        public HomeCompanyBean getHomeCompanyBean() {
             mHomeCompanyBean = new HomeCompanyBean();
             mHomeCompanyBean.setAreaCode(getPlaceCode());
             mHomeCompanyBean.setDesignCount(getDesignNum());
@@ -68,6 +70,7 @@ public class HomeWorkerBean {
             mHomeCompanyBean.setPageType(1);
             mHomeCompanyBean.setId(id);
             mHomeCompanyBean.setCompanyUserId(companyUserId);
+            mHomeCompanyBean.setOrgEntity(getCompanyEntity());
             return mHomeCompanyBean;
         }
 
@@ -91,24 +94,6 @@ public class HomeWorkerBean {
             private String mobile;
             private String realName;
             private boolean simplePwd;
-        }
-
-        @NoArgsConstructor
-        @Data
-        public static class CompanyEntityBean {
-            /**
-             * countStaff : 0
-             * level : 0
-             * orgId : 979995434422681602
-             * orgName : 北京法安视科技有限公司
-             * topCompanyId : 979995434422681602
-             */
-
-            private int countStaff;
-            private int level;
-            private String orgId;
-            private String orgName;
-            private String topCompanyId;
         }
 
         @NoArgsConstructor

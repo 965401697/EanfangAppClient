@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -308,7 +309,7 @@ public class WorkDetailActivity extends BaseActivity {
 
     //获取技师信息
     private void getWorkerDetailData() {
-
+        Log.e("GG", "workerId" + workerId);
         EanfangHttp.get(RepairApi.GET_REPAIR_WORKER_DETAIL)
                 .params("workerId", workerId)
                 .params("userId", companyUserId)
@@ -323,7 +324,7 @@ public class WorkDetailActivity extends BaseActivity {
             return;
         }
         if (bean.getAccountEntity() != null) {
-            GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + bean.getVerifyEntity().getAvatarPhoto()), ivHeader);
+            GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + bean.getAccountEntity().getAvatar()), ivHeader);
             headUrl = bean.getAccountEntity().getAvatar();
             workerName = bean.getAccountEntity().getRealName();
             comapnyName = bean.getCompanyEntity().getOrgName();
@@ -340,7 +341,7 @@ public class WorkDetailActivity extends BaseActivity {
         tvNumber.setText(v(() -> bean.getRepairCount()) + "单");
         tvKoubei.setText(v(() -> bean.getPublicPraise() / 100) + "分");
         if (bean.getVerifyEntity() != null) {
-            tvLevel.setText(GetConstDataUtils.getWorkingLevelList().get(bean.getVerifyEntity().getWorkingLevel()));
+//            tvLevel.setText(GetConstDataUtils.getWorkingLevelList().get(bean.getVerifyEntity().getWorkingLevel()));
             tvYear.setText(GetConstDataUtils.getWorkingYearList().get(bean.getVerifyEntity().getWorkingYear()));
         }
         // 技师编号
@@ -404,15 +405,15 @@ public class WorkDetailActivity extends BaseActivity {
         // 服务区域
         mDataList1 = new ArrayList<>();
         new Thread(() -> {
-            if (bean.getRegionList() != null && !bean.getRegionList().isEmpty()) {
-                mDataList1.addAll(Stream.of(bean.getRegionList()).map(regionId -> Config.get().getAddressById(regionId)).toList());
+            if (bean.getVerifyEntity().getRegionList() != null && !bean.getVerifyEntity().getRegionList().isEmpty()) {
+                mDataList1.addAll(Stream.of(bean.getVerifyEntity().getRegionList()).map(regionId -> Config.get().getAddressById(regionId)).toList());
             }
         }).start();
 
         // 服务类型
         mDataList2 = new ArrayList<>();
         mDataList2.clear();
-        List<Integer> serviceList = bean.getServiceList();
+        List<Integer> serviceList = bean.getVerifyEntity().getServiceList();
         if (serviceList != null && !serviceList.isEmpty()) {
             mDataList2.addAll(Stream.of(serviceList).map(id -> Config.get().getServiceNameById(id)).toList());
             if (mDataList2.size() <= 4) {
@@ -428,7 +429,7 @@ public class WorkDetailActivity extends BaseActivity {
         }
 
         // 业务类型
-        List<Integer> businessType = bean.getBusinessList();
+        List<Integer> businessType = bean.getVerifyEntity().getBusinessList();
         mDataList3 = new ArrayList<>();
         mDataList3.clear();
         if (businessType != null && !businessType.isEmpty()) {

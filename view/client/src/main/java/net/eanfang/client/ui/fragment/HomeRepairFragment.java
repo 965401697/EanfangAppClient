@@ -24,6 +24,7 @@ import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.base.kit.utils.GlideUtil;
 import com.eanfang.biz.model.bean.OrderCountBean;
 import com.eanfang.biz.model.bean.SelectAddressItem;
+import com.eanfang.biz.model.entity.RepairOrderEntity;
 import com.eanfang.biz.rds.base.LViewModelProviders;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
@@ -54,6 +55,7 @@ public class HomeRepairFragment extends BaseFragment {
     private static final String DEVICE_BRAND_NAME = "deviceBrandName";
     private static final String BRAND_DATA_CODE = "dataCode";
     private static final String SYSTEM_NAME = "systemName";
+    private static final String REPAIRORDERENEITY = "repairOrderEntity";
     private static final int SELECT_ADDRESS_CALL_BACK_CODE = 1;
     /**
      * 设备信息 RequestCode
@@ -76,15 +78,16 @@ public class HomeRepairFragment extends BaseFragment {
     private int mStatus;
 
     private String mSystemName;
+    private RepairOrderEntity mRepairOrderEntity;
 
-
-    public static Fragment getInstance(int status, String deviceBrandName, String brandName, String systemName) {
+    public static Fragment getInstance(int status, String deviceBrandName, String brandName, String systemName, RepairOrderEntity repairOrderEntity) {
         HomeRepairFragment fragment = new HomeRepairFragment();
         Bundle arguments = new Bundle();
         arguments.putInt(STATUS, status);
         arguments.putString(DEVICE_BRAND_NAME, deviceBrandName);
         arguments.putString(BRAND_DATA_CODE, brandName);
         arguments.putString(SYSTEM_NAME, systemName);
+        arguments.putSerializable(REPAIRORDERENEITY, repairOrderEntity);
         fragment.setArguments(arguments);
         return fragment;
     }
@@ -116,6 +119,7 @@ public class HomeRepairFragment extends BaseFragment {
             String deviceBrandName = getArguments().getString(DEVICE_BRAND_NAME);
             String brandDataCode = getArguments().getString(BRAND_DATA_CODE);
             mSystemName = getArguments().getString(SYSTEM_NAME);
+            mRepairOrderEntity = (RepairOrderEntity) getArguments().getSerializable(REPAIRORDERENEITY);
             // 全部品牌报修
             if (!StrUtil.isEmpty(deviceBrandName)) {
                 String name = Config.get().getModelNameByCode(brandDataCode, 1);
@@ -131,6 +135,9 @@ public class HomeRepairFragment extends BaseFragment {
                 mBinding.etHomeRepairSys.setText(mSystemName);
                 mBinding.etHomeRepairBrand.setText(null);
                 mViewModel.setSysData(businessOneCode);
+            }
+            if (mRepairOrderEntity != null) {
+                mViewModel.setRepairId(mRepairOrderEntity);
             }
 
         }

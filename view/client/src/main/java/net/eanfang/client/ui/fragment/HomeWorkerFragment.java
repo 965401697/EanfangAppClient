@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.biz.model.bean.HomeCompanyBean;
 import com.eanfang.biz.model.bean.HomeWorkerBean;
+import com.eanfang.biz.model.entity.RepairOrderEntity;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
@@ -49,6 +50,8 @@ public class HomeWorkerFragment extends BaseFragment {
     private int mCityId = 102;
     private int mProvinceId;
     private String mAreaCode = "";
+
+    private RepairOrderEntity mRepairOrderEntity;
 
     public static HomeWorkerFragment getInstance(int pageType) {
         HomeWorkerFragment homeCompanyFragment = new HomeWorkerFragment();
@@ -118,19 +121,17 @@ public class HomeWorkerFragment extends BaseFragment {
                 case R.id.btn_home_company_install:
                     Bundle bundle_install = new Bundle();
                     bundle_install.putString("type", "install");
-//                    bundle_install.putString("assigneeUserId", adapter.getData().get(position).get);
-                    bundle_install.putString("assigneeCompanyId", "install");
-                    bundle_install.putString("assigneeTopCompanyId", "install");
-                    bundle_install.putString("assigneeOrgCode", "install");
                     JumpItent.jump(getActivity(), QuickRepairActivity.class, bundle_install);
                     break;
                 case R.id.btn_home_company_repair:
+                    mRepairOrderEntity = new RepairOrderEntity();
                     Bundle bundle_repair = new Bundle();
                     bundle_repair.putString("type", "repair");
-                    bundle_repair.putString("assigneeUserId", "install");
-                    bundle_repair.putString("assigneeCompanyId", "install");
-                    bundle_repair.putString("assigneeTopCompanyId", "install");
-                    bundle_repair.putString("assigneeOrgCode", "install");
+                    mRepairOrderEntity.setAssigneeUserId(Long.parseLong(adapter.getData().get(position).getCompanyUserId()));
+                    mRepairOrderEntity.setAssigneeCompanyId(adapter.getData().get(position).getOrgEntity().getCompanyId());
+                    mRepairOrderEntity.setAssigneeTopCompanyId(adapter.getData().get(position).getOrgEntity().getTopCompanyId());
+                    mRepairOrderEntity.setAssigneeOrgCode(adapter.getData().get(position).getOrgEntity().getOrgCode());
+                    bundle_repair.putSerializable("mRepairOrderEntity", mRepairOrderEntity);
                     JumpItent.jump(getActivity(), QuickRepairActivity.class, bundle_repair);
                     break;
                 default:

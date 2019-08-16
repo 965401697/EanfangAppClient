@@ -194,9 +194,9 @@ public class HomeFragment extends BaseFragment {
         SlidingTabLayout tlDataStatisticsList = findViewById(R.id.tl_home_repair);
 
         fragments.clear();
-        fragments.add(HomeRepairFragment.getInstance(0, null, null, null));
-        fragments.add(HomeRepairFragment.getInstance(1, null, null, null));
-        fragments.add(HomeRepairFragment.getInstance(2, null, null, null));
+        fragments.add(HomeRepairFragment.getInstance(0, null, null, null, null));
+        fragments.add(HomeRepairFragment.getInstance(1, null, null, null, null));
+        fragments.add(HomeRepairFragment.getInstance(2, null, null, null, null));
 
         mAdapter = new MyPagerAdapter(titles, fragments);
         vpDataStatis.setAdapter(mAdapter);

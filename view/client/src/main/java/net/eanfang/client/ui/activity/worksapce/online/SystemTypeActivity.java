@@ -17,12 +17,13 @@ import java.io.Serializable;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.hutool.core.util.StrUtil;
 
 public class SystemTypeActivity extends BaseClientActivity {
 
     @BindView(R.id.recycler_view)
     RecyclerView recyclerView;
-    private String mFrom;
+    private String mFrom = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,7 @@ public class SystemTypeActivity extends BaseClientActivity {
 
     private void initView() {
         mFrom = getIntent().getStringExtra("from");
-        if (mFrom.equals("home")) {
+        if (!StrUtil.isEmpty(mFrom) && mFrom.equals("home")) {
             setTitle("全部业务");
         } else {
             setTitle("系统类别");

@@ -377,7 +377,7 @@ public class RepairOrderEntity implements Serializable {
     }
 
     /**
-     * 设置：报修方式（0：APP报修，1：系统报修，2：电话报修）
+     * 报修方式（0：APP报修，1：电话报修，2：电子邮件报修，3：PC官网报修，4：wap官网报修）
      */
     public void setRepairWay(Integer repairWay) {
         this.repairWay = repairWay;

@@ -203,6 +203,15 @@ public class QuickRepairViewModel extends BaseViewModel {
         }
     }
 
+    public void setRepairId(RepairOrderEntity repairOrderEntity) {
+        // 技师id
+        mRepairOrderEntity.setAssigneeUserId(repairOrderEntity.getAssigneeUserId());
+        // 安防公司 id
+        mRepairOrderEntity.setAssigneeCompanyId(repairOrderEntity.getAssigneeCompanyId());
+        mRepairOrderEntity.setAssigneeTopCompanyId(repairOrderEntity.getAssigneeTopCompanyId());
+        mRepairOrderEntity.setAssigneeOrgCode(repairOrderEntity.getOwnerOrgCode());
+    }
+
     /**
      * 设置系统数据
      *

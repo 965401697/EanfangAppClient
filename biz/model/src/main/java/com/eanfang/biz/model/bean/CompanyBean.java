@@ -1,5 +1,7 @@
 package com.eanfang.biz.model.bean;
 
+import com.eanfang.biz.model.entity.OrgEntity;
+
 import java.util.List;
 
 import lombok.Data;
@@ -36,7 +38,7 @@ public class CompanyBean {
         private int item3;
         private int item4;
         private int item5;
-        private OrgEntityBean orgEntity;
+        private OrgEntity orgEntity;
         private String orgId;
         private int publicPraise;
         private int receiveCount;
@@ -93,21 +95,6 @@ public class CompanyBean {
             private String verifyUserName;
         }
 
-        @NoArgsConstructor
-        @Data
-        public static class OrgEntityBean {
-            /**
-             * adminUserId : 1086179092560191490
-             * countStaff : 0
-             * level : 0
-             * orgId : 1086179092560191489
-             */
-
-            private String adminUserId;
-            private int countStaff;
-            private int level;
-            private String orgId;
-        }
 
         @NoArgsConstructor
         @Data

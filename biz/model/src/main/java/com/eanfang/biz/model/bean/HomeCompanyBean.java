@@ -1,5 +1,7 @@
 package com.eanfang.biz.model.bean;
 
+import com.eanfang.biz.model.entity.OrgEntity;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -53,7 +55,7 @@ public class HomeCompanyBean {
      */
     private int status;
     /**
-     *页面类型 0：安防公司 1：找技师
+     * 页面类型 0：安防公司 1：找技师
      */
     private int pageType;
 
@@ -66,5 +68,8 @@ public class HomeCompanyBean {
      * userId
      */
     private String companyUserId;
+
+    private OrgEntity orgEntity;
+    private OrgEntity companyEntity;
 
 }

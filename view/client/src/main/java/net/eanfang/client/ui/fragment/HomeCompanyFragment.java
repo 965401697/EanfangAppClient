@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.biz.model.bean.CompanyBean;
 import com.eanfang.biz.model.bean.HomeCompanyBean;
+import com.eanfang.biz.model.entity.RepairOrderEntity;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
@@ -21,6 +22,7 @@ import net.eanfang.client.R;
 import net.eanfang.client.ui.activity.MainActivity;
 import net.eanfang.client.ui.activity.worksapce.SelectCompanyActivity;
 import net.eanfang.client.ui.activity.worksapce.online.DividerItemDecoration;
+import net.eanfang.client.ui.activity.worksapce.repair.QuickRepairActivity;
 import net.eanfang.client.ui.adapter.FragmentHomeCompanyAdapter;
 
 import java.util.ArrayList;
@@ -47,6 +49,8 @@ public class HomeCompanyFragment extends BaseFragment {
     private int mPageType;
     private int mCityId = 102;
     private int mProvinceId;
+
+    private RepairOrderEntity mRepairOrderEntity;
 
     public static HomeCompanyFragment getInstance(int pageType) {
         HomeCompanyFragment homeCompanyFragment = new HomeCompanyFragment();
@@ -85,28 +89,29 @@ public class HomeCompanyFragment extends BaseFragment {
                 .params("size", "2")
                 .params("areaId", areaId)
                 .execute(new EanfangCallback<CompanyBean>(getActivity(), true, CompanyBean.class, bean -> {
-            boolean toRequestNew = (bean.getList() == null || bean.getList().size() == 0);
-            if (toRequestNew) {
-                initListData(mProvinceId);
-                return;
-            }
-            adapter.getData().clear();
-            ArrayList<HomeCompanyBean> homeCompanyBeans = new ArrayList<>();
-            for (CompanyBean.ListBean companyBean : bean.getList()) {
-                HomeCompanyBean homeCompanyBean = new HomeCompanyBean();
-                homeCompanyBean.setAreaCode(companyBean.getCompanyEntity().getAreaCode());
-                homeCompanyBean.setDesignCount(companyBean.getDesignCount());
-                homeCompanyBean.setGoodRate(companyBean.getGoodRate());
-                homeCompanyBean.setInstallCount(companyBean.getInstallCount());
-                homeCompanyBean.setLogoPic(companyBean.getCompanyEntity().getLogoPic());
-                homeCompanyBean.setName(companyBean.getCompanyEntity().getName());
-                homeCompanyBean.setRepairCount(companyBean.getRepairCount());
-                homeCompanyBean.setStatus(companyBean.getCompanyEntity().getStatus());
-                homeCompanyBean.setPageType(0);
-                homeCompanyBeans.add(homeCompanyBean);
-            }
-            adapter.setNewData(homeCompanyBeans);
-        }));
+                    boolean toRequestNew = (bean.getList() == null || bean.getList().size() == 0);
+                    if (toRequestNew) {
+                        initListData(mProvinceId);
+                        return;
+                    }
+                    adapter.getData().clear();
+                    ArrayList<HomeCompanyBean> homeCompanyBeans = new ArrayList<>();
+                    for (CompanyBean.ListBean companyBean : bean.getList()) {
+                        HomeCompanyBean homeCompanyBean = new HomeCompanyBean();
+                        homeCompanyBean.setAreaCode(companyBean.getCompanyEntity().getAreaCode());
+                        homeCompanyBean.setDesignCount(companyBean.getDesignCount());
+                        homeCompanyBean.setGoodRate(companyBean.getGoodRate());
+                        homeCompanyBean.setInstallCount(companyBean.getInstallCount());
+                        homeCompanyBean.setLogoPic(companyBean.getCompanyEntity().getLogoPic());
+                        homeCompanyBean.setName(companyBean.getCompanyEntity().getName());
+                        homeCompanyBean.setRepairCount(companyBean.getRepairCount());
+                        homeCompanyBean.setStatus(companyBean.getCompanyEntity().getStatus());
+                        homeCompanyBean.setPageType(0);
+                        homeCompanyBean.setOrgEntity(companyBean.getOrgEntity());
+                        homeCompanyBeans.add(homeCompanyBean);
+                    }
+                    adapter.setNewData(homeCompanyBeans);
+                }));
     }
 
     @Override
@@ -122,6 +127,27 @@ public class HomeCompanyFragment extends BaseFragment {
 
     @Override
     protected void setListener() {
+        adapter.setOnItemChildClickListener(((adapter1, view, position) -> {
+            switch (view.getId()) {
+                case R.id.btn_home_company_install:
+                    Bundle bundle_install = new Bundle();
+                    bundle_install.putString("type", "install");
+                    JumpItent.jump(getActivity(), QuickRepairActivity.class, bundle_install);
+                    break;
+                case R.id.btn_home_company_repair:
+                    mRepairOrderEntity = new RepairOrderEntity();
+                    Bundle bundle_repair = new Bundle();
+                    bundle_repair.putString("type", "repair");
+                    mRepairOrderEntity.setAssigneeCompanyId(adapter.getData().get(position).getOrgEntity().getCompanyId());
+                    mRepairOrderEntity.setAssigneeTopCompanyId(adapter.getData().get(position).getOrgEntity().getTopCompanyId());
+                    mRepairOrderEntity.setAssigneeOrgCode(adapter.getData().get(position).getOrgEntity().getOrgCode());
+                    bundle_repair.putSerializable("mRepairOrderEntity", mRepairOrderEntity);
+                    JumpItent.jump(getActivity(), QuickRepairActivity.class, bundle_repair);
+                    break;
+                default:
+                    break;
+            }
+        }));
         /**
          * 0 安防公司
          * 1 找技师

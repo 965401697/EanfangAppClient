@@ -813,5 +813,12 @@ public interface NewApiService {
      * 获取萤石云视频Token
      */
     String HOME_SUB_ACCOUNT_INFO_LIST = BASE_URL + "/yaf_station/stationDetect/subAccountInfoList";
-
+    /**
+     * 电话报修获取合作公司
+     */
+    String REPAIR_PHONE_COMPANY_LIST = BASE_URL + "/yaf_shop/cooperation/coopListMobile";
+    /**
+     * 电话报修生成订单
+     */
+    String REPAIR_PHONE_COMPANY_CREATE = BASE_URL + "/yaf_repair/order/createByMobile";
 }

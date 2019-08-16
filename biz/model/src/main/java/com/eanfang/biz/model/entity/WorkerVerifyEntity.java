@@ -20,29 +20,29 @@ public class WorkerVerifyEntity extends TechWorkerVerifyEntity implements Serial
     /**
      * 技师服务的 业务类型 id
      */
-    private List<Long> businessList;
+    private List<Integer> businessList;
     /**
      * 技师的 服务类型 id
      */
-    private List<Long> serviceList;
+    private List<Integer> serviceList;
     /**
      * 技师服务的 区域 id
      */
-    private List<Long> regionList;
+    private List<Integer> regionList;
 
     public AccountEntity getAccountEntity() {
         return this.accountEntity;
     }
 
-    public List<Long> getBusinessList() {
+    public List<Integer> getBusinessList() {
         return this.businessList;
     }
 
-    public List<Long> getServiceList() {
+    public List<Integer> getServiceList() {
         return this.serviceList;
     }
 
-    public List<Long> getRegionList() {
+    public List<Integer> getRegionList() {
         return this.regionList;
     }
 
@@ -50,15 +50,15 @@ public class WorkerVerifyEntity extends TechWorkerVerifyEntity implements Serial
         this.accountEntity = accountEntity;
     }
 
-    public void setBusinessList(List<Long> businessList) {
+    public void setBusinessList(List<Integer> businessList) {
         this.businessList = businessList;
     }
 
-    public void setServiceList(List<Long> serviceList) {
+    public void setServiceList(List<Integer> serviceList) {
         this.serviceList = serviceList;
     }
 
-    public void setRegionList(List<Long> regionList) {
+    public void setRegionList(List<Integer> regionList) {
         this.regionList = regionList;
     }
 

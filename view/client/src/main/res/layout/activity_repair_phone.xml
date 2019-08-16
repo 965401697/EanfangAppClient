@@ -100,6 +100,17 @@
             android:text="合作公司"
             android:textColor="@color/color_client_neworder"
             android:textSize="@dimen/textSize_15" />
+
+        <TextView
+            android:id="@+id/tv_noData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_company"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none" />
     </LinearLayout>
 
 </LinearLayout>

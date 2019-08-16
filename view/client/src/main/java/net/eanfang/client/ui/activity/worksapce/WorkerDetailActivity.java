@@ -176,8 +176,8 @@ public class WorkerDetailActivity extends BaseClientActivity {
 
     private BaseQuickAdapter evaluateAdapter1;
 
-    private RepairOrderEntity toRepairBean;
     private WorkerEntity detailsBean;
+    private RepairOrderEntity toRepairBean;
     // 扫码二维码进入技师详情页面 传入的entriy
     private WorkerEntity mQRWorkerEntity;
     private boolean isComeIn = false;
@@ -485,7 +485,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
             return;
         }
         if (bean.getAccountEntity() != null) {
-            GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + bean.getVerifyEntity().getAvatarPhoto()), ivHeader);
+            GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + bean.getAccountEntity().getAvatar()), ivHeader);
             headUrl = bean.getVerifyEntity().getAvatarPhoto();
             workerName = bean.getAccountEntity().getRealName();
             comapnyName = bean.getCompanyEntity().getOrgName();
@@ -502,7 +502,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
         tvNumber.setText(v(() -> bean.getRepairCount()) + "单");
         tvKoubei.setText(v(() -> bean.getPublicPraise() / 100) + "分");
         if (bean.getVerifyEntity() != null) {
-            tvLevel.setText(GetConstDataUtils.getWorkingLevelList().get(bean.getVerifyEntity().getWorkingLevel()));
+//            tvLevel.setText(GetConstDataUtils.getWorkingLevelList().get(bean.getVerifyEntity().getWorkingLevel()));
             tvYear.setText(GetConstDataUtils.getWorkingYearList().get(bean.getVerifyEntity().getWorkingYear()));
         }
         // 技师编号
@@ -566,15 +566,15 @@ public class WorkerDetailActivity extends BaseClientActivity {
         // 服务区域
         mDataList1 = new ArrayList<>();
         new Thread(() -> {
-            if (bean.getRegionList() != null && !bean.getRegionList().isEmpty()) {
-                mDataList1.addAll(Stream.of(bean.getRegionList()).map(regionId -> Config.get().getAddressById(regionId)).toList());
+            if (bean.getVerifyEntity().getRegionList() != null && !bean.getVerifyEntity().getRegionList().isEmpty()) {
+                mDataList1.addAll(Stream.of(bean.getVerifyEntity().getRegionList()).map(regionId -> Config.get().getAddressById(regionId)).toList());
             }
         }).start();
 
         // 服务类型
         mDataList2 = new ArrayList<>();
         mDataList2.clear();
-        List<Integer> serviceList = bean.getServiceList();
+        List<Integer> serviceList = bean.getVerifyEntity().getServiceList();
         if (serviceList != null && !serviceList.isEmpty()) {
             mDataList2.addAll(Stream.of(serviceList).map(id -> Config.get().getServiceNameById(id)).toList());
             if (mDataList2.size() <= 4) {
@@ -590,7 +590,7 @@ public class WorkerDetailActivity extends BaseClientActivity {
         }
 
         // 业务类型
-        List<Integer> businessType = bean.getBusinessList();
+        List<Integer> businessType = bean.getVerifyEntity().getBusinessList();
         mDataList3 = new ArrayList<>();
         mDataList3.clear();
         if (businessType != null && !businessType.isEmpty()) {
