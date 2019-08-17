@@ -64,7 +64,7 @@ public class ManufacturerAfterSaleActivity extends BaseClientActivity implements
             manufacturerAfterSaleAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                    if (mFrom.equals("home")) {
+                    if (!StrUtil.isEmpty(mFrom) && mFrom.equals("home")) {
                         return;
                     }
                     SharedPreferences sp = getSharedPreferences("basis", MODE_PRIVATE);
@@ -100,11 +100,12 @@ public class ManufacturerAfterSaleActivity extends BaseClientActivity implements
         manufacturerAfterSaleAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                if (mFrom.equals("home")) {
+                if (!StrUtil.isEmpty(mFrom) && mFrom.equals("home")) {
                     BaseDataEntity bean = (BaseDataEntity) adapter.getData().get(position);
                     Intent intent = new Intent(ManufacturerAfterSaleActivity.this, QuickRepairActivity.class);
                     intent.putExtra("deviceBrandName", bean.getDataName());
                     intent.putExtra("dataCode", bean.getDataCode());
+                    intent.putExtra("type", "repair");
                     startActivity(intent);
                 } else {
                     Intent intent = new Intent(ManufacturerAfterSaleActivity.this, ExpertListActivity.class);

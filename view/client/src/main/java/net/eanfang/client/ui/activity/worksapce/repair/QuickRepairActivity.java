@@ -18,6 +18,8 @@ import net.eanfang.client.ui.fragment.HomeRepairFragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.hutool.core.util.StrUtil;
+
 /**
  * @author liangkailun
  * Date ：2019-07-23
@@ -69,7 +71,7 @@ public class QuickRepairActivity extends BaseActivity {
         mBinding.tlQuickRepair.setViewPager(mBinding.vpQuickRepair, titles);
         // 设置不可滑动
         mBinding.vpQuickRepair.setScanScroll(false);
-        if (mType.equals("repair")) {
+        if (!StrUtil.isEmpty(mType) && mType.equals("repair")) {
             mBinding.tlQuickRepair.setCurrentTab(0);
         } else {
             mBinding.tlQuickRepair.setCurrentTab(1);
