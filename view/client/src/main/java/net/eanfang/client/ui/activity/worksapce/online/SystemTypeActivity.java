@@ -9,8 +9,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.config.Config;
+import com.eanfang.util.JumpItent;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.worksapce.repair.QuickRepairActivity;
 import net.eanfang.client.ui.base.BaseClientActivity;
 
 import java.io.Serializable;
@@ -56,19 +58,17 @@ public class SystemTypeActivity extends BaseClientActivity {
         systemTypeAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                systemTypeAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                        if (mFrom.equals("home")) {
-                            return;
-                        } else {
-                            Intent intent = new Intent(SystemTypeActivity.this, ExpertListActivity.class);
-                            intent.putExtra("brand", (Serializable) adapter.getData().get(position));
-                            startActivity(intent);
-                        }
+                if (!StrUtil.isEmpty(mFrom) && mFrom.equals("home")) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("type", "repair");
+                    bundle.putString("systemName", systemTypeAdapter.getData().get(position).getDataName());
+                    JumpItent.jump(SystemTypeActivity.this, QuickRepairActivity.class, bundle);
+                } else {
+                    Intent intent = new Intent(SystemTypeActivity.this, ExpertListActivity.class);
+                    intent.putExtra("brand", (Serializable) adapter.getData().get(position));
+                    startActivity(intent);
+                }
 
-                    }
-                });
             }
         });
     }

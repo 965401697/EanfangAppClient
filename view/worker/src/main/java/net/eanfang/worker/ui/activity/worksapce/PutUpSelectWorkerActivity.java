@@ -12,13 +12,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.biz.model.QueryEntry;
+import com.eanfang.biz.model.entity.SelectWorkEntitity;
 import com.eanfang.biz.model.entity.WorkerEntity;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.biz.model.QueryEntry;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.ui.adapter.SelectWorkerAdapter;
@@ -47,7 +48,7 @@ public class PutUpSelectWorkerActivity extends BaseWorkerActivity {
     TextView tvNoData;
 
 
-    private List<WorkerEntity> mDataList = new ArrayList<>();
+    private List<SelectWorkEntitity.ListBean> mDataList = new ArrayList<>();
     private List<String> businessId;
     private Long companyId;
 
@@ -80,9 +81,9 @@ public class PutUpSelectWorkerActivity extends BaseWorkerActivity {
         queryEntry.getEquals().put("companyId", companyId + "");
         EanfangHttp.post(RepairApi.GET_REPAIR_SEARCH)
                 .upJson(JsonUtils.obj2String(queryEntry))
-                .execute(new EanfangCallback<WorkerEntity>(this, true, WorkerEntity.class, true, (list) -> {
-                    if (list != null && list.size() > 0) {
-                        mDataList = list;
+                .execute(new EanfangCallback<SelectWorkEntitity>(this, true, SelectWorkEntitity.class, (bean) -> {
+                    if (bean.getList() != null && bean.getList().size() > 0) {
+                        mDataList = bean.getList();
                         initAdapter();
                         rvList.setVisibility(View.VISIBLE);
                         tvNoData.setVisibility(View.GONE);

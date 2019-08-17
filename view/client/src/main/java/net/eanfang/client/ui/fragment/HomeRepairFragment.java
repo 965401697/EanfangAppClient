@@ -106,6 +106,10 @@ public class HomeRepairFragment extends BaseFragment {
     }
 
     private void showSuccessToast(JSONObject jsonObject) {
+        dataCode = "";
+        mBinding.etHomeRepairBrand.setText("");
+        mBinding.etHomeRepairSys.setText("");
+        mBinding.etHomeRepairDescribe.setText("");
         showToast("提交成功！");
     }
 

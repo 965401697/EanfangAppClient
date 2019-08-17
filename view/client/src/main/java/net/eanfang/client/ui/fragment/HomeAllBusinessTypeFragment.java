@@ -67,6 +67,7 @@ public class HomeAllBusinessTypeFragment extends BaseFragment {
             BusinessTypeBean bean = (BusinessTypeBean) adapter.getData().get(position);
             Bundle bundle = new Bundle();
             bundle.putString("systemName", bean.getTypeName());
+            bundle.putString("type", "repair");
             JumpItent.jump(getActivity(), QuickRepairActivity.class, bundle);
         });
     }

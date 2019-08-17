@@ -7,7 +7,7 @@ import android.widget.ImageView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
-import com.eanfang.biz.model.entity.WorkerEntity;
+import com.eanfang.biz.model.entity.SelectWorkEntitity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
 
@@ -23,10 +23,10 @@ import static com.eanfang.base.kit.V.v;
  * Created by admin on 2018/4/27.
  */
 
-public class SelectWorkerAdapter extends BaseQuickAdapter<WorkerEntity, BaseViewHolder> {
+public class SelectWorkerAdapter extends BaseQuickAdapter<SelectWorkEntitity.ListBean, BaseViewHolder> {
 
 
-    public SelectWorkerAdapter(int layoutResId, List<WorkerEntity> mWorkData) {
+    public SelectWorkerAdapter(int layoutResId, List<SelectWorkEntitity.ListBean> mWorkData) {
         super(layoutResId);
         this.mData = mWorkData;
     }
@@ -37,11 +37,11 @@ public class SelectWorkerAdapter extends BaseQuickAdapter<WorkerEntity, BaseView
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, WorkerEntity item) {
+    protected void convert(BaseViewHolder helper, SelectWorkEntitity.ListBean item) {
         // 头像
         ImageView iv_header = helper.getView(R.id.iv_header);
         if (!StrUtil.isEmpty(item.getAccountEntity().getAvatar())) {
-            GlideUtil.intoImageView(mContext,Uri.parse(BuildConfig.OSS_SERVER + item.getAccountEntity().getAvatar()),iv_header);
+            GlideUtil.intoImageView(mContext, Uri.parse(BuildConfig.OSS_SERVER + item.getAccountEntity().getAvatar()), iv_header);
         }
         // 公司名称
         helper.setText(R.id.tv_companyName, item.getCompanyEntity().getOrgName());
@@ -51,7 +51,7 @@ public class SelectWorkerAdapter extends BaseQuickAdapter<WorkerEntity, BaseView
         helper.setText(R.id.tv_name, item.getAccountEntity().getRealName());
         if (item.getPublicPraise() != 0) {
             // 口碑
-            helper.setText(R.id.tv_koubei, item.getPublicPraise()+"");
+            helper.setText(R.id.tv_koubei, item.getPublicPraise() + "");
         }
         if (item.getGoodRate() != 0) {
             // 好评率

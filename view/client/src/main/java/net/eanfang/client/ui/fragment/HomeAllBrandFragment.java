@@ -85,6 +85,7 @@ public class HomeAllBrandFragment extends BaseFragment {
             Intent intent = new Intent(getActivity(), QuickRepairActivity.class);
             intent.putExtra("deviceBrandName", bean.getDataName());
             intent.putExtra("dataCode", bean.getDataCode());
+            intent.putExtra("type", "repair");
             startActivity(intent);
         });
     }
