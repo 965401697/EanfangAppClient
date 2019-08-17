@@ -69,6 +69,7 @@ public class ScanCodeActivity extends BaseActivity {
     }
 
     public void initView() {
+        super.initView();
         setLeftBack(true);
         setTitle("二维码扫描");
         mFromWhere = getIntent().getStringExtra("from");

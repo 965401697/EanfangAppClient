@@ -11,20 +11,22 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModel;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Stream;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.base.kit.cache.CacheKit;
+import com.eanfang.base.BaseActivity;
 import com.eanfang.biz.model.bean.InstallOrderConfirmBean;
+import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.biz.model.bean.Message;
 import com.eanfang.biz.model.bean.SelectAddressItem;
-import com.eanfang.biz.model.bean.LoginBean;
 import com.eanfang.biz.model.vo.InstallOrderConfirmVo;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.kit.PageCacheKit;
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PickerSelectUtil;
@@ -43,7 +45,7 @@ import net.eanfang.client.ui.base.BaseClientActivity;
  * @desc 我要报装
  */
 
-public class InstallActivity extends BaseClientActivity {
+public class InstallActivity extends BaseActivity {
 //    @BindView(R.id.et_company)
 //    EditText etCompany;
 //    @BindView(R.id.tv_address)
@@ -81,8 +83,6 @@ public class InstallActivity extends BaseClientActivity {
 
     private String latitude;
     private String longitude;
-    //选中的业务大类的uid
-    private String bugOneUid;
 
     private String city;
     private String zone;
@@ -96,68 +96,39 @@ public class InstallActivity extends BaseClientActivity {
     }
 
     private ActivityInstallBinding binding;
-    private InstallOrderConfirmVo installOrderConfirmVo;
-    private LoginBean user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_install);
         super.onCreate(savedInstanceState);
-        setTitle("我要报装");
-        setLeftBack(view -> giveUp());
-        initDialog();
+//        initDialog();
         initData();
     }
 
-    private void initData() {
-        user = ClientApplication.get().getLoginBean();
-        binding.setUser(user);
+    @Override
+    protected void initView() {
+        super.initView();
+        setLeftBack(true);
+        setTitle("我要报装");
+        setLeftBack(view -> giveUp());
     }
 
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
+    }
 
-    private void initDialog() {
-        installOrderConfirmVo = CacheKit.get().get("installOrder", InstallOrderConfirmVo.class);
-        if (null == installOrderConfirmVo) {
-            installOrderConfirmVo = new InstallOrderConfirmVo();
-            binding.setInstallbean(installOrderConfirmVo);
-
-            return;
-        }
-
-        into("installOrder", new InvokingData() {
-            @Override
-            public void invoke() {
-                binding.setInstallbean(installOrderConfirmVo);
+    private void initData() {
+        LoginBean user = ClientApplication.get().getLoginBean();
+        binding.setUser(user);
+        PageCacheKit.get(this, InstallOrderConfirmVo.class, (vo) -> {
+            if (vo != null) {
+                binding.setVo(vo);
+            } else {
+                binding.setVo(new InstallOrderConfirmVo());
             }
         });
     }
-
-//    private void setListener() {
-//        //选择地址
-//        llAddress.setOnClickListener((v) -> {
-//            Intent intent = new Intent(InstallActivity.this, SelectAddressActivity.class);
-//            startActivityForResult(intent, INSTALL_REQUEST_CODE);
-//        });
-//        //回复时限选择
-//        llTime.setOnClickListener((v) -> {
-//            PickerSelectUtil.singleTextPicker(this, "", tvTime, GetConstDataUtils.getRevertList());
-//        });
-//        //业务类型一级
-//        llBusiness.setOnClickListener((v) -> {
-//            PickerSelectUtil.singleTextPicker(this, "", tvBusiness, Stream.of(Config.get().getBusinessList(1)).map(bus -> bus.getDataName()).toList());
-//        });
-//        //预计工期
-//        LLProjectTime.setOnClickListener((v) -> {
-//            PickerSelectUtil.singleTextPicker(this, "", tvProjectTime, GetConstDataUtils.getPredictList());
-//        });
-//        //预算范围
-//        llBudget.setOnClickListener((v) -> {
-//            PickerSelectUtil.singleTextPicker(this, "", tvBudget, GetConstDataUtils.getBudgetList());
-//        });
-//        rlConfirm.setOnClickListener((v) -> {
-//            submit();
-//        });
-//    }
 
     private void submit() {
         // validate
@@ -172,7 +143,7 @@ public class InstallActivity extends BaseClientActivity {
             return;
         }
 //        String address = etDetailAddress.getText().toString().trim();
-        if (TextUtils.isEmpty(installOrderConfirmVo.getDetailPlace().get())) {
+        if (TextUtils.isEmpty(binding.getVo().getDetailPlace().get())) {
             Toast.makeText(this, "详细地址不能为空", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -190,29 +161,29 @@ public class InstallActivity extends BaseClientActivity {
         }
 
 //        String business = binding.tvBusiness.getText().toString().trim();
-        if (TextUtils.isEmpty(installOrderConfirmVo.getBusinessOneId().get())) {
+        if (TextUtils.isEmpty(binding.getVo().getBusinessOneId().get())) {
             Toast.makeText(this, "业务类型不能为空", Toast.LENGTH_SHORT).show();
             return;
         }
 //        String time = tvTime.getText().toString().trim();
-        if (TextUtils.isEmpty(installOrderConfirmVo.getRevertTimeLimit().get())) {
+        if (TextUtils.isEmpty(binding.getVo().getRevertTimeLimit().get())) {
             Toast.makeText(this, "回复时限不能为空", Toast.LENGTH_SHORT).show();
             return;
         }
 //        String projectTime = tvProjectTime.getText().toString().trim();
-        if (TextUtils.isEmpty(installOrderConfirmVo.getPredictTime().get())) {
+        if (TextUtils.isEmpty(binding.getVo().getPredictTime().get())) {
             Toast.makeText(this, "预计工期不能为空", Toast.LENGTH_SHORT).show();
             return;
         }
 //        String mBudget = tvBudget.getText().toString().trim();
-        if (TextUtils.isEmpty(installOrderConfirmVo.getBudget().get())) {
+        if (TextUtils.isEmpty(binding.getVo().getBudget().get())) {
             Toast.makeText(this, "预算范围不能为空", Toast.LENGTH_SHORT).show();
             return;
         }
 
 
 //        String desc = etDesc.getText().toString().trim();
-        String desc = installOrderConfirmVo.getDescription().get();
+        String desc = binding.getVo().getDescription().get();
         if (TextUtils.isEmpty(desc)) {
             Toast.makeText(this, "需求描述不能为空", Toast.LENGTH_SHORT).show();
             return;
@@ -233,12 +204,12 @@ public class InstallActivity extends BaseClientActivity {
 //        installOrderConfirmBean.setZoneId(Long.valueOf(installOrderConfirmVo.getZoneId().get()));
         installOrderConfirmBean.setConnector(contact);
         installOrderConfirmBean.setConnectorPhone(phone);
-        installOrderConfirmBean.setDetailPlace(installOrderConfirmVo.getDetailPlace().get());
+        installOrderConfirmBean.setDetailPlace(binding.getVo().getDetailPlace().get());
         installOrderConfirmBean.setDescription(desc);
         installOrderConfirmBean.setPredictTime(GetConstDataUtils.getPredictList().indexOf(predictTime));
         installOrderConfirmBean.setRevertTimeLimit(GetConstDataUtils.getRevertList().indexOf(revertime));
         installOrderConfirmBean.setBudget(GetConstDataUtils.getBudgetList().indexOf(budget));
-        installOrderConfirmBean.setBusinessOneCode(Config.get().getBusinessCodeByName(installOrderConfirmVo.getBusinessOneId().get(), 1));
+        installOrderConfirmBean.setBusinessOneCode(Config.get().getBusinessCodeByName(binding.getVo().getBusinessOneId().get(), 1));
         installOrderConfirmBean.setBusinessOneId(Long.valueOf(Config.get().getBusinessIdByCode(installOrderConfirmBean.getBusinessOneCode(), 1)));
 
         doHttp(JSON.toJSONString(installOrderConfirmBean));
@@ -273,6 +244,7 @@ public class InstallActivity extends BaseClientActivity {
 //            finishSelf();
             finish();
         });
+        PageCacheKit.clean(this, InstallOrderConfirmVo.class);
     }
 
     /**
@@ -280,7 +252,11 @@ public class InstallActivity extends BaseClientActivity {
      */
     @SuppressLint("CheckResult")
     private void giveUp() {
-        out("installOrder", installOrderConfirmVo);
+        PageCacheKit.save(this, binding.getVo(), (isOk -> {
+            if (isOk) {
+                finish();
+            }
+        }));
     }
 
     @Override
@@ -310,9 +286,9 @@ public class InstallActivity extends BaseClientActivity {
             longitude = item.getLongitude().toString();
             city = item.getCity();
             zone = item.getAddress();
-            binding.getInstallbean().getZone().set(zone);
-            binding.getInstallbean().getLatitude().set(latitude);
-            binding.getInstallbean().getLongitude().set(longitude);
+            binding.getVo().getZone().set(zone);
+            binding.getVo().getLatitude().set(latitude);
+            binding.getVo().getLongitude().set(longitude);
 //            binding.getInstallbean().getZoneId().set(Config.get().getBaseIdByCode(zone, 3, Constant.AREA).toString());
             binding.tvAddress.setText(item.getProvince() + "-" + item.getCity() + "-" + item.getAddress());
             //地图选址 取 显示值

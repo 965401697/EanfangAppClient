@@ -216,7 +216,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
      * @param listener   listener
      */
     private void setLeftBack(boolean visibility, View.OnClickListener listener) {
-        if (findViewById(R.id.titles_bar) == null) {
+        if (findViewById(R.id.iv_left) == null) {
             return;
         }
         ImageView iv_left = findViewById(R.id.iv_left);
@@ -257,7 +257,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
      * @param listener   listener
      */
     private void setRightClick(boolean visibility, View.OnClickListener listener) {
-        if (findViewById(R.id.titles_bar) == null) {
+        if (findViewById(R.id.ll_right) == null) {
             return;
         }
         View llRight = findViewById(R.id.ll_right);

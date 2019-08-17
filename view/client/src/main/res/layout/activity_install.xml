@@ -7,7 +7,7 @@
             name="user"
             type="com.eanfang.biz.model.bean.LoginBean" />
         <variable
-            name="installbean"
+            name="vo"
             type="com.eanfang.biz.model.vo.InstallOrderConfirmVo" />
     </data>
 
@@ -84,7 +84,7 @@
                         android:id="@+id/tv_address"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@={installbean.detailPlace}"
+                        android:text="@={vo.detailPlace}"
                         android:textColor="@color/client"
                         android:textSize="16sp" />
 
@@ -122,7 +122,7 @@
                         android:gravity="right"
                         android:textColor="@color/font_color"
                         android:textSize="16sp"
-                        android:text="@={installbean.detailPlace}"/>
+                        android:text="@={vo.detailPlace}"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -207,7 +207,7 @@
                         android:id="@+id/tv_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@={installbean.revertTimeLimit}"
+                        android:text="@={vo.revertTimeLimit}"
                         android:textColor="@color/client"
                         android:textSize="16sp" />
 
@@ -242,7 +242,7 @@
                         android:id="@+id/tv_business"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@={installbean.businessOneId}"
+                        android:text="@={vo.businessOneId}"
                         android:textColor="@color/client"
                         android:textSize="16sp" />
 
@@ -276,7 +276,7 @@
                         android:id="@+id/tv_project_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@={installbean.predictTime}"
+                        android:text="@={vo.predictTime}"
                         android:textColor="@color/client"
                         android:textSize="16sp" />
 
@@ -310,7 +310,7 @@
                         android:id="@+id/tv_budget"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@={installbean.budget}"
+                        android:text="@={vo.budget}"
                         android:textColor="@color/client"
                         android:textSize="16sp" />
 
@@ -331,7 +331,7 @@
                     android:gravity="left"
                     android:hint="请输入需求描述,字数在50个字以内"
                     android:padding="10dp"
-                    android:text="@={installbean.description}"
+                    android:text="@={vo.description}"
                     android:textColor="@color/font_color"
                     android:textColorHint="@color/font_color"
                     android:textSize="16sp" />

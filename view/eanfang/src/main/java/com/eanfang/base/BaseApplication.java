@@ -219,10 +219,10 @@ public class BaseApplication extends MultiDexApplication {
         }
     }
 
+
     /**
      * 获取最后一个Activity
      */
-
     public Activity currentActivity() {
         return activityStack.get(activityStack.size() - 1);
     }

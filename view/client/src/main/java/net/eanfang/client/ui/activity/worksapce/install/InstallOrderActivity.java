@@ -2,7 +2,11 @@ package net.eanfang.client.ui.activity.worksapce.install;
 
 import android.os.Bundle;
 
-import com.eanfang.biz.model.bean.WorkspaceInstallBean;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
 import com.eanfang.util.GetConstDataUtils;
 import com.flyco.tablayout.SlidingTabLayout;
 
@@ -13,10 +17,6 @@ import net.eanfang.client.ui.fragment.WorkInstallListFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -38,17 +38,8 @@ public class InstallOrderActivity extends BaseClientActivity {
     private ArrayList<Fragment> mFragments = new ArrayList<>();
     private String[] mTitles;
     private MyPagerAdapter mAdapter;
-    private WorkspaceInstallBean workspaceInstallBean;
     private int dataType;
 
-
-    public WorkspaceInstallBean getWorkspaceInstallBean() {
-        return workspaceInstallBean;
-    }
-
-    public void setWorkspaceInstallBean(WorkspaceInstallBean workspaceInstallBean) {
-        this.workspaceInstallBean = workspaceInstallBean;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
