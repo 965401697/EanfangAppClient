@@ -14,12 +14,15 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.base.BaseActivity;
 import com.eanfang.biz.model.bean.CompanyBean;
+import com.eanfang.biz.model.entity.RepairOrderEntity;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.util.JumpItent;
 
 import net.eanfang.client.R;
 import net.eanfang.client.databinding.ActivitySelectCompanyBinding;
 import net.eanfang.client.ui.activity.worksapce.online.DividerItemDecoration;
+import net.eanfang.client.ui.activity.worksapce.repair.QuickRepairActivity;
 import net.eanfang.client.ui.adapter.repair.SelectCompanyAdapter;
 
 import java.util.ArrayList;
@@ -60,6 +63,8 @@ public class SelectCompanyActivity extends BaseActivity implements SwipeRefreshL
     private String mOrderByValue = "";
 
     private int mAreaId;
+
+    private RepairOrderEntity mRepairOrderEntity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,6 +167,27 @@ public class SelectCompanyActivity extends BaseActivity implements SwipeRefreshL
         activitySelectCompanyBinding.include.llConstruction.setOnClickListener((v) -> {
             doChangetState("construction");
         });
+        selectCompanyAdapter.setOnItemChildClickListener(((adapter1, view, position) -> {
+            switch (view.getId()) {
+                case R.id.btn_home_company_install:
+                    Bundle bundle_install = new Bundle();
+                    bundle_install.putString("type", "install");
+                    JumpItent.jump(SelectCompanyActivity.this, QuickRepairActivity.class, bundle_install);
+                    break;
+                case R.id.btn_home_company_repair:
+                    mRepairOrderEntity = new RepairOrderEntity();
+                    Bundle bundle_repair = new Bundle();
+                    bundle_repair.putString("type", "repair");
+                    mRepairOrderEntity.setAssigneeCompanyId(selectCompanyAdapter.getData().get(position).getOrgEntity().getCompanyId());
+                    mRepairOrderEntity.setAssigneeTopCompanyId(selectCompanyAdapter.getData().get(position).getOrgEntity().getTopCompanyId());
+                    mRepairOrderEntity.setAssigneeOrgCode(selectCompanyAdapter.getData().get(position).getOrgEntity().getOrgCode());
+                    bundle_repair.putSerializable("mRepairOrderEntity", mRepairOrderEntity);
+                    JumpItent.jump(SelectCompanyActivity.this, QuickRepairActivity.class, bundle_repair);
+                    break;
+                default:
+                    break;
+            }
+        }));
     }
 
     private void doChangetState(String mType) {

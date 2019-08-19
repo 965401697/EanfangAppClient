@@ -34,6 +34,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.JumpItent;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
@@ -42,6 +43,7 @@ import net.eanfang.client.ui.activity.worksapce.SelectWorkerActivity;
 import net.eanfang.client.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.client.ui.activity.worksapce.WorkerDetailActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.AddTroubleActivity;
+import net.eanfang.client.ui.activity.worksapce.repair.QuickRepairActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.RepairActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.RepairTypeActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.TroubleListActivity;
@@ -143,6 +145,8 @@ public class AllWorkerFragment extends BaseFragment implements SwipeRefreshLayou
     private String mOrderByValue = "";
     private String mAreaCode;
 
+    private RepairOrderEntity mRepairOrderEntity;
+
     public static AllWorkerFragment getInstance(RepairOrderEntity toRepairBean, RepairPersonalInfoEntity.ListBean repairPersonalInfoEntity, ArrayList<String> businessIds, int doorfee, Long ownerOrgId, boolean isFromHome, String areaCode) {
         AllWorkerFragment allWorkerFragment = new AllWorkerFragment();
         Bundle bundle = new Bundle();
@@ -192,7 +196,7 @@ public class AllWorkerFragment extends BaseFragment implements SwipeRefreshLayou
 
     @Override
     protected void initView() {
-        selectWorkerAdapter = new SelectWorkerAdapter();
+        selectWorkerAdapter = new SelectWorkerAdapter(isFromHome);
         rvAllWorker.setLayoutManager(new LinearLayoutManager(getActivity()));
         rvAllWorker.addItemDecoration(new DividerItemDecoration(getActivity(),
                 DividerItemDecoration.VERTICAL));
@@ -237,6 +241,27 @@ public class AllWorkerFragment extends BaseFragment implements SwipeRefreshLayou
         llConstruction.setOnClickListener((v) -> {
             doChangetState("construction");
         });
+        selectWorkerAdapter.setOnItemChildClickListener(((adapter1, view, position) -> {
+            switch (view.getId()) {
+                case R.id.tv_install:
+                    Bundle bundle_install = new Bundle();
+                    bundle_install.putString("type", "install");
+                    JumpItent.jump(getActivity(), QuickRepairActivity.class, bundle_install);
+                    break;
+                case R.id.tv_repair:
+                    mRepairOrderEntity = new RepairOrderEntity();
+                    Bundle bundle_repair = new Bundle();
+                    bundle_repair.putString("type", "repair");
+                    mRepairOrderEntity.setAssigneeCompanyId(selectWorkerAdapter.getData().get(position).getDepartmentEntity().getCompanyId());
+                    mRepairOrderEntity.setAssigneeTopCompanyId(selectWorkerAdapter.getData().get(position).getDepartmentEntity().getTopCompanyId());
+                    mRepairOrderEntity.setAssigneeOrgCode(selectWorkerAdapter.getData().get(position).getDepartmentEntity().getOrgCode());
+                    bundle_repair.putSerializable("mRepairOrderEntity", mRepairOrderEntity);
+                    JumpItent.jump(getActivity(), QuickRepairActivity.class, bundle_repair);
+                    break;
+                default:
+                    break;
+            }
+        }));
     }
 
     private void doChangetState(String mType) {

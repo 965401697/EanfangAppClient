@@ -48,6 +48,9 @@ public class SelectCompanyAdapter extends BaseQuickAdapter<CompanyBean.ListBean,
         int consultCount = item.getDesignCount() + item.getInstallCount() + item.getRepairCount();
         helper.setText(R.id.tv_home_company_consult, mContext.getString(R.string.text_home_company_consultCount, consultCount));
 
+        helper.addOnClickListener(R.id.btn_home_company_install);
+        helper.addOnClickListener(R.id.btn_home_company_repair);
+
     }
 
     private SpannableString toSpanString(String text) {

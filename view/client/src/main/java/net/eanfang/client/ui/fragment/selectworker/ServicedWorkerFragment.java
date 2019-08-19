@@ -33,6 +33,7 @@ import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JsonUtils;
+import com.eanfang.util.JumpItent;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
@@ -41,6 +42,7 @@ import net.eanfang.client.ui.activity.worksapce.SelectWorkerActivity;
 import net.eanfang.client.ui.activity.worksapce.StateChangeActivity;
 import net.eanfang.client.ui.activity.worksapce.WorkerDetailActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.AddTroubleActivity;
+import net.eanfang.client.ui.activity.worksapce.repair.QuickRepairActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.RepairActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.RepairTypeActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.TroubleListActivity;
@@ -129,8 +131,14 @@ public class ServicedWorkerFragment extends BaseFragment implements SwipeRefresh
      */
     private String mOrderByType = "";
     private String mOrderByValue = "";
+    /**
+     * 首页进入技师列表
+     */
+    private boolean isFromHome = false;
 
-    public static ServicedWorkerFragment getInstance(RepairOrderEntity toRepairBean, RepairPersonalInfoEntity.ListBean repairPersonalInfoEntity, ArrayList<String> businessIds, int doorfee, Long ownerOrgId, String areaCode) {
+    private RepairOrderEntity mRepairOrderEntity;
+
+    public static ServicedWorkerFragment getInstance(RepairOrderEntity toRepairBean, RepairPersonalInfoEntity.ListBean repairPersonalInfoEntity, ArrayList<String> businessIds, int doorfee, Long ownerOrgId, boolean isFromHome, String areaCode) {
         ServicedWorkerFragment servicedWorkerFragment = new ServicedWorkerFragment();
         Bundle bundle = new Bundle();
         bundle.putSerializable("toRepairBean", toRepairBean);
@@ -138,6 +146,7 @@ public class ServicedWorkerFragment extends BaseFragment implements SwipeRefresh
         bundle.putSerializable("topInfo", repairPersonalInfoEntity);
         bundle.putInt("doorFee", doorfee);
         bundle.putLong("mOwnerOrgId", ownerOrgId);
+        bundle.putBoolean("isFromHome", isFromHome);
         bundle.putString("mAreaCode", areaCode);
         servicedWorkerFragment.setArguments(bundle);
         return servicedWorkerFragment;
@@ -157,6 +166,7 @@ public class ServicedWorkerFragment extends BaseFragment implements SwipeRefresh
         businessIds = bundle.getStringArrayList("bussinsList");
         mDoorFee = bundle.getInt("doorFee", 0);
         mOwnerOrgId = bundle.getLong("mOwnerOrgId", 0);
+        isFromHome = bundle.getBoolean("isFromHome", false);
         mAreaCode = bundle.getString("mAreaCode");
         mScreenTitleList.add(tvMouth);
         mScreenTitleList.add(tvPraise);
@@ -178,7 +188,7 @@ public class ServicedWorkerFragment extends BaseFragment implements SwipeRefresh
         rvSelectedWorker.addItemDecoration(new DividerItemDecoration(getActivity(),
                 DividerItemDecoration.VERTICAL));
 
-        selectWorkerAdapter = new SelectWorkerAdapter();
+        selectWorkerAdapter = new SelectWorkerAdapter(isFromHome);
         selectWorkerAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
         swipreFresh.setOnRefreshListener(this);
         selectWorkerAdapter.setOnLoadMoreListener(this, rvSelectedWorker);
@@ -219,6 +229,27 @@ public class ServicedWorkerFragment extends BaseFragment implements SwipeRefresh
         llConstruction.setOnClickListener((v) -> {
             doChangetState("construction");
         });
+        selectWorkerAdapter.setOnItemChildClickListener(((adapter1, view, position) -> {
+            switch (view.getId()) {
+                case R.id.tv_install:
+                    Bundle bundle_install = new Bundle();
+                    bundle_install.putString("type", "install");
+                    JumpItent.jump(getActivity(), QuickRepairActivity.class, bundle_install);
+                    break;
+                case R.id.tv_repair:
+                    mRepairOrderEntity = new RepairOrderEntity();
+                    Bundle bundle_repair = new Bundle();
+                    bundle_repair.putString("type", "repair");
+                    mRepairOrderEntity.setAssigneeCompanyId(selectWorkerAdapter.getData().get(position).getDepartmentEntity().getCompanyId());
+                    mRepairOrderEntity.setAssigneeTopCompanyId(selectWorkerAdapter.getData().get(position).getDepartmentEntity().getTopCompanyId());
+                    mRepairOrderEntity.setAssigneeOrgCode(selectWorkerAdapter.getData().get(position).getDepartmentEntity().getOrgCode());
+                    bundle_repair.putSerializable("mRepairOrderEntity", mRepairOrderEntity);
+                    JumpItent.jump(getActivity(), QuickRepairActivity.class, bundle_repair);
+                    break;
+                default:
+                    break;
+            }
+        }));
     }
 
     private void doChangetState(String mType) {

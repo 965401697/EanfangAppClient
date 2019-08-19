@@ -84,8 +84,8 @@ public class SelectWorkerActivity extends BaseActivity implements OnTabSelectLis
 
 
         mFragments.add(AllWorkerFragment.getInstance(toRepairBean, repairPersonalInfoEntity, businessIds, mDoorFee, mOwnerOrgId, isFromHome, mAreaCode));
-        mFragments.add(CollectWorkerFragment.getInstance(toRepairBean, repairPersonalInfoEntity, businessIds, mDoorFee, mOwnerOrgId, mAreaCode));
-        mFragments.add(ServicedWorkerFragment.getInstance(toRepairBean, repairPersonalInfoEntity, businessIds, mDoorFee, mOwnerOrgId, mAreaCode));
+        mFragments.add(CollectWorkerFragment.getInstance(toRepairBean, repairPersonalInfoEntity, businessIds, mDoorFee, mOwnerOrgId, isFromHome, mAreaCode));
+        mFragments.add(ServicedWorkerFragment.getInstance(toRepairBean, repairPersonalInfoEntity, businessIds, mDoorFee, mOwnerOrgId, isFromHome, mAreaCode));
         View decorView = getWindow().getDecorView();
         ViewPager vp = ViewFindUtils.find(decorView, R.id.vp_selectWork);
         mAdapter = new MyPagerAdapter(getSupportFragmentManager());
