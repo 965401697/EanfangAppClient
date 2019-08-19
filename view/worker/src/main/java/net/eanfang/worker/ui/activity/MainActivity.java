@@ -25,7 +25,6 @@ import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.BaseApplication;
 import com.eanfang.base.kit.SDKManager;
-import com.eanfang.base.kit.aop.annotation.BugLog;
 import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.base.kit.cache.CacheMod;
 import com.eanfang.base.kit.rx.RxPerm;
@@ -146,24 +145,26 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
     }
 
     private void init() {
-        ThreadUtil.execAsync(this::initXinGe);
+        ThreadUtil.execAsync(() -> {
+            initXinGe();
+            getBaseData();
+            getConst();
+            submitLocation();
+            initRongIm();
+            initUpdate();
+        });
+//        ThreadUtil.execAsync(this::initXinGe);
+//
+//        ThreadUtil.execAsync(this::getBaseData);
+//        ThreadUtil.execAsync(this::getConst);
+//        ThreadUtil.execAsync(this::submitLocation);
+//        ThreadUtil.execAsync(this::initRongIm);
+//        ThreadUtil.execAsync(this::initUpdate);
 
-        ThreadUtil.execAsync(this::getBaseData);
-        ThreadUtil.execAsync(this::getConst);
-        ThreadUtil.execAsync(this::submitLocation);
-        ThreadUtil.execAsync(this::initRongIm);
-        ThreadUtil.execAsync(this::initUpdate);
-//        initXinGe();
-//        getBaseData();
-//        getConst();
-//        submitLocation();
         RxPerm.get(this).getAllPerm();
-//        initRongIm();
         initFragment();
-//        initUpdate();
         initView();
         initMaintainNotice();
-
     }
 
     /**
@@ -219,7 +220,6 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
      * 技师上报位置专用
      */
     private void submitLocation() {
-        ThreadUtil.excAsync(() -> {
             LocationUtil.location(this, (location) -> {
                 LoginBean user = WorkerApplication.get().getLoginBean();
                 if (user == null || StrUtil.isEmpty(user.getToken())) {
@@ -235,8 +235,6 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
                         .upJson(JSONObject.toJSONString(workerEntity))
                         .execute(new EanfangCallback(this, false, String.class));
             });
-        }, false);
-
     }
 
     /**
@@ -305,7 +303,6 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
         SDKManager.getXGPush(MainActivity.this).setMzPush(MEIZU_APPID_WORKER, MEIZU_APPKEY_WORKER);
         SDKManager.getXGPush(MainActivity.this).registerPush(BaseApplication.get().getAccount().getMobile());
 
-//        ReceiverInit.getInstance().inits(MainActivity.this, BaseApplication.get().getAccount().getMobile());
     }
 
     private void getBaseData() {
@@ -333,12 +330,6 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
                         }
                     });
                 });
-//        String md5 = Config.get().getBaseDataBean() != null ? Config.get().getBaseDataBean().getMD5() : "0";
-//        mainRepo.getBaseData(md5).observe(this, (bean) -> {
-//            if (bean != null) {
-//                ClientApplication.get().set(BaseDataBean.class.getName(), bean);
-//            }
-//        });
     }
 
     /**
@@ -369,11 +360,6 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
                     });
                 });
 
-//        mainRepo.getConstData(md5).observe(this, (bean) -> {
-//            if (bean != null) {
-//                ClientApplication.get().set(ConstAllBean.class.getName(), bean);
-//            }
-//        });
     }
 
     private void saveArea(BaseDataBean dataBean) {
@@ -689,9 +675,6 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
             String frgTag = mTabHost.getCurrentTabTag();
             ContactListFragment contactListFragment = (ContactListFragment) getSupportFragmentManager().findFragmentByTag(frgTag);
             contactListFragment.onActivityResult(requestCode, resultCode, data);
-        } else if (resultCode == RESULT_OK && requestCode == 49) {
-            ContactsFragment contactsFragment = (ContactsFragment) getSupportFragmentManager().getFragments().get(3);
-            contactsFragment.onActivityResult(requestCode, resultCode, data);
         }
     }
 

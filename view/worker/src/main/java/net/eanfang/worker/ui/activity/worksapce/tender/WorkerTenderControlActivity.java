@@ -56,10 +56,9 @@ public class WorkerTenderControlActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        super.initView();
         setTitle("招标用工大厅");
-        setLeftBack(true);
-        setRightTitle("我的");
-        setRightImageResId(R.mipmap.ic_security_right);
+        setRightClick("我的", R.mipmap.ic_security_right, (v) -> JumpItent.jump(this, TenderPersonControlActivity.class));
         mIvTenderNotice = mWorkerTenderControlBinding.ivTenderNotice;
         mIvTenderFind = mWorkerTenderControlBinding.ivTenderFind;
         mTenderViewPager = mWorkerTenderControlBinding.vpTenderList;
@@ -121,9 +120,6 @@ public class WorkerTenderControlActivity extends BaseActivity {
             public void onPageScrollStateChanged(int state) {
 
             }
-        });
-        setRightTitleOnClickListener((view) -> {
-            JumpItent.jump(this, TenderPersonControlActivity.class);
         });
     }
 

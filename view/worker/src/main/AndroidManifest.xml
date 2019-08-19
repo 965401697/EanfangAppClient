@@ -530,9 +530,6 @@
             android:name=".ui.activity.worksapce.WorkDetailActivity"
             android:screenOrientation="portrait" /> <!-- 企业管理 -->
         <activity
-            android:name=".ui.activity.worksapce.contacts.CompanyManagerActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ui.activity.worksapce.datastatistics.DataStaticsticsListActivity"
             android:screenOrientation="portrait" /> <!-- 视频文件选择 -->
         <activity

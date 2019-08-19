@@ -98,24 +98,21 @@ public class AddCertificationActivity extends BaseActivity implements SelectTime
         orgid = getIntent().getLongExtra("orgid", 0);
         bean = (HonorCertificateEntity) getIntent().getSerializableExtra("bean");
         doSelectYearMonthDay();
-        setRightTitleOnClickListener(view -> setData());
         if (bean != null) {
             setTitle("荣誉证书");
-            setRightTitle("编辑");
             setZhiDu(false);
             fillData();
             selectList = recycleview.setData(bean.getHonorPics());
             recycleview.showImagev(selectList, listener);
-            setRightTitleOnClickListener(view -> {
-                        setRightTitle("保存");
+            setRightClick("编辑", view -> {
                         setZhiDu(true);
                         recycleview.isShow(true, selectList);
-                        setRightTitleOnClickListener(view1 -> setData());
+                setRightClick("保存", view1 -> setData());
                     }
 
             );
         } else {
-            setRightTitle("保存");
+            setRightClick("保存", view -> setData());
             setTitle("荣誉证书");
             tvSave.setVisibility(View.GONE);
             recycleview.addImagev(listener);

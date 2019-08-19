@@ -54,6 +54,7 @@ public class JsCapabilityTagActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        super.initView();
         setLeftBack(true);
         setRightClick(true);
         setTitle("能力标签");
@@ -61,8 +62,7 @@ public class JsCapabilityTagActivity extends BaseActivity {
         recyclerView.setNestedScrollingEnabled(false);
         jseQualificationsAndAbilitiesGetListAdapter = new JseQualificationsAndAbilitiesGetListAdapter(true);
         jseQualificationsAndAbilitiesGetListAdapter.bindToRecyclerView(recyclerView);
-        setRightTitle("保存");
-        setRightTitleOnClickListener(view -> setData());
+        setRightClick("保存", view -> setData());
     }
 
     private void initData() {

@@ -21,21 +21,20 @@ import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.BaseActivity;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.IPictureCallBack;
+import com.eanfang.base.kit.rx.RxPerm;
+import com.eanfang.biz.model.bean.AuthCompanyBaseInfoBean;
+import com.eanfang.biz.model.bean.SelectAddressItem;
+import com.eanfang.biz.model.entity.BaseDataEntity;
 import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.bean.AuthCompanyBaseInfoBean;
-import com.eanfang.biz.model.bean.SelectAddressItem;
-
 import com.eanfang.ui.activity.SelectAddressActivity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.PermKit;
-import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.PickerSelectUtil;
-import com.eanfang.biz.model.entity.BaseDataEntity;
 import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.worker.R;
@@ -135,8 +134,8 @@ public class AuthCompanyActivity extends BaseActivity {
 
     @Override
     public void initView() {
+        super.initView();
         setTitle("填写企业信息");
-        setRightTitle("编辑");
         setLeftBack(true);
         orgid = getIntent().getLongExtra("orgid", 0);
         orgName = getIntent().getStringExtra("orgName");
@@ -182,7 +181,7 @@ private int state=0;
                 showToast("抱歉，您没有权限！");
             }
         });
-        setRightTitleOnClickListener((v) -> {
+        setRightClick("编辑", (v) -> {
             if (!PermKit.get().getWorkerCompanyBackPerm()) {
                 return;
             }
@@ -242,25 +241,18 @@ private int state=0;
     public void doVerify() {
         if (StrUtil.isEmpty(etCompany.getText().toString().trim())) {
             showToast("请输入单位名称");
-            return;
         } else if (StrUtil.isEmpty(edCompanyNumber.getText().toString().trim())) {
             showToast("请输入营业执照号码");
-            return;
         } else if (StrUtil.isEmpty(etMoney.getText().toString().trim())) {
             showToast("请输入注册资本");
-            return;
         } else if (StrUtil.isEmpty(etDetailOfficeAddress.getText().toString().trim())) {
             showToast("请输入办公地址");
-            return;
         } else if (StrUtil.isEmpty(tvType.getText().toString().trim())) {
             showToast("请选择行业类型");
-            return;
         } else if (StrUtil.isEmpty(etLegalPersion.getText().toString().trim())) {
             showToast("请输入法人代表");
-            return;
         } else if (StrUtil.isEmpty(etDesc.getText().toString().trim())) {
             showToast("请输入单位简介");
-            return;
         } else {
             setData();
         }

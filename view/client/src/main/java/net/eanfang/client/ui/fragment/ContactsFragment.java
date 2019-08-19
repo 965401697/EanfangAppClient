@@ -6,29 +6,27 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.annimon.stream.Stream;
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.BaseFragment;
 import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.base.kit.cache.CacheMod;
 import com.eanfang.base.network.config.HttpConfig;
-import com.eanfang.biz.model.bean.OrganizationBean;
 import com.eanfang.biz.model.bean.LoginBean;
+import com.eanfang.biz.model.bean.OrganizationBean;
 import com.eanfang.biz.model.entity.OrgEntity;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
-import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.ToastUtil;
@@ -45,6 +43,7 @@ import net.eanfang.client.ui.activity.worksapce.ExternalCompanyActivity;
 import net.eanfang.client.ui.activity.worksapce.PartnerActivity;
 import net.eanfang.client.ui.activity.worksapce.SubcompanyActivity;
 import net.eanfang.client.ui.activity.worksapce.contacts.CompanyManagerActivity;
+import net.eanfang.client.ui.activity.worksapce.contacts.CreatTeamActivity;
 import net.eanfang.client.ui.adapter.ParentAdapter;
 
 import java.util.Collections;
@@ -60,7 +59,7 @@ import static android.app.Activity.RESULT_OK;
  * @desc 通讯录
  */
 
-public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener {
+public class ContactsFragment extends BaseFragment {
     private List<OrgEntity> mDatas;
     private ParentAdapter parentAdapter;
     private RecyclerView rev_list;
@@ -71,7 +70,6 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
     private boolean isFirstShow = true;
     private int mOldPosition = 0;
     private OrgEntity mOrgEntity;
-    private View view;
 
     public final int CREAT_TEAM_CODE = 49;
 
@@ -83,42 +81,29 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
 
 
     @Override
-    protected int setLayoutResouceId() {
-        return R.layout.fragment_contact;
+    protected ViewModel initViewModel() {
+        return null;
     }
 
-
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        if (view == null) {
-            view = inflater.inflate(R.layout.fragment_contact, container, false);
+    protected View initView(LayoutInflater inflater, ViewGroup container) {
+        if (mRootView == null) {
+            mRootView = inflater.inflate(R.layout.fragment_contact, container, false);
             initView();
             setListener();
             getData();
+
         }
-        ViewGroup parent = (ViewGroup) view.getParent();
+        ViewGroup parent = (ViewGroup) mRootView.getParent();
         if (parent != null) {
-            parent.removeView(view);
+            parent.removeView(mRootView);
         }
-
-        return view;
+        return mRootView;
     }
-
-    @Override
-    protected void initData(Bundle arguments) {
-//        getData();
-    }
-
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        getData();
-//    }
 
     private void getData() {
 
-        ((SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setRefreshing(true);
+        ((SwipeRefreshLayout) findViewById(R.id.swipre_fresh)).setRefreshing(true);
 
         EanfangHttp.get(UserApi.GET_STAFFINCOMPANY_LISTTREE)
                 .execute(new EanfangCallback<OrgEntity>(getActivity(), true, OrgEntity.class, true, (list) -> {
@@ -131,7 +116,7 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
                     } else {
                         mDatas = Collections.EMPTY_LIST;
                     }
-                    ((SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setRefreshing(false);
+                    ((SwipeRefreshLayout) findViewById(R.id.swipre_fresh)).setRefreshing(false);
 
                     initAdapter();
                 }));
@@ -171,67 +156,38 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
         }
     }
 
-    @Override
     protected void initView() {
+        findViewById(R.id.nested_view).getViewTreeObserver().addOnScrollChangedListener(() -> findViewById(R.id.swipre_fresh).setEnabled(findViewById(R.id.nested_view).getScrollY() == 0));
 
-        view.findViewById(R.id.nested_view).getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
-            @Override
-            public void onScrollChanged() {
-                view.findViewById(R.id.swipre_fresh).setEnabled(view.findViewById(R.id.nested_view).getScrollY() == 0);
-            }
+        rl_create_team = findViewById(R.id.rl_create_team);
+        tv_noTeam = findViewById(R.id.tv_noTeam);
+
+        findViewById(R.id.ll_my_friends).setOnClickListener(v -> {
+            //开启我的好友列表
+            startActivity(new Intent(getActivity(), MyFriendsListActivity.class));
+        });
+        findViewById(R.id.ll_my_group).setOnClickListener(v -> {
+            //开启我的群组列表
+            startActivity(new Intent(getActivity(), MyGroupsListActivity.class));
+        });
+
+        findViewById(R.id.rl_focus).setOnClickListener(v -> startActivity(new Intent(getActivity(), FollowListActivity.class)));
+
+        findViewById(R.id.rl_peer_connection).setOnClickListener(v -> {
+            //同行人脉
+            startActivity(new Intent(getActivity(), PeerConnectionListActivity.class));
+        });
+
+        findViewById(R.id.ll_add).setOnClickListener(v -> {
+            //添加好友界面
+            MorePopWindow morePopWindow = new MorePopWindow(getActivity(), true);
+            morePopWindow.showPopupWindow(findViewById(R.id.ll_add));
         });
 
 
-        rl_create_team = view.findViewById(R.id.rl_create_team);
-        tv_noTeam = view.findViewById(R.id.tv_noTeam);
+        ((SwipeRefreshLayout) findViewById(R.id.swipre_fresh)).setOnRefreshListener(this::getData);
 
-        view.findViewById(R.id.ll_my_friends).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //开启我的好友列表
-                startActivity(new Intent(getActivity(), MyFriendsListActivity.class));
-            }
-        });
-        view.findViewById(R.id.ll_my_group).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //开启我的群组列表
-                startActivity(new Intent(getActivity(), MyGroupsListActivity.class));
-            }
-        });
-
-        view.findViewById(R.id.rl_focus).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getActivity(), FollowListActivity.class));
-            }
-        });
-
-        view.findViewById(R.id.rl_peer_connection).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //同行人脉
-                startActivity(new Intent(getActivity(), PeerConnectionListActivity.class));
-            }
-        });
-
-        view.findViewById(R.id.ll_add).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //添加好友界面
-//                startActivity(new Intent(getActivity(), AddFriendActivity.class));
-
-                MorePopWindow morePopWindow = new MorePopWindow(getActivity(), true);
-                morePopWindow.showPopupWindow(view.findViewById(R.id.ll_add));
-            }
-        });
-
-
-        ((SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setOnRefreshListener(this);
-
-
-        rev_list = view.findViewById(R.id.rev_list);
-//        rev_list.setHasFixedSize(true);//应该reycylerview reqestlayout()计算
+        rev_list = findViewById(R.id.rev_list);
         rev_list.setNestedScrollingEnabled(false);
 
         //设置布局样式
@@ -241,23 +197,20 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
 
         parentAdapter = new ParentAdapter(getActivity());
         parentAdapter.bindToRecyclerView(rev_list);
-        parentAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                OrgEntity bean = (OrgEntity) adapter.getData().get(position);
-                if (position == mOldPosition) {
-                    isFirstShow = !isFirstShow;
-                } else {
-                    mOrgEntity.setFlag(false);
-                    isFirstShow = true;
-                }
-
-                bean.setFlag(isFirstShow);
-                mOrgEntity = bean;
-                parentAdapter.notifyItemChanged(mOldPosition);
-                mOldPosition = position;
-                parentAdapter.notifyItemChanged(position);
+        parentAdapter.setOnItemClickListener((adapter, view, position) -> {
+            OrgEntity bean = (OrgEntity) adapter.getData().get(position);
+            if (position == mOldPosition) {
+                isFirstShow = !isFirstShow;
+            } else {
+                mOrgEntity.setFlag(false);
+                isFirstShow = true;
             }
+
+            bean.setFlag(isFirstShow);
+            mOrgEntity = bean;
+            parentAdapter.notifyItemChanged(mOldPosition);
+            mOldPosition = position;
+            parentAdapter.notifyItemChanged(position);
         });
 
 
@@ -324,12 +277,12 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
 //                        );
                     break;
                 case R.id.iv_setting:
-                    Bundle bundle = new Bundle();
-                    bundle.putLong("orgid", mDatas.get(position).getOrgId());
-                    bundle.putString("orgName", mDatas.get(position).getOrgName());
-                    bundle.putString("isAuth", mDatas.get(position).getVerifyStatus() + "");
-                    bundle.putString("adminUserId", String.valueOf(mDatas.get(position).getAdminUserId()));
-                    JumpItent.jump(getActivity(), CompanyManagerActivity.class, bundle);
+                    Intent intent_company = new Intent(getActivity(), CompanyManagerActivity.class);
+                    intent_company.putExtra("orgid", mDatas.get(position).getOrgId());
+                    intent_company.putExtra("orgName", mDatas.get(position).getOrgName());
+                    intent_company.putExtra("isAuth", mDatas.get(position).getVerifyStatus() + "");
+                    intent_company.putExtra("adminUserId", String.valueOf(mDatas.get(position).getAdminUserId()));
+                    startActivityForResult(intent_company, CREAT_TEAM_CODE);
                     break;
                 default:
                     break;
@@ -353,37 +306,12 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
         }
 
     }
-
-    @Override
-    protected void setListener() {
-//        rl_create_team.setOnClickListener(v -> new CreateTeamView(getActivity(), () -> getData()).show());
-//        rl_create_team.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivityForResult(new Intent(getActivity(), CreatTeamActivity.class), CREAT_TEAM_CODE);
-//            }
-//        });
-//        rl_create_team.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent("com.eanfang.intent.action.SELECTCONTACT");
-//                startActivity(intent);
-//            }
-//        });
-
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == 49) {
             getData();
         }
-    }
-
-    @Override
-    public void onRefresh() {
-        getData();
     }
 
     private void SwitchCompany() {
@@ -399,5 +327,9 @@ public class ContactsFragment extends BaseFragment implements SwipeRefreshLayout
                         EanfangHttp.setClient();
                     }
                 }));
+    }
+
+    protected void setListener() {
+        rl_create_team.setOnClickListener(v -> startActivityForResult(new Intent(getActivity(), CreatTeamActivity.class), CREAT_TEAM_CODE));
     }
 }

@@ -23,4 +23,9 @@ public class ContactsDs extends BaseRemoteDataSource implements IContactsDs {
     public void joinDefCompany(RequestCallback<LoginBean> callback) {
         execute(getService(ContactsApi.class).joinDefCompany(), callback);
     }
+
+    @Override
+    public void quitCompany(Long userId, RequestCallback<LoginBean> callback) {
+        execute(getService(ContactsApi.class).quitCompany(userId), callback);
+    }
 }

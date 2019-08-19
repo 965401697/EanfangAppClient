@@ -8,12 +8,10 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.base.BaseActivity;
 import com.eanfang.biz.rds.base.LViewModelProviders;
 
 import net.eanfang.client.R;
-import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.databinding.ActivityLeavePostManageBinding;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostManageListBean;
 import net.eanfang.client.ui.activity.leave_post.viewmodel.LeavePostManageListViewModel;
@@ -45,9 +43,9 @@ public class LeavePostManageListActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        super.initView();
         setLeftBack(true);
-        setRightImageResId(R.mipmap.ic_news_add);
-        setRightClick(view -> mViewModel.gotoAddPostPage(LeavePostManageListActivity.this));
+        setRightClick(R.mipmap.ic_news_add, view -> mViewModel.gotoAddPostPage(LeavePostManageListActivity.this));
         setTitle("岗位管理");
         mAdapter = new LeavePostManageListAdapter();
         mBinding.recLeavePostManage.setLayoutManager(new LinearLayoutManager(this));

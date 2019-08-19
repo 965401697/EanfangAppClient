@@ -10,7 +10,7 @@ import com.eanfang.base.network.exception.base.BaseException;
 public class RequestFastException extends BaseException {
 
     public RequestFastException() {
-        super(HttpCode.CODE_TOKEN_INVALID, "请求太快了，歇一会儿在操作吧");
+        super(HttpCode.CODE_REQUEST_FAST, "请求太快了，歇一会儿在操作吧");
     }
 
 }

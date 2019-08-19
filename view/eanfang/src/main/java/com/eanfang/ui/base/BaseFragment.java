@@ -13,10 +13,9 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.eanfang.R;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.widget.customview.CircleImageView;
-import com.eanfang.R;
-import com.eanfang.listener.NetBroadcastReceiver;
 import com.eanfang.util.ToastUtil;
 import com.luck.picture.lib.config.PictureConfig;
 
@@ -55,7 +54,6 @@ public abstract class BaseFragment extends Fragment implements IBase {
      * 当执行完oncreatview,View的初始化方法后方法后即为true
      */
     protected boolean mIsPrepare;
-    public static NetBroadcastReceiver.NetChangeListener netChangeListener;
 
     @Override
     @Nullable

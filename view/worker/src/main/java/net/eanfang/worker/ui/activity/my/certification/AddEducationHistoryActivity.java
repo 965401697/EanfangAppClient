@@ -90,25 +90,22 @@ public class AddEducationHistoryActivity extends BaseActivity {
         setTitle("添加教育培训");
         setLeftBack(true);
         setRightClick(true);
-        setRightTitleOnClickListener(view -> setData());
         bean = (EducationExperienceEntity) getIntent().getSerializableExtra("bean");
         if (bean != null) {
             setTitle("教育培训");
-            setRightTitle("编辑");
             setZhiDu(false);
             fillData();
             selectList = recycleview.setData(bean.getCertificatePics());
             recycleview.showImagev(selectList, listener);
-            setRightTitleOnClickListener(view -> {
-                        setRightTitle("保存");
+            setRightClick("编辑", view -> {
                         setZhiDu(true);
                         recycleview.isShow(true, selectList);
-                        setRightTitleOnClickListener(view1 -> setData());
+                setRightClick("保存", view1 -> setData());
                     }
             );
         } else {
             setTitle("教育培训");
-            setRightTitle("保存");
+            setRightClick("保存", view -> setData());
             tvSave.setVisibility(View.GONE);
             recycleview.addImagev(listener);
         }

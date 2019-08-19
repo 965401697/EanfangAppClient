@@ -42,6 +42,7 @@ import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.hutool.core.util.StrUtil;
 import lombok.Getter;
 
 
@@ -197,18 +198,6 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         ((TextView) findViewById(R.id.tv_title)).setText(txt);
     }
 
-    public void setRightImageResId(int resId) {
-        ((ImageView) findViewById(R.id.iv_right)).setImageResource(resId);
-    }
-
-    public void setRightTitle(String id) {
-        ((TextView) findViewById(R.id.tv_right)).setText(id);
-    }
-
-    public void setRightTitleOnClickListener(View.OnClickListener listener) {
-        findViewById(R.id.ll_right).setOnClickListener(listener);
-    }
-
     /**
      * 设置返回按钮
      *
@@ -251,12 +240,12 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     }
 
     /**
-     * 设置返回按钮
+     * 设置右侧按钮
      *
      * @param visibility visibility
      * @param listener   listener
      */
-    private void setRightClick(boolean visibility, View.OnClickListener listener) {
+    private void setRightClick(boolean visibility, String txt, Integer imgId, View.OnClickListener listener) {
         if (findViewById(R.id.ll_right) == null) {
             return;
         }
@@ -266,6 +255,19 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         } else {
             llRight.setVisibility(View.GONE);
         }
+
+        if (!StrUtil.isEmpty(txt)) {
+            ((TextView) findViewById(R.id.tv_right)).setText(txt);
+        } else {
+            ((TextView) findViewById(R.id.tv_right)).setText("");
+        }
+
+        if (imgId != null) {
+            ((ImageView) findViewById(R.id.iv_right)).setImageResource(imgId);
+        } else {
+//            ((ImageView) findViewById(R.id.iv_right)).setImageBitmap();
+        }
+
         if (listener != null) {
             llRight.setOnClickListener(listener);
         } else {
@@ -274,21 +276,42 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     }
 
     /**
-     * 设置返回按钮
+     * 设置右侧按钮 文字 图片
      *
+     * @param txt      txt
+     * @param imgId    imgId
      * @param listener listener
      */
-    public void setRightClick(View.OnClickListener listener) {
-        setRightClick(true, listener);
+    public void setRightClick(String txt, Integer imgId, View.OnClickListener listener) {
+        setRightClick(true, txt, imgId, listener);
     }
 
     /**
-     * 设置返回按钮
+     * 设置右侧按钮 图片
+     *
+     * @param imgId    imgId
+     * @param listener listener
+     */
+    public void setRightClick(Integer imgId, View.OnClickListener listener) {
+        setRightClick(true, null, imgId, listener);
+    }
+
+    /**
+     * 设置右侧按钮
+     *
+     * @param listener listener
+     */
+    public void setRightClick(String txt, View.OnClickListener listener) {
+        setRightClick(true, txt, null, listener);
+    }
+
+    /**
+     * 设置右侧按钮
      *
      * @param visibility 是否可见
      */
     public void setRightClick(boolean visibility) {
-        setRightClick(visibility, null);
+        setRightClick(visibility, null, null, null);
     }
 
 

@@ -9,12 +9,10 @@ import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -102,22 +100,6 @@ public class BaseActivity extends AppCompatActivity implements
         StatusBarUtil.setColor(this, getResources().getColor(R.color.color_main_header_bg));
     }
 
-    /**
-     * 沉浸式状态栏
-     */
-    @Deprecated
-    private void initState() {
-//        if (Build.VERSION.SDK_INT >= 21) {
-//            View decorView = getWindow().getDecorView();
-//            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-//                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-//            decorView.setSystemUiVisibility(option);
-//            getWindow().setStatusBarColor(Color.TRANSPARENT);
-//        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { //透明状态栏
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS); //透明导航栏
-        }
-    }
 
     @Override
     protected void onStart() {

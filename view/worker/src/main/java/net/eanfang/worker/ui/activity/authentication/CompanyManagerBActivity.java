@@ -18,11 +18,21 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.lifecycle.ViewModel;
+
+import com.eanfang.base.BaseActivity;
+import com.eanfang.base.BaseApplication;
+import com.eanfang.base.kit.cache.CacheKit;
+import com.eanfang.base.kit.cache.CacheMod;
+import com.eanfang.base.kit.rx.RxDialog;
 import com.eanfang.base.widget.customview.CircleImageView;
+import com.eanfang.biz.model.bean.BusinessManagementData;
+import com.eanfang.biz.model.bean.LoginBean;
+import com.eanfang.biz.rds.base.BaseViewModel;
+import com.eanfang.biz.rds.sys.ds.impl.ContactsDs;
+import com.eanfang.biz.rds.sys.repo.ContactsRepo;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.bean.BusinessManagementData;
-import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
@@ -49,7 +59,7 @@ import static com.eanfang.apiservice.NewApiService.BUSINESS_MANAGEMENT;
 /**
  * @author WQ
  */
-public class CompanyManagerBActivity extends BaseActivity implements DissloveTeamDialog.OnForgetPasswordListener, DissloveTeamDialog.OnConfirmListener {
+public class CompanyManagerBActivity extends BaseActivity {
 
     @BindView(R.id.gs_xq_tv)
     TextView gsXqTv;
@@ -85,6 +95,9 @@ public class CompanyManagerBActivity extends BaseActivity implements DissloveTea
     private int bizCertify = 0;
     private String mOrgName = "";
 
+    private ContactsRepo contactsRepo;
+    private BaseViewModel viewModel;
+
     /**
      * 解散团队
      */
@@ -94,25 +107,54 @@ public class CompanyManagerBActivity extends BaseActivity implements DissloveTea
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_company_manager_b);
         ButterKnife.bind(this);
+        contactsRepo = new ContactsRepo(new ContactsDs(viewModel = new BaseViewModel()));
         super.onCreate(savedInstanceState);
         initView();
     }
 
-    private void initView() {
-        setLeftBack();
+    @Override
+    protected ViewModel initViewModel() {
+        return viewModel;
+    }
+
+    protected void initView() {
+        super.initView();
+
         setTitle("企业管理");
         adminUserId = getIntent().getStringExtra("adminUserId");
         if (String.valueOf(WorkerApplication.get().getUserId()).equals(adminUserId)) {
-            setRightTitle("解散团队");
-            setRightTitleOnClickListener(v -> doDisslove());
+            setRightClick("解散团队", v -> doDisslove());
         } else {
-            setRightTitle("");
+            setRightClick("退出组织", v -> {
+                doQuitCompany();
+            });
         }
         initData();
     }
 
+    private void doQuitCompany() {
+        new RxDialog(this)
+                .setTitle("提示")
+                .setMessage("是否确认退出当前组织？")
+                .setPositiveText("是")
+                .setNegativeText("否")
+                .dialogToObservable()
+                .subscribe((code) -> {
+                    if (code.equals(RxDialog.POSITIVE)) {
+                        contactsRepo.quitCompany(BaseApplication.get().getUserId()).observe(CompanyManagerBActivity.this, (bean -> {
+                            if (bean != null) {
+                                PermKit.permList.clear();
+                                CacheKit.get().put(LoginBean.class.getName(), bean, CacheMod.All);
+                                setResult(RESULT_OK);
+                                finish();
+                            }
+                        }));
+                    }
+                });
+    }
+
     private void doDisslove() {
-        dissloveTeamDialog = new DissloveTeamDialog(CompanyManagerBActivity.this, this, this);
+        dissloveTeamDialog = new DissloveTeamDialog(CompanyManagerBActivity.this, this::doForget, this::doConfirm);
         dissloveTeamDialog.show();
     }
 
@@ -277,10 +319,10 @@ public class CompanyManagerBActivity extends BaseActivity implements DissloveTea
         }
     }
 
+
     /**
      * 忘记密码
      */
-    @Override
     public void doForget() {
         Bundle bundle = new Bundle();
         bundle.putBoolean("disslove", true);
@@ -290,9 +332,8 @@ public class CompanyManagerBActivity extends BaseActivity implements DissloveTea
     /**
      * 确认解散团队
      */
-    @Override
     public void doConfirm() {
         ContactsFragment.isDisslove = true;
-        finishSelf();
+        finish();
     }
 }

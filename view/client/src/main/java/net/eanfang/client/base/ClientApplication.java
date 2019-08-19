@@ -43,14 +43,13 @@ public class ClientApplication extends BaseApplication {
     public void onCreate() {
         super.onCreate();
 
+        CacheKit.init(this).put("APP_TYPE", BuildConfig.APP_TYPE);
+        initHttp();
         ThreadUtil.execAsync(() -> {
             initRongIM();
             initWxPay();
-            initHttp();
             initBugly();
         });
-
-        CacheKit.init(this).put("APP_TYPE", BuildConfig.APP_TYPE);
     }
 
     private void initBugly() {
@@ -78,7 +77,7 @@ public class ClientApplication extends BaseApplication {
         );
 
         EanfangHttp.setClient();
-        if (BaseApplication.get().getUser() != null) {
+        if (BaseApplication.get().getLoginBean() != null) {
             EanfangHttp.setToken(BaseApplication.get().getLoginBean().getToken());
             HttpConfig.get().setToken(BaseApplication.get().getLoginBean().getToken());
         }

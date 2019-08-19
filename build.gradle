@@ -47,8 +47,8 @@ ext {
             targetSdkVersion : 29,
             compileSdkVersion: 29,
             buildToolsVersion: "29.0.0",
-            versionName      : "3.0.6",
-            versionCode      : 19072301,
+            versionName      : "3.0.7",
+            versionCode      : 19081701,
 
             //common config
             ossServer        : "\"https://oss.eanfang.net/\"",

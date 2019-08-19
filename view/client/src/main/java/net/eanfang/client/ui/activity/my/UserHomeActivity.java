@@ -6,8 +6,6 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,12 +14,17 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.lifecycle.ViewModel;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.BaseActivity;
 import com.eanfang.base.widget.customview.CircleImageView;
+import com.eanfang.biz.model.bean.UserHomePageBean;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.bean.UserHomePageBean;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.ToastUtil;
@@ -33,7 +36,6 @@ import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.ui.activity.worksapce.online.ExpertOnlineActivity;
 import net.eanfang.client.ui.activity.worksapce.security.SecurityPersonalActivity;
 import net.eanfang.client.ui.adapter.UserHomeAdapter;
-import net.eanfang.client.ui.base.BaseClientActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,7 +54,7 @@ import io.rong.imlib.model.UserInfo;
  * Date: 2019/04/03
  * Describe: 用户主页
  */
-public class UserHomeActivity extends BaseClientActivity {
+public class UserHomeActivity extends BaseActivity {
     /**
      * 带返回值请求用户首页code
      */
@@ -136,17 +138,17 @@ public class UserHomeActivity extends BaseClientActivity {
         activity.startActivityForResult(intent, REQUEST_USER_HOME_CODE);
     }
 
-    /**
-     * uid启动用户主页页面
-     *
-     * @param activity
-     * @param uid      被查看用户的uid
-     */
-    public static void startActivityForUid(Activity activity, Long uid) {
-        Intent intent = new Intent(activity, UserHomeActivity.class);
-        intent.putExtra(UserHomeActivity.EXTRA_UID, uid);
-        activity.startActivityForResult(intent, REQUEST_USER_HOME_CODE);
-    }
+//    /**
+//     * uid启动用户主页页面
+//     *
+//     * @param activity
+//     * @param uid      被查看用户的uid
+//     */
+//    public static void startActivityForUid(Activity activity, Long uid) {
+//        Intent intent = new Intent(activity, UserHomeActivity.class);
+//        intent.putExtra(UserHomeActivity.EXTRA_UID, uid);
+//        activity.startActivityForResult(intent, REQUEST_USER_HOME_CODE);
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,8 +163,14 @@ public class UserHomeActivity extends BaseClientActivity {
         initView();
     }
 
-    private void initView() {
-        setRightImageResId(R.drawable.icon_right_more);
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
+    }
+
+    @Override
+    protected void initView() {
+        super.initView();
         mPopWindowContent = LayoutInflater.from(this).inflate(R.layout.layout_pop_user_home_select, null);
         mTvAddAndCancelFriend = mPopWindowContent.findViewById(R.id.tv_addAndCancelFriend);
         mTvAddAndCancelFollow = mPopWindowContent.findViewById(R.id.tv_addAndCancelFollow);
@@ -217,11 +225,10 @@ public class UserHomeActivity extends BaseClientActivity {
             ToastUtil.get().showToast(UserHomeActivity.this, "跳转拉黑好友");
             popWindow.dismiss();
         });
-        setRightImageOnClickListener(v -> {
+        setRightClick(R.drawable.icon_right_more, v -> {
             popWindow.showAsDropDown(findViewById(R.id.iv_right));
             popWindow.backgroundAlpha(UserHomeActivity.this, 0.5f);
         });
-        setLeftBack();
         mLlUserHomeFriend.setOnClickListener(v -> {
             if (mUserInfo != null) {
                 if (mIsFriend) {

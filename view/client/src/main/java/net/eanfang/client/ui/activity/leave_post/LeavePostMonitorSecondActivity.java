@@ -12,7 +12,6 @@ import com.eanfang.base.BaseActivity;
 import com.eanfang.biz.rds.base.LViewModelProviders;
 
 import net.eanfang.client.R;
-import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.databinding.ActivityLeavePostCheckListBinding;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostDetailBean;
 import net.eanfang.client.ui.activity.leave_post.viewmodel.LeavePostMonitorViewModel;
@@ -38,11 +37,9 @@ public class LeavePostMonitorSecondActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        super.initView();
         setTitle("监测设备");
-        setRightTitle("确定");
-        setLeftBack(true);
-
-        setRightClick(view -> mViewModel.setResult(LeavePostMonitorSecondActivity.this));
+        setRightClick("确定", view -> mViewModel.setResult(LeavePostMonitorSecondActivity.this));
         mAdapter = new LeavePostDetailAdapter();
         mBinding.recLeavePostCheckList.setLayoutManager(new LinearLayoutManager(this));
         mAdapter.bindToRecyclerView(mBinding.recLeavePostCheckList);

@@ -75,13 +75,12 @@ public class WorkerApplication extends BaseApplication {
     public void onCreate() {
         super.onCreate();
 
+        CacheKit.init(this).put("APP_TYPE", BuildConfig.APP_TYPE);
+        initHttp();
         ThreadUtil.execAsync(() -> {
             initRongIM();
-            initHttp();
             initBugly();
         });
-
-        CacheKit.init(this).put("APP_TYPE", BuildConfig.APP_TYPE);
     }
 
 
@@ -115,8 +114,10 @@ public class WorkerApplication extends BaseApplication {
                 BuildConfig.VERSION_CODE
         );
         EanfangHttp.setWorker();
-        EanfangHttp.setToken(BaseApplication.get().getLoginBean().getToken());
-        HttpConfig.get().setToken(BaseApplication.get().getLoginBean().getToken());
+        if (BaseApplication.get().getLoginBean() != null) {
+            EanfangHttp.setToken(BaseApplication.get().getLoginBean().getToken());
+            HttpConfig.get().setToken(BaseApplication.get().getLoginBean().getToken());
+        }
 
     }
 

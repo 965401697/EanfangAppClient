@@ -12,23 +12,22 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.lifecycle.ViewModel;
 
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.BaseFragment;
 import com.eanfang.biz.model.bean.AllMessageBean;
-import com.eanfang.biz.model.bean.GroupsBean;
 import com.eanfang.biz.model.bean.GroupDetailBean;
+import com.eanfang.biz.model.bean.GroupsBean;
 import com.eanfang.biz.model.bean.device.User;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.listener.NetBroadcastReceiver;
-import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JumpItent;
 
 import net.eanfang.worker.R;
@@ -66,19 +65,14 @@ import static android.app.Activity.RESULT_CANCELED;
  * @desc 消息
  */
 
-public class ContactListFragment extends BaseFragment implements SwipeRefreshLayout.OnRefreshListener, NetBroadcastReceiver.NetChangeListener {
+public class ContactListFragment extends BaseFragment {
 
     private boolean isFrist = true;
-    private List<String> invalidList = new ArrayList<>();//无效的会话id
+    //无效的会话id
+    private List<String> invalidList = new ArrayList<>();
     private Set<String> conversationsId = new HashSet<>();
     private QBadgeView qBadgeViewSys = new QBadgeView(WorkerApplication.get().getApplicationContext());
 
-  /*  // 消息数量
-    private int mMessageCount = 0;
-    private int mStystemCount = 0;
-    private int mCmpCount = 0;*/
-
-    private View view;
     private MyConversationListFragment myConversationListFragment;
     private Uri uri;
     private final int REQUST_REFRESH_CODE = 102;
@@ -99,34 +93,24 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
     private String mStatus = "";
 
     @Override
-
-    protected int setLayoutResouceId() {
-        return R.layout.fragment_message;
+    protected ViewModel initViewModel() {
+        return null;
     }
 
     @Override
-    protected void initData(Bundle arguments) {
+    protected View initView(LayoutInflater inflater, ViewGroup container) {
+        if (mRootView == null) {
+            mRootView = inflater.inflate(R.layout.fragment_message, container, false);
+            initView();
+            setListener();
+        }
+        ViewGroup parent = (ViewGroup) mRootView.getParent();
+        if (parent != null) {
+            parent.removeView(mRootView);
+        }
 
-    }
+        NetBroadcastReceiver.setListener(this::onChangeListener);
 
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        //防止刷新
-//        if (view == null) {
-        view = inflater.inflate(R.layout.fragment_message, container, false);
-        initView();
-        setListener();
-//            doHttpNoticeCount();
-//        } else {
-//            initView();
-//        }
-//        ViewGroup parent = (ViewGroup) view.getParent();
-//        if (parent != null) {
-//            parent.removeView(view);
-//        }
-        netChangeListener = this;
         //Android 7.0以上需要动态注册
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             //实例化IntentFilter对象
@@ -136,24 +120,22 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
             //注册广播接收
             getActivity().registerReceiver(netBroadcastReceiver, filter);
         }
-        return view;
+        return mRootView;
     }
 
-    @Override
     protected void initView() {
-        mContactStatus = view.findViewById(R.id.tv_contact_status);
-        qBadgeViewSys.bindTarget(view.findViewById(R.id.ll_message))
+        mContactStatus = findViewById(R.id.tv_contact_status);
+        qBadgeViewSys.bindTarget(findViewById(R.id.ll_message))
                 .setBadgeBackgroundColor(0xFFFF0000)
                 .setBadgePadding(3, true)
                 .setBadgeGravity(Gravity.END | Gravity.TOP)
                 .setGravityOffset(0, 0, true)
                 .setBadgeTextSize(10, true);
-//        ((android.support.v4.widget.SwipeRefreshLayout) view.findViewById(R.id.swipre_fresh)).setOnRefreshListener(this);
 
         myConversationListFragment = new MyConversationListFragment();
         //设置私聊会话，该会话聚合显示
-//设置群组会话，该会话非聚合显示
-//系统
+        //设置群组会话，该会话非聚合显示
+        //系统
         uri = Uri.parse("rong://" + getActivity().getApplicationInfo().packageName).buildUpon()
                 .appendPath("conversationlist")
                 .appendQueryParameter(Conversation.ConversationType.PRIVATE.getName(), "false") //设置私聊会话，该会话聚合显示
@@ -165,17 +147,8 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
         getActivity().getSupportFragmentManager().getFragments();
 
         transaction = getActivity().getSupportFragmentManager().beginTransaction();
-//        transaction = this.getChildFragmentManager().beginTransaction();
         transaction.add(R.id.rong_content, myConversationListFragment);
         transaction.commit();
-
-//        RelativeLayout relativeLayout = (RelativeLayout) myConversationListFragment.getmView();
-//        ConversationListFragment conversationListFragment = ((ContactListFragment) getActivity().getSupportFragmentManager().getFragments().get(0)).getMyConversationListFragment();
-//        RelativeLayout relativeLayout = (RelativeLayout) conversationListFragment.getView();
-//        if (relativeLayout != null) {
-//            Log.e("zzw", relativeLayout.getChildCount() + "");
-//            Log.e("zzw", relativeLayout.getChildAt(2).getId() + "");
-//        }
 
         setGroupInfo();//对比数据
 
@@ -208,15 +181,6 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
 
             @Override
             public boolean onConversationPortraitClick(Context context, Conversation.ConversationType conversationType, String s) {
-//                if (conversationType.equals(Conversation.ConversationType.PRIVATE)) {
-//                    Intent intent = new Intent(getActivity(), IMPresonInfoActivity.class);
-//                    intent.putExtra(EanfangConst.RONG_YUN_ID, s);
-//                    startActivity(intent);
-//                } else if (conversationType.equals(Conversation.ConversationType.GROUP)) {
-//                    Intent intent = new Intent(getActivity(), GroupDetailActivity.class);
-//                    intent.putExtra(EanfangConst.RONG_YUN_ID, s);
-//                    startActivity(intent);
-//                }
                 return false;
             }
 
@@ -262,40 +226,33 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
          * 获取用户头像和名称
          */
 
-        RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
-            @Override
-            public UserInfo getUserInfo(String s) {
-                //系统消息 也走这个  判断是个人的id 还是融云的群组id  设置系统消息的内容提供者
-                if (isInteger(s)) {
-                    setUserInfo(s);
-                } else {
-                    getActivity().runOnUiThread(() -> {
-                        EanfangHttp.post(UserApi.POST_GROUP_DETAIL_RY)
-                                .params("ryGroupId", s)
-                                .execute(new EanfangCallback<GroupDetailBean>(getActivity(), true, GroupDetailBean.class, (bean) -> {
-                                    if (bean != null) {
-                                        UserInfo userInfo = new UserInfo(s, bean.getGroup().getGroupName(), Uri.parse(BuildConfig.OSS_SERVER + bean.getGroup().getHeadPortrait()));
-                                        RongIM.getInstance().refreshUserInfoCache(userInfo);
-                                    }
+        RongIM.setUserInfoProvider(s -> {
+            //系统消息 也走这个  判断是个人的id 还是融云的群组id  设置系统消息的内容提供者
+            if (isInteger(s)) {
+                setUserInfo(s);
+            } else {
+                getActivity().runOnUiThread(() -> {
+                    EanfangHttp.post(UserApi.POST_GROUP_DETAIL_RY)
+                            .params("ryGroupId", s)
+                            .execute(new EanfangCallback<GroupDetailBean>(getActivity(), true, GroupDetailBean.class, (bean) -> {
+                                if (bean != null) {
+                                    UserInfo userInfo = new UserInfo(s, bean.getGroup().getGroupName(), Uri.parse(BuildConfig.OSS_SERVER + bean.getGroup().getHeadPortrait()));
+                                    RongIM.getInstance().refreshUserInfoCache(userInfo);
+                                }
 
-                                }));
-                    });
+                            }));
+                });
 
-                }
-                return null;
             }
+            return null;
         }, true);
         /**
          * 获取群组头像和名称
          */
         //提供融云的头像和昵称
-        RongIM.setGroupInfoProvider(new RongIM.GroupInfoProvider() {
-            @Override
-            public Group getGroupInfo(String s) {
-
-                setGroupInfo();
-                return null;
-            }
+        RongIM.setGroupInfoProvider(s -> {
+            setGroupInfo();
+            return null;
         }, true);
 
     }
@@ -303,34 +260,23 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        RelativeLayout relativeLayout = (RelativeLayout) myConversationListFragment.getmView();
-    }
-
-
-    public MyConversationListFragment getMyConversationListFragment() {
-        return myConversationListFragment;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-//        doHttpNoticeCount();
-//        if (myConversationListFragment != null && uri != null)
-//            myConversationListFragment.setUri(uri);
-//
-//        ((MainActivity) getActivity()).getIMUnreadMessageCount();
+
         String mStatus = ((MainActivity) getActivity()).onNoConatac();
         if (StrUtil.isEmpty(mStatus)) {
-            view.findViewById(R.id.rl_no_contact).setVisibility(View.GONE);
+            findViewById(R.id.rl_no_contact).setVisibility(View.GONE);
         } else {
-            view.findViewById(R.id.rl_no_contact).setVisibility(View.VISIBLE);
+            findViewById(R.id.rl_no_contact).setVisibility(View.VISIBLE);
             mContactStatus.setText(mStatus);
         }
     }
 
     //
     private void doHttpNoticeCount() {
-
         EanfangHttp.get(UserApi.ALL_MESSAGE)
                 .execute(new EanfangCallback<AllMessageBean>(getActivity(), true, AllMessageBean.class, bean -> {
                     int messageNum = bean.getSys() + bean.getBiz() + bean.getCmp();
@@ -427,20 +373,14 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
     }
 
 
-    @Override
     protected void setListener() {
-        view.findViewById(R.id.ll_add).setOnClickListener(v -> {
+        findViewById(R.id.ll_add).setOnClickListener(v -> {
             MorePopWindow morePopWindow = new MorePopWindow(getActivity(), false);
-            morePopWindow.showPopupWindow(view.findViewById(R.id.ll_add));
+            morePopWindow.showPopupWindow(findViewById(R.id.ll_add));
         });
-        view.findViewById(R.id.iv_message).setOnClickListener(v -> {
+        findViewById(R.id.iv_message).setOnClickListener(v -> {
             JumpItent.jump(getActivity(), MessageNotificationActivity.class, REQUST_REFRESH_CODE);
         });
-    }
-
-    @Override
-    public void onRefresh() {
-//        doHttpNoticeCount();
     }
 
     @Override
@@ -463,28 +403,16 @@ public class ContactListFragment extends BaseFragment implements SwipeRefreshLay
         return pattern.matcher(str).matches();
     }
 
-
-    //    public boolean checkNet() {
-//        this.isNetWork = ConnectivityChangeUtil.isNetConnected(getActivity());
-//        if (!isNetConnect()) {
-//            view.findViewById(R.id.rl_no_contact).setVisibility(View.VISIBLE);
-//            mContactStatus.setText("当前网络不可用，请检查网络设置");
-//        } else {
-//            view.findViewById(R.id.rl_no_contact).setVisibility(View.GONE);
-//        }
-//        return isNetConnect();
-//    }
-    @Override
     public void onChangeListener(boolean status) {
         this.isNetWork = status;
         if (isNetConnect()) {
             if (StrUtil.isEmpty(mStatus)) {
-                view.findViewById(R.id.rl_no_contact).setVisibility(View.GONE);
+                findViewById(R.id.rl_no_contact).setVisibility(View.GONE);
             } else {
-                view.findViewById(R.id.rl_no_contact).setVisibility(View.VISIBLE);
+                findViewById(R.id.rl_no_contact).setVisibility(View.VISIBLE);
             }
         } else {
-            view.findViewById(R.id.rl_no_contact).setVisibility(View.VISIBLE);
+            findViewById(R.id.rl_no_contact).setVisibility(View.VISIBLE);
             mContactStatus.setText("当前网络不可用，请检查网络设置");
         }
     }

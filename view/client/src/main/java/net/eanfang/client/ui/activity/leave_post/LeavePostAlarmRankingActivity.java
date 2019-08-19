@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.LinearLayoutManager;
+
 import com.eanfang.base.BaseActivity;
 import com.eanfang.biz.rds.base.LViewModelProviders;
 
@@ -41,9 +42,9 @@ public class LeavePostAlarmRankingActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        super.initView();
         setLeftBack(true);
         setTitle("报警排名");
-        setRightTitle("历史详情");
         mCheckBoxes = new ArrayList<>();
         mCheckBoxes.add(mBinding.checkboxLeavePostRankingYear);
         mCheckBoxes.add(mBinding.checkboxLeavePostRankingQuarter);
@@ -53,7 +54,7 @@ public class LeavePostAlarmRankingActivity extends BaseActivity {
         mBinding.recLeavePostAlarmRanking.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new LeavePostRankingAdapter();
         mAdapter.bindToRecyclerView(mBinding.recLeavePostAlarmRanking);
-        setRightClick(view -> mViewModel.gotoHistoryPage(LeavePostAlarmRankingActivity.this));
+        setRightClick("历史详情", view -> mViewModel.gotoHistoryPage(LeavePostAlarmRankingActivity.this));
         mAdapter.setOnItemClickListener((adapter, view, position) -> mViewModel.gotoAlertDetailPage(LeavePostAlarmRankingActivity.this, adapter, position));
         mBinding.tvLeavePostRankingAll.setOnClickListener(view -> mViewModel.gotoAllAlert(LeavePostAlarmRankingActivity.this, mJumpAllType, dateType));
 

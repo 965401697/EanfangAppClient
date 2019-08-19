@@ -82,26 +82,23 @@ public class AddSkillCertificafeActivity extends BaseActivity {
         super.initView();
         setLeftBack(true);
         setRightClick(true);
-        setRightTitleOnClickListener(view -> setData());
         bean = (QualificationCertificateEntity) getIntent().getSerializableExtra("bean");
         if (bean != null) {
             setTitle("资质证书");
-            setRightTitle("编辑");
             setZhiDu(false);
             fillData();
             selectList = pictureRecycler.setData(bean.getCertificatePics());
             pictureRecycler.showImagev(selectList, listener);
-            setRightTitleOnClickListener(view -> {
-                        setRightTitle("保存");
+            setRightClick("编辑", view -> {
                         setZhiDu(true);
                         pictureRecycler.isShow(true, selectList);
-                        setRightTitleOnClickListener(view1 -> setData());
+                setRightClick("保存", view1 -> setData());
                     }
             );
 
         } else {
             setTitle("资质证书");
-            setRightTitle("保存");
+            setRightClick("保存", view -> setData());
             tvSave.setVisibility(View.GONE);
             pictureRecycler.addImagev(listener);
         }

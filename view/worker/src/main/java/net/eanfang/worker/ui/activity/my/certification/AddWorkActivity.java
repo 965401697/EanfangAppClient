@@ -82,26 +82,23 @@ public class AddWorkActivity extends BaseActivity {
         super.initView();
         setLeftBack(true);
         setRightClick(true);
-        setRightTitleOnClickListener(view -> setData());
         bean = (JobExperienceEntity) getIntent().getSerializableExtra("bean");
         if (bean != null) {
             setTitle("工作经历");
-            setRightTitle("编辑");
             setZhiDu(false);
             fillData();
             selectList = pictureRecycler.setData(bean.getCardPics());
             pictureRecycler.showImagev(selectList, listener);
-            setRightTitleOnClickListener(view -> {
-                        setRightTitle("保存");
+            setRightClick("编辑", view -> {
                         setZhiDu(true);
                         pictureRecycler.isShow(true, selectList);
-                        setRightTitleOnClickListener(view1 -> setData());
+                setRightClick("保存", view1 -> setData());
                     }
             );
 
         } else {
             setTitle("工作经历");
-            setRightTitle("保存");
+            setRightClick("保存", view -> setData());
             tvSave.setVisibility(View.GONE);
             pictureRecycler.addImagev(listener);
         }

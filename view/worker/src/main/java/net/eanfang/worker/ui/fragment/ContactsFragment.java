@@ -2,7 +2,6 @@ package net.eanfang.worker.ui.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +30,6 @@ import com.eanfang.biz.rds.sys.repo.ContactsRepo;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
-import com.eanfang.util.JumpItent;
 import com.eanfang.util.PermKit;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.witget.recycleview.FullyLinearLayoutManager;
@@ -276,12 +274,12 @@ public class ContactsFragment extends BaseFragment {
                 case R.id.tv_auth_status:
                     break;
                 case R.id.iv_setting:
-                    Bundle bundle = new Bundle();
-                    bundle.putLong("orgid", mDatas.get(position).getOrgId());
-                    bundle.putString("orgName", mDatas.get(position).getOrgName());
-                    bundle.putString("isAuth", mDatas.get(position).getVerifyStatus() + "");
-                    bundle.putString("adminUserId", String.valueOf(mDatas.get(position).getAdminUserId()));
-                    JumpItent.jump(getActivity(), CompanyManagerBActivity.class, bundle, CREAT_TEAM_CODE);
+                    Intent intent_company = new Intent(getActivity(), CompanyManagerBActivity.class);
+                    intent_company.putExtra("orgid", mDatas.get(position).getOrgId());
+                    intent_company.putExtra("orgName", mDatas.get(position).getOrgName());
+                    intent_company.putExtra("isAuth", mDatas.get(position).getVerifyStatus() + "");
+                    intent_company.putExtra("adminUserId", String.valueOf(mDatas.get(position).getAdminUserId()));
+                    startActivityForResult(intent_company, CREAT_TEAM_CODE);
                     break;
                 default:
                     break;
@@ -339,6 +337,7 @@ public class ContactsFragment extends BaseFragment {
             getData();
         }
     }
+
 
     private void SwitchCompany() {
         EanfangHttp.get(NewApiService.SWITCH_COMPANY_ALL_LIST)

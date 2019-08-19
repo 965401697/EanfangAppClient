@@ -69,25 +69,22 @@ public class CreateGroupOrganizationActivity extends BaseClientActivity {
         } else {
             setRightTitle("确定");
         }
-        setRightTitleOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (TextUtils.isEmpty(isFromOA)) {
-                    Intent intent = new Intent(CreateGroupOrganizationActivity.this, CreateGroupActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("list", (Serializable) mAdapter.getSeletePerson());
-                    intent.putExtras(bundle);
+        setRightTitleOnClickListener(v -> {
+            if (TextUtils.isEmpty(isFromOA)) {
+                Intent intent = new Intent(CreateGroupOrganizationActivity.this, CreateGroupActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("list", (Serializable) mAdapter.getSeletePerson());
+                intent.putExtras(bundle);
 
-                    intent.putExtra("groupName", getIntent().getStringExtra("groupName"));
-                    intent.putExtra("imgKey", getIntent().getStringExtra("imgKey"));
-                    intent.putExtra("locationPortrait", getIntent().getStringExtra("locationPortrait"));
+                intent.putExtra("groupName", getIntent().getStringExtra("groupName"));
+                intent.putExtra("imgKey", getIntent().getStringExtra("imgKey"));
+                intent.putExtra("locationPortrait", getIntent().getStringExtra("locationPortrait"));
 
-                    startActivity(intent);
-                } else {
-                    EventBus.getDefault().post(mAdapter.getSeletePerson());
-                }
-                endTransaction(true);
+                startActivity(intent);
+            } else {
+                EventBus.getDefault().post(mAdapter.getSeletePerson());
             }
+            endTransaction(true);
         });
 
         companyId = getIntent().getStringExtra("companyId");//单选 多选

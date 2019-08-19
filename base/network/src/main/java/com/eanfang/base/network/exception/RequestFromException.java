@@ -10,7 +10,7 @@ import com.eanfang.base.network.exception.base.BaseException;
 public class RequestFromException extends BaseException {
 
     public RequestFromException() {
-        super(HttpCode.CODE_TOKEN_INVALID, "请求来源错误，请退出后重试");
+        super(HttpCode.CODE_FROM_INVALID, "请求来源错误，请退出后重试");
     }
 
 }

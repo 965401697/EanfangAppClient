@@ -22,4 +22,15 @@ public class ContactsRepo extends BaseRepo<ContactsDs> {
         return loginMutableLiveData;
     }
 
+    /**
+     * 退出组织
+     *
+     * @param userId userId
+     * @return MutableLiveData<LoginBean>
+     */
+    public MutableLiveData<LoginBean> quitCompany(Long userId) {
+        MutableLiveData<LoginBean> loginMutableLiveData = new MutableLiveData<>();
+        remoteDataSource.quitCompany(userId, loginMutableLiveData::setValue);
+        return loginMutableLiveData;
+    }
 }

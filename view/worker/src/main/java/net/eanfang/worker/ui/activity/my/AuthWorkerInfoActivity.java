@@ -3,9 +3,6 @@ package net.eanfang.worker.ui.activity.my;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.core.widget.NestedScrollView;
-import androidx.lifecycle.ViewModel;
-
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.view.ViewGroup;
@@ -13,6 +10,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.core.widget.NestedScrollView;
+import androidx.lifecycle.ViewModel;
 
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.JSONPObject;
@@ -22,15 +22,15 @@ import com.eanfang.apiservice.UserApi;
 import com.eanfang.base.BaseActivity;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.base.kit.picture.IPictureCallBack;
+import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.base.widget.customview.CircleImageView;
+import com.eanfang.biz.model.bean.WorkerInfoBean;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.bean.WorkerInfoBean;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JumpItent;
-import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.util.PickerSelectUtil;
 import com.luck.picture.lib.entity.LocalMedia;
 
@@ -150,7 +150,6 @@ public class AuthWorkerInfoActivity extends BaseActivity {
     public void initView() {
         super.initView();
         setTitle("填写技师资料");
-        setRightTitle("编辑");
         //设置表情过滤，最多输入字数为100
         etIntro.setFilters(new InputFilter[]{inputFilter, new InputFilter.LengthFilter(100)});
         // 解决自动滑动
@@ -169,7 +168,7 @@ public class AuthWorkerInfoActivity extends BaseActivity {
 
         llHeaders.setOnClickListener(v -> RxPerm.get(this).cameraPerm((isSuccess)-> headImage()));
 
-        setRightTitleOnClickListener((v) -> {
+        setRightClick("编辑", (v) -> {
             showToast("可以进行编辑");
             isEdit = true;
             setRightClick(false);

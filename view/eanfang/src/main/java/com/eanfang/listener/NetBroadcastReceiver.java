@@ -6,8 +6,9 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.util.Log;
 
-import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.ConnectivityChangeUtil;
+
+import lombok.Setter;
 
 /**
  * @author guanluocang
@@ -17,7 +18,8 @@ import com.eanfang.util.ConnectivityChangeUtil;
 
 public class NetBroadcastReceiver extends BroadcastReceiver {
 
-    public NetChangeListener listener = BaseFragment.netChangeListener;
+    @Setter
+    private static NetChangeListener listener;
 
     @Override
     public void onReceive(Context context, Intent intent) {

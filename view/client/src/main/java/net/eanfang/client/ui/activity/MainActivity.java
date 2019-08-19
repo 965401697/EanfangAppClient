@@ -283,12 +283,6 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
                         }
                     });
                 });
-//        String md5 = Config.get().getBaseDataBean() != null ? Config.get().getBaseDataBean().getMD5() : "0";
-//        mainRepo.getBaseData(md5).observe(this, (bean) -> {
-//            if (bean != null) {
-//                ClientApplication.get().set(BaseDataBean.class.getName(), bean);
-//            }
-//        });
     }
 
     /**
@@ -319,18 +313,12 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
                     });
                 });
 
-//        mainRepo.getConstData(md5).observe(this, (bean) -> {
-//            if (bean != null) {
-//                ClientApplication.get().set(ConstAllBean.class.getName(), bean);
-//            }
-//        });
     }
 
     /**
      * 初始化信鸽推送
      */
     public void initXinGe() {
-        ThreadUtil.execAsync(() -> {
             // 打开第三方推送
             SDKManager.getXGPush(MainActivity.this).enableOtherPush(true);
             //开启信鸽日志输出
@@ -339,9 +327,7 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
             SDKManager.getXGPush(MainActivity.this).setMiPush(XIAOMI_APPID_CLIENT, XIAOMI_APPKEY_CLIENT);
             SDKManager.getXGPush(MainActivity.this).setMzPush(MEIZU_APPID_CLIENT, MEIZU_APPKEY_CLIENT);
 
-//            SDKManager.getXGPush(MainActivity.this).registerPush(BaseApplication.get().getAccount().getMobile());
             ReceiverInit.getInstance().inits(MainActivity.this, BaseApplication.get().getAccount().getMobile());
-        });
     }
 
 
@@ -637,9 +623,6 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
             String frgTag = mTabHost.getCurrentTabTag();
             ContactListFragment contactListFragment = (ContactListFragment) getSupportFragmentManager().findFragmentByTag(frgTag);
             contactListFragment.onActivityResult(requestCode, resultCode, data);
-        } else if (resultCode == RESULT_OK && requestCode == 49) {
-            ContactsFragment contactsFragment = (ContactsFragment) getSupportFragmentManager().getFragments().get(3);
-            contactsFragment.onActivityResult(requestCode, resultCode, data);
         }
     }
 

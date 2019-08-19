@@ -41,10 +41,10 @@ public class LeavePostDetailActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        super.initView();
         setLeftBack(true);
         setTitle("报警详情");
-        setRightClick(view -> mViewModel.gotoAudioPlay(LeavePostDetailActivity.this));
-        setRightTitle("图像查岗");
+        setRightClick("图像查岗", view -> mViewModel.gotoAudioPlay(LeavePostDetailActivity.this));
         int alertId = getIntent().getIntExtra("alertId", 0);
         mViewModel.getAlertInfoData(String.valueOf(alertId));
         mEventInfoAdapter = new LeavePostDetailInfoAdapter();

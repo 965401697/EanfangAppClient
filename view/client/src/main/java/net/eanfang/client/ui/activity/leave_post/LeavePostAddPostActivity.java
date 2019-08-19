@@ -58,6 +58,7 @@ public class LeavePostAddPostActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        super.initView();
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
@@ -74,18 +75,16 @@ public class LeavePostAddPostActivity extends BaseActivity {
             setTitle("岗位详情");
             mBinding.contentInfo.setVisibility(View.GONE);
             mBinding.recLeavePostDetailInfo.setVisibility(View.VISIBLE);
-            setRightClick(view -> {
-                setRightTitle("确定");
+            setRightClick("编辑", view -> {
                 mChargeStaffAdapter.setCanClick(true);
                 mDutyStaffAdapter.setCanClick(true);
                 mBinding.contentInfo.setVisibility(View.VISIBLE);
                 mBinding.recLeavePostDetailInfo.setVisibility(View.GONE);
                 setDefaultData();
-                setRightClick(view1 -> {
+                setRightClick("确定", view1 -> {
                     mViewModel.addPostCommit(mBinding, 1);
                 });
             });
-            setRightTitle("编辑");
         }
         mAdapter = new LeavePostDetailInfoAdapter();
         mBinding.recLeavePostDetailInfo.setLayoutManager(new LinearLayoutManager(this));

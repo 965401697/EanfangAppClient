@@ -37,11 +37,10 @@ public class LeavePostHistoryActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        super.initView();
         setLeftBack(true);
         setTitle("历史报警");
-        setRightTitle("筛选");
-        setRightImageResId(R.drawable.icon_screen);
-        setRightClick(view -> mViewModel.gotoScreenPage(LeavePostHistoryActivity.this));
+        setRightClick("筛选", R.drawable.icon_screen, view -> mViewModel.gotoScreenPage(LeavePostHistoryActivity.this));
         mAdapter = new LeavePostHistoryAdapter(R.layout.item_leave_post_history);
         mBinding.recLeavePostManage.setLayoutManager(new LinearLayoutManager(this));
         mAdapter.bindToRecyclerView(mBinding.recLeavePostManage);

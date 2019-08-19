@@ -113,23 +113,21 @@ public class AddAuthQualifyActivity extends BaseActivity implements SelectTimeDi
         mOrgId = getIntent().getLongExtra("orgid", 0);
         aptitudeCertificateEntity = (AptitudeCertificateEntity) getIntent().getSerializableExtra("bean");
         doSelectYearMonthDay();
-        setRightTitleOnClickListener(view -> doVerify());
+//        setRightClick("保存", view -> doVerify());
         if (aptitudeCertificateEntity != null) {
             setTitle("资质证书");
-            setRightTitle("编辑");
             setZhiDu(false);
             fillData();
             selectList = recycleview.setData(aptitudeCertificateEntity.getCertificatePics());
             recycleview.showImagev(selectList, listener);
-            setRightTitleOnClickListener(view -> {
-                        setRightTitle("保存");
+            setRightClick("编辑", view -> {
                         setZhiDu(true);
                         recycleview.isShow(true, selectList);
-                        setRightTitleOnClickListener(view1 -> doVerify());
+                setRightClick("保存", view1 -> doVerify());
                     }
             );
         } else {
-            setRightTitle("保存");
+            setRightClick("保存", view -> doVerify());
             setTitle("资质证书");
             tvSave.setVisibility(View.GONE);
             recycleview.addImagev(listener);

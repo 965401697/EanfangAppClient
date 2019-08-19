@@ -38,7 +38,7 @@ import io.reactivex.schedulers.Schedulers;
  * @author jornl
  * @date 2019-07-09
  */
-public class SplashActivity extends BaseActivity implements GuideUtil.OnCallback {
+public class SplashActivity extends BaseActivity {
     public static final String SHOWGUID = "showguid";
     public static final String GUID = "guid";
     int[] drawables_worker = {R.mipmap.ic_work_splash_one, R.mipmap.ic_splash_two, R.mipmap.ic_work_splash_three, R.mipmap.ic_work_splash_end};
@@ -140,7 +140,7 @@ public class SplashActivity extends BaseActivity implements GuideUtil.OnCallback
 
     //加载引导页
     void firstUse() {
-        new GuideUtil().init(this, findViewById(R.id.layout), drawables_worker, this);
+        new GuideUtil().init(this, findViewById(R.id.layout), drawables_worker, this::goLogin);
         CacheKit.get().put(SHOWGUID, false, CacheMod.All);
     }
 
@@ -165,7 +165,6 @@ public class SplashActivity extends BaseActivity implements GuideUtil.OnCallback
         });
     }
 
-    @Override
     public void goLogin() {
         startActivityForResult(new Intent(this, LoginActivity.class), LoginActivity.LOGIN_BACK_CODE);
     }

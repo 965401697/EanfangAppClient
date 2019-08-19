@@ -29,9 +29,11 @@ public class BaseRepo<T extends BaseRemoteDataSource> {
      * @return MutableLiveData<BaseActionEvent>
      */
     public MutableLiveData<BaseActionEvent> onError(String methodName, boolean showError) {
-        String methodNameTmp = new Exception().getStackTrace()[1].getMethodName();
-        if (methodName.equals(methodNameTmp)) {
-            return remoteDataSource.errorLiveData();
+        StackTraceElement[] stackArr = new Exception().getStackTrace();
+        for (StackTraceElement element : stackArr) {
+            if (methodName.equals(element.getMethodName())) {
+                return remoteDataSource.errorLiveData();
+            }
         }
         return new MutableLiveData<>();
     }
