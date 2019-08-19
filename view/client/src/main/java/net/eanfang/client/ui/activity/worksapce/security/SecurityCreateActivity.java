@@ -21,6 +21,7 @@ import com.eanfang.bean.security.SecurityFoucsListBean;
 import com.eanfang.delegate.BGASortableDelegate;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.listener.MultiClickListener;
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.takevideo.TakeVdideoMode;
 import com.eanfang.takevideo.TakeVideoActivity;
@@ -114,9 +115,7 @@ public class SecurityCreateActivity extends BaseActivity {
         setTitle("编辑");
         setRightTitle("发布");
         snplAddPhoto.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_CERTIFICATE, REQUEST_CODE_PHOTO_CERTIFICATE));
-        setRightTitleOnClickListener((v) -> {
-            doCommit();
-        });
+        setRightTitleOnClickListener(new MultiClickListener(this, this::doCommit));
         takeVideoPopWindow = new TakeVideoPopWindow(this, takeVideoSelectItemsOnClick);
         takeVideoPopWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
