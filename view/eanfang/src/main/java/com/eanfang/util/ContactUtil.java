@@ -43,9 +43,13 @@ public class ContactUtil {
         Observable.create((ObservableOnSubscribe<Long>) emitter -> {
             String str = BaseApplication.get().get(ADDRESS_LIST_SAVE_TIME, 0);
             long saveTime = NumberUtil.parseLong(str, 0);
+            AccountMailBean accountMailBean = getAllContacts(context);
+            if (accountMailBean == null) {
+                return;
+            }
             if (DateUtil.currentSeconds() - saveTime > POST_TIME) {
                 EanfangHttp.post(NewApiService.ACCOUNT_POST)
-                        .upJson(JSON.toJSONString(getAllContacts(context)))
+                        .upJson(JSON.toJSONString(accountMailBean))
                         .execute(new EanfangCallback(context, false, JSONObject.class, bean -> {
                             emitter.onNext(DateUtil.currentSeconds());
                             emitter.onComplete();

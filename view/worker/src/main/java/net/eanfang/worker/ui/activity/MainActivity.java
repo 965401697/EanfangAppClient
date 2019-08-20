@@ -210,7 +210,6 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
                 Conversation.ConversationType.GROUP, Conversation.ConversationType.SYSTEM,
                 Conversation.ConversationType.PUBLIC_SERVICE, Conversation.ConversationType.APP_PUBLIC_SERVICE
         };
-        ContactUtil.postAccount(MainActivity.this);
         RongIM.getInstance().addUnReadMessageCountChangedObserver(this, conversationTypes);
 
     }
@@ -220,21 +219,21 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
      * 技师上报位置专用
      */
     private void submitLocation() {
-            LocationUtil.location(this, (location) -> {
-                LoginBean user = WorkerApplication.get().getLoginBean();
-                if (user == null || StrUtil.isEmpty(user.getToken())) {
-                    return;
-                }
-                WorkerEntity workerEntity = new WorkerEntity();
-                workerEntity.setAccId(user.getAccount().getAccId());
-                workerEntity.setLat(location.getLatitude() + "");
-                workerEntity.setLon(location.getLongitude() + "");
-                workerEntity.setPlaceCode(Config.get().getAreaCodeByName(location.getCity(), location.getDistrict()));
-                //技师上报位置
-                EanfangHttp.post(UserApi.POST_WORKER_SUBMIT_LOCATION)
-                        .upJson(JSONObject.toJSONString(workerEntity))
-                        .execute(new EanfangCallback(this, false, String.class));
-            });
+        LocationUtil.location(this, (location) -> {
+            LoginBean user = WorkerApplication.get().getLoginBean();
+            if (user == null || StrUtil.isEmpty(user.getToken())) {
+                return;
+            }
+            WorkerEntity workerEntity = new WorkerEntity();
+            workerEntity.setAccId(user.getAccount().getAccId());
+            workerEntity.setLat(location.getLatitude() + "");
+            workerEntity.setLon(location.getLongitude() + "");
+            workerEntity.setPlaceCode(Config.get().getAreaCodeByName(location.getCity(), location.getDistrict()));
+            //技师上报位置
+            EanfangHttp.post(UserApi.POST_WORKER_SUBMIT_LOCATION)
+                    .upJson(JSONObject.toJSONString(workerEntity))
+                    .execute(new EanfangCallback(this, false, String.class));
+        });
     }
 
     /**
