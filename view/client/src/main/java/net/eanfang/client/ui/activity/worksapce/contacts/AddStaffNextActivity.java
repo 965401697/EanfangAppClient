@@ -34,6 +34,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * @author guanluocang
+ * @data 2019/8/20  14:51
+ * @description 选择部门 分配角色
+ */
+
 public class AddStaffNextActivity extends BaseClientActivity {
 
     @BindView(R.id.iv_user_header)
@@ -66,7 +72,7 @@ public class AddStaffNextActivity extends BaseClientActivity {
         setLeftBack();
         friendBean = (FriendListBean) getIntent().getSerializableExtra("bean");
 
-        GlideUtil.intoImageView(this,BuildConfig.OSS_SERVER + friendBean.getAvatar(),ivUserHeader);
+        GlideUtil.intoImageView(this, BuildConfig.OSS_SERVER + friendBean.getAvatar(), ivUserHeader);
         tvNamePhone.setText(friendBean.getNickName() + "(" + friendBean.getMobile() + ")");
         if (!TextUtils.isEmpty(friendBean.getAreaCode())) {
             tvAddress.setText(Config.get().getAddressByCode(friendBean.getAreaCode()) + friendBean.getAddress());
@@ -84,18 +90,23 @@ public class AddStaffNextActivity extends BaseClientActivity {
     @OnClick({R.id.ll_section, R.id.ll_role})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            // 选择部门
             case R.id.ll_section:
                 Intent intent = new Intent(this, SelectOrganizationActivity.class);
-                intent.putExtra("isSection", "isSection");//是否是组织架构
-                intent.putExtra("isAdd", "isAdd");//是否是组织架构
+                //是否是组织架构
+                intent.putExtra("isSection", "isSection");
+                //是否是组织架构
+                intent.putExtra("isAdd", "isAdd");
                 startActivity(intent);
                 break;
+            // 分配角色
             case R.id.ll_role:
                 Intent in = new Intent(this, AolltRoleActivity.class);
                 in.putStringArrayListExtra("roleNameList", roleNameList);
                 startActivityForResult(in, ROLE_FLAG);
                 break;
-
+            default:
+                break;
         }
     }
 
