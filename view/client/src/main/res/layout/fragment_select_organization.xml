@@ -3,6 +3,9 @@
 
     <data>
 
+        <variable
+            name="companySelectViewModle"
+            type="net.eanfang.client.viewmodel.CompanySelectViewModle" />
     </data>
 
     <androidx.recyclerview.widget.RecyclerView

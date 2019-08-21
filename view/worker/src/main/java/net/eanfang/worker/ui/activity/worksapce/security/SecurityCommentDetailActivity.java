@@ -21,24 +21,26 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.base.kit.V;
+import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.bean.security.SecurityCommentBean;
+import com.eanfang.bean.security.SecurityCommentDetailBean;
 import com.eanfang.bean.security.SecurityDetailBean;
+import com.eanfang.biz.model.QueryEntry;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.bean.security.SecurityCommentDetailBean;
+import com.eanfang.listener.MultiClickListener;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JsonUtils;
-import com.eanfang.biz.model.QueryEntry;
 import com.eanfang.util.StringUtils;
-import com.eanfang.base.kit.V;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;
 import net.eanfang.worker.ui.adapter.security.SecurityCommentSecondAdapter;
 import net.eanfang.worker.ui.widget.DividerItemDecoration;
 import net.eanfang.worker.ui.widget.GeneralSDialog;
-import com.eanfang.base.widget.customview.CircleImageView;
+
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -46,7 +48,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import cn.hutool.core.util.StrUtil;
 
 
@@ -127,8 +128,8 @@ public class SecurityCommentDetailActivity extends BaseActivity implements
 
     private void initData() {
         // 头像
-        GlideUtil.intoImageView(this,Uri.parse(BuildConfig.OSS_SERVER + V.v(() ->
-                mCommentBean.getCommentUser().getAccountEntity().getAvatar())),ivSeucrityHeader);
+        GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + V.v(() ->
+                mCommentBean.getCommentUser().getAccountEntity().getAvatar())), ivSeucrityHeader);
         // 评论人
         tvName.setText(mCommentBean.getCommentUser().getAccountEntity().getRealName());
         // 公司名称
@@ -200,6 +201,7 @@ public class SecurityCommentDetailActivity extends BaseActivity implements
                     break;
             }
         }));
+        tvSend.setOnClickListener(new MultiClickListener(this, this::doSend));
     }
 
     private void doDeleteComment(int mDeleteId) {
@@ -331,11 +333,6 @@ public class SecurityCommentDetailActivity extends BaseActivity implements
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
-    }
-
-    @OnClick(R.id.tv_send)
-    public void onViewClicked() {
-        doSend();
     }
 
     private void doSend() {

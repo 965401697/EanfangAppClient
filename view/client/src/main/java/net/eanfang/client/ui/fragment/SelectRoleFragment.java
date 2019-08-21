@@ -16,19 +16,19 @@ import lombok.experimental.Accessors;
 
 /**
  * @author guanluocang
- * @data 2019/8/20  15:49
- * @description 选择部门
+ * @data 2019/8/20  18:55
+ * @description 分配角色
  */
 
-public class SelectOrganizationFragment extends BaseFragment {
+public class SelectRoleFragment extends BaseFragment {
 
     private FragmentSelectOrganizationBinding fragmentSelectOrganizationBinding;
     @Setter
     @Accessors(chain = true)
     private CompanySelectViewModle companySelectViewModle;
 
-    public static SelectOrganizationFragment getInstance(CompanySelectViewModle companySelectViewModle) {
-        return new SelectOrganizationFragment().setCompanySelectViewModle(companySelectViewModle);
+    public static SelectRoleFragment getInstance(CompanySelectViewModle companySelectViewModle) {
+        return new SelectRoleFragment().setCompanySelectViewModle(companySelectViewModle);
     }
 
     @Override
@@ -39,8 +39,7 @@ public class SelectOrganizationFragment extends BaseFragment {
     @Override
     protected View initView(LayoutInflater inflater, ViewGroup container) {
         fragmentSelectOrganizationBinding = FragmentSelectOrganizationBinding.inflate(getLayoutInflater());
-//        fragmentSelectOrganizationBinding.setVm(companySelectViewModle);
-        companySelectViewModle.setFragmentSelectOrganizationBinding(fragmentSelectOrganizationBinding);
         return fragmentSelectOrganizationBinding.getRoot();
     }
+
 }

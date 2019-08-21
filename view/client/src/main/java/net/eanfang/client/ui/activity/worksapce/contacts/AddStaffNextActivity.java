@@ -4,34 +4,39 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.TextView;
+
+import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModel;
+import androidx.viewpager.widget.ViewPager;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
-import com.eanfang.base.widget.customview.CircleImageView;
-import com.eanfang.config.Config;
-import com.eanfang.http.EanfangCallback;
-import com.eanfang.http.EanfangHttp;
+import com.eanfang.base.BaseActivity;
 import com.eanfang.biz.model.bean.FriendListBean;
 import com.eanfang.biz.model.bean.OrganizationBean;
 import com.eanfang.biz.model.bean.SectionBean;
+import com.eanfang.biz.model.entity.AccountEntity;
+import com.eanfang.biz.model.entity.UserEntity;
+import com.eanfang.biz.rds.base.LViewModelProviders;
+import com.eanfang.config.Config;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.activity.SelectOrganizationActivity;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.ToastUtil;
-import com.eanfang.biz.model.entity.AccountEntity;
-import com.eanfang.biz.model.entity.UserEntity;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.base.BaseClientActivity;
+import net.eanfang.client.databinding.ActivityAddStaffNextBinding;
+import net.eanfang.client.ui.fragment.SelectOrganizationFragment;
+import net.eanfang.client.ui.fragment.SelectRoleFragment;
+import net.eanfang.client.viewmodel.CompanySelectViewModle;
 
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -40,18 +45,8 @@ import butterknife.OnClick;
  * @description 选择部门 分配角色
  */
 
-public class AddStaffNextActivity extends BaseClientActivity {
+public class AddStaffNextActivity extends BaseActivity {
 
-    @BindView(R.id.iv_user_header)
-    CircleImageView ivUserHeader;
-    @BindView(R.id.tv_name_phone)
-    TextView tvNamePhone;
-    @BindView(R.id.tv_address)
-    TextView tvAddress;
-    @BindView(R.id.tv_section_name)
-    TextView tvSectionName;
-    @BindView(R.id.tv_role)
-    TextView tvRole;
 
     private SectionBean mSectionBean;
     private SectionBean.ChildrenBean mChildrenBean;
@@ -63,28 +58,53 @@ public class AddStaffNextActivity extends BaseClientActivity {
     private final int ROLE_FLAG = 101;
     private OrganizationBean mOrganizationBean;
 
+    /**
+     * 正在公告 0  已过期 1
+     */
+    private String[] mTitles = {"选择部门", "分配角色"};
+    private ViewPager mTenderViewPager;
+    private MyPagerAdapter mAdapter;
+
+
+    private ActivityAddStaffNextBinding activityAddStaffNextBinding;
+    private CompanySelectViewModle companySelectViewModle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_add_staff_next);
-        ButterKnife.bind(this);
+        activityAddStaffNextBinding = DataBindingUtil.setContentView(this, R.layout.activity_add_staff_next);
         super.onCreate(savedInstanceState);
-        setTitle("添加员工");
-        setLeftBack();
+
         friendBean = (FriendListBean) getIntent().getSerializableExtra("bean");
 
-        GlideUtil.intoImageView(this, BuildConfig.OSS_SERVER + friendBean.getAvatar(), ivUserHeader);
-        tvNamePhone.setText(friendBean.getNickName() + "(" + friendBean.getMobile() + ")");
+        GlideUtil.intoImageView(this, BuildConfig.OSS_SERVER + friendBean.getAvatar(), activityAddStaffNextBinding.includeInfo.ivUserHeader);
+        activityAddStaffNextBinding.includeInfo.tvNamePhone.setText(friendBean.getNickName() + "(" + friendBean.getMobile() + ")");
         if (!TextUtils.isEmpty(friendBean.getAreaCode())) {
-            tvAddress.setText(Config.get().getAddressByCode(friendBean.getAreaCode()) + friendBean.getAddress());
+            activityAddStaffNextBinding.includeInfo.tvAddress.setText(Config.get().getAddressByCode(friendBean.getAreaCode()) + friendBean.getAddress());
         }
+    }
 
-        setRightTitle("确定");
-        setRightTitleOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onSure();
-            }
+    @Override
+    protected void initView() {
+        super.initView();
+        setTitle("添加员工");
+        setLeftBack(true);
+        setRightClick("确定", (view) -> {
+            onSure();
         });
+        mTenderViewPager = activityAddStaffNextBinding.vpSelect;
+        mAdapter = new MyPagerAdapter(getSupportFragmentManager(), mTitles);
+        mAdapter.getFragments().add(SelectOrganizationFragment.getInstance(companySelectViewModle));
+        mAdapter.getFragments().add(SelectRoleFragment.getInstance(companySelectViewModle));
+        mTenderViewPager.setAdapter(mAdapter);
+        mTenderViewPager.setCurrentItem(0);
+    }
+
+    @Override
+    protected ViewModel initViewModel() {
+        companySelectViewModle = LViewModelProviders.of(this, CompanySelectViewModle.class);
+        activityAddStaffNextBinding.setCompanySelectViewModle(companySelectViewModle);
+        companySelectViewModle.setActivityAddStaffNextBinding(activityAddStaffNextBinding);
+        return companySelectViewModle;
     }
 
     @OnClick({R.id.ll_section, R.id.ll_role})
@@ -111,12 +131,12 @@ public class AddStaffNextActivity extends BaseClientActivity {
     }
 
     private void onSure() {
-        if (TextUtils.isEmpty(tvSectionName.getText().toString().trim())) {
+        if (TextUtils.isEmpty(activityAddStaffNextBinding.tvSectionName.getText().toString().trim())) {
             ToastUtil.get().showToast(this, "部门不能为空");
             return;
         }
 
-        if (TextUtils.isEmpty(tvRole.getText().toString().trim())) {
+        if (TextUtils.isEmpty(activityAddStaffNextBinding.tvRole.getText().toString().trim())) {
             ToastUtil.get().showToast(this, "角色不能为空");
             return;
         }
@@ -157,7 +177,7 @@ public class AddStaffNextActivity extends BaseClientActivity {
                                     public void onSuccess(JSONObject bean) {
                                         ToastUtil.get().showToast(AddStaffNextActivity.this, "添加成功");
 
-                                        endTransaction(true);
+//                                        endTransaction(true);
                                     }
 
                                 });
@@ -175,15 +195,15 @@ public class AddStaffNextActivity extends BaseClientActivity {
 
         if (o instanceof OrganizationBean) {
             mOrganizationBean = (OrganizationBean) o;
-            tvSectionName.setText(mOrganizationBean.getOrgName());
+            activityAddStaffNextBinding.tvSectionName.setText(mOrganizationBean.getOrgName());
 
         } else if (o instanceof SectionBean) {
             mSectionBean = (SectionBean) o;
-            tvSectionName.setText(mSectionBean.getOrgName());
+            activityAddStaffNextBinding.tvSectionName.setText(mSectionBean.getOrgName());
 
         } else if (o instanceof SectionBean.ChildrenBean) {
             mChildrenBean = (SectionBean.ChildrenBean) o;
-            tvSectionName.setText(mChildrenBean.getOrgName());
+            activityAddStaffNextBinding.tvSectionName.setText(mChildrenBean.getOrgName());
 
         }
     }
@@ -203,7 +223,8 @@ public class AddStaffNextActivity extends BaseClientActivity {
                 for (String s : roleNameList) {
                     stringBuffer.append(s + ",");
                 }
-                tvRole.setText(stringBuffer.toString().substring(0, stringBuffer.toString().length() - 1));
+                activityAddStaffNextBinding.tvRole.setText(stringBuffer.toString().substring(0, stringBuffer.toString().length() - 1));
+
             }
         }
     }

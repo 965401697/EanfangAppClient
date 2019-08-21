@@ -90,6 +90,8 @@ public class OrderDetailFragment extends BaseFragment {
     //分享用的必要参数
     private HashMap hashMap = new HashMap();
 
+    private OrderConfirmAdapter orderConfirmAdapter;
+
     public static OrderDetailFragment getInstance(Long id) {
         OrderDetailFragment sf = new OrderDetailFragment();
         sf.id = id;
@@ -135,21 +137,16 @@ public class OrderDetailFragment extends BaseFragment {
         mTvPayTime = findViewById(R.id.tv_payTime);
         mTvDoorFee = findViewById(R.id.tv_doorFee);
         mTvOrderAllPrice = findViewById(R.id.tv_orderAllPrice);
+
+        orderConfirmAdapter = new OrderConfirmAdapter(R.layout.item_order_confirm, mDataList, "");
+        orderConfirmAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
+
+        mRecyclerView.setAdapter(orderConfirmAdapter);
     }
 
 
     @Override
     protected void setListener() {
-
-    }
-
-    private void initAdapter() {
-        if (mDataList.size() == 0) {
-            return;
-        }
-
-        BaseQuickAdapter evaluateAdapter = new OrderConfirmAdapter(R.layout.item_order_confirm, mDataList, "");
-        evaluateAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
         mRecyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
             @Override
             public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
@@ -184,7 +181,7 @@ public class OrderDetailFragment extends BaseFragment {
 //                }
             }
         });
-        evaluateAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+        orderConfirmAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 if (!PermKit.get().getRepairBughandlePerm()) {
@@ -195,11 +192,21 @@ public class OrderDetailFragment extends BaseFragment {
                 JumpItent.jump(getActivity(), FaultDetailActivity.class, bundle);
             }
         });
-        mRecyclerView.setAdapter(evaluateAdapter);
 
         iv_phone.setOnClickListener(v ->
                 CallUtils.call(getActivity(), iv_phone.getTag().toString())
         );
+    }
+
+    private void initAdapter() {
+        if (mDataList.size() == 0) {
+            mTvFaultNum.setVisibility(View.GONE);
+            return;
+        }
+        orderConfirmAdapter.setNewData(mDataList);
+        mTvFaultNum.setText(mDataList.size() + "");
+
+
     }
 
     private void getData() {

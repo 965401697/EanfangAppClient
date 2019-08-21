@@ -32,18 +32,19 @@ import com.eanfang.bean.security.SecurityCommentBean;
 import com.eanfang.bean.security.SecurityDetailBean;
 import com.eanfang.bean.security.SecurityFoucsBean;
 import com.eanfang.bean.security.SecurityLikeBean;
+import com.eanfang.bean.security.SecurityLikeStatusBean;
 import com.eanfang.bean.security.SecurityListBean;
+import com.eanfang.biz.model.QueryEntry;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.bean.security.SecurityLikeStatusBean;
+import com.eanfang.listener.MultiClickListener;
 import com.eanfang.takevideo.PlayVideoActivity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.ETimeUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.util.JsonUtils;
 import com.eanfang.util.JumpItent;
-import com.eanfang.biz.model.QueryEntry;
 import com.eanfang.util.StringUtils;
 import com.eanfang.util.contentsafe.ContentDefaultAuditing;
 import com.eanfang.util.contentsafe.ContentSecurityAuditUtil;
@@ -284,6 +285,25 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
             popWindow.showAsDropDown(findViewById(R.id.iv_right));
             popWindow.backgroundAlpha(SecurityDetailActivity.this, 0.5f);
         });
+        tvSend.setOnClickListener(  new MultiClickListener(this, this::doSend));
+    }
+
+    /**
+     * 发表评论
+     */
+    private void                            doSend() {
+        String content = etInput.getText().toString().trim();
+        if (StrUtil.isEmpty(content)) {
+            showToast("请输入评论内容");
+            return;
+        }
+        ContentSecurityAuditUtil.getInstance().toAuditing
+                (content, new ContentDefaultAuditing(this) {
+                    @Override
+                    public void auditingSuccess() {
+                        doComments(content);
+                    }
+                });
     }
 
     /**
@@ -450,7 +470,7 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
 
     PictureRecycleView.ImageListener listener = list -> picList = list;
 
-    @OnClick({R.id.ll_like, R.id.ll_comments, R.id.ll_share, R.id.tv_send, R.id.tv_isFocus, R.id.iv_seucrity_header, R.id.rl_video})
+    @OnClick({R.id.ll_like, R.id.ll_comments, R.id.ll_share, R.id.tv_isFocus, R.id.iv_seucrity_header, R.id.rl_video})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_like:
@@ -461,20 +481,6 @@ public class SecurityDetailActivity extends BaseActivity implements Parser.OnPar
                 break;
             case R.id.ll_share:
                 doShare();
-                break;
-            case R.id.tv_send:
-                String content = etInput.getText().toString().trim();
-                if (StrUtil.isEmpty(content)) {
-                    showToast("请输入评论内容");
-                    return;
-                }
-                ContentSecurityAuditUtil.getInstance().toAuditing
-                        (content, new ContentDefaultAuditing(this) {
-                            @Override
-                            public void auditingSuccess() {
-                                doComments(content);
-                            }
-                        });
                 break;
             case R.id.tv_isFocus:
                 doUnFoucus(securityDetailBean);

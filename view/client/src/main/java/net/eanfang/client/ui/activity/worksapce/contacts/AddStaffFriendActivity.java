@@ -5,11 +5,14 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.biz.model.bean.FriendListBean;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.bean.FriendListBean;
 import com.eanfang.util.Cn2Spell;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.witget.SideBar;
@@ -21,10 +24,13 @@ import net.eanfang.client.ui.base.BaseClientActivity;
 import java.util.Collections;
 import java.util.List;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+/**
+ * @author guanluocang
+ * @data 2019/8/20  19:18
+ * @description  添加员工 选择我的好友
+ */
 
 public class AddStaffFriendActivity extends BaseClientActivity {
     @BindView(R.id.recycler_view)

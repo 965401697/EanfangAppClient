@@ -20,6 +20,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.io.FileUtil;
 
 /**
  * Created by Mr.hou
@@ -368,6 +369,9 @@ public class BitmapUtil {
         File file = null;
         // 声明输出流
         FileOutputStream outStream = null;
+        if (!FileUtil.exist(BASE_DCIM)) {
+            FileUtil.mkdir(BASE_DCIM);
+        }
         Bitmap mBitmap = getRotateBM(bm, filePath);
         File mFile = new File(filePath);
         if (mFile.exists()) {

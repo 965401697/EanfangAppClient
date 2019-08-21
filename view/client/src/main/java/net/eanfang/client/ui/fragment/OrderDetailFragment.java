@@ -124,7 +124,7 @@ public class OrderDetailFragment extends BaseFragment {
     private LinearLayout ll_wait;
     private View line;
     private PayLogEntity payLogEntity;
-
+    private OrderConfirmAdapter orderConfirmAdapter;
 
     public static OrderDetailFragment getInstance(Long id) {
         OrderDetailFragment sf = new OrderDetailFragment();
@@ -182,6 +182,10 @@ public class OrderDetailFragment extends BaseFragment {
         mTvPayTime = findViewById(R.id.tv_payTime);
         mTvDoorFee = findViewById(R.id.tv_doorFee);
         mTvOrderAllPrice = findViewById(R.id.tv_orderAllPrice);
+
+        orderConfirmAdapter = new OrderConfirmAdapter(R.layout.item_order_confirm, mDataList, "");
+        orderConfirmAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
+        mRecyclerView.setAdapter(orderConfirmAdapter);
     }
 
     @Override
@@ -222,16 +226,10 @@ public class OrderDetailFragment extends BaseFragment {
             }
         });
 
-    }
+        iv_phone.setOnClickListener(v -> {
+            CallUtils.call(getActivity(), iv_phone.getTag().toString());
+        });
 
-    private void initAdapter() {
-        if (mDataList.size() == 0) {
-            mFaultNum.setVisibility(View.GONE);
-            return;
-        }
-        mFaultNum.setText(mDataList.size() + "");
-        BaseQuickAdapter evaluateAdapter = new OrderConfirmAdapter(R.layout.item_order_confirm, mDataList, "");
-        evaluateAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
         mRecyclerView.addOnItemTouchListener(new OnItemChildClickListener() {
             @Override
             public void onSimpleItemChildClick(BaseQuickAdapter adapter, View view, int position) {
@@ -263,7 +261,7 @@ public class OrderDetailFragment extends BaseFragment {
 //                }
             }
         });
-        evaluateAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+        orderConfirmAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Bundle bundle = new Bundle();
@@ -272,11 +270,18 @@ public class OrderDetailFragment extends BaseFragment {
             }
         });
 
-        mRecyclerView.setAdapter(evaluateAdapter);
 
-        iv_phone.setOnClickListener(v ->
-                CallUtils.call(getActivity(), iv_phone.getTag().toString())
-        );
+    }
+
+    private void initAdapter() {
+        if (mDataList.size() == 0) {
+            mFaultNum.setVisibility(View.GONE);
+            return;
+        }
+        orderConfirmAdapter.setNewData(mDataList);
+        mFaultNum.setText(mDataList.size() + "");
+
+
     }
 
     private void getData() {
@@ -427,6 +432,7 @@ public class OrderDetailFragment extends BaseFragment {
                         llPay.setVisibility(View.GONE);
                     }
                     mDataList = bean.getBugEntityList();
+
                     initAdapter();
 
                 }));

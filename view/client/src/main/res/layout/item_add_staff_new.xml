@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rl_info"
+        android:background="@color/white">
+
+        <com.eanfang.base.widget.customview.CircleImageView
+            android:id="@+id/iv_user_header"
+            android:layout_width="@dimen/dimen_80"
+            android:layout_height="@dimen/dimen_80"
+            android:layout_marginBottom="@dimen/dimen_24"
+            android:layout_marginLeft="@dimen/dimen_36"
+            android:layout_marginTop="@dimen/dimen_24"
+            android:src="@mipmap/ic_header" />
+
+        <TextView
+            android:id="@+id/tv_name_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_38"
+            android:layout_marginTop="@dimen/dimen_30"
+            android:layout_toRightOf="@+id/iv_user_header"
+            android:text=" "
+            android:textColor="@color/color_client_neworder"
+            android:textSize="@dimen/textSize_15" />
+
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_name_phone"
+            android:layout_marginBottom="@dimen/dimen_30"
+            android:layout_marginLeft="@dimen/dimen_38"
+            android:layout_toRightOf="@+id/iv_user_header"
+            android:text="  "
+            android:textColor="#999999"
+            android:textSize="@dimen/textSize_12" />
+    </RelativeLayout>
+</layout>
