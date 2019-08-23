@@ -209,7 +209,7 @@ public class QuickRepairViewModel extends BaseViewModel {
         // 安防公司 id
         mRepairOrderEntity.setAssigneeCompanyId(repairOrderEntity.getAssigneeCompanyId());
         mRepairOrderEntity.setAssigneeTopCompanyId(repairOrderEntity.getAssigneeTopCompanyId());
-        mRepairOrderEntity.setAssigneeOrgCode(repairOrderEntity.getOwnerOrgCode());
+        mRepairOrderEntity.setAssigneeOrgCode(repairOrderEntity.getAssigneeOrgCode());
     }
 
     /**

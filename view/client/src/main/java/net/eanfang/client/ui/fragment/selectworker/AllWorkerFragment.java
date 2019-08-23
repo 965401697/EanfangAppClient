@@ -252,9 +252,10 @@ public class AllWorkerFragment extends BaseFragment implements SwipeRefreshLayou
                     mRepairOrderEntity = new RepairOrderEntity();
                     Bundle bundle_repair = new Bundle();
                     bundle_repair.putString("type", "repair");
-                    mRepairOrderEntity.setAssigneeCompanyId(selectWorkerAdapter.getData().get(position).getDepartmentEntity().getCompanyId());
-                    mRepairOrderEntity.setAssigneeTopCompanyId(selectWorkerAdapter.getData().get(position).getDepartmentEntity().getTopCompanyId());
-                    mRepairOrderEntity.setAssigneeOrgCode(selectWorkerAdapter.getData().get(position).getDepartmentEntity().getOrgCode());
+                    mRepairOrderEntity.setAssigneeUserId(Long.valueOf(selectWorkerAdapter.getData().get(position).getCompanyUserId()));
+                    mRepairOrderEntity.setAssigneeCompanyId(selectWorkerAdapter.getData().get(position).getCompanyEntity().getCompanyId());
+                    mRepairOrderEntity.setAssigneeTopCompanyId(selectWorkerAdapter.getData().get(position).getCompanyEntity().getTopCompanyId());
+                    mRepairOrderEntity.setAssigneeOrgCode(selectWorkerAdapter.getData().get(position).getCompanyEntity().getOrgCode());
                     bundle_repair.putSerializable("mRepairOrderEntity", mRepairOrderEntity);
                     JumpItent.jump(getActivity(), QuickRepairActivity.class, bundle_repair);
                     break;
