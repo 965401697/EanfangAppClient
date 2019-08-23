@@ -43,7 +43,7 @@
             app:tl_underline_color="@color/color_new_line"
             app:tl_underline_height="@dimen/dimen_2" />
 
-        <net.eanfang.client.ui.widget.CustomHomeViewPager
+        <androidx.viewpager.widget.ViewPager
             android:id="@+id/vp_select"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

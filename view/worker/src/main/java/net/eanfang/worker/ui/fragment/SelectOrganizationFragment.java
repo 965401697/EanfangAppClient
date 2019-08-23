@@ -1,4 +1,4 @@
-package net.eanfang.client.ui.fragment;
+package net.eanfang.worker.ui.fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,9 +8,9 @@ import androidx.lifecycle.ViewModel;
 
 import com.eanfang.base.BaseFragment;
 
-import net.eanfang.client.base.ClientApplication;
-import net.eanfang.client.databinding.FragmentSelectOrganizationBinding;
-import net.eanfang.client.viewmodel.CompanySelectViewModle;
+import net.eanfang.worker.base.WorkerApplication;
+import net.eanfang.worker.databinding.FragmentSelectOrganizationBinding;
+import net.eanfang.worker.viewmodle.CompanySelectViewModle;
 
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -43,9 +43,8 @@ public class SelectOrganizationFragment extends BaseFragment {
         fragmentSelectOrganizationBinding = FragmentSelectOrganizationBinding.inflate(getLayoutInflater());
         fragmentSelectOrganizationBinding.setCompanySelectViewModle(companySelectViewModle);
         companySelectViewModle.setFragmentSelectOrganizationBinding(fragmentSelectOrganizationBinding);
-        companySelectViewModle.initOrganiaztionListener(String.valueOf(ClientApplication.get().getCompanyId()));
+        companySelectViewModle.initOrganiaztionListener(String.valueOf(WorkerApplication.get().getCompanyId()));
         return fragmentSelectOrganizationBinding.getRoot();
     }
-
 
 }

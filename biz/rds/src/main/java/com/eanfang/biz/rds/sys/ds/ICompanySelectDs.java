@@ -1,9 +1,11 @@
 package com.eanfang.biz.rds.sys.ds;
 
 import com.eanfang.base.network.callback.RequestCallback;
-import com.eanfang.biz.model.bean.PageBean;
-import com.eanfang.biz.model.bean.QueryEntry;
-import com.eanfang.biz.model.entity.IfbOrderEntity;
+import com.eanfang.biz.model.bean.RoleBean;
+import com.eanfang.biz.model.bean.SectionBean;
+import com.eanfang.biz.model.entity.UserEntity;
+
+import java.util.List;
 
 /**
  * @author guanluocang
@@ -11,12 +13,35 @@ import com.eanfang.biz.model.entity.IfbOrderEntity;
  * @description
  */
 public interface ICompanySelectDs {
+
     /**
-     * 招标大厅 公告中 已过期
+     * 角色
      *
-     * @param queryEntry
      * @param callback
      */
-    void getOrganization(QueryEntry queryEntry, RequestCallback<PageBean<IfbOrderEntity>> callback);
+    void getRoleType(RequestCallback<List<RoleBean>> callback);
+
+    /**
+     * 员工
+     *
+     * @param companyId
+     * @param callback
+     */
+    void getStaff(String companyId, RequestCallback<List<SectionBean>> callback);
+
+    /**
+     * 添加第一步
+     * @param userEntity
+     * @param callback
+     */
+    void doSubmitFirst(UserEntity userEntity, RequestCallback<UserEntity> callback);
+
+    /**
+     * 添加第二步
+     * @param userId
+     * @param roleIdList
+     * @param callback
+     */
+    void doSubmitSecond(String userId,List<String> roleIdList, RequestCallback<Object> callback);
 }
 

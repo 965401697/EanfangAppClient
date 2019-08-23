@@ -48,7 +48,7 @@ public class OrderAdapter extends BaseQuickAdapter<RepairOrderEntity, BaseViewHo
         }
         helper.setText(R.id.tv_bugonename, DateUtil.date(item.getCreateTime()).toDateStr());
         //将业务类型的图片显示到列表
-        if (item.getFailureEntity() != null) {
+        if (item.getFailureEntity() != null&&item.getFailureEntity().getPictures() != null) {
             String[] urls = V.v(() -> item.getFailureEntity().getPictures().split(","));
             //将业务类型的图片显示到列表
             GlideUtil.intoImageView(mContext, Uri.parse(BuildConfig.OSS_SERVER + urls[0]), helper.getView(R.id.sdv_pic));

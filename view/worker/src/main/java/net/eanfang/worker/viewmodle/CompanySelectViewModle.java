@@ -1,4 +1,4 @@
-package net.eanfang.client.viewmodel;
+package net.eanfang.worker.viewmodle;
 
 import android.view.View;
 
@@ -24,11 +24,11 @@ import com.eanfang.biz.rds.sys.ds.impl.CompanySelectDs;
 import com.eanfang.biz.rds.sys.repo.CompanySelectRepo;
 import com.eanfang.ui.items.OrgOneLevelItem;
 
-import net.eanfang.client.R;
-import net.eanfang.client.base.ClientApplication;
-import net.eanfang.client.databinding.ActivityAddStaffNextBinding;
-import net.eanfang.client.databinding.FragmentSelectOrganizationBinding;
-import net.eanfang.client.databinding.FragmentSelectRoletypeBinding;
+import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
+import net.eanfang.worker.databinding.ActivityAddStaffNextBinding;
+import net.eanfang.worker.databinding.FragmentSelectOrganizationBinding;
+import net.eanfang.worker.databinding.FragmentSelectRoleBinding;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +47,7 @@ public class CompanySelectViewModle extends BaseViewModel {
     private FragmentSelectOrganizationBinding fragmentSelectOrganizationBinding;
     @Setter
     @Getter
-    private FragmentSelectRoletypeBinding fragmentSelectRoletypeBinding;
+    private FragmentSelectRoleBinding fragmentSelectRoletypeBinding;
     @Setter
     @Getter
     private ActivityAddStaffNextBinding activityAddStaffNextBinding;
@@ -78,8 +78,8 @@ public class CompanySelectViewModle extends BaseViewModel {
         companySelectRepo = new CompanySelectRepo(new CompanySelectDs(this));
 
         mAllOrganizationBean = new OrganizationBean();
-        mAllOrganizationBean.setOrgId(String.valueOf(ClientApplication.get().getUser().getCompanyEntity().getOrgId()));
-        mAllOrganizationBean.setOrgName(ClientApplication.get().getUser().getCompanyEntity().getOrgName());
+        mAllOrganizationBean.setOrgId(String.valueOf(WorkerApplication.get().getUser().getCompanyEntity().getOrgId()));
+        mAllOrganizationBean.setOrgName(WorkerApplication.get().getUser().getCompanyEntity().getOrgName());
         mAllOrganizationBean.setFlag(2);
         mAllOrganizationBean.setAdd(true);
     }

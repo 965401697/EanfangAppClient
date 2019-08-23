@@ -1,96 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="companySelectViewModle"
+            type="net.eanfang.worker.viewmodle.CompanySelectViewModle" />
+    </data>
 
     <LinearLayout
-        android:id="@+id/header"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include layout="@layout/header_eanfang" />
+        <LinearLayout
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <include layout="@layout/item_add_staff" />
+            <include layout="@layout/header_eanfang" />
+
+            <include
+                android:id="@+id/include_info"
+                layout="@layout/item_add_staff" />
+
+        </LinearLayout>
+
+        <com.flyco.tablayout.SlidingTabLayout
+            android:id="@+id/tl_select"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_100"
+            android:layout_marginTop="@dimen/dimen_20"
+            app:tl_indicator_color="@color/color_main_header_bg"
+            app:tl_indicator_height="@dimen/dimen_3"
+            app:tl_tab_padding="@dimen/dimen_1"
+            app:tl_tab_space_equal="true"
+            app:tl_textSelectColor="@color/color_main_header_bg"
+            app:tl_textUnselectColor="@color/color_text"
+            app:tl_textsize="14sp"
+            app:tl_underline_color="@color/color_new_line"
+            app:tl_underline_height="@dimen/dimen_2" />
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/vp_select"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <LinearLayout
+            android:id="@+id/ll_section"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_90"
+            android:layout_below="@+id/titles_bar"
+            android:layout_marginTop="@dimen/dimen_14"
+            android:background="@color/white"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dimen_36"
+                android:text="选择部门"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_14" />
+
+
+            <TextView
+                android:id="@+id/tv_section_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dimen_36"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:paddingRight="@dimen/dimen_20"
+                android:text="  "
+                android:textColor="#999999"
+                android:textSize="@dimen/textSize_14" />
+
+            <ImageView
+                android:layout_width="@dimen/dimen_14"
+                android:layout_height="@dimen/dimen_26"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="@dimen/dimen_34"
+                android:src="@mipmap/arrow_right" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_role"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_90"
+            android:layout_below="@+id/ll_section"
+            android:layout_marginTop="@dimen/dimen_14"
+            android:background="@color/white"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dimen_36"
+                android:text="分配角色"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_14" />
+
+
+            <TextView
+                android:id="@+id/tv_role"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/dimen_36"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:paddingRight="@dimen/dimen_20"
+                android:text="  "
+                android:textColor="#999999"
+                android:textSize="@dimen/textSize_14" />
+
+            <ImageView
+                android:layout_width="@dimen/dimen_14"
+                android:layout_height="@dimen/dimen_26"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="@dimen/dimen_34"
+                android:src="@mipmap/arrow_right" />
+        </LinearLayout>
+
 
     </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ll_section"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_90"
-        android:layout_below="@+id/titles_bar"
-        android:layout_marginTop="@dimen/dimen_14"
-        android:background="@color/white">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/dimen_36"
-            android:text="选择部门"
-            android:textColor="@color/color_client_neworder"
-            android:textSize="@dimen/textSize_14" />
-
-
-        <TextView
-            android:id="@+id/tv_section_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/dimen_36"
-            android:layout_weight="1"
-            android:gravity="right"
-            android:paddingRight="@dimen/dimen_20"
-            android:text="  "
-            android:textColor="#999999"
-            android:textSize="@dimen/textSize_14" />
-
-        <ImageView
-            android:layout_width="@dimen/dimen_14"
-            android:layout_height="@dimen/dimen_26"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="@dimen/dimen_34"
-            android:src="@mipmap/arrow_right" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/ll_role"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_90"
-        android:layout_below="@+id/ll_section"
-        android:layout_marginTop="@dimen/dimen_14"
-        android:background="@color/white">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/dimen_36"
-            android:text="分配角色"
-            android:textColor="@color/color_client_neworder"
-            android:textSize="@dimen/textSize_14" />
-
-
-        <TextView
-            android:id="@+id/tv_role"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/dimen_36"
-            android:layout_weight="1"
-            android:gravity="right"
-            android:paddingRight="@dimen/dimen_20"
-            android:text="  "
-            android:textColor="#999999"
-            android:textSize="@dimen/textSize_14" />
-
-        <ImageView
-            android:layout_width="@dimen/dimen_14"
-            android:layout_height="@dimen/dimen_26"
-            android:layout_gravity="center_vertical"
-            android:layout_marginRight="@dimen/dimen_34"
-            android:src="@mipmap/arrow_right" />
-    </LinearLayout>
-</LinearLayout>
+</layout>

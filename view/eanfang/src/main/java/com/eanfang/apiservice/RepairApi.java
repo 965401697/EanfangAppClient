@@ -203,4 +203,9 @@ public interface RepairApi {
      * 36.根据客户绑定的关系，查询是否存在记录并返回对象
      */
     String GET_REAPIR_DO_VERIRFY = BuildConfig.API_HOST + "/yaf_shop/cooperation/exists";
+    /**
+     * 37.报修查看安防公司详情
+     */
+    String GET_SECURITY_COMPANY_DETAIL = BuildConfig.API_HOST + "/yaf_sys/orgunit/orgUnitInfo";
 }
+

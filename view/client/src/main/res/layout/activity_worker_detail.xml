@@ -207,7 +207,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=""
-                        android:textColor="@color/color_main_client" />
+                        android:textColor="@color/color_workdertail_num" />
                 </LinearLayout>
 
                 <LinearLayout style="@style/style_worker_detail_order">
@@ -222,7 +222,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=""
-                        android:textColor="@color/color_main_client" />
+                        android:textColor="@color/color_workdertail_num" />
                 </LinearLayout>
 
                 <LinearLayout style="@style/style_worker_detail_order">
@@ -237,7 +237,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=""
-                        android:textColor="@color/color_main_client" />
+                        android:textColor="@color/color_workdertail_num" />
                 </LinearLayout>
 
                 <LinearLayout style="@style/style_worker_detail_order">
@@ -252,7 +252,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=""
-                        android:textColor="@color/color_main_client" />
+                        android:textColor="@color/color_workdertail_num" />
                 </LinearLayout>
             </LinearLayout>
 

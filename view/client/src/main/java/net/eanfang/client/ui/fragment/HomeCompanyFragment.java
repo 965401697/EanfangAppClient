@@ -14,6 +14,7 @@ import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
+import com.eanfang.ui.activity.SecurityCompanyDetailsActivity;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.LocationUtil;
@@ -127,6 +128,11 @@ public class HomeCompanyFragment extends BaseFragment {
 
     @Override
     protected void setListener() {
+        adapter.setOnItemClickListener(((adapter1, view, position) -> {
+            Bundle mBundleOrgDetail = new Bundle();
+            mBundleOrgDetail.putString("mOrgId", adapter.getData().get(position).getId() + "");
+            JumpItent.jump(getActivity(), SecurityCompanyDetailsActivity.class, mBundleOrgDetail);
+        }));
         adapter.setOnItemChildClickListener(((adapter1, view, position) -> {
             switch (view.getId()) {
                 case R.id.btn_home_company_install:
