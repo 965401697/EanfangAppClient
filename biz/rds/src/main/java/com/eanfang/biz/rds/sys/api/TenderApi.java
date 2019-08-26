@@ -1,4 +1,4 @@
-package com.eanfang.biz.rds.sys.api.tender;
+package com.eanfang.biz.rds.sys.api;
 
 import com.eanfang.base.network.model.BaseResponseBody;
 import com.eanfang.biz.model.bean.PageBean;

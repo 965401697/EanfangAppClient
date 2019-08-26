@@ -129,17 +129,14 @@
                         android:id="@+id/tv_des"
                         android:layout_width="@dimen/dimen_160"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/show_more_tv"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginTop="@dimen/dimen_6"
                         android:background="@drawable/bg_gradual_change_ellipse"
                         android:gravity="center"
                         android:padding="@dimen/dimen_14"
                         android:text="去认证→"
                         android:textColor="@color/white"
-                        android:textSize="12sp"
-                        />
+                        android:textSize="12sp" />
                 </RelativeLayout>
 
 

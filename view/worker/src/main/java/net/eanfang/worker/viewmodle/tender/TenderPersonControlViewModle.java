@@ -9,7 +9,7 @@ import com.eanfang.biz.model.entity.tender.TaskApplyEntity;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
 import com.eanfang.biz.rds.base.BaseViewModel;
 import com.eanfang.biz.rds.sys.ds.impl.tender.TenderDs;
-import com.eanfang.biz.rds.sys.repo.tender.TenderRepo;
+import com.eanfang.biz.rds.sys.repo.TenderRepo;
 
 import net.eanfang.worker.databinding.ActivityTenderPersonControlBinding;
 

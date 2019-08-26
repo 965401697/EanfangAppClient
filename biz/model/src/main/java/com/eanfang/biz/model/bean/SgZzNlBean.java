@@ -39,6 +39,7 @@ public class SgZzNlBean {
         private int dataType;
         private int id;
         private String remark;
+        private String dataName;
         private int status;
         private String units;
 
@@ -118,6 +119,14 @@ public class SgZzNlBean {
 
         public void setUnits(String units) {
             this.units = units;
+        }
+
+        public String getDataName() {
+            return dataName;
+        }
+
+        public void setDataName(String dataName) {
+            this.dataName = dataName;
         }
 
         public static class BaseDataEntityBean {

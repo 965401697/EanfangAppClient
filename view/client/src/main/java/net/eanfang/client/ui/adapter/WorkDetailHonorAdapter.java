@@ -35,5 +35,6 @@ public class WorkDetailHonorAdapter extends BaseQuickAdapter<HonorCertificateEnt
             //一条
             GlideUtil.intoImageView(context,BuildConfig.OSS_SERVER + info[0],helper.getView(R.id.iv_pic));
         }
+
     }
 }

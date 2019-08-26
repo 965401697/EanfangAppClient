@@ -13,6 +13,8 @@ import net.eanfang.worker.R;
 import net.eanfang.worker.ui.activity.worksapce.contacts.verifyqualify.AuthQualifyFirstActivity;
 import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -73,6 +75,7 @@ public class StateChangeActivity extends BaseWorkerActivity {
                     bundle.putLong("orgid", mOrgId);
                     JumpItent.jump(StateChangeActivity.this, AuthQualifyFirstActivity.class, bundle);
                 }
+                EventBus.getDefault().post("tenderCreateSuccess");
                 finishSelf();
                 break;
             case R.id.tv_phone:

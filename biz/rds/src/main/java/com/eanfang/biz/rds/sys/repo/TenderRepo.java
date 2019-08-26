@@ -1,4 +1,4 @@
-package com.eanfang.biz.rds.sys.repo.tender;
+package com.eanfang.biz.rds.sys.repo;
 
 import androidx.lifecycle.MutableLiveData;
 
@@ -11,8 +11,6 @@ import com.eanfang.biz.model.vo.tender.TenderCommitVo;
 import com.eanfang.biz.model.vo.tender.TenderCreateVo;
 import com.eanfang.biz.rds.base.BaseRepo;
 import com.eanfang.biz.rds.sys.ds.impl.tender.TenderDs;
-
-import lombok.val;
 
 /**
  * @author guanluocang

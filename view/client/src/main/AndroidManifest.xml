@@ -57,7 +57,9 @@
         android:supportsRtl="true"
         android:theme="@style/NewBaseTheme"
         tools:replace="android:name,android:theme,android:icon">
-        <activity android:name=".ui.activity.worksapce.repair.RepairPhoneActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.SecurityCompanyAllAreaActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.repair.SecurityCompanyDetailActivity" />
+        <activity android:name=".ui.activity.worksapce.repair.RepairPhoneActivity" />
         <activity android:name=".ui.activity.worksapce.SelectCompanyActivity" /> <!-- 如果当前应用的TargetVersion>=28（Android 9.0），则必须在应用的AndroidManifest.xml文件中添加以下标签，否则sdk在运行过程中将可能出现崩溃问题（NoClassDefFoundError: Failed resolution of: Lorg/apache/http/impl/client/DefaultHttpClient）。 -->
         <!-- <uses-library -->
         <!-- android:name="org.apache.http.legacy" -->

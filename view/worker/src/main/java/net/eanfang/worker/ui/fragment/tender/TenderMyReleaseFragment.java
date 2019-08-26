@@ -1,27 +1,17 @@
 package net.eanfang.worker.ui.fragment.tender;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModel;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.eanfang.base.network.event.BaseActionEvent;
 import com.eanfang.biz.model.bean.QueryEntry;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
 import com.eanfang.util.CallUtils;
 import com.eanfang.util.JumpItent;
 
 import net.eanfang.worker.R;
-import net.eanfang.worker.ui.activity.worksapce.tender.TenderCommitActivity;
 import net.eanfang.worker.ui.activity.worksapce.tender.TenderCreateActivity;
-import net.eanfang.worker.ui.activity.worksapce.tender.TenderFindDetailActivity;
 import net.eanfang.worker.ui.activity.worksapce.tender.TenderOfferDetailActivity;
 import net.eanfang.worker.ui.adapter.worktender.WorkTenderReleaseAdapter;
 import net.eanfang.worker.ui.fragment.TemplateItemListFragment;
@@ -29,8 +19,6 @@ import net.eanfang.worker.viewmodle.tender.TenderPersonControlViewModle;
 
 import lombok.Setter;
 import lombok.experimental.Accessors;
-
-import static com.eanfang.base.network.event.BaseActionEvent.EMPTY_DATA;
 
 /**
  * @author guanluocang

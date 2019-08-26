@@ -1,20 +1,15 @@
 package net.eanfang.worker.ui.fragment.tender;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModel;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModel;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.eanfang.base.BaseActivity;
-import com.eanfang.base.BaseFragment;
 import com.eanfang.biz.model.bean.QueryEntry;
 import com.eanfang.util.JumpItent;
 
@@ -25,10 +20,12 @@ import net.eanfang.worker.ui.adapter.worktender.WorkTenderFindAdapter;
 import net.eanfang.worker.ui.fragment.TemplateItemListFragment;
 import net.eanfang.worker.viewmodle.tender.TenderViewModle;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import lombok.Setter;
 import lombok.experimental.Accessors;
-
-import static com.eanfang.base.network.event.BaseActionEvent.EMPTY_DATA;
 
 /**
  * @author guanluocang
@@ -46,6 +43,15 @@ public class WorkTenderFindFragment extends TemplateItemListFragment {
 
     public static WorkTenderFindFragment getInstance(TenderViewModle tenderViewModle) {
         return new WorkTenderFindFragment().setMTenderViewModle(tenderViewModle);
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
@@ -105,5 +111,23 @@ public class WorkTenderFindFragment extends TemplateItemListFragment {
 
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEventCreateTender(String status) {
+        if (status.equals("tenderCreateSuccess")) {
+            mTenderViewModle.mFindQueryEntry = null;
+            mPage = 1;
+            getData();
+        }
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //取消订阅
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+    }
 
 }

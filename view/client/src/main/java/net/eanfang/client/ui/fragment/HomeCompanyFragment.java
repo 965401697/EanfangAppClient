@@ -14,7 +14,6 @@ import com.eanfang.config.Config;
 import com.eanfang.config.Constant;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.ui.activity.SecurityCompanyDetailsActivity;
 import com.eanfang.ui.base.BaseFragment;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.LocationUtil;
@@ -24,6 +23,7 @@ import net.eanfang.client.ui.activity.MainActivity;
 import net.eanfang.client.ui.activity.worksapce.SelectCompanyActivity;
 import net.eanfang.client.ui.activity.worksapce.online.DividerItemDecoration;
 import net.eanfang.client.ui.activity.worksapce.repair.QuickRepairActivity;
+import net.eanfang.client.ui.activity.worksapce.repair.SecurityCompanyDetailActivity;
 import net.eanfang.client.ui.adapter.FragmentHomeCompanyAdapter;
 
 import java.util.ArrayList;
@@ -130,8 +130,8 @@ public class HomeCompanyFragment extends BaseFragment {
     protected void setListener() {
         adapter.setOnItemClickListener(((adapter1, view, position) -> {
             Bundle mBundleOrgDetail = new Bundle();
-            mBundleOrgDetail.putString("mOrgId", adapter.getData().get(position).getId() + "");
-            JumpItent.jump(getActivity(), SecurityCompanyDetailsActivity.class, mBundleOrgDetail);
+            mBundleOrgDetail.putString("mOrgId", String.valueOf(adapter.getData().get(position).getOrgEntity().getOrgId()));
+            JumpItent.jump(getActivity(), SecurityCompanyDetailActivity.class, mBundleOrgDetail);
         }));
         adapter.setOnItemChildClickListener(((adapter1, view, position) -> {
             switch (view.getId()) {

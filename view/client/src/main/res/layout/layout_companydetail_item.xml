@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/dimen_32">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_32"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/dimen_80">
+
+        <TextView
+            android:id="@+id/tv_business_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="系统类型："
+            android:textColor="@color/color_client_neworder"
+            android:textSize="@dimen/textSize_13" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_32"
+            android:text="业务类型：安装"
+            android:textColor="@color/color_client_neworder"
+            android:textSize="@dimen/textSize_13" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_32"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_scale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="规模："
+            android:textColor="@color/color_client_neworder"
+            android:textSize="@dimen/textSize_13" />
+
+        <TextView
+            android:id="@+id/tv_custome"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_32"
+            android:text="客户："
+            android:textColor="@color/color_client_neworder"
+            android:textSize="@dimen/textSize_13" />
+    </LinearLayout>
+</LinearLayout>

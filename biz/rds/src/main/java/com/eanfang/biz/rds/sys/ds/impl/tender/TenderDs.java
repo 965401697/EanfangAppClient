@@ -11,7 +11,7 @@ import com.eanfang.biz.model.vo.tender.TenderCreateVo;
 import com.eanfang.biz.rds.base.BaseRemoteDataSource;
 import com.eanfang.biz.rds.base.BaseViewModel;
 import com.eanfang.biz.rds.base.CacheModel;
-import com.eanfang.biz.rds.sys.api.tender.TenderApi;
+import com.eanfang.biz.rds.sys.api.TenderApi;
 import com.eanfang.biz.rds.sys.ds.tender.ITenderDs;
 import com.zchu.rxcache.stategy.CacheStrategy;
 

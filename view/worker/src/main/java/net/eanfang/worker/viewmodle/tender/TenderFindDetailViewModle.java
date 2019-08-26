@@ -12,11 +12,10 @@ import com.eanfang.base.kit.picture.picture.PictureRecycleView;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
 import com.eanfang.biz.rds.base.BaseViewModel;
 import com.eanfang.biz.rds.sys.ds.impl.tender.TenderDs;
-import com.eanfang.biz.rds.sys.repo.tender.TenderRepo;
+import com.eanfang.biz.rds.sys.repo.TenderRepo;
 import com.eanfang.config.Config;
 import com.eanfang.util.DateKit;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.util.StringUtils;
 import com.luck.picture.lib.entity.LocalMedia;
 
 import net.eanfang.worker.databinding.ActivityTenderFindDetailBinding;
@@ -25,7 +24,6 @@ import net.eanfang.worker.ui.activity.my.UserHomeActivity;
 import net.eanfang.worker.ui.activity.worksapce.tender.TenderFindDetailActivity;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import cn.hutool.core.date.DateField;
