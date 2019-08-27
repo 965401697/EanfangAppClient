@@ -23,6 +23,7 @@ import net.eanfang.client.R;
 import net.eanfang.client.databinding.ActivitySelectCompanyBinding;
 import net.eanfang.client.ui.activity.worksapce.online.DividerItemDecoration;
 import net.eanfang.client.ui.activity.worksapce.repair.QuickRepairActivity;
+import net.eanfang.client.ui.activity.worksapce.repair.SecurityCompanyDetailActivity;
 import net.eanfang.client.ui.adapter.repair.SelectCompanyAdapter;
 
 import java.util.ArrayList;
@@ -187,6 +188,11 @@ public class SelectCompanyActivity extends BaseActivity implements SwipeRefreshL
                 default:
                     break;
             }
+        }));
+        selectCompanyAdapter.setOnItemClickListener(((adapter1, view, position) -> {
+            Bundle mBundleOrgDetail = new Bundle();
+            mBundleOrgDetail.putString("mOrgId", String.valueOf(selectCompanyAdapter.getData().get(position).getOrgEntity().getOrgId()));
+            JumpItent.jump(SelectCompanyActivity.this, SecurityCompanyDetailActivity.class, mBundleOrgDetail);
         }));
     }
 
