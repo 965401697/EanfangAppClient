@@ -2,21 +2,20 @@ package net.eanfang.worker.ui.activity.worksapce.tender;
 
 import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.NewApiService;
+import com.eanfang.biz.model.entity.IfbOrderEntity;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.entity.IfbOrderEntity;
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.FileDisplayActivity;
 
@@ -199,11 +198,13 @@ public class WorkTenderDetailActivity extends BaseActivity {
         tvAgentAddress.setText(ifbOrderEntity.getAgencyAddress());
         //代理机构电话
         tvAgentPhone.setText(ifbOrderEntity.getAgencyPhone());
-
-        String[] info = ifbOrderEntity.getIfbFiles().split(",");
-        for (int i = 0; i < info.length; i++) {
-            mAdjunctList.add(info[i]);
+        if (ifbOrderEntity.getIfbFiles() != null) {
+            String[] info = ifbOrderEntity.getIfbFiles().split(",");
+            for (int i = 0; i < info.length; i++) {
+                mAdjunctList.add(info[i]);
+            }
         }
+
         workTenderAdjunctAdapter.setNewData(mAdjunctList);
     }
 
