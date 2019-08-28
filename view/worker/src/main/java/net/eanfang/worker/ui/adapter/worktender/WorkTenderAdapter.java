@@ -1,17 +1,12 @@
 package net.eanfang.worker.ui.adapter.worktender;
 
-import android.view.View;
-
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.biz.model.entity.IfbOrderEntity;
 import com.eanfang.config.Config;
 import com.eanfang.util.DateKit;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.worker.R;
-
-import java.util.Calendar;
 
 import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateUnit;
@@ -31,7 +26,10 @@ public class WorkTenderAdapter extends BaseQuickAdapter<IfbOrderEntity, BaseView
 
     @Override
     protected void convert(BaseViewHolder helper, IfbOrderEntity item) {
-        String endTime = DateUtil.date(item.getIfbFileEndTime()).toString();
+        String endTime = null;
+        if (item.getIfbFileEndTime() != null) {
+            endTime = DateUtil.date(item.getIfbFileEndTime()).toString();
+        }
         // 公告名称
         helper.setText(R.id.tv_tender_name, item.getAnnouncementName());
         //招标单位
@@ -41,7 +39,9 @@ public class WorkTenderAdapter extends BaseQuickAdapter<IfbOrderEntity, BaseView
         //项目地区
         helper.setText(R.id.tv_tender_address, Config.get().getAddressByCode(item.getProjectArea()));
         //发布时间
-        helper.setText(R.id.tv_tender_update_time, DateUtil.date(item.getReleaseTime()).toString());
+        if (item.getReleaseTime() != null) {
+            helper.setText(R.id.tv_tender_update_time, DateUtil.date(item.getReleaseTime()).toString());
+        }
         //截止时间
         if (!StrUtil.isEmpty(endTime)) {
             if (DateUtil.parse(endTime).getTime() - DateUtil.date().getTime() > 0) {

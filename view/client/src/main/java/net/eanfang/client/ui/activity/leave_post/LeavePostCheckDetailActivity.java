@@ -1,5 +1,6 @@
 package net.eanfang.client.ui.activity.leave_post;
 
+import android.app.Application;
 import android.os.Bundle;
 import android.view.View;
 
@@ -8,17 +9,17 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.eanfang.BuildConfig;
 import com.eanfang.base.BaseActivity;
+import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.biz.rds.base.LViewModelProviders;
-import com.eanfang.util.GlideUtil;
+import com.ezvizuikit.open.EZUIKit;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.databinding.ActivityLeavePostCheckDetailBinding;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostDeviceInfoBean;
 import net.eanfang.client.ui.activity.leave_post.viewmodel.LeavePostCheckDetailViewModel;
 import net.eanfang.client.ui.adapter.LeavePostCheckDetailAdapter;
-import net.eanfang.client.util.ImagePerviewUtil;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -33,7 +34,6 @@ public class LeavePostCheckDetailActivity extends BaseActivity {
     private LeavePostCheckDetailViewModel mViewModel;
     private LeavePostCheckDetailAdapter mAdapter;
     private boolean showTopContent;
-    private String mUrlImg;
     /**
      * 岗位id
      */
@@ -58,10 +58,12 @@ public class LeavePostCheckDetailActivity extends BaseActivity {
         showTopContent = getIntent().getBooleanExtra("isShowTopContent", true);
         if (showTopContent) {
             setTitle("图像查岗");
+            EZUIKit.initWithAppKey((Application) ClientApplication.get().getApplicationContext(), "e1c0c37930874e04b8db23168def1ddc");
+            EZUIKit.setAccessToken(CacheKit.get().getStr("YingShiYunToken"));
         } else {
             setTitle("联系责任人");
             mBinding.tvLeavePostCheckDetailTitle.setVisibility(View.GONE);
-            mBinding.imgLeavePostCheckDetail.setVisibility(View.GONE);
+//            mBinding.ezPlayer.setVisibility(View.GONE);
         }
         if (showTopContent) {
             mViewModel.getDeviceListData(mStationId);
@@ -72,11 +74,6 @@ public class LeavePostCheckDetailActivity extends BaseActivity {
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> mViewModel.callToPerson(LeavePostCheckDetailActivity.this, adapter, position));
         mBinding.recLeavePostCheckDetailPerson.setLayoutManager(new LinearLayoutManager(this));
         mAdapter.bindToRecyclerView(mBinding.recLeavePostCheckDetailPerson);
-        mBinding.imgLeavePostCheckDetail.setOnClickListener(view -> {
-            ArrayList<String> arrayList = new ArrayList<>();
-            arrayList.add(mUrlImg);
-            ImagePerviewUtil.perviewImage(LeavePostCheckDetailActivity.this, arrayList, 0);
-        });
     }
 
     @Override
@@ -92,8 +89,10 @@ public class LeavePostCheckDetailActivity extends BaseActivity {
         }
         if (showTopContent) {
             mBinding.tvLeavePostCheckDetailTitle.setText(MessageFormat.format("{0}\t({1})\t{2}", leavePostDeviceInfoBean.getStationName(), leavePostDeviceInfoBean.getStationCode(), leavePostDeviceInfoBean.getDeviceEntity().getDeviceName()));
-            mUrlImg = BuildConfig.OSS_SERVER + leavePostDeviceInfoBean.getDeviceEntity().getLivePic();
-            GlideUtil.intoImageView(this, mUrlImg, mBinding.imgLeavePostCheckDetail);
+//            mUrlImg = BuildConfig.OSS_SERVER + leavePostDeviceInfoBean.getDeviceEntity().getLivePic();
+//            mBinding.ezPlayer.setUrl("ezopen://open.ys7.com/C86980223/1.hd.live");
+//            mBinding.ezPlayer.setCallBack(this);
+//            mBinding.ezPlayer.startPlay();
         }
 
         ArrayList<LeavePostDeviceInfoBean.ChargeStaffListBean> beans = new ArrayList<>(leavePostDeviceInfoBean.getChargeStaffList());
@@ -110,4 +109,5 @@ public class LeavePostCheckDetailActivity extends BaseActivity {
         }
         mAdapter.setNewData(beans);
     }
+
 }

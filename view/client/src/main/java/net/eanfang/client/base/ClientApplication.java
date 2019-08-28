@@ -12,6 +12,7 @@ import com.eanfang.http.EanfangHttp;
 import com.mob.MobSDK;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+import com.videogo.openapi.EZOpenSDK;
 
 import net.eanfang.client.BuildConfig;
 import net.eanfang.client.ui.activity.im.CustomizeMessage;
@@ -49,7 +50,21 @@ public class ClientApplication extends BaseApplication {
             initRongIM();
             initWxPay();
             initBugly();
+            initEZPlayer();
         });
+    }
+
+    /**
+     * 初始化 萤石云播放
+     */
+    private void initEZPlayer() {
+        /** * sdk日志开关，正式发布需要去掉 */
+        EZOpenSDK.showSDKLog( HttpConfig.get().isDebug());
+        /** * 设置是否支持P2P取流,详见api */
+        EZOpenSDK.enableP2P(false);
+
+        /** * APP_KEY请替换成自己申请的 */
+        EZOpenSDK.initLib(this, EanfangConst.YING_SHI_YUN_APP_KEY);
     }
 
     private void initBugly() {

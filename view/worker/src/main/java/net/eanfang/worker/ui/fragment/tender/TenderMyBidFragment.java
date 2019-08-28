@@ -65,7 +65,7 @@ public class TenderMyBidFragment extends TemplateItemListFragment {
                     JumpItent.jump(getActivity(), TenderCommitActivity.class, bundle_offer);
                     break;
                 case R.id.tv_contact:
-                    CallUtils.call(getActivity(), workTenderBidAdapter.getData().get(position).getApplyConstactsPhone());
+                    CallUtils.call(getActivity(), workTenderBidAdapter.getData().get(position).getTaskPublishEntity().getContactsPhone());
                     break;
                 default:
                     break;

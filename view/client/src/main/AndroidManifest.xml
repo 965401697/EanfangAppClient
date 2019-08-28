@@ -47,6 +47,9 @@
     <uses-permission android:name="android.permission.FLASHLIGHT" /> <!-- 华为桌面消息图标权限 -->
     <uses-permission android:name="com.huawei.android.launcher.permission.CHANGE_BADGE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+    <uses-permission
+        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions" />
 
     <application
         android:name=".base.ClientApplication"
@@ -70,6 +73,11 @@
         <meta-data
             android:name="com.tencent.tac.channel"
             android:value="${tac_channel}" /> <!-- 高德地图 -->
+        <!-- 萤石云 -->
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="${AMAP_KEY}" />
@@ -975,7 +983,9 @@
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".ui.activity.leave_post.LeavePostHomeActivity" />
         <activity android:name=".ui.activity.leave_post.LeavePostCheckListActivity" />
-        <activity android:name=".ui.activity.leave_post.LeavePostCheckDetailActivity" />
+        <activity android:name=".ui.activity.leave_post.LeavePostCheckDetailActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"/>
         <activity android:name=".ui.activity.leave_post.LeavePostDetailActivity" />
         <activity
             android:name=".ui.activity.leave_post.LeavePostAddPostActivity"

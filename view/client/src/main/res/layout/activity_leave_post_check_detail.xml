@@ -24,15 +24,20 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/titles_bar" />
 
-        <ImageView
-            android:id="@+id/img_leave_post_check_detail"
+        <SurfaceView
+            android:id="@+id/realplay_sv"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginLeft="@dimen/dimen_38"
-            android:layout_marginTop="@dimen/dimen_28"
-            android:layout_marginRight="@dimen/dimen_38"
-            app:layout_constraintDimensionRatio="w,135:324"
+            android:layout_height="@dimen/dimen_400"
+            android:background="@android:color/transparent"
             app:layout_constraintTop_toBottomOf="@id/tv_leave_post_check_detail_title" />
+
+        <include
+            android:id="@+id/ll_play_control"
+            layout="@layout/ez_play_control"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@id/realplay_sv"
+            app:layout_constraintTop_toBottomOf="@id/realplay_sv" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rec_leave_post_check_detail_person"
@@ -42,6 +47,6 @@
             android:clipChildren="false"
             android:paddingTop="@dimen/dimen_20"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/img_leave_post_check_detail" />
+            app:layout_constraintTop_toBottomOf="@id/ll_play_control" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

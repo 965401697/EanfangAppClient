@@ -104,7 +104,7 @@ public class TenderMyReleaseFragment extends TemplateItemListFragment {
                     break;
                 // 联系中标人
                 case R.id.tv_contact:
-                    CallUtils.call(getActivity(), workTenderReleaseAdapter.getData().get(position).getContactsPhone());
+                    CallUtils.call(getActivity(), workTenderReleaseAdapter.getData().get(position).getApplyContactsPhone());
                     break;
                 default:
                     break;

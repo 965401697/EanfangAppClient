@@ -5,7 +5,6 @@ import com.eanfang.biz.model.entity.UserEntity;
 import com.eanfang.biz.model.entity.WorkerEntity;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -37,6 +36,7 @@ public class TaskPublishEntity implements Serializable {
      * 联系人电话
      */
     private String contactsPhone;
+    private String applyContactsPhone;
     /**
      * 任务发布单位名==用工单位：
      */

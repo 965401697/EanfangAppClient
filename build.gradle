@@ -56,7 +56,7 @@ ext {
             ossEndpoint      : "\"https://oss-cn-beijing.aliyuncs.com\"",
             javaVersion      : JavaVersion.VERSION_1_8,
             debugMod         : "true",
-            localApiHost     : "\"http://192.168.0.104:8080\"",
+            localApiHost     : "\"http://ifb.ngrok.eanfang.net:89\"",
             betaApiHost      : "\"http://api.beta.eanfang.net\"",
             proApiHost       : "\"https://api.eanfang.net\"",
             clientId         : "net.eanfang.client",
@@ -177,7 +177,7 @@ ext {
             monitor              : "leavesc.hello:Monitor:1.0.3",
 //            gson                 : 'com.google.code.gson:gson:2.8.5'
             //萤石云
-            yingshiyun           : 'com.hikvision.ezviz:ezuikit:2.1'
+            yingshiyun           : 'com.hikvision.ezviz:ezviz-sdk:4.8.8'
 
 
     ]
