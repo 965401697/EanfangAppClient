@@ -1,6 +1,5 @@
 package net.eanfang.client.ui.activity.leave_post;
 
-import android.app.Application;
 import android.os.Bundle;
 import android.view.View;
 
@@ -12,10 +11,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.eanfang.base.BaseActivity;
 import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.biz.rds.base.LViewModelProviders;
-import com.ezvizuikit.open.EZUIKit;
+import com.videogo.openapi.EZOpenSDK;
 
 import net.eanfang.client.R;
-import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.databinding.ActivityLeavePostCheckDetailBinding;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostDeviceInfoBean;
 import net.eanfang.client.ui.activity.leave_post.viewmodel.LeavePostCheckDetailViewModel;
@@ -58,8 +56,7 @@ public class LeavePostCheckDetailActivity extends BaseActivity {
         showTopContent = getIntent().getBooleanExtra("isShowTopContent", true);
         if (showTopContent) {
             setTitle("图像查岗");
-            EZUIKit.initWithAppKey((Application) ClientApplication.get().getApplicationContext(), "e1c0c37930874e04b8db23168def1ddc");
-            EZUIKit.setAccessToken(CacheKit.get().getStr("YingShiYunToken"));
+            EZOpenSDK.getInstance().setAccessToken(CacheKit.get().getStr("YingShiYunToken"));
         } else {
             setTitle("联系责任人");
             mBinding.tvLeavePostCheckDetailTitle.setVisibility(View.GONE);

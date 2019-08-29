@@ -405,7 +405,7 @@ public class WorkDetailActivity extends BaseActivity {
         // 服务区域
         mDataList1 = new ArrayList<>();
         new Thread(() -> {
-            if (bean.getVerifyEntity().getRegionList() != null && !bean.getVerifyEntity().getRegionList().isEmpty()) {
+            if (bean.getVerifyEntity() != null && bean.getVerifyEntity().getRegionList() != null && !bean.getVerifyEntity().getRegionList().isEmpty()) {
                 mDataList1.addAll(Stream.of(bean.getVerifyEntity().getRegionList()).map(regionId -> Config.get().getAddressById(regionId)).toList());
             }
         }).start();

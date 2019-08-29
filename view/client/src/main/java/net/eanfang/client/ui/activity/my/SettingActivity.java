@@ -25,6 +25,7 @@ import com.eanfang.util.ToastUtil;
 import com.eanfang.witget.SwitchButton;
 import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushManager;
+import com.videogo.openapi.EZOpenSDK;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
@@ -167,6 +168,7 @@ public class SettingActivity extends BaseActivity {
             // 切换账号后 立即技师认证  地区为空
 //            CleanMessageUtil.clearAllCache(ClientApplication.get());
             CacheKit.get().remove(EanfangConst.RONG_YUN_TOKEN);
+            EZOpenSDK.getInstance().logout();
             finish();
             startActivity(new Intent(SettingActivity.this, SplashActivity.class));
             BaseApplication.get().closeActivity(MainActivity.class);
