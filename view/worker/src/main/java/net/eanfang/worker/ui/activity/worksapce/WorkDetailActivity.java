@@ -285,7 +285,7 @@ public class WorkDetailActivity extends BaseActivity {
         });
         // 业务领域查看更多
         rlAllArea.setOnClickListener((v) -> {
-            if (mDataList3.size() <= 4) {
+            if (mDataList3 != null && mDataList3.size() <= 4) {
                 showToast("暂无更多");
                 return;
             }
@@ -413,39 +413,41 @@ public class WorkDetailActivity extends BaseActivity {
         // 服务类型
         mDataList2 = new ArrayList<>();
         mDataList2.clear();
-        List<Integer> serviceList = bean.getVerifyEntity().getServiceList();
-        if (serviceList != null && !serviceList.isEmpty()) {
-            mDataList2.addAll(Stream.of(serviceList).map(id -> Config.get().getServiceNameById(id)).toList());
-            if (mDataList2.size() <= 4) {
-                addView(WorkDetailActivity.this, rgType, mDataList2);
-            } else {
-                mTypeSmall.add(mDataList2.get(0));
-                mTypeSmall.add(mDataList2.get(1));
-                mTypeSmall.add(mDataList2.get(2));
-                mTypeSmall.add(mDataList2.get(3));
-                addView(WorkDetailActivity.this, rgType, mTypeSmall);
+        if (bean.getVerifyEntity() != null) {
+            List<Integer> serviceList = bean.getVerifyEntity().getServiceList();
+            if (serviceList != null && !serviceList.isEmpty()) {
+                mDataList2.addAll(Stream.of(serviceList).map(id -> Config.get().getServiceNameById(id)).toList());
+                if (mDataList2.size() <= 4) {
+                    addView(WorkDetailActivity.this, rgType, mDataList2);
+                } else {
+                    mTypeSmall.add(mDataList2.get(0));
+                    mTypeSmall.add(mDataList2.get(1));
+                    mTypeSmall.add(mDataList2.get(2));
+                    mTypeSmall.add(mDataList2.get(3));
+                    addView(WorkDetailActivity.this, rgType, mTypeSmall);
+                }
             }
-//
         }
 
-        // 业务类型
-        List<Integer> businessType = bean.getVerifyEntity().getBusinessList();
         mDataList3 = new ArrayList<>();
         mDataList3.clear();
-        if (businessType != null && !businessType.isEmpty()) {
-            mDataList3.addAll(Stream.of(Config.get().getBusinessList(1)).filter(bus -> businessType.contains(bus.getDataId())).map(bus -> Config.get().getBusinessNameById(bus.getDataId())).toList());
-            if (mDataList3.size() <= 4) {
-                addView(WorkDetailActivity.this, rgArea, mDataList3);
-            } else {
-                mAreaSmall.add(mDataList3.get(0));
-                mAreaSmall.add(mDataList3.get(1));
-                mAreaSmall.add(mDataList3.get(2));
-                mAreaSmall.add(mDataList3.get(3));
-                addView(WorkDetailActivity.this, rgArea, mAreaSmall);
+        if (bean.getVerifyEntity() != null) {
+            // 业务类型
+            List<Integer> businessType = bean.getVerifyEntity().getBusinessList();
+            if (businessType != null && !businessType.isEmpty()) {
+                mDataList3.addAll(Stream.of(Config.get().getBusinessList(1)).filter(bus -> businessType.contains(bus.getDataId())).map(bus -> Config.get().getBusinessNameById(bus.getDataId())).toList());
+                if (mDataList3.size() <= 4) {
+                    addView(WorkDetailActivity.this, rgArea, mDataList3);
+                } else {
+                    mAreaSmall.add(mDataList3.get(0));
+                    mAreaSmall.add(mDataList3.get(1));
+                    mAreaSmall.add(mDataList3.get(2));
+                    mAreaSmall.add(mDataList3.get(3));
+                    addView(WorkDetailActivity.this, rgArea, mAreaSmall);
+                }
+
             }
-
         }
-
         initAdapter();
         initHonor(bean);
     }
