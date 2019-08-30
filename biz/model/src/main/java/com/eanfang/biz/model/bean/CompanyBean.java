@@ -45,7 +45,6 @@ public class CompanyBean {
         private int repairCount;
         private int workingLevel;
         private int workingYear;
-        private List<BaseDataEntityListBean> baseDataEntityList;
 
         @NoArgsConstructor
         @Data
@@ -93,31 +92,6 @@ public class CompanyBean {
             private String verifyMessage;
             private String verifyTime;
             private String verifyUserName;
-        }
-
-
-        @NoArgsConstructor
-        @Data
-        public static class BaseDataEntityListBean {
-            /**
-             * dataCode : 2.1
-             * dataId : 31
-             * dataName : 维修
-             * dataType : 2
-             * leaf : true
-             * level : 2
-             * remarkInfo :
-             * sortNum : 0
-             */
-
-            private String dataCode;
-            private int dataId;
-            private String dataName;
-            private int dataType;
-            private boolean leaf;
-            private int level;
-            private String remarkInfo;
-            private int sortNum;
         }
     }
 }

@@ -44,6 +44,8 @@ import com.eanfang.util.ContactUtil;
 import com.eanfang.util.JumpItent;
 import com.eanfang.util.ToastUtil;
 import com.eanfang.util.UpdateAppManager;
+import com.videogo.openapi.EZOpenSDK;
+import com.videogo.openapi.EzvizAPI;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
@@ -151,6 +153,11 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
     private void initYingShiYunData() {
         EanfangHttp.post(NewApiService.HOME_SUB_ACCOUNT_INFO_LIST).execute(new EanfangCallback<JSONObject>(this, false, JSONObject.class, bean -> {
             JSONObject jsonObject = bean.getJSONObject("subAccountInfoList");
+            String value = jsonObject != null ? jsonObject.getString(String.valueOf(ClientApplication.get().getCompanyId())) : null;
+            if (!StrUtil.isEmpty(value)) {
+                EZOpenSDK.getInstance().setAccessToken(value);
+                EzvizAPI.getInstance().setServerUrl(EanfangConst.YING_SHI_YUN_OPEN_API_SERVER, EanfangConst.YING_SHI_YUN_OPEN_AUTH_API_SERVER);
+            }
             CacheKit.get().put("subAccountInfoList", jsonObject);
         }));
     }
@@ -319,15 +326,15 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
      * 初始化信鸽推送
      */
     public void initXinGe() {
-            // 打开第三方推送
-            SDKManager.getXGPush(MainActivity.this).enableOtherPush(true);
-            //开启信鸽日志输出
-            SDKManager.getXGPush(MainActivity.this).enableDebug(true);
-            SDKManager.getXGPush(MainActivity.this).setHuaweiDebug(true);
-            SDKManager.getXGPush(MainActivity.this).setMiPush(XIAOMI_APPID_CLIENT, XIAOMI_APPKEY_CLIENT);
-            SDKManager.getXGPush(MainActivity.this).setMzPush(MEIZU_APPID_CLIENT, MEIZU_APPKEY_CLIENT);
+        // 打开第三方推送
+        SDKManager.getXGPush(MainActivity.this).enableOtherPush(true);
+        //开启信鸽日志输出
+        SDKManager.getXGPush(MainActivity.this).enableDebug(true);
+        SDKManager.getXGPush(MainActivity.this).setHuaweiDebug(true);
+        SDKManager.getXGPush(MainActivity.this).setMiPush(XIAOMI_APPID_CLIENT, XIAOMI_APPKEY_CLIENT);
+        SDKManager.getXGPush(MainActivity.this).setMzPush(MEIZU_APPID_CLIENT, MEIZU_APPKEY_CLIENT);
 
-            ReceiverInit.getInstance().inits(MainActivity.this, BaseApplication.get().getAccount().getMobile());
+        ReceiverInit.getInstance().inits(MainActivity.this, BaseApplication.get().getAccount().getMobile());
     }
 
 

@@ -64,7 +64,6 @@ public class ClientApplication extends BaseApplication {
         /** * 设置是否支持P2P取流,详见api */
         EZOpenSDK.enableP2P(true);
         EZOpenSDK.initLib(this, EanfangConst.YING_SHI_YUN_APP_KEY);
-        EzvizAPI.getInstance().setServerUrl(EanfangConst.YING_SHI_YUN_OPEN_API_SERVER, EanfangConst.YING_SHI_YUN_OPEN_AUTH_API_SERVER);
     }
 
     private void initBugly() {

@@ -21,8 +21,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/play_play_selector"
-            android:onClick="onClick" />
+            android:background="@drawable/play_play_selector"  />
 
         <View
             android:id="@+id/sound_line"
@@ -35,8 +34,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:background="@drawable/ezopen_vertical_preview_sound_selector"
-            android:onClick="onClick" />
+            android:background="@drawable/ezopen_vertical_preview_sound_selector"  />
 
         <View
             android:id="@+id/quality_line"
@@ -50,7 +48,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@null"
-            android:onClick="onClick"
             android:text="@string/quality_balanced"
             android:textColor="@color/white"
             android:textSize="@dimen/textSize_12" />

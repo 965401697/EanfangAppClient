@@ -1,11 +1,15 @@
 package net.eanfang.client.ui.activity.leave_post;
 
 import android.annotation.SuppressLint;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
@@ -14,10 +18,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.eanfang.base.BaseActivity;
 import com.eanfang.biz.rds.base.LViewModelProviders;
+import com.videogo.constant.Constant;
+import com.videogo.errorlayer.ErrorInfo;
+import com.videogo.openapi.EZConstants;
+import com.videogo.openapi.EZConstants.EZVideoLevel;
 import com.videogo.openapi.EZOpenSDK;
 import com.videogo.openapi.EZPlayer;
 import com.videogo.realplay.RealPlayStatus;
 import com.videogo.util.LocalInfo;
+import com.videogo.util.Utils;
 
 import net.eanfang.client.R;
 import net.eanfang.client.databinding.ActivityLeavePostCheckDetailBinding;
@@ -59,6 +68,9 @@ public class LeavePostCheckDetailActivity extends BaseActivity implements Handle
     private SurfaceHolder mRealPlaySh = null;
     private int mStatus = RealPlayStatus.STATUS_INIT;
     public static final int MSG_PLAY_UI_UPDATE = 200;
+    private int mOrientation = Configuration.ORIENTATION_PORTRAIT;
+    private float mRealRatio = Constant.LIVE_VIEW_RATIO;
+    private EZConstants.EZVideoLevel mCurrentQulityMode = EZConstants.EZVideoLevel.VIDEO_LEVEL_HD;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -79,7 +91,6 @@ public class LeavePostCheckDetailActivity extends BaseActivity implements Handle
             mRealPlaySh = mBinding.realplaySv.getHolder();
             mRealPlaySh.addCallback(this);
             mViewModel.getDeviceListData(mStationId);
-            EZOpenSDK.getInstance().setAccessToken("ra.812fdm4f2i71n8zcbxkx9ojo86e0dr9p-4jm1670lc2-1epu9vg-ikac74qei");
             ezPlayer = EZOpenSDK.getInstance().createPlayer(mDeviceSerial, 1);
             mLocalInfo = LocalInfo.getInstance();
             //该handler将被用于从播放器向handler传递消息
@@ -131,6 +142,19 @@ public class LeavePostCheckDetailActivity extends BaseActivity implements Handle
         mAdapter.setNewData(beans);
     }
 
+    private void initUI() {
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        mBinding.llPlayControl.realplaySoundBtn.setVisibility(View.VISIBLE);
+        if (mLocalInfo.isSoundOpen()) {
+            mBinding.llPlayControl.realplaySoundBtn.setBackgroundResource(R.drawable.ezopen_vertical_preview_sound_selector);
+        } else {
+            mBinding.llPlayControl.realplaySoundBtn.setBackgroundResource(R.drawable.ezopen_vertical_preview_sound_off_selector);
+        }
+
+//        setRealPlaySvLayout();
+        setRealPlaySound();
+        setVideoLevel();
+    }
 
     /**
      * 声音
@@ -150,6 +174,63 @@ public class LeavePostCheckDetailActivity extends BaseActivity implements Handle
         mBinding.llPlayControl.realplayPlayBtn.setBackgroundResource(R.drawable.play_stop_selector);
     }
 
+    private void setRealPlaySvLayout() {
+        final int screenWidth = mLocalInfo.getScreenWidth();
+        final int screenHeight = (mOrientation == Configuration.ORIENTATION_PORTRAIT) ? (mLocalInfo.getScreenHeight() - mLocalInfo
+                .getNavigationBarHeight()) : mLocalInfo.getScreenHeight();
+        final RelativeLayout.LayoutParams realPlaySvlp = Utils.getPlayViewLp(mRealRatio, mOrientation,
+                mLocalInfo.getScreenWidth(), (int) (mLocalInfo.getScreenWidth() * Constant.LIVE_VIEW_RATIO),
+                screenWidth, screenHeight);
+        RelativeLayout.LayoutParams svLp = new RelativeLayout.LayoutParams(realPlaySvlp.width, realPlaySvlp.height);
+        mBinding.vgPlayWindow.setLayoutParams(svLp);
+    }
+
+    /**
+     * 屏幕选择
+     */
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        mOrientation = newConfig.orientation;
+        super.onConfigurationChanged(newConfig);
+    }
+
+    private void setVideoLevel() {
+        if (ezPlayer == null) {
+            return;
+        }
+
+        /**
+         *
+         * 视频质量，2-高清，1-标清，0-流畅
+         * Video quality, 2-HD, 1-standard, 0- smooth
+         *
+         */
+        if (mCurrentQulityMode.getVideoLevel() == EZVideoLevel.VIDEO_LEVEL_FLUNET.getVideoLevel()) {
+            mBinding.llPlayControl.realplayQualityBtn.setText(R.string.quality_flunet);
+        } else if (mCurrentQulityMode.getVideoLevel() == EZVideoLevel.VIDEO_LEVEL_BALANCED.getVideoLevel()) {
+            mBinding.llPlayControl.realplayQualityBtn.setText(R.string.quality_balanced);
+        } else if (mCurrentQulityMode.getVideoLevel() == EZVideoLevel.VIDEO_LEVEL_HD.getVideoLevel()) {
+            mBinding.llPlayControl.realplayQualityBtn.setText(R.string.quality_hd);
+        } else if (mCurrentQulityMode.getVideoLevel() == EZVideoLevel.VIDEO_LEVEL_SUPERCLEAR.getVideoLevel()) {
+            mBinding.llPlayControl.realplayQualityBtn.setText(R.string.quality_super_hd);
+        } else {
+            mBinding.llPlayControl.realplayQualityBtn.setText("unknown");
+        }
+    }
+
+    private void handlePlayFail(Object obj) {
+        int errorCode = 0;
+        if (obj != null) {
+            ErrorInfo errorInfo = (ErrorInfo) obj;
+            errorCode = errorInfo.errorCode;
+            Log.e("GG ezplayer", "handlePlayFail:" + errorInfo.errorCode);
+        }
+
+        mStatus = RealPlayStatus.STATUS_STOP;
+        if (ezPlayer != null) {
+            ezPlayer.stopRealPlay();
+        }
+    }
 
     @SuppressLint("NewApi")
     @Override
@@ -158,16 +239,21 @@ public class LeavePostCheckDetailActivity extends BaseActivity implements Handle
             return false;
         }
         switch (msg.what) {
+            //200
             case MSG_PLAY_UI_UPDATE:
                 updateRealPlayUI();
                 break;
 //            case MSG_AUTO_START_PLAY:
 //                startRealPlay();
 //                break;
-            // 102 声音
-//            case EZConstants.EZRealPlayConstants.MSG_REALPLAY_PLAY_SUCCESS:
-//                setRealPlaySound();
-//                break;
+            // 102 播放声音 初始化ui 成功
+            case EZConstants.EZRealPlayConstants.MSG_REALPLAY_PLAY_SUCCESS:
+                initUI();
+                break;
+                // 103
+            case EZConstants.EZRealPlayConstants.MSG_REALPLAY_PLAY_FAIL:
+                handlePlayFail(msg.obj);
+                break;
             default:
                 // do nothing
                 break;
@@ -177,13 +263,14 @@ public class LeavePostCheckDetailActivity extends BaseActivity implements Handle
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
 //        if (this.getResources().getConfiguration().orientation != Configuration.ORIENTATION_PORTRAIT) {
 //            mScreenOrientationHelper.portrait();
 //            return;
 //        }
-        if (ezPlayer != null) {
-            ezPlayer.stopRealPlay();
-        }
+//        if (ezPlayer != null) {
+//            ezPlayer.stopRealPlay();
+//        }
     }
 
     @Override

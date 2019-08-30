@@ -211,7 +211,7 @@ public class PutUpOrderActivity extends BaseWorkerActivity {
             return;
         }
         if (requestCode == REQUEST_CODE) {// 选择技师
-            transferLogEntity.setReceiveUserId(data.getLongExtra("id", 0));
+            transferLogEntity.setReceiveUserId(Long.parseLong(data.getStringExtra("id")));
             tvWorkerName.setText(data.getStringExtra("name"));
         }
 
