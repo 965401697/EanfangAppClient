@@ -86,5 +86,7 @@
     <string name="quality_hd">高清</string>
     <string name="quality_balanced">均衡</string>
     <string name="quality_flunet">流畅</string>
+    <string name="loading_text_default">加载中，请稍候</string>
+    <string name="stream_type">stream type: </string>
 
 </resources>

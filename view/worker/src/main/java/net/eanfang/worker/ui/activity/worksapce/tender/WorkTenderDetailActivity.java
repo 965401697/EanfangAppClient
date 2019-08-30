@@ -171,7 +171,7 @@ public class WorkTenderDetailActivity extends BaseActivity {
         //预算金额
         tvBudgetAmount.setText(ifbOrderEntity.getBudgetPrice() + "");
         //开标时间
-        tvBeginTime.setText(DateUtil.date(ifbOrderEntity.getReleaseTime()).toString("yyyy年MM月dd日 HH:mm:ss"));
+        tvBeginTime.setText(DateUtil.date(ifbOrderEntity.getIfbOpenTime()).toString("yyyy年MM月dd日 HH:mm:ss"));
         //开标地点
         tvBeginAddress.setText(ifbOrderEntity.getIfbOpenAddress());
         //获取招标文件时间

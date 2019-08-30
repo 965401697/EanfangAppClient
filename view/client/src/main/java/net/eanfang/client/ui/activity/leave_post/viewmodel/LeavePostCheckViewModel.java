@@ -8,7 +8,6 @@ import androidx.lifecycle.MutableLiveData;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.biz.model.bean.QueryEntry;
 import com.eanfang.biz.rds.base.BaseViewModel;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.ui.activity.leave_post.LeavePostCheckDetailActivity;
 import net.eanfang.client.ui.activity.leave_post.LeavePostCheckListSecondActivity;
@@ -72,6 +71,7 @@ public class LeavePostCheckViewModel extends BaseViewModel {
     public void gotoCheckDetailPage(Activity activity, BaseQuickAdapter adapter, int position) {
         LeavePostDeviceListBean.ListBean bean = (LeavePostDeviceListBean.ListBean) adapter.getData().get(position);
         Intent intent = new Intent(activity, LeavePostCheckDetailActivity.class);
+        intent.putExtra("deviceSerial", bean.getDeviceEntity().getYs7DeviceSerial());
         intent.putExtra("stationId", bean.getStationId());
         intent.putExtra("isShowTopContent", true);
         activity.startActivity(intent);

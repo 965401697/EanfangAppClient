@@ -23,10 +23,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/color_white"
-                android:paddingBottom="@dimen/dimen_24"
                 android:paddingLeft="@dimen/dimen_40"
+                android:paddingTop="@dimen/dimen_24"
                 android:paddingRight="@dimen/dimen_40"
-                android:paddingTop="@dimen/dimen_24">
+                android:paddingBottom="@dimen/dimen_24">
 
                 <TextView
                     android:id="@+id/tv_tender_title"
@@ -181,7 +181,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="招标文件售价："
+                        android:text="招标文件售价：￥"
                         android:textColor="@color/color_bottom"
                         android:textSize="@dimen/textSize_14" />
 

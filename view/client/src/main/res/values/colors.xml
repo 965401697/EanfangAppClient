@@ -88,4 +88,5 @@
     <color name="color_leave_post_ranking_btn_uncheck">#C7C7C7</color>
     <color name="color_home_off_duty_bg">#FFF7EE</color>
     <color name="color_home_off_duty_bg_out">#FFDFCF</color>
+    <color name="gray_text">#adadad</color>
 </resources>

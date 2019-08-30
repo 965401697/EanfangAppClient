@@ -13,6 +13,7 @@ import com.mob.MobSDK;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.videogo.openapi.EZOpenSDK;
+import com.videogo.openapi.EzvizAPI;
 
 import net.eanfang.client.BuildConfig;
 import net.eanfang.client.ui.activity.im.CustomizeMessage;
@@ -61,8 +62,9 @@ public class ClientApplication extends BaseApplication {
         /** * sdk日志开关，正式发布需要去掉 */
         EZOpenSDK.showSDKLog(HttpConfig.get().isDebug());
         /** * 设置是否支持P2P取流,详见api */
-        EZOpenSDK.enableP2P(false);
+        EZOpenSDK.enableP2P(true);
         EZOpenSDK.initLib(this, EanfangConst.YING_SHI_YUN_APP_KEY);
+        EzvizAPI.getInstance().setServerUrl(EanfangConst.YING_SHI_YUN_OPEN_API_SERVER, EanfangConst.YING_SHI_YUN_OPEN_AUTH_API_SERVER);
     }
 
     private void initBugly() {

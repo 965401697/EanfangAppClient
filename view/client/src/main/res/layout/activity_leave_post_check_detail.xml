@@ -24,20 +24,40 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/titles_bar" />
 
-        <SurfaceView
-            android:id="@+id/realplay_sv"
+        <LinearLayout
+            android:id="@+id/ll_player"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_400"
-            android:background="@android:color/transparent"
-            app:layout_constraintTop_toBottomOf="@id/tv_leave_post_check_detail_title" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@id/tv_leave_post_check_detail_title">
 
-        <include
-            android:id="@+id/ll_play_control"
-            layout="@layout/ez_play_control"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_below="@id/realplay_sv"
-            app:layout_constraintTop_toBottomOf="@id/realplay_sv" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_400">
+
+                <SurfaceView
+                    android:id="@+id/realplay_sv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/transparent" />
+
+                <include
+                    android:id="@+id/ll_inclued"
+                    layout="@layout/realplay_loading_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </RelativeLayout>
+
+
+            <include
+                android:id="@+id/ll_play_control"
+                layout="@layout/ez_play_control"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_below="@id/realplay_sv"
+                app:layout_constraintTop_toBottomOf="@id/realplay_sv" />
+        </LinearLayout>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rec_leave_post_check_detail_person"
@@ -47,6 +67,6 @@
             android:clipChildren="false"
             android:paddingTop="@dimen/dimen_20"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ll_play_control" />
+            app:layout_constraintTop_toBottomOf="@id/ll_player" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

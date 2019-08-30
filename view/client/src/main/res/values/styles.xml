@@ -107,7 +107,6 @@
     </style>
 
 
-
     <style name="wx_theme" parent="AppTheme">
         <!--<style name="AppTheme" parent="android:Theme.Material.Light.NoActionBar">-->
         <!-- Customize your theme here. -->
@@ -145,14 +144,31 @@
         <!--背景变暗-->
         <item name="android:backgroundDimEnabled">true</item>
     </style>
+
     <style name="NoStatusStyle" parent="AppTheme">
-        <item name="android:windowTranslucentStatus" tools:ignore="NewApi">true</item>    <!--状态栏为透明,如果设置为false，则没有黑色条盖住，见下图对比-->
-        <item name="android:windowTranslucentNavigation" tools:ignore="NewApi">true</item> <!--导航栏为透明-->
+        <item name="android:windowTranslucentStatus" tools:ignore="NewApi">true
+        </item>    <!--状态栏为透明,如果设置为false，则没有黑色条盖住，见下图对比-->
+        <item name="android:windowTranslucentNavigation" tools:ignore="NewApi">true
+        </item> <!--导航栏为透明-->
         <item name="android:statusBarColor" tools:ignore="NewApi">@android:color/transparent</item>
     </style>
 
     <style name="HomeEditText" parent="Theme.AppCompat.Light">
         <item name="colorControlNormal">@color/color_service_deiveder</item>
         <item name="colorControlActivated">@color/colorPrimaryC</item>
+    </style>
+
+    <style name="LoadingTextView">
+        <item name="textStyle">vertical</item>
+        <item name="textColor">@color/gray_text</item>
+        <item name="textSize">12sp</item>
+        <item name="textPadding">5dp</item>
+        <item name="android:text">@string/loading_text_default</item>
+    </style>
+
+    <style name="LoadingTextView_Percent" parent="LoadingTextView">
+        <item name="textPadding">10dp</item>
+        <item name="textSize">15sp</item>
+        <item name="android:text" />
     </style>
 </resources>
