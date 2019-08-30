@@ -55,6 +55,7 @@
                 android:id="@+id/ll_play_control"
                 layout="@layout/ez_play_control"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_below="@id/vg_play_window"
                 android:layout_height="40dp"  />
         </RelativeLayout>
