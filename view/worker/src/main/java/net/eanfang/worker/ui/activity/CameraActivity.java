@@ -371,7 +371,7 @@ public class CameraActivity extends BaseActivity implements AMapLocationListener
         GlideUtil.intoImageView(CameraActivity.this, textBitmap, showTakePhotoImg);
 //        保存图片
         Observable.create((ObservableOnSubscribe<Boolean>) emitter -> {
-            emitter.onNext(BitmapUtil.saveLubanImage( textBitmap, path));
+            emitter.onNext(BitmapUtil.saveLubanImage(CameraActivity.this,textBitmap, path));
             emitter.onComplete();
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

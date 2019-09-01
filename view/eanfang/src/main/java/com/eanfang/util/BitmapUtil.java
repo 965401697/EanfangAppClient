@@ -1,5 +1,7 @@
 package com.eanfang.util;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -8,9 +10,13 @@ import android.graphics.PixelFormat;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.widget.ImageView;
+
+import com.eanfang.base.BaseApplication;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -31,6 +37,7 @@ import cn.hutool.core.io.FileUtil;
 
 public class BitmapUtil {
 
+    private static Context mContext;
     /**
      * 图片存储目录
      */
@@ -73,8 +80,9 @@ public class BitmapUtil {
 
     }
 
-    public static boolean saveLubanImage( Bitmap bitmap, String outPath) throws FileNotFoundException {
+    public static boolean saveLubanImage(Context context, Bitmap bitmap, String outPath) throws FileNotFoundException {
         try {
+            mContext = context;
             compressByQuality(bitmap, outPath, 1024 * 2);
         } catch (IOException e) {
             e.printStackTrace();
@@ -359,36 +367,31 @@ public class BitmapUtil {
 
     private static void saveBitmaps(Bitmap bm, String filePath) {
         BASE_DCIM = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getAbsolutePath();
-        String mPath = DateUtil.today() + DateUtil.currentSeconds() + ".png";
+        String mFileName = DateUtil.today() + DateUtil.currentSeconds() + ".png";
         if (Build.BRAND.equals("Xiaomi")) {
             BASE_DCIM = BASE_DCIM + "/Camera/";
         } else {  // Meizu 、Oppo
-            BASE_DCIM = BASE_DCIM + "/DCIM/";
+            BASE_DCIM = BASE_DCIM + "/DCIM";
         }
-        // 声明文件对象
-        File file = null;
         // 声明输出流
         FileOutputStream outStream = null;
         if (!FileUtil.exist(BASE_DCIM)) {
             FileUtil.mkdir(BASE_DCIM);
         }
+        // 旋转
         Bitmap mBitmap = getRotateBM(bm, filePath);
-        File mFile = new File(filePath);
+        File mFile = new File(BASE_DCIM + mFileName);
         if (mFile.exists()) {
-            mFile.delete();
-        }
-        file = new File(BASE_DCIM + mPath);
-        if (file.exists()) {
             try {
-                file.createNewFile();
-
+                mFile.delete();
+                mFile.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
         try {
-            file.createNewFile();
-            outStream = new FileOutputStream(file);
+//            file.createNewFile();
+            outStream = new FileOutputStream(mFile);
             mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
             outStream.flush();
             outStream.close();
@@ -400,6 +403,18 @@ public class BitmapUtil {
                 bm.recycle();
                 bm = null;
             }
+            // 其次把文件插入到系统图库
+            String path = mFile.getAbsolutePath();
+            try {
+                MediaStore.Images.Media.insertImage(mContext.getContentResolver(), path, mFileName, null);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            // 最后通知图库更新
+            Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+            Uri uri = Uri.fromFile(mFile);
+            intent.setData(uri);
+            BaseApplication.get().sendBroadcast(intent);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
