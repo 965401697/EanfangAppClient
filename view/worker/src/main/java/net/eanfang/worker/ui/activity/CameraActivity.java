@@ -366,7 +366,7 @@ public class CameraActivity extends BaseActivity implements AMapLocationListener
         String mContent = "时间：" + time + "\n" + "天气：" + weather + "\n" + "创建者:" +
                 creatUser + "\n" + "类型：" + project_type + "\n" + "名称：" + project_name + "\n" + "部位/区域：" + region_name + "\n" + "内容：" + project_content + "\n" +
                 "地址：" + lAddress;
-        textBitmap = ImageUtil.drawTextToRightBottom(this, watermarkBitmap, mContent, 40, color, 5, 500);
+        textBitmap = ImageUtil.drawTextToRightBottom(this, watermarkBitmap, mContent, 20, color, 5, 300);
         flCamera.setVisibility(View.VISIBLE);
         GlideUtil.intoImageView(CameraActivity.this, textBitmap, showTakePhotoImg);
 //        保存图片
