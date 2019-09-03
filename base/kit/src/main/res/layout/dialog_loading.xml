@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:id="@+id/loading_bg"
-        android:layout_width="85dp"
+        android:layout_width="90dp"
         android:layout_height="65dp"
         android:background="@drawable/loading_bg"
         android:gravity="center"
