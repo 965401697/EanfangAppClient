@@ -110,6 +110,11 @@ public class LeavePostCheckDetailActivity extends BaseActivity implements Handle
         mAdapter.setOnItemChildClickListener((adapter, view, position) -> mViewModel.callToPerson(LeavePostCheckDetailActivity.this, adapter, position));
         mBinding.recLeavePostCheckDetailPerson.setLayoutManager(new LinearLayoutManager(this));
         mAdapter.bindToRecyclerView(mBinding.recLeavePostCheckDetailPerson);
+        initListener();
+    }
+
+    private void initListener() {
+
     }
 
     @Override
@@ -151,8 +156,7 @@ public class LeavePostCheckDetailActivity extends BaseActivity implements Handle
             mBinding.llPlayControl.realplaySoundBtn.setBackgroundResource(R.drawable.ezopen_vertical_preview_sound_off_selector);
         }
 
-//        setRealPlaySvLayout();
-        setRealPlaySound();
+//        setRealPlaySound();
         setVideoLevel();
     }
 
@@ -250,7 +254,7 @@ public class LeavePostCheckDetailActivity extends BaseActivity implements Handle
             case EZConstants.EZRealPlayConstants.MSG_REALPLAY_PLAY_SUCCESS:
                 initUI();
                 break;
-                // 103
+            // 103
             case EZConstants.EZRealPlayConstants.MSG_REALPLAY_PLAY_FAIL:
                 handlePlayFail(msg.obj);
                 break;
@@ -314,4 +318,5 @@ public class LeavePostCheckDetailActivity extends BaseActivity implements Handle
         }
         mRealPlaySh = null;
     }
+
 }

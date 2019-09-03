@@ -298,7 +298,7 @@ public class ImageUtil {
      * @return
      */
     public static int dp2px(Context context, float dp) {
-        final float scale = context.getResources().getDisplayMetrics().density;
+        final float scale = context.getResources().getDisplayMetrics().scaledDensity;
         return (int) (dp * scale + 0.5f);
     }
 }
