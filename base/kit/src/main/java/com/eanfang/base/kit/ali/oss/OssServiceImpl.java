@@ -106,7 +106,7 @@ public class OssServiceImpl implements IOssService {
                     //上传成功
                     if (result != null && result.getStatusCode() == 200) {
                         successCount.getAndIncrement();
-                        LoadKit.setText(loading, StrUtil.format("正在上传 {}/{}", successCount.get(), objectMap.size()));
+                        LoadKit.setText(loading, StrUtil.format("正在上传{}/{}", successCount.get(), objectMap.size()));
                     } else {
                         LoadKit.setText(loading, "上传失败，请重试");
                         LoadKit.closeDialog(loading);
