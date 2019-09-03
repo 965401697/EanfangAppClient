@@ -77,12 +77,16 @@ public class WorkerApplication extends BaseApplication {
 
         CacheKit.init(this).put("APP_TYPE", BuildConfig.APP_TYPE);
         initHttp();
+        initRongIM();
         ThreadUtil.execAsync(() -> {
-            initRongIM();
             initBugly();
+            initMob();
         });
     }
 
+    private void initMob() {
+        MobSDK.init(this, BuildConfig.MOB_WORKER_APPID, BuildConfig.MOB_WORKER_APPKEY);
+    }
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -97,8 +101,6 @@ public class WorkerApplication extends BaseApplication {
     protected void initConfig() {
         super.initConfig();
         LoadKit.initLoadSir();
-
-        MobSDK.init(this, BuildConfig.MOB_WORKER_APPID, BuildConfig.MOB_WORKER_APPKEY);
     }
 
     /**

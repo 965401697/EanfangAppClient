@@ -9,10 +9,12 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.alibaba.sdk.android.oss.OSS;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
+import com.annimon.stream.Stream;
 import com.annimon.stream.function.Consumer;
 import com.eanfang.base.kit.loading.LoadKit;
 
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -22,6 +24,7 @@ import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import top.zibin.luban.Luban;
+import top.zibin.luban.OnCompressListener;
 
 /**
  * created by wtt
@@ -106,7 +109,7 @@ public class OssServiceImpl implements IOssService {
                     //上传成功
                     if (result != null && result.getStatusCode() == 200) {
                         successCount.getAndIncrement();
-                        LoadKit.setText(loading, StrUtil.format("正在上传{}/{}", successCount.get(), objectMap.size()));
+                        LoadKit.setText(loading, StrUtil.format("正在上传 {}/{}", successCount.get(), objectMap.size()));
                     } else {
                         LoadKit.setText(loading, "上传失败，请重试");
                         LoadKit.closeDialog(loading);
@@ -120,7 +123,6 @@ public class OssServiceImpl implements IOssService {
                 }));
     }
 
-
     /**
      * 压缩图片的方法
      *
@@ -129,20 +131,37 @@ public class OssServiceImpl implements IOssService {
     private void compressPic(Map<String, String> objectMap) {
         AtomicInteger successCount = new AtomicInteger();
         loading.show();
-        Flowable.fromIterable(objectMap.keySet())
-                .flatMap((key) -> Flowable.just(key).map(fileKey -> Luban.with(activity).get(objectMap.get(fileKey)).getAbsolutePath() + "_F_" + fileKey).subscribeOn(Schedulers.io()))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe((path) -> {
-                    String[] arr = path.split("_F_");
-                    objectMap.put(arr[1], arr[0]);
-                    successCount.getAndIncrement();
-                    LoadKit.setText(loading, StrUtil.format("正在压缩图片 {}/{}", successCount.get(), objectMap.size()));
-                    if (successCount.get() >= objectMap.size()) {
-                        isCompress.setValue(true);
-                        LoadKit.setText(loading, "上传中...");
-                    }
-                });
+        List<String> keyList = Stream.of(objectMap.keySet().iterator()).toList();
+        int count = objectMap.size();
+
+        MutableLiveData<Integer> compressLiveData = new MutableLiveData<>();
+
+        compressLiveData.observeForever((d) -> Luban.with(activity).load(objectMap.get(keyList.get(successCount.get()))).setCompressListener(new OnCompressListener() {
+            @Override
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onSuccess(File file) {
+                successCount.getAndIncrement();
+                objectMap.remove(keyList.get(successCount.get() - 1));
+                objectMap.put(keyList.get(successCount.get() - 1), file.getAbsolutePath());
+                LoadKit.setText(loading, StrUtil.format("正在压缩 {}/{}", successCount.get(), count));
+                if (successCount.get() >= count) {
+                    isCompress.setValue(true);
+                    LoadKit.setText(loading, "上传中...");
+                    return;
+                }
+                compressLiveData.setValue(successCount.get());
+            }
+
+            @Override
+            public void onError(Throwable e) {
+
+            }
+        }).launch());
+        compressLiveData.setValue(0);
     }
 
     @Override
