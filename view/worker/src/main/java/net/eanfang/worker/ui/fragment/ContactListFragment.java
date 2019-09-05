@@ -116,9 +116,12 @@ public class ContactListFragment extends BaseFragment {
             //实例化IntentFilter对象
             IntentFilter filter = new IntentFilter();
             filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
-            netBroadcastReceiver = new NetBroadcastReceiver();
-            //注册广播接收
-            getActivity().registerReceiver(netBroadcastReceiver, filter);
+            if (netBroadcastReceiver == null) {
+                netBroadcastReceiver = new NetBroadcastReceiver();
+                //注册广播接收
+                getActivity().registerReceiver(netBroadcastReceiver, filter);
+            }
+
         }
         return mRootView;
     }

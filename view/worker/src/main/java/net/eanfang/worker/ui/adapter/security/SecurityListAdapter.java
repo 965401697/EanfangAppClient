@@ -63,11 +63,11 @@ public class SecurityListAdapter extends BaseQuickAdapter<SecurityListBean.ListB
         // 发布人
         helper.setText(R.id.tv_name, V.v(() -> item.getAccountEntity().getRealName()));
         // 头像
-        GlideUtil.intoImageView(mContext, Uri.parse(BuildConfig.OSS_SERVER + item.getAccountEntity().getAvatar()), ivHeader);
+        GlideUtil.intoImageView(mContext, Uri.parse(BuildConfig.OSS_SERVER + V.v(() -> item.getAccountEntity().getAvatar())), ivHeader);
         // 公司名称
         helper.setText(R.id.tv_company, item.getPublisherOrg().getOrgName());
         // 艾特人
-        if (V.v(() -> (item.getAtMap() != null))) {
+        if (V.v(item::getAtMap) != null) {
             atName = SecurityItemUtil.getInstance().doJonint(item.getAtMap());
         } else {
             atName = "";

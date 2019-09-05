@@ -13,7 +13,6 @@ import com.mob.MobSDK;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.videogo.openapi.EZOpenSDK;
-import com.videogo.openapi.EzvizAPI;
 
 import net.eanfang.client.BuildConfig;
 import net.eanfang.client.ui.activity.im.CustomizeMessage;
@@ -47,12 +46,17 @@ public class ClientApplication extends BaseApplication {
 
         CacheKit.init(this).put("APP_TYPE", BuildConfig.APP_TYPE);
         initHttp();
+        initRongIM();
         ThreadUtil.execAsync(() -> {
-            initRongIM();
             initWxPay();
             initBugly();
             initEZPlayer();
+            initMob();
         });
+    }
+
+    private void initMob() {
+        MobSDK.init(this, BuildConfig.MOB_CLIENT_APPID, BuildConfig.MOB_CLIENT_APPKEY);
     }
 
     /**
@@ -74,7 +78,6 @@ public class ClientApplication extends BaseApplication {
     protected void initConfig() {
         super.initConfig();
         LoadKit.initLoadSir();
-        MobSDK.init(this, BuildConfig.MOB_CLIENT_APPID, BuildConfig.MOB_CLIENT_APPKEY);
     }
 
     /**

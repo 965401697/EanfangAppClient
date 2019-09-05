@@ -95,9 +95,13 @@ public class HttpConfig {
      * @param cachePath cachePath
      */
     private void initRxCache(String cachePath) {
+        File file = new File(cachePath + "data-cache");
+        if (!file.exists()) {
+            file.mkdir();
+        }
         RxCache.initializeDefault(new RxCache.Builder()
                 .appVersion(versionCode)
-                .diskDir(new File(cachePath + File.separator + "data-cache"))
+                .diskDir(file)
                 .diskConverter(new FastJsonDiskConverter())
                 //50MB
                 .diskMax((50 * 1024 * 1024L))

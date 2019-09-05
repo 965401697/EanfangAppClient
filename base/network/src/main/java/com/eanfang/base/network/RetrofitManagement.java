@@ -110,10 +110,6 @@ public enum RetrofitManagement {
                                 return createData(new Optional(result.getMessage()));
                             }
                             return createData(new Optional(result.getData()));
-                        case HttpCode.CODE_UNKNOWN:
-                            actionLiveData.setValue(new BaseActionEvent(BaseActionEvent.SERVER_ERROR));
-                            errorLiveData.setValue(new BaseActionEvent(BaseActionEvent.SERVER_ERROR));
-                            throw new ServerResultException(result.getCode(), result.getMessage());
                         case HttpCode.CODE_TOKEN_INVALID:
                             actionLiveData.setValue(new BaseActionEvent(BaseActionEvent.TOKEN_ERROR));
                             errorLiveData.setValue(new BaseActionEvent(BaseActionEvent.TOKEN_ERROR));
