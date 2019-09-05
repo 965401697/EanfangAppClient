@@ -85,7 +85,6 @@ public class SelectCompanyActivity extends BaseActivity implements SwipeRefreshL
         activitySelectCompanyBinding.swipeFresh.setOnRefreshListener(this);
         selectCompanyAdapter.bindToRecyclerView(activitySelectCompanyBinding.rvCompany);
         selectCompanyAdapter.setOnLoadMoreListener(this, activitySelectCompanyBinding.rvCompany);
-
         mScreenTitleList.add(activitySelectCompanyBinding.include.tvMouth);
         mScreenTitleList.add(activitySelectCompanyBinding.include.tvPraise);
         mScreenTitleList.add(activitySelectCompanyBinding.include.tvRepair);
