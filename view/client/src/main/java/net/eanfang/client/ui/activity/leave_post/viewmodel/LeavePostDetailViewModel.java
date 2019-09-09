@@ -9,7 +9,6 @@ import com.annimon.stream.Stream;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.BuildConfig;
 import com.eanfang.biz.rds.base.BaseViewModel;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.ui.activity.leave_post.LeavePostCheckDetailActivity;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostAlertInfoDetailBean;
@@ -47,6 +46,8 @@ public class LeavePostDetailViewModel extends BaseViewModel {
     private MutableLiveData<List<String>> leavePostAlertLeaveList;
     private LeavePostRepo mLeavePostRepo;
 
+    private String mDeviceSerial;
+
     public LeavePostDetailViewModel() {
         leavePostAlertInfoData = new MutableLiveData<>();
         leavePostAlertEventList = new MutableLiveData<>();
@@ -73,6 +74,8 @@ public class LeavePostDetailViewModel extends BaseViewModel {
                 mKeyValueLeaveList.add(leaveKeys[2] + (StrUtil.isEmpty(leavePostAlertInfoDetailBean.getLeaveTime()) ? "" : leavePostAlertInfoDetailBean.getLeaveTime()));
                 mKeyValueLeaveList.add(leaveKeys[3] + (StrUtil.isEmpty(leavePostAlertInfoDetailBean.getBackTime()) ? "" : leavePostAlertInfoDetailBean.getBackTime()));
                 mKeyValueLeaveList.add(leaveKeys[4] + leavePostAlertInfoDetailBean.getAbsencePeriod() + "min");
+
+                mDeviceSerial = leavePostAlertInfoDetailBean.getDevicesEntity().getYs7DeviceSerial();
             }
             leavePostAlertEventList.setValue(mKeyValueEventList);
             leavePostAlertLeaveList.setValue(mKeyValueLeaveList);
@@ -89,6 +92,7 @@ public class LeavePostDetailViewModel extends BaseViewModel {
     public void gotoAudioPlay(Activity activity) {
         Intent intent = new Intent(activity, LeavePostCheckDetailActivity.class);
         intent.putExtra("isShowTopContent", true);
+        intent.putExtra("deviceSerial", mDeviceSerial);
         if (leavePostAlertInfoData.getValue() != null) {
             intent.putExtra("stationId", leavePostAlertInfoData.getValue().getStationId());
         }
@@ -103,7 +107,7 @@ public class LeavePostDetailViewModel extends BaseViewModel {
      * @param position
      */
     public void lookImage(Activity activity, BaseQuickAdapter adapter, int position) {
-        ArrayList<String> arrayList = new ArrayList<String>(Stream.of((ArrayList<String>)adapter.getData()).map(url -> BuildConfig.OSS_SERVER + (url)).toList());
-        ImagePerviewUtil.perviewImage(activity, arrayList , position);
+        ArrayList<String> arrayList = new ArrayList<String>(Stream.of((ArrayList<String>) adapter.getData()).map(url -> BuildConfig.OSS_SERVER + (url)).toList());
+        ImagePerviewUtil.perviewImage(activity, arrayList, position);
     }
 }

@@ -46,6 +46,7 @@ public class LeavePostAlertInfoDetailBean {
         private int deviceId;
         private String deviceName;
         private String livePic;
+        private String ys7DeviceSerial;
     }
 
     @NoArgsConstructor

@@ -184,6 +184,9 @@ public class LeavePostCheckDetailActivity extends BaseActivity implements Handle
         getWindowManager().getDefaultDisplay().getMetrics(metric);
         mLocalInfo.setScreenWidthHeight(metric.widthPixels, metric.heightPixels);
         mLocalInfo.setNavigationBarHeight((int) Math.ceil(25 * getResources().getDisplayMetrics().density));
+        if (ezPlayer == null) {
+            return;
+        }
         //该handler将被用于从播放器向handler传递消息
         ezPlayer.setHandler(mHandler);
         //设置播放器的显示Surface
@@ -421,8 +424,10 @@ public class LeavePostCheckDetailActivity extends BaseActivity implements Handle
         if (ezPlayer != null) {
             ezPlayer.release();
         }
-        mHandler.removeMessages(MSG_AUTO_START_PLAY);
-        mHandler = null;
+        if (mHandler != null) {
+            mHandler.removeMessages(MSG_AUTO_START_PLAY);
+            mHandler = null;
+        }
         mScreenOrientationHelper = null;
     }
 
