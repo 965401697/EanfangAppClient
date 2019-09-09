@@ -5,6 +5,7 @@ import android.content.Intent;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.eanfang.base.BaseApplication;
 import com.eanfang.biz.model.bean.SelectAddressItem;
 import com.eanfang.biz.model.bean.TemplateBean;
 import com.eanfang.biz.model.entity.AccountEntity;
@@ -19,7 +20,6 @@ import net.eanfang.client.ui.activity.leave_post.bean.LeavePostAddPostPostBean;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostDeviceInfoBean;
 import net.eanfang.client.ui.activity.leave_post.ds.LeavePostDs;
 import net.eanfang.client.ui.activity.leave_post.repo.LeavePostRepo;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,8 +115,12 @@ public class LeavePostAddPostViewModel extends BaseViewModel {
      *
      * @param binding
      */
-    public void addPostCommit(ActivityLeavePostAddPostBinding binding, int type) {
+    public void addPostCommit(ActivityLeavePostAddPostBinding binding, int type, Integer stationId) {
         if (checkoutInfo(binding)) {
+            if (stationId != null) {
+                addPostPostBean.setStationId(stationId);
+            }
+            addPostPostBean.setCompanyId(BaseApplication.get().getCompanyId());
             addPostPostBean.setStationName(binding.edtLeavePostAddPostName.getText().toString());
             addPostPostBean.setStationArea(binding.edtLeavePostAddPostPosition.getText().toString());
             addPostPostBean.setStationCode(binding.edtLeavePostAddPostNumber.getText().toString());

@@ -82,7 +82,7 @@ public class LeavePostAddPostActivity extends BaseActivity {
                 mBinding.recLeavePostDetailInfo.setVisibility(View.GONE);
                 setDefaultData();
                 setRightClick("确定", view1 -> {
-                    mViewModel.addPostCommit(mBinding, 1);
+                    mViewModel.addPostCommit(mBinding, 1, stationId);
                 });
             });
         }
@@ -92,7 +92,7 @@ public class LeavePostAddPostActivity extends BaseActivity {
             mViewModel.addDevice(LeavePostAddPostActivity.this, SELECT_DEVICE_CALL_BACK_CODE);
         });
         mBinding.btnLeavePostAddCommit.setOnClickListener(view -> {
-            mViewModel.addPostCommit(mBinding, 0);
+            mViewModel.addPostCommit(mBinding, 0, null);
         });
         mBinding.tvLeavePostAddPostArea.setOnClickListener(view -> {
             mViewModel.gotoChooseArea(LeavePostAddPostActivity.this, SELECT_ADDRESS_CALL_BACK_CODE);
@@ -129,7 +129,7 @@ public class LeavePostAddPostActivity extends BaseActivity {
         mChargeStaffAdapter.setCanClick(true);
         mChargeStaffAdapter.setNewData(mChargeStaff == null ? new ArrayList<>() : mChargeStaff);
         mDutyStaffAdapter.setCanClick(true);
-        mDutyStaffAdapter.setNewData(mDutyStaffData == null ? new ArrayList<>() : mChargeStaff);
+        mDutyStaffAdapter.setNewData(mDutyStaffData == null ? new ArrayList<>() : mDutyStaffData);
 
     }
 

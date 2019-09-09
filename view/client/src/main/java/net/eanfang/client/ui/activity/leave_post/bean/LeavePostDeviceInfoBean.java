@@ -79,6 +79,7 @@ public class LeavePostDeviceInfoBean {
             mPerson = new TemplateBean.Preson();
             mPerson.setMobile(mobile);
             mPerson.setName(name);
+            mPerson.setUserId(userId);
             if (accountEntity != null) {
                 mPerson.setProtraivat(accountEntity.getAvatar());
                 mPerson.setProtraivat(accountEntity.getAvatar());

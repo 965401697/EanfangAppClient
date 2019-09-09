@@ -42,6 +42,7 @@ android {
         // 开发
         debug {
             buildConfigField("boolean", "DEBUG_MOD", cfg.debugMod)
+//            buildConfigField("String", "API_HOST", cfg.localApiHost)
             buildConfigField("String", "API_HOST", cfg.betaApiHost)
         }
         release {

@@ -18,6 +18,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class LeavePostAddPostPostBean implements Serializable {
+    private Integer stationId;
+    private Long companyId;
     private String stationName;
     private String stationArea;
     private String stationCode;
