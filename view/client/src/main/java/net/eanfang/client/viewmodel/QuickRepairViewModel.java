@@ -94,7 +94,17 @@ public class QuickRepairViewModel extends BaseViewModel {
      * @param repairOrderEntity
      */
     private void createRepairOrder(RepairOrderEntity repairOrderEntity) {
-        mQuickRepairRepo.createRepairOrder(repairOrderEntity).observe(lifecycleOwner, mCreateRepair::setValue);
+        mQuickRepairRepo.createRepairOrder(repairOrderEntity).observe(lifecycleOwner, repair -> {
+            mRepairOrderEntity = null;
+            mRepairOrderEntity = new RepairOrderEntity();
+            mRepairBugEntity = null;
+            mRepairBugEntity = new RepairBugEntity();
+            ArrayList<RepairBugEntity> repairBugEntities = new ArrayList<>();
+            repairBugEntities.add(mRepairBugEntity);
+            mRepairOrderEntity.setBugEntityList(repairBugEntities);
+            mBinding.tvHomeRepairAddress.setText("选位置");
+            mCreateRepair.setValue(repair);
+        });
     }
 
     /**
@@ -103,7 +113,12 @@ public class QuickRepairViewModel extends BaseViewModel {
      * @param installOrderConfirmBean
      */
     private void createInstallOrder(InstallOrderConfirmBean installOrderConfirmBean) {
-        mQuickRepairRepo.createInstallOrder(installOrderConfirmBean).observe(lifecycleOwner, mCreateRepair::setValue);
+        mQuickRepairRepo.createInstallOrder(installOrderConfirmBean).observe(lifecycleOwner, install -> {
+            mInstallOrderConfirmBean = null;
+            mInstallOrderConfirmBean = new InstallOrderConfirmBean();
+            mBinding.tvHomeRepairAddress.setText("选位置");
+            mCreateRepair.setValue(install);
+        });
     }
 
     /**
@@ -112,7 +127,12 @@ public class QuickRepairViewModel extends BaseViewModel {
      * @param designOrderInfoBean
      */
     private void createFreeDesign(DesignOrderInfoBean designOrderInfoBean) {
-        mQuickRepairRepo.createFreeDesign(designOrderInfoBean).observe(lifecycleOwner, mCreateRepair::setValue);
+        mQuickRepairRepo.createFreeDesign(designOrderInfoBean).observe(lifecycleOwner, design -> {
+            mDesignOrderInfoBean = null;
+            mDesignOrderInfoBean = new DesignOrderInfoBean();
+            mBinding.tvHomeRepairAddress.setText("选位置");
+            mCreateRepair.setValue(design);
+        });
     }
 
     /**
