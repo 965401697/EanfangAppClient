@@ -8,31 +8,32 @@ import androidx.lifecycle.ViewModel;
 import com.eanfang.base.BaseActivity;
 
 import net.eanfang.client.R;
-import net.eanfang.client.databinding.ActivityMonitorListBinding;
+import net.eanfang.client.databinding.ActivityMonitorGroupManagerBinding;
+import net.eanfang.client.viewmodel.MonitorViewModle;
 
 /**
  * @author guanluocang
- * @data 2019/9/9  10:21
- * @description 实时监控 列表
+ * @data 2019/9/9  18:46
+ * @description 分组管理
  */
 
-public class MonitorListActivity extends BaseActivity {
+public class MonitorGroupManagerActivity extends BaseActivity {
 
-    private ActivityMonitorListBinding monitorListBinding;
-
+    private ActivityMonitorGroupManagerBinding groupManagerBinding;
+    private MonitorViewModle monitorViewModle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        monitorListBinding = DataBindingUtil.setContentView(this, R.layout.activity_monitor_list);
+        groupManagerBinding = DataBindingUtil.setContentView(this, R.layout.activity_monitor_group_manager);
         super.onCreate(savedInstanceState);
     }
 
     @Override
     protected void initView() {
         super.initView();
-        setTitle("实时监控");
         setLeftBack(true);
-        setRightClick(R.mipmap.ic_search_white,(v)->{
-            
+        setTitle("分组管理");
+        setRightClick(R.mipmap.add,(v)->{
+
         });
     }
 
