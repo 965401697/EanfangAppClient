@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_monitorLevOne"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@mipmap/ic_monitor_item_orange"
+        android:drawablePadding="@dimen/dimen_8"
+        android:textColor="@color/colorPrimary"
+        android:text="阿斯顿节阿萨德年"
+        android:textSize="@dimen/textSize_12" />
+</LinearLayout>

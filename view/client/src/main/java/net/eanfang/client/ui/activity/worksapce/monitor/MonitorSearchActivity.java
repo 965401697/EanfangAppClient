@@ -8,33 +8,31 @@ import androidx.lifecycle.ViewModel;
 import com.eanfang.base.BaseActivity;
 
 import net.eanfang.client.R;
-import net.eanfang.client.databinding.ActivityMonitorListBinding;
+import net.eanfang.client.databinding.ActivityMonitorSearchBinding;
 
 /**
  * @author guanluocang
- * @data 2019/9/9  10:21
- * @description 实时监控 列表
+ * @data 2019/9/9  17:35
+ * @description 搜索 实时监控
  */
 
-public class MonitorListActivity extends BaseActivity {
+public class MonitorSearchActivity extends BaseActivity {
 
-    private ActivityMonitorListBinding monitorListBinding;
+    private ActivityMonitorSearchBinding monitorSearchBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        monitorListBinding = DataBindingUtil.setContentView(this, R.layout.activity_monitor_list);
+        monitorSearchBinding = DataBindingUtil.setContentView(this, R.layout.activity_monitor_search);
         super.onCreate(savedInstanceState);
     }
 
     @Override
     protected void initView() {
         super.initView();
-        setTitle("实时监控");
+        setTitle("搜索");
         setLeftBack(true);
-        setRightClick(R.mipmap.ic_search_white,(v)->{
-            
-        });
     }
+
 
     @Override
     protected ViewModel initViewModel() {

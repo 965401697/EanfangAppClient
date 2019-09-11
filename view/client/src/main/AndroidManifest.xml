@@ -60,7 +60,10 @@
         android:supportsRtl="true"
         android:theme="@style/NewBaseTheme"
         tools:replace="android:name,android:theme,android:icon">
-        <activity android:name=".ui.activity.worksapce.monitor.MonitorListActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.monitor.MonitorGroupEditActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.monitor.MonitorGroupManagerActivity" />
+        <activity android:name=".ui.activity.worksapce.monitor.MonitorSearchActivity" />
+        <activity android:name=".ui.activity.worksapce.monitor.MonitorListActivity" />
         <activity android:name=".ui.activity.worksapce.SecurityCompanyAllAreaActivity" />
         <activity android:name=".ui.activity.worksapce.repair.SecurityCompanyDetailActivity" />
         <activity android:name=".ui.activity.worksapce.repair.RepairPhoneActivity" />
