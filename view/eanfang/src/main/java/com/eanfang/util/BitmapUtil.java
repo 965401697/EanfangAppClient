@@ -1,5 +1,6 @@
 package com.eanfang.util;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -373,26 +374,25 @@ public class BitmapUtil {
         } else {  // Meizu 、Oppo
             BASE_DCIM = BASE_DCIM + "/DCIM";
         }
-        // 声明输出流
-        FileOutputStream outStream = null;
         if (!FileUtil.exist(BASE_DCIM)) {
             FileUtil.mkdir(BASE_DCIM);
         }
         // 旋转
         Bitmap mBitmap = getRotateBM(bm, filePath);
-        File mFile = new File(BASE_DCIM + mFileName);
-        if (mFile.exists()) {
-            try {
-                mFile.delete();
-                mFile.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        File mOldFile = new File(filePath);
+        if (mOldFile.exists()) {
+            mOldFile.delete();
+            mContext.getContentResolver().delete(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, MediaStore.Images.Media.DATA + "=?", new String[]{filePath});
         }
+        File mFile = new File(BASE_DCIM + mFileName);
         try {
-//            file.createNewFile();
-            outStream = new FileOutputStream(mFile);
-            mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, outStream);
+            if (mFile.exists()) {
+                mFile.delete();
+            }
+            mFile.createNewFile();
+            // 声明输出流
+            FileOutputStream outStream = new FileOutputStream(mFile);
+            mBitmap.compress(Bitmap.CompressFormat.PNG, 90, outStream);
             outStream.flush();
             outStream.close();
             if (mBitmap != null && !mBitmap.isRecycled()) {
@@ -406,18 +406,20 @@ public class BitmapUtil {
             // 其次把文件插入到系统图库
             String path = mFile.getAbsolutePath();
             try {
-                MediaStore.Images.Media.insertImage(mContext.getContentResolver(), path, mFileName, null);
-            } catch (FileNotFoundException e) {
+                ContentValues values = new ContentValues();
+                values.put(MediaStore.Images.Media.DATA, path);
+                values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+
+                Uri uri = mContext.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+//                MediaStore.Images.Media.insertImage(mContext.getContentResolver(), path, mFile.getName(), null);
+                Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+//                Uri uri = Uri.fromFile(mFile);
+                intent.setData(uri);
+                BaseApplication.get().sendBroadcast(intent);
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-            // 最后通知图库更新
-            Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-            Uri uri = Uri.fromFile(mFile);
-            intent.setData(uri);
-            BaseApplication.get().sendBroadcast(intent);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
