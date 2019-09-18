@@ -169,7 +169,7 @@ dependencies {
     annotationProcessor pkg.butterknifeCompiler
     implementation pkg.lombok
     annotationProcessor pkg.lombok
-    implementation pkg.yingshiyun
+//    implementation pkg.yingshiyun
     implementation pkg.alipay
 
     implementation project(':view:eanfang')

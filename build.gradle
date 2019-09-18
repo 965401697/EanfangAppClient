@@ -47,15 +47,15 @@ ext {
             targetSdkVersion : 29,
             compileSdkVersion: 29,
             buildToolsVersion: "29.0.0",
-            versionName      : "3.0.7",
-            versionCode      : 19081701,
+            versionName      : "3.0.9",
+            versionCode      : 19090901,
 
             //common config
             ossServer        : "\"https://oss.eanfang.net/\"",
             ossBucket        : "\"eanfang\"",
             ossEndpoint      : "\"https://oss-cn-beijing.aliyuncs.com\"",
             javaVersion      : JavaVersion.VERSION_1_8,
-            debugMod         : "true",
+            debugMod         : "false",
             localApiHost     : "\"http://192.168.0.222:8080\"",
             betaApiHost      : "\"http://api.beta.eanfang.net\"",
             proApiHost       : "\"https://api.eanfang.net\"",
@@ -177,7 +177,7 @@ ext {
             monitor              : "leavesc.hello:Monitor:1.0.3",
 //            gson                 : 'com.google.code.gson:gson:2.8.5'
             //萤石云
-            yingshiyun           : 'com.hikvision.ezviz:ezviz-sdk:4.8.8'
+//            yingshiyun           : 'com.hikvision.ezviz:ezviz-sdk:4.8.8'
 
 
     ]

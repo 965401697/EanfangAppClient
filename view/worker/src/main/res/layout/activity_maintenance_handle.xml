@@ -189,7 +189,7 @@
                         android:background="@drawable/selector_maintenance"
                         android:button="@null"
                         android:gravity="center"
-                        android:text="没路监控录像存储时限"
+                        android:text="每路监控录像存储时限"
                         android:textColor="@drawable/selector_maintenance_text"
                         android:textSize="@dimen/textSize_12" />
 
