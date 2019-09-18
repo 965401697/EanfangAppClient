@@ -54,14 +54,20 @@
     <application
         android:name=".base.ClientApplication"
         android:allowBackup="true"
+        android:hardwareAccelerated="false"
         android:icon="@drawable/client_logo"
         android:label="@string/app_name"
         android:roundIcon="@drawable/client_logo"
         android:supportsRtl="true"
         android:theme="@style/NewBaseTheme"
         tools:replace="android:name,android:theme,android:icon">
-        <activity android:name=".ui.activity.worksapce.monitor.MonitorGroupEditActivity"></activity>
-        <activity android:name=".ui.activity.worksapce.monitor.MonitorGroupManagerActivity" />
+        <activity android:name=".ui.activity.worksapce.monitor.group.MonitorGroupEditGroupActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.monitor.group.MonitorGroupSettingActivity" />
+        <activity android:name=".ui.activity.worksapce.monitor.group.MonitorGroupCreateActivity" />
+        <activity android:name=".ui.activity.worksapce.monitor.MonitorDeviceDetailActivity" />
+        <activity android:name=".ui.activity.worksapce.monitor.MonitorDeviceManagerActivity" />
+        <activity android:name=".ui.activity.worksapce.monitor.group.MonitorGroupEditNameActivity" />
+        <activity android:name=".ui.activity.worksapce.monitor.group.MonitorGroupManagerActivity" />
         <activity android:name=".ui.activity.worksapce.monitor.MonitorSearchActivity" />
         <activity android:name=".ui.activity.worksapce.monitor.MonitorListActivity" />
         <activity android:name=".ui.activity.worksapce.SecurityCompanyAllAreaActivity" />
