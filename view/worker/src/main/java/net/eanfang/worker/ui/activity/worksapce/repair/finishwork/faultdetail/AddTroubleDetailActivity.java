@@ -2,10 +2,6 @@ package net.eanfang.worker.ui.activity.worksapce.repair.finishwork.faultdetail;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.IdRes;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -19,10 +15,15 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.IdRes;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Optional;
 import com.eanfang.apiservice.RepairApi;
-import com.eanfang.biz.model.bean.ZjZgBean;
+import com.eanfang.base.kit.rx.RxPerm;
 import com.eanfang.biz.model.entity.BughandleDetailEntity;
 import com.eanfang.biz.model.entity.BughandleParamEntity;
 import com.eanfang.biz.model.entity.BughandleUseDeviceEntity;
@@ -34,7 +35,6 @@ import com.eanfang.http.EanfangHttp;
 import com.eanfang.ui.base.voice.RecognitionManager;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.JumpItent;
-import com.eanfang.base.kit.rx.RxPerm;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -52,7 +52,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -451,8 +450,8 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
                             mReapirOneStauts = detailEntity.getStatus();
                             mReapirTwoStauts = detailEntity.getStatusTwo();
                         }
-                        addRepariResult();
-                        addReapirResultMode(mReapirOneStauts);
+                        addRepairResult();
+                        addRepairResultMode(mReapirOneStauts);
                         // 是否误报
                         if (failureEntity.getIsMisinformation() == 0) {
                             rgNo.setChecked(true);
@@ -477,7 +476,7 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
                         detailEntity.setRestorePictures(null);
                     }).showDialog();
         }
-        addRepariResult();
+        addRepairResult();
     }
 
     private void submit() {
@@ -649,7 +648,7 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
         mUploadMapPicture = uploadMap;
     }
 
-    public void addRepariResult() {
+    public void addRepairResult() {
 
         tagRepairResult.setAdapter(mResultAdapter = new TagAdapter<String>(mRepairResult) {
             @Override
@@ -662,29 +661,27 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
         if (mReapirOneStauts != 100) {
             mResultAdapter.setSelectedList(mReapirOneStauts);
         }
-        tagRepairResult.setOnSelectListener(new TagFlowLayout.OnSelectListener() {
-            @Override
-            public void onSelected(Set<Integer> selectPosSet) {
-                if (!selectPosSet.isEmpty()) {
-                    String str = selectPosSet.toString().substring(1, selectPosSet.toString().length() - 1);
-                    int position = Integer.parseInt(str);
-                    mReapirOneStauts = position;
-                    mReapirTwoStauts = 200;
-                    addReapirResultMode(position);
-                } else {
-                    mReapirOneStauts = 100;
-                }
+        tagRepairResult.setOnSelectListener(selectPosSet -> {
+            if (!selectPosSet.isEmpty()) {
+                String str = selectPosSet.toString().substring(1, selectPosSet.toString().length() - 1);
+                int position = Integer.parseInt(str);
+                mReapirOneStauts = position;
+                mReapirTwoStauts = 200;
+                addRepairResultMode(position);
+            } else {
+                mReapirOneStauts = 100;
             }
         });
 
     }
 
-    public void addReapirResultMode(int status) {
+    public void addRepairResultMode(int status) {
         List<String> faultModeList = GetConstDataUtils.getBugDetailTwoList(status);
-        if (tagRepairResultTwo.getSelectedList().size() > 0) {
+        if (tagRepairResultTwo.getSelectedList() != null && tagRepairResultTwo.getSelectedList().size() > 0) {
             tagRepairResultTwo.getSelectedList().clear();
-            tagRepairResultTwo.getAdapter().notifyDataChanged();
-
+            if (tagRepairResultTwo.getAdapter() != null) {
+                tagRepairResultTwo.getAdapter().notifyDataChanged();
+            }
         }
         tagRepairResultTwo.setAdapter(mModeAdapter = new TagAdapter<String>(faultModeList) {
             @Override
@@ -701,16 +698,13 @@ public class AddTroubleDetailActivity extends BaseWorkerActivity implements Radi
             mModeAdapter.setSelectedList(mReapirTwoStauts);
         }
 
-        tagRepairResultTwo.setOnSelectListener(new TagFlowLayout.OnSelectListener() {
-            @Override
-            public void onSelected(Set<Integer> selectPosSet) {
-                if (!selectPosSet.isEmpty()) {
-                    String str = selectPosSet.toString().substring(1, selectPosSet.toString().length() - 1);
-                    int position = Integer.parseInt(str);
-                    mReapirTwoStauts = position;
-                } else {
-                    mReapirTwoStauts = 200;
-                }
+        tagRepairResultTwo.setOnSelectListener(selectPosSet -> {
+            if (!selectPosSet.isEmpty()) {
+                String str = selectPosSet.toString().substring(1, selectPosSet.toString().length() - 1);
+                int position = Integer.parseInt(str);
+                mReapirTwoStauts = position;
+            } else {
+                mReapirTwoStauts = 200;
             }
         });
     }

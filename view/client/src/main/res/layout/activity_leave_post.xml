@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -22,7 +23,8 @@
             android:layout_height="0dp"
             android:background="@color/white"
             app:layout_constraintDimensionRatio="H, 360:77"
-            app:layout_constraintTop_toBottomOf="@id/tv_leave_post_date" />
+            app:layout_constraintTop_toBottomOf="@id/tv_leave_post_date"
+            tools:layout_editor_absoluteX="0dp" />
 
         <TextView
             android:id="@+id/tv_leave_post_date"
@@ -39,10 +41,11 @@
 
         <TextView
             android:id="@+id/tv_leave_post_post_count"
-            android:layout_width="@dimen/dimen_120"
+            android:layout_width="@dimen/dimen_100"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dimen_74"
             android:text="0"
+            android:textAlignment="center"
             android:textColor="@color/color_leave_post_count_text"
             android:textSize="24sp"
             app:layout_constraintBottom_toBottomOf="@id/view_content"
@@ -52,8 +55,9 @@
 
         <TextView
             android:id="@+id/tv_leave_post_warn_count"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/dimen_100"
             android:layout_height="wrap_content"
+            android:textAlignment="center"
             android:layout_marginLeft="@dimen/dimen_64"
             android:text="0"
             android:textColor="@color/color_main_header_bg"

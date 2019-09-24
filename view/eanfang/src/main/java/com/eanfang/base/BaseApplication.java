@@ -61,6 +61,7 @@ public class BaseApplication extends MultiDexApplication {
 
         Leaves.INSTANCE.init(this);
 
+
         ThreadUtil.execAsync(() -> {
             initConfig();
             initFresco();

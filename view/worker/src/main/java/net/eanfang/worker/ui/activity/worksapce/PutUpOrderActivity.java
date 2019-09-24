@@ -15,12 +15,12 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONObject;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.biz.model.entity.BughandleConfirmEntity;
 import com.eanfang.biz.model.entity.TransferLogEntity;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.biz.model.entity.BughandleConfirmEntity;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -32,7 +32,6 @@ import net.eanfang.worker.ui.base.BaseWorkerActivity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -120,7 +119,7 @@ public class PutUpOrderActivity extends BaseWorkerActivity {
             transferLogEntityHistory = bughandleConfirmEntity.getTransferLogEntity();
             getHistory(transferLogEntityHistory);
         }
-        addReapirResultMode(GetConstDataUtils.getTransferCauseList());
+        addRepairResultMode(GetConstDataUtils.getTransferCauseList());
 
         llToWorker.setOnClickListener((v) -> {
             Intent intent = new Intent(PutUpOrderActivity.this, PutUpSelectWorkerActivity.class);
@@ -217,10 +216,12 @@ public class PutUpOrderActivity extends BaseWorkerActivity {
 
     }
 
-    public void addReapirResultMode(List<String> stringList) {
-        if (tagReason.getSelectedList().size() > 0) {
+    public void addRepairResultMode(List<String> stringList) {
+        if (tagReason.getSelectedList() != null && tagReason.getSelectedList().size() > 0) {
             tagReason.getSelectedList().clear();
-            tagReason.getAdapter().notifyDataChanged();
+            if (tagReason.getAdapter() != null) {
+                tagReason.getAdapter().notifyDataChanged();
+            }
         }
         tagReason.setAdapter(new TagAdapter<String>(stringList) {
             @Override
@@ -230,18 +231,14 @@ public class PutUpOrderActivity extends BaseWorkerActivity {
                 return tv;
             }
         });
-        tagReason.setOnSelectListener(new TagFlowLayout.OnSelectListener() {
-            @Override
-            public void onSelected(Set<Integer> selectPosSet) {
-                if (!selectPosSet.isEmpty()) {
-                    String str = selectPosSet.toString().substring(1, selectPosSet.toString().length() - 1);
-                    int position = Integer.parseInt(str);
-                    mOrderReason = position;
-                } else {
-                    mOrderReason = 100;
-                }
+        tagReason.setOnSelectListener(selectPosSet -> {
+            if (!selectPosSet.isEmpty()) {
+                String str = selectPosSet.toString().substring(1, selectPosSet.toString().length() - 1);
+                int position = Integer.parseInt(str);
+                mOrderReason = position;
+            } else {
+                mOrderReason = 100;
             }
-
         });
     }
 

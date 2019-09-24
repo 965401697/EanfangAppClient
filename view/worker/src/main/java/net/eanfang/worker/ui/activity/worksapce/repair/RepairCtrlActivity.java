@@ -2,14 +2,16 @@ package net.eanfang.worker.ui.activity.worksapce.repair;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-import android.view.View;
 
 import com.annimon.stream.Collectors;
 import com.annimon.stream.Stream;
+import com.eanfang.base.kit.V;
 import com.eanfang.biz.model.bean.RepairedOrderBean;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.ViewFindUtils;
@@ -96,7 +98,9 @@ public class RepairCtrlActivity extends BaseWorkerActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == REFREST_ITEM) {
-            currentFragment.getAdapter().remove(currentFragment.getCurrentPosition());
+            if (V.v(() -> currentFragment.getAdapter()) != null) {
+                currentFragment.getAdapter().remove(currentFragment.getCurrentPosition());
+            }
         }
     }
 

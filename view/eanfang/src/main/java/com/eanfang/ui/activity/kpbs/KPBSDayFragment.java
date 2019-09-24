@@ -15,6 +15,9 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.R;
@@ -27,8 +30,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.Unbinder;
 
@@ -139,145 +140,128 @@ public class KPBSDayFragment extends BaseFragment {
 
     @Override
     protected void setListener() {
-        llKpbs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showPopupWindow();
-            }
+        llKpbs.setOnClickListener(v -> showPopupWindow());
+
+        tvClean.setOnClickListener(v -> {
+            etVidiconNum.setText("");
+            etDay.setText("");
+            etSdNum.setText("");
+            tvResult.setText("");
+            tvKpbs.setText("");
+
+
+            imm.hideSoftInputFromWindow(v.getWindowToken(), 0); //强制隐藏键盘
         });
 
-        tvClean.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                etVidiconNum.setText("");
-                etDay.setText("");
-                etSdNum.setText("");
-                tvResult.setText("");
-                tvKpbs.setText("");
+        tvCount.setOnClickListener(v -> {
 
-
-                imm.hideSoftInputFromWindow(v.getWindowToken(), 0); //强制隐藏键盘
+            if (llCustom.getVisibility() == View.VISIBLE) {
+                currentKpbs = etCustomKpbs.getText().toString().trim();
             }
-        });
 
-        tvCount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            int vidiconNum = 0;
+            int sdNum = 0;
+            int day = 0;
+            float kpbs = 0.0f;
+            if (!TextUtils.isEmpty(currentKpbs)) {
+                kpbs = Float.parseFloat(currentKpbs.split("K")[0]);
+            }
+            if (!TextUtils.isEmpty(etVidiconNum.getText().toString().trim())) {
+                vidiconNum = Integer.parseInt(etVidiconNum.getText().toString().trim());
+            } else {
+                ToastUtil.get().showToast(getActivity(), "请输入摄像机数量");
+                return;
+            }
 
-                if (llCustom.getVisibility() == View.VISIBLE) {
-                    currentKpbs = etCustomKpbs.getText().toString().trim();
-                }
-
-                int vidiconNum = 0;
-                int sdNum = 0;
-                int day = 0;
-                float kpbs = 0.0f;
-                if (!TextUtils.isEmpty(currentKpbs)) {
-                    kpbs = Float.parseFloat(currentKpbs.split("K")[0]);
-                }
-                if (!TextUtils.isEmpty(etVidiconNum.getText().toString().trim())) {
-                    vidiconNum = Integer.parseInt(etVidiconNum.getText().toString().trim());
-                } else {
-                    ToastUtil.get().showToast(getActivity(), "请输入摄像机数量");
+            if ((!TextUtils.isEmpty(etSdNum.getText().toString().trim()) && mType == 0) || (!TextUtils.isEmpty(etSdNum.getText().toString().trim()) && mType == 2)) {
+                sdNum = Integer.parseInt(etSdNum.getText().toString().trim());
+            } else {
+                if (mType == 0 || mType == 2) {
+                    ToastUtil.get().showToast(getActivity(), "请输入硬盘容量");
                     return;
                 }
+            }
+            if ((!TextUtils.isEmpty(etDay.getText().toString().trim()) && mType == 1) || (!TextUtils.isEmpty(etDay.getText().toString().trim()) && mType == 2)) {
+                day = Integer.parseInt(etDay.getText().toString().trim());
+            } else {
+                if (mType == 1 || mType == 2) {
+                    ToastUtil.get().showToast(getActivity(), "请输入储存天数");
+                    return;
+                }
+            }
 
-                if ((!TextUtils.isEmpty(etSdNum.getText().toString().trim()) && mType == 0) || (!TextUtils.isEmpty(etSdNum.getText().toString().trim()) && mType == 2)) {
-                    sdNum = Integer.parseInt(etSdNum.getText().toString().trim());
+            if (mType != 2) {
+                if (rbDis.isChecked()) {
+                    if (TextUtils.isEmpty(tvKpbs.getText().toString().trim())) {
+                        ToastUtil.get().showToast(getActivity(), "请输选择分辨率");
+                        return;
+                    }
                 } else {
-                    if (mType == 0 || mType == 2) {
-                        ToastUtil.get().showToast(getActivity(), "请输入硬盘容量");
+                    if (TextUtils.isEmpty(tvKpbs.getText().toString().trim())) {
+                        ToastUtil.get().showToast(getActivity(), "请输选择码率");
                         return;
                     }
                 }
-                if ((!TextUtils.isEmpty(etDay.getText().toString().trim()) && mType == 1) || (!TextUtils.isEmpty(etDay.getText().toString().trim()) && mType == 2)) {
-                    day = Integer.parseInt(etDay.getText().toString().trim());
-                } else {
-                    if (mType == 1 || mType == 2) {
-                        ToastUtil.get().showToast(getActivity(), "请输入储存天数");
-                        return;
-                    }
+            }
+
+
+            if (mType == 0) {
+                //算存储时间
+                double temp = new BigDecimal(sdNum * 1024).multiply(new BigDecimal(1024 * 1024)).multiply(new BigDecimal("8")).doubleValue();
+                double time = Double.parseDouble(String.valueOf(temp / kpbs / 60 / 60 / 24 / vidiconNum));
+                double dTime = SplitAndRound(time, 2);
+                //计算储存时间
+                long temp1 = new BigDecimal((String.valueOf((dTime * 24 * 60 * 60)))).multiply(new BigDecimal("1000")).longValue();
+                tvResult.setText(formatTime(temp1));
+            } else if (mType == 1) {
+                double d = SplitAndRound(Double.parseDouble(String.valueOf((kpbs * 60 * 60 * 24 * day * vidiconNum / 8 / 1024 / 1024 / 1024))), 2);
+                if (d < 0.99d) {
+                    tvResult.setText(d * 1024 + "GB");
                 }
-
-                if (mType != 2) {
-                    if (rbDis.isChecked()) {
-                        if (TextUtils.isEmpty(tvKpbs.getText().toString().trim())) {
-                            ToastUtil.get().showToast(getActivity(), "请输选择分辨率");
-                            return;
-                        }
-                    } else {
-                        if (TextUtils.isEmpty(tvKpbs.getText().toString().trim())) {
-                            ToastUtil.get().showToast(getActivity(), "请输选择码率");
-                            return;
-                        }
-                    }
-                }
-
-
-                if (mType == 0) {
-                    //算存储时间
-                    double temp = new BigDecimal(sdNum * 1024).multiply(new BigDecimal(1024 * 1024)).multiply(new BigDecimal("8")).doubleValue();
-                    double time = Double.parseDouble(String.valueOf(temp / kpbs / 60 / 60 / 24 / vidiconNum));
-                    double dTime = SplitAndRound(time, 2);
-                    //计算储存时间
-                    long temp1 = new BigDecimal((String.valueOf((dTime * 24 * 60 * 60)))).multiply(new BigDecimal("1000")).longValue();
-                    tvResult.setText(formatTime(temp1));
-                } else if (mType == 1) {
-                    double d = SplitAndRound(Double.parseDouble(String.valueOf((kpbs * 60 * 60 * 24 * day * vidiconNum / 8 / 1024 / 1024 / 1024))), 2);
-                    if (d < 0.99d) {
-                        tvResult.setText(d * 1024 + "GB");
-                    }
 //                    else if (d < 1.00d) {
 //                        tvResult.setText(String.valueOf(d) + "TB");
 //                    }
-                    else {
-                        tvResult.setText(Math.rint(d) + "TB");
-                    }
-                } else {
-                    double temp = new BigDecimal(sdNum * 1024).multiply(new BigDecimal(1024 * 1024)).multiply(new BigDecimal("8")).doubleValue();
-                    double kp = Double.parseDouble(String.valueOf(temp / vidiconNum / day / 24 / 60 / 60 / 1024));
-                    if (rbRuseltDis.isChecked()) {
-                        int o = Integer.parseInt((String.valueOf(SplitAndRound(kp, 1))).split("\\.")[0]);
-                        int t = Integer.parseInt((String.valueOf(SplitAndRound(kp, 1))).split("\\.")[1]);
+                else {
+                    tvResult.setText(Math.rint(d) + "TB");
+                }
+            } else {
+                double temp = new BigDecimal(sdNum * 1024).multiply(new BigDecimal(1024 * 1024)).multiply(new BigDecimal("8")).doubleValue();
+                double kp = Double.parseDouble(String.valueOf(temp / vidiconNum / day / 24 / 60 / 60 / 1024));
+                if (rbRuseltDis.isChecked()) {
+                    int o = Integer.parseInt((String.valueOf(SplitAndRound(kp, 1))).split("\\.")[0]);
+                    int t = Integer.parseInt((String.valueOf(SplitAndRound(kp, 1))).split("\\.")[1]);
 
-                        tvResult.setText(findDis(o, t));
-                    } else {
-                        float f = (float) (kp * 1024);
-                        tvResult.setText(SplitAndRound(f, 1) + "    Kb");
-                    }
-                }
-                imm.hideSoftInputFromWindow(v.getWindowToken(), 0); //强制隐藏键盘
-            }
-        });
-        rgCondition.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                currentLists.clear();
-                if (checkedId == R.id.rb_dis) {
-                    currentLists.addAll(Arrays.asList(distinguishability));
-                    tvCondition.setText("分辨率");
-                    tvKpbs.setText("");
+                    tvResult.setText(findDis(o, t));
                 } else {
-                    currentLists.addAll(Arrays.asList(kpbs));
-                    tvCondition.setText("码率");
-                    tvKpbs.setText("");
+                    float f = (float) (kp * 1024);
+                    tvResult.setText(SplitAndRound(f, 1) + "    Kb");
                 }
-                tvResult.setText("");
-                showPopupWindow();
             }
+            imm.hideSoftInputFromWindow(v.getWindowToken(), 0); //强制隐藏键盘
+        });
+        rgCondition.setOnCheckedChangeListener((group, checkedId) -> {
+            currentLists.clear();
+            if (checkedId == R.id.rb_dis) {
+                currentLists.addAll(Arrays.asList(distinguishability));
+                tvCondition.setText("分辨率");
+                tvKpbs.setText("");
+            } else {
+                currentLists.addAll(Arrays.asList(kpbs));
+                tvCondition.setText("码率");
+                tvKpbs.setText("");
+            }
+            tvResult.setText("");
+            showPopupWindow();
         });
 
-        rgRuseltType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                currentLists.clear();
-                if (checkedId == R.id.rb_ruselt_dis) {
-                    tvDesc.setText("分辨率：");
-                } else {
-                    tvDesc.setText("储存码率：");
-                }
-                tvResult.setText("");
+        rgRuseltType.setOnCheckedChangeListener((group, checkedId) -> {
+            currentLists.clear();
+            if (checkedId == R.id.rb_ruselt_dis) {
+                tvDesc.setText("分辨率：");
+            } else {
+                tvDesc.setText("储存码率：");
             }
+            tvResult.setText("");
         });
     }
 
@@ -374,25 +358,25 @@ public class KPBSDayFragment extends BaseFragment {
             mKPBSAdapter.bindToRecyclerView(recyclerView);
 
 
-            mKPBSAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
-                    if (kpbs[9].equals(adapter.getData().get(position))) {
-                        llCustom.setVisibility(View.VISIBLE);
-                    } else {
-                        llCustom.setVisibility(View.GONE);
-                    }
-                    tvKpbs.setText((String) adapter.getData().get(position));
-                    currentKpbs = kpbs[position];
-                    mPopWindow.dismiss();
+            mKPBSAdapter.setOnItemClickListener((adapter, view, position) -> {
+                if (kpbs[9].equals(adapter.getData().get(position))) {
+                    llCustom.setVisibility(View.VISIBLE);
+                } else {
+                    llCustom.setVisibility(View.GONE);
                 }
+                tvKpbs.setText((String) adapter.getData().get(position));
+                currentKpbs = kpbs[position];
+                mPopWindow.dismiss();
             });
 
         }
         mKPBSAdapter.setNewData(currentLists);
         // 显示PopupWindow，其中：
-        // 第一个参数是PopupWindow的锚点，第二和第三个参数分别是PopupWindow相对锚点的x、y偏移
-        mPopWindow.showAsDropDown(tvKpbs, 0, 2);
+        if (!isFinishing()) {
+            // 第一个参数是PopupWindow的锚点，第二和第三个参数分别是PopupWindow相对锚点的x、y偏移
+            mPopWindow.showAsDropDown(tvKpbs, 0, 2);
+        }
+
     }
 
     /*

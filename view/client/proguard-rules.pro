@@ -127,7 +127,6 @@
  #使用GSON、fastjson等框架时，所写的JSON对象类不混淆，否则无法将JSON解析成对应的对象
 -keepclassmembers class * {
 public <methods>;
-    #public <init>(org.json.JSONObject);
 }
 -keep class com.chad.library.adapter.** {
    *;
@@ -202,8 +201,8 @@ public <methods>;
 #不做预校验的操作
 -dontpreverify
 #生成原类名和混淆后的类名的映射文件
--verbose
--printmapping proguardMapping.txt
+#-verbose
+#-printmapping proguardMapping.txt
 #指定混淆是采用的算法
 -optimizations !code/simplification/cast,!field/*,!class/merging/*
 #不混淆Annotation
@@ -342,7 +341,19 @@ public <methods>;
 -keep class com.tencent.mm.**{*;}
 -keepattributes EnclosingMethod
 
-#萤石云忽略
+#========SDK对外接口=======#
+-dontwarn com.ezviz.opensdk.**
+-keep class com.ezviz.opensdk.** { *;}
+#========海康二方库=======#
+-dontwarn com.ezviz.downloader.**
+-keep class com.ezviz.downloader.** { *;}
+
+-dontwarn com.ezviz.hcnetsdk.**
+-keep class com.ezviz.hcnetsdk.** { *;}
+
+-dontwarn com.ezviz.jna.**
+-keep class com.ezviz.jna.** { *;}
+
 -dontwarn com.ezviz.player.**
 -keep class com.ezviz.player.** { *;}
 
@@ -352,33 +363,28 @@ public <methods>;
 -dontwarn com.ezviz.stream.**
 -keep class com.ezviz.stream.** { *;}
 
--dontwarn com.ezviz.hcnetsdk.**
--keep class com.ezviz.hcnetsdk.** { *;}
-
-
--dontwarn com.ezviz.opensdk.**
--keep class com.ezviz.opensdk.** { *;}
-
 -dontwarn com.hik.**
 -keep class com.hik.** { *;}
 
 -dontwarn com.hikvision.**
 -keep class com.hikvision.** { *;}
 
--dontwarn com.videogo.**
--keep class com.videogo.** { *;}
-
 -dontwarn org.MediaPlayer.PlayM4.**
 -keep class org.MediaPlayer.PlayM4.** { *;}
 
+-dontwarn com.videogo.**
+-keep class com.videogo.** { *;}
+
+#========jna=======#
 -dontwarn com.sun.jna.**
 -keep class com.sun.jna.**{*;}
 
-#Gson混淆配置
+#========gson=======#
 -keepattributes Annotation
 -keep class sun.misc.Unsafe { *; }
 -keep class com.idea.fifaalarmclock.entity.*
 -keep class com.google.gson.stream.* { *; }
+
 
 #引用mars的xlog，混淆配置
 -keep class com.tencent.mars.** {

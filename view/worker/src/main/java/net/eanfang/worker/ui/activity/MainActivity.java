@@ -313,7 +313,6 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
                     BaseDataBean baseDataBean = ObjectUtil.unserialize(bytes);
                     CacheKit.get().put(BaseDataBean.class.getName(), baseDataBean);
                     md5 = baseDataBean.getMD5();
-                    saveArea(baseDataBean);
                 }
             }
             emitter.onNext(md5);
@@ -326,6 +325,7 @@ public class MainActivity extends BaseActivity implements IUnReadMessageObserver
                             CacheKit.get().put(BaseDataBean.class.getName(), bean);
                             Config.get().cleanBaseDataBean();
                             Config.get().getBaseDataBean();
+                            saveArea(bean);
                         }
                     });
                 });

@@ -15,6 +15,7 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,13 +25,13 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.base.BaseActivity;
+import com.eanfang.base.kit.V;
 import com.eanfang.base.widget.customview.CircleImageView;
-import com.eanfang.biz.model.entity.RepairOrderEntity;
 import com.eanfang.biz.model.entity.WorkerEntity;
 import com.eanfang.config.Config;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.GlideUtil;
 import com.eanfang.witget.ArcProgressView;
@@ -165,21 +166,20 @@ public class WorkDetailActivity extends BaseActivity {
 
     private BaseQuickAdapter evaluateAdapter1;
 
-    private RepairOrderEntity toRepairBean;
-    private WorkerEntity detailsBean;
+    //    private RepairOrderEntity toRepairBean;
+//    private WorkerEntity detailsBean;
     // 扫码二维码进入技师详情页面 传入的entriy
     private WorkerEntity mQRWorkerEntity;
     private boolean isComeIn = false;
-    private RepairOrderEntity mScanRepairBean;
     private String companyUserId = "";
     private String workerId = "";
 
-    private boolean isCollect;
-
-    // 传到下个页面 头像 名称 公司名
-    private String headUrl = "";
-    private String workerName = "";
-    private String comapnyName = "";
+//    private boolean isCollect;
+//
+//    // 传到下个页面 头像 名称 公司名
+//    private String headUrl = "";
+//    private String workerName = "";
+//    private String comapnyName = "";
 
     private int regionSize = 20;
 
@@ -203,7 +203,13 @@ public class WorkDetailActivity extends BaseActivity {
         setListener();
     }
 
-    private void initView() {
+    @Override
+    protected ViewModel initViewModel() {
+        return null;
+    }
+
+    @Override
+    protected void initView() {
         rvList1.setLayoutManager(new GridLayoutManager(this, 2));
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -219,7 +225,7 @@ public class WorkDetailActivity extends BaseActivity {
         workDetailQualificationAdapter.bindToRecyclerView(rvQualification);
 
         // 正常报修流程 获取数据
-        toRepairBean = v(() -> (RepairOrderEntity) getIntent().getSerializableExtra("toRepairBean"));
+//        toRepairBean = v(() -> (RepairOrderEntity) getIntent().getSerializableExtra("toRepairBean"));
         companyUserId = v(() -> getIntent().getStringExtra("companyUserId"));
         workerId = v(() -> getIntent().getStringExtra("workerId"));
 
@@ -235,7 +241,7 @@ public class WorkDetailActivity extends BaseActivity {
         }
 
         setTitle("技师详情");
-        setLeftBack();
+        setLeftBack(true);
     }
 
     private void initData() {
@@ -314,7 +320,7 @@ public class WorkDetailActivity extends BaseActivity {
                 .params("workerId", workerId)
                 .params("userId", companyUserId)
                 .execute(new EanfangCallback<WorkerEntity>(this, true, WorkerEntity.class, (bean) -> {
-                    detailsBean = bean;
+//                    detailsBean = bean;
                     setData(bean);
                 }));
     }
@@ -325,9 +331,9 @@ public class WorkDetailActivity extends BaseActivity {
         }
         if (bean.getAccountEntity() != null) {
             GlideUtil.intoImageView(this, Uri.parse(BuildConfig.OSS_SERVER + bean.getAccountEntity().getAvatar()), ivHeader);
-            headUrl = bean.getAccountEntity().getAvatar();
-            workerName = bean.getAccountEntity().getRealName();
-            comapnyName = bean.getCompanyEntity().getOrgName();
+//            headUrl = bean.getAccountEntity().getAvatar();
+//            workerName = bean.getAccountEntity().getRealName();
+//            comapnyName = bean.getCompanyEntity().getOrgName();
             tvRealname.setText(bean.getAccountEntity().getRealName());
             if (!StrUtil.isEmpty(bean.getAccountEntity().getAreaCode())) {
                 String region = Config.get().getAddressByCode(bean.getAccountEntity().getAreaCode());
@@ -335,7 +341,7 @@ public class WorkDetailActivity extends BaseActivity {
             }
         }
         if (bean.getCompanyEntity() != null) {
-            comapnyName = bean.getCompanyEntity().getOrgName();
+//            comapnyName = bean.getCompanyEntity().getOrgName();
             tvCompanyName.setText(bean.getCompanyEntity().getOrgName());
         }
         tvNumber.setText(v(() -> bean.getRepairCount()) + "单");
@@ -404,11 +410,14 @@ public class WorkDetailActivity extends BaseActivity {
 
         // 服务区域
         mDataList1 = new ArrayList<>();
-        new Thread(() -> {
-            if (bean.getVerifyEntity() != null && bean.getVerifyEntity().getRegionList() != null && !bean.getVerifyEntity().getRegionList().isEmpty()) {
-                mDataList1.addAll(Stream.of(bean.getVerifyEntity().getRegionList()).map(regionId -> Config.get().getAddressById(regionId)).toList());
-            }
-        }).start();
+        if (V.v(() -> bean.getVerifyEntity().getRegionList()) != null && bean.getVerifyEntity().getRegionList().size() > 0) {
+            mDataList1.addAll(Stream.of(bean.getVerifyEntity().getRegionList()).map(regionId -> Config.get().getAddressById(regionId)).toList());
+        }
+//        new Thread(() -> {
+//            if (bean.getVerifyEntity() != null && bean.getVerifyEntity().getRegionList() != null && !bean.getVerifyEntity().getRegionList().isEmpty()) {
+//                mDataList1.addAll(Stream.of(bean.getVerifyEntity().getRegionList()).map(regionId -> Config.get().getAddressById(regionId)).toList());
+//            }
+//        }).start();
 
         // 服务类型
         mDataList2 = new ArrayList<>();
@@ -460,12 +469,7 @@ public class WorkDetailActivity extends BaseActivity {
         evaluateAdapter1.bindToRecyclerView(rvList1);
         evaluateAdapter1.addFooterView(footView);
 
-        evaluateAdapter1.getFooterLayout().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                fillRegionData();
-            }
-        });
+        evaluateAdapter1.getFooterLayout().setOnClickListener(v -> fillRegionData());
 //        rvList1.setNestedScrollingEnabled(false);
 //        findViewById(R.id.sv_worker_detail).setOnTouchListener((v, event) -> {
 //            if (event.getAction() == MotionEvent.ACTION_UP) {
@@ -523,6 +527,7 @@ public class WorkDetailActivity extends BaseActivity {
         super.onDestroy();
 
     }
+
 
     public static void addView(final Context context, CustomRadioGroup
             parent, List<String> list) {

@@ -20,7 +20,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.annimon.stream.Optional;
 import com.eanfang.apiservice.RepairApi;
 import com.eanfang.base.kit.rx.RxPerm;
-import com.eanfang.biz.model.bean.ZjZgBean;
 import com.eanfang.biz.model.entity.BughandleDetailEntity;
 import com.eanfang.biz.model.entity.BughandleParamEntity;
 import com.eanfang.biz.model.entity.BughandleUseDeviceEntity;
@@ -391,8 +390,8 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
                         etTroubleUseAdvace.setText(Optional.ofNullable(bughandleDetailEntity.getUseAdvice()).orElse(""));
                         mReapirOneStauts = bughandleDetailEntity.getStatus();
                         mReapirTwoStauts = bughandleDetailEntity.getStatusTwo();
-                        addRepariResult();
-                        addReapirResultMode(mReapirOneStauts);
+                        addRepairResult();
+                        addRepairResultMode(mReapirOneStauts);
                         // 是否误报
                         if (bughandleDetailEntity.getFailureEntity().getIsMisinformation() == 0) {
                             rgNo.setChecked(true);
@@ -412,7 +411,7 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
         }
 
         //添加维修结论
-        addRepariResult();
+        addRepairResult();
 
     }
 
@@ -524,7 +523,7 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
         }
     }
 
-    public void addRepariResult() {
+    public void addRepairResult() {
 
         tagRepairResult.setAdapter(mResultAdapter = new TagAdapter<String>(mRepairResult) {
             @Override
@@ -537,28 +536,27 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
         if (mReapirOneStauts != 100) {
             mResultAdapter.setSelectedList(mReapirOneStauts);
         }
-        tagRepairResult.setOnSelectListener(new TagFlowLayout.OnSelectListener() {
-            @Override
-            public void onSelected(Set<Integer> selectPosSet) {
-                if (!selectPosSet.isEmpty()) {
-                    String str = selectPosSet.toString().substring(1, selectPosSet.toString().length() - 1);
-                    int position = Integer.parseInt(str);
-                    mReapirOneStauts = position;
-                    mReapirTwoStauts = 200;
-                    addReapirResultMode(position);
-                } else {
-                    mReapirOneStauts = 100;
-                }
+        tagRepairResult.setOnSelectListener(selectPosSet -> {
+            if (!selectPosSet.isEmpty()) {
+                String str = selectPosSet.toString().substring(1, selectPosSet.toString().length() - 1);
+                int position = Integer.parseInt(str);
+                mReapirOneStauts = position;
+                mReapirTwoStauts = 200;
+                addRepairResultMode(position);
+            } else {
+                mReapirOneStauts = 100;
             }
         });
 
     }
 
-    public void addReapirResultMode(int status) {
+    public void addRepairResultMode(int status) {
         List<String> faultModeList = GetConstDataUtils.getBugDetailTwoList(status);
-        if (tagRepairResultTwo.getSelectedList().size() > 0) {
+        if (tagRepairResultTwo.getSelectedList() != null && tagRepairResultTwo.getSelectedList().size() > 0) {
             tagRepairResultTwo.getSelectedList().clear();
-            tagRepairResultTwo.getAdapter().notifyDataChanged();
+            if (tagRepairResultTwo.getAdapter() != null) {
+                tagRepairResultTwo.getAdapter().notifyDataChanged();
+            }
         }
         tagRepairResultTwo.setAdapter(mModeAdapter = new TagAdapter<String>(faultModeList) {
             @Override
@@ -575,16 +573,13 @@ public class PhoneSolveTroubleDetailActivity extends BaseWorkerActivity implemen
         if (mReapirTwoStauts != 200) {
             mModeAdapter.setSelectedList(mReapirTwoStauts);
         }
-        tagRepairResultTwo.setOnSelectListener(new TagFlowLayout.OnSelectListener() {
-            @Override
-            public void onSelected(Set<Integer> selectPosSet) {
-                if (!selectPosSet.isEmpty()) {
-                    String str = selectPosSet.toString().substring(1, selectPosSet.toString().length() - 1);
-                    int position = Integer.parseInt(str);
-                    mReapirTwoStauts = position;
-                } else {
-                    mReapirTwoStauts = 200;
-                }
+        tagRepairResultTwo.setOnSelectListener(selectPosSet -> {
+            if (!selectPosSet.isEmpty()) {
+                String str = selectPosSet.toString().substring(1, selectPosSet.toString().length() - 1);
+                int position = Integer.parseInt(str);
+                mReapirTwoStauts = position;
+            } else {
+                mReapirTwoStauts = 200;
             }
         });
     }

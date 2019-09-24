@@ -9,9 +9,11 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.alibaba.sdk.android.oss.OSS;
 import com.alibaba.sdk.android.oss.model.PutObjectRequest;
+import com.alibaba.sdk.android.oss.model.PutObjectResult;
 import com.annimon.stream.Stream;
 import com.annimon.stream.function.Consumer;
 import com.eanfang.base.kit.loading.LoadKit;
+import com.eanfang.base.network.holder.ToastHolder;
 
 import java.io.File;
 import java.util.List;
@@ -104,6 +106,12 @@ public class OssServiceImpl implements IOssService {
                     }
                 }).subscribeOn(Schedulers.io()))
                 .subscribeOn(Schedulers.io())
+                .onErrorReturn((e) -> {
+                    PutObjectResult result = new PutObjectResult();
+                    result.setStatusCode(-1);
+                    result.setETag(e.getMessage());
+                    return result;
+                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((result -> {
                     //上传成功
@@ -113,6 +121,9 @@ public class OssServiceImpl implements IOssService {
                     } else {
                         LoadKit.setText(loading, "上传失败，请重试");
                         LoadKit.closeDialog(loading);
+                        if (result.getETag() != null) {
+                            ToastHolder.showToast(result.getETag());
+                        }
                     }
                     //全部上传成功
                     if (successCount.get() >= objectMap.size()) {

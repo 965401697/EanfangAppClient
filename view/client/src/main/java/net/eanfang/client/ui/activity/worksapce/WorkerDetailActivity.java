@@ -25,6 +25,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.base.kit.V;
 import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.biz.model.QueryEntry;
@@ -565,11 +566,15 @@ public class WorkerDetailActivity extends BaseClientActivity {
 
         // 服务区域
         mDataList1 = new ArrayList<>();
-        new Thread(() -> {
-            if (bean.getVerifyEntity() != null && bean.getVerifyEntity().getRegionList() != null && !bean.getVerifyEntity().getRegionList().isEmpty()) {
-                mDataList1.addAll(Stream.of(bean.getVerifyEntity().getRegionList()).map(regionId -> Config.get().getAddressById(regionId)).toList());
-            }
-        }).start();
+        if (V.v(() -> bean.getVerifyEntity().getRegionList()) != null && bean.getVerifyEntity().getRegionList().size() > 0) {
+            mDataList1.addAll(Stream.of(bean.getVerifyEntity().getRegionList()).map(regionId -> Config.get().getAddressById(regionId)).toList());
+        }
+//        mDataList1 = new ArrayList<>();
+//        new Thread(() -> {
+//            if (bean.getVerifyEntity() != null && bean.getVerifyEntity().getRegionList() != null && !bean.getVerifyEntity().getRegionList().isEmpty()) {
+//                mDataList1.addAll(Stream.of(bean.getVerifyEntity().getRegionList()).map(regionId -> Config.get().getAddressById(regionId)).toList());
+//            }
+//        }).start();
 
         // 服务类型
         mDataList2 = new ArrayList<>();

@@ -4,8 +4,13 @@ import android.content.Context;
 
 import com.eanfang.base.network.holder.ContextHolder;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import io.reactivex.exceptions.UndeliverableException;
+import io.reactivex.plugins.RxJavaPlugins;
 import okhttp3.Interceptor;
 
 /**
@@ -18,6 +23,7 @@ public enum Leaves {
 
     public Leaves init(Context context) {
         ContextHolder.setContext(context);
+        setRxErrorHandler();
         return INSTANCE;
     }
 
@@ -31,4 +37,30 @@ public enum Leaves {
         return INSTANCE;
     }
 
+    public void setRxErrorHandler() {
+        RxJavaPlugins.setErrorHandler(e -> {
+            if (e instanceof UndeliverableException) {
+                e = e.getCause();
+            }
+            if ((e instanceof IOException)) {
+                // fine, irrelevant network problem or API that throws on cancellation
+                return;
+            }
+            if (e instanceof InterruptedException) {
+                // fine, some blocking code was interrupted by a dispose call
+                return;
+            }
+            if ((e instanceof NullPointerException) || (e instanceof IllegalArgumentException)) {
+                // that's likely a bug in the application
+                Thread.currentThread().getUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), e);
+                return;
+            }
+            if (e instanceof IllegalStateException) {
+                // that's a bug in RxJava or in a custom operator
+                Thread.currentThread().getUncaughtExceptionHandler().uncaughtException(Thread.currentThread(), e);
+                return;
+            }
+            Logger.getLogger(Leaves.class.getName()).log(Level.WARNING, e.getMessage());
+        });
+    }
 }

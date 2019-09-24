@@ -3,6 +3,11 @@ package net.eanfang.client.ui.activity.worksapce.repair;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.ViewFindUtils;
 import com.flyco.tablayout.SlidingTabLayout;
@@ -13,11 +18,6 @@ import net.eanfang.client.ui.fragment.OrderListFragment;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
 /**
  * Created by MrHou

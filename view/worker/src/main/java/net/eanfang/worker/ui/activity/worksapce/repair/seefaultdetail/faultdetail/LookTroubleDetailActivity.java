@@ -1,9 +1,6 @@
 package net.eanfang.worker.ui.activity.worksapce.repair.seefaultdetail.faultdetail;
 
 import android.os.Bundle;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.RadioButton;
@@ -11,11 +8,14 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.annimon.stream.Optional;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.eanfang.apiservice.RepairApi;
-import com.eanfang.biz.model.bean.ZjZgBean;
 import com.eanfang.biz.model.entity.BughandleDetailEntity;
 import com.eanfang.biz.model.entity.BughandleParamEntity;
 import com.eanfang.biz.model.entity.BughandleUseDeviceEntity;
@@ -202,8 +202,8 @@ public class LookTroubleDetailActivity extends BaseWorkerActivity {
         }
         if (bughandleDetailEntity.getStatus() != null && bughandleDetailEntity.getStatusTwo() != null) {
             //添加维修结论
-            addRepariResult(GetConstDataUtils.getBugDetailList(), v(() -> bughandleDetailEntity.getStatus()));
-            addReapirResultMode(GetConstDataUtils.getBugDetailTwoList(v(() -> bughandleDetailEntity.getStatus())), v(() -> bughandleDetailEntity.getStatusTwo()));
+            addRepairResult(GetConstDataUtils.getBugDetailList(), v(bughandleDetailEntity::getStatus));
+            addRepairResultMode(GetConstDataUtils.getBugDetailTwoList(v(bughandleDetailEntity::getStatus)), v(bughandleDetailEntity::getStatusTwo));
         }
 
     }
@@ -244,7 +244,7 @@ public class LookTroubleDetailActivity extends BaseWorkerActivity {
         });
     }
 
-    public void addRepariResult(List<String> stringList, int status) {
+    public void addRepairResult(List<String> stringList, int status) {
 
         tagRepairResult.setAdapter(mResultAdapter = new TagAdapter<String>(stringList) {
             @Override
@@ -259,10 +259,12 @@ public class LookTroubleDetailActivity extends BaseWorkerActivity {
         tagRepairResult.setEnabled(false);
     }
 
-    public void addReapirResultMode(List<String> stringList, int status) {
-        if (tagRepairResultTwo.getSelectedList().size() > 0) {
+    public void addRepairResultMode(List<String> stringList, int status) {
+        if (tagRepairResultTwo.getSelectedList() != null && tagRepairResultTwo.getSelectedList().size() > 0) {
             tagRepairResultTwo.getSelectedList().clear();
-            tagRepairResultTwo.getAdapter().notifyDataChanged();
+            if (tagRepairResultTwo.getAdapter() != null) {
+                tagRepairResultTwo.getAdapter().notifyDataChanged();
+            }
         }
         tagRepairResultTwo.setAdapter(mModeAdapter = new TagAdapter<String>(stringList) {
             @Override

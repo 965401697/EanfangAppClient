@@ -11,15 +11,15 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.eanfang.apiservice.UserApi;
-import com.eanfang.config.Config;
-import com.eanfang.http.EanfangCallback;
-import com.eanfang.http.EanfangHttp;
 import com.eanfang.biz.model.bean.GrantChange;
 import com.eanfang.biz.model.bean.WorkerVerifySkillBean;
 import com.eanfang.biz.model.entity.BaseDataEntity;
+import com.eanfang.biz.model.entity.TechWorkerVerifyEntity;
+import com.eanfang.config.Config;
+import com.eanfang.http.EanfangCallback;
+import com.eanfang.http.EanfangHttp;
 import com.eanfang.util.GetConstDataUtils;
 import com.eanfang.util.PickerSelectUtil;
-import com.eanfang.biz.model.entity.TechWorkerVerifyEntity;
 
 import net.eanfang.worker.R;
 import net.eanfang.worker.base.WorkerApplication;

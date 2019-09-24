@@ -10,14 +10,14 @@ import com.alibaba.fastjson.JSONPObject;
 import com.annimon.stream.Stream;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.biz.model.bean.GrantChange;
+import com.eanfang.biz.model.bean.SystypeBean;
+import com.eanfang.biz.model.entity.BaseDataEntity;
 import com.eanfang.config.Config;
 import com.eanfang.dialog.TrueFalseDialog;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
-import com.eanfang.biz.model.bean.GrantChange;
-import com.eanfang.biz.model.bean.SystypeBean;
 import com.eanfang.ui.base.BaseActivity;
-import com.eanfang.biz.model.entity.BaseDataEntity;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
 import com.zhy.view.flowlayout.TagFlowLayout;
@@ -94,7 +94,7 @@ public class AuthWorkerSysTypeActivity extends BaseActivity {
         if (status != 2) {
             setRightGone();
         }
-        addRepariResult();
+        addRepairResult();
     }
 
     private void initListener() {
@@ -157,7 +157,7 @@ public class AuthWorkerSysTypeActivity extends BaseActivity {
                 }));
     }
 
-    public void addRepariResult() {
+    public void addRepairResult() {
 
         tagWorkType.setAdapter(new TagAdapter<BaseDataEntity>(businessOneList) {
             @Override

@@ -175,8 +175,8 @@
 #不做预校验的操作
 -dontpreverify
 #生成原类名和混淆后的类名的映射文件
--verbose
--printmapping proguardMapping.txt
+#-verbose
+#-printmapping proguardMapping.txt
 #指定混淆是采用的算法
 -optimizations !code/simplification/cast,!field/*,!class/merging/*
 #不混淆Annotation
