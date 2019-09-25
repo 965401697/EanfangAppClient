@@ -213,11 +213,12 @@ public class AddTroubleAddPictureActivity extends BaseActivity {
 //            }
             if (uploadMap.size() > 0) {
                 detailEntity = (BughandleDetailEntity) getIntent().getSerializableExtra("detailEntity");
-                uploadMap.clear();
+
             } else {
                 detailEntity = new BughandleDetailEntity();
             }
         }
+        uploadMap.clear();
         initImgUrlList();
 
 
@@ -333,6 +334,7 @@ public class AddTroubleAddPictureActivity extends BaseActivity {
             });
             //        } else if (isLoad) {
         } else {
+            uploadMap.put("", "");
             EventBus.getDefault().post(detailEntity);
             EventBus.getDefault().post(uploadMap);
             finishSelf();
