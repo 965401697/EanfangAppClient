@@ -199,19 +199,23 @@ public class AddTroubleAddPictureActivity extends BaseActivity {
         setTitle("添加照片");
         setLeftBack();
         isLoad = getIntent().getBooleanExtra("isLoad", false);
-        uploadMap = (HashMap<String, String>) getIntent().getSerializableExtra("mUploadMapPicture");
+//        uploadMap = (HashMap<String, String>) getIntent().getSerializableExtra("mUploadMapPicture");
         //是否加载记录
         if (isLoad) {
             detailEntity = (BughandleDetailEntity) getIntent().getSerializableExtra("detailEntity");
             //回显视频
             doShowVideo(detailEntity);
         } else {
-            if (uploadMap.size() > 0) {
-                detailEntity = (BughandleDetailEntity) getIntent().getSerializableExtra("detailEntity");
-                uploadMap.clear();
-            } else {
+            detailEntity = (BughandleDetailEntity) getIntent().getSerializableExtra("detailEntity");
+            if (detailEntity == null) {
                 detailEntity = new BughandleDetailEntity();
             }
+//            if (uploadMap.size() > 0) {
+//                detailEntity = (BughandleDetailEntity) getIntent().getSerializableExtra("detailEntity");
+//                uploadMap.clear();
+//            } else {
+//                detailEntity = new BughandleDetailEntity();
+//            }
         }
         initImgUrlList();
         initNinePhoto();
@@ -320,15 +324,15 @@ public class AddTroubleAddPictureActivity extends BaseActivity {
          * 提交照片
          * */
         if (uploadMap.size() != 0) {
-            SDKManager.ossKit(this).asyncPutImages(uploadMap,(isSuccess) -> {
-                runOnUiThread(() -> {
-                    EventBus.getDefault().post(detailEntity);
-                    EventBus.getDefault().post(uploadMap);
-                    finishSelf();
-                });
+            SDKManager.ossKit(this).asyncPutImages(uploadMap, (isSuccess) -> {
+                EventBus.getDefault().post(detailEntity);
+                EventBus.getDefault().post(uploadMap);
+                finishSelf();
             });
-            return;
-        } else if (isLoad) {
+            //        } else if (isLoad) {
+        } else {
+            EventBus.getDefault().post(detailEntity);
+            EventBus.getDefault().post(uploadMap);
             finishSelf();
         }
 
@@ -342,6 +346,7 @@ public class AddTroubleAddPictureActivity extends BaseActivity {
         snplAfterProcessingLocale.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_4, REQUEST_CODE_PHOTO_PREVIEW_4));
         snplMachineFitBack.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_5, REQUEST_CODE_PHOTO_PREVIEW_5));
         snplFailureRecoverPhenomena.setDelegate(new BGASortableDelegate(this, REQUEST_CODE_CHOOSE_PHOTO_6, REQUEST_CODE_PHOTO_PREVIEW_6));
+
 
         snplMomentAddPhotos.setData(picList1);
         snplMonitorAddPhotos.setData(picList2);
