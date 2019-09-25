@@ -199,32 +199,34 @@ public class AddTroubleAddPictureActivity extends BaseActivity {
         setTitle("添加照片");
         setLeftBack();
         isLoad = getIntent().getBooleanExtra("isLoad", false);
-//        uploadMap = (HashMap<String, String>) getIntent().getSerializableExtra("mUploadMapPicture");
+        uploadMap = (HashMap<String, String>) getIntent().getSerializableExtra("mUploadMapPicture");
         //是否加载记录
+
         if (isLoad) {
             detailEntity = (BughandleDetailEntity) getIntent().getSerializableExtra("detailEntity");
             //回显视频
-            doShowVideo(detailEntity);
+//            doShowVideo(detailEntity);
         } else {
-            detailEntity = (BughandleDetailEntity) getIntent().getSerializableExtra("detailEntity");
-            if (detailEntity == null) {
-                detailEntity = new BughandleDetailEntity();
-            }
-//            if (uploadMap.size() > 0) {
-//                detailEntity = (BughandleDetailEntity) getIntent().getSerializableExtra("detailEntity");
-//                uploadMap.clear();
-//            } else {
+//            detailEntity = (BughandleDetailEntity) getIntent().getSerializableExtra("detailEntity");
+//            if (detailEntity == null) {
 //                detailEntity = new BughandleDetailEntity();
 //            }
+            if (uploadMap.size() > 0) {
+                detailEntity = (BughandleDetailEntity) getIntent().getSerializableExtra("detailEntity");
+                uploadMap.clear();
+            } else {
+                detailEntity = new BughandleDetailEntity();
+            }
         }
         initImgUrlList();
-        initNinePhoto();
+
+
     }
 
-    //回显视频
-    private void doShowVideo(BughandleDetailEntity detailEntity) {
-        //故障表象
-    }
+//    //回显视频
+//    private void doShowVideo(BughandleDetailEntity detailEntity) {
+//        //故障表象
+//    }
 
 
     @Override
@@ -483,6 +485,7 @@ public class AddTroubleAddPictureActivity extends BaseActivity {
             }
         }
 
+        initNinePhoto();
     }
 
     @Subscribe()//MAIN代表主线程
