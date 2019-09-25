@@ -669,7 +669,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/button_bg_orange"
-                    android:text="添加"
+                    android:text="保存"
                     android:textColor="@color/white" />
             </LinearLayout>
 

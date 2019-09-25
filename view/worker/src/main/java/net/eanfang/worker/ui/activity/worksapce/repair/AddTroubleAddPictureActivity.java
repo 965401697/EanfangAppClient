@@ -13,7 +13,6 @@ import com.eanfang.BuildConfig;
 import com.eanfang.base.kit.SDKManager;
 import com.eanfang.biz.model.entity.BughandleDetailEntity;
 import com.eanfang.delegate.BGASortableDelegate;
-
 import com.eanfang.takevideo.TakeVdideoMode;
 import com.eanfang.takevideo.TakeVideoActivity;
 import com.eanfang.ui.base.BaseActivity;
@@ -209,6 +208,7 @@ public class AddTroubleAddPictureActivity extends BaseActivity {
         } else {
             if (uploadMap.size() > 0) {
                 detailEntity = (BughandleDetailEntity) getIntent().getSerializableExtra("detailEntity");
+                uploadMap.clear();
             } else {
                 detailEntity = new BughandleDetailEntity();
             }
