@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.activity.worksapce.monitor.group.MonitorGroupEditDeviceActivity">
+
+        <include layout="@layout/header_eanfang" />
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipre_fresh"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/color_white">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_videoList"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbars="none" />
+
+                <TextView
+                    android:id="@+id/tv_noData"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/color_white"
+                    android:gravity="center"
+                    android:text="暂无设备"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_15"
+                    android:visibility="gone" />
+            </RelativeLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <TextView
+            android:id="@+id/tv_create"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="@dimen/dimen_40"
+            android:background="@drawable/bg_ll_selectwork"
+            android:gravity="center"
+            android:padding="@dimen/dimen_30"
+            android:text="添加新设备"
+            android:textColor="@color/color_white" />
+    </LinearLayout>
+</layout>

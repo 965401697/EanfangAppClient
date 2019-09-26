@@ -7,8 +7,10 @@ import android.widget.RelativeLayout;
 
 import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.CallUtils;
+import com.eanfang.util.JumpItent;
 
 import net.eanfang.client.R;
+import net.eanfang.client.ui.activity.worksapce.monitor.MonitorListActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,7 +36,7 @@ public class RealTimeMonitorActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
     }
 
-    @OnClick({R.id.iv_left, R.id.rl_consult})
+    @OnClick({R.id.iv_left, R.id.rl_consult, R.id.iv_monitor})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_left:
@@ -43,6 +45,11 @@ public class RealTimeMonitorActivity extends BaseActivity {
             case R.id.rl_consult:
                 //给客户联系人打电话
                 CallUtils.call(RealTimeMonitorActivity.this, "400-890-9280");
+                break;
+            case R.id.iv_monitor:
+                JumpItent.jump(this, MonitorListActivity.class);
+                break;
+            default:
                 break;
         }
     }

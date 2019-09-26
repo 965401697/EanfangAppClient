@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.activity.worksapce.monitor.group.MonitorGroupAddDeviceActivity">
+
+        <include layout="@layout/header_eanfang" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/content_bg">
+
+            <LinearLayout
+                android:id="@+id/ll_search"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_70"
+                android:layout_marginLeft="@dimen/dimen_36"
+                android:layout_marginTop="@dimen/dimen_26"
+                android:layout_marginRight="@dimen/dimen_36"
+                android:layout_marginBottom="@dimen/dimen_26"
+                android:background="@color/color_white"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/dimen_24"
+                    android:layout_height="@dimen/dimen_24"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:src="@mipmap/ic_contact_search" />
+
+                <EditText
+                    android:id="@+id/et_serach"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/dimen_20"
+                    android:background="@null"
+                    android:hint="请输入图像名称/设备编号 搜索"
+                    android:textSize="@dimen/textSize_12" />
+
+
+            </LinearLayout>
+        </RelativeLayout>
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipre_fresh"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/color_white">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_videoList"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scrollbars="none" />
+
+                <TextView
+                    android:id="@+id/tv_noData"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/color_white"
+                    android:gravity="center"
+                    android:text="暂无设备"
+                    android:textColor="@color/color_client_neworder"
+                    android:textSize="@dimen/textSize_15"
+                    android:visibility="gone" />
+            </RelativeLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </LinearLayout>
+</layout>

@@ -16,16 +16,22 @@ import net.eanfang.client.R;
  * @data 2019/9/9
  * @description
  */
-public class MonitorListRightAdapter extends BaseQuickAdapter<Ys7DevicesEntity, BaseViewHolder> {
-    public MonitorListRightAdapter() {
-        super(R.layout.layout_monitor_right_item);
+public class MonitorDeleteDevicetAdapter extends BaseQuickAdapter<Ys7DevicesEntity, BaseViewHolder> {
+
+
+
+    public MonitorDeleteDevicetAdapter( ) {
+        super(R.layout.layout_monitor_delete_device_item);
     }
+
 
     @Override
     protected void convert(BaseViewHolder helper, Ys7DevicesEntity item) {
         // 摄像机名称
         helper.setText(R.id.tv_monitorName, item.getDeviceName());
         GlideUtil.intoImageView(BaseApplication.get().getApplicationContext(), Uri.parse(BuildConfig.OSS_SERVER + item.getLivePic()), helper.getView(R.id.iv_monitorThumbnail));
-        helper.addOnClickListener(R.id.iv_monitorSetting);
+        helper.addOnClickListener(R.id.iv_delete);
+
     }
+
 }

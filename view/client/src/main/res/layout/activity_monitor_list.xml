@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="viewModle"
+            type="net.eanfang.client.viewmodel.monitor.MonitorHomeViewModle" />
     </data>
 
     <LinearLayout
@@ -15,9 +18,11 @@
         <include layout="@layout/header_eanfang" />
 
         <RelativeLayout
+            android:id="@+id/rl_selectCompany"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/color_white">
+            android:background="@color/color_white"
+            android:onClick="@{()->viewModle.doSelectCompany()}">
 
             <TextView
                 android:id="@+id/tv_companyName"
@@ -42,32 +47,57 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="@color/rc_input_bg"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tv_companyNameTwo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/dimen_20"
                     android:drawableLeft="@mipmap/ic_monitor_edit"
                     android:drawablePadding="@dimen/dimen_20"
                     android:ellipsize="end"
                     android:maxLines="1"
-                    android:text="的撒飞机法j的撒飞机法j的撒飞机法j的撒飞机法j"
                     android:textColor="@color/color_client_neworder"
                     android:textSize="@dimen/textSize_15" />
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_leftGroup"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scrollbars="none" />
             </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_videoList"
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swipre_fresh"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:scrollbars="none" />
+                android:layout_weight="2"
+                android:background="@color/color_white">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_videoList"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:scrollbars="none" />
+
+                    <TextView
+                        android:id="@+id/tv_noData"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/color_white"
+                        android:gravity="center"
+                        android:text="暂无设备"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_15"
+                        android:visibility="gone" />
+                </RelativeLayout>
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
         </LinearLayout>
     </LinearLayout>
 </layout>

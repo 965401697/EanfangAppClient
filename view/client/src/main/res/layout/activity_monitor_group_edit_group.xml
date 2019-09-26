@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModle"
+            type="net.eanfang.client.viewmodel.monitor.MonitorGroupEditViewModle" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/rc_input_bg"
+        android:orientation="vertical"
+        tools:context=".ui.activity.worksapce.monitor.group.MonitorGroupEditGroupActivity">
+
+        <include layout="@layout/header_eanfang" />
+
+        <RelativeLayout
+            android:id="@+id/rl_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_white"
+            android:padding="@dimen/dimen_30">
+
+            <TextView
+                android:id="@+id/tv_groupName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_14" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:drawableEnd="@mipmap/ic_icon_right"
+                android:drawablePadding="@dimen/dimen_16"
+                android:text="编辑"
+                android:textSize="@dimen/textSize_12" />
+        </RelativeLayout>
+
+        <View style="@style/style_common_line_gray" />
+
+        <RelativeLayout
+            android:id="@+id/rl_topGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_white"
+            android:padding="@dimen/dimen_30">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="上级分组"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_14" />
+
+            <TextView
+                android:id="@+id/tv_topGroupName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:drawableEnd="@mipmap/ic_icon_right"
+                android:drawablePadding="@dimen/dimen_16"
+                android:textSize="@dimen/textSize_12" />
+        </RelativeLayout>
+
+        <View style="@style/style_common_line_gray" />
+
+        <RelativeLayout
+            android:id="@+id/rl_device"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/color_white"
+            android:padding="@dimen/dimen_30">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="分组设备"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_14" />
+
+            <TextView
+                android:id="@+id/tv_deviceCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:drawableEnd="@mipmap/ic_icon_right"
+                android:drawablePadding="@dimen/dimen_16"
+                android:text="22个设备"
+                android:textSize="@dimen/textSize_12" />
+        </RelativeLayout>
+
+        <View style="@style/style_common_line_gray" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_26"
+            android:layout_marginTop="@dimen/dimen_60"
+            android:layout_marginEnd="@dimen/dimen_26">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_monitor_delete_group"
+                android:gravity="center"
+                android:onClick="@{()->viewModle.doDeleteGroup()}"
+                android:padding="@dimen/dimen_30"
+                android:text="删除分组 "
+                android:textColor="@color/colorPrimary" />
+        </RelativeLayout>
+
+    </LinearLayout>
+</layout>

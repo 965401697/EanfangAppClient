@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:id="@+id/ll_second"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="horizontal"
+    android:padding="@dimen/dimen_20">
+
+    <View
+        android:id="@+id/tv_white"
+        android:layout_width="@dimen/dimen_40"
+        android:layout_height="@dimen/dimen_20"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/iv_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_monitor_item_black" />
 
     <TextView
         android:id="@+id/tv_monitorLevOne"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:drawableLeft="@mipmap/ic_monitor_item_black"
-        android:drawablePadding="@dimen/dimen_8"
         android:textColor="@color/color_client_neworder"
-        android:text="阿斯顿节阿萨德年"
         android:textSize="@dimen/textSize_12" />
 </LinearLayout>
