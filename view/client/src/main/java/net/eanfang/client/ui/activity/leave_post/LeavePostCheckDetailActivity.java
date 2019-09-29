@@ -466,10 +466,10 @@ public class LeavePostCheckDetailActivity extends BaseActivity implements Handle
             return;
         }
 
-        if (sensor == ActivityInfo.SCREEN_ORIENTATION_SENSOR)
+        if (sensor == ActivityInfo.SCREEN_ORIENTATION_SENSOR) {
             mScreenOrientationHelper.enableSensorOrientation();
-        else
-            mScreenOrientationHelper.disableSensorOrientation();
+        } else{
+            mScreenOrientationHelper.disableSensorOrientation();}
     }
 
     public void setForceOrientation(int orientation) {

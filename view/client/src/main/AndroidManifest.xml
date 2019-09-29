@@ -61,6 +61,10 @@
         android:supportsRtl="true"
         android:theme="@style/NewBaseTheme"
         tools:replace="android:name,android:theme,android:icon">
+        <activity android:name=".ui.activity.worksapce.monitor.device.MonitorDevicePlayBackActivity"></activity>
+        <activity android:name=".ui.activity.worksapce.monitor.device.MonitorDeviceReportActivity" />
+        <activity android:name=".ui.activity.worksapce.monitor.device.MonitorDeviceScreenHotActivity" />
+        <activity android:name=".ui.activity.worksapce.monitor.device.MonitorDeviceListActivity" />
         <activity android:name=".ui.activity.worksapce.monitor.group.MonitorGroupSelectTopActivity" />
         <activity android:name=".ui.activity.worksapce.monitor.group.MonitorGroupAddDeviceActivity" />
         <activity android:name=".ui.activity.worksapce.monitor.group.MonitorGroupEditDeviceActivity" />
@@ -68,7 +72,7 @@
         <activity android:name=".ui.activity.worksapce.monitor.group.MonitorGroupUpdateActivity" />
         <activity android:name=".ui.activity.worksapce.monitor.group.MonitorGroupCreateActivity" />
         <activity android:name=".ui.activity.worksapce.monitor.device.MonitorDeviceDetailActivity" />
-        <activity android:name=".ui.activity.worksapce.monitor.MonitorDeviceManagerActivity" />
+        <activity android:name=".ui.activity.worksapce.monitor.device.MonitorDeviceManagerActivity" />
         <activity android:name=".ui.activity.worksapce.monitor.group.MonitorGroupEditNameActivity" />
         <activity android:name=".ui.activity.worksapce.monitor.group.MonitorGroupManagerActivity" />
         <activity android:name=".ui.activity.worksapce.monitor.MonitorSearchActivity" />

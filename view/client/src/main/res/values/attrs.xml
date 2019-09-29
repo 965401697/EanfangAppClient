@@ -38,4 +38,34 @@
         <attr name="textPadding" format="dimension" />
         <attr name="android:text" />
     </declare-styleable>
+    <declare-styleable name="SlidingRuleView">
+        <!--长刻度的长度-->
+        <attr name="longDegreeLine" format="dimension" />
+        <!--线条颜色-->
+        <attr name="lineDegreeColor" format="color" />
+        <!--顶部的直线距离View顶部距离-->
+        <attr name="topDegreeLine" format="dimension" />
+        <!-- 刻度间隔-->
+        <attr name="lineDegreeSpace" format="dimension" />
+        <!-- 刻度大数目 -->
+        <attr name="lineCount" format="integer" />
+        <!--刻度尺左边界记录View左边界的距离-->
+        <attr name="ruleLeftSpacing" format="dimension" />
+        <!--刻度尺右边界记录View右边界的距离-->
+        <attr name="ruleRightSpacing" format="dimension" />
+        <!--数字颜色-->
+        <attr name="numberColor" format="color" />
+        <!--数字大小-->
+        <attr name="numberSize" format="dimension" />
+        <!--短刻度值的长度-->
+        <attr name="shortDegreeLine" format="dimension" />
+        <!--指针宽度-->
+        <attr name="greenPointWidth" format="dimension" />
+        <!--指针颜色-->
+        <attr name="greenPointColor" format="color" />
+        <!--当前刻度的大小-->
+        <attr name="currentNumberSize" format="dimension" />
+        <!--当前刻度的颜色-->
+        <attr name="currentNumberColor" format="color" />
+    </declare-styleable>
 </resources>

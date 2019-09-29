@@ -1,4 +1,4 @@
-package net.eanfang.client.ui.activity.worksapce.monitor;
+package net.eanfang.client.ui.activity.worksapce.monitor.device;
 
 import android.os.Bundle;
 

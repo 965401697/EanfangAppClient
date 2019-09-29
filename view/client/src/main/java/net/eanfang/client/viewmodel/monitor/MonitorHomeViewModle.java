@@ -1,6 +1,7 @@
 package net.eanfang.client.viewmodel.monitor;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.PopupWindow;
 
@@ -13,9 +14,11 @@ import com.eanfang.biz.model.bean.monitor.MonitorGroupListBean;
 import com.eanfang.biz.rds.base.BaseViewModel;
 import com.eanfang.biz.rds.sys.ds.impl.MonitorDs;
 import com.eanfang.biz.rds.sys.repo.MonitorRepo;
+import com.eanfang.util.JumpItent;
 
 import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.databinding.ActivityMonitorListBinding;
+import net.eanfang.client.ui.activity.worksapce.monitor.device.MonitorDeviceDetailActivity;
 import net.eanfang.client.ui.adapter.monitor.MonitorListLeftAdapter;
 import net.eanfang.client.ui.adapter.monitor.MonitorListRightAdapter;
 import net.eanfang.client.ui.widget.MonitorSelectCompanyView;
@@ -100,6 +103,12 @@ public class MonitorHomeViewModle extends BaseViewModel implements SwipeRefreshL
         monitorListRightAdapter.bindToRecyclerView(monitorListBinding.rvVideoList);
         monitorListRightAdapter.setOnLoadMoreListener(this, monitorListBinding.rvVideoList);
         monitorListBinding.swipreFresh.setOnRefreshListener(this);
+        monitorListRightAdapter.setOnItemClickListener(((adapter, view, position) -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("deviceSerial",monitorListRightAdapter.getData().get(position).getYs7DeviceSerial());
+            bundle.putString("mDeviceName",monitorListRightAdapter.getData().get(position).getDeviceName());
+            JumpItent.jump((Activity) monitorListBinding.getRoot().getContext(), MonitorDeviceDetailActivity.class);
+        }));
 
         ThreadUtil.sleep(1000);
         for (MonitorGroupListBean monitorGroupListBean : monitorGroupList) {
