@@ -50,10 +50,10 @@
 
     <!-- Base application theme. -->
     <!--<style name="BaseTheme" parent="Theme.AppCompat.Light.NoActionBar">-->
-        <!--&lt;!&ndash; Actionbar color &ndash;&gt;-->
-        <!--<item name="colorPrimary">@color/title_bar_color</item>-->
-        <!--&lt;!&ndash;Status bar color&ndash;&gt;-->
-        <!--<item name="android:windowBackground">@color/window_background</item>-->
+    <!--&lt;!&ndash; Actionbar color &ndash;&gt;-->
+    <!--<item name="colorPrimary">@color/title_bar_color</item>-->
+    <!--&lt;!&ndash;Status bar color&ndash;&gt;-->
+    <!--<item name="android:windowBackground">@color/window_background</item>-->
     <!--</style>-->
     <!-- Base application theme. -->
     <!--<style name="AppTheme" parent="@style/BaseTheme">-->
@@ -81,10 +81,10 @@
     </style>
 
     <!--<style name="launch_theme" parent="@style/BaseTheme">-->
-        <!--&lt;!&ndash;<item name="android:windowBackground">@color/title_bar_color</item>&ndash;&gt;-->
-        <!--<item name="android:windowBackground">@mipmap/ic_app_launch</item>-->
-        <!--<item name="android:windowContentOverlay">@null</item>-->
-        <!--<item name="android:windowFullscreen">true</item>-->
+    <!--&lt;!&ndash;<item name="android:windowBackground">@color/title_bar_color</item>&ndash;&gt;-->
+    <!--<item name="android:windowBackground">@mipmap/ic_app_launch</item>-->
+    <!--<item name="android:windowContentOverlay">@null</item>-->
+    <!--<item name="android:windowFullscreen">true</item>-->
     <!--</style>-->
 
 
@@ -193,5 +193,15 @@
         <item name="android:drawablePadding">@dimen/dimen_28</item>
         <item name="android:textColor">@color/color_client_neworder</item>
         <item name="android:textSize">@dimen/textSize_13</item>
+    </style>
+
+    <style name="style_client_monitor_detail_meun">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/color_client_neworder</item>
+        <item name="android:textSize">@dimen/textSize_12</item>
     </style>
 </resources>

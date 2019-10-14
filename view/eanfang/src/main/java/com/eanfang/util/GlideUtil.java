@@ -43,6 +43,9 @@ public class GlideUtil {
     }
 
     public static void intoImageView(Context context, String path, ImageView imageView) {
+//        SubsamplingScaleImageView image = (SubsamplingScaleImageView) context.findViewById(R.id.image);
+//        image.setDoubleTapZoomDuration(200);
+//        image.setOrientation(ORIENTATION_USE_EXIF);
         if (context != null) {
             Glide.with(context).load(path).apply(getOptions()).into(imageView);
         } else {
@@ -65,6 +68,7 @@ public class GlideUtil {
             Log.e(TAG, "context is null");
         }
     }
+
 
     public static void intoImageView(Context context, Bitmap path, ImageView imageView, int roundingRadius) {
         if (context != null) {
@@ -89,6 +93,7 @@ public class GlideUtil {
             Log.e(TAG, "context is null");
         }
     }
+
 
     private static RequestOptions getOptions() {
         RequestOptions options = new RequestOptions()

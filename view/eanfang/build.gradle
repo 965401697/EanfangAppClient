@@ -41,6 +41,7 @@ android {
 //            buildConfigField("String", "API_HOST", cfg.localApiHost)
             buildConfigField("String", "API_HOST", cfg.betaApiHost)
 //            buildConfigField("String", "API_HOST", cfg.proApiHost)
+//            buildConfigField("String", "API_HOST", cfg.betaApiHost)
         }
         release {
             // 上线url

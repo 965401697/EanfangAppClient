@@ -90,4 +90,6 @@
     <color name="color_home_off_duty_bg_out">#FFDFCF</color>
     <color name="gray_text">#adadad</color>
     <color name="common_bg">#f0f0f3</color>
+    <color name="color_monitor_text_back">#c3c3c3</color>
+    <color name="color_monitor_text">#919191</color>
 </resources>

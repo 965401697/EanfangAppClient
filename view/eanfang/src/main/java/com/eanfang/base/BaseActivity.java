@@ -239,6 +239,19 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         setLeftBack(visibility, null);
     }
 
+    public void setRightOther(Integer imgId, View.OnClickListener listener) {
+        if (findViewById(R.id.iv_right_other) == null) {
+            return;
+        }
+        ImageView iv_left_other = findViewById(R.id.iv_right_other);
+        if (imgId != null) {
+            ((ImageView) findViewById(R.id.iv_right_other)).setImageResource(imgId);
+        }
+        if (listener != null) {
+            iv_left_other.setOnClickListener(listener);
+        }
+    }
+
     /**
      * 设置右侧按钮
      *

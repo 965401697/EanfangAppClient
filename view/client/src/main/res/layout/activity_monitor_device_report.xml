@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModle"
+            type="net.eanfang.client.viewmodel.device.MonitorDeviceReportViewModle" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_white"
+        android:orientation="vertical"
+        tools:context=".ui.activity.worksapce.monitor.device.MonitorDeviceReportActivity">
+
+        <include layout="@layout/header_eanfang" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/iv_thumbnail"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_300" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_40"
+                    android:layout_marginTop="@dimen/dimen_40"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_addressName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_15" />
+
+                    <TextView
+                        android:id="@+id/tv_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dimen_20"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_12" />
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_40"
+                    android:layout_marginTop="@dimen/dimen_60">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="标注："
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_15" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="@dimen/dimen_24"
+                        android:background="@drawable/bg_monitor_device_text_edit_report"
+                        android:onClick="@{()->viewModle.doGetCommonLanguage()}"
+                        android:padding="@dimen/dimen_24"
+                        android:text="选择常用语"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_15" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dimen_40"
+                    android:layout_marginTop="@dimen/dimen_34">
+
+                    <EditText
+                        android:id="@+id/et_sign"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dimen_180"
+                        android:background="@drawable/bg_camera_input_back"
+                        android:gravity="start"
+                        android:padding="@dimen/dimen_30"
+                        android:textColor="@color/color_client_neworder"
+                        android:textSize="@dimen/textSize_12" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:layout_marginRight="@dimen/dimen_20"
+                    android:layout_marginBottom="@dimen/dimen_20"
+                    android:background="@drawable/bg_ll_selctor"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dimen_90"
+                            android:gravity="center_vertical"
+                            android:text="处理人"
+                            android:textColor="@color/color_client_neworder"
+                            android:textSize="@dimen/textSize_15" />
+
+                    </LinearLayout>
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_dealWith"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/dimen_15"
+                        android:paddingRight="@dimen/dimen_15" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:layout_marginRight="@dimen/dimen_20"
+                    android:background="@drawable/bg_ll_selctor"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dimen_90"
+                            android:gravity="center_vertical"
+                            android:text="抄送人"
+                            android:textColor="@color/color_client_neworder"
+                            android:textSize="@dimen/textSize_15" />
+
+                    </LinearLayout>
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_copy"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/dimen_15"
+                        android:paddingRight="@dimen/dimen_15" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen_20"
+                    android:layout_marginRight="@dimen/dimen_20"
+                    android:background="@drawable/bg_ll_selctor"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="@dimen/dimen_90"
+                            android:gravity="center_vertical"
+                            android:text="发送群聊"
+                            android:textColor="@color/color_client_neworder"
+                            android:textSize="@dimen/textSize_15" />
+
+                    </LinearLayout>
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_sendGroup"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="@dimen/dimen_15"
+                        android:paddingRight="@dimen/dimen_15" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_send"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_90"
+                    android:layout_margin="@dimen/dimen_40"
+                    android:background="@drawable/shape_bg_sure"
+                    android:gravity="center"
+                    android:onClick="@{()->viewModle.doSendReport()}"
+                    android:text="发送"
+                    android:textColor="@color/white" />
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+
+    </LinearLayout>
+</layout>

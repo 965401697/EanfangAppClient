@@ -133,7 +133,7 @@ public enum RetrofitManagement {
                         default:
                             actionLiveData.setValue(new BaseActionEvent(BaseActionEvent.SERVER_ERROR));
                             errorLiveData.setValue(new BaseActionEvent(BaseActionEvent.SERVER_ERROR));
-                            throw new ServerResultException(result.getCode(), result.getMessage());
+                             throw new ServerResultException(result.getCode(), result.getMessage());
                     }
                     return createData(new Optional(null));
                 });

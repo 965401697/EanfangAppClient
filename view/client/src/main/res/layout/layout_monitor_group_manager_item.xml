@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_item"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/color_white"
+    android:orientation="horizontal">
+
+    <View
+        android:id="@+id/view_white"
+        android:layout_width="@dimen/dimen_90"
+        android:visibility="gone"
+        android:layout_height="@dimen/dimen_90"
+        android:background="@color/color_white" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen_20">
+
+            <TextView
+                android:id="@+id/tv_groupName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="色撒旦 安山东"
+                android:textColor="@color/color_client_neworder"
+                android:textSize="@dimen/textSize_15" />
+
+            <TextView
+                android:id="@+id/tv_deviceCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:drawableEnd="@mipmap/arrow_right"
+                android:drawablePadding="@dimen/dimen_16"
+                android:textColor="@color/color_bottom"
+                android:textSize="@dimen/textSize_12" />
+        </RelativeLayout>
+
+        <View style="@style/style_common_line_gray" />
+    </LinearLayout>
+
+
+</LinearLayout>

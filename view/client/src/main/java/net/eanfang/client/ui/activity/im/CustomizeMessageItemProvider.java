@@ -150,6 +150,13 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
             holder.creatTime.setText("标题：" + customizeMessage.getCreatTime());
             holder.workerName.setText("发布人：" + customizeMessage.getWorkerName());
             holder.status.setVisibility(View.GONE);
+        } else if (customizeMessage.getShareType().equals("11")) {
+            holder.title.setText("实时监控");
+            holder.orderNum.setText("公司：" + customizeMessage.getOrderNum());
+            GlideUtil.intoImageView(ClientApplication.get().getApplicationContext(), Uri.parse(BuildConfig.OSS_SERVER + customizeMessage.getPicUrl()), holder.simpleDraweeView);
+            holder.creatTime.setText("标题：" + customizeMessage.getCreatTime());
+            holder.workerName.setText("发布人：" + customizeMessage.getWorkerName());
+            holder.status.setVisibility(View.GONE);
         }
 
         if (uiMessage.getMessageDirection() == Message.MessageDirection.SEND) {//消息方向，自己发送的
@@ -189,6 +196,8 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
             return new SpannableString("布防日志(快去查看吧!)");
         } else if (customizeMessage.getShareType().equals("10")) {
             return new SpannableString("安防圈(快去查看吧!)");
+        }else if((customizeMessage.getShareType().equals("11"))) {
+            return new SpannableString("实时监控(快去查看吧!)");
         }
         return null;
     }
@@ -246,6 +255,8 @@ public class CustomizeMessageItemProvider extends IContainerItemProvider.Message
 
         } else if (customizeMessage.getShareType().equals("10")) {
             view.getContext().startActivity(new Intent(view.getContext(), SecurityDetailActivity.class).putExtra("spcId", Long.parseLong(customizeMessage.getOrderId())));
+        }else if(customizeMessage.getShareType().equals("11")) {
+//            view.getContext().startActivity(new Intent(view.getContext(), SecurityDetailActivity.class).putExtra("spcId", Long.parseLong(customizeMessage.getOrderId())));
         }
 
     }

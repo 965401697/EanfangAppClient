@@ -87,5 +87,6 @@
     <string name="quality_flunet">流畅</string>
     <string name="loading_text_default">加载中，请稍候</string>
     <string name="stream_type">stream type: </string>
+    <string name="btn_ensure">确认</string>
 
 </resources>
