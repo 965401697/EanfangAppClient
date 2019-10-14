@@ -1,6 +1,7 @@
 package com.eanfang.biz.model.entity;
 
 import com.alibaba.fastjson.JSON;
+import com.eanfang.biz.model.bean.monitor.RealTimeGroupEntity;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -115,7 +116,7 @@ public class Ys7DevicesEntity implements Serializable {
     /**
      * 分组
      */
-//    private RealTimeGroupEntity realTimeGroupEntity;
+    private RealTimeGroupEntity realTimeGroupEntity;
     @Override
     public String toString() {
         return JSON.toJSONString(this);

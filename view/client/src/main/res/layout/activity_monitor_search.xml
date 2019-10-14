@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/dimen_30"
                 android:layout_marginTop="@dimen/dimen_30"
-                android:text="为您搜到2个结果"
+                android:text="为您搜到0个结果"
                 android:textColor="@color/color_bottom"
                 android:textSize="@dimen/textSize_12" />
 
@@ -94,7 +94,7 @@
                         android:text="暂无设备"
                         android:textColor="@color/color_client_neworder"
                         android:textSize="@dimen/textSize_15"
-                        android:visibility="gone" />
+                        android:visibility="visible" />
                 </RelativeLayout>
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
         </LinearLayout>

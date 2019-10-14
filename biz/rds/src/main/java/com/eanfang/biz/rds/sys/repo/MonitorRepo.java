@@ -9,6 +9,7 @@ import com.eanfang.biz.model.bean.monitor.RealTimeGroupEntity;
 import com.eanfang.biz.model.entity.OrgEntity;
 import com.eanfang.biz.model.entity.Ys7DevicesEntity;
 import com.eanfang.biz.model.vo.MonitorDeleteVo;
+import com.eanfang.biz.model.vo.MonitorReportVo;
 import com.eanfang.biz.model.vo.MonitorUpdataVo;
 import com.eanfang.biz.rds.base.BaseRepo;
 import com.eanfang.biz.rds.sys.ds.impl.MonitorDs;
@@ -68,6 +69,52 @@ public class MonitorRepo extends BaseRepo<MonitorDs> {
                         firstGroup.setChecked(true);
                     }
                     firstGroup.setHaveSubGroup(true);
+                    firstGroup.setFirstHaveDevice(true);
+                    groupList.add(firstGroup);
+                }
+            }
+            monitorListMutableLiveData.setValue(groupList);
+        });
+        return monitorListMutableLiveData;
+    }
+
+    /**
+     * 实时监控首页
+     */
+    public MutableLiveData<List<MonitorGroupListBean>> doGetMonitorDeviceUpdateGroupList(String companyId) {
+        MutableLiveData<List<MonitorGroupListBean>> monitorListMutableLiveData = new MutableLiveData<>();
+        remoteDataSource.getMonitorList(companyId, (val) -> {
+            List<MonitorGroupListBean> groupList = new ArrayList<>();
+            for (int j = 0; j < val.getGroupList().size(); j++) {
+                MonitorGroupListBean firstGroup = new MonitorGroupListBean();
+                firstGroup.setParentGroupName(val.getOrgUnit().getName());
+                firstGroup.setGroupId(val.getGroupList().get(j).getGroupId());
+                firstGroup.setGroupName(val.getGroupList().get(j).getGroupName());
+                /**
+                 * 有二级分组
+                 * */
+                if (!CollectionUtil.isEmpty(val.getGroupList().get(j).getSubGroupList())) {
+                    firstGroup.setHaveSubGroup(true);
+                    groupList.add(firstGroup);
+                    for (int i = 0; i < val.getGroupList().get(j).getSubGroupList().size(); i++) {
+                        MonitorGroupListBean secondGroup = new MonitorGroupListBean();
+                        if (i == 0 && j == 0) {
+                            secondGroup.setChecked(true);
+                        }
+                        secondGroup.setGroupId(val.getGroupList().get(j).getSubGroupList().get(i).getGroupId());
+                        secondGroup.setGroupName(val.getGroupList().get(j).getSubGroupList().get(i).getGroupName());
+                        groupList.add(secondGroup);
+                    }
+                } else {
+                    /**
+                     * 没有二级分组
+                     *
+                     * 判断有无devicelist  有说明当前分组下存在设备
+                     * */
+                    if (j == 0) {
+                        firstGroup.setChecked(true);
+                    }
+                    firstGroup.setHaveSubGroup(false);
                     firstGroup.setFirstHaveDevice(true);
                     groupList.add(firstGroup);
                 }
@@ -221,4 +268,53 @@ public class MonitorRepo extends BaseRepo<MonitorDs> {
         return monitorGetAddDeviceListMutableLiveData;
     }
 
+    /**
+     * 获取设备详情
+     *
+     * @param deviceId
+     * @return
+     */
+    public MutableLiveData<Ys7DevicesEntity> doGetDeviceDetail(Long deviceId) {
+        MutableLiveData<Ys7DevicesEntity> monitorDeviceDetailMutableLiveData = new MutableLiveData<>();
+        remoteDataSource.doGetDeviceDetail(deviceId, (val) -> {
+            monitorDeviceDetailMutableLiveData.setValue(val);
+        });
+        return monitorDeviceDetailMutableLiveData;
+    }
+
+    /**
+     * 修改设备名称
+     */
+    public MutableLiveData<MonitorUpdataVo> doUpdataDeviceName(MonitorUpdataVo monitorUpdataVo) {
+        MutableLiveData<MonitorUpdataVo> monitorUpdateDeviceNameMutableLiveData = new MutableLiveData<>();
+        remoteDataSource.doUpdateDeviceName(monitorUpdataVo, (val) -> {
+            monitorUpdateDeviceNameMutableLiveData.setValue(val);
+        });
+        return monitorUpdateDeviceNameMutableLiveData;
+    }
+
+    /**
+     * 修改设备分组
+     */
+    public MutableLiveData<MonitorUpdataVo> doUpdataDeviceGroup(MonitorUpdataVo monitorUpdataVo) {
+        MutableLiveData<MonitorUpdataVo> monitorUpdateDeviceGroupMutableLiveData = new MutableLiveData<>();
+        remoteDataSource.doUpdateDeviceGroup(monitorUpdataVo, (val) -> {
+            monitorUpdateDeviceGroupMutableLiveData.setValue(val);
+        });
+        return monitorUpdateDeviceGroupMutableLiveData;
+    }
+
+    /**
+     * 生成汇报
+     */
+    public MutableLiveData<MonitorReportVo> doCreateDeviceReport(MonitorReportVo monitorReportVo) {
+        MutableLiveData<MonitorReportVo> monitorDeviceReportMutableLiveData = new MutableLiveData<>();
+        remoteDataSource.doCreateReport(monitorReportVo, (val) -> {
+            monitorDeviceReportMutableLiveData.setValue(val);
+        });
+        return monitorDeviceReportMutableLiveData;
+    }
+
+
 }
+

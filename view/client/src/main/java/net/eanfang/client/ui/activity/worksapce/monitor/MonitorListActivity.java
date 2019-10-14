@@ -29,6 +29,7 @@ public class MonitorListActivity extends BaseActivity {
     private String mCompanyName;
     private String mCompanyId;
 
+    private boolean isFirst = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         monitorListBinding = DataBindingUtil.setContentView(this, R.layout.activity_monitor_list);
@@ -58,6 +59,14 @@ public class MonitorListActivity extends BaseActivity {
         monitorViewModle.doGetMonitorList(mCompanyId);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(!isFirst){
+            monitorViewModle.doGetRightDeviceList(1,monitorViewModle.mLeftGroupId);
+        }
+
+    }
 
     @Override
     protected ViewModel initViewModel() {
@@ -65,5 +74,11 @@ public class MonitorListActivity extends BaseActivity {
         monitorListBinding.setViewModle(monitorViewModle);
         monitorViewModle.setMonitorListBinding(monitorListBinding);
         return monitorViewModle;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        isFirst = false;
     }
 }

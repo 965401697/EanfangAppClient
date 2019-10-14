@@ -1,6 +1,7 @@
 package net.eanfang.client.ui.activity.worksapce.oa.workreport;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,12 +13,14 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.eanfang.BuildConfig;
+import com.eanfang.base.kit.V;
 import com.eanfang.base.widget.customview.CircleImageView;
 import com.eanfang.biz.model.bean.TemplateBean;
-import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.GlideUtil;
-import com.eanfang.base.kit.V;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
@@ -26,14 +29,12 @@ import net.eanfang.client.ui.activity.im.CreateGroupOrganizationActivity;
 import net.eanfang.client.ui.activity.im.NewSelectIMContactActivity;
 import net.eanfang.client.ui.activity.leave_post.LeavePostAddPostActivity;
 import net.eanfang.client.ui.activity.worksapce.defendlog.FilterDefendLogActivity;
+import net.eanfang.client.ui.activity.worksapce.monitor.device.MonitorDeviceReportActivity;
 import net.eanfang.client.ui.activity.worksapce.oa.SelectOAGroupActivity;
 import net.eanfang.client.ui.activity.worksapce.oa.task.TaskAssignmentCreationActivity;
 
 import java.io.Serializable;
 import java.util.List;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
 
 
 /**
@@ -92,11 +93,13 @@ public class OAPersonAdaptet extends RecyclerView.Adapter<OAPersonAdaptet.ViewHo
                             ((FilterDefendLogActivity) mContext).setFlag(mFlag);
                         } else if (mContext instanceof LeavePostAddPostActivity) {
                             ((LeavePostAddPostActivity) mContext).setFlag(mFlag);
+                        } else if (mContext instanceof MonitorDeviceReportActivity) {
+                            ((MonitorDeviceReportActivity) mContext).setFlag(mFlag);
                         }
 
                     }
                     if (mFlag == 4) {//选择群组
-                        ((BaseActivity) mContext).startActivityForResult(new Intent(mContext, SelectOAGroupActivity.class), 101);
+                        ( (Activity) mContext).startActivityForResult(new Intent(mContext, SelectOAGroupActivity.class), 101);
                     } else if (mFlag == 6) {
                         Intent intent = new Intent(new Intent(mContext, NewSelectIMContactActivity.class));
                         Bundle bundle = new Bundle();

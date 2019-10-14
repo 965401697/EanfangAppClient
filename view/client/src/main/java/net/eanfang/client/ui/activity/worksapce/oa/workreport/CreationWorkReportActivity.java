@@ -106,8 +106,6 @@ public class CreationWorkReportActivity extends BaseClientActivity {
     @BindView(R.id.ll_complete_work)
     LinearLayout llCompleteWork;
     @BindView(R.id.rv_send_who)
-
-
     RecyclerView rvSendWho;
     @BindView(R.id.rv_send_group)
     RecyclerView rvSendGroup;

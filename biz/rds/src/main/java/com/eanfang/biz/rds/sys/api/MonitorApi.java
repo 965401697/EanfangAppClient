@@ -8,6 +8,7 @@ import com.eanfang.biz.model.bean.monitor.RealTimeGroupEntity;
 import com.eanfang.biz.model.entity.OrgEntity;
 import com.eanfang.biz.model.entity.Ys7DevicesEntity;
 import com.eanfang.biz.model.vo.MonitorDeleteVo;
+import com.eanfang.biz.model.vo.MonitorReportVo;
 import com.eanfang.biz.model.vo.MonitorUpdataVo;
 
 import org.json.JSONObject;
@@ -122,5 +123,41 @@ public interface MonitorApi {
     @POST("/yaf_real_time/realTimeDevice/deviceListNoRealTime")
     Observable<BaseResponseBody<PageBean<Ys7DevicesEntity>>> doGetAddDeviceList(@Body QueryEntry queryMap);
 
+
+    /**
+     * 获取设备详情
+     *
+     * @param deviceId
+     * @return
+     */
+    @POST("/yaf_real_time/realTimeDevice/infoWithGroup")
+    Observable<BaseResponseBody<Ys7DevicesEntity>> doGetDeviceDetail(@Query("deviceId") Long deviceId);
+
+    /**
+     * 修改设备名称
+     *
+     * @param monitorDeleteVo
+     * @return
+     */
+    @POST("/yaf_real_time/realTimeDevice/updateDevice")
+    Observable<BaseResponseBody<Ys7DevicesEntity>> doUpdateDeviceName(@Body MonitorUpdataVo monitorDeleteVo);
+
+    /**
+     * 修改设备分组
+     *
+     * @param monitorDeleteVo
+     * @return
+     */
+    @POST("/yaf_real_time/realTimeDevice/changeDeviceGroup")
+    Observable<BaseResponseBody<Ys7DevicesEntity>> doUpdateDeviceGroup(@Body MonitorUpdataVo monitorDeleteVo);
+
+    /**
+     * 生成汇报
+     *
+     * @param monitorReportVo
+     * @return
+     */
+    @POST("/yaf_real_time/realtimereport/insert")
+    Observable<BaseResponseBody<MonitorReportVo>> doCreateReport(@Body MonitorReportVo monitorReportVo);
 
 }

@@ -16,7 +16,7 @@ import lombok.Setter;
 /**
  * @author guanluocang
  * @data 2019/9/24
- * @description
+ * @description 修改分组名称
  */
 public class MonitorGroupEditNameViewModle extends BaseViewModel {
 

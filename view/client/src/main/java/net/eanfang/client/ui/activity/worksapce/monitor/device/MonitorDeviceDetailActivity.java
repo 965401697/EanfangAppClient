@@ -1,17 +1,23 @@
 package net.eanfang.client.ui.activity.worksapce.monitor.device;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +25,8 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModel;
@@ -27,22 +35,36 @@ import com.eanfang.base.BaseActivity;
 import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.base.kit.cache.CacheMod;
 import com.eanfang.biz.rds.base.LViewModelProviders;
+import com.eanfang.config.Config;
+import com.eanfang.util.CallUtils;
 import com.eanfang.util.JumpItent;
 import com.videogo.constant.Constant;
 import com.videogo.errorlayer.ErrorInfo;
+import com.videogo.exception.InnerException;
 import com.videogo.openapi.EZConstants;
 import com.videogo.openapi.EZConstants.EZVideoLevel;
 import com.videogo.openapi.EZOpenSDK;
+import com.videogo.openapi.EZOpenSDKListener;
 import com.videogo.openapi.EZPlayer;
 import com.videogo.realplay.RealPlayStatus;
 import com.videogo.util.ConnectionDetector;
 import com.videogo.util.LocalInfo;
+import com.videogo.util.MediaScanner;
+import com.videogo.util.RotateViewUtil;
+import com.videogo.util.SDCardUtil;
 import com.videogo.util.Utils;
 
 import net.eanfang.client.R;
+import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.databinding.ActivityMonitorDeviceDetailBinding;
+import net.eanfang.client.util.AudioPlayUtil;
+import net.eanfang.client.util.EZUtils;
 import net.eanfang.client.util.ScreenOrientationHelper;
 import net.eanfang.client.viewmodel.device.MonitorDeviceDetailViewModle;
+
+import java.util.Calendar;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static com.videogo.openapi.EZConstants.EZRealPlayConstants.MSG_SET_VEDIOMODE_FAIL;
 import static com.videogo.openapi.EZConstants.EZRealPlayConstants.MSG_SET_VEDIOMODE_SUCCESS;
@@ -55,6 +77,7 @@ import static com.videogo.openapi.EZConstants.EZRealPlayConstants.MSG_SET_VEDIOM
 
 public class MonitorDeviceDetailActivity extends BaseActivity implements Handler.Callback, SurfaceHolder.Callback {
     public static final String LEAVE_MODLE = "LEAVE_MODLE";
+    private static final int REQUEST_UPDATE_NAME = 1001;
     private ActivityMonitorDeviceDetailBinding monitorDeviceDetailBinding;
 
     private MonitorDeviceDetailViewModle monitorDeviceDetailViewModle;
@@ -73,8 +96,19 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
     private float mRealRatio = Constant.LIVE_VIEW_RATIO;
     private EZConstants.EZVideoLevel mCurrentQulityMode = EZConstants.EZVideoLevel.VIDEO_LEVEL_HD;
     private int mForceOrientation = 0;
+    private AudioPlayUtil mAudioPlayUtil = null;
     private PopupWindow mQualityPopupWindow = null;
+    private String mCurrentRecordPath = null;
+    private boolean isRecording = false;
+    private RotateViewUtil mRecordRotateViewUtil = null;
+    private boolean mIsOnStop = false;
+    private int mRecordSecond = 0;
+
+    private Timer mUpdateTimer = null;
+    private TimerTask mUpdateTimerTask = null;
+    private String mRecordTime = null;
     private View view;
+    private boolean isEdit = false;
     /**
      * 设备序列号
      */
@@ -91,6 +125,8 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
     protected void initView() {
         super.initView();
         setLeftBack(true);
+        mAudioPlayUtil = AudioPlayUtil.getInstance(ClientApplication.get());
+        mRecordRotateViewUtil = new RotateViewUtil();
         mDeviceSerial = getIntent().getStringExtra("deviceSerial");
         mDeviceName = getIntent().getStringExtra("mDeviceName");
         setTitle(mDeviceName);
@@ -99,6 +135,7 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
         view = findViewById(R.id.layout_include);
         initListener();
         startRealPlay();
+        monitorDeviceDetailViewModle.mDeviceId = getIntent().getLongExtra("mDeviceId", 0);
         monitorDeviceDetailViewModle.init();
     }
 
@@ -106,15 +143,27 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
     protected ViewModel initViewModel() {
         monitorDeviceDetailViewModle = LViewModelProviders.of(this, MonitorDeviceDetailViewModle.class);
         monitorDeviceDetailViewModle.setMonitorDeviceDetailBinding(monitorDeviceDetailBinding);
+        monitorDeviceDetailViewModle.initTimeAdapter();
         return monitorDeviceDetailViewModle;
     }
 
     private void initListener() {
         setRightOther(R.mipmap.ic_monitor_detail_list, (v) -> {
-            JumpItent.jump(this, MonitorDeviceListActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putLong("mLeftGroupId", getIntent().getLongExtra("mLeftGroupId", 0));
+            bundle.putString("mChangeCompanyId", getIntent().getStringExtra("mChangeCompanyId"));
+            JumpItent.jump(this, MonitorDeviceListActivity.class, bundle);
         });
         setRightClick(R.mipmap.ic_monitor_detail_setting, (v) -> {
-            JumpItent.jump(this, MonitorDeviceManagerActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString("imagePath", monitorDeviceDetailViewModle.mImagePath);
+            bundle.putString("deviceName", monitorDeviceDetailViewModle.mDeviceName);
+            bundle.putString("deviceGroupName", monitorDeviceDetailViewModle.mDeviceGroupName);
+            bundle.putString("deviceSerial", monitorDeviceDetailViewModle.mDeviceSerial);
+            bundle.putString("deviceId", String.valueOf(monitorDeviceDetailViewModle.mDeviceId));
+            bundle.putString("groupId", String.valueOf(monitorDeviceDetailViewModle.mGroupId));
+            bundle.putString("companyId", String.valueOf(monitorDeviceDetailViewModle.mCompanyId));
+            JumpItent.jump(this, MonitorDeviceManagerActivity.class, bundle, REQUEST_UPDATE_NAME);
         });
         // 暂停播放按钮
         monitorDeviceDetailBinding.llPlayControl.realplayPlayBtn.setOnClickListener((v) -> {
@@ -152,6 +201,54 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
                 }
             }
         });
+        // 滑动冲突
+        monitorDeviceDetailBinding.viewTimeLine.setOnTouchListener((view, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_UP) {
+                monitorDeviceDetailBinding.nestedView.requestDisallowInterceptTouchEvent(false);
+            } else {
+                monitorDeviceDetailBinding.nestedView.requestDisallowInterceptTouchEvent(true);
+            }
+            return false;
+        });
+        // 截图
+        monitorDeviceDetailBinding.tvScreenHot.setOnClickListener((v) -> {
+            isEdit = false;
+            onScreenHot();
+        });
+        // 录像
+        monitorDeviceDetailBinding.llVideoTape.setOnClickListener((v) -> {
+            onVideoTape();
+        });
+        // 编辑
+        monitorDeviceDetailBinding.tvEdit.setOnClickListener((v) -> {
+            isEdit = true;
+            onScreenHot();
+        });
+
+        // 联系
+        monitorDeviceDetailBinding.tvContact.setOnClickListener((v) -> {
+            CallUtils.call(MonitorDeviceDetailActivity.this,monitorDeviceDetailViewModle.mobile);
+        });
+
+        //云存储
+        monitorDeviceDetailBinding.tvSeviceClound.setOnClickListener((V) -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("type", "clound");
+            JumpItent.jump(this, MonitorDetailServiceActivity.class, bundle);
+        });
+        //人脸识别
+        monitorDeviceDetailBinding.tvSeviceFace.setOnClickListener((V) -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("type", "face");
+            JumpItent.jump(this, MonitorDetailServiceActivity.class, bundle);
+        });
+        //脱岗检测
+        monitorDeviceDetailBinding.tvSeviceLeave.setOnClickListener((V) -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("type", "leave");
+            JumpItent.jump(this, MonitorDetailServiceActivity.class, bundle);
+        });
+
     }
 
     private void startRealPlay() {
@@ -231,6 +328,9 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
     private void updateRealPlayUI() {
         monitorDeviceDetailBinding.llInclued.realplayLoading.setVisibility(View.INVISIBLE);
         monitorDeviceDetailBinding.llPlayControl.realplayPlayBtn.setBackgroundResource(R.drawable.play_stop_selector);
+        if (isRecording) {
+            updateRecordTime();
+        }
     }
 
     private void setRealPlaySvLayout() {
@@ -361,6 +461,9 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
         if (mOrientation == Configuration.ORIENTATION_LANDSCAPE) {
             return;
         }
+        if (ezPlayer != null) {
+            initUI();
+        }
     }
 
     @Override
@@ -368,6 +471,12 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
         super.onStop();
         if (mScreenOrientationHelper != null) {
             mScreenOrientationHelper.postOnStop();
+        }
+        if (ezPlayer != null) {
+            mIsOnStop = true;
+            mStatus = RealPlayStatus.STATUS_STOP;
+            ezPlayer.stopLocalRecord();
+            ezPlayer.stopPlayback();
         }
     }
 
@@ -571,6 +680,259 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
         showToast("视频质量切换失败");
     }
 
+    /**
+     * 截图
+     */
+    private void onScreenHot() {
+        if (!SDCardUtil.isSDCardUseable()) {
+            // 提示SD卡不可用
+            showToast("存储卡不可用");
+            return;
+        }
+
+        if (SDCardUtil.getSDCardRemainSize() < SDCardUtil.PIC_MIN_MEM_SPACE) {
+            // 提示内存不足
+            showToast("录像中断,存储空间已满");
+            return;
+        }
+
+        if (ezPlayer != null) {
+            Thread thr = new Thread() {
+                @Override
+                public void run() {
+                    Bitmap bmp = ezPlayer.capturePicture();
+                    if (bmp != null) {
+                        try {
+                            mAudioPlayUtil.playAudioFile(AudioPlayUtil.CAPTURE_SOUND);
+                            final String strCaptureFile = Config.Cache.IMG_STORAGE_DIR + System.currentTimeMillis() + ".jpg";
+                            Log.e("GG", "captured picture file path is " + strCaptureFile);
+
+                            if (TextUtils.isEmpty(strCaptureFile)) {
+                                bmp.recycle();
+                                bmp = null;
+                                return;
+                            }
+                            EZUtils.saveCapturePictrue(strCaptureFile, bmp);
+                            MediaScanner mMediaScanner = new MediaScanner(MonitorDeviceDetailActivity.this);
+                            mMediaScanner.scanFile(strCaptureFile, "jpg");
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(MonitorDeviceDetailActivity.this, "已保存至相册" + strCaptureFile, Toast.LENGTH_SHORT).show();
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("imagePath", strCaptureFile);
+                                    bundle.putString("shopName", monitorDeviceDetailViewModle.mShopName);
+                                    if (isEdit) {
+                                        JumpItent.jump(MonitorDeviceDetailActivity.this, MonitorDeviceReportActivity.class, bundle);
+                                    } else {
+                                        JumpItent.jump(MonitorDeviceDetailActivity.this, MonitorDeviceScreenHotActivity.class, bundle);
+                                    }
+                                }
+                            });
+                        } catch (InnerException e) {
+                            e.printStackTrace();
+                        } finally {
+                            if (bmp != null) {
+                                bmp.recycle();
+                                bmp = null;
+                                return;
+                            }
+                        }
+                    } else {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(getApplicationContext(), "抓图失败, 检查是否开启了硬件解码",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                    super.run();
+                }
+            };
+            thr.start();
+        }
+    }
+
+
+    /**
+     * 录像
+     */
+    private void onVideoTape() {
+        if (isRecording) {
+            stopRealPlayRecord();
+            return;
+        }
+
+        if (!SDCardUtil.isSDCardUseable()) {
+            // 提示SD卡不可用
+            showToast("存储卡不可用");
+            return;
+        }
+
+        if (SDCardUtil.getSDCardRemainSize() < SDCardUtil.PIC_MIN_MEM_SPACE) {
+            // 提示内存不足
+            showToast("录像中断,存储空间已满");
+            return;
+        }
+
+        if (ezPlayer != null) {
+            startUpdateTimer();
+            final String strRecordFile = Config.Cache.VIDEO_STORAGE_DIR + "/" + System.currentTimeMillis() + ".mp4";
+            Log.e("GG", "recorded video file path is " + strRecordFile);
+            ezPlayer.setStreamDownloadCallback(new EZOpenSDKListener.EZStreamDownloadCallback() {
+                @Override
+                public void onSuccess(String filepath) {
+                    Log.e("GG", "EZStreamDownloadCallback onSuccess " + filepath);
+                }
+
+                @Override
+                public void onError(EZOpenSDKListener.EZStreamDownloadError code) {
+
+                }
+            });
+            if (ezPlayer.startLocalRecordWithFile(strRecordFile)) {
+                isRecording = true;
+                mCurrentRecordPath = strRecordFile;
+                mAudioPlayUtil.playAudioFile(AudioPlayUtil.RECORD_SOUND);
+                handleRecordSuccess(strRecordFile);
+            } else {
+                handleRecordFail();
+            }
+        }
+    }
+
+    private void handleRecordFail() {
+        showToast("录像失败");
+        if (isRecording) {
+            stopRealPlayRecord();
+        }
+    }
+
+    private void stopRealPlayRecord() {
+        if (ezPlayer == null || !isRecording) {
+            return;
+        }
+        dialog("Record result", "saved to " + mCurrentRecordPath);
+        // 设置录像按钮为check状态
+        if (mOrientation == Configuration.ORIENTATION_PORTRAIT) {
+            if (!mIsOnStop) {
+                mRecordRotateViewUtil.applyRotation(monitorDeviceDetailBinding.llVideoTape, monitorDeviceDetailBinding.ivVideoTapeStop,
+                        monitorDeviceDetailBinding.ivVideoTapeStart, 0, 90);
+            } else {
+                monitorDeviceDetailBinding.ivVideoTapeStop.setVisibility(View.GONE);
+                monitorDeviceDetailBinding.ivVideoTapeStart.setVisibility(View.VISIBLE);
+            }
+        } else {
+            monitorDeviceDetailBinding.ivVideoTapeStop.setVisibility(View.GONE);
+            monitorDeviceDetailBinding.ivVideoTapeStart.setVisibility(View.VISIBLE);
+        }
+        mAudioPlayUtil.playAudioFile(AudioPlayUtil.RECORD_SOUND);
+        ezPlayer.stopLocalRecord();
+
+        // 计时按钮不可见
+        //The timed button is not visible
+        monitorDeviceDetailBinding.rlVideoTape.setVisibility(View.GONE);
+        isRecording = false;
+    }
+
+    private void handleRecordSuccess(String recordFilePath) {
+
+        if (mOrientation == Configuration.ORIENTATION_PORTRAIT) {
+            if (!mIsOnStop) {
+                mRecordRotateViewUtil.applyRotation(monitorDeviceDetailBinding.llVideoTape, monitorDeviceDetailBinding.ivVideoTapeStart,
+                        monitorDeviceDetailBinding.ivVideoTapeStop, 0, 90);
+            } else {
+                monitorDeviceDetailBinding.ivVideoTapeStart.setVisibility(View.GONE);
+                monitorDeviceDetailBinding.ivVideoTapeStop.setVisibility(View.VISIBLE);
+            }
+        } else {
+            monitorDeviceDetailBinding.ivVideoTapeStart.setVisibility(View.GONE);
+            monitorDeviceDetailBinding.ivVideoTapeStop.setVisibility(View.VISIBLE);
+        }
+        isRecording = true;
+        monitorDeviceDetailBinding.rlVideoTape.setVisibility(View.VISIBLE);
+        monitorDeviceDetailBinding.tvRealplayRecord.setText("00:00");
+
+        mRecordSecond = 0;
+    }
+
+    private AlertDialog mLastDialog = null;
+
+    protected void dialog(final String title, final String msg) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (mLastDialog != null && mLastDialog.isShowing()) {
+                    mLastDialog.dismiss();
+                }
+                AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(MonitorDeviceDetailActivity.this);
+                dialogBuilder.setTitle(title);
+                ViewGroup msgLayoutVg = (ViewGroup) LayoutInflater.from(getApplicationContext()).inflate(R.layout.layout_dialog_tip, null);
+                TextView msgTv = (TextView) msgLayoutVg.findViewById(R.id.tv_tip);
+                if (msgTv != null) {
+                    msgTv.setText(msg);
+                }
+                dialogBuilder.setView(msgLayoutVg);
+                dialogBuilder.setPositiveButton(getApplicationContext().getString(R.string.btn_ensure), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                dialogBuilder.setCancelable(false);
+                mLastDialog = dialogBuilder.show();
+            }
+        });
+    }
+
+    private void updateRecordTime() {
+
+        int leftSecond = mRecordSecond % 3600;
+        int minitue = leftSecond / 60;
+        int second = leftSecond % 60;
+
+        String recordTime = String.format("%02d:%02d", minitue, second);
+        monitorDeviceDetailBinding.tvRealplayRecord.setText(recordTime);
+    }
+
+    private void startUpdateTimer() {
+        stopUpdateTimer();
+        mUpdateTimer = new Timer();
+        mUpdateTimerTask = new TimerTask() {
+            @Override
+            public void run() {
+                if (ezPlayer != null && isRecording) {
+                    Calendar OSDTime = ezPlayer.getOSDTime();
+                    if (OSDTime != null) {
+                        String playtime = Utils.OSD2Time(OSDTime);
+                        if (!TextUtils.equals(playtime, mRecordTime)) {
+                            mRecordSecond++;
+                            mRecordTime = playtime;
+                        }
+                    }
+                }
+                if (mHandler != null) {
+                    mHandler.sendEmptyMessage(MSG_PLAY_UI_UPDATE);
+                }
+            }
+        };
+        mUpdateTimer.schedule(mUpdateTimerTask, 0, 1000);
+    }
+
+    private void stopUpdateTimer() {
+        mHandler.removeMessages(MSG_PLAY_UI_UPDATE);
+        if (mUpdateTimer != null) {
+            mUpdateTimer.cancel();
+            mUpdateTimer = null;
+        }
+
+        if (mUpdateTimerTask != null) {
+            mUpdateTimerTask.cancel();
+            mUpdateTimerTask = null;
+        }
+    }
+
     private void dismissPopWindow(PopupWindow popupWindow) {
         if (popupWindow != null && !isFinishing()) {
             try {
@@ -578,6 +940,23 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
             } catch (Exception e) {
                 // TODO: handle exception
             }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (data == null) {
+            return;
+        }
+        switch (requestCode) {
+            case REQUEST_UPDATE_NAME:
+                mDeviceName = data.getStringExtra("deviceName");
+                setTitle(mDeviceName);
+                break;
+            default:
+                break;
         }
     }
 }

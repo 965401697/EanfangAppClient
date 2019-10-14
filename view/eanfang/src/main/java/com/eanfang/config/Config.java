@@ -8,7 +8,6 @@ import com.eanfang.base.BaseApplication;
 import com.eanfang.biz.model.bean.BaseDataBean;
 import com.eanfang.biz.model.bean.ConstAllBean;
 import com.eanfang.biz.model.entity.BaseDataEntity;
-import com.eanfang.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,7 +36,7 @@ public class Config {
         /**
          * 缓存基础目录
          */
-        static final String BASE_CACHE_DIR = Environment.getExternalStorageDirectory().getAbsolutePath() + "/eanfang/";
+        static final String BASE_CACHE_DIR = Environment.getExternalStorageDirectory().getAbsolutePath() + "/eanfang";
         /**
          * 视频缓存目录
          */

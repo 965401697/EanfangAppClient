@@ -56,4 +56,6 @@ public class MonitorGroupManagerActivity extends BaseActivity {
         monitorGroupManagerViewModle.setGroupManagerBinding(groupManagerBinding);
         return monitorGroupManagerViewModle;
     }
+
+
 }

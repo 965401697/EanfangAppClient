@@ -21,6 +21,7 @@
             android:layout_height="@dimen/dimen_300" />
 
         <RelativeLayout
+            android:id="@+id/rl_editDeviceName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/color_white"
@@ -31,7 +32,6 @@
                 android:id="@+id/tv_devicesName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="机动方式安山东"
                 android:textColor="@color/color_client_neworder"
                 android:textSize="@dimen/textSize_15" />
 
@@ -48,6 +48,7 @@
         <View style="@style/style_common_line_gray" />
 
         <RelativeLayout
+            android:id="@+id/rl_deviceGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/color_white"
@@ -77,6 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_20"
             android:background="@color/color_white"
+            android:visibility="gone"
             android:orientation="vertical"
             android:padding="@dimen/dimen_30">
 

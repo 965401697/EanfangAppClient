@@ -14,7 +14,7 @@ import java.util.List;
  * @desc
  */
 
-public class WorkReportInfoBean implements Serializable {
+public class    WorkReportInfoBean implements Serializable {
 
     /**
      * assigneeOrg : {"orgCode":"c.c1.2","orgName":"维修部"}

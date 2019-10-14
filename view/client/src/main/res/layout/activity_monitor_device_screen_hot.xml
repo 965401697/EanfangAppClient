@@ -74,7 +74,7 @@
                         style="@style/style_client_monitor_detail_meun"
                         android:drawableTop="@mipmap/ic_monitor_circle"
                         android:drawablePadding="@dimen/dimen_16"
-                        android:text="朋友圈" />
+                        android:text="安防圈" />
 
                     <TextView
                         android:id="@+id/tv_screen_hot_contact"

@@ -19,6 +19,7 @@ import com.eanfang.util.JumpItent;
 import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.databinding.ActivityMonitorListBinding;
 import net.eanfang.client.ui.activity.worksapce.monitor.device.MonitorDeviceDetailActivity;
+import net.eanfang.client.ui.activity.worksapce.monitor.device.MonitorDeviceManagerActivity;
 import net.eanfang.client.ui.adapter.monitor.MonitorListLeftAdapter;
 import net.eanfang.client.ui.adapter.monitor.MonitorListRightAdapter;
 import net.eanfang.client.ui.widget.MonitorSelectCompanyView;
@@ -52,7 +53,7 @@ public class MonitorHomeViewModle extends BaseViewModel implements SwipeRefreshL
     /***
      *分组id
      */
-    private Long mLeftGroupId;
+    public Long mLeftGroupId;
     public QueryEntry mDeviceQueryEntry;
     public int mDevicePage = 1;
 
@@ -105,14 +106,31 @@ public class MonitorHomeViewModle extends BaseViewModel implements SwipeRefreshL
         monitorListBinding.swipreFresh.setOnRefreshListener(this);
         monitorListRightAdapter.setOnItemClickListener(((adapter, view, position) -> {
             Bundle bundle = new Bundle();
-            bundle.putString("deviceSerial",monitorListRightAdapter.getData().get(position).getYs7DeviceSerial());
-            bundle.putString("mDeviceName",monitorListRightAdapter.getData().get(position).getDeviceName());
-            JumpItent.jump((Activity) monitorListBinding.getRoot().getContext(), MonitorDeviceDetailActivity.class);
+            bundle.putString("deviceSerial", monitorListRightAdapter.getData().get(position).getYs7DeviceSerial());
+            bundle.putString("mDeviceName", monitorListRightAdapter.getData().get(position).getDeviceName());
+            bundle.putString("mChangeCompanyId", mChangeCompanyId);
+            bundle.putLong("mDeviceId", monitorListRightAdapter.getData().get(position).getDeviceId() != null ? monitorListRightAdapter.getData().get(position).getDeviceId() : 0);
+            bundle.putLong("mLeftGroupId", mLeftGroupId != null ? mLeftGroupId : 0);
+            JumpItent.jump((Activity) monitorListBinding.getRoot().getContext(), MonitorDeviceDetailActivity.class, bundle);
+        }));
+        monitorListRightAdapter.setOnItemChildClickListener(((adapter, view, position) -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("imagePath", monitorListRightAdapter.getData().get(position).getLivePic());
+            bundle.putString("deviceName", monitorListRightAdapter.getData().get(position).getDeviceName());
+            bundle.putString("deviceSerial", monitorListRightAdapter.getData().get(position).getYs7DeviceSerial());
+            bundle.putString("deviceId", String.valueOf(monitorListRightAdapter.getData().get(position).getDeviceId()));
+            bundle.putString("companyId", String.valueOf(monitorListRightAdapter.getData().get(position).getCompanyId()));
+            if (monitorListRightAdapter.getData().get(position).getRealTimeGroupEntity() != null) {
+                bundle.putString("deviceGroupName", monitorListRightAdapter.getData().get(position).getRealTimeGroupEntity().getGroupName());
+                bundle.putString("groupId", String.valueOf(monitorListRightAdapter.getData().get(position).getRealTimeGroupEntity().getGroupId()));
+            }
+            JumpItent.jump((Activity) monitorListBinding.getRoot().getContext(), MonitorDeviceManagerActivity.class, bundle);
         }));
 
         ThreadUtil.sleep(1000);
         for (MonitorGroupListBean monitorGroupListBean : monitorGroupList) {
             if (monitorGroupListBean.isChecked()) {
+                mLeftGroupId = monitorGroupListBean.getGroupId();
                 doGetRightDeviceList(mDevicePage, monitorGroupListBean.getGroupId());
             }
         }
@@ -147,7 +165,7 @@ public class MonitorHomeViewModle extends BaseViewModel implements SwipeRefreshL
     /**
      * 获取设备 数据
      */
-    private void doGetRightDeviceList(int page, Long mLeftGroupId) {
+    public void doGetRightDeviceList(int page, Long mLeftGroupId) {
         if (mDeviceQueryEntry == null) {
             mDeviceQueryEntry = new QueryEntry();
         }
@@ -156,7 +174,7 @@ public class MonitorHomeViewModle extends BaseViewModel implements SwipeRefreshL
         }
         mDeviceQueryEntry.getEquals().put("companyId", mChangeCompanyId);
         mDeviceQueryEntry.setPage(page);
-        monitorRepo.doGetMonitorDeviceList(mDeviceQueryEntry).observe(lifecycleOwner, monitorDeviceBean -> {
+        monitorRepo. doGetMonitorDeviceList(mDeviceQueryEntry).observe(lifecycleOwner, monitorDeviceBean -> {
             if (monitorDeviceBean != null && !CollectionUtil.isEmpty(monitorDeviceBean.getList())) {
                 if (mDevicePage == 1) {
                     monitorListRightAdapter.getData().clear();
@@ -203,7 +221,6 @@ public class MonitorHomeViewModle extends BaseViewModel implements SwipeRefreshL
     public void onLoadMoreRequested() {
         mDevicePage++;
         doGetRightDeviceList(mDevicePage, mLeftGroupId);
-
     }
 
 }

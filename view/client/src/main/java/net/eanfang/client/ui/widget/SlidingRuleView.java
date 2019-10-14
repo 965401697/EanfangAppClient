@@ -23,7 +23,7 @@ import java.text.DecimalFormat;
  * @data 2019/9/27
  * @description 实时监控设备详情 时间轴
  */
-public class MonitorTimeLineView extends View {
+public class SlidingRuleView extends View {
 
     /**
      * 画笔
@@ -125,15 +125,15 @@ public class MonitorTimeLineView extends View {
 
     private DoGetValueListener doGetValueListener = null;
 
-    public MonitorTimeLineView(Context context) {
+    public SlidingRuleView(Context context) {
         this(context, null);
     }
 
-    public MonitorTimeLineView(Context context, AttributeSet attrs) {
+    public SlidingRuleView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public MonitorTimeLineView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public SlidingRuleView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         // 初始化参数
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.SlidingRuleView);
@@ -275,7 +275,7 @@ public class MonitorTimeLineView extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        mVelocityTracker.addMovement(event);
+         mVelocityTracker.addMovement(event);
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 //记录初始触摸屏幕下的坐标
@@ -304,10 +304,10 @@ public class MonitorTimeLineView extends View {
                 moveRecently();
                 break;
             case MotionEvent.ACTION_CANCEL:
-                if (mVelocityTracker != null) {
-                    mVelocityTracker.recycle();
-                    mVelocityTracker = null;
-                }
+//                if (mVelocityTracker != null) {
+//                    mVelocityTracker.recycle();
+//                    mVelocityTracker = null;
+//                }
                 break;
             default:
                 break;

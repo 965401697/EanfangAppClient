@@ -8,6 +8,7 @@ import com.eanfang.biz.model.bean.monitor.RealTimeGroupEntity;
 import com.eanfang.biz.model.entity.OrgEntity;
 import com.eanfang.biz.model.entity.Ys7DevicesEntity;
 import com.eanfang.biz.model.vo.MonitorDeleteVo;
+import com.eanfang.biz.model.vo.MonitorReportVo;
 import com.eanfang.biz.model.vo.MonitorUpdataVo;
 
 import org.json.JSONObject;
@@ -96,8 +97,38 @@ public interface IMonitorDs {
 
     /**
      * 获取增加设备
+     *
      * @param queryEntry
      * @param callback
      */
     void doGetAddDeviceList(QueryEntry queryEntry, RequestCallback<PageBean<Ys7DevicesEntity>> callback);
+
+    /**
+     * 获取设备详情
+     *
+     * @param deviceId
+     * @param callback
+     */
+    void doGetDeviceDetail(Long deviceId, RequestCallback<Ys7DevicesEntity> callback);
+
+    /**
+     * 修改设备名称
+     * @param monitorUpdataVo
+     * @param callback
+     */
+    void doUpdateDeviceName(MonitorUpdataVo monitorUpdataVo, RequestCallback<MonitorUpdataVo> callback);
+
+    /**
+     * 修改设备分组
+     * @param monitorUpdataVo
+     * @param callback
+     */
+    void doUpdateDeviceGroup(MonitorUpdataVo monitorUpdataVo, RequestCallback<MonitorUpdataVo> callback);
+
+    /**
+     * 生成汇报
+     * @param monitorReportVo
+     * @param callback
+     */
+    void doCreateReport(MonitorReportVo monitorReportVo,RequestCallback<MonitorReportVo> callback);
 }

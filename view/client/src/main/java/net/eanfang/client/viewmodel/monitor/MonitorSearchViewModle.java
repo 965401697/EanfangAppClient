@@ -27,6 +27,7 @@ import lombok.Setter;
  * @description
  */
 public class MonitorSearchViewModle extends BaseViewModel implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
+
     private MonitorRepo monitorRepo;
     @Getter
     @Setter
@@ -89,6 +90,7 @@ public class MonitorSearchViewModle extends BaseViewModel implements SwipeRefres
                     monitorSearchAdapter.setNewData(searchDeviceBean.getList());
                     monitorSearchBinding.swipreFresh.setRefreshing(false);
                     monitorSearchAdapter.loadMoreComplete();
+                    monitorSearchBinding.tvSerarchNum.setText("为您搜到" + searchDeviceBean.getList().size() + "个结果");
                     hideKeyboard();
                     if (searchDeviceBean.getList().size() < 10) {
                         monitorSearchAdapter.loadMoreEnd();
@@ -106,6 +108,8 @@ public class MonitorSearchViewModle extends BaseViewModel implements SwipeRefres
                     }
                 }
             } else {
+
+                monitorSearchBinding.tvNoData.setVisibility(View.VISIBLE);
                 monitorSearchBinding.swipreFresh.setRefreshing(false);
             }
         });

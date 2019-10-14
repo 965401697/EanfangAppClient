@@ -19,4 +19,6 @@ public class MonitorUpdataVo extends BaseVo implements Serializable {
     private ObservableField<String> groupName = new ObservableField<>();
     private ObservableField<String> parentGroupName = new ObservableField<>();
     private ObservableField<String> groupId = new ObservableField<>();
+    private ObservableField<String> deviceId = new ObservableField<>();
+    private ObservableField<String> deviceName = new ObservableField<>();
 }

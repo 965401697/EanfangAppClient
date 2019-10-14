@@ -812,7 +812,7 @@ public interface NewApiService {
     /**
      * 获取萤石云视频Token
      */
-    String HOME_SUB_ACCOUNT_INFO_LIST = BASE_URL + "/yaf_station/stationDetect/subAccountInfoList";
+    String HOME_SUB_ACCOUNT_INFO_LIST = BASE_URL + "/yaf_station/ys7account/subAccountInfoList";
     /**
      * 电话报修获取合作公司
      */

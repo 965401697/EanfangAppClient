@@ -8,6 +8,7 @@ import com.eanfang.biz.model.bean.monitor.RealTimeGroupEntity;
 import com.eanfang.biz.model.entity.OrgEntity;
 import com.eanfang.biz.model.entity.Ys7DevicesEntity;
 import com.eanfang.biz.model.vo.MonitorDeleteVo;
+import com.eanfang.biz.model.vo.MonitorReportVo;
 import com.eanfang.biz.model.vo.MonitorUpdataVo;
 import com.eanfang.biz.rds.base.BaseRemoteDataSource;
 import com.eanfang.biz.rds.base.BaseViewModel;
@@ -117,5 +118,46 @@ public class MonitorDs extends BaseRemoteDataSource implements IMonitorDs {
         execute(getService(MonitorApi.class).doGetAddDeviceList(queryEntry), callback);
     }
 
+    /**
+     * 获取设备详情
+     *
+     * @param deviceId
+     * @param callback
+     */
+    @Override
+    public void doGetDeviceDetail(Long deviceId, RequestCallback<Ys7DevicesEntity> callback) {
+        execute(getService(MonitorApi.class).doGetDeviceDetail(deviceId), callback);
+    }
+
+    /**
+     * 修改设备名称
+     *
+     * @param monitorUpdataVo
+     * @param callback
+     */
+
+    @Override
+    public void doUpdateDeviceName(MonitorUpdataVo monitorUpdataVo, RequestCallback<MonitorUpdataVo> callback) {
+        execute(getService(MonitorApi.class).doUpdateDeviceName(monitorUpdataVo), callback);
+    }
+
+    /**
+     * 修改设备分组
+     *
+     * @param monitorUpdataVo
+     * @param callback
+     */
+    @Override
+    public void doUpdateDeviceGroup(MonitorUpdataVo monitorUpdataVo, RequestCallback<MonitorUpdataVo> callback) {
+        execute(getService(MonitorApi.class).doUpdateDeviceGroup(monitorUpdataVo), callback);
+    }
+
+    /**
+     * 生成汇报
+     */
+    @Override
+    public void doCreateReport(MonitorReportVo monitorReportVo, RequestCallback<MonitorReportVo> callback) {
+        execute(getService(MonitorApi.class).doCreateReport(monitorReportVo), callback);
+    }
 
 }
