@@ -98,6 +98,34 @@
                             </LinearLayout>
 
                         </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/rl_selectLeft"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentStart="true"
+                            android:padding="@dimen/dimen_40">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:src="@mipmap/ic_monitro_detail_left" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/rl_selectRight"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_alignParentEnd="true"
+                            android:padding="@dimen/dimen_40">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"
+                                android:src="@mipmap/ic_monitro_detail_right" />
+                        </RelativeLayout>
                     </RelativeLayout>
 
 
@@ -160,8 +188,8 @@
                                 android:id="@+id/iv_videoTape_stop"
                                 android:layout_width="@dimen/dimen_85"
                                 android:layout_height="@dimen/dimen_85"
-                                android:visibility="gone"
-                                android:src="@drawable/play_video_sel" />
+                                android:src="@drawable/play_video_sel"
+                                android:visibility="gone" />
 
                             <TextView
                                 android:id="@+id/tv_video_tape"

@@ -7,16 +7,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
+
 import com.eanfang.R;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
-
-import java.text.SimpleDateFormat;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.DialogFragment;
 import cn.hutool.core.date.DateUtil;
 
 /**
@@ -37,7 +35,6 @@ public class SelectCalendarDialogFragment extends DialogFragment implements OnDa
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-
         try {
             selectTimeListener = (SelectCalendarTimeListener) activity;
         } catch (ClassCastException e) {

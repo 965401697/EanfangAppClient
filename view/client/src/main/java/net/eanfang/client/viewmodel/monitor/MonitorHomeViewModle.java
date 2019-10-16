@@ -24,6 +24,7 @@ import net.eanfang.client.ui.adapter.monitor.MonitorListLeftAdapter;
 import net.eanfang.client.ui.adapter.monitor.MonitorListRightAdapter;
 import net.eanfang.client.ui.widget.MonitorSelectCompanyView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -111,6 +112,8 @@ public class MonitorHomeViewModle extends BaseViewModel implements SwipeRefreshL
             bundle.putString("mChangeCompanyId", mChangeCompanyId);
             bundle.putLong("mDeviceId", monitorListRightAdapter.getData().get(position).getDeviceId() != null ? monitorListRightAdapter.getData().get(position).getDeviceId() : 0);
             bundle.putLong("mLeftGroupId", mLeftGroupId != null ? mLeftGroupId : 0);
+            bundle.putInt("position", position);
+            bundle.putSerializable("deviceList", (Serializable) monitorListRightAdapter.getData());
             JumpItent.jump((Activity) monitorListBinding.getRoot().getContext(), MonitorDeviceDetailActivity.class, bundle);
         }));
         monitorListRightAdapter.setOnItemChildClickListener(((adapter, view, position) -> {
@@ -174,7 +177,7 @@ public class MonitorHomeViewModle extends BaseViewModel implements SwipeRefreshL
         }
         mDeviceQueryEntry.getEquals().put("companyId", mChangeCompanyId);
         mDeviceQueryEntry.setPage(page);
-        monitorRepo. doGetMonitorDeviceList(mDeviceQueryEntry).observe(lifecycleOwner, monitorDeviceBean -> {
+        monitorRepo.doGetMonitorDeviceList(mDeviceQueryEntry).observe(lifecycleOwner, monitorDeviceBean -> {
             if (monitorDeviceBean != null && !CollectionUtil.isEmpty(monitorDeviceBean.getList())) {
                 if (mDevicePage == 1) {
                     monitorListRightAdapter.getData().clear();

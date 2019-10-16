@@ -143,9 +143,9 @@ public class SlidingRuleView extends View {
         //顶部的直线距离View顶部距离
 //        topDegreeLine = typedArray.getDimension(R.styleable.SlidingRuleView_topDegreeLine, dp2px(getContext(), 45));
         //刻度间隔
-        lineDegreeSpace = typedArray.getDimension(R.styleable.SlidingRuleView_lineDegreeSpace, dp2px(getContext(), 5));
+        lineDegreeSpace = typedArray.getDimension(R.styleable.SlidingRuleView_lineDegreeSpace, dp2px(getContext(), 10));
         //刻度大数目 默认30
-        lineCount = typedArray.getInt(R.styleable.SlidingRuleView_lineCount, 60);
+        lineCount = typedArray.getInt(R.styleable.SlidingRuleView_lineCount, 12);
         //长的刻度线条长度
         longDegreeLine = typedArray.getDimension(R.styleable.SlidingRuleView_longDegreeLine, dp2px(getContext(), 25));
         //短刻度值的长度
@@ -183,7 +183,7 @@ public class SlidingRuleView extends View {
         //增加左边界距离
         mLeftOrder = ruleLeftSpacing;
         //确定刻顶部度长线右边界 格数 * 之间的间隔 * 大数目（间隔）之间是有10小间隔的
-        mRightOrder = lineDegreeSpace * lineCount * 10 + ruleLeftSpacing + ruleRightSpacing;
+        mRightOrder = lineDegreeSpace * lineCount * 5 + ruleLeftSpacing + ruleRightSpacing;
         //添加速度追踪器
         mVelocityTracker = VelocityTracker.obtain();
         //获取最大速度
@@ -237,15 +237,15 @@ public class SlidingRuleView extends View {
 //        canvas.drawLine(x, y, mRightOrder, y, mPaint);
 
         //循环绘制长刻度
-        for (int i = 0; i <= lineCount * 10; i++) {
+        for (int i = 0; i <= lineCount * 5; i++) {
             //画长刻度
-            if (i % 10 == 0) {
+            if (i % 5 == 0) {
                 mPaint.setColor(ContextCompat.getColor(getContext(), R.color.color_monitor_text));
                 mPaint.setStrokeWidth(6);
                 canvas.drawLine(x, 0, x, 0 + longDegreeLine, mPaint);
 
                 //画刻度值
-                String number = i / 10 + "分";
+                String number = i + "分";
                 //得到文字宽度
                 float textWidth = mPaint.measureText(number);
                 //绘制颜色
@@ -267,7 +267,7 @@ public class SlidingRuleView extends View {
         mPaint.setStrokeWidth(greenPointWidth);
         canvas.drawLine(greenPointX + getScrollX(), 0, greenPointX + getScrollX(), longDegreeLine + dp2px(getContext(), 3),
                 mPaint);
-        mValue = decimalFormat.format((greenPointX + getScrollX() - mLeftOrder) / (lineDegreeSpace * 10.0f));
+        mValue = decimalFormat.format((greenPointX + getScrollX() - mLeftOrder) / lineDegreeSpace );
         if (doGetValueListener != null) {
             doGetValueListener.doGetValue(mValue);
         }

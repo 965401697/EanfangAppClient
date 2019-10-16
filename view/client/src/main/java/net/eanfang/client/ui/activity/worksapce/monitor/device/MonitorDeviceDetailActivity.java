@@ -30,10 +30,12 @@ import android.widget.Toast;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModel;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.eanfang.base.BaseActivity;
 import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.base.kit.cache.CacheMod;
+import com.eanfang.biz.model.entity.Ys7DevicesEntity;
 import com.eanfang.biz.rds.base.LViewModelProviders;
 import com.eanfang.config.Config;
 import com.eanfang.util.CallUtils;
@@ -57,14 +59,21 @@ import com.videogo.util.Utils;
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.databinding.ActivityMonitorDeviceDetailBinding;
+import net.eanfang.client.ui.adapter.monitor.MonitorDeviceDetailTimeAdapter;
+import net.eanfang.client.ui.widget.SlidingRuleView;
 import net.eanfang.client.util.AudioPlayUtil;
 import net.eanfang.client.util.EZUtils;
 import net.eanfang.client.util.ScreenOrientationHelper;
 import net.eanfang.client.viewmodel.device.MonitorDeviceDetailViewModle;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 
 import static com.videogo.openapi.EZConstants.EZRealPlayConstants.MSG_SET_VEDIOMODE_FAIL;
 import static com.videogo.openapi.EZConstants.EZRealPlayConstants.MSG_SET_VEDIOMODE_SUCCESS;
@@ -75,7 +84,7 @@ import static com.videogo.openapi.EZConstants.EZRealPlayConstants.MSG_SET_VEDIOM
  * @description 摄像机详情页
  */
 
-public class MonitorDeviceDetailActivity extends BaseActivity implements Handler.Callback, SurfaceHolder.Callback {
+public class MonitorDeviceDetailActivity extends BaseActivity implements Handler.Callback, SurfaceHolder.Callback, SlidingRuleView.DoGetValueListener {
     public static final String LEAVE_MODLE = "LEAVE_MODLE";
     private static final int REQUEST_UPDATE_NAME = 1001;
     private ActivityMonitorDeviceDetailBinding monitorDeviceDetailBinding;
@@ -114,6 +123,22 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
      */
     private String mDeviceSerial;
 
+    /**
+     * 设备position
+     */
+    private int mDevicePosition = 1000;
+    private List<Ys7DevicesEntity> mDeviceList = new ArrayList<>();
+
+    /**
+     * 是否回放
+     */
+    private boolean isPlayBack = false;
+    private int mHour;
+    public String minute;
+    public Calendar mPlayTime;
+
+    public MonitorDeviceDetailTimeAdapter monitorDeviceDetailTimeAdapter;
+    private List<String> mTimeList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,24 +152,64 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
         setLeftBack(true);
         mAudioPlayUtil = AudioPlayUtil.getInstance(ClientApplication.get());
         mRecordRotateViewUtil = new RotateViewUtil();
-        mDeviceSerial = getIntent().getStringExtra("deviceSerial");
-        mDeviceName = getIntent().getStringExtra("mDeviceName");
-        setTitle(mDeviceName);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         mScreenOrientationHelper = new ScreenOrientationHelper(this, monitorDeviceDetailBinding.llPlayControl.fullscreenButton, null);
         view = findViewById(R.id.layout_include);
+        mDevicePosition = getIntent().getIntExtra("position", 1000);
+        mDeviceList = (List<Ys7DevicesEntity>) getIntent().getSerializableExtra("deviceList");
+        mDeviceSerial = getIntent().getStringExtra("deviceSerial");
+        mDeviceName = getIntent().getStringExtra("mDeviceName");
+        init(mDeviceName, getIntent().getLongExtra("mDeviceId", 0));
+        monitorDeviceDetailBinding.viewTimeLine.setOnScrollListener(this);
+        initTimeAdapter();
         initListener();
-        startRealPlay();
-        monitorDeviceDetailViewModle.mDeviceId = getIntent().getLongExtra("mDeviceId", 0);
+    }
+
+
+    private void init(String mDeviceName, Long mDeviceId) {
+        monitorDeviceDetailViewModle.mDeviceId = mDeviceId;
         monitorDeviceDetailViewModle.init();
+        setTitle(mDeviceName);
+        startRealPlay();
     }
 
     @Override
     protected ViewModel initViewModel() {
         monitorDeviceDetailViewModle = LViewModelProviders.of(this, MonitorDeviceDetailViewModle.class);
         monitorDeviceDetailViewModle.setMonitorDeviceDetailBinding(monitorDeviceDetailBinding);
-        monitorDeviceDetailViewModle.initTimeAdapter();
         return monitorDeviceDetailViewModle;
+    }
+
+    private void initTimeAdapter() {
+        monitorDeviceDetailTimeAdapter = new MonitorDeviceDetailTimeAdapter(onItemClickListener);
+        LinearLayoutManager manager = new LinearLayoutManager(monitorDeviceDetailBinding.getRoot().getContext());
+        manager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        monitorDeviceDetailBinding.rvTime.setLayoutManager(manager);
+        monitorDeviceDetailTimeAdapter.bindToRecyclerView(monitorDeviceDetailBinding.rvTime);
+        for (int i = 0; i < 24; i++) {
+            if (i < 10) {
+                mTimeList.add("0" + i + "时");
+            } else {
+                mTimeList.add(i + "时");
+            }
+        }
+        monitorDeviceDetailTimeAdapter.setNewData(mTimeList);
+    }
+
+    MonitorDeviceDetailTimeAdapter.OnItemClickListener onItemClickListener = new MonitorDeviceDetailTimeAdapter.OnItemClickListener() {
+        @Override
+        public void onItemClick(int posititon, String mTime) {
+            monitorDeviceDetailBinding.llInclued.realplayLoading.setVisibility(View.GONE);
+            isPlayBack = true;
+            stopRealPlay();
+            mHour = posititon;
+        }
+    };
+
+    @Override
+    public void doGetValue(String mValue) {
+        Log.e("GG", "value" + mValue);
+        minute = mValue;
     }
 
     private void initListener() {
@@ -177,7 +242,42 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
         // 暂停后 播放
         monitorDeviceDetailBinding.llInclued.realplayPlayIv.setOnClickListener((v) -> {
             if (mStatus == RealPlayStatus.STATUS_STOP) {
-                startRealPlay();
+                if (isPlayBack) {
+                    if (StrUtil.isEmpty(minute)) {
+                        mPlayTime = DateUtil.parseTimeToday(mHour + ":00").toCalendar();
+                    } else {
+                        mPlayTime = DateUtil.parseTimeToday(mHour + ":" + minute).toCalendar();
+                    }
+                    monitorDeviceDetailBinding.llInclued.realplayPlayIv.setVisibility(View.GONE);
+
+                    monitorDeviceDetailBinding.llPlayControl.realplayPlayBtn.setBackgroundResource(R.drawable.play_stop_selector);
+                    mStatus = RealPlayStatus.STATUS_START;
+                    mHandler = new Handler(this);
+                    monitorDeviceDetailBinding.realplaySv.setVisibility(View.VISIBLE);
+                    mRealPlaySh = monitorDeviceDetailBinding.realplaySv.getHolder();
+                    mRealPlaySh.addCallback(this);
+                    ezPlayer = EZOpenSDK.getInstance().createPlayer(mDeviceSerial, 1);
+                    mLocalInfo = LocalInfo.getInstance();
+                    DisplayMetrics metric = new DisplayMetrics();
+                    getWindowManager().getDefaultDisplay().getMetrics(metric);
+                    mLocalInfo.setScreenWidthHeight(metric.widthPixels, metric.heightPixels);
+                    mLocalInfo.setNavigationBarHeight((int) Math.ceil(25 * getResources().getDisplayMetrics().density));
+                    if (ezPlayer == null) {
+                        return;
+                    }
+                    //该handler将被用于从播放器向handler传递消息
+                    ezPlayer.setHandler(mHandler);
+                    //设置播放器的显示Surface
+                    ezPlayer.setSurfaceHold(mRealPlaySh);
+                    setOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+                    monitorDeviceDetailBinding.llInclued.realplayLoading.setVisibility(View.VISIBLE);
+                    boolean isSuccess = ezPlayer.startPlayback(mPlayTime, DateUtil.parseTimeToday("23:59").toCalendar());
+                    Log.e("GG", "playback" + isSuccess);
+                    isPlayBack = false;
+                } else {
+                    startRealPlay();
+                }
+
             }
         });
         // 清晰度
@@ -219,6 +319,13 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
         monitorDeviceDetailBinding.llVideoTape.setOnClickListener((v) -> {
             onVideoTape();
         });
+        //回放
+        monitorDeviceDetailBinding.tvPlayBack.setOnClickListener((v) -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("shopName", monitorDeviceDetailViewModle.mShopName);
+            bundle.putString("deviceSerial", mDeviceSerial);
+            JumpItent.jump(MonitorDeviceDetailActivity.this, MonitorDevicePlayBackActivity.class, bundle);
+        });
         // 编辑
         monitorDeviceDetailBinding.tvEdit.setOnClickListener((v) -> {
             isEdit = true;
@@ -227,9 +334,35 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
 
         // 联系
         monitorDeviceDetailBinding.tvContact.setOnClickListener((v) -> {
-            CallUtils.call(MonitorDeviceDetailActivity.this,monitorDeviceDetailViewModle.mobile);
+            CallUtils.call(MonitorDeviceDetailActivity.this, monitorDeviceDetailViewModle.mobile);
         });
 
+        //上一个
+        monitorDeviceDetailBinding.rlSelectLeft.setOnClickListener((v) -> {
+            if (mDevicePosition == 0) {
+                showToast("已是第一个");
+            } else {
+                monitorDeviceDetailBinding.realplaySv.setVisibility(View.GONE);
+                --mDevicePosition;
+                onPlayerStop();
+                mDeviceSerial = mDeviceList.get(mDevicePosition).getYs7DeviceSerial();
+                init(mDeviceList.get(mDevicePosition).getDeviceName(), mDeviceList.get(mDevicePosition).getDeviceId());
+            }
+        });
+        // 下一个
+        monitorDeviceDetailBinding.rlSelectRight.setOnClickListener((v) -> {
+            ++mDevicePosition;
+            if (mDevicePosition <= mDeviceList.size() - 1) {
+                monitorDeviceDetailBinding.realplaySv.setVisibility(View.GONE);
+                onPlayerStop();
+                mDeviceSerial = mDeviceList.get(mDevicePosition).getYs7DeviceSerial();
+                init(mDeviceList.get(mDevicePosition).getDeviceName(), mDeviceList.get(mDevicePosition).getDeviceId());
+            } else {
+                showToast("已是最后一个");
+                --mDevicePosition;
+            }
+
+        });
         //云存储
         monitorDeviceDetailBinding.tvSeviceClound.setOnClickListener((V) -> {
             Bundle bundle = new Bundle();
@@ -260,6 +393,7 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
         monitorDeviceDetailBinding.llInclued.realplayPlayIv.setVisibility(View.GONE);
         mStatus = RealPlayStatus.STATUS_START;
         mHandler = new Handler(this);
+        monitorDeviceDetailBinding.realplaySv.setVisibility(View.VISIBLE);
         mRealPlaySh = monitorDeviceDetailBinding.realplaySv.getHolder();
         mRealPlaySh.addCallback(this);
         ezPlayer = EZOpenSDK.getInstance().createPlayer(mDeviceSerial, 1);
@@ -438,6 +572,16 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
             case MSG_SET_VEDIOMODE_FAIL:
                 handleSetVedioModeFail(msg.arg1);
                 break;
+            case EZConstants.EZPlaybackConstants.MSG_REMOTEPLAYBACK_PLAY_SUCCUSS:
+                startRealPlay();
+                monitorDeviceDetailBinding.llInclued.realplayLoadingRl.setVisibility(View.GONE);
+                showToast("回访成功");
+                break;
+            // 回访失败
+            case EZConstants.EZPlaybackConstants.MSG_REMOTEPLAYBACK_PLAY_FAIL:
+                showToast("回访失败");
+                Log.e("GG", "回访失败 " + msg.arg1);
+                break;
             default:
                 // do nothing
                 break;
@@ -466,9 +610,7 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
         }
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
+    private void onPlayerStop() {
         if (mScreenOrientationHelper != null) {
             mScreenOrientationHelper.postOnStop();
         }
@@ -478,6 +620,12 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
             ezPlayer.stopLocalRecord();
             ezPlayer.stopPlayback();
         }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        onPlayerStop();
     }
 
     @Override
@@ -959,4 +1107,5 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
                 break;
         }
     }
+
 }

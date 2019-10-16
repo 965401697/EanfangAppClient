@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/preview_selection_bg"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingBottom="20dp">
+
+    <Button
+        android:id="@+id/rate_16x"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:background="@color/transparent"
+        android:text="16x"
+        android:textColor="@color/color_white"
+        android:textSize="@dimen/textSize_14" />
+
+    <Button
+        android:id="@+id/rate_8x"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:background="@color/transparent"
+        android:text="8x"
+        android:textColor="@color/color_white"
+        android:textSize="@dimen/textSize_14" />
+
+    <Button
+        android:id="@+id/rate_4x"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:background="@color/transparent"
+        android:text="4x"
+        android:textColor="@color/color_white"
+        android:textSize="@dimen/textSize_14" />
+
+    <Button
+        android:id="@+id/rate_1x"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:background="@color/transparent"
+        android:text="1x"
+        android:textColor="@color/color_white"
+        android:textSize="@dimen/textSize_14" />
+
+</LinearLayout>
