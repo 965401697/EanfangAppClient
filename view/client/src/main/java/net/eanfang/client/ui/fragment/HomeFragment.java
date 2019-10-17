@@ -290,7 +290,7 @@ public class HomeFragment extends BaseFragment {
             JSONObject jsonObject1 = CacheKit.get().get("subAccountInfoList", JSONObject.class);
             String value = jsonObject1 != null ? jsonObject1.getString(String.valueOf(ClientApplication.get().getCompanyId())) : null;
             if (!StrUtil.isEmpty(value)) {
-                CacheKit.get().put("YingShiYunToken", value);
+                // CacheKit.get().put("YingShiYunToken", value);
 //                ClientApplication.get().set("YingShiYunToken", value);
                 startActivity(new Intent(getActivity(), LeavePostHomeActivity.class));
             } else {

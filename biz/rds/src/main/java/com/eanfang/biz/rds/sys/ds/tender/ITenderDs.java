@@ -1,16 +1,13 @@
 package com.eanfang.biz.rds.sys.ds.tender;
 
 import com.eanfang.base.network.callback.RequestCallback;
-import com.eanfang.biz.model.bean.LoginBean;
-import com.eanfang.biz.model.bean.PageBean;
+import com.eanfang.biz.model.PageBean;
 import com.eanfang.biz.model.bean.QueryEntry;
 import com.eanfang.biz.model.entity.IfbOrderEntity;
 import com.eanfang.biz.model.entity.tender.TaskApplyEntity;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;
 import com.eanfang.biz.model.vo.tender.TenderCommitVo;
 import com.eanfang.biz.model.vo.tender.TenderCreateVo;
-
-import retrofit2.http.QueryMap;
 
 /**
  * @author guanluocang

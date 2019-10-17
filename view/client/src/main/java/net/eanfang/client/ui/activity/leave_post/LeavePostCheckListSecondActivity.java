@@ -9,12 +9,13 @@ import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.eanfang.base.BaseActivity;
+import com.eanfang.biz.model.PageBean;
+import com.eanfang.biz.model.entity.station.StationDetectStationsEntity;
 import com.eanfang.biz.rds.base.LViewModelProviders;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.databinding.ActivityLeavePostCheckListBinding;
-import net.eanfang.client.ui.activity.leave_post.bean.LeavePostDeviceListBean;
 import net.eanfang.client.ui.activity.leave_post.viewmodel.LeavePostCheckViewModel;
 import net.eanfang.client.ui.adapter.LeavePostCheckListAdapter;
 
@@ -66,7 +67,7 @@ public class LeavePostCheckListSecondActivity extends BaseActivity {
         return mViewModel;
     }
 
-    private void setData(LeavePostDeviceListBean bean) {
+    private void setData(PageBean<StationDetectStationsEntity> bean) {
         if (bean.getCurrPage() == 1) {
             mAdapter.setNewData(bean.getList());
         } else {

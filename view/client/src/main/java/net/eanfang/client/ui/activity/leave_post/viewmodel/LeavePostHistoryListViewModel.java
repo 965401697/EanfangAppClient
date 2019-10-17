@@ -34,7 +34,7 @@ public class LeavePostHistoryListViewModel extends BaseViewModel {
     private LeavePostRepo mLeavePostHomeRepo;
     private int mCurrentPage = 1;
     private Long mCompanyId;
-    private int mStationId = -1;
+    private long mStationId = -1;
     private String mPlaceName;
     private int mStatus = -1;
 
@@ -93,7 +93,7 @@ public class LeavePostHistoryListViewModel extends BaseViewModel {
     }
 
     public void setResultData(Intent data) {
-        mStationId = data.getIntExtra("stationId", -1);
+        mStationId = data.getLongExtra("stationId", -1);
         mPlaceName = data.getStringExtra("placeName");
         mStatus = data.getIntExtra("status", -1);
         mCurrentPage = 1;

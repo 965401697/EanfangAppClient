@@ -7,10 +7,10 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.eanfang.BuildConfig;
+import com.eanfang.biz.model.entity.station.StationDetectStationsEntity;
 import com.eanfang.util.GlideUtil;
 
 import net.eanfang.client.R;
-import net.eanfang.client.ui.activity.leave_post.bean.LeavePostDeviceListBean;
 
 import java.text.MessageFormat;
 
@@ -20,14 +20,14 @@ import java.text.MessageFormat;
  * Date ：2019-06-24
  * Describe :图像查岗
  */
-public class LeavePostCheckListAdapter extends BaseQuickAdapter<LeavePostDeviceListBean.ListBean, LeavePostCheckListAdapter.LeavePostViewHolder> {
+public class LeavePostCheckListAdapter extends BaseQuickAdapter<StationDetectStationsEntity, LeavePostCheckListAdapter.LeavePostViewHolder> {
 
     public LeavePostCheckListAdapter(int rec) {
         super(rec);
     }
 
     @Override
-    protected void convert(LeavePostViewHolder helper, LeavePostDeviceListBean.ListBean item) {
+    protected void convert(LeavePostViewHolder helper, StationDetectStationsEntity item) {
         if (item == null) {
             return;
         }

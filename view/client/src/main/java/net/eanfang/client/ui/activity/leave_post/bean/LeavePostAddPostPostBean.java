@@ -1,6 +1,7 @@
 package net.eanfang.client.ui.activity.leave_post.bean;
 
 import com.eanfang.biz.model.entity.AccountEntity;
+import com.eanfang.biz.model.entity.Ys7DevicesEntity;
 
 import java.io.Serializable;
 import java.util.List;
@@ -9,6 +10,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 
 /**
  * @author liangkailun
@@ -18,7 +20,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class LeavePostAddPostPostBean implements Serializable {
-    private Integer stationId;
+    private Long stationId;
     private Long companyId;
     private String stationName;
     private String stationArea;
@@ -27,19 +29,12 @@ public class LeavePostAddPostPostBean implements Serializable {
     private String stationPlaceCode;
     private String status;
     private int intervalLength;
-    private DeviceEntityBean deviceEntity;
+    private long configId;
+    private Ys7DevicesEntity deviceEntity;
     private List<ChargeStaffListBean> dutyUserList;
     private List<ChargeStaffListBean> chargeUserList;
+    private NowUserBean nowUser;
 
-    @NoArgsConstructor
-    @Data
-    public static class DeviceEntityBean implements Serializable {
-        private int belongTo;
-        private String companyId;
-        private int deviceId;
-        private String deviceName;
-        private int isInUse;
-    }
 
     @NoArgsConstructor
     @Data
@@ -61,5 +56,13 @@ public class LeavePostAddPostPostBean implements Serializable {
          * 标题
          */
         private String title;
+    }
+
+    @NoArgsConstructor
+    @Data
+    @Accessors(chain = true)
+    public static class NowUserBean {
+        private long userId;
+        private long companyId;
     }
 }

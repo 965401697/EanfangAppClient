@@ -7,7 +7,7 @@ import android.view.View;
 import androidx.lifecycle.MutableLiveData;
 
 import com.eanfang.BuildConfig;
-import com.eanfang.biz.model.bean.PageBean;
+import com.eanfang.biz.model.PageBean;
 import com.eanfang.biz.model.entity.WorkerEntity;
 import com.eanfang.biz.model.entity.tender.TaskApplyEntity;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;

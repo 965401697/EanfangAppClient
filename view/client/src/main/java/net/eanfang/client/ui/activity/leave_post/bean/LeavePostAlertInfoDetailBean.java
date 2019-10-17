@@ -27,7 +27,7 @@ public class LeavePostAlertInfoDetailBean {
     private DevicesEntityBean devicesEntity;
     private String handelUserId;
     private String leaveTime;
-    private int stationId;
+    private long stationId;
     private StationsEntityBean stationsEntity;
     private int status;
     private String updateTime;

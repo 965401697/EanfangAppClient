@@ -3,7 +3,7 @@ package net.eanfang.worker.viewmodle.tender;
 import androidx.lifecycle.MutableLiveData;
 
 import com.eanfang.base.BaseApplication;
-import com.eanfang.biz.model.bean.PageBean;
+import com.eanfang.biz.model.PageBean;
 import com.eanfang.biz.model.bean.QueryEntry;
 import com.eanfang.biz.model.entity.tender.TaskApplyEntity;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;

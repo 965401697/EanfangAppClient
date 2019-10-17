@@ -6,12 +6,13 @@ import android.content.Intent;
 import androidx.lifecycle.MutableLiveData;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.eanfang.biz.model.PageBean;
 import com.eanfang.biz.model.bean.QueryEntry;
+import com.eanfang.biz.model.entity.station.StationDetectStationsEntity;
 import com.eanfang.biz.rds.base.BaseViewModel;
 
 import net.eanfang.client.ui.activity.leave_post.LeavePostCheckDetailActivity;
 import net.eanfang.client.ui.activity.leave_post.LeavePostCheckListSecondActivity;
-import net.eanfang.client.ui.activity.leave_post.bean.LeavePostDeviceListBean;
 import net.eanfang.client.ui.activity.leave_post.ds.LeavePostDs;
 import net.eanfang.client.ui.activity.leave_post.repo.LeavePostRepo;
 
@@ -30,7 +31,7 @@ public class LeavePostCheckViewModel extends BaseViewModel {
     private Long mCompanyId;
     private String mStationPlaceName;
     @Getter
-    private MutableLiveData<LeavePostDeviceListBean> leavePostDeviceList;
+    private MutableLiveData<PageBean<StationDetectStationsEntity>> leavePostDeviceList;
     private LeavePostRepo mLeavePostHomeRepo;
 
     public LeavePostCheckViewModel() {
@@ -69,7 +70,7 @@ public class LeavePostCheckViewModel extends BaseViewModel {
      * @param position 位置
      */
     public void gotoCheckDetailPage(Activity activity, BaseQuickAdapter adapter, int position) {
-        LeavePostDeviceListBean.ListBean bean = (LeavePostDeviceListBean.ListBean) adapter.getData().get(position);
+        StationDetectStationsEntity bean = (StationDetectStationsEntity) adapter.getData().get(position);
         Intent intent = new Intent(activity, LeavePostCheckDetailActivity.class);
         intent.putExtra("deviceSerial", bean.getDeviceEntity().getYs7DeviceSerial());
         intent.putExtra("stationId", bean.getStationId());

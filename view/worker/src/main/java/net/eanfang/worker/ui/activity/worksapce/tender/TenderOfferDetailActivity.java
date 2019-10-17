@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.eanfang.base.BaseActivity;
-import com.eanfang.biz.model.bean.PageBean;
+import com.eanfang.biz.model.PageBean;
 import com.eanfang.biz.model.entity.WorkerEntity;
 import com.eanfang.biz.model.entity.tender.TaskApplyEntity;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;

@@ -11,7 +11,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.eanfang.base.BaseFragment;
-import com.eanfang.biz.model.bean.PageBean;
+import com.eanfang.biz.model.PageBean;
 
 import net.eanfang.worker.databinding.FragmentTemplateItemListBinding;
 

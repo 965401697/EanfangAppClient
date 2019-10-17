@@ -69,13 +69,13 @@ public class LeavePostDetailViewModel extends BaseViewModel {
                 }
                 if (leavePostAlertInfoDetailBean.getDevicesEntity() != null) {
                     mKeyValueLeaveList.add(leaveKeys[0] + leavePostAlertInfoDetailBean.getDevicesEntity().getDeviceName());
+                    mDeviceSerial = leavePostAlertInfoDetailBean.getDevicesEntity().getYs7DeviceSerial();
                 }
                 mKeyValueLeaveList.add(leaveKeys[1] + DateUtil.parse(leavePostAlertInfoDetailBean.getAlertTime()).toDateStr());
                 mKeyValueLeaveList.add(leaveKeys[2] + (StrUtil.isEmpty(leavePostAlertInfoDetailBean.getLeaveTime()) ? "" : leavePostAlertInfoDetailBean.getLeaveTime()));
                 mKeyValueLeaveList.add(leaveKeys[3] + (StrUtil.isEmpty(leavePostAlertInfoDetailBean.getBackTime()) ? "" : leavePostAlertInfoDetailBean.getBackTime()));
                 mKeyValueLeaveList.add(leaveKeys[4] + leavePostAlertInfoDetailBean.getAbsencePeriod() + "min");
 
-                mDeviceSerial = leavePostAlertInfoDetailBean.getDevicesEntity().getYs7DeviceSerial();
             }
             leavePostAlertEventList.setValue(mKeyValueEventList);
             leavePostAlertLeaveList.setValue(mKeyValueLeaveList);
@@ -90,6 +90,10 @@ public class LeavePostDetailViewModel extends BaseViewModel {
     }
 
     public void gotoAudioPlay(Activity activity) {
+        if (StrUtil.isEmpty(mDeviceSerial)) {
+            showToast("设备已解绑,无法查岗");
+            return;
+        }
         Intent intent = new Intent(activity, LeavePostCheckDetailActivity.class);
         intent.putExtra("isShowTopContent", true);
         intent.putExtra("deviceSerial", mDeviceSerial);

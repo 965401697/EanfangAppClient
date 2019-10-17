@@ -2,7 +2,10 @@ package net.eanfang.client.ui.activity.leave_post.repo;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.eanfang.biz.model.PageBean;
 import com.eanfang.biz.model.bean.QueryEntry;
+import com.eanfang.biz.model.entity.Ys7DevicesEntity;
+import com.eanfang.biz.model.entity.station.StationDetectStationsEntity;
 import com.eanfang.biz.rds.base.BaseRepo;
 
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostAddPostPostBean;
@@ -11,18 +14,14 @@ import net.eanfang.client.ui.activity.leave_post.bean.LeavePostAlertInfoDetailBe
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostAlertRankingListBean;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostChooseAreaBean;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostDeviceInfoBean;
-import net.eanfang.client.ui.activity.leave_post.bean.LeavePostDeviceListBean;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostHistoryDayBean;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostHomeTopBean;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostHomeUnHandledAlertBean;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostManageListBean;
-import net.eanfang.client.ui.activity.leave_post.bean.LeavePostMonitorBean;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostStationRankingListBean;
 import net.eanfang.client.ui.activity.leave_post.ds.LeavePostDs;
 
 import org.json.JSONObject;
-
-import java.util.Date;
 
 /**
  * @author liangkailun
@@ -65,8 +64,8 @@ public class LeavePostRepo extends BaseRepo<LeavePostDs> {
      * @param queryEntry
      * @return
      */
-    public MutableLiveData<LeavePostDeviceListBean> deviceListData(QueryEntry queryEntry) {
-        MutableLiveData<LeavePostDeviceListBean> mutableLiveData = new MutableLiveData<>();
+    public MutableLiveData<PageBean<StationDetectStationsEntity>> deviceListData(QueryEntry queryEntry) {
+        MutableLiveData<PageBean<StationDetectStationsEntity>> mutableLiveData = new MutableLiveData<>();
         remoteDataSource.getLeavePostDeviceList(queryEntry, mutableLiveData::setValue);
         return mutableLiveData;
     }
@@ -100,8 +99,8 @@ public class LeavePostRepo extends BaseRepo<LeavePostDs> {
      *
      * @return
      */
-    public MutableLiveData<LeavePostMonitorBean> postMonitorData(QueryEntry queryEntry) {
-        MutableLiveData<LeavePostMonitorBean> mutableLiveData = new MutableLiveData<>();
+    public MutableLiveData<PageBean<Ys7DevicesEntity>> postMonitorData(QueryEntry queryEntry) {
+        MutableLiveData<PageBean<Ys7DevicesEntity>> mutableLiveData = new MutableLiveData<>();
         remoteDataSource.getLeavePostMonitorData(queryEntry, mutableLiveData::setValue);
         return mutableLiveData;
     }

@@ -67,7 +67,7 @@ public class LeavePostCheckDetailActivity extends BaseActivity implements Handle
     /**
      * 岗位id
      */
-    private int mStationId;
+    private long mStationId;
 
     /**
      * 报警id
@@ -103,7 +103,7 @@ public class LeavePostCheckDetailActivity extends BaseActivity implements Handle
     @Override
     protected void initView() {
         setLeftBack(true);
-        mStationId = getIntent().getIntExtra("stationId", 0);
+        mStationId = getIntent().getLongExtra("stationId", 0);
         mAlertId = getIntent().getIntExtra("mAlertId", 0);
         mDeviceSerial = getIntent().getStringExtra("deviceSerial");
         showTopContent = getIntent().getBooleanExtra("isShowTopContent", true);

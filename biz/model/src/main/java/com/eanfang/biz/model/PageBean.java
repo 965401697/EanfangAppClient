@@ -1,4 +1,4 @@
-package com.eanfang.biz.model.bean;
+package com.eanfang.biz.model;
 
 import java.io.Serializable;
 import java.util.List;

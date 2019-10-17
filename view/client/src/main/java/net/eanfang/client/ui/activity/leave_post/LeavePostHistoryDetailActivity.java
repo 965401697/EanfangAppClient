@@ -47,7 +47,7 @@ public class LeavePostHistoryDetailActivity extends BaseActivity {
     protected void initView() {
         setTitle("报警记录");
         setLeftBack(true);
-        int stationId = getIntent().getIntExtra("stationId", 0);
+        long stationId = getIntent().getLongExtra("stationId", 0);
         String date = getIntent().getStringExtra("date");
         mViewModel.historyDayData(DateUtil.parse(date), String.valueOf(stationId));
         mBinding.tvLeavePostHistoryDetailDate.setText(MessageFormat.format("{0}\t\t{1}", DateUtil.parse(date).toString("yyyy年MM月dd日"), DateKit.get(date).weekName()));

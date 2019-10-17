@@ -28,6 +28,7 @@ public class LeavePostDeviceInfoBean {
     private String stationName;
     private String stationPlaceCode;
     private String stationPlaceName;
+    private long configId;
     private int status;
     private List<ChargeStaffListBean> chargeStaffList;
     private List<ChargeStaffListBean> dutyStaffList;
