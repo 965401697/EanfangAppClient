@@ -36,6 +36,7 @@ public class MonitorGroupManagerViewModle extends BaseViewModel {
     private MonitorGroupMangerAdapter monitorGroupMangerAdapter;
 
     private String mCompanyId;
+    public String mCompanyName;
 
     public MonitorGroupManagerViewModle() {
         monitorRepo = new MonitorRepo(new MonitorDs(this));
@@ -92,6 +93,7 @@ public class MonitorGroupManagerViewModle extends BaseViewModel {
                 } else {
                     bundle.putBoolean("isSecond", true);
                 }
+                bundle.putString("mChangeCompanyName", mCompanyName);
                 JumpItent.jump((Activity) groupManagerBinding.getRoot().getContext(), MonitorGroupEditGroupActivity.class, bundle);
             }
 //            }

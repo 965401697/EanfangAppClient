@@ -30,6 +30,7 @@ public class MonitorListActivity extends BaseActivity {
     private String mCompanyId;
 
     private boolean isFirst = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         monitorListBinding = DataBindingUtil.setContentView(this, R.layout.activity_monitor_list);
@@ -50,22 +51,23 @@ public class MonitorListActivity extends BaseActivity {
         monitorListBinding.tvCompanyNameTwo.setOnClickListener((v) -> {
             Bundle bundle_group = new Bundle();
             bundle_group.putString("mChangeCompanyId", monitorViewModle.mChangeCompanyId);
+            bundle_group.putString("mChangeCompanyName", monitorViewModle.mChangeCompanyName);
             JumpItent.jump(this, MonitorGroupManagerActivity.class, bundle_group);
         });
         mCompanyName = ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getOrgName();
+        monitorViewModle.mChangeCompanyName = mCompanyName;
         mCompanyId = ClientApplication.get().getLoginBean().getAccount().getDefaultUser().getCompanyEntity().getCompanyId().toString();
         monitorListBinding.tvCompanyName.setText(mCompanyName);
         monitorListBinding.tvCompanyNameTwo.setText(mCompanyName);
-        monitorViewModle.doGetMonitorList(mCompanyId);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if(!isFirst){
-            monitorViewModle.doGetRightDeviceList(1,monitorViewModle.mLeftGroupId);
+        if (!isFirst) {
+            monitorViewModle.doGetRightDeviceList(1, monitorViewModle.mLeftGroupId);
         }
-
+        monitorViewModle.doGetMonitorList(mCompanyId);
     }
 
     @Override

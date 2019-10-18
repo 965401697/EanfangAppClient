@@ -63,6 +63,7 @@ public class MonitorHomeViewModle extends BaseViewModel implements SwipeRefreshL
      */
     private MonitorSelectCompanyView selectCompanyPop;
     public String mChangeCompanyId;
+    public String mChangeCompanyName;
 
     public MonitorHomeViewModle() {
         monitorRepo = new MonitorRepo(new MonitorDs(this));
@@ -77,6 +78,7 @@ public class MonitorHomeViewModle extends BaseViewModel implements SwipeRefreshL
             selectCompanyPop = new MonitorSelectCompanyView((Activity) monitorListBinding.getRoot().getContext(), companyBean, ((name, companyId) -> {
                 monitorListBinding.tvCompanyName.setText(name);
                 monitorListBinding.tvCompanyNameTwo.setText(name);
+                mChangeCompanyName = name;
                 mChangeCompanyId = String.valueOf(companyId);
                 doGetMonitorList(mChangeCompanyId);
                 selectCompanyPop.dismiss();

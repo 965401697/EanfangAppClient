@@ -3,7 +3,7 @@ package net.eanfang.client.viewmodel.monitor;
 import androidx.lifecycle.MutableLiveData;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.eanfang.biz.model.bean.monitor.MonitorGroupListBean;
+import com.eanfang.biz.model.bean.monitor.RealTimeGroupEntity;
 import com.eanfang.biz.model.vo.MonitorUpdataVo;
 import com.eanfang.biz.rds.base.BaseViewModel;
 import com.eanfang.biz.rds.sys.ds.impl.MonitorDs;
@@ -47,16 +47,15 @@ public class MonitorGroupSelectTopViewModle extends BaseViewModel {
     /**
      * 获取分组管理
      */
-    public void doGetGroupList(String mCompanyId) {
-        monitorRepo.doGetMonitorList(mCompanyId).observe(lifecycleOwner, groupMangerBean -> {
+    public void doGetGroupList(String companyId) {
+        monitorRepo.doGetGroupManagerList(companyId).observe(lifecycleOwner, groupMangerBean -> {
             if (groupMangerBean != null) {
-                monitorGroupSelectTopBinding.tvCompanyName.setText(groupMangerBean.get(0).getParentGroupName());
                 initGroupManagerListLeft(groupMangerBean);
             }
         });
     }
 
-    private void initGroupManagerListLeft(List<MonitorGroupListBean> groupMangerBean) {
+    private void initGroupManagerListLeft(List<RealTimeGroupEntity> groupMangerBean) {
         monitorGroupMangerAdapter = new MonitorGroupSelectTopAdapter(onFirstlistener);
         monitorGroupSelectTopBinding.rvGroup.setLayoutManager(new LinearLayoutManager(monitorGroupSelectTopBinding.getRoot().getContext()));
         monitorGroupMangerAdapter.bindToRecyclerView(monitorGroupSelectTopBinding.rvGroup);

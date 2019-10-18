@@ -1,6 +1,8 @@
 package net.eanfang.client.ui.activity.worksapce.monitor.device;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -27,6 +29,7 @@ import net.eanfang.client.ui.activity.im.SelectIMContactActivity;
 import net.eanfang.client.ui.activity.worksapce.security.SecurityDetailActivity;
 
 import java.util.HashMap;
+import java.util.List;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
@@ -63,10 +66,13 @@ public class MonitorDeviceScreenHotActivity extends BaseActivity {
         monitorDeviceScreenHotBinding.tvEditReport.setOnClickListener((v) -> {
             Bundle bundle = new Bundle();
             bundle.putString("imagePath", getIntent().getStringExtra("imagePath"));
+            bundle.putString("shopName", getIntent().getStringExtra("shopName"));
             JumpItent.jump(this, MonitorDeviceReportActivity.class, bundle);
         });
         monitorDeviceScreenHotBinding.tvScreenHotWeChat.setOnClickListener((v) -> {
-            doShareWx();
+            if (isWeixinAvilible()) {
+                doShareWx();
+            }
         });
         monitorDeviceScreenHotBinding.tvScreenHotContact.setOnClickListener((v) -> {
             doContact();
@@ -150,5 +156,23 @@ public class MonitorDeviceScreenHotActivity extends BaseActivity {
     @Override
     protected ViewModel initViewModel() {
         return null;
+    }
+
+    private boolean isWeixinAvilible() {
+        // 获取packagemanager
+        final PackageManager packageManager = this.getPackageManager();
+        // 获取所有已安装程序的包信息
+        List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);
+        if (pinfo != null) {
+            for (int i = 0; i < pinfo.size(); i++) {
+                String pn = pinfo.get(i).packageName;
+                if ("com.tencent.mm".equals(pn)) {
+                    return true;
+                }
+            }
+        }
+        //  没有安装微信的
+        showToast("您的手机没有安装微信");
+        return false;
     }
 }

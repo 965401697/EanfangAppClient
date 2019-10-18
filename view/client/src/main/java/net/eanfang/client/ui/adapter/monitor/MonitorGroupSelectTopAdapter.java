@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
-import com.eanfang.biz.model.bean.monitor.MonitorGroupListBean;
+import com.eanfang.biz.model.bean.monitor.RealTimeGroupEntity;
 
 import net.eanfang.client.R;
 
@@ -16,11 +16,11 @@ import net.eanfang.client.R;
  * @data 2019/9/9
  * @description 实时监控 上级分组管理
  */
-public class MonitorGroupSelectTopAdapter extends BaseQuickAdapter<MonitorGroupListBean, BaseViewHolder> {
+public class MonitorGroupSelectTopAdapter extends BaseQuickAdapter<RealTimeGroupEntity, BaseViewHolder> {
 
 
     public OnFirstItemClickListener onFirstItemClickListener;
-    private MonitorGroupListBean mRealTimeGroupEntity;
+    private RealTimeGroupEntity mRealTimeGroupEntity;
 
     public MonitorGroupSelectTopAdapter(OnFirstItemClickListener mOnFirstItemClickListener) {
         super(R.layout.layout_monitor_group_select_top_item);
@@ -28,8 +28,8 @@ public class MonitorGroupSelectTopAdapter extends BaseQuickAdapter<MonitorGroupL
     }
 
     @Override
-    protected void convert(BaseViewHolder helper, MonitorGroupListBean item) {
-        MonitorGroupListBean realTimeGroupEntity = item;
+    protected void convert(BaseViewHolder helper, RealTimeGroupEntity item) {
+        RealTimeGroupEntity realTimeGroupEntity = item;
         TextView mName = helper.getView(R.id.tv_groupName);
         RelativeLayout rlItem = helper.getView(R.id.rl_item);
         View mWhite = helper.getView(R.id.view_white);

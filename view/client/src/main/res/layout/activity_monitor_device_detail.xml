@@ -41,7 +41,7 @@
                         layout="@layout/ez_play_control"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
-                        android:layout_below="@id/vg_play_window" />
+                        android:layout_below="@id/vg_play_window"  />
 
                     <RelativeLayout
                         android:id="@+id/vg_play_window"
@@ -132,6 +132,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/rl_time_line"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/color_white"
@@ -152,6 +153,7 @@
                     android:layout_height="@dimen/dimen_100" />
 
                 <LinearLayout
+                    android:id="@+id/ll_control"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/color_white"
@@ -252,69 +254,77 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/dimen_30"
-                    android:text="其他服务"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/textSize_15" />
-
                 <LinearLayout
+                    android:id="@+id/ll_service"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/color_white"
                     android:orientation="vertical">
 
-                    <net.eanfang.client.ui.widget.WQLeftRightClickTextView
-                        android:id="@+id/tv_sevice_clound"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/dimen_30"
+                        android:text="其他服务"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/textSize_15" />
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/white"
-                        android:clickable="true"
-                        android:drawablePadding="@dimen/dimen_30"
-                        android:gravity="left"
-                        android:padding="@dimen/dimen_30"
-                        android:text="云存储增值服务"
-                        android:textSize="14sp"
-                        app:tvImageHeight="@dimen/dimen_30"
-                        app:tvImageWidth="@dimen/dimen_40"
-                        app:tvLeftImage="@mipmap/ic_monitor_detail_cloud"
-                        app:tvRightImage="@mipmap/jtriv_cl" />
+                        android:background="@color/color_white"
+                        android:orientation="vertical">
 
-                    <net.eanfang.client.ui.widget.WQLeftRightClickTextView
-                        android:id="@+id/tv_sevice_face"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/white"
-                        android:clickable="true"
-                        android:drawablePadding="@dimen/dimen_30"
-                        android:gravity="left"
-                        android:padding="@dimen/dimen_30"
-                        android:text="人脸识别增值服务"
-                        android:textSize="14sp"
-                        app:tvImageHeight="@dimen/dimen_40"
-                        app:tvImageWidth="@dimen/dimen_40"
-                        app:tvLeftImage="@mipmap/ic_monitor_detail_face"
-                        app:tvRightImage="@mipmap/jtriv_cl" />
+                        <net.eanfang.client.ui.widget.WQLeftRightClickTextView
+                            android:id="@+id/tv_sevice_clound"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:clickable="true"
+                            android:drawablePadding="@dimen/dimen_30"
+                            android:gravity="left"
+                            android:padding="@dimen/dimen_30"
+                            android:text="云存储增值服务"
+                            android:textSize="14sp"
+                            app:tvImageHeight="@dimen/dimen_30"
+                            app:tvImageWidth="@dimen/dimen_40"
+                            app:tvLeftImage="@mipmap/ic_monitor_detail_cloud"
+                            app:tvRightImage="@mipmap/jtriv_cl" />
 
-                    <net.eanfang.client.ui.widget.WQLeftRightClickTextView
-                        android:id="@+id/tv_sevice_leave"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/white"
-                        android:clickable="true"
-                        android:drawablePadding="@dimen/dimen_30"
-                        android:gravity="left"
-                        android:padding="@dimen/dimen_30"
-                        android:text="脱岗监测增值服务"
-                        android:textSize="14sp"
-                        app:tvImageHeight="@dimen/dimen_50"
-                        app:tvImageWidth="@dimen/dimen_40"
-                        app:tvLeftImage="@mipmap/ic_monitor_detail_leave"
-                        app:tvRightImage="@mipmap/jtriv_cl" />
+                        <net.eanfang.client.ui.widget.WQLeftRightClickTextView
+                            android:id="@+id/tv_sevice_face"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:clickable="true"
+                            android:drawablePadding="@dimen/dimen_30"
+                            android:gravity="left"
+                            android:padding="@dimen/dimen_30"
+                            android:text="人脸识别增值服务"
+                            android:textSize="14sp"
+                            app:tvImageHeight="@dimen/dimen_40"
+                            app:tvImageWidth="@dimen/dimen_40"
+                            app:tvLeftImage="@mipmap/ic_monitor_detail_face"
+                            app:tvRightImage="@mipmap/jtriv_cl" />
 
+                        <net.eanfang.client.ui.widget.WQLeftRightClickTextView
+                            android:id="@+id/tv_sevice_leave"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/white"
+                            android:clickable="true"
+                            android:drawablePadding="@dimen/dimen_30"
+                            android:gravity="left"
+                            android:padding="@dimen/dimen_30"
+                            android:text="脱岗监测增值服务"
+                            android:textSize="14sp"
+                            app:tvImageHeight="@dimen/dimen_50"
+                            app:tvImageWidth="@dimen/dimen_40"
+                            app:tvLeftImage="@mipmap/ic_monitor_detail_leave"
+                            app:tvRightImage="@mipmap/jtriv_cl" />
+
+                    </LinearLayout>
                 </LinearLayout>
+
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 

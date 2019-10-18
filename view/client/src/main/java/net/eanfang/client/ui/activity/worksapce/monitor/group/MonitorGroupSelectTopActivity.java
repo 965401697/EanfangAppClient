@@ -41,6 +41,7 @@ public class MonitorGroupSelectTopActivity extends BaseActivity {
         setLeftBack(true);
 
         mEdit = getIntent().getBooleanExtra("mEdit", false);
+        monitorGroupSelectTopBinding.tvCompanyName.setText(getIntent().getStringExtra("mChangeCompanyName"));
         setRightClick("保存", (v) -> {
             if (mEdit) {
                 monitorGroupSelectTopViewModle.doSaveTopGroupInfo(getIntent().getLongExtra("groupId", 0));

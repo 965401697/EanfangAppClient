@@ -84,6 +84,7 @@ public class MonitorGroupEditGroupActivity extends BaseActivity {
             bundle.putString("mCompanyId", String.valueOf(getIntent().getStringExtra("mCompanyId")));
             bundle.putBoolean("mEdit", true);
             bundle.putLong("groupId", getIntent().getLongExtra("groupId", 0));
+            bundle.putString("mChangeCompanyName",getIntent().getStringExtra("mChangeCompanyName"));
             JumpItent.jump(this, MonitorGroupSelectTopActivity.class, bundle, REQUEST_SELECT_TOP);
         });
         /**

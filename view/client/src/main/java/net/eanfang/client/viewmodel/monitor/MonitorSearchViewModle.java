@@ -2,6 +2,7 @@ package net.eanfang.client.viewmodel.monitor;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
@@ -13,9 +14,13 @@ import com.eanfang.biz.model.bean.QueryEntry;
 import com.eanfang.biz.rds.base.BaseViewModel;
 import com.eanfang.biz.rds.sys.ds.impl.MonitorDs;
 import com.eanfang.biz.rds.sys.repo.MonitorRepo;
+import com.eanfang.util.JumpItent;
 
 import net.eanfang.client.databinding.ActivityMonitorSearchBinding;
+import net.eanfang.client.ui.activity.worksapce.monitor.device.MonitorDeviceDetailActivity;
 import net.eanfang.client.ui.adapter.monitor.MonitorSearchAdapter;
+
+import java.io.Serializable;
 
 import cn.hutool.core.collection.CollectionUtil;
 import lombok.Getter;
@@ -52,6 +57,18 @@ public class MonitorSearchViewModle extends BaseViewModel implements SwipeRefres
         monitorSearchAdapter.bindToRecyclerView(monitorSearchBinding.rvDeviceList);
         monitorSearchAdapter.setOnLoadMoreListener(this, monitorSearchBinding.rvDeviceList);
         monitorSearchBinding.swipreFresh.setOnRefreshListener(this);
+
+        monitorSearchAdapter.setOnItemClickListener(((adapter, view, position) -> {
+            Bundle bundle = new Bundle();
+            bundle.putString("deviceSerial", monitorSearchAdapter.getData().get(position).getYs7DeviceSerial());
+            bundle.putString("mDeviceName", monitorSearchAdapter.getData().get(position).getDeviceName());
+            bundle.putString("mChangeCompanyId", mChangeCompanyId);
+            bundle.putLong("mDeviceId", monitorSearchAdapter.getData().get(position).getDeviceId() != null ? monitorSearchAdapter.getData().get(position).getDeviceId() : 0);
+            bundle.putLong("mLeftGroupId", monitorSearchAdapter.getData().get(position).getRealTimeDevice().getGroupId());
+            bundle.putInt("position", position);
+            bundle.putSerializable("deviceList", (Serializable) monitorSearchAdapter.getData());
+            JumpItent.jump((Activity) monitorSearchBinding.getRoot().getContext(), MonitorDeviceDetailActivity.class, bundle);
+        }));
     }
 
     /**

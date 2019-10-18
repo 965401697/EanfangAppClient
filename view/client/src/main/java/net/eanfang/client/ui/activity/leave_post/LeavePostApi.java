@@ -68,7 +68,7 @@ public interface LeavePostApi {
      * @param queryEntry
      * @return
      */
-    @POST("/yaf_station/stationDetectDevices/customerDeviceList")
+    @POST("/yaf_station/stationdevice/customerDeviceList")
     Observable<BaseResponseBody<LeavePostMonitorBean>> postMonitor(@Body QueryEntry queryEntry);
 
     /**

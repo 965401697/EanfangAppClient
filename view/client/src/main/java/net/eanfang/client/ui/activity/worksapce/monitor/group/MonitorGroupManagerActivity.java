@@ -43,9 +43,12 @@ public class MonitorGroupManagerActivity extends BaseActivity {
         setLeftBack(true);
         setTitle("分组管理");
         mChangeCompanyId = getIntent().getStringExtra("mChangeCompanyId");
+        monitorGroupManagerViewModle.mCompanyName= getIntent().getStringExtra("mChangeCompanyName");
+
         setRightClick(R.mipmap.add, (v) -> {
             Bundle bundle = new Bundle();
             bundle.putString("mChangeCompanyId", getIntent().getStringExtra("mChangeCompanyId"));
+            bundle.putString("mChangeCompanyName", getIntent().getStringExtra("mChangeCompanyName"));
             JumpItent.jump(this, MonitorGroupCreateActivity.class, bundle);
         });
     }

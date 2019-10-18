@@ -42,6 +42,7 @@ import com.eanfang.util.CallUtils;
 import com.eanfang.util.JumpItent;
 import com.videogo.constant.Constant;
 import com.videogo.errorlayer.ErrorInfo;
+import com.videogo.exception.BaseException;
 import com.videogo.exception.InnerException;
 import com.videogo.openapi.EZConstants;
 import com.videogo.openapi.EZConstants.EZVideoLevel;
@@ -72,6 +73,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 
@@ -136,6 +138,7 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
     private int mHour;
     public String minute;
     public Calendar mPlayTime;
+    public Calendar mPlayEndTime;
 
     public MonitorDeviceDetailTimeAdapter monitorDeviceDetailTimeAdapter;
     private List<String> mTimeList = new ArrayList<>();
@@ -245,11 +248,22 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
                 if (isPlayBack) {
                     if (StrUtil.isEmpty(minute)) {
                         mPlayTime = DateUtil.parseTimeToday(mHour + ":00").toCalendar();
+                        mPlayEndTime = DateUtil.parse(DateUtil.today() + " " + mHour + ":10:00", DatePattern.NORM_DATETIME_MINUTE_PATTERN).toCalendar();
                     } else {
                         mPlayTime = DateUtil.parseTimeToday(mHour + ":" + minute).toCalendar();
+                        mPlayEndTime = DateUtil.parse(DateUtil.today() + " " + mHour + ":" + (Double.parseDouble(minute) + 10), DatePattern.NORM_DATETIME_MINUTE_PATTERN).toCalendar();
+                    }
+                    try {
+                        if (EZOpenSDK.getInstance().searchRecordFileFromDevice(mDeviceSerial, 1, mPlayTime, mPlayEndTime).size() <= 0) {
+                            showToast("该时间段没有录像片段");
+                            return;
+                        }
+                    } catch (BaseException e) {
+                        showToast("该时间段没有录像片段");
+                        e.printStackTrace();
+                        return;
                     }
                     monitorDeviceDetailBinding.llInclued.realplayPlayIv.setVisibility(View.GONE);
-
                     monitorDeviceDetailBinding.llPlayControl.realplayPlayBtn.setBackgroundResource(R.drawable.play_stop_selector);
                     mStatus = RealPlayStatus.STATUS_START;
                     mHandler = new Handler(this);
@@ -491,12 +505,22 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
             getWindow().setAttributes(lp);
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
             view.setVisibility(View.GONE);
+            monitorDeviceDetailBinding.rlTimeLine.setVisibility(View.GONE);
+            monitorDeviceDetailBinding.viewTimeLine.setVisibility(View.GONE);
+            monitorDeviceDetailBinding.llControl.setVisibility(View.GONE);
+            monitorDeviceDetailBinding.llService.setVisibility(View.GONE);
+            monitorDeviceDetailBinding.llPlayControl.realplayControlRl.setVisibility(View.GONE);
         } else {
             WindowManager.LayoutParams lp2 = getWindow().getAttributes();
             lp2.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
             getWindow().setAttributes(lp2);
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
             view.setVisibility(View.VISIBLE);
+            monitorDeviceDetailBinding.rlTimeLine.setVisibility(View.VISIBLE);
+            monitorDeviceDetailBinding.viewTimeLine.setVisibility(View.VISIBLE);
+            monitorDeviceDetailBinding.llControl.setVisibility(View.VISIBLE);
+            monitorDeviceDetailBinding.llService.setVisibility(View.VISIBLE);
+            monitorDeviceDetailBinding.llPlayControl.realplayControlRl.setVisibility(View.VISIBLE);
         }
         setRealPlaySvLayout();
         super.onConfigurationChanged(newConfig);
@@ -619,6 +643,7 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
             mStatus = RealPlayStatus.STATUS_STOP;
             ezPlayer.stopLocalRecord();
             ezPlayer.stopPlayback();
+            ezPlayer.release();
         }
     }
 

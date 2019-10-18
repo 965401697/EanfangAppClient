@@ -185,15 +185,15 @@ public class MonitorDevicePlayBackActivity extends BaseActivity implements Handl
             } else {
                 if (!StrUtil.isEmpty(mHour)) {
                     if (StrUtil.isEmpty(minute)) {
-                        mPlayTime = DateUtil.parse(mYearMonthDay + " " + mHour + ":00:00", DatePattern.NORM_DATETIME_MINUTE_PATTERN).toCalendar();
-                        mPlayEndTime = DateUtil.parse(mYearMonthDay + " " + mHour + ":10:00", DatePattern.NORM_DATETIME_MINUTE_PATTERN).toCalendar();
+                        mPlayTime = DateUtil.calendar(DateUtil.parse(mYearMonthDay + " " + mHour + ":00:00", DatePattern.NORM_DATETIME_MINUTE_PATTERN).getTime());
+                        mPlayEndTime = DateUtil.calendar(DateUtil.parse(mYearMonthDay + " " + mHour + ":10:00", DatePattern.NORM_DATETIME_MINUTE_PATTERN).getTime());
                     } else {
-                        mPlayTime = DateUtil.parse(mYearMonthDay + " " + mHour + ":" + minute + ":00", DatePattern.NORM_DATETIME_MINUTE_PATTERN).toCalendar();
-                        mPlayEndTime = DateUtil.parse(mYearMonthDay + " " + mHour + ":" + (Double.parseDouble(minute) + 10) + ":00", DatePattern.NORM_DATETIME_MINUTE_PATTERN).toCalendar();
+                        mPlayTime = DateUtil.calendar(DateUtil.parse(mYearMonthDay + " " + mHour + ":" + minute + ":00", DatePattern.NORM_DATETIME_MINUTE_PATTERN).getTime());
+                        mPlayEndTime = DateUtil.calendar(DateUtil.parse(mYearMonthDay + " " + mHour + ":" + (Double.parseDouble(minute) + 10) + ":00", DatePattern.NORM_DATETIME_MINUTE_PATTERN).getTime());
                     }
                 } else {
-                    mPlayTime = DateUtil.parse(mYearMonthDay + " 00:00:00", DatePattern.NORM_DATETIME_MINUTE_PATTERN).toCalendar();
-                    mPlayEndTime = DateUtil.parse(mYearMonthDay + " " + mHour + ":10:00", DatePattern.NORM_DATETIME_MINUTE_PATTERN).toCalendar();
+                    mPlayTime = DateUtil.calendar(DateUtil.parse(mYearMonthDay + " 00:00:00", DatePattern.NORM_DATETIME_MINUTE_PATTERN).getTime());
+                    mPlayEndTime = DateUtil.calendar(DateUtil.parse(mYearMonthDay + " " + mHour + ":10:00", DatePattern.NORM_DATETIME_MINUTE_PATTERN).getTime());
                 }
             }
             try {
@@ -202,7 +202,7 @@ public class MonitorDevicePlayBackActivity extends BaseActivity implements Handl
                     return;
                 }
             } catch (BaseException e) {
-                showToast("该时间段没有录像片段");
+                showToast(e.getMessage());
                 e.printStackTrace();
                 return;
             }
@@ -214,6 +214,7 @@ public class MonitorDevicePlayBackActivity extends BaseActivity implements Handl
                 monitorDevicePlayBackBinding.realplaySv.setVisibility(View.VISIBLE);
                 mRealPlaySh = monitorDevicePlayBackBinding.realplaySv.getHolder();
                 mRealPlaySh.addCallback(this);
+                ezPlayer = null;
                 ezPlayer = EZOpenSDK.getInstance().createPlayer(mDeviceSerial, 1);
                 mLocalInfo = LocalInfo.getInstance();
                 DisplayMetrics metric = new DisplayMetrics();
@@ -229,7 +230,7 @@ public class MonitorDevicePlayBackActivity extends BaseActivity implements Handl
                 ezPlayer.setSurfaceHold(mRealPlaySh);
                 setOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
                 monitorDevicePlayBackBinding.llInclued.realplayLoading.setVisibility(View.VISIBLE);
-                boolean isSuccess = ezPlayer.startPlayback(mPlayTime, DateUtil.parseTimeToday("23:59").toCalendar());
+                boolean isSuccess = ezPlayer.startPlayback(mPlayTime, DateUtil.calendar(DateUtil.parseTimeToday("23:59").toCalendar().getTime()));
                 isPlayBack = false;
             } else {
                 stopRealPlay();
@@ -262,9 +263,11 @@ public class MonitorDevicePlayBackActivity extends BaseActivity implements Handl
             onClickChangePlaybackSpeed(monitorDevicePlayBackBinding.ivSpeed);
         });
         // 回退十秒
-        monitorDevicePlayBackBinding.ivReturn.setOnClickListener((v)->{
-            ezPlayer.stopPlayback();
-            ezPlayer.seekPlayback(DateUtil.date(ezPlayer.getOSDTime().getTime().getTime()-10000).toCalendar());
+        monitorDevicePlayBackBinding.ivReturn.setOnClickListener((v) -> {
+            if (ezPlayer.getOSDTime() != null) {
+                ezPlayer.stopPlayback();
+                ezPlayer.seekPlayback(DateUtil.date(ezPlayer.getOSDTime().getTime().getTime() - 10000).toCalendar());
+            }
         });
     }
 
@@ -877,27 +880,28 @@ public class MonitorDevicePlayBackActivity extends BaseActivity implements Handl
         popupWindow.showAsDropDown(view, 0, yOffset);
         isShowChangePlaybackRateWindow = true;
     }
+
     private View.OnClickListener mChangePlaybackRateListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             PopupWindow popupWindow = null;
-            if (v.getTag()!= null && v.getTag() instanceof PopupWindow){
+            if (v.getTag() != null && v.getTag() instanceof PopupWindow) {
                 popupWindow = ((PopupWindow) v.getTag());
                 popupWindow.dismiss();
             }
-            if (v instanceof Button){
+            if (v instanceof Button) {
                 String targetRateWithX = (String) ((Button) v).getText();
                 String rate = targetRateWithX.replaceAll("x", "");
                 rate = rate.replace("X", "");
                 int rateInt = Integer.parseInt(rate);
-                for (EZConstants.EZPlaybackRate rateEnum: EZConstants.EZPlaybackRate.values()){
-                    if (rateInt == rateEnum.speed){
-                        if (ezPlayer.setPlaybackRate(rateEnum)){
-                            if (popupWindow != null && popupWindow.getContentView() != null && popupWindow.getContentView().getTag() instanceof  Button){
+                for (EZConstants.EZPlaybackRate rateEnum : EZConstants.EZPlaybackRate.values()) {
+                    if (rateInt == rateEnum.speed) {
+                        if (ezPlayer.setPlaybackRate(rateEnum)) {
+                            if (popupWindow != null && popupWindow.getContentView() != null && popupWindow.getContentView().getTag() instanceof Button) {
                                 ((Button) popupWindow.getContentView().getTag()).setText(targetRateWithX);
                             }
-                        }else{
-                            showToast("failed to change to " + targetRateWithX);
+                        } else {
+                            showToast("修改失败" + targetRateWithX);
                         }
                     }
                 }

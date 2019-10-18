@@ -40,9 +40,11 @@ public class MonitorGroupCreateActivity extends BaseActivity {
         setLeftBack(true);
         setTitle("创建分组");
 
+        monitorGroupCreatViewModle.mTopGroupName = getIntent().getStringExtra("mChangeCompanyName");
         monitorGroupCreateBinding.rlTopGroupName.setOnClickListener((v) -> {
             Bundle bundle = new Bundle();
             bundle.putString("mCompanyId", getIntent().getStringExtra("mChangeCompanyId"));
+            bundle.putString("mChangeCompanyName", getIntent().getStringExtra("mChangeCompanyName"));
             JumpItent.jump(this, MonitorGroupSelectTopActivity.class, bundle, REQUEST_SELECT_TOP);
         });
     }
