@@ -9,6 +9,7 @@ import com.eanfang.base.BaseApplication;
 import com.eanfang.biz.model.bean.SelectAddressItem;
 import com.eanfang.biz.model.bean.TemplateBean;
 import com.eanfang.biz.model.entity.AccountEntity;
+import com.eanfang.biz.model.entity.Ys7DevicesEntity;
 import com.eanfang.biz.rds.base.BaseViewModel;
 import com.eanfang.config.Config;
 import com.eanfang.ui.activity.SelectAddressActivity;
@@ -68,7 +69,7 @@ public class LeavePostAddPostViewModel extends BaseViewModel {
      *
      * @param stationId
      */
-    public void getPostInfo(int stationId) {
+    public void getPostInfo(long stationId) {
         mLeavePostHomeRepo.deviceInfoData(String.valueOf(stationId)).observe(lifecycleOwner, leavePostDeviceInfoBean -> {
             if (leavePostDeviceInfoBean == null) {
                 return;
@@ -115,10 +116,13 @@ public class LeavePostAddPostViewModel extends BaseViewModel {
      *
      * @param binding
      */
-    public void addPostCommit(ActivityLeavePostAddPostBinding binding, int type, Integer stationId) {
+    public void addPostCommit(ActivityLeavePostAddPostBinding binding, int type, Long stationId, Long configId) {
         if (checkoutInfo(binding)) {
             if (stationId != null) {
                 addPostPostBean.setStationId(stationId);
+            }
+            if (configId != null) {
+                addPostPostBean.setConfigId(configId);
             }
             addPostPostBean.setCompanyId(BaseApplication.get().getCompanyId());
             addPostPostBean.setStationName(binding.edtLeavePostAddPostName.getText().toString());
@@ -128,6 +132,7 @@ public class LeavePostAddPostViewModel extends BaseViewModel {
             addPostPostBean.setIntervalLength(Integer.parseInt(binding.tvLeavePostAddPostTime.getText().toString().replace("分钟", "")));
             addPostPostBean.setChargeUserList(mChargeStaffListBeans);
             addPostPostBean.setDutyUserList(mDutyStaffListBeans);
+            addPostPostBean.setNowUser(new LeavePostAddPostPostBean.NowUserBean().setUserId(BaseApplication.get().getUserId()).setCompanyId(BaseApplication.get().getCompanyId()));
             if (type == 0) {
                 mLeavePostHomeRepo.addPost(addPostPostBean).observe(lifecycleOwner, jsonObject -> {
                     showToast("提交成功");
@@ -135,7 +140,7 @@ public class LeavePostAddPostViewModel extends BaseViewModel {
                 });
             } else {
                 mLeavePostHomeRepo.updatePost(addPostPostBean).observe(lifecycleOwner, jsonObject -> {
-                    showToast("提交成功");
+                    showToast("保存成功");
                     finish();
                 });
             }
@@ -178,7 +183,7 @@ public class LeavePostAddPostViewModel extends BaseViewModel {
     /**
      * 设置设备返回结果
      */
-    public void setDeviceResult(LeavePostAddPostPostBean.DeviceEntityBean deviceEntityBean) {
+    public void setDeviceResult(Ys7DevicesEntity deviceEntityBean) {
         addPostPostBean.setDeviceEntity(deviceEntityBean);
     }
 

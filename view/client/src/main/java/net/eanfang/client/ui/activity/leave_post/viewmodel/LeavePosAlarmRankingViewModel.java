@@ -6,6 +6,7 @@ import android.content.Intent;
 import androidx.lifecycle.MutableLiveData;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.eanfang.biz.model.bean.LeavePostDetailBean;
 import com.eanfang.biz.model.bean.QueryEntry;
 import com.eanfang.biz.rds.base.BaseViewModel;
 
@@ -15,7 +16,6 @@ import net.eanfang.client.ui.activity.leave_post.LeavePostHistoryDetailActivity;
 import net.eanfang.client.ui.activity.leave_post.LeavePostListActivity;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostAlertRankingListBean;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostDefaultRankingBean;
-import net.eanfang.client.ui.activity.leave_post.bean.LeavePostDetailBean;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostStationRankingListBean;
 import net.eanfang.client.ui.activity.leave_post.ds.LeavePostDs;
 import net.eanfang.client.ui.activity.leave_post.repo.LeavePostRepo;

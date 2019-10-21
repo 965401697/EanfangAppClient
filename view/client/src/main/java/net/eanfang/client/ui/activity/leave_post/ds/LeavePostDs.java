@@ -1,29 +1,27 @@
 package net.eanfang.client.ui.activity.leave_post.ds;
 
 import com.eanfang.base.network.callback.RequestCallback;
+import com.eanfang.biz.model.PageBean;
 import com.eanfang.biz.model.bean.QueryEntry;
+import com.eanfang.biz.model.entity.Ys7DevicesEntity;
+import com.eanfang.biz.model.entity.station.StationDetectStationsEntity;
 import com.eanfang.biz.rds.base.BaseRemoteDataSource;
 import com.eanfang.biz.rds.base.BaseViewModel;
 
+import net.eanfang.client.ui.activity.leave_post.LeavePostApi;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostAddPostPostBean;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostAlertHistoryBean;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostAlertInfoDetailBean;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostAlertRankingListBean;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostChooseAreaBean;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostDeviceInfoBean;
-import net.eanfang.client.ui.activity.leave_post.bean.LeavePostDeviceListBean;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostHistoryDayBean;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostHomeTopBean;
-import net.eanfang.client.ui.activity.leave_post.LeavePostApi;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostHomeUnHandledAlertBean;
-import net.eanfang.client.ui.activity.leave_post.bean.LeavePostLatestAlertBean;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostManageListBean;
-import net.eanfang.client.ui.activity.leave_post.bean.LeavePostMonitorBean;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostStationRankingListBean;
 
 import org.json.JSONObject;
-
-import java.util.Date;
 
 
 /**
@@ -63,7 +61,7 @@ public class LeavePostDs extends BaseRemoteDataSource {
      * @param queryEntry
      * @param callback
      */
-    public void getLeavePostDeviceList(QueryEntry queryEntry, RequestCallback<LeavePostDeviceListBean> callback) {
+    public void getLeavePostDeviceList(QueryEntry queryEntry, RequestCallback<PageBean<StationDetectStationsEntity>> callback) {
         execute(getService(LeavePostApi.class).deviceList(queryEntry), callback);
     }
 
@@ -92,7 +90,7 @@ public class LeavePostDs extends BaseRemoteDataSource {
      * @param queryEntry
      * @param callback
      */
-    public void getLeavePostMonitorData(QueryEntry queryEntry, RequestCallback<LeavePostMonitorBean> callback) {
+    public void getLeavePostMonitorData(QueryEntry queryEntry, RequestCallback<PageBean<Ys7DevicesEntity>> callback) {
         execute(getService(LeavePostApi.class).postMonitor(queryEntry), callback);
     }
 

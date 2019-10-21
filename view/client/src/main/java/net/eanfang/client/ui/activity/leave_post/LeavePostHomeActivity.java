@@ -101,7 +101,7 @@ public class LeavePostHomeActivity extends BaseActivity {
      * @param leavePostHomeBean
      */
     private void setTopData(LeavePostHomeTopBean leavePostHomeBean) {
-        mBinding.tvLeavePostPostCount.setText(String.valueOf(leavePostHomeBean.getStationDetect().getStationCount()));
+        mBinding.tvLeavePostPostCount.setText(String.valueOf(leavePostHomeBean.getConfigEntity().getStationCount()));
         mBinding.tvLeavePostWarnCount.setText(String.valueOf(leavePostHomeBean.getTodayAlertCount()));
         mBinding.tvLeavePostAllWarn.setText(String.valueOf(leavePostHomeBean.getTotalAlertCount()));
         int changeCount = leavePostHomeBean.getDifference();

@@ -34,7 +34,7 @@ public class LeavePostCheckDetailViewModel extends BaseViewModel {
      *
      * @param stationId
      */
-    public void getDeviceListData(int stationId) {
+    public void getDeviceListData(long stationId) {
         mLeavePostHomeRepo.deviceInfoData(String.valueOf(stationId)).observe(lifecycleOwner, leavePostDeviceDetail::setValue);
     }
 

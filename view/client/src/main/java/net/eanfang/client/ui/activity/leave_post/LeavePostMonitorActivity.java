@@ -8,11 +8,11 @@ import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.eanfang.base.BaseActivity;
+import com.eanfang.biz.model.bean.LeavePostDetailBean;
 import com.eanfang.biz.rds.base.LViewModelProviders;
 
 import net.eanfang.client.R;
 import net.eanfang.client.databinding.ActivityLeavePostCheckListBinding;
-import net.eanfang.client.ui.activity.leave_post.bean.LeavePostDetailBean;
 import net.eanfang.client.ui.activity.leave_post.viewmodel.LeavePostMonitorViewModel;
 import net.eanfang.client.ui.adapter.LeavePostDetailAdapter;
 

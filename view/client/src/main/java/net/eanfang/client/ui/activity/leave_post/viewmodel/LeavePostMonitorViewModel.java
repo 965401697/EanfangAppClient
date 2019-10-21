@@ -7,14 +7,13 @@ import android.view.View;
 import androidx.lifecycle.MutableLiveData;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.eanfang.biz.model.PageBean;
+import com.eanfang.biz.model.bean.LeavePostDetailBean;
 import com.eanfang.biz.model.bean.QueryEntry;
+import com.eanfang.biz.model.entity.Ys7DevicesEntity;
 import com.eanfang.biz.rds.base.BaseViewModel;
-import com.eanfang.util.StringUtils;
 
 import net.eanfang.client.ui.activity.leave_post.LeavePostMonitorSecondActivity;
-import net.eanfang.client.ui.activity.leave_post.bean.LeavePostAddPostPostBean;
-import net.eanfang.client.ui.activity.leave_post.bean.LeavePostDetailBean;
-import net.eanfang.client.ui.activity.leave_post.bean.LeavePostMonitorBean;
 import net.eanfang.client.ui.activity.leave_post.ds.LeavePostDs;
 import net.eanfang.client.ui.activity.leave_post.repo.LeavePostRepo;
 
@@ -33,17 +32,17 @@ public class LeavePostMonitorViewModel extends BaseViewModel {
     @Getter
     private MutableLiveData<List<LeavePostDetailBean>> leavePostDetailData;
     @Getter
-    private LeavePostMonitorBean mLeavePostMonitorBean;
+    private PageBean<Ys7DevicesEntity> mLeavePostMonitorBean;
     private LeavePostRepo mLeavePostRepo;
     private int mCurrentPage = 1;
-    private LeavePostAddPostPostBean.DeviceEntityBean mDeviceEntityBean;
+    private Ys7DevicesEntity mDeviceEntityBean;
     private int lastPosition = -1;
     private String mDeviceName;
 
     public LeavePostMonitorViewModel() {
         leavePostDetailData = new MutableLiveData<>();
         mLeavePostRepo = new LeavePostRepo(new LeavePostDs(this));
-        mDeviceEntityBean = new LeavePostAddPostPostBean.DeviceEntityBean();
+        mDeviceEntityBean = new Ys7DevicesEntity();
     }
 
     /**
@@ -66,8 +65,8 @@ public class LeavePostMonitorViewModel extends BaseViewModel {
             }
             mLeavePostMonitorBean = leavePostMonitorBean;
             ArrayList<LeavePostDetailBean> list = new ArrayList<>();
-            for (LeavePostMonitorBean.ListBean bean : leavePostMonitorBean.getList()) {
-                list.add(bean.getLeavePostDetailBean());
+            for (Ys7DevicesEntity entity : leavePostMonitorBean.getList()) {
+                list.add(entity.getLeavePostDetailBean());
             }
             leavePostDetailData.setValue(list);
         });

@@ -14,47 +14,56 @@ import lombok.NoArgsConstructor;
 @Data
 public class LeavePostHomeTopBean implements Serializable {
 
+
     /**
+     * ys7Account : {"accountId":42,"adminUserId":"1003832818015506434","companyId":"1003832818015506433","orgName":"测试啊","status":1,"topCompanyId":"1003832818015506433"}
      * todayAlertCount : 0
-     * lunarDate : 五月廿九
-     * now : 2019-07-01 14:59:17
+     * lunarDate : 八月十九
+     * now : 2019-09-17 13:42:57
      * difference : 0
-     * stationDetect : {"adminUserId":"1134307027488649219","beginTime":"2019-06-19 00:00:00","companyId":"1134307027488649218","detectId":21,"detectType":"2,3","endTime":"2020-06-20 00:00:00","orgName":"测试太卡了","stationCount":10,"status":0,"topCompanyId":"1134307027488649218"}
+     * configEntity : {"beginTime":"2019-09-16 15:48:58","endTime":"2019-09-16 15:49:00","stationCount":0}
      * totalAlertCount : 0
      */
 
+    private Ys7AccountBean ys7Account;
     private int todayAlertCount;
     private String lunarDate;
     private String now;
     private int difference;
-    private StationDetectBean stationDetect;
+    private ConfigEntityBean configEntity;
     private int totalAlertCount;
 
-    @NoArgsConstructor
     @Data
-    public static class StationDetectBean {
+    public static class Ys7AccountBean {
         /**
-         * adminUserId : 1134307027488649219
-         * beginTime : 2019-06-19 00:00:00
-         * companyId : 1134307027488649218
-         * detectId : 21
-         * detectType : 2,3
-         * endTime : 2020-06-20 00:00:00
-         * orgName : 测试太卡了
-         * stationCount : 10
-         * status : 0
-         * topCompanyId : 1134307027488649218
+         * accountId : 42
+         * adminUserId : 1003832818015506434
+         * companyId : 1003832818015506433
+         * orgName : 测试啊
+         * status : 1
+         * topCompanyId : 1003832818015506433
          */
 
+        private int accountId;
         private String adminUserId;
-        private String beginTime;
         private String companyId;
-        private int detectId;
-        private String detectType;
-        private String endTime;
         private String orgName;
-        private int stationCount;
         private int status;
         private String topCompanyId;
+
+
+    }
+
+    @Data
+    public static class ConfigEntityBean {
+        /**
+         * beginTime : 2019-09-16 15:48:58
+         * endTime : 2019-09-16 15:49:00
+         * stationCount : 0
+         */
+
+        private String beginTime;
+        private String endTime;
+        private int stationCount;
     }
 }

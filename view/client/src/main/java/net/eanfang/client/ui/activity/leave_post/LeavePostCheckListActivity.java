@@ -1,7 +1,6 @@
 package net.eanfang.client.ui.activity.leave_post;
 
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
@@ -9,12 +8,13 @@ import androidx.lifecycle.ViewModel;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.eanfang.base.BaseActivity;
+import com.eanfang.biz.model.PageBean;
+import com.eanfang.biz.model.entity.station.StationDetectStationsEntity;
 import com.eanfang.biz.rds.base.LViewModelProviders;
 
 import net.eanfang.client.R;
 import net.eanfang.client.base.ClientApplication;
 import net.eanfang.client.databinding.ActivityLeavePostCheckListBinding;
-import net.eanfang.client.ui.activity.leave_post.bean.LeavePostDeviceListBean;
 import net.eanfang.client.ui.activity.leave_post.viewmodel.LeavePostCheckViewModel;
 import net.eanfang.client.ui.adapter.LeavePostCheckListAdapter;
 
@@ -42,12 +42,7 @@ public class LeavePostCheckListActivity extends BaseActivity {
         mBinding.leavePostCheckListSearch.setCursorVisible(false);
         mBinding.leavePostCheckListSearch.setFocusable(false);
         mBinding.leavePostCheckListSearch.setFocusableInTouchMode(false);
-        mBinding.leavePostCheckListSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mViewModel.gotoCheckSecondPage(LeavePostCheckListActivity.this);
-            }
-        });
+        mBinding.leavePostCheckListSearch.setOnClickListener(view -> mViewModel.gotoCheckSecondPage(LeavePostCheckListActivity.this));
         mAdapter = new LeavePostCheckListAdapter(R.layout.item_leave_post_check);
         mBinding.recLeavePostCheckList.setLayoutManager(new LinearLayoutManager(this));
         mAdapter.bindToRecyclerView(mBinding.recLeavePostCheckList);
@@ -67,7 +62,7 @@ public class LeavePostCheckListActivity extends BaseActivity {
         return mViewModel;
     }
 
-    private void setData(LeavePostDeviceListBean bean) {
+    private void setData(PageBean<StationDetectStationsEntity> bean) {
         if (bean.getCurrPage() == 1) {
             mAdapter.setNewData(bean.getList());
         } else {

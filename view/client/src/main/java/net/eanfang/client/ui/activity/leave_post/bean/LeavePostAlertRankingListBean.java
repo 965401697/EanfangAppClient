@@ -1,5 +1,7 @@
 package net.eanfang.client.ui.activity.leave_post.bean;
 
+import com.eanfang.biz.model.bean.LeavePostDetailBean;
+
 import java.util.List;
 
 import lombok.Data;

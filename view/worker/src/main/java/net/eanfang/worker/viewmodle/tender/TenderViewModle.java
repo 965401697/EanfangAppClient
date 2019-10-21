@@ -5,7 +5,7 @@ import android.widget.PopupWindow;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.eanfang.biz.model.bean.PageBean;
+import com.eanfang.biz.model.PageBean;
 import com.eanfang.biz.model.bean.QueryEntry;
 import com.eanfang.biz.model.entity.IfbOrderEntity;
 import com.eanfang.biz.model.entity.tender.TaskPublishEntity;

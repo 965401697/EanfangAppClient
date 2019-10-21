@@ -1,4 +1,6 @@
-package net.eanfang.client.ui.activity.leave_post.bean;
+package com.eanfang.biz.model.bean;
+
+import com.eanfang.biz.model.entity.Ys7DevicesEntity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -59,9 +61,9 @@ public class LeavePostDetailBean {
     /**
      * 岗位id
      */
-    private int stationId;
+    private long stationId;
 
-    private LeavePostAddPostPostBean.DeviceEntityBean mDeviceEntityBean;
+    private Ys7DevicesEntity mDeviceEntityBean;
 
     /**
      * 检测设备页面选择设备位置
