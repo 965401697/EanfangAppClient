@@ -2,7 +2,10 @@ package net.eanfang.client.ui.activity.leave_post;
 
 
 import com.eanfang.base.network.model.BaseResponseBody;
+import com.eanfang.biz.model.PageBean;
 import com.eanfang.biz.model.bean.QueryEntry;
+import com.eanfang.biz.model.entity.Ys7DevicesEntity;
+import com.eanfang.biz.model.entity.station.StationDetectStationsEntity;
 
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostAddPostPostBean;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostAlertHistoryBean;
@@ -10,13 +13,11 @@ import net.eanfang.client.ui.activity.leave_post.bean.LeavePostAlertInfoDetailBe
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostAlertRankingListBean;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostChooseAreaBean;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostDeviceInfoBean;
-import net.eanfang.client.ui.activity.leave_post.bean.LeavePostDeviceListBean;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostHistoryDayBean;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostHomeTopBean;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostHomeUnHandledAlertBean;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostLatestAlertBean;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostManageListBean;
-import net.eanfang.client.ui.activity.leave_post.bean.LeavePostMonitorBean;
 import net.eanfang.client.ui.activity.leave_post.bean.LeavePostStationRankingListBean;
 
 import org.json.JSONObject;
@@ -60,7 +61,7 @@ public interface LeavePostApi {
      * @return
      */
     @POST("/yaf_station/stationDetectStations/list")
-    Observable<BaseResponseBody<LeavePostDeviceListBean>> deviceList(@Body QueryEntry queryEntry);
+    Observable<BaseResponseBody<PageBean<StationDetectStationsEntity>>> deviceList(@Body QueryEntry queryEntry);
 
     /**
      * 监测岗位
@@ -69,7 +70,7 @@ public interface LeavePostApi {
      * @return
      */
     @POST("/yaf_station/stationdevice/customerDeviceList")
-    Observable<BaseResponseBody<LeavePostMonitorBean>> postMonitor(@Body QueryEntry queryEntry);
+    Observable<BaseResponseBody<PageBean<Ys7DevicesEntity>>> postMonitor(@Body QueryEntry queryEntry);
 
     /**
      * 添加岗位

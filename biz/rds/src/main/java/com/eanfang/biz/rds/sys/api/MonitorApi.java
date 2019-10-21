@@ -1,7 +1,7 @@
 package com.eanfang.biz.rds.sys.api;
 
 import com.eanfang.base.network.model.BaseResponseBody;
-import com.eanfang.biz.model.bean.PageBean;
+import com.eanfang.biz.model.PageBean;
 import com.eanfang.biz.model.bean.QueryEntry;
 import com.eanfang.biz.model.bean.monitor.MonitorListBean;
 import com.eanfang.biz.model.bean.monitor.RealTimeGroupEntity;

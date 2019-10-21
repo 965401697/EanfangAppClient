@@ -2,7 +2,7 @@ package com.eanfang.biz.rds.sys.repo;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.eanfang.biz.model.bean.PageBean;
+import com.eanfang.biz.model.PageBean;
 import com.eanfang.biz.model.bean.QueryEntry;
 import com.eanfang.biz.model.bean.monitor.MonitorGroupListBean;
 import com.eanfang.biz.model.bean.monitor.RealTimeGroupEntity;
