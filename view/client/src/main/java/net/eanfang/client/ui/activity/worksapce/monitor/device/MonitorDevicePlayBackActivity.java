@@ -208,7 +208,7 @@ public class MonitorDevicePlayBackActivity extends BaseActivity implements Handl
             }
             if (mStatus == RealPlayStatus.STATUS_STOP) {
                 monitorDevicePlayBackBinding.llInclued.realplayPlayIv.setVisibility(View.GONE);
-                monitorDevicePlayBackBinding.realplayPlayBtn.setBackgroundResource(R.drawable.play_stop_selector);
+                monitorDevicePlayBackBinding.realplayPlayBtn.setBackgroundResource(R.mipmap.ic_monitor_back_play_pause);
                 mStatus = RealPlayStatus.STATUS_START;
                 mHandler = new Handler(this);
                 monitorDevicePlayBackBinding.realplaySv.setVisibility(View.VISIBLE);
@@ -275,7 +275,7 @@ public class MonitorDevicePlayBackActivity extends BaseActivity implements Handl
         if (mStatus == RealPlayStatus.STATUS_START || mStatus == RealPlayStatus.STATUS_PLAY) {
             return;
         }
-        monitorDevicePlayBackBinding.realplayPlayBtn.setBackgroundResource(R.drawable.play_play_selector);
+        monitorDevicePlayBackBinding.realplayPlayBtn.setBackgroundResource(R.mipmap.ic_monitor_back_play);
         // 视频中的播放按钮
 //        monitorDevicePlayBackBinding.llInclued.realplayPlayIv.setVisibility(View.VISIBLE);
         mStatus = RealPlayStatus.STATUS_START;
@@ -305,7 +305,7 @@ public class MonitorDevicePlayBackActivity extends BaseActivity implements Handl
     }
 
     private void stopRealPlay() {
-        monitorDevicePlayBackBinding.realplayPlayBtn.setBackgroundResource(R.drawable.play_play_selector);
+        monitorDevicePlayBackBinding.realplayPlayBtn.setBackgroundResource(R.mipmap.ic_monitor_back_play);
         mStatus = RealPlayStatus.STATUS_STOP;
         if (ezPlayer != null) {
             ezPlayer.stopLocalRecord();
@@ -347,7 +347,7 @@ public class MonitorDevicePlayBackActivity extends BaseActivity implements Handl
 
     private void updateRealPlayUI() {
         monitorDevicePlayBackBinding.llInclued.realplayLoading.setVisibility(View.INVISIBLE);
-        monitorDevicePlayBackBinding.realplayPlayBtn.setBackgroundResource(R.drawable.play_stop_selector);
+        monitorDevicePlayBackBinding.realplayPlayBtn.setBackgroundResource(R.mipmap.ic_monitor_back_play_pause);
         if (isRecording) {
             updateRecordTime();
         }
@@ -576,7 +576,7 @@ public class MonitorDevicePlayBackActivity extends BaseActivity implements Handl
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(getApplicationContext(), "抓图失败, 检查是否开启了硬件解码",
+                                Toast.makeText(getApplicationContext(), "截图失败",
                                         Toast.LENGTH_SHORT).show();
                             }
                         });

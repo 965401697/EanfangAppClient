@@ -118,8 +118,7 @@
                 android:id="@+id/ll_time"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/dimen_60"
-                android:layout_centerHorizontal="true"
-                android:gravity="center_vertical"
+                android:layout_centerInParent="true"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -142,15 +141,6 @@
                     android:layout_height="match_parent"
                     android:background="@mipmap/ic_monitor_back_right" />
             </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/ll_time"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/dimen_60"
-                android:text="未检测到SD卡或硬盘"
-                android:visibility="gone " />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -179,15 +169,14 @@
                 <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="#999999">
+                    android:layout_weight="1">
 
                     <ImageButton
                         android:id="@+id/realplay_play_btn"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:background="@drawable/play_play_selector" />
+                        android:background="@mipmap/ic_monitor_back_play" />
                 </RelativeLayout>
 
 
@@ -221,6 +210,8 @@
                 </LinearLayout>
 
             </LinearLayout>
+
         </RelativeLayout>
+
     </LinearLayout>
 </layout>

@@ -915,7 +915,7 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(getApplicationContext(), "抓图失败, 检查是否开启了硬件解码",
+                                Toast.makeText(getApplicationContext(), "截图失败",
                                         Toast.LENGTH_SHORT).show();
                             }
                         });
