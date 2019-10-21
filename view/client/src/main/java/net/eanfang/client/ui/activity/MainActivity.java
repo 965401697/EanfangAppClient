@@ -28,6 +28,7 @@ import com.eanfang.biz.model.bean.AllMessageBean;
 import com.eanfang.biz.model.bean.BaseDataBean;
 import com.eanfang.biz.model.bean.ConstAllBean;
 import com.eanfang.biz.model.bean.GroupDetailBean;
+import com.eanfang.biz.model.bean.Ys7SubAccountBean;
 import com.eanfang.biz.model.bean.device.User;
 import com.eanfang.biz.model.entity.WorkerEntity;
 import com.eanfang.biz.rds.base.BaseViewModel;
@@ -151,14 +152,14 @@ public class MainActivity extends BaseClientActivity implements IUnReadMessageOb
      * 存储脱岗监测token
      */
     private void initYingShiYunData() {
-        EanfangHttp.post(NewApiService.HOME_SUB_ACCOUNT_INFO_LIST).execute(new EanfangCallback<JSONObject>(this, false, JSONObject.class, bean -> {
-            JSONObject jsonObject = bean.getJSONObject("subAccountInfoList");
-            String value = jsonObject != null ? jsonObject.getString(String.valueOf(ClientApplication.get().getCompanyId())) : null;
-            if (!StrUtil.isEmpty(value)) {
-                EZOpenSDK.getInstance().setAccessToken(value);
+        EanfangHttp.post(NewApiService.HOME_SUB_ACCOUNT_INFO_LIST).execute(new EanfangCallback<Ys7SubAccountBean>(this, false, Ys7SubAccountBean.class, bean -> {
+//            JSONObject jsonObject = bean.getJSONObject("subAccountInfoList");
+
+            if (bean != null && bean.getSubAccountInfoList().get(ClientApplication.get().getCompanyId()) != null) {
+                EZOpenSDK.getInstance().setAccessToken(bean.getSubAccountInfoList().get(ClientApplication.get().getCompanyId()).getSubAccountToken());
                 EzvizAPI.getInstance().setServerUrl(EanfangConst.YING_SHI_YUN_OPEN_API_SERVER, EanfangConst.YING_SHI_YUN_OPEN_AUTH_API_SERVER);
+                CacheKit.get().put("subAccountInfoList", bean);
             }
-            CacheKit.get().put("subAccountInfoList", jsonObject);
         }));
     }
 
