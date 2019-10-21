@@ -69,4 +69,22 @@ public class LeavePostDetailBean {
      * 检测设备页面选择设备位置
      */
     private int choosePosition = -1;
+
+    public static LeavePostDetailBean getLeavePostDetailBean(Ys7DevicesEntity ys7DevicesEntity) {
+        LeavePostDetailBean mLeavePostDetailBean = new LeavePostDetailBean();
+        mLeavePostDetailBean.setName(ys7DevicesEntity.getDeviceName());
+        mLeavePostDetailBean.setImg(ys7DevicesEntity.getLivePic());
+        mLeavePostDetailBean.setSerialNum(ys7DevicesEntity.getYs7DeviceSerial());
+        mLeavePostDetailBean.setStatus(ys7DevicesEntity.getStatus());
+        mLeavePostDetailBean.setUse(ys7DevicesEntity.getIsInUse());
+        mLeavePostDetailBean.setPageType(1);
+        Ys7DevicesEntity deviceEntityBean = new Ys7DevicesEntity();
+        deviceEntityBean.setBelongTo(ys7DevicesEntity.getBelongTo());
+        deviceEntityBean.setCompanyId(ys7DevicesEntity.getCompanyId());
+        deviceEntityBean.setDeviceId(ys7DevicesEntity.getDeviceId());
+        deviceEntityBean.setDeviceName(ys7DevicesEntity.getDeviceName());
+        deviceEntityBean.setIsInUse(ys7DevicesEntity.getIsInUse());
+        mLeavePostDetailBean.setMDeviceEntityBean(deviceEntityBean);
+        return mLeavePostDetailBean;
+    }
 }

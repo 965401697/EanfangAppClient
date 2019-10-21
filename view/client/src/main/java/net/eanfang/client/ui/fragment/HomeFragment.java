@@ -13,12 +13,14 @@ import android.widget.TextView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.alibaba.fastjson.JSONObject;
 import com.eanfang.apiservice.NewApiService;
 import com.eanfang.apiservice.UserApi;
+import com.eanfang.base.BaseApplication;
 import com.eanfang.base.kit.cache.CacheKit;
 import com.eanfang.biz.model.bean.AllMessageBean;
+import com.eanfang.biz.model.bean.Ys7SubAccountBean;
 import com.eanfang.biz.model.bean.datastatistics.HomeDatastisticeBean;
+import com.eanfang.biz.model.entity.Ys7AccountParam;
 import com.eanfang.config.EanfangConst;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
@@ -52,7 +54,6 @@ import java.util.Date;
 import java.util.List;
 
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.util.StrUtil;
 import q.rorbin.badgeview.QBadgeView;
 
 import static com.eanfang.base.kit.V.v;
@@ -287,12 +288,14 @@ public class HomeFragment extends BaseFragment {
         findViewById(R.id.tv_monitor).setOnClickListener(v -> JumpItent.jump(getActivity(), RealTimeMonitorActivity.class));
         //脱岗监测
         findViewById(R.id.tv_out_post).setOnClickListener(view -> {
-            JSONObject jsonObject1 = CacheKit.get().get("subAccountInfoList", JSONObject.class);
-            String value = jsonObject1 != null ? jsonObject1.getString(String.valueOf(ClientApplication.get().getCompanyId())) : null;
-            if (!StrUtil.isEmpty(value)) {
-                // CacheKit.get().put("YingShiYunToken", value);
+            Ys7SubAccountBean bean = CacheKit.get().get("subAccountInfoList", Ys7SubAccountBean.class);
+            if (bean != null) {
+                Ys7AccountParam param = bean.getSubAccountInfoList().get(BaseApplication.get().getCompanyId());
+                if (param != null && param.getStationDetect()) {
+                    startActivity(new Intent(getActivity(), LeavePostHomeActivity.class));
+                    // CacheKit.get().put("YingShiYunToken", value);
 //                ClientApplication.get().set("YingShiYunToken", value);
-                startActivity(new Intent(getActivity(), LeavePostHomeActivity.class));
+                }
             } else {
                 showToast(R.string.text_leave_post_no_open_toast);
             }
