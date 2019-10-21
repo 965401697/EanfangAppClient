@@ -1,7 +1,6 @@
 package com.eanfang.biz.model.entity;
 
 import com.alibaba.fastjson.JSON;
-import com.eanfang.biz.model.bean.LeavePostDetailBean;
 import com.eanfang.biz.model.bean.monitor.RealTimeGroupEntity;
 
 import java.io.Serializable;
@@ -108,30 +107,6 @@ public class Ys7DevicesEntity implements Serializable {
      * real_time关系表
      */
     private RealTimeDeviceEntity realTimeDevice;
-
-    /**
-     * face_detect关系表
-     */
-//    private FaceDetectDeviceEntity faceDetectDevice;
-    private LeavePostDetailBean mLeavePostDetailBean;
-
-    public LeavePostDetailBean getLeavePostDetailBean() {
-        mLeavePostDetailBean = new LeavePostDetailBean();
-        mLeavePostDetailBean.setName(deviceName);
-        mLeavePostDetailBean.setImg(livePic);
-        mLeavePostDetailBean.setSerialNum(ys7DeviceSerial);
-        mLeavePostDetailBean.setStatus(status);
-        mLeavePostDetailBean.setUse(isInUse);
-        mLeavePostDetailBean.setPageType(1);
-        Ys7DevicesEntity deviceEntityBean = new Ys7DevicesEntity();
-        deviceEntityBean.setBelongTo(belongTo);
-        deviceEntityBean.setCompanyId(Long.valueOf(companyId));
-        deviceEntityBean.setDeviceId(Long.valueOf(deviceId));
-        deviceEntityBean.setDeviceName(deviceName);
-        deviceEntityBean.setIsInUse(isInUse);
-        mLeavePostDetailBean.setMDeviceEntityBean(deviceEntityBean);
-        return mLeavePostDetailBean;
-    }
 
     /**
      * 分组

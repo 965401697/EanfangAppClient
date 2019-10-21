@@ -91,7 +91,7 @@ public class LeavePostAddPostViewModel extends BaseViewModel {
             mListInfo.add(infos[1] + leavePostDeviceInfoBean.getStationArea());
             mListInfo.add(infos[2] + leavePostDeviceInfoBean.getStationCode());
             mListInfo.add(infos[3] + Config.get().getAddressByCode(leavePostDeviceInfoBean.getStationPlaceCode()));
-            mListInfo.add(infos[4] + (StrUtil.isEmpty(leavePostDeviceInfoBean.getDeviceName()) ? "" : leavePostDeviceInfoBean.getDeviceName()));
+            mListInfo.add(infos[4] + (leavePostDeviceInfoBean.getDeviceEntity() == null ? "" : leavePostDeviceInfoBean.getDeviceEntity().getDeviceName()));
             mListInfo.add(infos[5] + leavePostDeviceInfoBean.getIntervalLength() + "分钟");
             mListInfo.add(infos[6] + (leavePostDeviceInfoBean.getStatus() == 0 ? "未开启" : "已启用"));
             leavePostInfo.setValue(mListInfo);

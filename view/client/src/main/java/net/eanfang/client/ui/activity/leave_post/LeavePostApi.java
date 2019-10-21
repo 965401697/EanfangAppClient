@@ -42,7 +42,7 @@ public interface LeavePostApi {
      * @param companyId 公司id
      * @return
      */
-    @POST("/yaf_station/stationDetect/homepage")
+    @POST("/yaf_station/stationDetectConfig/homepage")
     Observable<BaseResponseBody<LeavePostHomeTopBean>> homeData(@Query("companyId") Long companyId);
 
     /**
@@ -60,7 +60,7 @@ public interface LeavePostApi {
      * @param queryEntry
      * @return
      */
-    @POST("/yaf_station/stationDetectStations/list")
+    @POST("/yaf_station/stationDetectStations/stationList")
     Observable<BaseResponseBody<PageBean<StationDetectStationsEntity>>> deviceList(@Body QueryEntry queryEntry);
 
     /**

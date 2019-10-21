@@ -66,7 +66,7 @@ public class LeavePostMonitorViewModel extends BaseViewModel {
             mLeavePostMonitorBean = leavePostMonitorBean;
             ArrayList<LeavePostDetailBean> list = new ArrayList<>();
             for (Ys7DevicesEntity entity : leavePostMonitorBean.getList()) {
-                list.add(entity.getLeavePostDetailBean());
+                list.add(LeavePostDetailBean.getLeavePostDetailBean(entity));
             }
             leavePostDetailData.setValue(list);
         });

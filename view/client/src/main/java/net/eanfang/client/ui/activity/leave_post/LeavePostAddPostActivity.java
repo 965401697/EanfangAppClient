@@ -123,7 +123,7 @@ public class LeavePostAddPostActivity extends BaseActivity {
             mBinding.edtLeavePostAddPostPosition.setText(leavePostDeviceInfoBean.getStationArea());
             mBinding.edtLeavePostAddPostNumber.setText(leavePostDeviceInfoBean.getStationCode());
             mBinding.tvLeavePostAddPostArea.setText(Config.get().getAddressByCode(leavePostDeviceInfoBean.getStationPlaceCode()));
-            mBinding.tvLeavePostAddPostDevice.setText(leavePostDeviceInfoBean.getDeviceName());
+            mBinding.tvLeavePostAddPostDevice.setText((leavePostDeviceInfoBean.getDeviceEntity() == null ? "" : leavePostDeviceInfoBean.getDeviceEntity().getDeviceName()));
             mBinding.tvLeavePostAddPostTime.setText(MessageFormat.format("{0}分钟", leavePostDeviceInfoBean.getIntervalLength()));
             mBinding.switchBtnLeavePostAddPostStatus.setChecked(leavePostDeviceInfoBean.getStatus() == 1);
         }
