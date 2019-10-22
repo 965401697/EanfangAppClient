@@ -1,10 +1,20 @@
 package com.eanfang.biz.model.bean;
 
+import java.io.Serializable;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 /**
  * Created by O u r on 2018/4/17.
  */
-
-public class GroupCreatBean {
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+public class GroupCreatBean implements Serializable {
 
     /**
      * createTime : 2018-04-17 17:05:58
@@ -19,44 +29,6 @@ public class GroupCreatBean {
     private int groupId;
     private String groupName;
     private String rcloudGroupId;
+    private String headPortrait;
 
-    public String getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
-    }
-
-    public String getCreateUser() {
-        return createUser;
-    }
-
-    public void setCreateUser(String createUser) {
-        this.createUser = createUser;
-    }
-
-    public int getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(int groupId) {
-        this.groupId = groupId;
-    }
-
-    public String getGroupName() {
-        return groupName;
-    }
-
-    public void setGroupName(String groupName) {
-        this.groupName = groupName;
-    }
-
-    public String getRcloudGroupId() {
-        return rcloudGroupId;
-    }
-
-    public void setRcloudGroupId(String rcloudGroupId) {
-        this.rcloudGroupId = rcloudGroupId;
-    }
 }

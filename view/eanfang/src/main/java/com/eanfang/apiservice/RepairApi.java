@@ -207,5 +207,10 @@ public interface RepairApi {
      * 37.报修查看安防公司详情
      */
     String GET_SECURITY_COMPANY_DETAIL = BuildConfig.API_HOST + "/yaf_sys/orgunit/orgUnitInfo";
+    /**
+     * 38.预约成功后生成群组
+     */
+    String REPAIR_CREATE_GROUP = BuildConfig.API_HOST + "/yaf_im/sysgroup/createRepair";
+
 }
 

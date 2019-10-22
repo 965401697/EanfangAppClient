@@ -40,6 +40,7 @@ import net.eanfang.client.ui.activity.worksapce.DesignOrderActivity;
 import net.eanfang.client.ui.activity.worksapce.RealTimeMonitorActivity;
 import net.eanfang.client.ui.activity.worksapce.datastatistics.DataStaticsticsListActivity;
 import net.eanfang.client.ui.activity.worksapce.install.InstallOrderParentActivity;
+import net.eanfang.client.ui.activity.worksapce.monitor.MonitorListActivity;
 import net.eanfang.client.ui.activity.worksapce.online.ExpertOnlineActivity;
 import net.eanfang.client.ui.activity.worksapce.repair.RepairTypeActivity;
 import net.eanfang.client.ui.activity.worksapce.scancode.ScanCodeActivity;
@@ -252,6 +253,7 @@ public class HomeFragment extends BaseFragment {
      * 工作按钮
      */
     private void initIconClick() {
+        Ys7SubAccountBean ys7SubAccountBean = CacheKit.get().get("subAccountInfoList", Ys7SubAccountBean.class);
         //我要报修
         findViewById(R.id.tv_reparir).setOnClickListener((v) -> {
             JumpItent.jump(getActivity(), RepairTypeActivity.class);
@@ -285,12 +287,24 @@ public class HomeFragment extends BaseFragment {
             showToast("暂未开通");
         });
         //实时监控
-        findViewById(R.id.tv_monitor).setOnClickListener(v -> JumpItent.jump(getActivity(), RealTimeMonitorActivity.class));
+        findViewById(R.id.tv_monitor).setOnClickListener(v -> {
+            if (ys7SubAccountBean != null) {
+                Ys7AccountParam param = ys7SubAccountBean.getSubAccountInfoList().get(BaseApplication.get().getCompanyId());
+                if (param != null && param.getRealTime()) {
+                    JumpItent.jump(getActivity(), MonitorListActivity.class);
+                } else {
+                    JumpItent.jump(getActivity(), RealTimeMonitorActivity.class);
+                }
+            } else {
+                JumpItent.jump(getActivity(), RealTimeMonitorActivity.class);
+            }
+
+        });
         //脱岗监测
         findViewById(R.id.tv_out_post).setOnClickListener(view -> {
-            Ys7SubAccountBean bean = CacheKit.get().get("subAccountInfoList", Ys7SubAccountBean.class);
-            if (bean != null) {
-                Ys7AccountParam param = bean.getSubAccountInfoList().get(BaseApplication.get().getCompanyId());
+
+            if (ys7SubAccountBean != null) {
+                Ys7AccountParam param = ys7SubAccountBean.getSubAccountInfoList().get(BaseApplication.get().getCompanyId());
                 if (param != null && param.getStationDetect()) {
                     startActivity(new Intent(getActivity(), LeavePostHomeActivity.class));
                     // CacheKit.get().put("YingShiYunToken", value);

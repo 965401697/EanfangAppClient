@@ -1,5 +1,6 @@
 package net.eanfang.worker.ui.activity.worksapce.repair;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -8,7 +9,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.eanfang.BuildConfig;
 import com.eanfang.apiservice.RepairApi;
+import com.eanfang.biz.model.bean.RepairCreateGroupBean;
 import com.eanfang.http.EanfangCallback;
 import com.eanfang.http.EanfangHttp;
 import com.eanfang.sdk.selecttime.SelectTimeDialogFragment;
@@ -16,24 +19,17 @@ import com.eanfang.ui.base.BaseActivity;
 import com.eanfang.util.DateKit;
 
 import net.eanfang.worker.R;
+import net.eanfang.worker.base.WorkerApplication;
+import net.eanfang.worker.ui.activity.im.NewSelectIMContactActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.hutool.core.date.DateField;
-
-import net.eanfang.worker.R;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Group;
 
 /**
  * @author Guanluocang
@@ -105,9 +101,24 @@ public class RepairAppointTimeActivity extends BaseActivity implements SelectTim
                     Log.d("电话回访，电话预约上门时间a", RepairApi.POST_FLOW_SCREENING + "\n" + "orderId: " + orderId + "\n" + "solve: " + solve + "\n" + "bookTime: " + bookTime + "\n");
                     showToast("预约成功");
                     setResult(RESULT_OK);
-                    finishSelf();
+                    // 创建群组
+                    doCreateGroup();
                 }));
 
+    }
+
+    private void doCreateGroup() {
+        EanfangHttp.post(RepairApi.REPAIR_CREATE_GROUP)
+                .params("orderId", orderId + "")
+                .execute(new EanfangCallback<RepairCreateGroupBean>(RepairAppointTimeActivity.this, true, RepairCreateGroupBean.class, (bean) -> {
+                    Group groupInfo = new Group(bean.getSysGroup().getRcloudGroupId(), bean.getSysGroup().getGroupName(), Uri.parse(BuildConfig.OSS_SERVER + bean.getSysGroup().getHeadPortrait()));
+                    RongIM.getInstance().refreshGroupInfoCache(groupInfo);
+
+                    WorkerApplication.get().set(bean.getSysGroup().getRcloudGroupId(), bean.getSysGroup().getGroupId());
+//                    RongIM.getInstance().startGroupChat(RepairAppointTimeActivity.this, bean.getSysGroup().getRcloudGroupId(), bean.getSysGroup().getGroupName());
+                    NewSelectIMContactActivity.transactionActivities.remove(this);
+                    RepairAppointTimeActivity.this.finish();
+                }));
     }
 
     @OnClick({R.id.ll_doorTime, R.id.ll_specificTime})
