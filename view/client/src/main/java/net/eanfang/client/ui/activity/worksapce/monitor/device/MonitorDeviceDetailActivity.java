@@ -135,7 +135,11 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
      * 是否回放
      */
     private boolean isPlayBack = false;
-    private int mHour;
+    /**
+     * 是否滑动分钟
+     */
+    private boolean isScrollMinute = false;
+    private int mHour = 1000;
     public String minute;
     public Calendar mPlayTime;
     public Calendar mPlayEndTime;
@@ -212,6 +216,12 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
     @Override
     public void doGetValue(String mValue) {
         Log.e("GG", "value" + mValue);
+        if (isScrollMinute) {
+            isPlayBack = true;
+            stopRealPlay();
+        } else {
+            isScrollMinute = true;
+        }
         minute = mValue;
     }
 
@@ -246,6 +256,10 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
         monitorDeviceDetailBinding.llInclued.realplayPlayIv.setOnClickListener((v) -> {
             if (mStatus == RealPlayStatus.STATUS_STOP) {
                 if (isPlayBack) {
+                    if (mHour == 1000) {
+                        showToast("请选择小时");
+                        return;
+                    }
                     if (StrUtil.isEmpty(minute)) {
                         mPlayTime = DateUtil.parseTimeToday(mHour + ":00").toCalendar();
                         mPlayEndTime = DateUtil.parse(DateUtil.today() + " " + mHour + ":10:00", DatePattern.NORM_DATETIME_MINUTE_PATTERN).toCalendar();
@@ -440,6 +454,7 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
         }
         // 视频中的播放按钮
         monitorDeviceDetailBinding.llInclued.realplayPlayIv.setVisibility(View.VISIBLE);
+        monitorDeviceDetailBinding.llInclued.realplayLoading.setVisibility(View.GONE);
         monitorDeviceDetailBinding.llInclued.realplayLoadingRl.setVisibility(View.VISIBLE);
         setForceOrientation(0);
     }
@@ -475,7 +490,7 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
 
     private void updateRealPlayUI() {
         monitorDeviceDetailBinding.llInclued.realplayLoading.setVisibility(View.INVISIBLE);
-        monitorDeviceDetailBinding.llPlayControl.realplayPlayBtn.setBackgroundResource(R.drawable.play_stop_selector);
+        monitorDeviceDetailBinding.llPlayControl.realplayPlayBtn.setBackgroundResource(R.drawable.play_play_selector);
         if (isRecording) {
             updateRecordTime();
         }
@@ -986,7 +1001,7 @@ public class MonitorDeviceDetailActivity extends BaseActivity implements Handler
         if (ezPlayer == null || !isRecording) {
             return;
         }
-        dialog("Record result", "saved to " + mCurrentRecordPath);
+        dialog("录像完成", "保存路径：" + mCurrentRecordPath);
         // 设置录像按钮为check状态
         if (mOrientation == Configuration.ORIENTATION_PORTRAIT) {
             if (!mIsOnStop) {

@@ -124,6 +124,7 @@ public class SlidingRuleView extends View {
     private String mValue;
 
     private DoGetValueListener doGetValueListener = null;
+    private boolean isFirst = true;
 
     public SlidingRuleView(Context context) {
         this(context, null);
@@ -139,7 +140,7 @@ public class SlidingRuleView extends View {
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.SlidingRuleView);
 
         // 刻度线的颜色
-        timeLineDegreeColor = typedArray.getColor(R.styleable.SlidingRuleView_lineDegreeColor,ContextCompat.getColor(getContext(), R.color.color_monitor_text_back));
+        timeLineDegreeColor = typedArray.getColor(R.styleable.SlidingRuleView_lineDegreeColor, ContextCompat.getColor(getContext(), R.color.color_monitor_text_back));
         //顶部的直线距离View顶部距离
 //        topDegreeLine = typedArray.getDimension(R.styleable.SlidingRuleView_topDegreeLine, dp2px(getContext(), 45));
         //刻度间隔
@@ -219,7 +220,6 @@ public class SlidingRuleView extends View {
         mViewHeight = getMeasuredHeight();
         //绿色指针的x坐标
         greenPointX = getMeasuredWidth() / 2;
-
     }
 
     @Override
@@ -243,7 +243,6 @@ public class SlidingRuleView extends View {
                 mPaint.setColor(ContextCompat.getColor(getContext(), R.color.color_monitor_text));
                 mPaint.setStrokeWidth(6);
                 canvas.drawLine(x, 0, x, 0 + longDegreeLine, mPaint);
-
                 //画刻度值
                 String number = i + "分";
                 //得到文字宽度
@@ -267,15 +266,19 @@ public class SlidingRuleView extends View {
         mPaint.setStrokeWidth(greenPointWidth);
         canvas.drawLine(greenPointX + getScrollX(), 0, greenPointX + getScrollX(), longDegreeLine + dp2px(getContext(), 3),
                 mPaint);
-        mValue = decimalFormat.format((greenPointX + getScrollX() - mLeftOrder) / lineDegreeSpace );
+        mValue = decimalFormat.format((greenPointX + getScrollX() - mLeftOrder) / lineDegreeSpace);
         if (doGetValueListener != null) {
             doGetValueListener.doGetValue(mValue);
+        }
+        if (isFirst) {
+            scrollBy(0, 0);
+            isFirst = false;
         }
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-         mVelocityTracker.addMovement(event);
+        mVelocityTracker.addMovement(event);
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 //记录初始触摸屏幕下的坐标

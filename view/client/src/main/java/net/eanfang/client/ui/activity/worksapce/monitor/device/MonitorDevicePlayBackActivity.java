@@ -109,7 +109,11 @@ public class MonitorDevicePlayBackActivity extends BaseActivity implements Handl
      * 是否回放
      */
     private boolean isPlayBack = false;
-    private String mHour;
+    /**
+     * 是否滑动分钟
+     */
+    private boolean isScrollMinute = false;
+    private String mHour = "1000";
     public String minute;
     public Calendar mPlayTime;
     public Calendar mPlayEndTime;
@@ -173,12 +177,22 @@ public class MonitorDevicePlayBackActivity extends BaseActivity implements Handl
     @Override
     public void doGetValue(String mValue) {
         Log.e("GG", "value" + mValue);
+        if (isScrollMinute) {
+            isPlayBack = true;
+            stopRealPlay();
+        } else {
+            isScrollMinute = true;
+        }
         minute = mValue;
     }
 
     private void initListener() {
         // 暂停后 播放 视频中间的播放按钮
         monitorDevicePlayBackBinding.realplayPlayBtn.setOnClickListener((v) -> {
+            if (mHour.equals(1000)) {
+                showToast("请选择小时");
+                return;
+            }
             if (StrUtil.isEmpty(mYearMonthDay)) {
                 showToast("请选择时间");
                 return;
@@ -230,7 +244,9 @@ public class MonitorDevicePlayBackActivity extends BaseActivity implements Handl
                 ezPlayer.setSurfaceHold(mRealPlaySh);
                 setOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
                 monitorDevicePlayBackBinding.llInclued.realplayLoading.setVisibility(View.VISIBLE);
-                boolean isSuccess = ezPlayer.startPlayback(mPlayTime, DateUtil.calendar(DateUtil.parseTimeToday("23:59").toCalendar().getTime()));
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(DateUtil.parseTimeToday("23:59"));
+                boolean isSuccess = ezPlayer.startPlayback(mPlayTime, calendar);
                 isPlayBack = false;
             } else {
                 stopRealPlay();
@@ -647,7 +663,7 @@ public class MonitorDevicePlayBackActivity extends BaseActivity implements Handl
         if (ezPlayer == null || !isRecording) {
             return;
         }
-        dialog("Record result", "saved to " + mCurrentRecordPath);
+        dialog("录像完成", "保存路径：" + mCurrentRecordPath);
         // 设置录像按钮为check状态
         if (mOrientation == Configuration.ORIENTATION_PORTRAIT) {
             if (!mIsOnStop) {

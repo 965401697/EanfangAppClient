@@ -197,14 +197,14 @@
                         android:id="@+id/iv_videoTape_start"
                         android:layout_width="@dimen/dimen_85"
                         android:layout_height="@dimen/dimen_85"
-                        android:background="@drawable/play_video_selector"
+                        android:background="@mipmap/ic_monitor_video"
                         android:visibility="visible" />
 
                     <ImageView
                         android:id="@+id/iv_videoTape_stop"
                         android:layout_width="@dimen/dimen_85"
                         android:layout_height="@dimen/dimen_85"
-                        android:src="@drawable/play_video_sel"
+                        android:src="@mipmap/ic_monitor_video_stop"
                         android:visibility="gone" />
 
                 </LinearLayout>

@@ -45,7 +45,7 @@ public class MonitorDeviceListActivity extends BaseActivity {
         setTitle("设备列表");
         monitorDeviceListViewModle.mChangeCompanyId = getIntent().getStringExtra("mChangeCompanyId");
         monitorDeviceListViewModle.mGroupId = getIntent().getLongExtra("mLeftGroupId", 0);
-
+        monitorDeviceListViewModle.doSearchDevice("");
         monitorDeviceListBinding.etSerach.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
